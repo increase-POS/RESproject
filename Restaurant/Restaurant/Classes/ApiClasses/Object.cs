@@ -26,6 +26,7 @@ namespace POS.Classes
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
+        List<Object> plist = new List<Object>();
 
         public async Task<List<Object>> GetAll()
         {
@@ -88,7 +89,54 @@ namespace POS.Classes
             //}
         }
 
-   
+      
+        public List<Object> GetParents(List<Object> all, string objName)
+        {
+            List<Object> list = new List<Object>();
+            Object tempob = null;
+            tempob = all.Where(o => o.name == objName).FirstOrDefault();
+            if (tempob != null)
+            {
+                int? firstpid = tempob.parentObjectId;
+                plist.Add(tempob);
+
+                list = findparentslist(firstpid, all);
+                plist.Reverse();
+                plist.Remove(plist.Where(x => x.parentObjectId == null).FirstOrDefault());
+                return plist;
+            }
+
+            return plist;
+
+        }
+
+        private List<Object> findparentslist(int? parentid, List<Object> all)
+        {
+
+
+            // findparentslist(int ? parentid, List < Object > all)
+            if (parentid != null)
+            {
+                Object Ptempob = null;
+                Ptempob = findparents(parentid, all);
+                plist.Add(Ptempob);
+                return findparentslist(Ptempob.parentObjectId, all);
+            }
+            else
+            {
+                return plist;
+            }
+
+
+        }
+        private Object findparents(int? parentid, List<Object> all)
+        {
+            Object ptempob = null;
+            ptempob = all.Where(o => o.objectId == parentid).FirstOrDefault();
+
+            return ptempob;
+        }
+
         public async Task<int> Save(Object newObject)
         {
 
