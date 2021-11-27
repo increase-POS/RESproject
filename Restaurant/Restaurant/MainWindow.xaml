@@ -205,11 +205,11 @@
                                 <TextBlock Margin="5,2.5"  Foreground="White" Text="POS-013" FontSize="10" ></TextBlock>
                             </StackPanel>-->
                             <!--<Separator />-->
-                            <MenuItem x:Name="mi_changePassword"  Foreground="White"  BorderThickness="0,1,0,0" BorderBrush="#DEDEDE"
+                            <MenuItem x:Name="mi_changePassword"  Foreground="{StaticResource SecondColor}"  BorderThickness="0,1,0,0" BorderBrush="#DEDEDE"
                               Header="Change Password" Click="Mi_changePassword_Click"
                               Icon="{materialDesign:PackIcon Kind=Password}"></MenuItem>
-                            <Separator />
-                            <MenuItem Header="Logout"  Foreground="White"  x:Name="BTN_logOut" Click="BTN_logOut_Click" 
+                            <Separator Background="{StaticResource SecondColor}" />
+                            <MenuItem Header="Logout"  Foreground="{StaticResource SecondColor}"  x:Name="BTN_logOut" Click="BTN_logOut_Click" 
                          Icon="{materialDesign:PackIcon Kind=ExitToApp}" />
                         </MenuItem>
                     </Menu>

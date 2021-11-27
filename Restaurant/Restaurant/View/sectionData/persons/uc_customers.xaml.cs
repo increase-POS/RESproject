@@ -33,6 +33,35 @@ namespace Restaurant.View.sectionData.persons
             try
             {
                 InitializeComponent();
+                if (System.Windows.SystemParameters.PrimaryScreenWidth >= 1440)
+                {
+                    txt_deleteButton.Visibility = Visibility.Visible;
+                    txt_addButton.Visibility = Visibility.Visible;
+                    txt_updateButton.Visibility = Visibility.Visible;
+                    txt_add_Icon.Visibility = Visibility.Visible;
+                    txt_update_Icon.Visibility = Visibility.Visible;
+                    txt_delete_Icon.Visibility = Visibility.Visible;
+                }
+                else if (System.Windows.SystemParameters.PrimaryScreenWidth >= 1360)
+                {
+                    txt_add_Icon.Visibility = Visibility.Collapsed;
+                    txt_update_Icon.Visibility = Visibility.Collapsed;
+                    txt_delete_Icon.Visibility = Visibility.Collapsed;
+                    txt_deleteButton.Visibility = Visibility.Visible;
+                    txt_addButton.Visibility = Visibility.Visible;
+                    txt_updateButton.Visibility = Visibility.Visible;
+
+                }
+                else
+                {
+                    txt_deleteButton.Visibility = Visibility.Collapsed;
+                    txt_addButton.Visibility = Visibility.Collapsed;
+                    txt_updateButton.Visibility = Visibility.Collapsed;
+                    txt_add_Icon.Visibility = Visibility.Visible;
+                    txt_update_Icon.Visibility = Visibility.Visible;
+                    txt_delete_Icon.Visibility = Visibility.Visible;
+
+                }
             }
             catch (Exception ex)
             {
@@ -70,7 +99,7 @@ namespace Restaurant.View.sectionData.persons
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "custname", "lastName", "mobile" };
+                requiredControlList = new List<string> { "name", "mobile" };
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
@@ -86,7 +115,7 @@ namespace Restaurant.View.sectionData.persons
                 await FillCombo.fillCountries(cb_areaMobile);
                 await FillCombo.fillCountries(cb_areaPhone);
                 await FillCombo.fillCountries(cb_areaFax);
-                Keyboard.Focus(tb_custCode);
+                Keyboard.Focus(tb_code);
                 await RefreshCustomersList();
                 await Search();
                 Clear();
@@ -152,27 +181,45 @@ namespace Restaurant.View.sectionData.persons
         {//add
             try
             {
-                HelpClass.StartAwait(grid_main);
+                //if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") || SectionData.isAdminPermision())
+                //{
+                    HelpClass.StartAwait(grid_main);
+
+               
+
                 agent = new Agent();
                 if (HelpClass.validate(requiredControlList, this))
                 {
-                    tb_custCode.Text = await agent.generateCodeNumber("c");
-                    agent.code = tb_custCode.Text;
-                    //  agent.custCode = "Cu-000001";
-                    agent.name = tb_custname.Text;
-                    agent.lastName = tb_lastName.Text;
+                    //deserve
+                    decimal maxDeserveValue = 0;
+                    if (!tb_upperLimit.Text.Equals(""))
+                        maxDeserveValue = decimal.Parse(tb_upperLimit.Text);
+
+                    //payType
+                    string payType = "";
+                    if (cb_payType.SelectedIndex != -1)
+                        payType = cb_payType.SelectedValue.ToString();
+
+                    tb_code.Text = await agent.generateCodeNumber("c");
+                    agent.name = tb_name.Text;
+                    agent.code = tb_code.Text;
+                    agent.company = tb_company.Text;
                     agent.email = tb_email.Text;
                     agent.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text;
                     if (!tb_phone.Text.Equals(""))
                         agent.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
                     if (!tb_fax.Text.Equals(""))
                         agent.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
-                    agent.company = tb_company.Text;
-                    agent.address = tb_address.Text;
-                    agent.notes = tb_notes.Text;
-                    agent.isActive = 1;
+                    agent.type = "c";
+                    agent.accType = "";
+                    agent.balance = 0;
+                    agent.payType = payType;
+                    agent.isLimited = (bool)tgl_hasCredit.IsChecked;
                     agent.createUserId = MainWindow.userLogin.userId;
                     agent.updateUserId = MainWindow.userLogin.userId;
+                    agent.notes = tb_notes.Text;
+                    agent.isActive = 1;
+                    agent.maxDeserve = maxDeserveValue;
 
                     int s = await agent.save(agent);
                     if (s <= 0)
@@ -196,6 +243,10 @@ namespace Restaurant.View.sectionData.persons
                     }
                 }
                 HelpClass.EndAwait(grid_main);
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
             }
             catch (Exception ex)
             {
@@ -208,25 +259,43 @@ namespace Restaurant.View.sectionData.persons
         {//update
             try
             {
-                HelpClass.StartAwait(grid_main);
+                //if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || SectionData.isAdminPermision())
+                //{
+                    HelpClass.StartAwait(grid_main);
                 if (HelpClass.validate(requiredControlList, this))
                 {
-                    //agent.custCode = "Us-000001";
+                    //deserve
+                    decimal maxDeserveValue = 0;
+                    if (!tb_upperLimit.Text.Equals(""))
+                        maxDeserveValue = decimal.Parse(tb_upperLimit.Text);
+
+                    //payType
+                    string payType = "";
+                    if (cb_payType.SelectedIndex != -1)
+                        payType = cb_payType.SelectedValue.ToString();
+
+                    //agent.code = "Us-000001";
                     //agent.custname = tb_custname.Text;
-                    agent.lastName = tb_lastName.Text;
+                    tb_code.Text = await agent.generateCodeNumber("c");
+                    agent.name = tb_name.Text;
+                    agent.code = tb_code.Text;
+                    agent.company = tb_company.Text;
                     agent.email = tb_email.Text;
-                    agent.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text; ;
+                    agent.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text;
                     if (!tb_phone.Text.Equals(""))
                         agent.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
                     if (!tb_fax.Text.Equals(""))
                         agent.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
-                   
-                    agent.company = tb_company.Text;
-                    agent.address = tb_address.Text;
-                    agent.notes = tb_notes.Text;
-                    agent.isActive = 1;
+                    agent.type = "c";
+                    agent.accType = "";
+                    agent.balance = 0;
+                    agent.payType = payType;
+                    agent.isLimited = (bool)tgl_hasCredit.IsChecked;
                     agent.createUserId = MainWindow.userLogin.userId;
                     agent.updateUserId = MainWindow.userLogin.userId;
+                    agent.notes = tb_notes.Text;
+                    agent.isActive = 1;
+                    agent.maxDeserve = maxDeserveValue;
 
                     int s = await agent.save(agent);
                     if (s <= 0)
@@ -254,6 +323,10 @@ namespace Restaurant.View.sectionData.persons
                     }
                 }
                 HelpClass.EndAwait(grid_main);
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
             }
             catch (Exception ex)
             {
@@ -463,9 +536,8 @@ namespace Restaurant.View.sectionData.persons
             if (agents is null)
                 await RefreshCustomersList();
             searchText = tb_search.Text.ToLower();
-            //agentsQuery = agents.Where(s => (s.custCode.ToLower().Contains(searchText) ||
-            agentsQuery = agents.Where(s => (
-            //s.custname.ToLower().Contains(searchText) ||
+            agentsQuery = agents.Where(s => (s.code.ToLower().Contains(searchText) ||
+            s.name.ToLower().Contains(searchText) ||
             s.mobile.ToLower().Contains(searchText)
             ) && s.isActive == tgl_agentState);
             RefreshCustomersView();
@@ -670,7 +742,15 @@ namespace Restaurant.View.sectionData.persons
             }
         }
         #endregion
+        private void Tgl_isOpenUpperLimit_Checked(object sender, RoutedEventArgs e)
+        {
+            tb_upperLimit.IsEnabled = true;
+        }
 
-      
+        private void Tgl_isOpenUpperLimit_Unchecked(object sender, RoutedEventArgs e)
+        {
+            tb_upperLimit.IsEnabled = false;
+        }
+
     }
 }

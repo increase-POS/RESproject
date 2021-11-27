@@ -38,6 +38,7 @@
                 <Setter Property="Background" Value="#15FF0000"/>
             </Style>
             <!--#region ScrollBarTrackThumb-->
+
             <Style x:Key="ScrollBarTrackThumb"
         TargetType="{x:Type Thumb}">
                 <Setter Property="Template">
@@ -265,13 +266,13 @@
                                         <VisualState x:Name="MouseOver">
                                             <Storyboard>
                                                 <DoubleAnimation Duration="0" To="0.95" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="X"/>
-                                                <ColorAnimation Duration="0:0:0.6" To="#178DD2"
+                                                <ColorAnimation Duration="0:0:0.6" To="#D35400"
                                                 Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="X"/>
                                             </Storyboard>
                                         </VisualState>
                                         <VisualState x:Name="Pressed">
                                             <Storyboard>
-                                                <ColorAnimation Duration="0:0:0.3" To="#9CD0EF"
+                                                <ColorAnimation Duration="0:0:0.3" To="#FFA062"
                                                 Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="X"/>
                                             </Storyboard>
                                         </VisualState>
@@ -348,8 +349,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.blue.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.orange.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.orange.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

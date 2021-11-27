@@ -184,11 +184,11 @@ namespace Restaurant
             try
             {
                 InitializeComponent();
-
+                userLogin = new User();
+                userLogin.userId = 1;
                 mainWindow = this;
                 windowFlowDirection();
-
-
+                
             }
             catch (Exception ex)
             {

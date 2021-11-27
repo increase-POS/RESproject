@@ -9,8 +9,9 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="800" d:DesignWidth="1000" >
     <Grid x:Name="grid_main">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Margin="40 15" FontSize="24" FontWeight="Bold" x:Name="txt_mainTitle" Text="Stocktaking operations" Foreground="{StaticResource LightGrey}"   />
@@ -187,5 +188,6 @@
                 <!--#endregion-->
             </WrapPanel>
         </ScrollViewer>
+    </Grid>
     </Grid>
 </UserControl>

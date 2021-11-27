@@ -6,11 +6,11 @@
              xmlns:local="clr-namespace:Restaurant.View.sectionData.persons"
              mc:Ignorable="d"  Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             d:DesignHeight="800" d:DesignWidth="950">
-    <Grid x:Name="grid_main" >
+             d:DesignHeight="870" d:DesignWidth="950">
+    <Grid x:Name="grid_main" Margin="20 10" >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition  Width="350"  />
+            <ColumnDefinition Width="2.5*"/>
+            <ColumnDefinition x:Name="gridWidth" Width="*" MinWidth="225"/>
         </Grid.ColumnDefinitions>
 
 
@@ -19,7 +19,7 @@
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid Margin="15 0"  >
+            <Grid Margin="0 0 10 0"  >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="2*"/>
@@ -97,7 +97,7 @@
                 </Button>
 
             </Grid>
-            <Border Margin="15,0,15,15" Grid.Row="1"  Background="White" CornerRadius="10">
+            <Border Margin="0,0,10,15" Grid.Row="1"  Background="White" CornerRadius="10">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
@@ -120,10 +120,11 @@
                                     <Setter Property="Background" Value="#F5D7C4" />
                                 <Setter Property="BorderBrush" Value="White"/>
                                 <Setter Property="BorderThickness" Value="0 0 1 0"/>
+                                <Setter Property="Foreground" Value="{StaticResource SecondColor}"/>
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="*"  Header="Code" Binding="{Binding Path=custCode}">
+                            <DataGridTextColumn Width="*"  Header="Code" Binding="{Binding Path=code}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -135,7 +136,7 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Width="*"  Header="Name" Binding="{Binding Path=custname}">
+                            <DataGridTextColumn Width="*"  Header="Name" Binding="{Binding Path=name}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -249,7 +250,7 @@
         </Border>
         </Grid>
 
-        <Grid Margin="0 60 0 15" Grid.Column="1"  >
+        <Grid Margin="10 60 0 15" Grid.Column="1"  >
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -295,8 +296,23 @@
                 </Grid>
         </Border>
 
-        <ScrollViewer Background="White"  Grid.Row="1" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Background="White"  Grid.Row="1"   >
                 <StackPanel>
+                    <!--<Grid >
+                        <Grid.RowDefinitions >
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>-->
                     <DockPanel Margin="10 0" LastChildFill="True"  >
                         <TextBlock x:Name="txt_baseInformation" Text="Base Infomation" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
                         <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
@@ -306,17 +322,16 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <!--<Grid x:Name="grid_image" Grid.RowSpan="3"  Grid.Column="1">-->
-                        <Button  Grid.Row="0"   FlowDirection="LeftToRight" 
-                        Grid.RowSpan="3" x:Name="btn_image" Click="Btn_image_Click" VerticalAlignment="Center"
-                     Margin="0"  BorderBrush="{StaticResource LightGrey}" materialDesign:ButtonAssist.CornerRadius="5"
-                         HorizontalAlignment="Center" Height="140" Width="140" Grid.Column="1">
+                        <Button  Grid.Row="1"   FlowDirection="LeftToRight" 
+                        Grid.RowSpan="2" x:Name="btn_image" Click="Btn_image_Click" VerticalAlignment="Center"
+                     Margin="0"  BorderBrush="{x:Null}" materialDesign:ButtonAssist.CornerRadius="5"
+                         HorizontalAlignment="Center" Height="90" Width="90" Grid.Column="1">
                             <Button.Background>
                                 <ImageBrush Stretch="UniformToFill"  x:Name="img_image"
                                             ImageSource="/pic/no-image-icon-125x125.png"   />
@@ -324,8 +339,8 @@
                         </Button>
                         <!--</Grid>-->
 
-                        <Border   CornerRadius="10" Margin="0,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                            <TextBox x:Name="tb_custCode"  Text="{Binding custCode, Mode=OneWay}" Padding="10,5,0,0" 
+                        <Border Grid.ColumnSpan="2"   CornerRadius="10" Margin="0,5,0,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <TextBox x:Name="tb_code"  Text="{Binding code, Mode=OneWay}" Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" IsReadOnly="True"
                                       materialDesign:HintAssist.Hint="code..."  
                                      Foreground="#4E4E4E"  FontWeight="SemiBold" KeyboardNavigation.IsTabStop="False"
@@ -336,7 +351,7 @@
 
                         <Border Grid.Row="1" CornerRadius="10" Margin="0,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid>
-                                <TextBox x:Name="tb_custname"  Text="{Binding custname, Mode=OneWay}" Padding="10,5,0,0" 
+                                <TextBox x:Name="tb_name"  Text="{Binding name, Mode=OneWay}" Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="name..."  
                                      Foreground="#4E4E4E"  
@@ -344,57 +359,34 @@
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"   Margin="4,0"  
                                  LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
-                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_custname"
+                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_name"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
                                 </Path>
                             </Grid>
                         </Border>
-                        <Border Grid.Row="2" CornerRadius="10" Margin="0,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        <Border Grid.Row="3" CornerRadius="10" Margin="0,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid   >
-                                <TextBox x:Name="tb_lastName"  Text="{Binding lastName, Mode=OneWay}" Padding="10,5,0,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="lastName..."  
-                                     Foreground="#4E4E4E"  
-                                      MaxLength="50" BorderThickness="0"
-                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"   Margin="4,0" 
-                                  LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
-                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_lastName"
-                              HorizontalAlignment="Right" Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
-                                </Path>
-                            </Grid>
-                        </Border>
-
-
-                    </Grid>
-
-
-
-                    <DockPanel Margin="10 0" LastChildFill="True" Grid.Row="4">
-                        <TextBlock  Text="More Information"   x:Name="txt_contentInformatin" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
-                        <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
-                    </DockPanel>
-                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                        <Grid   >
-                            <TextBox x:Name="tb_company"  Text="{Binding company, Mode=OneWay}" Padding="10,0,5,0" 
+                                <TextBox x:Name="tb_company"  Text="{Binding company, Mode=OneWay}" Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="company..."  
                                      Foreground="#4E4E4E"  
                                       MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"  Margin="4,0"  />
-                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
-                            </Path>
-                        </Grid>
-                    </Border>
-                    <DockPanel Margin="10 0" LastChildFill="True" Grid.Row="0">
+                                </Path>
+                            </Grid>
+                        </Border>
+
+
+
+                    </Grid>
+                     <DockPanel Margin="10 0" LastChildFill="True" Grid.Row="4">
                         <TextBlock  Text="Contact Information"   x:Name="txt_contactInformation"
                                   Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
                         <Separator Background="{StaticResource MainColor}"    Margin="5,0,5,0"
@@ -402,9 +394,7 @@
 
                     </DockPanel>
                     <!--#region  Phone-->
-
-
-                    <Grid  Grid.Row="1"  >
+                    <Grid  Grid.Row="5"  >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -438,7 +428,7 @@
                         </Border>
 
                     </Grid>
-                    <Grid   Grid.Column="1" Grid.Row="2" >
+                    <Grid   Grid.Column="1" Grid.Row="6" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
@@ -482,7 +472,7 @@
                         </Border>
 
                     </Grid>
-                    <Grid  Grid.Row="3"  >
+                    <Grid  Grid.Row="7"  >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
@@ -524,9 +514,8 @@
                             </Grid>
                         </Border>
                     </Grid>
-
                     <!--#endregion-->
-                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                    <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                             <TextBox x:Name="tb_email"  Text="{Binding email, Mode=OneWay}" Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -543,8 +532,7 @@
                             </Path>
                         </Grid>
                     </Border>
-
-                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                    <Border Grid.Row="9" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                             <TextBox  x:Name="tb_address" Text="{Binding address, Mode=OneWay}"
                                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -562,8 +550,57 @@
 
                         </Grid>
                     </Border>
+                    <DockPanel Margin="10 0" LastChildFill="True" Grid.Row="2">
+                        <TextBlock  Text="More Information"   x:Name="txt_contentInformatin" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
+                        <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
+                    </DockPanel>
+                    <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        <Grid   >
+                            <ComboBox x:Name="cb_payType"    SelectedValue="{Binding payType, Mode=OneWay}"
+                                  Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
+                                  materialDesign:HintAssist.Hint="Default pay Type..."  
+                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                  TextBlock.FontSize="12"  
+                                  Grid.Column="0" Height="40"  Margin="4,0"
+                                  BorderBrush="#737373" BorderThickness="0"  />
+                            <Path Fill="#E81123" x:Name="p_errorDepositTo" Stretch="Fill" Margin="5,5,15,5"
+                              HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
+                         VerticalAlignment="Center" Width="15"  Height="15" 
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                                <Path.ToolTip>
+                                    <ToolTip x:Name="tt_errorDepositTo" Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
+                                </Path.ToolTip>
+                            </Path>
 
-                    <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        </Grid>
+                    </Border>
+                    <DockPanel Grid.Row="9"  Margin="10,5,10,5">
+                        <TextBlock   x:Name="txt_isCredit"
+                                   Margin="0,0,5,0" Text="Credit" Foreground="#6e6e6e"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                                   FontSize="12"/>
+                        <ToggleButton   x:Name="tgl_hasCredit"  IsChecked="{Binding isLimited, Mode=OneWay}"
+                                      Checked="Tgl_isOpenUpperLimit_Checked" 
+                                      Unchecked="Tgl_isOpenUpperLimit_Unchecked"
+                                        VerticalAlignment="Center" Padding="10,15,5,5"  
+                                      Margin="0" Height="13" Width="28"  TabIndex="15" />
+                        <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+
+                            <TextBox x:Name="tb_upperLimit" Grid.Row="8"  Padding="10,0,5,0"  
+                                         Text="{Binding maxDeserve, Mode=OneWay}"
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="The upper limit of the entitlement..."    
+                           Foreground="#4E4E4E"  TextBlock.FontSize="12"  
+                                     BorderThickness="0"
+                                 BorderBrush="AliceBlue" MaxLength="100" PreviewTextInput="Number_PreviewTextInput"
+                      TabIndex="12" 
+                    materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                  Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
+                        </Border>
+                    </DockPanel>
+
+
+                    <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                             <TextBox  x:Name="tb_notes" Text="{Binding notes, Mode=OneWay}"
                                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -575,6 +612,9 @@
                             Grid.Column="1"  Height="70" TextWrapping="Wrap"/>
                         </Grid>
                     </Border>
+
+
+                    <!--</Grid>-->
                 </StackPanel>
             </ScrollViewer>
 
@@ -591,16 +631,74 @@
                     </Grid.ColumnDefinitions>
                     <Border Background="White" Grid.ColumnSpan="3"  Height="1"  BorderBrush="{StaticResource MainColor}" 
                     BorderThickness="1" Opacity="1" Margin="5,5,5,0"  />
+                    <Border>
 
-                    <Button  Grid.Row="2" Grid.Column="0" x:Name="btn_add"   Click="Btn_add_Click"
-                        materialDesign:ButtonAssist.CornerRadius="10" Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  
-                        Margin="5"    Content="add"/>
-                    <Button Grid.Row="2" Grid.Column="1" x:Name="btn_update" Click="Btn_update_Click"
-                       materialDesign:ButtonAssist.CornerRadius="10" Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
-                        Margin="5"    Content="update"/>
-                    <Button Grid.Row="2" Grid.Column="2" x:Name="btn_delete"  Click="Btn_delete_Click"
-                       materialDesign:ButtonAssist.CornerRadius="10" Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
-                        Margin="5"    Content="delete"/>
+                        <Button x:Name="btn_add"  materialDesign:ButtonAssist.CornerRadius="7"
+                          Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                    Margin="1,1" Click="Btn_add_Click" Foreground="White" >
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <materialDesign:PackIcon Name="txt_add_Icon" Kind="PlusThick" Foreground="White" VerticalAlignment="Center" Width="15"  Height="15" Margin="0,1,2,0">
+
+                                </materialDesign:PackIcon>
+                                <TextBlock Visibility="Collapsed" Name="txt_addButton" Text="Add" Foreground="White" VerticalAlignment="Center">
+
+                                </TextBlock>
+
+                            </StackPanel>
+                        </Button>
+                        <Border.ToolTip>
+                            <ToolTip x:Name="tt_add_Button" Content="Add"
+                                    Placement="left" 
+                                    HorizontalOffset="15"
+                                    PlacementRectangle="50,0,0,0"
+                                    VerticalOffset="30"/>
+                        </Border.ToolTip>
+                    </Border>
+                    <Border Grid.Column="1">
+                        <Button x:Name="btn_update"   materialDesign:ButtonAssist.CornerRadius="7"
+                        Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                   Margin="1,1"  Click="Btn_update_Click" >
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <materialDesign:PackIcon Name="txt_update_Icon" Foreground="White" Kind="Edit" VerticalAlignment="Center" Width="15" Height="15" Margin="0,1,2,0">
+
+                                </materialDesign:PackIcon>
+                                <TextBlock Foreground="White" Visibility="Collapsed" Name="txt_updateButton" Text="Update" VerticalAlignment="Center">
+
+                                </TextBlock>
+
+                            </StackPanel>
+                        </Button>
+                        <Border.ToolTip>
+
+                            <ToolTip x:Name="tt_update_Button" Content="Update"
+                                    Placement="left" 
+                                    HorizontalOffset="15"
+                                    PlacementRectangle="50,0,0,0"
+                                    VerticalOffset="30"/>
+
+                        </Border.ToolTip>
+                    </Border>
+                    <Border Grid.Column="2">
+                        <Button x:Name="btn_delete"  materialDesign:ButtonAssist.CornerRadius="7"
+                        Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" 
+                    Margin="1,1"  Click="Btn_delete_Click" >
+                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
+                                <materialDesign:PackIcon Name="txt_delete_Icon" Kind="Delete" Foreground="White" VerticalAlignment="Center" Width="15" Height="15" Margin="0,1,2,0">
+
+                                </materialDesign:PackIcon>
+                                <TextBlock Visibility="Collapsed" Name="txt_deleteButton" Foreground="White" Width="auto" Text="Delete" VerticalAlignment="Center">
+
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+                        <Border.ToolTip>
+                            <ToolTip x:Name="tt_delete_Button" Content="delete"
+                                    Placement="left" 
+                                    HorizontalOffset="15"
+                                    PlacementRectangle="50,0,0,0"
+                                    VerticalOffset="30"/>
+                        </Border.ToolTip>
+                    </Border>
                 </Grid>
 
             </Border>
