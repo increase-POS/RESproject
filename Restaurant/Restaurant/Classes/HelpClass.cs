@@ -32,7 +32,13 @@ namespace Restaurant.Classes
             tt_error.Content = MainWindow.resourcemanager.GetString(tr);
             c.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
         }
-
+        static public bool isAdminPermision()
+        {
+            //if (MainWindow.userLogin.userId == 1 || MainWindow.userLogin.userId == 2)
+            if (MainWindow.userLogin.isAdmin == true)
+                return true;
+            return false;
+        }
         public static bool validateEmpty(string str, Path p_error)
         {
             bool isValid = true;
@@ -481,7 +487,7 @@ namespace Restaurant.Classes
                 errorClass.stackTrace = ex.StackTrace;
                 errorClass.targetSite = ex.TargetSite.ToString();
                 errorClass.createUserId = MainWindow.userLogin.userId;
-                await errorClass.Save(errorClass);
+                await errorClass.save(errorClass);
             }
             catch
             {

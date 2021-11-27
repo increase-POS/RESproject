@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Security.Claims;
+using Restaurant.Classes;
+using Restaurant.ApiClasses;
 
 namespace POS.Classes
 {

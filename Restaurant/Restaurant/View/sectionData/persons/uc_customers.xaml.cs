@@ -19,7 +19,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 using System.IO;
-
+using Restaurant.View.windows;
 
 namespace Restaurant.View.sectionData.persons
 {
@@ -44,9 +44,13 @@ namespace Restaurant.View.sectionData.persons
         {
             get
             {
-                if (_instance == null)
+                //if (_instance == null)
                     _instance = new uc_customers();
                 return _instance;
+            }
+            set
+            {
+                _instance = value;
             }
         }
 
@@ -56,6 +60,11 @@ namespace Restaurant.View.sectionData.persons
         byte tgl_agentState;
         string searchText = "";
         public static List<string> requiredControlList;
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Instance = null;
+            GC.Collect();
+        }
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
@@ -90,6 +99,7 @@ namespace Restaurant.View.sectionData.persons
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+      
         private void translate()
         {
             //txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
@@ -201,8 +211,8 @@ namespace Restaurant.View.sectionData.persons
                 HelpClass.StartAwait(grid_main);
                 if (HelpClass.validate(requiredControlList, this))
                 {
-                    agent.custCode = "Us-000001";
-                    agent.custname = tb_custname.Text;
+                    //agent.custCode = "Us-000001";
+                    //agent.custname = tb_custname.Text;
                     agent.lastName = tb_lastName.Text;
                     agent.email = tb_email.Text;
                     agent.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text; ;
@@ -453,15 +463,16 @@ namespace Restaurant.View.sectionData.persons
             if (agents is null)
                 await RefreshCustomersList();
             searchText = tb_search.Text.ToLower();
-            agentsQuery = agents.Where(s => (s.custCode.ToLower().Contains(searchText) ||
-            s.custname.ToLower().Contains(searchText) ||
+            //agentsQuery = agents.Where(s => (s.custCode.ToLower().Contains(searchText) ||
+            agentsQuery = agents.Where(s => (
+            //s.custname.ToLower().Contains(searchText) ||
             s.mobile.ToLower().Contains(searchText)
             ) && s.isActive == tgl_agentState);
             RefreshCustomersView();
         }
         async Task<IEnumerable<Agent>> RefreshCustomersList()
         {
-            agents = await agent.Get();
+            agents = await agent.Get("c");
             return agents;
         }
         void RefreshCustomersView()
@@ -650,7 +661,7 @@ namespace Restaurant.View.sectionData.persons
                     btn_image.Background = new ImageBrush(bitmapImage);
                     // configure trmporary path
                     string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                    string tmpPath = System.IO.Path.Combine(dir, Global.TMPCustomersFolder);
+                    string tmpPath = System.IO.Path.Combine(dir, Global.TMPAgentsFolder);
                     tmpPath = System.IO.Path.Combine(tmpPath, agent.image);
                     openFileDialog.FileName = tmpPath;
                 }
@@ -659,5 +670,7 @@ namespace Restaurant.View.sectionData.persons
             }
         }
         #endregion
+
+      
     }
 }

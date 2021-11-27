@@ -164,6 +164,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\ApiClasses\Agent.cs" />
     <Compile Include="View\accounts\uc_accounts.xaml.cs">
       <DependentUpon>uc_accounts.xaml</DependentUpon>
     </Compile>
@@ -194,6 +195,9 @@
     <Compile Include="View\sectionData\hallDivide\uc_hallDivide.xaml.cs">
       <DependentUpon>uc_hallDivide.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\sectionData\persons\uc_customers.xaml.cs">
+      <DependentUpon>uc_customers.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\sectionData\persons\uc_persons.xaml.cs">
       <DependentUpon>uc_persons.xaml</DependentUpon>
     </Compile>
@@ -217,6 +221,9 @@
     </Compile>
     <Compile Include="View\storage\uc_storage.xaml.cs">
       <DependentUpon>uc_storage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_acceptCancelPopup.xaml.cs">
+      <DependentUpon>wd_acceptCancelPopup.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -309,6 +316,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\sectionData\persons\uc_customers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\sectionData\persons\uc_persons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -340,6 +351,10 @@
     <Page Include="View\storage\uc_storage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_acceptCancelPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -396,7 +411,6 @@
     <Resource Include="pic\no-image-icon-40x40.png" />
     <Resource Include="pic\no-image-icon-512x512.png" />
     <Resource Include="pic\no-image-icon-90x90.png" />
-    <Resource Include="pic\profilePhotos.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

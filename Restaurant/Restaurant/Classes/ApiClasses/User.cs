@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using POS;
+using Restaurant.ApiClasses;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -14,7 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace POS.Classes
+namespace Restaurant.Classes
 {
     public class User
     {

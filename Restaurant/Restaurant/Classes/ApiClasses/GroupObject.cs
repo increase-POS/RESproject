@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Security.Claims;
+using Restaurant.ApiClasses;
+using Restaurant.Classes;
 
 namespace POS.Classes
 {
@@ -480,7 +482,7 @@ namespace POS.Classes
 
         public bool HasPermissionAction(string objectname, List<GroupObject> GOList, string type)
         {
-            if (SectionData.isAdminPermision())
+            if (HelpClass.isAdminPermision())
                 return true;
 
             bool hasPermission = false;

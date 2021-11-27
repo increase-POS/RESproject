@@ -1,4 +1,4 @@
-﻿E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\GeneratedInternalTypeHelper.g.cs
+﻿
 FE:\GitHub\RESproject\Restaurant\Restaurant\App.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\MainWindow.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\accounts\uc_accounts.xaml;;
@@ -11,6 +11,7 @@ FE:\GitHub\RESproject\Restaurant\Restaurant\View\sales\uc_sales.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\banksData\uc_banksData.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\branchesAndStores\uc_branchesAndStores.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\hallDivide\uc_hallDivide.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\persons\uc_customers.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\persons\uc_persons.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\uc_sectionData.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\settings\uc_settings.xaml;;
@@ -19,4 +20,5 @@ FE:\GitHub\RESproject\Restaurant\Restaurant\View\storage\movementsOperations\uc_
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\storage\storageDivide\uc_storageDivide.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\storage\storageOperations\storageOperations.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\storage\uc_storage.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_acceptCancelPopup.xaml;;
 

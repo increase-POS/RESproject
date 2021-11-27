@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Restaurant.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,6 +49,27 @@ namespace Restaurant.View.sectionData.persons
             Instance = null;
             GC.Collect();
 
+        }
+
+        private void Btn_vendors_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_customers_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_customers.Instance);
+
+                Button button = sender as Button;
+                //initializationMainTrack(button.Tag.ToString(), 0);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }

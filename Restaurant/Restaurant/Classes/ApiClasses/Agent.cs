@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Converters;
 using POS;
 using POS.Classes;
+using Restaurant.ApiClasses;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -23,6 +24,7 @@ namespace Restaurant.Classes
     {
         public int agentId { get; set; }
         public string name { get; set; }
+        public string lastName { get; set; }
         public string code { get; set; }
         public string company { get; set; }
         public string address { get; set; }
