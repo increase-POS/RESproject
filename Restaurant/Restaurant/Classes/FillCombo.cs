@@ -34,15 +34,15 @@ namespace Restaurant.Classes
         /// <returns></returns>
         /// 
         //phone 
-        public static IEnumerable<Country> countrynum;
+        public static IEnumerable<CountryCode> countrynum;
         public static IEnumerable<City> citynum;
         public static IEnumerable<City> citynumofcountry;
-        public static Country countrycodes = new Country();
+        public static CountryCode countrycodes = new CountryCode();
         public static City cityCodes = new City();
 
-        static public async Task<IEnumerable<Country>> RefreshCountry()
+        static async Task<IEnumerable<CountryCode>> RefreshCountry()
         {
-           countrynum = await countrycodes.GetAll();
+            countrynum = await countrycodes.GetAllCountries();
             return countrynum;
         }
         static public async Task<IEnumerable<City>> RefreshCity()

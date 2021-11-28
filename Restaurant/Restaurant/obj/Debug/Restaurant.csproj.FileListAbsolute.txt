@@ -322,8 +322,6 @@ E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\storage\storageOperati
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\storage\uc_storage.baml
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_acceptCancelPopup.baml
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\Restaurant.g.resources
-E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\Restaurant.ar_file.resources
-E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\Restaurant.en_file.resources
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\Restaurant.Properties.Resources.resources
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\Restaurant.csproj.GenerateResource.cache
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\Restaurant.csproj.CoreCompileInputs.cache
