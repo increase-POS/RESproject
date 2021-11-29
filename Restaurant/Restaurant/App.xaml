@@ -4,7 +4,9 @@
              xmlns:local="clr-namespace:Restaurant"
               xmlns:converters="clr-namespace:Restaurant.converters"
           xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             StartupUri="MainWindow.xaml">
+             Startup="Application_Startup"
+           >
+    <!--StartupUri="MainWindow.xaml"-->
     <Application.Resources>
         <ResourceDictionary>
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
@@ -13,9 +15,9 @@
 
 
             <!--#region Fonts-->
-            <FontFamily x:Key="BarcodeFont" >IDAHC39M Code 39 Barcode, /AdministratorApp;component/fonts/#IDAHC39M Code 39 Barcode, Arial</FontFamily>
-            <FontFamily x:Key="Font-cairo-light" >cairo light, /AdministratorApp;component/fonts/cairo-font/#cairo light, Arial</FontFamily>
-            <FontFamily x:Key="Font-cairo-bold" >cairo bold , /AdministratorApp;component/fonts/cairo-font/#cairo bold, Arial</FontFamily>
+            <FontFamily x:Key="BarcodeFont" >IDAHC39M Code 39 Barcode, /Restaurant;component/fonts/#IDAHC39M Code 39 Barcode, Arial</FontFamily>
+            <FontFamily x:Key="Font-cairo-light" >cairo light, /Restaurant;component/fonts/cairo-font/#cairo light, Arial</FontFamily>
+            <FontFamily x:Key="Font-cairo-bold" >cairo bold , /Restaurant;component/fonts/cairo-font/#cairo bold, Arial</FontFamily>
 
 
 

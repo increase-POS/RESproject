@@ -26,10 +26,9 @@ namespace Restaurant.View.windows
     public partial class wd_logIn : Window
     {
         BrushConverter brushConverter = new BrushConverter();
-        public static string lang = "en";
-        bool logInProcessing = false;
-        Users userModel = new Users();
-        Users user = new Users();
+         bool logInProcessing = false;
+        User userModel = new User();
+        User user = new User();
         public wd_logIn()
         {
             try
@@ -49,13 +48,13 @@ namespace Restaurant.View.windows
                 HelpClass.StartAwait(grid_main);
 
                 bdrLogIn.RenderTransform = Animations.borderAnimation(-100, bdrLogIn, true);
-
+                MainWindow.lang = "en";
                 #region properties
                 if (Properties.Settings.Default.userName != string.Empty)
                 {
                     txtUserName.Text = Properties.Settings.Default.userName;
                     txtPassword.Password = Properties.Settings.Default.password;
-                    lang = Properties.Settings.Default.Lang;
+                    MainWindow.lang = Properties.Settings.Default.Lang;
                     //menuIsOpen = Properties.Settings.Default.menuIsOpen;
                     cbxRemmemberMe.IsChecked = true;
 
@@ -64,23 +63,23 @@ namespace Restaurant.View.windows
                 {
                     txtUserName.Clear();
                     txtPassword.Clear();
-                    lang = "en";
+                    MainWindow.lang = "en";
                     //menuIsOpen = "close";
                     cbxRemmemberMe.IsChecked = false;
                 }
                 #endregion
 
                 #region translate
-                if (lang.Equals("en"))
+                if (MainWindow.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                     bdr_imageAr.Visibility = Visibility.Hidden;
                     bdr_image.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.ar_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                     bdr_imageAr.Visibility = Visibility.Visible;
                     bdr_image.Visibility = Visibility.Hidden;
@@ -228,10 +227,10 @@ namespace Restaurant.View.windows
 
                     string password = Md5Encription.MD5Hash("Inc-m" + txtPassword.Password);
                     string userName = txtUserName.Text;
-                    
-                    user = await userModel.Getloginuser(userName, password);
+                    MainWindow.userLogin = new User();
+                   user = await userModel.Getloginuser(userName, password);
 
-                    if (user.accountName == null)
+                    if (user.username == null)
                     {
                         //user does not exist
                         HelpClass.showTextBoxValidate(txtUserName, p_errorUserName, tt_errorUserName, "trUserNotFound");
@@ -247,21 +246,21 @@ namespace Restaurant.View.windows
                         {
                             //correct
                             //send user info to main window
-                            MainWindow.userID = user.userId;
+                            MainWindow.userLogin.userId = user.userId;
                             MainWindow.userLogin = user;
 
-                            #region send language to main window
-                            try
-                            {
-                                //MainWindow.lang = await getUserLanguage(user.userId);
-                                lang = MainWindow.lang;
-                            }
-                            catch
-                            {
-                                MainWindow.lang = "en";
-                                lang = MainWindow.lang;
-                            }
-                            #endregion
+                            //#region send language to main window
+                            //try
+                            //{
+                            //    //MainWindow.lang = await getUserLanguage(user.userId);
+                            //    lang = MainWindow.lang;
+                            //}
+                            //catch
+                            //{
+                            //    MainWindow.lang = "en";
+                            //    lang = MainWindow.lang;
+                            //}
+                            //#endregion
 
                             #region check if menu is open
                             //try
@@ -283,14 +282,14 @@ namespace Restaurant.View.windows
                             //make user online
                             user.isOnline = 1;
 
-                            int s = await userModel.Save(user);
+                            int s = await userModel.save(user);
 
                             #region remember me
                             if (cbxRemmemberMe.IsChecked.Value)
                             {
                                 Properties.Settings.Default.userName = txtUserName.Text;
                                 Properties.Settings.Default.password = txtPassword.Password;
-                                Properties.Settings.Default.Lang = lang;
+                                Properties.Settings.Default.Lang = MainWindow.lang;
                                 //Properties.Settings.Default.menuIsOpen = menuIsOpen;
                             }
                             else

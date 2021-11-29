@@ -51,14 +51,16 @@
                     <RowDefinition Height="68.8"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Image FlowDirection="LeftToRight" Source="/pic/increase-logo.png" Margin="0,0,0,0" Width="100" Height="100"/>
+                <Image FlowDirection="LeftToRight" Source="/pic/increase-logo.png"   Margin="0,0,0,0" Width="100" Height="100"/>
 
                 <DockPanel Grid.Row="1" Margin="0,10,15,0">
                     <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="Account" Height="25" Width="25" Foreground="Gray" ></materialDesign:PackIcon>
                     </TextBlock>
                     <Grid>
-                    <TextBox x:Name="txtUserName" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5,0,0,0"  materialDesign:HintAssist.Hint="User Name" materialDesign:HintAssist.Foreground="#FF2196F3" VerticalAlignment="Top" Width="160" LostFocus="validateEmpty" TextChanged="validateTextChanged" ></TextBox>
+                    <TextBox x:Name="txtUserName" Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                             Margin="5,0,0,0"  materialDesign:HintAssist.Hint="User Name" 
+                           VerticalAlignment="Top" Width="160" LostFocus="validateEmpty" TextChanged="validateTextChanged" ></TextBox>
                     <Path Fill="#E81123" x:Name="p_errorUserName" Stretch="Fill" Margin="5,5,5,5"
                           HorizontalAlignment="Right" Grid.Row="2"  Visibility="Collapsed"   
                           VerticalAlignment="Center" Width="15"  Height="15"
@@ -78,7 +80,7 @@
                                 <materialDesign:PackIcon Kind="Password" Height="25" Width="25" Foreground="Gray"></materialDesign:PackIcon>
                     </TextBlock>
                     <Grid>
-                        <PasswordBox x:Name="txtPassword" Margin="5,0,0,0" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" materialDesign:HintAssist.Hint="Password" materialDesign:HintAssist.Foreground="#FF2196F3" VerticalAlignment="Top" Width="160" PasswordChanged="validatePasswordChanged" LostFocus="validateEmpty"  ></PasswordBox>
+                        <PasswordBox x:Name="txtPassword" Margin="5,0,0,0" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" materialDesign:HintAssist.Hint="Password"   VerticalAlignment="Top" Width="160" PasswordChanged="validatePasswordChanged" LostFocus="validateEmpty"  ></PasswordBox>
                         <TextBox x:Name="txtShowPassword" Visibility="Collapsed" Margin="5,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" Width="160"></TextBox>
                         <Path Fill="#E81123" x:Name="p_errorPassword" Stretch="Fill" Margin="5,5,5,5"
                               HorizontalAlignment="Right" Grid.Row="2"  Visibility="Collapsed"   
@@ -103,7 +105,7 @@
                         VerticalAlignment="Center"  ></CheckBox>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="4" >
                     <Grid>
-                        <Button x:Name="btnLogIn" Background="#FF2196F3" Foreground="White" Margin="0,0,10,0" Click="btnLogIn_Click" IsDefault="True">
+                        <Button x:Name="btnLogIn" Background="{StaticResource MainColor}" Foreground="White" Margin="0,0,10,0" Click="btnLogIn_Click" IsDefault="True">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0">
                                         <materialDesign:PackIcon FlowDirection="LeftToRight" Kind="Login"></materialDesign:PackIcon>
@@ -113,7 +115,7 @@
                         </Button>
                        
                     </Grid>
-                    <Button x:Name="btnClose" Background="#FF2196F3" Foreground="White" Click="btnClose_Click"   IsCancel="true" >
+                    <Button x:Name="btnClose" Background="{StaticResource MainColor}" Foreground="White" Click="btnClose_Click"   IsCancel="true" >
                         <StackPanel Orientation="Horizontal">
                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0">
                                         <materialDesign:PackIcon Kind="Close"></materialDesign:PackIcon>
@@ -126,10 +128,10 @@
 
             <!--Main-->
             <Grid Grid.Column="1">
-                <Border x:Name="bdr_image" FlowDirection="LeftToRight"  CornerRadius="0,10,10,0">
-                    <Border.Background>
+                <Border x:Name="bdr_image" Background="{StaticResource MainColor}" FlowDirection="LeftToRight"  CornerRadius="0,10,10,0">
+                    <!--<Border.Background>
                         <ImageBrush x:Name="img_En"  Stretch="Fill"  ImageSource="/pic/increase-login-bg.png"/>
-                    </Border.Background>
+                    </Border.Background>-->
                 </Border>
                 <Border Visibility="Hidden" x:Name="bdr_imageAr" FlowDirection="LeftToRight"  CornerRadius="10,0,0,10">
                     <Border.Background>

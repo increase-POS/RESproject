@@ -54,7 +54,7 @@ namespace Restaurant
         public static string Currency;
         public static int CurrencyId;
         public static string Phone;
-        internal static User userLogin;
+        internal static User userLogin; 
         //internal static Pos posLogIn;
         bool isHome = false;
         internal static int? isInvTax;
@@ -184,8 +184,8 @@ namespace Restaurant
             try
             {
                 InitializeComponent();
-                userLogin = new User();
-                userLogin.userId = 1;
+                //userLogin = new User();
+                //userLogin.userId = 1;
                 mainWindow = this;
                 windowFlowDirection();
                 

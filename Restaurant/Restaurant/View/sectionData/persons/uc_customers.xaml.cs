@@ -100,21 +100,22 @@ namespace Restaurant.View.sectionData.persons
             {
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "name", "mobile" };
-                //if (MainWindow.lang.Equals("en"))
-                //{
-                //    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.en_file", Assembly.GetExecutingAssembly());
-                //    grid_main.FlowDirection = FlowDirection.LeftToRight;
-                //}
-                //else
-                //{
-                //    MainWindow.resourcemanager = new ResourceManager("AdministratorApp.ar_file", Assembly.GetExecutingAssembly());
-                //    grid_main.FlowDirection = FlowDirection.RightToLeft;
-                //}
-                //translate();
+                if (MainWindow.lang.Equals("en"))
+                {
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.LeftToRight;
+                }
+                else
+                {
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.RightToLeft;
+                }
+                translate();
 
                 await FillCombo.fillCountries(cb_areaMobile);
                 await FillCombo.fillCountries(cb_areaPhone);
                 await FillCombo.fillCountries(cb_areaFax);
+                FillCombo.FillDefaultPayType(cb_payType);
                 Keyboard.Focus(tb_code);
                 await RefreshCustomersList();
                 await Search();
@@ -131,50 +132,42 @@ namespace Restaurant.View.sectionData.persons
       
         private void translate()
         {
-            //txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            //txt_userHeader.Text = MainWindow.resourcemanager.GetString("trUsers");
-            //txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, MainWindow.resourcemanager.GetString("trCodeHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
-            //txt_isActive.Text = MainWindow.resourcemanager.GetString("trActive");
-            //txt_details.Text = MainWindow.resourcemanager.GetString("trDetails");
+            txt_title.Text = MainWindow.resourcemanager.GetString("trCustomer");
 
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_discountType, MainWindow.resourcemanager.GetString("trTypeDiscountHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_discountValue, MainWindow.resourcemanager.GetString("trDiscountValueHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_startDate, MainWindow.resourcemanager.GetString("trStartDateHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_endDate, MainWindow.resourcemanager.GetString("trEndDateHint"));
-            //TextBox tbStart = (TextBox)tp_startTime.Template.FindName("PART_TextBox", tp_startTime);
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tbStart, MainWindow.resourcemanager.GetString("trStartTimeHint"));
-            //TextBox tbEnd = (TextBox)tp_endTime.Template.FindName("PART_TextBox", tp_endTime);
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tbEnd, MainWindow.resourcemanager.GetString("trEndTimeHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_note, MainWindow.resourcemanager.GetString("trNoteHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+            txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, MainWindow.resourcemanager.GetString("trCodeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_company, MainWindow.resourcemanager.GetString("trCompanyHint"));
+            txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mobile, MainWindow.resourcemanager.GetString("trMobileHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_phone, MainWindow.resourcemanager.GetString("trPhoneHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_email, MainWindow.resourcemanager.GetString("trEmailHint"));
+            txt_contentInformatin.Text = MainWindow.resourcemanager.GetString("trMoreInformation");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_upperLimit, MainWindow.resourcemanager.GetString("trUpperLimitHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fax, MainWindow.resourcemanager.GetString("trFaxHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+            txt_addButton.Text = MainWindow.resourcemanager.GetString("trAdd");
+            txt_updateButton.Text = MainWindow.resourcemanager.GetString("trUpdate");
+            tt_add_Button.Content = MainWindow.resourcemanager.GetString("trAdd");
+            tt_update_Button.Content = MainWindow.resourcemanager.GetString("trUpdate");
+            tt_delete_Button.Content = MainWindow.resourcemanager.GetString("trDelete");
+            txt_deleteButton.Text = MainWindow.resourcemanager.GetString("trDelete");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_payType, MainWindow.resourcemanager.GetString("trDefaultPayType"));
 
-            //txt_addButton.Text = MainWindow.resourcemanager.GetString("trAdd");
-            //txt_updateButton.Text = MainWindow.resourcemanager.GetString("trUpdate");
-            //txt_deleteButton.Text = MainWindow.resourcemanager.GetString("trDelete");
-            //tt_add_Button.Content = MainWindow.resourcemanager.GetString("trAdd");
-            //tt_update_Button.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            //tt_delete_Button.Content = MainWindow.resourcemanager.GetString("trDelete");
+            dg_agent.Columns[0].Header = MainWindow.resourcemanager.GetString("trCode");
+            dg_agent.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
+            dg_agent.Columns[2].Header = MainWindow.resourcemanager.GetString("trCompany");
+            dg_agent.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
+            btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
 
-            //dg_user.Columns[0].Header = MainWindow.resourcemanager.GetString("trCode");
-            //dg_user.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
-            //dg_user.Columns[2].Header = MainWindow.resourcemanager.GetString("trValue");
-            //dg_user.Columns[3].Header = MainWindow.resourcemanager.GetString("trStartDate");
-            //dg_user.Columns[4].Header = MainWindow.resourcemanager.GetString("trEndDate");
-
-            //tt_startTime.Content = MainWindow.resourcemanager.GetString("trStartTime");
-            //tt_endTime.Content = MainWindow.resourcemanager.GetString("trEndTime");
-
-            //tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            //tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
-            //tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            //tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            //tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            //tt_pieChart.Content = MainWindow.resourcemanager.GetString("trPieChart");
-            //tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
-            //btn_items.Content = MainWindow.resourcemanager.GetString("trItems");
-
+            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
+            tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
+            tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
+            tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
+            //tt_search.Content = MainWindow.resourcemanager.GetString("trSearch");
+            txt_isCredit.Text = MainWindow.resourcemanager.GetString("trCredit");
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
@@ -188,7 +181,7 @@ namespace Restaurant.View.sectionData.persons
                
 
                 agent = new Agent();
-                if (HelpClass.validate(requiredControlList, this))
+                if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                 {
                     //deserve
                     decimal maxDeserveValue = 0;
@@ -200,10 +193,11 @@ namespace Restaurant.View.sectionData.persons
                     if (cb_payType.SelectedIndex != -1)
                         payType = cb_payType.SelectedValue.ToString();
 
-                    tb_code.Text = await agent.generateCodeNumber("c");
+                    //tb_code.Text = await agent.generateCodeNumber("c");
+                    agent.code = await agent.generateCodeNumber("c");
                     agent.name = tb_name.Text;
-                    agent.code = tb_code.Text;
                     agent.company = tb_company.Text;
+                    agent.address = tb_address.Text;
                     agent.email = tb_email.Text;
                     agent.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text;
                     if (!tb_phone.Text.Equals(""))
@@ -262,7 +256,7 @@ namespace Restaurant.View.sectionData.persons
                 //if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || SectionData.isAdminPermision())
                 //{
                     HelpClass.StartAwait(grid_main);
-                if (HelpClass.validate(requiredControlList, this))
+                if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                 {
                     //deserve
                     decimal maxDeserveValue = 0;
@@ -276,11 +270,12 @@ namespace Restaurant.View.sectionData.persons
 
                     //agent.code = "Us-000001";
                     //agent.custname = tb_custname.Text;
-                    tb_code.Text = await agent.generateCodeNumber("c");
+                    //tb_code.Text = await agent.generateCodeNumber("c");
+                    agent.code = await agent.generateCodeNumber("c");
                     agent.name = tb_name.Text;
-                    agent.code = tb_code.Text;
                     agent.company = tb_company.Text;
                     agent.email = tb_email.Text;
+                    agent.address = tb_address.Text;
                     agent.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text;
                     if (!tb_phone.Text.Equals(""))
                         agent.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
@@ -557,8 +552,18 @@ namespace Restaurant.View.sectionData.persons
         void Clear()
         {
             this.DataContext = new Agent();
-            #region Phone
+
+            #region mobile-Phone-fax-email
+            brd_areaPhoneLocal.Visibility =
+                brd_areaFaxLocal.Visibility = Visibility.Collapsed;
+            cb_areaMobile.SelectedIndex = -1;
+            cb_areaPhone.SelectedIndex = -1;
+            cb_areaFax.SelectedIndex = -1;
+            cb_areaPhoneLocal.SelectedIndex = -1;
+            cb_areaFaxLocal.SelectedIndex = -1;
             tb_mobile.Clear();
+            tb_phone.Clear();
+            tb_fax.Clear();
             tb_email.Clear();
             #endregion
             #region image
@@ -568,6 +573,7 @@ namespace Restaurant.View.sectionData.persons
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);
+            p_error_email.Visibility = Visibility.Collapsed;
         }
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {

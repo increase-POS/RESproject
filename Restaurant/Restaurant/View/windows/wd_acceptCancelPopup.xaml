@@ -31,7 +31,7 @@
                      Click="Btn_cancel_Click" >
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock  FontSize="16" Foreground="White"  Name="txt_cancel" Text="Cancel" VerticalAlignment="Center"/>
-                            <materialDesign:PackIcon Name="path_cancel"
+                            <materialDesign:PackIcon Name="path_cancel" Foreground="White"
                                                  Kind="CloseBold" VerticalAlignment="Center" 
                                                  Width="15"  Height="15" Margin="4,1,0,0"/>
 
@@ -46,7 +46,7 @@
                     </Button>
             </Border>
             <Border Grid.Row="2" Grid.Column="1" Background="#178DD2"  CornerRadius="0,0,2.5,0" >
-                <Button x:Name="btn_ok"  
+                <Button x:Name="btn_ok"  Foreground="White"
                            BorderBrush="{x:Null}" Background="{x:Null}"
                      Click="Btn_ok_Click" >
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
