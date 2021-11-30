@@ -8,8 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Restaurant
-{
+namespace Restaurant {
     using System;
     
     
@@ -80,20 +79,20 @@ namespace Restaurant
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        internal static string String2 {
-            get {
-                return ResourceManager.GetString("String2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to رصيد.
         /// </summary>
         internal static string tr_Balance {
             get {
                 return ResourceManager.GetString("tr_Balance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to فرع.
+        /// </summary>
+        internal static string tr_Branch {
+            get {
+                return ResourceManager.GetString("tr_Branch", resourceCulture);
             }
         }
         
@@ -107,11 +106,56 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to عميل.
+        /// </summary>
+        internal static string tr_Customer {
+            get {
+                return ResourceManager.GetString("tr_Customer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to فاتورة.
         /// </summary>
         internal static string tr_Invoice {
             get {
                 return ResourceManager.GetString("tr_Invoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مشتريات.
+        /// </summary>
+        internal static string tr_Purchases {
+            get {
+                return ResourceManager.GetString("tr_Purchases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مبيعات.
+        /// </summary>
+        internal static string tr_Sales {
+            get {
+                return ResourceManager.GetString("tr_Sales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مخزن.
+        /// </summary>
+        internal static string tr_Store {
+            get {
+                return ResourceManager.GetString("tr_Store", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مورد.
+        /// </summary>
+        internal static string tr_Vendor {
+            get {
+                return ResourceManager.GetString("tr_Vendor", resourceCulture);
             }
         }
         
@@ -161,7 +205,7 @@ namespace Restaurant
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to الأرقام بعد الفاصلة.
+        ///   Looks up a localized string similar to الأرقام العشرية.
         /// </summary>
         internal static string trAccuracy {
             get {
@@ -215,6 +259,15 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مدير.
+        /// </summary>
+        internal static string trAdmin {
+            get {
+                return ResourceManager.GetString("trAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to إيداعات إدارية.
         /// </summary>
         internal static string trAdministrativeDeposit {
@@ -229,6 +282,15 @@ namespace Restaurant
         internal static string trAdministrativePull {
             get {
                 return ResourceManager.GetString("trAdministrativePull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to سحوبات إدارية....
+        /// </summary>
+        internal static string trAdministrativePullHint {
+            get {
+                return ResourceManager.GetString("trAdministrativePullHint", resourceCulture);
             }
         }
         
@@ -269,11 +331,29 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to لا يمكن دفع مبلغ اكبر من قيمة الفاتورة.
+        /// </summary>
+        internal static string trAmountGreaterInvoiceValue {
+            get {
+                return ResourceManager.GetString("trAmountGreaterInvoiceValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to الكمية....
         /// </summary>
         internal static string trAmountHint {
             get {
                 return ResourceManager.GetString("trAmountHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to يجب أن يكون المبلغ المدفوع يساوي قيمة الفاتورة.
+        /// </summary>
+        internal static string trAmountPaidEqualInvoiceValue {
+            get {
+                return ResourceManager.GetString("trAmountPaidEqualInvoiceValue", resourceCulture);
             }
         }
         
@@ -292,6 +372,15 @@ namespace Restaurant
         internal static string trAnotherInfomation {
             get {
                 return ResourceManager.GetString("trAnotherInfomation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to طرق دفع.
+        /// </summary>
+        internal static string trAnotherPaymentMethods {
+            get {
+                return ResourceManager.GetString("trAnotherPaymentMethods", resourceCulture);
             }
         }
         
@@ -323,6 +412,15 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مؤرشفة.
+        /// </summary>
+        internal static string trArchived {
+            get {
+                return ResourceManager.GetString("trArchived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 963+.
         /// </summary>
         internal static string trAreaHint {
@@ -332,11 +430,47 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to متاح.
+        /// </summary>
+        internal static string trAvailable {
+            get {
+                return ResourceManager.GetString("trAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نسخ احتياطي.
+        /// </summary>
+        internal static string trBackup {
+            get {
+                return ResourceManager.GetString("trBackup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نسخ احتياطي/استعادة.
         /// </summary>
         internal static string trBackUp_Restore {
             get {
                 return ResourceManager.GetString("trBackUp/Restore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تم النسخ الاحتياطي بنجاح.
+        /// </summary>
+        internal static string trBackupDoneSuccessfuly {
+            get {
+                return ResourceManager.GetString("trBackupDoneSuccessfuly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to حدث خطأ قبل اتمام عملية النسخ.
+        /// </summary>
+        internal static string trBackupNotComplete {
+            get {
+                return ResourceManager.GetString("trBackupNotComplete", resourceCulture);
             }
         }
         
@@ -431,11 +565,29 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to عدد البنوك.
+        /// </summary>
+        internal static string trBanksCount {
+            get {
+                return ResourceManager.GetString("trBanksCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to الباركود.
         /// </summary>
         internal static string trBarcode {
             get {
                 return ResourceManager.GetString("trBarcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to الباركود فارغ.
+        /// </summary>
+        internal static string trBarcodeEmpty {
+            get {
+                return ResourceManager.GetString("trBarcodeEmpty", resourceCulture);
             }
         }
         
@@ -458,7 +610,52 @@ namespace Restaurant
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to السندات المالية.
+        ///   Looks up a localized string similar to الأكثر مبيعاً.
+        /// </summary>
+        internal static string trBestSeller {
+            get {
+                return ResourceManager.GetString("trBestSeller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to وثيقة.
+        /// </summary>
+        internal static string trBond {
+            get {
+                return ResourceManager.GetString("trBond", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عدد السندات.
+        /// </summary>
+        internal static string trBondesCount {
+            get {
+                return ResourceManager.GetString("trBondesCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to السند غير مستلم.
+        /// </summary>
+        internal static string trBondNotRecieved {
+            get {
+                return ResourceManager.GetString("trBondNotRecieved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to السند مستلم.
+        /// </summary>
+        internal static string trBondRecieved {
+            get {
+                return ResourceManager.GetString("trBondRecieved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to السندات.
         /// </summary>
         internal static string trBonds {
             get {
@@ -472,15 +669,6 @@ namespace Restaurant
         internal static string trBranch {
             get {
                 return ResourceManager.GetString("trBranch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to الفرع/المخزن.
-        /// </summary>
-        internal static string trBranch_Store {
-            get {
-                return ResourceManager.GetString("trBranch/Store", resourceCulture);
             }
         }
         
@@ -508,6 +696,15 @@ namespace Restaurant
         internal static string trBranches {
             get {
                 return ResourceManager.GetString("trBranches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عدد الفروع.
+        /// </summary>
+        internal static string trBranchesCount {
+            get {
+                return ResourceManager.GetString("trBranchesCount", resourceCulture);
             }
         }
         
@@ -548,11 +745,29 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to الفرع, نقطة البيع,....
+        /// </summary>
+        internal static string trBranchPosHint {
+            get {
+                return ResourceManager.GetString("trBranchPosHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to الفروع/المخازن.
         /// </summary>
         internal static string trBranchs_Stores {
             get {
                 return ResourceManager.GetString("trBranchs/Stores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شراء.
+        /// </summary>
+        internal static string trBuy {
+            get {
+                return ResourceManager.GetString("trBuy", resourceCulture);
             }
         }
         
@@ -629,6 +844,15 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to عدد بطاقات الدفع.
+        /// </summary>
+        internal static string trCardsCount {
+            get {
+                return ResourceManager.GetString("trCardsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to بطاقة.
         /// </summary>
         internal static string trCardTooltip {
@@ -647,11 +871,38 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to الرصيد النقدي.
+        /// </summary>
+        internal static string trCashBalance {
+            get {
+                return ResourceManager.GetString("trCashBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to زبون نقدي.
+        /// </summary>
+        internal static string trCashCustomer {
+            get {
+                return ResourceManager.GetString("trCashCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to المبلغ...
         /// </summary>
         internal static string trCashHint {
             get {
                 return ResourceManager.GetString("trCashHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to المبلغ المدفوع.
+        /// </summary>
+        internal static string trCashPaid {
+            get {
+                return ResourceManager.GetString("trCashPaid", resourceCulture);
             }
         }
         
@@ -679,6 +930,24 @@ namespace Restaurant
         internal static string trCashTooltip {
             get {
                 return ResourceManager.GetString("trCashTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عدد التحويلات النقدية.
+        /// </summary>
+        internal static string trCashtransferCount {
+            get {
+                return ResourceManager.GetString("trCashtransferCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نقدي.
+        /// </summary>
+        internal static string trCashType {
+            get {
+                return ResourceManager.GetString("trCashType", resourceCulture);
             }
         }
         
@@ -787,6 +1056,15 @@ namespace Restaurant
         internal static string trCodeHint {
             get {
                 return ResourceManager.GetString("trCodeHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تجميع.
+        /// </summary>
+        internal static string trCollect {
+            get {
+                return ResourceManager.GetString("trCollect", resourceCulture);
             }
         }
         
@@ -908,6 +1186,15 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to هل تريد متابعة العملية؟.
+        /// </summary>
+        internal static string trContinueProcess_ {
+            get {
+                return ResourceManager.GetString("trContinueProcess?", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تحويل.
         /// </summary>
         internal static string trConvert {
@@ -926,7 +1213,16 @@ namespace Restaurant
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to عدد السجلات.
+        ///   Looks up a localized string similar to التكلفة.
+        /// </summary>
+        internal static string trCost {
+            get {
+                return ResourceManager.GetString("trCost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to العدد.
         /// </summary>
         internal static string trCount {
             get {
@@ -1034,7 +1330,7 @@ namespace Restaurant
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to بطاقة.
+        ///   Looks up a localized string similar to بطاقة إئتمان.
         /// </summary>
         internal static string trCreditCard {
             get {
@@ -1075,6 +1371,42 @@ namespace Restaurant
         internal static string trCustomers {
             get {
                 return ResourceManager.GetString("trCustomers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عدد الزبائن.
+        /// </summary>
+        internal static string trCustomersCount {
+            get {
+                return ResourceManager.GetString("trCustomersCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to يومي.
+        /// </summary>
+        internal static string trDaily {
+            get {
+                return ResourceManager.GetString("trDaily", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to المشتريات اليومية.
+        /// </summary>
+        internal static string trDailyPurchase {
+            get {
+                return ResourceManager.GetString("trDailyPurchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to المبيعات اليومية.
+        /// </summary>
+        internal static string trDailySales {
+            get {
+                return ResourceManager.GetString("trDailySales", resourceCulture);
             }
         }
         
@@ -1120,6 +1452,33 @@ namespace Restaurant
         internal static string trDateHint {
             get {
                 return ResourceManager.GetString("trDateHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to يوم.
+        /// </summary>
+        internal static string trDay {
+            get {
+                return ResourceManager.GetString("trDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to الأيام.
+        /// </summary>
+        internal static string trDays {
+            get {
+                return ResourceManager.GetString("trDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to طريقة الدفع الافتراضية.
+        /// </summary>
+        internal static string trDefaultPayType {
+            get {
+                return ResourceManager.GetString("trDefaultPayType", resourceCulture);
             }
         }
         
@@ -1237,6 +1596,15 @@ namespace Restaurant
         internal static string trDeposit {
             get {
                 return ResourceManager.GetString("trDeposit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to رقم الايداع.
+        /// </summary>
+        internal static string trDepositeNum {
+            get {
+                return ResourceManager.GetString("trDepositeNum", resourceCulture);
             }
         }
         
@@ -1376,6 +1744,15 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to التوالف.
+        /// </summary>
+        internal static string trDestructives {
+            get {
+                return ResourceManager.GetString("trDestructives", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تفاصيل.
         /// </summary>
         internal static string trDetails {
@@ -1390,6 +1767,15 @@ namespace Restaurant
         internal static string trDetailsHint {
             get {
                 return ResourceManager.GetString("trDetailsHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to إدخال مباشر.
+        /// </summary>
+        internal static string trDirectEntry {
+            get {
+                return ResourceManager.GetString("trDirectEntry", resourceCulture);
             }
         }
         
@@ -1664,6 +2050,15 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to موظف.
+        /// </summary>
+        internal static string trEmployee {
+            get {
+                return ResourceManager.GetString("trEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to رقم الحساب لا يمكن أن يكون فارغ.
         /// </summary>
         internal static string trEmptyAccNumberToolTip {
@@ -1678,6 +2073,15 @@ namespace Restaurant
         internal static string trEmptyAccNumToolTip {
             get {
                 return ResourceManager.GetString("trEmptyAccNumToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عدد الأرقام بعد الفاصلة لا يمكن أن يكون فارغ.
+        /// </summary>
+        internal static string trEmptyAccuracy {
+            get {
+                return ResourceManager.GetString("trEmptyAccuracy", resourceCulture);
             }
         }
         
@@ -1898,6 +2302,15 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to كلفة العنصر لا يمكن أن تكون فارغة.
+        /// </summary>
+        internal static string trEmptyItemCost {
+            get {
+                return ResourceManager.GetString("trEmptyItemCost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to العمل لا يمكن أن يكون فارغ.
         /// </summary>
         internal static string trEmptyJobToolTip {
@@ -1984,6 +2397,15 @@ namespace Restaurant
         internal static string trEmptyPrice {
             get {
                 return ResourceManager.GetString("trEmptyPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عدد النسخ لا يمكن أن يكون فارغ.
+        /// </summary>
+        internal static string trEmptyPrintCount {
+            get {
+                return ResourceManager.GetString("trEmptyPrintCount", resourceCulture);
             }
         }
         
@@ -2132,7 +2554,7 @@ namespace Restaurant
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to الانكليزية.
+        ///   Looks up a localized string similar to English.
         /// </summary>
         internal static string trEnglish {
             get {
@@ -2236,6 +2658,15 @@ namespace Restaurant
         internal static string trErrorDistroyMoreQuanToolTip {
             get {
                 return ResourceManager.GetString("trErrorDistroyMoreQuanToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to الحساب موجود مسبقاً.
+        /// </summary>
+        internal static string trErrorDuplicateAccountName {
+            get {
+                return ResourceManager.GetString("trErrorDuplicateAccountName", resourceCulture);
             }
         }
         
@@ -2546,6 +2977,15 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تحميل ملف الأخطاء.
+        /// </summary>
+        internal static string trErrorFileDownload {
+            get {
+                return ResourceManager.GetString("trErrorFileDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to لا يمكن أن يكون تاريخ الاستحقاق قبل تاريخ الفاتورة.
         /// </summary>
         internal static string trErrorInvDateAfterDeserveToolTip {
@@ -2690,6 +3130,15 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ملف الأخطاء.
+        /// </summary>
+        internal static string trErrorsFile {
+            get {
+                return ResourceManager.GetString("trErrorsFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تاريخ النهاية لا يمكن أن يكون قبل تاريخ البداية.
         /// </summary>
         internal static string trErrorStartBeforEndToolTip {
@@ -2704,6 +3153,24 @@ namespace Restaurant
         internal static string trErrorTotalIsZeroToolTip {
             get {
                 return ResourceManager.GetString("trErrorTotalIsZeroToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مفتاح التفعيل خاطئ.
+        /// </summary>
+        internal static string trErrorWrongActivation {
+            get {
+                return ResourceManager.GetString("trErrorWrongActivation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to رابط خطأ.
+        /// </summary>
+        internal static string trErrorWrongUrl {
+            get {
+                return ResourceManager.GetString("trErrorWrongUrl", resourceCulture);
             }
         }
         
@@ -2780,7 +3247,7 @@ namespace Restaurant
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to trExportAlertContent.
+        ///   Looks up a localized string similar to طلب تصدير مواد بانتظار الموافقة.
         /// </summary>
         internal static string trExportAlertContent {
             get {
@@ -2794,6 +3261,33 @@ namespace Restaurant
         internal static string trExportAlertTilte {
             get {
                 return ResourceManager.GetString("trExportAlertTilte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مسودة تصدير.
+        /// </summary>
+        internal static string trExportDraft {
+            get {
+                return ResourceManager.GetString("trExportDraft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to طلب تصدير.
+        /// </summary>
+        internal static string trExportOrder {
+            get {
+                return ResourceManager.GetString("trExportOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to حركة خارجية.
+        /// </summary>
+        internal static string trExternal {
+            get {
+                return ResourceManager.GetString("trExternal", resourceCulture);
             }
         }
         
@@ -2825,6 +3319,15 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to فلترة الفواتير حسب.
+        /// </summary>
+        internal static string trFilterInvoicesBy {
+            get {
+                return ResourceManager.GetString("trFilterInvoicesBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to المسار الرئيسي.
         /// </summary>
         internal static string trFirstLevel {
@@ -2848,6 +3351,15 @@ namespace Restaurant
         internal static string trFirstPath {
             get {
                 return ResourceManager.GetString("trFirstPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to المنطقة الحرة.
+        /// </summary>
+        internal static string trFreeZone {
+            get {
+                return ResourceManager.GetString("trFreeZone", resourceCulture);
             }
         }
         
@@ -2969,11 +3481,29 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مصروفات إدارية....
+        /// </summary>
+        internal static string trGeneralExpensesHint {
+            get {
+                return ResourceManager.GetString("trGeneralExpensesHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to لا يمكن أن يكون المبلغ أكبر من المبلغ المسستحق للدفع.
         /// </summary>
         internal static string trGreaterAmmount {
             get {
                 return ResourceManager.GetString("trGreaterAmmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to المجموعات.
+        /// </summary>
+        internal static string trGroups {
+            get {
+                return ResourceManager.GetString("trGroups", resourceCulture);
             }
         }
         
@@ -2987,11 +3517,29 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to أصناف ذات تاريخ انتهاء صلاحية.
+        /// </summary>
+        internal static string trHaveExpirationDates {
+            get {
+                return ResourceManager.GetString("trHaveExpirationDates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to رقم سيريال.
         /// </summary>
         internal static string trHaveSerialNumber {
             get {
                 return ResourceManager.GetString("trHaveSerialNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to أصناف ذات رقم تسلسلي.
+        /// </summary>
+        internal static string trHaveSerialNumbers {
+            get {
+                return ResourceManager.GetString("trHaveSerialNumbers", resourceCulture);
             }
         }
         
@@ -3041,11 +3589,29 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مسودة استيراد.
+        /// </summary>
+        internal static string trImportDraft {
+            get {
+                return ResourceManager.GetString("trImportDraft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to التنقلات.
         /// </summary>
         internal static string trImportExport {
             get {
                 return ResourceManager.GetString("trImportExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to طلب استيراد.
+        /// </summary>
+        internal static string trImportOrder {
+            get {
+                return ResourceManager.GetString("trImportOrder", resourceCulture);
             }
         }
         
@@ -3077,11 +3643,47 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تهيئة النواقص.
+        /// </summary>
+        internal static string trInitializeShortage {
+            get {
+                return ResourceManager.GetString("trInitializeShortage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to إدخال رقم العملية.
+        /// </summary>
+        internal static string trInputProcessNumber {
+            get {
+                return ResourceManager.GetString("trInputProcessNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to إعدادات التنصيب.
         /// </summary>
         internal static string trInstallationSettings {
             get {
                 return ResourceManager.GetString("trInstallationSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to حركة داخلية.
+        /// </summary>
+        internal static string trInternal {
+            get {
+                return ResourceManager.GetString("trInternal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to فاتورة.
+        /// </summary>
+        internal static string trInv {
+            get {
+                return ResourceManager.GetString("trInv", resourceCulture);
             }
         }
         
@@ -3185,6 +3787,15 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to فاتورة, عنصر,....
+        /// </summary>
+        internal static string trInvoiceItemHint {
+            get {
+                return ResourceManager.GetString("trInvoiceItemHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to رقم الفاتورة.
         /// </summary>
         internal static string trInvoiceNumber {
@@ -3239,6 +3850,15 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to هذا الحقل إجباري.
+        /// </summary>
+        internal static string trIsRequired {
+            get {
+                return ResourceManager.GetString("trIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to هي الوحدة الأصغر.
         /// </summary>
         internal static string trIsSmallest {
@@ -3262,6 +3882,15 @@ namespace Restaurant
         internal static string trItem {
             get {
                 return ResourceManager.GetString("trItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to كلفة العنصر.
+        /// </summary>
+        internal static string trItemCost {
+            get {
+                return ResourceManager.GetString("trItemCost", resourceCulture);
             }
         }
         
@@ -3320,6 +3949,15 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تصدير/استيراد العناصر.
+        /// </summary>
+        internal static string trItemsImport_Export {
+            get {
+                return ResourceManager.GetString("trItemsImport/Export", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to التخزين.
         /// </summary>
         internal static string trItemsStorage {
@@ -3361,6 +3999,15 @@ namespace Restaurant
         internal static string trItemUnitHint {
             get {
                 return ResourceManager.GetString("trItemUnitHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to هناك عنصر بدون عدد.
+        /// </summary>
+        internal static string trItemWithNoCount {
+            get {
+                return ResourceManager.GetString("trItemWithNoCount", resourceCulture);
             }
         }
         
@@ -3451,6 +4098,15 @@ namespace Restaurant
         internal static string trLocations {
             get {
                 return ResourceManager.GetString("trLocations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مكان التخزين.
+        /// </summary>
+        internal static string trLocationt {
+            get {
+                return ResourceManager.GetString("trLocationt", resourceCulture);
             }
         }
         
@@ -3770,6 +4426,15 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to دفع متعدد.
+        /// </summary>
+        internal static string trMultiplePayment {
+            get {
+                return ResourceManager.GetString("trMultiplePayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to العدد يجب أن يكون أكبر من الصفر.
         /// </summary>
         internal static string trMustBeMoreThanZero {
@@ -3793,6 +4458,24 @@ namespace Restaurant
         internal static string trNameHint {
             get {
                 return ResourceManager.GetString("trNameHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to صافي المشتريات.
+        /// </summary>
+        internal static string trNetPurchases {
+            get {
+                return ResourceManager.GetString("trNetPurchases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to صافي المبيعات.
+        /// </summary>
+        internal static string trNetSales {
+            get {
+                return ResourceManager.GetString("trNetSales", resourceCulture);
             }
         }
         
@@ -3833,11 +4516,29 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to التالي.
+        /// </summary>
+        internal static string trNext {
+            get {
+                return ResourceManager.GetString("trNext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to الرقم.
         /// </summary>
         internal static string trNo_ {
             get {
                 return ResourceManager.GetString("trNo.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to لا يوجد اتصال.
+        /// </summary>
+        internal static string trNoConnection {
+            get {
+                return ResourceManager.GetString("trNoConnection", resourceCulture);
             }
         }
         
@@ -3888,11 +4589,29 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to عادي.
+        /// </summary>
+        internal static string trNormal {
+            get {
+                return ResourceManager.GetString("trNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to عنصر عادي.
         /// </summary>
         internal static string trNormalItem {
             get {
                 return ResourceManager.GetString("trNormalItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to أصناف عادية.
+        /// </summary>
+        internal static string trNormals {
+            get {
+                return ResourceManager.GetString("trNormals", resourceCulture);
             }
         }
         
@@ -3933,6 +4652,15 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to غير جاهز.
+        /// </summary>
+        internal static string trNotReady {
+            get {
+                return ResourceManager.GetString("trNotReady", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to الرقم.
         /// </summary>
         internal static string trNum {
@@ -3942,11 +4670,38 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to رقم.
+        /// </summary>
+        internal static string trNum_ {
+            get {
+                return ResourceManager.GetString("trNum:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  من .
+        /// </summary>
+        internal static string trOf {
+            get {
+                return ResourceManager.GetString("trOf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to العروض.
         /// </summary>
         internal static string trOffer {
             get {
                 return ResourceManager.GetString("trOffer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عرض....
+        /// </summary>
+        internal static string trOfferHint {
+            get {
+                return ResourceManager.GetString("trOfferHint", resourceCulture);
             }
         }
         
@@ -4005,6 +4760,24 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to المتصلين.
+        /// </summary>
+        internal static string trOnline {
+            get {
+                return ResourceManager.GetString("trOnline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to العملية.
+        /// </summary>
+        internal static string trOperator {
+            get {
+                return ResourceManager.GetString("trOperator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نوع العملية....
         /// </summary>
         internal static string trOpperationTypeHint {
@@ -4023,11 +4796,38 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to رقم الطلبية.
+        /// </summary>
+        internal static string trOrderNum {
+            get {
+                return ResourceManager.GetString("trOrderNum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to الطلبات.
         /// </summary>
         internal static string trOrders {
             get {
                 return ResourceManager.GetString("trOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عدد الطلبات.
+        /// </summary>
+        internal static string trOrdersCount {
+            get {
+                return ResourceManager.GetString("trOrdersCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to أخرى.
+        /// </summary>
+        internal static string trOthers {
+            get {
+                return ResourceManager.GetString("trOthers", resourceCulture);
             }
         }
         
@@ -4041,7 +4841,7 @@ namespace Restaurant
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to رزمة.
+        ///   Looks up a localized string similar to الحزمة.
         /// </summary>
         internal static string trPackage {
             get {
@@ -4055,6 +4855,15 @@ namespace Restaurant
         internal static string trPackageItems {
             get {
                 return ResourceManager.GetString("trPackageItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to حزم.
+        /// </summary>
+        internal static string trPackages {
+            get {
+                return ResourceManager.GetString("trPackages", resourceCulture);
             }
         }
         
@@ -4158,6 +4967,24 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to الدفع.
+        /// </summary>
+        internal static string trPayment1 {
+            get {
+                return ResourceManager.GetString("trPayment1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to طرق الدفع.
+        /// </summary>
+        internal static string trPaymentMethods {
+            get {
+                return ResourceManager.GetString("trPaymentMethods", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نوع عملية الدفع.
         /// </summary>
         internal static string trPaymentProcessType {
@@ -4172,6 +4999,15 @@ namespace Restaurant
         internal static string trPaymentProcessTypeHint {
             get {
                 return ResourceManager.GetString("trPaymentProcessTypeHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to إيصال دفع.
+        /// </summary>
+        internal static string trPaymentReceipt {
+            get {
+                return ResourceManager.GetString("trPaymentReceipt", resourceCulture);
             }
         }
         
@@ -4257,7 +5093,7 @@ namespace Restaurant
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to صلاحيات.
+        ///   Looks up a localized string similar to الصلاحية.
         /// </summary>
         internal static string trPermission {
             get {
@@ -4280,6 +5116,15 @@ namespace Restaurant
         internal static string trPermissionsBasics {
             get {
                 return ResourceManager.GetString("trPermissionsBasics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مجموعة الصلاحيات.
+        /// </summary>
+        internal static string trPermissionsGroup {
+            get {
+                return ResourceManager.GetString("trPermissionsGroup", resourceCulture);
             }
         }
         
@@ -4509,6 +5354,24 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to عدد نقاط البيع.
+        /// </summary>
+        internal static string trPosCount {
+            get {
+                return ResourceManager.GetString("trPosCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نقطة البيع ....
+        /// </summary>
+        internal static string trPosHint {
+            get {
+                return ResourceManager.GetString("trPosHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to اسم نقطة البيع.
         /// </summary>
         internal static string trPosName {
@@ -4545,6 +5408,15 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to السابق.
+        /// </summary>
+        internal static string trPrevious {
+            get {
+                return ResourceManager.GetString("trPrevious", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to السعر.
         /// </summary>
         internal static string trPrice {
@@ -4568,6 +5440,24 @@ namespace Restaurant
         internal static string trPrint {
             get {
                 return ResourceManager.GetString("trPrint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to طباعة باركود.
+        /// </summary>
+        internal static string trPrintBarcode {
+            get {
+                return ResourceManager.GetString("trPrintBarcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عدد الطباعات.
+        /// </summary>
+        internal static string trPrintCount {
+            get {
+                return ResourceManager.GetString("trPrintCount", resourceCulture);
             }
         }
         
@@ -4604,6 +5494,24 @@ namespace Restaurant
         internal static string trProcessNumTooltip {
             get {
                 return ResourceManager.GetString("trProcessNumTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to الربح.
+        /// </summary>
+        internal static string trProfits {
+            get {
+                return ResourceManager.GetString("trProfits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ترويج.
+        /// </summary>
+        internal static string trPromotion {
+            get {
+                return ResourceManager.GetString("trPromotion", resourceCulture);
             }
         }
         
@@ -4662,11 +5570,29 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to المشتريات &amp; المبيعات.
+        /// </summary>
+        internal static string trPurchase_Sales {
+            get {
+                return ResourceManager.GetString("trPurchase&Sales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to فاتورة شراء.
         /// </summary>
         internal static string trPurchaseBill {
             get {
                 return ResourceManager.GetString("trPurchaseBill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تكلفة الشراء.
+        /// </summary>
+        internal static string trPurchaseCost {
+            get {
+                return ResourceManager.GetString("trPurchaseCost", resourceCulture);
             }
         }
         
@@ -4799,6 +5725,15 @@ namespace Restaurant
         /// <summary>
         ///   Looks up a localized string similar to الكمية.
         /// </summary>
+        internal static string trQTR {
+            get {
+                return ResourceManager.GetString("trQTR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to الكمية.
+        /// </summary>
         internal static string trQuantity {
             get {
                 return ResourceManager.GetString("trQuantity", resourceCulture);
@@ -4829,6 +5764,15 @@ namespace Restaurant
         internal static string trQuotationsDraft {
             get {
                 return ResourceManager.GetString("trQuotationsDraft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to جاهز.
+        /// </summary>
+        internal static string trReady {
+            get {
+                return ResourceManager.GetString("trReady", resourceCulture);
             }
         }
         
@@ -4874,6 +5818,24 @@ namespace Restaurant
         internal static string trReasonOfShortageHint {
             get {
                 return ResourceManager.GetString("trReasonOfShortageHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to إيصال استلام.
+        /// </summary>
+        internal static string trReceipt {
+            get {
+                return ResourceManager.GetString("trReceipt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to وصل فاتورة المشتريات.
+        /// </summary>
+        internal static string trReceiptOfPurchasesBill {
+            get {
+                return ResourceManager.GetString("trReceiptOfPurchasesBill", resourceCulture);
             }
         }
         
@@ -4928,6 +5890,15 @@ namespace Restaurant
         internal static string trRecepientHint {
             get {
                 return ResourceManager.GetString("trRecepientHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to رقم السحب.
+        /// </summary>
+        internal static string trRecieptNum {
+            get {
+                return ResourceManager.GetString("trRecieptNum", resourceCulture);
             }
         }
         
@@ -5040,6 +6011,60 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to حجز.
+        /// </summary>
+        internal static string trReservation {
+            get {
+                return ResourceManager.GetString("trReservation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to حجز.
+        /// </summary>
+        internal static string trReserve {
+            get {
+                return ResourceManager.GetString("trReserve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to محجوز.
+        /// </summary>
+        internal static string trReserved {
+            get {
+                return ResourceManager.GetString("trReserved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to استعادة نسخة.
+        /// </summary>
+        internal static string trRestore {
+            get {
+                return ResourceManager.GetString("trRestore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تم الاستعادة بنجاح.
+        /// </summary>
+        internal static string trRestoreDoneSuccessfuly {
+            get {
+                return ResourceManager.GetString("trRestoreDoneSuccessfuly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to حدث خطأ قبل اتمام عملية الاستعادة.
+        /// </summary>
+        internal static string trRestoreNotComplete {
+            get {
+                return ResourceManager.GetString("trRestoreNotComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to إرجاع.
         /// </summary>
         internal static string trReturn {
@@ -5090,6 +6115,15 @@ namespace Restaurant
         internal static string trSalary {
             get {
                 return ResourceManager.GetString("trSalary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to راتب....
+        /// </summary>
+        internal static string trSalaryHint {
+            get {
+                return ResourceManager.GetString("trSalaryHint", resourceCulture);
             }
         }
         
@@ -5166,7 +6200,7 @@ namespace Restaurant
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to trSalesOrderAlertContent.
+        ///   Looks up a localized string similar to تم تحويل طلب للفرع.
         /// </summary>
         internal static string trSalesOrderAlertContent {
             get {
@@ -5216,6 +6250,15 @@ namespace Restaurant
         internal static string trSave {
             get {
                 return ResourceManager.GetString("trSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to محفوظة.
+        /// </summary>
+        internal static string trSaved {
+            get {
+                return ResourceManager.GetString("trSaved", resourceCulture);
             }
         }
         
@@ -5321,8 +6364,7 @@ namespace Restaurant
         /// <summary>
         ///   Looks up a localized string similar to البيانات.
         /// </summary>
-        internal static string trsectionData
-        {
+        internal static string trSectionData {
             get {
                 return ResourceManager.GetString("trSectionData", resourceCulture);
             }
@@ -5388,6 +6430,15 @@ namespace Restaurant
         internal static string trSelectCategorieHint {
             get {
                 return ResourceManager.GetString("trSelectCategorieHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to اختر بطاقة ائتمان.
+        /// </summary>
+        internal static string trSelectCreditCard {
+            get {
+                return ResourceManager.GetString("trSelectCreditCard", resourceCulture);
             }
         }
         
@@ -5590,6 +6641,15 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to يجب أن يتساوى عدد السيريال مع عدد العناصر.
+        /// </summary>
+        internal static string trSerialNumbersEqualItemsNumber {
+            get {
+                return ResourceManager.GetString("trSerialNumbersEqualItemsNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to الرقم التسلسلي....
         /// </summary>
         internal static string trSerialNumHint {
@@ -5604,6 +6664,15 @@ namespace Restaurant
         internal static string trService {
             get {
                 return ResourceManager.GetString("trService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خدمات.
+        /// </summary>
+        internal static string trServices {
+            get {
+                return ResourceManager.GetString("trServices", resourceCulture);
             }
         }
         
@@ -5626,11 +6695,29 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to الشحن.
+        /// </summary>
+        internal static string trShipping {
+            get {
+                return ResourceManager.GetString("trShipping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to شركات الشحن.
         /// </summary>
         internal static string trShippingCompanies {
             get {
                 return ResourceManager.GetString("trShippingCompanies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عدد شركات الشحن.
+        /// </summary>
+        internal static string trShippingCompaniesCount {
+            get {
+                return ResourceManager.GetString("trShippingCompaniesCount", resourceCulture);
             }
         }
         
@@ -5676,6 +6763,15 @@ namespace Restaurant
         internal static string trShouldInputOneSerialNumberAtLeast {
             get {
                 return ResourceManager.GetString("trShouldInputOneSerialNumberAtLeast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عرض.
+        /// </summary>
+        internal static string trShow {
+            get {
+                return ResourceManager.GetString("trShow", resourceCulture);
             }
         }
         
@@ -5797,6 +6893,15 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مخزون.
+        /// </summary>
+        internal static string trStock {
+            get {
+                return ResourceManager.GetString("trStock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to جرد.
         /// </summary>
         internal static string trStocktaking {
@@ -5847,6 +6952,15 @@ namespace Restaurant
         internal static string trStorageCostHent {
             get {
                 return ResourceManager.GetString("trStorageCostHent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تكلفة التخزين باليوم.
+        /// </summary>
+        internal static string trStorageCostPerDay {
+            get {
+                return ResourceManager.GetString("trStorageCostPerDay", resourceCulture);
             }
         }
         
@@ -5919,6 +7033,24 @@ namespace Restaurant
         internal static string trStores {
             get {
                 return ResourceManager.GetString("trStores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عدد المخازن.
+        /// </summary>
+        internal static string trStoresCount {
+            get {
+                return ResourceManager.GetString("trStoresCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to إرسال.
+        /// </summary>
+        internal static string trSubmit {
+            get {
+                return ResourceManager.GetString("trSubmit", resourceCulture);
             }
         }
         
@@ -6049,11 +7181,47 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to الباقي.
+        /// </summary>
+        internal static string trTheRemine {
+            get {
+                return ResourceManager.GetString("trTheRemine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to الباقي.
+        /// </summary>
+        internal static string trTheRest {
+            get {
+                return ResourceManager.GetString("trTheRest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to حدث خطأ أثناء تحميل الصورة.
         /// </summary>
         internal static string trThereWasAnErrorLoadingTheImage {
             get {
                 return ResourceManager.GetString("trThereWasAnErrorLoadingTheImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to الخدمة.
+        /// </summary>
+        internal static string trTheService {
+            get {
+                return ResourceManager.GetString("trTheService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to الخدمات.
+        /// </summary>
+        internal static string trTheServices {
+            get {
+                return ResourceManager.GetString("trTheServices", resourceCulture);
             }
         }
         
@@ -6126,6 +7294,33 @@ namespace Restaurant
         internal static string trTotalNet {
             get {
                 return ResourceManager.GetString("trTotalNet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to إجمالي المشتريات.
+        /// </summary>
+        internal static string trTotalPurchases {
+            get {
+                return ResourceManager.GetString("trTotalPurchases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to إجمالي المرتجع.
+        /// </summary>
+        internal static string trTotalReturn {
+            get {
+                return ResourceManager.GetString("trTotalReturn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to إجمالي المبيعات.
+        /// </summary>
+        internal static string trTotalSales {
+            get {
+                return ResourceManager.GetString("trTotalSales", resourceCulture);
             }
         }
         
@@ -6346,6 +7541,24 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to غير معروف.
+        /// </summary>
+        internal static string trUnKnown {
+            get {
+                return ResourceManager.GetString("trUnKnown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to إلغاء الحجز.
+        /// </summary>
+        internal static string trUnlock {
+            get {
+                return ResourceManager.GetString("trUnlock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to إلغاء اختيار الكل.
         /// </summary>
         internal static string trUnSelectAllItems {
@@ -6459,6 +7672,15 @@ namespace Restaurant
         internal static string trUsers {
             get {
                 return ResourceManager.GetString("trUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عدد المستخدمين.
+        /// </summary>
+        internal static string trUsersCount {
+            get {
+                return ResourceManager.GetString("trUsersCount", resourceCulture);
             }
         }
         
@@ -6625,6 +7847,24 @@ namespace Restaurant
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to عدد الموردين.
+        /// </summary>
+        internal static string trVendorsCount {
+            get {
+                return ResourceManager.GetString("trVendorsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عرض.
+        /// </summary>
+        internal static string trView {
+            get {
+                return ResourceManager.GetString("trView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to العرض على شكل قائمة.
         /// </summary>
         internal static string trViewGrid {
@@ -6639,6 +7879,24 @@ namespace Restaurant
         internal static string trViewItems {
             get {
                 return ResourceManager.GetString("trViewItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vip.
+        /// </summary>
+        internal static string trVip {
+            get {
+                return ResourceManager.GetString("trVip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to سند.
+        /// </summary>
+        internal static string trVoucher {
+            get {
+                return ResourceManager.GetString("trVoucher", resourceCulture);
             }
         }
         
@@ -6774,6 +8032,15 @@ namespace Restaurant
         internal static string trYHint {
             get {
                 return ResourceManager.GetString("trYHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to لقد تجاوزت الحد.
+        /// </summary>
+        internal static string trYouExceedLimit {
+            get {
+                return ResourceManager.GetString("trYouExceedLimit", resourceCulture);
             }
         }
         

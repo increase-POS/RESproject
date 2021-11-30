@@ -546,9 +546,6 @@
   <data name="trPopAdd" xml:space="preserve">
     <value>Added success</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="trPopAddValidate" xml:space="preserve">
     <value>It is not possible to add without the code and name and mobile number</value>
   </data>
@@ -601,7 +598,7 @@
     <value>Cash</value>
   </data>
   <data name="trCreditCard" xml:space="preserve">
-    <value>Card</value>
+    <value>Credit Card</value>
   </data>
   <data name="trDeservedDateHint" xml:space="preserve">
     <value> Deserved Date...</value>
@@ -636,7 +633,7 @@
   <data name="trItem" xml:space="preserve">
     <value>Item</value>
   </data>
-  <data name="trNum" xml:space="preserve">
+  <data name="Num :" xml:space="preserve">
     <value>Num</value>
   </data>
   <data name="trPaidHint" xml:space="preserve">
@@ -685,7 +682,7 @@
     <value>Delivery...</value>
   </data>
   <data name="trCount" xml:space="preserve">
-    <value>Recordes Count</value>
+    <value>Count</value>
   </data>
   <data name="trCoupon" xml:space="preserve">
     <value>Coupon</value>
@@ -931,10 +928,10 @@
     <value>Bank...</value>
   </data>
   <data name="trCashHint" xml:space="preserve">
-    <value>Ammount...</value>
+    <value>Amount...</value>
   </data>
   <data name="trCashTooltip" xml:space="preserve">
-    <value>Ammount</value>
+    <value>Amount</value>
   </data>
   <data name="trDeposit" xml:space="preserve">
     <value>Deposit</value>
@@ -988,7 +985,7 @@
     <value>Document Type...</value>
   </data>
   <data name="trEmptyCashToolTip" xml:space="preserve">
-    <value>Ammount can not be empty</value>
+    <value>Amount can not be empty</value>
   </data>
   <data name="trEmptyDepositNumberToolTip" xml:space="preserve">
     <value>Deposit/pull number can not be empty</value>
@@ -1009,10 +1006,10 @@
     <value>User can not be empty</value>
   </data>
   <data name="trFromPos" xml:space="preserve">
-    <value>Pull Pos</value>
+    <value>Pull POS</value>
   </data>
   <data name="trFromPosHint" xml:space="preserve">
-    <value>From Pos...</value>
+    <value>From POS</value>
   </data>
   <data name="trImage" xml:space="preserve">
     <value>Image</value>
@@ -1027,10 +1024,10 @@
     <value>Recepient</value>
   </data>
   <data name="trToPos" xml:space="preserve">
-    <value>Deposit Pos</value>
+    <value>Deposit POS</value>
   </data>
   <data name="trToPosHint" xml:space="preserve">
-    <value>To Pos...</value>
+    <value>To POS...</value>
   </data>
   <data name="trTransaferDetails" xml:space="preserve">
     <value>Transafer Details</value>
@@ -1039,7 +1036,7 @@
     <value>Confirmed</value>
   </data>
   <data name="trPosTooltip" xml:space="preserve">
-    <value>Pos</value>
+    <value>POS</value>
   </data>
   <data name="trStateHint" xml:space="preserve">
     <value>State...</value>
@@ -1078,7 +1075,7 @@
     <value>Quantity can not be exceeded</value>
   </data>
   <data name="trErrorSamePos" xml:space="preserve">
-    <value>It is not possible to pull from the same pos</value>
+    <value>It is not possible to pull from the same POS</value>
   </data>
   <data name="trBankAccounts" xml:space="preserve">
     <value>Bank Accounts</value>
@@ -1234,7 +1231,7 @@
     <value>Add Range</value>
   </data>
   <data name="trLocation" xml:space="preserve">
-    <value>Storage Locations</value>
+    <value>Location</value>
   </data>
   <data name="trSection" xml:space="preserve">
     <value>Section</value>
@@ -1258,7 +1255,7 @@
     <value>Received</value>
   </data>
   <data name="trPayVocher" xml:space="preserve">
-    <value>Pay Voucher</value>
+    <value>Payment Voucher</value>
   </data>
   <data name="trBranch/Store" xml:space="preserve">
     <value>Branch/Store</value>
@@ -1477,10 +1474,10 @@
     <value>Sales Return Draft</value>
   </data>
   <data name="trSalesReturnInvoice" xml:space="preserve">
-    <value>Sales ReturnI</value>
+    <value>Sales Return</value>
   </data>
   <data name="trComInfo" xml:space="preserve">
-    <value>Company Informations</value>
+    <value>Company Info</value>
   </data>
   <data name="trDeliveryCost" xml:space="preserve">
     <value>Delivery cost</value>
@@ -1567,7 +1564,7 @@
     <value>SMS</value>
   </data>
   <data name="trArabic" xml:space="preserve">
-    <value>Arabic</value>
+    <value>العربية</value>
   </data>
   <data name="trEnglish" xml:space="preserve">
     <value>English</value>
@@ -1755,9 +1752,6 @@
   <data name="trPurchaseOrdersBill" xml:space="preserve">
     <value>Purchase Orders</value>
   </data>
-  <data name="String2" xml:space="preserve">
-    <value />
-  </data>
   <data name="trProcessNumHint" xml:space="preserve">
     <value>Process Number...</value>
   </data>
@@ -1801,7 +1795,7 @@
     <value>Cannot delete the main branch</value>
   </data>
   <data name="trCannotDeleteTheMainPos" xml:space="preserve">
-    <value>Cannot delete the main Pos</value>
+    <value>Cannot delete the main POS</value>
   </data>
   <data name="trCard" xml:space="preserve">
     <value>Cards</value>
@@ -1816,7 +1810,7 @@
     <value>Subscriptions</value>
   </data>
   <data name="trZeroAmmount" xml:space="preserve">
-    <value>Ammount cann't be zero</value>
+    <value>Amount cann't be zero</value>
   </data>
   <data name="trInvoiceDate" xml:space="preserve">
     <value>Invoice Date</value>
@@ -1904,13 +1898,10 @@ Please add Email in setting</value>
     <value>Shortages</value>
   </data>
   <data name="trCredit" xml:space="preserve">
-    <value>Credit</value>
+    <value>On Credit</value>
   </data>
   <data name="trDepositor" xml:space="preserve">
     <value>Depositor</value>
-  </data>
-  <data name="String3" xml:space="preserve">
-    <value />
   </data>
   <data name="trPurchaceOrder" xml:space="preserve">
     <value>Purchace Order</value>
@@ -1946,7 +1937,7 @@ Please add Email in setting</value>
     <value>Pos cann't be empty</value>
   </data>
   <data name="trDateForm" xml:space="preserve">
-    <value>Date form</value>
+    <value>Date state</value>
   </data>
   <data name="trEmptyDateFormat" xml:space="preserve">
     <value>Date format cann't be empty</value>
@@ -2054,7 +2045,7 @@ Please add Email in setting</value>
     <value>Send email</value>
   </data>
   <data name="trStore/Branch" xml:space="preserve">
-    <value>Stroe/Branch</value>
+    <value>Store/Branch</value>
   </data>
   <data name="trStore/BranchHint" xml:space="preserve">
     <value>Stroe/Branch...</value>
@@ -2123,7 +2114,7 @@ Please add Email in setting</value>
     <value>Description</value>
   </data>
   <data name="trFromToPosHint" xml:space="preserve">
-    <value>From pos , To pos , ...</value>
+    <value>From POS, To POS, ...</value>
   </data>
   <data name="trOneDeposit" xml:space="preserve">
     <value>Deposit</value>
@@ -2192,7 +2183,7 @@ Please add Email in setting</value>
     <value>lack of quantity</value>
   </data>
   <data name="trExportAlertContent" xml:space="preserve">
-    <value>trExportAlertContent</value>
+    <value>Export order waiting to confirm</value>
   </data>
   <data name="trExportAlertTilte" xml:space="preserve">
     <value>Export Order</value>
@@ -2213,7 +2204,7 @@ Please add Email in setting</value>
     <value>Month count ...</value>
   </data>
   <data name="trSalesOrderAlertContent" xml:space="preserve">
-    <value>trSalesOrderAlertContent</value>
+    <value>branch have receved order</value>
   </data>
   <data name="trSalesOrderAlertTilte" xml:space="preserve">
     <value>Sales Order</value>
@@ -2327,7 +2318,7 @@ Please add Email in setting</value>
     <value>Can not send draft invoice</value>
   </data>
   <data name="trAccuracy" xml:space="preserve">
-    <value>Accuracy of numbers</value>
+    <value>Decimals</value>
   </data>
   <data name="trErrorMaxInvToolTip" xml:space="preserve">
     <value>Coupon cannot be used, the total is more than the maximum allowed</value>
@@ -2383,6 +2374,9 @@ Please add Email in setting</value>
   <data name="trMustBeMoreThanZero" xml:space="preserve">
     <value>The count must be more than zero</value>
   </data>
+  <data name="trEmptyAccuracy" xml:space="preserve">
+    <value>Accuracy of numbers cann't be empty</value>
+  </data>
   <data name="trIsRequired" xml:space="preserve">
     <value>is required</value>
   </data>
@@ -2401,16 +2395,418 @@ Please add Email in setting</value>
   <data name="trVip" xml:space="preserve">
     <value>Vip</value>
   </data>
-  <data name="trAgents" xml:space="preserve">
-    <value>Agents</value>
+  <data name="trExportDraft" xml:space="preserve">
+    <value>Export Draft</value>
   </data>
-  <data name="trApplications" xml:space="preserve">
-    <value>Applications</value>
+  <data name="trExportOrder" xml:space="preserve">
+    <value>Export Order</value>
   </data>
-  <data name="trSerials" xml:space="preserve">
-    <value>Serials</value>
+  <data name="trImportDraft" xml:space="preserve">
+    <value>Import Draft</value>
   </data>
-  <data name="trUserPackage" xml:space="preserve">
-    <value>User Package</value>
+  <data name="trImportOrder" xml:space="preserve">
+    <value>Import Order</value>
+  </data>
+  <data name="trNext" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="trPrevious" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="trUnlock" xml:space="preserve">
+    <value>Unlock</value>
+  </data>
+  <data name="trFreeZone" xml:space="preserve">
+    <value>Free Zone</value>
+  </data>
+  <data name="trOrderNum" xml:space="preserve">
+    <value>Order Num</value>
+  </data>
+  <data name="trReserved" xml:space="preserve">
+    <value>Reserved</value>
+  </data>
+  <data name="trShipping" xml:space="preserve">
+    <value>Shipping</value>
+  </data>
+  <data name="trItemsImport/Export" xml:space="preserve">
+    <value>Export/Import Items</value>
+  </data>
+  <data name="trReceiptOfPurchasesBill" xml:space="preserve">
+    <value>Receipt of Purchases Bill</value>
+  </data>
+  <data name="trInv" xml:space="preserve">
+    <value>Invoice</value>
+  </data>
+  <data name="trArchived" xml:space="preserve">
+    <value>Archived</value>
+  </data>
+  <data name="trSaved" xml:space="preserve">
+    <value>Saved</value>
+  </data>
+  <data name="trBond" xml:space="preserve">
+    <value>Bond</value>
+  </data>
+  <data name="trNum:" xml:space="preserve">
+    <value>Num</value>
+  </data>
+  <data name="trPaymentReceipt" xml:space="preserve">
+    <value>Payment receipt</value>
+  </data>
+  <data name="trReceipt" xml:space="preserve">
+    <value>Receipt</value>
+  </data>
+  <data name="trSubmit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="trBuy" xml:space="preserve">
+    <value>Buy</value>
+  </data>
+  <data name="trNetSales" xml:space="preserve">
+    <value>Net Sales</value>
+  </data>
+  <data name="trTotalReturn" xml:space="preserve">
+    <value>Total Return</value>
+  </data>
+  <data name="trTotalSales" xml:space="preserve">
+    <value>Total Sales</value>
+  </data>
+  <data name="tr_Sales" xml:space="preserve">
+    <value>Sales</value>
+  </data>
+  <data name="trNum" xml:space="preserve">
+    <value>Num</value>
+  </data>
+  <data name="trLocationt" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="trDaily" xml:space="preserve">
+    <value>Daily</value>
+  </data>
+  <data name="trPrintBarcode" xml:space="preserve">
+    <value>Print Barcode</value>
+  </data>
+  <data name="trSerialNumbersEqualItemsNumber" xml:space="preserve">
+    <value>The number of serials must be equal to the number of elements</value>
+  </data>
+  <data name="trNetPurchases" xml:space="preserve">
+    <value>Net Purchases</value>
+  </data>
+  <data name="trTotalPurchases" xml:space="preserve">
+    <value>Total Purchases</value>
+  </data>
+  <data name="tr_Purchases" xml:space="preserve">
+    <value>Purchases</value>
+  </data>
+  <data name="trDestructives" xml:space="preserve">
+    <value>Destructives</value>
+  </data>
+  <data name="trInitializeShortage" xml:space="preserve">
+    <value>Initialize Shortage</value>
+  </data>
+  <data name="trView" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="trGroups" xml:space="preserve">
+    <value>Groups</value>
+  </data>
+  <data name="trOthers" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="trPermissionsGroup" xml:space="preserve">
+    <value>Permissions Group</value>
+  </data>
+  <data name="trShow" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="tr_Customer" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="tr_Vendor" xml:space="preserve">
+    <value>Vendor</value>
+  </data>
+  <data name="trBestSeller" xml:space="preserve">
+    <value>Best Seller</value>
+  </data>
+  <data name="trBranch&amp;Store" xml:space="preserve">
+    <value>Branch &amp; Store</value>
+  </data>
+  <data name="trDailyPurchase" xml:space="preserve">
+    <value>Daily Purchase</value>
+  </data>
+  <data name="trDailySales" xml:space="preserve">
+    <value>Daily Sales</value>
+  </data>
+  <data name="trPurchase&amp;Sales" xml:space="preserve">
+    <value>Purchase &amp; Sales</value>
+  </data>
+  <data name="trDay" xml:space="preserve">
+    <value>Day</value>
+  </data>
+  <data name="trDays" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="trOnline" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="trFilterInvoicesBy" xml:space="preserve">
+    <value>Filter invoices by</value>
+  </data>
+  <data name="trItemWithNoCount" xml:space="preserve">
+    <value>There is an item with no count</value>
+  </data>
+  <data name="trBanksCount" xml:space="preserve">
+    <value>Banks count</value>
+  </data>
+  <data name="trBondesCount" xml:space="preserve">
+    <value>Bondes count</value>
+  </data>
+  <data name="trBranchesCount" xml:space="preserve">
+    <value>BranchesCount</value>
+  </data>
+  <data name="trCardsCount" xml:space="preserve">
+    <value>credit cards count</value>
+  </data>
+  <data name="trCashtransferCount" xml:space="preserve">
+    <value>Cashtransfers count</value>
+  </data>
+  <data name="trCustomersCount" xml:space="preserve">
+    <value>Customers count</value>
+  </data>
+  <data name="trOrdersCount" xml:space="preserve">
+    <value>Orders count</value>
+  </data>
+  <data name="trPosCount" xml:space="preserve">
+    <value>POScount</value>
+  </data>
+  <data name="trShippingCompaniesCount" xml:space="preserve">
+    <value>Shipping companies count</value>
+  </data>
+  <data name="trStoresCount" xml:space="preserve">
+    <value>Stores count</value>
+  </data>
+  <data name="trUsersCount" xml:space="preserve">
+    <value>Users count</value>
+  </data>
+  <data name="trVendorsCount" xml:space="preserve">
+    <value>Vendors count</value>
+  </data>
+  <data name="trCollect" xml:space="preserve">
+    <value>Collect</value>
+  </data>
+  <data name="trExternal" xml:space="preserve">
+    <value>External</value>
+  </data>
+  <data name="trInternal" xml:space="preserve">
+    <value>Internal</value>
+  </data>
+  <data name="trOperator" xml:space="preserve">
+    <value>Operator</value>
+  </data>
+  <data name="trPromotion" xml:space="preserve">
+    <value>Promotion</value>
+  </data>
+  <data name="trStock" xml:space="preserve">
+    <value>Stock</value>
+  </data>
+  <data name="trDepositeNum" xml:space="preserve">
+    <value>Deposit no.</value>
+  </data>
+  <data name="trRecieptNum" xml:space="preserve">
+    <value>Reciept no.</value>
+  </data>
+  <data name="trVoucher" xml:space="preserve">
+    <value>Voucher</value>
+  </data>
+  <data name="tr_Branch" xml:space="preserve">
+    <value>Branch</value>
+  </data>
+  <data name="tr_Store" xml:space="preserve">
+    <value>Store</value>
+  </data>
+  <data name="trCashPaid" xml:space="preserve">
+    <value>Cash Paid</value>
+  </data>
+  <data name="trTheRest" xml:space="preserve">
+    <value>The Rest</value>
+  </data>
+  <data name="trPosHint" xml:space="preserve">
+    <value>POS...</value>
+  </data>
+  <data name="trProfits" xml:space="preserve">
+    <value>Profits</value>
+  </data>
+  <data name="trAdministrativePullHint" xml:space="preserve">
+    <value>Administrative Pull...</value>
+  </data>
+  <data name="trGeneralExpensesHint" xml:space="preserve">
+    <value>General Expenses...</value>
+  </data>
+  <data name="trSalaryHint" xml:space="preserve">
+    <value>Salary...</value>
+  </data>
+  <data name="trBranchPosHint" xml:space="preserve">
+    <value>Branch, POS,...</value>
+  </data>
+  <data name="trCashBalance" xml:space="preserve">
+    <value>Cash Balance</value>
+  </data>
+  <data name="trInvoiceItemHint" xml:space="preserve">
+    <value>Invoice, Item,...</value>
+  </data>
+  <data name="trCashCustomer" xml:space="preserve">
+    <value>Cash Customer</value>
+  </data>
+  <data name="trUnKnown" xml:space="preserve">
+    <value>UnKown</value>
+  </data>
+  <data name="trQTR" xml:space="preserve">
+    <value>QTY</value>
+  </data>
+  <data name="trAnotherPaymentMethods" xml:space="preserve">
+    <value>payment methods</value>
+  </data>
+  <data name="trErrorWrongUrl" xml:space="preserve">
+    <value>wrong Url</value>
+  </data>
+  <data name="trInputProcessNumber" xml:space="preserve">
+    <value>Input process number</value>
+  </data>
+  <data name="trMultiplePayment" xml:space="preserve">
+    <value>Multiple payment</value>
+  </data>
+  <data name="trPayment1" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="trPaymentMethods" xml:space="preserve">
+    <value>Payment Methods</value>
+  </data>
+  <data name="trErrorWrongActivation" xml:space="preserve">
+    <value>Wrong activation key</value>
+  </data>
+  <data name="trAmountGreaterInvoiceValue" xml:space="preserve">
+    <value>It is not possible to pay an amount greater than the   invoice value</value>
+  </data>
+  <data name="trAmountPaidEqualInvoiceValue" xml:space="preserve">
+    <value>amount paid must be equal to the invoice value</value>
+  </data>
+  <data name="trBackup" xml:space="preserve">
+    <value>Backup</value>
+  </data>
+  <data name="trRestore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="trBackupDoneSuccessfuly" xml:space="preserve">
+    <value>Backup done successfuly</value>
+  </data>
+  <data name="trBackupNotComplete" xml:space="preserve">
+    <value>Error .Backup not complete</value>
+  </data>
+  <data name="trRestoreDoneSuccessfuly" xml:space="preserve">
+    <value>Restore done successfuly</value>
+  </data>
+  <data name="trRestoreNotComplete" xml:space="preserve">
+    <value>Error, Restore not complete</value>
+  </data>
+  <data name="trAvailable" xml:space="preserve">
+    <value>Available</value>
+  </data>
+  <data name="trReservation" xml:space="preserve">
+    <value>Reservation</value>
+  </data>
+  <data name="trContinueProcess?" xml:space="preserve">
+    <value>Do you want to continue process?</value>
+  </data>
+  <data name="trNoConnection" xml:space="preserve">
+    <value>No Connection</value>
+  </data>
+  <data name="trCashType" xml:space="preserve">
+    <value>Cash</value>
+  </data>
+  <data name="trNotReady" xml:space="preserve">
+    <value>Not Ready</value>
+  </data>
+  <data name="trReady" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="trOfferHint" xml:space="preserve">
+    <value>Offer...</value>
+  </data>
+  <data name="trReserve" xml:space="preserve">
+    <value>Reserve</value>
+  </data>
+  <data name="trStorageCostPerDay" xml:space="preserve">
+    <value>Storage Cost Per Day</value>
+  </data>
+  <data name="trErrorsFile" xml:space="preserve">
+    <value>Errors file</value>
+  </data>
+  <data name="trPurchaseCost" xml:space="preserve">
+    <value>Purchase cost</value>
+  </data>
+  <data name="trErrorFileDownload" xml:space="preserve">
+    <value>Error file download</value>
+  </data>
+  <data name="trSelectCreditCard" xml:space="preserve">
+    <value>Select credit card</value>
+  </data>
+  <data name="trTheRemine" xml:space="preserve">
+    <value>The remine</value>
+  </data>
+  <data name="trCost" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="trDefaultPayType" xml:space="preserve">
+    <value>Default pay type</value>
+  </data>
+  <data name="trDirectEntry" xml:space="preserve">
+    <value>Direct Entry</value>
+  </data>
+  <data name="trBarcodeEmpty" xml:space="preserve">
+    <value>Barcode is empty</value>
+  </data>
+  <data name="trBondNotRecieved" xml:space="preserve">
+    <value>Bond is not recieved</value>
+  </data>
+  <data name="trYouExceedLimit" xml:space="preserve">
+    <value>You have exceeded the limit</value>
+  </data>
+  <data name="trEmptyItemCost" xml:space="preserve">
+    <value>Item cost can not be empty</value>
+  </data>
+  <data name="trItemCost" xml:space="preserve">
+    <value>Item cost</value>
+  </data>
+  <data name="trEmptyPrintCount" xml:space="preserve">
+    <value>Number of copies can not be empty</value>
+  </data>
+  <data name="trPrintCount" xml:space="preserve">
+    <value>Prints count</value>
+  </data>
+  <data name="trBondRecieved" xml:space="preserve">
+    <value>Bond is received</value>
+  </data>
+  <data name="trOf" xml:space="preserve">
+    <value> Of </value>
+  </data>
+  <data name="trTheService" xml:space="preserve">
+    <value>The Service</value>
+  </data>
+  <data name="trTheServices" xml:space="preserve">
+    <value>The Services</value>
+  </data>
+  <data name="trHaveExpirationDates" xml:space="preserve">
+    <value>Items with an expiration date</value>
+  </data>
+  <data name="trHaveSerialNumbers" xml:space="preserve">
+    <value>Items with serial number</value>
+  </data>
+  <data name="trNormals" xml:space="preserve">
+    <value>Normal Items</value>
+  </data>
+  <data name="trPackages" xml:space="preserve">
+    <value>Packages</value>
+  </data>
+  <data name="trServices" xml:space="preserve">
+    <value>Services</value>
   </data>
 </root>

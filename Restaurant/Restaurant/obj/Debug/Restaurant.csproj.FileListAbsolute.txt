@@ -330,3 +330,5 @@ E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_logIn.g.cs
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_logIn.baml
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\Restaurant.ar_file.resources
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\Restaurant.en_file.resources
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\delivery\uc_delivery.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\delivery\uc_delivery.baml

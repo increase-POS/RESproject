@@ -589,7 +589,7 @@
     <value>مبلغ</value>
   </data>
   <data name="trCreditCard" xml:space="preserve">
-    <value>بطاقة</value>
+    <value>بطاقة إئتمان</value>
   </data>
   <data name="trDeservedDateHint" xml:space="preserve">
     <value>تاريخ الإستحقاق...</value>
@@ -673,7 +673,7 @@
     <value>التوصيل...</value>
   </data>
   <data name="trCount" xml:space="preserve">
-    <value>عدد السجلات</value>
+    <value>العدد</value>
   </data>
   <data name="trCoupon" xml:space="preserve">
     <value>الكوبون</value>
@@ -1219,7 +1219,7 @@
     <value>القسم</value>
   </data>
   <data name="trBonds" xml:space="preserve">
-    <value>السندات المالية</value>
+    <value>السندات</value>
   </data>
   <data name="trErrorEmptyDepositFromToolTip" xml:space="preserve">
     <value>المودع لا يمكن أن يكون فارغ</value>
@@ -1549,7 +1549,7 @@
     <value>العربية</value>
   </data>
   <data name="trEnglish" xml:space="preserve">
-    <value>الانكليزية</value>
+    <value>English</value>
   </data>
   <data name="trTranseToSameLocation" xml:space="preserve">
     <value>يجب اختيار مكان تخزين جديد للنقل</value>
@@ -1630,7 +1630,7 @@
     <value>المستخدمون المختارون</value>
   </data>
   <data name="trPackage" xml:space="preserve">
-    <value>رزمة</value>
+    <value>الحزمة</value>
   </data>
   <data name="trdontHavePermission" xml:space="preserve">
     <value>ليس لديك صلاحية</value>
@@ -1639,7 +1639,7 @@
     <value>إعدادات</value>
   </data>
   <data name="trPermission" xml:space="preserve">
-    <value>صلاحيات</value>
+    <value>الصلاحية</value>
   </data>
   <data name="trItemType" xml:space="preserve">
     <value>نوع العنصر</value>
@@ -1879,17 +1879,11 @@
   <data name="trShortage" xml:space="preserve">
     <value>نقص</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="trCredit" xml:space="preserve">
     <value>رصيد</value>
   </data>
   <data name="trDepositor" xml:space="preserve">
     <value>المودع</value>
-  </data>
-  <data name="String2" xml:space="preserve">
-    <value />
   </data>
   <data name="trPurchaceOrder" xml:space="preserve">
     <value>طلبية شراء</value>
@@ -2171,7 +2165,7 @@
     <value>نقص الكمية</value>
   </data>
   <data name="trExportAlertContent" xml:space="preserve">
-    <value>trExportAlertContent</value>
+    <value>طلب تصدير مواد بانتظار الموافقة</value>
   </data>
   <data name="trExportAlertTilte" xml:space="preserve">
     <value>طلب تصدير</value>
@@ -2192,7 +2186,7 @@
     <value>عدد الأشهر ...</value>
   </data>
   <data name="trSalesOrderAlertContent" xml:space="preserve">
-    <value>trSalesOrderAlertContent</value>
+    <value>تم تحويل طلب للفرع</value>
   </data>
   <data name="trSalesOrderAlertTilte" xml:space="preserve">
     <value>طلبية مبيعات</value>
@@ -2306,7 +2300,7 @@
     <value>لا يمكن ارسال مسودة فاتورة</value>
   </data>
   <data name="trAccuracy" xml:space="preserve">
-    <value>الأرقام بعد الفاصلة</value>
+    <value>الأرقام العشرية</value>
   </data>
   <data name="trErrorMaxInvToolTip" xml:space="preserve">
     <value>لا يمكن استخدام الكوبون، المجموع أكبر من الحد الأعلى المسموح</value>
@@ -2365,6 +2359,9 @@
   <data name="trMustBeMoreThanZero" xml:space="preserve">
     <value>العدد يجب أن يكون أكبر من الصفر</value>
   </data>
+  <data name="trEmptyAccuracy" xml:space="preserve">
+    <value>عدد الأرقام بعد الفاصلة لا يمكن أن يكون فارغ</value>
+  </data>
   <data name="trIsRequired" xml:space="preserve">
     <value>هذا الحقل إجباري</value>
   </data>
@@ -2383,16 +2380,418 @@
   <data name="trVip" xml:space="preserve">
     <value>Vip</value>
   </data>
-  <data name="trAgents" xml:space="preserve">
-    <value>الوكلاء</value>
+  <data name="trExportDraft" xml:space="preserve">
+    <value>مسودة تصدير</value>
   </data>
-  <data name="trApplications" xml:space="preserve">
-    <value>التطبيقات</value>
+  <data name="trExportOrder" xml:space="preserve">
+    <value>طلب تصدير</value>
   </data>
-  <data name="trSerials" xml:space="preserve">
-    <value>الأرقام التسلسلية</value>
+  <data name="trImportDraft" xml:space="preserve">
+    <value>مسودة استيراد</value>
   </data>
-  <data name="trUserPackage" xml:space="preserve">
-    <value>حزمة المستخدم</value>
+  <data name="trImportOrder" xml:space="preserve">
+    <value>طلب استيراد</value>
+  </data>
+  <data name="trNext" xml:space="preserve">
+    <value>التالي</value>
+  </data>
+  <data name="trPrevious" xml:space="preserve">
+    <value>السابق</value>
+  </data>
+  <data name="trLocationt" xml:space="preserve">
+    <value>مكان التخزين</value>
+  </data>
+  <data name="trUnlock" xml:space="preserve">
+    <value>إلغاء الحجز</value>
+  </data>
+  <data name="trFreeZone" xml:space="preserve">
+    <value>المنطقة الحرة</value>
+  </data>
+  <data name="trOrderNum" xml:space="preserve">
+    <value>رقم الطلبية</value>
+  </data>
+  <data name="trReserved" xml:space="preserve">
+    <value>محجوز</value>
+  </data>
+  <data name="trShipping" xml:space="preserve">
+    <value>الشحن</value>
+  </data>
+  <data name="trItemsImport/Export" xml:space="preserve">
+    <value>تصدير/استيراد العناصر</value>
+  </data>
+  <data name="trReceiptOfPurchasesBill" xml:space="preserve">
+    <value>وصل فاتورة المشتريات</value>
+  </data>
+  <data name="trInv" xml:space="preserve">
+    <value>فاتورة</value>
+  </data>
+  <data name="trArchived" xml:space="preserve">
+    <value>مؤرشفة</value>
+  </data>
+  <data name="trSaved" xml:space="preserve">
+    <value>محفوظة</value>
+  </data>
+  <data name="trBond" xml:space="preserve">
+    <value>وثيقة</value>
+  </data>
+  <data name="trNum:" xml:space="preserve">
+    <value>رقم</value>
+  </data>
+  <data name="trPaymentReceipt" xml:space="preserve">
+    <value>إيصال دفع</value>
+  </data>
+  <data name="trReceipt" xml:space="preserve">
+    <value>إيصال استلام</value>
+  </data>
+  <data name="trSubmit" xml:space="preserve">
+    <value>إرسال</value>
+  </data>
+  <data name="trBuy" xml:space="preserve">
+    <value>شراء</value>
+  </data>
+  <data name="trNetSales" xml:space="preserve">
+    <value>صافي المبيعات</value>
+  </data>
+  <data name="trTotalReturn" xml:space="preserve">
+    <value>إجمالي المرتجع</value>
+  </data>
+  <data name="trTotalSales" xml:space="preserve">
+    <value>إجمالي المبيعات</value>
+  </data>
+  <data name="tr_Sales" xml:space="preserve">
+    <value>مبيعات</value>
+  </data>
+  <data name="trDaily" xml:space="preserve">
+    <value>يومي</value>
+  </data>
+  <data name="trPrintBarcode" xml:space="preserve">
+    <value>طباعة باركود</value>
+  </data>
+  <data name="trSerialNumbersEqualItemsNumber" xml:space="preserve">
+    <value>يجب أن يتساوى عدد السيريال مع عدد العناصر</value>
+  </data>
+  <data name="trNetPurchases" xml:space="preserve">
+    <value>صافي المشتريات</value>
+  </data>
+  <data name="trTotalPurchases" xml:space="preserve">
+    <value>إجمالي المشتريات</value>
+  </data>
+  <data name="tr_Purchases" xml:space="preserve">
+    <value>مشتريات</value>
+  </data>
+  <data name="trDestructives" xml:space="preserve">
+    <value>التوالف</value>
+  </data>
+  <data name="trInitializeShortage" xml:space="preserve">
+    <value>تهيئة النواقص</value>
+  </data>
+  <data name="trView" xml:space="preserve">
+    <value>عرض</value>
+  </data>
+  <data name="trGroups" xml:space="preserve">
+    <value>المجموعات</value>
+  </data>
+  <data name="trOthers" xml:space="preserve">
+    <value>أخرى</value>
+  </data>
+  <data name="trPermissionsGroup" xml:space="preserve">
+    <value>مجموعة الصلاحيات</value>
+  </data>
+  <data name="trShow" xml:space="preserve">
+    <value>عرض</value>
+  </data>
+  <data name="tr_Customer" xml:space="preserve">
+    <value>عميل</value>
+  </data>
+  <data name="tr_Vendor" xml:space="preserve">
+    <value>مورد</value>
+  </data>
+  <data name="trBestSeller" xml:space="preserve">
+    <value>الأكثر مبيعاً</value>
+  </data>
+  <data name="trBranch&amp;Store" xml:space="preserve">
+    <value>المخازن &amp; الفروع</value>
+  </data>
+  <data name="trDailyPurchase" xml:space="preserve">
+    <value>المشتريات اليومية</value>
+  </data>
+  <data name="trDailySales" xml:space="preserve">
+    <value>المبيعات اليومية</value>
+  </data>
+  <data name="trPurchase&amp;Sales" xml:space="preserve">
+    <value>المشتريات &amp; المبيعات</value>
+  </data>
+  <data name="trDay" xml:space="preserve">
+    <value>يوم</value>
+  </data>
+  <data name="trDays" xml:space="preserve">
+    <value>الأيام</value>
+  </data>
+  <data name="trOnline" xml:space="preserve">
+    <value>المتصلين</value>
+  </data>
+  <data name="trFilterInvoicesBy" xml:space="preserve">
+    <value>فلترة الفواتير حسب</value>
+  </data>
+  <data name="trItemWithNoCount" xml:space="preserve">
+    <value>هناك عنصر بدون عدد</value>
+  </data>
+  <data name="trBanksCount" xml:space="preserve">
+    <value>عدد البنوك</value>
+  </data>
+  <data name="trBondesCount" xml:space="preserve">
+    <value>عدد السندات</value>
+  </data>
+  <data name="trBranchesCount" xml:space="preserve">
+    <value>عدد الفروع</value>
+  </data>
+  <data name="trCardsCount" xml:space="preserve">
+    <value>عدد بطاقات الدفع</value>
+  </data>
+  <data name="trCashtransferCount" xml:space="preserve">
+    <value>عدد التحويلات النقدية</value>
+  </data>
+  <data name="trCustomersCount" xml:space="preserve">
+    <value>عدد الزبائن</value>
+  </data>
+  <data name="trOrdersCount" xml:space="preserve">
+    <value>عدد الطلبات</value>
+  </data>
+  <data name="trPosCount" xml:space="preserve">
+    <value>عدد نقاط البيع</value>
+  </data>
+  <data name="trShippingCompaniesCount" xml:space="preserve">
+    <value>عدد شركات الشحن</value>
+  </data>
+  <data name="trStoresCount" xml:space="preserve">
+    <value>عدد المخازن</value>
+  </data>
+  <data name="trUsersCount" xml:space="preserve">
+    <value>عدد المستخدمين</value>
+  </data>
+  <data name="trVendorsCount" xml:space="preserve">
+    <value>عدد الموردين</value>
+  </data>
+  <data name="trCollect" xml:space="preserve">
+    <value>تجميع</value>
+  </data>
+  <data name="trExternal" xml:space="preserve">
+    <value>حركة خارجية</value>
+  </data>
+  <data name="trInternal" xml:space="preserve">
+    <value>حركة داخلية</value>
+  </data>
+  <data name="trOperator" xml:space="preserve">
+    <value>العملية</value>
+  </data>
+  <data name="trPromotion" xml:space="preserve">
+    <value>ترويج</value>
+  </data>
+  <data name="trStock" xml:space="preserve">
+    <value>مخزون</value>
+  </data>
+  <data name="trDepositeNum" xml:space="preserve">
+    <value>رقم الايداع</value>
+  </data>
+  <data name="trRecieptNum" xml:space="preserve">
+    <value>رقم السحب</value>
+  </data>
+  <data name="trVoucher" xml:space="preserve">
+    <value>سند</value>
+  </data>
+  <data name="tr_Branch" xml:space="preserve">
+    <value>فرع</value>
+  </data>
+  <data name="tr_Store" xml:space="preserve">
+    <value>مخزن</value>
+  </data>
+  <data name="trCashPaid" xml:space="preserve">
+    <value>المبلغ المدفوع</value>
+  </data>
+  <data name="trTheRest" xml:space="preserve">
+    <value>الباقي</value>
+  </data>
+  <data name="trPosHint" xml:space="preserve">
+    <value>نقطة البيع ...</value>
+  </data>
+  <data name="trProfits" xml:space="preserve">
+    <value>الربح</value>
+  </data>
+  <data name="trAdministrativePullHint" xml:space="preserve">
+    <value>سحوبات إدارية...</value>
+  </data>
+  <data name="trGeneralExpensesHint" xml:space="preserve">
+    <value>مصروفات إدارية...</value>
+  </data>
+  <data name="trSalaryHint" xml:space="preserve">
+    <value>راتب...</value>
+  </data>
+  <data name="trBranchPosHint" xml:space="preserve">
+    <value>الفرع, نقطة البيع,...</value>
+  </data>
+  <data name="trCashBalance" xml:space="preserve">
+    <value>الرصيد النقدي</value>
+  </data>
+  <data name="trInvoiceItemHint" xml:space="preserve">
+    <value>فاتورة, عنصر,...</value>
+  </data>
+  <data name="trCashCustomer" xml:space="preserve">
+    <value>زبون نقدي</value>
+  </data>
+  <data name="trUnKnown" xml:space="preserve">
+    <value>غير معروف</value>
+  </data>
+  <data name="trQTR" xml:space="preserve">
+    <value>الكمية</value>
+  </data>
+  <data name="trAnotherPaymentMethods" xml:space="preserve">
+    <value>طرق دفع</value>
+  </data>
+  <data name="trErrorWrongUrl" xml:space="preserve">
+    <value>رابط خطأ</value>
+  </data>
+  <data name="trInputProcessNumber" xml:space="preserve">
+    <value>إدخال رقم العملية</value>
+  </data>
+  <data name="trMultiplePayment" xml:space="preserve">
+    <value>دفع متعدد</value>
+  </data>
+  <data name="trPayment1" xml:space="preserve">
+    <value>الدفع</value>
+  </data>
+  <data name="trPaymentMethods" xml:space="preserve">
+    <value>طرق الدفع</value>
+  </data>
+  <data name="trErrorWrongActivation" xml:space="preserve">
+    <value>مفتاح التفعيل خاطئ</value>
+  </data>
+  <data name="trAmountGreaterInvoiceValue" xml:space="preserve">
+    <value>لا يمكن دفع مبلغ اكبر من قيمة الفاتورة</value>
+  </data>
+  <data name="trAmountPaidEqualInvoiceValue" xml:space="preserve">
+    <value>يجب أن يكون المبلغ المدفوع يساوي قيمة الفاتورة</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="trBackup" xml:space="preserve">
+    <value>نسخ احتياطي</value>
+  </data>
+  <data name="trRestore" xml:space="preserve">
+    <value>استعادة نسخة</value>
+  </data>
+  <data name="trBackupDoneSuccessfuly" xml:space="preserve">
+    <value>تم النسخ الاحتياطي بنجاح</value>
+  </data>
+  <data name="trBackupNotComplete" xml:space="preserve">
+    <value>حدث خطأ قبل اتمام عملية النسخ</value>
+  </data>
+  <data name="trRestoreDoneSuccessfuly" xml:space="preserve">
+    <value>تم الاستعادة بنجاح</value>
+  </data>
+  <data name="trRestoreNotComplete" xml:space="preserve">
+    <value>حدث خطأ قبل اتمام عملية الاستعادة</value>
+  </data>
+  <data name="trAvailable" xml:space="preserve">
+    <value>متاح</value>
+  </data>
+  <data name="trReservation" xml:space="preserve">
+    <value>حجز</value>
+  </data>
+  <data name="trContinueProcess?" xml:space="preserve">
+    <value>هل تريد متابعة العملية؟</value>
+  </data>
+  <data name="trNoConnection" xml:space="preserve">
+    <value>لا يوجد اتصال</value>
+  </data>
+  <data name="trCashType" xml:space="preserve">
+    <value>نقدي</value>
+  </data>
+  <data name="trNotReady" xml:space="preserve">
+    <value>غير جاهز</value>
+  </data>
+  <data name="trReady" xml:space="preserve">
+    <value>جاهز</value>
+  </data>
+  <data name="trOfferHint" xml:space="preserve">
+    <value>عرض...</value>
+  </data>
+  <data name="trReserve" xml:space="preserve">
+    <value>حجز</value>
+  </data>
+  <data name="trStorageCostPerDay" xml:space="preserve">
+    <value>تكلفة التخزين باليوم</value>
+  </data>
+  <data name="trErrorsFile" xml:space="preserve">
+    <value>ملف الأخطاء</value>
+  </data>
+  <data name="trPurchaseCost" xml:space="preserve">
+    <value>تكلفة الشراء</value>
+  </data>
+  <data name="trErrorFileDownload" xml:space="preserve">
+    <value>تحميل ملف الأخطاء</value>
+  </data>
+  <data name="trSelectCreditCard" xml:space="preserve">
+    <value>اختر بطاقة ائتمان</value>
+  </data>
+  <data name="trTheRemine" xml:space="preserve">
+    <value>الباقي</value>
+  </data>
+  <data name="trCost" xml:space="preserve">
+    <value>التكلفة</value>
+  </data>
+  <data name="trDefaultPayType" xml:space="preserve">
+    <value>طريقة الدفع الافتراضية</value>
+  </data>
+  <data name="trDirectEntry" xml:space="preserve">
+    <value>إدخال مباشر</value>
+  </data>
+  <data name="trBarcodeEmpty" xml:space="preserve">
+    <value>الباركود فارغ</value>
+  </data>
+  <data name="trBondNotRecieved" xml:space="preserve">
+    <value>السند غير مستلم</value>
+  </data>
+  <data name="trYouExceedLimit" xml:space="preserve">
+    <value>لقد تجاوزت الحد</value>
+  </data>
+  <data name="trEmptyItemCost" xml:space="preserve">
+    <value>كلفة العنصر لا يمكن أن تكون فارغة</value>
+  </data>
+  <data name="trItemCost" xml:space="preserve">
+    <value>كلفة العنصر</value>
+  </data>
+  <data name="trEmptyPrintCount" xml:space="preserve">
+    <value>عدد النسخ لا يمكن أن يكون فارغ</value>
+  </data>
+  <data name="trPrintCount" xml:space="preserve">
+    <value>عدد الطباعات</value>
+  </data>
+  <data name="trBondRecieved" xml:space="preserve">
+    <value>السند مستلم</value>
+  </data>
+  <data name="trOf" xml:space="preserve">
+    <value> من </value>
+  </data>
+  <data name="trTheService" xml:space="preserve">
+    <value>الخدمة</value>
+  </data>
+  <data name="trTheServices" xml:space="preserve">
+    <value>الخدمات</value>
+  </data>
+  <data name="trHaveExpirationDates" xml:space="preserve">
+    <value>أصناف ذات تاريخ انتهاء صلاحية</value>
+  </data>
+  <data name="trHaveSerialNumbers" xml:space="preserve">
+    <value>أصناف ذات رقم تسلسلي</value>
+  </data>
+  <data name="trNormals" xml:space="preserve">
+    <value>أصناف عادية</value>
+  </data>
+  <data name="trPackages" xml:space="preserve">
+    <value>حزم</value>
+  </data>
+  <data name="trServices" xml:space="preserve">
+    <value>خدمات</value>
   </data>
 </root>

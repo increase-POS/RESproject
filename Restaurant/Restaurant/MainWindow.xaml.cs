@@ -38,6 +38,7 @@ using Restaurant.View.storage.storageOperations;
 using Restaurant.View.storage.movementsOperations;
 using Restaurant.View.storage.stocktakingOperations;
 using Restaurant.View.sales.promotion;
+using Restaurant.View.delivery;
 
 namespace Restaurant
 {
@@ -757,9 +758,7 @@ namespace Restaurant
 
 
                 #endregion
-
                 translate();
-
                 #region loading
                 loadingList = new List<keyValueBool>();
                 bool isDone = true;
@@ -836,7 +835,7 @@ namespace Restaurant
                 EventManager.RegisterClassHandler(typeof(System.Windows.Controls.TextBox), System.Windows.Controls.TextBox.GotKeyboardFocusEvent, new RoutedEventHandler(SelectAllText));
 
 
-                SetNotificationsLocation();
+                //SetNotificationsLocation();
 
                 if (sender != null)
                     HelpClass.EndAwait(grid_mainWindow);
@@ -848,49 +847,49 @@ namespace Restaurant
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        public void SetNotificationsLocation()
-        {
-            #region notifications location
-            //Point position = BTN_notifications.PointToScreen(new Point(0d, 0d)),
-            //controlPosition = this.PointToScreen(new Point(0d, 0d));
-            //position.X -= controlPosition.X;
-            //position.Y -= controlPosition.Y;
-            //position.X -= 100;
-            //bdrMain.Margin = new Thickness(0, 70, position.X, 0);
-            #endregion
-            #region notifications location
-            /*
-           Point positionBtnMinimize = BTN_Minimize.PointToScreen(new Point(0d, 0d)),
-           positionBtnUserImage = btn_userImage.PointToScreen(new Point(0d, 0d)),
-           controlPositionBtnMinimize = this.PointToScreen(new Point(0d, 0d)),
-           controlPositionBtnUserImage = this.PointToScreen(new Point(0d, 0d));
-           positionBtnMinimize.X -= controlPositionBtnMinimize.X;
-           positionBtnUserImage.X -= controlPositionBtnUserImage.X;
-           Double position;
-           if (positionBtnMinimize.X > positionBtnUserImage.X)
-           position = positionBtnMinimize.X - positionBtnUserImage.X;
-           else 
-           position =   positionBtnUserImage.X - positionBtnMinimize.X;
-           var thickness = bdrMain.Margin;
-           bdrMain.Margin = new Thickness(0, 70, thickness.Right + position - 25, 0);
-           //if(lang.Equals("en"))
-           //bdrMain.Margin = new Thickness(0, 70, thickness.Right + position - 5 , 0);
-           //else
-           //  bdrMain.Margin = new Thickness(0, 70, thickness.Right + position - 10, 0);
-           */
-            #endregion
-            #region notifications location
-            //Point position = BTN_notifications.PointToScreen(new Point(0d, 0d)),
-            //controlPosition = this.PointToScreen(new Point(0d, 0d));
-            //position.X -= controlPosition.X;
-            //Canvas.SetTop(bdrMain, position.X);
-            ////bdrMain.Margin = new Thickness(0, 70, position.X, 0);
-            #endregion
-            #region notifications location
-            var thickness = bdrMain.Margin;
-            bdrMain.Margin = new Thickness(0, 70, thickness.Right + stp_userName.ActualWidth, 0);
-            #endregion
-        }
+        //public void SetNotificationsLocation()
+        //{
+        //    #region notifications location
+        //    //Point position = BTN_notifications.PointToScreen(new Point(0d, 0d)),
+        //    //controlPosition = this.PointToScreen(new Point(0d, 0d));
+        //    //position.X -= controlPosition.X;
+        //    //position.Y -= controlPosition.Y;
+        //    //position.X -= 100;
+        //    //bdrMain.Margin = new Thickness(0, 70, position.X, 0);
+        //    #endregion
+        //    #region notifications location
+        //    /*
+        //   Point positionBtnMinimize = BTN_Minimize.PointToScreen(new Point(0d, 0d)),
+        //   positionBtnUserImage = btn_userImage.PointToScreen(new Point(0d, 0d)),
+        //   controlPositionBtnMinimize = this.PointToScreen(new Point(0d, 0d)),
+        //   controlPositionBtnUserImage = this.PointToScreen(new Point(0d, 0d));
+        //   positionBtnMinimize.X -= controlPositionBtnMinimize.X;
+        //   positionBtnUserImage.X -= controlPositionBtnUserImage.X;
+        //   Double position;
+        //   if (positionBtnMinimize.X > positionBtnUserImage.X)
+        //   position = positionBtnMinimize.X - positionBtnUserImage.X;
+        //   else 
+        //   position =   positionBtnUserImage.X - positionBtnMinimize.X;
+        //   var thickness = bdrMain.Margin;
+        //   bdrMain.Margin = new Thickness(0, 70, thickness.Right + position - 25, 0);
+        //   //if(lang.Equals("en"))
+        //   //bdrMain.Margin = new Thickness(0, 70, thickness.Right + position - 5 , 0);
+        //   //else
+        //   //  bdrMain.Margin = new Thickness(0, 70, thickness.Right + position - 10, 0);
+        //   */
+        //    #endregion
+        //    #region notifications location
+        //    //Point position = BTN_notifications.PointToScreen(new Point(0d, 0d)),
+        //    //controlPosition = this.PointToScreen(new Point(0d, 0d));
+        //    //position.X -= controlPosition.X;
+        //    //Canvas.SetTop(bdrMain, position.X);
+        //    ////bdrMain.Margin = new Thickness(0, 70, position.X, 0);
+        //    #endregion
+        //    #region notifications location
+        //    var thickness = bdrMain.Margin;
+        //    bdrMain.Margin = new Thickness(0, 70, thickness.Right + sp_userName.ActualWidth, 0);
+        //    #endregion
+        //}
         void SelectAllText(object sender, RoutedEventArgs e)
         {
             var textBox = sender as System.Windows.Controls.TextBox;
@@ -1190,7 +1189,8 @@ namespace Restaurant
             txt_storage.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FEDFB7"));
             txt_purchases.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FEDFB7"));
             txt_sales.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FEDFB7"));
-            txt_sales.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FEDFB7"));
+            txt_kitchen.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FEDFB7"));
+            txt_delivery.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FEDFB7"));
             txt_accounts.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FEDFB7"));
             txt_reports.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FEDFB7"));
             txt_sectiondata.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FEDFB7"));
@@ -1205,6 +1205,8 @@ namespace Restaurant
             path_iconReports.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FEDFB7"));
             path_iconAccounts.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FEDFB7"));
             path_iconSales.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FEDFB7"));
+            path_iconKitchen.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FEDFB7"));
+            path_iconDelivery.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FEDFB7"));
             path_iconPurchases.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FEDFB7"));
             path_iconStorage.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FEDFB7"));
             path_iconCatalog.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FEDFB7"));
@@ -1295,6 +1297,7 @@ namespace Restaurant
             path_openHome.Visibility = Visibility.Collapsed;
             path_openAccounts.Visibility = Visibility.Collapsed;
             path_openKitchen.Visibility = Visibility.Collapsed;
+            path_openDelivery.Visibility = Visibility.Collapsed;
 
         }
         void FN_pathVisible(Rectangle p)
@@ -1466,7 +1469,22 @@ namespace Restaurant
         }
         private void Btn_delivery_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                colorTextRefreash(txt_delivery);
+                FN_pathVisible(path_openDelivery);
+                fn_ColorIconRefreash(path_iconDelivery);
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_delivery.Instance);
 
+                isHome = true;
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private void Btn_accounts_Click(object sender, RoutedEventArgs e)
         {
@@ -1657,6 +1675,7 @@ namespace Restaurant
             }
         }
         */
+        #region Main Path
         public void initializationMainTrack(string tag)
         {
             //sp_mainPath
@@ -1937,226 +1956,8 @@ namespace Restaurant
 
             }
         }
-        /*
-        public void initializationMainTrack(string tag, int level)
-        {
-            if (level == 0)
-            {
-                txt_secondLevelTrack.Visibility = Visibility.Collapsed;
-                txt_thirdLevelTrack.Visibility = Visibility.Collapsed;
-                #region  mainWindow
-                if (tag == "home")
-                    txt_firstLevelTrack.Text = "> " + resourcemanager.GetString("trHome");
-                else if (tag == "catalog")
-                    txt_firstLevelTrack.Text = "> " + resourcemanager.GetString("trCatalog");
-                else if (tag == "storage")
-                    txt_firstLevelTrack.Text = "> " + resourcemanager.GetString("trStore");
-                else if (tag == "purchase")
-                    txt_firstLevelTrack.Text = "> " + resourcemanager.GetString("trPurchases");
-                else if (tag == "sales")
-                    txt_firstLevelTrack.Text = "> " + resourcemanager.GetString("trSales");
-                else if (tag == "accounts")
-                    txt_firstLevelTrack.Text = "> " + resourcemanager.GetString("trAccounting");
-                else if (tag == "reports")
-                    txt_firstLevelTrack.Text = "> " + resourcemanager.GetString("trReports");
-                else if (tag == "sectionData")
-                    txt_firstLevelTrack.Text = "> " + resourcemanager.GetString("trSectionData");
-                else if (tag == "settings")
-                    txt_firstLevelTrack.Text = "> " + resourcemanager.GetString("trSettings");
-                #endregion
-            }
-            else if (level == 1)
-            {
-                txt_secondLevelTrack.Visibility = Visibility.Visible;
-                txt_thirdLevelTrack.Visibility = Visibility.Collapsed;
-                #region  storage
-                if (tag == "locations")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trLocation");
-                else if (tag == "section")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trSection");
-                else if (tag == "reciptOfInvoice")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trInvoice");
-                else if (tag == "itemsStorage")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trStorage");
-                else if (tag == "importExport")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trMovements");
-                else if (tag == "itemsDestroy")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trDestructive");
-                else if (tag == "shortage")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trShortage");
-                else if (tag == "inventory")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trStocktaking");
-                else if (tag == "storageStatistic")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trStatistic");
-                #endregion
-                #region  Account
-                else if (tag == "posAccounting")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trPOS");
-                else if (tag == "payments")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trPayments");
-                else if (tag == "received")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trReceived");
-                else if (tag == "bonds")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trBonds");
-                else if (tag == "banksAccounting")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trBanks");
-                else if (tag == "ordersAccounting")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trOrders");
-                else if (tag == "subscriptions")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trSubscriptions");
-                else if (tag == "accountsStatistic")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trStatistic");
-                #endregion
-                #region  catalog
-                else if (tag == "categories")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trCategories");
-                else if (tag == "item")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trItems");
-                else if (tag == "service")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trService");
-                else if (tag == "package")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trPackage");
-                else if (tag == "properties")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trProperties");
-                else if (tag == "units")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trUnits");
-                else if (tag == "storageCost")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trStorageCost");
-                #endregion
-                #region  purchase
-                else if (tag == "payInvoice")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trInvoice");
-                else if (tag == "purchaseOrder")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trOrders");
-                else if (tag == "purchaseStatistic")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trStatistic");
-                #endregion
-                #region  sales
-                else if (tag == "reciptInvoice")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trInvoice");
-                else if (tag == "coupon")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trCoupon");
-                else if (tag == "offer")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trOffer");
-                else if (tag == "quotation")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trQuotations");
-                else if (tag == "salesOrders")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trOrders");
-                else if (tag == "medals")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trMedals");
-                else if (tag == "membership")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trMembership");
-                else if (tag == "salesStatistic")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trStatistic");
-                #endregion
-                #region  sectionData
-                else if (tag == "suppliers")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trSuppliers");
-                else if (tag == "customers")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trCustomers");
-                else if (tag == "users")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trUsers");
-                else if (tag == "branches")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trBranches");
-                else if (tag == "stores")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trStores");
-                else if (tag == "pos")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trPOS");
-                else if (tag == "banks")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trBanks");
-                else if (tag == "cards")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trPayment1");
-                else if (tag == "shippingCompany")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trShippingCompanies");
-                #endregion
-                #region  settings
-                else if (tag == "general")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trGeneral");
-                else if (tag == "reportsSettings")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trReports");
-                else if (tag == "permissions")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trPermission");
-                else if (tag == "emailsSetting")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trEmail");
-                else if (tag == "emailTemplates")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trEmailTemplates");
-                #endregion
-                #region  report
-                else if (tag == "reports")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trReports");
-                else if (tag == "storageReports")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trStorage");
-                else if (tag == "purchaseReports")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trPurchases");
-                else if (tag == "salesReports")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trSales");
-                else if (tag == "accountsReports")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trAccounts");
-                else if (tag == "usersReports")
-                    txt_secondLevelTrack.Text = "> " + resourcemanager.GetString("trUsers");
-                #endregion
-            }
-            else if (level == 2)
-            {
-                txt_thirdLevelTrack.Visibility = Visibility.Visible;
-
-                #region  report
-
-                if (tag == "invoice")
-                    txt_thirdLevelTrack.Text = "> " + resourcemanager.GetString("trInvoice");
-                else if (tag == "order")
-                    txt_thirdLevelTrack.Text = "> " + resourcemanager.GetString("trOrders");
-                else if (tag == "item")
-                    txt_thirdLevelTrack.Text = "> " + resourcemanager.GetString("trItems");
-
-
-                #region  storageReports
-                else if (tag == "stock")
-                    txt_thirdLevelTrack.Text = "> " + resourcemanager.GetString("trStock");
-                else if (tag == "external")
-                    txt_thirdLevelTrack.Text = "> " + resourcemanager.GetString("trExternal");
-                else if (tag == "internal")
-                    txt_thirdLevelTrack.Text = "> " + resourcemanager.GetString("trInternal");
-                else if (tag == "stocktaking")
-                    txt_thirdLevelTrack.Text = "> " + resourcemanager.GetString("trStocktaking");
-                else if (tag == "destroied")
-                    txt_thirdLevelTrack.Text = "> " + resourcemanager.GetString("trDestructives");
-
-                #endregion
-
-                #region  salesReports
-                else if (tag == "promotion")
-                    txt_thirdLevelTrack.Text = "> " + resourcemanager.GetString("trPromotion");
-                else if (tag == "quotation")
-                    txt_thirdLevelTrack.Text = "> " + resourcemanager.GetString("trQuotations");
-                else if (tag == "dailySales")
-                    txt_thirdLevelTrack.Text = "> " + resourcemanager.GetString("trDailySales");
-
-                #endregion
-
-                #region  accountsReports
-                else if (tag == "payments")
-                    txt_thirdLevelTrack.Text = "> " + resourcemanager.GetString("trPayments");
-                else if (tag == "recipient")
-                    txt_thirdLevelTrack.Text = "> " + resourcemanager.GetString("trRecipientTooltip");
-                else if (tag == "bank")
-                    txt_thirdLevelTrack.Text = "> " + resourcemanager.GetString("trBank");
-                else if (tag == "pos")
-                    txt_thirdLevelTrack.Text = "> " + resourcemanager.GetString("trPOS");
-                else if (tag == "statement")
-                    txt_thirdLevelTrack.Text = "> " + resourcemanager.GetString("trAccountStatement");
-                else if (tag == "fund")
-                    txt_thirdLevelTrack.Text = "> " + resourcemanager.GetString("trCashBalance");
-                else if (tag == "profit")
-                    txt_thirdLevelTrack.Text = "> " + resourcemanager.GetString("trProfits");
-
-                #endregion
-
-                #endregion
-            }
-
-        }
-        */
+      
+        #endregion
         private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             try

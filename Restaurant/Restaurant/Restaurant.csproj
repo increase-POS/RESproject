@@ -177,6 +177,9 @@
     <Compile Include="View\catalog\uc_catalog.xaml.cs">
       <DependentUpon>uc_catalog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\delivery\uc_delivery.xaml.cs">
+      <DependentUpon>uc_delivery.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\kitchen\uc_kitchen.xaml.cs">
       <DependentUpon>uc_kitchen.xaml</DependentUpon>
     </Compile>
@@ -288,6 +291,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\catalog\uc_catalog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\delivery\uc_delivery.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -403,7 +410,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="View\delivery\" />
     <Folder Include="View\home\" />
     <Folder Include="View\reports\" />
   </ItemGroup>
@@ -416,6 +422,9 @@
     <Resource Include="pic\no-image-icon-40x40.png" />
     <Resource Include="pic\no-image-icon-512x512.png" />
     <Resource Include="pic\no-image-icon-90x90.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pic\90408.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
