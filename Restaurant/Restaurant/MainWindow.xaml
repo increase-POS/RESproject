@@ -137,10 +137,10 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Horizontal" Margin="10 5"
+                    <StackPanel x:Name="sp_mainPath" Orientation="Horizontal" Margin="10 5"
                           VerticalAlignment="Center">
-                        <TextBlock FontSize="16" Text="Menu> " Foreground="{StaticResource Grey}"   />
-                        <TextBlock FontSize="16"  Text="Items" Foreground="{StaticResource MainColor}"   />
+                       
+                       
                     </StackPanel>
                 </Grid>
                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="5">

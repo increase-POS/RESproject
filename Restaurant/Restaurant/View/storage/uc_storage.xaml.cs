@@ -66,7 +66,7 @@ namespace Restaurant.View.storage
                 grid_main.Children.Add(uc_storageDivide.Instance);
 
                 Button button = sender as Button;
-                //initializationMainTrack(button.Tag.ToString(), 0);
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
             catch (Exception ex)
             {
@@ -83,7 +83,7 @@ namespace Restaurant.View.storage
                 grid_main.Children.Add(uc_storageOperations.Instance);
 
                 Button button = sender as Button;
-                //initializationMainTrack(button.Tag.ToString(), 0);
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
             catch (Exception ex)
             {
@@ -99,7 +99,7 @@ namespace Restaurant.View.storage
                 grid_main.Children.Add(uc_movementsOperations.Instance);
 
                 Button button = sender as Button;
-                //initializationMainTrack(button.Tag.ToString(), 0);
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
             catch (Exception ex)
             {
@@ -117,7 +117,7 @@ namespace Restaurant.View.storage
                 grid_main.Children.Add(uc_stocktakingOperations.Instance);
 
                 Button button = sender as Button;
-                //initializationMainTrack(button.Tag.ToString(), 0);
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
             catch (Exception ex)
             {

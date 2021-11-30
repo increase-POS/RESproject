@@ -271,7 +271,7 @@ namespace Restaurant.View.sectionData.persons
                     //agent.code = "Us-000001";
                     //agent.custname = tb_custname.Text;
                     //tb_code.Text = await agent.generateCodeNumber("c");
-                    agent.code = await agent.generateCodeNumber("c");
+                    //agent.code = await agent.generateCodeNumber("c");
                     agent.name = tb_name.Text;
                     agent.company = tb_company.Text;
                     agent.email = tb_email.Text;

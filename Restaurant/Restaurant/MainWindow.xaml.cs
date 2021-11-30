@@ -27,6 +27,17 @@ using Restaurant.View.kitchen;
 using Restaurant.View.sales;
 using Restaurant.View.accounts;
 using Restaurant.View.settings;
+using POS.Classes;
+using Object = POS.Classes.Object;
+using Restaurant.View.sectionData.persons;
+using Restaurant.View.sectionData.hallDivide;
+using Restaurant.View.sectionData.branchesAndStores;
+using Restaurant.View.catalog.foods;
+using Restaurant.View.storage.storageDivide;
+using Restaurant.View.storage.storageOperations;
+using Restaurant.View.storage.movementsOperations;
+using Restaurant.View.storage.stocktakingOperations;
+using Restaurant.View.sales.promotion;
 
 namespace Restaurant
 {
@@ -69,6 +80,8 @@ namespace Restaurant
         //public static List<ItemUnitUser> itemUnitsUsers = new List<ItemUnitUser>();
         //public static ItemUnitUser itemUnitsUser = new ItemUnitUser();
 
+        Object objectModel = new Object();
+        List<Object> listObjects = new List<Object>();
         //static public GroupObject groupObject = new GroupObject();
         //static public List<GroupObject> groupObjects = new List<GroupObject>();
         //static SettingCls setModel = new SettingCls();
@@ -215,7 +228,26 @@ namespace Restaurant
 
         #region loading
         List<keyValueBool> loadingList;
-        //loadingThread[] loadingList = new loadingThread[25];
+        async void loading_listObjects()
+        {
+            //get tax
+            try
+            {
+                listObjects = await objectModel.GetAll();
+            }
+            catch
+            {
+                
+            }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_listObjects"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
         /*
         async void loading_getUserPath()
         {
@@ -731,6 +763,7 @@ namespace Restaurant
                 #region loading
                 loadingList = new List<keyValueBool>();
                 bool isDone = true;
+                loadingList.Add(new keyValueBool { key = "loading_listObjects", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getUserPath", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getTax", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getItemCost", value = false });
@@ -748,6 +781,7 @@ namespace Restaurant
                 //loadingList.Add(new keyValueBool { key = "loading_POSList", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getPrintCount", value = false });
 
+                loading_listObjects();
                 //loading_getUserPath();
                 //loading_getTax();
                 //loading_getItemCost();
@@ -1309,6 +1343,600 @@ namespace Restaurant
             return true;
         }
         */
+        
+        private void Btn_home_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                colorTextRefreash(txt_home);
+                FN_pathVisible(path_openHome);
+                fn_ColorIconRefreash(path_iconHome);
+                grid_main.Children.Clear();
+                //grid_main.Children.Add(uc_home.Instance);
+                //if (isHome)
+                //{
+                //    uc_home.Instance.timerAnimation();
+                //    isHome = false;
+                //}
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+        private void Btn_catalog_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                colorTextRefreash(txt_catalog);
+                FN_pathVisible(path_openCatalog);
+                fn_ColorIconRefreash(path_iconCatalog);
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_catalog.Instance);
+
+                isHome = true;
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_purchase_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                colorTextRefreash(txt_purchases);
+                FN_pathVisible(path_openPurchases);
+                fn_ColorIconRefreash(path_iconPurchases);
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_purchase.Instance);
+
+                isHome = true;
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_storage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                colorTextRefreash(txt_storage);
+                FN_pathVisible(path_openStorage);
+                fn_ColorIconRefreash(path_iconStorage);
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_storage.Instance);
+
+                isHome = true;
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+        private void Btn_kitchen_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                colorTextRefreash(txt_kitchen);
+                FN_pathVisible(path_openKitchen);
+                fn_ColorIconRefreash(path_iconKitchen);
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_kitchen.Instance);
+
+                isHome = true;
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_sales_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                colorTextRefreash(txt_sales);
+                FN_pathVisible(path_openSales);
+                fn_ColorIconRefreash(path_iconSales);
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_sales.Instance);
+
+                isHome = true;
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_delivery_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Btn_accounts_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                colorTextRefreash(txt_accounts);
+                FN_pathVisible(path_openAccounts);
+                fn_ColorIconRefreash(path_iconAccounts);
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_accounts.Instance);
+
+                isHome = true;
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_settings_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                colorTextRefreash(txt_settings);
+                FN_pathVisible(path_openSettings);
+                fn_ColorIconRefreash(path_iconSettings);
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_settings.Instance);
+
+                isHome = true;
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_SectionData_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                colorTextRefreash(txt_sectiondata);
+                FN_pathVisible(path_openSectionData);
+                fn_ColorIconRefreash(path_iconSectionData);
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_sectionData.Instance);
+
+                isHome = true;
+                Button button = sender as Button;
+                initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        /*
+        
+        private void BTN_catalog_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                colorTextRefreash(txt_catalog);
+                FN_pathVisible(path_openCatalog);
+                fn_ColorIconRefreash(path_iconCatalog);
+                grid_main.Children.Clear();
+                grid_main.Children.Add(UC_catalog.Instance);
+                isHome = true;
+                Button button = sender as Button;
+                initializationMainTrack(button.Tag.ToString(), 0);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        public void BTN_purchases_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                colorTextRefreash(txt_purchases);
+                FN_pathVisible(path_openPurchases);
+                fn_ColorIconRefreash(path_iconPurchases);
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_purchases.Instance);
+                isHome = true;
+                Button button = sender as Button;
+                initializationMainTrack(button.Tag.ToString(), 0);
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        public void BTN_sales_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                colorTextRefreash(txt_sales);
+                FN_pathVisible(path_openSales);
+                fn_ColorIconRefreash(path_iconSales);
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_sales.Instance);
+                isHome = true;
+                Button button = sender as Button;
+                initializationMainTrack(button.Tag.ToString(), 0);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void BTN_accounts_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                colorTextRefreash(txt_accounting);
+                FN_pathVisible(path_openAccount);
+                fn_ColorIconRefreash(path_iconAccounts);
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_accounts.Instance);
+                isHome = true;
+                Button button = sender as Button;
+                initializationMainTrack(button.Tag.ToString(), 0);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void BTN_reports_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                colorTextRefreash(txt_reports);
+                FN_pathVisible(path_openReports);
+                fn_ColorIconRefreash(path_iconReports);
+                isHome = true;
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_reports.Instance);
+                Button button = sender as Button;
+                initializationMainTrack(button.Tag.ToString(), 0);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        public void BTN_settings_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                colorTextRefreash(txt_settings);
+                FN_pathVisible(path_openSettings);
+                fn_ColorIconRefreash(path_iconSettings);
+                isHome = true;
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_settings.Instance);
+                Button button = sender as Button;
+                initializationMainTrack(button.Tag.ToString(), 0);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void BTN_storage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button;
+                initializationMainTrack(button.Tag.ToString(), 0);
+                colorTextRefreash(txt_storage);
+                FN_pathVisible(path_openStorage);
+                fn_ColorIconRefreash(path_iconStorage);
+                grid_main.Children.Clear();
+                grid_main.Children.Add(View.uc_storage.Instance);
+                isHome = true;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        */
+        public void initializationMainTrack(string tag)
+        {
+            //sp_mainPath
+            sp_mainPath.Children.Clear();
+            List<Object> _listObjects = new List<Object>();
+             _listObjects =   objectModel.GetParents( listObjects, tag);
+            int counter = 1;
+            bool isLast = false;
+            foreach (var item in _listObjects)
+            {
+                if (counter == _listObjects.Count)
+                    isLast = true;
+                else
+                    isLast = false;
+                sp_mainPath.Children.Add(initializationMainButton(item, isLast));
+                counter++;
+            }
+        }
+        Button initializationMainButton(Object _object, bool isLast)
+        {
+            Button button = new Button();
+            button.Content = ">" + _object.translate;
+            button.Tag = _object.name;
+            button.Click += MainButton_Click;
+            button.Background = null;
+            button.Margin = new Thickness(5, 0, 0, 0);
+            button.BorderThickness = new Thickness(0);
+            button.Padding = new Thickness(0);
+            button.FontSize = 16;
+            if (isLast)
+                button.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            else
+                button.Foreground = Application.Current.Resources["Grey"] as SolidColorBrush;
+            return button;
+        }
+        void MainButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            initializationMainTrack(button.Tag.ToString());
+            loadPath(button.Tag.ToString());
+
+        }
+        void loadPath(string tag)
+        {
+            grid_main.Children.Clear();
+            switch (tag)
+            {
+                //2
+                //case "home":
+                //    grid_main.Children.Add(uc_home.Instance);
+                //    break;
+                case "catalog":
+                    grid_main.Children.Add(uc_catalog.Instance);
+                    break;
+                case "purchase":
+                    grid_main.Children.Add(uc_purchase.Instance);
+                    break;
+                case "storage":
+                    grid_main.Children.Add(uc_storage.Instance);
+                    break;
+                case "kitchen":
+                    grid_main.Children.Add(uc_kitchen.Instance);
+                    break;
+                case "sales":
+                    grid_main.Children.Add(uc_sales.Instance);
+                    break;
+                //case "delivery":
+                //    grid_main.Children.Add(uc_delivery.Instance);
+                //    break;
+                case "accounts":
+                    grid_main.Children.Add(uc_accounts.Instance);
+                    break;
+                //case "reports":
+                //    grid_main.Children.Add(uc_reports.Instance);
+                //    break;
+                case "sectionData":
+                    grid_main.Children.Add(uc_sectionData.Instance);
+                    break;
+                //12
+                case "settings":
+                    grid_main.Children.Add(uc_settings.Instance);
+                    break;
+                case "hallDivide":
+                    grid_main.Children.Add(uc_hallDivide.Instance);
+                    break;
+                case "persons":
+                    grid_main.Children.Add(uc_persons.Instance);
+                    break;
+                case "branchesAndStores":
+                    grid_main.Children.Add(uc_branchesAndStores.Instance);
+                    break;
+                //case "banksData":
+                //    grid_main.Children.Add(uc_banksData.Instance);
+                //    break;
+                //case "tables":
+                //    grid_main.Children.Add(uc_tables.Instance);
+                //    break;
+                //case "hallSections":
+                //    grid_main.Children.Add(uc_hallSections.Instance);
+                //    break;
+                //case "vendors":
+                //    grid_main.Children.Add(uc_vendors.Instance);
+                //    break;
+                case "customers":
+                    grid_main.Children.Add(uc_customers.Instance);
+                    break;
+                //case "users":
+                //    grid_main.Children.Add(uc_users.Instance);
+                //    break;
+                //22
+                //case "branches":
+                //    grid_main.Children.Add(uc_branches.Instance);
+                //    break;
+                //case "stores":
+                //    grid_main.Children.Add(uc_stores.Instance);
+                //    break;
+                //case "pos":
+                //    grid_main.Children.Add(uc_pos.Instance);
+                //    break;
+                //case "banks":
+                //    grid_main.Children.Add(uc_banks.Instance);
+                //    break;
+                //case "cards":
+                //    grid_main.Children.Add(uc_cards.Instance);
+                //    break;
+                //case "rawMaterials":
+                //    grid_main.Children.Add(uc_rawMaterials.Instance);
+                //    break;
+                case "foods":
+                    grid_main.Children.Add(uc_foods.Instance);
+                    break;
+                //case "appetizers":
+                //    grid_main.Children.Add(uc_appetizers.Instance);
+                //    break;
+                //case "beverages":
+                //    grid_main.Children.Add(uc_beverages.Instance);
+                //    break;
+                //case "fastFood":
+                //    grid_main.Children.Add(uc_fastFood.Instance);
+                //    break;
+                //32
+                //case "mainCourses":
+                //    grid_main.Children.Add(uc_mainCourses.Instance);
+                //    break;
+                //case "desserts":
+                //    grid_main.Children.Add(uc_desserts.Instance);
+                //    break;
+                //case "payInvoice":
+                //    grid_main.Children.Add(uc_payInvoice.Instance);
+                //    break;
+                //case "purchaseOrder":
+                //    grid_main.Children.Add(uc_purchaseOrder.Instance);
+                //    break;
+                //case "purchaseStatistic":
+                //    grid_main.Children.Add(uc_purchaseStatistic.Instance);
+                //    break;
+                case "storageDivide":
+                    grid_main.Children.Add(uc_storageDivide.Instance);
+                    break;
+                case "storageOperations":
+                    grid_main.Children.Add(uc_storageOperations.Instance);
+                    break;
+                case "movementsOperations":
+                    grid_main.Children.Add(uc_movementsOperations.Instance);
+                    break;
+                case "stocktakingOperations":
+                    grid_main.Children.Add(uc_stocktakingOperations.Instance);
+                    break;
+                //case "locations":
+                //    grid_main.Children.Add(uc_locations.Instance);
+                //    break;
+                //42
+                //case "storageSections":
+                //    grid_main.Children.Add(uc_storageSections.Instance);
+                //    break;
+                //case "storageCost":
+                //    grid_main.Children.Add(uc_storageCost.Instance);
+                //    break;
+                //case "storageInvoice":
+                //    grid_main.Children.Add(uc_storageInvoice.Instance);
+                //    break;
+                //case "itemsStorage":
+                //    grid_main.Children.Add(uc_itemsStorage.Instance);
+                //    break;
+                //case "storageMovements":
+                //    grid_main.Children.Add(uc_storageMovements.Instance);
+                //    break;
+                //case "consumptionRawMaterials":
+                //    grid_main.Children.Add(uc_consumptionRawMaterials.Instance);
+                //    break;
+                //case "itemsShortage":
+                //    grid_main.Children.Add(uc_itemsShortage.Instance);
+                //    break;
+                //case "itemsDestructive":
+                //    grid_main.Children.Add(uc_itemsDestructive.Instance);
+                //    break;
+                //case "stocktaking":
+                //    grid_main.Children.Add(uc_stocktaking.Instance);
+                //    break;
+                //case "preparingOrders":
+                //    grid_main.Children.Add(uc_preparingOrders.Instance);
+                //    break;
+                //52
+                //case "kitchenOrder":
+                //    grid_main.Children.Add(uc_kitchenOrder.Instance);
+                //    break;
+                //case "posTransfers":
+                //    grid_main.Children.Add(uc_posTransfers.Instance);
+                //    break;
+                //case "payments":
+                //    grid_main.Children.Add(uc_payments.Instance);
+                //    break;
+                //case "received":
+                //    grid_main.Children.Add(uc_received.Instance);
+                //    break;
+                //case "banksAccounting":
+                //    grid_main.Children.Add(uc_banksAccounting.Instance);
+                //    break;
+                //case "accountsStatistic":
+                //    grid_main.Children.Add(uc_accountsStatistic.Instance);
+                //    break;
+                //case "subscriptions":
+                //    grid_main.Children.Add(uc_subscriptions.Instance);
+                //    break;
+                //case "ordersAccounting":
+                //    grid_main.Children.Add(uc_ordersAccounting.Instance);
+                //    break;
+                //case "general":
+                //    grid_main.Children.Add(uc_general.Instance);
+                //    break;
+                //case "reportsSettings":
+                //    grid_main.Children.Add(uc_reportsSettings.Instance);
+                //    break;
+                //62
+                //case "permissions":
+                //    grid_main.Children.Add(uc_permissions.Instance);
+                //    break;
+                //case "emailSettings":
+                //    grid_main.Children.Add(uc_emailSettings.Instance);
+                //    break;
+                //case "smsSettings":
+                //    grid_main.Children.Add(uc_smsSettings.Instance);
+                //    break;
+                case "promotion":
+                    grid_main.Children.Add(uc_promotion.Instance);
+                    break;
+                //case "reservations":
+                //    grid_main.Children.Add(uc_reservations.Instance);
+                //    break;
+                //case "diningHall":
+                //    grid_main.Children.Add(uc_diningHall.Instance);
+                //    break;
+                //case "takeAway":
+                //    grid_main.Children.Add(uc_takeAway.Instance);
+                //    break;
+                //case "salesStatistic":
+                //    grid_main.Children.Add(uc_salesStatistic.Instance);
+                //    break;
+                //case "membership":
+                //    grid_main.Children.Add(uc_membership.Instance);
+                //    break;
+                //case "coupon":
+                //    grid_main.Children.Add(uc_coupon.Instance);
+                    //break;
+                //72
+                //case "offer":
+                //    grid_main.Children.Add(uc_offer.Instance);
+                //    break;
+                //case "quotation":
+                //    grid_main.Children.Add(uc_quotation.Instance);
+                //    break;
+                //case "medals":
+                //    grid_main.Children.Add(uc_medals.Instance);
+                //    break;
+
+                default:
+                    return;
+
+            }
+        }
         /*
         public void initializationMainTrack(string tag, int level)
         {
@@ -1527,319 +2155,6 @@ namespace Restaurant
                 #endregion
             }
 
-        }
-        */
-        private void Btn_home_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-
-                colorTextRefreash(txt_home);
-                FN_pathVisible(path_openHome);
-                fn_ColorIconRefreash(path_iconHome);
-                grid_main.Children.Clear();
-                //grid_main.Children.Add(uc_home.Instance);
-                //if (isHome)
-                //{
-                //    uc_home.Instance.timerAnimation();
-                //    isHome = false;
-                //}
-                Button button = sender as Button;
-                //initializationMainTrack(button.Tag.ToString(), 0);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-
-        }
-        private void Btn_catalog_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_catalog);
-                FN_pathVisible(path_openCatalog);
-                fn_ColorIconRefreash(path_iconCatalog);
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_catalog.Instance);
-
-                isHome = true;
-                Button button = sender as Button;
-                //initializationMainTrack(button.Tag.ToString(), 0);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void Btn_purchase_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_purchases);
-                FN_pathVisible(path_openPurchases);
-                fn_ColorIconRefreash(path_iconPurchases);
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_purchase.Instance);
-
-                isHome = true;
-                Button button = sender as Button;
-                //initializationMainTrack(button.Tag.ToString(), 0);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void Btn_storage_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_storage);
-                FN_pathVisible(path_openStorage);
-                fn_ColorIconRefreash(path_iconStorage);
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_storage.Instance);
-
-                isHome = true;
-                Button button = sender as Button;
-                //initializationMainTrack(button.Tag.ToString(), 0);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-
-        }
-        private void Btn_kitchen_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_kitchen);
-                FN_pathVisible(path_openKitchen);
-                fn_ColorIconRefreash(path_iconKitchen);
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_kitchen.Instance);
-
-                isHome = true;
-                Button button = sender as Button;
-                //initializationMainTrack(button.Tag.ToString(), 0);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void Btn_sales_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_sales);
-                FN_pathVisible(path_openSales);
-                fn_ColorIconRefreash(path_iconSales);
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_sales.Instance);
-
-                isHome = true;
-                Button button = sender as Button;
-                //initializationMainTrack(button.Tag.ToString(), 0);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void Btn_delivery_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void Btn_accounts_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_accounts);
-                FN_pathVisible(path_openAccounts);
-                fn_ColorIconRefreash(path_iconAccounts);
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_accounts.Instance);
-
-                isHome = true;
-                Button button = sender as Button;
-                //initializationMainTrack(button.Tag.ToString(), 0);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void Btn_settings_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_settings);
-                FN_pathVisible(path_openSettings);
-                fn_ColorIconRefreash(path_iconSettings);
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_settings.Instance);
-
-                isHome = true;
-                Button button = sender as Button;
-                //initializationMainTrack(button.Tag.ToString(), 0);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void Btn_SectionData_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_sectiondata);
-                FN_pathVisible(path_openSectionData);
-                fn_ColorIconRefreash(path_iconSectionData);
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_sectionData.Instance);
-
-                isHome = true;
-                Button button = sender as Button;
-                //initializationMainTrack(button.Tag.ToString(), 0);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        /*
-        
-        private void BTN_catalog_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_catalog);
-                FN_pathVisible(path_openCatalog);
-                fn_ColorIconRefreash(path_iconCatalog);
-                grid_main.Children.Clear();
-                grid_main.Children.Add(UC_catalog.Instance);
-                isHome = true;
-                Button button = sender as Button;
-                initializationMainTrack(button.Tag.ToString(), 0);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        public void BTN_purchases_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_purchases);
-                FN_pathVisible(path_openPurchases);
-                fn_ColorIconRefreash(path_iconPurchases);
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_purchases.Instance);
-                isHome = true;
-                Button button = sender as Button;
-                initializationMainTrack(button.Tag.ToString(), 0);
-
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        public void BTN_sales_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_sales);
-                FN_pathVisible(path_openSales);
-                fn_ColorIconRefreash(path_iconSales);
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_sales.Instance);
-                isHome = true;
-                Button button = sender as Button;
-                initializationMainTrack(button.Tag.ToString(), 0);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void BTN_accounts_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_accounting);
-                FN_pathVisible(path_openAccount);
-                fn_ColorIconRefreash(path_iconAccounts);
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_accounts.Instance);
-                isHome = true;
-                Button button = sender as Button;
-                initializationMainTrack(button.Tag.ToString(), 0);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void BTN_reports_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_reports);
-                FN_pathVisible(path_openReports);
-                fn_ColorIconRefreash(path_iconReports);
-                isHome = true;
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_reports.Instance);
-                Button button = sender as Button;
-                initializationMainTrack(button.Tag.ToString(), 0);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        public void BTN_settings_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_settings);
-                FN_pathVisible(path_openSettings);
-                fn_ColorIconRefreash(path_iconSettings);
-                isHome = true;
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_settings.Instance);
-                Button button = sender as Button;
-                initializationMainTrack(button.Tag.ToString(), 0);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void BTN_storage_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Button button = sender as Button;
-                initializationMainTrack(button.Tag.ToString(), 0);
-                colorTextRefreash(txt_storage);
-                FN_pathVisible(path_openStorage);
-                fn_ColorIconRefreash(path_iconStorage);
-                grid_main.Children.Clear();
-                grid_main.Children.Add(View.uc_storage.Instance);
-                isHome = true;
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
         }
         */
         private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

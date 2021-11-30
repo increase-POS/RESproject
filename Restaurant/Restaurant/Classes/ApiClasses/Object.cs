@@ -21,6 +21,7 @@ namespace POS.Classes
         public string name { get; set; }
         public Nullable<int> parentObjectId { get; set; }
         public string objectType { get; set; }
+        public string translate { get; set; }
         public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
@@ -92,6 +93,7 @@ namespace POS.Classes
       
         public List<Object> GetParents(List<Object> all, string objName)
         {
+            plist = new List<Object>();
             List<Object> list = new List<Object>();
             Object tempob = null;
             tempob = all.Where(o => o.name == objName).FirstOrDefault();
@@ -129,6 +131,7 @@ namespace POS.Classes
 
 
         }
+
         private Object findparents(int? parentid, List<Object> all)
         {
             Object ptempob = null;

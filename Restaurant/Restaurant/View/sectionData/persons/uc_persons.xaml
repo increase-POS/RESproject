@@ -50,7 +50,7 @@
                             <TextBlock x:Name="txt_vendorsInfo" Text="Vendors" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_vendorsHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
-                        <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button Tag="vendors" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_vendors" 
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
@@ -106,7 +106,7 @@
                             <TextBlock x:Name="txt_customersInfo" Text="Customers"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_customersHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
-                        <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button Tag="customers" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_customers" 
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
@@ -164,7 +164,7 @@
                             <TextBlock x:Name="txt_usersInfo" Text="Users"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_usersHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
-                        <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button   Tag="users"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_users" 
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"

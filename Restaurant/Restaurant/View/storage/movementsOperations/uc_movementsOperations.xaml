@@ -55,7 +55,7 @@
                             <TextBlock x:Name="txt_storageMovementsInfo" Text="Storage movements" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_storageMovementsHint" Text="import, export,..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
-                        <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button Tag="storageMovements" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_storageMovements" 
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
@@ -103,7 +103,7 @@
                             <TextBlock x:Name="txt_consumptionRawMaterialsInfo" Text="Consumption"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_consumptionRawMaterialsHint" Text="Consumption raw materials" FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
-                        <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button Tag="consumptionRawMaterials" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_consumptionRawMaterials" 
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"

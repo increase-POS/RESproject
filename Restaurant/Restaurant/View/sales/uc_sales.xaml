@@ -44,7 +44,7 @@
                             <TextBlock x:Name="txt_promotionInfo" Text="promotion" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_promotionHint" Text="membership, coupon, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
-                        <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button Tag="promotion"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_promotion" Click="Btn_promotion_Click"
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
@@ -144,7 +144,7 @@
                             <TextBlock x:Name="txt_reservationsInfo" Text="Reservations"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_reservationsHint" Text="Reservations tables ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
-                        <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button Tag="reservations" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_reservations"  
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
@@ -191,7 +191,7 @@
                             <TextBlock x:Name="txt_diningHallInfo" Text="Dining hall"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_diningHallHint" Text="Dining hall management" FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
-                        <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button Tag="diningHall" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_diningHall"   
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
@@ -321,7 +321,7 @@
                             <TextBlock x:Name="txt_takeAwayInfo" Text="Take away"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_takeAwayHint" Text="self-service, order" FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
-                        <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button Tag="takeAway"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_takeAway" 
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
@@ -374,7 +374,7 @@
                             <TextBlock x:Name="txt_salesStatisticInfo" Text="Statistic"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_salesStatisticHint" Text="Daily Statistic..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
-                        <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button Tag="salesStatistic" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_salesStatistic" 
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"

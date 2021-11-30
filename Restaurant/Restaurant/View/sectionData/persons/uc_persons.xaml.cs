@@ -64,7 +64,7 @@ namespace Restaurant.View.sectionData.persons
                 grid_main.Children.Add(uc_customers.Instance);
 
                 Button button = sender as Button;
-                //initializationMainTrack(button.Tag.ToString(), 0);
+               MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
             catch (Exception ex)
             {

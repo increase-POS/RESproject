@@ -69,7 +69,7 @@
                             <TextBlock x:Name="txt_itemsShortageInfo" Text="Items shortage" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_itemsShortageHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
-                        <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button Tag="itemsShortage" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_itemsShortage" 
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
@@ -118,7 +118,7 @@
                             <TextBlock x:Name="txt_itemsDestructiveInfo" Text="Items destructive"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_itemsDestructiveHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
-                        <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button Tag="itemsDestructive" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_itemsDestructive" 
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
@@ -170,7 +170,7 @@
                               BorderThickness="0" x:Name="btn_stocktaking" 
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-                            <StackPanel    Orientation="Horizontal">
+                                <StackPanel  Tag="stocktaking"  Orientation="Horizontal">
                                 <TextBlock Text="Enter"    Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
                                 <!--<TextBlock   Text=">>"    Foreground="White"></TextBlock>-->
                                 <Path  Fill="{StaticResource White}" Stretch="Fill" 

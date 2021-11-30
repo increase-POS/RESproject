@@ -63,7 +63,7 @@ namespace Restaurant.View.sales
                 grid_main.Children.Add(uc_promotion.Instance);
 
                 Button button = sender as Button;
-                //initializationMainTrack(button.Tag.ToString(), 0);
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
             catch (Exception ex)
             {

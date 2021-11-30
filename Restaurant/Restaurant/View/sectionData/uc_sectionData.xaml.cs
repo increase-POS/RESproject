@@ -65,7 +65,7 @@ namespace Restaurant.View.sectionData
                 grid_main.Children.Add(uc_hallDivide.Instance);
 
                 Button button = sender as Button;
-                //initializationMainTrack(button.Tag.ToString(), 0);
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
             catch (Exception ex)
             {
@@ -81,7 +81,7 @@ namespace Restaurant.View.sectionData
                 grid_main.Children.Add(uc_persons.Instance);
 
                 Button button = sender as Button;
-                //initializationMainTrack(button.Tag.ToString(), 0);
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
             catch (Exception ex)
             {
@@ -97,7 +97,7 @@ namespace Restaurant.View.sectionData
                 grid_main.Children.Add(uc_branchesAndStores.Instance);
 
                 Button button = sender as Button;
-                //initializationMainTrack(button.Tag.ToString(), 0);
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
             catch (Exception ex)
             {
@@ -113,7 +113,7 @@ namespace Restaurant.View.sectionData
                 grid_main.Children.Add(uc_banksData.Instance);
 
                 Button button = sender as Button;
-                //initializationMainTrack(button.Tag.ToString(), 0);
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
             catch (Exception ex)
             {

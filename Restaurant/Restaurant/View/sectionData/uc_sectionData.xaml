@@ -43,7 +43,7 @@
                                 <TextBlock x:Name="txt_hallDivideInfo" Text="Hall Divide" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
                                 <TextBlock x:Name="txt_hallDivideHint" Text="Dining Hall Divide" FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                             </StackPanel>
-                            <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button Tag="hallDivide"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                     Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                                   BorderThickness="0" x:Name="btn_hallDivide" Click="Btn_hallDivide_Click"
                                  Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
@@ -90,7 +90,7 @@
                                 <TextBlock x:Name="txt_personsInfo" Text="Persons"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                                 <TextBlock x:Name="txt_personsHint" Text="Vendors, Customer, Users" FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                             </StackPanel>
-                            <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button Tag="persons" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                     Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                                   BorderThickness="0" x:Name="btn_persons"  Click="Btn_persons_Click"
                                  Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
@@ -143,7 +143,7 @@
                                 <TextBlock x:Name="txt_branchesAndStoresInfo" Text="Branches/Stores"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                                 <TextBlock x:Name="txt_branchesAndStoresHint" Text="Branches, Stores, POS" FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                             </StackPanel>
-                            <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button  Tag="branchesAndStores" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                     Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                                   BorderThickness="0" x:Name="btn_branchesAndStores"  Click="Btn_branchesAndStores_Click"
                                  Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
@@ -190,7 +190,7 @@
                                 <TextBlock x:Name="txt_banksDataInfo" Text="Banks Data"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                                 <TextBlock x:Name="txt_banksDataHint" Text="Banks, Payment Methods" FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                             </StackPanel>
-                            <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button Tag="banksData" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                     Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                                   BorderThickness="0" x:Name="btn_banksData" Click="Btn_banksData_Click"
                                  Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"

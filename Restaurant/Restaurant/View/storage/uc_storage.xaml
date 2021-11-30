@@ -44,7 +44,7 @@
                             <TextBlock x:Name="txt_storageDivideInfo" Text="Storage Divide" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_storageDivideHint" Text="locations, Sections" FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
-                        <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button Tag="storageDivide" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_storageDivide" Click="Btn_storageDivide_Click"
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
@@ -91,7 +91,7 @@
                             <TextBlock x:Name="txtstorageOperationsInfo" Text="Storage Operations"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                             <TextBlock x:Name="txtstorageOperationsHint" Text="Storage cost, Storage invoice, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
-                        <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button Tag="storageOperations"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_storageOperations"  Click="Btn_storageOperations_Click"
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
@@ -151,7 +151,7 @@
                             <TextBlock x:Name="txtmovementsOperationsInfo" Text="Movements Operations"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                             <TextBlock x:Name="txtmovementsOperationsHint" Text="Movements, Consumption materials" FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
-                        <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button  Tag="movementsOperations" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_movementsOperations"  Click="Btn_movementsOperations_Click"
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
@@ -198,7 +198,7 @@
                             <TextBlock x:Name="txt_stocktakingOperationsInfo" Text="stocktaking Operations"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_stocktakingOperationsHint" Text="Shortage, Destructive, stocktaking" FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
-                        <Button Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                            <Button  Tag="stocktakingOperations" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_stocktakingOperations" Click="Btn_stocktakingOperations_Click"
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
