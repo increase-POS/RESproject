@@ -22,7 +22,18 @@ namespace Restaurant.Classes
 {
     class HelpClass
     {
-       static public BrushConverter brushConverter = new BrushConverter();
+        public static bool iscodeExist = false;
+        public static Agent agentModel = new Agent();
+        //public static Bonds bondModel = new Bonds();
+        public static Branch branchModel = new Branch();
+        public static Category categoryModel = new Category();
+        public static Pos posModel = new Pos();
+        //public static Offer offerModel = new Offer();
+        //public static CashTransfer cashModel = new CashTransfer();
+        //public static Coupon couponModel = new Coupon();
+
+        public static string code;
+        static public BrushConverter brushConverter = new BrushConverter();
         public static ImageBrush imageBrush = new ImageBrush();
         
         
@@ -64,6 +75,84 @@ namespace Restaurant.Classes
         public static void clearValidate( Path p_error)
         {
             p_error.Visibility = Visibility.Collapsed;
+        }
+        public static async Task<bool> isCodeExist(string randomNum, string type, string _class, int id)
+        {
+            iscodeExist = false;
+            try
+            {
+                List<string> codes = new List<string>();
+
+                if (_class.Equals("Agent"))
+                {
+                    List<Agent> agents = await agentModel.Get(type);
+                    //Agent agent = new Agent();
+                    //for (int i = 0; i < agents.Count; i++)
+                    //{
+                    //    agent = agents[i];
+                    //    codes.Add(agent.code.Trim());
+                    //}
+                    if (agents.Any(a => a.code == randomNum && a.agentId != id))
+                        iscodeExist = true;
+                    else
+                        iscodeExist = false;
+                }
+                else if (_class.Equals("Branch"))
+                {
+                    List<Branch> branches = await branchModel.Get(type);
+
+                    //Branch branch = new Branch();
+                    //for (int i = 0; i < branches.Count; i++)
+                    //{
+                    //    branch = branches[i];
+                    //    if (branch.branchId != id)
+                    //        codes.Add(branch.code.Trim());
+                    //}
+                    if (branches.Any(b => b.code == randomNum && b.branchId != id))
+                        iscodeExist = true;
+                    else
+                        iscodeExist = false;
+                }
+                else if (_class.Equals("Category"))
+                {
+                    List<Category> categories = await categoryModel.GetAllCategories(MainWindow.userLogin.userId);
+
+                    //Category category = new Category();
+                    //for (int i = 0; i < categories.Count; i++)
+                    //{
+                    //    category = categories[i];
+                    //    if (category.categoryId != id)
+                    //        codes.Add(category.categoryCode.Trim());
+                    //}
+                    if (categories.Any(c => c.categoryCode == randomNum && c.categoryId != id))
+                        iscodeExist = true;
+                    else
+                        iscodeExist = false;
+                }
+                else if (_class.Equals("Pos"))
+                {
+                    List<Pos> poss = await posModel.Get();
+
+                    //    Pos pos = new Pos();
+                    //    for (int i = 0; i < poss.Count; i++)
+                    //    {
+                    //        pos = poss[i];
+                    //        if (pos.posId != id)
+                    //            codes.Add(pos.code.Trim());
+                    //    }
+                    if (poss.Any(p => p.code == randomNum && p.posId != id))
+                        iscodeExist = true;
+                    else
+                        iscodeExist = false;
+                }
+                //if (codes.Contains(randomNum.Trim()))
+                //    iscodeExist = true;
+                //else
+                //    iscodeExist = false;
+
+            }
+            catch { }
+            return iscodeExist;
         }
         #region validateEmpty 
         /*

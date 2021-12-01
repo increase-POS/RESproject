@@ -51,7 +51,7 @@
                     <RowDefinition Height="68.8"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Image FlowDirection="LeftToRight" Source="/pic/increase-logo.png"   Margin="0,0,0,0" Width="100" Height="100"/>
+                <Image FlowDirection="LeftToRight" Source="/pic/increase-logo100.png"   Margin="0,0,0,0" Width="100" Height="100"/>
 
                 <DockPanel Grid.Row="1" Margin="0,10,15,0">
                     <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center">

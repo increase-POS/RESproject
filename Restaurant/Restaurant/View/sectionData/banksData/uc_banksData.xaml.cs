@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Restaurant.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,7 +50,20 @@ namespace Restaurant.View.sectionData.banksData
             GC.Collect();
         }
 
-       
+        private void Btn_banks_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_banks.Instance);
 
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

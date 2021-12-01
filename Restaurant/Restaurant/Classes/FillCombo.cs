@@ -24,6 +24,23 @@ namespace Restaurant.Classes
             combo.DisplayMemberPath = "packageName";
         }
         */
+        static Branch branch = new Branch();
+        static List<Branch> branchsList ;
+        static async Task<IEnumerable<Branch>> RefreshBranch()
+        {
+            branchsList = await branch.GetAll();
+            return branchsList;
+        }
+        static public async Task fillComboBranchParent(ComboBox combo)
+        {
+            if (branchsList is null)
+                await RefreshBranch();
+            combo.ItemsSource = branchsList.Where(b => b.type == "b" || b.type == "bs");
+            combo.DisplayMemberPath = "name";
+            combo.SelectedValuePath = "branchId";
+            combo.SelectedIndex = -1;
+        }
+
 
         /// <summary>
         /// PayType

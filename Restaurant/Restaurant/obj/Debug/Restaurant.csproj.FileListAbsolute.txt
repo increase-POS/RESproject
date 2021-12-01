@@ -332,3 +332,15 @@ E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\Restaurant.ar_file.resource
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\Restaurant.en_file.resources
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\delivery\uc_delivery.g.cs
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\delivery\uc_delivery.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\banksData\uc_banks.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\banksData\uc_banks.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\catalog\rawMaterials\uc_rawMaterials.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\catalog\rawMaterials\uc_rawMaterials.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\branchesAndStores\uc_branches.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\branchesAndStores\uc_pos.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\branchesAndStores\uc_stores.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\branchesAndStores\uc_branches.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\branchesAndStores\uc_pos.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\branchesAndStores\uc_stores.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_branchesList.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_branchesList.baml

@@ -83,6 +83,7 @@ namespace Restaurant.View.sectionData.persons
             }
         }
 
+        string basicsPermission = "customers_basics";
         Agent agent = new Agent();
         IEnumerable<Agent> agentsQuery;
         IEnumerable<Agent> agents;
@@ -174,8 +175,8 @@ namespace Restaurant.View.sectionData.persons
         {//add
             try
             {
-                //if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") || SectionData.isAdminPermision())
-                //{
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") || HelpClass.isAdminPermision())
+                {
                     HelpClass.StartAwait(grid_main);
 
                
@@ -237,9 +238,9 @@ namespace Restaurant.View.sectionData.persons
                     }
                 }
                 HelpClass.EndAwait(grid_main);
-                //}
-                //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)
@@ -253,8 +254,8 @@ namespace Restaurant.View.sectionData.persons
         {//update
             try
             {
-                //if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || SectionData.isAdminPermision())
-                //{
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
+                {
                     HelpClass.StartAwait(grid_main);
                 if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                 {
@@ -318,9 +319,9 @@ namespace Restaurant.View.sectionData.persons
                     }
                 }
                 HelpClass.EndAwait(grid_main);
-                //}
-                //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)
@@ -333,8 +334,9 @@ namespace Restaurant.View.sectionData.persons
         {
             try
             {//delete
-
-                HelpClass.StartAwait(grid_main);
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") || HelpClass.isAdminPermision())
+                {
+                    HelpClass.StartAwait(grid_main);
                 if (agent.agentId != 0)
                 {
                     if ((!agent.canDelete) && (agent.isActive == 0))
@@ -382,6 +384,10 @@ namespace Restaurant.View.sectionData.persons
                     }
                 }
                 HelpClass.EndAwait(grid_main);
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
             }
             catch (Exception ex)
             {

@@ -9,6 +9,7 @@ FE:\GitHub\RESproject\Restaurant\Restaurant\View\kitchen\uc_kitchen.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\purchase\uc_purchase.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sales\promotion\uc_promotion.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sales\uc_sales.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\banksData\uc_banks.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\banksData\uc_banksData.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\branchesAndStores\uc_branchesAndStores.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\hallDivide\uc_hallDivide.xaml;;
@@ -23,4 +24,9 @@ FE:\GitHub\RESproject\Restaurant\Restaurant\View\storage\storageOperations\stora
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\storage\uc_storage.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_acceptCancelPopup.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_logIn.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\catalog\rawMaterials\uc_rawMaterials.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\branchesAndStores\uc_branches.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\branchesAndStores\uc_pos.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\branchesAndStores\uc_stores.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_branchesList.xaml;;
 

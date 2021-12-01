@@ -166,13 +166,22 @@
     </ApplicationDefinition>
     <Compile Include="ar_file.Designer.cs" />
     <Compile Include="Classes\ApiClasses\Agent.cs" />
+    <Compile Include="Classes\ApiClasses\Bank.cs" />
+    <Compile Include="Classes\ApiClasses\Branch.cs" />
+    <Compile Include="Classes\ApiClasses\BranchesUsers.cs" />
+    <Compile Include="Classes\ApiClasses\BranchStore.cs" />
+    <Compile Include="Classes\ApiClasses\Category.cs" />
     <Compile Include="Classes\ApiClasses\CountryCode.cs" />
+    <Compile Include="Classes\ApiClasses\Pos.cs" />
     <Compile Include="en_file.Designer.cs" />
     <Compile Include="View\accounts\uc_accounts.xaml.cs">
       <DependentUpon>uc_accounts.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\catalog\foods\uc_foods.xaml.cs">
       <DependentUpon>uc_foods.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\catalog\rawMaterials\uc_rawMaterials.xaml.cs">
+      <DependentUpon>uc_rawMaterials.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\catalog\uc_catalog.xaml.cs">
       <DependentUpon>uc_catalog.xaml</DependentUpon>
@@ -192,11 +201,23 @@
     <Compile Include="View\sales\uc_sales.xaml.cs">
       <DependentUpon>uc_sales.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\sectionData\banksData\uc_banks.xaml.cs">
+      <DependentUpon>uc_banks.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\sectionData\banksData\uc_banksData.xaml.cs">
       <DependentUpon>uc_banksData.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\sectionData\branchesAndStores\uc_branches.xaml.cs">
+      <DependentUpon>uc_branches.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\sectionData\branchesAndStores\uc_branchesAndStores.xaml.cs">
       <DependentUpon>uc_branchesAndStores.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sectionData\branchesAndStores\uc_pos.xaml.cs">
+      <DependentUpon>uc_pos.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sectionData\branchesAndStores\uc_stores.xaml.cs">
+      <DependentUpon>uc_stores.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\sectionData\hallDivide\uc_hallDivide.xaml.cs">
       <DependentUpon>uc_hallDivide.xaml</DependentUpon>
@@ -230,6 +251,9 @@
     </Compile>
     <Compile Include="View\windows\wd_acceptCancelPopup.xaml.cs">
       <DependentUpon>wd_acceptCancelPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_branchesList.xaml.cs">
+      <DependentUpon>wd_branchesList.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_logIn.xaml.cs">
       <DependentUpon>wd_logIn.xaml</DependentUpon>
@@ -290,6 +314,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\catalog\rawMaterials\uc_rawMaterials.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\catalog\uc_catalog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -314,11 +342,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\sectionData\banksData\uc_banks.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\sectionData\banksData\uc_banksData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\sectionData\branchesAndStores\uc_branches.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\sectionData\branchesAndStores\uc_branchesAndStores.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sectionData\branchesAndStores\uc_pos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sectionData\branchesAndStores\uc_stores.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -363,6 +407,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_acceptCancelPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_branchesList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -425,6 +473,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="pic\90408.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Thumb\agents\tmp.txt" />
+    <Resource Include="Thumb\cards\tmp.txt" />
+    <Resource Include="Thumb\items\tmp.txt" />
+    <Resource Include="Thumb\report\tmp.txt" />
+    <Resource Include="Thumb\setting\tmp.txt" />
+    <Resource Include="Thumb\tmp.txt" />
+    <Resource Include="Thumb\users\tmp.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pic\increase-logo100.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -83,8 +83,8 @@ namespace Restaurant
 
         Object objectModel = new Object();
         List<Object> listObjects = new List<Object>();
-        //static public GroupObject groupObject = new GroupObject();
-        //static public List<GroupObject> groupObjects = new List<GroupObject>();
+        static public GroupObject groupObject = new GroupObject();
+        static public List<GroupObject> groupObjects = new List<GroupObject>();
         //static SettingCls setModel = new SettingCls();
         //static SetValues valueModel = new SetValues();
         static int nameId, addressId, emailId, mobileId, phoneId, faxId, logoId, taxId;
@@ -243,6 +243,23 @@ namespace Restaurant
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_listObjects"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_getGroupObjects()
+        {
+            try
+            {
+                groupObjects = await groupObject.GetUserpermission(userLogin.userId);
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getGroupObjects"))
                 {
                     item.value = true;
                     break;
@@ -493,23 +510,7 @@ namespace Restaurant
                 }
             }
         }
-        async void loading_getGroupObjects()
-        {
-            try
-            {
-                groupObjects = await groupObject.GetUserpermission(userLogin.userId);
-            }
-            catch (Exception)
-            { }
-            foreach (var item in loadingList)
-            {
-                if (item.key.Equals("loading_getGroupObjects"))
-                {
-                    item.value = true;
-                    break;
-                }
-            }
-        }
+        
         async void loading_getDefaultSystemInfo()
         {
             try
@@ -724,9 +725,8 @@ namespace Restaurant
             try
             {
                     HelpClass.StartAwait(grid_mainWindow);
-
                 #region bonni
-                #pragma warning disable CS0436 // Type conflicts with imported type
+#pragma warning disable CS0436 // Type conflicts with imported type
                 TabTipAutomation.IgnoreHardwareKeyboard = HardwareKeyboardIgnoreOptions.IgnoreAll;
                 #pragma warning restore CS0436 // Type conflicts with imported type
                 #pragma warning disable CS0436 // Type conflicts with imported type
@@ -763,6 +763,7 @@ namespace Restaurant
                 loadingList = new List<keyValueBool>();
                 bool isDone = true;
                 loadingList.Add(new keyValueBool { key = "loading_listObjects", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_getGroupObjects", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getUserPath", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getTax", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getItemCost", value = false });
@@ -773,7 +774,6 @@ namespace Restaurant
                 //loadingList.Add(new keyValueBool { key = "loading_getUserPersonalInfo", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getDefaultSystemInfo", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getItemUnitsUsers", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getGroupObjects", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getprintSitting", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_GlobalItemUnitsList", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_GlobalUnitsList", value = false });
@@ -781,6 +781,7 @@ namespace Restaurant
                 //loadingList.Add(new keyValueBool { key = "loading_getPrintCount", value = false });
 
                 loading_listObjects();
+                loading_getGroupObjects();
                 //loading_getUserPath();
                 //loading_getTax();
                 //loading_getItemCost();
@@ -791,7 +792,6 @@ namespace Restaurant
                 //loading_getItemUnitsUsers();
                 //loading_getUserPersonalInfo();
                 //loading_getDefaultSystemInfo();
-                //loading_getGroupObjects();
                 //loading_getprintSitting();
                 //loading_GlobalItemUnitsList();
                 //loading_GlobalUnitsList();
