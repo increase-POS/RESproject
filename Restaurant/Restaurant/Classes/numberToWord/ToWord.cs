@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace POS.Classes
+namespace Restaurant.Classes
 {
     class ToWord
     {

@@ -173,6 +173,8 @@
     <Compile Include="Classes\ApiClasses\Category.cs" />
     <Compile Include="Classes\ApiClasses\CountryCode.cs" />
     <Compile Include="Classes\ApiClasses\Pos.cs" />
+    <Compile Include="Classes\numberToWord\CurrencyInfo.cs" />
+    <Compile Include="Classes\numberToWord\ToWord.cs" />
     <Compile Include="en_file.Designer.cs" />
     <Compile Include="View\accounts\uc_accounts.xaml.cs">
       <DependentUpon>uc_accounts.xaml</DependentUpon>

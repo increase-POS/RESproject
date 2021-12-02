@@ -10,7 +10,7 @@ using System.Resources;
 using System.Reflection;
 using System.Globalization;
 using System.Collections;
-namespace POS.Classes
+namespace Restaurant.Classes
 {
     class ReportCls
     {

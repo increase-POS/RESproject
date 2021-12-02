@@ -99,7 +99,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                 try
                 {
                     HelpClass.StartAwait(grid_main);
-                    requiredControlList = new List<string> { "name", "mobile" };
+                    requiredControlList = new List<string> { "code","name", "parentId", "mobile" };
                     if (MainWindow.lang.Equals("en"))
                     {
                         MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
@@ -224,7 +224,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
 
 
                                 Clear();
-                                await RefreshCustomersList();
+                                await RefreshBranchsList();
                                 await Search();
                             }
                         }
@@ -253,7 +253,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                     {
 
 
-                        bool iscodeExist = await HelpClass.isCodeExist(tb_code.Text, "b", "Branch", 0);
+                        bool iscodeExist = await HelpClass.isCodeExist(tb_code.Text, "b", "Branch", branch.branchId);
                         if (iscodeExist)
                         {
                             Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trDuplicateCodeToolTip"), animation: ToasterAnimation.FadeIn);
@@ -286,7 +286,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                             else
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                                await RefreshCustomersList();
+                                await RefreshBranchsList();
                                 await Search();
 
 
@@ -351,7 +351,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                                     {
                                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
-                                        await RefreshCustomersList();
+                                        await RefreshBranchsList();
                                         await Search();
                                         Clear();
                                     }
@@ -379,7 +379,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                 else
                 {
                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
-                    await RefreshCustomersList();
+                    await RefreshBranchsList();
                     await Search();
                 }
             }
@@ -405,7 +405,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                 {
                     HelpClass.StartAwait(grid_main);
                     if (branchs is null)
-                        await RefreshCustomersList();
+                        await RefreshBranchsList();
                     tgl_branchState = 1;
                     await Search();
                     HelpClass.EndAwait(grid_main);
@@ -422,7 +422,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                 {
                     HelpClass.StartAwait(grid_main);
                     if (branchs is null)
-                        await RefreshCustomersList();
+                        await RefreshBranchsList();
                     tgl_branchState = 0;
                     await Search();
                     HelpClass.EndAwait(grid_main);
@@ -461,8 +461,9 @@ namespace Restaurant.View.sectionData.branchesAndStores
                         this.DataContext = branch;
                         if (branch != null)
                         {
-                            #region delete
-                            if (branch.canDelete)
+                    btn_stores.IsEnabled = true;
+                        #region delete
+                        if (branch.canDelete)
                                 btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
                             else
                             {
@@ -491,7 +492,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                 {//refresh
 
                     HelpClass.StartAwait(grid_main);
-                    await RefreshCustomersList();
+                    await RefreshBranchsList();
                     await Search();
                     HelpClass.EndAwait(grid_main);
                 }
@@ -508,20 +509,20 @@ namespace Restaurant.View.sectionData.branchesAndStores
             {
                 //search
                 if (branchs is null)
-                    await RefreshCustomersList();
+                    await RefreshBranchsList();
                 searchText = tb_search.Text.ToLower();
                 branchsQuery = branchs.Where(s => (s.code.ToLower().Contains(searchText) ||
                 s.name.ToLower().Contains(searchText) ||
                 s.mobile.ToLower().Contains(searchText)
                 ) && s.isActive == tgl_branchState);
-                RefreshCustomersView();
+                RefreshBranchsView();
             }
-            async Task<IEnumerable<Branch>> RefreshCustomersList()
+            async Task<IEnumerable<Branch>> RefreshBranchsList()
             {
-                branchs = await branch.Get("c");
+                branchs = await branch.Get("b");
                 return branchs;
             }
-            void RefreshCustomersView()
+            void RefreshBranchsView()
             {
                 dg_branch.ItemsSource = branchsQuery;
                 txt_count.Text = branchsQuery.Count().ToString();
@@ -545,8 +546,10 @@ namespace Restaurant.View.sectionData.branchesAndStores
                 // last 
                 HelpClass.clearValidate(requiredControlList, this);
                 p_error_email.Visibility = Visibility.Collapsed;
-            }
-            private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
+            btn_stores.IsEnabled = false;
+
+        }
+        private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
             {
                 try
                 {
@@ -634,11 +637,238 @@ namespace Restaurant.View.sectionData.branchesAndStores
                     HelpClass.ExceptionMessage(ex, this);
                 }
             }
-           
+
 
 
         #endregion
+        #region report
+        /*
+        // report
+        ReportCls reportclass = new ReportCls();
+        LocalReport rep = new LocalReport();
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+        public void BuildReport()
+        {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
 
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
+                addpath = @"\Reports\Sale\Ar\PackageReport.rdlc";
+            }
+            else
+                addpath = @"\Reports\Sale\En\PackageReport.rdlc";
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+            ReportCls.checkLang();
+
+            clsReports.packageReport(itemsQuery, rep, reppath, paramarr);
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+        }
+        public void pdfpackage()
+        {
+
+            BuildReport();
+
+            this.Dispatcher.Invoke(() =>
+            {
+                saveFileDialog.Filter = "PDF|*.pdf;";
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string filepath = saveFileDialog.FileName;
+                    LocalReportExtensions.ExportToPDF(rep, filepath);
+                }
+            });
+        }
+        private void Btn_pdf_Click(object sender, RoutedEventArgs e)
+        {//pdf
+            try
+            {
+
+                if (sender != null)
+                    SectionData.StartAwait(grid_main);
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                {
+                    /////////////////////////////////////
+                    Thread t1 = new Thread(() =>
+                    {
+                        pdfpackage();
+                    });
+                    t1.Start();
+                    //////////////////////////////////////
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+                SectionData.ExceptionMessage(ex, this);
+            }
+        }
+        public void printpackage()
+        {
+            BuildReport();
+
+            this.Dispatcher.Invoke(() =>
+            {
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
+            });
+        }
+        private void Btn_print_Click(object sender, RoutedEventArgs e)
+        {//print
+            try
+            {
+                if (sender != null)
+                    SectionData.StartAwait(grid_main);
+
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                {
+                    /////////////////////////////////////
+                    Thread t1 = new Thread(() =>
+                    {
+                        printpackage();
+                    });
+                    t1.Start();
+                    //////////////////////////////////////
+
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+                SectionData.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
+        {//pie
+            try
+            {
+                if (sender != null)
+                    SectionData.StartAwait(grid_main);
+
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                {
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+                    win_lvcCatalog win = new win_lvcCatalog(itemsQuery, 3);
+                    win.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+                SectionData.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_preview_Click(object sender, RoutedEventArgs e)
+        {//preview
+            try
+            {
+                if (sender != null)
+                    SectionData.StartAwait(grid_main);
+
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                {
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+                    /////////////////////
+                    string pdfpath = "";
+                    pdfpath = @"\Thumb\report\temp.pdf";
+                    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+                    BuildReport();
+                    LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                    ///////////////////
+                    wd_previewPdf w = new wd_previewPdf();
+                    w.pdfPath = pdfpath;
+                    if (!string.IsNullOrEmpty(w.pdfPath))
+                    {
+                        w.ShowDialog();
+                        w.wb_pdfWebViewer.Dispose();
+                    }
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+                SectionData.ExceptionMessage(ex, this);
+            }
+        }
+        public void ExcelPackage()
+        {
+
+            BuildReport();
+
+            this.Dispatcher.Invoke(() =>
+            {
+                saveFileDialog.Filter = "EXCEL|*.xls;";
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string filepath = saveFileDialog.FileName;
+                    LocalReportExtensions.ExportToExcel(rep, filepath);
+                }
+            });
+        }
+        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
+        {//excel
+            try
+            {
+                if (sender != null)
+                    SectionData.StartAwait(grid_main);
+
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                {
+                    Thread t1 = new Thread(() =>
+                    {
+                        ExcelPackage();
+
+                    });
+                    t1.Start();
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+                SectionData.ExceptionMessage(ex, this);
+            }
+        }
+        */
+        #endregion
         private void Btn_stores_Click(object sender, RoutedEventArgs e)
         {
             // stores

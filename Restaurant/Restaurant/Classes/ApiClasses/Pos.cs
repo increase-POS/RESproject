@@ -27,7 +27,7 @@ namespace Restaurant.Classes
         public Nullable<int> updateUserId { get; set; }
         public Nullable<byte> isActive { get; set; }
         public Boolean canDelete { get; set; }
-        public string note { get; set; }
+        public string notes { get; set; }
         public string branchName { get; set; }
         public string branchCode { get; set; }
         public Nullable<decimal> balanceAll { get; set; }

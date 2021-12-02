@@ -611,7 +611,7 @@
                     </DockPanel>
 
 
-                    <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                    <Border Grid.Row="10" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                             <TextBox  x:Name="tb_notes" Text="{Binding notes, Mode=OneWay}"
                                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -641,8 +641,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Border Background="White" Grid.ColumnSpan="3"  Height="1"  BorderBrush="{StaticResource MainColor}" 
-                    BorderThickness="1" Opacity="1" Margin="5,5,5,0"  />
-                    <Border>
+                    BorderThickness="1" Opacity="1" Margin="5,5,5,5"  />
+                    <Border Grid.Row="1">
 
                         <Button x:Name="btn_add"  materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
@@ -665,7 +665,7 @@
                                     VerticalOffset="30"/>
                         </Border.ToolTip>
                     </Border>
-                    <Border Grid.Column="1">
+                    <Border Grid.Row="1" Grid.Column="1">
                         <Button x:Name="btn_update"   materialDesign:ButtonAssist.CornerRadius="7"
                         Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                    Margin="1,1"  Click="Btn_update_Click" >
@@ -689,7 +689,7 @@
 
                         </Border.ToolTip>
                     </Border>
-                    <Border Grid.Column="2">
+                    <Border Grid.Row="1" Grid.Column="2">
                         <Button x:Name="btn_delete"  materialDesign:ButtonAssist.CornerRadius="7"
                         Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" Foreground="White"
                     Margin="1,1"  Click="Btn_delete_Click" >

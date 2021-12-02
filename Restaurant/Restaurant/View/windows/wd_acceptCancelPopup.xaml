@@ -26,7 +26,7 @@
                      TextWrapping="Wrap" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Center"  
                         Margin="5"/>
             <Border  Grid.Row="2"  Grid.Column="0"   CornerRadius="0,0,0,2.5" Background="#E65B65">
-                <Button x:Name="btn_cancel"    IsCancel="true"
+                <Button x:Name="btn_cancel"    IsCancel="true" Foreground="White"
                            BorderBrush="{x:Null}" Background="{x:Null}"
                      Click="Btn_cancel_Click" >
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">

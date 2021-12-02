@@ -26,7 +26,8 @@ namespace Restaurant.Classes
         */
         static Branch branch = new Branch();
         static List<Branch> branchsList ;
-        static async Task<IEnumerable<Branch>> RefreshBranch()
+        static List<Branch> branchesAllWithoutMain;
+        static async Task<IEnumerable<Branch>> RefreshBranches()
         {
             branchsList = await branch.GetAll();
             return branchsList;
@@ -34,13 +35,26 @@ namespace Restaurant.Classes
         static public async Task fillComboBranchParent(ComboBox combo)
         {
             if (branchsList is null)
-                await RefreshBranch();
+                await RefreshBranches();
             combo.ItemsSource = branchsList.Where(b => b.type == "b" || b.type == "bs");
             combo.DisplayMemberPath = "name";
             combo.SelectedValuePath = "branchId";
             combo.SelectedIndex = -1;
         }
-
+        static async Task<IEnumerable<Branch>> RefreshBranchesAllWithoutMain()
+        {
+            branchesAllWithoutMain = await  branch.GetAllWithoutMain("all");
+            return branchesAllWithoutMain;
+        }
+        static public async Task fillComboBranchesAllWithoutMain(ComboBox combo)
+        {
+            if (branchesAllWithoutMain is null)
+                await RefreshBranchesAllWithoutMain();
+            combo.ItemsSource = branchesAllWithoutMain;
+            combo.DisplayMemberPath = "name";
+            combo.SelectedValuePath = "branchId";
+            combo.SelectedIndex = -1;
+        }
 
         /// <summary>
         /// PayType

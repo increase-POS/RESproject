@@ -73,9 +73,9 @@ namespace Restaurant.View.windows
 
                 #region translate
                 if (MainWindow.lang.Equals("en"))
-                { MainWindow.resourcemanager = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly()); grid_branchList.FlowDirection = FlowDirection.LeftToRight; }
+                { MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly()); grid_branchList.FlowDirection = FlowDirection.LeftToRight; }
                 else
-                { MainWindow.resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly()); grid_branchList.FlowDirection = FlowDirection.RightToLeft; }
+                { MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly()); grid_branchList.FlowDirection = FlowDirection.RightToLeft; }
 
                 translat();
                 #endregion

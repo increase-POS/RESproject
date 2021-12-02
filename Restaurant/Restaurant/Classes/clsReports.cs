@@ -6,8 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using POS.View.storage;
-namespace POS.Classes
+using Restaurant.View.storage;
+namespace Restaurant.Classes
 {
     class clsReports
     {
@@ -50,61 +50,9 @@ namespace POS.Classes
 
 
         }
-        public static void bondsReport(IEnumerable<Bonds> bondsQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
-        {
-            rep.ReportPath = reppath;
-            rep.EnableExternalImages = true;
-            rep.DataSources.Clear();
-            foreach (var c in bondsQuery)
-            {
+       
 
-                c.amount = decimal.Parse(SectionData.DecTostring(c.amount));
-            }
-            rep.DataSources.Add(new ReportDataSource("DataSetBond", bondsQuery));
-
-            DateFormConv(paramarr);
-            AccountSideConv(paramarr);
-            cashTransTypeConv(paramarr);
-        
-        }
-
-        public static void bondsDocReport(LocalReport rep, string reppath, List<ReportParameter> paramarr)
-        {
-            rep.ReportPath = reppath;
-            rep.EnableExternalImages = true;
-            rep.DataSources.Clear();
-          
-          
-
-            DateFormConv(paramarr);
-     
-
-        }
-        //public static void orderReport(IEnumerable<Invoice> invoiceQuery, LocalReport rep, string reppath)
-        //{
-        //    rep.ReportPath = reppath;
-        //    rep.EnableExternalImages = true;
-        //    rep.DataSources.Clear();
-        //    foreach(var o in invoiceQuery)
-        //    {
-        //        string status = "";
-        //        switch (o.status)
-        //        {
-        //            case "tr":
-        //                status = MainWindow.resourcemanager.GetString("trDelivered");
-        //                break;
-        //            case "rc":
-        //                status = MainWindow.resourcemanager.GetString("trInDelivery");
-        //                break;
-        //            default:
-        //                status = "";
-        //                break;
-        //        }
-        //        o.status = status;
-        //        o.deserved = decimal.Parse(SectionData.DecTostring(o.deserved));
-        //    }
-        //    rep.DataSources.Add(new ReportDataSource("DataSetInvoice", invoiceQuery));
-        //}
+       
         public static void orderReport(IEnumerable<Invoice> invoiceQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             rep.ReportPath = reppath;
