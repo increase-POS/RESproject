@@ -344,3 +344,7 @@ E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\branchesAn
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\branchesAndStores\uc_stores.baml
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_branchesList.g.cs
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_branchesList.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sales\uc_diningHall.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sales\uc_diningHall.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\controlTemplate\uc_squareCard.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\controlTemplate\uc_squareCard.baml

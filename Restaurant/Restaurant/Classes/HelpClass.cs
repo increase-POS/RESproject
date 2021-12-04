@@ -537,7 +537,229 @@ namespace Restaurant.Classes
             });
             itemsViewOriginal.Refresh();
         }
+        public static async void getImg(string type, string imageUri, Button button)
+        {
+            try
+            {
 
+                //if (string.IsNullOrEmpty(category.image))
+                //{
+                //    SectionData.clearImg(button);
+                //}
+                //else
+                //{
+
+                if (type.Equals("Category"))
+                {
+                    Category category = new Category();
+                    byte[] imageBuffer = await category.downloadImage(imageUri); // read this as BLOB from your DB
+                    var bitmapImage = new BitmapImage();
+                    using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
+                    {
+                        bitmapImage.BeginInit();
+                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmapImage.StreamSource = memoryStream;
+                        bitmapImage.EndInit();
+                    }
+                    button.Background = new ImageBrush(bitmapImage);
+                }
+                else if (type.Equals("Item"))
+                {
+                    Item item = new Item();
+                    byte[] imageBuffer = await item.downloadImage(imageUri); // read this as BLOB from your DB
+                    var bitmapImage = new BitmapImage();
+                    using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
+                    {
+                        bitmapImage.BeginInit();
+                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmapImage.StreamSource = memoryStream;
+                        bitmapImage.EndInit();
+                    }
+                    button.Background = new ImageBrush(bitmapImage);
+                }
+                else if (type.Equals("User"))
+                {
+                    User user = new User();
+                    byte[] imageBuffer = await user.downloadImage(imageUri); // read this as BLOB from your DB
+                    var bitmapImage = new BitmapImage();
+                    using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
+                    {
+                        bitmapImage.BeginInit();
+                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmapImage.StreamSource = memoryStream;
+                        bitmapImage.EndInit();
+                    }
+                    button.Background = new ImageBrush(bitmapImage);
+                }
+                else if (type.Equals("Agent"))
+                {
+                    Agent agent = new Agent();
+                    byte[] imageBuffer = await agent.downloadImage(imageUri); // read this as BLOB from your DB
+                    var bitmapImage = new BitmapImage();
+                    using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
+                    {
+                        bitmapImage.BeginInit();
+                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmapImage.StreamSource = memoryStream;
+                        bitmapImage.EndInit();
+                    }
+                    button.Background = new ImageBrush(bitmapImage);
+                }
+
+                //}
+            }
+            catch
+            {
+                clearImg(button);
+            }
+        }
+        public static async void getLocalImg(string type, string imageUri, Button button)
+        {
+            try
+            {
+
+                if (type.Equals("Category"))
+                {
+                    Category category = new Category();
+                    byte[] imageBuffer = readLocalImage(imageUri, Global.TMPFolder);
+                    var bitmapImage = new BitmapImage();
+                    using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
+                    {
+                        bitmapImage.BeginInit();
+                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmapImage.StreamSource = memoryStream;
+                        bitmapImage.EndInit();
+                    }
+                    button.Background = new ImageBrush(bitmapImage);
+                }
+                else if (type.Equals("Item"))
+                {
+                    Item item = new Item();
+                    byte[] imageBuffer = readLocalImage(imageUri, Global.TMPItemsFolder);
+                    var bitmapImage = new BitmapImage();
+                    using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
+                    {
+                        bitmapImage.BeginInit();
+                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmapImage.StreamSource = memoryStream;
+                        bitmapImage.EndInit();
+                    }
+                    button.Background = new ImageBrush(bitmapImage);
+                }
+                else if (type.Equals("User"))
+                {
+                    User user = new User();
+                    byte[] imageBuffer = readLocalImage(imageUri, Global.TMPUsersFolder);
+                    var bitmapImage = new BitmapImage();
+                    using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
+                    {
+                        bitmapImage.BeginInit();
+                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmapImage.StreamSource = memoryStream;
+                        bitmapImage.EndInit();
+                    }
+                    button.Background = new ImageBrush(bitmapImage);
+                }
+                else if (type.Equals("Agent"))
+                {
+                    Agent agent = new Agent();
+                    byte[] imageBuffer = readLocalImage(imageUri, Global.TMPAgentsFolder);
+                    var bitmapImage = new BitmapImage();
+                    using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
+                    {
+                        bitmapImage.BeginInit();
+                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmapImage.StreamSource = memoryStream;
+                        bitmapImage.EndInit();
+                    }
+                    button.Background = new ImageBrush(bitmapImage);
+                }
+
+                //}
+            }
+            catch
+            {
+                clearImg(button);
+            }
+        }
+        public static bool chkImgChng(string imageName, DateTime updateDate, string TMPFolder)
+        {
+            string dir = System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName;
+            string tmpPath = System.IO.Path.Combine(dir, Global.TMPFolder);
+            tmpPath = System.IO.Path.Combine(tmpPath, imageName);
+            DateTime mofdifyDate;
+            if (!System.IO.File.Exists(tmpPath))
+            {
+                return true;
+            }
+            else
+            {
+                mofdifyDate = System.IO.File.GetLastWriteTime(tmpPath);
+                if (mofdifyDate < updateDate)
+                    return true;
+            }
+            return false;
+        }
+        public static byte[] readLocalImage(string imageName, string TMPFolder)
+        {
+            byte[] data = null;
+            string dir = System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName;
+            string tmpPath = System.IO.Path.Combine(dir, TMPFolder);
+            if (!System.IO.Directory.Exists(tmpPath))
+                System.IO.Directory.CreateDirectory(tmpPath);
+            tmpPath = System.IO.Path.Combine(tmpPath, imageName);
+            if (System.IO.File.Exists(tmpPath))
+            {
+                // Load file meta data with FileInfo
+                System.IO.FileInfo fileInfo = new System.IO.FileInfo(tmpPath);
+                // The byte[] to save the data in
+                data = new byte[fileInfo.Length];
+                using (var stream = new System.IO.FileStream(tmpPath, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                {
+                    stream.Read(data, 0, data.Length);
+                }
+                // Delete the temporary file
+                // fileInfo.Delete();
+            }
+            return data;
+        }
+       
+      
+        public static string DecTostring(decimal? dec)
+        {
+            string sdc = "0";
+            if (dec == null)
+            {
+
+            }
+            else
+            {
+                decimal dc = decimal.Parse(dec.ToString());
+
+                switch (MainWindow.accuracy)
+                {
+                    case "0":
+                        sdc = string.Format("{0:F0}", dc);
+                        break;
+                    case "1":
+                        sdc = string.Format("{0:F1}", dc);
+                        break;
+                    case "2":
+                        sdc = string.Format("{0:F2}", dc);
+                        break;
+                    case "3":
+                        sdc = string.Format("{0:F3}", dc);
+                        break;
+                    default:
+                        sdc = string.Format("{0:F1}", dc);
+                        break;
+                }
+
+            }
+
+
+            return sdc;
+        }
         //static public bool isAdminPermision()
         //{
         //    //if (MainWindow.userLogin.userId == 1 || MainWindow.userLogin.userId == 2)

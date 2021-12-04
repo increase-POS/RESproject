@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POS.Classes
+namespace Restaurant.Classes
 {
     public class CardViewItems
     {
@@ -14,7 +14,5 @@ namespace POS.Classes
         public Agent agent { get; set; }
         public int row { get; set; }
         public int column { get; set; }
-        public string language { get; set; }
-        public string cardType { get; set; }
     }
 }

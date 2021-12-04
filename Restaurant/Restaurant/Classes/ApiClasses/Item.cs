@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Converters;
 using POS;
 using POS.Classes;
+using Restaurant.ApiClasses;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -17,7 +18,7 @@ using System.Web;
 using System.Windows.Media.Imaging;
 using System.Windows.Resources;
 
-namespace POS.Classes
+namespace Restaurant.Classes
 {
     public class Item
     {

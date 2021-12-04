@@ -1,4 +1,4 @@
-﻿E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\GeneratedInternalTypeHelper.g.cs
+﻿
 FE:\GitHub\RESproject\Restaurant\Restaurant\App.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\MainWindow.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\accounts\uc_accounts.xaml;;
@@ -29,4 +29,6 @@ FE:\GitHub\RESproject\Restaurant\Restaurant\View\storage\uc_storage.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_acceptCancelPopup.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_branchesList.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_logIn.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\sales\uc_diningHall.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\controlTemplate\uc_squareCard.xaml;;
 

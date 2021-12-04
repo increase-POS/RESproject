@@ -172,9 +172,16 @@
     <Compile Include="Classes\ApiClasses\BranchStore.cs" />
     <Compile Include="Classes\ApiClasses\Category.cs" />
     <Compile Include="Classes\ApiClasses\CountryCode.cs" />
+    <Compile Include="Classes\ApiClasses\Item.cs" />
+    <Compile Include="Classes\ApiClasses\ItemCardView.cs" />
     <Compile Include="Classes\ApiClasses\Pos.cs" />
+    <Compile Include="Classes\CatigoriesAndItemsView.cs" />
     <Compile Include="Classes\numberToWord\CurrencyInfo.cs" />
     <Compile Include="Classes\numberToWord\ToWord.cs" />
+    <Compile Include="Classes\Pagination.cs" />
+    <Compile Include="controlTemplate\uc_squareCard.xaml.cs">
+      <DependentUpon>uc_squareCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="en_file.Designer.cs" />
     <Compile Include="View\accounts\uc_accounts.xaml.cs">
       <DependentUpon>uc_accounts.xaml</DependentUpon>
@@ -199,6 +206,9 @@
     </Compile>
     <Compile Include="View\sales\promotion\uc_promotion.xaml.cs">
       <DependentUpon>uc_promotion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sales\uc_diningHall.xaml.cs">
+      <DependentUpon>uc_diningHall.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\sales\uc_sales.xaml.cs">
       <DependentUpon>uc_sales.xaml</DependentUpon>
@@ -260,6 +270,10 @@
     <Compile Include="View\windows\wd_logIn.xaml.cs">
       <DependentUpon>wd_logIn.xaml</DependentUpon>
     </Compile>
+    <Page Include="controlTemplate\uc_squareCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -337,6 +351,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\sales\promotion\uc_promotion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sales\uc_diningHall.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

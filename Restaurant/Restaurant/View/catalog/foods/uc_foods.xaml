@@ -7,7 +7,7 @@
              mc:Ignorable="d" Tag="foods"
              Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             d:DesignHeight="800" d:DesignWidth="1000" >
+             d:DesignHeight="672" d:DesignWidth="941" >
     <Grid x:Name="grid_main">
         <Grid>
             <Grid.RowDefinitions>
