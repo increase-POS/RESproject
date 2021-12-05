@@ -1,5 +1,6 @@
 ﻿
 FE:\GitHub\RESproject\Restaurant\Restaurant\App.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\controlTemplate\uc_squareCard.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\MainWindow.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\accounts\uc_accounts.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\catalog\foods\uc_foods.xaml;;
@@ -9,6 +10,7 @@ FE:\GitHub\RESproject\Restaurant\Restaurant\View\delivery\uc_delivery.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\kitchen\uc_kitchen.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\purchase\uc_purchase.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sales\promotion\uc_promotion.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\sales\uc_diningHall.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sales\uc_sales.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\banksData\uc_banks.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\banksData\uc_banksData.xaml;;
@@ -29,6 +31,4 @@ FE:\GitHub\RESproject\Restaurant\Restaurant\View\storage\uc_storage.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_acceptCancelPopup.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_branchesList.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_logIn.xaml;;
-FE:\GitHub\RESproject\Restaurant\Restaurant\View\sales\uc_diningHall.xaml;;
-FE:\GitHub\RESproject\Restaurant\Restaurant\controlTemplate\uc_squareCard.xaml;;
 
