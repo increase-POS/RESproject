@@ -46,6 +46,7 @@ namespace Restaurant.View.sales
             catch
             { }
         }
+        public static List<string> catalogMenuList;
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -54,6 +55,9 @@ namespace Restaurant.View.sales
             catigoriesAndItemsView.ucdiningHall = this;
             FillBillDetailsList(0);
             await Search();
+
+            catalogMenuList = new List<string> { "allMenu", "appetizers", "beverages", "fastFood", "mainCourses", "desserts" };
+
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -286,7 +290,106 @@ namespace Restaurant.View.sales
         }
         #endregion
         #endregion
+        #region catalogMenu
+        private void catalogMenu_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //bdr_allMenu
+                //btn_appetizers
+                //    path_appetizers
+                //    txt_appetizers
+                string senderTag = (sender as Button).Tag.ToString();
+                #region refresh colors
+                foreach (var control in catalogMenuList)
+                {
+                    Border border = FindControls.FindVisualChildren<Border>(this).Where(x => x.Tag != null && x.Name == "bdr_" + control )
+                        .FirstOrDefault();
+                    if (border.Tag.ToString() == senderTag)
+                        border.Background = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                    else
+                        border.Background = Application.Current.Resources["White"] as SolidColorBrush;
+                }
+                foreach (var control in catalogMenuList)
+                {
 
+                    Path path = FindControls.FindVisualChildren<Path>(this).Where(x => x.Tag != null && x.Name == "path_" + control)
+                        .FirstOrDefault();
+                    if (path.Tag.ToString() == senderTag)
+                        path.Fill = Application.Current.Resources["White"] as SolidColorBrush;
+                    else
+                        path.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                }
+                foreach (var control in catalogMenuList)
+                {
+                    TextBlock textBlock = FindControls.FindVisualChildren<TextBlock>(this).Where(x => x.Tag != null && x.Name == "txt_" + control)
+                        .FirstOrDefault();
+                    if (textBlock.Tag.ToString() == senderTag)
+                        textBlock.Foreground = Application.Current.Resources["White"] as SolidColorBrush;
+                    else
+                        textBlock.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                }
+                #endregion
+                refreshCatalogTags(senderTag);
+
+            }
+            catch { }
+        }
+        public static List<string> tagsList;
+        void refreshCatalogTags(string tag)
+        {
+           tagsList = new List<string> { "Orient", "Western", "Eastern" };
+            sp_menuTags.Children.Clear();
+            foreach (var item in tagsList)
+            {
+                #region  
+                Button button = new Button();
+                button.Content = item;
+                button.Tag = "catalogTags-" + item;
+                button.FontSize = 10;
+                button.Height = 25;
+                button.Padding = new Thickness(5);
+                MaterialDesignThemes.Wpf.ButtonAssist.SetCornerRadius(button, (new CornerRadius(7)));
+                button.Margin = new Thickness(5,0,5,0);
+                button.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                button.Background = Application.Current.Resources["White"] as SolidColorBrush;
+                button.BorderBrush = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                button.Click += buttonCatalogTags_Click;
+
+
+                sp_menuTags.Children.Add(button);
+                /////////////////////////////////
+
+                #endregion
+            }
+        }
+        void buttonCatalogTags_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string senderTag = (sender as Button).Tag.ToString();
+                #region refresh colors
+                foreach (var control in tagsList)
+                {
+                    Button button = FindControls.FindVisualChildren<Button>(this).Where(x => x.Tag != null && x.Tag.ToString() == "catalogTags-" + control)
+                        .FirstOrDefault();
+                    if (button.Tag.ToString() == senderTag)
+                    {
+                        button.Foreground = Application.Current.Resources["White"] as SolidColorBrush;
+                        button.Background = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                    }
+                    else
+                    {
+                        button.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                        button.Background = Application.Current.Resources["White"] as SolidColorBrush;
+                    }
+                }
+                #endregion
+
+            }
+            catch { }
+        }
+        #endregion
         #region invoice
         ObservableCollection<BillDetails> billDetailsList = new ObservableCollection<BillDetails>();
 
@@ -312,11 +415,11 @@ namespace Restaurant.View.sales
             //test
             Random r = new Random();
             //int rInt = r.Next(0, 100);
-                for (int i = 0; i < 13; i++)
+                for (int i = 0; i < 7; i++)
                 {
 
-                 int   _Count = r.Next(0, 25);
-                Decimal _Price = (r.Next(0, 10000)) / 100;
+                 int   _Count = r.Next(1, 10);
+                Decimal _Price = r.Next(0, 10000);
                 billDetailsList.Add(new BillDetails()
                 {
                     index = i,
@@ -360,7 +463,7 @@ namespace Restaurant.View.sales
             Grid gridContainer = new Grid();
             gridContainer.Margin = new Thickness(5);
             //int rowCount = billDetailsList.Count();
-            int rowCount = 13;
+            int rowCount = 8;
             RowDefinition[] rd = new RowDefinition[rowCount];
             for (int i = 0; i < rowCount; i++)
             {
@@ -399,7 +502,8 @@ namespace Restaurant.View.sales
                 #region   index
                 var indexText = new TextBlock();
                 indexText.Text = (item.index + 1)+".";
-                indexText.Tag = item.index;
+                indexText.Tag = ( "index-"+ item.index);
+                //indexText.Tag = item.index;
                 indexText.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                 indexText.FontSize = 14;
                 indexText.FontWeight = FontWeights.Bold;
@@ -415,7 +519,8 @@ namespace Restaurant.View.sales
                 #endregion
                 #region   image
                 Button buttonImage = new Button();
-                buttonImage.Tag = item.index;
+                buttonImage.Tag = "image-" + item.index;
+                //buttonImage.Tag = item.index;
                 buttonImage.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFFFF"));
                 buttonImage.Height =  
                 buttonImage.Width = 40;
@@ -443,7 +548,8 @@ namespace Restaurant.View.sales
                 #region   name
                 var itemNameText = new TextBlock();
                 itemNameText.Text = item.itemName;
-                itemNameText.Tag = item.index;
+                itemNameText.Tag = "name-" + item.index;
+                //itemNameText.Tag = item.index;
                 itemNameText.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                 itemNameText.FontSize = 14;
                 itemNameText.Margin = new Thickness(5);
@@ -455,10 +561,11 @@ namespace Restaurant.View.sales
                 Grid.SetColumn(itemNameText, 2);
                 gridContainer.Children.Add(itemNameText);
                 #endregion
-                #region   Count
+                #region   count
                 var countText = new TextBlock();
                 countText.Text = item.Count.ToString();
-                countText.Tag = item.index;
+                countText.Tag = "count-" + item.index;
+                //countText.Tag = item.index;
                 countText.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                 countText.FontSize = 14;
                 countText.FontWeight = FontWeights.Bold;
@@ -472,10 +579,11 @@ namespace Restaurant.View.sales
                 /////////////////////////////////
 
                 #endregion
-                #region   Total
+                #region   total
                 var totalText = new TextBlock();
                 totalText.Text = item.Total.ToString();
-                totalText.Tag = item.index;
+                totalText.Tag = "total-" + item.index;
+                //totalText.Tag = item.index;
                 totalText.Foreground = Application.Current.Resources["Grey"] as SolidColorBrush;
                 totalText.Margin = new Thickness(5);
                 totalText.VerticalAlignment = VerticalAlignment.Center;
@@ -487,27 +595,41 @@ namespace Restaurant.View.sales
                 /////////////////////////////////
 
                 #endregion
-
-                #region   Minus
-                //                         Width = "25" Height = "25" Kind = "Minus" />
-
+                #region   minus
                 Button buttonMinus = new Button();
-                buttonMinus.Tag = item.index;
+                buttonMinus.Tag = "minus-" + item.index;
+                //buttonMinus.Tag = item.index;
                 buttonMinus.Margin = new Thickness(2.5);
                 buttonMinus.BorderThickness = new Thickness(0);
                 buttonMinus.Height =
                 buttonMinus.Width = 30;
                 buttonMinus.Padding = new Thickness(0);
-                buttonMinus.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#DFDFDF"));
-
+                MaterialDesignThemes.Wpf.ButtonAssist.SetCornerRadius(buttonMinus, (new CornerRadius(5)));
+                if (item.Count <2)
+                buttonMinus.Background = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                else
+                    buttonMinus.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#DFDFDF"));
                 #region materialDesign
                 var MinusPackIcon = new PackIcon();
-                MinusPackIcon.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
-                MinusPackIcon.Height =
-                MinusPackIcon.Width = 30;
-                MinusPackIcon.Kind = PackIconKind.Minus;
+                MinusPackIcon.Tag = "minusPackIcon-" + item.index;
+                if (item.Count < 2)
+                {
+                    MinusPackIcon.Foreground = Application.Current.Resources["White"] as SolidColorBrush;
+                    MinusPackIcon.Kind = PackIconKind.Delete;
+                    MinusPackIcon.Height =
+                    MinusPackIcon.Width = 20;
+                }
+                else
+                {
+                    MinusPackIcon.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                    MinusPackIcon.Kind = PackIconKind.Minus;
+                    MinusPackIcon.Height =
+               MinusPackIcon.Width = 25;
+                }
+               
                 #endregion
                 buttonMinus.Content = MinusPackIcon;
+                buttonMinus.Click += buttonMinus_Click;
 
                 Grid.SetRow(buttonMinus, item.index);
                 Grid.SetColumn(buttonMinus, 3);
@@ -515,27 +637,140 @@ namespace Restaurant.View.sales
                 /////////////////////////////////
 
                 #endregion
-                /*
-
-            <!--#region  1-->
-                                
-                                
-                                
-                                <Button Tag="ssssssss" Grid.Column="5"    Margin="2.5"
-                                    Height="25" Width="25"  Padding="0"
-                                        Background="#DFDFDF"   BorderThickness="0">
-                                    <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
-                                         Width="25" Height="25" Kind="Plus" />
-                                </Button>
-                               
-                                <!--#endregion-->
-                  
-                 * */
+                #region   plus
+                Button buttonPlus = new Button();
+                buttonPlus.Tag = "plus-" + item.index;
+                //buttonPlus.Tag = item.index;
+                buttonPlus.Margin = new Thickness(2.5);
+                buttonPlus.BorderThickness = new Thickness(0);
+                buttonPlus.Height =
+                buttonPlus.Width = 30;
+                buttonPlus.Padding = new Thickness(0);
+                buttonPlus.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#DFDFDF"));
+                MaterialDesignThemes.Wpf.ButtonAssist.SetCornerRadius(buttonPlus, (new CornerRadius(5)));
+                #region materialDesign
+                var PlusPackIcon = new PackIcon();
+                PlusPackIcon.Tag = "plusPackIcon-" + item.index;
+                PlusPackIcon.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                PlusPackIcon.Height =
+                PlusPackIcon.Width = 25;
+                PlusPackIcon.Kind = PackIconKind.Plus;
+                #endregion
+                buttonPlus.Content = PlusPackIcon;
+                buttonPlus.Click += buttonPlus_Click;
+                Grid.SetRow(buttonPlus, item.index);
+                Grid.SetColumn(buttonPlus, 5);
+                gridContainer.Children.Add(buttonPlus);
+                /////////////////////////////////
+                #endregion
             }
             sv_billDetail.Content = gridContainer;
-
+            refreshTotal();
         }
+        void buttonPlus_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            int index = int.Parse(button.Tag.ToString().Replace("plus-", ""));
+            //MessageBox.Show("Hey you Click me! I'm Index: " + button.Tag);
+            billDetailsList[index].Count++;
+            billDetailsList[index].Total = billDetailsList[index].Count * billDetailsList[index].Price;
+            //BuildBillDesign();
+            editBillRow(index);
+            if (billDetailsList[index].Count == 2)
+                refreshDeleteButtonInvoice(index,billDetailsList[index].Count);
+        }
+        void buttonMinus_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            int index = int.Parse(button.Tag.ToString().Replace("minus-", ""));
+            if (billDetailsList[index].Count < 2)
+            {
+                billDetailsList.Remove(billDetailsList[index]);
+                int counter = 0;
+                foreach (var item in billDetailsList)
+                {
+                    item.index = counter;
+                    counter++;
+                }
+                BuildBillDesign();
+            }
+            else
+            {
+                billDetailsList[index].Count--;
+                billDetailsList[index].Total = billDetailsList[index].Count * billDetailsList[index].Price;
+                editBillRow(index);
+                if (billDetailsList[index].Count == 1)
+                    refreshDeleteButtonInvoice(index, billDetailsList[index].Count);
+            }
+           
+        }
+        void refreshDeleteButtonInvoice(int index,int count)
+        {
+            Button buttonMinus = new Button();
+            var buttonMinuslist = FindControls.FindVisualChildren<Button>(this).Where(x => x.Tag != null);
+            foreach (var item in buttonMinuslist)
+            {
+                if (item.Tag.ToString() == ("minus-" + index))
+                {
+                    buttonMinus = item;
+                    break;
+                }
+               
+            }
 
+            PackIcon MinusPackIcon = new PackIcon();
+            var MinusPackIconlist = FindControls.FindVisualChildren<PackIcon>(this).Where(x => x.Tag != null);
+            foreach (var item in MinusPackIconlist)
+            {
+                if (item.Tag.ToString() == ("minusPackIcon-" + index))
+                {
+                    MinusPackIcon = item;
+                    break;
+                }
+            }
+
+            if (count == 1)
+                buttonMinus.Background = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            else if (count == 2)
+                buttonMinus.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#DFDFDF"));
+
+            if (count == 1)
+            {
+                MinusPackIcon.Foreground = Application.Current.Resources["White"] as SolidColorBrush;
+                MinusPackIcon.Kind = PackIconKind.Delete;
+                MinusPackIcon.Height =
+                MinusPackIcon.Width = 20;
+            }
+            else if (count == 2)
+            {
+                MinusPackIcon.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                MinusPackIcon.Kind = PackIconKind.Minus;
+                MinusPackIcon.Height =
+                MinusPackIcon.Width = 25;
+            }
+        }
+        void editBillRow(int index)
+        {
+          var textBlocklist = FindControls.FindVisualChildren<TextBlock>(this).Where(x => x.Tag != null);
+            foreach (var item in textBlocklist)
+            {
+                if (item.Tag.ToString() == ("count-" + index))
+                {
+                    item.Text = billDetailsList[index].Count.ToString();
+                }
+                else if (item.Tag.ToString() == ("total-" + index))
+                {
+                    item.Text = (billDetailsList[index].Count * billDetailsList[index].Price).ToString();
+                }
+            }
+
+            refreshTotal();
+        }
+        void refreshTotal()
+        {
+            tb_subtotal.Text =
+                tb_total.Text = billDetailsList.Select(x => x.Total).Sum().ToString();
+        }
         void fillEllipse(Button img)
         {
             try
@@ -550,7 +785,8 @@ namespace Restaurant.View.sales
             catch
             { }
         }
-       
         #endregion
+
+       
     }
 }

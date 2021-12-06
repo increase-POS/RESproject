@@ -71,6 +71,7 @@ namespace Restaurant.controlTemplate
             buttonImage.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFFFF"));
             //buttonImage.Height = (gridContainer.Height / 1.1) - 7.5;
             //buttonImage.Width = ((gridContainer.Width / 2.2) / 1.2) - 7.5;
+            if(brd_main.ActualHeight != 0)
             buttonImage.Height = brd_main.ActualHeight -2;
             buttonImage.Width = buttonImage.Height;
             buttonImage.BorderThickness = new Thickness(0);
