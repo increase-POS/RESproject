@@ -1,5 +1,6 @@
 ﻿using netoaster;
 using Restaurant.Classes;
+using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,18 +18,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Microsoft.Win32;
-using System.IO;
-using Restaurant.View.windows;
 
-namespace Restaurant.View.sectionData.persons
+namespace Restaurant.View.storage.storageDivide
 {
     /// <summary>
-    /// Interaction logic for uc_customers.xaml
+    /// Interaction logic for uc_locations.xaml
     /// </summary>
-    public partial class uc_customers : UserControl
+    public partial class uc_locations : UserControl
     {
-        public uc_customers()
+        public uc_locations()
         {
             try
             {
@@ -68,13 +66,13 @@ namespace Restaurant.View.sectionData.persons
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private static uc_customers _instance;
-        public static uc_customers Instance
+        private static uc_locations _instance;
+        public static uc_locations Instance
         {
             get
             {
                 //if (_instance == null)
-                    _instance = new uc_customers();
+                _instance = new uc_locations();
                 return _instance;
             }
             set
@@ -83,11 +81,12 @@ namespace Restaurant.View.sectionData.persons
             }
         }
 
-        string basicsPermission = "customers_basics";
-        Agent agent = new Agent();
-        IEnumerable<Agent> agentsQuery;
-        IEnumerable<Agent> agents;
-        byte tgl_agentState;
+        string basicsPermission = "locations_basics";
+        string addRangePermission = "locations_addRange";
+        Location location = new Location();
+        IEnumerable<Location> locationsQuery;
+        IEnumerable<Location> locations;
+        byte tgl_locationState;
         string searchText = "";
         public static List<string> requiredControlList;
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -100,7 +99,7 @@ namespace Restaurant.View.sectionData.persons
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "name", "mobile" };
+                requiredControlList = new List<string> { "code", "name", "parentId", "mobile" };
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
@@ -113,12 +112,8 @@ namespace Restaurant.View.sectionData.persons
                 }
                 translate();
 
-                await FillCombo.fillCountries(cb_areaMobile);
-                await FillCombo.fillCountries(cb_areaPhone);
-                await FillCombo.fillCountries(cb_areaFax);
-                FillCombo.FillDefaultPayType(cb_payType);
-                Keyboard.Focus(tb_code);
-                await RefreshCustomersList();
+
+                Keyboard.Focus(tb_x);
                 await Search();
                 Clear();
                 HelpClass.EndAwait(grid_main);
@@ -130,45 +125,41 @@ namespace Restaurant.View.sectionData.persons
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-      
+
         private void translate()
         {
-            txt_title.Text = MainWindow.resourcemanager.GetString("trCustomer");
+            txt_title.Text = MainWindow.resourcemanager.GetString("trLocation");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_x, MainWindow.resourcemanager.GetString("trXHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_y, MainWindow.resourcemanager.GetString("trYHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_z, MainWindow.resourcemanager.GetString("trZHint"));
+
+            btn_refresh.ToolTip = MainWindow.resourcemanager.GetString("trRefresh");
+            btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
+            txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
             txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, MainWindow.resourcemanager.GetString("trCodeHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_company, MainWindow.resourcemanager.GetString("trCompanyHint"));
-            txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mobile, MainWindow.resourcemanager.GetString("trMobileHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_phone, MainWindow.resourcemanager.GetString("trPhoneHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_email, MainWindow.resourcemanager.GetString("trEmailHint"));
-            txt_contentInformatin.Text = MainWindow.resourcemanager.GetString("trMoreInformation");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_upperLimit, MainWindow.resourcemanager.GetString("trUpperLimitHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fax, MainWindow.resourcemanager.GetString("trFaxHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+            btn_addRange.Content = MainWindow.resourcemanager.GetString("trAddRange");
             txt_addButton.Text = MainWindow.resourcemanager.GetString("trAdd");
             txt_updateButton.Text = MainWindow.resourcemanager.GetString("trUpdate");
+            txt_deleteButton.Text = MainWindow.resourcemanager.GetString("trDelete");
             tt_add_Button.Content = MainWindow.resourcemanager.GetString("trAdd");
             tt_update_Button.Content = MainWindow.resourcemanager.GetString("trUpdate");
             tt_delete_Button.Content = MainWindow.resourcemanager.GetString("trDelete");
-            txt_deleteButton.Text = MainWindow.resourcemanager.GetString("trDelete");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_payType, MainWindow.resourcemanager.GetString("trDefaultPayType"));
 
-            dg_agent.Columns[0].Header = MainWindow.resourcemanager.GetString("trCode");
-            dg_agent.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
-            dg_agent.Columns[2].Header = MainWindow.resourcemanager.GetString("trCompany");
-            dg_agent.Columns[3].Header = MainWindow.resourcemanager.GetString("trMobile");
-            btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
 
             tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
+            tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
             tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
+            tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
             tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
+            tt_pieChart.Content = MainWindow.resourcemanager.GetString("trPieChart");
             tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
-            //tt_search.Content = MainWindow.resourcemanager.GetString("trSearch");
-            txt_isCredit.Text = MainWindow.resourcemanager.GetString("trCredit");
+
+            dg_location.Columns[0].Header = MainWindow.resourcemanager.GetString("trName");
+            dg_location.Columns[1].Header = MainWindow.resourcemanager.GetString("trSection");
+            dg_location.Columns[2].Header = MainWindow.resourcemanager.GetString("trNote");
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
@@ -179,65 +170,44 @@ namespace Restaurant.View.sectionData.persons
                 {
                     HelpClass.StartAwait(grid_main);
 
-               
 
-                agent = new Agent();
-                if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
-                {
-                    //deserve
-                    decimal maxDeserveValue = 0;
-                    if (!tb_upperLimit.Text.Equals(""))
-                        maxDeserveValue = decimal.Parse(tb_upperLimit.Text);
 
-                    //payType
-                    string payType = "";
-                    if (cb_payType.SelectedIndex != -1)
-                        payType = cb_payType.SelectedValue.ToString();
-
-                    //tb_code.Text = await agent.generateCodeNumber("c");
-                    agent.code = await agent.generateCodeNumber("c");
-                    agent.name = tb_name.Text;
-                    agent.company = tb_company.Text;
-                    agent.address = tb_address.Text;
-                    agent.email = tb_email.Text;
-                    agent.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text;
-                    if (!tb_phone.Text.Equals(""))
-                        agent.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
-                    if (!tb_fax.Text.Equals(""))
-                        agent.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
-                    agent.type = "c";
-                    agent.accType = "";
-                    agent.balance = 0;
-                    agent.payType = payType;
-                    agent.isLimited = (bool)tgl_hasCredit.IsChecked;
-                    agent.createUserId = MainWindow.userLogin.userId;
-                    agent.updateUserId = MainWindow.userLogin.userId;
-                    agent.notes = tb_notes.Text;
-                    agent.isActive = 1;
-                    agent.maxDeserve = maxDeserveValue;
-
-                    int s = await agent.save(agent);
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    else
+                    location = new Location();
+                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
-                        if (isImgPressed)
+                        location = new Location();
+                        location.x = tb_x.Text;
+                        location.y = tb_y.Text;
+                        location.z = tb_z.Text;
+                        if (locations.Where(x => x.name == location.name && x.branchId == MainWindow.branchLogin.branchId).Count() == 0)
                         {
-                            int agentId = s;
-                            string b = await agent.uploadImage(imgFileName,
-                                Md5Encription.MD5Hash("Inc-m" + agentId.ToString()), agentId);
-                            agent.image = b;
-                            isImgPressed = false;
-                        }
+                            location.note = tb_notes.Text;
+                            location.createUserId =MainWindow.userLogin.userId;
+                            location.updateUserId = MainWindow.userLogin.userId;
+                            location.isActive = 1;
+                            location.sectionId = null;
+                            location.branchId = MainWindow.branchLogin.branchId;
 
-                        Clear();
-                        await RefreshCustomersList();
-                        await Search();
+
+                            int s = await location.save(location);
+                            if (s <= 0)
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            else
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+
+                                Clear();
+                                await RefreshLocationsList();
+                                await Search();
+                            }
+                        }
+                        else
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trDublicateLocation"), animation: ToasterAnimation.FadeIn);
+
                     }
-                }
-                HelpClass.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -257,68 +227,37 @@ namespace Restaurant.View.sectionData.persons
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
-                if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
-                {
-                    //deserve
-                    decimal maxDeserveValue = 0;
-                    if (!tb_upperLimit.Text.Equals(""))
-                        maxDeserveValue = decimal.Parse(tb_upperLimit.Text);
-
-                    //payType
-                    string payType = "";
-                    if (cb_payType.SelectedIndex != -1)
-                        payType = cb_payType.SelectedValue.ToString();
-
-                    //agent.code = "Us-000001";
-                    //agent.custname = tb_custname.Text;
-                    //tb_code.Text = await agent.generateCodeNumber("c");
-                    //agent.code = await agent.generateCodeNumber("c");
-                    agent.name = tb_name.Text;
-                    agent.company = tb_company.Text;
-                    agent.email = tb_email.Text;
-                    agent.address = tb_address.Text;
-                    agent.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text;
-                    if (!tb_phone.Text.Equals(""))
-                        agent.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
-                    if (!tb_fax.Text.Equals(""))
-                        agent.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
-                    agent.type = "c";
-                    agent.accType = "";
-                    agent.balance = 0;
-                    agent.payType = payType;
-                    agent.isLimited = (bool)tgl_hasCredit.IsChecked;
-                    agent.createUserId = MainWindow.userLogin.userId;
-                    agent.updateUserId = MainWindow.userLogin.userId;
-                    agent.notes = tb_notes.Text;
-                    agent.isActive = 1;
-                    agent.maxDeserve = maxDeserveValue;
-
-                    int s = await agent.save(agent);
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    else
+                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                        await RefreshCustomersList();
-                        await Search();
-                        if (isImgPressed)
+
+
+
+                        location.x = tb_x.Text;
+                        location.y = tb_y.Text;
+                        location.z = tb_z.Text;
+                        if (locations.Where(x => x.name == location.name && x.branchId == MainWindow.branchLogin.branchId).Count() == 0)
                         {
-                            int agentId = s;
-                            string b = await agent.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + agentId.ToString()), agentId);
-                            agent.image = b;
-                            isImgPressed = false;
-                            if (!b.Equals(""))
-                            {
-                                await getImg();
-                            }
+                            location.note = tb_notes.Text;
+                            location.updateUserId = MainWindow.userLogin.userId;
+
+
+                            int s = await location.save(location);
+                            if (s <= 0)
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
-                                HelpClass.clearImg(btn_image);
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                                await RefreshLocationsList();
+                                await Search();
+
+
                             }
                         }
+                        else
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trDublicateLocation"), animation: ToasterAnimation.FadeIn);
+
                     }
-                }
-                HelpClass.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -337,53 +276,53 @@ namespace Restaurant.View.sectionData.persons
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
-                if (agent.agentId != 0)
-                {
-                    if ((!agent.canDelete) && (agent.isActive == 0))
+                    if (location.locationId != 0)
                     {
-                        #region
-                        Window.GetWindow(this).Opacity = 0.2;
-                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                        w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxActivate");
-                        w.ShowDialog();
-                        Window.GetWindow(this).Opacity = 1;
-                        #endregion
-                        if (w.isOk)
-                            await activate();
-                    }
-                    else
-                    {
-                        #region
-                        Window.GetWindow(this).Opacity = 0.2;
-                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                        if (agent.canDelete)
-                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
-                        if (!agent.canDelete)
-                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
-                        w.ShowDialog();
-                        Window.GetWindow(this).Opacity = 1;
-                        #endregion
-                        if (w.isOk)
+                        if ((!location.canDelete) && (location.isActive == 0))
                         {
-                            string popupContent = "";
-                            if (agent.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
-                            if ((!agent.canDelete) && (agent.isActive == 1)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
-
-                            int s = await agent.delete(agent.agentId, MainWindow.userLogin.userId, agent.canDelete);
-                            if (s < 0)
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                            else
+                            #region
+                            Window.GetWindow(this).Opacity = 0.2;
+                            wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxActivate");
+                            w.ShowDialog();
+                            Window.GetWindow(this).Opacity = 1;
+                            #endregion
+                            if (w.isOk)
+                                await activate();
+                        }
+                        else
+                        {
+                            #region
+                            Window.GetWindow(this).Opacity = 0.2;
+                            wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                            if (location.canDelete)
+                                w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                            if (!location.canDelete)
+                                w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
+                            w.ShowDialog();
+                            Window.GetWindow(this).Opacity = 1;
+                            #endregion
+                            if (w.isOk)
                             {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                                string popupContent = "";
+                                if (location.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
+                                if ((!location.canDelete) && (location.isActive == 1)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
 
-                                await RefreshCustomersList();
-                                await Search();
-                                Clear();
+                                int s = await location.delete(location.locationId, MainWindow.userLogin.userId, location.canDelete);
+                                if (s < 0)
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                else
+                                {
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+
+                                    await RefreshLocationsList();
+                                    await Search();
+                                    Clear();
+                                }
                             }
                         }
                     }
-                }
-                HelpClass.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -397,14 +336,14 @@ namespace Restaurant.View.sectionData.persons
         }
         private async Task activate()
         {//activate
-            agent.isActive = 1;
-            int s = await agent.save(agent);
+            location.isActive = 1;
+            int s = await location.save(location);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
             {
                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
-                await RefreshCustomersList();
+                await RefreshLocationsList();
                 await Search();
             }
         }
@@ -429,9 +368,9 @@ namespace Restaurant.View.sectionData.persons
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (agents is null)
-                    await RefreshCustomersList();
-                tgl_agentState = 1;
+                if (locations is null)
+                    await RefreshLocationsList();
+                tgl_locationState = 1;
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -446,9 +385,9 @@ namespace Restaurant.View.sectionData.persons
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (agents is null)
-                    await RefreshCustomersList();
-                tgl_agentState = 0;
+                if (locations is null)
+                    await RefreshLocationsList();
+                tgl_locationState = 0;
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -474,34 +413,30 @@ namespace Restaurant.View.sectionData.persons
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Dg_agent_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Dg_location_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
                 //selection
-                if (dg_agent.SelectedIndex != -1)
+                if (dg_location.SelectedIndex != -1)
                 {
-                    agent = dg_agent.SelectedItem as Agent;
-                    this.DataContext = agent;
-                    if (agent != null)
+                    location = dg_location.SelectedItem as Location;
+                    this.DataContext = location;
+                    if (location != null)
                     {
-                        await getImg();
-                        #region delete
-                        if (agent.canDelete)
+                         #region delete
+                        if (location.canDelete)
                             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
                         else
                         {
-                            if (agent.isActive == 0)
+                            if (location.isActive == 0)
                                 btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
                             else
                                 btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
                         }
                         #endregion
-                        HelpClass.getMobile(agent.mobile, cb_areaMobile, tb_mobile);
-                        HelpClass.getPhone(agent.phone, cb_areaPhone, cb_areaPhoneLocal, tb_phone);
-                        HelpClass.getPhone(agent.fax, cb_areaFax, cb_areaFaxLocal, tb_fax);
-                    }
+                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
                 HelpClass.EndAwait(grid_main);
@@ -518,7 +453,7 @@ namespace Restaurant.View.sectionData.persons
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
-                await RefreshCustomersList();
+                await RefreshLocationsList();
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -534,52 +469,34 @@ namespace Restaurant.View.sectionData.persons
         async Task Search()
         {
             //search
-            if (agents is null)
-                await RefreshCustomersList();
+            if (locations is null)
+                await RefreshLocationsList();
             searchText = tb_search.Text.ToLower();
-            agentsQuery = agents.Where(s => (s.code.ToLower().Contains(searchText) ||
-            s.name.ToLower().Contains(searchText) ||
-            s.mobile.ToLower().Contains(searchText)
-            ) && s.isActive == tgl_agentState);
-            RefreshCustomersView();
+            locationsQuery = locations.Where(s => ( 
+            s.name.ToLower().Contains(searchText)  
+            ) && s.isActive == tgl_locationState);
+            RefreshLocationsView();
         }
-        async Task<IEnumerable<Agent>> RefreshCustomersList()
+        async Task<IEnumerable<Location>> RefreshLocationsList()
         {
-            agents = await agent.Get("c");
-            return agents;
+            locations = await location.Get();
+            locations = locations.Where(x => x.branchId == MainWindow.branchLogin.branchId && x.isFreeZone != 1);
+            return locations;
         }
-        void RefreshCustomersView()
+        void RefreshLocationsView()
         {
-            dg_agent.ItemsSource = agentsQuery;
-            txt_count.Text = agentsQuery.Count().ToString();
+            dg_location.ItemsSource = locationsQuery;
+            txt_count.Text = locationsQuery.Count().ToString();
         }
         #endregion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            this.DataContext = new Agent();
-
-            #region mobile-Phone-fax-email
-            brd_areaPhoneLocal.Visibility =
-                brd_areaFaxLocal.Visibility = Visibility.Collapsed;
-            cb_areaMobile.SelectedIndex = -1;
-            cb_areaPhone.SelectedIndex = -1;
-            cb_areaFax.SelectedIndex = -1;
-            cb_areaPhoneLocal.SelectedIndex = -1;
-            cb_areaFaxLocal.SelectedIndex = -1;
-            tb_mobile.Clear();
-            tb_phone.Clear();
-            tb_fax.Clear();
-            tb_email.Clear();
-            #endregion
-            #region image
-            HelpClass.clearImg(btn_image);
-            #endregion
-
+            this.DataContext = new Location();
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);
-            p_error_email.Visibility = Visibility.Collapsed;
+ 
         }
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -646,114 +563,8 @@ namespace Restaurant.View.sectionData.persons
         }
 
         #endregion
-        #region Phone
-        int? countryid;
-        private async void Cb_areaPhone_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (cb_areaPhone.SelectedValue != null)
-                {
-                    if (cb_areaPhone.SelectedIndex >= 0)
-                    {
-                        countryid = int.Parse(cb_areaPhone.SelectedValue.ToString());
-                        await FillCombo.fillCountriesLocal(cb_areaPhoneLocal, (int)countryid, brd_areaPhoneLocal);
-                    }
-                }
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Cb_areaFax_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (cb_areaFax.SelectedValue != null)
-                {
-                    if (cb_areaFax.SelectedIndex >= 0)
-                    {
-                        countryid = int.Parse(cb_areaFax.SelectedValue.ToString());
-                        await FillCombo.fillCountriesLocal(cb_areaFaxLocal, (int)countryid, brd_areaFaxLocal);
-                    }
-                }
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+       
 
-        #endregion
-        #region Image
-        string imgFileName = "pic/no-image-icon-125x125.png";
-        bool isImgPressed = false;
-        OpenFileDialog openFileDialog = new OpenFileDialog();
-        SaveFileDialog saveFileDialog = new SaveFileDialog();
-        private void Btn_image_Click(object sender, RoutedEventArgs e)
-        {
-            //select image
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                isImgPressed = true;
-                openFileDialog.Filter = "Images|*.png;*.jpg;*.bmp;*.jpeg;*.jfif";
-                if (openFileDialog.ShowDialog() == true)
-                {
-                    HelpClass.imageBrush.ImageSource = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Relative));
-                    btn_image.Background = HelpClass.imageBrush;
-                    imgFileName = openFileDialog.FileName;
-                }
-                else
-                { }
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async Task getImg()
-        {
-            if (string.IsNullOrEmpty(agent.image))
-            {
-                HelpClass.clearImg(btn_image);
-            }
-            else
-            {
-                byte[] imageBuffer = await agent.downloadImage(agent.image); // read this as BLOB from your DB
-
-                var bitmapImage = new BitmapImage();
-                if (imageBuffer != null)
-                {
-                    using (var memoryStream = new MemoryStream(imageBuffer))
-                    {
-                        bitmapImage.BeginInit();
-                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                        bitmapImage.StreamSource = memoryStream;
-                        bitmapImage.EndInit();
-                    }
-
-                    btn_image.Background = new ImageBrush(bitmapImage);
-                    // configure trmporary path
-                    string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                    string tmpPath = System.IO.Path.Combine(dir, Global.TMPAgentsFolder);
-                    tmpPath = System.IO.Path.Combine(tmpPath, agent.image);
-                    openFileDialog.FileName = tmpPath;
-                }
-                else
-                    HelpClass.clearImg(btn_image);
-            }
-        }
-        #endregion
         #region report
         /*
         // report
@@ -982,16 +793,30 @@ namespace Restaurant.View.sectionData.persons
         }
         */
         #endregion
-        private void Tgl_isOpenUpperLimit_Checked(object sender, RoutedEventArgs e)
-        {
-            tb_upperLimit.IsEnabled = true;
-        }
 
-        private void Tgl_isOpenUpperLimit_Unchecked(object sender, RoutedEventArgs e)
+        private void Btn_addRange_Click(object sender, RoutedEventArgs e)
         {
-            tb_upperLimit.IsEnabled = false;
-        }
+            try
+            {
+                    HelpClass.StartAwait(grid_main);
 
-      
+                if (MainWindow.groupObject.HasPermissionAction(addRangePermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                {
+                    Window.GetWindow(this).Opacity = 0.2;
+                    wd_locationAddRange w = new wd_locationAddRange();
+                    w.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                    Btn_refresh_Click(null, null);
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                     HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

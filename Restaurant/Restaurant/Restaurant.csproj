@@ -174,7 +174,9 @@
     <Compile Include="Classes\ApiClasses\CountryCode.cs" />
     <Compile Include="Classes\ApiClasses\Item.cs" />
     <Compile Include="Classes\ApiClasses\ItemCardView.cs" />
+    <Compile Include="Classes\ApiClasses\Location.cs" />
     <Compile Include="Classes\ApiClasses\Pos.cs" />
+    <Compile Include="Classes\ApiClasses\Section.cs" />
     <Compile Include="Classes\CatigoriesAndItemsView.cs" />
     <Compile Include="Classes\numberToWord\CurrencyInfo.cs" />
     <Compile Include="Classes\numberToWord\ToWord.cs" />
@@ -252,6 +254,9 @@
     <Compile Include="View\storage\movementsOperations\uc_movementsOperations.xaml.cs">
       <DependentUpon>uc_movementsOperations.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\storage\storageDivide\uc_locations.xaml.cs">
+      <DependentUpon>uc_locations.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\storage\storageDivide\uc_storageDivide.xaml.cs">
       <DependentUpon>uc_storageDivide.xaml</DependentUpon>
     </Compile>
@@ -266,6 +271,9 @@
     </Compile>
     <Compile Include="View\windows\wd_branchesList.xaml.cs">
       <DependentUpon>wd_branchesList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_locationAddRange.xaml.cs">
+      <DependentUpon>wd_locationAddRange.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_logIn.xaml.cs">
       <DependentUpon>wd_logIn.xaml</DependentUpon>
@@ -414,6 +422,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\storage\storageDivide\uc_locations.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\storage\storageDivide\uc_storageDivide.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -431,6 +443,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_branchesList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_locationAddRange.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

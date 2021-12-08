@@ -67,6 +67,8 @@ namespace Restaurant
         public static int CurrencyId;
         public static string Phone;
         internal static User userLogin; 
+        internal static Pos posLogin; 
+        internal static Branch branchLogin; 
         //internal static Pos posLogIn;
         bool isHome = false;
         internal static int? isInvTax;
