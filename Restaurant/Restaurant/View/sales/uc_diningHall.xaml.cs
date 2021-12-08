@@ -423,7 +423,7 @@ namespace Restaurant.View.sales
                 billDetailsList.Add(new BillDetails()
                 {
                     index = i,
-                    image = "/pic/90408.jpg",
+                    image = "/pic/hamburger.jfif",
                     itemId = (i + 1),
                     itemName = "name - " + (i + 1),
                     Count = _Count,
@@ -532,6 +532,11 @@ namespace Restaurant.View.sales
                 buttonImage.Padding = new Thickness(0);
                 buttonImage.FlowDirection = FlowDirection.LeftToRight;
                 MaterialDesignThemes.Wpf.ButtonAssist.SetCornerRadius(buttonImage, (new CornerRadius(10)));
+                buttonImage.Cursor = Cursors.Arrow;
+                //MaterialDesignThemes.Wpf.ShadowAssist.SetDarken(buttonImage, false);
+                MaterialDesignThemes.Wpf.ShadowAssist.SetShadowDepth(buttonImage, ShadowDepth.Depth0);
+                //MaterialDesignThemes.Wpf.ShadowAssist.SetShadowEdges(buttonImage,ShadowEdges.None);
+
                 //bool isModified = HelpClass.chkImgChng(cardViewitem.item.image, (DateTime)cardViewitem.item.updateDate, Global.TMPItemsFolder);
                 //if (isModified)
                 //    HelpClass.getImg("Item", cardViewitem.item.image, buttonImage);
@@ -776,7 +781,8 @@ namespace Restaurant.View.sales
             try
             {
                 ImageBrush myBrush = new ImageBrush();
-                Uri resourceUri = new Uri("/pic/90408.jpg", UriKind.Relative);
+                //Uri resourceUri = new Uri("/pic/90408.jpg", UriKind.Relative);
+                Uri resourceUri = new Uri("/pic/hana.jpg", UriKind.Relative);
                 StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
                 BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
                 myBrush.ImageSource = temp;

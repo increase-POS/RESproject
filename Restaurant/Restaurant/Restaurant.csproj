@@ -506,5 +506,8 @@
   <ItemGroup>
     <Resource Include="pic\increase-logo100.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pic\hana.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
