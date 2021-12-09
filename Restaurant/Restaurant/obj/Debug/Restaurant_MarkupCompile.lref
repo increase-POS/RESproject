@@ -31,4 +31,8 @@ FE:\GitHub\RESproject\Restaurant\Restaurant\View\storage\uc_storage.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_acceptCancelPopup.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_branchesList.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_logIn.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\storage\storageDivide\uc_locations.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_locationAddRange.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\persons\uc_vendors.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\banksData\uc_cards.xaml;;
 

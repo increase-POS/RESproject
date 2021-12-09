@@ -170,6 +170,7 @@
     <Compile Include="Classes\ApiClasses\Branch.cs" />
     <Compile Include="Classes\ApiClasses\BranchesUsers.cs" />
     <Compile Include="Classes\ApiClasses\BranchStore.cs" />
+    <Compile Include="Classes\ApiClasses\Card.cs" />
     <Compile Include="Classes\ApiClasses\Category.cs" />
     <Compile Include="Classes\ApiClasses\CountryCode.cs" />
     <Compile Include="Classes\ApiClasses\Item.cs" />
@@ -221,6 +222,9 @@
     <Compile Include="View\sectionData\banksData\uc_banksData.xaml.cs">
       <DependentUpon>uc_banksData.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\sectionData\banksData\uc_cards.xaml.cs">
+      <DependentUpon>uc_cards.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\sectionData\branchesAndStores\uc_branches.xaml.cs">
       <DependentUpon>uc_branches.xaml</DependentUpon>
     </Compile>
@@ -241,6 +245,9 @@
     </Compile>
     <Compile Include="View\sectionData\persons\uc_persons.xaml.cs">
       <DependentUpon>uc_persons.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sectionData\persons\uc_vendors.xaml.cs">
+      <DependentUpon>uc_vendors.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\sectionData\uc_sectionData.xaml.cs">
       <DependentUpon>uc_sectionData.xaml</DependentUpon>
@@ -378,6 +385,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\sectionData\banksData\uc_cards.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\sectionData\branchesAndStores\uc_branches.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -403,6 +414,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\sectionData\persons\uc_persons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sectionData\persons\uc_vendors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

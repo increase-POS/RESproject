@@ -348,3 +348,11 @@ E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sales\uc_diningHall.g.
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sales\uc_diningHall.baml
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\controlTemplate\uc_squareCard.g.cs
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\controlTemplate\uc_squareCard.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\storage\storageDivide\uc_locations.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_locationAddRange.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\storage\storageDivide\uc_locations.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_locationAddRange.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\persons\uc_vendors.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\persons\uc_vendors.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\banksData\uc_cards.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\banksData\uc_cards.baml
