@@ -504,7 +504,7 @@ namespace Restaurant.View.sales
                 indexText.Text = (item.index + 1)+".";
                 indexText.Tag = ( "index-"+ item.index);
                 //indexText.Tag = item.index;
-                indexText.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                indexText.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                 indexText.FontSize = 14;
                 indexText.FontWeight = FontWeights.Bold;
                 indexText.Margin = new Thickness(5);

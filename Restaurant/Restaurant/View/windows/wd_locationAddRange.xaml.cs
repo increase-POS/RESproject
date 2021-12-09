@@ -280,7 +280,7 @@ namespace Restaurant.View.windows
                         {
                             item.createUserId = MainWindow.userLogin.userId;
                             item.updateUserId = MainWindow.userLogin.userId;
-                            item.note = "";
+                            item.notes = "";
                             item.isActive = 1;
                             item.sectionId = null;
                             item.branchId = MainWindow.branchLogin.branchId;

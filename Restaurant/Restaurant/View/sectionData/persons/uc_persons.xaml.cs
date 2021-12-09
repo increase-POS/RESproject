@@ -53,7 +53,18 @@ namespace Restaurant.View.sectionData.persons
 
         private void Btn_vendors_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_vendors.Instance);
 
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_customers_Click(object sender, RoutedEventArgs e)

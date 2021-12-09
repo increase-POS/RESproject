@@ -36,6 +36,7 @@ namespace Restaurant.View.sectionData.banksData
         }
         public uc_banksData()
         {
+            
             InitializeComponent();
         }
 
@@ -56,6 +57,22 @@ namespace Restaurant.View.sectionData.banksData
             {
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_banks.Instance);
+
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_cards_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_cards.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

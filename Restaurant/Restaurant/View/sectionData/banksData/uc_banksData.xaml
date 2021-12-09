@@ -172,7 +172,7 @@
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_cards" 
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
-                         HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                         HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Btn_cards_Click">
                             <StackPanel    Orientation="Horizontal">
                                 <TextBlock Text="Enter"    Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
                                 <!--<TextBlock   Text=">>"    Foreground="White"></TextBlock>-->
