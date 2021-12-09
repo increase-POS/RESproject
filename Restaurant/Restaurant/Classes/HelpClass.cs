@@ -685,7 +685,7 @@ namespace Restaurant.Classes
         public static bool chkImgChng(string imageName, DateTime updateDate, string TMPFolder)
         {
             string dir = System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName;
-            string tmpPath = System.IO.Path.Combine(dir, Global.TMPFolder);
+            string tmpPath = System.IO.Path.Combine(dir, TMPFolder);
             tmpPath = System.IO.Path.Combine(tmpPath, imageName);
             DateTime mofdifyDate;
             if (!System.IO.File.Exists(tmpPath))

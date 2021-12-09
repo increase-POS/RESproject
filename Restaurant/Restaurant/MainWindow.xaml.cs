@@ -39,6 +39,7 @@ using Restaurant.View.storage.movementsOperations;
 using Restaurant.View.storage.stocktakingOperations;
 using Restaurant.View.sales.promotion;
 using Restaurant.View.delivery;
+using Restaurant.View.sectionData.banksData;
 
 namespace Restaurant
 {
@@ -1769,18 +1770,18 @@ namespace Restaurant
                 case "branchesAndStores":
                     grid_main.Children.Add(uc_branchesAndStores.Instance);
                     break;
-                //case "banksData":
-                //    grid_main.Children.Add(uc_banksData.Instance);
-                //    break;
+                case "banksData":
+                    grid_main.Children.Add(uc_banksData.Instance);
+                    break;
                 //case "tables":
                 //    grid_main.Children.Add(uc_tables.Instance);
                 //    break;
                 //case "hallSections":
                 //    grid_main.Children.Add(uc_hallSections.Instance);
                 //    break;
-                //case "vendors":
-                //    grid_main.Children.Add(uc_vendors.Instance);
-                //    break;
+                case "vendors":
+                    grid_main.Children.Add(uc_vendors.Instance);
+                    break;
                 case "customers":
                     grid_main.Children.Add(uc_customers.Instance);
                     break;
@@ -1788,18 +1789,18 @@ namespace Restaurant
                 //    grid_main.Children.Add(uc_users.Instance);
                 //    break;
                 //22
-                //case "branches":
-                //    grid_main.Children.Add(uc_branches.Instance);
-                //    break;
-                //case "stores":
-                //    grid_main.Children.Add(uc_stores.Instance);
-                //    break;
-                //case "pos":
-                //    grid_main.Children.Add(uc_pos.Instance);
-                //    break;
-                //case "banks":
-                //    grid_main.Children.Add(uc_banks.Instance);
-                //    break;
+                case "branches":
+                    grid_main.Children.Add(uc_branches.Instance);
+                    break;
+                case "stores":
+                    grid_main.Children.Add(uc_stores.Instance);
+                    break;
+                case "pos":
+                    grid_main.Children.Add(uc_pos.Instance);
+                    break;
+                case "banks":
+                    grid_main.Children.Add(uc_banks.Instance);
+                    break;
                 //case "cards":
                 //    grid_main.Children.Add(uc_cards.Instance);
                 //    break;
@@ -1846,9 +1847,9 @@ namespace Restaurant
                 case "stocktakingOperations":
                     grid_main.Children.Add(uc_stocktakingOperations.Instance);
                     break;
-                //case "locations":
-                //    grid_main.Children.Add(uc_locations.Instance);
-                //    break;
+                case "locations":
+                    grid_main.Children.Add(uc_locations.Instance);
+                    break;
                 //42
                 //case "storageSections":
                 //    grid_main.Children.Add(uc_storageSections.Instance);

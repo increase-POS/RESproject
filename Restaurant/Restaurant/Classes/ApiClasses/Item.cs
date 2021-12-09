@@ -284,7 +284,7 @@ namespace Restaurant.Classes
                 {
                     // configure trmporery path
                     string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                    string tmpPath = Path.Combine(dir, Global.TMPFolder);
+                    string tmpPath = Path.Combine(dir, Global.TMPItemsFolder);
                     string[] files = System.IO.Directory.GetFiles(tmpPath, imageName + ".*");
                     foreach (string f in files)
                     {

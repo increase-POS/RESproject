@@ -32,7 +32,7 @@ namespace Restaurant.Classes
         public string x { get; set; }
         public string y { get; set; }
         public string z { get; set; }
-        public string note { get; set; }
+        public string notes { get; set; }
         public Nullable<int> branchId { get; set; }
         public string sectionName { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }

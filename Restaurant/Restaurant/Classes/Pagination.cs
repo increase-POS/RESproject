@@ -15,7 +15,7 @@ namespace Restaurant.Classes
         //int[] countItemss;
         void pageNumberActive(Button btn, int indexContent)
         {
-            btn.Background = Application.Current.Resources["MainColor"] as SolidColorBrush; 
+            btn.Background = Application.Current.Resources["SecondColor"] as SolidColorBrush; 
             btn.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFFFF"));
             btn.Content = indexContent.ToString();
         }
