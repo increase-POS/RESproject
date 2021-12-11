@@ -178,6 +178,10 @@
     <Compile Include="Classes\ApiClasses\Location.cs" />
     <Compile Include="Classes\ApiClasses\Pos.cs" />
     <Compile Include="Classes\ApiClasses\Section.cs" />
+    <Compile Include="Classes\ApiClasses\ShippingCompanies.cs" />
+    <Compile Include="Classes\ApiClasses\StorageCost.cs" />
+    <Compile Include="Classes\ApiClasses\Tag.cs" />
+    <Compile Include="Classes\ApiClasses\Unit.cs" />
     <Compile Include="Classes\CatigoriesAndItemsView.cs" />
     <Compile Include="Classes\numberToWord\CurrencyInfo.cs" />
     <Compile Include="Classes\numberToWord\ToWord.cs" />
@@ -185,6 +189,7 @@
     <Compile Include="controlTemplate\uc_squareCard.xaml.cs">
       <DependentUpon>uc_squareCard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="converters\deliveryTypeConverter.cs" />
     <Compile Include="en_file.Designer.cs" />
     <Compile Include="View\accounts\uc_accounts.xaml.cs">
       <DependentUpon>uc_accounts.xaml</DependentUpon>
@@ -195,11 +200,17 @@
     <Compile Include="View\catalog\rawMaterials\uc_rawMaterials.xaml.cs">
       <DependentUpon>uc_rawMaterials.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\catalog\rawMaterials\uc_units.xaml.cs">
+      <DependentUpon>uc_units.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\catalog\uc_catalog.xaml.cs">
       <DependentUpon>uc_catalog.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\delivery\uc_delivery.xaml.cs">
       <DependentUpon>uc_delivery.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\delivery\uc_shippingCompanies.xaml.cs">
+      <DependentUpon>uc_shippingCompanies.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\kitchen\uc_kitchen.xaml.cs">
       <DependentUpon>uc_kitchen.xaml</DependentUpon>
@@ -267,8 +278,14 @@
     <Compile Include="View\storage\storageDivide\uc_storageDivide.xaml.cs">
       <DependentUpon>uc_storageDivide.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\storage\storageDivide\uc_storageSections.xaml.cs">
+      <DependentUpon>uc_storageSections.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\storage\storageOperations\storageOperations.xaml.cs">
       <DependentUpon>storageOperations.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\storage\storageOperations\uc_storageCost.xaml.cs">
+      <DependentUpon>uc_storageCost.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\storage\uc_storage.xaml.cs">
       <DependentUpon>uc_storage.xaml</DependentUpon>
@@ -281,6 +298,9 @@
     </Compile>
     <Compile Include="View\windows\wd_locationAddRange.xaml.cs">
       <DependentUpon>wd_locationAddRange.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_locationsList.xaml.cs">
+      <DependentUpon>wd_locationsList.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_logIn.xaml.cs">
       <DependentUpon>wd_logIn.xaml</DependentUpon>
@@ -349,11 +369,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\catalog\rawMaterials\uc_units.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\catalog\uc_catalog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\delivery\uc_delivery.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\delivery\uc_shippingCompanies.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -445,7 +473,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\storage\storageDivide\uc_storageSections.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\storage\storageOperations\storageOperations.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\storage\storageOperations\uc_storageCost.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -462,6 +498,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_locationAddRange.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_locationsList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

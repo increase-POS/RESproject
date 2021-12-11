@@ -54,6 +54,7 @@ namespace Restaurant.Classes
             combo.DisplayMemberPath = "name";
             combo.SelectedValuePath = "branchId";
             combo.SelectedIndex = -1;
+
         }
 
         /// <summary>
@@ -76,6 +77,19 @@ namespace Restaurant.Classes
             #endregion
         }
 
+        /// <summary>
+        /// FillDeliveryType
+        /// </summary>
+        static public void FillDeliveryType(ComboBox cmb)
+        {
+            var typelist = new[] {
+                new { Text = MainWindow.resourcemanager.GetString("trLocaly")     , Value = "local" },
+                new { Text = MainWindow.resourcemanager.GetString("trShippingCompany")   , Value = "com" },
+                 };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = typelist;
+        }
 
         #region Countries
         /// <summary>

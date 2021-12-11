@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Restaurant.ApiClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +12,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace POS.Classes
+namespace Restaurant.Classes
 {
     public class ShippingCompanies
     {
 
         public int shippingCompanyId { get; set; }
         public string name { get; set; }
-        public Nullable<decimal> RealDeliveryCost { get; set; }
+        public Nullable<decimal> realDeliveryCost { get; set; }
         public Nullable<decimal> deliveryCost { get; set; }
         public string deliveryType { get; set; }
         public string notes { get; set; }

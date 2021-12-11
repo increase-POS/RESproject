@@ -356,3 +356,11 @@ E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\persons\uc
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\persons\uc_vendors.baml
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\banksData\uc_cards.g.cs
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\banksData\uc_cards.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\storage\storageDivide\uc_storageSections.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_locationsList.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\storage\storageDivide\uc_storageSections.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_locationsList.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\storage\storageOperations\uc_storageCost.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\storage\storageOperations\uc_storageCost.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\catalog\rawMaterials\uc_units.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\catalog\rawMaterials\uc_units.baml

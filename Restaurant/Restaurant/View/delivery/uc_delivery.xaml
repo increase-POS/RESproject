@@ -86,7 +86,7 @@
                                     Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                                   BorderThickness="0" x:Name="btn_deliveryManagement" 
                                  Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
-                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center" >
+                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Btn_deliveryManagement_Click" >
                                 <StackPanel    Orientation="Horizontal">
                                     <TextBlock Text="Enter"    Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
                                     <!--<TextBlock   Text=">>"    Foreground="White"></TextBlock>-->
@@ -155,7 +155,7 @@
                                     Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                                   BorderThickness="0" x:Name="btn_shippingCompanies"  
                                  Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
-                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Btn_shippingCompanies_Click">
                                 <StackPanel    Orientation="Horizontal">
                                     <TextBlock Text="Enter"    Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
                                     <!--<TextBlock   Text=">>"    Foreground="White"></TextBlock>-->
