@@ -282,15 +282,10 @@ namespace Restaurant.View.sectionData.persons
                         agent.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
                     if (!tb_fax.Text.Equals(""))
                         agent.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
-                    agent.type = "c";
-                    agent.accType = "";
-                    agent.balance = 0;
                     agent.payType = payType;
                     agent.isLimited = (bool)tgl_hasCredit.IsChecked;
-                    agent.createUserId = MainWindow.userLogin.userId;
                     agent.updateUserId = MainWindow.userLogin.userId;
                     agent.notes = tb_notes.Text;
-                    agent.isActive = 1;
                     agent.maxDeserve = maxDeserveValue;
 
                     int s = await agent.save(agent);

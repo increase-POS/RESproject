@@ -105,7 +105,7 @@ namespace Restaurant.View.storage.storageDivide
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "code", "name", "parentId", "mobile" };
+                requiredControlList = new List<string> {  "name", "branchId" };
                 btn_locations.IsEnabled = false;
                 if (MainWindow.lang.Equals("en"))
                 {
@@ -197,6 +197,7 @@ namespace Restaurant.View.storage.storageDivide
                         section.createUserId = MainWindow.userLogin.userId;
                         section.updateUserId = MainWindow.userLogin.userId;
                         section.isActive = 1;
+                        section.type = "l";
 
 
                         int s = await section.save(section);
@@ -488,7 +489,7 @@ namespace Restaurant.View.storage.storageDivide
         {
             sections = await section.Get();
             if (HelpClass.isAdminPermision())
-                sections = sections.Where(x =>   x.isFreeZone != 1);
+                sections = sections.Where(x => x.type == "l" &&  x.isFreeZone != 1);
             else
             sections = sections.Where(x => x.branchId == MainWindow.branchLogin.branchId && x.isFreeZone != 1);
             return sections;

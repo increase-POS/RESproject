@@ -352,7 +352,7 @@
                 </Grid>
             </Border>
 
-            <ScrollViewer Background="White"  Grid.Row="1"   >
+            <ScrollViewer Background="White"  Grid.Row="1"   VerticalScrollBarVisibility="Auto"   >
                 <StackPanel>
                     <!--<Grid >
                         <Grid.RowDefinitions >

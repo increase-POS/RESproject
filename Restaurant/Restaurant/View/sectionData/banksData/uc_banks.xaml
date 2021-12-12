@@ -298,7 +298,7 @@
                 </Grid>
             </Border>
 
-            <ScrollViewer Background="White"  Grid.Row="1"   >
+            <ScrollViewer Background="White"  Grid.Row="1"   VerticalScrollBarVisibility="Auto"   >
                 <StackPanel>
                     <!--<Grid >
                         <Grid.RowDefinitions >
@@ -348,6 +348,7 @@
                                       MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"   Margin="4,0"  
+                                     PreviewKeyDown="Spaces_PreviewKeyDown" PreviewTextInput="Number_PreviewTextInput"
                                  LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_accNumber"
                               HorizontalAlignment="Right" Visibility="Collapsed"   

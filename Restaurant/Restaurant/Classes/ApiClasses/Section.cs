@@ -28,6 +28,7 @@ namespace Restaurant.Classes
         public Nullable<byte> isActive { get; set; }
         public Nullable<byte> isFreeZone { get; set; }
         public Boolean canDelete { get; set; }
+        public string type { get; set; }
         public async Task<List<Section>> Get()
         {
             List<Section> items = new List<Section>();

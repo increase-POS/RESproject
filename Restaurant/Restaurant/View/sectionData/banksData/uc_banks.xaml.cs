@@ -269,10 +269,8 @@ namespace Restaurant.View.sectionData.banksData
                         bank.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text;
                         if (!tb_phone.Text.Equals(""))
                             bank.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
-                        bank.createUserId = MainWindow.userLogin.userId;
                         bank.updateUserId = MainWindow.userLogin.userId;
                         bank.notes = tb_notes.Text;
-                        bank.isActive = 1;
 
                         int s = await bank.save(bank);
                         if (s <= 0)

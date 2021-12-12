@@ -258,10 +258,6 @@ namespace Restaurant.View.sectionData.persons
                         if (cb_payType.SelectedIndex != -1)
                             payType = cb_payType.SelectedValue.ToString();
 
-                        //agent.code = "Us-000001";
-                        //agent.custname = tb_custname.Text;
-                        //tb_code.Text = await agent.generateCodeNumber("v");
-                        //agent.code = await agent.generateCodeNumber("v");
                         agent.name = tb_name.Text;
                         agent.company = tb_company.Text;
                         agent.email = tb_email.Text;
@@ -271,14 +267,9 @@ namespace Restaurant.View.sectionData.persons
                             agent.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
                         if (!tb_fax.Text.Equals(""))
                             agent.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
-                        agent.type = "v";
-                        agent.accType = "";
-                        agent.balance = 0;
                         agent.payType = payType;
-                        agent.createUserId = MainWindow.userLogin.userId;
                         agent.updateUserId = MainWindow.userLogin.userId;
                         agent.notes = tb_notes.Text;
-                        agent.isActive = 1;
 
                         int s = await agent.save(agent);
                         if (s <= 0)

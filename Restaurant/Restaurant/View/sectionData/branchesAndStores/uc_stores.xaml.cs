@@ -277,7 +277,6 @@ namespace Restaurant.View.sectionData.branchesAndStores
                             if (!tb_phone.Text.Equals(""))
                                 branch.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
                             branch.updateUserId = MainWindow.userLogin.userId;
-                            branch.type = "s";
                             branch.parentId = Convert.ToInt32(cb_parentId.SelectedValue);
 
                             int s = await branch.save(branch);

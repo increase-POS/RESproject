@@ -99,7 +99,7 @@ namespace Restaurant.View.storage.storageDivide
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "code", "name", "parentId", "mobile" };
+                requiredControlList = new List<string> { "x", "y", "z"};
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());

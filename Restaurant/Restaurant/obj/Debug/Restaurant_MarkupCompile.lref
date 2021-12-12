@@ -5,8 +5,10 @@ FE:\GitHub\RESproject\Restaurant\Restaurant\MainWindow.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\accounts\uc_accounts.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\catalog\foods\uc_foods.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\catalog\rawMaterials\uc_rawMaterials.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\catalog\rawMaterials\uc_units.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\catalog\uc_catalog.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\delivery\uc_delivery.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\delivery\uc_shippingCompanies.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\kitchen\uc_kitchen.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\purchase\uc_purchase.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sales\promotion\uc_promotion.xaml;;
@@ -38,5 +40,5 @@ FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_branchesList.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_locationAddRange.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_locationsList.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_logIn.xaml;;
-FE:\GitHub\RESproject\Restaurant\Restaurant\View\catalog\rawMaterials\uc_units.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\hallDivide\uc_hallSections.xaml;;
 

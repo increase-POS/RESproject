@@ -364,7 +364,7 @@
                 </Grid>
             </Border>
 
-            <ScrollViewer Background="White"  Grid.Row="1"   >
+            <ScrollViewer Background="White"  Grid.Row="1"    VerticalScrollBarVisibility="Auto"    >
                 <StackPanel>
                     <!--<Grid >
                         <Grid.RowDefinitions >
@@ -394,7 +394,8 @@
                                      Foreground="#4E4E4E"  
                                       MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"   Margin="4,0"  
+                                     Height="40"   Margin="4,0" 
+                                     PreviewKeyDown="Spaces_PreviewKeyDown" PreviewTextInput="Code_PreviewTextInput"
                                  LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_code"
                               HorizontalAlignment="Right" Visibility="Collapsed"   

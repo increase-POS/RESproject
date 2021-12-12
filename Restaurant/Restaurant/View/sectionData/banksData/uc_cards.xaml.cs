@@ -100,7 +100,7 @@ namespace Restaurant.View.sectionData.banksData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "name", "mobile" };
+                requiredControlList = new List<string> { "name" };
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());

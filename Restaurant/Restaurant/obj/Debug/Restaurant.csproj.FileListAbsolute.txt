@@ -364,3 +364,7 @@ E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\storage\storageOperati
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\storage\storageOperations\uc_storageCost.baml
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\catalog\rawMaterials\uc_units.g.cs
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\catalog\rawMaterials\uc_units.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\delivery\uc_shippingCompanies.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\delivery\uc_shippingCompanies.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\hallDivide\uc_hallSections.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\hallDivide\uc_hallSections.baml

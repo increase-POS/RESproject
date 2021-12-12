@@ -98,7 +98,7 @@ namespace Restaurant.View.storage.storageOperations
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "name", "mobile" };
+                requiredControlList = new List<string> { "name", "cost" };
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());

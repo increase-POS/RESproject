@@ -251,6 +251,9 @@
     <Compile Include="View\sectionData\hallDivide\uc_hallDivide.xaml.cs">
       <DependentUpon>uc_hallDivide.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\sectionData\hallDivide\uc_hallSections.xaml.cs">
+      <DependentUpon>uc_hallSections.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\sectionData\persons\uc_customers.xaml.cs">
       <DependentUpon>uc_customers.xaml</DependentUpon>
     </Compile>
@@ -434,6 +437,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\sectionData\hallDivide\uc_hallDivide.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sectionData\hallDivide\uc_hallSections.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
