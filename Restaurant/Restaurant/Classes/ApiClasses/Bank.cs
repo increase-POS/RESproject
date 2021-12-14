@@ -27,8 +27,12 @@ namespace Restaurant.Classes
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-        public Nullable<byte> isActive { get; set; }
+        public byte isActive { get; set; }
+
+
         public Boolean canDelete { get; set; }
+
+      
 
         public async Task<List<Bank>> Get()
         {

@@ -23,6 +23,7 @@ namespace Restaurant.Classes
     public class Agent
     {
         public int agentId { get; set; }
+        public Nullable<int> pointId { get; set; }
         public string name { get; set; }
         public string code { get; set; }
         public string company { get; set; }
@@ -33,19 +34,24 @@ namespace Restaurant.Classes
         public string image { get; set; }
         public string type { get; set; }
         public string accType { get; set; }
-        public float balance { get; set; }
-        public Nullable<byte> balanceType { get; set; }
-        public bool isLimited { get; set; }
+        public decimal balance { get; set; }
+        public byte balanceType { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public string notes { get; set; }
-        public int isActive { get; set; }
+        public byte isActive { get; set; }
         public string fax { get; set; }
-        public string payType { get; set; }
         public decimal maxDeserve { get; set; }
+        public bool isLimited { get; set; }
+        public string payType { get; set; }
+
+
         public Boolean canDelete { get; set; }
+
+
+      
 
         public async Task<List<Agent>> Get(string type)
         {
