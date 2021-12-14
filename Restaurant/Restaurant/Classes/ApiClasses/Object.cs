@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using POS;
+using Restaurant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,20 +13,26 @@ using System.Web;
 using System.Security.Claims;
 using Restaurant.ApiClasses;
 
-namespace POS.Classes
+namespace Restaurant.Classes
 {
    public class Object
     {
+
         public int objectId { get; set; }
         public string name { get; set; }
         public Nullable<int> parentObjectId { get; set; }
         public string objectType { get; set; }
         public string translate { get; set; }
-        public string notes { get; set; }
+
+
+        public string note { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
+        public byte isActive { get; set; }
+        public Boolean canDelete { get; set; }
+
         List<Object> plist = new List<Object>();
 
         public async Task<List<Object>> GetAll()

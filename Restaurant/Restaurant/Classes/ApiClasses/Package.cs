@@ -25,11 +25,13 @@ namespace POS.Classes
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
+
         public Nullable<System.DateTime> updateDate { get; set; }
+
         public bool canDelete { get; set; }
 
-        // item and unit
-        //  item parent
+
+        // item parent
         public Nullable<int> pitemId { get; set; }
         public string pcode { get; set; }
         public string pitemName { get; set; }
@@ -37,11 +39,13 @@ namespace POS.Classes
         public string type { get; set; }
         public string image { get; set; }
 
+
         //units
         public Nullable<int> punitId { get; set; }
         public string punitName { get; set; }
 
         //item chiled
+
         public Nullable<int> citemId { get; set; }
         public string ccode { get; set; }
         public string citemName { get; set; }
@@ -49,9 +53,12 @@ namespace POS.Classes
         public string ctype { get; set; }
         public string cimage { get; set; }
 
+
         //units
         public Nullable<int> cunitId { get; set; }
         public string cunitName { get; set; }
+
+          
 
 
 

@@ -368,3 +368,5 @@ E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\delivery\uc_shippingCo
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\delivery\uc_shippingCompanies.baml
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\hallDivide\uc_hallSections.g.cs
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\hallDivide\uc_hallSections.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\persons\uc_users.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\persons\uc_users.baml

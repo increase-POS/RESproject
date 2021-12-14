@@ -12,23 +12,25 @@ using System.Web;
 
 using Newtonsoft.Json.Converters;
 using System.Security.Claims;
+using Restaurant.ApiClasses;
 
-namespace POS.Classes
+namespace Restaurant.Classes
 {
     public class ItemUnitUser
     {
-
         public int id { get; set; }
         public Nullable<int> itemUnitId { get; set; }
-        public Nullable<int> itemId { get; set; }
-        public Nullable<int> unitId { get; set; }
         public Nullable<int> userId { get; set; }
         public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-        public Nullable<byte> isActive { get; set; }
+        public byte isActive { get; set; }
+
+
+        public Nullable<int> itemId { get; set; }
+        public Nullable<int> unitId { get; set; }
         /// <summary>
         /// ///////////////////////////////////////
         /// </summary>

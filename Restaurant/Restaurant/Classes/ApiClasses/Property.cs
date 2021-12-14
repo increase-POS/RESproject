@@ -17,13 +17,17 @@ namespace POS.Classes
     {
         public int propertyId { get; set; }
         public string name { get; set; }
-        public string propertyValues { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-        public Nullable<byte> isActive { get; set; }
+
+        public byte isActive { get; set; }
+
+        public string propertyValues { get; set; }
+
         public Boolean canDelete { get; set; }
+         
 
         // adding or editing  category by calling API metod "save"
         // if categoryId = 0 will call save else call edit

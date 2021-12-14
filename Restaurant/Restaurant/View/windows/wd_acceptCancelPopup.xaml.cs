@@ -1,6 +1,5 @@
 ﻿using Restaurant;
 using Restaurant.Classes;
-using POS.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;

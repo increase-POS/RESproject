@@ -19,6 +19,7 @@ namespace Restaurant.Classes
 {
     public class User
     {
+
         public int userId { get; set; }
         public string username { get; set; }
         public string password { get; set; }
@@ -27,25 +28,28 @@ namespace Restaurant.Classes
         public string fullName { get; set; }
         public string job { get; set; }
         public string workHours { get; set; }
-        public string details { get; set; }
-        public float balance { get; set; }
-        public int balanceType { get; set; }
-        public DateTime? createDate { get; set; }
-        public DateTime? updateDate { get; set; }
-        public int? createUserId { get; set; }
-        public int? updateUserId { get; set; }
+        public Nullable<System.DateTime> createDate { get; set; }
+        public Nullable<System.DateTime> updateDate { get; set; }
+        public Nullable<int> createUserId { get; set; }
+        public Nullable<int> updateUserId { get; set; }
         public string phone { get; set; }
         public string mobile { get; set; }
         public string email { get; set; }
         public string address { get; set; }
-        public short? isActive { get; set; }
+        public byte isActive { get; set; }
         public string notes { get; set; }
-        public byte? isOnline { get; set; }
-        public bool? isAdmin { get; set; }
-        public string role { get; set; }
-        public Boolean canDelete { get; set; }
+        public byte isOnline { get; set; }
+
         public string image { get; set; }
         public Nullable<int> groupId { get; set; }
+        public decimal balance { get; set; }
+        public byte balanceType { get; set; }
+        public bool isAdmin { get; set; }
+
+
+        public Boolean canDelete { get; set; }
+
+         
 
         public async Task<List<User>> Get()
         {

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using POS;
+using Restaurant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Security.Claims;
-namespace POS.Classes
+using Restaurant.ApiClasses;
+
+namespace Restaurant.Classes
 {
 
     class updateCategoryuser
@@ -43,9 +45,9 @@ namespace POS.Classes
         public string image { get; set; }
         public string notes { get; set; }
         public Nullable<int> parentId { get; set; }
-        public Nullable<decimal> taxes { get; set; }
+        public decimal taxes { get; set; }
 
-        public Nullable<short> isActive { get; set; }
+        public short isActive { get; set; }
 
         //public async Task<List<Categoryuser>> GetAll()
         //{

@@ -9,22 +9,27 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using Restaurant.ApiClasses;
 
-namespace POS.Classes
+namespace Restaurant.Classes
 {
     class ItemsProp
     {
         public int itemPropId { get; set; }
         public Nullable<int> propertyItemId { get; set; }
         public Nullable<int> itemId { get; set; }
-
-        public string propValue { get; set; }
-        public string propName { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
+
         public Nullable<int> updateUserId { get; set; }
 
+        public Nullable<int> isActive { get; set; }
+        public string propValue { get; set; }
+        public string propName { get; set; }
+
+
+         
         public async Task<int> Save(ItemsProp itemsProp)
         {
 

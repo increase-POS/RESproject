@@ -24,11 +24,11 @@ namespace Restaurant.Classes
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
+         
     }
 
     public class BranchesUsers
     {
-
         public int branchsUsersId { get; set; }
         public Nullable<int> branchId { get; set; }
         public Nullable<int> userId { get; set; }
@@ -36,6 +36,9 @@ namespace Restaurant.Classes
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
+
+
+
 
         // branch
         public int bbranchId { get; set; }
@@ -51,7 +54,7 @@ namespace Restaurant.Classes
         public Nullable<int> bupdateUserId { get; set; }
         public string bnotes { get; set; }
         public Nullable<int> bparentId { get; set; }
-        public Nullable<byte> bisActive { get; set; }
+        public byte bisActive { get; set; }
         public string btype { get; set; }
 
         // user
@@ -71,10 +74,14 @@ namespace Restaurant.Classes
         public string uemail { get; set; }
         public string unotes { get; set; }
         public string uaddress { get; set; }
-        public short? uisActive { get; set; }
-        public byte? uisOnline { get; set; }
+        public byte uisActive { get; set; }
+        public byte uisOnline { get; set; }
         public Boolean ucanDelete { get; set; }
         public string uimage { get; set; }
+
+   
+ 
+ 
 
         public async Task<List<BranchesUsers>> Get()
         {
@@ -182,7 +189,7 @@ namespace Restaurant.Classes
 //using System.Threading.Tasks;
 //using System.Web;
 
-//namespace POS.Classes
+//namespace Restaurant.Classes
 //{
 //    public class BranchesUsers
 //    {

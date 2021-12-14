@@ -21,7 +21,7 @@ namespace POS.Classes
         public int id { get; set; }
         public Nullable<int> userId { get; set; }
         public Nullable<int> valId { get; set; }
-        public string note { get; set; }
+        public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }

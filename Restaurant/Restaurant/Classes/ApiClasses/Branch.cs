@@ -31,8 +31,8 @@ namespace Restaurant.Classes
         public Nullable<int> updateUserId { get; set; }
         public string notes { get; set; }
         public Nullable<int> parentId { get; set; }
+        public byte isActive { get; set; }
         public string type { get; set; }
-        public int isActive { get; set; }
         public Boolean canDelete { get; set; }
         public Nullable<decimal> balance { get; set; }
         // for report

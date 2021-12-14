@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using POS;
-using POS.Classes;
+using Restaurant;
+using Restaurant.Classes;
 using Restaurant.ApiClasses;
 using System;
 using System.Collections.Generic;
@@ -29,11 +29,10 @@ namespace Restaurant.Classes
         public string type { get; set; }
         public string image { get; set; }
         public Nullable<decimal> taxes { get; set; }
-        public Nullable<byte> isActive { get; set; }
-        public Nullable<int> min { get; set; }
-        public Nullable<int> max { get; set; }
+        public byte isActive { get; set; }
+        public int min { get; set; }
+        public int max { get; set; }
         public Nullable<int> categoryId { get; set; }
-        public string categoryName { get; set; }
         public Nullable<int> parentId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
@@ -41,12 +40,17 @@ namespace Restaurant.Classes
         public Nullable<int> updateUserId { get; set; }
         public Nullable<int> minUnitId { get; set; }
         public Nullable<int> maxUnitId { get; set; }
+        public decimal avgPurchasePrice { get; set; }
+        public Nullable<int> tagId { get; set; }
+
+
+        public string categoryName { get; set; }
+
         public Boolean canDelete { get; set; }
-        public string parentName { get; set; }
-        public string minUnitName { get; set; }
-        public string maxUnitName { get; set; }
+
         public Nullable<int> itemCount { get; set; }
-        public Nullable<decimal> avgPurchasePrice { get; set; }
+
+
         // new units and offers an is new
         //units
         public Nullable<int> unitId { get; set; }
@@ -63,8 +67,15 @@ namespace Restaurant.Classes
         public Nullable<int> itemUnitId { get; set; }
         public Nullable<int> offerId { get; set; }
         public Nullable<decimal> priceTax { get; set; }
-        public Nullable<short> defaultSale { get; set; }
+
+        public string parentName { get; set; }
+        public string minUnitName { get; set; }
+        public string maxUnitName { get; set; }
         public bool canUpdate { get; set; }
+
+
+      
+        public Nullable<short> defaultSale { get; set; }
 
         public async Task<int> saveItem(Item item)
         {

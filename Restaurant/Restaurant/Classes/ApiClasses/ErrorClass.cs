@@ -16,7 +16,6 @@ namespace Restaurant.Classes
 {
     public class ErrorClass
     {
-
         public int errorId { get; set; }
         public string num { get; set; }
         public string msg { get; set; }
@@ -26,6 +25,8 @@ namespace Restaurant.Classes
         public Nullable<int> branchId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<int> createUserId { get; set; }
+
+ 
 
         /// <summary>
         /// ///////////////////////////////////////

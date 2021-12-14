@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using POS;
+using Restaurant;
 using Restaurant.ApiClasses;
 using System;
 using System.Collections.Generic;
@@ -21,13 +21,14 @@ namespace Restaurant.Classes
         public int id { get; set; }
         public Nullable<int> branchId { get; set; }
         public Nullable<int> storeId { get; set; }
-        public string note { get; set; }
+        public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> isActive { get; set; }
-        public Boolean canDelete { get; set; }
+        public int isActive { get; set; }
+        public Boolean canDelete { get; set; } 
+
 
     }
     class BranchStore
@@ -35,12 +36,14 @@ namespace Restaurant.Classes
         public int id { get; set; }
         public Nullable<int> branchId { get; set; }
         public Nullable<int> storeId { get; set; }
-        public string note { get; set; }
+        public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> isActive { get; set; }
+        public int isActive { get; set; }
+
+
         public Boolean canDelete { get; set; }
 
         // branch
@@ -57,7 +60,7 @@ namespace Restaurant.Classes
         public Nullable<int> bupdateUserId { get; set; }
         public string bnotes { get; set; }
         public Nullable<int> bparentId { get; set; }
-        public Nullable<byte> bisActive { get; set; }
+        public byte bisActive { get; set; }
         public string btype { get; set; }
 
         // store
@@ -74,8 +77,11 @@ namespace Restaurant.Classes
         public Nullable<int> supdateUserId { get; set; }
         public string snotes { get; set; }
         public Nullable<int> sparentId { get; set; }
-        public Nullable<byte> sisActive { get; set; }
+        public byte sisActive { get; set; }
         public string stype { get; set; }
+         
+       
+         
 
         public async Task<List<BranchStore>> GetAll()
         {
@@ -191,7 +197,7 @@ namespace Restaurant.Classes
 //using System.Threading.Tasks;
 //using System.Web;
 
-//namespace POS.Classes
+//namespace Restaurant.Classes
 //{
 //    class BranchStore
 //    {

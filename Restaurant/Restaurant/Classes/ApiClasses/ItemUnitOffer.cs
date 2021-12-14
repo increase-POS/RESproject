@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using POS;
-using POS.Classes;
+using Restaurant;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -16,8 +15,9 @@ using System.Web;
 using System.Windows.Media.Imaging;
 using System.Windows.Resources;
 using System.Security.Claims;
+using Restaurant.ApiClasses;
 
-namespace POS.Classes
+namespace Restaurant.Classes
 {
     public class ItemUnitOffer
     {
@@ -28,13 +28,21 @@ namespace POS.Classes
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> quantity { get; set; }
+        public int quantity { get; set; }
+        public int used { get; set; }
+
+
+
         public string offerName { get; set; }
         public string unitName { get; set; }
-        public string itemName { get; set; }
         public string code { get; set; }
         public Nullable<int> itemId { get; set; }
         public Nullable<int> unitId { get; set; }
+
+        public string itemName { get; set; }
+
+
+
 
         public async Task<int> updategroup(int offerId, List<ItemUnitOffer> newitoflist, int userId)
         {

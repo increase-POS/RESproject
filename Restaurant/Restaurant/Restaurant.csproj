@@ -260,6 +260,9 @@
     <Compile Include="View\sectionData\persons\uc_persons.xaml.cs">
       <DependentUpon>uc_persons.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\sectionData\persons\uc_users.xaml.cs">
+      <DependentUpon>uc_users.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\sectionData\persons\uc_vendors.xaml.cs">
       <DependentUpon>uc_vendors.xaml</DependentUpon>
     </Compile>
@@ -449,6 +452,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\sectionData\persons\uc_persons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sectionData\persons\uc_users.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

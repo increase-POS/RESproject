@@ -15,13 +15,15 @@ namespace POS.Classes
 {
     public class UsersLogs
     {
-
         public int logId { get; set; }
         public Nullable<System.DateTime> sInDate { get; set; }
         public Nullable<System.DateTime> sOutDate { get; set; }
         public Nullable<int> posId { get; set; }
         public Nullable<int> userId { get; set; }
+
         public bool canDelete { get; set; }
+
+      
 
         public async Task<List<UsersLogs>> Get()
         {

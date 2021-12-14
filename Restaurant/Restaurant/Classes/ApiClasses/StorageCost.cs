@@ -16,17 +16,19 @@ namespace Restaurant.Classes
 {
     public class StorageCost
     {
-
         public int storageCostId { get; set; }
         public string name { get; set; }
         public decimal cost { get; set; }
-        public string note { get; set; }
-        public Nullable<byte> isActive { get; set; }
+        public string notes { get; set; }
+        public byte isActive { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
+
+
         public bool canDelete { get; set; }
+         
 
         public async Task<List<StorageCost>> Get()
         {

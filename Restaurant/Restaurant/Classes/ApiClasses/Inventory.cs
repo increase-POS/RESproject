@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using POS;
+using Restaurant;
+using Restaurant.ApiClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,23 +13,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace POS.Classes
+namespace Restaurant.Classes
 {
     public class Inventory
     {
         public int inventoryId { get; set; }
-        public int branchId { get; set; }
-        public int posId { get; set; }
         public string num { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-        public Nullable<byte> isActive { get; set; }
+        public byte isActive { get; set; }
         public string notes { get; set; }
-        public Boolean canDelete { get; set; }
         public string inventoryType { get; set; }
+        public Nullable<int> branchId { get; set; }
+        public Nullable<int> posId { get; set; }
         public Nullable<int> mainInventoryId { get; set; }
+
+
+
+        public Boolean canDelete { get; set; }
+       
         //*******************************************************
         public async Task<List<Inventory>> GetByCreator(string inventoryType, int userId)
         {

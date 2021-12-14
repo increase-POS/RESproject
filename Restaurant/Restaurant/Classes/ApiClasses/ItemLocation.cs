@@ -10,17 +10,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Security.Claims;
+using Restaurant.ApiClasses;
 
-
-
-namespace POS.Classes
+namespace Restaurant.Classes
 {
     public class ItemLocation
     {
-        public int sequence { get; set; }
+
         public int itemsLocId { get; set; }
         public Nullable<int> locationId { get; set; }
-        public Nullable<long> quantity { get; set; }
+        public long quantity { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
@@ -28,17 +27,25 @@ namespace POS.Classes
         public Nullable<System.DateTime> startDate { get; set; }
         public Nullable<System.DateTime> endDate { get; set; }
         public Nullable<int> itemUnitId { get; set; }
-        public string note { get; set; }
+        public string notes { get; set; }
+        public Nullable<int> invoiceId { get; set; }
+
+        public int sequence { get; set; }
+
+        public Nullable<int> sectionId { get; set; }
+
+
         public string itemName { get; set; }
         public string location { get; set; }
         public string section { get; set; }
         public string unitName { get; set; }
-        public string invNumber { get; set; }
-        public Nullable<int> invoiceId { get; set; }
-        public Nullable<int> sectionId { get; set; }
+        public string itemType { get; set; }
         public Nullable<decimal> storeCost { get; set; }
         public Nullable<byte> isFreeZone { get; set; }
-        public string itemType { get; set; }
+
+        public string invNumber { get; set; }
+
+       
         public Nullable<bool> isSelected { get; set; }
 
         //****************************************************
