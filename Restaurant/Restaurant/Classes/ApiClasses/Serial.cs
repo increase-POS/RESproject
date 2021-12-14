@@ -18,7 +18,7 @@ namespace POS.Classes
         public int serialId { get; set; }
         public Nullable<int> itemId { get; set; }
         public string serialNum { get; set; }
-        public Nullable<byte> isActive { get; set; }
+        public byte isActive { get; set; }
 
         public async Task<List<Serial>> GetItemSerials(int itemId)
         {

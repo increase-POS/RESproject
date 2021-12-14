@@ -16,18 +16,22 @@ namespace Restaurant.Classes
 {
     public class Unit
     {
-        public int      unitId { get; set; }
-        public string   name { get; set; }
-        public int?      isSmallest { get; set; }
-        public int?      smallestId { get; set; }
-        public string notes { get; set; }
+        public int unitId { get; set; }
+        public string name { get; set; }
+        public short isSmallest { get; set; }
+        public Nullable<int> smallestId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
-        public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> parentId { get; set; }
-        public int? isActive { get; set; }
+        public Nullable<System.DateTime> updateDate { get; set; }
+        public Nullable<int> parentid { get; set; }
+        public byte isActive { get; set; }
+        public string notes { get; set; }
+
+        public string smallestUnit { get; set; }
+
         public Boolean canDelete { get; set; }
+      
 
         public async Task<List<Unit>> Get()
         {
