@@ -190,7 +190,7 @@ namespace Restaurant.View.sectionData.banksData
                         else
                         {
                             card.name = tb_name.Text;
-                            card.hasProcessNum = tgl_hasProcessNum.IsChecked;
+                            card.hasProcessNum = tgl_hasProcessNum.IsChecked.Value;
 
                             card.isActive = active;
 
@@ -270,7 +270,7 @@ namespace Restaurant.View.sectionData.banksData
                         else
                         {
                             card.name = tb_name.Text;
-                            card.hasProcessNum = tgl_hasProcessNum.IsChecked;
+                            card.hasProcessNum = tgl_hasProcessNum.IsChecked.Value;
 
                             card.isActive = active;
 

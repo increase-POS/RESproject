@@ -192,7 +192,7 @@ namespace Restaurant.View.sectionData.hallDivide
                         section = new Section();
                         section.name = tb_name.Text;
                         section.branchId = Convert.ToInt32(cb_branchId.SelectedValue);
-                        section.note = tb_notes.Text;
+                        section.notes = tb_notes.Text;
                         section.createUserId = MainWindow.userLogin.userId;
                         section.updateUserId = MainWindow.userLogin.userId;
                         section.isActive = 1;
@@ -240,7 +240,7 @@ namespace Restaurant.View.sectionData.hallDivide
 
                         section.name = tb_name.Text;
                         section.branchId = Convert.ToInt32(cb_branchId.SelectedValue);
-                        section.note = tb_notes.Text;
+                        section.notes = tb_notes.Text;
                         section.updateUserId = MainWindow.userLogin.userId;
 
                         int s = await section.save(section);

@@ -169,7 +169,7 @@ namespace Restaurant.View.storage.storageOperations
 
                         storageCost.name = tb_name.Text;
                         storageCost.cost = decimal.Parse(tb_cost.Text);
-                        storageCost.note = tb_notes.Text;
+                        storageCost.notes = tb_notes.Text;
                         storageCost.createUserId = MainWindow.userLogin.userId;
                         storageCost.updateUserId = MainWindow.userLogin.userId;
                         storageCost.isActive = 1;
@@ -212,7 +212,7 @@ namespace Restaurant.View.storage.storageOperations
                     {
                         storageCost.name = tb_name.Text;
                         storageCost.cost = decimal.Parse(tb_cost.Text);
-                        storageCost.note = tb_notes.Text;
+                        storageCost.notes = tb_notes.Text;
                         storageCost.updateUserId = MainWindow.userLogin.userId;
 
                         int s = await storageCost.save(storageCost);
