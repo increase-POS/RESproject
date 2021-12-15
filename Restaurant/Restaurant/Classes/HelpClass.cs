@@ -831,154 +831,31 @@ namespace Restaurant.Classes
                 grid.IsEnabled = true;
                 grid.Opacity = 1;
             }
-
-        }
-
-      
-
-
-        public static string translate(string str)
-        {
-            string _str = "";
-
-
-            #region  mainWindow
-            if (str == "home")
-                _str = MainWindow.resourcemanager.GetString("trHome");
-            else if (str == "catalog")
-                _str = MainWindow.resourcemanager.GetString("trCatalog");
-                else if (str == "storage")
-                _str = MainWindow.resourcemanager.GetString("trStore");
-                else if (str == "purchase")
-                _str = MainWindow.resourcemanager.GetString("trPurchases");
-                else if (str == "sales")
-                _str = MainWindow.resourcemanager.GetString("trSales");
-                else if (str == "accounts")
-                _str = MainWindow.resourcemanager.GetString("trAccounting");
-                else if (str == "reports")
-                _str = MainWindow.resourcemanager.GetString("trReports");
-                else if (str == "HelpClass")
-                _str = MainWindow.resourcemanager.GetString("trHelpClass");
-                else if (str == "settings")
-                _str = MainWindow.resourcemanager.GetString("trSettings");
-                #endregion
-           
-                #region  storage
-                if (str == "locations")
-                _str = MainWindow.resourcemanager.GetString("trLocation");
-                else if (str == "section")
-                _str = MainWindow.resourcemanager.GetString("trSection");
-                else if (str == "reciptOfInvoice")
-                _str = MainWindow.resourcemanager.GetString("trInvoice");
-                else if (str == "itemsStorage")
-                _str = MainWindow.resourcemanager.GetString("trStorage");
-                else if (str == "importExport")
-                _str = MainWindow.resourcemanager.GetString("trMovements");
-                else if (str == "itemsDestroy")
-                _str = MainWindow.resourcemanager.GetString("trDestructive");
-                else if (str == "shorstre")
-                _str = MainWindow.resourcemanager.GetString("trShorstre");
-                else if (str == "inventory")
-                _str = MainWindow.resourcemanager.GetString("trStocktaking");
-                else if (str == "storageStatistic")
-                _str = MainWindow.resourcemanager.GetString("trStatistic");
-                #endregion
-                #region  Account
-                else if (str == "posAccounting")
-                _str = MainWindow.resourcemanager.GetString("trPOS");
-                else if (str == "payments")
-                _str = MainWindow.resourcemanager.GetString("trPayments");
-                else if (str == "received")
-                _str = MainWindow.resourcemanager.GetString("trReceived");
-                else if (str == "bonds")
-                _str = MainWindow.resourcemanager.GetString("trBonds");
-                else if (str == "banksAccounting")
-                _str = MainWindow.resourcemanager.GetString("trBanks");
-                else if (str == "ordersAccounting")
-                _str = MainWindow.resourcemanager.GetString("trOrders");
-                else if (str == "subscriptions")
-                _str = MainWindow.resourcemanager.GetString("trSubscriptions");
-                else if (str == "accountsStatistic")
-                _str = MainWindow.resourcemanager.GetString("trStatistic");
-                #endregion
-                #region  catalog
-                else if (str == "categories")
-                _str = MainWindow.resourcemanager.GetString("trCategories");
-                else if (str == "item")
-                _str = MainWindow.resourcemanager.GetString("trItems");
-                else if (str == "properties")
-                _str = MainWindow.resourcemanager.GetString("trProperties");
-                else if (str == "units")
-                _str = MainWindow.resourcemanager.GetString("trUnits");
-                else if (str == "storageCost")
-                _str = MainWindow.resourcemanager.GetString("trStorageCost");
-                #endregion
-                #region  purchase
-                if (str == "payInvoice")
-                _str = MainWindow.resourcemanager.GetString("trInvoice");
-                else if (str == "purchaseOrder")
-                _str = MainWindow.resourcemanager.GetString("trOrders");
-                else if (str == "purchaseStatistic")
-                _str = MainWindow.resourcemanager.GetString("trStatistic");
-                #endregion
-                #region  sales
-                if (str == "reciptInvoice")
-                _str = MainWindow.resourcemanager.GetString("trInvoice");
-                else if (str == "coupon")
-                _str = MainWindow.resourcemanager.GetString("trCoupon");
-                else if (str == "offer")
-                _str = MainWindow.resourcemanager.GetString("trOffer");
-                else if (str == "package")
-                _str = MainWindow.resourcemanager.GetString("trPackage");
-                else if (str == "quotation")
-                _str = MainWindow.resourcemanager.GetString("trQuotations");
-                else if (str == "salesOrders")
-                _str = MainWindow.resourcemanager.GetString("trOrders");
-                else if (str == "medals")
-                _str = MainWindow.resourcemanager.GetString("trMedals");
-                else if (str == "membership")
-                _str = MainWindow.resourcemanager.GetString("trMembership");
-                else if (str == "salesStatistic")
-                _str = MainWindow.resourcemanager.GetString("trStatistic");
-                #endregion
-                #region  HelpClass
-                if (str == "suppliers")
-                _str = MainWindow.resourcemanager.GetString("trSuppliers");
-                else if (str == "customers")
-                _str = MainWindow.resourcemanager.GetString("trCustomers");
-                else if (str == "users")
-                _str = MainWindow.resourcemanager.GetString("trUsers");
-                else if (str == "branches")
-                _str = MainWindow.resourcemanager.GetString("trBranches");
-                else if (str == "stores")
-                _str = MainWindow.resourcemanager.GetString("trStores");
-                else if (str == "pos")
-                _str = MainWindow.resourcemanager.GetString("trPOS");
-                else if (str == "banks")
-                _str = MainWindow.resourcemanager.GetString("trBanks");
-                else if (str == "cards")
-                _str = MainWindow.resourcemanager.GetString("trCard");
-                else if (str == "shippingCompany")
-                _str = MainWindow.resourcemanager.GetString("trShippingCompanies");
-                #endregion
-                #region  settings
-                if (str == "general")
-                _str = MainWindow.resourcemanager.GetString("trGeneral");
-                else if (str == "reportsSettings")
-                _str = MainWindow.resourcemanager.GetString("trReports");
-                else if (str == "permissions")
-                _str = MainWindow.resourcemanager.GetString("trPermission");
-                else if (str == "emailsSetting")
-                _str = MainWindow.resourcemanager.GetString("trEmail");
-                else if (str == "emailTemplates")
-                _str = MainWindow.resourcemanager.GetString("trEmailTemplates");
-                #endregion
-           
-
-            return _str;
             
         }
-         
+
+        /// <summary>
+        /// badged name , previous count, new count
+        /// </summary>
+        /// <param name="badged">badged name</param>
+        /// <param name="_count">previous count</param>
+        /// <param name="count">new count</param>
+       static public void refreshNotification(Badged badged,ref int _count , int count )
+        {
+            if (count != _count)
+            {
+                if (count > 9)
+                {
+                    badged.Badge = "+9";
+                }
+                else if (count == 0) badged.Badge = "";
+                else
+                    badged.Badge = count.ToString();
+            }
+            _count = count;
+        }
+
+
     }
 
     
