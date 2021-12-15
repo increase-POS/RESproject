@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using POS;
 using Restaurant.ApiClasses;
 using System;
 using System.Collections.Generic;
