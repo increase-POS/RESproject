@@ -86,12 +86,6 @@ namespace Restaurant.Classes
                 if (_class.Equals("Agent"))
                 {
                     List<Agent> agents = await agentModel.Get(type);
-                    //Agent agent = new Agent();
-                    //for (int i = 0; i < agents.Count; i++)
-                    //{
-                    //    agent = agents[i];
-                    //    codes.Add(agent.code.Trim());
-                    //}
                     if (agents.Any(a => a.code == randomNum && a.agentId != id))
                         iscodeExist = true;
                     else
@@ -100,14 +94,6 @@ namespace Restaurant.Classes
                 else if (_class.Equals("Branch"))
                 {
                     List<Branch> branches = await branchModel.Get(type);
-
-                    //Branch branch = new Branch();
-                    //for (int i = 0; i < branches.Count; i++)
-                    //{
-                    //    branch = branches[i];
-                    //    if (branch.branchId != id)
-                    //        codes.Add(branch.code.Trim());
-                    //}
                     if (branches.Any(b => b.code == randomNum && b.branchId != id))
                         iscodeExist = true;
                     else
@@ -116,14 +102,6 @@ namespace Restaurant.Classes
                 else if (_class.Equals("Category"))
                 {
                     List<Category> categories = await categoryModel.GetAllCategories(MainWindow.userLogin.userId);
-
-                    //Category category = new Category();
-                    //for (int i = 0; i < categories.Count; i++)
-                    //{
-                    //    category = categories[i];
-                    //    if (category.categoryId != id)
-                    //        codes.Add(category.categoryCode.Trim());
-                    //}
                     if (categories.Any(c => c.categoryCode == randomNum && c.categoryId != id))
                         iscodeExist = true;
                     else
@@ -133,13 +111,6 @@ namespace Restaurant.Classes
                 {
                     List<Pos> poss = await posModel.Get();
 
-                    //    Pos pos = new Pos();
-                    //    for (int i = 0; i < poss.Count; i++)
-                    //    {
-                    //        pos = poss[i];
-                    //        if (pos.posId != id)
-                    //            codes.Add(pos.code.Trim());
-                    //    }
                     if (poss.Any(p => p.code == randomNum && p.posId != id))
                         iscodeExist = true;
                     else
@@ -329,6 +300,50 @@ namespace Restaurant.Classes
             catch { }
             return isValid;
         }
+        public static bool validate(List<string> requiredControlList, Window userControl)
+        {
+            bool isValid = true;
+            try
+            {
+                foreach (var control in requiredControlList)
+                {
+                    TextBox textBox = FindControls.FindVisualChildren<TextBox>(userControl).Where(x => x.Name == "tb_" + control)
+                        .FirstOrDefault();
+                    Path path = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    if (textBox != null && path != null)
+                        if (!HelpClass.validateEmpty(textBox.Text, path))
+                            isValid = false;
+                }
+                foreach (var control in requiredControlList)
+                {
+                    ComboBox comboBox = FindControls.FindVisualChildren<ComboBox>(userControl).Where(x => x.Name == "cb_" + control)
+                        .FirstOrDefault();
+                    Path path = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    if (comboBox != null && path != null)
+                        if (!HelpClass.validateEmpty(comboBox.Text, path))
+                            isValid = false;
+                }
+                foreach (var control in requiredControlList)
+                {
+                    PasswordBox passwordBox = FindControls.FindVisualChildren<PasswordBox>(userControl).Where(x => x.Name == "pb_" + control)
+                        .FirstOrDefault();
+                    Path path = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    if (passwordBox != null && path != null)
+                        if (!HelpClass.validateEmpty(passwordBox.Password, path))
+                            isValid = false;
+                }
+                #region Email
+                IsValidEmail(userControl);
+                #endregion
+
+
+            }
+            catch { }
+            return isValid;
+        }
         public static bool IsValidEmail(UserControl userControl)
         {//for email
             bool isValidEmail = true;
@@ -366,7 +381,58 @@ namespace Restaurant.Classes
             return isValidEmail;
 
         }
+        public static bool IsValidEmail(Window userControl)
+        {//for email
+            bool isValidEmail = true;
+            TextBox textBoxEmail = FindControls.FindVisualChildren<TextBox>(userControl).Where(x => x.Name == "tb_email")
+                    .FirstOrDefault();
+            Path pathEmail = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_email")
+                    .FirstOrDefault();
+            if (textBoxEmail != null && pathEmail != null)
+            {
+                if (textBoxEmail.Text.Equals(""))
+                    return isValidEmail;
+                else
+                {
+                    Regex regex = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
+                          RegexOptions.CultureInvariant | RegexOptions.Singleline);
+                    isValidEmail = regex.IsMatch(textBoxEmail.Text);
+
+                    if (!isValidEmail)
+                    {
+                        pathEmail.Visibility = Visibility.Visible;
+                        #region Tooltip
+                        ToolTip toolTip = new ToolTip();
+                        toolTip.Content = MainWindow.resourcemanager.GetString("trErrorEmailToolTip");
+                        toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
+                        pathEmail.ToolTip = toolTip;
+                        #endregion
+                        isValidEmail = false;
+                    }
+                    else
+                    {
+                        pathEmail.Visibility = Visibility.Collapsed;
+                    }
+                }
+            }
+            return isValidEmail;
+
+        }
         public static void clearValidate(List<string> requiredControlList, UserControl userControl)
+        {
+            try
+            {
+                foreach (var control in requiredControlList)
+                {
+                    Path path = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    if (path != null)
+                        HelpClass.clearValidate(path);
+                }
+            }
+            catch { }
+        }
+        public static void clearValidate(List<string> requiredControlList, Window userControl)
         {
             try
             {
@@ -422,12 +488,12 @@ namespace Restaurant.Classes
 
      
 
-        public static void validateDuplicateCode(TextBox tb, Path p_error, ToolTip tt_error ,string tr)
-        {
-            p_error.Visibility = Visibility.Visible;
-            tt_error.Content = MainWindow.resourcemanager.GetString(tr);
-            tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
-        }
+        //public static void validateDuplicateCode(TextBox tb, Path p_error, ToolTip tt_error ,string tr)
+        //{
+        //    p_error.Visibility = Visibility.Visible;
+        //    tt_error.Content = MainWindow.resourcemanager.GetString(tr);
+        //    tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
+        //}
 
         public static void getMobile(string _mobile , ComboBox _area , TextBox _tb)
         {//mobile

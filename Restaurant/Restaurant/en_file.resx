@@ -2809,4 +2809,19 @@ Please add Email in setting</value>
   <data name="trServices" xml:space="preserve">
     <value>Services</value>
   </data>
+  <data name="trDrinks" xml:space="preserve">
+    <value>Drinks</value>
+  </data>
+  <data name="trMeat" xml:space="preserve">
+    <value>Meat</value>
+  </data>
+  <data name="trRawMaterials" xml:space="preserve">
+    <value>Raw materials</value>
+  </data>
+  <data name="trVegetables" xml:space="preserve">
+    <value>Vegetables</value>
+  </data>
+  <data name="trTables" xml:space="preserve">
+    <value>Tables</value>
+  </data>
 </root>

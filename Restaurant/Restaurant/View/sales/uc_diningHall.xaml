@@ -246,7 +246,7 @@
                             <ColumnDefinition Width="32.5"/>
                             <ColumnDefinition Width="50"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" HorizontalAlignment="Left" TabIndex="11"
+                        <Button Grid.Column="0" HorizontalAlignment="Left"  
                                                 Height="25" Width="25"  Padding="0" x:Name="btn_firstPage" Click="Btn_firstPage_Click"
                                                 Foreground="#686868"     Background="#DFDFDF"   BorderThickness="0">
                             <Path Fill="#686868" Stretch="Fill"  x:Name="path_firstPage"
@@ -264,7 +264,7 @@
                         <Button Grid.Column="3" x:Name="btn_nextPage" Click="Btn_nextPage_Click"
                                     Height="25" Width="25" Content="3" Padding="0"
                                        Foreground="#686868"     Background="#DFDFDF" BorderThickness="0"/>
-                        <Button Grid.Column="4" HorizontalAlignment="Right"  TabIndex="12"
+                        <Button Grid.Column="4" HorizontalAlignment="Right"   
                                                 Height="25" Width="25"  Padding="0" x:Name="btn_lastPage" Click="Btn_lastPage_Click"
                                      Foreground="#686868"     Background="#DFDFDF"   BorderThickness="0">
                             <Path Fill="#686868" Stretch="Fill" x:Name="path_lastPage"

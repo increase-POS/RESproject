@@ -114,7 +114,7 @@ namespace Restaurant.View.sectionData.banksData
                 translate();
 
                 Keyboard.Focus(tb_name);
-                await RefreshCustomersList();
+                await RefreshCardsList();
                 await Search();
                 Clear();
                 HelpClass.EndAwait(grid_main);
@@ -212,10 +212,18 @@ namespace Restaurant.View.sectionData.banksData
                                         Md5Encription.MD5Hash("Inc-m" + cardId.ToString()), cardId);
                                     card.image = b;
                                     isImgPressed = false;
+                                    if (!b.Equals(""))
+                                    {
+                                        await getImg();
+                                    }
+                                    else
+                                    {
+                                        HelpClass.clearImg(btn_image);
+                                    }
                                 }
 
                                 Clear();
-                                await RefreshCustomersList();
+                                await RefreshCardsList();
                                 await Search();
                             }
                         }
@@ -284,8 +292,6 @@ namespace Restaurant.View.sectionData.banksData
                             else
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                                await RefreshCustomersList();
-                                await Search();
                                 if (isImgPressed)
                                 {
                                     int cardId = s;
@@ -301,6 +307,8 @@ namespace Restaurant.View.sectionData.banksData
                                         HelpClass.clearImg(btn_image);
                                     }
                                 }
+                                await RefreshCardsList();
+                                await Search();
                             }
                         }
                     }
@@ -362,7 +370,7 @@ namespace Restaurant.View.sectionData.banksData
                                 {
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
-                                    await RefreshCustomersList();
+                                    await RefreshCardsList();
                                     await Search();
                                     Clear();
                                 }
@@ -390,7 +398,7 @@ namespace Restaurant.View.sectionData.banksData
             else
             {
                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
-                await RefreshCustomersList();
+                await RefreshCardsList();
                 await Search();
             }
         }
@@ -416,7 +424,7 @@ namespace Restaurant.View.sectionData.banksData
             {
                 HelpClass.StartAwait(grid_main);
                 if (cards is null)
-                    await RefreshCustomersList();
+                    await RefreshCardsList();
                 tgl_cardState = 1;
                 await Search();
                 HelpClass.EndAwait(grid_main);
@@ -433,7 +441,7 @@ namespace Restaurant.View.sectionData.banksData
             {
                 HelpClass.StartAwait(grid_main);
                 if (cards is null)
-                    await RefreshCustomersList();
+                    await RefreshCardsList();
                 tgl_cardState = 0;
                 await Search();
                 HelpClass.EndAwait(grid_main);
@@ -501,7 +509,7 @@ namespace Restaurant.View.sectionData.banksData
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
-                await RefreshCustomersList();
+                await RefreshCardsList();
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -518,18 +526,18 @@ namespace Restaurant.View.sectionData.banksData
         {
             //search
             if (cards is null)
-                await RefreshCustomersList();
+                await RefreshCardsList();
             searchText = tb_search.Text.ToLower();
             cardsQuery = cards.Where(s => (s.name.ToLower().Contains(searchText) 
             ) && s.isActive == tgl_cardState);
-            RefreshCustomersView();
+            RefreshCardsView();
         }
-        async Task<IEnumerable<Card>> RefreshCustomersList()
+        async Task<IEnumerable<Card>> RefreshCardsList()
         {
             cards = await card.GetAll();
             return cards;
         }
-        void RefreshCustomersView()
+        void RefreshCardsView()
         {
             dg_card.ItemsSource = cardsQuery;
             txt_count.Text = cardsQuery.Count().ToString();
@@ -538,7 +546,9 @@ namespace Restaurant.View.sectionData.banksData
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            this.DataContext = new Card();
+            card = new Card();
+            card.isActive = 1;
+            this.DataContext = card;
 
             #region image
             HelpClass.clearImg(btn_image);
@@ -555,7 +565,8 @@ namespace Restaurant.View.sectionData.banksData
                 //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
-                Regex regex = new Regex("[^0-9]+");
+                //Regex regex = new Regex("[^0-9]+");
+                Regex regex = new Regex(@"/^(0|[1-9]\d*)(\.\d+)?$/");
                 e.Handled = regex.IsMatch(e.Text);
             }
             catch (Exception ex)

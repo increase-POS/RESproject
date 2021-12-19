@@ -370,3 +370,7 @@ E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\hallDivide
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\hallDivide\uc_hallSections.baml
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\persons\uc_users.g.cs
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\sectionData\persons\uc_users.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\catalog\rawMaterials\uc_itemsRawMaterials.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\catalog\rawMaterials\uc_itemsRawMaterials.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_units.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_units.baml

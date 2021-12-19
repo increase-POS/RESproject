@@ -2794,4 +2794,19 @@
   <data name="trServices" xml:space="preserve">
     <value>خدمات</value>
   </data>
+  <data name="trDrinks" xml:space="preserve">
+    <value>مشروبات</value>
+  </data>
+  <data name="trMeat" xml:space="preserve">
+    <value>لحوم</value>
+  </data>
+  <data name="trRawMaterials" xml:space="preserve">
+    <value>مواد خام</value>
+  </data>
+  <data name="trVegetables" xml:space="preserve">
+    <value>خضروات</value>
+  </data>
+  <data name="trTables" xml:space="preserve">
+    <value>طاولات</value>
+  </data>
 </root>

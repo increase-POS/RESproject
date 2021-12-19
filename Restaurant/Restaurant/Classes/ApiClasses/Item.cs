@@ -22,32 +22,41 @@ namespace Restaurant.Classes
 {
     public class Item
     {
+
         public int itemId { get; set; }
         public string code { get; set; }
         public string name { get; set; }
         public string details { get; set; }
-        public string type { get; set; }
         public string image { get; set; }
         public Nullable<decimal> taxes { get; set; }
         public byte isActive { get; set; }
+        public Nullable<int> categoryId { get; set; }
+        public string categoryName { get; set; }
+
+
         public int min { get; set; }
         public int max { get; set; }
-        public Nullable<int> categoryId { get; set; }
-        public Nullable<int> parentId { get; set; }
+        public Nullable<int> minUnitId { get; set; }
+        public Nullable<int> maxUnitId { get; set; }
+
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> minUnitId { get; set; }
-        public Nullable<int> maxUnitId { get; set; }
+        public Boolean canDelete { get; set; }
+
         public decimal avgPurchasePrice { get; set; }
         public Nullable<int> tagId { get; set; }
 
+        //new
+        public string notes { get; set; }
+        public string categoryString { get; set; }
 
-        public string categoryName { get; set; }
+        ///pos
 
-        public Boolean canDelete { get; set; }
 
+        public string type { get; set; }
+        public Nullable<int> parentId { get; set; }
         public Nullable<int> itemCount { get; set; }
 
 
@@ -56,7 +65,7 @@ namespace Restaurant.Classes
         public Nullable<int> unitId { get; set; }
         public string unitName { get; set; }
         public Nullable<decimal> price { get; set; }
-        //offer
+        // offer
         public Nullable<decimal> desPrice { get; set; }
         public Nullable<int> isNew { get; set; }
         public Nullable<int> isOffer { get; set; }
@@ -77,7 +86,7 @@ namespace Restaurant.Classes
       
         public Nullable<short> defaultSale { get; set; }
 
-        public async Task<int> saveItem(Item item)
+        public async Task<int> save(Item item)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Items/Save";
@@ -86,7 +95,7 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<List<Item>> GetAllItems()
+        public async Task<List<Item>> Get()
         {
             List<Item> items = new List<Item>();
 
@@ -126,7 +135,7 @@ namespace Restaurant.Classes
             }
             return items;            
         }
-        public async Task<int> deleteItem(int itemId, int userId,Boolean final)
+        public async Task<int> delete(int itemId, int userId,Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", itemId.ToString());

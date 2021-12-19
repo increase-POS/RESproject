@@ -4,6 +4,7 @@ FE:\GitHub\RESproject\Restaurant\Restaurant\controlTemplate\uc_squareCard.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\MainWindow.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\accounts\uc_accounts.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\catalog\foods\uc_foods.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\catalog\rawMaterials\uc_itemsRawMaterials.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\catalog\rawMaterials\uc_rawMaterials.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\catalog\rawMaterials\uc_units.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\catalog\uc_catalog.xaml;;
@@ -22,8 +23,10 @@ FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\branchesAndStores\u
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\branchesAndStores\uc_pos.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\branchesAndStores\uc_stores.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\hallDivide\uc_hallDivide.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\hallDivide\uc_hallSections.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\persons\uc_customers.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\persons\uc_persons.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\persons\uc_users.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\persons\uc_vendors.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\uc_sectionData.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\settings\uc_settings.xaml;;
@@ -40,6 +43,5 @@ FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_branchesList.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_locationAddRange.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_locationsList.xaml;;
 FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_logIn.xaml;;
-FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\hallDivide\uc_hallSections.xaml;;
-FE:\GitHub\RESproject\Restaurant\Restaurant\View\sectionData\persons\uc_users.xaml;;
+FE:\GitHub\RESproject\Restaurant\Restaurant\View\windows\wd_units.xaml;;
 

@@ -10,9 +10,7 @@ namespace Restaurant
     {
         public const string APIKey = "1234";
         //public const string APIUri = "http://141.95.1.58:4747/api/";
-
-        public const string APIUri = "http://192.168.1.5:44370/api/";
-        //public const string APIUri = "http://141.95.1.58:44/api/";
+        public static string APIUri = "http://192.168.1.5:4747/api/";
 
 
 

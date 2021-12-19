@@ -390,9 +390,9 @@
                            Foreground="#4E4E4E"  TextBlock.FontSize="12"  
                                      BorderThickness="0"
                                  BorderBrush="AliceBlue" MaxLength="100" PreviewTextInput="Number_PreviewTextInput"
-                      TabIndex="12" 
-                    materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                  Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
+                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                  Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown"
+                         LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_cost"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
@@ -430,6 +430,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -438,7 +439,13 @@
                     </Grid.ColumnDefinitions>
                     <Border Background="White" Grid.ColumnSpan="3"  Height="1"  BorderBrush="{StaticResource MainColor}" 
                     BorderThickness="1" Opacity="1" Margin="5,5,5,5"  />
-                    <Border Grid.Row="1">
+                    <Border Grid.Row="1" Grid.ColumnSpan="3">
+
+                        <Button x:Name="btn_items" Click="Btn_items_Click"   Content="items" materialDesign:ButtonAssist.CornerRadius="7"
+                          Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                    Margin="1,1"   Foreground="White" />
+                    </Border>
+                    <Border Grid.Row="2">
 
                         <Button x:Name="btn_add"  materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
@@ -461,7 +468,7 @@
                                     VerticalOffset="30"/>
                         </Border.ToolTip>
                     </Border>
-                    <Border Grid.Row="1" Grid.Column="1">
+                    <Border Grid.Row="2" Grid.Column="1">
                         <Button x:Name="btn_update"   materialDesign:ButtonAssist.CornerRadius="7"
                         Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                    Margin="1,1"  Click="Btn_update_Click" >
@@ -485,7 +492,7 @@
 
                         </Border.ToolTip>
                     </Border>
-                    <Border Grid.Row="1" Grid.Column="2">
+                    <Border Grid.Row="2" Grid.Column="2">
                         <Button x:Name="btn_delete"  materialDesign:ButtonAssist.CornerRadius="7"
                         Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" Foreground="White"
                     Margin="1,1"  Click="Btn_delete_Click" >

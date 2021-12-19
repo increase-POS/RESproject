@@ -99,6 +99,8 @@ namespace Restaurant.View.storage.storageOperations
             {
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "name", "cost" };
+                btn_items.IsEnabled = false;
+
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
@@ -151,6 +153,8 @@ namespace Restaurant.View.storage.storageOperations
             tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
             tt_pieChart.Content = MainWindow.resourcemanager.GetString("trPieChart");
             tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
+            btn_items.Content = MainWindow.resourcemanager.GetString("trItems");
+
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
@@ -394,6 +398,7 @@ namespace Restaurant.View.storage.storageOperations
                     this.DataContext = storageCost;
                     if (storageCost != null)
                     {
+                        btn_items.IsEnabled = true;
                         #region delete
                         if (storageCost.canDelete)
                             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
@@ -459,7 +464,10 @@ namespace Restaurant.View.storage.storageOperations
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            this.DataContext = new StorageCost();
+            storageCost = new StorageCost();
+            storageCost.cost = 0;
+            this.DataContext = storageCost;
+            btn_items.IsEnabled = false;
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);
@@ -471,7 +479,8 @@ namespace Restaurant.View.storage.storageOperations
                 //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
-                Regex regex = new Regex("[^0-9]+");
+                //Regex regex = new Regex("[^0-9]+");
+                Regex regex = new Regex(@"/^(0|[1-9]\d*)(\.\d+)?$/");
                 e.Handled = regex.IsMatch(e.Text);
             }
             catch (Exception ex)
@@ -529,6 +538,7 @@ namespace Restaurant.View.storage.storageOperations
         }
 
         #endregion
+
         #region report
         /*
         // report
@@ -757,7 +767,39 @@ namespace Restaurant.View.storage.storageOperations
         }
         */
         #endregion
-        
+
+        private void Btn_items_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {/*
+                HelpClass.StartAwait(grid_main);
+                //tables
+                if (MainWindow.groupObject.HasPermissionAction(selectLocationPermission, MainWindow.groupObjects, "one"))
+                {
+
+                    Window.GetWindow(this).Opacity = 0.2;
+                    wd_tablesList w = new wd_tablesList();
+                    w.sectionId = section.sectionId;
+                    w.ShowDialog();
+                    if (w.isActive)
+                    {
+                       await tables.saveTablesSection(w.selectedTables, section.sectionId, MainWindow.userLogin.userId);
+
+                    }
+                    Window.GetWindow(this).Opacity = 1;
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+                */
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
 
     }
 }

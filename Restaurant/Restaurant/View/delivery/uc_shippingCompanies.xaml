@@ -417,7 +417,6 @@
                            Foreground="#4E4E4E"  TextBlock.FontSize="12"  
                                      BorderThickness="0"
                                  BorderBrush="AliceBlue" MaxLength="100" PreviewTextInput="Number_PreviewTextInput"
-                      TabIndex="12" 
                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                   Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
 
@@ -437,7 +436,6 @@
                            Foreground="#4E4E4E"  TextBlock.FontSize="12"  
                                      BorderThickness="0"
                                  BorderBrush="AliceBlue" MaxLength="100" PreviewTextInput="Number_PreviewTextInput"
-                      TabIndex="12" 
                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                   Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
 
@@ -696,7 +694,7 @@
                     <Border Grid.Row="1" Grid.Column="1">
                         <Button x:Name="btn_update"   materialDesign:ButtonAssist.CornerRadius="7"
                         Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
-                   Margin="1,1"  Click="Btn_update_Click" >
+                   Margin="1,1"  Click="Btn_update_Click" Foreground="White" >
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <materialDesign:PackIcon Name="txt_update_Icon" Foreground="White" Kind="Edit" VerticalAlignment="Center" Width="15" Height="15" Margin="0,1,2,0">
 

@@ -505,7 +505,11 @@ namespace Restaurant.View.delivery
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            this.DataContext = new ShippingCompanies();
+            shCompany = new ShippingCompanies();
+            shCompany.realDeliveryCost =
+                shCompany.deliveryCost = 0;
+
+            this.DataContext = shCompany;
 
             #region mobile-Phone-fax-email
             brd_areaPhoneLocal.Visibility =
@@ -532,8 +536,8 @@ namespace Restaurant.View.delivery
                 //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
-                Regex regex = new Regex("[^0-9]+");
-                e.Handled = regex.IsMatch(e.Text);
+                //Regex regex = new Regex("[^0-9]+");
+                Regex regex = new Regex(@"/^(0|[1-9]\d*)(\.\d+)?$/"); e.Handled = regex.IsMatch(e.Text);
             }
             catch (Exception ex)
             {

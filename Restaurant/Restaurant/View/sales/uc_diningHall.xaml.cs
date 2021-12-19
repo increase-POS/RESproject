@@ -72,7 +72,7 @@ namespace Restaurant.View.sales
         IEnumerable<Item> itemsQuery;
         async Task<IEnumerable<Item>> RefreshItemsList()
         {
-            items = await item.GetAllItems();
+            items = await item.Get();
             return items;
         }
         void RefrishItemsCard(IEnumerable<Item> _items)

@@ -122,10 +122,10 @@ namespace Restaurant
         //static public List<Item> InvoiceGlobalSaleUnitsList = new List<Item>();
 
 
-        //static public ItemUnit GlobalItemUnit = new ItemUnit();
-        //static public List<ItemUnit> GlobalItemUnitsList = new List<ItemUnit>();
-        //static public Unit GlobalUnit = new Unit();
-        //static public List<Unit> GlobalUnitsList = new List<Unit>();
+        static public ItemUnit GlobalItemUnit = new ItemUnit();
+        static public List<ItemUnit> GlobalItemUnitsList = new List<ItemUnit>();
+        static public Unit GlobalUnit = new Unit();
+        static public List<Unit> GlobalUnitsList = new List<Unit>();
         /*
         public static async Task Getprintparameter()
         {
@@ -262,6 +262,40 @@ namespace Restaurant
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_getGroupObjects"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_GlobalItemUnitsList()
+        {
+            try
+            {
+                GlobalItemUnitsList = await GlobalItemUnit.GetIU();
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_GlobalItemUnitsList"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+         async void loading_GlobalUnitsList()
+        {
+            try
+            {
+                GlobalUnitsList = await GlobalUnit.GetU();
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_GlobalUnitsList"))
                 {
                     item.value = true;
                     break;
@@ -669,40 +703,8 @@ namespace Restaurant
                 }
             }
         }
-        async void loading_GlobalItemUnitsList()
-        {
-            try
-            {
-                GlobalItemUnitsList = await GlobalItemUnit.GetIU();
-            }
-            catch (Exception)
-            { }
-            foreach (var item in loadingList)
-            {
-                if (item.key.Equals("loading_GlobalItemUnitsList"))
-                {
-                    item.value = true;
-                    break;
-                }
-            }
-        }
-        async void loading_GlobalUnitsList()
-        {
-            try
-            {
-                GlobalUnitsList = await GlobalUnit.GetU();
-            }
-            catch (Exception)
-            { }
-            foreach (var item in loadingList)
-            {
-                if (item.key.Equals("loading_GlobalUnitsList"))
-                {
-                    item.value = true;
-                    break;
-                }
-            }
-        }
+       
+       
         async void loading_POSList()
         {
             try
@@ -766,6 +768,8 @@ namespace Restaurant
                 bool isDone = true;
                 loadingList.Add(new keyValueBool { key = "loading_listObjects", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_getGroupObjects", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_GlobalItemUnitsList", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_GlobalUnitsList", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getUserPath", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getTax", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getItemCost", value = false });
@@ -777,13 +781,13 @@ namespace Restaurant
                 //loadingList.Add(new keyValueBool { key = "loading_getDefaultSystemInfo", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getItemUnitsUsers", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getprintSitting", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_GlobalItemUnitsList", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_GlobalUnitsList", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_POSList", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getPrintCount", value = false });
 
                 loading_listObjects();
                 loading_getGroupObjects();
+                loading_GlobalItemUnitsList();
+                loading_GlobalUnitsList();
                 //loading_getUserPath();
                 //loading_getTax();
                 //loading_getItemCost();
@@ -795,8 +799,6 @@ namespace Restaurant
                 //loading_getUserPersonalInfo();
                 //loading_getDefaultSystemInfo();
                 //loading_getprintSitting();
-                //loading_GlobalItemUnitsList();
-                //loading_GlobalUnitsList();
                 //loading_POSList();
                 //loading_getPrintCount();
                 do

@@ -146,7 +146,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Width="*"  Header="Note" Binding="{Binding Path=note}">
+                                <DataGridTextColumn Width="*"  Header="Note" Binding="{Binding Path=notes}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>
@@ -440,7 +440,7 @@
                     BorderThickness="1" Opacity="1" Margin="5,5,5,5"  />
                     <Border Grid.Row="1" Grid.ColumnSpan="3">
 
-                        <Button x:Name="btn_locations" Click="Btn_locations_Click"   Content="Locations" materialDesign:ButtonAssist.CornerRadius="7"
+                        <Button x:Name="btn_tables" Click="Btn_tables_Click"   Content="tables" materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                     Margin="1,1"   Foreground="White" />
                     </Border>

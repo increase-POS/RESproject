@@ -505,7 +505,8 @@ namespace Restaurant.View.storage.storageDivide
                 //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
-                Regex regex = new Regex("[^0-9]+");
+                //Regex regex = new Regex("[^0-9]+");
+                Regex regex = new Regex(@"/^(0|[1-9]\d*)(\.\d+)?$/");
                 e.Handled = regex.IsMatch(e.Text);
             }
             catch (Exception ex)

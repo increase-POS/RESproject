@@ -197,7 +197,7 @@
                     </Border>
                 </Grid>
                 <Button Content="Save" Grid.Row="5" Grid.ColumnSpan="5"
-                   TabIndex="6" Foreground="White"    Margin="10,2.5" x:Name="btn_save" Click="Btn_save_Click"
+                Foreground="White"    Margin="10,2.5" x:Name="btn_save" Click="Btn_save_Click"
                           Background="{StaticResource MainColor}" BorderBrush="{x:Null}"  />
             </Grid>
 

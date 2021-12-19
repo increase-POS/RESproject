@@ -78,6 +78,24 @@ namespace Restaurant.Classes
         }
 
         /// <summary>
+        /// CategoryString
+        /// </summary>
+        static public void FillCategoryString(ComboBox cmb)
+        {
+            #region fill process type
+            var typelist = new[] {
+                new { Text = MainWindow.resourcemanager.GetString("trRawMaterials")       , Value = "RawMaterials" },
+                new { Text = MainWindow.resourcemanager.GetString("trVegetables") , Value = "Vegetables" },
+                new { Text = MainWindow.resourcemanager.GetString("trMeat") , Value = "Meat" },
+                new { Text = MainWindow.resourcemanager.GetString("trDrinks") , Value = "Drinks" }, 
+                 };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = typelist;
+            #endregion
+        }
+
+        /// <summary>
         /// FillDeliveryType
         /// </summary>
         static public void FillDeliveryType(ComboBox cmb)

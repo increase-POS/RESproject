@@ -105,7 +105,7 @@ namespace Restaurant.View.sectionData.hallDivide
             {
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "name", "branchId" };
-                btn_locations.IsEnabled = false;
+                btn_tables.IsEnabled = false;
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
@@ -148,7 +148,7 @@ namespace Restaurant.View.sectionData.hallDivide
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branchId, MainWindow.resourcemanager.GetString("trBranch/StoreHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
-            btn_locations.Content = MainWindow.resourcemanager.GetString("trLocation");
+            btn_tables.Content = MainWindow.resourcemanager.GetString("trTables");
             btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
 
             dg_section.Columns[0].Header = MainWindow.resourcemanager.GetString("trName");
@@ -424,7 +424,7 @@ namespace Restaurant.View.sectionData.hallDivide
                     this.DataContext = section;
                     if (section != null)
                     {
-                        btn_locations.IsEnabled = true;
+                        btn_tables.IsEnabled = true;
                         //if (section.branchId != 0)
                         //{
                         //    //display branch by id
@@ -502,8 +502,10 @@ namespace Restaurant.View.sectionData.hallDivide
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            this.DataContext = new Section();
-            btn_locations.IsEnabled = false;
+            section = new Section();
+            section.branchId = MainWindow.branchLogin.branchId;
+            this.DataContext = section;
+            btn_tables.IsEnabled = false;
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);
@@ -516,8 +518,8 @@ namespace Restaurant.View.sectionData.hallDivide
                 //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
-                Regex regex = new Regex("[^0-9]+");
-                e.Handled = regex.IsMatch(e.Text);
+                //Regex regex = new Regex("[^0-9]+");
+                Regex regex = new Regex(@"/^(0|[1-9]\d*)(\.\d+)?$/"); e.Handled = regex.IsMatch(e.Text);
             }
             catch (Exception ex)
             {
@@ -805,22 +807,22 @@ namespace Restaurant.View.sectionData.hallDivide
         */
         #endregion
 
-        private async void Btn_locations_Click(object sender, RoutedEventArgs e)
+        private async void Btn_tables_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
+            {/*
                 HelpClass.StartAwait(grid_main);
-                //locations
+                //tables
                 if (MainWindow.groupObject.HasPermissionAction(selectLocationPermission, MainWindow.groupObjects, "one"))
                 {
 
                     Window.GetWindow(this).Opacity = 0.2;
-                    wd_locationsList w = new wd_locationsList();
+                    wd_tablesList w = new wd_tablesList();
                     w.sectionId = section.sectionId;
                     w.ShowDialog();
                     if (w.isActive)
                     {
-                        await location.saveLocationsSection(w.selectedLocations, section.sectionId, MainWindow.userLogin.userId);
+                       await tables.saveTablesSection(w.selectedTables, section.sectionId, MainWindow.userLogin.userId);
 
                     }
                     Window.GetWindow(this).Opacity = 1;
@@ -829,6 +831,7 @@ namespace Restaurant.View.sectionData.hallDivide
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
+                */
             }
             catch (Exception ex)
             {

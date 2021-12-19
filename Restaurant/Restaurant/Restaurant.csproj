@@ -158,6 +158,10 @@
     <Reference Include="WPFTabTip">
       <HintPath>..\packages\WPFTabTip.1.2.2\lib\net45\WPFTabTip.dll</HintPath>
     </Reference>
+    <Reference Include="Zen.Barcode.Core, Version=3.1.0.0, Culture=neutral, PublicKeyToken=b5ae55aa76d2d9de, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Zen.Barcode.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -175,6 +179,7 @@
     <Compile Include="Classes\ApiClasses\CountryCode.cs" />
     <Compile Include="Classes\ApiClasses\Item.cs" />
     <Compile Include="Classes\ApiClasses\ItemCardView.cs" />
+    <Compile Include="Classes\ApiClasses\ItemUnit.cs" />
     <Compile Include="Classes\ApiClasses\Location.cs" />
     <Compile Include="Classes\ApiClasses\Pos.cs" />
     <Compile Include="Classes\ApiClasses\Section.cs" />
@@ -196,6 +201,9 @@
     </Compile>
     <Compile Include="View\catalog\foods\uc_foods.xaml.cs">
       <DependentUpon>uc_foods.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\catalog\rawMaterials\uc_itemsRawMaterials.xaml.cs">
+      <DependentUpon>uc_itemsRawMaterials.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\catalog\rawMaterials\uc_rawMaterials.xaml.cs">
       <DependentUpon>uc_rawMaterials.xaml</DependentUpon>
@@ -311,6 +319,9 @@
     <Compile Include="View\windows\wd_logIn.xaml.cs">
       <DependentUpon>wd_logIn.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_units.xaml.cs">
+      <DependentUpon>wd_units.xaml</DependentUpon>
+    </Compile>
     <Page Include="controlTemplate\uc_squareCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -368,6 +379,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\catalog\foods\uc_foods.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\catalog\rawMaterials\uc_itemsRawMaterials.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -522,6 +537,10 @@
     <Page Include="View\windows\wd_logIn.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_units.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

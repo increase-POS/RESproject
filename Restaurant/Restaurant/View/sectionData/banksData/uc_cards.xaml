@@ -465,7 +465,7 @@
                                    FontSize="12"/>
                         <ToggleButton   x:Name="tgl_hasProcessNum"  IsChecked="{Binding hasProcessNum, Mode=OneWay}"
                                         VerticalAlignment="Center" Padding="10,15,5,5"  
-                                      Margin="0" Height="13" Width="28"  TabIndex="15" />
+                                      Margin="0" Height="13" Width="28"  />
                     </StackPanel>
                     <StackPanel Grid.Row="9"  Margin="15,5,10,5" Orientation="Horizontal">
                         <TextBlock   x:Name="txt_isActive"
@@ -474,7 +474,7 @@
                                    FontSize="12"/>
                         <ToggleButton   x:Name="tgl_isActive"  IsChecked="{Binding isActive, Mode=OneWay}"
                                         VerticalAlignment="Center" Padding="10,15,5,5"  
-                                      Margin="0" Height="13" Width="28"  TabIndex="15" />
+                                      Margin="0" Height="13" Width="28"  />
                     </StackPanel>
 
                     <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">

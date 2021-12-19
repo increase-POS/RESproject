@@ -56,7 +56,18 @@ namespace Restaurant.View.catalog.rawMaterials
 
         private void Btn_itemsRawMaterials_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_itemsRawMaterials.Instance);
 
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_units_Click(object sender, RoutedEventArgs e)

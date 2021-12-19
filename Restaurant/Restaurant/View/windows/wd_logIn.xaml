@@ -31,7 +31,8 @@
         </EventTrigger>
     </Window.Triggers>
 
-    <Border x:Name="bdrLogIn" CornerRadius="10"  Background="White" >
+    <Border x:Name="bdrLogIn" CornerRadius="10"  Background="White"
+            BorderBrush="{StaticResource LightMainColor}"  BorderThickness="1" >
         <Grid x:Name="grid_main">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
