@@ -49,64 +49,91 @@
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="68.8"></RowDefinition>
+                    <RowDefinition Height="60"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Image FlowDirection="LeftToRight" Source="/pic/increase-logo100.png"   Margin="0,0,0,0" Width="100" Height="100"/>
+                <Image FlowDirection="LeftToRight" Source="/pic/increase-logo100.png"   Margin="0,0,0,0" Width="110" Height="110"/>
 
-                <DockPanel Grid.Row="1" Margin="0,10,15,0">
-                    <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <materialDesign:PackIcon Kind="Account" Height="25" Width="25" Foreground="Gray" ></materialDesign:PackIcon>
+
+                <Grid Grid.Row="1" Margin="0 10 0 0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="Account" Height="30" Width="30" Foreground="Gray" ></materialDesign:PackIcon>
                     </TextBlock>
-                    <Grid>
-                    <TextBox x:Name="txtUserName" Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
-                             Margin="5,0,0,0"  materialDesign:HintAssist.Hint="User Name" 
-                           VerticalAlignment="Top" Width="160" LostFocus="validateEmpty" TextChanged="validateTextChanged" ></TextBox>
-                    <Path Fill="#E81123" x:Name="p_errorUserName" Stretch="Fill" Margin="5,5,5,5"
+
+                    <Border Grid.Row="0" Grid.Column="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        <Grid Grid.Column="1">
+                            <TextBox x:Name="txtUserName" Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                             Height="40"  Margin="4,0" 
+                                      BorderThickness="0"
+                           materialDesign:HintAssist.Hint="User Name" 
+                           VerticalAlignment="Top" LostFocus="validateEmpty" TextChanged="validateTextChanged" ></TextBox>
+                            <Path Fill="#E81123" x:Name="p_errorUserName" Stretch="Fill" Margin="5,5,5,5"
                           HorizontalAlignment="Right" Grid.Row="2"  Visibility="Collapsed"   
                           VerticalAlignment="Center" Width="15"  Height="15"
                           Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
-                        <Path.ToolTip>
-                            <ToolTip x:Name="tt_errorUserName" Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
-                        </Path.ToolTip>
-                    </Path>
-                    </Grid>
-                    <Path Fill="#7e7e7e" Grid.Row="2" Stretch="Fill" Margin="5,5,5,5"
-                              HorizontalAlignment="Right"  Grid.Column="2"  Visibility="Visible" 
-                         VerticalAlignment="Center" Width="20"  Height="15">
-                    </Path>
-                </DockPanel>
-                <DockPanel Grid.Row="2" Margin="0,10,15,0">
-                    <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Path.ToolTip>
+                                    <ToolTip x:Name="tt_errorUserName" Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
+                                </Path.ToolTip>
+                            </Path>
+                        </Grid>
+                    </Border>
+                    <TextBlock  Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="Password" Height="25" Width="25" Foreground="Gray"></materialDesign:PackIcon>
                     </TextBlock>
-                    <Grid>
-                        <PasswordBox x:Name="txtPassword" Margin="5,0,0,0" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" materialDesign:HintAssist.Hint="Password"   VerticalAlignment="Top" Width="160" PasswordChanged="validatePasswordChanged" LostFocus="validateEmpty"  ></PasswordBox>
-                        <TextBox x:Name="txtShowPassword" Visibility="Collapsed" Margin="5,0,0,0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" Width="160"></TextBox>
-                        <Path Fill="#E81123" x:Name="p_errorPassword" Stretch="Fill" Margin="5,5,5,5"
+                    <Border Grid.Row="1" Grid.Column="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        <Grid  Grid.Row="1" Grid.Column="1" >
+                            <PasswordBox x:Name="txtPassword" 
+                             Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" 
+                            materialDesign:HintAssist.Hint="Password"   VerticalAlignment="Top"  
+                              Height="40"  Margin="4,0"      BorderThickness="0"
+                              PasswordChanged="validatePasswordChanged" LostFocus="validateEmpty"  />
+                            <TextBox x:Name="txtShowPassword" Visibility="Collapsed"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top"
+                            Height="40"  Margin="4,0"  BorderThickness="0"></TextBox>
+                            <Path Fill="#E81123" x:Name="p_errorPassword" Stretch="Fill" Margin="5,5,30,5"
                               HorizontalAlignment="Right" Grid.Row="2"  Visibility="Collapsed"   
                               VerticalAlignment="Center" Width="15"  Height="15"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
-                            <Path.ToolTip>
-                                <ToolTip x:Name="tt_errorPassword" Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
-                            </Path.ToolTip>
-                        </Path>
-                    </Grid>
-
-                    <Path Fill="#7e7e7e" Grid.Row="2" Stretch="Fill" Margin="5,5,5,5"
+                                <Path.ToolTip>
+                                    <ToolTip x:Name="tt_errorPassword" Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
+                                </Path.ToolTip>
+                            </Path>
+                            <Path Fill="#7e7e7e" Grid.Row="2" Stretch="Fill" Margin="5,5,5,5"
                               HorizontalAlignment="Right"  Grid.Column="2"  Visibility="Visible" 
                          VerticalAlignment="Center" Width="20"  Height="15" x:Name="p_showPassword" 
                               Data="M11,0.5C6,0.5,1.7,3.6,0,8c1.7,4.4,6,7.5,11,7.5s9.3-3.1,11-7.5C20.3,3.6,16,0.5,11,0.5z M11,13
 	c-2.8,0-5-2.2-5-5s2.2-5,5-5s5,2.2,5,5S13.8,13,11,13z M11,5C9.3,5,8,6.3,8,8s1.3,3,3,3s3-1.3,3-3S12.7,5,11,5z" 
                                   MouseEnter="P_showPassword_MouseEnter" 
                                   MouseLeave="P_showPassword_MouseLeave">
-                    </Path>
-                </DockPanel>
-                <CheckBox Grid.Row="3" Margin="5,20,0,0" x:Name="cbxRemmemberMe" Content="Remmember Me" 
+                            </Path>
+                        </Grid>
+
+                    </Border>
+                   
+                </Grid>
+
+               
+             
+                
+                
+                <CheckBox Grid.Row="3" Margin="5 10" x:Name="cbxRemmemberMe" Content="Remmember Me" 
                         VerticalAlignment="Center"  ></CheckBox>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="4" >
-                    <Grid>
-                        <Button x:Name="btnLogIn" Background="{StaticResource MainColor}" Foreground="White" Margin="0,0,10,0" Click="btnLogIn_Click" IsDefault="True">
+                <Grid Grid.Row="4"  Margin="10,5,10,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" x:Name="btnLogIn" Background="{StaticResource MainColor}" Foreground="White" Margin="0,0,10,0" Click="btnLogIn_Click" 
+                                IsDefault="True"  materialDesign:ButtonAssist.CornerRadius="7"  BorderThickness="0">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0">
                                         <materialDesign:PackIcon FlowDirection="LeftToRight" Kind="Login"></materialDesign:PackIcon>
@@ -114,9 +141,8 @@
                                 <TextBlock x:Name="txt_logIn" Text="Log In"></TextBlock>
                             </StackPanel>
                         </Button>
-                       
-                    </Grid>
-                    <Button x:Name="btnClose" Background="{StaticResource MainColor}" Foreground="White" Click="btnClose_Click"   IsCancel="true" >
+                    <Button Grid.Column="1"  x:Name="btnClose" Background="{StaticResource MainColor}" Foreground="White" Click="btnClose_Click"  
+                     IsCancel="true" materialDesign:ButtonAssist.CornerRadius="7" BorderThickness="0" >
                         <StackPanel Orientation="Horizontal">
                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0">
                                         <materialDesign:PackIcon Kind="Close"></materialDesign:PackIcon>
@@ -124,7 +150,8 @@
                             <TextBlock x:Name="txt_close" Text="CLose"></TextBlock>
                         </StackPanel>
                     </Button>
-                </StackPanel>
+
+                </Grid>
             </Grid>
 
             <!--Main-->

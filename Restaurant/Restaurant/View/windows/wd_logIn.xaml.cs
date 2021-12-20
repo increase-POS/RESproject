@@ -150,12 +150,28 @@ namespace Restaurant.View.windows
                 if (sender.GetType().Name == "TextBox")
                 {
                     if (txtUserName.Text.Equals(""))
-                        HelpClass.showTextBoxValidate(txtUserName, p_errorUserName, tt_errorUserName, "trEmptyUserNameToolTip");
+                    {
+                        #region Tooltip error
+                        p_errorUserName.Visibility = Visibility.Visible;
+                        ToolTip toolTip_userName = new ToolTip();
+                        toolTip_userName.Content = MainWindow.resourcemanager.GetString("trEmptyUserNameToolTip");
+                        toolTip_userName.Style = Application.Current.Resources["ToolTipError"] as Style;
+                        p_errorUserName.ToolTip = toolTip_userName;
+                        #endregion
+                    }
                 }
                 else if (sender.GetType().Name == "PasswordBox")
                 {
                     if (txtPassword.Password.Equals(""))
-                        HelpClass.showPasswordValidate(txtPassword, p_errorPassword, tt_errorPassword, "trEmptyPasswordToolTip");
+                    {
+                        #region Tooltip error
+                        p_errorPassword.Visibility = Visibility.Visible;
+                        ToolTip toolTip_password = new ToolTip();
+                        toolTip_password.Content = MainWindow.resourcemanager.GetString("trEmptyPasswordToolTip");
+                        toolTip_password.Style = Application.Current.Resources["ToolTipError"] as Style;
+                        p_errorPassword.ToolTip = toolTip_password;
+                        #endregion
+                    }
                 }
             }
             catch (Exception ex)
@@ -166,12 +182,10 @@ namespace Restaurant.View.windows
         private void validateTextChanged(object sender, TextChangedEventArgs e)
         {
             clearValidate(p_errorUserName);
-            txtUserName.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
         }
         private void validatePasswordChanged(object sender, RoutedEventArgs e)
         {
             clearValidate(p_errorPassword);
-            txtPassword.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
         }
 
         private void clearValidate(Path p)
@@ -198,7 +212,6 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private void P_showPassword_MouseLeave(object sender, MouseEventArgs e)
         {
             try
@@ -233,14 +246,26 @@ namespace Restaurant.View.windows
                     if (user.username == null)
                     {
                         //user does not exist
-                        HelpClass.showTextBoxValidate(txtUserName, p_errorUserName, tt_errorUserName, "trUserNotFound");
+                        #region Tooltip error
+                        p_errorUserName.Visibility = Visibility.Visible;
+                        ToolTip toolTip_userName = new ToolTip();
+                        toolTip_userName.Content = MainWindow.resourcemanager.GetString("trUserNotFound");
+                        toolTip_userName.Style = Application.Current.Resources["ToolTipError"] as Style;
+                        p_errorUserName.ToolTip = toolTip_userName;
+                        #endregion
                     }
                     else
                     {
                         if (user.userId == 0)
                         {
                             //wrong password
-                            HelpClass.showPasswordValidate(txtPassword, p_errorPassword, tt_errorPassword, "trWrongPassword");
+                            #region Tooltip error
+                            p_errorPassword.Visibility = Visibility.Visible;
+                            ToolTip toolTip_password = new ToolTip();
+                            toolTip_password.Content = MainWindow.resourcemanager.GetString("trWrongPassword");
+                            toolTip_password.Style = Application.Current.Resources["ToolTipError"] as Style;
+                            p_errorPassword.ToolTip = toolTip_password;
+                            #endregion
                         }
                         else
                         {
@@ -324,7 +349,6 @@ namespace Restaurant.View.windows
             }
 
         }
-
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {//close
             try
@@ -336,7 +360,6 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         #region get language from database
         /*
         List<UserSetValues> usValues = new List<UserSetValues>();
@@ -379,7 +402,6 @@ namespace Restaurant.View.windows
         }
         */
         #endregion
-
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             //MessageBox.Show("Memory used before collection: " +
