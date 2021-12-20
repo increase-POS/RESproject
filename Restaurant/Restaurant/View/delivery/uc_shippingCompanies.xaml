@@ -418,7 +418,8 @@
                                      BorderThickness="0"
                                  BorderBrush="AliceBlue" MaxLength="100" PreviewTextInput="Number_PreviewTextInput"
                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                  Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
+                  Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" 
+                                      LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
 
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_realDeliveryCost"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
@@ -437,7 +438,8 @@
                                      BorderThickness="0"
                                  BorderBrush="AliceBlue" MaxLength="100" PreviewTextInput="Number_PreviewTextInput"
                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                  Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
+                  Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" 
+                                      LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
 
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_deliveryCost"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
@@ -454,7 +456,8 @@
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                   TextBlock.FontSize="12"  
                                   Grid.Column="0" Height="40"  Margin="4,0"
-                                  BorderBrush="#737373" BorderThickness="0"  />
+                                  BorderBrush="#737373" BorderThickness="0" 
+                                       LostFocus="validateEmpty_LostFocus" />
                             <Path Fill="#E81123" x:Name="p_error_deliveryType" Stretch="Fill" Margin="5,5,20,5"
                               HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15" 
@@ -544,7 +547,8 @@
                                      BorderThickness="0" materialDesign:HintAssist.Hint="Phone..."    
                            Foreground="#4E4E4E"   materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                      MaxLength="9"    Height="40"   Margin="4,0" 
-                                         PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"/>
+                                         PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
+                                          LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
                                 <Path Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right"    Visibility="Collapsed"  
                          VerticalAlignment="Center" Width="15"  Height="15"
@@ -587,7 +591,8 @@
                                      BorderThickness="0" materialDesign:HintAssist.Hint="Fax..."    
                                      Foreground="#4E4E4E"  Height="40"  Margin="4,0"  MaxLength="9" 
                                          materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                         PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"/>
+                                         PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
+                                          LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
                                 <Path Fill="#E81123" Stretch="Fill" Margin="5,5,15,5" x:Name="p_errorFax"
                                   HorizontalAlignment="Right" Visibility="Collapsed" 
                              VerticalAlignment="Center" Width="15"  Height="15"
@@ -623,7 +628,8 @@
                                   materialDesign:HintAssist.Hint="address..."  
                                   Foreground="#4E4E4E"
                                  Margin="4,0"  BorderThickness="0"
-                            Grid.Column="1"  Height="70" TextWrapping="Wrap"/>
+                            Grid.Column="1"  Height="70" TextWrapping="Wrap"
+                                       LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
                             <Path Fill="#E81123" Grid.Row="8" Stretch="Fill" Margin="5,5,15,5"
                                   HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                              VerticalAlignment="Center" Width="15"  Height="15"
@@ -646,7 +652,8 @@
                                   materialDesign:HintAssist.Hint="Note..."  
                                   Foreground="#4E4E4E"
                                  Margin="4,0"  BorderThickness="0"
-                            Grid.Column="1"  Height="70" TextWrapping="Wrap"/>
+                            Grid.Column="1"  Height="70" TextWrapping="Wrap" 
+                                      LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
                         </Grid>
                     </Border>
 

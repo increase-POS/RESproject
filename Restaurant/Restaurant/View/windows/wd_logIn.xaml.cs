@@ -151,26 +151,14 @@ namespace Restaurant.View.windows
                 {
                     if (txtUserName.Text.Equals(""))
                     {
-                        #region Tooltip error
-                        p_errorUserName.Visibility = Visibility.Visible;
-                        ToolTip toolTip_userName = new ToolTip();
-                        toolTip_userName.Content = MainWindow.resourcemanager.GetString("trEmptyUserNameToolTip");
-                        toolTip_userName.Style = Application.Current.Resources["ToolTipError"] as Style;
-                        p_errorUserName.ToolTip = toolTip_userName;
-                        #endregion
+                        HelpClass.SetValidate(p_errorUserName, "trEmptyUserNameToolTip");
                     }
                 }
                 else if (sender.GetType().Name == "PasswordBox")
                 {
                     if (txtPassword.Password.Equals(""))
                     {
-                        #region Tooltip error
-                        p_errorPassword.Visibility = Visibility.Visible;
-                        ToolTip toolTip_password = new ToolTip();
-                        toolTip_password.Content = MainWindow.resourcemanager.GetString("trEmptyPasswordToolTip");
-                        toolTip_password.Style = Application.Current.Resources["ToolTipError"] as Style;
-                        p_errorPassword.ToolTip = toolTip_password;
-                        #endregion
+                        HelpClass.SetValidate(p_errorPassword, "trEmptyPasswordToolTip");
                     }
                 }
             }
@@ -246,26 +234,14 @@ namespace Restaurant.View.windows
                     if (user.username == null)
                     {
                         //user does not exist
-                        #region Tooltip error
-                        p_errorUserName.Visibility = Visibility.Visible;
-                        ToolTip toolTip_userName = new ToolTip();
-                        toolTip_userName.Content = MainWindow.resourcemanager.GetString("trUserNotFound");
-                        toolTip_userName.Style = Application.Current.Resources["ToolTipError"] as Style;
-                        p_errorUserName.ToolTip = toolTip_userName;
-                        #endregion
+                        HelpClass.SetValidate(p_errorUserName, "trUserNotFound");
                     }
                     else
                     {
                         if (user.userId == 0)
                         {
                             //wrong password
-                            #region Tooltip error
-                            p_errorPassword.Visibility = Visibility.Visible;
-                            ToolTip toolTip_password = new ToolTip();
-                            toolTip_password.Content = MainWindow.resourcemanager.GetString("trWrongPassword");
-                            toolTip_password.Style = Application.Current.Resources["ToolTipError"] as Style;
-                            p_errorPassword.ToolTip = toolTip_password;
-                            #endregion
+                            HelpClass.SetValidate(p_errorPassword, "trWrongPassword");
                         }
                         else
                         {

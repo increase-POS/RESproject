@@ -187,10 +187,9 @@ namespace Restaurant.View.catalog.rawMaterials
                     HelpClass.StartAwait(grid_main);
 
                     item = new Item();
-                    if (HelpClass.validate(requiredControlList, this)  )
+                    if (HelpClass.validate(requiredControlList, this))
                     {
                         Boolean codeAvailable = await checkCodeAvailabiltiy();
-
 
                         string categoryString = null;
                         if (cb_categoryString.SelectedIndex != -1)
@@ -213,7 +212,6 @@ namespace Restaurant.View.catalog.rawMaterials
                         Nullable<int> maxUnitId = null;
                         if (cb_maxUnitId.SelectedIndex != -1)
                         maxUnitId = units.Where(x => x.unitId == (int)cb_maxUnitId.SelectedValue).FirstOrDefault().unitId;
-
 
                         item = new Item();
                         item.code = tb_code.Text;
@@ -240,30 +238,23 @@ namespace Restaurant.View.catalog.rawMaterials
                         {
                             item.itemId = res;
                             Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+                            int itemId = res;
+
+                            if (openFileDialog.FileName != "")
+                                await item.uploadImage(openFileDialog.FileName, Md5Encription.MD5Hash("Inc-m" + itemId.ToString()), itemId);
+                            Clear();
+                            await RefreshItemsList();
+                            await Search();
                         }
-
-                        int itemId = res;
-
-                        if (openFileDialog.FileName != "")
-                            await item.uploadImage(openFileDialog.FileName, Md5Encription.MD5Hash("Inc-m" + itemId.ToString()), itemId);
-
-
-
-
-                        Clear();
-                        await RefreshItemsList();
-                        await Search();
-                         
                     }
                     HelpClass.EndAwait(grid_main);
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -320,19 +311,19 @@ namespace Restaurant.View.catalog.rawMaterials
                         {
                             item.itemId = res;
                             Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+                            int itemId = res;
+                            if (openFileDialog.FileName != "")
+                                await item.uploadImage(openFileDialog.FileName, Md5Encription.MD5Hash("Inc-m" + itemId.ToString()), itemId);
+
+                            Clear();
+                            await RefreshItemsList();
+                            await Search();
+
+
                         }
 
-                        int itemId = res;
-
-                        if (openFileDialog.FileName != "")
-                            await item.uploadImage(openFileDialog.FileName, Md5Encription.MD5Hash("Inc-m" + itemId.ToString()), itemId);
-
-
-
-
-                        Clear();
-                        await RefreshItemsList();
-                        await Search();
+                     
 
                     }
                     HelpClass.EndAwait(grid_main);
@@ -588,16 +579,31 @@ namespace Restaurant.View.catalog.rawMaterials
             btn_units.IsEnabled = false;
             // last 
             HelpClass.clearValidate(requiredControlList, this);
+            HelpClass.clearValidate(p_error_taxes);
         }
+        string input;
+        decimal _decimal = 0;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             try
             {
+
+                HelpClass.clearValidate(p_error_taxes);
+
                 //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
-                //Regex regex = new Regex("[^0-9]+");
-                Regex regex = new Regex(@"/^(0|[1-9]\d*)(\.\d+)?$/"); e.Handled = regex.IsMatch(e.Text);
+                if (textBox.Tag.ToString() == "int")
+                {
+                    Regex regex = new Regex("[^0-9]");
+                    e.Handled = regex.IsMatch(e.Text);
+                }
+                else if (textBox.Tag.ToString() == "decimal")
+                {
+                    input = e.Text;
+                    e.Handled = !decimal.TryParse(tb_taxes.Text + input, out _decimal);
+
+                }
             }
             catch (Exception ex)
             {
