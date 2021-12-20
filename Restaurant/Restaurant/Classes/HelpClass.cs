@@ -72,6 +72,16 @@ namespace Restaurant.Classes
         }
 
         
+        public static void SetValidate( Path p_error, string tr)
+        {
+            #region Tooltip error
+            p_error.Visibility = Visibility.Visible;
+            ToolTip toolTip_userName = new ToolTip();
+            toolTip_userName.Content = MainWindow.resourcemanager.GetString(tr);
+            toolTip_userName.Style = Application.Current.Resources["ToolTipError"] as Style;
+            p_error.ToolTip = toolTip_userName;
+            #endregion
+        }
         public static void clearValidate( Path p_error)
         {
             p_error.Visibility = Visibility.Collapsed;
