@@ -564,7 +564,6 @@ namespace Restaurant.View.catalog.foods
             #endregion
             // last 
             HelpClass.clearValidate(requiredControlList, this);
-            HelpClass.clearValidate(p_error_price);
 
         }
         string input;

@@ -8,7 +8,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
          WindowStyle="None" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" Margin="0"  
-        Title="wd_tagS" Height="500" Width="400" Background="Transparent" AllowsTransparency="True" 
+        Title="wd_tagS" Height="500" Width="500" Background="Transparent" AllowsTransparency="True" 
         Loaded="Window_Loaded"  
         MouseDown="Window_MouseDown" >
     <Border BorderThickness="1,0,1,1"  Grid.Row="1"
@@ -17,6 +17,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Grid Grid.ColumnSpan="2"   >
                 <Border  BorderThickness="0" Grid.Row="0" 
@@ -55,59 +56,64 @@
             </Grid>
             <Border BorderThickness="1,0,1,1"  Grid.Row="1"
                   Margin="15 15 15 15"  CornerRadius="7,7,7,7"    Background="White">
+                <Grid Grid.Row="0">
+                    <Border Margin="0"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
+                           Background="White"/>
+                    <DataGrid  Margin="10" Grid.Row="0"
+                              Background="White"   HeadersVisibility="Column"
+                       x:Name="dg_tag" SelectionChanged="Dg_tag_SelectionChanged"  AutoGenerateColumns="False"  
+                        ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
+                        <DataGrid.OpacityMask>
+                            <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
+                        </DataGrid.OpacityMask>
+                        <DataGrid.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"></SolidColorBrush>
+                            <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="Background" Value="#F5D7C4" />
+                                <Setter Property="BorderBrush" Value="White"/>
+                                <Setter Property="BorderThickness" Value="0 0 1 0"/>
+                                <Setter Property="Foreground" Value="{StaticResource SecondColor}"/>
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="*"  Header="tag" Binding="{Binding Path=tagName}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding isActive}" Value="0">
+                                                <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Width="*"  Header="Notes"  Binding="{Binding Path =notes }">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding isActive}" Value="0">
+                                                <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </Grid>
+            </Border>
+            <Border BorderThickness="1,0,1,1"  Grid.Row="2"
+                  Margin="15 0 15 15"  CornerRadius="7,7,7,7"    Background="White">
             <Grid  Grid.Row="1" Grid.Column="1"   >
                 <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <Border Margin="0"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
-                            Background="White"/>
-                        <DataGrid  Margin="10" Grid.Row="0" Background="White"   HeadersVisibility="Column"
-                       x:Name="dg_tag" SelectionChanged="Dg_tag_SelectionChanged"  AutoGenerateColumns="False"  
-                        ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
-                            <DataGrid.OpacityMask>
-                                <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
-                            </DataGrid.OpacityMask>
-                            <DataGrid.Resources>
-                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"></SolidColorBrush>
-                                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
-                                    <Setter Property="Background" Value="#F5D7C4" />
-                                    <Setter Property="BorderBrush" Value="White"/>
-                                    <Setter Property="BorderThickness" Value="0 0 1 0"/>
-                                    <Setter Property="Foreground" Value="{StaticResource SecondColor}"/>
-                                </Style>
-                            </DataGrid.Resources>
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Width="*"  Header="tag" Binding="{Binding Path=tagName}">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="{x:Type TextBlock}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding isActive}" Value="0">
-                                                    <Setter Property="TextDecorations" Value="Strikethrough"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
-                                <DataGridTextColumn Width="*"  Header="Notes"  Binding="{Binding Path =notes }">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="{x:Type TextBlock}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding isActive}" Value="0">
-                                                    <Setter Property="TextDecorations" Value="Strikethrough"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-
-                    </Grid>
-                <ScrollViewer Background="White"  Grid.Row="1"  VerticalScrollBarVisibility="Auto" >
+                   
+                <ScrollViewer  Grid.Row="1"  VerticalScrollBarVisibility="Auto" >
                     <StackPanel>
                         <!--<Grid >
                         <Grid.RowDefinitions >
@@ -217,7 +223,7 @@
                         <Border Grid.Row="1" Grid.Column="1">
                             <Button x:Name="btn_update"   materialDesign:ButtonAssist.CornerRadius="7"
                         Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
-                   Margin="1,1"  Click="Btn_update_Click" >
+                   Margin="1,1"  Click="Btn_update_Click" Foreground="White" >
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <materialDesign:PackIcon Name="txt_update_Icon" Foreground="White" Kind="Edit" VerticalAlignment="Center" Width="15" Height="15" Margin="0,1,2,0">
 
