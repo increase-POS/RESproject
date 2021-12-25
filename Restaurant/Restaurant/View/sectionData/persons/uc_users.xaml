@@ -476,7 +476,7 @@
                                          materialDesign:HintAssist.Hint="Mobile..."   Foreground="#4E4E4E"
                                          MaxLength="9"  
                                          materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" 
-                                         PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
+                                        Tag="int" PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
                                           LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
                                 <Path Fill="#E81123" Stretch="Fill"    x:Name="p_error_mobile" 
                                       HorizontalAlignment="Right" Visibility="Collapsed"   VerticalAlignment="Center" 
@@ -521,7 +521,7 @@
                                      BorderThickness="0" materialDesign:HintAssist.Hint="Phone..."    
                            Foreground="#4E4E4E"   materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                      MaxLength="9"    Height="40"   Margin="4,0" 
-                                         PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"/>
+                                      Tag="int"   PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"/>
                                 <Path Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right"    Visibility="Collapsed"  
                          VerticalAlignment="Center" Width="15"  Height="15"
@@ -610,7 +610,7 @@
                                          materialDesign:HintAssist.Hint="workHours..."    
                            Foreground="#4E4E4E"  TextBlock.FontSize="12"  
                                      BorderThickness="0" TextChanged="ValidateEmpty_TextChange"
-                                 BorderBrush="AliceBlue" MaxLength="100" PreviewTextInput="Number_PreviewTextInput"
+                                 BorderBrush="AliceBlue" MaxLength="100" Tag="int" PreviewTextInput="Number_PreviewTextInput"
                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                   Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
                                 <Button x:Name="countUp_workHours"   FontSize="10" Padding="0,5,0,0" Content="▲" Width="20" Height="20" Click="countUp_Click"

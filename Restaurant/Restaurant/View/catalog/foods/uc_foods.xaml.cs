@@ -1,4 +1,7 @@
-﻿using System;
+﻿using netoaster;
+using Restaurant.Classes;
+using Restaurant.View.windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,7 +45,7 @@ namespace Restaurant.View.catalog.foods
             catch
             { }
         }
-
+        string tagsPermission = "foods_tags";
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -52,5 +55,53 @@ namespace Restaurant.View.catalog.foods
             Instance = null;
             GC.Collect();
         }
+
+        private void Btn_itemsFoods_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button;
+
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_itemsFoods.Instance);
+                uc_itemsFoods.Instance.categoryName = button.Tag.ToString();
+
+                //Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_tags_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //Tags
+                if (MainWindow.groupObject.HasPermissionAction(tagsPermission, MainWindow.groupObjects, "one"))
+                {
+                    Button button = sender as Button;
+                    Window.GetWindow(this).Opacity = 0.2;
+                    wd_tags w = new wd_tags();
+                    w.categoryName = button.Tag.ToString();
+                    w.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+       
     }
 }

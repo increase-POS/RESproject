@@ -548,23 +548,35 @@ namespace Restaurant.View.sectionData.branchesAndStores
             btn_stores.IsEnabled = false;
 
         }
+        string input;
+        decimal _decimal = 0;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            try
             {
-                try
+
+
+                //only  digits
+                TextBox textBox = sender as TextBox;
+                HelpClass.InputJustNumber(ref textBox);
+                if (textBox.Tag.ToString() == "int")
                 {
-                    //only  digits
-                    TextBox textBox = sender as TextBox;
-                    HelpClass.InputJustNumber(ref textBox);
-                //Regex regex = new Regex("[^0-9]+");
-                Regex regex = new Regex("[^0-9.]");
-                e.Handled = regex.IsMatch(e.Text);
+                    Regex regex = new Regex("[^0-9]");
+                    e.Handled = regex.IsMatch(e.Text);
                 }
-                catch (Exception ex)
+                else if (textBox.Tag.ToString() == "decimal")
                 {
-                    HelpClass.ExceptionMessage(ex, this);
+                    input = e.Text;
+                    e.Handled = !decimal.TryParse(textBox.Text + input, out _decimal);
+
                 }
             }
-            private void Code_PreviewTextInput(object sender, TextCompositionEventArgs e)
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Code_PreviewTextInput(object sender, TextCompositionEventArgs e)
             {
                 try
                 {

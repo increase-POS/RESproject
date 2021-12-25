@@ -250,8 +250,8 @@ namespace Restaurant.View.windows
                                 else
                                 {
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                                    MainWindow.GlobalItemUnitsList = await MainWindow.GlobalItemUnit.GetIU();
-                                    MainWindow.GlobalUnitsList = await MainWindow.GlobalUnit.GetU();
+                                    MainWindow.mainWindow.globalItemUnitsList = await MainWindow.mainWindow.globalItemUnit.GetIU();
+                                    MainWindow.mainWindow.globalUnitsList = await MainWindow.mainWindow.globalUnit.GetU();
 
                                     Clear();
                                     await RefreshItemUnitsList();
@@ -354,8 +354,8 @@ namespace Restaurant.View.windows
                                 else
                                 {
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                                    MainWindow.GlobalItemUnitsList = await MainWindow.GlobalItemUnit.GetIU();
-                                    MainWindow.GlobalUnitsList = await MainWindow.GlobalUnit.GetU();
+                                    MainWindow.mainWindow.globalItemUnitsList = await MainWindow.mainWindow.globalItemUnit.GetIU();
+                                    MainWindow.mainWindow.globalUnitsList = await MainWindow.mainWindow.globalUnit.GetU();
 
                                     Clear();
                                     await RefreshItemUnitsList();
@@ -594,24 +594,37 @@ namespace Restaurant.View.windows
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
+        string input;
+        decimal _decimal = 0;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             try
             {
+
+
                 //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
-                //Regex regex = new Regex("[^0-9]+");
-                Regex regex = new Regex("[^0-9.]"); 
-                e.Handled = regex.IsMatch(e.Text);
+                if (textBox.Tag.ToString() == "int")
+                {
+                    Regex regex = new Regex("[^0-9]");
+                    e.Handled = regex.IsMatch(e.Text);
+                }
+                else if (textBox.Tag.ToString() == "decimal")
+                {
+                    input = e.Text;
+                    e.Handled = !decimal.TryParse(textBox.Text + input, out _decimal);
+
+                }
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         private void Code_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
+        { 
             try
             {
                 //only english and digits

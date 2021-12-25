@@ -117,7 +117,7 @@ namespace Restaurant.View.catalog.rawMaterials
                 }
                 translate();
 
-                FillCombo.FillCategoryString(cb_categoryString);
+                FillCombo.FillCategoryPurchase(cb_categoryId);
                 Keyboard.Focus(tb_code);
                 await RefreshItemsList();
                 await fillUnits();
@@ -157,7 +157,7 @@ namespace Restaurant.View.catalog.rawMaterials
 
 
             txt_contentInformatin.Text = MainWindow.resourcemanager.GetString("trMoreInformation");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_categoryString, MainWindow.resourcemanager.GetString("trSelectCategorieHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_categoryId, MainWindow.resourcemanager.GetString("trSelectCategorieHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_taxes, MainWindow.resourcemanager.GetString("trTax") + "...");
 
 
@@ -191,9 +191,9 @@ namespace Restaurant.View.catalog.rawMaterials
                     {
                         Boolean codeAvailable = await checkCodeAvailabiltiy();
 
-                        string categoryString = null;
-                        if (cb_categoryString.SelectedIndex != -1)
-                            categoryString = (string)cb_categoryString.SelectedValue;
+                        int? categoryId = null;
+                        if (cb_categoryId.SelectedIndex != -1)
+                            categoryId = (int) cb_categoryId.SelectedValue;
 
                         int min = 0;
                         int max = 0;
@@ -222,7 +222,7 @@ namespace Restaurant.View.catalog.rawMaterials
                         item.isActive = 1;
                         item.min = min;
                         item.max = max;
-                        item.categoryString = categoryString;
+                        item.categoryId = categoryId;
                         item.createUserId = MainWindow.userLogin.userId;
                         item.updateUserId = MainWindow.userLogin.userId;
                         item.minUnitId = minUnitId;
@@ -270,9 +270,9 @@ namespace Restaurant.View.catalog.rawMaterials
                     {
                         Boolean codeAvailable = await checkCodeAvailabiltiy(item.code);
 
-                        string categoryString = null;
-                        if (cb_categoryString.SelectedIndex != -1)
-                            categoryString = (string)cb_categoryString.SelectedValue;
+                        int? categoryId = null;
+                        if (cb_categoryId.SelectedIndex != -1)
+                            categoryId = (int)cb_categoryId.SelectedValue;
 
                         int min = 0;
                         int max = 0;
@@ -296,7 +296,7 @@ namespace Restaurant.View.catalog.rawMaterials
                         item.taxes = taxes;
                         item.min = min;
                         item.max = max;
-                        item.categoryString = categoryString;
+                        item.categoryId = categoryId;
                         item.updateUserId = MainWindow.userLogin.userId;
                         item.minUnitId = minUnitId;
                         item.maxUnitId = maxUnitId;
@@ -579,7 +579,6 @@ namespace Restaurant.View.catalog.rawMaterials
             btn_units.IsEnabled = false;
             // last 
             HelpClass.clearValidate(requiredControlList, this);
-            HelpClass.clearValidate(p_error_taxes);
         }
         string input;
         decimal _decimal = 0;
@@ -588,7 +587,6 @@ namespace Restaurant.View.catalog.rawMaterials
             try
             {
 
-                HelpClass.clearValidate(p_error_taxes);
 
                 //only  digits
                 TextBox textBox = sender as TextBox;
@@ -601,7 +599,7 @@ namespace Restaurant.View.catalog.rawMaterials
                 else if (textBox.Tag.ToString() == "decimal")
                 {
                     input = e.Text;
-                    e.Handled = !decimal.TryParse(tb_taxes.Text + input, out _decimal);
+                    e.Handled = !decimal.TryParse(textBox.Text + input, out _decimal);
 
                 }
             }

@@ -389,7 +389,7 @@
                                          materialDesign:HintAssist.Hint="cost..."    
                            Foreground="#4E4E4E"  TextBlock.FontSize="12"  
                                      BorderThickness="0"
-                                 BorderBrush="AliceBlue" MaxLength="100" PreviewTextInput="Number_PreviewTextInput"
+                                 BorderBrush="AliceBlue" MaxLength="100" Tag="decimal" PreviewTextInput="Number_PreviewTextInput"
                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                   Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown"
                          LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />

@@ -511,16 +511,28 @@ namespace Restaurant.View.storage.storageDivide
             HelpClass.clearValidate(requiredControlList, this);
 
         }
+        string input;
+        decimal _decimal = 0;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             try
             {
+
+
                 //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
-                //Regex regex = new Regex("[^0-9]+");
-                Regex regex = new Regex("[^0-9.]"); 
-                e.Handled = regex.IsMatch(e.Text);
+                if (textBox.Tag.ToString() == "int")
+                {
+                    Regex regex = new Regex("[^0-9]");
+                    e.Handled = regex.IsMatch(e.Text);
+                }
+                else if (textBox.Tag.ToString() == "decimal")
+                {
+                    input = e.Text;
+                    e.Handled = !decimal.TryParse(textBox.Text + input, out _decimal);
+
+                }
             }
             catch (Exception ex)
             {
