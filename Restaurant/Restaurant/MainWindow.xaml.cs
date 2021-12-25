@@ -117,15 +117,18 @@ namespace Restaurant
         //static public PosSetting posSetting = new PosSetting();
         //internal static List<Pos> posList = new List<Pos>();
 
-        //static public List<Item> InvoiceGlobalItemsList = new List<Item>();
-        //static public List<ItemUnit> InvoiceGlobalItemUnitsList = new List<ItemUnit>();
-        //static public List<Item> InvoiceGlobalSaleUnitsList = new List<Item>();
+        //static public List<Item> InvoiceglobalItemsList = new List<Item>();
+        //static public List<ItemUnit> InvoiceglobalItemUnitsList = new List<ItemUnit>();
+        //static public List<Item> InvoiceglobalSaleUnitsList = new List<Item>();
 
 
-        static public ItemUnit GlobalItemUnit = new ItemUnit();
-        static public List<ItemUnit> GlobalItemUnitsList = new List<ItemUnit>();
-        static public Unit GlobalUnit = new Unit();
-        static public List<Unit> GlobalUnitsList = new List<Unit>();
+        public ItemUnit globalItemUnit = new ItemUnit();
+        public List<ItemUnit> globalItemUnitsList = new List<ItemUnit>();
+        static public Unit saleUnit = new Unit();
+        public Unit globalUnit = new Unit();
+        public List<Unit> globalUnitsList = new List<Unit>();
+        public Category globalCategory = new Category();
+        public List<Category> globalCategories = new List<Category>();
         /*
         public static async Task Getprintparameter()
         {
@@ -268,34 +271,53 @@ namespace Restaurant
                 }
             }
         }
-        async void loading_GlobalItemUnitsList()
+        async void loading_globalItemUnitsList()
         {
             try
             {
-                GlobalItemUnitsList = await GlobalItemUnit.GetIU();
+                globalItemUnitsList = await globalItemUnit.GetIU();
             }
             catch (Exception)
             { }
             foreach (var item in loadingList)
             {
-                if (item.key.Equals("loading_GlobalItemUnitsList"))
+                if (item.key.Equals("loading_globalItemUnitsList"))
                 {
                     item.value = true;
                     break;
                 }
             }
         }
-         async void loading_GlobalUnitsList()
+         async void loading_globalUnitsList()
         {
             try
             {
-                GlobalUnitsList = await GlobalUnit.GetU();
+                globalUnitsList = await globalUnit.GetU();
+                saleUnit = globalUnitsList.Where(x => x.name == "saleUnit").FirstOrDefault();
             }
             catch (Exception)
             { }
             foreach (var item in loadingList)
             {
-                if (item.key.Equals("loading_GlobalUnitsList"))
+                if (item.key.Equals("loading_globalUnitsList"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+       
+        async void loading_globalCategories()
+        {
+            try
+            {
+                globalCategories = await globalCategory.Get();
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_globalCategories"))
                 {
                     item.value = true;
                     break;
@@ -768,8 +790,9 @@ namespace Restaurant
                 bool isDone = true;
                 loadingList.Add(new keyValueBool { key = "loading_listObjects", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_getGroupObjects", value = false });
-                loadingList.Add(new keyValueBool { key = "loading_GlobalItemUnitsList", value = false });
-                loadingList.Add(new keyValueBool { key = "loading_GlobalUnitsList", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_globalItemUnitsList", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_globalUnitsList", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_globalCategories", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getUserPath", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getTax", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getItemCost", value = false });
@@ -786,8 +809,9 @@ namespace Restaurant
 
                 loading_listObjects();
                 loading_getGroupObjects();
-                loading_GlobalItemUnitsList();
-                loading_GlobalUnitsList();
+                loading_globalItemUnitsList();
+                loading_globalUnitsList();
+                loading_globalCategories();
                 //loading_getUserPath();
                 //loading_getTax();
                 //loading_getItemCost();

@@ -50,7 +50,7 @@ namespace Restaurant.Classes
 
         //new
         public string notes { get; set; }
-        public string categoryString { get; set; }
+        //public string categoryString { get; set; }
 
         ///pos
 

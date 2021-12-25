@@ -2,6 +2,7 @@
 using Restaurant.controlTemplate;
 using Restaurant.View;
 using Restaurant.View.catalog;
+using Restaurant.View.catalog.foods;
 using Restaurant.View.catalog.rawMaterials;
 using Restaurant.View.sales;
 using Restaurant.View.storage;
@@ -27,12 +28,14 @@ namespace Restaurant.Classes
 
         public uc_diningHall ucdiningHall;
         public uc_itemsRawMaterials ucitemsRawMaterials;
+        public uc_itemsFoods ucitemsFoods;
 
         public Grid gridCatigories;
         public Grid gridCatigorieItems;
         private int _idItem;
         private int _iddiningHall;
         private int _iditemsRawMaterials;
+        private int _iditemsFoods;
 
         public int idItem
         {
@@ -61,6 +64,10 @@ namespace Restaurant.Classes
             if (ucitemsRawMaterials != null)
             {
                 ucitemsRawMaterials.ChangeItemIdEvent(idItem);
+            }
+            if (ucitemsFoods != null)
+            {
+                ucitemsFoods.ChangeItemIdEvent(idItem);
             }
         }
       

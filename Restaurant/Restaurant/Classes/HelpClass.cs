@@ -931,7 +931,10 @@ namespace Restaurant.Classes
             _count = count;
         }
 
-
+        static public int GetCategoryId(string categoryName)
+        {
+            return MainWindow.mainWindow.globalCategories.Where(x => x.name == categoryName).FirstOrDefault().id.Value;
+        }
     }
 
     

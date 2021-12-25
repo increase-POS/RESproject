@@ -20,6 +20,7 @@ namespace Restaurant.Classes
         public string categoryCode { get; set; }
         public string name { get; set; }
         public string details { get; set; }
+        public string type { get; set; }
         public string image { get; set; }
         public byte isActive { get; set; }
         public decimal taxes { get; set; }
@@ -55,6 +56,21 @@ namespace Restaurant.Classes
             }
             return items;
         }
+        public async Task<List<Category>> Get()
+        {
+            List<Category> items = new List<Category>();
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Categories/Get");
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<Category>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
         public async Task<List<Category>> GetAllCategories( int userId)
         {
             List<Category> items = new List<Category>();
@@ -72,7 +88,6 @@ namespace Restaurant.Classes
             }
             return items;
         }
-
         public async Task<Category> getById(int itemId)
         {
             Category item = new Category();

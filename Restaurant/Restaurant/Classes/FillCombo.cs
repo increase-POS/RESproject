@@ -80,21 +80,45 @@ namespace Restaurant.Classes
         /// <summary>
         /// CategoryString
         /// </summary>
-        static public void FillCategoryString(ComboBox cmb)
+        //static public void FillCategoryString(ComboBox cmb)
+        //{
+        //    #region fill process type
+        //    var typelist = new[] {
+        //        new { Text = MainWindow.resourcemanager.GetString("trRawMaterials"), Value = "RawMaterials" },
+        //        new { Text = MainWindow.resourcemanager.GetString("trVegetables") , Value = "Vegetables" },
+        //        new { Text = MainWindow.resourcemanager.GetString("trMeat") , Value = "Meat" },
+        //        new { Text = MainWindow.resourcemanager.GetString("trDrinks") , Value = "Drinks" }, 
+        //         };
+        //    cmb.DisplayMemberPath = "Text";
+        //    cmb.SelectedValuePath = "Value";
+        //    cmb.ItemsSource = typelist;
+        //    #endregion
+        //}
+        static async Task<IEnumerable<Category>> RefreshCategory()
         {
-            #region fill process type
-            var typelist = new[] {
-                new { Text = MainWindow.resourcemanager.GetString("trRawMaterials")       , Value = "RawMaterials" },
-                new { Text = MainWindow.resourcemanager.GetString("trVegetables") , Value = "Vegetables" },
-                new { Text = MainWindow.resourcemanager.GetString("trMeat") , Value = "Meat" },
-                new { Text = MainWindow.resourcemanager.GetString("trDrinks") , Value = "Drinks" }, 
-                 };
-            cmb.DisplayMemberPath = "Text";
-            cmb.SelectedValuePath = "Value";
-            cmb.ItemsSource = typelist;
+            MainWindow.mainWindow.globalCategories = await MainWindow.mainWindow.globalCategory.Get();
+            return MainWindow.mainWindow.globalCategories;
+        }
+        static public async void FillCategoryPurchase(ComboBox cmb)
+        {
+            #region FillCategoryPurchase
+            if (MainWindow.mainWindow.globalCategories.Count<1)
+                await RefreshCategory();
+            cmb.ItemsSource = MainWindow.mainWindow.globalCategories.Where(x=>x.type == "p").ToList();
+            cmb.SelectedValuePath = "categoryId";
+            cmb.DisplayMemberPath = "name";
             #endregion
         }
-
+        static public async void FillCategorySale(ComboBox cmb)
+        {
+            #region FillCategoryPurchase
+            if (MainWindow.mainWindow.globalCategories.Count < 1)
+                await RefreshCategory();
+            cmb.ItemsSource = MainWindow.mainWindow.globalCategories.Where(x => x.type == "s").ToList();
+            cmb.SelectedValuePath = "categoryId";
+            cmb.DisplayMemberPath = "name";
+            #endregion
+        }
         /// <summary>
         /// FillDeliveryType
         /// </summary>
