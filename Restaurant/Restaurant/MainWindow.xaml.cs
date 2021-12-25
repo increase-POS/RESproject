@@ -288,7 +288,7 @@ namespace Restaurant
                 }
             }
         }
-         async void loading_globalUnitsList()
+        async void loading_globalUnitsList()
         {
             try
             {
@@ -306,7 +306,6 @@ namespace Restaurant
                 }
             }
         }
-       
         async void loading_globalCategories()
         {
             try
