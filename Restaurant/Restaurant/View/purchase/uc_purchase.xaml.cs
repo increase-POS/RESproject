@@ -53,6 +53,21 @@ namespace Restaurant.View.purchase
             Instance = null;
             GC.Collect();
         }
-      
+
+        private void Btn_payInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                grid_main.Children.Clear();
+                //grid_main.Children.Add(uc_payInvoice.Instance);
+
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

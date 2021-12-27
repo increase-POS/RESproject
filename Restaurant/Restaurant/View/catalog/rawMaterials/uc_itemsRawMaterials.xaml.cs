@@ -116,8 +116,8 @@ namespace Restaurant.View.catalog.rawMaterials
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-
-                FillCombo.FillCategoryPurchase(cb_categoryId);
+                // يجب حل المشكلة
+                //FillCombo.FillCategoryPurchase(cb_categoryId);
                 Keyboard.Focus(tb_code);
                 await RefreshItemsList();
                 await fillUnits();

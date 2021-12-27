@@ -685,6 +685,23 @@ namespace Restaurant.Classes
             }
             return items;
         }
+        public async Task<string> isThereLack(int branchId)
+        {
+            string res = "";
+            List<ItemTransfer> items = new List<ItemTransfer>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("branchId", branchId.ToString());
+            IEnumerable<Claim> claims = await APIResult.getList("itemsLocations/isThereLack", parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    res = c.Value;
+                }
+            }
+            return res;
+        }
+
         public async Task<List<CouponInvoice>> GetInvoiceCoupons(int invoiceId)
         {
             List<CouponInvoice> items = new List<CouponInvoice>();
@@ -785,12 +802,12 @@ namespace Restaurant.Classes
         public async Task<Invoice> recordCashTransfer(Invoice invoice, string invType)
         {
             Agent agent = new Agent();
-            float newBalance = 0;
+            decimal newBalance = 0;
             agent = await agent.getAgentById(invoice.agentId.Value);
 
             #region agent Cash transfer
             CashTransfer cashTrasnfer = new CashTransfer();
-            cashTrasnfer.posId = MainWindow.posID;
+            cashTrasnfer.posId = MainWindow.posLogin.posId;
             cashTrasnfer.agentId = invoice.agentId;
             cashTrasnfer.invId = invoice.invoiceId;
             cashTrasnfer.createUserId = invoice.createUserId;
@@ -819,14 +836,14 @@ namespace Restaurant.Classes
                         {
                             invoice.paid = invoice.totalNet;
                             invoice.deserved = 0;
-                            newBalance = agent.balance - (float)invoice.totalNet;
+                            newBalance = agent.balance - (decimal)invoice.totalNet;
                             agent.balance = newBalance;
                         }
                         else
                         {
                             invoice.paid = (decimal)agent.balance;
                             invoice.deserved = invoice.totalNet - (decimal)agent.balance;
-                            newBalance = (float)invoice.totalNet - agent.balance;
+                            newBalance = (decimal)invoice.totalNet - agent.balance;
                             agent.balance = newBalance;
                             agent.balanceType = 0;
                         }
@@ -842,7 +859,7 @@ namespace Restaurant.Classes
                     }
                     else if (agent.balanceType == 0)
                     {
-                        newBalance = agent.balance + (float)invoice.totalNet;
+                        newBalance = agent.balance + (decimal)invoice.totalNet;
                         agent.balance = newBalance;
                         await agent.save(agent);
                     }
@@ -870,14 +887,14 @@ namespace Restaurant.Classes
                         {
                             invoice.paid = invoice.totalNet;
                             invoice.deserved = 0;
-                            newBalance = agent.balance - (float)invoice.totalNet;
+                            newBalance = agent.balance - (decimal)invoice.totalNet;
                             agent.balance = newBalance;
                         }
                         else
                         {
                             invoice.paid = (decimal)agent.balance;
                             invoice.deserved = invoice.totalNet - (decimal)agent.balance;
-                            newBalance = (float)invoice.totalNet - agent.balance;
+                            newBalance = (decimal)invoice.totalNet - agent.balance;
                             agent.balance = newBalance;
                             agent.balanceType = 1;
                         }
@@ -894,7 +911,7 @@ namespace Restaurant.Classes
                     }
                     else if (agent.balanceType == 1)
                     {
-                        newBalance = agent.balance + (float)invoice.totalNet;
+                        newBalance = agent.balance + (decimal)invoice.totalNet;
                         agent.balance = newBalance;
                         await agent.save(agent);
                     }
@@ -907,11 +924,11 @@ namespace Restaurant.Classes
         public async Task<Invoice> recordConfiguredAgentCash(Invoice invoice, string invType, CashTransfer cashTransfer)
         {
             Agent agent = new Agent();
-            float newBalance = 0;
+            decimal newBalance = 0;
             agent = await agent.getAgentById(invoice.agentId.Value);
 
             #region agent Cash transfer
-            cashTransfer.posId = MainWindow.posID;
+            cashTransfer.posId = MainWindow.posLogin.posId;
             cashTransfer.agentId = invoice.agentId;
             cashTransfer.invId = invoice.invoiceId;
             cashTransfer.createUserId = invoice.createUserId;
@@ -937,12 +954,12 @@ namespace Restaurant.Classes
                     {
                         if (cashTransfer.cash <= (decimal)agent.balance)
                         {
-                            newBalance = agent.balance - (float)cashTransfer.cash;
+                            newBalance = agent.balance - (decimal)cashTransfer.cash;
                             agent.balance = newBalance;
                         }
                         else
                         {
-                            newBalance = (float)cashTransfer.cash - agent.balance;
+                            newBalance = (decimal)cashTransfer.cash - agent.balance;
                             agent.balance = newBalance;
                             agent.balanceType = 0;
                         }
@@ -953,7 +970,7 @@ namespace Restaurant.Classes
                     }
                     else if (agent.balanceType == 0)
                     {
-                        newBalance = agent.balance + (float)cashTransfer.cash;
+                        newBalance = agent.balance + (decimal)cashTransfer.cash;
                         agent.balance = newBalance;
                         await agent.save(agent);
                     }
@@ -978,12 +995,12 @@ namespace Restaurant.Classes
                     {
                         if (cashTransfer.cash <= (decimal)agent.balance)
                         {
-                            newBalance = agent.balance - (float)cashTransfer.cash;
+                            newBalance = agent.balance - (decimal)cashTransfer.cash;
                             agent.balance = newBalance;
                         }
                         else
                         {
-                            newBalance = (float)cashTransfer.cash - agent.balance;
+                            newBalance = (decimal)cashTransfer.cash - agent.balance;
                             agent.balance = newBalance;
                             agent.balanceType = 1;
                         }
@@ -997,7 +1014,7 @@ namespace Restaurant.Classes
                     }
                     else if (agent.balanceType == 1)
                     {
-                        newBalance = agent.balance + (float)cashTransfer.cash;
+                        newBalance = agent.balance + (decimal)cashTransfer.cash;
                         agent.balance = newBalance;
                         await agent.save(agent);
                     }
@@ -1011,7 +1028,7 @@ namespace Restaurant.Classes
         {
             #region pos Cash transfer
             CashTransfer posCash = new CashTransfer();
-            posCash.posId = MainWindow.posID;
+            posCash.posId = MainWindow.posLogin.posId;
             posCash.agentId = invoice.agentId;
             posCash.invId = invoice.invoiceId;
             posCash.createUserId = invoice.createUserId;
@@ -1069,7 +1086,7 @@ namespace Restaurant.Classes
             company = await company.GetByID(invoice.shippingCompanyId.Value);
 
             CashTransfer cashTrasnfer = new CashTransfer();
-            cashTrasnfer.posId = MainWindow.posID;
+            cashTrasnfer.posId = MainWindow.posLogin.posId;
             cashTrasnfer.shippingCompanyId = invoice.shippingCompanyId;
             cashTrasnfer.invId = invoice.invoiceId;
             cashTrasnfer.createUserId = invoice.createUserId;
@@ -1119,7 +1136,7 @@ namespace Restaurant.Classes
             decimal newBalance = 0;
             company = await company.GetByID(invoice.shippingCompanyId.Value);
 
-            cashTrasnfer.posId = MainWindow.posID;
+            cashTrasnfer.posId = MainWindow.posLogin.posId;
             cashTrasnfer.shippingCompanyId = invoice.shippingCompanyId;
             cashTrasnfer.invId = invoice.invoiceId;
             cashTrasnfer.createUserId = invoice.createUserId;

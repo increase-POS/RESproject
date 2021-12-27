@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Resources;
 using System.Windows.Shapes;
 using Tulpep.NotificationWindow;
+using System.Globalization;
 
 namespace Restaurant.Classes
 {
@@ -289,6 +290,16 @@ namespace Restaurant.Classes
                         .FirstOrDefault();
                     if (comboBox != null && path != null)
                         if (!HelpClass.validateEmpty(comboBox.Text, path))
+                            isValid = false;
+                }
+                foreach (var control in requiredControlList)
+                {
+                    DatePicker datePicker = FindControls.FindVisualChildren<DatePicker>(userControl).Where(x => x.Name == "dp_" + control)
+                        .FirstOrDefault();
+                    Path path = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    if (datePicker != null && path != null)
+                        if (!HelpClass.validateEmpty(datePicker.Text, path))
                             isValid = false;
                 }
                 foreach (var control in requiredControlList)
@@ -799,8 +810,37 @@ namespace Restaurant.Classes
             }
             return data;
         }
-       
-      
+
+        public static string DateToString(DateTime? date)
+        {
+            string sdate = "";
+            if (date != null)
+            {
+                DateTimeFormatInfo dtfi = DateTimeFormatInfo.CurrentInfo;
+
+                switch (MainWindow.dateFormat)
+                {
+                    case "ShortDatePattern":
+                        sdate = date.Value.ToString(dtfi.ShortDatePattern);
+                        break;
+                    case "LongDatePattern":
+                        sdate = date.Value.ToString(dtfi.LongDatePattern);
+                        break;
+                    case "MonthDayPattern":
+                        sdate = date.Value.ToString(dtfi.MonthDayPattern);
+                        break;
+                    case "YearMonthPattern":
+                        sdate = date.Value.ToString(dtfi.YearMonthPattern);
+                        break;
+                    default:
+                        sdate = date.Value.ToString(dtfi.ShortDatePattern);
+                        break;
+                }
+            }
+
+            return sdate;
+        }
+
         public static string DecTostring(decimal? dec)
         {
             string sdc = "0";

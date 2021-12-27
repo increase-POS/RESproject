@@ -55,7 +55,49 @@ namespace Restaurant.Classes
             }            
             return result;
         }
-        
+        public void ScaleOrginalImage(string filePath)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (FileStream fs = new FileStream(sourcePath, FileMode.Open, FileAccess.Read))
+                {
+                    Bitmap bmp = (Bitmap)Image.FromStream(fs);
+
+                    SaveTemporary(bmp, ms, 150);
+                    ms.SetLength(0);
+                    bmp = ScaleOrginalImage(bmp, bmp.Width, bmp.Height);
+                    SaveTemporary(bmp, ms, 150);
+
+                    if (bmp != null)
+                        bmp.Dispose();
+                    SaveImageToFile(ms, filePath);
+                }
+            }
+        }
+        public Bitmap ScaleOrginalImage(Bitmap image, int Width, int Height)
+        {
+            int newWidth = Width;
+            int newHeight = Height;
+
+            Bitmap result = new Bitmap(newWidth, newHeight, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            result.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (Graphics g = Graphics.FromImage(result))
+            {
+                using (SolidBrush brush = new SolidBrush(System.Drawing.Color.FromArgb(255, 255, 255)))
+                {
+                    g.FillRectangle(brush, 0, 0, newWidth, newHeight);
+                }
+
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                g.DrawImage(image, 0, 0, result.Width, result.Height);
+            }
+            return result;
+        }
         public void ScaleImage(string filePath)
         {
             using (MemoryStream ms = new MemoryStream())

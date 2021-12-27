@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Security.Claims;
 using Newtonsoft.Json.Converters;
+using Restaurant.ApiClasses;
 
-namespace POS.Classes
+namespace Restaurant.Classes
 {
     public class SysEmails
     {

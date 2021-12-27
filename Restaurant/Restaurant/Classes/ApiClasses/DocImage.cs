@@ -14,7 +14,7 @@ using System.Web;
 using System.Security.Claims;
 using Restaurant.ApiClasses;
 
-namespace POS.Classes
+namespace Restaurant.Classes
 {
     class DocImage
     {

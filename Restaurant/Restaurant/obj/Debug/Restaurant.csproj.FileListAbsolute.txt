@@ -374,3 +374,10 @@ E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\catalog\rawMaterials\u
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\catalog\rawMaterials\uc_itemsRawMaterials.baml
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_units.g.cs
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_units.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\catalog\foods\uc_itemsFoods.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_tags.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\catalog\foods\uc_itemsFoods.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_tags.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\purchase\uc_payInvoice.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_previewPdf.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_uploadImage.g.cs

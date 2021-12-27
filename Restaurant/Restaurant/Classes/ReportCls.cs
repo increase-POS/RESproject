@@ -675,6 +675,7 @@ namespace Restaurant.Classes
             return totalheight;
 
         }
+        /*
         public string GetreceiptInvoiceRdlcpath(Invoice invoice)
         {
             string addpath;
@@ -779,7 +780,6 @@ namespace Restaurant.Classes
             string reppath = PathUp(Directory.GetCurrentDirectory(), 2, addpath);
             return reppath;
         }
-
         public string GetreceiptInvoiceRdlcpath(Invoice invoice, int isPreview)
         {
             string addpath;
@@ -884,6 +884,7 @@ namespace Restaurant.Classes
             string reppath = PathUp(Directory.GetCurrentDirectory(), 2, addpath);
             return reppath;
         }
+        */
         public List<ReportParameter> fillPurInvReport(Invoice invoice, List<ReportParameter> paramarr)
         {
             checkLang();

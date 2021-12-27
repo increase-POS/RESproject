@@ -994,7 +994,6 @@ namespace Restaurant.View.sectionData.persons
         {
             tb_upperLimit.IsEnabled = true;
         }
-
         private void Tgl_isOpenUpperLimit_Unchecked(object sender, RoutedEventArgs e)
         {
             tb_upperLimit.IsEnabled = false;

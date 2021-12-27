@@ -12,6 +12,7 @@
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <converters:accuracyConverter x:Key="accuracyConverter"/>
             <converters:deliveryTypeConverter x:Key="deliveryTypeConverter"/>
+            <converters:unitItemsListConverter x:Key="unitItemsListConverter"/>
 
 
 

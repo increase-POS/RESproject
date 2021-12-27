@@ -8,7 +8,7 @@ using System.Net.Mime;
 
 using System.Net;
 using System.IO;
-namespace POS.Classes
+namespace Restaurant.Classes
 {
     class MailimageClass
     {

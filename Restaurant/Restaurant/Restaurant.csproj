@@ -44,6 +44,10 @@
     <Reference Include="FontAwesome.WPF">
       <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
     </Reference>
+    <Reference Include="Interop.WIA">
+      <HintPath>bin\Interop.WIA.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="LiveCharts">
       <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
     </Reference>
@@ -139,6 +143,8 @@
     </Reference>
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -175,32 +181,52 @@
     <Compile Include="Classes\ApiClasses\BranchesUsers.cs" />
     <Compile Include="Classes\ApiClasses\BranchStore.cs" />
     <Compile Include="Classes\ApiClasses\Card.cs" />
+    <Compile Include="Classes\ApiClasses\CashTransfer.cs" />
     <Compile Include="Classes\ApiClasses\Category.cs" />
     <Compile Include="Classes\ApiClasses\CountryCode.cs" />
+    <Compile Include="Classes\ApiClasses\Coupon.cs" />
+    <Compile Include="Classes\ApiClasses\DocImage.cs" />
+    <Compile Include="Classes\ApiClasses\InventoryItemLocation.cs" />
+    <Compile Include="Classes\ApiClasses\Invoice.cs" />
     <Compile Include="Classes\ApiClasses\Item.cs" />
     <Compile Include="Classes\ApiClasses\ItemCardView.cs" />
+    <Compile Include="Classes\ApiClasses\ItemLocation.cs" />
     <Compile Include="Classes\ApiClasses\ItemUnit.cs" />
     <Compile Include="Classes\ApiClasses\Location.cs" />
+    <Compile Include="Classes\ApiClasses\NotificationUser.cs" />
+    <Compile Include="Classes\ApiClasses\Offer.cs" />
     <Compile Include="Classes\ApiClasses\Pos.cs" />
     <Compile Include="Classes\ApiClasses\Section.cs" />
+    <Compile Include="Classes\ApiClasses\setValues.cs" />
     <Compile Include="Classes\ApiClasses\ShippingCompanies.cs" />
     <Compile Include="Classes\ApiClasses\StorageCost.cs" />
+    <Compile Include="Classes\ApiClasses\SysEmails.cs" />
     <Compile Include="Classes\ApiClasses\Tag.cs" />
     <Compile Include="Classes\ApiClasses\Unit.cs" />
+    <Compile Include="Classes\BillDetails.cs" />
     <Compile Include="Classes\CatigoriesAndItemsView.cs" />
+    <Compile Include="Classes\clsReports.cs" />
+    <Compile Include="Classes\EmailClass.cs" />
+    <Compile Include="Classes\LocalReportExtensions.cs" />
     <Compile Include="Classes\numberToWord\CurrencyInfo.cs" />
     <Compile Include="Classes\numberToWord\ToWord.cs" />
     <Compile Include="Classes\Pagination.cs" />
+    <Compile Include="Classes\ReportCls.cs" />
+    <Compile Include="Classes\Statistics.cs" />
     <Compile Include="controlTemplate\uc_squareCard.xaml.cs">
       <DependentUpon>uc_squareCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="converters\deliveryTypeConverter.cs" />
+    <Compile Include="converters\unitItemsListConverter.cs" />
     <Compile Include="en_file.Designer.cs" />
     <Compile Include="View\accounts\uc_accounts.xaml.cs">
       <DependentUpon>uc_accounts.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\catalog\foods\uc_foods.xaml.cs">
       <DependentUpon>uc_foods.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\catalog\foods\uc_itemsFoods.xaml.cs">
+      <DependentUpon>uc_itemsFoods.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\catalog\rawMaterials\uc_itemsRawMaterials.xaml.cs">
       <DependentUpon>uc_itemsRawMaterials.xaml</DependentUpon>
@@ -319,8 +345,17 @@
     <Compile Include="View\windows\wd_logIn.xaml.cs">
       <DependentUpon>wd_logIn.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_previewPdf.xaml.cs">
+      <DependentUpon>wd_previewPdf.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_tags.xaml.cs">
+      <DependentUpon>wd_tags.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_units.xaml.cs">
       <DependentUpon>wd_units.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_uploadImage.xaml.cs">
+      <DependentUpon>wd_uploadImage.xaml</DependentUpon>
     </Compile>
     <Page Include="controlTemplate\uc_squareCard.xaml">
       <SubType>Designer</SubType>
@@ -379,6 +414,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\catalog\foods\uc_foods.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\catalog\foods\uc_itemsFoods.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -538,9 +577,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\windows\wd_previewPdf.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_tags.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\windows\wd_units.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_uploadImage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

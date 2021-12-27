@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using POS;
+using Restaurant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +16,9 @@ using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 
 using System.Security.Claims;
+using Restaurant.ApiClasses;
 
-
-namespace POS.Classes
+namespace Restaurant.Classes
 {
     public class SetValues
     {

@@ -192,7 +192,6 @@ C:\Users\YasinIdlbiPC\source\repos\Restaurant\netoaster\obj\Debug\netoaster.pdb
 C:\Users\YasinIdlbiPC\source\repos\Restaurant\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache
 E:\GitHub\RESproject\Restaurant\netoaster\bin\Debug\netoaster.dll
 E:\GitHub\RESproject\Restaurant\netoaster\bin\Debug\netoaster.pdb
-E:\GitHub\RESproject\Restaurant\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache
 E:\GitHub\RESproject\Restaurant\netoaster\obj\Debug\ToasterWindow.g.cs
 E:\GitHub\RESproject\Restaurant\netoaster\obj\Debug\GeneratedInternalTypeHelper.g.cs
 E:\GitHub\RESproject\Restaurant\netoaster\obj\Debug\netoaster_MarkupCompile.cache

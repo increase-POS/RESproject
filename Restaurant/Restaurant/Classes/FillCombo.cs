@@ -10,56 +10,72 @@ namespace Restaurant.Classes
 {
     public class FillCombo
     {
-        /*
-        /// <summary>
-        /// Packages
-        /// </summary>
-        static Packages package = new Packages();
-        static IEnumerable<Packages> packages;
-        static public async Task fillPackage(ComboBox combo)
-        {
-            packages = await package.GetAll();
-            combo.ItemsSource = packages.Where(x => x.isActive == 1);
-            combo.SelectedValuePath = "packageId";
-            combo.DisplayMemberPath = "packageName";
-        }
-        */
+        #region branch
         static Branch branch = new Branch();
         static List<Branch> branchsList ;
         static List<Branch> branchesAllWithoutMain;
+        static List<Branch> BranchesByBranchandUser;
         static async Task<IEnumerable<Branch>> RefreshBranches()
         {
             branchsList = await branch.GetAll();
             return branchsList;
         }
-        static public async Task fillComboBranchParent(ComboBox combo)
+        static public async Task fillComboBranchParent(ComboBox cmb)
         {
             if (branchsList is null)
                 await RefreshBranches();
-            combo.ItemsSource = branchsList.Where(b => b.type == "b" || b.type == "bs");
-            combo.DisplayMemberPath = "name";
-            combo.SelectedValuePath = "branchId";
-            combo.SelectedIndex = -1;
+            cmb.ItemsSource = branchsList.Where(b => b.type == "b" || b.type == "bs");
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "branchId";
+            cmb.SelectedIndex = -1;
         }
         static async Task<IEnumerable<Branch>> RefreshBranchesAllWithoutMain()
         {
             branchesAllWithoutMain = await  branch.GetAllWithoutMain("all");
             return branchesAllWithoutMain;
         }
-        static public async Task fillComboBranchesAllWithoutMain(ComboBox combo)
+        static public async Task fillComboBranchesAllWithoutMain(ComboBox cmb)
         {
             if (branchesAllWithoutMain is null)
                 await RefreshBranchesAllWithoutMain();
-            combo.ItemsSource = branchesAllWithoutMain;
-            combo.DisplayMemberPath = "name";
-            combo.SelectedValuePath = "branchId";
-            combo.SelectedIndex = -1;
+            cmb.ItemsSource = branchesAllWithoutMain;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "branchId";
+            cmb.SelectedIndex = -1;
 
         }
+        static async Task<IEnumerable<Branch>> RefreshByBranchandUser()
+        {
+            BranchesByBranchandUser = await branch.BranchesByBranchandUser(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
+            return BranchesByBranchandUser;
+        }
+        static public async Task fillBranchesWithoutCurrent(ComboBox cmb, int currentBranchId, string type = "")
+        {
+            List<Branch> branches = new List<Branch>();
 
-        /// <summary>
-        /// PayType
-        /// </summary>
+            if (branchesAllWithoutMain is null)
+                await RefreshBranchesAllWithoutMain();
+            if (BranchesByBranchandUser is null)
+                await RefreshByBranchandUser();
+
+            if (HelpClass.isAdminPermision())
+                branches =   branchesAllWithoutMain;
+            else
+                branches = BranchesByBranchandUser;
+
+            branch = branches.Where(s => s.branchId == currentBranchId).FirstOrDefault<Branch>();
+            branches.Remove(branch);
+            var br = new Branch();
+            br.branchId = 0;
+            br.name = "-";
+            branches.Insert(0, br);
+            cmb.ItemsSource = branches.Where(b => b.type != type && b.branchId != 1);
+            cmb.SelectedValuePath = "branchId";
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedIndex = -1;
+        }
+        #endregion
+        #region PayType
         static public void FillDefaultPayType(ComboBox cmb)
         {
             #region fill process type
@@ -76,10 +92,29 @@ namespace Restaurant.Classes
             cmb.ItemsSource = typelist;
             #endregion
         }
+        #endregion
+        #region DiscountType
+        static public void FillDiscountType(ComboBox cmb)
+        {
+            #region fill process type
+            var dislist = new[] {
+            new { Text = "", Value = -1 },
+            new { Text = MainWindow.resourcemanager.GetString("trValueDiscount"), Value = 1 },
+            new { Text = MainWindow.resourcemanager.GetString("trPercentageDiscount"), Value = 2 },
+             };
 
-        /// <summary>
-        /// CategoryString
-        /// </summary>
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = dislist;
+            cmb.SelectedIndex = 0;
+            #endregion
+        }
+        private void configure()
+        {
+            
+        }
+        #endregion
+        #region Category
         //static public void FillCategoryString(ComboBox cmb)
         //{
         //    #region fill process type
@@ -119,9 +154,8 @@ namespace Restaurant.Classes
             cmb.DisplayMemberPath = "name";
             #endregion
         }
-        /// <summary>
-        /// FillDeliveryType
-        /// </summary>
+        #endregion
+        #region FillDeliveryType
         static public void FillDeliveryType(ComboBox cmb)
         {
             var typelist = new[] {
@@ -132,7 +166,7 @@ namespace Restaurant.Classes
             cmb.SelectedValuePath = "Value";
             cmb.ItemsSource = typelist;
         }
-
+        #endregion
         #region Countries
         /// <summary>
         /// area code methods
@@ -156,48 +190,65 @@ namespace Restaurant.Classes
             citynum = await cityCodes.Get();
             return citynum;
         }
-        static public async Task fillCountries(ComboBox combo)
+        static public async Task fillCountries(ComboBox cmb)
         {
             if (countrynum is null)
                 await RefreshCountry();
 
-            combo.ItemsSource = countrynum.ToList();
-            combo.SelectedValuePath = "countryId";
-            combo.DisplayMemberPath = "code";
+            cmb.ItemsSource = countrynum.ToList();
+            cmb.SelectedValuePath = "countryId";
+            cmb.DisplayMemberPath = "code";
         }
-        static public async Task fillCountriesLocal(ComboBox combo , int countryid,Border border)
+        static public async Task fillCountriesLocal(ComboBox cmb , int countryid,Border border)
         {
             if (citynum is null)
                 await RefreshCity();
             FillCombo.citynumofcountry = FillCombo.citynum.Where(b => b.countryId == countryid).OrderBy(b => b.cityCode).ToList();
-            combo.ItemsSource = FillCombo.citynumofcountry;
-            combo.SelectedValuePath = "cityId";
-            combo.DisplayMemberPath = "cityCode";
+            cmb.ItemsSource = FillCombo.citynumofcountry;
+            cmb.SelectedValuePath = "cityId";
+            cmb.DisplayMemberPath = "cityCode";
             if (FillCombo.citynumofcountry.Count() > 0)
                 border.Visibility = Visibility.Visible;
             else
                 border.Visibility = Visibility.Collapsed;
         }
         #endregion
-        /// <summary>
-        /// fill user type
-        /// </summary>
         #region fill user type
-            /*
-        static public void fillUserType(ComboBox combo)
-        {
-            var typelist = new[] {
-                new { Text = MainWindow.resourcemanager.GetString("trAdmin")       , Value = "ad" },
-                new { Text = MainWindow.resourcemanager.GetString("trEmployee")   , Value = "u" },
-                 };
-            combo.DisplayMemberPath = "Text";
-            combo.SelectedValuePath = "Value";
-            combo.ItemsSource = typelist;
+        /*
+    static public void fillUserType(ComboBox cmb)
+    {
+        var typelist = new[] {
+            new { Text = MainWindow.resourcemanager.GetString("trAdmin")       , Value = "ad" },
+            new { Text = MainWindow.resourcemanager.GetString("trEmployee")   , Value = "u" },
+             };
+        cmb.DisplayMemberPath = "Text";
+        cmb.SelectedValuePath = "Value";
+        cmb.ItemsSource = typelist;
 
-        }
-        */
+    }
+    */
         #endregion
-
-
+        #region Vendors
+        static Agent agent = new Agent();
+        static List<Agent> agentsList;
+        static public async Task<IEnumerable<Agent>> RefreshVendors()
+        {
+            agentsList = await agent.GetAgentsActive("v");
+            return agentsList;
+        }
+        static public async Task FillComboVendors(ComboBox cmb)
+        {
+            if (agentsList is null)
+                await RefreshVendors();
+            agent = new Agent();
+            agent.agentId = 0;
+            agent.name = "-";
+            agentsList.Insert(0, agent);
+            cmb.ItemsSource = agentsList;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "agentId";
+            cmb.SelectedIndex = -1;
+        }
+        #endregion
     }
 }

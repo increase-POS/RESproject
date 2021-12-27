@@ -391,21 +391,9 @@ namespace Restaurant.View.sales
         }
         #endregion
         #region invoice
-        ObservableCollection<BillDetails> billDetailsList = new ObservableCollection<BillDetails>();
+        ObservableCollection<BillDetailsSales> billDetailsList = new ObservableCollection<BillDetailsSales>();
 
-        public class BillDetails
-        {
-            public int index { get; set; }
-            public string image { get; set; }
-            public int itemId { get; set; }
-            public string itemName { get; set; }
-            public int Count { get; set; }
-            public decimal Price { get; set; }
-            public decimal Total { get; set; }
-            public decimal Tax { get; set; }
-            public int? offerId { get; set; }
-           
-        }
+      
         private async Task FillBillDetailsList(int invoiceId)
         {
             ////get invoice items
@@ -420,7 +408,7 @@ namespace Restaurant.View.sales
 
                  int   _Count = r.Next(1, 10);
                 Decimal _Price = r.Next(0, 10000);
-                billDetailsList.Add(new BillDetails()
+                billDetailsList.Add(new BillDetailsSales()
                 {
                     index = i,
                     image = "/pic/hamburger.jfif",

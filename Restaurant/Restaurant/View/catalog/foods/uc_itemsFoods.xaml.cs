@@ -90,8 +90,6 @@ namespace Restaurant.View.catalog.foods
         byte tgl_itemState;
         string searchText = "";
         public static List<string> requiredControlList;
-        public static List<string> validateNumberControlList;
-
         List<Unit> units;
         Unit unit = new Unit();
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -108,7 +106,6 @@ namespace Restaurant.View.catalog.foods
                 btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
                 catigoriesAndItemsView.ucitemsFoods = this;
  
-                requiredControlList = new List<string> { "code", "name" };
                 requiredControlList = new List<string> { "code", "name" };
                 if (MainWindow.lang.Equals("en"))
                 {
@@ -564,7 +561,6 @@ namespace Restaurant.View.catalog.foods
             #endregion
             // last 
             HelpClass.clearValidate(requiredControlList, this);
-
         }
         string input;
         decimal _decimal = 0;
