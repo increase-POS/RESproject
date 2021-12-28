@@ -532,7 +532,7 @@ namespace Restaurant.Classes
 
                 if ((invoice.invType == "s" || invoice.invType == "sd" || invoice.invType == "sbd" || invoice.invType == "sb"|| invoice.invType == "p" || invoice.invType == "pw" ))
                 {
-                    decimal sump = mailpayedList.Sum(x => x.cash).Value;
+                    decimal sump = mailpayedList.Sum(x => x.cash);
                     decimal deservd = (decimal)invoice.totalNet - sump;
 
                     cashTr = MainWindow.resourcemanagerreport.GetString("trCashType");
@@ -676,7 +676,7 @@ namespace Restaurant.Classes
             foreach (ItemTransfer row in invoiceItems)
             {
                 string rowhtml = invitemrow;
-                row.price = decimal.Parse(SectionData.DecTostring(row.price));
+                row.price = decimal.Parse(HelpClass.DecTostring(row.price));
                 rowhtml = rowhtml.Replace("[[col1]]", row.itemName.Trim());
                 rowhtml = rowhtml.Replace("[[col2]]", row.unitName.Trim());
                 rowhtml = rowhtml.Replace("[[col3]]", row.price.ToString());
