@@ -283,11 +283,11 @@ namespace Restaurant.Classes
 
         #region image
         // update image field in DB
-        public async Task<int> updateImage(Item item)
+        public async Task<int> updateImage(int itemId, string imageName)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            var myContent = JsonConvert.SerializeObject(item);
-            parameters.Add("itemObject", myContent);
+            parameters.Add("itemId", itemId.ToString());
+            parameters.Add("imageName", imageName);
 
             string method = "Items/UpdateImage";
            return await APIResult.post(method, parameters); 
@@ -311,10 +311,7 @@ namespace Restaurant.Classes
                         System.IO.File.Delete(f);
                     }
                     tmpPath = Path.Combine(tmpPath, imageName + extension);
-                    //if (System.IO.File.Exists(tmpPath))
-                    //{
-                    //    System.IO.File.Delete(tmpPath);
-                    //}
+                   
                     // resize image
                     ImageProcess imageP = new ImageProcess(150, imagePath);
                     imageP.ScaleImage(tmpPath);
@@ -344,19 +341,10 @@ namespace Restaurant.Classes
                         if (response.IsSuccessStatusCode)
                         {
                             // save image name in DB
-                            Item item = new Item();
-                            item.itemId = itemId;
-                            item.image = fileName;
-                            await updateImage(item);
-
+                            await updateImage(itemId,fileName);
                         }
                     }
                     stream.Dispose();
-                    //delete tmp image
-                    //if (System.IO.File.Exists(tmpPath))
-                    //{
-                    //    System.IO.File.Delete(tmpPath);
-                    //}
                     return true;
                 }
                 catch

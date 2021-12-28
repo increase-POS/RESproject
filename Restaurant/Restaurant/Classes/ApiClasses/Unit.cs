@@ -46,6 +46,19 @@ namespace Restaurant.Classes
             }
             return items;
         }
+        public async Task<List<Unit>> GetActive()
+        {
+            List<Unit> items = new List<Unit>();
+            IEnumerable<Claim> claims = await APIResult.getList("Units/getActive");
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<Unit>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
         public async Task<List<Unit>> GetU()
         {
             List<Unit> items = new List<Unit>();

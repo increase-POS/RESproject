@@ -116,8 +116,8 @@ namespace Restaurant.View.catalog.rawMaterials
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-                // يجب حل المشكلة
-                //FillCombo.FillCategoryPurchase(cb_categoryId);
+              
+                FillCombo.FillCategoryPurchase(cb_categoryId);
                 Keyboard.Focus(tb_code);
                 await RefreshItemsList();
                 await fillUnits();
@@ -227,7 +227,7 @@ namespace Restaurant.View.catalog.rawMaterials
                         item.updateUserId = MainWindow.userLogin.userId;
                         item.minUnitId = minUnitId;
                         item.maxUnitId = maxUnitId;
-
+                        item.type = "n";
                         int res = await item.save(item);
                         if (res == -1)// إظهار رسالة الترقية
                             Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);

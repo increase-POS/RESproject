@@ -126,6 +126,7 @@ namespace Restaurant.View.windows
                 translate();
 
                 Keyboard.Focus(tb_barcode);
+                FillCombo.FillUnits(cb_unitId);
                 await RefreshItemUnitsList();
                 await Search();
                 Clear();
@@ -564,6 +565,10 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private void Cb_unitId_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
         #endregion
         #region Refresh & Search
         async Task Search()
@@ -787,5 +792,7 @@ namespace Restaurant.View.windows
 
         }
         #endregion
+
+       
     }
 }

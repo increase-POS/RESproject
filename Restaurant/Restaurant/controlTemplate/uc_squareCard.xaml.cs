@@ -79,7 +79,7 @@ namespace Restaurant.controlTemplate
             buttonImage.FlowDirection = FlowDirection.LeftToRight;
             MaterialDesignThemes.Wpf.ButtonAssist.SetCornerRadius(buttonImage, (new CornerRadius(10)));
             bool isModified = HelpClass.chkImgChng(cardViewitem.item.image, (DateTime)cardViewitem.item.updateDate, Global.TMPItemsFolder);
-            if (isModified)
+            if (isModified && cardViewitem.item.image != "")
                 HelpClass.getImg("Item", cardViewitem.item.image, buttonImage);
             else
                 HelpClass.getLocalImg("Item", cardViewitem.item.image, buttonImage);

@@ -223,7 +223,8 @@
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                   TextBlock.FontSize="12"  
                                   Grid.Column="0" Height="40"  Margin="4,0"
-                                  BorderBrush="#737373" BorderThickness="0"  />
+                                  BorderBrush="#737373" BorderThickness="0"
+                                  SelectionChanged="Cb_unitId_SelectionChanged"/>
                                 <Path Fill="#E81123" x:Name="p_error_unitId" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15" 

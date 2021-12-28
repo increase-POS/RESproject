@@ -155,6 +155,23 @@ namespace Restaurant.Classes
             #endregion
         }
         #endregion
+        #region Unit
+        static async Task<IEnumerable<Unit>> RefreshUnit()
+        {
+            MainWindow.mainWindow.globalUnitsList = await MainWindow.mainWindow.globalUnit.GetActive();
+            return MainWindow.mainWindow.globalUnitsList;
+        }
+        static public async void FillUnits(ComboBox cmb)
+        {
+            #region FillCategoryPurchase
+            if (MainWindow.mainWindow.globalUnitsList.Count < 1)
+                await RefreshUnit();
+            cmb.ItemsSource = MainWindow.mainWindow.globalUnitsList.ToList();
+            cmb.SelectedValuePath = "unitId";
+            cmb.DisplayMemberPath = "name";
+            #endregion
+        }
+        #endregion
         #region FillDeliveryType
         static public void FillDeliveryType(ComboBox cmb)
         {
