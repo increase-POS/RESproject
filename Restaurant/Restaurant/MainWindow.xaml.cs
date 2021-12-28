@@ -39,6 +39,7 @@ using Restaurant.View.storage.stocktakingOperations;
 using Restaurant.View.sales.promotion;
 using Restaurant.View.delivery;
 using Restaurant.View.sectionData.banksData;
+using Restaurant.View.catalog.rawMaterials;
 
 namespace Restaurant
 {
@@ -118,7 +119,7 @@ namespace Restaurant
         //internal static List<Pos> posList = new List<Pos>();
 
         //static public List<Item> InvoiceglobalItemsList = new List<Item>();
-        //static public List<ItemUnit> InvoiceglobalItemUnitsList = new List<ItemUnit>();
+        static public List<ItemUnit> InvoiceGlobalItemUnitsList = new List<ItemUnit>();
         //static public List<Item> InvoiceglobalSaleUnitsList = new List<Item>();
 
 
@@ -1800,18 +1801,18 @@ namespace Restaurant
                 //case "tables":
                 //    grid_main.Children.Add(uc_tables.Instance);
                 //    break;
-                //case "hallSections":
-                //    grid_main.Children.Add(uc_hallSections.Instance);
-                //    break;
+                case "hallSections":
+                    grid_main.Children.Add(uc_hallSections.Instance);
+                    break;
                 case "vendors":
                     grid_main.Children.Add(uc_vendors.Instance);
                     break;
                 case "customers":
                     grid_main.Children.Add(uc_customers.Instance);
                     break;
-                //case "users":
-                //    grid_main.Children.Add(uc_users.Instance);
-                //    break;
+                case "users":
+                    grid_main.Children.Add(uc_users.Instance);
+                    break;
                 //22
                 case "branches":
                     grid_main.Children.Add(uc_branches.Instance);
@@ -1825,12 +1826,12 @@ namespace Restaurant
                 case "banks":
                     grid_main.Children.Add(uc_banks.Instance);
                     break;
-                //case "cards":
-                //    grid_main.Children.Add(uc_cards.Instance);
-                //    break;
-                //case "rawMaterials":
-                //    grid_main.Children.Add(uc_rawMaterials.Instance);
-                //    break;
+                case "cards":
+                    grid_main.Children.Add(uc_cards.Instance);
+                    break;
+                case "rawMaterials":
+                    grid_main.Children.Add(uc_rawMaterials.Instance);
+                    break;
                 case "foods":
                     grid_main.Children.Add(uc_foods.Instance);
                     break;
@@ -1850,9 +1851,9 @@ namespace Restaurant
                 //case "desserts":
                 //    grid_main.Children.Add(uc_desserts.Instance);
                 //    break;
-                //case "payInvoice":
-                //    grid_main.Children.Add(uc_payInvoice.Instance);
-                //    break;
+                case "payInvoice":
+                    grid_main.Children.Add(uc_payInvoice.Instance);
+                    break;
                 //case "purchaseOrder":
                 //    grid_main.Children.Add(uc_purchaseOrder.Instance);
                 //    break;
@@ -1952,9 +1953,9 @@ namespace Restaurant
                 //case "reservations":
                 //    grid_main.Children.Add(uc_reservations.Instance);
                 //    break;
-                //case "diningHall":
-                //    grid_main.Children.Add(uc_diningHall.Instance);
-                //    break;
+                case "diningHall":
+                    grid_main.Children.Add(uc_diningHall.Instance);
+                    break;
                 //case "takeAway":
                 //    grid_main.Children.Add(uc_takeAway.Instance);
                 //    break;
@@ -1966,7 +1967,7 @@ namespace Restaurant
                 //    break;
                 //case "coupon":
                 //    grid_main.Children.Add(uc_coupon.Instance);
-                    //break;
+                //break;
                 //72
                 //case "offer":
                 //    grid_main.Children.Add(uc_offer.Instance);

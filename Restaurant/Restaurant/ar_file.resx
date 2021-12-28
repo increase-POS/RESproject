@@ -2809,4 +2809,10 @@
   <data name="trTables" xml:space="preserve">
     <value>طاولات</value>
   </data>
+  <data name="String2" xml:space="preserve">
+    <value />
+  </data>
+  <data name="trExpire" xml:space="preserve">
+    <value>تاريخ صلاحية</value>
+  </data>
 </root>

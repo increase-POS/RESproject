@@ -2824,4 +2824,7 @@ Please add Email in setting</value>
   <data name="trTables" xml:space="preserve">
     <value>Tables</value>
   </data>
+  <data name="trExpire" xml:space="preserve">
+    <value>Expire date</value>
+  </data>
 </root>

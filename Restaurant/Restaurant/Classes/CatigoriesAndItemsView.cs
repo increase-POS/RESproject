@@ -33,9 +33,9 @@ namespace Restaurant.Classes
         public Grid gridCatigories;
         public Grid gridCatigorieItems;
         private int _idItem;
-        private int _iddiningHall;
-        private int _iditemsRawMaterials;
-        private int _iditemsFoods;
+        //private int _iddiningHall;
+        //private int _iditemsRawMaterials;
+        //private int _iditemsFoods;
 
         public int idItem
         {

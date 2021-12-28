@@ -118,9 +118,11 @@ namespace Restaurant.View.catalog.rawMaterials
                 translate();
               
                 FillCombo.FillCategoryPurchase(cb_categoryId);
+                FillCombo.FillItemTypePurchase(cb_type);
                 Keyboard.Focus(tb_code);
                 await RefreshItemsList();
-                await fillUnits();
+                // يجب نقله الى كلاس تعبئة الكومبو
+                //await fillUnits();
                 await Search();
                 Clear();
                 HelpClass.EndAwait(grid_main);
@@ -132,6 +134,7 @@ namespace Restaurant.View.catalog.rawMaterials
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        // يجب نقله الى كلاس تعبئة الكومبو
         private async Task fillUnits()
         {
             units = await unit.Get();
@@ -145,7 +148,7 @@ namespace Restaurant.View.catalog.rawMaterials
             cb_maxUnitId.SelectedValuePath = "unitId";
             cb_maxUnitId.DisplayMemberPath = "name";
 
-           
+
         }
         private void translate()
         {
@@ -672,6 +675,7 @@ namespace Restaurant.View.catalog.rawMaterials
                 openFileDialog.Filter = "Images|*.png;*.jpg;*.bmp;*.jpeg;*.jfif";
                 if (openFileDialog.ShowDialog() == true)
                 {
+                    HelpClass.imageBrush = new ImageBrush();
                     HelpClass.imageBrush.ImageSource = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Relative));
                     btn_image.Background = HelpClass.imageBrush;
                     imgFileName = openFileDialog.FileName;
@@ -969,7 +973,7 @@ namespace Restaurant.View.catalog.rawMaterials
 
         public void ChangeItemIdEvent(int itemId)
         {
-
+            MessageBox.Show("Hello, I'm here!!");
             btn_units.IsEnabled = true;
         }
         #endregion

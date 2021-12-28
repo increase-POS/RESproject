@@ -126,7 +126,7 @@ namespace Restaurant.View.windows
                 Keyboard.Focus(tb_tagName);
                 categoryId = HelpClass.GetCategoryId(categoryName);
 
-                    await RefreshTagsList();
+                await RefreshTagsList();
                 await Search();
                 Clear();
                 HelpClass.EndAwait(grid_main);

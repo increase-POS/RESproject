@@ -11,11 +11,11 @@ namespace Restaurant.Classes
     public class FillCombo
     {
         #region branch
-        static Branch branch = new Branch();
-        static List<Branch> branchsList ;
-        static List<Branch> branchesAllWithoutMain;
-        static List<Branch> BranchesByBranchandUser;
-        static async Task<IEnumerable<Branch>> RefreshBranches()
+        static public Branch branch = new Branch();
+        static public List<Branch> branchsList ;
+        static public List<Branch> branchesAllWithoutMain;
+        static public List<Branch> BranchesByBranchandUser;
+        static public async Task<IEnumerable<Branch>> RefreshBranches()
         {
             branchsList = await branch.GetAll();
             return branchsList;
@@ -86,6 +86,20 @@ namespace Restaurant.Classes
                 new { Text = MainWindow.resourcemanager.GetString("trMultiplePayment") , Value = "multiple" }, 
                 //new { Text = MainWindow.resourcemanager.GetString("trDocument")   , Value = "doc" },
                 //new { Text = MainWindow.resourcemanager.GetString("trCheque")     , Value = "cheque" },
+                 };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = typelist;
+            #endregion
+        }
+        #endregion
+        #region ItemTypePurchase
+        static public void FillItemTypePurchase(ComboBox cmb)
+        {
+            #region fill process type
+            var typelist = new[] {
+                new { Text = MainWindow.resourcemanager.GetString("trNormal")       , Value = "PurchaseNormal" },
+                new { Text = MainWindow.resourcemanager.GetString("trExpire") , Value = "PurchaseExpire" },
                  };
             cmb.DisplayMemberPath = "Text";
             cmb.SelectedValuePath = "Value";
@@ -245,27 +259,56 @@ namespace Restaurant.Classes
     }
     */
         #endregion
+
+        #region agent
+        static public Agent agent = new Agent();
         #region Vendors
-        static Agent agent = new Agent();
-        static List<Agent> agentsList;
+        static public List<Agent> vendorsList;
         static public async Task<IEnumerable<Agent>> RefreshVendors()
         {
-            agentsList = await agent.GetAgentsActive("v");
-            return agentsList;
+            vendorsList = await agent.GetAgentsActive("v");
+            return vendorsList;
         }
         static public async Task FillComboVendors(ComboBox cmb)
         {
-            if (agentsList is null)
+            if (vendorsList is null)
                 await RefreshVendors();
             agent = new Agent();
             agent.agentId = 0;
             agent.name = "-";
-            agentsList.Insert(0, agent);
-            cmb.ItemsSource = agentsList;
+            vendorsList.Insert(0, agent);
+            cmb.ItemsSource = vendorsList;
             cmb.DisplayMemberPath = "name";
             cmb.SelectedValuePath = "agentId";
             cmb.SelectedIndex = -1;
         }
         #endregion
+        #endregion
+
+        #region fill cards combo
+        static public Card card = new Card();
+        static public List<Card> cardsList;
+        static public async Task<IEnumerable<Card>> RefreshCards()
+        {
+            cardsList = await card.GetAll();
+            return cardsList;
+        }
+        static public async Task FillComboCards(ComboBox cmb)
+        {
+            if (cardsList is null)
+                await RefreshCards();
+            cmb.ItemsSource = cardsList;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "agentId";
+            cmb.SelectedIndex = -1;
+        }
+        #endregion
+
+        
+        static public Item item = new Item();
+        static public ItemLocation itemLocation = new ItemLocation();
+        static public ItemUnit itemUnit = new ItemUnit();
+        static public Invoice invoice = new Invoice();
+
     }
 }

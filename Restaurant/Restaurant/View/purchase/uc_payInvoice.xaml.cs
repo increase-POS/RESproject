@@ -76,28 +76,14 @@ namespace Restaurant.View.purchase
         public static bool isFromReport = false;
         public static bool archived = false;
 
-        Item itemModel = new Item();
         Item item = new Item();
         IEnumerable<Item> items;
-        ItemLocation itemLocationModel = new ItemLocation();
-
-        Branch branchModel = new Branch();
-
-        Agent agentModel = new Agent();
-        List<Agent> vendors;
-        List<Agent> vendorsL;
-
-        ItemUnit itemUnitModel = new ItemUnit();
         List<ItemUnit> barcodesList;
         List<ItemUnit> itemUnits;
-
-        Invoice invoiceModel = new Invoice();
         public Invoice invoice = new Invoice();
         List<Invoice> invoices;
         List<ItemTransfer> invoiceItems;
         List<ItemTransfer> mainInvoiceItems;
-        Card cardModel = new Card();
-        IEnumerable<Card> cards;
         CashTransfer cashTransfer = new CashTransfer();
         #region //to handle barcode characters
         static private int _SelectedBranch = -1;
@@ -120,10 +106,10 @@ namespace Restaurant.View.purchase
         int _PaymentCount = 0;
 
         #endregion
-        CatigoriesAndItemsView catigoriesAndItemsView = new CatigoriesAndItemsView();
-        public byte tglCategoryState = 1;
-        public byte tglItemState = 1;
-        public string txtItemSearch;
+        //CatigoriesAndItemsView catigoriesAndItemsView = new CatigoriesAndItemsView();
+        //public byte tglCategoryState = 1;
+        //public byte tglItemState = 1;
+        //public string txtItemSearch;
 
         //for bill details
         static private int _SequenceNum = 0;
@@ -196,11 +182,9 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                #region fill card combo
-                cards = await cardModel.GetAll();
-                InitializeCardsPic(cards);
-                #endregion
-
+                if (FillCombo.cardsList is null)
+                    await FillCombo.RefreshCards();
+                InitializeCardsPic(FillCombo.cardsList);
             }
             catch (Exception)
             { }
@@ -218,7 +202,7 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
 
@@ -241,13 +225,14 @@ namespace Restaurant.View.purchase
 
                 translate();
                 controls = new List<Control>();
-
+               
                 #region loading
                 loadingList = new List<keyValueBool>();
                 bool isDone = true;
                 loadingList.Add(new keyValueBool { key = "loading_RefrishItems", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_fillBranchesWithoutCurrent", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_fillBarcodeList", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_fillCardCombo", value = false });
 
 
                 loading_RefrishItems();
@@ -359,13 +344,13 @@ namespace Restaurant.View.purchase
                 btn_emailMessage.Visibility = Visibility.Collapsed;
                 bdr_emailMessage.Visibility = Visibility.Collapsed;
                 #endregion
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 tb_barcode.Focus();
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -374,7 +359,7 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 MainWindow.mainWindow.KeyDown -= HandleKeyPress;
@@ -382,7 +367,7 @@ namespace Restaurant.View.purchase
                 timer.Stop();
 
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
 
                 Instance = null;
@@ -390,7 +375,7 @@ namespace Restaurant.View.purchase
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 //HelpClass.ExceptionMessage(ex, this);
             }
@@ -620,11 +605,11 @@ namespace Restaurant.View.purchase
             
         async Task RefrishItems()
         {
-            items = await itemModel.Get();
+            items = await FillCombo.item.Get();
         }
         async Task fillBarcodeList()
         {
-            barcodesList = await itemUnitModel.getAllBarcodes();
+            barcodesList = await FillCombo.itemUnit.getAllBarcodes();
         }
         #endregion
         #region save
@@ -689,7 +674,7 @@ namespace Restaurant.View.purchase
                     invoice.invNumber = await invoice.generateInvNumber("pi", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
 
                 // save invoice in DB
-                int invoiceId = await invoiceModel.saveInvoice(invoice);
+                int invoiceId = await FillCombo.invoice.saveInvoice(invoice);
                 prInvoiceId = invoiceId;
                 invoice.invoiceId = invoiceId;
                 if (invoiceId != 0)
@@ -710,11 +695,11 @@ namespace Restaurant.View.purchase
 
                         invoiceItems.Add(itemT);
                     }
-                    int s = await invoiceModel.saveInvoiceItems(invoiceItems, invoiceId);
+                    int s = await FillCombo.invoice.saveInvoiceItems(invoiceItems, invoiceId);
 
                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                     if (invType == "p")
-                        invoiceModel.saveAvgPurchasePrice(invoiceItems);
+                        FillCombo.invoice.saveAvgPurchasePrice(invoiceItems);
                 }
                 else
                     Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -768,8 +753,8 @@ namespace Restaurant.View.purchase
         {//save
             try
             {
-                if (sender != null)
                     HelpClass.StartAwait(grid_main);
+                /*
                 if (MainWindow.groupObject.HasPermissionAction(invoicePermission, MainWindow.groupObjects, "one") )
                 {
                     //check mandatory inputs
@@ -903,7 +888,7 @@ namespace Restaurant.View.purchase
                             }
 
                         }
-                        prInvoice = await invoiceModel.GetByInvoiceId(prInvoiceId);
+                        prInvoice = await FillCombo.invoice.GetByInvoiceId(prInvoiceId);
                         ///////////////////////////////////////
 
                         if (prInvoice.invType == "pw" || prInvoice.invType == "p")
@@ -929,13 +914,13 @@ namespace Restaurant.View.purchase
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                if (sender != null)
+                */
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1112,7 +1097,7 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                cb_vendor.ItemsSource = vendorsL.Where(x => x.name.Contains(cb_vendor.Text));
+                cb_vendor.ItemsSource =FillCombo.vendorsList.Where(x => x.name.Contains(cb_vendor.Text));
 
             }
             catch (Exception ex)
@@ -1128,7 +1113,7 @@ namespace Restaurant.View.purchase
                 if (elapsed.TotalMilliseconds > 100 && cb_vendor.SelectedIndex != -1)
                 {
                     _SelectedVendor = (int)cb_vendor.SelectedValue;
-                    var v = vendorsL.Where(x => x.agentId == _SelectedVendor).FirstOrDefault();
+                    var v = FillCombo.vendorsList.Where(x => x.agentId == _SelectedVendor).FirstOrDefault();
                     if (v.payType != null)
                         cb_paymentProcessType.SelectedValue = v.payType;
                     else
@@ -1204,17 +1189,17 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 _Sender = sender;
                 moveControlToBarcode(sender, e);
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1223,7 +1208,7 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 DatePicker dt = sender as DatePicker;
@@ -1233,12 +1218,12 @@ namespace Restaurant.View.purchase
                     tb_barcode.Focus();
                     HandleKeyPress(sender, e);
                 }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1247,7 +1232,7 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
                 if (elapsed.TotalMilliseconds > 100 && cb_paymentProcessType.SelectedIndex != -1)
@@ -1258,6 +1243,7 @@ namespace Restaurant.View.purchase
                 {
                     cb_paymentProcessType.SelectedValue = _SelectedPaymentType;
                 }
+                
 
                 switch (cb_paymentProcessType.SelectedIndex)
                 {
@@ -1267,16 +1253,22 @@ namespace Restaurant.View.purchase
                         _SelectedCard = -1;
                         txt_card.Text = "";
                         dp_desrvedDate.IsEnabled = false;
+                        // update validate list
+                        requiredControlList = new List<string> { "invoiceNumber",    };
                         break;
                     case 1:// balance
                         gd_card.Visibility = Visibility.Collapsed;
                         dp_desrvedDate.IsEnabled = true;
                         tb_processNum.Clear();
                         _SelectedCard = -1;
+                        // update validate list
+                        requiredControlList = new List<string> { "invoiceNumber",   "desrvedDate" };
                         break;
                     case 2://card
                         dp_desrvedDate.IsEnabled = false;
                         gd_card.Visibility = Visibility.Visible;
+                        // update validate list
+                        requiredControlList = new List<string> { "invoiceNumber",   "desrvedDate" };
                         break;
                     case 3://multiple
                         gd_card.Visibility = Visibility.Collapsed;
@@ -1284,15 +1276,17 @@ namespace Restaurant.View.purchase
                         _SelectedCard = -1;
                         txt_card.Text = "";
                         dp_desrvedDate.IsEnabled = true;
+                        // update validate list
+                        requiredControlList = new List<string> { "invoiceNumber"    };
                         break;
 
                 }
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.validate(requiredControlList, this);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1370,7 +1364,8 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                requiredControlList = new List<string> { "invoiceNumber", "branch", "desrvedDate" };
+                // update validate list
+                //requiredControlList = new List<string> { "invoiceNumber", "branch", "desrvedDate" };
                 HelpClass.validate(requiredControlList, this);
             }
             catch (Exception ex)
@@ -1430,7 +1425,7 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 int index = invoices.IndexOf(invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
                 index++;
@@ -1439,12 +1434,12 @@ namespace Restaurant.View.purchase
                 _invoiceId = invoice.invoiceId;
                 navigateBtnActivate();
                 await fillInvoiceInputs(invoice);
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1453,7 +1448,7 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 int index = invoices.IndexOf(invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
                 index--;
@@ -1462,12 +1457,12 @@ namespace Restaurant.View.purchase
                 _invoiceId = invoice.invoiceId;
                 navigateBtnActivate();
                 await fillInvoiceInputs(invoice);
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1478,18 +1473,18 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 await saveBeforeTransfer();
                 if (invoice.invoiceId != 0)
                     clearInvoice();
                 await buildShortageInvoiceDetails();
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1559,11 +1554,11 @@ namespace Restaurant.View.purchase
                 if (dg_billDetails.SelectedIndex != -1 && cmb.SelectedValue != null)
                 {
                     billDetails[dg_billDetails.SelectedIndex].itemUnitId = (int)cmb.SelectedValue;
-                    if (_InvoiceType == "p" || _InvoiceType == "pw"
-                       || _InvoiceType == "pb" || _InvoiceType == "pbw")
-                        cmb.IsEnabled = false;
-                    else
-                        cmb.IsEnabled = true;
+                    //if (_InvoiceType == "p" || _InvoiceType == "pw"
+                    //   || _InvoiceType == "pb" || _InvoiceType == "pbw")
+                    //    cmb.IsEnabled = false;
+                    //else
+                    //    cmb.IsEnabled = true;
                 }
 
             }
@@ -1812,14 +1807,14 @@ namespace Restaurant.View.purchase
                 tb_sum.Text = "0";
 
         }
-        void refrishDataGridItems()
-        {
-            dg_billDetails.ItemsSource = null;
-            dg_billDetails.ItemsSource = billDetails;
-            dg_billDetails.Items.Refresh();
-            DataGrid_CollectionChanged(dg_billDetails, null);
+        //void refrishDataGridItems()
+        //{
+        //    dg_billDetails.ItemsSource = null;
+        //    dg_billDetails.ItemsSource = billDetails;
+        //    dg_billDetails.Items.Refresh();
+        //    DataGrid_CollectionChanged(dg_billDetails, null);
 
-        }
+        //}
         // read item from barcode
         private async void HandleKeyPress(object sender, KeyEventArgs e)
         {
@@ -1832,7 +1827,7 @@ namespace Restaurant.View.purchase
                         tb_barcode.Focus();
                     _IsFocused = true;
                 }
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
@@ -1913,12 +1908,12 @@ namespace Restaurant.View.purchase
                             break;
                     }
                 }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1970,7 +1965,7 @@ namespace Restaurant.View.purchase
             {
                 case "pi":// this barcode for invoice               
                     Btn_newDraft_Click(null, null);
-                    invoice = await invoiceModel.GetInvoicesByNum(barcode);
+                    invoice = await FillCombo.invoice.GetInvoicesByNum(barcode);
                     _InvoiceType = invoice.invType;
                     if (_InvoiceType.Equals("pd") || _InvoiceType.Equals("p") || _InvoiceType.Equals("pbd") || _InvoiceType.Equals("pb"))
                     {
@@ -2017,7 +2012,7 @@ namespace Restaurant.View.purchase
                                 if (index == -1)//item doesn't exist in bill
                                 {
                                     // get item units
-                                    itemUnits = await itemUnitModel.GetItemUnits(itemId);
+                                    itemUnits = await FillCombo.itemUnit.GetItemUnits(itemId);
                                     //get item from list
                                     item = items.ToList().Find(i => i.itemId == itemId);
 
@@ -2052,7 +2047,7 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 if (e.Key == Key.Return)
                 {
@@ -2064,12 +2059,12 @@ namespace Restaurant.View.purchase
                     }
 
                 }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -2163,7 +2158,7 @@ namespace Restaurant.View.purchase
         private async Task buildInvoiceDetails()
         {
             //get invoice items
-            invoiceItems = await invoiceModel.GetInvoicesItems(invoice.invoiceId);
+            invoiceItems = await FillCombo.invoice.GetInvoicesItems(invoice.invoiceId);
             // build invoice details grid
             _SequenceNum = 0;
             billDetails.Clear();
@@ -2419,7 +2414,7 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 if (billDetails.Count > 0 && (_InvoiceType == "pd" || _InvoiceType == "pbd"))
@@ -2456,21 +2451,21 @@ namespace Restaurant.View.purchase
                 else
                     clearInvoice();
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
         private async void Btn_items_Click(object sender, RoutedEventArgs e)
         {
+            /*
             try
             {
-                if (sender != null)
                     HelpClass.StartAwait(grid_main);
                 //items
 
@@ -2491,15 +2486,16 @@ namespace Restaurant.View.purchase
                 }
 
                 Window.GetWindow(this).Opacity = 1;
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+            */
         }
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {
@@ -2509,16 +2505,17 @@ namespace Restaurant.View.purchase
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void Btn_payments_Click(object sender, RoutedEventArgs e)
         {//payments
+            /*
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 if (invoice != null && invoice.invoiceId != 0)
@@ -2540,21 +2537,22 @@ namespace Restaurant.View.purchase
                     else
                         Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+            */
         }
         private async void Btn_draft_Click(object sender, RoutedEventArgs e)
-        {
+        {   /*
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_invoice w = new wd_invoice();
@@ -2589,28 +2587,30 @@ namespace Restaurant.View.purchase
                         }
                         if (_InvoiceType == "pbd")
                         {
-                            mainInvoiceItems = await invoiceModel.GetInvoicesItems(invoice.invoiceMainId.Value);
+                            mainInvoiceItems = await FillCombo.invoice.GetInvoicesItems(invoice.invoiceMainId.Value);
                             txt_payInvoice.Text = MainWindow.resourcemanager.GetString("trDraftBounceBill");
                             txt_payInvoice.Foreground = Application.Current.Resources["MainColorRed"] as SolidColorBrush;
                         }
                     }
                 }
                 Window.GetWindow(this).Opacity = 1;
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+            */
         }
         private async void Btn_invoices_Click(object sender, RoutedEventArgs e)
         {
+            /*
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 await saveBeforeTransfer();
                 Window.GetWindow(this).Opacity = 0.2;
@@ -2651,21 +2651,23 @@ namespace Restaurant.View.purchase
                     }
                 }
                 Window.GetWindow(this).Opacity = 1;
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+            */
         }
         private async void Btn_purchaseOrder_Click(object sender, RoutedEventArgs e)
         {
+            /*
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 await saveBeforeTransfer();
                 Window.GetWindow(this).Opacity = 0.2;
@@ -2701,21 +2703,22 @@ namespace Restaurant.View.purchase
                     }
                 }
                 Window.GetWindow(this).Opacity = 1;
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+            */
         }
         private void Btn_invoiceImage_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 if (invoice != null && invoice.invoiceId != 0)
@@ -2733,12 +2736,12 @@ namespace Restaurant.View.purchase
                 }
                 else
                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trChooseInvoiceToolTip"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -2747,7 +2750,7 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 _SequenceNum = 0;
@@ -2770,21 +2773,22 @@ namespace Restaurant.View.purchase
                 tb_barcode.Focus();
 
                 refrishBillDetails();
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
         private async void Btn_returnInvoice_Click(object sender, RoutedEventArgs e)
         {
+            /*
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(returnPermission, MainWindow.groupObjects, "one"))
                 {
@@ -2827,21 +2831,23 @@ namespace Restaurant.View.purchase
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+            */
         }
         private async void Btn_addVendor_Click(object sender, RoutedEventArgs e)
         {
+            /*
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_updateVendor w = new wd_updateVendor();
@@ -2856,21 +2862,23 @@ namespace Restaurant.View.purchase
                     await FillCombo.RefreshVendors();
                     await FillCombo.FillComboVendors(cb_vendor);
                 }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+            */
         }
         private async void Btn_updateVendor_Click(object sender, RoutedEventArgs e)
         {
+            /*
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 if (cb_vendor.SelectedIndex != -1)
@@ -2878,7 +2886,7 @@ namespace Restaurant.View.purchase
 
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_updateVendor w = new wd_updateVendor();
-                    //// pass agent id to update windows
+                    // pass agent id to update windows
                     w.agent.agentId = (int)cb_vendor.SelectedValue;
                     w.ShowDialog();
                     await FillCombo.RefreshVendors();
@@ -2887,15 +2895,16 @@ namespace Restaurant.View.purchase
                     Window.GetWindow(this).Opacity = 1;
                 }
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+            */
         }
         #endregion
         #region report
@@ -2912,7 +2921,7 @@ namespace Restaurant.View.purchase
         {//pdf
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(paymentsPermission, MainWindow.groupObjects, "one"))
                 {
@@ -2926,12 +2935,12 @@ namespace Restaurant.View.purchase
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -2959,7 +2968,7 @@ namespace Restaurant.View.purchase
         {
             if (invoice.invoiceId > 0)
             {
-                prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
+                prInvoice = await FillCombo.invoice.GetByInvoiceId(invoice.invoiceId);
 
                 if (int.Parse(MainWindow.Allow_print_inv_count) <= prInvoice.printedcount)
                 {
@@ -2986,7 +2995,7 @@ namespace Restaurant.View.purchase
                         string reppath = reportclass.GetpayInvoiceRdlcpath(prInvoice);
                         if (prInvoice.invoiceId > 0)
                         {
-                            invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                            invoiceItems = await FillCombo.invoice.GetInvoicesItems(prInvoice.invoiceId);
                             if (prInvoice.agentId != null)
                             {
                                 Agent agentinv = new Agent();
@@ -3011,7 +3020,7 @@ namespace Restaurant.View.purchase
 
 
                             Branch branch = new Branch();
-                            branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                            branch = await FillCombo.branch.getBranchById((int)prInvoice.branchCreatorId);
                             if (branch.branchId > 0)
                             {
                                 prInvoice.branchName = branch.name;
@@ -3071,7 +3080,7 @@ namespace Restaurant.View.purchase
 
                                         int res = 0;
 
-                                        res = await invoiceModel.updateprintstat(prInvoice.invoiceId, 1, false, true);
+                                        res = await FillCombo.invoice.updateprintstat(prInvoice.invoiceId, 1, false, true);
 
 
 
@@ -3122,7 +3131,7 @@ namespace Restaurant.View.purchase
             if (invoice.invoiceId > 0)
             {
 
-                prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
+                prInvoice = await FillCombo.invoice.GetByInvoiceId(invoice.invoiceId);
 
                 if (int.Parse(MainWindow.Allow_print_inv_count) <= prInvoice.printedcount)
                 {
@@ -3145,7 +3154,7 @@ namespace Restaurant.View.purchase
                     string reppath = reportclass.GetpayInvoiceRdlcpath(invoice);
                     if (prInvoice.invoiceId > 0)
                     {
-                        invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                        invoiceItems = await FillCombo.invoice.GetInvoicesItems(prInvoice.invoiceId);
                         if (prInvoice.agentId != null)
                         {
                             Agent agentinv = new Agent();
@@ -3165,9 +3174,9 @@ namespace Restaurant.View.purchase
                             prInvoice.agentCompany = "-";
                         }
 
-                        invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                        invoiceItems = await FillCombo.invoice.GetInvoicesItems(prInvoice.invoiceId);
                         Branch branch = new Branch();
-                        branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                        branch = await FillCombo.branch.getBranchById((int)prInvoice.branchCreatorId);
                         if (branch.branchId > 0)
                         {
                             prInvoice.branchName = branch.name;
@@ -3244,7 +3253,7 @@ namespace Restaurant.View.purchase
 
                                 int res = 0;
 
-                                res = await invoiceModel.updateprintstat(prInvoice.invoiceId, 1, false, true);
+                                res = await FillCombo.invoice.updateprintstat(prInvoice.invoiceId, 1, false, true);
 
 
 
@@ -3306,7 +3315,7 @@ namespace Restaurant.View.purchase
             if (prInvoiceId > 0)
             {
                 prInvoice = new Invoice();
-                prInvoice = await invoiceModel.GetByInvoiceId(prInvoiceId);
+                prInvoice = await FillCombo.invoice.GetByInvoiceId(prInvoiceId);
                 //
                 if (prInvoice.invType == "pd" || prInvoice.invType == "sd" || prInvoice.invType == "qd"
                              || prInvoice.invType == "sbd" || prInvoice.invType == "pbd"
@@ -3321,7 +3330,7 @@ namespace Restaurant.View.purchase
                     string reppath = reportclass.GetpayInvoiceRdlcpath(prInvoice);
                     if (prInvoice.invoiceId > 0)
                     {
-                        invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                        invoiceItems = await FillCombo.invoice.GetInvoicesItems(prInvoice.invoiceId);
 
 
 
@@ -3348,9 +3357,9 @@ namespace Restaurant.View.purchase
                             prInvoice.agentCompany = "-";
                         }
 
-                        invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                        invoiceItems = await FillCombo.invoice.GetInvoicesItems(prInvoice.invoiceId);
                         Branch branch = new Branch();
-                        branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                        branch = await FillCombo.branch.getBranchById((int)prInvoice.branchCreatorId);
                         if (branch.branchId > 0)
                         {
                             prInvoice.branchName = branch.name;
@@ -3411,7 +3420,7 @@ namespace Restaurant.View.purchase
 
 
                                     int res = 0;
-                                    res = await invoiceModel.updateprintstat(prInvoice.invoiceId, 1, false, true);
+                                    res = await FillCombo.invoice.updateprintstat(prInvoice.invoiceId, 1, false, true);
                                     prInvoice.printedcount = prInvoice.printedcount + 1;
 
                                     prInvoice.isOrginal = false;
@@ -3456,7 +3465,7 @@ namespace Restaurant.View.purchase
             if (prInvoiceId > 0)
             {
                 prInvoice = new Invoice();
-                prInvoice = await invoiceModel.GetByInvoiceId(prInvoiceId);
+                prInvoice = await FillCombo.invoice.GetByInvoiceId(prInvoiceId);
                 decimal discountval = 0;
                 string discounttype = "";
                 discountval = prInvoice.discountValue;
@@ -3475,7 +3484,7 @@ namespace Restaurant.View.purchase
                 {
                     if (prInvoice.invType == "pw" || prInvoice.invType == "p")
                     {
-                        invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                        invoiceItems = await FillCombo.invoice.GetInvoicesItems(prInvoice.invoiceId);
                         SysEmails email = new SysEmails();
                         EmailClass mailtosend = new EmailClass();
                         email = await email.GetByBranchIdandSide((int)MainWindow.branchLogin.branchId, "purchase");
@@ -3631,7 +3640,7 @@ namespace Restaurant.View.purchase
             if (prInvoiceId > 0)
             {
                 prInvoice = new Invoice();
-                prInvoice = await invoiceModel.GetByInvoiceId(prInvoiceId);
+                prInvoice = await FillCombo.invoice.GetByInvoiceId(prInvoiceId);
 
                 List<ReportParameter> paramarr = new List<ReportParameter>();
 
@@ -3641,7 +3650,7 @@ namespace Restaurant.View.purchase
                 string reppath = reportclass.GetpayInvoiceRdlcpath(prInvoice);
                 if (prInvoice.invoiceId > 0)
                 {
-                    invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                    invoiceItems = await FillCombo.invoice.GetInvoicesItems(prInvoice.invoiceId);
                     if (prInvoice.agentId != null)
                     {
                         Agent agentinv = new Agent();
@@ -3660,9 +3669,9 @@ namespace Restaurant.View.purchase
                         prInvoice.agentCompany = "-";
                     }
 
-                    invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                    invoiceItems = await FillCombo.invoice.GetInvoicesItems(prInvoice.invoiceId);
                     Branch branch = new Branch();
-                    branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                    branch = await FillCombo.branch.getBranchById((int)prInvoice.branchCreatorId);
                     if (branch.branchId > 0)
                     {
                         prInvoice.branchName = branch.name;
@@ -3714,7 +3723,7 @@ namespace Restaurant.View.purchase
         {//print
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(paymentsPermission, MainWindow.groupObjects, "one"))
                 {
@@ -3732,12 +3741,12 @@ namespace Restaurant.View.purchase
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -3747,7 +3756,7 @@ namespace Restaurant.View.purchase
         {//preview
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(paymentsPermission, MainWindow.groupObjects, "one"))
                 {
@@ -3757,12 +3766,12 @@ namespace Restaurant.View.purchase
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -3771,7 +3780,7 @@ namespace Restaurant.View.purchase
         {//email
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(paymentsPermission, MainWindow.groupObjects, "one"))
@@ -3787,12 +3796,12 @@ namespace Restaurant.View.purchase
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -3801,14 +3810,14 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 int result = 0;
 
                 if (invoice.invoiceId > 0)
                 {
-                    result = await invoiceModel.updateprintstat(invoice.invoiceId, -1, true, true);
+                    result = await FillCombo.invoice.updateprintstat(invoice.invoiceId, -1, true, true);
 
 
                     if (result > 0)
@@ -3825,12 +3834,12 @@ namespace Restaurant.View.purchase
                 {
                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trChooseInvoiceToolTip"), animation: ToasterAnimation.FadeIn);
                 }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -3899,7 +3908,7 @@ namespace Restaurant.View.purchase
                 {
                     clearImg(ellipse);
 
-                    byte[] imageBuffer = await cardModel.downloadImage(image); // read this as BLOB from your DB
+                    byte[] imageBuffer = await FillCombo.card.downloadImage(image); // read this as BLOB from your DB
                     var bitmapImage = new BitmapImage();
                     using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
                     {

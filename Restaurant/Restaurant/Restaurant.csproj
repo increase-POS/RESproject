@@ -249,6 +249,9 @@
     <Compile Include="View\kitchen\uc_kitchen.xaml.cs">
       <DependentUpon>uc_kitchen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\purchase\uc_payInvoice.xaml.cs">
+      <DependentUpon>uc_payInvoice.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\purchase\uc_purchase.xaml.cs">
       <DependentUpon>uc_purchase.xaml</DependentUpon>
     </Compile>
@@ -448,6 +451,10 @@
     <Page Include="View\kitchen\uc_kitchen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\purchase\uc_payInvoice.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\purchase\uc_purchase.xaml">
       <SubType>Designer</SubType>

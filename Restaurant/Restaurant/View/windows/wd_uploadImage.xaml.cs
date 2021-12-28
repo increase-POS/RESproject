@@ -102,7 +102,7 @@ namespace Restaurant.View.windows
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
-             tt_notes.Content = MainWindow.resourcemanager.GetString("trNote");
+             //tt_notes.Content = MainWindow.resourcemanager.GetString("trNote");
             tt_file.Content = MainWindow.resourcemanager.GetString("trSelectImage");
             tt_scanner.Content = MainWindow.resourcemanager.GetString("trScan");
             tt_preview.Content = MainWindow.resourcemanager.GetString("trPreview");

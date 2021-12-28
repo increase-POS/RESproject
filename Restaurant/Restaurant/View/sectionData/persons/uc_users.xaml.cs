@@ -689,6 +689,7 @@ namespace Restaurant.View.sectionData.persons
                 openFileDialog.Filter = "Images|*.png;*.jpg;*.bmp;*.jpeg;*.jfif";
                 if (openFileDialog.ShowDialog() == true)
                 {
+                    HelpClass.imageBrush = new ImageBrush();
                     HelpClass.imageBrush.ImageSource = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Relative));
                     btn_image.Background = HelpClass.imageBrush;
                     imgFileName = openFileDialog.FileName;
