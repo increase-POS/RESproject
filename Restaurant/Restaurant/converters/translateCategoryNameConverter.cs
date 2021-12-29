@@ -14,18 +14,26 @@ namespace Restaurant.converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
                 Category category = value as Category;
-                string s = category.name + " - HelloWorld!!";
+                string s = category.name ;
 
-                //switch (s)
-                //{
-                //    case "0":
-                //        s = s + "HelloWorld!!";
-                //        break;
-                   
-                //    //default:
-                //    //    s = ;
-                //    //    break;
-                //}
+            switch (s)
+            {
+                case "RawMaterials":
+                    s = MainWindow.resourcemanager.GetString("trRawMaterials");
+                    break;
+                case "Vegetables":
+                    s = MainWindow.resourcemanager.GetString("trVegetables");
+                    break;
+                case "Meat":
+                    s = MainWindow.resourcemanager.GetString("trMeat");
+                    break;
+                case "Drinks":
+                    s = MainWindow.resourcemanager.GetString("trDrinks");
+                    break;
+                default:
+                    s = s + "HelloWorld!!";
+                    break;
+            }
 
             return s;
         }

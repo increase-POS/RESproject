@@ -124,7 +124,7 @@ namespace Restaurant.View.windows
                 translate();
 
                 Keyboard.Focus(tb_tagName);
-                categoryId = HelpClass.GetCategoryId(categoryName);
+                categoryId = FillCombo.GetCategoryId(categoryName);
 
                 await RefreshTagsList();
                 await Search();

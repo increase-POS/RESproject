@@ -251,7 +251,7 @@ namespace Restaurant.View.windows
                                 else
                                 {
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                                    MainWindow.mainWindow.globalItemUnitsList = await MainWindow.mainWindow.globalItemUnit.GetIU();
+                                    MainWindow.mainWindow.globalItemUnitsList = await FillCombo.itemUnit.GetIU();
                                     //MainWindow.mainWindow.globalUnitsList = await MainWindow.mainWindow.globalUnit.GetU();
 
                                     Clear();
@@ -355,7 +355,7 @@ namespace Restaurant.View.windows
                                 else
                                 {
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                                    MainWindow.mainWindow.globalItemUnitsList = await MainWindow.mainWindow.globalItemUnit.GetIU();
+                                    MainWindow.mainWindow.globalItemUnitsList = await FillCombo.itemUnit.GetIU();
                                     //MainWindow.mainWindow.globalUnitsList = await MainWindow.mainWindow.globalUnit.GetU();
 
                                     Clear();

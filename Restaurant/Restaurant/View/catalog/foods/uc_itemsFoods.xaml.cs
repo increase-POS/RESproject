@@ -118,7 +118,7 @@ namespace Restaurant.View.catalog.foods
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-                categoryId = HelpClass.GetCategoryId(categoryName);
+                categoryId = FillCombo.GetCategoryId(categoryName);
                 Keyboard.Focus(tb_code);
                 await RefreshItemsList();
                 await Search();

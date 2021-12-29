@@ -29,7 +29,7 @@ namespace Restaurant.Classes
             cmb.SelectedValuePath = "branchId";
             cmb.SelectedIndex = -1;
         }
-        static async Task<IEnumerable<Branch>> RefreshBranchesAllWithoutMain()
+        static public async Task<IEnumerable<Branch>> RefreshBranchesAllWithoutMain()
         {
             branchesAllWithoutMain = await  branch.GetAllWithoutMain("all");
             return branchesAllWithoutMain;
@@ -44,7 +44,7 @@ namespace Restaurant.Classes
             cmb.SelectedIndex = -1;
 
         }
-        static async Task<IEnumerable<Branch>> RefreshByBranchandUser()
+        static public async Task<IEnumerable<Branch>> RefreshByBranchandUser()
         {
             BranchesByBranchandUser = await branch.BranchesByBranchandUser(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
             return BranchesByBranchandUser;
@@ -129,31 +129,23 @@ namespace Restaurant.Classes
         }
         #endregion
         #region Category
-        //static public void FillCategoryString(ComboBox cmb)
-        //{
-        //    #region fill process type
-        //    var typelist = new[] {
-        //        new { Text = MainWindow.resourcemanager.GetString("trRawMaterials"), Value = "RawMaterials" },
-        //        new { Text = MainWindow.resourcemanager.GetString("trVegetables") , Value = "Vegetables" },
-        //        new { Text = MainWindow.resourcemanager.GetString("trMeat") , Value = "Meat" },
-        //        new { Text = MainWindow.resourcemanager.GetString("trDrinks") , Value = "Drinks" }, 
-        //         };
-        //    cmb.DisplayMemberPath = "Text";
-        //    cmb.SelectedValuePath = "Value";
-        //    cmb.ItemsSource = typelist;
-        //    #endregion
-        //}
-        static async Task<IEnumerable<Category>> RefreshCategory()
+        static public Category category = new Category();
+        static public List<Category> categoriesList;
+        static public int GetCategoryId(string categoryName)
         {
-            MainWindow.mainWindow.globalCategories = await MainWindow.mainWindow.globalCategory.Get();
-            return MainWindow.mainWindow.globalCategories;
+            return categoriesList.Where(x => x.name == categoryName).FirstOrDefault().categoryId;
+        }
+        static public async Task<IEnumerable<Category>> RefreshCategory()
+        {
+            categoriesList = await category.Get();
+            return categoriesList;
         }
         static public async void FillCategoryPurchase(ComboBox cmb)
         {
             #region FillCategoryPurchase
-            if (MainWindow.mainWindow.globalCategories.Count<1)
+            if (categoriesList is null)
                 await RefreshCategory();
-            cmb.ItemsSource = MainWindow.mainWindow.globalCategories.Where(x=>x.type == "p").ToList();
+            cmb.ItemsSource = categoriesList.Where(x=>x.type == "p").ToList();
             cmb.SelectedValuePath = "categoryId";
             //cmb.DisplayMemberPath = "name";
             #endregion
@@ -161,9 +153,9 @@ namespace Restaurant.Classes
         static public async void FillCategorySale(ComboBox cmb)
         {
             #region FillCategoryPurchase
-            if (MainWindow.mainWindow.globalCategories.Count < 1)
+            if (categoriesList is null)
                 await RefreshCategory();
-            cmb.ItemsSource = MainWindow.mainWindow.globalCategories.Where(x => x.type == "s").ToList();
+            cmb.ItemsSource = categoriesList.Where(x => x.type == "s").ToList();
             cmb.SelectedValuePath = "categoryId";
             cmb.DisplayMemberPath = "name";
             #endregion
@@ -174,7 +166,7 @@ namespace Restaurant.Classes
         static public Unit saleUnit = new Unit();
  
         static public List<Unit> unitsList;
-        static async Task<IEnumerable<Unit>> RefreshUnit()
+        static public async Task<IEnumerable<Unit>> RefreshUnit()
         {
 
             unitsList = await unit.GetActive();
@@ -260,22 +252,6 @@ namespace Restaurant.Classes
                 border.Visibility = Visibility.Collapsed;
         }
         #endregion
-        #region fill user type
-        /*
-    static public void fillUserType(ComboBox cmb)
-    {
-        var typelist = new[] {
-            new { Text = MainWindow.resourcemanager.GetString("trAdmin")       , Value = "ad" },
-            new { Text = MainWindow.resourcemanager.GetString("trEmployee")   , Value = "u" },
-             };
-        cmb.DisplayMemberPath = "Text";
-        cmb.SelectedValuePath = "Value";
-        cmb.ItemsSource = typelist;
-
-    }
-    */
-        #endregion
-
         #region agent
         static public Agent agent = new Agent();
         #region Vendors
@@ -300,7 +276,6 @@ namespace Restaurant.Classes
         }
         #endregion
         #endregion
-
         #region fill cards combo
         static public Card card = new Card();
         static public List<Card> cardsList;

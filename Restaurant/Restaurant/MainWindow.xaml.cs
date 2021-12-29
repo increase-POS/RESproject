@@ -123,11 +123,10 @@ namespace Restaurant
         //static public List<Item> InvoiceglobalSaleUnitsList = new List<Item>();
 
 
-        public ItemUnit globalItemUnit = new ItemUnit();
-         public List<ItemUnit> globalItemUnitsList = new List<ItemUnit>();
-        static public Unit saleUnit = new Unit();
-        public Category globalCategory = new Category();
-        public List<Category> globalCategories = new List<Category>();
+        //public ItemUnit globalItemUnit = new ItemUnit();
+        public List<ItemUnit> globalItemUnitsList = new List<ItemUnit>();
+        //static public Unit saleUnit = new Unit();
+       
         /*
         public static async Task Getprintparameter()
         {
@@ -274,7 +273,7 @@ namespace Restaurant
         {
             try
             {
-                globalItemUnitsList = await globalItemUnit.GetIU();
+                globalItemUnitsList = await FillCombo.itemUnit.GetIU();
             }
             catch (Exception)
             { }
@@ -287,24 +286,132 @@ namespace Restaurant
                 }
             }
         }
-      
-        async void loading_globalCategories()
+        #region FillCombo
+        async void loading_RefreshBranches()
         {
             try
             {
-                globalCategories = await globalCategory.Get();
+                await FillCombo.RefreshBranches();
             }
             catch (Exception)
             { }
             foreach (var item in loadingList)
             {
-                if (item.key.Equals("loading_globalCategories"))
+                if (item.key.Equals("loading_RefreshBranches"))
                 {
                     item.value = true;
                     break;
                 }
             }
         }
+        async void loading_RefreshBranchesAllWithoutMain()
+        {
+            try
+            {
+                await FillCombo.RefreshBranchesAllWithoutMain();
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_RefreshBranchesAllWithoutMain"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_RefreshByBranchandUser()
+        {
+            try
+            {
+                await FillCombo.RefreshByBranchandUser();
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_RefreshByBranchandUser"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_RefreshCategory()
+        {
+            try
+            {
+                await FillCombo.RefreshCategory();
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_RefreshCategory"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_RefreshUnit()
+        {
+            try
+            {
+                await FillCombo.RefreshUnit();
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_RefreshUnit"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_RefreshVendors()
+        {
+            try
+            {
+                await FillCombo.RefreshVendors();
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_RefreshVendors"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_RefreshCards()
+        {
+            try
+            {
+                await FillCombo.RefreshCards();
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_RefreshCards"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+
+
+        #endregion
+
+
+
         /*
         async void loading_getUserPath()
         {
@@ -772,7 +879,14 @@ namespace Restaurant
                 loadingList.Add(new keyValueBool { key = "loading_listObjects", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_getGroupObjects", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_globalItemUnitsList", value = false });
-                loadingList.Add(new keyValueBool { key = "loading_globalCategories", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_RefreshBranches", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_RefreshBranchesAllWithoutMain", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_RefreshByBranchandUser", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_RefreshCategory", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_RefreshUnit", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_RefreshVendors", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_RefreshCards", value = false });
+
                 //loadingList.Add(new keyValueBool { key = "loading_getUserPath", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getTax", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getItemCost", value = false });
@@ -790,7 +904,13 @@ namespace Restaurant
                 loading_listObjects();
                 loading_getGroupObjects();
                 loading_globalItemUnitsList();
-                 loading_globalCategories();
+                loading_RefreshBranches();
+                loading_RefreshBranchesAllWithoutMain();
+                loading_RefreshByBranchandUser();
+                loading_RefreshCategory();
+                loading_RefreshUnit();
+                loading_RefreshVendors();
+                loading_RefreshCards();
                 //loading_getUserPath();
                 //loading_getTax();
                 //loading_getItemCost();
