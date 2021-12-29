@@ -42,15 +42,14 @@ namespace Restaurant.converters
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            //try
-            //{
+            try
+            {
                 throw new NotImplementedException();
-
-            //}
-            //catch
-            //{
-            //    return value;
-            //}
+            }
+            catch
+            {
+                return value;
+            }
         }
 
       

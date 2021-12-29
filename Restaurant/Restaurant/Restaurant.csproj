@@ -217,6 +217,7 @@
       <DependentUpon>uc_squareCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="converters\deliveryTypeConverter.cs" />
+    <Compile Include="converters\translateCategoryNameConverter.cs" />
     <Compile Include="converters\unitItemsListConverter.cs" />
     <Compile Include="en_file.Designer.cs" />
     <Compile Include="View\accounts\uc_accounts.xaml.cs">

@@ -155,7 +155,7 @@ namespace Restaurant.Classes
                 await RefreshCategory();
             cmb.ItemsSource = MainWindow.mainWindow.globalCategories.Where(x=>x.type == "p").ToList();
             cmb.SelectedValuePath = "categoryId";
-            cmb.DisplayMemberPath = "name";
+            //cmb.DisplayMemberPath = "name";
             #endregion
         }
         static public async void FillCategorySale(ComboBox cmb)

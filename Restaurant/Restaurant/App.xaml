@@ -13,6 +13,7 @@
             <converters:accuracyConverter x:Key="accuracyConverter"/>
             <converters:deliveryTypeConverter x:Key="deliveryTypeConverter"/>
             <converters:unitItemsListConverter x:Key="unitItemsListConverter"/>
+            <converters:translateCategoryNameConverter x:Key="translateCategoryNameConverter"/>
 
 
 
