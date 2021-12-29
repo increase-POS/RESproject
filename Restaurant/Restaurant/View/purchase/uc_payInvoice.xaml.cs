@@ -373,7 +373,7 @@ namespace Restaurant.View.purchase
                 Instance = null;
                 GC.Collect();
             }
-            catch (Exception ex)
+            catch 
             {
                 
                     HelpClass.EndAwait(grid_main);
@@ -420,16 +420,13 @@ namespace Restaurant.View.purchase
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_desrvedDate, MainWindow.resourcemanager.GetString("trDeservedDateHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_invoiceNumber, MainWindow.resourcemanager.GetString("trInvoiceNumberHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_invoiceDate, MainWindow.resourcemanager.GetString("trInvoiceDateHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_note, MainWindow.resourcemanager.GetString("trNoteHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
             tt_error_previous.Content = MainWindow.resourcemanager.GetString("trPrevious");
             tt_error_next.Content = MainWindow.resourcemanager.GetString("trNext");
 
             btn_save.Content = MainWindow.resourcemanager.GetString("trBuy");
         }
-        
-        
-        
         #region timer to refresh notifications
         private void setTimer()
         {
@@ -601,8 +598,7 @@ namespace Restaurant.View.purchase
             catch { }
         }
         #endregion
-        #region Refrish 
-            
+        #region refrish 
         async Task RefrishItems()
         {
             items = await FillCombo.item.Get();
@@ -661,7 +657,7 @@ namespace Restaurant.View.purchase
                 invoice.deservedDate = dp_desrvedDate.SelectedDate;
                 invoice.vendorInvNum = tb_invoiceNumber.Text;
                 invoice.vendorInvDate = dp_invoiceDate.SelectedDate;
-                invoice.notes = tb_note.Text;
+                invoice.notes = tb_notes.Text;
                 invoice.taxtype = 2;
                 if (tb_taxValue.Text != "")
                     invoice.tax = decimal.Parse(tb_taxValue.Text);
@@ -1364,8 +1360,6 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                // update validate list
-                //requiredControlList = new List<string> { "invoiceNumber", "branch", "desrvedDate" };
                 HelpClass.validate(requiredControlList, this);
             }
             catch (Exception ex)
@@ -1871,7 +1865,7 @@ namespace Restaurant.View.purchase
                         }
                         else if (tb != null)
                         {
-                            if (tb.Name == "tb_invoiceNumber" || tb.Name == "tb_note" || tb.Name == "tb_discount")// remove barcode from text box
+                            if (tb.Name == "tb_invoiceNumber" || tb.Name == "tb_notes" || tb.Name == "tb_discount")// remove barcode from text box
                             {
                                 string tbString = tb.Text;
                                 string newStr = "";
@@ -2133,7 +2127,7 @@ namespace Restaurant.View.purchase
                 tb_taxValue.Text = HelpClass.DecTostring(invoice.tax);
             else
                 tb_taxValue.Text = "0";
-            tb_note.Text = invoice.notes;
+            tb_notes.Text = invoice.notes;
 
             if (invoice.total != 0)
                 tb_sum.Text = HelpClass.DecTostring(invoice.total);
@@ -2198,7 +2192,7 @@ namespace Restaurant.View.purchase
                 cb_vendor.IsEnabled = false;
                 dp_desrvedDate.IsEnabled = false;
                 dp_invoiceDate.IsEnabled = false;
-                tb_note.IsEnabled = false;
+                tb_notes.IsEnabled = false;
                 tb_barcode.IsEnabled = false;
                 cb_branch.IsEnabled = false;
                 tb_discount.IsEnabled = false;
@@ -2217,7 +2211,7 @@ namespace Restaurant.View.purchase
                 cb_vendor.IsEnabled = false;
                 dp_desrvedDate.IsEnabled = false;
                 dp_invoiceDate.IsEnabled = false;
-                tb_note.IsEnabled = false;
+                tb_notes.IsEnabled = false;
                 tb_barcode.IsEnabled = false;
                 cb_branch.IsEnabled = true;
                 tb_discount.IsEnabled = false;
@@ -2240,7 +2234,7 @@ namespace Restaurant.View.purchase
                 cb_vendor.IsEnabled = true;
                 dp_desrvedDate.IsEnabled = true;
                 dp_invoiceDate.IsEnabled = true;
-                tb_note.IsEnabled = true;
+                tb_notes.IsEnabled = true;
                 tb_barcode.IsEnabled = true;
                 cb_branch.IsEnabled = true;
                 tb_discount.IsEnabled = true;
@@ -2263,7 +2257,7 @@ namespace Restaurant.View.purchase
                 cb_vendor.IsEnabled = false;
                 dp_desrvedDate.IsEnabled = true;
                 dp_invoiceDate.IsEnabled = true;
-                tb_note.IsEnabled = true;
+                tb_notes.IsEnabled = true;
                 tb_barcode.IsEnabled = true;
                 cb_branch.IsEnabled = true;
                 tb_discount.IsEnabled = true;
@@ -2286,7 +2280,7 @@ namespace Restaurant.View.purchase
                 cb_vendor.IsEnabled = false;
                 dp_desrvedDate.IsEnabled = false;
                 dp_invoiceDate.IsEnabled = false;
-                tb_note.IsEnabled = false;
+                tb_notes.IsEnabled = false;
                 tb_barcode.IsEnabled = false;
                 cb_branch.IsEnabled = false;
                 tb_discount.IsEnabled = false;
@@ -2361,7 +2355,7 @@ namespace Restaurant.View.purchase
             txt_vendorIvoiceDetails.Text = "";
             tb_invoiceNumber.Clear();
             dp_invoiceDate.Text = "";
-            tb_note.Clear();
+            tb_notes.Clear();
             tb_discount.Clear();
             tb_taxValue.Clear();
             billDetails.Clear();
@@ -2406,10 +2400,10 @@ namespace Restaurant.View.purchase
             tb_invoiceNumber.Text = "";
             dp_invoiceDate.SelectedDate = null;
             dp_invoiceDate.Text = "";
-            tb_note.Text = "";
+            tb_notes.Text = "";
         }
         #endregion
-        #region Btn
+        #region btn
         private async void Btn_newDraft_Click(object sender, RoutedEventArgs e)
         {
             try

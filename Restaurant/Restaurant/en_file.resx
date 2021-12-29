@@ -2827,4 +2827,7 @@ Please add Email in setting</value>
   <data name="trExpire" xml:space="preserve">
     <value>Expire date</value>
   </data>
+  <data name="trLack" xml:space="preserve">
+    <value>Lack</value>
+  </data>
 </root>

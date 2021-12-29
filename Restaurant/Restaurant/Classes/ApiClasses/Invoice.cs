@@ -265,6 +265,26 @@ namespace Restaurant.Classes
             }
             return items;
         }
+        public async Task<List<Invoice>> getUnHandeldOrders(string invType, int branchCreatorId, int branchId, int duration = 0, int userId = 0)
+        {
+            List<Invoice> items = new List<Invoice>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("invType", invType);
+            parameters.Add("branchCreatorId", branchCreatorId.ToString());
+            parameters.Add("branchId", branchId.ToString());
+            parameters.Add("duration", duration.ToString());
+            parameters.Add("userId", userId.ToString());
+            IEnumerable<Claim> claims = await APIResult.getList("Invoices/getUnHandeldOrders", parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<Invoice>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
+
         public async Task<int> GetCountByCreator(string invType, int createUserId, int duration)
         {
             int count = 0;
