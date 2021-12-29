@@ -124,10 +124,8 @@ namespace Restaurant
 
 
         public ItemUnit globalItemUnit = new ItemUnit();
-        public List<ItemUnit> globalItemUnitsList = new List<ItemUnit>();
+         public List<ItemUnit> globalItemUnitsList = new List<ItemUnit>();
         static public Unit saleUnit = new Unit();
-        public Unit globalUnit = new Unit();
-        public List<Unit> globalUnitsList = new List<Unit>();
         public Category globalCategory = new Category();
         public List<Category> globalCategories = new List<Category>();
         /*
@@ -289,24 +287,7 @@ namespace Restaurant
                 }
             }
         }
-        async void loading_globalUnitsList()
-        {
-            try
-            {
-                globalUnitsList = await globalUnit.GetU();
-                saleUnit = globalUnitsList.Where(x => x.name == "saleUnit").FirstOrDefault();
-            }
-            catch (Exception)
-            { }
-            foreach (var item in loadingList)
-            {
-                if (item.key.Equals("loading_globalUnitsList"))
-                {
-                    item.value = true;
-                    break;
-                }
-            }
-        }
+      
         async void loading_globalCategories()
         {
             try
@@ -791,7 +772,6 @@ namespace Restaurant
                 loadingList.Add(new keyValueBool { key = "loading_listObjects", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_getGroupObjects", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_globalItemUnitsList", value = false });
-                loadingList.Add(new keyValueBool { key = "loading_globalUnitsList", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_globalCategories", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getUserPath", value = false });
                 //loadingList.Add(new keyValueBool { key = "loading_getTax", value = false });
@@ -810,8 +790,7 @@ namespace Restaurant
                 loading_listObjects();
                 loading_getGroupObjects();
                 loading_globalItemUnitsList();
-                loading_globalUnitsList();
-                loading_globalCategories();
+                 loading_globalCategories();
                 //loading_getUserPath();
                 //loading_getTax();
                 //loading_getItemCost();

@@ -170,17 +170,33 @@ namespace Restaurant.Classes
         }
         #endregion
         #region Unit
+        static public Unit unit = new Unit();
+        static public Unit saleUnit = new Unit();
+ 
+        static public List<Unit> unitsList;
         static async Task<IEnumerable<Unit>> RefreshUnit()
         {
-            MainWindow.mainWindow.globalUnitsList = await MainWindow.mainWindow.globalUnit.GetActive();
-            return MainWindow.mainWindow.globalUnitsList;
+
+            unitsList = await unit.GetActive();
+            saleUnit = unitsList.Where(x => x.name == "saleUnit").FirstOrDefault();
+            unitsList = unitsList.Where(u => u.name != "saleUnit").ToList();
+            return unitsList;
         }
         static public async void FillUnits(ComboBox cmb)
         {
-            #region FillCategoryPurchase
-            if (MainWindow.mainWindow.globalUnitsList.Count < 1)
+            #region Fill Active Units
+            if (unitsList is null)
                 await RefreshUnit();
-            cmb.ItemsSource = MainWindow.mainWindow.globalUnitsList.ToList();
+            cmb.ItemsSource = unitsList.ToList();
+            cmb.SelectedValuePath = "unitId";
+            cmb.DisplayMemberPath = "name";
+            #endregion
+        }
+        static public async Task FillSmallUnits(ComboBox cmb, int mainUnitId, int itemId)
+        {
+            #region Fill small units
+           var smallUnits = await unit.getSmallUnits(itemId, mainUnitId);
+            cmb.ItemsSource = smallUnits.Where(u => u.name != "saleUnit").ToList();
             cmb.SelectedValuePath = "unitId";
             cmb.DisplayMemberPath = "name";
             #endregion

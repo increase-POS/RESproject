@@ -25,7 +25,7 @@ namespace Restaurant.converters
 
             var result = itemUnit.GetIUbyItem(int.Parse(value.ToString()),
                 MainWindow.mainWindow.globalItemUnitsList,
-                MainWindow.mainWindow.globalUnitsList);
+               FillCombo.unitsList);
 
             return result;
         }

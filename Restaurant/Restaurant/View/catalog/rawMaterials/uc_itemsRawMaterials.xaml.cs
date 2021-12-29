@@ -87,7 +87,7 @@ namespace Restaurant.View.catalog.rawMaterials
         byte tgl_itemState;
         string searchText = "";
         public static List<string> requiredControlList;
-        List<Unit> units;
+        //List<Unit> units;
         Unit unit = new Unit();
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -119,10 +119,10 @@ namespace Restaurant.View.catalog.rawMaterials
               
                 FillCombo.FillCategoryPurchase(cb_categoryId);
                 FillCombo.FillItemTypePurchase(cb_type);
+                FillCombo.FillUnits(cb_maxUnitId);
+                FillCombo.FillUnits(cb_minUnitId);
                 Keyboard.Focus(tb_code);
                 await RefreshItemsList();
-                // يجب نقله الى كلاس تعبئة الكومبو
-                //await fillUnits();
                 await Search();
                 Clear();
                 HelpClass.EndAwait(grid_main);
@@ -133,23 +133,7 @@ namespace Restaurant.View.catalog.rawMaterials
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-        }
-        // يجب نقله الى كلاس تعبئة الكومبو
-        private async Task fillUnits()
-        {
-            units = await unit.Get();
-            units = units.Where(u => u.name != "package" && u.name != "service").ToList();
-
-            cb_minUnitId.ItemsSource = units.ToList();
-            cb_minUnitId.SelectedValuePath = "unitId";
-            cb_minUnitId.DisplayMemberPath = "name";
-
-            cb_maxUnitId.ItemsSource = units.ToList();
-            cb_maxUnitId.SelectedValuePath = "unitId";
-            cb_maxUnitId.DisplayMemberPath = "name";
-
-
-        }
+        }      
         private void translate()
         {
 
@@ -211,10 +195,10 @@ namespace Restaurant.View.catalog.rawMaterials
 
                         Nullable<int> minUnitId = null;
                         if (cb_minUnitId.SelectedIndex != -1)
-                            minUnitId = units.Where(x => x.unitId == (int)cb_minUnitId.SelectedValue).FirstOrDefault().unitId;
+                            minUnitId = (int)cb_minUnitId.SelectedValue;
                         Nullable<int> maxUnitId = null;
                         if (cb_maxUnitId.SelectedIndex != -1)
-                        maxUnitId = units.Where(x => x.unitId == (int)cb_maxUnitId.SelectedValue).FirstOrDefault().unitId;
+                            maxUnitId = (int)cb_maxUnitId.SelectedValue;
 
                         item = new Item();
                         item.code = tb_code.Text;
@@ -230,7 +214,7 @@ namespace Restaurant.View.catalog.rawMaterials
                         item.updateUserId = MainWindow.userLogin.userId;
                         item.minUnitId = minUnitId;
                         item.maxUnitId = maxUnitId;
-                        item.type = "n";
+                        item.type = cb_type.SelectedItem.ToString();
                         int res = await item.save(item);
                         if (res == -1)// إظهار رسالة الترقية
                             Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);
@@ -289,10 +273,10 @@ namespace Restaurant.View.catalog.rawMaterials
 
                         Nullable<int> minUnitId = null;
                         if (cb_minUnitId.SelectedIndex != -1)
-                            minUnitId = units.Where(x => x.unitId == (int)cb_minUnitId.SelectedValue).FirstOrDefault().unitId;
+                            minUnitId = (int)cb_minUnitId.SelectedValue;
                         Nullable<int> maxUnitId = null;
                         if (cb_maxUnitId.SelectedIndex != -1)
-                            maxUnitId = units.Where(x => x.unitId == (int)cb_maxUnitId.SelectedValue).FirstOrDefault().unitId;
+                            maxUnitId = (int)cb_maxUnitId.SelectedValue;
                         item.code = tb_code.Text;
                         item.name = tb_name.Text;
                         item.details = tb_details.Text;
@@ -303,6 +287,7 @@ namespace Restaurant.View.catalog.rawMaterials
                         item.updateUserId = MainWindow.userLogin.userId;
                         item.minUnitId = minUnitId;
                         item.maxUnitId = maxUnitId;
+                        item.type = cb_type.SelectedItem.ToString();
 
                         int res = await item.save(item);
                         if (res == -1)// إظهار رسالة الترقية
@@ -575,7 +560,7 @@ namespace Restaurant.View.catalog.rawMaterials
             item.taxes = 0;
             item.min = 0;
             item.max = 0;
-            this.DataContext = item;
+            this.DataContext = item;       
             #region image
             HelpClass.clearImg(btn_image);
             #endregion
@@ -973,7 +958,8 @@ namespace Restaurant.View.catalog.rawMaterials
 
         public void ChangeItemIdEvent(int itemId)
         {
-            MessageBox.Show("Hello, I'm here!!");
+            item = items.Where(x => x.itemId == itemId).FirstOrDefault();
+            this.DataContext = item;
             btn_units.IsEnabled = true;
         }
         #endregion
@@ -1221,7 +1207,7 @@ namespace Restaurant.View.catalog.rawMaterials
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_units w = new wd_units();
                     w.item = item;
-                    w.units = units;
+                    //w.units = units;
                     w.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
                 }
