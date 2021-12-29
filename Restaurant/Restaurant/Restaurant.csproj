@@ -255,6 +255,9 @@
     <Compile Include="View\purchase\uc_purchase.xaml.cs">
       <DependentUpon>uc_purchase.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\purchase\uc_purchaseOrder.xaml.cs">
+      <DependentUpon>uc_purchaseOrder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\sales\promotion\uc_promotion.xaml.cs">
       <DependentUpon>uc_promotion.xaml</DependentUpon>
     </Compile>
@@ -457,6 +460,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\purchase\uc_purchase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\purchase\uc_purchaseOrder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
