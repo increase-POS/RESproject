@@ -966,11 +966,6 @@ namespace Restaurant.View.catalog.rawMaterials
         #region Search Y
 
 
-        /// <summary>
-        /// Item
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         async Task Search()
         {
             //search

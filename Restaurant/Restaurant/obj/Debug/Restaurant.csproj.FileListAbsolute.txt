@@ -383,3 +383,7 @@ E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_uploadImage
 E:\GitHub\RESproject\Restaurant\Restaurant\bin\Debug\Interop.WIA.dll
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_previewPdf.baml
 E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\windows\wd_uploadImage.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\purchase\uc_payInvoice.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\purchase\uc_payInvoice.baml
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\purchase\uc_purchaseOrder.g.cs
+E:\GitHub\RESproject\Restaurant\Restaurant\obj\Debug\View\purchase\uc_purchaseOrder.baml

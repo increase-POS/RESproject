@@ -75,9 +75,13 @@ namespace Restaurant.Classes
 
 
         private int pastCatalogItem = -1;
+        double gridCatigorieItems_ActualHeight = 0;
+        double gridCatigorieItems_ActualWidth = 0;
         public void  FN_refrishCatalogItem(List<Item> items)
         {
             gridCatigorieItems.Children.Clear();
+            gridCatigorieItems_ActualHeight = gridCatigorieItems.ActualHeight/3;
+            gridCatigorieItems_ActualWidth = gridCatigorieItems.ActualWidth/5;
             int row = 0;
             int column = 0;
             foreach (var item in items)
@@ -101,7 +105,7 @@ namespace Restaurant.Classes
 
         uc_squareCard FN_createRectangelCard(CardViewItems itemCardView, string BorderBrush = "#DFDFDF")
         {
-            uc_squareCard uc = new uc_squareCard(itemCardView);
+            uc_squareCard uc = new uc_squareCard(itemCardView, gridCatigorieItems_ActualHeight , gridCatigorieItems_ActualWidth);
             uc.squareCardBorderBrush = BorderBrush;
             uc.Name = "CardName" + itemCardView.item.itemId;
             Grid.SetRow(uc, itemCardView.row);

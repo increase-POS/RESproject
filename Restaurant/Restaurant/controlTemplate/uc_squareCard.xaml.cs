@@ -27,10 +27,22 @@ namespace Restaurant.controlTemplate
         }
         public int contentId { get; set; }
         public CardViewItems cardViewitem { get; set; }
-        public uc_squareCard(CardViewItems _CardViewitems)
+        double gridCatigorieItems_ActualHeight { get; set; }
+        double gridCatigorieItems_ActualWidth { get; set; }
+        public uc_squareCard(CardViewItems _CardViewitems 
+            ,double _gridCatigorieItems_ActualHeight, double _gridCatigorieItems_ActualWidth)
         {
             InitializeComponent();
-            cardViewitem = _CardViewitems;
+            this.gridCatigorieItems_ActualHeight = _gridCatigorieItems_ActualHeight;
+            this.gridCatigorieItems_ActualWidth = _gridCatigorieItems_ActualWidth;
+            if (brd_main.ActualHeight == 0)
+            {
+                // gridMain Margin = 10, second row = 40
+                brd_main.Height = this.gridCatigorieItems_ActualHeight - 10 - 40;
+                brd_main.Width = this.gridCatigorieItems_ActualWidth - 10 ;
+
+            }
+                cardViewitem = _CardViewitems;
         }
        async void CreateItemCard()
         {
@@ -58,10 +70,10 @@ namespace Restaurant.controlTemplate
             /////////////////////////////////////////////////////
             
             brd_main.Child = gridContainer;
-            if (brd_main.ActualHeight > brd_main.ActualWidth)
-                brd_main.Height = brd_main.ActualWidth;
+            if (brd_main.Height > brd_main.Width)
+                brd_main.Height = brd_main.Width;
             else
-                brd_main.Width = brd_main.ActualHeight;
+                brd_main.Width = brd_main.Height;
 
             #endregion
             grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -71,8 +83,8 @@ namespace Restaurant.controlTemplate
             buttonImage.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFFFF"));
             //buttonImage.Height = (gridContainer.Height / 1.1) - 7.5;
             //buttonImage.Width = ((gridContainer.Width / 2.2) / 1.2) - 7.5;
-            if (brd_main.ActualHeight != 0)
-            buttonImage.Height = brd_main.ActualHeight -2;
+            if (brd_main.Height != 0)
+            buttonImage.Height = brd_main.Height - 2;
             buttonImage.Width = buttonImage.Height;
             buttonImage.BorderThickness = new Thickness(0);
             buttonImage.Padding = new Thickness(0);
@@ -140,7 +152,7 @@ namespace Restaurant.controlTemplate
                 pathNewLabel.Stretch = Stretch.Fill;
                 pathNewLabel.FlowDirection = FlowDirection.LeftToRight;
                 pathNewLabel.Data = App.Current.Resources["rectangleBlock"] as Geometry;
-                pathNewLabel.Width = brd_main.ActualHeight / 2.5;
+                pathNewLabel.Width = brd_main.Height / 2.5;
                 pathNewLabel.Height = pathNewLabel.Width / 3;
                 #region Text
                 Path pathNewLabelText = new Path();
@@ -148,7 +160,7 @@ namespace Restaurant.controlTemplate
                 pathNewLabelText.Stretch = Stretch.Fill;
                 pathNewLabelText.FlowDirection = FlowDirection.LeftToRight;
                 pathNewLabelText.Data = App.Current.Resources["newText"] as Geometry;
-                pathNewLabelText.Width = brd_main.ActualHeight / 4;
+                pathNewLabelText.Width = brd_main.Height / 4;
                 pathNewLabelText.Height = pathNewLabelText.Width / 3;
                 #endregion
                 #endregion
@@ -170,7 +182,7 @@ namespace Restaurant.controlTemplate
                 pathOfferLabel.Stretch = Stretch.Fill;
                 pathOfferLabel.FlowDirection = FlowDirection.LeftToRight;
                 pathOfferLabel.Data = App.Current.Resources["rectangleBlock"] as Geometry;
-                pathOfferLabel.Width = brd_main.ActualHeight / 2.1;
+                pathOfferLabel.Width = brd_main.Height / 2.1;
                 pathOfferLabel.Height = pathOfferLabel.Width / 3;
                 #region Text
                 Path pathOfferLabelText = new Path();
@@ -178,7 +190,7 @@ namespace Restaurant.controlTemplate
                 pathOfferLabelText.Stretch = Stretch.Fill;
                 pathOfferLabelText.FlowDirection = FlowDirection.LeftToRight;
                 pathOfferLabelText.Data = App.Current.Resources["offerText"] as Geometry;
-                pathOfferLabelText.Width = brd_main.ActualHeight /3;
+                pathOfferLabelText.Width = brd_main.Height /3;
                 pathOfferLabelText.Height = pathOfferLabelText.Width / 3;
                 #endregion
                 #endregion
