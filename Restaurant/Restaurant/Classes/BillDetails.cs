@@ -27,9 +27,11 @@ namespace Restaurant.Classes
         public int itemUnitId { get; set; }
         public string Product { get; set; }
         public string Unit { get; set; }
+        public string UnitName { get; set; }
         public int Count { get; set; }
         public decimal Price { get; set; }
         public decimal Total { get; set; }
         public int OrderId { get; set; }
+        
     }
 }

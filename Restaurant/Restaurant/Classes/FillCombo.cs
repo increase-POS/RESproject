@@ -305,7 +305,46 @@ namespace Restaurant.Classes
         }
         #endregion
 
-        
+        #region section
+        static public Section section = new Section();
+        static public List<Section> sectionsByBranchList;
+        static public async Task<IEnumerable<Section>> RefreshSectionsByBranch()
+        {
+            sectionsByBranchList = await section.getBranchSections(MainWindow.branchLogin.branchId);
+            return sectionsByBranchList;
+        }
+        static public async Task FillComboSections(ComboBox cmb)
+        {
+            if (sectionsByBranchList is null)
+                await RefreshSectionsByBranch();
+            cmb.ItemsSource = sectionsByBranchList;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "sectionId";
+            cmb.SelectedIndex = -1;
+        }
+        #endregion
+
+        #region section
+
+        static public Location location = new Location();
+        static public List<Location> locationsList;
+        static public List<Location> locationsBySectionList;
+        static public async Task<IEnumerable<Location>> RefreshLocationsBySection(int sectionId)
+        {
+            locationsBySectionList = await location.getLocsBySectionId(sectionId);
+            return locationsBySectionList;
+        }
+        static public async Task FillComboLocationsBySection(ComboBox cmb , int sectionId)
+        {
+            await RefreshLocationsBySection(sectionId);
+            cmb.ItemsSource = locationsBySectionList;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "locationId";
+            cmb.SelectedIndex = -1;
+        }
+        #endregion
+       
+
         static public Item item = new Item();
         static public ItemLocation itemLocation = new ItemLocation();
         static public Invoice invoice = new Invoice();

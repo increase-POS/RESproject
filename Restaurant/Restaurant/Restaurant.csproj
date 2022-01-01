@@ -217,6 +217,7 @@
       <DependentUpon>uc_squareCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="converters\deliveryTypeConverter.cs" />
+    <Compile Include="converters\SectionLocationFreeZoneConverter.cs" />
     <Compile Include="converters\translateCategoryNameConverter.cs" />
     <Compile Include="converters\unitItemsListConverter.cs" />
     <Compile Include="en_file.Designer.cs" />
@@ -331,8 +332,14 @@
     <Compile Include="View\storage\storageOperations\storageOperations.xaml.cs">
       <DependentUpon>storageOperations.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\storage\storageOperations\uc_itemsStorage.xaml.cs">
+      <DependentUpon>uc_itemsStorage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\storage\storageOperations\uc_storageCost.xaml.cs">
       <DependentUpon>uc_storageCost.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\storage\storageOperations\uc_storageInvoice.xaml.cs">
+      <DependentUpon>uc_storageInvoice.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\storage\uc_storage.xaml.cs">
       <DependentUpon>uc_storage.xaml</DependentUpon>
@@ -564,7 +571,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\storage\storageOperations\uc_itemsStorage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\storage\storageOperations\uc_storageCost.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\storage\storageOperations\uc_storageInvoice.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

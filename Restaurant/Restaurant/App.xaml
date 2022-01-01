@@ -14,6 +14,8 @@
             <converters:deliveryTypeConverter x:Key="deliveryTypeConverter"/>
             <converters:unitItemsListConverter x:Key="unitItemsListConverter"/>
             <converters:translateCategoryNameConverter x:Key="translateCategoryNameConverter"/>
+            <converters:SectionLocationFreeZoneConverter x:Key="SectionLocationFreeZoneConverter"/>
+            <converters:dateFrameConverter x:Key="dateFrameConverter"/>
 
 
 
