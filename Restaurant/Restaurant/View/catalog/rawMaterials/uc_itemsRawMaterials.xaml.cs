@@ -89,8 +89,14 @@ namespace Restaurant.View.catalog.rawMaterials
         public static List<string> requiredControlList;
         //List<Unit> units;
         Unit unit = new Unit();
+        #region for barcode
+        DateTime _lastKeystroke = new DateTime(0);
+        static private string _BarcodeStr = "";
+        static private object _Sender;
+        #endregion
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
+            MainWindow.mainWindow.KeyDown -= HandleKeyPress;
             Instance = null;
             GC.Collect();
         }
@@ -99,6 +105,7 @@ namespace Restaurant.View.catalog.rawMaterials
             try
             {
                 HelpClass.StartAwait(grid_main);
+                MainWindow.mainWindow.KeyDown += HandleKeyPress;
                 // for pagination onTop Always
                 btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
                 catigoriesAndItemsView.ucitemsRawMaterials = this;
@@ -214,7 +221,7 @@ namespace Restaurant.View.catalog.rawMaterials
                         item.updateUserId = MainWindow.userLogin.userId;
                         item.minUnitId = minUnitId;
                         item.maxUnitId = maxUnitId;
-                        item.type = cb_type.SelectedItem.ToString();
+                        item.type = cb_type.SelectedValue.ToString();
                         int res = await item.save(item);
                         if (res == -1)// إظهار رسالة الترقية
                             Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);
@@ -287,7 +294,7 @@ namespace Restaurant.View.catalog.rawMaterials
                         item.updateUserId = MainWindow.userLogin.userId;
                         item.minUnitId = minUnitId;
                         item.maxUnitId = maxUnitId;
-                        item.type = cb_type.SelectedItem.ToString();
+                        item.type = cb_type.SelectedValue.ToString();
 
                         int res = await item.save(item);
                         if (res == -1)// إظهار رسالة الترقية
@@ -467,6 +474,59 @@ namespace Restaurant.View.catalog.rawMaterials
             {
 
                 HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void HandleKeyPress(object sender, KeyEventArgs e)
+        {
+            try
+                {
+                TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
+                if (elapsed.TotalMilliseconds > 150)
+                {
+                    _BarcodeStr = "";
+                }
+
+                string digit = "";
+                // record keystroke & timestamp 
+                if (e.Key >= Key.D0 && e.Key <= Key.D9)
+                {
+                    //digit pressed!
+                    digit = e.Key.ToString().Substring(1);
+                    // = "1" when D1 is pressed
+                }
+                else if (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
+                {
+                    digit = e.Key.ToString().Substring(6); // = "1" when NumPad1 is pressed
+
+                }
+                _BarcodeStr += digit;
+                _lastKeystroke = DateTime.Now;
+
+                // process barcode 
+                if (e.Key.ToString() == "Return" && _BarcodeStr != "")
+                {
+                    // get item matches barcode
+                    if (FillCombo.itemUnitList != null)
+                    {
+                         var ob = FillCombo.itemUnitList.ToList().Find(c => c.barcode == _BarcodeStr);
+                        if (ob != null)
+                        {
+                            int itemId = (int) ob.itemId;
+                            ChangeItemIdEvent(itemId);
+                        }
+                        else
+                        {
+                            Clear();
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorItemNotFoundToolTip"), animation: ToasterAnimation.FadeIn);
+                        }
+                    }
+                    _BarcodeStr = "";
+                }
+            }
+            catch (Exception ex)
+            {
+                _BarcodeStr = "";
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

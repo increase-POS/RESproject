@@ -162,11 +162,8 @@ namespace Restaurant.View.windows
                     tag = new Tag();
                     if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
-
-
-                      
                         tag.tagName = tb_tagName.Text;
-                    tag.categoryId = categoryId;
+                        tag.categoryId = categoryId;
                         tag.createUserId = MainWindow.userLogin.userId;
                         tag.updateUserId = MainWindow.userLogin.userId;
                         tag.notes = tb_notes.Text;

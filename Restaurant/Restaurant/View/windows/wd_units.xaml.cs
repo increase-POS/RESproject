@@ -27,6 +27,11 @@ namespace Restaurant.View.windows
     /// </summary>
     public partial class wd_units : Window
     {
+        #region for barcode
+        DateTime _lastKeystroke = new DateTime(0);
+        static private string _BarcodeStr = "";
+        static private object _Sender;
+        #endregion
         public wd_units()
         {
             try
@@ -83,13 +88,75 @@ namespace Restaurant.View.windows
         {
             this.Close();
         }
-        private void HandleKeyPress(object sender, KeyEventArgs e)
+        private async void HandleKeyPress(object sender, KeyEventArgs e)
         {
             try
             {
-                if (e.Key == Key.Return)
+                TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
+                if (elapsed.TotalMilliseconds > 150)
                 {
-                    //Btn_save_Click(null, null);
+                    _BarcodeStr = "";
+                }
+
+                string digit = "";
+                // record keystroke & timestamp 
+                if (e.Key >= Key.D0 && e.Key <= Key.D9)
+                {
+                    //digit pressed!
+                    digit = e.Key.ToString().Substring(1);
+                    // = "1" when D1 is pressed
+                }
+                else if (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
+                {
+                    digit = e.Key.ToString().Substring(6); // = "1" when NumPad1 is pressed
+
+                }
+                _BarcodeStr += digit;
+                _lastKeystroke = DateTime.Now;
+
+                // process barcode 
+
+                //if (e.Key.ToString() == "Return" && _BarcodeStr.Length > 0)
+
+               // if (_BarcodeStr.Length == 13)
+                if (e.Key.ToString() == "Return" && _BarcodeStr != "")
+                {                 
+                    // get item matches barcode
+                    if (FillCombo.itemUnitList != null)
+                    {
+                       itemUnit = FillCombo.itemUnitList.ToList().Find(c => c.barcode == tb_barcode.Text && c.itemId == item.itemId);
+                        if (itemUnit == null)
+                        {
+                            itemUnit = new ItemUnit();
+                            if (_Sender != null)
+                            {
+                                TextBox tb = _Sender as TextBox;
+                                if (tb != null)
+                                {
+                                    if (tb.Name == "tb_unitValue" || tb.Name == "tb_price")// remove barcode from text box
+                                    {
+                                        string tbString = tb.Text;
+                                        string newStr = "";
+                                        int startIndex = tbString.IndexOf(_BarcodeStr);
+                                        if (startIndex != -1)
+                                            newStr = tbString.Remove(startIndex, _BarcodeStr.Length);
+
+                                        if (newStr != "")
+                                        {
+                                            if (tb.Name == "tb_unitValue")
+                                                itemUnit.unitValue = int.Parse(newStr);
+                                            else
+                                                itemUnit.price = int.Parse(newStr);
+                                        }
+                                    }
+                                }
+                            }
+                           itemUnit.barcode = _BarcodeStr;
+                        }
+                        await fillItemUnit();
+                    }
+                    drawBarcode(tb_barcode.Text);
+                    _BarcodeStr = "";
                 }
             }
             catch (Exception ex)
@@ -112,7 +179,7 @@ namespace Restaurant.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "unitId", "unitValue", "subUnitId", "price", "barcode" };
+                requiredControlList = new List<string> { "unitId", "unitValue", "subUnitId", "barcode" };
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
@@ -175,27 +242,7 @@ namespace Restaurant.View.windows
                 {
                     if (tb_barcode.Text.Length == 12 || tb_barcode.Text.Length == 13)
                     {
-                        char[] barcodeData;
-                        char checkDigit;
-                        bool valid = true;
-                        if (tb_barcode.Text.Length == 12)// generate checksum didit
-                        {
-                            barcodeData = tb_barcode.Text.ToCharArray();
-                            checkDigit = Mod10CheckDigit(barcodeData);
-                            tb_barcode.Text = checkDigit + tb_barcode.Text;
-                        }
-                        else if (tb_barcode.Text.Length == 13)
-                        {
-                            char cd = tb_barcode.Text[0];
-                            string barCode = tb_barcode.Text.Substring(1);
-                            barcodeData = barCode.ToCharArray();
-                            checkDigit = Mod10CheckDigit(barcodeData);
-                            if (checkDigit != cd)
-                            {
-                                valid = false;
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorBarcodeToolTip"), animation: ToasterAnimation.FadeIn);
-                            }
-                        }
+                        bool valid = validateValues();                       
                         if (valid == true)
                         {
                             // check barcode value if assigned to any item
@@ -225,12 +272,13 @@ namespace Restaurant.View.windows
                                 short defaultBurchase = 0;
                                 if (tbtn_isDefaultPurchases.IsChecked == true)
                                     defaultBurchase = 1;
-                                //defaultSale
-                                //short defaultSale = 0;
-                                //if (tbtn_isDefaultSales.IsChecked == true)
-                                //    defaultSale = 1;
                                 //price
-                                decimal price = decimal.Parse(tb_price.Text);
+                                decimal price = 0;
+                                try
+                                {
+                                    price = decimal.Parse(tb_price.Text);
+                                }
+                                catch { }
                                 //barcode
                                 string barcode = tb_barcode.Text;
                                 /////////////////////////////////////
@@ -251,9 +299,7 @@ namespace Restaurant.View.windows
                                 else
                                 {
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                                    MainWindow.mainWindow.globalItemUnitsList = await FillCombo.itemUnit.GetIU();
-                                    //MainWindow.mainWindow.globalUnitsList = await MainWindow.mainWindow.globalUnit.GetU();
-
+                                    await FillCombo.RefreshItemUnit();
                                     Clear();
                                     await RefreshItemUnitsList();
                                     await Search();
@@ -281,27 +327,7 @@ namespace Restaurant.View.windows
                 {
                     if (tb_barcode.Text.Length == 12 || tb_barcode.Text.Length == 13)
                     {
-                        char[] barcodeData;
-                        char checkDigit;
-                        bool valid = true;
-                        if (tb_barcode.Text.Length == 12)// generate checksum didit
-                        {
-                            barcodeData = tb_barcode.Text.ToCharArray();
-                            checkDigit = Mod10CheckDigit(barcodeData);
-                            tb_barcode.Text = checkDigit + tb_barcode.Text;
-                        }
-                        else if (tb_barcode.Text.Length == 13)
-                        {
-                            char cd = tb_barcode.Text[0];
-                            string barCode = tb_barcode.Text.Substring(1);
-                            barcodeData = barCode.ToCharArray();
-                            checkDigit = Mod10CheckDigit(barcodeData);
-                            if (checkDigit != cd)
-                            {
-                                valid = false;
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorBarcodeToolTip"), animation: ToasterAnimation.FadeIn);
-                            }
-                        }
+                        bool valid = validateValues();
                         if (valid == true)
                         {
                             // check barcode value if assigned to any item
@@ -336,7 +362,12 @@ namespace Restaurant.View.windows
                                 //if (tbtn_isDefaultSales.IsChecked == true)
                                 //    defaultSale = 1;
                                 //price
-                                decimal price = decimal.Parse(tb_price.Text);
+                                decimal price = 0;
+                                try
+                                {
+                                   price = decimal.Parse(tb_price.Text);
+                                }
+                                catch { }
                                 //barcode
                                 string barcode = tb_barcode.Text;
                                 /////////////////////////////////////
@@ -355,9 +386,7 @@ namespace Restaurant.View.windows
                                 else
                                 {
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                                    MainWindow.mainWindow.globalItemUnitsList = await FillCombo.itemUnit.GetIU();
-                                    //MainWindow.mainWindow.globalUnitsList = await MainWindow.mainWindow.globalUnit.GetU();
-
+                                    await FillCombo.RefreshItemUnit();
                                     Clear();
                                     await RefreshItemUnitsList();
                                     await Search();
@@ -514,6 +543,14 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private void Tb_unitValue_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            _Sender = sender;
+        }
+        private void Tb_price_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            _Sender = sender;
+        }
         private async void Dg_itemUnit_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -523,25 +560,25 @@ namespace Restaurant.View.windows
                 if (dg_itemUnit.SelectedIndex != -1)
                 {
                     itemUnit = dg_itemUnit.SelectedItem as ItemUnit;
-                  
-                    this.DataContext = itemUnit;
-                    await FillCombo.FillSmallUnits(cb_subUnitId, (int)itemUnit.unitId, item.itemId);
-                    cb_subUnitId.SelectedValue = (int)itemUnit.subUnitId;
+                    await fillItemUnit();
+                    //this.DataContext = itemUnit;
+                    //await FillCombo.FillSmallUnits(cb_subUnitId, (int)itemUnit.unitId, item.itemId);
+                    //cb_subUnitId.SelectedValue = (int)itemUnit.subUnitId;
 
-                    if (itemUnit != null)
-                    {
-                        #region delete
-                        if (itemUnit.canDelete)
-                            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
-                        else
-                        {
-                            if (itemUnit.isActive == 0)
-                                btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
-                            else
-                                btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
-                        }
-                        #endregion
-                    }
+                    //if (itemUnit != null)
+                    //{
+                    //    #region delete
+                    //    if (itemUnit.canDelete)
+                    //        btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+                    //    else
+                    //    {
+                    //        if (itemUnit.isActive == 0)
+                    //            btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+                    //        else
+                    //            btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+                    //    }
+                    //    #endregion
+                    //}
                 }
                 HelpClass.clearValidate(requiredControlList, this);
                 HelpClass.EndAwait(grid_main);
@@ -576,7 +613,9 @@ namespace Restaurant.View.windows
                 if (cb_unitId.SelectedIndex != -1)
                 {
                     await FillCombo.FillSmallUnits(cb_subUnitId, (int)cb_unitId.SelectedValue, item.itemId);
-                    generateBarcode();
+                    cb_subUnitId.SelectedValue = itemUnit.subUnitId;
+                    if(itemUnit.itemUnitId == 0)
+                        generateBarcode();
                 }
             }
             catch (Exception ex)
@@ -717,9 +756,9 @@ namespace Restaurant.View.windows
         static private int _InternalCounter = 0;
         private Boolean checkBarcodeValidity(string barcode)
         {
-            if (MainWindow.mainWindow.globalItemUnitsList != null)
+            if (FillCombo.itemUnitList != null)
             {
-                var exist = MainWindow.mainWindow.globalItemUnitsList.Where(x => x.barcode == barcode && x.itemUnitId != itemUnit.itemUnitId).FirstOrDefault();
+                var exist = FillCombo.itemUnitList.Where(x => x.barcode == barcode && x.itemUnitId != itemUnit.itemUnitId).FirstOrDefault();
                 if (exist != null)
                     return false;
                 else
@@ -821,7 +860,7 @@ namespace Restaurant.View.windows
         {
             string barcodeString = "";
             barcodeString = generateRandomBarcode();
-            if (MainWindow.mainWindow.globalItemUnitsList != null)
+            if (FillCombo.itemUnitList!= null)
             {
                 if (! checkBarcodeValidity(barcodeString))
                     barcodeString = generateRandomBarcode();
@@ -832,6 +871,61 @@ namespace Restaurant.View.windows
         }
 
         #endregion
-     
+        #region functions
+        private async Task fillItemUnit()
+        {
+            this.DataContext = itemUnit;
+            await FillCombo.FillSmallUnits(cb_subUnitId, (int)itemUnit.unitId, item.itemId);
+            cb_subUnitId.SelectedValue = (int)itemUnit.subUnitId;
+            tb_unitValue.Text = itemUnit.unitValue.ToString() ;
+            if (itemUnit != null)
+            {
+                #region delete
+                if (itemUnit.canDelete)
+                    btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+                else
+                {
+                    if (itemUnit.isActive == 0)
+                        btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+                    else
+                        btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+                }
+                #endregion
+            }
+        }
+
+        private bool validateValues()
+        {
+            bool valid = true;
+            char[] barcodeData;
+            char checkDigit;
+            if (tb_barcode.Text.Length == 12)// generate checksum didit
+            {
+                barcodeData = tb_barcode.Text.ToCharArray();
+                checkDigit = Mod10CheckDigit(barcodeData);
+                tb_barcode.Text = checkDigit + tb_barcode.Text;
+            }
+            else if (tb_barcode.Text.Length == 13)
+            {
+                char cd = tb_barcode.Text[0];
+                string barCode = tb_barcode.Text.Substring(1);
+                barcodeData = barCode.ToCharArray();
+                checkDigit = Mod10CheckDigit(barcodeData);
+                if (checkDigit != cd)
+                {
+                    valid = false;
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorBarcodeToolTip"), animation: ToasterAnimation.FadeIn);
+                }
+            }
+            if(tb_unitValue.Text.Equals("0"))
+            {
+                valid = false;
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trMustBeMoreThanZero"), animation: ToasterAnimation.FadeIn);
+            }
+            return valid;
+        }
+        #endregion
+
+
     }
 }

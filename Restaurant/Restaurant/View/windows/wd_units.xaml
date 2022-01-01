@@ -273,7 +273,7 @@
                                      BorderThickness="0"
                                  BorderBrush="AliceBlue" MaxLength="100"  Tag="int" PreviewTextInput="Number_PreviewTextInput"
                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                  Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
+                  Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" TextChanged="Tb_unitValue_TextChanged" />
 
                                     <Path Fill="#E81123" x:Name="p_error_unitValue" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
@@ -312,7 +312,7 @@
                                      BorderThickness="0"
                                  BorderBrush="AliceBlue" MaxLength="100" Tag="decimal" PreviewTextInput="Number_PreviewTextInput"
                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                  Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
+                  Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" TextChanged="Tb_price_TextChanged" />
 
                                 <Path Fill="#E81123" x:Name="p_error_price" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   

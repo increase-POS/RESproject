@@ -124,7 +124,7 @@ namespace Restaurant
 
 
         //public ItemUnit globalItemUnit = new ItemUnit();
-        public List<ItemUnit> globalItemUnitsList = new List<ItemUnit>();
+        //public List<ItemUnit> globalItemUnitsList = new List<ItemUnit>();
         //static public Unit saleUnit = new Unit();
        
         /*
@@ -273,7 +273,7 @@ namespace Restaurant
         {
             try
             {
-                globalItemUnitsList = await FillCombo.itemUnit.GetIU();
+                await FillCombo.RefreshItemUnit();
             }
             catch (Exception)
             { }

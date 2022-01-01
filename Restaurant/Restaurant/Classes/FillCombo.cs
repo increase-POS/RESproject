@@ -194,6 +194,16 @@ namespace Restaurant.Classes
             #endregion
         }
         #endregion
+        #region item units
+        static public ItemUnit itemUnit = new ItemUnit();
+        static public List<ItemUnit> itemUnitList;
+        static public async Task<IEnumerable<ItemUnit>> RefreshItemUnit()
+        {
+            itemUnitList = await itemUnit.GetIU();
+            itemUnitList = itemUnitList.Where(u => u.isActive == 1).ToList();
+            return itemUnitList;
+        }
+        #endregion
         #region FillDeliveryType
         static public void FillDeliveryType(ComboBox cmb)
         {
@@ -298,7 +308,6 @@ namespace Restaurant.Classes
         
         static public Item item = new Item();
         static public ItemLocation itemLocation = new ItemLocation();
-        static public ItemUnit itemUnit = new ItemUnit();
         static public Invoice invoice = new Invoice();
 
     }
