@@ -55,7 +55,7 @@ namespace Restaurant.Classes
         public decimal avgPurchasePrice { get; set; }
          
 
-        public async Task<List<InventoryItemLocation>> GetAll(int itemId)
+        public async Task<List<InventoryItemLocation>> Get(int itemId)
         {
             List<InventoryItemLocation> items = new List<InventoryItemLocation>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
