@@ -59,7 +59,7 @@
                 <Grid Grid.Row="0">
                     <Border Margin="0"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                            Background="White"/>
-                    <DataGrid  Margin="10" Grid.Row="0"
+                    <DataGrid  Margin="10" Grid.Row="0" IsReadOnly="True"
                               Background="White"   HeadersVisibility="Column"
                        x:Name="dg_tag" SelectionChanged="Dg_tag_SelectionChanged"  AutoGenerateColumns="False"  
                         ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">

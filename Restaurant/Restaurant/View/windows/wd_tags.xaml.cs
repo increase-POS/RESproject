@@ -418,12 +418,13 @@ namespace Restaurant.View.windows
             //search
             if (tags is null)
                 await RefreshTagsList();
+            tagsQuery = tags;
             RefreshTagsView();
         }
         async Task<IEnumerable<Tag>> RefreshTagsList()
         {
-            tags = await tag.Get();
-            tags = tags.Where(x => x.categoryId == categoryId);
+            tags = await tag.Get(categoryId);
+           // tags = tags.Where(x => x.categoryId == categoryId);
             return tags;
         }
         void RefreshTagsView()
