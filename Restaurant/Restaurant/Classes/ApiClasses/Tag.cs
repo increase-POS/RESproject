@@ -32,10 +32,12 @@ namespace Restaurant.Classes
         public bool canDelete { get; set; }
          
 
-        public async Task<List<Tag>> Get()
+        public async Task<List<Tag>> Get(int categoryId =0)
         {
             List<Tag> items = new List<Tag>();
-            IEnumerable<Claim> claims = await APIResult.getList("Tags/Get");
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("categoryId", categoryId.ToString());
+            IEnumerable<Claim> claims = await APIResult.getList("Tags/Get", parameters);
             foreach (Claim c in claims)
             {
                 if (c.Type == "scopes")
