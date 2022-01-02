@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace Restaurant.converters
 {
-   class SectionLocationFreeZoneConverter : IMultiValueConverter
+    public class SectionLocationFreeZoneConverter : IMultiValueConverter
     {
         public object Convert(object[] value, Type targetType, object parameter, CultureInfo culture)
         {

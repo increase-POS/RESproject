@@ -49,7 +49,7 @@ namespace Restaurant.Classes
             BranchesByBranchandUser = await branch.BranchesByBranchandUser(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
             return BranchesByBranchandUser;
         }
-        static public async Task fillBranchesWithoutCurrent(ComboBox cmb, int currentBranchId, string type = "")
+        static public async Task fillBranchesWithoutCurrent(ComboBox cmb, string type = "")
         {
             List<Branch> branches = new List<Branch>();
 
@@ -59,11 +59,11 @@ namespace Restaurant.Classes
                 await RefreshByBranchandUser();
 
             if (HelpClass.isAdminPermision())
-                branches =   branchesAllWithoutMain;
+                branches = branchesAllWithoutMain;
             else
                 branches = BranchesByBranchandUser;
 
-            branch = branches.Where(s => s.branchId == currentBranchId).FirstOrDefault<Branch>();
+            branch = branches.Where(s => s.branchId == MainWindow.branchLogin.branchId).FirstOrDefault<Branch>();
             branches.Remove(branch);
             var br = new Branch();
             br.branchId = 0;
@@ -164,7 +164,7 @@ namespace Restaurant.Classes
         }
         #endregion
         #region tags
-       public static Tag tag = new Tag();
+        public static Tag tag = new Tag();
         public static async void fillTags(ComboBox cmb, int categoryId)
         {
             var tags = await tag.Get(categoryId);
@@ -336,7 +336,7 @@ namespace Restaurant.Classes
         }
         #endregion
 
-        #region section
+        #region location
 
         static public Location location = new Location();
         static public List<Location> locationsList;
@@ -355,11 +355,26 @@ namespace Restaurant.Classes
             cmb.SelectedIndex = -1;
         }
         #endregion
-       
+        #region movements
+        static public void FillMovementsProcessType(ComboBox cmb)
+        {
+            #region fill process type
+            var processList = new[] {
+                 new { Text = MainWindow.resourcemanager.GetString("trImport"), Value = "im" },
+            new { Text = MainWindow.resourcemanager.GetString("trExport"), Value = "ex"},
+            };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = processList;
+            cmb.SelectedIndex = 0;
+            #endregion
+        }
+        #endregion
 
         static public Item item = new Item();
         static public ItemLocation itemLocation = new ItemLocation();
         static public Invoice invoice = new Invoice();
-
+        static public ShippingCompanies ShipCompany = new ShippingCompanies();
+        static public User user = new User();
     }
 }

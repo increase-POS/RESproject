@@ -72,10 +72,8 @@ namespace Restaurant.View.purchase
         }
         ObservableCollection<BillDetailsPurchase> billDetails = new ObservableCollection<BillDetailsPurchase>();
         public List<Control> controls;
-
         public static bool isFromReport = false;
         public static bool archived = false;
-
         Item item = new Item();
         IEnumerable<Item> items;
         List<ItemUnit> barcodesList;
@@ -106,22 +104,13 @@ namespace Restaurant.View.purchase
         int _PaymentCount = 0;
 
         #endregion
-        //CatigoriesAndItemsView catigoriesAndItemsView = new CatigoriesAndItemsView();
-        //public byte tglCategoryState = 1;
-        //public byte tglItemState = 1;
-        //public string txtItemSearch;
-
         //for bill details
         static private int _SequenceNum = 0;
         static private int _invoiceId;
         static private decimal _Sum = 0;
         static public string _InvoiceType = "pd"; // purchase draft
-
-       
-
        
         public static List<string> requiredControlList;
-
         #region loading
         List<keyValueBool> loadingList;
         async void loading_RefrishItems()
@@ -146,7 +135,7 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                await FillCombo.fillBranchesWithoutCurrent(cb_branch, MainWindow.branchLogin.branchId, "bs");
+                await FillCombo.fillBranchesWithoutCurrent(cb_branch, "bs");
 
             }
             catch (Exception)
@@ -355,7 +344,7 @@ namespace Restaurant.View.purchase
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             try
             {
