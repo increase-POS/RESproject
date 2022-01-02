@@ -94,11 +94,13 @@ namespace Restaurant.Classes
         }
         #endregion
         #region ItemTypePurchase
+        static public List<string> purchaseTypes = new List<string>() { "PurchaseNormal", "PurchaseExpire" };
+       
         static public void FillItemTypePurchase(ComboBox cmb)
         {
             #region fill process type
             var typelist = new[] {
-                new { Text = MainWindow.resourcemanager.GetString("trNormal")       , Value = "PurchaseNormal" },
+                new { Text = MainWindow.resourcemanager.GetString("trNormal"), Value = "PurchaseNormal" },
                 new { Text = MainWindow.resourcemanager.GetString("trExpire") , Value = "PurchaseExpire" },
                  };
             cmb.DisplayMemberPath = "Text";
@@ -152,13 +154,23 @@ namespace Restaurant.Classes
         }
         static public async void FillCategorySale(ComboBox cmb)
         {
-            #region FillCategoryPurchase
+            #region FillCategorySale
             if (categoriesList is null)
                 await RefreshCategory();
             cmb.ItemsSource = categoriesList.Where(x => x.type == "s").ToList();
             cmb.SelectedValuePath = "categoryId";
             cmb.DisplayMemberPath = "name";
             #endregion
+        }
+        #endregion
+        #region tags
+       public static Tag tag = new Tag();
+        public static async void fillTags(ComboBox cmb, int categoryId)
+        {
+            var tags = await tag.Get(categoryId);
+            cmb.ItemsSource = tags.ToList();
+            cmb.SelectedValuePath = "tagId";
+            cmb.DisplayMemberPath = "tagName";
         }
         #endregion
         #region Unit
