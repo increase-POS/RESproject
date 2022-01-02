@@ -118,7 +118,9 @@ namespace Restaurant.View.catalog.foods
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
+                categoryName = "appetizers";
                 categoryId = FillCombo.GetCategoryId(categoryName);
+                FillCombo.fillTags(cb_tagId, categoryId);
                 Keyboard.Focus(tb_code);
                 await RefreshItemsList();
                 await Search();
@@ -172,66 +174,56 @@ namespace Restaurant.View.catalog.foods
                         // this default sale unit 
                         //MainWindow.saleUnit.unitId
 
-                        /*
-                        Boolean codeAvailable = await checkCodeAvailabiltiy();
-
-                        string categoryString = null;
-                        if (cb_categoryString.SelectedIndex != -1)
-                            categoryString = (string)cb_categoryString.SelectedValue;
-
-                        int min = 0;
-                        int max = 0;
-                        decimal taxes = 0;
-
-                        if (tb_min.Text != "")
-                            min = int.Parse(tb_min.Text);
-                        if (tb_max.Text != "")
-                            max = int.Parse(tb_max.Text);
-                        if (tb_taxes.Text != "")
-                            taxes = decimal.Parse(tb_taxes.Text);
-
-                        Nullable<int> minUnitId = null;
-                        if (cb_minUnitId.SelectedIndex != -1)
-                            minUnitId = units.Where(x => x.unitId == (int)cb_minUnitId.SelectedValue).FirstOrDefault().unitId;
-                        Nullable<int> maxUnitId = null;
-                        if (cb_maxUnitId.SelectedIndex != -1)
-                            maxUnitId = units.Where(x => x.unitId == (int)cb_maxUnitId.SelectedValue).FirstOrDefault().unitId;
-
-                        item = new Item();
-                        item.code = tb_code.Text;
-                        item.name = tb_name.Text;
-                        item.details = tb_details.Text;
-                        item.image = "";
-                        item.taxes = taxes;
-                        item.isActive = 1;
-                        item.min = min;
-                        item.max = max;
-                        item.categoryId = categoryId;
-                        item.createUserId = MainWindow.userLogin.userId;
-                        item.updateUserId = MainWindow.userLogin.userId;
-                        item.minUnitId = minUnitId;
-                        item.maxUnitId = maxUnitId;
-
-                        int res = await item.save(item);
-                        if (res == -1)// إظهار رسالة الترقية
-                            Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);
-
-                        else if (res == 0) // an error occure
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                        else
+                        Boolean codeAvailable = checkCodeAvailabiltiy();
+                        if (codeAvailable)
                         {
-                            item.itemId = res;
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                            item = new Item();
+                            item.code = tb_code.Text;
+                            item.name = tb_name.Text;
+                            item.details = tb_details.Text;
+                            item.image = "";
+                            item.isActive = 1;
+                            item.tagId = (int) cb_tagId.SelectedValue;
+                            item.categoryId = categoryId;
+                            item.createUserId = MainWindow.userLogin.userId;
+                            item.updateUserId = MainWindow.userLogin.userId;
+                            item.type = "salesNormal";
+                            item.taxes = 0;
+                            // sale item unit
+                            ItemUnit saleItemUnit = new ItemUnit();
+                            saleItemUnit.unitId = saleItemUnit.subUnitId = FillCombo.saleUnit.unitId;
+                            saleItemUnit.itemId = item.itemId;
+                            decimal price = 0;
+                            try
+                            {
+                                price = decimal.Parse(tb_price.Text);
+                            }
+                            catch { }
+                            saleItemUnit.price = price;
+                            saleItemUnit.barcode = tb_barcode.Text;
+                            saleItemUnit.unitValue = 1;
+                            saleItemUnit.taxes = 0;
+                            saleItemUnit.createUserId = MainWindow.userLogin.userId;
 
-                            int itemId = res;
+                            int res = await item.saveSaleItem(item, saleItemUnit);
+                            if (res == -1)// إظهار رسالة الترقية
+                                Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);
 
-                            if (openFileDialog.FileName != "")
-                                await item.uploadImage(openFileDialog.FileName, Md5Encription.MD5Hash("Inc-m" + itemId.ToString()), itemId);
-                            Clear();
-                            await RefreshItemsList();
-                            await Search();
+                            else if (res == 0) // an error occure
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            else
+                            {
+                                item.itemId = res;
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+                                if (openFileDialog.FileName != "")
+                                    await item.uploadImage(openFileDialog.FileName, Md5Encription.MD5Hash("Inc-m" + item.itemId.ToString()), item.itemId);
+                               
+                                Clear();
+                                await RefreshItemsList();
+                                await Search();
+                            }
                         }
-                        */
                     }
                     HelpClass.EndAwait(grid_main);
                 }
@@ -939,7 +931,8 @@ namespace Restaurant.View.catalog.foods
         IEnumerable<Item> itemsQuery;
         async Task<IEnumerable<Item>> RefreshItemsList()
         {
-            items = await item.Get();
+            items = await item.GetSalesItems();
+            items = items.Where(x => x.categoryId == categoryId).ToList();
             return items;
         }
         void RefrishItemsCard(IEnumerable<Item> _items)
@@ -953,8 +946,9 @@ namespace Restaurant.View.catalog.foods
 
         public void ChangeItemIdEvent(int itemId)
         {
-
-         }
+            item = items.Where(x => x.itemId == itemId).FirstOrDefault();
+            this.DataContext = item;
+        }
         #endregion
         #region Search Y
 
@@ -1162,26 +1156,31 @@ namespace Restaurant.View.catalog.foods
         #endregion
 
         #endregion
-        private async Task<Boolean> checkCodeAvailabiltiy(string oldCode = "")
+        private Boolean checkCodeAvailabiltiy(string oldCode = "")
         {
-
-            List<string> itemsCodes = await item.GetItemsCodes();
             string code = tb_code.Text;
-            var match = "";
-            if (code != oldCode && itemsCodes != null)
-                match = itemsCodes.FirstOrDefault(stringToCheck => stringToCheck.Contains(code));
 
-            if (match != "" && match != null)
+            if (code != oldCode && items.ToList().Count > 0)
             {
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trDuplicateCodeToolTip"), animation: ToasterAnimation.FadeIn);
-                #region Tooltip_code
-                p_error_code.Visibility = Visibility.Visible;
-                ToolTip toolTip_code = new ToolTip();
-                toolTip_code.Content = MainWindow.resourcemanager.GetString("trDuplicateCodeToolTip");
-                toolTip_code.Style = Application.Current.Resources["ToolTipError"] as Style;
-                p_error_code.ToolTip = toolTip_code;
-                #endregion
-                return false;
+                var match = items.Where(x => x.code.Contains(code));
+
+                if ( match != null)
+                {
+                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trDuplicateCodeToolTip"), animation: ToasterAnimation.FadeIn);
+                    #region Tooltip_code
+                    p_error_code.Visibility = Visibility.Visible;
+                    ToolTip toolTip_code = new ToolTip();
+                    toolTip_code.Content = MainWindow.resourcemanager.GetString("trDuplicateCodeToolTip");
+                    toolTip_code.Style = Application.Current.Resources["ToolTipError"] as Style;
+                    p_error_code.ToolTip = toolTip_code;
+                    #endregion
+                    return false;
+                }
+                else
+                {
+                    HelpClass.clearValidate(p_error_code);
+                    return true;
+                }
             }
             else
             {
@@ -1189,32 +1188,7 @@ namespace Restaurant.View.catalog.foods
                 return true;
             }
         }
-        private void Btn_units_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                //units
-                if (MainWindow.groupObject.HasPermissionAction(unitsPermission, MainWindow.groupObjects, "one"))
-                {
-                    Window.GetWindow(this).Opacity = 0.2;
-                    wd_units w = new wd_units();
-                    w.item = item;
-                    w.units = units;
-                    w.ShowDialog();
-                    Window.GetWindow(this).Opacity = 1;
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+       
         #region barcode
         List<ItemUnit> barcodesList;
         static private int _InternalCounter = 0;

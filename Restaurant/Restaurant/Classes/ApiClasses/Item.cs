@@ -50,7 +50,7 @@ namespace Restaurant.Classes
 
         //new
         public string notes { get; set; }
-        //public string categoryString { get; set; }
+        public string barcode { get; set; }
 
         ///pos
 
@@ -95,16 +95,36 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
         }
+        public async Task<int> saveSaleItem(Item item, ItemUnit itemUnit)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "Items/SaveSaleItem";
+
+            var myContent = JsonConvert.SerializeObject(item);
+            parameters.Add("itemObject", myContent);
+
+            myContent = JsonConvert.SerializeObject(itemUnit);
+            parameters.Add("itemUnit",myContent);
+           return await APIResult.post(method, parameters);
+        }
         public async Task<List<Item>> Get()
         {
             List<Item> items = new List<Item>();
-
-            //########### to pass parameters (optional)
-            //Dictionary<string, string> parameters = new Dictionary<string, string>();
-            //parameters.Add("itemObject", myContent);
-            //IEnumerable<Claim> claims = await APIResult.getList("items/GetAllItems",parameters);
-            //#################
             IEnumerable<Claim> claims = await APIResult.getList("items/GetAllItems");
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<Item>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
+        public async Task<List<Item>> GetSalesItems()
+        {
+            List<Item> items = new List<Item>();
+            IEnumerable<Claim> claims = await APIResult.getList("items/GetSalesItems");
 
             foreach (Claim c in claims)
             {
