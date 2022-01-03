@@ -93,6 +93,10 @@ namespace Restaurant.Classes
             #endregion
         }
         #endregion
+        #region ItemTypeSales
+        static public List<string> salesTypes = new List<string>() { "SalesNormal" };
+
+        #endregion
         #region ItemTypePurchase
         static public List<string> purchaseTypes = new List<string>() { "PurchaseNormal", "PurchaseExpire" };
        

@@ -44,12 +44,10 @@ namespace Restaurant.Classes
         public Boolean canDelete { get; set; }
 
         public Nullable<decimal> taxes { get; set; }
-
-
-
         public Nullable<decimal> priceTax { get; set; }
-      
- 
+
+        public string type { get; set; }
+        public Nullable<int> categoryId { get; set; }
         //**************************************************
         //*************** item unit methods *********************
         public async Task<List<ItemUnit>> GetAllItemUnits(int itemId)
