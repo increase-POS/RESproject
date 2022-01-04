@@ -1016,11 +1016,22 @@ namespace Restaurant.View.catalog.foods
         #endregion
         #region Get Id By Click  Y
 
-        public void ChangeItemIdEvent(int itemId)
+        public async void ChangeItemIdEvent(int itemId)
         {
-            item = items.Where(x => x.itemId == itemId).FirstOrDefault();
-            this.DataContext = item;
-            drawBarcode(item.barcode);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                item = items.Where(x => x.itemId == itemId).FirstOrDefault();
+                this.DataContext = item;
+                drawBarcode(item.barcode);
+                await getImg();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         #endregion
         #region Search Y
@@ -1235,7 +1246,7 @@ namespace Restaurant.View.catalog.foods
 
             if (code != oldCode && items.ToList().Count > 0)
             {
-                var match = items.Where(x => x.code.Contains(code));
+                var match = items.Where(x => x.code.Contains(code)).FirstOrDefault();
 
                 if ( match != null)
                 {
