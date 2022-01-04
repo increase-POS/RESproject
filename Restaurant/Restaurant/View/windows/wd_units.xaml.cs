@@ -255,8 +255,8 @@ namespace Restaurant.View.windows
                                 toolTip_barcode.Style = Application.Current.Resources["ToolTipError"] as Style;
                                 p_error_barcode.ToolTip = toolTip_barcode;
                                 #endregion
-                            }
-                                else //barcode is available
+                            }                          
+                            else //barcode is available
                                 {
 
                                 //unit
@@ -330,6 +330,7 @@ namespace Restaurant.View.windows
                         bool valid = validateValues();
                         if (valid == true)
                         {
+
                             // check barcode value if assigned to any item
                             if (!checkBarcodeValidity(tb_barcode.Text) && itemUnit.barcode != tb_barcode.Text)
                             {
@@ -340,7 +341,7 @@ namespace Restaurant.View.windows
                                 toolTip_barcode.Style = Application.Current.Resources["ToolTipError"] as Style;
                                 p_error_barcode.ToolTip = toolTip_barcode;
                                 #endregion
-                            }
+                            }                        
                             else //barcode is available
                             {
 
@@ -561,24 +562,6 @@ namespace Restaurant.View.windows
                 {
                     itemUnit = dg_itemUnit.SelectedItem as ItemUnit;
                     await fillItemUnit();
-                    //this.DataContext = itemUnit;
-                    //await FillCombo.FillSmallUnits(cb_subUnitId, (int)itemUnit.unitId, item.itemId);
-                    //cb_subUnitId.SelectedValue = (int)itemUnit.subUnitId;
-
-                    //if (itemUnit != null)
-                    //{
-                    //    #region delete
-                    //    if (itemUnit.canDelete)
-                    //        btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
-                    //    else
-                    //    {
-                    //        if (itemUnit.isActive == 0)
-                    //            btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
-                    //        else
-                    //            btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
-                    //    }
-                    //    #endregion
-                    //}
                 }
                 HelpClass.clearValidate(requiredControlList, this);
                 HelpClass.EndAwait(grid_main);
@@ -668,6 +651,7 @@ namespace Restaurant.View.windows
             cb_subUnitId.SelectedIndex = -1;
             tb_barcode.Clear();
             tb_unitValue.Text = "0";
+            img_barcode.Source = null;
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
@@ -770,30 +754,45 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (e.Key == Key.Return && tb_barcode.Text.Length == 13)
+                TextBox tb = (TextBox)sender;
+                string barCode = tb_barcode.Text;
+                if (e.Key == Key.Return && barCode.Length == 13)
                 {
-                    char checkDigit;
-                    char[] barcodeData;
-                    TextBox tb = (TextBox)sender;
-                    string barCode = tb_barcode.Text;
-                    char cd = barCode[0];
-                    barCode = barCode.Substring(1);
-                    barcodeData = barCode.ToCharArray();
-                    checkDigit = Mod10CheckDigit(barcodeData);
-
-                    if (checkDigit != cd)
+                    if (isBarcodeCorrect(barCode) == false)
                     {
-                        tb_barcode.Text = "";
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorBarcodeToolTip"), animation: ToasterAnimation.FadeIn);
+                        item.barcode = "";
+                        this.DataContext = item;                      
                     }
                     else
                         drawBarcode(barCode);
                 }
+                else if (barCode.Length == 13 || barCode.Length == 12)
+                    drawBarcode(barCode);
+                else
+                    drawBarcode("");
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+        private bool isBarcodeCorrect(string barCode)
+        {
+            char checkDigit;
+            char[] barcodeData;
+
+            char cd = barCode[0];
+            barCode = barCode.Substring(1);
+            barcodeData = barCode.ToCharArray();
+            checkDigit = Mod10CheckDigit(barcodeData);
+
+            if (checkDigit != cd)
+            {
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorBarcodeToolTip"), animation: ToasterAnimation.FadeIn);
+                return false;
+            }
+            else
+                return true;
         }
         public static char Mod10CheckDigit(char[] data)
         {
@@ -842,8 +841,6 @@ namespace Restaurant.View.windows
         }
         static public string generateRandomBarcode()
         {
-
-
             var now = DateTime.Now;
 
             var days = (int)(now - new DateTime(2000, 1, 1)).TotalDays;
@@ -865,9 +862,9 @@ namespace Restaurant.View.windows
                 if (! checkBarcodeValidity(barcodeString))
                     barcodeString = generateRandomBarcode();
             }
-            tb_barcode.Text = barcodeString;
+           tb_barcode.Text = barcodeString;
             HelpClass.validateEmpty( "trErrorEmptyBarcodeToolTip",p_error_barcode );
-            drawBarcode(tb_barcode.Text);
+            drawBarcode(barcodeString);
         }
 
         #endregion
@@ -877,7 +874,8 @@ namespace Restaurant.View.windows
             this.DataContext = itemUnit;
             await FillCombo.FillSmallUnits(cb_subUnitId, (int)itemUnit.unitId, item.itemId);
             cb_subUnitId.SelectedValue = (int)itemUnit.subUnitId;
-            tb_unitValue.Text = itemUnit.unitValue.ToString() ;
+            tb_unitValue.Text = itemUnit.unitValue.ToString();
+            tb_barcode.Text = itemUnit.barcode;
             if (itemUnit != null)
             {
                 #region delete
@@ -891,7 +889,9 @@ namespace Restaurant.View.windows
                         btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
                 }
                 #endregion
+                drawBarcode(itemUnit.barcode);
             }
+           
         }
 
         private bool validateValues()
@@ -903,19 +903,22 @@ namespace Restaurant.View.windows
             {
                 barcodeData = tb_barcode.Text.ToCharArray();
                 checkDigit = Mod10CheckDigit(barcodeData);
-                tb_barcode.Text = checkDigit + tb_barcode.Text;
+                itemUnit.barcode = checkDigit + tb_barcode.Text;
+                this.DataContext = itemUnit;
+               // tb_barcode.Text = checkDigit + tb_barcode.Text;
             }
             else if (tb_barcode.Text.Length == 13)
             {
-                char cd = tb_barcode.Text[0];
-                string barCode = tb_barcode.Text.Substring(1);
-                barcodeData = barCode.ToCharArray();
-                checkDigit = Mod10CheckDigit(barcodeData);
-                if (checkDigit != cd)
-                {
-                    valid = false;
-                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorBarcodeToolTip"), animation: ToasterAnimation.FadeIn);
-                }
+                valid = isBarcodeCorrect(tb_barcode.Text);
+                //char cd = tb_barcode.Text[0];
+                //string barCode = tb_barcode.Text.Substring(1);
+                //barcodeData = barCode.ToCharArray();
+                //checkDigit = Mod10CheckDigit(barcodeData);
+                //if (checkDigit != cd)
+                //{
+                //    valid = false;
+                //    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorBarcodeToolTip"), animation: ToasterAnimation.FadeIn);
+                //}
             }
             if(tb_unitValue.Text.Equals("0"))
             {

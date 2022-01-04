@@ -92,8 +92,13 @@ namespace Restaurant.View.catalog.foods
         public static List<string> requiredControlList;
         List<Unit> units;
         Unit unit = new Unit();
+        #region for barcode
+        DateTime _lastKeystroke = new DateTime(0);
+        static private string _BarcodeStr = "";
+        #endregion
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
+            MainWindow.mainWindow.KeyDown -= HandleKeyPress;
             Instance = null;
             GC.Collect();
         }
@@ -102,6 +107,7 @@ namespace Restaurant.View.catalog.foods
             try
             {
                 HelpClass.StartAwait(grid_main);
+                MainWindow.mainWindow.KeyDown += HandleKeyPress;
                 // for pagination onTop Always
                 btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
                 catigoriesAndItemsView.ucitemsFoods = this;
@@ -158,7 +164,7 @@ namespace Restaurant.View.catalog.foods
 
 
         }
-        #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
+        #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh - validateValues
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//add
             try
@@ -170,12 +176,9 @@ namespace Restaurant.View.catalog.foods
                     item = new Item();
                     if (HelpClass.validate(requiredControlList, this))
                     {
-                        // dina
-                        // this default sale unit 
-                        //MainWindow.saleUnit.unitId
-
                         Boolean codeAvailable = checkCodeAvailabiltiy();
-                        if (codeAvailable)
+                        Boolean barcodeCorrect = isBarcodeCorrect(tb_barcode.Text);
+                       if (codeAvailable && barcodeCorrect)
                         {
                             item = new Item();
                             item.code = tb_code.Text;
@@ -183,11 +186,12 @@ namespace Restaurant.View.catalog.foods
                             item.details = tb_details.Text;
                             item.image = "";
                             item.isActive = 1;
-                            item.tagId = (int) cb_tagId.SelectedValue;
+                            if (cb_tagId.SelectedIndex != -1)
+                                item.tagId = (int)cb_tagId.SelectedValue;
                             item.categoryId = categoryId;
                             item.createUserId = MainWindow.userLogin.userId;
                             item.updateUserId = MainWindow.userLogin.userId;
-                            item.type = "salesNormal";
+                            item.type = "SalesNormal";
                             item.taxes = 0;
                             // sale item unit
                             ItemUnit saleItemUnit = new ItemUnit();
@@ -220,8 +224,9 @@ namespace Restaurant.View.catalog.foods
                                     await item.uploadImage(openFileDialog.FileName, Md5Encription.MD5Hash("Inc-m" + item.itemId.ToString()), item.itemId);
                                
                                 Clear();
-                                await RefreshItemsList();
+                                await RefreshItemsList();                              
                                 await Search();
+                                await FillCombo.RefreshItemUnit();
                             }
                         }
                     }
@@ -245,63 +250,58 @@ namespace Restaurant.View.catalog.foods
                     HelpClass.StartAwait(grid_main);
                     if (HelpClass.validate(requiredControlList, this))
                     {
-                       /*
-                        Boolean codeAvailable = await checkCodeAvailabiltiy(item.code);
-
-                        string categoryString = null;
-                        if (cb_categoryString.SelectedIndex != -1)
-                            categoryString = (string)cb_categoryString.SelectedValue;
-
-                        int min = 0;
-                        int max = 0;
-                        decimal taxes = 0;
-                        if (tb_min.Text != "")
-                            min = int.Parse(tb_min.Text);
-                        if (tb_max.Text != "")
-                            max = int.Parse(tb_max.Text);
-                        if (tb_taxes.Text != "")
-                            taxes = decimal.Parse(tb_taxes.Text);
-
-                        Nullable<int> minUnitId = null;
-                        if (cb_minUnitId.SelectedIndex != -1)
-                            minUnitId = units.Where(x => x.unitId == (int)cb_minUnitId.SelectedValue).FirstOrDefault().unitId;
-                        Nullable<int> maxUnitId = null;
-                        if (cb_maxUnitId.SelectedIndex != -1)
-                            maxUnitId = units.Where(x => x.unitId == (int)cb_maxUnitId.SelectedValue).FirstOrDefault().unitId;
-                        item.code = tb_code.Text;
-                        item.name = tb_name.Text;
-                        item.details = tb_details.Text;
-                        item.taxes = taxes;
-                        item.min = min;
-                        item.max = max;
-                        item.categoryId = categoryId;
-                        item.updateUserId = MainWindow.userLogin.userId;
-                        item.minUnitId = minUnitId;
-                        item.maxUnitId = maxUnitId;
-
-                        int res = await item.save(item);
-                        if (res == -1)// إظهار رسالة الترقية
-                            Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);
-
-                        else if (res == 0) // an error occure
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                        else
+                        Boolean codeAvailable = checkCodeAvailabiltiy(item.code);
+                        Boolean valid = validateValues();
+                        if (codeAvailable && valid)
                         {
-                            item.itemId = res;
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                            item.code = tb_code.Text;
+                            item.name = tb_name.Text;
+                            item.details = tb_details.Text;
+                            item.image = "";
+                            item.isActive = 1;
+                            if(cb_tagId.SelectedIndex != -1)
+                                item.tagId = (int)cb_tagId.SelectedValue;
+                            item.categoryId = categoryId;
+                            item.createUserId = MainWindow.userLogin.userId;
+                            item.updateUserId = MainWindow.userLogin.userId;
+                            item.type = "SalesNormal";
+                            item.taxes = 0;
+                            // sale item unit
+                            ItemUnit saleItemUnit = new ItemUnit();
+                            saleItemUnit.unitId = saleItemUnit.subUnitId = FillCombo.saleUnit.unitId;
+                            saleItemUnit.itemId = item.itemId;
+                            decimal price = 0;
+                            try
+                            {
+                                price = decimal.Parse(tb_price.Text);
+                            }
+                            catch { }
+                            saleItemUnit.price = price;
+                            saleItemUnit.barcode = tb_barcode.Text;
+                            saleItemUnit.unitValue = 1;
+                            saleItemUnit.taxes = 0;
+                            saleItemUnit.createUserId = MainWindow.userLogin.userId;
 
-                            int itemId = res;
-                            if (openFileDialog.FileName != "")
-                                await item.uploadImage(openFileDialog.FileName, Md5Encription.MD5Hash("Inc-m" + itemId.ToString()), itemId);
+                            int res = await item.saveSaleItem(item, saleItemUnit);
+                            if (res == -1)// إظهار رسالة الترقية
+                                Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);
 
-                            Clear();
-                            await RefreshItemsList();
-                            await Search();
+                            else if (res == 0) // an error occure
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            else
+                            {
+                                item.itemId = res;
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
+                                if (openFileDialog.FileName != "")
+                                    await item.uploadImage(openFileDialog.FileName, Md5Encription.MD5Hash("Inc-m" + item.itemId.ToString()), item.itemId);
 
+                                Clear();
+                                await RefreshItemsList();
+                                await Search();
+                                await FillCombo.RefreshItemUnit();
+                            }
                         }
-
-                        */
                     }
                     HelpClass.EndAwait(grid_main);
                 }
@@ -393,8 +393,78 @@ namespace Restaurant.View.catalog.foods
                 await Search();
             }
         }
+        private bool validateValues()
+        {
+            bool valid = true;
+            char[] barcodeData;
+            char checkDigit;
+            if (tb_barcode.Text.Length == 12)// generate checksum didit
+            {
+                barcodeData = tb_barcode.Text.ToCharArray();
+                checkDigit = Mod10CheckDigit(barcodeData);
+                tb_barcode.Text = checkDigit + tb_barcode.Text;
+            }
+            else if (tb_barcode.Text.Length == 13)
+            {
+                valid = isBarcodeCorrect(tb_barcode.Text);
+            }           
+            return valid;
+        }
         #endregion
         #region events
+        private async void HandleKeyPress(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
+                if (elapsed.TotalMilliseconds > 150)
+                {
+                    _BarcodeStr = "";
+                }
+
+                string digit = "";
+                // record keystroke & timestamp 
+                if (e.Key >= Key.D0 && e.Key <= Key.D9)
+                {
+                    //digit pressed!
+                    digit = e.Key.ToString().Substring(1);
+                    // = "1" when D1 is pressed
+                }
+                else if (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
+                {
+                    digit = e.Key.ToString().Substring(6); // = "1" when NumPad1 is pressed
+
+                }
+                _BarcodeStr += digit;
+                _lastKeystroke = DateTime.Now;
+
+                // process barcode 
+                if (e.Key.ToString() == "Return" && _BarcodeStr != "")
+                {
+                    // get item matches barcode
+                    if (FillCombo.itemUnitList != null)
+                    {
+                        var ob = FillCombo.itemUnitList.ToList().Find(c => c.barcode == _BarcodeStr && c.categoryId == categoryId);
+                        if (ob != null)
+                        {
+                            int itemId = (int)ob.itemId;
+                            ChangeItemIdEvent(itemId);
+                        }
+                        else
+                        {
+                            Clear();
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorItemNotFoundToolTip"), animation: ToasterAnimation.FadeIn);
+                        }
+                    }
+                    _BarcodeStr = "";
+                }
+            }
+            catch (Exception ex)
+            {
+                _BarcodeStr = "";
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -547,7 +617,8 @@ namespace Restaurant.View.catalog.foods
         {
             item = new Item();
             item.price = 0;
-            this.DataContext = item;
+            generateBarcode();
+            this.DataContext = item;            
             #region image
             HelpClass.clearImg(btn_image);
             #endregion
@@ -932,7 +1003,8 @@ namespace Restaurant.View.catalog.foods
         async Task<IEnumerable<Item>> RefreshItemsList()
         {
             items = await item.GetSalesItems();
-            items = items.Where(x => x.categoryId == categoryId).ToList();
+            if(items != null)
+                items = items.Where(x => x.categoryId == categoryId).ToList();
             return items;
         }
         void RefrishItemsCard(IEnumerable<Item> _items)
@@ -948,6 +1020,7 @@ namespace Restaurant.View.catalog.foods
         {
             item = items.Where(x => x.itemId == itemId).FirstOrDefault();
             this.DataContext = item;
+            drawBarcode(item.barcode);
         }
         #endregion
         #region Search Y
@@ -1192,52 +1265,63 @@ namespace Restaurant.View.catalog.foods
         #region barcode
         List<ItemUnit> barcodesList;
         static private int _InternalCounter = 0;
-        private async Task<Boolean> checkBarcodeValidity(string barcode)
+        private Boolean checkBarcodeValidity(string barcode)
         {
-            await fillBarcodeList();
-            //if (barcodesList != null)
-            //{
-            //    var exist = barcodesList.Where(x => x.barcode == barcode && x.itemUnitId != itemUnit.itemUnitId).FirstOrDefault();
-            //    if (exist != null)
-            //        return false;
-            //    else
-            //        return true;
-            //}
+            if (FillCombo.itemUnitList != null)
+            {
+                var exist = FillCombo.itemUnitList.Where(x => x.barcode == barcode && x.itemId != item.itemId).FirstOrDefault();
+                if (exist != null)
+                    return false;
+                else
+                    return true;
+            }
             return true;
-        }
-        async Task fillBarcodeList()
-        {
-            //barcodesList = await itemUnit.getAllBarcodes();
         }
         private void Tb_barcode_KeyDown(object sender, KeyEventArgs e)
         {
             try
             {
-                if (e.Key == Key.Return && tb_barcode.Text.Length == 13)
+                TextBox tb = (TextBox)sender;
+                string barCode = tb_barcode.Text;
+                if (e.Key == Key.Return && barCode.Length == 13)
                 {
-                    char checkDigit;
-                    char[] barcodeData;
-                    TextBox tb = (TextBox)sender;
-                    string barCode = tb_barcode.Text;
-                    char cd = barCode[0];
-                    barCode = barCode.Substring(1);
-                    barcodeData = barCode.ToCharArray();
-                    checkDigit = Mod10CheckDigit(barcodeData);
-
-                    if (checkDigit != cd)
+                    if (isBarcodeCorrect(barCode) == false)
                     {
-                        tb_barcode.Text = "";
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorBarcodeToolTip"), animation: ToasterAnimation.FadeIn);
+                        item.barcode = "";
+                        this.DataContext = item;
+
                     }
                     else
                         drawBarcode(barCode);
                 }
+                else if (barCode.Length == 13 || barCode.Length == 12)
+                    drawBarcode(barCode);
+                else
+                    drawBarcode("");
             }
             catch (Exception ex)
             {
 
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+        private bool isBarcodeCorrect(string barCode)
+        {
+            char checkDigit;
+            char[] barcodeData;
+
+            char cd = barCode[0];
+            barCode = barCode.Substring(1);
+            barcodeData = barCode.ToCharArray();
+            checkDigit = Mod10CheckDigit(barcodeData);
+
+            if (checkDigit != cd)
+            {
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorBarcodeToolTip"), animation: ToasterAnimation.FadeIn);
+                return false;
+            }
+            else
+                return true;
         }
         public static char Mod10CheckDigit(char[] data)
         {
@@ -1257,37 +1341,54 @@ namespace Restaurant.View.catalog.foods
         }
         private void drawBarcode(string barcodeStr)
         {
-
-            // configur check sum metrics
-            BarcodeSymbology s = BarcodeSymbology.CodeEan13;
-
-            BarcodeDraw drawObject = BarcodeDrawFactory.GetSymbology(s);
-
-            BarcodeMetrics barcodeMetrics = drawObject.GetDefaultMetrics(60);
-            barcodeMetrics.Scale = 2;
-
-            if (barcodeStr != "")
+            try
             {
-                if (barcodeStr.Length == 13)
-                    barcodeStr = barcodeStr.Substring(1);//remove check sum from barcode string
-                var barcodeImage = drawObject.Draw(barcodeStr, barcodeMetrics);
+                // configur check sum metrics
+                BarcodeSymbology s = BarcodeSymbology.CodeEan13;
 
-                using (MemoryStream ms = new MemoryStream())
+                BarcodeDraw drawObject = BarcodeDrawFactory.GetSymbology(s);
+
+                BarcodeMetrics barcodeMetrics = drawObject.GetDefaultMetrics(60);
+                barcodeMetrics.Scale = 2;
+
+                if (barcodeStr != "")
                 {
-                    barcodeImage.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                    byte[] imageBytes = ms.ToArray();
+                    if (barcodeStr.Length == 13)
+                        barcodeStr = barcodeStr.Substring(1);//remove check sum from barcode string
+                    var barcodeImage = drawObject.Draw(barcodeStr, barcodeMetrics);
 
-                    img_barcode.Source = ImageProcess.ByteToImage(imageBytes);
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        barcodeImage.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                        byte[] imageBytes = ms.ToArray();
+
+                        img_barcode.Source = ImageProcess.ByteToImage(imageBytes);
+                    }
                 }
+                else
+                    img_barcode.Source = null;
             }
-            else
-                img_barcode.Source = null;
+            catch { img_barcode.Source = null; }
 
         }
+        private async void generateBarcode()
+        {
+            string barcodeString = "";
+            barcodeString = generateRandomBarcode();
+            if (FillCombo.itemUnitList != null)
+            {
+                if (!checkBarcodeValidity(barcodeString))
+                    barcodeString = generateRandomBarcode();
+            }
+            item.barcode = barcodeString;
+            this.DataContext = item;
+            //tb_barcode.Text = barcodeString;
+            HelpClass.validateEmpty("trErrorEmptyBarcodeToolTip", p_error_barcode);
+            drawBarcode(tb_barcode.Text);
+        }
+     
         static public string generateRandomBarcode()
         {
-
-
             var now = DateTime.Now;
 
             var days = (int)(now - new DateTime(2000, 1, 1)).TotalDays;

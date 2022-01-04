@@ -92,7 +92,6 @@ namespace Restaurant.View.catalog.rawMaterials
         #region for barcode
         DateTime _lastKeystroke = new DateTime(0);
         static private string _BarcodeStr = "";
-        static private object _Sender;
         #endregion
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -507,7 +506,7 @@ namespace Restaurant.View.catalog.rawMaterials
                     // get item matches barcode
                     if (FillCombo.itemUnitList != null)
                     {
-                         var ob = FillCombo.itemUnitList.ToList().Find(c => c.barcode == _BarcodeStr);
+                         var ob = FillCombo.itemUnitList.ToList().Find(c => c.barcode == _BarcodeStr && FillCombo.purchaseTypes.Contains(c.type));
                         if (ob != null)
                         {
                             int itemId = (int) ob.itemId;
