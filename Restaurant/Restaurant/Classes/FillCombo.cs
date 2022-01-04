@@ -375,7 +375,17 @@ namespace Restaurant.Classes
         }
         #endregion
 
+        #region items
         static public Item item = new Item();
+        static public List<Item> purchaseItems;
+        static public List<Item> salesItems;
+        static public async Task<IEnumerable<Item>> RefrishPurchaseItems()
+        {
+            purchaseItems = await item.GetPurchaseItems();
+            return purchaseItems;
+        }
+        #endregion
+
         static public ItemLocation itemLocation = new ItemLocation();
         static public Invoice invoice = new Invoice();
         static public ShippingCompanies ShipCompany = new ShippingCompanies();

@@ -121,6 +121,20 @@ namespace Restaurant.Classes
             }
             return items;
         }
+        public async Task<List<Item>> GetPurchaseItems()
+        {
+            List<Item> items = new List<Item>();
+            IEnumerable<Claim> claims = await APIResult.getList("items/GetPurchaseItems");
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<Item>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
         public async Task<List<Item>> GetSalesItems()
         {
             List<Item> items = new List<Item>();

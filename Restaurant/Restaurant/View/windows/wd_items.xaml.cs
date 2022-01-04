@@ -15,7 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MaterialDesignThemes.Wpf;
 using netoaster;
-using POS.Classes;
+using Restaurant;
+using Restaurant.Classes;
 
 namespace POS.View.windows
 {
@@ -32,7 +33,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         /// <summary>
@@ -45,12 +46,12 @@ namespace POS.View.windows
         Item itemModel = new Item();
         Category categoryModel = new Category();
         Unit unitModel = new Unit();
-        Property propertyModel = new Property();
-        PropertiesItems propItemsModel = new PropertiesItems();
-        ItemsProp itemsPropModel = new ItemsProp();
-        Serial serialModel = new Serial();
+        //Property propertyModel = new Property();
+        //PropertiesItems propItemsModel = new PropertiesItems();
+        //ItemsProp itemsPropModel = new ItemsProp();
+        //Serial serialModel = new Serial();
         ItemUnit itemUnitModel = new ItemUnit();
-        Service serviceModel = new Service();
+        //Service serviceModel = new Service();
         IEnumerable<Category> categoriesQuery;
         IEnumerable<Item> items;
         IEnumerable<Item> itemsQuery;
@@ -135,12 +136,12 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_ucItems);
+                    HelpClass.StartAwait(grid_ucItems);
                 grid_ucItems.Opacity = 1;
 
                 // for pagination onTop Always
                 btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
-                catigoriesAndItemsView.wdItems = this;
+               // catigoriesAndItemsView.wdItems = this;
 
                 #region translate
                 if (MainWindow.lang.Equals("en"))
@@ -197,13 +198,13 @@ namespace POS.View.windows
                 Txb_searchitems_TextChanged(null, null);
                
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_ucItems);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_ucItems);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void translate()
@@ -230,17 +231,17 @@ namespace POS.View.windows
         /// <returns></returns>
         async Task<IEnumerable<Category>> RefrishCategories()
         {
-            categories = await categoryModel.GetAllCategories(MainWindow.userID.Value);
+            categories = await categoryModel.GetAllCategories(MainWindow.userLogin.userId);
             return categories;
         }
         async Task RefrishCategoriesCard()
         {
-            if (categories is null)
-                await RefrishCategories();
-            categoriesQuery = categories.Where(x => x.isActive == tglCategoryState && x.parentId == categoryParentId);
-            catigoriesAndItemsView.gridCatigories = grid_categoryCards;
-            generateCoulmnCategoriesGrid(categoriesQuery.Count());
-            catigoriesAndItemsView.FN_refrishCatalogCard(categoriesQuery.ToList(), -1);
+            //if (categories is null)
+            //    await RefrishCategories();
+            //categoriesQuery = categories.Where(x => x.isActive == tglCategoryState && x.parentId == categoryParentId);
+            //catigoriesAndItemsView.gridCatigories = grid_categoryCards;
+            //generateCoulmnCategoriesGrid(categoriesQuery.Count());
+            //catigoriesAndItemsView.FN_refrishCatalogCard(categoriesQuery.ToList(), -1);
         }
         void generateCoulmnCategoriesGrid(int column)
         {
@@ -264,34 +265,40 @@ namespace POS.View.windows
         {
             short defaultSale = 0;
             short defaultPurchase = 0;
-            int branchId = MainWindow.branchID.Value;
+            int branchId = MainWindow.branchLogin.branchId;
             selectedItems = new List<int>();
             if (CardType.Equals("sales"))
             {
                 defaultSale = 1;
                 defaultPurchase = 0;
+                items = await itemModel.GetSaleOrPurItems(category.categoryId, defaultSale, defaultPurchase, branchId);
+                FillCombo.salesItems = items.ToList();
             }
             else if (CardType.Equals("purchase"))
             {
                 defaultPurchase = 1;
                 defaultSale = 0;
+                items = FillCombo.purchaseItems;
             }
             else if (CardType.Equals("order"))
             {
                 defaultPurchase = 0;
                 defaultSale = 0;
+                items = await itemModel.GetSaleOrPurItems(category.categoryId, defaultSale, defaultPurchase, branchId);
+                FillCombo.salesItems = items.ToList();
             }
             else if (CardType.Equals("movement"))
             {
                 defaultPurchase = -1;
                 defaultSale = -1;
+                items = await itemModel.GetSaleOrPurItems(category.categoryId, defaultSale, defaultPurchase, branchId);
+                FillCombo.salesItems = items.ToList();
             }
-            items = await itemModel.GetSaleOrPurItems(category.categoryId,defaultSale,defaultPurchase,branchId);
-            MainWindow.InvoiceGlobalItemsList = items.ToList();
-            if (defaultSale == 1)
-                MainWindow.InvoiceGlobalSaleUnitsList = await itemUnitModel.GetForSale();
-            else
-                MainWindow.InvoiceGlobalItemUnitsList = await itemUnitModel.Getall();
+           
+            //if (defaultSale == 1)
+            //    MainWindow.InvoiceGlobalSaleUnitsList = await itemUnitModel.GetForSale();
+            //else
+            //    MainWindow.InvoiceGlobalItemUnitsList = await itemUnitModel.Getall();
             return items;
         }
 
@@ -305,7 +312,7 @@ namespace POS.View.windows
         {
             grid_itemContainerCard.Children.Clear();
             catigoriesAndItemsView.gridCatigorieItems = grid_itemContainerCard;
-            catigoriesAndItemsView.FN_refrishCatalogItem(_items.ToList(), "en", CardType);
+            //catigoriesAndItemsView.FN_refrishCatalogItem(_items.ToList(), "en", CardType);
         }
         #endregion
         #region Get Id By Click  Y
@@ -314,7 +321,7 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_ucItems);
+                    HelpClass.StartAwait(grid_ucItems);
 
                 if (dg_items.SelectedIndex != -1)
             {
@@ -336,13 +343,13 @@ namespace POS.View.windows
 
             }
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_ucItems);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_ucItems);
+                HelpClass.ExceptionMessage(ex, this);
             }
 
         }
@@ -439,7 +446,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -456,7 +463,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         #endregion
@@ -473,7 +480,7 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_ucItems);
+                    HelpClass.StartAwait(grid_ucItems);
 
                 if (items is null)
                 await RefrishItems();
@@ -493,13 +500,13 @@ namespace POS.View.windows
                 RefrishItemsDatagrid(itemsQuery);
 
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_ucItems);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_ucItems);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -514,7 +521,7 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_ucItems);
+                    HelpClass.StartAwait(grid_ucItems);
 
                 itemsQuery = items.Where(x => x.isActive == tglItemState);
 
@@ -540,13 +547,13 @@ namespace POS.View.windows
                 #endregion
 
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_ucItems);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_ucItems);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -556,7 +563,7 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_ucItems);
+                    HelpClass.StartAwait(grid_ucItems);
 
                 pageIndex = 1;
                 #region
@@ -568,13 +575,13 @@ namespace POS.View.windows
                 #endregion
 
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_ucItems);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_ucItems);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void Btn_prevPage_Click(object sender, RoutedEventArgs e)
@@ -582,7 +589,7 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_ucItems);
+                    HelpClass.StartAwait(grid_ucItems);
 
                 pageIndex = int.Parse(btn_prevPage.Content.ToString());
                 #region
@@ -594,13 +601,13 @@ namespace POS.View.windows
                 #endregion
 
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_ucItems);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_ucItems);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void Btn_activePage_Click(object sender, RoutedEventArgs e)
@@ -608,7 +615,7 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_ucItems);
+                    HelpClass.StartAwait(grid_ucItems);
 
                 pageIndex = int.Parse(btn_activePage.Content.ToString());
                 #region
@@ -620,13 +627,13 @@ namespace POS.View.windows
                 #endregion
 
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_ucItems);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_ucItems);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void Btn_nextPage_Click(object sender, RoutedEventArgs e)
@@ -634,7 +641,7 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_ucItems);
+                    HelpClass.StartAwait(grid_ucItems);
 
                 pageIndex = int.Parse(btn_nextPage.Content.ToString());
                 #region
@@ -646,13 +653,13 @@ namespace POS.View.windows
                 #endregion
 
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_ucItems);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_ucItems);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void Btn_lastPage_Click(object sender, RoutedEventArgs e)
@@ -660,7 +667,7 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_ucItems);
+                    HelpClass.StartAwait(grid_ucItems);
 
                 itemsQuery = items.Where(x => x.isActive == tglCategoryState);
                 pageIndex = ((itemsQuery.Count() - 1) / 9) + 1;
@@ -673,13 +680,13 @@ namespace POS.View.windows
                 #endregion
 
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_ucItems);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_ucItems);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         #endregion
@@ -722,7 +729,7 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_ucItems);
+                    HelpClass.StartAwait(grid_ucItems);
                 Button b = (Button)sender;
 
                 if (!string.IsNullOrEmpty(b.Tag.ToString()))
@@ -739,13 +746,13 @@ namespace POS.View.windows
                 await RefrishItems();
                 Txb_searchitems_TextChanged(null, null);
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_ucItems);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_ucItems);
+                HelpClass.ExceptionMessage(ex, this);
             }
 
         }
@@ -753,55 +760,55 @@ namespace POS.View.windows
         {
             try
             {
-                if (sender != null)
-                    SectionData.StartAwait(grid_ucItems);
-                categoryParentId = 0;
-                await RefrishCategoriesCard();
-                grid_categoryControlPath.Children.Clear();
-                //category.categoryId = 0;
-                //await RefrishItems();
-                #region
-                short defaultSale = 0;
-                short defaultPurchase = 0;
-                int branchId = MainWindow.branchID.Value;
-                selectedItems = new List<int>();
-                if (CardType.Equals("sales"))
-                {
-                    defaultSale = 1;
-                    defaultPurchase = 0;
-                }
-                else if (CardType.Equals("purchase"))
-                {
-                    defaultPurchase = 1;
-                    defaultSale = 0;
-                }
-                else if (CardType.Equals("order"))
-                {
-                    defaultPurchase = 0;
-                    defaultSale = 0;
-                }
-                else if (CardType.Equals("movement"))
-                {
-                    defaultPurchase = -1;
-                    defaultSale = -1;
-                }
-                items = await itemModel.GetSaleOrPurItems(0, defaultSale, defaultPurchase, branchId);
-                MainWindow.InvoiceGlobalItemsList = items.ToList();
-                if (defaultSale == 1)
-                    MainWindow.InvoiceGlobalSaleUnitsList = await itemUnitModel.GetForSale();
-                else
-                    MainWindow.InvoiceGlobalItemUnitsList = await itemUnitModel.Getall();
-                #endregion
-                Txb_searchitems_TextChanged(null, null);
+                //if (sender != null)
+                //    HelpClass.StartAwait(grid_ucItems);
+                //categoryParentId = 0;
+                //await RefrishCategoriesCard();
+                //grid_categoryControlPath.Children.Clear();
+                ////category.categoryId = 0;
+                ////await RefrishItems();
+                //#region
+                //short defaultSale = 0;
+                //short defaultPurchase = 0;
+                //int branchId = MainWindow.branchLogin.branchId;
+                //selectedItems = new List<int>();
+                //if (CardType.Equals("sales"))
+                //{
+                //    defaultSale = 1;
+                //    defaultPurchase = 0;
+                //}
+                //else if (CardType.Equals("purchase"))
+                //{
+                //    defaultPurchase = 1;
+                //    defaultSale = 0;
+                //}
+                //else if (CardType.Equals("order"))
+                //{
+                //    defaultPurchase = 0;
+                //    defaultSale = 0;
+                //}
+                //else if (CardType.Equals("movement"))
+                //{
+                //    defaultPurchase = -1;
+                //    defaultSale = -1;
+                //}
+                //items = await itemModel.GetSaleOrPurItems(0, defaultSale, defaultPurchase, branchId);
+                //MainWindow.InvoiceGlobalItemsList = items.ToList();
+                //if (defaultSale == 1)
+                //    MainWindow.InvoiceGlobalSaleUnitsList = await itemUnitModel.GetForSale();
+                //else
+                //    MainWindow.InvoiceGlobalItemUnitsList = await itemUnitModel.Getall();
+                //#endregion
+                //Txb_searchitems_TextChanged(null, null);
 
-                if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
+                //if (sender != null)
+                //    HelpClass.EndAwait(grid_ucItems);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_ucItems);
+                HelpClass.ExceptionMessage(ex, this);
             }
 
         }
@@ -815,18 +822,18 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_ucItems);
+                    HelpClass.StartAwait(grid_ucItems);
 
                 await RefrishItems();
 
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_ucItems);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucItems);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_ucItems);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -856,7 +863,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 

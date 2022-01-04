@@ -197,6 +197,7 @@ namespace Restaurant.View.catalog.foods
                             ItemUnit saleItemUnit = new ItemUnit();
                             saleItemUnit.unitId = saleItemUnit.subUnitId = FillCombo.saleUnit.unitId;
                             saleItemUnit.itemId = item.itemId;
+                            saleItemUnit.isActive = 1;
                             decimal price = 0;
                             try
                             {
