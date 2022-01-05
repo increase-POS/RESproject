@@ -15,10 +15,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MaterialDesignThemes.Wpf;
 using netoaster;
-using Restaurant;
 using Restaurant.Classes;
 
-namespace POS.View.windows
+namespace Restaurant.View.windows
 {
     /// <summary>
     /// Interaction logic for wd_items.xaml

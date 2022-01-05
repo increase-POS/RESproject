@@ -1,17 +1,16 @@
-﻿<Window x:Class="POS.View.windows.wd_invoice"
+﻿<Window x:Class="Restaurant.View.windows.wd_invoice"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:POS.View.windows"
+        xmlns:local="clr-namespace:Restaurant.View.windows"
         mc:Ignorable="d" KeyDown="HandleKeyPress"
-        xmlns:converters="clr-namespace:POS.converters"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        WindowStyle="None" WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize" Margin="0" 
-        Height="500" Width="775"   Background="Transparent"
-        AllowsTransparency="True"
-        Loaded="Window_Loaded" MouseDown="Window_MouseDown">
+         WindowStyle="None" WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize" Margin="0"  
+        Title="wd_itemsList" Height="500" Width="775"  Background="Transparent" AllowsTransparency="True" 
+        Loaded="Window_Loaded"  
+        MouseDown="Window_MouseDown" >
     <Grid Grid.Column="1" Grid.Row="1"   x:Name="grid_ucInvoice" >
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -150,7 +149,7 @@
                             <DataGridTextColumn x:Name="col_user" Width="2*"  Header="User" Binding="{Binding Path=createrUserName}" Visibility="Collapsed"/>
                             <DataGridTextColumn x:Name="col_count" Width="1.5*"  Header="items count" Binding="{Binding Path=itemsCount}"/>
                             <DataGridTextColumn x:Name="col_total" Width="2*" Header="Total" Binding="{Binding Path =totalNet,Converter={StaticResource accuracyConverter }}"/>
-                            <DataGridTextColumn x:Name="col_type" Width="2*"  Header="" Binding="{Binding invType,Converter={StaticResource invoiceTypeConverter}}"/>
+                            <DataGridTextColumn x:Name="col_type" Width="2*"  Header="" Binding="{Binding invType}"/>
                             <!--<DataGridTextColumn x:Name="col_status" Width="2*"  Header="" Binding="{Binding status,Converter={StaticResource orderStatusConverter}}" Visibility="Collapsed"/>-->
                         </DataGrid.Columns>
                         <DataGrid.RowStyle>

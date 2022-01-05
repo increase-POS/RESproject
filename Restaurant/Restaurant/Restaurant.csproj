@@ -353,6 +353,9 @@
     <Compile Include="View\windows\wd_branchesList.xaml.cs">
       <DependentUpon>wd_branchesList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_invoice.xaml.cs">
+      <DependentUpon>wd_invoice.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_locationAddRange.xaml.cs">
       <DependentUpon>wd_locationAddRange.xaml</DependentUpon>
     </Compile>
@@ -364,6 +367,9 @@
     </Compile>
     <Compile Include="View\windows\wd_previewPdf.xaml.cs">
       <DependentUpon>wd_previewPdf.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_returnInvoice.xaml.cs">
+      <DependentUpon>wd_returnInvoice.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_tags.xaml.cs">
       <DependentUpon>wd_tags.xaml</DependentUpon>
@@ -602,6 +608,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\windows\wd_invoice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
     <Page Include="View\windows\wd_locationAddRange.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -615,6 +625,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_previewPdf.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_returnInvoice.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

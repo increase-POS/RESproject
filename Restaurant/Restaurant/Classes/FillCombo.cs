@@ -388,6 +388,7 @@ namespace Restaurant.Classes
 
         static public ItemLocation itemLocation = new ItemLocation();
         static public Invoice invoice = new Invoice();
+        static public List<Invoice> invoices;
         static public ShippingCompanies ShipCompany = new ShippingCompanies();
         static public User user = new User();
     }

@@ -1,5 +1,5 @@
 ﻿using netoaster;
-using POS.Classes;
+using Restaurant.Classes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,7 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace POS.View.windows
+namespace Restaurant.View.windows
 {
     /// <summary>
     /// Interaction logic for wd_invoice.xaml
@@ -32,7 +32,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         /// <summary>
@@ -47,6 +47,9 @@ namespace POS.View.windows
         /// <summary>
         /// for filtering invoice type
         /// </summary>
+        /// 
+       public string icon { get; set; }
+       public string page { get; set; }
         public string invoiceType { get; set; }
         public string invoiceStatus { get; set; }
         public string title { get; set; }
@@ -63,7 +66,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
 
         }
@@ -78,7 +81,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -92,7 +95,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private async void Window_Loaded(object sender, RoutedEventArgs e)
@@ -100,17 +103,17 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_ucInvoice);
+                    HelpClass.StartAwait(grid_ucInvoice);
 
                 #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_ucInvoice.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_ucInvoice.FlowDirection = FlowDirection.RightToLeft;
                 }
                 txt_Invoices.Text = title;
@@ -164,13 +167,13 @@ namespace POS.View.windows
                 Txb_search_TextChanged(null, null);
 
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucInvoice);
+                    HelpClass.EndAwait(grid_ucInvoice);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_ucInvoice);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_ucInvoice);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void translat()
@@ -192,6 +195,13 @@ namespace POS.View.windows
         }
         private async Task refreshInvoices()
         {
+            if (page == "purchases")
+            {
+                if (icon == "invoices" )
+                    FillCombo.invoices = await FillCombo.invoice.GetInvoicesByCreator(invoiceType, userId, duration);
+                else if (icon == "orders")
+                    FillCombo.invoices = await FillCombo.invoice.getUnHandeldOrders(invoiceType, branchCreatorId, branchId, duration, userId);
+            }
             if (condition == "orders")
             {
                 invoices = await invoice.getUnHandeldOrders(invoiceType,branchCreatorId, branchId,duration,userId);
@@ -228,7 +238,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void Dg_Invoice_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -239,7 +249,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
@@ -259,48 +269,48 @@ namespace POS.View.windows
         }
         private async void deleteRowFromInvoiceItems(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                if (sender != null)
-                    SectionData.StartAwait(grid_ucInvoice);
-                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
-                    if (vis is DataGridRow)
-                    {
-                        #region
-                        Window.GetWindow(this).Opacity = 0.2;
-                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                        w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
-                        w.ShowDialog();
-                        Window.GetWindow(this).Opacity = 1;
-                        #endregion
-                        if (w.isOk)
-                        {
-                            Invoice row = (Invoice)dg_Invoice.SelectedItems[0];
-                            int res = 0;
-                            if (row.invType == "or")
-                                res = await invoice.deleteOrder(row.invoiceId);
-                            else
-                                res = await invoice.deleteInvoice(row.invoiceId);
-                            if (res > 0)
-                            {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
-                                await refreshInvoices();
-                                Txb_search_TextChanged(null,null);
-                            }
-                            else
-                                Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                        }
-                    }
+            //try
+            //{
+            //    if (sender != null)
+            //        HelpClass.StartAwait(grid_ucInvoice);
+            //    for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+            //        if (vis is DataGridRow)
+            //        {
+            //            #region
+            //            Window.GetWindow(this).Opacity = 0.2;
+            //            wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+            //            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+            //            w.ShowDialog();
+            //            Window.GetWindow(this).Opacity = 1;
+            //            #endregion
+            //            if (w.isOk)
+            //            {
+            //                Invoice row = (Invoice)dg_Invoice.SelectedItems[0];
+            //                int res = 0;
+            //                if (row.invType == "or")
+            //                    res = await invoice.deleteOrder(row.invoiceId);
+            //                else
+            //                    res = await invoice.deleteInvoice(row.invoiceId);
+            //                if (res > 0)
+            //                {
+            //                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+            //                    await refreshInvoices();
+            //                    Txb_search_TextChanged(null,null);
+            //                }
+            //                else
+            //                    Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+            //            }
+            //        }
 
-                if (sender != null)
-                    SectionData.EndAwait(grid_ucInvoice);
-            }
-            catch (Exception ex)
-            {
-                if (sender != null)
-                    SectionData.EndAwait(grid_ucInvoice);
-                SectionData.ExceptionMessage(ex, this);
-            }
+            //    if (sender != null)
+            //        HelpClass.EndAwait(grid_ucInvoice);
+            //}
+            //catch (Exception ex)
+            //{
+            //    if (sender != null)
+            //        HelpClass.EndAwait(grid_ucInvoice);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
     }
 }

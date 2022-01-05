@@ -72,7 +72,6 @@ namespace Restaurant.View.purchase
 
         Item item = new Item();
         IEnumerable<Item> items;
-         List<ItemUnit> barcodesList;
         List<ItemUnit> itemUnits;
 
          public Invoice invoice = new Invoice();
@@ -167,8 +166,7 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                await RefrishItems();
-
+                await FillCombo.RefrishPurchaseItems();
             }
             catch (Exception)
             { }
@@ -181,26 +179,7 @@ namespace Restaurant.View.purchase
                 }
             }
         }
-         async void loading_fillBarcodeList()
-        {
-            try
-            {
-                await fillBarcodeList();
-
-            }
-            catch (Exception)
-            { }
-            foreach (var item in loadingList)
-            {
-                if (item.key.Equals("loading_fillBarcodeList"))
-                {
-                    item.value = true;
-                    break;
-                }
-            }
-        }
-
-
+       
         #endregion
         public async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -227,10 +206,8 @@ namespace Restaurant.View.purchase
                 loadingList = new List<keyValueBool>();
                 bool isDone = true;
                 loadingList.Add(new keyValueBool { key = "loading_RefrishItems", value = false });
-                 loadingList.Add(new keyValueBool { key = "loading_fillBarcodeList", value = false });
 
                 loading_RefrishItems();
-                 loading_fillBarcodeList();
                 do
                 {
                     isDone = true;
@@ -249,8 +226,6 @@ namespace Restaurant.View.purchase
                 }
                 while (!isDone);
                 #endregion
-
-
 
                 refreshNotification();
                 refreshLackNotification();
@@ -353,17 +328,7 @@ namespace Restaurant.View.purchase
                 if (invoice != null && (invoice.invType == "pod" || invoice.invType == "pos") && !isFromReport)
                     draftCount--;
 
-                if (draftCount != _DraftCount)
-                {
-                    if (draftCount > 9)
-                    {
-                        md_draft.Badge = "+9";
-                    }
-                    else if (draftCount == 0) md_draft.Badge = "";
-                    else
-                        md_draft.Badge = draftCount.ToString();
-                }
-                _DraftCount = draftCount;
+                HelpClass.refreshNotification(md_draft, ref _DraftCount, draftCount);               
             }
             catch { }
         }
@@ -377,17 +342,7 @@ namespace Restaurant.View.purchase
                 if (invoice != null && invoice.invType == "po" && !isFromReport)
                     orderCount--;
 
-                if (orderCount != _OrdersCount)
-                {
-                    if (orderCount > 9)
-                    {
-                        md_order.Badge = "+9";
-                    }
-                    else if (orderCount == 0) md_order.Badge = "";
-                    else
-                        md_order.Badge = orderCount.ToString();
-                }
-                _OrdersCount = orderCount;
+                HelpClass.refreshNotification(md_order, ref _OrdersCount, orderCount);               
             }
             catch { }
         }
@@ -410,15 +365,7 @@ namespace Restaurant.View.purchase
                 DocImage doc = new DocImage();
                 int docCount = await doc.GetDocCount("Invoices", invoiceId);
 
-                if (docCount != _DocCount)
-                {
-                    if (docCount > 9)
-                        md_docImage.Badge = "+9";
-                    else if (docCount == 0) md_docImage.Badge = "";
-                    else
-                        md_docImage.Badge = docCount.ToString();
-                }
-                _DocCount = docCount;
+                HelpClass.refreshNotification(md_docImage, ref _DocCount, docCount);
             }
             catch { }
         }
@@ -531,10 +478,7 @@ namespace Restaurant.View.purchase
         {
             bool valid = true;
 
-            //if (!HelpClass.validateEmptyComboBox(cb_vendor, p_errorVendor, tt_errorVendor, "trErrorEmptyVendorToolTip"))
             requiredControlList = new List<string> { "vendor" };
-            //if (!HelpClass.validate(requiredControlList, this))
-            //    exp_vendor.IsExpanded = true;
             HelpClass.validate(requiredControlList, this);
             if (billDetails.Count == 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trAddInvoiceWithoutItems"), animation: ToasterAnimation.FadeIn);
@@ -668,7 +612,6 @@ namespace Restaurant.View.purchase
         {
             try
             {
-
                 HelpClass.StartAwait(grid_main);
                 bool valid = validateItemUnits();
                 if (billDetails.Count > 0 && valid)
@@ -864,8 +807,6 @@ namespace Restaurant.View.purchase
                     }
                 }
 
-
-
                 TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
                 if (elapsed.TotalMilliseconds > 50)
                 {
@@ -898,16 +839,10 @@ namespace Restaurant.View.purchase
                     await dealWithBarcode(_BarcodeStr);
                     if (_Sender != null)
                     {
-                        DatePicker dt = _Sender as DatePicker;
-                        TextBox tb = _Sender as TextBox;
-                        if (dt != null)
+                       TextBox tb = _Sender as TextBox;
+                       if (tb != null)
                         {
-                            if (dt.Name == "dp_desrvedDate" || dt.Name == "dp_invoiceDate")
-                                _BarcodeStr = _BarcodeStr.Substring(1);
-                        }
-                        else if (tb != null)
-                        {
-                            if (tb.Name == "tb_invoiceNumber" || tb.Name == "tb_notes" || tb.Name == "tb_discount" || tb.Name == "tb_barcode")// remove barcode from text box
+                            if ( tb.Name == "tb_notes" || tb.Name == "tb_barcode")// remove barcode from text box
                             {
                                 string tbString = tb.Text;
                                 string newStr = "";
@@ -925,8 +860,7 @@ namespace Restaurant.View.purchase
                     e.Handled = true;
                 }
                 _Sender = null;
-
-
+                tb_barcode.Clear();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -1005,9 +939,9 @@ namespace Restaurant.View.purchase
 
                 default: // if barcode for item
                          // get item matches barcode
-                    if (barcodesList != null)
+                    if (FillCombo.itemUnitList != null)
                     {
-                        ItemUnit unit1 = barcodesList.ToList().Find(c => c.barcode == tb_barcode.Text.Trim());
+                        ItemUnit unit1 = FillCombo.itemUnitList.ToList().Find(c => c.barcode == barcode.Trim() && FillCombo.purchaseTypes.Contains(c.type));
 
                         // get item matches the barcode
                         if (unit1 != null)
@@ -1020,23 +954,21 @@ namespace Restaurant.View.purchase
                                 if (index == -1)//item doesn't exist in bill
                                 {
                                     // get item units
-                                    itemUnits = await FillCombo.itemUnit.GetItemUnits(itemId);
+                                    itemUnits = FillCombo.itemUnitList.ToList().Where(c => c.itemId == itemId).ToList();
 
                                     //get item from list
-                                    item = items.ToList().Find(i => i.itemId == itemId);
+                                    item = FillCombo.purchaseItems.ToList().Find(i => i.itemId == itemId);
 
                                     int count = 1;
-                                    decimal price = 0; //?????
-                                    decimal total = count * price;
+                                    decimal price = 0; 
+                                    decimal total = 0;
                                     addRowToBill(item.name, item.itemId, unit1.mainUnit, unit1.itemUnitId, count, price, total);
                                 }
                                 else // item exist prevoiusly in list
                                 {
                                     billDetails[index].Count++;
                                     billDetails[index].Total = billDetails[index].Count * billDetails[index].Price;
-
                                     _Sum += billDetails[index].Price;
-
                                 }
                                 refreshTotalValue();
                                 refrishBillDetails();
@@ -1056,7 +988,6 @@ namespace Restaurant.View.purchase
         {
             try
             {
-
                 HelpClass.StartAwait(grid_main);
                 if (e.Key == Key.Return)
                 {
@@ -1066,14 +997,11 @@ namespace Restaurant.View.purchase
                         barcode = tb_barcode.Text;
                         await dealWithBarcode(barcode);
                     }
-
                 }
-
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1591,17 +1519,6 @@ namespace Restaurant.View.purchase
             }
         }
         private void Tb_textBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            try
-            {
-                _Sender = sender;
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void Tb_barcode_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
@@ -2457,15 +2374,7 @@ namespace Restaurant.View.purchase
         }
 
         #endregion
-        #region refrish
-        async Task RefrishItems()
-        {
-            items = await FillCombo.item.Get();
-        }
-        async Task fillBarcodeList()
-        {
-            barcodesList = await FillCombo.itemUnit.getAllBarcodes();
-        }
+        #region refrish     
         #endregion
         private void moveControlToBarcode(object sender, KeyEventArgs e)
         {

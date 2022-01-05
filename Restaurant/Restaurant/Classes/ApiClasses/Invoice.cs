@@ -1192,7 +1192,45 @@ namespace Restaurant.Classes
             }
             return invoice;
         }
+        public async Task<Invoice> GetInvoicesByBarcodeAndUser(string invNum, int userId)
+        {
+            Invoice item = new Invoice();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("invNum", invNum);
+            parameters.Add("userId", userId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Invoices/GetInvoicesByBarcodeAndUser", parameters);
 
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    item = JsonConvert.DeserializeObject<Invoice>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                    break;
+                }
+            }
+            return item;
+        }
+        public async Task<Invoice> getInvoiceByNumAndUser(string invType, string invNum, int userId)
+        {
+            Invoice item = new Invoice();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("invNum", invNum);
+            parameters.Add("userId", userId.ToString());
+            parameters.Add("invType", invType);
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Invoices/getInvoiceByNumAndUser", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    item = JsonConvert.DeserializeObject<Invoice>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                    break;
+                }
+            }
+            return item;
+        }
 
         public async Task<int> updateprintstat(int id, int countstep, bool isOrginal, bool updateOrginalstate)
         {

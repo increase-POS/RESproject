@@ -1,5 +1,5 @@
 ﻿using netoaster;
-using POS.Classes;
+using Restaurant.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace POS.View.windows
+namespace Restaurant.View.windows
 {
     /// <summary>
     /// Interaction logic for wd_returnInvoice.xaml
@@ -40,7 +40,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -52,7 +52,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -61,18 +61,18 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                    HelpClass.StartAwait(grid_main);
 
                 string barcode = tb_invoiceNum.Text;
                 await dealWithBarcode(barcode);               
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private async void HandleKeyPress(object sender, KeyEventArgs e)
@@ -87,7 +87,7 @@ namespace POS.View.windows
                     _IsFocused = true;
                 }
                 if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                    HelpClass.StartAwait(grid_main);
 
                 TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
                 if (elapsed.TotalMilliseconds > 150)
@@ -127,13 +127,13 @@ namespace POS.View.windows
                 }
               
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         public Control CheckActiveControl()
@@ -159,15 +159,15 @@ namespace POS.View.windows
  
             if (prefix == "pi" && fromPurchase)
             {
-                invoice = await invoiceModel.GetInvoicesByBarcodeAndUser(barcode,MainWindow.userID.Value);                
+                invoice = await invoiceModel.GetInvoicesByBarcodeAndUser(barcode,MainWindow.userLogin.userId);                
             }
             else if(prefix == "si" && !fromPurchase)
             {
-                invoice = await invoiceModel.GetInvoicesByBarcodeAndUser(barcode, MainWindow.userID.Value);
+                invoice = await invoiceModel.GetInvoicesByBarcodeAndUser(barcode, MainWindow.userLogin.userId);
             }
             if (invoice == null) // check if agent invoice number
             {
-                invoice = await invoiceModel.getInvoiceByNumAndUser(invoiceType ,barcode, MainWindow.userID.Value);
+                invoice = await invoiceModel.getInvoiceByNumAndUser(invoiceType ,barcode, MainWindow.userLogin.userId);
             }
             if (invoice != null)
             {
@@ -186,7 +186,7 @@ namespace POS.View.windows
             {
                 tb_invoiceNum.Focus();
                 if (sender != null)
-                    SectionData.StartAwait(grid_main);            
+                    HelpClass.StartAwait(grid_main);            
                 #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
@@ -203,13 +203,13 @@ namespace POS.View.windows
                 controls = new List<Control>();
                 FindControl(this.grid_main, controls);
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         public void FindControl(DependencyObject root, List<Control> controls)
@@ -258,7 +258,7 @@ namespace POS.View.windows
                     _IsFocused = true;
                 }
                 if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                    HelpClass.StartAwait(grid_main);
 
                 TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
                 if (elapsed.TotalMilliseconds > 150)
@@ -298,20 +298,20 @@ namespace POS.View.windows
                 }
 
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
         private void space_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            SectionData.InputJustNumber(ref textBox);
+            HelpClass.InputJustNumber(ref textBox);
             e.Handled = e.Key == Key.Space;
         }
 
@@ -325,20 +325,20 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                    HelpClass.StartAwait(grid_main);
                 if (e.Key == Key.Return)
                 {
                     string barcode = tb_invoiceNum.Text;
                     await dealWithBarcode(barcode);
                 }
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
     }
