@@ -75,7 +75,6 @@ namespace Restaurant.View.purchase
         List<ItemUnit> itemUnits;
 
          public Invoice invoice = new Invoice();
-        List<Invoice> invoices;
         List<ItemTransfer> invoiceItems;
         List<ItemTransfer> mainInvoiceItems;
         public List<Control> controls;
@@ -179,7 +178,23 @@ namespace Restaurant.View.purchase
                 }
             }
         }
-       
+        async void loading_fillVendorCombo()
+        {
+            try
+            {
+                await FillCombo.FillComboVendors(cb_vendor);
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_fillVendorCombo"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
         #endregion
         public async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -206,8 +221,10 @@ namespace Restaurant.View.purchase
                 loadingList = new List<keyValueBool>();
                 bool isDone = true;
                 loadingList.Add(new keyValueBool { key = "loading_RefrishItems", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_fillVendorCombo", value = false });
 
                 loading_RefrishItems();
+                loading_fillVendorCombo();
                 do
                 {
                     isDone = true;
@@ -1177,8 +1194,8 @@ namespace Restaurant.View.purchase
         #region navigation buttons
         private void navigateBtnActivate()
         {
-            int index = invoices.IndexOf(invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
-            if (index == invoices.Count - 1)
+            int index = FillCombo.invoices.IndexOf(FillCombo.invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
+            if (index == FillCombo.invoices.Count - 1)
                 btn_next.IsEnabled = false;
             else
                 btn_next.IsEnabled = true;
@@ -1192,14 +1209,11 @@ namespace Restaurant.View.purchase
         {
             try
             {
-
                 HelpClass.StartAwait(grid_main);
 
-                int index = invoices.IndexOf(invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
+                int index = FillCombo.invoices.IndexOf(FillCombo.invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
                 index++;
                 await navigateInvoice(index);
-
-
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -1238,7 +1252,7 @@ namespace Restaurant.View.purchase
             try
             {
                 clearNavigation();
-                invoice = invoices[index];
+                invoice = FillCombo.invoices[index];
                 _invoiceId = invoice.invoiceId;
                 _InvoiceType = invoice.invType;
                 if (invoice.invType == "pod")
@@ -1254,10 +1268,9 @@ namespace Restaurant.View.purchase
         {
             try
             {
-
                 HelpClass.StartAwait(grid_main);
 
-                int index = invoices.IndexOf(invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
+                int index = FillCombo.invoices.IndexOf(FillCombo.invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
                 index--;
                 await navigateInvoice(index);
 
@@ -2063,7 +2076,6 @@ namespace Restaurant.View.purchase
         }
         private async void Btn_draft_Click(object sender, RoutedEventArgs e)
         {
-            /*
             try
             {
 
@@ -2077,9 +2089,10 @@ namespace Restaurant.View.purchase
                 string invoiceType = "pod, pos";
                 int duration = 2;
                 w.invoiceType = invoiceType;
+                w.page = "purchaseOrders";
+                w.icon = "drafts";
                 w.userId = MainWindow.userLogin.userId;
                 w.duration = duration; // view drafts which created during 2 last days 
-                w.fromOrder = true;
                 w.title = MainWindow.resourcemanager.GetString("trDrafts");
 
                 if (w.ShowDialog() == true)
@@ -2102,7 +2115,6 @@ namespace Restaurant.View.purchase
                         else
                             txt_payInvoice.Text = MainWindow.resourcemanager.GetString("trPurchaceOrderSaved");
 
-                        invoices = await invoice.GetInvoicesByCreator(invoiceType, MainWindow.userLogin.userId, duration);
                         navigateBtnActivate();
                     }
                 }
@@ -2116,53 +2128,8 @@ namespace Restaurant.View.purchase
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
-        private async void Btn_invoices_Click(object sender, RoutedEventArgs e)
-        {
-            /*
-            try
-            {
-
-                HelpClass.StartAwait(grid_main);
-                Window.GetWindow(this).Opacity = 0.2;
-                wd_invoice w = new wd_invoice();
-
-                // purchase invoices
-                w.invoiceType = "p , pw";
-                w.userId = MainWindow.userLogin.userId;
-                w.duration = 1; // view drafts which created during 1 last days 
-
-                w.title = MainWindow.resourcemanager.GetString("trPurchaseInvoices");
-
-                if (w.ShowDialog() == true)
-                {
-                    if (w.invoice != null)
-                    {
-                        invoice = w.invoice;
-
-                        this.DataContext = invoice;
-
-                        _InvoiceType = invoice.invType;
-                        // set title to bill
-                        txt_payInvoice.Text = MainWindow.resourcemanager.GetString("trPurchaseInvoice");
-                        brd_total.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFA926"));
-                        await fillInvoiceInputs(invoice);
-
-                    }
-                }
-                Window.GetWindow(this).Opacity = 1;
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-            */
-        }
+       
         private async void Btn_invoiceImage_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -2206,7 +2173,6 @@ namespace Restaurant.View.purchase
         }
         private async void Btn_purchaseOrder_Click(object sender, RoutedEventArgs e)
         {
-            /*
             try
             {
 
@@ -2217,11 +2183,11 @@ namespace Restaurant.View.purchase
                 string invoiceType = "po";
                 int duration = 1;
                 w.invoiceType = invoiceType;
+                w.icon = "invoices";
+                w.page = "purchaseOrders";
                 w.userId = MainWindow.userLogin.userId;
                 w.branchCreatorId = MainWindow.branchLogin.branchId;
-                w.duration = duration; // view purchase orders which created during  last one day 
-                w.fromOrder = true;
-                w.condition = "orders";
+                w.duration = duration; // view purchase orders which updated during  last one day 
                 w.title = MainWindow.resourcemanager.GetString("trOrders");
 
                 if (w.ShowDialog() == true)
@@ -2241,7 +2207,6 @@ namespace Restaurant.View.purchase
 
                         mainInvoiceItems = invoiceItems;
                         txt_payInvoice.Text = MainWindow.resourcemanager.GetString("trPurchaceOrder");
-                        invoices = await invoice.getUnHandeldOrders(invoiceType, MainWindow.branchLogin.branchId, 0, duration, MainWindow.userLogin.userId);
                         navigateBtnActivate();
                     }
                 }
@@ -2255,7 +2220,6 @@ namespace Restaurant.View.purchase
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {

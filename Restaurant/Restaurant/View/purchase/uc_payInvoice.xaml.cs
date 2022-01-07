@@ -109,7 +109,7 @@ namespace Restaurant.View.purchase
         static private decimal _Sum = 0;
         static public string _InvoiceType = "pd"; // purchase draft
        
-        public static List<string> requiredControlList;
+        public static List<string> requiredControlList = new List<string>();
         #region loading
         List<keyValueBool> loadingList;
         async void loading_RefrishItems()
@@ -165,6 +165,23 @@ namespace Restaurant.View.purchase
                 }
             }
         }
+        async void loading_fillVendorCombo()
+        {
+            try
+            {
+                await FillCombo.FillComboVendors(cb_vendor);
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_fillVendorCombo"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
         #endregion
         public async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -198,11 +215,13 @@ namespace Restaurant.View.purchase
                 loadingList.Add(new keyValueBool { key = "loading_RefrishItems", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_fillBranchesWithoutCurrent", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_fillCardCombo", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_fillVendorCombo", value = false });
 
 
                 loading_RefrishItems();
                 loading_fillBranchesWithoutCurrent();
                 loading_fillCardCombo();
+                loading_fillVendorCombo();
                 do
                 {
                     isDone = true;
@@ -865,6 +884,8 @@ namespace Restaurant.View.purchase
                     break;
                 case "card":
                     cashTransfer.cash = invoice.totalNet;
+                    cashTransfer.cardId = _SelectedCard;
+                    cashTransfer.docNum = tb_processNum.Text;
                     await cashTransfer.Save(cashTransfer); //add cash transfer  
                     invoice.paid = invoice.totalNet;
                     invoice.deserved = 0;
@@ -1992,14 +2013,17 @@ namespace Restaurant.View.purchase
         }
         public async Task fillInvoiceInputs(Invoice invoice)
         {
-           var cashTransfers = await cashTransfer.GetListByInvId(invoice.invoiceId);
-            if (cashTransfers.Count == 1)
+            if (_InvoiceType == "p" || _InvoiceType == "pb")
             {
-                cb_paymentProcessType.SelectedValue = cashTransfers[0].processType;
-                tb_processNum.Text = cashTransfers[0].docNum;
+                var cashTransfers = await cashTransfer.GetListByInvId(invoice.invoiceId);
+                if (cashTransfers.Count == 1)
+                {
+                    cb_paymentProcessType.SelectedValue = cashTransfers[0].processType;
+                    tb_processNum.Text = cashTransfers[0].docNum;
+                }
+                else
+                    cb_paymentProcessType.SelectedValue = "multiple";
             }
-            else
-                cb_paymentProcessType.SelectedValue = "multiple";
             _Sum = (decimal)invoice.total;
             txt_invNumber.Text = invoice.invNumber.ToString();
             cb_branch.SelectedValue = invoice.branchId;
@@ -2080,11 +2104,13 @@ namespace Restaurant.View.purchase
                 cb_vendor.IsEnabled = false;
                 dp_desrvedDate.IsEnabled = false;
                 dp_invoiceDate.IsEnabled = false;
-                tb_notes.IsEnabled = false;
                 tb_barcode.IsEnabled = false;
                 cb_branch.IsEnabled = false;
                 tb_discount.IsEnabled = false;
                 cb_typeDiscount.IsEnabled = false;
+                cb_paymentProcessType.IsEnabled = false;
+                tb_processNum.IsEnabled = false;
+                dkp_cards.IsEnabled = false;
                 btn_save.IsEnabled = true;
                 tb_invoiceNumber.IsEnabled = false;
                 tb_taxValue.IsEnabled = false;
@@ -2099,7 +2125,6 @@ namespace Restaurant.View.purchase
                 cb_vendor.IsEnabled = false;
                 dp_desrvedDate.IsEnabled = false;
                 dp_invoiceDate.IsEnabled = false;
-                tb_notes.IsEnabled = false;
                 tb_barcode.IsEnabled = false;
                 cb_branch.IsEnabled = true;
                 tb_discount.IsEnabled = false;
@@ -2109,6 +2134,8 @@ namespace Restaurant.View.purchase
                 tb_taxValue.IsEnabled = false;
                 btn_items.IsEnabled = false;
                 cb_paymentProcessType.IsEnabled = true;
+                tb_processNum.IsEnabled = true;
+                dkp_cards.IsEnabled = true;
                 btn_clear.IsEnabled = true;
                 btn_updateVendor.IsEnabled = true;
                 btn_addVendor.IsEnabled = true;
@@ -2122,7 +2149,6 @@ namespace Restaurant.View.purchase
                 cb_vendor.IsEnabled = true;
                 dp_desrvedDate.IsEnabled = true;
                 dp_invoiceDate.IsEnabled = true;
-                tb_notes.IsEnabled = true;
                 tb_barcode.IsEnabled = true;
                 cb_branch.IsEnabled = true;
                 tb_discount.IsEnabled = true;
@@ -2132,6 +2158,8 @@ namespace Restaurant.View.purchase
                 tb_taxValue.IsEnabled = true;
                 btn_items.IsEnabled = true;
                 cb_paymentProcessType.IsEnabled = true;
+                dkp_cards.IsEnabled = true;
+                tb_processNum.IsEnabled = true;
                 btn_clear.IsEnabled = true;
                 btn_updateVendor.IsEnabled = true;
                 btn_addVendor.IsEnabled = true;
@@ -2145,7 +2173,6 @@ namespace Restaurant.View.purchase
                 cb_vendor.IsEnabled = false;
                 dp_desrvedDate.IsEnabled = true;
                 dp_invoiceDate.IsEnabled = true;
-                tb_notes.IsEnabled = true;
                 tb_barcode.IsEnabled = true;
                 cb_branch.IsEnabled = true;
                 tb_discount.IsEnabled = true;
@@ -2155,6 +2182,8 @@ namespace Restaurant.View.purchase
                 tb_taxValue.IsEnabled = true;
                 btn_items.IsEnabled = true;
                 cb_paymentProcessType.IsEnabled = true;
+                dkp_cards.IsEnabled = true;
+                tb_processNum.IsEnabled = true;
                 btn_clear.IsEnabled = false;
                 btn_updateVendor.IsEnabled = false;
                 btn_addVendor.IsEnabled = false;
@@ -2168,7 +2197,6 @@ namespace Restaurant.View.purchase
                 cb_vendor.IsEnabled = false;
                 dp_desrvedDate.IsEnabled = false;
                 dp_invoiceDate.IsEnabled = false;
-                tb_notes.IsEnabled = false;
                 tb_barcode.IsEnabled = false;
                 cb_branch.IsEnabled = false;
                 tb_discount.IsEnabled = false;
@@ -2178,6 +2206,8 @@ namespace Restaurant.View.purchase
                 tb_taxValue.IsEnabled = false;
                 btn_items.IsEnabled = false;
                 cb_paymentProcessType.IsEnabled = false;
+                dkp_cards.IsEnabled = false;
+                tb_processNum.IsEnabled = false;
                 btn_clear.IsEnabled = false;
                 btn_updateVendor.IsEnabled = false;
                 btn_addVendor.IsEnabled = false;
@@ -2424,16 +2454,17 @@ namespace Restaurant.View.purchase
             */
         }
         private async void Btn_draft_Click(object sender, RoutedEventArgs e)
-        {   /*
+        {   
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_invoice w = new wd_invoice();
                 string invoiceType = "pd ,pbd";
                 int duration = 2;
                 w.invoiceType = invoiceType;
+                w.icon = "drafts";
+                w.page = "purchases";
                 w.userId = MainWindow.userLogin.userId;
                 w.duration = duration; // view drafts which created during 2 last days 
 
@@ -2451,7 +2482,6 @@ namespace Restaurant.View.purchase
                         await fillInvoiceInputs(invoice);
                         setNotifications();
                         refreshDocCount(invoice.invoiceId);
-                        invoices = await invoice.GetInvoicesByCreator(invoiceType, MainWindow.userLogin.userId, duration);
                         navigateBtnActivate();
                         md_payments.Badge = "";
                         if (_InvoiceType == "pd")// set title to bill
@@ -2478,7 +2508,6 @@ namespace Restaurant.View.purchase
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private async void Btn_invoices_Click(object sender, RoutedEventArgs e)
         {
@@ -2521,7 +2550,6 @@ namespace Restaurant.View.purchase
                         txt_payInvoice.Foreground = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
 
                         await fillInvoiceInputs(invoice);
-                        // invoices = await invoice.GetInvoicesByCreator(invoiceType, MainWindow.userLogin.userId, duration);
                         navigateBtnActivate();
                     }
                 }
