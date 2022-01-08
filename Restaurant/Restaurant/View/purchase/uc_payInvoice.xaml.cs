@@ -629,16 +629,17 @@ namespace Restaurant.View.purchase
         }
         private bool validateInvoiceValues()
         {
-            if (cb_paymentProcessType.SelectedValue.ToString() == "cash" && MainWindow.posLogin.balance < decimal.Parse(tb_total.Text))
-            {
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn);
-                return false;
-            }
             if (decimal.Parse(tb_total.Text) == 0)
             {
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorTotalIsZeroToolTip"), animation: ToasterAnimation.FadeIn);
                 return false;
             }
+            if (cb_paymentProcessType.SelectedValue.ToString() == "cash" && MainWindow.posLogin.balance < decimal.Parse(tb_total.Text))
+            {
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn);
+                return false;
+            }
+
             return true;
         }
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
@@ -1121,8 +1122,7 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
                 if (elapsed.TotalMilliseconds > 100 && cb_paymentProcessType.SelectedIndex != -1)
                 {
@@ -1133,7 +1133,6 @@ namespace Restaurant.View.purchase
                     cb_paymentProcessType.SelectedValue = _SelectedPaymentType;
                 }
                 
-
                 switch (cb_paymentProcessType.SelectedIndex)
                 {
                     case 0://cash
@@ -1157,7 +1156,7 @@ namespace Restaurant.View.purchase
                         dp_desrvedDate.IsEnabled = false;
                         gd_card.Visibility = Visibility.Visible;
                         // update validate list
-                        requiredControlList = new List<string> { };
+                        requiredControlList = new List<string> {"card" };
                         break;
                     case 3://multiple
                         gd_card.Visibility = Visibility.Collapsed;
@@ -2618,8 +2617,7 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (invoice != null && invoice.invoiceId != 0)
                 {
@@ -3794,9 +3792,15 @@ namespace Restaurant.View.purchase
             Card card = button.DataContext as Card;
             txt_card.Text = card.name;
             if (card.hasProcessNum)
+            {
                 tb_processNum.Visibility = Visibility.Visible;
+                requiredControlList = new List<string> { "card", "processNum" };
+            }
             else
+            {
                 tb_processNum.Visibility = Visibility.Collapsed;
+                requiredControlList = new List<string> { "card" };
+            }
 
         }
         async void userImageLoad(Ellipse ellipse, string image)
