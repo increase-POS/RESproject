@@ -285,16 +285,16 @@ namespace Restaurant.Classes
         static public async Task<IEnumerable<Agent>> RefreshVendors()
         {
             vendorsList = await agent.GetAgentsActive("v");
+            agent = new Agent();
+            agent.agentId = 0;
+            agent.name = "-";
+            vendorsList.Insert(0, agent);
             return vendorsList;
         }
         static public async Task FillComboVendors(ComboBox cmb)
         {
             if (vendorsList is null)
                 await RefreshVendors();
-            agent = new Agent();
-            agent.agentId = 0;
-            agent.name = "-";
-            vendorsList.Insert(0, agent);
             cmb.ItemsSource = vendorsList;
             cmb.DisplayMemberPath = "name";
             cmb.SelectedValuePath = "agentId";
