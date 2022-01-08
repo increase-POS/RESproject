@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         <Grid   Background="#333333" >
             <Border  BorderThickness="0" Grid.Row="0" 
-                    CornerRadius="7,7,0,0"  Background="#178DD2">
+                    CornerRadius="7,7,0,0"  Background="{StaticResource SecondColor}">
                 <Grid>
 
                     <Button   IsCancel="true"  HorizontalAlignment="Right" VerticalAlignment="Center" Background="{x:Null}" 
@@ -52,26 +52,32 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <TextBox x:Name="tb_invoiceNum"  Grid.Row="0"
+                <Border Grid.Row="0" CornerRadius="10" Margin="10,12.5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                    <Grid>
+
+                        <TextBox x:Name="tb_invoiceNum"  Grid.Row="0"
                                   Padding="10,10,5,0"  TextBlock.Foreground="#4E4E4E"
                                   materialDesign:HintAssist.Hint="invoice Num..."  
-                                  TextBlock.FontSize="12"   Background="#f8f8f8"
-                                  Grid.Column="0" Height="40"  Margin="10,10,10,5"
-                                  BorderBrush="#737373" BorderThickness="0" 
+                                  Grid.Column="0" Height="40"  
+                                 BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
                                   KeyDown="Tb_invoiceNum_KeyDown"
                                   PreviewKeyDown="space_PreviewKeyDown"  />
-                <Path Fill="#E81123" x:Name="p_errorInvoiceNum" Stretch="Fill" Margin="5,5,15,5"
+                        <Path Fill="#E81123" x:Name="p_errorInvoiceNum" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right" Grid.Row="0" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
-                    <Path.ToolTip>
-                        <ToolTip x:Name="tt_errorSerialNum" Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
-                    </Path.ToolTip>
-                </Path>
-                
+                            <Path.ToolTip>
+                                <ToolTip x:Name="tt_errorSerialNum" Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
+                            </Path.ToolTip>
+                        </Path>
+
+
+                    </Grid>
+                </Border>
+               
                 <Button   Grid.Row="3"   Content="Select"
                        Margin="10,5" x:Name="btn_save" Click="Btn_save_Click"
-                          Background="#178DD2" BorderBrush="{x:Null}" />
+                         Foreground="White"  Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" />
             </Grid>
         </Border>
     </Grid>
