@@ -29,6 +29,7 @@ namespace Restaurant.Classes
         public uc_diningHall ucdiningHall;
         public uc_itemsRawMaterials ucitemsRawMaterials;
         public uc_itemsFoods ucitemsFoods;
+        public wd_items wditems;
 
         public Grid gridCatigories;
         public Grid gridCatigorieItems;
@@ -68,6 +69,10 @@ namespace Restaurant.Classes
             if (ucitemsFoods != null)
             {
                 ucitemsFoods.ChangeItemIdEvent(idItem);
+            }
+            if (wditems != null)
+            {
+                wditems.ChangeItemIdEvent(idItem);
             }
         }
       
