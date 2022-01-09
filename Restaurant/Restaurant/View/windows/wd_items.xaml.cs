@@ -35,27 +35,17 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        /// <summary>
-        /// item is select
-        /// </summary>
-        /// 
         public string CardType { get; set; }
         public int selectedItem { get; set; }
         public List<int> selectedItems { get; set; }
         Item itemModel = new Item();
         Category categoryModel = new Category();
         Unit unitModel = new Unit();
-        //Property propertyModel = new Property();
-        //PropertiesItems propItemsModel = new PropertiesItems();
-        //ItemsProp itemsPropModel = new ItemsProp();
-        //Serial serialModel = new Serial();
         ItemUnit itemUnitModel = new ItemUnit();
-        //Service serviceModel = new Service();
         IEnumerable<Category> categoriesQuery;
         IEnumerable<Item> items;
         IEnumerable<Item> itemsQuery;
         Category category = new Category();
-        // item object
         Item item = new Item();
 
         List<int> categoryIds = new List<int>();
@@ -93,40 +83,7 @@ namespace Restaurant.View.windows
                 }
             }
         }
-        async void loading_RefrishCategories()
-        {
-            try
-            {
-                await RefrishCategories();
-            }
-            catch (Exception)
-            { }
-            foreach (var item in loadingList)
-            {
-                if (item.key.Equals("loading_RefrishCategories"))
-                {
-                    item.value = true;
-                    break;
-                }
-            }
-        }
-        async void loading_RefrishCategoriesCard()
-        {
-            try
-            {
-                await RefrishCategoriesCard();
-            }
-            catch (Exception)
-            { }
-            foreach (var item in loadingList)
-            {
-                if (item.key.Equals("loading_RefrishCategoriesCard"))
-                {
-                    item.value = true;
-                    break;
-                }
-            }
-        }
+     
 
 
         #endregion
@@ -145,12 +102,12 @@ namespace Restaurant.View.windows
                 #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_ucItems.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_ucItems.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
@@ -159,13 +116,9 @@ namespace Restaurant.View.windows
                 loadingList = new List<keyValueBool>();
                 bool isDone = true;
                 loadingList.Add(new keyValueBool { key = "loading_RefrishItems", value = false });
-                loadingList.Add(new keyValueBool { key = "loading_RefrishCategories", value = false });
-                loadingList.Add(new keyValueBool { key = "loading_RefrishCategoriesCard", value = false });
 
 
                 loading_RefrishItems();
-                loading_RefrishCategories();
-                loading_RefrishCategoriesCard();
                 do
                 {
                     isDone = true;
@@ -211,8 +164,6 @@ namespace Restaurant.View.windows
             txt_items.Text = MainWindow.resourcemanager.GetString("trItems");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_searchitems, MainWindow.resourcemanager.GetString("trSearchHint"));
             btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
-            tt_grid.Content = MainWindow.resourcemanager.GetString("trViewGrid");
-            tt_items.Content = MainWindow.resourcemanager.GetString("trViewItems");
 
         }
         
@@ -224,42 +175,9 @@ namespace Restaurant.View.windows
 
         #region Categor and Item
         #region Refrish Y
-        /// <summary>
-        /// Category
-        /// </summary>
-        /// <returns></returns>
-        async Task<IEnumerable<Category>> RefrishCategories()
-        {
-            categories = await categoryModel.GetAllCategories(MainWindow.userLogin.userId);
-            return categories;
-        }
-        async Task RefrishCategoriesCard()
-        {
-            //if (categories is null)
-            //    await RefrishCategories();
-            //categoriesQuery = categories.Where(x => x.isActive == tglCategoryState && x.parentId == categoryParentId);
-            //catigoriesAndItemsView.gridCatigories = grid_categoryCards;
-            //generateCoulmnCategoriesGrid(categoriesQuery.Count());
-            //catigoriesAndItemsView.FN_refrishCatalogCard(categoriesQuery.ToList(), -1);
-        }
-        void generateCoulmnCategoriesGrid(int column)
-        {
-            #region
-            grid_categoryCards.ColumnDefinitions.Clear();
-            ColumnDefinition[] cd = new ColumnDefinition[column];
-            for (int i = 0; i < column; i++)
-            {
-                cd[i] = new ColumnDefinition();
-                cd[i].Width = new GridLength(85, GridUnitType.Pixel);
-                grid_categoryCards.ColumnDefinitions.Add(cd[i]);
-            }
-            #endregion
-        }
-        /// <summary>
-        /// Item
-        /// </summary>
-        /// <returns></returns>
-
+   
+      
+    
         async Task<IEnumerable<Item>> RefrishItems()
         {
             short defaultSale = 0;
@@ -301,10 +219,10 @@ namespace Restaurant.View.windows
             return items;
         }
 
-        void RefrishItemsDatagrid(IEnumerable<Item> _items)
-        {
-            dg_items.ItemsSource = _items;
-        }
+        //void RefrishItemsDatagrid(IEnumerable<Item> _items)
+        //{
+        //    dg_items.ItemsSource = _items;
+        //}
 
 
         void RefrishItemsCard(IEnumerable<Item> _items)
@@ -315,58 +233,43 @@ namespace Restaurant.View.windows
         }
         #endregion
         #region Get Id By Click  Y
-        private void dg_items_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_ucItems);
+        //private void dg_items_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (sender != null)
+        //            HelpClass.StartAwait(grid_ucItems);
 
-                if (dg_items.SelectedIndex != -1)
-            {
-                item = dg_items.SelectedItem as Item;
-                int isExist = selectedItems.IndexOf(item.itemId);
-                if (isExist == -1)
-                {
-                    var b = new MaterialDesignThemes.Wpf.Chip()
-                    {
-                        Content = item.name,
-                        Name = "btn" + item.itemId,
-                        IsDeletable = true,
-                        Margin = new Thickness(5, 5, 5, 5)
-                    };
-                    b.DeleteClick += Chip_OnDeleteClick;
-                    lst_items.Children.Add(b);
-                    selectedItems.Add(item.itemId);
-                }
+        //        if (dg_items.SelectedIndex != -1)
+        //    {
+        //        item = dg_items.SelectedItem as Item;
+        //        int isExist = selectedItems.IndexOf(item.itemId);
+        //        if (isExist == -1)
+        //        {
+        //            var b = new MaterialDesignThemes.Wpf.Chip()
+        //            {
+        //                Content = item.name,
+        //                Name = "btn" + item.itemId,
+        //                IsDeletable = true,
+        //                Margin = new Thickness(5, 5, 5, 5)
+        //            };
+        //            b.DeleteClick += Chip_OnDeleteClick;
+        //            lst_items.Children.Add(b);
+        //            selectedItems.Add(item.itemId);
+        //        }
 
-            }
-                if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
-            }
-            catch (Exception ex)
-            {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+        //    }
+        //        if (sender != null)
+        //            HelpClass.EndAwait(grid_ucItems);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (sender != null)
+        //            HelpClass.EndAwait(grid_ucItems);
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
 
-        }
-        public async Task ChangeCategoryIdEvent(int categoryId)
-        {
-            category = categories.ToList().Find(c => c.categoryId == categoryId);
-
-            if (categories.Where(x =>
-            x.isActive == tglCategoryState && x.parentId == category.categoryId).Count() != 0)
-            {
-                categoryParentId = category.categoryId;
-                await RefrishCategoriesCard();
-            }
-
-            await generateTrack(categoryId);
-            await RefrishItems();
-            Txb_searchitems_TextChanged(null, null);
-        }
+        //}
         private void Chip_OnDeleteClick(object sender, RoutedEventArgs e)
         {
             var currentChip = (Chip)sender;
@@ -395,85 +298,10 @@ namespace Restaurant.View.windows
         }
 
         #endregion
-        #region Grid Definition
-        /*
-        ColumnDefinition[] c;
-        RowDefinition[] r;
-        Grid gridItemContainerCard = new Grid();
-        int[] count;
-        void CreateGridCardContainer()
-        {
-            gridItemContainerCard.Name = "grid_itemContainerCard";
-            gridItemContainerCard.Background = null;
-            Grid.SetColumnSpan(gridItemContainerCard, 2);
-            count = CatigoriesAndItemsView.itemsRowColumnCount(1, 3);
-            c = new ColumnDefinition[count[1]];
-            for (int i = 0; i < count[1]; i++)
-            {
-                //ColumnDefinition c1 = new ColumnDefinition();
-                c[i] = new ColumnDefinition();
-                c[i].Width = new GridLength(1, GridUnitType.Star);
-                gridItemContainerCard.ColumnDefinitions.Add(c[i]);
-            }
-            r = new RowDefinition[count[0]];
-            for (int i = 0; i < count[0]; i++)
-            {
-                r[i] = new RowDefinition();
-                r[i].Height = new GridLength(1, GridUnitType.Star);
-                gridItemContainerCard.RowDefinitions.Add(r[i]);
-            }
-
-
-            grid_itemContainerCard.Children.Clear();
-            grid_itemContainerCard.Children.Add(gridItemContainerCard);
-        }
-        */
-        #endregion
       
-        #region Switch Card/DataGrid Y
-
-        private void Btn_itemsInCards_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                grid_itemsDatagrid.Visibility = Visibility.Collapsed;
-                grid_itemCards.Visibility = Visibility.Visible;
-                path_itemsInCards.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#178DD2"));
-                path_itemsInGrid.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#4e4e4e"));
-
-                Txb_searchitems_TextChanged(null, null);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void Btn_itemsInGrid_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                grid_itemCards.Visibility = Visibility.Collapsed;
-                grid_itemsDatagrid.Visibility = Visibility.Visible;
-                path_itemsInGrid.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#178DD2"));
-                path_itemsInCards.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#4e4e4e"));
-
-                Txb_searchitems_TextChanged(null, null);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        #endregion
         #region Search Y
 
 
-        /// <summary>
-        /// Item
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private async void Txb_searchitems_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -496,7 +324,7 @@ namespace Restaurant.View.windows
                     btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
                 RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
                 #endregion
-                RefrishItemsDatagrid(itemsQuery);
+                //RefrishItemsDatagrid(itemsQuery);
 
                 if (sender != null)
                     HelpClass.EndAwait(grid_ucItems);
@@ -689,130 +517,7 @@ namespace Restaurant.View.windows
             }
         }
         #endregion
-        #region categoryPathControl Y
-
-        async Task generateTrack(int categorypaPathId)
-        {
-            grid_categoryControlPath.Children.Clear();
-            IEnumerable<Category> categoriesPath = await
-            categoryModel.GetCategoryTreeByID(categorypaPathId);
-
-            int count = 0;
-            foreach (var item in categoriesPath.Reverse())
-            {
-                if (categories.Where(x => x.parentId == item.categoryId).Count() != 0)
-                {
-                    Button b = new Button();
-                    b.Content = " > " + item.name + " ";
-                    b.Padding = new Thickness(0);
-                    b.Margin = new Thickness(0);
-                    b.Background = null;
-                    b.BorderThickness = new Thickness(0);
-                    b.FontFamily = Application.Current.Resources["Font-cairo-light"] as FontFamily;
-                    b.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#6e6e6e"));
-                    b.FontSize = 14;
-                    Grid.SetColumn(b, count);
-                    b.DataContext = item;
-                    b.Name = "category" + item.categoryId;
-                    b.Tag = item.categoryId;
-                    b.Click += new RoutedEventHandler( getCategoryIdFromPath);
-                    count++;
-                    grid_categoryControlPath.Children.Add(b);
-                }
-            }
-            
-
-        }
-        private async void getCategoryIdFromPath(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_ucItems);
-                Button b = (Button)sender;
-
-                if (!string.IsNullOrEmpty(b.Tag.ToString()))
-                {
-                    await generateTrack(int.Parse(b.Tag.ToString()));
-                    categoryParentId = int.Parse(b.Tag.ToString());
-                    await RefrishCategoriesCard();
-
-
-                    //category.categoryId = int.Parse(b.Tag.ToString());
-
-                }
-            
-                await RefrishItems();
-                Txb_searchitems_TextChanged(null, null);
-                if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
-            }
-            catch (Exception ex)
-            {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-
-        }
-        private async void Btn_getAllCategory_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                //if (sender != null)
-                //    HelpClass.StartAwait(grid_ucItems);
-                //categoryParentId = 0;
-                //await RefrishCategoriesCard();
-                //grid_categoryControlPath.Children.Clear();
-                ////category.categoryId = 0;
-                ////await RefrishItems();
-                //#region
-                //short defaultSale = 0;
-                //short defaultPurchase = 0;
-                //int branchId = MainWindow.branchLogin.branchId;
-                //selectedItems = new List<int>();
-                //if (CardType.Equals("sales"))
-                //{
-                //    defaultSale = 1;
-                //    defaultPurchase = 0;
-                //}
-                //else if (CardType.Equals("purchase"))
-                //{
-                //    defaultPurchase = 1;
-                //    defaultSale = 0;
-                //}
-                //else if (CardType.Equals("order"))
-                //{
-                //    defaultPurchase = 0;
-                //    defaultSale = 0;
-                //}
-                //else if (CardType.Equals("movement"))
-                //{
-                //    defaultPurchase = -1;
-                //    defaultSale = -1;
-                //}
-                //items = await itemModel.GetSaleOrPurItems(0, defaultSale, defaultPurchase, branchId);
-                //MainWindow.InvoiceGlobalItemsList = items.ToList();
-                //if (defaultSale == 1)
-                //    MainWindow.InvoiceGlobalSaleUnitsList = await itemUnitModel.GetForSale();
-                //else
-                //    MainWindow.InvoiceGlobalItemUnitsList = await itemUnitModel.Getall();
-                //#endregion
-                //Txb_searchitems_TextChanged(null, null);
-
-                //if (sender != null)
-                //    HelpClass.EndAwait(grid_ucItems);
-            }
-            catch (Exception ex)
-            {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-
-        }
-
-        #endregion
+      
 
         #endregion
 
@@ -866,5 +571,40 @@ namespace Restaurant.View.windows
             }
         }
 
+        private void categories_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            if (checkBox.Tag.ToString() == "allCategories")
+            {
+                chb_rawMaterials.IsChecked =
+                chb_vegetables.IsChecked =
+                chb_meat.IsChecked =
+                chb_drinks.IsChecked = false;
+
+                chb_rawMaterials.IsEnabled =
+                chb_vegetables.IsEnabled =
+                chb_meat.IsEnabled =
+                chb_drinks.IsEnabled = false;
+
+            }
+        }
+
+        private void categories_Unchecked(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            if (checkBox.Tag.ToString() == "allCategories")
+            {
+                chb_rawMaterials.IsChecked =
+                chb_vegetables.IsChecked =
+                chb_meat.IsChecked =
+                chb_drinks.IsChecked = false;
+
+                chb_rawMaterials.IsEnabled =
+                chb_vegetables.IsEnabled =
+                chb_meat.IsEnabled =
+                chb_drinks.IsEnabled = true;
+
+            }
+        }
     }
 }

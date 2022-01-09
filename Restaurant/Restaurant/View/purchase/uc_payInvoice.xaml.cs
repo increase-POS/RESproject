@@ -2372,34 +2372,34 @@ namespace Restaurant.View.purchase
         }
         private async void Btn_items_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //   HelpClass.StartAwait(grid_main);
-            //    //items
-            //    Window.GetWindow(this).Opacity = 0.2;
-            //    wd_items w = new wd_items();
-            //    w.CardType = "purchase";
-            //    w.ShowDialog();
-            //    if (w.isActive)
-            //    {
-            //        for (int i = 0; i < w.selectedItems.Count; i++)
-            //        {
-            //            int itemId = w.selectedItems[i];
-            //            await ChangeItemIdEvent(itemId);
-            //        }
-            //        refreshTotalValue();
-            //        refrishBillDetails();
-            //    }
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //items
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_items w = new wd_items();
+                w.CardType = "purchase";
+                w.ShowDialog();
+                if (w.isActive)
+                {
+                    for (int i = 0; i < w.selectedItems.Count; i++)
+                    {
+                        int itemId = w.selectedItems[i];
+                        await ChangeItemIdEvent(itemId);
+                    }
+                    refreshTotalValue();
+                    refrishBillDetails();
+                }
 
-            //    Window.GetWindow(this).Opacity = 1;
-                
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                Window.GetWindow(this).Opacity = 1;
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {
