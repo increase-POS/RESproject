@@ -110,7 +110,7 @@ namespace Restaurant.View.catalog.rawMaterials
                 catigoriesAndItemsView.ucitemsRawMaterials = this;
                 btn_units.IsEnabled = false;
 
-                requiredControlList = new List<string> { "code", "name"  };
+                requiredControlList = new List<string> { "code", "name" , "type" };
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());

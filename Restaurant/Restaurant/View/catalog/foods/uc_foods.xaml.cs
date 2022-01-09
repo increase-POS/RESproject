@@ -64,7 +64,7 @@ namespace Restaurant.View.catalog.foods
 
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_itemsFoods.Instance);
-                uc_itemsFoods.Instance.categoryName = button.Tag.ToString();
+                uc_itemsFoods.categoryName = button.Tag.ToString();
 
                 //Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

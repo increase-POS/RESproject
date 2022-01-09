@@ -8,7 +8,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
          WindowStyle="None" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" Margin="0"  
-        Title="wd_tagS" Height="500" Width="500" Background="Transparent" AllowsTransparency="True" 
+        Title="wd_tags" Height="500" Width="500" Background="Transparent" AllowsTransparency="True" 
         Loaded="Window_Loaded"  
         MouseDown="Window_MouseDown" >
     <Border BorderThickness="1,0,1,1"  Grid.Row="1"

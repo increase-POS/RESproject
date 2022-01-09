@@ -83,7 +83,7 @@ namespace Restaurant.View.catalog.foods
                 _instance = value;
             }
         }
-        public string categoryName;
+        public static string categoryName;
         int categoryId;
         string basicsPermission = "itemsRawMaterials_basics";
         string unitsPermission = "itemsRawMaterials_units";
@@ -124,7 +124,7 @@ namespace Restaurant.View.catalog.foods
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-                categoryName = "appetizers";
+                //categoryName = "appetizers";
                 categoryId = FillCombo.GetCategoryId(categoryName);
                 FillCombo.fillTags(cb_tagId, categoryId);
                 Keyboard.Focus(tb_code);
