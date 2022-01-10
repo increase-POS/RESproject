@@ -17,45 +17,37 @@ namespace Restaurant.Classes
 {
     public class InventoryItemLocation
     {
+        public int sequence { get; set; }
         public int id { get; set; }
-        public bool isDestroyed { get; set; }
-        public int amount { get; set; }
-        public int amountDestroyed { get; set; }
-        public int realAmount { get; set; }
+        public Nullable<bool> isDestroyed { get; set; }
+        public Nullable<bool> isFalls { get; set; }
+        public Nullable<int> amount { get; set; }
+        public Nullable<int> amountDestroyed { get; set; }
+        public Nullable<int> quantity { get; set; }
         public Nullable<int> itemLocationId { get; set; }
         public Nullable<int> inventoryId { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-        public byte isActive { get; set; }
+        public Nullable<byte> isActive { get; set; }
         public string notes { get; set; }
-        public string cause { get; set; }
-        public bool isFalls { get; set; }
-        public string fallCause { get; set; }
-
-
-        public int sequence { get; set; }
-
-        public int quantity { get; set; }  //realAmount
-
         public Boolean canDelete { get; set; }
         public string itemName { get; set; }
-        public int itemId { get; set; }
-        public int unitId { get; set; }
-        public int itemUnitId { get; set; }
         public string location { get; set; }
         public string section { get; set; }
         public string unitName { get; set; }
+        public int itemId { get; set; }
+        public int itemUnitId { get; set; }
+        public int unitId { get; set; }
         public string inventoryNum { get; set; }
         public Nullable<System.DateTime> inventoryDate { get; set; }
         public string itemType { get; set; }
+        public string cause { get; set; }
+        public string fallCause { get; set; }
+        public Nullable<decimal> avgPurchasePrice { get; set; }
 
-
-        public decimal avgPurchasePrice { get; set; }
-         
-
-        public async Task<List<InventoryItemLocation>> Get(int itemId)
+        public async Task<List<InventoryItemLocation>> GetAll(int itemId)
         {
             List<InventoryItemLocation> items = new List<InventoryItemLocation>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -126,8 +118,8 @@ namespace Restaurant.Classes
             var myContent = JsonConvert.SerializeObject(newObject);
             parameters.Add("itemObject", myContent);
             parameters.Add("inventoryId", inventoryId.ToString());
-           
-           return await APIResult.post(method, parameters);
+
+            return await APIResult.post(method, parameters);
         }
         public async Task<int> distroyItem(InventoryItemLocation item)
         {
@@ -135,7 +127,7 @@ namespace Restaurant.Classes
             string method = "InventoryItemLocation/distroyItem";
             var myContent = JsonConvert.SerializeObject(item);
             parameters.Add("itemObject", myContent);
-           return await APIResult.post(method, parameters);
+            return await APIResult.post(method, parameters);
         }
         public async Task<int> fallItem(InventoryItemLocation item)
         {
@@ -143,7 +135,7 @@ namespace Restaurant.Classes
             string method = "InventoryItemLocation/fallItem";
             var myContent = JsonConvert.SerializeObject(item);
             parameters.Add("itemObject", myContent);
-           return await APIResult.post(method, parameters);
+            return await APIResult.post(method, parameters);
         }
         public async Task<int> delete(int itemId, int userId, Boolean final)
         {
@@ -152,7 +144,7 @@ namespace Restaurant.Classes
             parameters.Add("userId", userId.ToString());
             parameters.Add("final", final.ToString());
             string method = "InventoryItemLocation/Delete";
-           return await APIResult.post(method, parameters);
+            return await APIResult.post(method, parameters);
         }
 
     }
