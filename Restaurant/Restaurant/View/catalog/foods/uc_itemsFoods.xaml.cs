@@ -1012,7 +1012,7 @@ namespace Restaurant.View.catalog.foods
         {
             grid_itemContainerCard.Children.Clear();
             catigoriesAndItemsView.gridCatigorieItems = grid_itemContainerCard;
-            catigoriesAndItemsView.FN_refrishCatalogItem(_items.ToList());
+            catigoriesAndItemsView.FN_refrishCatalogItem(_items.ToList(), "purchase");
         }
         #endregion
         #region Get Id By Click  Y
