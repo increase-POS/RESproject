@@ -1953,9 +1953,9 @@ namespace Restaurant
                 case "payInvoice":
                     grid_main.Children.Add(uc_payInvoice.Instance);
                     break;
-                //case "purchaseOrder":
-                //    grid_main.Children.Add(uc_purchaseOrder.Instance);
-                //    break;
+                case "purchaseOrder":
+                    grid_main.Children.Add(uc_purchaseOrder.Instance);
+                    break;
                 //case "purchaseStatistic":
                 //    grid_main.Children.Add(uc_purchaseStatistic.Instance);
                 //    break;
@@ -1975,33 +1975,33 @@ namespace Restaurant
                     grid_main.Children.Add(uc_locations.Instance);
                     break;
                 //42
-                //case "storageSections":
-                //    grid_main.Children.Add(uc_storageSections.Instance);
-                //    break;
-                //case "storageCost":
-                //    grid_main.Children.Add(uc_storageCost.Instance);
-                //    break;
-                //case "storageInvoice":
-                //    grid_main.Children.Add(uc_storageInvoice.Instance);
-                //    break;
-                //case "itemsStorage":
-                //    grid_main.Children.Add(uc_itemsStorage.Instance);
-                //    break;
-                //case "storageMovements":
-                //    grid_main.Children.Add(uc_storageMovements.Instance);
-                //    break;
+                case "storageSections":
+                    grid_main.Children.Add(uc_storageSections.Instance);
+                    break;
+                case "storageCost":
+                    grid_main.Children.Add(uc_storageCost.Instance);
+                    break;
+                case "storageInvoice":
+                    grid_main.Children.Add(uc_storageInvoice.Instance);
+                    break;
+                case "itemsStorage":
+                    grid_main.Children.Add(uc_itemsStorage.Instance);
+                    break;
+                case "storageMovements":
+                    grid_main.Children.Add(uc_storageMovements.Instance);
+                    break;
                 //case "consumptionRawMaterials":
                 //    grid_main.Children.Add(uc_consumptionRawMaterials.Instance);
                 //    break;
-                //case "itemsShortage":
-                //    grid_main.Children.Add(uc_itemsShortage.Instance);
-                //    break;
-                //case "itemsDestructive":
-                //    grid_main.Children.Add(uc_itemsDestructive.Instance);
-                //    break;
-                //case "stocktaking":
-                //    grid_main.Children.Add(uc_stocktaking.Instance);
-                //    break;
+                case "itemsShortage":
+                    grid_main.Children.Add(uc_itemsShortage.Instance);
+                    break;
+                case "itemsDestructive":
+                    grid_main.Children.Add(uc_itemsDestructive.Instance);
+                    break;
+                case "stocktaking":
+                    grid_main.Children.Add(uc_stocktaking.Instance);
+                    break;
                 //case "preparingOrders":
                 //    grid_main.Children.Add(uc_preparingOrders.Instance);
                 //    break;
@@ -2083,7 +2083,6 @@ namespace Restaurant
 
             }
         }
-      
         #endregion
         private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
