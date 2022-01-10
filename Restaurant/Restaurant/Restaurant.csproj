@@ -317,6 +317,15 @@
     <Compile Include="View\storage\movementsOperations\uc_storageMovements.xaml.cs">
       <DependentUpon>uc_storageMovements.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\storage\stocktakingOperations\uc_itemsDestructive.xaml.cs">
+      <DependentUpon>uc_itemsDestructive.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\storage\stocktakingOperations\uc_itemsShortage.xaml.cs">
+      <DependentUpon>uc_itemsShortage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\storage\stocktakingOperations\uc_stocktaking.xaml.cs">
+      <DependentUpon>uc_stocktaking.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\storage\stocktakingOperations\uc_stocktakingOperations.xaml.cs">
       <DependentUpon>uc_stocktakingOperations.xaml</DependentUpon>
     </Compile>
@@ -562,6 +571,18 @@
     <Page Include="View\storage\movementsOperations\uc_storageMovements.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\storage\stocktakingOperations\uc_itemsDestructive.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\storage\stocktakingOperations\uc_itemsShortage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\storage\stocktakingOperations\uc_stocktaking.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\storage\stocktakingOperations\uc_stocktakingOperations.xaml">
       <SubType>Designer</SubType>
