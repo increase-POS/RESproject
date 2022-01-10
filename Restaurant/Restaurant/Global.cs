@@ -14,7 +14,8 @@ namespace Restaurant
         public static string APIUri = "http://192.168.1.5:4747/api/";
 
 
-        public static string ScannedImageLocation = "Thumb/Scan/scan.jpg";
+        public static string ScannedImage = "Thumb/Scan/scan.jpg";
+        public static string ScannedImageLocation = "Thumb/Scan";
         public const string TMPFolder = "Thumb";
         public const string TMPItemsFolder = "Thumb/items"; // folder to save items photos locally 
         public const string TMPAgentsFolder = "Thumb/agents"; // folder to save agents photos locally 

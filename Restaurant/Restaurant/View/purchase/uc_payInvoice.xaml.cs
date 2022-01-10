@@ -2377,8 +2377,8 @@ namespace Restaurant.View.purchase
                 HelpClass.StartAwait(grid_main);
                 //items
                 Window.GetWindow(this).Opacity = 0.2;
-                wd_items w = new wd_items();
-                w.CardType = "purchase";
+                wd_purchaseItems w = new wd_purchaseItems();
+
                 w.ShowDialog();
                 if (w.isActive)
                 {
