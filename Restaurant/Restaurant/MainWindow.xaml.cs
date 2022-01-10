@@ -1802,288 +1802,7 @@ namespace Restaurant
             }
         }
         */
-        #region Main Path
-        public void initializationMainTrack(string tag)
-        {
-            //sp_mainPath
-            sp_mainPath.Children.Clear();
-            List<Object> _listObjects = new List<Object>();
-             _listObjects =   objectModel.GetParents( listObjects, tag);
-            int counter = 1;
-            bool isLast = false;
-            foreach (var item in _listObjects)
-            {
-                if (counter == _listObjects.Count)
-                    isLast = true;
-                else
-                    isLast = false;
-                sp_mainPath.Children.Add(initializationMainButton(item, isLast));
-                counter++;
-            }
-        }
-        Button initializationMainButton(Object _object, bool isLast)
-        {
-            Button button = new Button();
-            button.Content = ">" + _object.translate;
-            button.Tag = _object.name;
-            button.Click += MainButton_Click;
-            button.Background = null;
-            button.Margin = new Thickness(5, 0, 0, 0);
-            button.BorderThickness = new Thickness(0);
-            button.Padding = new Thickness(0);
-            button.FontSize = 16;
-            if (isLast)
-                button.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
-            else
-                button.Foreground = Application.Current.Resources["Grey"] as SolidColorBrush;
-            return button;
-        }
-        void MainButton_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            initializationMainTrack(button.Tag.ToString());
-            loadPath(button.Tag.ToString());
-
-        }
-        void loadPath(string tag)
-        {
-            grid_main.Children.Clear();
-            switch (tag)
-            {
-                //2
-                //case "home":
-                //    grid_main.Children.Add(uc_home.Instance);
-                //    break;
-                case "catalog":
-                    grid_main.Children.Add(uc_catalog.Instance);
-                    break;
-                case "purchase":
-                    grid_main.Children.Add(uc_purchase.Instance);
-                    break;
-                case "storage":
-                    grid_main.Children.Add(uc_storage.Instance);
-                    break;
-                case "kitchen":
-                    grid_main.Children.Add(uc_kitchen.Instance);
-                    break;
-                case "sales":
-                    grid_main.Children.Add(uc_sales.Instance);
-                    break;
-                //case "delivery":
-                //    grid_main.Children.Add(uc_delivery.Instance);
-                //    break;
-                case "accounts":
-                    grid_main.Children.Add(uc_accounts.Instance);
-                    break;
-                //case "reports":
-                //    grid_main.Children.Add(uc_reports.Instance);
-                //    break;
-                case "sectionData":
-                    grid_main.Children.Add(uc_sectionData.Instance);
-                    break;
-                //12
-                case "settings":
-                    grid_main.Children.Add(uc_settings.Instance);
-                    break;
-                case "hallDivide":
-                    grid_main.Children.Add(uc_hallDivide.Instance);
-                    break;
-                case "persons":
-                    grid_main.Children.Add(uc_persons.Instance);
-                    break;
-                case "branchesAndStores":
-                    grid_main.Children.Add(uc_branchesAndStores.Instance);
-                    break;
-                case "banksData":
-                    grid_main.Children.Add(uc_banksData.Instance);
-                    break;
-                //case "tables":
-                //    grid_main.Children.Add(uc_tables.Instance);
-                //    break;
-                case "hallSections":
-                    grid_main.Children.Add(uc_hallSections.Instance);
-                    break;
-                case "vendors":
-                    grid_main.Children.Add(uc_vendors.Instance);
-                    break;
-                case "customers":
-                    grid_main.Children.Add(uc_customers.Instance);
-                    break;
-                case "users":
-                    grid_main.Children.Add(uc_users.Instance);
-                    break;
-                //22
-                case "branches":
-                    grid_main.Children.Add(uc_branches.Instance);
-                    break;
-                case "stores":
-                    grid_main.Children.Add(uc_stores.Instance);
-                    break;
-                case "pos":
-                    grid_main.Children.Add(uc_pos.Instance);
-                    break;
-                case "banks":
-                    grid_main.Children.Add(uc_banks.Instance);
-                    break;
-                case "cards":
-                    grid_main.Children.Add(uc_cards.Instance);
-                    break;
-                case "rawMaterials":
-                    grid_main.Children.Add(uc_rawMaterials.Instance);
-                    break;
-                case "foods":
-                    grid_main.Children.Add(uc_foods.Instance);
-                    break;
-                //case "appetizers":
-                //    grid_main.Children.Add(uc_appetizers.Instance);
-                //    break;
-                //case "beverages":
-                //    grid_main.Children.Add(uc_beverages.Instance);
-                //    break;
-                //case "fastFood":
-                //    grid_main.Children.Add(uc_fastFood.Instance);
-                //    break;
-                //32
-                //case "mainCourses":
-                //    grid_main.Children.Add(uc_mainCourses.Instance);
-                //    break;
-                //case "desserts":
-                //    grid_main.Children.Add(uc_desserts.Instance);
-                //    break;
-                case "payInvoice":
-                    grid_main.Children.Add(uc_payInvoice.Instance);
-                    break;
-                case "purchaseOrder":
-                    grid_main.Children.Add(uc_purchaseOrder.Instance);
-                    break;
-                //case "purchaseStatistic":
-                //    grid_main.Children.Add(uc_purchaseStatistic.Instance);
-                //    break;
-                case "storageDivide":
-                    grid_main.Children.Add(uc_storageDivide.Instance);
-                    break;
-                case "storageOperations":
-                    grid_main.Children.Add(uc_storageOperations.Instance);
-                    break;
-                case "movementsOperations":
-                    grid_main.Children.Add(uc_movementsOperations.Instance);
-                    break;
-                case "stocktakingOperations":
-                    grid_main.Children.Add(uc_stocktakingOperations.Instance);
-                    break;
-                case "locations":
-                    grid_main.Children.Add(uc_locations.Instance);
-                    break;
-                //42
-                case "storageSections":
-                    grid_main.Children.Add(uc_storageSections.Instance);
-                    break;
-                case "storageCost":
-                    grid_main.Children.Add(uc_storageCost.Instance);
-                    break;
-                case "storageInvoice":
-                    grid_main.Children.Add(uc_storageInvoice.Instance);
-                    break;
-                case "itemsStorage":
-                    grid_main.Children.Add(uc_itemsStorage.Instance);
-                    break;
-                case "storageMovements":
-                    grid_main.Children.Add(uc_storageMovements.Instance);
-                    break;
-                //case "consumptionRawMaterials":
-                //    grid_main.Children.Add(uc_consumptionRawMaterials.Instance);
-                //    break;
-                case "itemsShortage":
-                    grid_main.Children.Add(uc_itemsShortage.Instance);
-                    break;
-                case "itemsDestructive":
-                    grid_main.Children.Add(uc_itemsDestructive.Instance);
-                    break;
-                case "stocktaking":
-                    grid_main.Children.Add(uc_stocktaking.Instance);
-                    break;
-                //case "preparingOrders":
-                //    grid_main.Children.Add(uc_preparingOrders.Instance);
-                //    break;
-                //52
-                //case "kitchenOrder":
-                //    grid_main.Children.Add(uc_kitchenOrder.Instance);
-                //    break;
-                //case "posTransfers":
-                //    grid_main.Children.Add(uc_posTransfers.Instance);
-                //    break;
-                //case "payments":
-                //    grid_main.Children.Add(uc_payments.Instance);
-                //    break;
-                //case "received":
-                //    grid_main.Children.Add(uc_received.Instance);
-                //    break;
-                //case "banksAccounting":
-                //    grid_main.Children.Add(uc_banksAccounting.Instance);
-                //    break;
-                //case "accountsStatistic":
-                //    grid_main.Children.Add(uc_accountsStatistic.Instance);
-                //    break;
-                //case "subscriptions":
-                //    grid_main.Children.Add(uc_subscriptions.Instance);
-                //    break;
-                //case "ordersAccounting":
-                //    grid_main.Children.Add(uc_ordersAccounting.Instance);
-                //    break;
-                //case "general":
-                //    grid_main.Children.Add(uc_general.Instance);
-                //    break;
-                //case "reportsSettings":
-                //    grid_main.Children.Add(uc_reportsSettings.Instance);
-                //    break;
-                //62
-                //case "permissions":
-                //    grid_main.Children.Add(uc_permissions.Instance);
-                //    break;
-                //case "emailSettings":
-                //    grid_main.Children.Add(uc_emailSettings.Instance);
-                //    break;
-                //case "smsSettings":
-                //    grid_main.Children.Add(uc_smsSettings.Instance);
-                //    break;
-                case "promotion":
-                    grid_main.Children.Add(uc_promotion.Instance);
-                    break;
-                //case "reservations":
-                //    grid_main.Children.Add(uc_reservations.Instance);
-                //    break;
-                case "diningHall":
-                    grid_main.Children.Add(uc_diningHall.Instance);
-                    break;
-                //case "takeAway":
-                //    grid_main.Children.Add(uc_takeAway.Instance);
-                //    break;
-                //case "salesStatistic":
-                //    grid_main.Children.Add(uc_salesStatistic.Instance);
-                //    break;
-                //case "membership":
-                //    grid_main.Children.Add(uc_membership.Instance);
-                //    break;
-                //case "coupon":
-                //    grid_main.Children.Add(uc_coupon.Instance);
-                //break;
-                //72
-                //case "offer":
-                //    grid_main.Children.Add(uc_offer.Instance);
-                //    break;
-                //case "quotation":
-                //    grid_main.Children.Add(uc_quotation.Instance);
-                //    break;
-                //case "medals":
-                //    grid_main.Children.Add(uc_medals.Instance);
-                //    break;
-
-                default:
-                    return;
-
-            }
-        }
-        #endregion
+      
         private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             try
@@ -2383,6 +2102,287 @@ namespace Restaurant
             img_userLogin.Fill = myBrush;
 
         }
-      
+        #region Main Path
+        public void initializationMainTrack(string tag)
+        {
+            //sp_mainPath
+            sp_mainPath.Children.Clear();
+            List<Object> _listObjects = new List<Object>();
+            _listObjects = objectModel.GetParents(listObjects, tag);
+            int counter = 1;
+            bool isLast = false;
+            foreach (var item in _listObjects)
+            {
+                if (counter == _listObjects.Count)
+                    isLast = true;
+                else
+                    isLast = false;
+                sp_mainPath.Children.Add(initializationMainButton(item, isLast));
+                counter++;
+            }
+        }
+        Button initializationMainButton(Object _object, bool isLast)
+        {
+            Button button = new Button();
+            button.Content = ">" + _object.translate;
+            button.Tag = _object.name;
+            button.Click += MainButton_Click;
+            button.Background = null;
+            button.Margin = new Thickness(5, 0, 0, 0);
+            button.BorderThickness = new Thickness(0);
+            button.Padding = new Thickness(0);
+            button.FontSize = 16;
+            if (isLast)
+                button.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            else
+                button.Foreground = Application.Current.Resources["Grey"] as SolidColorBrush;
+            return button;
+        }
+        void MainButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            initializationMainTrack(button.Tag.ToString());
+            loadPath(button.Tag.ToString());
+
+        }
+        void loadPath(string tag)
+        {
+            grid_main.Children.Clear();
+            switch (tag)
+            {
+                //2
+                //case "home":
+                //    grid_main.Children.Add(uc_home.Instance);
+                //    break;
+                case "catalog":
+                    grid_main.Children.Add(uc_catalog.Instance);
+                    break;
+                case "purchase":
+                    grid_main.Children.Add(uc_purchase.Instance);
+                    break;
+                case "storage":
+                    grid_main.Children.Add(uc_storage.Instance);
+                    break;
+                case "kitchen":
+                    grid_main.Children.Add(uc_kitchen.Instance);
+                    break;
+                case "sales":
+                    grid_main.Children.Add(uc_sales.Instance);
+                    break;
+                //case "delivery":
+                //    grid_main.Children.Add(uc_delivery.Instance);
+                //    break;
+                case "accounts":
+                    grid_main.Children.Add(uc_accounts.Instance);
+                    break;
+                //case "reports":
+                //    grid_main.Children.Add(uc_reports.Instance);
+                //    break;
+                case "sectionData":
+                    grid_main.Children.Add(uc_sectionData.Instance);
+                    break;
+                //12
+                case "settings":
+                    grid_main.Children.Add(uc_settings.Instance);
+                    break;
+                case "hallDivide":
+                    grid_main.Children.Add(uc_hallDivide.Instance);
+                    break;
+                case "persons":
+                    grid_main.Children.Add(uc_persons.Instance);
+                    break;
+                case "branchesAndStores":
+                    grid_main.Children.Add(uc_branchesAndStores.Instance);
+                    break;
+                case "banksData":
+                    grid_main.Children.Add(uc_banksData.Instance);
+                    break;
+                //case "tables":
+                //    grid_main.Children.Add(uc_tables.Instance);
+                //    break;
+                case "hallSections":
+                    grid_main.Children.Add(uc_hallSections.Instance);
+                    break;
+                case "vendors":
+                    grid_main.Children.Add(uc_vendors.Instance);
+                    break;
+                case "customers":
+                    grid_main.Children.Add(uc_customers.Instance);
+                    break;
+                case "users":
+                    grid_main.Children.Add(uc_users.Instance);
+                    break;
+                //22
+                case "branches":
+                    grid_main.Children.Add(uc_branches.Instance);
+                    break;
+                case "stores":
+                    grid_main.Children.Add(uc_stores.Instance);
+                    break;
+                case "pos":
+                    grid_main.Children.Add(uc_pos.Instance);
+                    break;
+                case "banks":
+                    grid_main.Children.Add(uc_banks.Instance);
+                    break;
+                case "cards":
+                    grid_main.Children.Add(uc_cards.Instance);
+                    break;
+                case "rawMaterials":
+                    grid_main.Children.Add(uc_rawMaterials.Instance);
+                    break;
+                case "foods":
+                    grid_main.Children.Add(uc_foods.Instance);
+                    break;
+                //case "appetizers":
+                //    grid_main.Children.Add(uc_appetizers.Instance);
+                //    break;
+                //case "beverages":
+                //    grid_main.Children.Add(uc_beverages.Instance);
+                //    break;
+                //case "fastFood":
+                //    grid_main.Children.Add(uc_fastFood.Instance);
+                //    break;
+                //32
+                //case "mainCourses":
+                //    grid_main.Children.Add(uc_mainCourses.Instance);
+                //    break;
+                //case "desserts":
+                //    grid_main.Children.Add(uc_desserts.Instance);
+                //    break;
+                case "payInvoice":
+                    grid_main.Children.Add(uc_payInvoice.Instance);
+                    break;
+                case "purchaseOrder":
+                    grid_main.Children.Add(uc_purchaseOrder.Instance);
+                    break;
+                //case "purchaseStatistic":
+                //    grid_main.Children.Add(uc_purchaseStatistic.Instance);
+                //    break;
+                case "storageDivide":
+                    grid_main.Children.Add(uc_storageDivide.Instance);
+                    break;
+                case "storageOperations":
+                    grid_main.Children.Add(uc_storageOperations.Instance);
+                    break;
+                case "movementsOperations":
+                    grid_main.Children.Add(uc_movementsOperations.Instance);
+                    break;
+                case "stocktakingOperations":
+                    grid_main.Children.Add(uc_stocktakingOperations.Instance);
+                    break;
+                case "locations":
+                    grid_main.Children.Add(uc_locations.Instance);
+                    break;
+                //42
+                case "storageSections":
+                    grid_main.Children.Add(uc_storageSections.Instance);
+                    break;
+                case "storageCost":
+                    grid_main.Children.Add(uc_storageCost.Instance);
+                    break;
+                case "storageInvoice":
+                    grid_main.Children.Add(uc_storageInvoice.Instance);
+                    break;
+                case "itemsStorage":
+                    grid_main.Children.Add(uc_itemsStorage.Instance);
+                    break;
+                case "storageMovements":
+                    grid_main.Children.Add(uc_storageMovements.Instance);
+                    break;
+                //case "consumptionRawMaterials":
+                //    grid_main.Children.Add(uc_consumptionRawMaterials.Instance);
+                //    break;
+                case "itemsShortage":
+                    grid_main.Children.Add(uc_itemsShortage.Instance);
+                    break;
+                case "itemsDestructive":
+                    grid_main.Children.Add(uc_itemsDestructive.Instance);
+                    break;
+                case "stocktaking":
+                    grid_main.Children.Add(uc_stocktaking.Instance);
+                    break;
+                //case "preparingOrders":
+                //    grid_main.Children.Add(uc_preparingOrders.Instance);
+                //    break;
+                //52
+                case "kitchenOrder":
+                    grid_main.Children.Add(uc_kitchenOrder.Instance);
+                    break;
+                //case "posTransfers":
+                //    grid_main.Children.Add(uc_posTransfers.Instance);
+                //    break;
+                //case "payments":
+                //    grid_main.Children.Add(uc_payments.Instance);
+                //    break;
+                //case "received":
+                //    grid_main.Children.Add(uc_received.Instance);
+                //    break;
+                //case "banksAccounting":
+                //    grid_main.Children.Add(uc_banksAccounting.Instance);
+                //    break;
+                //case "accountsStatistic":
+                //    grid_main.Children.Add(uc_accountsStatistic.Instance);
+                //    break;
+                //case "subscriptions":
+                //    grid_main.Children.Add(uc_subscriptions.Instance);
+                //    break;
+                //case "ordersAccounting":
+                //    grid_main.Children.Add(uc_ordersAccounting.Instance);
+                //    break;
+                //case "general":
+                //    grid_main.Children.Add(uc_general.Instance);
+                //    break;
+                //case "reportsSettings":
+                //    grid_main.Children.Add(uc_reportsSettings.Instance);
+                //    break;
+                //62
+                //case "permissions":
+                //    grid_main.Children.Add(uc_permissions.Instance);
+                //    break;
+                //case "emailSettings":
+                //    grid_main.Children.Add(uc_emailSettings.Instance);
+                //    break;
+                //case "smsSettings":
+                //    grid_main.Children.Add(uc_smsSettings.Instance);
+                //    break;
+                case "promotion":
+                    grid_main.Children.Add(uc_promotion.Instance);
+                    break;
+                //case "reservations":
+                //    grid_main.Children.Add(uc_reservations.Instance);
+                //    break;
+                case "diningHall":
+                    grid_main.Children.Add(uc_diningHall.Instance);
+                    break;
+                //case "takeAway":
+                //    grid_main.Children.Add(uc_takeAway.Instance);
+                //    break;
+                //case "salesStatistic":
+                //    grid_main.Children.Add(uc_salesStatistic.Instance);
+                //    break;
+                //case "membership":
+                //    grid_main.Children.Add(uc_membership.Instance);
+                //    break;
+                //case "coupon":
+                //    grid_main.Children.Add(uc_coupon.Instance);
+                //break;
+                //72
+                //case "offer":
+                //    grid_main.Children.Add(uc_offer.Instance);
+                //    break;
+                //case "quotation":
+                //    grid_main.Children.Add(uc_quotation.Instance);
+                //    break;
+                //case "medals":
+                //    grid_main.Children.Add(uc_medals.Instance);
+                //    break;
+
+                default:
+                    return;
+
+            }
+        }
+        #endregion
     }
 }
