@@ -186,6 +186,7 @@
     <Compile Include="Classes\ApiClasses\CountryCode.cs" />
     <Compile Include="Classes\ApiClasses\Coupon.cs" />
     <Compile Include="Classes\ApiClasses\DocImage.cs" />
+    <Compile Include="Classes\ApiClasses\Inventory.cs" />
     <Compile Include="Classes\ApiClasses\InventoryItemLocation.cs" />
     <Compile Include="Classes\ApiClasses\Invoice.cs" />
     <Compile Include="Classes\ApiClasses\Item.cs" />
