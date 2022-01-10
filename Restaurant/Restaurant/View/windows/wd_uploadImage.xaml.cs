@@ -64,7 +64,7 @@ namespace Restaurant.View.windows
         {//load
             try
             {
-                requiredControlList = new List<string> { "Name" };
+                requiredControlList = new List<string> { "name" };
 
                 HelpClass.StartAwait(grid_main);
 
@@ -72,12 +72,12 @@ namespace Restaurant.View.windows
                 #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = System.Windows.FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = System.Windows.FlowDirection.RightToLeft;
                 }
                 translate();
@@ -102,7 +102,6 @@ namespace Restaurant.View.windows
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
-             //tt_notes.Content = MainWindow.resourcemanager.GetString("trNote");
             tt_file.Content = MainWindow.resourcemanager.GetString("trSelectImage");
             tt_scanner.Content = MainWindow.resourcemanager.GetString("trScan");
             tt_preview.Content = MainWindow.resourcemanager.GetString("trPreview");
@@ -141,8 +140,7 @@ namespace Restaurant.View.windows
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 //select image
                 openFileDialog.Filter = "Images|*.png;*.jpg;*.bmp;*.jpeg;*.jfif";
@@ -155,28 +153,19 @@ namespace Restaurant.View.windows
                     {
                         string str = "file size must be les than 500 KB";
                         MessageBox.Show(str);
-
                     }
                     else
                     {
                         brush.ImageSource = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Relative));
                         img_upload.Background = brush;
                     }
-
-
-
                 }
 
-
-                // MessageBox.Show(filesize.ToString());
-
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -188,8 +177,7 @@ namespace Restaurant.View.windows
         {//add
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 validateDocValues();
                 if (!tb_name.Text.Equals(""))
@@ -369,8 +357,7 @@ namespace Restaurant.View.windows
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 CommonDialogClass commonDialogClass = new CommonDialogClass();
                 Device scannerDevice = commonDialogClass.ShowSelectDevice(WiaDeviceType.ScannerDeviceType, false, false);
@@ -399,7 +386,9 @@ namespace Restaurant.View.windows
                         }
                         // configure trmporery path
                         string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                        string tmpPath = System.IO.Path.Combine(dir, Global.ScannedImageLocation);
+                        if (!Directory.Exists(System.IO.Path.Combine(dir, Global.ScannedImageLocation)))
+                            Directory.CreateDirectory(System.IO.Path.Combine(dir, Global.ScannedImageLocation));
+                        string tmpPath = System.IO.Path.Combine(dir, Global.ScannedImage);
                         if (System.IO.File.Exists(tmpPath))
                         {
                             System.IO.File.Delete(tmpPath);

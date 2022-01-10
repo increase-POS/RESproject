@@ -90,6 +90,7 @@ namespace Restaurant.Classes
             cmb.DisplayMemberPath = "Text";
             cmb.SelectedValuePath = "Value";
             cmb.ItemsSource = typelist;
+            cmb.SelectedIndex = 0;
             #endregion
         }
         #endregion
