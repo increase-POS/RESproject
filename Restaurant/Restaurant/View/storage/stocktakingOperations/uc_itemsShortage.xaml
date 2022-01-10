@@ -454,7 +454,7 @@
                                   materialDesign:HintAssist.Hint="serial Num..."  
                                   Grid.Column="0" Height="40" 
                                          BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
-                                  PreviewKeyDown="space_PreviewKeyDown"
+                                  PreviewKeyDown="Spaces_PreviewKeyDown"
                                 KeyDown="Tb_serialNum_KeyDown">
                                     <TextBox.ToolTip>
                                         <ToolTip x:Name="tt_serialNum" Content="serial Num"

@@ -671,5 +671,63 @@ namespace Restaurant.View.storage.stocktakingOperations
         */
         #endregion
 
+        private void Btn_clearSerial_Click(object sender, RoutedEventArgs e)
+        {
+            /*
+            try
+            {
+
+                _serialCount = 0;
+                lst_serials.Items.Clear();
+            }
+            catch (Exception ex)
+            {
+                SectionData.ExceptionMessage(ex, this);
+            }
+            */
+        }
+        private void Tb_serialNum_KeyDown(object sender, KeyEventArgs e)
+        {
+            /*
+            try
+            {
+                if (sender != null)
+                    SectionData.StartAwait(grid_main);
+
+
+                if (e.Key == Key.Return && !tb_amount.Text.Equals(""))
+                {
+                    string s = tb_serialNum.Text;
+                    int itemCount = int.Parse(tb_amount.Text);
+
+                    if (!s.Equals(""))
+                    {
+                        int found = lst_serials.Items.IndexOf(s);
+
+                        if (_serialCount == itemCount)
+                        {
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trWarningItemCountIs:") + " " + itemCount, animation: ToasterAnimation.FadeIn);
+                        }
+                        else if (found == -1)
+                        {
+                            lst_serials.Items.Add(tb_serialNum.Text);
+                            _serialCount++;
+                        }
+                        else
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trWarningSerialExists"), animation: ToasterAnimation.FadeIn);
+                    }
+                    tb_serialNum.Clear();
+                }
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+                SectionData.ExceptionMessage(ex, this);
+            }
+            */
+        }
     }
 }

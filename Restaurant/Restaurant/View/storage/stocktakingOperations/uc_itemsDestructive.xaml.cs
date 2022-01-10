@@ -819,5 +819,75 @@ namespace Restaurant.View.storage.stocktakingOperations
             }
             */
         }
+        private void Btn_clearSerial_Click(object sender, RoutedEventArgs e)
+        {
+            /*
+            try
+            {
+
+                _serialCount = 0;
+                lst_serials.Items.Clear();
+            }
+            catch (Exception ex)
+            {
+                SectionData.ExceptionMessage(ex, this);
+            }
+            */
+        }
+        private async void Cb_item_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            /*
+            try
+            {
+                if (sender != null)
+                    SectionData.StartAwait(grid_main);
+
+
+                if (cb_item.SelectedValue != null && cb_item.SelectedIndex != -1)
+                    if (int.Parse(cb_item.SelectedValue.ToString()) != -1)
+                    {
+                        var list = await itemUnit.GetItemUnits(int.Parse(cb_item.SelectedValue.ToString()));
+                        cb_unit.ItemsSource = list;
+                        cb_unit.SelectedValuePath = "itemUnitId";
+                        cb_unit.DisplayMemberPath = "mainUnit";
+                        cb_unit.SelectedIndex = 0;
+                        int itemId = (int)cb_item.SelectedValue;
+                        Item item = items.ToList().Find(x => x.itemId == itemId);
+                        _ItemType = item.type;
+                        if (item.type == "sn")
+                        {
+                            grid_serial.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            grid_serial.Visibility = Visibility.Collapsed;
+                        }
+
+                    }
+                Btn_clearSerial_Click(null, null);
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+                SectionData.ExceptionMessage(ex, this);
+            }
+            */
+        }
+        private void Cb_item_KeyUp(object sender, KeyEventArgs e)
+        {
+            /*
+            try
+            {
+                cb_item.ItemsSource = items.Where(x => x.name.Contains(cb_item.Text));
+            }
+            catch (Exception ex)
+            {
+                SectionData.ExceptionMessage(ex, this);
+            }
+            */
+        }
     }
 }
