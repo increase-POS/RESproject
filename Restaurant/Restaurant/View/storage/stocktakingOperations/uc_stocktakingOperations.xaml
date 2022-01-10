@@ -73,7 +73,7 @@
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_itemsShortage" 
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
-                         HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                         HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Btn_itemsShortage_Click">
                             <StackPanel    Orientation="Horizontal">
                                 <TextBlock Text="Enter"    Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
                                 <!--<TextBlock   Text=">>"    Foreground="White"></TextBlock>-->
@@ -122,7 +122,7 @@
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_itemsDestructive" 
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
-                         HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                         HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Btn_itemsDestructive_Click">
                             <StackPanel    Orientation="Horizontal">
                                 <TextBlock Text="Enter"    Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
                                 <!--<TextBlock   Text=">>"    Foreground="White"></TextBlock>-->
@@ -169,7 +169,7 @@
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_stocktaking" 
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
-                         HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                         HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Btn_stocktaking_Click">
                                 <StackPanel  Tag="stocktaking"  Orientation="Horizontal">
                                 <TextBlock Text="Enter"    Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
                                 <!--<TextBlock   Text=">>"    Foreground="White"></TextBlock>-->

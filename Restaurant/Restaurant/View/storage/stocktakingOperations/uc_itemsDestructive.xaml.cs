@@ -22,11 +22,11 @@ using System.Windows.Shapes;
 namespace Restaurant.View.storage.stocktakingOperations
 {
     /// <summary>
-    /// Interaction logic for uc_itemsShortage.xaml
+    /// Interaction logic for uc_itemsDestructive.xaml
     /// </summary>
-    public partial class uc_itemsShortage : UserControl
+    public partial class uc_itemsDestructive : UserControl
     {
-        public uc_itemsShortage()
+        public uc_itemsDestructive()
         {
             try
             {
@@ -51,7 +51,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                 _instance = value;
             }
         }
-        string savePermission = "itemsShortage_save";
+        string destroyPermission = "itemsShortage_destroy";
         string reportsPermission = "itemsShortage_reports";
 
         InventoryItemLocation invItemLoc = new InventoryItemLocation();
@@ -98,98 +98,95 @@ namespace Restaurant.View.storage.stocktakingOperations
         private void translate()
         {
 
-            ////////////////////////////////----Grid----/////////////////////////////////
-            dg_invItemLoc.Columns[0].Header = MainWindow.resourcemanager.GetString("trInventoryNum");
-            dg_invItemLoc.Columns[1].Header = MainWindow.resourcemanager.GetString("trDate");
-            dg_invItemLoc.Columns[2].Header = MainWindow.resourcemanager.GetString("trSectionLocation");
-            dg_invItemLoc.Columns[3].Header = MainWindow.resourcemanager.GetString("trItemUnit");
-            dg_invItemLoc.Columns[4].Header = MainWindow.resourcemanager.GetString("trAmount");
-
-            txt_title.Text = MainWindow.resourcemanager.GetString("trItemShortage");
-            txt_shortage.Text = MainWindow.resourcemanager.GetString("trShortage");
-
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_itemName, MainWindow.resourcemanager.GetString("trItemHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_amount, MainWindow.resourcemanager.GetString("trAmountShortageedHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_user, MainWindow.resourcemanager.GetString("trUserHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fallCause, MainWindow.resourcemanager.GetString("trReasonOfShortageHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
-
-            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
-
-            btn_shortage.Content = MainWindow.resourcemanager.GetString("trShortage");
-            btn_refresh.ToolTip = MainWindow.resourcemanager.GetString("trRefresh");
 
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
 
-        private async void Btn_shortage_Click(object sender, RoutedEventArgs e)
+        private async void Btn_destroy_Click(object sender, RoutedEventArgs e)
         {
+            /*
             try
             {
-                HelpClass.StartAwait(grid_main);
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(savePermission, MainWindow.groupObjects, "one")  )
+                if (MainWindow.groupObject.HasPermissionAction(destroyPermission, MainWindow.groupObjects, "one") )
                 {
-                    /*
-                    if (invItemLoc.id != 0)
+                    bool valid = validateDistroy();
+                    if (valid)
                     {
-                        bool valid = validateDistroy();
-                        if (valid)
+                        int itemUnitId = 0;
+                        int itemId = 0;
+                        int invoiceId = 0;
+                        string serialNum = "";
+                        if (invItemLoc.id != 0)
                         {
-                            int itemUnitId = 0;
-                            int itemId = 0;
-                            int invoiceId = 0;
-                            string serialNum = "";
-
                             itemUnitId = invItemLoc.itemUnitId;
                             itemId = invItemLoc.itemId;
-                            invItemLoc.notes = tb_notes.Text;
-                            invItemLoc.fallCause = tb_reasonOfShortage.Text;
-                            #region add invoice
+                        }
+                        else
+                        {
+                            itemUnitId = (int)cb_unit.SelectedValue;
+                            itemId = (int)cb_item.SelectedValue;
+                        }
+                        if (_ItemType == "sn")
+                            serialNum = tb_serialNum.Text;
+                        invItemLoc.cause = tb_reasonOfDestroy.Text;
+                        invItemLoc.notes = tb_notes.Text;
+                        if (lst_serials.Items.Count > 0)
+                        {
+                            for (int j = 0; j < lst_serials.Items.Count; j++)
+                            {
+                                serialNum += lst_serials.Items[j];
+                                if (j != lst_serials.Items.Count - 1)
+                                    serialNum += ",";
+                            }
+                        }
+                        // decimal price = await invoiceModel.GetAvgItemPrice(itemUnitId, itemId);
+                        decimal price = 0;
+                        decimal total = 0;
 
-                            decimal price = (decimal)invItemLoc.avgPurchasePrice;
-                            decimal total = price * int.Parse(tb_amount.Text);
-
-                            invoiceModel.invNumber = await invoiceModel.generateInvNumber("sh", branchModel.code, MainWindow.branchID.Value);
-                            invoiceModel.branchCreatorId = MainWindow.branchID.Value;
-                            invoiceModel.posId = MainWindow.posID.Value;
-                            invoiceModel.createUserId = MainWindow.userID.Value;
-                            invoiceModel.invType = "sh"; // shortage
+                        #region invoice Object
+                        invoiceModel.invNumber = await invoiceModel.generateInvNumber("ds", branchModel.code, MainWindow.branchID.Value);
+                        invoiceModel.branchCreatorId = MainWindow.branchID.Value;
+                        invoiceModel.posId = MainWindow.posID.Value;
+                        invoiceModel.createUserId = MainWindow.userID.Value;
+                        invoiceModel.invType = "d"; // destroy                      
+                        invoiceModel.paid = 0;
+                        invoiceModel.deserved = invoiceModel.totalNet;
+                        invoiceModel.notes = tb_notes.Text;
+                        if (cb_user.SelectedIndex != -1 && cb_user.SelectedIndex != 0)
+                            invoiceModel.userId = (int)cb_user.SelectedValue;
+                        #endregion
+                        List<ItemTransfer> orderList = new List<ItemTransfer>();
+                        #region notification Object
+                        Notification not = new Notification()
+                        {
+                            title = "trExceedMinLimitAlertTilte",
+                            ncontent = "trExceedMinLimitAlertContent",
+                            msgType = "alert",
+                            createDate = DateTime.Now,
+                            updateDate = DateTime.Now,
+                            createUserId = MainWindow.userID.Value,
+                            updateUserId = MainWindow.userID.Value,
+                        };
+                        #endregion
+                        if (invItemLoc.id != 0)
+                        {
+                            price = (decimal)invItemLoc.avgPurchasePrice;
+                            total = price * int.Parse(tb_amount.Text);
                             invoiceModel.total = total;
                             invoiceModel.totalNet = total;
-                            invoiceModel.paid = 0;
-                            invoiceModel.deserved = invoiceModel.totalNet;
-                            invoiceModel.notes = tb_notes.Text;
-
-                            if (cb_user.SelectedIndex != -1 && cb_user.SelectedIndex != 0)
-                                invoiceModel.userId = (int)cb_user.SelectedValue;
-                            #endregion
-
-                            List<ItemTransfer> orderList = new List<ItemTransfer>();
-                            if (_ItemType == "sn")
-                                serialNum = tb_serialNum.Text;
-
-                            if (lst_serials.Items.Count > 0)
-                            {
-                                for (int j = 0; j < lst_serials.Items.Count; j++)
-                                {
-                                    serialNum += lst_serials.Items[j];
-                                    if (j != lst_serials.Items.Count - 1)
-                                        serialNum += ",";
-                                }
-                            }
-
+                            //int amount = await itemLocationModel.getAmountByItemLocId((int)invItemLoc.itemLocationId);
+                            //if (amount >= invItemLoc.amountDestroyed)
+                            //{
                             orderList.Add(new ItemTransfer()
                             {
                                 itemName = invItemLoc.itemName,
                                 itemId = invItemLoc.itemId,
                                 unitName = invItemLoc.unitName,
                                 itemUnitId = invItemLoc.itemUnitId,
-                                quantity = invItemLoc.amount,
+                                quantity = invItemLoc.amountDestroyed,
                                 itemSerial = serialNum,
                                 price = price,
                                 invoiceId = 0,
@@ -201,29 +198,97 @@ namespace Restaurant.View.storage.stocktakingOperations
                             {
                                 invoiceModel.invoiceId = invoiceId;
                                 await invoiceModel.saveInvoiceItems(orderList, invoiceId);
-                                await invItemLoc.fallItem(invItemLoc);
+                                await invItemLoc.distroyItem(invItemLoc);
                                 if (cb_user.SelectedIndex != -1 && cb_user.SelectedIndex != 0)
                                     await recordCash(invoiceModel);
-                                await refreshShortageDetails();
+
+                                await itemLocationModel.decreaseItemLocationQuantity((int)invItemLoc.itemLocationId, (int)invItemLoc.amountDestroyed, MainWindow.userID.Value, "storageAlerts_minMaxItem", not);
+                                await refreshDestroyDetails();
                                 Btn_clear_Click(null, null);
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                             }
                             else
                                 Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                          
+
+                            //}
+                            //else
+                            //{
+                            //    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trDestroyAmountMoreExist"), animation: ToasterAnimation.FadeIn);
+                            //}
+                        }
+                        else
+                        {
+                            var avgPrice = items.Where(x => x.itemId == (int)cb_item.SelectedValue).Select(x => x.avgPurchasePrice).Single();
+                            if (avgPrice != null)
+                                price = (decimal)avgPrice;
+                            total = price * int.Parse(tb_amount.Text);
+                            invoiceModel.total = total;
+                            invoiceModel.totalNet = total;
+                            orderList.Add(new ItemTransfer()
+                            {
+                                itemName = cb_item.SelectedItem.ToString(),
+                                itemId = (int)cb_item.SelectedValue,
+                                unitName = cb_unit.SelectedItem.ToString(),
+                                itemUnitId = (int)cb_unit.SelectedValue,
+                                quantity = long.Parse(tb_amount.Text),
+                                itemSerial = serialNum,
+                                price = price,
+                                cause = tb_reasonOfDestroy.Text,
+                                invoiceId = 0,
+                                createUserId = MainWindow.userID,
+                            });
+                            // اتلاف عنصر يدوياً بدون جرد
+                            Window.GetWindow(this).Opacity = 0.2;
+                            wd_transItemsLocation w;
+                            w = new wd_transItemsLocation();
+                            w.orderList = orderList;
+                            if (w.ShowDialog() == true)
+                            {
+                                if (w.selectedItemsLocations != null)
+                                {
+                                    List<ItemLocation> itemsLocations = w.selectedItemsLocations;
+                                    List<ItemLocation> readyItemsLoc = new List<ItemLocation>();
+
+                                    // _ProcessType ="ex";
+                                    for (int i = 0; i < itemsLocations.Count; i++)
+                                    {
+                                        if (itemsLocations[i].isSelected == true)
+                                            readyItemsLoc.Add(itemsLocations[i]);
+                                    }
+
+                                    invoiceId = await invoiceModel.saveInvoice(invoiceModel);
+                                    if (invoiceId != 0)
+                                    {
+                                        await invoiceModel.saveInvoiceItems(orderList, invoiceId);
+                                        for (int i = 0; i < readyItemsLoc.Count; i++)
+                                        {
+                                            int itemLocId = readyItemsLoc[i].itemsLocId;
+                                            int quantity = (int)readyItemsLoc[i].quantity;
+                                            await itemLocationModel.decreaseItemLocationQuantity(itemLocId, quantity, MainWindow.userID.Value, "storageAlerts_minMaxItem", not);
+                                        }
+                                        Btn_clear_Click(null, null);
+                                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                    }
+                                    else
+                                        Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                }
+                            }
+                            Window.GetWindow(this).Opacity = 1;
                         }
                     }
-                    */
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+            */
         }
         #endregion
         #region events
@@ -670,6 +735,89 @@ namespace Restaurant.View.storage.stocktakingOperations
         }
         */
         #endregion
+        private void Tgl_manually_Checked(object sender, RoutedEventArgs e)
+        {
+            /*
+            try
+            {
+                if (sender != null)
+                    SectionData.StartAwait(grid_main);
 
+                tglManuallyChecking();
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+                SectionData.ExceptionMessage(ex, this);
+            }
+            */
+        }
+
+        private void Tgl_manually_Unchecked(object sender, RoutedEventArgs e)
+        {
+            /*
+            try
+            {
+                if (sender != null)
+                    SectionData.StartAwait(grid_main);
+
+                tglManuallyChecking();
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+                SectionData.ExceptionMessage(ex, this);
+            }
+            */
+        }
+
+        private void Tb_serialNum_KeyDown(object sender, KeyEventArgs e)
+        {
+            /*
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+
+                if (e.Key == Key.Return && !tb_amount.Text.Equals(""))
+                {
+                    string s = tb_serialNum.Text;
+                    int itemCount = int.Parse(tb_amount.Text);
+
+                    if (!s.Equals(""))
+                    {
+                        int found = lst_serials.Items.IndexOf(s);
+
+                        if (_serialCount == itemCount)
+                        {
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trWarningItemCountIs:") + " " + itemCount, animation: ToasterAnimation.FadeIn);
+                        }
+                        else if (found == -1)
+                        {
+                            lst_serials.Items.Add(tb_serialNum.Text);
+                            _serialCount++;
+                        }
+                        else
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trWarningSerialExists"), animation: ToasterAnimation.FadeIn);
+                    }
+                    tb_serialNum.Clear();
+                }
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+            */
+        }
     }
 }

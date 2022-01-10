@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Restaurant.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,6 +52,51 @@ namespace Restaurant.View.storage.stocktakingOperations
         {
             Instance = null;
             GC.Collect();
+        }
+
+        private void Btn_itemsShortage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_itemsShortage.Instance);
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_itemsDestructive_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_itemsDestructive.Instance);
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_stocktaking_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_stocktaking.Instance);
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }
