@@ -14,5 +14,8 @@ namespace Restaurant.Classes
         public Agent agent { get; set; }
         public int row { get; set; }
         public int column { get; set; }
+
+        // "sales" , "purchase" 
+        public string cardType { get; set; }
     }
 }

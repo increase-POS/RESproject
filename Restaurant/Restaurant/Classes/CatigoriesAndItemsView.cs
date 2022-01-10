@@ -82,7 +82,7 @@ namespace Restaurant.Classes
         private int pastCatalogItem = -1;
         double gridCatigorieItems_ActualHeight = 0;
         double gridCatigorieItems_ActualWidth = 0;
-        public void  FN_refrishCatalogItem(List<Item> items)
+        public void  FN_refrishCatalogItem(List<Item> items, string cardType)
         {
             gridCatigorieItems.Children.Clear();
             gridCatigorieItems_ActualHeight = gridCatigorieItems.ActualHeight/3;
@@ -94,6 +94,7 @@ namespace Restaurant.Classes
 
                 CardViewItems itemCardView = new CardViewItems();
                 itemCardView.item = item;
+                itemCardView.cardType = cardType;
                 itemCardView.row = row;
                 itemCardView.column = column;
                 FN_createRectangelCard(itemCardView);

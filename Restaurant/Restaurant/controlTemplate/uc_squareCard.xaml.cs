@@ -118,28 +118,32 @@ namespace Restaurant.controlTemplate
             titleText.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
             Grid.SetRow(titleText, 1);
             /////////////////////////////////
+            grid_main.Children.Add(titleText);
 
             #endregion
-            #region  subTitle
-            var subTitleText = new TextBlock();
-            try
+            #region  price
+            if (cardViewitem.cardType == "sales")
             {
-                subTitleText.Text = HelpClass.DecTostring(cardViewitem.item.priceTax);
+                var subTitleText = new TextBlock();
+                try
+                {
+                    subTitleText.Text = HelpClass.DecTostring(cardViewitem.item.priceTax);
+                }
+                catch
+                {
+                    subTitleText.Text = "";
+                }
+                subTitleText.Margin = new Thickness(1);
+                //subTitleText.FontWeight = FontWeights.Regular;
+                subTitleText.VerticalAlignment = VerticalAlignment.Center;
+                subTitleText.HorizontalAlignment = HorizontalAlignment.Center;
+                //subTitleText.FontSize = 10;
+                //subTitleText.TextWrapping = TextWrapping.Wrap;
+                subTitleText.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                Grid.SetRow(subTitleText, 2);
+                /////////////////////////////////
+                grid_main.Children.Add(subTitleText);
             }
-            catch
-            {
-                subTitleText.Text = "";
-            }
-            subTitleText.Margin = new Thickness(1);
-            //subTitleText.FontWeight = FontWeights.Regular;
-            subTitleText.VerticalAlignment = VerticalAlignment.Center;
-            subTitleText.HorizontalAlignment = HorizontalAlignment.Center;
-            //subTitleText.FontSize = 10;
-            //subTitleText.TextWrapping = TextWrapping.Wrap;
-            subTitleText.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
-            Grid.SetRow(subTitleText, 2);
-            /////////////////////////////////
-
             #endregion
 
             if (cardViewitem.item.isNew == 1)
@@ -202,14 +206,11 @@ namespace Restaurant.controlTemplate
                 gridOfferContainer.Children.Add(pathOfferLabelText);
                 gridContainer.Children.Add(gridOfferContainer);
             }
-            //if (cardViewitem.item.itemCount > 0)
-            //{
-            //    this.ToolTip = MainWindow.resourcemanager.GetString("trCount: ") + cardViewitem.item.itemCount + " " + cardViewitem.item.unitName;
-            //}
-            //gridContainer.Children.Add(titleText);
-            //gridContainer.Children.Add(subTitleText);
-            grid_main.Children.Add(titleText);
-            grid_main.Children.Add(subTitleText);
+            if (cardViewitem.item.itemCount > 0)
+            {
+                this.ToolTip = MainWindow.resourcemanager.GetString("trCount: ") + cardViewitem.item.itemCount + " " + cardViewitem.item.unitName;
+                //tt_name.Content = "Count" + cardViewitem.item.itemCount;
+            }
         }
         void InitializeControls()
         {
