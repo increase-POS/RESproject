@@ -318,6 +318,9 @@
     <Compile Include="View\settings\uc_settings.xaml.cs">
       <DependentUpon>uc_settings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\storage\movementsOperations\uc_consumptionRawMaterials.xaml.cs">
+      <DependentUpon>uc_consumptionRawMaterials.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\storage\movementsOperations\uc_storageMovements.xaml.cs">
       <DependentUpon>uc_storageMovements.xaml</DependentUpon>
     </Compile>
@@ -573,6 +576,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\settings\uc_settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\storage\movementsOperations\uc_consumptionRawMaterials.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
