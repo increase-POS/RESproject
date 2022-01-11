@@ -224,7 +224,7 @@ namespace Restaurant.View.windows
             //tb_isDefaultSales.Text = MainWindow.resourcemanager.GetString("trIsDefaultSales");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_unitValue, MainWindow.resourcemanager.GetString("trCountHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_subUnitId, MainWindow.resourcemanager.GetString("trUnitHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_price, MainWindow.resourcemanager.GetString("trPriceHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_price, MainWindow.resourcemanager.GetString("trPriceHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_barcode, MainWindow.resourcemanager.GetString("trBarcodeHint"));
  
              
@@ -273,12 +273,12 @@ namespace Restaurant.View.windows
                                 if (tbtn_isDefaultPurchases.IsChecked == true)
                                     defaultBurchase = 1;
                                 //price
-                                decimal price = 0;
-                                try
-                                {
-                                    price = decimal.Parse(tb_price.Text);
-                                }
-                                catch { }
+                                //decimal price = 0;
+                                //try
+                                //{
+                                //    price = decimal.Parse(tb_price.Text);
+                                //}
+                                //catch { }
                                 //barcode
                                 string barcode = tb_barcode.Text;
                                 /////////////////////////////////////
@@ -289,7 +289,7 @@ namespace Restaurant.View.windows
                                 itemUnit.subUnitId = smallUnitId;
                                 itemUnit.defaultPurchase = defaultBurchase;
                                 //itemUnit.defaultSale = defaultSale;
-                                itemUnit.price = price;
+                                //itemUnit.price = price;
                                 itemUnit.barcode = barcode;
                                 itemUnit.createUserId = MainWindow.userLogin.userId;
                                 itemUnit.updateUserId = MainWindow.userLogin.userId;
@@ -363,12 +363,12 @@ namespace Restaurant.View.windows
                                 //if (tbtn_isDefaultSales.IsChecked == true)
                                 //    defaultSale = 1;
                                 //price
-                                decimal price = 0;
-                                try
-                                {
-                                   price = decimal.Parse(tb_price.Text);
-                                }
-                                catch { }
+                                //decimal price = 0;
+                                //try
+                                //{
+                                //   price = decimal.Parse(tb_price.Text);
+                                //}
+                                //catch { }
                                 //barcode
                                 string barcode = tb_barcode.Text;
                                 /////////////////////////////////////
@@ -378,7 +378,7 @@ namespace Restaurant.View.windows
                                 itemUnit.subUnitId = smallUnitId;
                                 itemUnit.defaultPurchase = defaultBurchase;
                                 //itemUnit.defaultSale = defaultSale;
-                                itemUnit.price = price;
+                                //itemUnit.price = price;
                                 itemUnit.barcode = barcode;
                                 itemUnit.updateUserId = MainWindow.userLogin.userId;
                                 int res = await itemUnit.saveItemUnit(itemUnit);
