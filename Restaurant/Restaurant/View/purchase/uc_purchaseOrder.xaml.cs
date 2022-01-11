@@ -165,7 +165,7 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                await FillCombo.RefrishPurchaseItems();
+                await FillCombo.RefreshPurchaseItems();
             }
             catch (Exception)
             { }
@@ -523,7 +523,6 @@ namespace Restaurant.View.purchase
                     if (!w.isOk)
                     {
                         tgl_ActiveOffer.IsChecked = false;
-                        _InvoiceType = "pod";
                     }
                     else
                     {
@@ -558,7 +557,7 @@ namespace Restaurant.View.purchase
         }
         private void Tgl_ActiveOffer_Unchecked(object sender, RoutedEventArgs e)
         {
-            _InvoiceType = "pod";
+            _InvoiceType = invoice.invType;
             btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
             if (tgl_ActiveOffer.IsChecked == true)
             {
@@ -630,21 +629,25 @@ namespace Restaurant.View.purchase
             try
             {
                 HelpClass.StartAwait(grid_main);
-                bool valid = validateItemUnits();
-                if (billDetails.Count > 0 && valid)
+               
+                if (billDetails.Count > 0 && _InvoiceType == "pod")
                 {
-                    #region Accept
-                    MainWindow.mainWindow.Opacity = 0.2;
-                    wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                    w.contentText = MainWindow.resourcemanager.GetString("trSaveOrderNotification");
+                    bool valid = validateItemUnits();
+                    if (valid)
+                    {
+                        #region Accept
+                        MainWindow.mainWindow.Opacity = 0.2;
+                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                        w.contentText = MainWindow.resourcemanager.GetString("trSaveOrderNotification");
 
-                    w.ShowDialog();
-                    MainWindow.mainWindow.Opacity = 1;
-                    #endregion
-                    if (w.isOk)
-                        await addInvoice(_InvoiceType);
-                    clearInvoice();
-                    refreshNotification();
+                        w.ShowDialog();
+                        MainWindow.mainWindow.Opacity = 1;
+                        #endregion
+                        if (w.isOk)
+                            await addInvoice(_InvoiceType);
+                        clearInvoice();
+                        refreshNotification();
+                    }
                 }
                 else if (billDetails.Count == 0)
                 {
@@ -736,14 +739,14 @@ namespace Restaurant.View.purchase
         #region billdetails
         public async Task ChangeItemIdEvent(int itemId)
         {
-            item = items.ToList().Find(c => c.itemId == itemId);
+            item = FillCombo.purchaseItems.ToList().Find(c => c.itemId == itemId);
 
             if (item != null)
             {
-                this.DataContext = item;
+                //this.DataContext = item;
 
                 // get item units
-                itemUnits = MainWindow.InvoiceGlobalItemUnitsList.Where(a => a.itemId == item.itemId).ToList();
+                itemUnits = FillCombo.itemUnitList.Where(a => a.itemId == item.itemId).ToList();
                 // search for default unit for purchase
                 var defaultPurUnit = itemUnits.ToList().Find(c => c.defaultPurchase == 1);
                 if (defaultPurUnit != null)
@@ -758,7 +761,6 @@ namespace Restaurant.View.purchase
                     {
                         billDetails[index].Count++;
                         billDetails[index].Total = billDetails[index].Count * billDetails[index].Price;
-
 
                         _Count += billDetails[index].Count;
                         _Sum += billDetails[index].Price;
@@ -2040,19 +2042,16 @@ namespace Restaurant.View.purchase
         #region btn
         private async void Btn_items_Click(object sender, RoutedEventArgs e)
         {
-            /*
             try
             {
                 HelpClass.StartAwait(grid_main);
                 //items
 
                 Window.GetWindow(this).Opacity = 0.2;
-                wd_items w = new wd_items();
-                w.CardType = "purchase";
+                wd_purchaseItems w = new wd_purchaseItems();
                 w.ShowDialog();
                 if (w.isActive)
                 {
-                    // w.selectedItem this is ItemId
                     for (int i = 0; i < w.selectedItems.Count; i++)
                     {
                         int itemId = w.selectedItems[i];
@@ -2072,7 +2071,6 @@ namespace Restaurant.View.purchase
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private async void Btn_draft_Click(object sender, RoutedEventArgs e)
         {

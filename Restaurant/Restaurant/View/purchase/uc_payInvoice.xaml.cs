@@ -116,7 +116,7 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                await FillCombo.RefrishPurchaseItems();
+                await FillCombo.RefreshPurchaseItems();
             }
             catch (Exception)
             { }
@@ -2350,11 +2350,6 @@ namespace Restaurant.View.purchase
                             clearInvoice();
                             _InvoiceType = "pd";
                         }
-                    }
-                    else if (billDetails.Count == 0)
-                    {
-                        clearInvoice();
-                        _InvoiceType = "pd";
                     }
                 }
                 else

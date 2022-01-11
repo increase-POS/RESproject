@@ -140,7 +140,7 @@ namespace Restaurant.Classes
         static public List<Category> categoriesList;
         static public int GetCategoryId(string categoryName)
         {
-            return categoriesList.Where(x => x.name == categoryName).FirstOrDefault().categoryId;
+            return categoriesList.Where(x => x.name.ToLower() == categoryName.ToLower()).FirstOrDefault().categoryId;
         }
         static public async Task<IEnumerable<Category>> RefreshCategory()
         {
@@ -380,7 +380,7 @@ namespace Restaurant.Classes
         static public Item item = new Item();
         static public List<Item> purchaseItems;
         static public List<Item> salesItems;
-        static public async Task<IEnumerable<Item>> RefrishPurchaseItems()
+        static public async Task<IEnumerable<Item>> RefreshPurchaseItems()
         {
             purchaseItems = await item.GetPurchaseItems();
             return purchaseItems;

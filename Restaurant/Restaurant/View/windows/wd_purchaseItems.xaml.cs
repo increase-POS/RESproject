@@ -35,24 +35,17 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        public int selectedItem { get; set; }
+        //public int selectedItem { get; set; }
         public List<int> selectedItems { get; set; }
-        Item itemModel = new Item();
-        Category categoryModel = new Category();
-        Unit unitModel = new Unit();
-        ItemUnit itemUnitModel = new ItemUnit();
-        IEnumerable<Category> categoriesQuery;
-        IEnumerable<Item> items;
-        IEnumerable<Item> itemsQuery;
+        List<Item> items;
+        List<Item> itemsQuery;
         Category category = new Category();
-        Item item = new Item();
 
         List<int> categoryIds = new List<int>();
+        Boolean all = true;
         List<string> categoryNames = new List<string>();
-        List<Category> categories;
         public byte tglCategoryState = 1;
         public byte tglItemState = 1;
-        int? categoryParentId = 0;
         public string txtItemSearch;
         CatigoriesAndItemsView catigoriesAndItemsView = new CatigoriesAndItemsView();
 
@@ -65,11 +58,11 @@ namespace Restaurant.View.windows
             public bool value { get; set; }
         }
         List<keyValueBool> loadingList;
-        async void loading_RefrishItems()
+        void loading_RefrishItems()
         {
             try
             {
-                await RefrishItems();
+                RefrishItems();
             }
             catch (Exception)
             { }
@@ -169,9 +162,13 @@ namespace Restaurant.View.windows
     
         async Task<IEnumerable<Item>> RefrishItems()
         {
-            int branchId = MainWindow.branchLogin.branchId;
+            // int branchId = MainWindow.branchLogin.branchId;
+            if (FillCombo.purchaseItems == null)
+                await FillCombo.RefreshPurchaseItems();
+
             selectedItems = new List<int>();
-            items = FillCombo.purchaseItems.Where( x => x.itemUnitId != null);
+            items = FillCombo.purchaseItems.Where( x => x.itemUnitId != null).ToList();
+
             //if (CardType.Equals("sales"))
             //{
             //    defaultSale = 1;
@@ -258,16 +255,22 @@ namespace Restaurant.View.windows
                 if (sender != null)
                     HelpClass.StartAwait(grid_ucItems);
 
-                if (items is null)
-                await RefrishItems();
+                if (FillCombo.purchaseItems is null)
+                    await FillCombo.RefreshPurchaseItems();
                 txtItemSearch = txb_searchitems.Text.ToLower();
                 pageIndex = 1;
 
                 #region
-                itemsQuery = items.Where(x => (x.code.ToLower().Contains(txtItemSearch) ||
+                itemsQuery = items;
+                if (categoryIds.Count > 0 && all == false)
+                {
+                    itemsQuery = itemsQuery.Where(x => x.categoryId != null).ToList().Where(x => categoryIds.Contains((int)x.categoryId)).ToList();
+                }
+
+                itemsQuery = itemsQuery.Where(x => (x.code.ToLower().Contains(txtItemSearch) ||
                 x.name.ToLower().Contains(txtItemSearch) ||
                 x.details.ToLower().Contains(txtItemSearch)
-                ));
+                )).ToList();
 
                 if (btns is null)
                     btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
@@ -299,7 +302,7 @@ namespace Restaurant.View.windows
                 if (sender != null)
                     HelpClass.StartAwait(grid_ucItems);
 
-                itemsQuery = items.Where(x => x.isActive == tglItemState);
+                itemsQuery = items.Where(x => x.isActive == tglItemState).ToList();
 
                 if (tb_pageNumberSearch.Text.Equals(""))
                 {
@@ -318,7 +321,7 @@ namespace Restaurant.View.windows
                 itemsQuery = items.Where(x => (x.code.ToLower().Contains(txtItemSearch) ||
                 x.name.ToLower().Contains(txtItemSearch) ||
                 x.details.ToLower().Contains(txtItemSearch)
-                ) && x.isActive == tglItemState);
+                ) && x.isActive == tglItemState).ToList();
                 RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
                 #endregion
 
@@ -346,7 +349,7 @@ namespace Restaurant.View.windows
                 itemsQuery = items.Where(x => (x.code.ToLower().Contains(txtItemSearch) ||
                 x.name.ToLower().Contains(txtItemSearch) ||
                 x.details.ToLower().Contains(txtItemSearch)
-                ) && x.isActive == tglItemState);
+                ) && x.isActive == tglItemState).ToList();
                 RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
                 #endregion
 
@@ -372,7 +375,7 @@ namespace Restaurant.View.windows
                 itemsQuery = items.Where(x => (x.code.ToLower().Contains(txtItemSearch) ||
                 x.name.ToLower().Contains(txtItemSearch) ||
                 x.details.ToLower().Contains(txtItemSearch)
-                ) && x.isActive == tglItemState);
+                ) && x.isActive == tglItemState).ToList();
                 RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
                 #endregion
 
@@ -398,7 +401,7 @@ namespace Restaurant.View.windows
                 itemsQuery = items.Where(x => (x.code.ToLower().Contains(txtItemSearch) ||
                 x.name.ToLower().Contains(txtItemSearch) ||
                 x.details.ToLower().Contains(txtItemSearch)
-                ) && x.isActive == tglItemState);
+                ) && x.isActive == tglItemState).ToList();
                 RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
                 #endregion
 
@@ -424,7 +427,7 @@ namespace Restaurant.View.windows
                 itemsQuery = items.Where(x => (x.code.ToLower().Contains(txtItemSearch) ||
                 x.name.ToLower().Contains(txtItemSearch) ||
                 x.details.ToLower().Contains(txtItemSearch)
-                ) && x.isActive == tglItemState);
+                ) && x.isActive == tglItemState).ToList();
                 RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
                 #endregion
 
@@ -445,13 +448,13 @@ namespace Restaurant.View.windows
                 if (sender != null)
                     HelpClass.StartAwait(grid_ucItems);
 
-                itemsQuery = items.Where(x => x.isActive == tglCategoryState);
+                itemsQuery = items.Where(x => x.isActive == tglCategoryState).ToList();
                 pageIndex = ((itemsQuery.Count() - 1) / 9) + 1;
                 #region
                 itemsQuery = items.Where(x => (x.code.ToLower().Contains(txtItemSearch) ||
                 x.name.ToLower().Contains(txtItemSearch) ||
                 x.details.ToLower().Contains(txtItemSearch)
-                ) && x.isActive == tglItemState);
+                ) && x.isActive == tglItemState).ToList();
                 RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
                 #endregion
 
@@ -476,9 +479,9 @@ namespace Restaurant.View.windows
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_ucItems);
-
-                await RefrishItems();
-
+                await FillCombo.RefreshPurchaseItems();
+                RefrishItems();
+                Txb_searchitems_TextChanged(null, null);
                 if (sender != null)
                     HelpClass.EndAwait(grid_ucItems);
             }
@@ -535,7 +538,15 @@ namespace Restaurant.View.windows
                 chb_meat.IsEnabled =
                 chb_drinks.IsEnabled = false;
 
+                categoryIds = new List<int>();
+                all = true;
             }
+            else
+            {
+                all = false;
+                categoryIds.Add(FillCombo.GetCategoryId(checkBox.Tag.ToString()));
+            }
+            Txb_searchitems_TextChanged(null, null);
         }
 
         private void categories_Unchecked(object sender, RoutedEventArgs e)
@@ -553,7 +564,14 @@ namespace Restaurant.View.windows
                 chb_meat.IsEnabled =
                 chb_drinks.IsEnabled = true;
 
+                categoryIds = new List<int>();
+                all = true;
             }
+            else
+            {                
+                categoryIds.Remove(FillCombo.GetCategoryId(checkBox.Tag.ToString()));
+            }
+            Txb_searchitems_TextChanged(null, null);
         }
     }
 }

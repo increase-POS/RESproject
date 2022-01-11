@@ -221,29 +221,38 @@ namespace Restaurant.View.windows
         {//delete
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (docImgModel.id != 0)
                 {
-                    int res = await docImgModel.delete(docId);
+                    #region Accept
+                    MainWindow.mainWindow.Opacity = 0.2;
+                    wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                    w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                    w.ShowDialog();
+                    MainWindow.mainWindow.Opacity = 1;
+                    #endregion
+                    if (w.isOk)
+                    {
+                        int res = await docImgModel.delete(docId);
 
-                    if (res>0)
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
-                    else
-                        Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        if (res > 0)
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                        else
+                            Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
-                    docId = 0;
-                    //clear img
-                    Uri resourceUri = new Uri("/pic/no-image-icon-125x125.png", UriKind.Relative);
-                    StreamResourceInfo streamInfo = System.Windows.Application.GetResourceStream(resourceUri);
-                    BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
-                    brush.ImageSource = temp;
-                    img_upload.Background = brush;
+                        docId = 0;
+                        //clear img
+                        Uri resourceUri = new Uri("/pic/no-image-icon-125x125.png", UriKind.Relative);
+                        StreamResourceInfo streamInfo = System.Windows.Application.GetResourceStream(resourceUri);
+                        BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
+                        brush.ImageSource = temp;
+                        img_upload.Background = brush;
 
-                    //refresh images
-                    await refreshImageList();
-                    clear();
+                        //refresh images
+                        await refreshImageList();
+                        clear();
+                    }
                 }
                 
                     HelpClass.EndAwait(grid_main);
