@@ -702,6 +702,17 @@ namespace Restaurant.View.catalog.rawMaterials
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private void ValidateEmpty_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.validate(requiredControlList, this);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         #endregion
         #region Image
         string imgFileName = "pic/no-image-icon-125x125.png";
@@ -1019,16 +1030,17 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
+                //HelpClass.StartAwait(grid_main);
                 item = items.Where(x => x.itemId == itemId).FirstOrDefault();
                 this.DataContext = item;
                 await getImg();
                 btn_units.IsEnabled = true;
-                HelpClass.EndAwait(grid_main);
+                HelpClass.clearValidate(requiredControlList,this);
+                //HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_main);
+                //HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1292,5 +1304,7 @@ namespace Restaurant.View.catalog.rawMaterials
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+
     }
 }

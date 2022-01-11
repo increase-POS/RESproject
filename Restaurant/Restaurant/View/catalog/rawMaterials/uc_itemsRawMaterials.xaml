@@ -366,7 +366,8 @@
                         <Grid   >
                             <ComboBox x:Name="cb_type"    SelectedValue="{Binding type, Mode=OneWay}"
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
-                                  materialDesign:HintAssist.Hint="type..."  
+                                  materialDesign:HintAssist.Hint="type..." 
+                                      SelectionChanged="ValidateEmpty_SelectionChanged"
                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                   TextBlock.FontSize="12"  
                                   Grid.Column="0" Height="40"  Margin="4,0"

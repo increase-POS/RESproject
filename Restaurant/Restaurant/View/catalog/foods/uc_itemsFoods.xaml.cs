@@ -1021,16 +1021,17 @@ namespace Restaurant.View.catalog.foods
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
+                //HelpClass.StartAwait(grid_main);
                 item = items.Where(x => x.itemId == itemId).FirstOrDefault();
                 this.DataContext = item;
                 drawBarcode(item.barcode);
                 await getImg();
-                HelpClass.EndAwait(grid_main);
+                HelpClass.clearValidate(requiredControlList,this);
+                //HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_main);
+                //HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
