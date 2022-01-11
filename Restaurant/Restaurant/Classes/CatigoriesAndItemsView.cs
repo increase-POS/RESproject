@@ -4,6 +4,7 @@ using Restaurant.View;
 using Restaurant.View.catalog;
 using Restaurant.View.catalog.foods;
 using Restaurant.View.catalog.rawMaterials;
+using Restaurant.View.kitchen;
 using Restaurant.View.sales;
 using Restaurant.View.storage;
 using Restaurant.View.windows;
@@ -29,6 +30,7 @@ namespace Restaurant.Classes
         public uc_diningHall ucdiningHall;
         public uc_itemsRawMaterials ucitemsRawMaterials;
         public uc_itemsFoods ucitemsFoods;
+        public uc_menuSettings ucmenuSettings;
         public wd_purchaseItems wdPurchaseItems;
 
         public Grid gridCatigories;
@@ -69,6 +71,10 @@ namespace Restaurant.Classes
             if (ucitemsFoods != null)
             {
                 ucitemsFoods.ChangeItemIdEvent(idItem);
+            }
+            if (ucmenuSettings != null)
+            {
+                ucmenuSettings.ChangeItemIdEvent(idItem);
             }
             if (wdPurchaseItems != null)
             {
