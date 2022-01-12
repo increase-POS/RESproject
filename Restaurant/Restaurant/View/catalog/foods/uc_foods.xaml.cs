@@ -74,7 +74,20 @@ namespace Restaurant.View.catalog.foods
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
+        private void Btn_package_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button;
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_package.Instance);
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private void Btn_tags_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -102,6 +115,6 @@ namespace Restaurant.View.catalog.foods
             }
         }
 
-       
+        
     }
 }
