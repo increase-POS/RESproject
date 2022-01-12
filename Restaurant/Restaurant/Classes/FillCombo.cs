@@ -95,7 +95,7 @@ namespace Restaurant.Classes
         }
         #endregion
         #region ItemTypeSales
-        static public List<string> salesTypes = new List<string>() { "SalesNormal" };
+        static public List<string> salesTypes = new List<string>() { "SalesNormal", "packageItems" };
 
         #endregion
         #region ItemTypePurchase
@@ -164,13 +164,13 @@ namespace Restaurant.Classes
                 await RefreshCategory();
             cmb.ItemsSource = categoriesList.Where(x => x.type == "s").ToList();
             cmb.SelectedValuePath = "categoryId";
-            cmb.DisplayMemberPath = "name";
+            //cmb.DisplayMemberPath = "name";
             #endregion
         }
         #endregion
         #region tags
         public static Tag tag = new Tag();
-        public static async void fillTags(ComboBox cmb, int categoryId)
+        public static async Task fillTags(ComboBox cmb, int categoryId)
         {
             var tags = await tag.Get(categoryId);
             cmb.ItemsSource = tags.ToList();
