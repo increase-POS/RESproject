@@ -25,11 +25,10 @@ namespace Restaurant.Classes
     public class CatigoriesAndItemsView 
     {
 
-
-
         public uc_diningHall ucdiningHall;
         public uc_itemsRawMaterials ucitemsRawMaterials;
         public uc_itemsFoods ucitemsFoods;
+        public uc_package ucpackage;
         public uc_menuSettings ucmenuSettings;
         public wd_purchaseItems wdPurchaseItems;
 
@@ -71,6 +70,10 @@ namespace Restaurant.Classes
             if (ucitemsFoods != null)
             {
                 ucitemsFoods.ChangeItemIdEvent(idItem);
+            }
+            if (ucpackage != null)
+            {
+                ucpackage.ChangeItemIdEvent(idItem);
             }
             if (ucmenuSettings != null)
             {
