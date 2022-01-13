@@ -307,14 +307,15 @@
                     materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                     Margin="5 0"  Foreground="White"  />
+                <Button Content="kitchen"  Width="100" Height="40"
+                    materialDesign:ButtonAssist.CornerRadius="7"
+                          Background="{StaticResource White}" BorderBrush="{x:Null}"
+                    Margin="5 0"  Foreground="{StaticResource SecondColor}"  />
                 <Button Content="Customer"  Width="100" Height="40"
                     materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource White}" BorderBrush="{x:Null}"
                     Margin="5 0"  Foreground="{StaticResource SecondColor}"  />
-                <Button Content="Delivery"  Width="100" Height="40"
-                    materialDesign:ButtonAssist.CornerRadius="7"
-                          Background="{StaticResource White}" BorderBrush="{x:Null}"
-                    Margin="5 0"  Foreground="{StaticResource SecondColor}"  />
+               
                 <Button Content="Discount"  Width="100" Height="40"
                     materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource White}" BorderBrush="{x:Null}"
