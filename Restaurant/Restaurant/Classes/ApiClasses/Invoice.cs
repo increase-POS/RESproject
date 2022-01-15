@@ -61,6 +61,17 @@ namespace Restaurant.Classes
 
 
     }
+    public class invoiceTables
+    {
+        public int invTableId { get; set; }
+        public int invoiceId { get; set; }
+        public int tableId { get; set; }
+        public byte isActive { get; set; }
+        public Nullable<System.DateTime> createDate { get; set; }
+        public Nullable<System.DateTime> updateDate { get; set; }
+        public Nullable<int> createUserId { get; set; }
+        public Nullable<int> updateUserId { get; set; }
+    }
     public  class CouponInvoice
     {
         public int id { get; set; }
