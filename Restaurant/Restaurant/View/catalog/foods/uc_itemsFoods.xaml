@@ -367,10 +367,10 @@
                                          Text="{Binding price, Mode=OneWay}"
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="price..."    
-                           Foreground="#4E4E4E"  TextBlock.FontSize="12"  
+                                        Foreground="#4E4E4E"  TextBlock.FontSize="12"  
                                      BorderThickness="0" Tag="decimal"
                                  BorderBrush="AliceBlue" MaxLength="100" PreviewTextInput="Number_PreviewTextInput"
-                    materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                   Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
 
                                 <Path Fill="#E81123" x:Name="p_error_price" Stretch="Fill" Margin="5,5,15,5"

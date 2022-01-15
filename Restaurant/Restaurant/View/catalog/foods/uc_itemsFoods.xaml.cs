@@ -199,12 +199,19 @@ namespace Restaurant.View.catalog.foods
                             saleItemUnit.itemId = item.itemId;
                             saleItemUnit.isActive = 1;
                             decimal price = 0;
+                            decimal priceWithServ = 0;
                             try
                             {
                                 price = decimal.Parse(tb_price.Text);
+                                priceWithServ = decimal.Parse(tb_priceWithService.Text);
                             }
                             catch { }
+                            if (priceWithServ != 0 && price == 0)
+                                price = priceWithServ;
+                            else if (price != 0 && priceWithServ == 0)
+                                priceWithServ = price;
                             saleItemUnit.price = price;
+                            saleItemUnit.priceWithService = priceWithServ;
                             saleItemUnit.barcode = tb_barcode.Text;
                             saleItemUnit.unitValue = 1;
                             saleItemUnit.taxes = 0;
@@ -272,12 +279,19 @@ namespace Restaurant.View.catalog.foods
                             saleItemUnit.unitId = saleItemUnit.subUnitId = FillCombo.saleUnit.unitId;
                             saleItemUnit.itemId = item.itemId;
                             decimal price = 0;
+                            decimal priceWithServ = 0;
                             try
                             {
                                 price = decimal.Parse(tb_price.Text);
+                                priceWithServ = decimal.Parse(tb_priceWithService.Text);
                             }
                             catch { }
+                            if (priceWithServ != 0 && price == 0)
+                                price = priceWithServ;
+                            else if (price != 0 && priceWithServ == 0)
+                                priceWithServ = price;
                             saleItemUnit.price = price;
+                            saleItemUnit.priceWithService = priceWithServ;
                             saleItemUnit.barcode = tb_barcode.Text;
                             saleItemUnit.unitValue = 1;
                             saleItemUnit.taxes = 0;
@@ -530,6 +544,7 @@ namespace Restaurant.View.catalog.foods
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         //private async void Dg_item_SelectionChanged(object sender, SelectionChangedEventArgs e)
         //{
         //    try
@@ -1414,6 +1429,7 @@ namespace Restaurant.View.catalog.foods
             return checkDigit + randomBarcode;
 
         }
-        #endregion
+
+        #endregion        
     }
 }
