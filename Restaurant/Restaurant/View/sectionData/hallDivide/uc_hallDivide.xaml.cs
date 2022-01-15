@@ -52,7 +52,17 @@ namespace Restaurant.View.sectionData.hallDivide
 
         private void Btn_tables_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_tables.Instance);
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_hallSections_Click(object sender, RoutedEventArgs e)

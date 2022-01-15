@@ -2812,4 +2812,7 @@
   <data name="trLack" xml:space="preserve">
     <value>احتياجات</value>
   </data>
+  <data name="trPersonsCount" xml:space="preserve">
+    <value>عدد الأشخاص</value>
+  </data>
 </root>

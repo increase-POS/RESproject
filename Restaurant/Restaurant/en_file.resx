@@ -2830,4 +2830,7 @@ Please add Email in setting</value>
   <data name="trLack" xml:space="preserve">
     <value>Lack</value>
   </data>
+  <data name="trPersonsCount" xml:space="preserve">
+    <value>Persons count</value>
+  </data>
 </root>

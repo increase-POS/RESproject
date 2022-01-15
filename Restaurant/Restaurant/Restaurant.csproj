@@ -202,6 +202,7 @@
     <Compile Include="Classes\ApiClasses\ShippingCompanies.cs" />
     <Compile Include="Classes\ApiClasses\StorageCost.cs" />
     <Compile Include="Classes\ApiClasses\SysEmails.cs" />
+    <Compile Include="Classes\ApiClasses\Tables.cs" />
     <Compile Include="Classes\ApiClasses\Tag.cs" />
     <Compile Include="Classes\ApiClasses\Unit.cs" />
     <Compile Include="Classes\BillDetails.cs" />
@@ -305,6 +306,9 @@
     </Compile>
     <Compile Include="View\sectionData\hallDivide\uc_hallSections.xaml.cs">
       <DependentUpon>uc_hallSections.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sectionData\hallDivide\uc_tables.xaml.cs">
+      <DependentUpon>uc_tables.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\sectionData\persons\uc_customers.xaml.cs">
       <DependentUpon>uc_customers.xaml</DependentUpon>
@@ -569,6 +573,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\sectionData\hallDivide\uc_hallSections.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sectionData\hallDivide\uc_tables.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
