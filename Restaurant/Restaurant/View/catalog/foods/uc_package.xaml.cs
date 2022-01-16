@@ -641,9 +641,11 @@ namespace Restaurant.View.catalog.foods
             item.price = 0;
             generateBarcode();
             this.DataContext = item;
+            //cb_tagId.ItemsSource = null;
             #region image
             HelpClass.clearImg(btn_image);
             #endregion
+
             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
             // last 
             HelpClass.clearValidate(requiredControlList, this);
@@ -1488,12 +1490,18 @@ namespace Restaurant.View.catalog.foods
         {
             try
             {
-
-                if (int.TryParse(cb_categoryId.SelectedValue.ToString(), out _int))
+                if (cb_categoryId.SelectedValue != null)
                 {
-                   await FillCombo.fillTags(cb_tagId, int.Parse(cb_categoryId.SelectedValue.ToString()));
+                    if (int.TryParse(cb_categoryId.SelectedValue.ToString(), out _int))
+                    {
+                        await FillCombo.fillTags(cb_tagId, int.Parse(cb_categoryId.SelectedValue.ToString()));
 
-                    cb_tagId.SelectedValue = item.tagId;
+                        cb_tagId.SelectedValue = item.tagId;
+                    }
+                }
+                else
+                {
+                    await FillCombo.fillTags(cb_tagId, 0);
                 }
             }
             catch (Exception ex)
