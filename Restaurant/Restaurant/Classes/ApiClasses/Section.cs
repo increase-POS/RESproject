@@ -18,6 +18,7 @@ namespace Restaurant.Classes
     {
         public int sectionId { get; set; }
         public string name { get; set; }
+        public string details { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
