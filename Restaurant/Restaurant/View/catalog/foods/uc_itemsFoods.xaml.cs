@@ -184,6 +184,7 @@ namespace Restaurant.View.catalog.foods
                             item.code = tb_code.Text;
                             item.name = tb_name.Text;
                             item.details = tb_details.Text;
+                            item.notes = tb_notes.Text;
                             item.image = "";
                             item.isActive = 1;
                             if (cb_tagId.SelectedIndex != -1)
@@ -265,6 +266,7 @@ namespace Restaurant.View.catalog.foods
                             item.code = tb_code.Text;
                             item.name = tb_name.Text;
                             item.details = tb_details.Text;
+                            item.notes = tb_notes.Text;
                             item.image = "";
                             item.isActive = 1;
                             if(cb_tagId.SelectedIndex != -1)
@@ -349,7 +351,10 @@ namespace Restaurant.View.catalog.foods
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
                             if (w.isOk)
+                            {
                                 await activate();
+                                Clear();
+                            }
                         }
                         else
                         {
@@ -638,6 +643,7 @@ namespace Restaurant.View.catalog.foods
             #region image
             HelpClass.clearImg(btn_image);
             #endregion
+            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
@@ -1036,17 +1042,28 @@ namespace Restaurant.View.catalog.foods
         {
             try
             {
-                //HelpClass.StartAwait(grid_main);
+               HelpClass.StartAwait(grid_main);
                 item = items.Where(x => x.itemId == itemId).FirstOrDefault();
                 this.DataContext = item;
                 drawBarcode(item.barcode);
                 await getImg();
+                #region delete
+                if (item.canDelete)
+                    btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+                else
+                {
+                    if (item.isActive == 0)
+                        btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+                    else
+                        btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+                }
+                #endregion
                 HelpClass.clearValidate(requiredControlList,this);
-                //HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                //HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

@@ -211,6 +211,7 @@ namespace Restaurant.View.catalog.rawMaterials
                             item.code = tb_code.Text;
                             item.name = tb_name.Text;
                             item.details = tb_details.Text;
+                            item.notes = tb_notes.Text;
                             item.image = "";
                             item.taxes = taxes;
                             item.isActive = 1;
@@ -267,38 +268,39 @@ namespace Restaurant.View.catalog.rawMaterials
                         if (codeAvailable)
                         {
                             int? categoryId = null;
-                        if (cb_categoryId.SelectedIndex != -1)
-                            categoryId = (int)cb_categoryId.SelectedValue;
+                            if (cb_categoryId.SelectedIndex != -1)
+                                categoryId = (int)cb_categoryId.SelectedValue;
 
-                        int min = 0;
-                        int max = 0;
-                        decimal taxes = 0;
-                        if (tb_min.Text != "")
-                            min = int.Parse(tb_min.Text);
-                        if (tb_max.Text != "")
-                            max = int.Parse(tb_max.Text);
-                        if (tb_taxes.Text != "")
-                            taxes = decimal.Parse(tb_taxes.Text);
+                            int min = 0;
+                            int max = 0;
+                            decimal taxes = 0;
+                            if (tb_min.Text != "")
+                                min = int.Parse(tb_min.Text);
+                            if (tb_max.Text != "")
+                                max = int.Parse(tb_max.Text);
+                            if (tb_taxes.Text != "")
+                                taxes = decimal.Parse(tb_taxes.Text);
 
-                        Nullable<int> minUnitId = null;
-                        if (cb_minUnitId.SelectedIndex != -1)
-                            minUnitId = (int)cb_minUnitId.SelectedValue;
-                        Nullable<int> maxUnitId = null;
-                        if (cb_maxUnitId.SelectedIndex != -1)
-                            maxUnitId = (int)cb_maxUnitId.SelectedValue;
-                        item.code = tb_code.Text;
-                        item.name = tb_name.Text;
-                        item.details = tb_details.Text;
-                        item.taxes = taxes;
-                        item.min = min;
-                        item.max = max;
-                        item.categoryId = categoryId;
-                        item.updateUserId = MainWindow.userLogin.userId;
-                        item.minUnitId = minUnitId;
-                        item.maxUnitId = maxUnitId;
-                        item.type = cb_type.SelectedValue.ToString();
+                            Nullable<int> minUnitId = null;
+                            if (cb_minUnitId.SelectedIndex != -1)
+                                minUnitId = (int)cb_minUnitId.SelectedValue;
+                            Nullable<int> maxUnitId = null;
+                            if (cb_maxUnitId.SelectedIndex != -1)
+                                maxUnitId = (int)cb_maxUnitId.SelectedValue;
+                            item.code = tb_code.Text;
+                            item.name = tb_name.Text;
+                            item.details = tb_details.Text;
+                                item.notes = tb_notes.Text;
+                                item.taxes = taxes;
+                            item.min = min;
+                            item.max = max;
+                            item.categoryId = categoryId;
+                            item.updateUserId = MainWindow.userLogin.userId;
+                            item.minUnitId = minUnitId;
+                            item.maxUnitId = maxUnitId;
+                            item.type = cb_type.SelectedValue.ToString();
 
-                        int res = await item.save(item);
+                            int res = await item.save(item);
                             if (res == -1)// إظهار رسالة الترقية
                                 Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);
 
@@ -349,7 +351,10 @@ namespace Restaurant.View.catalog.rawMaterials
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
                             if (w.isOk)
+                            {
                                 await activate();
+                                Clear();
+                            }
                         }
                         else
                         {
@@ -623,6 +628,7 @@ namespace Restaurant.View.catalog.rawMaterials
             HelpClass.clearImg(btn_image);
             #endregion
             btn_units.IsEnabled = false;
+            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
@@ -1030,17 +1036,28 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             try
             {
-                //HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 item = items.Where(x => x.itemId == itemId).FirstOrDefault();
                 this.DataContext = item;
                 await getImg();
                 btn_units.IsEnabled = true;
+                #region delete
+                if (item.canDelete)
+                    btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+                else
+                {
+                    if (item.isActive == 0)
+                        btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+                    else
+                        btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+                }
+                #endregion
                 HelpClass.clearValidate(requiredControlList,this);
-                //HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                //HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

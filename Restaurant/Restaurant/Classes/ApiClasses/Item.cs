@@ -136,10 +136,13 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<List<Item>> GetSalesItems()
+        public async Task<List<Item>> GetSalesItems(string type = "")
         {
             List<Item> items = new List<Item>();
-            IEnumerable<Claim> claims = await APIResult.getList("items/GetSalesItems");
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("type", type);
+
+            IEnumerable<Claim> claims = await APIResult.getList("items/GetSalesItems",parameters);
 
             foreach (Claim c in claims)
             {

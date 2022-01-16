@@ -184,6 +184,7 @@ namespace Restaurant.View.catalog.foods
                             item.code = tb_code.Text;
                             item.name = tb_name.Text;
                             item.details = tb_details.Text;
+                            item.notes = tb_notes.Text;
                             item.image = "";
                             item.isActive = 1;
                             if (cb_tagId.SelectedIndex != -1)
@@ -200,12 +201,19 @@ namespace Restaurant.View.catalog.foods
                             saleItemUnit.itemId = item.itemId;
                             saleItemUnit.isActive = 1;
                             decimal price = 0;
+                            decimal priceWithServ = 0;
                             try
                             {
                                 price = decimal.Parse(tb_price.Text);
+                                priceWithServ = decimal.Parse(tb_priceWithService.Text);
                             }
                             catch { }
+                            if (priceWithServ != 0 && price == 0)
+                                price = priceWithServ;
+                            else if (price != 0 && priceWithServ == 0)
+                                priceWithServ = price;
                             saleItemUnit.price = price;
+                            saleItemUnit.priceWithService = priceWithServ;
                             saleItemUnit.barcode = tb_barcode.Text;
                             saleItemUnit.unitValue = 1;
                             saleItemUnit.taxes = 0;
@@ -259,6 +267,7 @@ namespace Restaurant.View.catalog.foods
                             item.code = tb_code.Text;
                             item.name = tb_name.Text;
                             item.details = tb_details.Text;
+                            item.notes = tb_notes.Text;
                             item.image = "";
                             item.isActive = 1;
                             if (cb_tagId.SelectedIndex != -1)
@@ -274,12 +283,19 @@ namespace Restaurant.View.catalog.foods
                             saleItemUnit.unitId = saleItemUnit.subUnitId = FillCombo.saleUnit.unitId;
                             saleItemUnit.itemId = item.itemId;
                             decimal price = 0;
+                            decimal priceWithServ = 0;
                             try
                             {
                                 price = decimal.Parse(tb_price.Text);
+                                priceWithServ = decimal.Parse(tb_priceWithService.Text);
                             }
                             catch { }
+                            if (priceWithServ != 0 && price == 0)
+                                price = priceWithServ;
+                            else if (price != 0 && priceWithServ == 0)
+                                priceWithServ = price;
                             saleItemUnit.price = price;
+                            saleItemUnit.priceWithService = priceWithServ;
                             saleItemUnit.barcode = tb_barcode.Text;
                             saleItemUnit.unitValue = 1;
                             saleItemUnit.taxes = 0;
@@ -337,7 +353,10 @@ namespace Restaurant.View.catalog.foods
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
                             if (w.isOk)
+                            {
                                 await activate();
+                                Clear();
+                            }
                         }
                         else
                         {
@@ -625,6 +644,7 @@ namespace Restaurant.View.catalog.foods
             #region image
             HelpClass.clearImg(btn_image);
             #endregion
+            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
@@ -1005,9 +1025,7 @@ namespace Restaurant.View.catalog.foods
         IEnumerable<Item> itemsQuery;
         async Task<IEnumerable<Item>> RefreshItemsList()
         {
-            items = await item.GetSalesItems();
-            if (items != null)
-                items = items.Where(x => x.type == "packageItems").ToList();
+            items = await item.GetSalesItems("packageItems");
             return items;
         }
         void RefrishItemsCard(IEnumerable<Item> _items)
@@ -1023,17 +1041,28 @@ namespace Restaurant.View.catalog.foods
         {
             try
             {
-                //HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 item = items.Where(x => x.itemId == itemId).FirstOrDefault();
                 this.DataContext = item;
                 drawBarcode(item.barcode);
                 await getImg();
+                #region delete
+                if (item.canDelete)
+                    btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+                else
+                {
+                    if (item.isActive == 0)
+                        btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+                    else
+                        btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+                }
+                #endregion
                 HelpClass.clearValidate(requiredControlList, this);
-                //HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                //HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
