@@ -83,7 +83,7 @@ namespace Restaurant.View.sectionData.persons
             }
         }
 
-         string basicsPermission = "users_basics";
+        string basicsPermission = "users_basics";
         string storesPermission = "users_stores";
         User user = new User();
         IEnumerable<User> usersQuery;
@@ -101,7 +101,7 @@ namespace Restaurant.View.sectionData.persons
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "name", "lastname", "mobile", "username", "password" };
+                requiredControlList = new List<string> { "name", "lastname", "mobile", "job", "username", "password" };
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
@@ -117,7 +117,9 @@ namespace Restaurant.View.sectionData.persons
                 btn_stores.IsEnabled = false;
                 await FillCombo.fillCountries(cb_areaMobile);
                 await FillCombo.fillCountries(cb_areaPhone);
-                await fillJobCombo();
+                FillCombo.FillUserJob(cb_job);
+
+                //await fillJobCombo();
                 Keyboard.Focus(tb_name);
                 await RefreshUsersList();
                 await Search();
@@ -131,7 +133,6 @@ namespace Restaurant.View.sectionData.persons
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private void translate()
         {
 
@@ -316,7 +317,7 @@ namespace Restaurant.View.sectionData.persons
         {
             try
             {//delete
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") || HelpClass.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") )
                 {
                     HelpClass.StartAwait(grid_main);
                     if (user.userId != 0)
