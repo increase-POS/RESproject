@@ -197,6 +197,7 @@
     <Compile Include="Classes\ApiClasses\NotificationUser.cs" />
     <Compile Include="Classes\ApiClasses\Offer.cs" />
     <Compile Include="Classes\ApiClasses\Pos.cs" />
+    <Compile Include="Classes\ApiClasses\reservations.cs" />
     <Compile Include="Classes\ApiClasses\Section.cs" />
     <Compile Include="Classes\ApiClasses\setValues.cs" />
     <Compile Include="Classes\ApiClasses\ShippingCompanies.cs" />
@@ -276,6 +277,9 @@
     </Compile>
     <Compile Include="View\sales\uc_diningHall.xaml.cs">
       <DependentUpon>uc_diningHall.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sales\uc_reservations.xaml.cs">
+      <DependentUpon>uc_reservations.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\sales\uc_sales.xaml.cs">
       <DependentUpon>uc_sales.xaml</DependentUpon>
@@ -533,6 +537,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\sales\uc_diningHall.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sales\uc_reservations.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
