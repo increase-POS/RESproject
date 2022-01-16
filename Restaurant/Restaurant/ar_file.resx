@@ -2366,7 +2366,7 @@
     <value>هذا الحقل إجباري</value>
   </data>
   <data name="trAdmin" xml:space="preserve">
-    <value>مدير</value>
+    <value>مدير النظام</value>
   </data>
   <data name="trEmployee" xml:space="preserve">
     <value>موظف</value>
@@ -2814,5 +2814,80 @@
   </data>
   <data name="trPersonsCount" xml:space="preserve">
     <value>عدد الأشخاص</value>
+  </data>
+  <data name="trAccountant" xml:space="preserve">
+    <value>محاسب</value>
+  </data>
+  <data name="trAssistantManager" xml:space="preserve">
+    <value>مساعد مدير</value>
+  </data>
+  <data name="trCashier" xml:space="preserve">
+    <value>محاسب الزبائن</value>
+  </data>
+  <data name="trChef" xml:space="preserve">
+    <value>طاهي</value>
+  </data>
+  <data name="trCleaningEmployee" xml:space="preserve">
+    <value>عامل تنظيف</value>
+  </data>
+  <data name="trDeliveryEmployee" xml:space="preserve">
+    <value>موظف التوصيل</value>
+  </data>
+  <data name="trDeliveryManager" xml:space="preserve">
+    <value>مدير التوصيل</value>
+  </data>
+  <data name="trDishwasher" xml:space="preserve">
+    <value>غاسل الأطباق</value>
+  </data>
+  <data name="trExecutiveChef" xml:space="preserve">
+    <value>رئيس الطهاة</value>
+  </data>
+  <data name="trGeneralManager" xml:space="preserve">
+    <value>مدير عام</value>
+  </data>
+  <data name="trHeadWaiter" xml:space="preserve">
+    <value>رئيس الندل</value>
+  </data>
+  <data name="trKitchenEmployee" xml:space="preserve">
+    <value>موظف مطبخ</value>
+  </data>
+  <data name="trKitchenManager" xml:space="preserve">
+    <value>مدير المطبخ</value>
+  </data>
+  <data name="trPurchasingManager" xml:space="preserve">
+    <value>مدير المشتريات</value>
+  </data>
+  <data name="trReceptionist" xml:space="preserve">
+    <value>موظف الاستقبال</value>
+  </data>
+  <data name="trSalesManager" xml:space="preserve">
+    <value>مدير المبيعات</value>
+  </data>
+  <data name="trSousChef" xml:space="preserve">
+    <value>مساعد رئيس الطهاة</value>
+  </data>
+  <data name="trWaiter" xml:space="preserve">
+    <value>نادل</value>
+  </data>
+  <data name="trWarehouseEmployee" xml:space="preserve">
+    <value>موظف المخزن</value>
+  </data>
+  <data name="trWarehouseManager" xml:space="preserve">
+    <value>مدير المخزن</value>
+  </data>
+  <data name="trAppetizers" xml:space="preserve">
+    <value>المقبلات</value>
+  </data>
+  <data name="trBeverages" xml:space="preserve">
+    <value>المشروبات</value>
+  </data>
+  <data name="trDesserts" xml:space="preserve">
+    <value>حلويات</value>
+  </data>
+  <data name="trFastFood" xml:space="preserve">
+    <value>الوجبات السريعه</value>
+  </data>
+  <data name="trMainCourses" xml:space="preserve">
+    <value>الوجبات الرئيسية</value>
   </data>
 </root>

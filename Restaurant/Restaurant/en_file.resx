@@ -2381,7 +2381,7 @@ Please add Email in setting</value>
     <value>is required</value>
   </data>
   <data name="trAdmin" xml:space="preserve">
-    <value>admin</value>
+    <value>System admin</value>
   </data>
   <data name="trEmployee" xml:space="preserve">
     <value>Employee</value>
@@ -2832,5 +2832,86 @@ Please add Email in setting</value>
   </data>
   <data name="trPersonsCount" xml:space="preserve">
     <value>Persons count</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="trAccountant" xml:space="preserve">
+    <value>Accountant</value>
+  </data>
+  <data name="trAssistantManager" xml:space="preserve">
+    <value>Assistant Manager</value>
+  </data>
+  <data name="trCashier" xml:space="preserve">
+    <value>Cashier</value>
+  </data>
+  <data name="trChef" xml:space="preserve">
+    <value>Chef</value>
+  </data>
+  <data name="trCleaningEmployee" xml:space="preserve">
+    <value>Cleaning Employee</value>
+  </data>
+  <data name="trDeliveryEmployee" xml:space="preserve">
+    <value>Delivery Employee</value>
+  </data>
+  <data name="trDeliveryManager" xml:space="preserve">
+    <value>Delivery Manager</value>
+  </data>
+  <data name="trDishwasher" xml:space="preserve">
+    <value>Dishwasher</value>
+  </data>
+  <data name="trExecutiveChef" xml:space="preserve">
+    <value>Executive Chef</value>
+  </data>
+  <data name="trGeneralManager" xml:space="preserve">
+    <value>General Manager</value>
+  </data>
+  <data name="trHeadWaiter" xml:space="preserve">
+    <value>Head Waiter</value>
+  </data>
+  <data name="trKitchenEmployee" xml:space="preserve">
+    <value>Kitchen Employee</value>
+  </data>
+  <data name="trKitchenManager" xml:space="preserve">
+    <value>Kitchen Manager</value>
+  </data>
+  <data name="trPurchasingManager" xml:space="preserve">
+    <value>Purchasing Manager</value>
+  </data>
+  <data name="trReceptionist" xml:space="preserve">
+    <value>Receptionist</value>
+  </data>
+  <data name="trSalesManager" xml:space="preserve">
+    <value>Sales Manager</value>
+  </data>
+  <data name="trServerUser" xml:space="preserve">
+    <value>Server</value>
+  </data>
+  <data name="trSousChef" xml:space="preserve">
+    <value>Sous Chef</value>
+  </data>
+  <data name="trWaiter" xml:space="preserve">
+    <value>Waiter</value>
+  </data>
+  <data name="trWarehouseEmployee" xml:space="preserve">
+    <value>Warehouse Employee</value>
+  </data>
+  <data name="trWarehouseManager" xml:space="preserve">
+    <value>Warehouse Manager</value>
+  </data>
+  <data name="trAppetizers" xml:space="preserve">
+    <value>Appetizers</value>
+  </data>
+  <data name="trBeverages" xml:space="preserve">
+    <value>Beverages</value>
+  </data>
+  <data name="trDesserts" xml:space="preserve">
+    <value>Desserts</value>
+  </data>
+  <data name="trFastFood" xml:space="preserve">
+    <value>FastFood</value>
+  </data>
+  <data name="trMainCourses" xml:space="preserve">
+    <value>MainCourses</value>
   </data>
 </root>
