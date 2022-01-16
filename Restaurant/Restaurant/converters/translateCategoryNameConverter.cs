@@ -21,6 +21,23 @@ namespace Restaurant.converters
 
                 switch (s)
                 {
+                    //sales
+                    case "appetizers":
+                        s = MainWindow.resourcemanager.GetString("trAppetizers");
+                        break;
+                    case "beverages":
+                        s = MainWindow.resourcemanager.GetString("trBeverages");
+                        break;
+                    case "fastFood":
+                        s = MainWindow.resourcemanager.GetString("trFastFood");
+                        break;
+                    case "mainCourses":
+                        s = MainWindow.resourcemanager.GetString("trMainCourses");
+                        break;
+                    case "desserts":
+                        s = MainWindow.resourcemanager.GetString("trDesserts");
+                        break;
+                    //purchase
                     case "RawMaterials":
                         s = MainWindow.resourcemanager.GetString("trRawMaterials");
                         break;
@@ -33,11 +50,7 @@ namespace Restaurant.converters
                     case "Drinks":
                         s = MainWindow.resourcemanager.GetString("trDrinks");
                         break;
-                    default:
-                        s = s + "HelloWorld!!";
-                        break;
                 }
-
                 return s;
             }
             else return value;

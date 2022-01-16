@@ -155,7 +155,7 @@ namespace Restaurant.Classes
         public int invStatusId { get; set; }
 
         public string createrUserName { get; set; }
-
+        public Nullable<int> waiterId { get; set; }
 
         // for report
         public int countP { get; set; }

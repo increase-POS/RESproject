@@ -94,6 +94,47 @@ namespace Restaurant.Classes
             #endregion
         }
         #endregion
+        #region job
+        static public void FillUserJob(ComboBox cmb)
+        {
+            #region fill process type
+            var typelist = new[] {
+                //manager
+                new { Text = MainWindow.resourcemanager.GetString("trAdmin")       , Value = "admin" },
+                new { Text = MainWindow.resourcemanager.GetString("trGeneralManager")       , Value = "generalManager" },
+                new { Text = MainWindow.resourcemanager.GetString("trAssistantManager")       , Value = "assistantManager" },
+                new { Text = MainWindow.resourcemanager.GetString("trPurchasingManager")       , Value = "purchasingManager" },
+                new { Text = MainWindow.resourcemanager.GetString("trSalesManager")       , Value = "salesManager" },
+                new { Text = MainWindow.resourcemanager.GetString("trAccountant")       , Value = "accountant" },
+                //Kitchen
+                new { Text = MainWindow.resourcemanager.GetString("trKitchenManager")       , Value = "kitchenManager" },
+                new { Text = MainWindow.resourcemanager.GetString("trExecutiveChef")       , Value = "executiveChef" },
+                new { Text = MainWindow.resourcemanager.GetString("trSousChef")       , Value = "sousChef" },
+                new { Text = MainWindow.resourcemanager.GetString("trChef")       , Value = "chef" },
+                new { Text = MainWindow.resourcemanager.GetString("trDishwasher")       , Value = "dishwasher" },
+                new { Text = MainWindow.resourcemanager.GetString("trKitchenEmployee")       , Value = "kitchenEmployee" },
+                //hall
+                new { Text = MainWindow.resourcemanager.GetString("trHeadWaiter")       , Value = "Headwaiter" },
+                new { Text = MainWindow.resourcemanager.GetString("trWaiter")       , Value = "waiter" },
+                new { Text = MainWindow.resourcemanager.GetString("trCashier")       , Value = "cashier" },
+                new { Text = MainWindow.resourcemanager.GetString("trReceptionist")       , Value = "receptionist" },
+                //warehouse manager
+                new { Text = MainWindow.resourcemanager.GetString("trWarehouseManager")       , Value = "warehouseManager" },
+                new { Text = MainWindow.resourcemanager.GetString("trWarehouseEmployee")       , Value = "warehouseEmployee" },
+                //Delivery
+                new { Text = MainWindow.resourcemanager.GetString("trDeliveryManager")       , Value = "deliveryManager" },
+                new { Text = MainWindow.resourcemanager.GetString("trDeliveryEmployee")       , Value = "deliveryEmployee" },
+                //other
+                new { Text = MainWindow.resourcemanager.GetString("trCleaningEmployee")       , Value = "cleaningEmployee" },
+                new { Text = MainWindow.resourcemanager.GetString("trEmployee")       , Value = "employee" },
+                 };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = typelist;
+            //cmb.SelectedIndex = 0;
+            #endregion
+        }
+        #endregion
         #region ItemTypeSales
         static public List<string> salesTypes = new List<string>() { "SalesNormal", "packageItems" };
 
@@ -302,6 +343,27 @@ namespace Restaurant.Classes
             cmb.SelectedIndex = -1;
         }
         #endregion
+        #region Customers
+        static public List<Agent> customersList;
+        static public async Task<IEnumerable<Agent>> RefreshCustomers()
+        {
+            customersList = await agent.GetAgentsActive("c");
+            agent = new Agent();
+            agent.agentId = 0;
+            agent.name = "-";
+            customersList.Insert(0, agent);
+            return customersList;
+        }
+        static public async Task FillComboCustomers(ComboBox cmb)
+        {
+            if (customersList is null)
+                await RefreshCustomers();
+            cmb.ItemsSource = customersList;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "agentId";
+            cmb.SelectedIndex = -1;
+        }
+        #endregion
         #endregion
         #region fill cards combo
         static public Card card = new Card();
@@ -321,7 +383,6 @@ namespace Restaurant.Classes
             cmb.SelectedIndex = -1;
         }
         #endregion
-
         #region section
         static public Section section = new Section();
         static public List<Section> sectionsByBranchList;
@@ -340,7 +401,6 @@ namespace Restaurant.Classes
             cmb.SelectedIndex = -1;
         }
         #endregion
-
         #region location
 
         static public Location location = new Location();
@@ -375,7 +435,6 @@ namespace Restaurant.Classes
             #endregion
         }
         #endregion
-
         #region items
         static public Item item = new Item();
         static public List<Item> purchaseItems;
