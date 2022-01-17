@@ -681,5 +681,55 @@ namespace Restaurant.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        private async void Cb_table_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                /*
+                string s = _BarcodeStr;
+                if (cb_coupon.SelectedIndex != -1)
+                {
+                    couponModel = coupons.ToList().Find(c => c.cId == (int)cb_coupon.SelectedValue);
+                    if (couponModel != null)
+                    {
+                        s = couponModel.barcode;
+                        await dealWithBarcode(s);
+                    }
+                    cb_coupon.SelectedIndex = -1;
+                    cb_coupon.SelectedItem = "";
+                }
+                */
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_clearTable_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                /*
+                _Discount = 0;
+                selectedCoupons.Clear();
+                lst_coupons.Items.Clear();
+                cb_coupon.SelectedIndex = -1;
+                cb_coupon.SelectedItem = "";
+                refreshTotalValue();
+                */
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

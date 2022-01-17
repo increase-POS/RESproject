@@ -49,19 +49,15 @@
                     </Border>
                     <Border Background="White" Grid.Column="1" CornerRadius="10"    Margin="10,5,10,5"  BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition  Width="auto"  />
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                           
 
                             <TextBox x:Name="tb_search" Grid.Column="1"    Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="Enter Here To Start Search ...."  
                                      Foreground="#4E4E4E"  TextChanged="Tb_search_TextChanged"
                                       MaxLength="50" 
-                                     BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"    />
+                                    BorderBrush="#737373"   BorderThickness="0" Margin="4,0"  />
                         </Grid>
                     </Border>
                     <Button   FlowDirection="LeftToRight"  Width="40" Height="40" 
@@ -167,7 +163,7 @@
                         <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                         <DataGrid  Margin="5,5,5,5" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
-                       x:Name="dg_user" SelectionChanged="Dg_user_SelectionChanged"  AutoGenerateColumns="False"   Background="White"
+                       x:Name="dg_table" SelectionChanged="Dg_user_SelectionChanged"  AutoGenerateColumns="False"   Background="White"
                         ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
                             <DataGrid.OpacityMask>
                                 <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
@@ -263,7 +259,7 @@
                     <Grid  Grid.Row="1" >
                         
                         <DataGrid  Margin="5,5,5,5" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
-                       x:Name="dg_user1" SelectionChanged="Dg_user_SelectionChanged"  AutoGenerateColumns="False"   Background="White"
+                       x:Name="dg_reservations" SelectionChanged="Dg_user_SelectionChanged"  AutoGenerateColumns="False"   Background="White"
                         ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
                             <DataGrid.OpacityMask>
                                 <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
@@ -548,8 +544,46 @@
                             </Path>
                         </Grid>
                     </Border>
+                    <Grid   Margin="0" >
+                        <Grid.RowDefinitions >
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="1"   >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Row="0" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                <Grid >
+                                    <ComboBox x:Name="cb_table" Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"  
+                                 materialDesign:HintAssist.Hint="table..." 
+                                Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                               IsEditable="True" Height="40" 
+                               BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
+                                  Grid.Row="0" SelectionChanged="Cb_table_SelectionChanged"   />
+                                    <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5"
+                              HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
+                              VerticalAlignment="Center" Width="15"  Height="15"
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z"/>
+                                </Grid>
+                            </Border>
+                            <Button Grid.Column="1" x:Name="btn_clearTable"  Padding="0" HorizontalAlignment="Right"
+                                        Background="{x:Null}" BorderBrush="{x:Null}" 
+                                        Margin="5,1,10,1"  Click="Btn_clearTable_Click">
+                                <materialDesign:PackIcon Foreground="{StaticResource MainColor}" Kind="RefreshCircle"  
+                              HorizontalAlignment="Center"  
+                         VerticalAlignment="Center" Width="30" Height="30"/>
+                            </Button>
+                        </Grid>
+                        <ListView Grid.Row="2" x:Name="lst_tables"/>
+                        <Separator Margin="10,0" Grid.Row="3"  Background="#DFDFDF" VerticalAlignment="Center" Width="auto" />
+                    </Grid>
 
-                   
                     <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                             <TextBox  x:Name="tb_notes" Text="{Binding notes, Mode=OneWay}"
