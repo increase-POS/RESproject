@@ -170,13 +170,9 @@ namespace Restaurant.View.sectionData.hallDivide
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
-
-
-
                     table = new Tables();
                     if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
-
                         table = new Tables();
                         table.name = tb_name.Text;
                         if (tables.Where(x => x.name == table.name && x.branchId == MainWindow.branchLogin.branchId).Count() == 0)
@@ -186,9 +182,7 @@ namespace Restaurant.View.sectionData.hallDivide
                             table.createUserId = MainWindow.userLogin.userId;
                             table.updateUserId = MainWindow.userLogin.userId;
                             table.isActive = 1;
-                            table.sectionId = null;
                             table.branchId = MainWindow.branchLogin.branchId;
-
 
                             int s = await table.save(table);
                             if (s <= 0)
@@ -197,9 +191,8 @@ namespace Restaurant.View.sectionData.hallDivide
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
-
                                 Clear();
-                                await RefreshTablessList();
+                                await RefreshTablesList();
                                 await Search();
                             }
                         }
@@ -229,27 +222,21 @@ namespace Restaurant.View.sectionData.hallDivide
                     HelpClass.StartAwait(grid_main);
                     if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
-
-
-
                         table.name = tb_name.Text;
                         if (tables.Where(x => x.name == table.name && x.branchId == MainWindow.branchLogin.branchId && x.tableId != table.tableId).Count() == 0)
                         {
                             table.personsCount =int.Parse(tb_personsCount.Text);
                             table.notes = tb_notes.Text;
                             table.updateUserId = MainWindow.userLogin.userId;
-
-
+                            table.sectionId = null;
                             int s = await table.save(table);
                             if (s <= 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                                await RefreshTablessList();
+                                await RefreshTablesList();
                                 await Search();
-
-
                             }
                         }
                         else
@@ -287,7 +274,12 @@ namespace Restaurant.View.sectionData.hallDivide
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
                             if (w.isOk)
+                            {
                                 await activate();
+                                await RefreshTablesList();
+                                await Search();
+                                Clear();
+                            }
                         }
                         else
                         {
@@ -314,7 +306,7 @@ namespace Restaurant.View.sectionData.hallDivide
                                 {
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
-                                    await RefreshTablessList();
+                                    await RefreshTablesList();
                                     await Search();
                                     Clear();
                                 }
@@ -342,7 +334,7 @@ namespace Restaurant.View.sectionData.hallDivide
             else
             {
                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
-                await RefreshTablessList();
+                await RefreshTablesList();
                 await Search();
             }
         }
@@ -368,7 +360,7 @@ namespace Restaurant.View.sectionData.hallDivide
             {
                 HelpClass.StartAwait(grid_main);
                 if (tables is null)
-                    await RefreshTablessList();
+                    await RefreshTablesList();
                 tgl_tableState = 1;
                 await Search();
                 HelpClass.EndAwait(grid_main);
@@ -385,7 +377,7 @@ namespace Restaurant.View.sectionData.hallDivide
             {
                 HelpClass.StartAwait(grid_main);
                 if (tables is null)
-                    await RefreshTablessList();
+                    await RefreshTablesList();
                 tgl_tableState = 0;
                 await Search();
                 HelpClass.EndAwait(grid_main);
@@ -452,7 +444,7 @@ namespace Restaurant.View.sectionData.hallDivide
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
-                await RefreshTablessList();
+                await RefreshTablesList();
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -469,17 +461,17 @@ namespace Restaurant.View.sectionData.hallDivide
         {
             //search
             if (tables is null)
-                await RefreshTablessList();
+                await RefreshTablesList();
             searchText = tb_search.Text.ToLower();
             tablesQuery = tables.Where(s => (
             s.name.ToLower().Contains(searchText)
             ) && s.isActive == tgl_tableState);
             RefreshTablessView();
         }
-        async Task<IEnumerable<Tables>> RefreshTablessList()
+        async Task<IEnumerable<Tables>> RefreshTablesList()
         {
-            tables = await table.Get();
-            tables = tables.Where(x => x.branchId == MainWindow.branchLogin.branchId );
+            tables = await table.Get(MainWindow.branchLogin.branchId);
+           // tables = tables.Where(x => x.branchId == MainWindow.branchLogin.branchId );
             return tables;
         }
         void RefreshTablessView()
@@ -492,7 +484,7 @@ namespace Restaurant.View.sectionData.hallDivide
         void Clear()
         {
             this.DataContext = new Tables();
-
+            dg_table.SelectedIndex = -1;
             // last 
             HelpClass.clearValidate(requiredControlList, this);
 
