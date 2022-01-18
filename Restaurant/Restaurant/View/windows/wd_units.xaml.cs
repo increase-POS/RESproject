@@ -589,16 +589,24 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        int _int = 0;
         private async void Cb_unitId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                if (cb_unitId.SelectedIndex != -1)
+                if (cb_unitId.SelectedValue != null)
                 {
-                    await FillCombo.FillSmallUnits(cb_subUnitId, (int)cb_unitId.SelectedValue, item.itemId);
-                    cb_subUnitId.SelectedValue = itemUnit.subUnitId;
-                    if(itemUnit.itemUnitId == 0)
-                        generateBarcode();
+                    if (int.TryParse(cb_unitId.SelectedValue.ToString(), out _int))
+                    {
+                        await FillCombo.FillSmallUnits(cb_subUnitId, (int)cb_unitId.SelectedValue, item.itemId);
+                        cb_subUnitId.SelectedValue = itemUnit.subUnitId;
+                        if (itemUnit.itemUnitId == 0)
+                            generateBarcode();
+                    }
+                }
+                else
+                {
+                    await FillCombo.FillSmallUnits(cb_subUnitId, -1, item.itemId);
                 }
             }
             catch (Exception ex)

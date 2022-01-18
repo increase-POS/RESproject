@@ -235,7 +235,7 @@ namespace Restaurant.View.storage.storageOperations
 
                                 await RefreshItemLocationsList();
                                 await Search();
-                               
+                                Clear();
                             }
                             else
                                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trTranseToSameLocation"), animation: ToasterAnimation.FadeIn);
@@ -255,30 +255,35 @@ namespace Restaurant.View.storage.storageOperations
         }
         #endregion
         #region events
+        int _int = 0;
         private async void Cb_sectionId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-
-                    HelpClass.StartAwait(grid_main);
-                if (cb_sectionId.SelectedIndex != -1)
-                    await FillCombo.FillComboLocationsBySection( cb_locationId , (int)cb_sectionId.SelectedValue);
-                    HelpClass.EndAwait(grid_main);
+                if (cb_sectionId.SelectedValue != null)
+                {
+                    if (int.TryParse(cb_sectionId.SelectedValue.ToString(), out _int))
+                    {
+                        await FillCombo.FillComboLocationsBySection(cb_locationId, (int)cb_sectionId.SelectedValue);
+                        cb_locationId.SelectedValue = itemLocation.locationId;
+                    }
+                }
+                else
+                {
+                    await FillCombo.FillComboLocationsBySection(cb_locationId, -1);
+                }
             }
             catch (Exception ex)
             {
-                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
         private async void search_Checking(object sender, RoutedEventArgs e)
         {
             try
-            {
-                
-                    HelpClass.StartAwait(grid_main);
+            {      
                 CheckBox cb = sender as CheckBox;
-                if (chk_freezone != null)
+                if (cb.IsFocused)
                 {
                     if (cb.Name == "chk_stored")
                     {
@@ -311,9 +316,10 @@ namespace Restaurant.View.storage.storageOperations
                         dg_itemsStorage.Columns[4].Visibility = Visibility.Collapsed;
                     }
                 }
+                HelpClass.StartAwait(grid_main);
                 await RefreshItemLocationsList();
                 await Search();
-
+                Clear();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -325,11 +331,8 @@ namespace Restaurant.View.storage.storageOperations
         }
         private void chk_uncheck(object sender, RoutedEventArgs e)
         {
-
             try
-            {
-                
-                    HelpClass.StartAwait(grid_main);
+            {               
                 CheckBox cb = sender as CheckBox;
                 if (cb.IsFocused)
                 {
@@ -339,14 +342,10 @@ namespace Restaurant.View.storage.storageOperations
                         chk_freezone.IsChecked = true;
                     else
                         chk_locked.IsChecked = true;
-                }
-                
-                    HelpClass.EndAwait(grid_main);
+                }                
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -364,53 +363,14 @@ namespace Restaurant.View.storage.storageOperations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Tgl_isActive_Checked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (itemLocations is null)
-                    await RefreshItemLocationsList();
-                tgl_branchState = 1;
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (itemLocations is null)
-                    await RefreshItemLocationsList();
-                tgl_branchState = 0;
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
                 Clear();
-                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
-                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -497,7 +457,7 @@ namespace Restaurant.View.storage.storageOperations
                 await refreshFreeZoneItemsLocations();
             else if (chk_locked.IsChecked == true)
                 await refreshLockedItems();
-            Clear();
+            
             return itemLocations;
         }
 
@@ -506,7 +466,7 @@ namespace Restaurant.View.storage.storageOperations
         void Clear()
         {
             this.DataContext = new ItemLocation();
-          
+            dg_itemsStorage.SelectedIndex = -1;
             // last 
             HelpClass.clearValidate(requiredControlList, this);
             btn_transfer.IsEnabled = false;
