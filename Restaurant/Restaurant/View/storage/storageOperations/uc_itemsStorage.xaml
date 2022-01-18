@@ -60,7 +60,7 @@
                                                           Unchecked="chk_uncheck"/>
                     <CheckBox x:Name="chk_freezone" 
                                                           Background="{StaticResource MainColor}"
-                                                          Content="Freezone"
+                                                          Content="Freezone" IsChecked="True"
                                                           Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
                                                           Checked="search_Checking"
                                                           Unchecked="chk_uncheck"/>

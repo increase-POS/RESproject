@@ -213,8 +213,12 @@ namespace Restaurant.Classes
         public static Tag tag = new Tag();
         public static async Task fillTags(ComboBox cmb, int categoryId)
         {
-            var tags = await tag.Get(categoryId);
-            cmb.ItemsSource = tags.ToList();
+            List<Tag> tags;
+            if (categoryId == -1)
+                tags = new List<Tag>();
+            else
+                tags = await tag.Get(categoryId);
+            cmb.ItemsSource = tags;
             cmb.SelectedValuePath = "tagId";
             cmb.DisplayMemberPath = "tagName";
         }
@@ -245,7 +249,11 @@ namespace Restaurant.Classes
         static public async Task FillSmallUnits(ComboBox cmb, int mainUnitId, int itemId)
         {
             #region Fill small units
-           var smallUnits = await unit.getSmallUnits(itemId, mainUnitId);
+            List<Unit> smallUnits;
+            if (mainUnitId == -1)
+                smallUnits = new List<Unit>();
+            else             
+                smallUnits = await unit.getSmallUnits(itemId, mainUnitId);
             cmb.ItemsSource = smallUnits.Where(u => u.name != "saleUnit").ToList();
             cmb.SelectedValuePath = "unitId";
             cmb.DisplayMemberPath = "name";
@@ -413,8 +421,13 @@ namespace Restaurant.Classes
         }
         static public async Task FillComboLocationsBySection(ComboBox cmb , int sectionId)
         {
-            await RefreshLocationsBySection(sectionId);
-            cmb.ItemsSource = locationsBySectionList;
+            if (sectionId == -1)
+                cmb.ItemsSource = new List<Location>();
+            else
+            {
+                await RefreshLocationsBySection(sectionId);
+                cmb.ItemsSource = locationsBySectionList;
+            }
             cmb.DisplayMemberPath = "name";
             cmb.SelectedValuePath = "locationId";
             cmb.SelectedIndex = -1;

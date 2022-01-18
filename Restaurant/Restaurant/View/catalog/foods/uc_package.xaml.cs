@@ -1501,7 +1501,7 @@ namespace Restaurant.View.catalog.foods
                 }
                 else
                 {
-                    await FillCombo.fillTags(cb_tagId, 0);
+                    await FillCombo.fillTags(cb_tagId, -1);
                 }
             }
             catch (Exception ex)
