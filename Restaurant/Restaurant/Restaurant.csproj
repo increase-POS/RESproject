@@ -220,12 +220,16 @@
       <DependentUpon>uc_squareCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="converters\deliveryTypeConverter.cs" />
+    <Compile Include="converters\enabledCouponConverter.cs" />
     <Compile Include="converters\SectionLocationFreeZoneConverter.cs" />
     <Compile Include="converters\translateCategoryNameConverter.cs" />
     <Compile Include="converters\unitItemsListConverter.cs" />
     <Compile Include="en_file.Designer.cs" />
     <Compile Include="View\accounts\uc_accounts.xaml.cs">
       <DependentUpon>uc_accounts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\accounts\uc_subscriptions.xaml.cs">
+      <DependentUpon>uc_subscriptions.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\catalog\foods\uc_foods.xaml.cs">
       <DependentUpon>uc_foods.xaml</DependentUpon>
@@ -271,6 +275,12 @@
     </Compile>
     <Compile Include="View\purchase\uc_purchaseOrder.xaml.cs">
       <DependentUpon>uc_purchaseOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sales\promotion\uc_coupon.xaml.cs">
+      <DependentUpon>uc_coupon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sales\promotion\uc_membership.xaml.cs">
+      <DependentUpon>uc_membership.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\sales\promotion\uc_promotion.xaml.cs">
       <DependentUpon>uc_promotion.xaml</DependentUpon>
@@ -407,6 +417,9 @@
     <Compile Include="View\windows\wd_returnInvoice.xaml.cs">
       <DependentUpon>wd_returnInvoice.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_subscriptionFees.xaml.cs">
+      <DependentUpon>wd_subscriptionFees.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_tags.xaml.cs">
       <DependentUpon>wd_tags.xaml</DependentUpon>
     </Compile>
@@ -472,6 +485,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\accounts\uc_subscriptions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\catalog\foods\uc_foods.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -529,6 +546,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\purchase\uc_purchaseOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sales\promotion\uc_coupon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sales\promotion\uc_membership.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -711,6 +736,10 @@
     <Page Include="View\windows\wd_returnInvoice.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_subscriptionFees.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_tags.xaml">
       <SubType>Designer</SubType>

@@ -16,6 +16,7 @@
             <converters:translateCategoryNameConverter x:Key="translateCategoryNameConverter"/>
             <converters:SectionLocationFreeZoneConverter x:Key="SectionLocationFreeZoneConverter"/>
             <converters:dateFrameConverter x:Key="dateFrameConverter"/>
+            <converters:enabledCouponConverter x:Key="enabledCouponConverter"/>
 
 
 
