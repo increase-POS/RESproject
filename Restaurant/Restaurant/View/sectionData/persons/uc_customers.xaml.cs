@@ -210,8 +210,10 @@ namespace Restaurant.View.sectionData.persons
                     agent.balance = 0;
                     agent.payType = payType;
                     agent.isLimited = (bool)tgl_hasCredit.IsChecked;
+                    agent.canReserve = (bool)tgl_canReserve.IsChecked;
+                    agent.disallowReason = tb_disallowReason.Text;
                     agent.createUserId = MainWindow.userLogin.userId;
-                    agent.updateUserId = MainWindow.userLogin.userId;
+                        agent.updateUserId = MainWindow.userLogin.userId;
                     agent.notes = tb_notes.Text;
                     agent.isActive = 1;
                     agent.maxDeserve = maxDeserveValue;
@@ -284,6 +286,8 @@ namespace Restaurant.View.sectionData.persons
                         agent.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
                     agent.payType = payType;
                     agent.isLimited = (bool)tgl_hasCredit.IsChecked;
+                    agent.canReserve = (bool)tgl_canReserve.IsChecked;
+                    agent.disallowReason = tb_disallowReason.Text;
                     agent.updateUserId = MainWindow.userLogin.userId;
                     agent.notes = tb_notes.Text;
                     agent.maxDeserve = maxDeserveValue;

@@ -651,7 +651,27 @@
                   Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
                         </Border>
                     </DockPanel>
+                    <DockPanel Grid.Row="9"  Margin="10,5,10,5">
+                        <TextBlock   x:Name="txt_canReserve"
+                                   Margin="0,0,5,0" Text="can reserve" Foreground="#6e6e6e"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <ToggleButton   x:Name="tgl_canReserve"  IsChecked="{Binding canReserve, Mode=OneWay}"
+                                        VerticalAlignment="Center" Padding="10,15,5,5"  
+                                      Margin="0" Height="13" Width="28" />
+                        <Border Grid.Row="8" CornerRadius="10" Margin="10,5,0,5" 
+                               x:Name="brd_disallowReason" Visibility="Hidden"  BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
 
+                            <TextBox x:Name="tb_disallowReason" Grid.Row="8"  Padding="10,0,5,0"  
+                                         Text="{Binding disallowReason, Mode=OneWay}"
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="reason..."    
+                           Foreground="#4E4E4E"  
+                                     BorderThickness="0"
+                                 BorderBrush="AliceBlue" MaxLength="100"  Tag="decimal" PreviewTextInput="Number_PreviewTextInput"
+                    materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                  Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
+                        </Border>
+                    </DockPanel>
 
                     <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
