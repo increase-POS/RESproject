@@ -282,6 +282,9 @@
     <Compile Include="View\sales\promotion\uc_membership.xaml.cs">
       <DependentUpon>uc_membership.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\sales\promotion\uc_offer.xaml.cs">
+      <DependentUpon>uc_offer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\sales\promotion\uc_promotion.xaml.cs">
       <DependentUpon>uc_promotion.xaml</DependentUpon>
     </Compile>
@@ -554,6 +557,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\sales\promotion\uc_membership.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sales\promotion\uc_offer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

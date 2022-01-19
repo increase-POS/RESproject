@@ -1,6 +1,5 @@
 ﻿using netoaster;
 using Restaurant.Classes;
-using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,11 +21,11 @@ using System.Windows.Shapes;
 namespace Restaurant.View.sales.promotion
 {
     /// <summary>
-    /// Interaction logic for uc_coupon.xaml
+    /// Interaction logic for uc_offer.xaml
     /// </summary>
-    public partial class uc_coupon : UserControl
+    public partial class uc_offer : UserControl
     {
-        public uc_coupon()
+        public uc_offer()
         {
             try
             {
@@ -66,13 +65,13 @@ namespace Restaurant.View.sales.promotion
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private static uc_coupon _instance;
-        public static uc_coupon Instance
+        private static uc_offer _instance;
+        public static uc_offer Instance
         {
             get
             {
                 //if (_instance == null)
-                _instance = new uc_coupon();
+                _instance = new uc_offer();
                 return _instance;
             }
             set
@@ -81,11 +80,11 @@ namespace Restaurant.View.sales.promotion
             }
         }
 
-        string basicsPermission = "coupon_basics";
-        Coupon coupon = new Coupon();
-        IEnumerable<Coupon> couponsQuery;
-        IEnumerable<Coupon> coupons;
-        byte tgl_couponState;
+        string basicsPermission = "offer_basics";
+        Offer offer = new Offer();
+        IEnumerable<Offer> offersQuery;
+        IEnumerable<Offer> offers;
+        byte tgl_offerState;
         string searchText = "";
         public static List<string> requiredControlList;
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -138,13 +137,13 @@ namespace Restaurant.View.sales.promotion
         {//add
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") )
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add"))
                 {
                     HelpClass.StartAwait(grid_main);
-                    coupon = new Coupon();
-                    if (HelpClass.validate(requiredControlList, this) )
+                    offer = new Offer();
+                    if (HelpClass.validate(requiredControlList, this))
                     {
-                      
+
 
                     }
                     HelpClass.EndAwait(grid_main);
@@ -164,12 +163,12 @@ namespace Restaurant.View.sales.promotion
         {//update
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") )
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update"))
                 {
                     HelpClass.StartAwait(grid_main);
                     if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
-                        
+
 
                     }
                     HelpClass.EndAwait(grid_main);
@@ -192,9 +191,9 @@ namespace Restaurant.View.sales.promotion
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") )
                 {
                     HelpClass.StartAwait(grid_main);
-                    if (coupon.cId != 0)
+                    if (offer.cId != 0)
                     {
-                        if ((!coupon.canDelete) && (coupon.isActive == 0))
+                        if ((!offer.canDelete) && (offer.isActive == 0))
                         {
                             #region
                             Window.GetWindow(this).Opacity = 0.2;
@@ -211,9 +210,9 @@ namespace Restaurant.View.sales.promotion
                             #region
                             Window.GetWindow(this).Opacity = 0.2;
                             wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                            if (coupon.canDelete)
+                            if (offer.canDelete)
                                 w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
-                            if (!coupon.canDelete)
+                            if (!offer.canDelete)
                                 w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
@@ -221,10 +220,10 @@ namespace Restaurant.View.sales.promotion
                             if (w.isOk)
                             {
                                 string popupContent = "";
-                                if (coupon.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
-                                if ((!coupon.canDelete) && (coupon.isActive == 1)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+                                if (offer.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
+                                if ((!offer.canDelete) && (offer.isActive == 1)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
 
-                                int s = await coupon.delete(coupon.cId, MainWindow.userLogin.userId, coupon.canDelete);
+                                int s = await offer.delete(offer.cId, MainWindow.userLogin.userId, offer.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
@@ -254,8 +253,8 @@ namespace Restaurant.View.sales.promotion
         /*
         private async Task activate()
         {//activate
-            coupon.isActive = 1;
-            int s = await coupon.save(coupon);
+            offer.isActive = 1;
+            int s = await offer.save(offer);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
@@ -290,9 +289,9 @@ namespace Restaurant.View.sales.promotion
             {
                 /*
                 HelpClass.StartAwait(grid_main);
-                if (coupons is null)
+                if (offers is null)
                     await RefreshCustomersList();
-                tgl_couponState = 1;
+                tgl_offerState = 1;
                 await Search();
                 HelpClass.EndAwait(grid_main);
                 */
@@ -309,9 +308,9 @@ namespace Restaurant.View.sales.promotion
             {
                 /*
                 HelpClass.StartAwait(grid_main);
-                if (coupons is null)
+                if (offers is null)
                     await RefreshCustomersList();
-                tgl_couponState = 0;
+                tgl_offerState = 0;
                 await Search();
                 HelpClass.EndAwait(grid_main);
                 */
@@ -338,24 +337,24 @@ namespace Restaurant.View.sales.promotion
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Dg_coupon_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Dg_offer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
                 //selection
-                if (dg_coupon.SelectedIndex != -1)
+                if (dg_offer.SelectedIndex != -1)
                 {
-                    coupon = dg_coupon.SelectedItem as Coupon;
-                    this.DataContext = coupon;
-                    if (coupon != null)
+                    offer = dg_offer.SelectedItem as Offer;
+                    this.DataContext = offer;
+                    if (offer != null)
                     {
                         #region delete
-                        if (coupon.canDelete)
+                        if (offer.canDelete)
                             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
                         else
                         {
-                            if (coupon.isActive == 0)
+                            if (offer.isActive == 0)
                                 btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
                             else
                                 btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
@@ -396,31 +395,31 @@ namespace Restaurant.View.sales.promotion
         async Task Search()
         {
             //search
-            if (coupons is null)
+            if (offers is null)
                 await RefreshCustomersList();
             searchText = tb_search.Text.ToLower();
-            couponsQuery = coupons.Where(s => (s.code.ToLower().Contains(searchText) ||
+            offersQuery = offers.Where(s => (s.code.ToLower().Contains(searchText) ||
             s.name.ToLower().Contains(searchText) ||
             s.mobile.ToLower().Contains(searchText)
-            ) && s.isActive == tgl_couponState);
+            ) && s.isActive == tgl_offerState);
             RefreshCustomersView();
         }
-        async Task<IEnumerable<Coupon>> RefreshCustomersList()
+        async Task<IEnumerable<Offer>> RefreshCustomersList()
         {
-            coupons = await coupon.Get("c");
-            return coupons;
+            offers = await offer.Get("c");
+            return offers;
         }
         void RefreshCustomersView()
         {
-            dg_coupon.ItemsSource = couponsQuery;
-            txt_count.Text = couponsQuery.Count().ToString();
+            dg_offer.ItemsSource = offersQuery;
+            txt_count.Text = offersQuery.Count().ToString();
         }
         */
         #endregion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            this.DataContext = new Coupon();
+            this.DataContext = new Offer();
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);
