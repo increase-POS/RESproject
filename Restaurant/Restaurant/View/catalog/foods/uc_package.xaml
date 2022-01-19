@@ -343,6 +343,7 @@
                                   materialDesign:HintAssist.Hint="category..."  
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                   SelectionChanged="Cb_categoryId_SelectionChanged" 
+                                      LostFocus="validateEmpty_LostFocus"
                                   Grid.Column="0" Height="40"  Margin="4,0"
                                   BorderBrush="#737373" BorderThickness="0"  >
                                 <ComboBox.ItemTemplate>
