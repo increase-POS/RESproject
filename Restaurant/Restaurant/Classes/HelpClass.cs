@@ -38,12 +38,12 @@ namespace Restaurant.Classes
         public static ImageBrush imageBrush = new ImageBrush();
         
         
-        public static void SetError(Control c, Path p_error, ToolTip tt_error, string tr)
-        {
-            p_error.Visibility = Visibility.Visible;
-            tt_error.Content = MainWindow.resourcemanager.GetString(tr);
-            c.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
-        }
+        //public static void SetError(Control c, Path p_error, ToolTip tt_error, string tr)
+        //{
+        //    p_error.Visibility = Visibility.Visible;
+        //    tt_error.Content = MainWindow.resourcemanager.GetString(tr);
+        //    c.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
+        //}
         static public bool isAdminPermision()
         {
             //if (MainWindow.userLogin.userId == 1 || MainWindow.userLogin.userId == 2)
