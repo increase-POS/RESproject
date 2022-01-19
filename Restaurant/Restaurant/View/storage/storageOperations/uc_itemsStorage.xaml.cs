@@ -86,6 +86,7 @@ namespace Restaurant.View.storage.storageOperations
                 await FillCombo.FillComboSections(cb_sectionId);
 
                 btn_transfer.IsEnabled = false;
+                btn_locked.IsEnabled = false;
 
                 Keyboard.Focus(tb_quantity);
                 await Search();
@@ -130,23 +131,18 @@ namespace Restaurant.View.storage.storageOperations
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_locked_Click(object sender, RoutedEventArgs e)
         {
-            /*
             try
-            {
-                
-                    HelpClass.StartAwait(grid_main);
+            {                
+                HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(transferPermission, MainWindow.groupObjects, "one") )
                 {
                     if (dg_itemsStorage.SelectedIndex != -1)
                     {
-                        //validateMandatoryInputs();
-                        if (itemLocation != null && !tb_quantity.Text.Equals(""))
+                        if (tb_quantity.Text != "" && int.Parse(tb_quantity.Text) == 0)
+                            HelpClass.SetValidate(p_error_quantity, MainWindow.resourcemanager.GetString("trErrorQuantIsZeroToolTip"));
+                        else if (HelpClass.validate(requiredControlList, this))
                         {
-                            //int oldLocationId = (int)itemLocation.locationId;
-                            //int newLocationId = (int)cb_XYZ.SelectedValue;
-                            //if (oldLocationId != newLocationId)
-                            //{
                             int quantity = int.Parse(tb_quantity.Text);
                             ItemLocation newLocation = new ItemLocation();
                             newLocation.itemsLocId = itemLocation.itemsLocId;
@@ -155,30 +151,21 @@ namespace Restaurant.View.storage.storageOperations
                             newLocation.quantity = quantity;
                             newLocation.startDate = dp_startDate.SelectedDate;
                             newLocation.endDate = dp_endDate.SelectedDate;
-                            newLocation.note = tb_notes.Text;
-                            newLocation.updateUserId = MainWindow.userID.Value;
-                            newLocation.createUserId = MainWindow.userID.Value;
-                            int res = await itemLocation.unlockItem(newLocation, MainWindow.branchID.Value);
+                            newLocation.notes = tb_notes.Text;
+                            newLocation.updateUserId = MainWindow.userLogin.userId;
+                            newLocation.createUserId = MainWindow.userLogin.userId;
+                            int res = await itemLocation.unlockItem(newLocation, MainWindow.branchLogin.branchId);
                             if (res > 0)
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
                             }
-                            else //HelpClass.popUpResponse("", MainWindow.resourcemanager.GetString("trPopError"));
+                            else 
                                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
-                            if (chk_stored.IsChecked == true)
-                                await refreshItemsLocations();
-                            else if (chk_freezone.IsChecked == true)
-                                await refreshFreeZoneItemsLocations();
-                            else
-                            { }
-
-                            clearInputs();
-                            //}
-                            //else
-                            //    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trTranseToSameLocation"), animation: ToasterAnimation.FadeIn);
-                            Tb_search_TextChanged(null, null);
+                            await RefreshItemLocationsList();
+                            await Search();
+                            Clear();
                         }
                     }
                 }
@@ -192,7 +179,6 @@ namespace Restaurant.View.storage.storageOperations
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private async void Btn_transfer_Click(object sender, RoutedEventArgs e)
         {
@@ -205,8 +191,9 @@ namespace Restaurant.View.storage.storageOperations
                 {
                     if (dg_itemsStorage.SelectedIndex != -1)
                     {
-                        //validateMandatoryInputs();
-                        if (HelpClass.validate(requiredControlList, this))
+                        if (tb_quantity.Text != "" && int.Parse(tb_quantity.Text) == 0)
+                            HelpClass.SetValidate(p_error_quantity, MainWindow.resourcemanager.GetString("trErrorQuantIsZeroToolTip"));
+                        else if (HelpClass.validate(requiredControlList, this))
                         {
                             int oldLocationId = (int)itemLocation.locationId;
                             int newLocationId = (int)cb_locationId.SelectedValue;
@@ -218,8 +205,8 @@ namespace Restaurant.View.storage.storageOperations
                                 newLocation.invoiceId = itemLocation.invoiceId;
                                 newLocation.locationId = newLocationId;
                                 newLocation.quantity = quantity;
-                                //newLocation.startDate = dp_startDate.SelectedDate;
-                                //newLocation.endDate = dp_endDate.SelectedDate;
+                                newLocation.startDate = dp_startDate.SelectedDate;
+                                newLocation.endDate = dp_endDate.SelectedDate;
                                 newLocation.notes = tb_notes.Text;
                                 newLocation.updateUserId = MainWindow.userLogin.userId;
                                 newLocation.createUserId = MainWindow.userLogin.userId;
@@ -386,7 +373,18 @@ namespace Restaurant.View.storage.storageOperations
                     this.DataContext = itemLocation;
                     if (itemLocation != null)
                     {
+                        if (itemLocation.itemType.Equals("PurchaseExpire"))
+                        {
+                            gd_date.Visibility = Visibility.Visible;
+                            requiredControlList = new List<string> { "itemName", "quantity", "sectionId", "locationId", "startDate" , "endDate" };
+                        }
+                        else
+                        {
+                            gd_date.Visibility = Visibility.Collapsed;
+                            requiredControlList = new List<string> { "itemName", "quantity", "sectionId", "locationId" };
+                        }
                         btn_transfer.IsEnabled = true;
+                        btn_locked.IsEnabled = true;
 
                     }
                 }
@@ -470,6 +468,7 @@ namespace Restaurant.View.storage.storageOperations
             // last 
             HelpClass.clearValidate(requiredControlList, this);
             btn_transfer.IsEnabled = false;
+            btn_locked.IsEnabled = false;
         }
         string input;
         decimal _decimal = 0;
