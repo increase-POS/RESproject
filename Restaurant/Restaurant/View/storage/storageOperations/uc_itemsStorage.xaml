@@ -517,7 +517,55 @@
                             </Path>
                         </Grid>
                     </Border>
+                    <Grid x:Name="gd_date" Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Row="2" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" 
+                                            BorderBrush="{StaticResource LightGrey}">
+                            <Grid>
 
+                                <DatePicker  x:Name="dp_startDate" 
+                                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                                         BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
+                                        TextBlock.Foreground="#4E4E4E"
+                                         SelectedDate="{Binding startDate, Mode=OneWay}" Padding="10,0,5,0"  
+                                        materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                        materialDesign:HintAssist.Hint="start date..."  
+                                        Foreground="#4E4E4E"   Height="40"    />
+                                <Path x:Name="p_error_startDate" Fill="#E81123" Stretch="Fill" Margin="5,5,30,5"
+                              HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
+                         VerticalAlignment="Center" Width="15"  Height="15"
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 
+                                  L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z" />
+
+
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="2" Grid.Column="1" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" 
+                                            BorderBrush="{StaticResource LightGrey}">
+                            <Grid>
+
+                                <DatePicker  x:Name="dp_endDate" 
+                                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                                         BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
+                                        TextBlock.Foreground="#4E4E4E"
+                                         SelectedDate="{Binding endDate, Mode=OneWay}" Padding="10,0,5,0"  
+                                        materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                        materialDesign:HintAssist.Hint="end date..."  
+                                        Foreground="#4E4E4E"   Height="40"    />
+                                <Path x:Name="p_error_endDate" Fill="#E81123" Stretch="Fill" Margin="5,5,30,5"
+                              HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
+                         VerticalAlignment="Center" Width="15"  Height="15"
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 
+                                  L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z" />
+
+
+                            </Grid>
+                        </Border>
+
+                    </Grid>
 
 
 
