@@ -393,9 +393,8 @@ namespace Restaurant.View.sales
         }
         #endregion
         #region invoice
-        ObservableCollection<BillDetailsSales> billDetailsList = new ObservableCollection<BillDetailsSales>();
 
-      
+        ObservableCollection<BillDetailsSales> billDetailsList = new ObservableCollection<BillDetailsSales>();
         private async Task FillBillDetailsList(int invoiceId)
         {
             ////get invoice items

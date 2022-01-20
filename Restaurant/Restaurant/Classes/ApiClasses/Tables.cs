@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Restaurant.Classes.ApiClasses
 {
-    class Tables
+    public class Tables
     {
         public int tableId { get; set; }
         public string name { get; set; }
