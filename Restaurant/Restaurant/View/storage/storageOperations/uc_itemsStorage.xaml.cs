@@ -192,7 +192,7 @@ namespace Restaurant.View.storage.storageOperations
                     if (dg_itemsStorage.SelectedIndex != -1)
                     {
                         if (tb_quantity.Text != "" && int.Parse(tb_quantity.Text) == 0)
-                            HelpClass.SetValidate(p_error_quantity, MainWindow.resourcemanager.GetString("trErrorQuantIsZeroToolTip"));
+                            HelpClass.SetValidate(p_error_quantity, "trErrorQuantIsZeroToolTip");
                         else if (HelpClass.validate(requiredControlList, this))
                         {
                             int oldLocationId = (int)itemLocation.locationId;
