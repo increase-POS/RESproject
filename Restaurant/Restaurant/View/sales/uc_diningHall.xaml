@@ -303,7 +303,7 @@
                    </Grid>
             </Border>
             <StackPanel Grid.Row="2" Margin="0 5" HorizontalAlignment="Left" Orientation="Horizontal">
-                <Button   Height="40"
+                <Button   Height="40" x:Name="btn_tables" Click="Btn_tables_Click"
                     materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                     Margin="5 0"  Foreground="White"  >

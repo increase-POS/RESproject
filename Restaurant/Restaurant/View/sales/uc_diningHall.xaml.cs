@@ -1,5 +1,7 @@
 ﻿using MaterialDesignThemes.Wpf;
+using netoaster;
 using Restaurant.Classes;
+using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -779,8 +781,33 @@ namespace Restaurant.View.sales
             catch
             { }
         }
+
         #endregion
 
-       
+        private void Btn_tables_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                //if (MainWindow.groupObject.HasPermissionAction(addRangePermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                //{
+                    Window.GetWindow(this).Opacity = 0.2;
+                    wd_diningHallTables w = new wd_diningHallTables();
+                    w.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                // }
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        
     }
 }

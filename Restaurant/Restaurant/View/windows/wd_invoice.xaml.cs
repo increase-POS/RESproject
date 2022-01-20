@@ -102,7 +102,7 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_ucInvoice);
 
                 #region translate
@@ -166,12 +166,12 @@ namespace Restaurant.View.windows
                 await refreshInvoices();
                 Txb_search_TextChanged(null, null);
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_ucInvoice);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_ucInvoice);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -281,7 +281,7 @@ namespace Restaurant.View.windows
         {
             //try
             //{
-            //    if (sender != null)
+            //    
             //        HelpClass.StartAwait(grid_ucInvoice);
             //    for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
             //        if (vis is DataGridRow)
@@ -312,12 +312,12 @@ namespace Restaurant.View.windows
             //            }
             //        }
 
-            //    if (sender != null)
+            //    
             //        HelpClass.EndAwait(grid_ucInvoice);
             //}
             //catch (Exception ex)
             //{
-            //    if (sender != null)
+            //    
             //        HelpClass.EndAwait(grid_ucInvoice);
             //    HelpClass.ExceptionMessage(ex, this);
             //}

@@ -97,11 +97,13 @@ namespace Restaurant.Classes
         {
             #region Tooltip error
             p_error.Visibility = Visibility.Visible;
-            ToolTip toolTip_userName = new ToolTip();
-            toolTip_userName.Content = MainWindow.resourcemanager.GetString(tr);
-            toolTip_userName.Style = Application.Current.Resources["ToolTipError"] as Style;
-            p_error.ToolTip = toolTip_userName;
+            ToolTip toolTip = new ToolTip();
+            toolTip.Content = MainWindow.resourcemanager.GetString(tr);
+            toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
+            p_error.ToolTip = toolTip;
             #endregion
+           
+
         }
         public static void clearValidate( Path p_error)
         {
