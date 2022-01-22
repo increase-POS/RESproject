@@ -246,7 +246,8 @@ namespace Restaurant.View.windows
         {
             var button = sender as Button;
             string tableName =button.Tag.ToString();
-            MessageBox.Show("Hey you Click me! I'm  " + tableName);
+            var table = tablesList.Where(x => x.name == tableName).FirstOrDefault();
+            MessageBox.Show("Hey you Click me! I'm  " + table.name + " & person Count is " + table.personsCount);
         }
         
         #endregion
