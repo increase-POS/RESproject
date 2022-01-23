@@ -341,7 +341,7 @@ namespace Restaurant.Classes
                 try
                 {
                     // configure trmporery path
-                    string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                    string dir = Directory.GetCurrentDirectory();
                     string tmpPath = Path.Combine(dir, Global.TMPItemsFolder);
                     string[] files = System.IO.Directory.GetFiles(tmpPath, imageName + ".*");
                     foreach (string f in files)
@@ -417,7 +417,7 @@ namespace Restaurant.Classes
                     byteImg = await response.Content.ReadAsByteArrayAsync();
 
                     // configure trmporery path
-                    string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                    string dir = Directory.GetCurrentDirectory();
                     string tmpPath = Path.Combine(dir, Global.TMPItemsFolder);
                     if (!Directory.Exists(tmpPath))
                         Directory.CreateDirectory(tmpPath);
@@ -430,10 +430,7 @@ namespace Restaurant.Classes
                         System.IO.File.Delete(f);
                     }
                     tmpPath = Path.Combine(tmpPath, imageName);
-                    //if (System.IO.File.Exists(tmpPath))
-                    //{
-                    //    System.IO.File.Delete(tmpPath);
-                    //}
+
                     using (FileStream fs = new FileStream(tmpPath, FileMode.Create, FileAccess.ReadWrite))
                     {
                         fs.Write(byteImg, 0, byteImg.Length);

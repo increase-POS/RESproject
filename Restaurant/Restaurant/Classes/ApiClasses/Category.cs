@@ -162,7 +162,7 @@ namespace Restaurant.Classes
                 try
                 {
                     // configure trmporery path
-                    string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                    string dir = Directory.GetCurrentDirectory();
                     string tmpPath = Path.Combine(dir, Global.TMPFolder);
                     string[] files = System.IO.Directory.GetFiles(tmpPath, imageName + ".*");
                     foreach (string f in files)
@@ -170,10 +170,7 @@ namespace Restaurant.Classes
                         System.IO.File.Delete(f);
                     }
                     tmpPath = Path.Combine(tmpPath, imageName + extension);
-                    //if (System.IO.File.Exists(tmpPath))
-                    //{
-                    //    System.IO.File.Delete(tmpPath);
-                    //}
+
                     // resize image
                     ImageProcess imageP = new ImageProcess(150, imagePath);
                     imageP.ScaleImage(tmpPath);
@@ -250,7 +247,7 @@ namespace Restaurant.Classes
                     byteImg = await response.Content.ReadAsByteArrayAsync();
 
                     // configure trmporery path
-                    string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                    string dir = Directory.GetCurrentDirectory();
                     string tmpPath = Path.Combine(dir, Global.TMPFolder);
                     if (!Directory.Exists(tmpPath))
                         Directory.CreateDirectory(tmpPath);
@@ -261,11 +258,7 @@ namespace Restaurant.Classes
                         System.IO.File.Delete(f);
                     }
                     tmpPath = Path.Combine(tmpPath, imageName);
-                    
-                    //if (System.IO.File.Exists(tmpPath))
-                    //{
-                    //    System.IO.File.Delete(tmpPath);
-                    //}
+
                     using (FileStream fs = new FileStream(tmpPath, FileMode.Create, FileAccess.ReadWrite))
                     {
                         fs.Write(byteImg, 0, byteImg.Length);
@@ -274,34 +267,6 @@ namespace Restaurant.Classes
                 return byteImg;
             }
         }
-        //public async Task<string> deleteCategory(int categoryId,int? userId)
-        //{
-        //    // ... Use HttpClient.
-        //    ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-
-        //    using (var client = new HttpClient())
-        //    {
-        //        ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-        //        client.BaseAddress = new Uri(Global.APIUri);
-        //        client.DefaultRequestHeaders.Clear();
-        //        client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-        //        client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-        //        HttpRequestMessage request = new HttpRequestMessage();
-        //        request.RequestUri = new Uri(Global.APIUri + "Categories/Delete?categoryId=" + categoryId + "&userId=" + userId);
-        //        request.Headers.Add("APIKey", Global.APIKey);
-        //        request.Method = HttpMethod.Post;
-        //        //set content type
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //        var response = await client.SendAsync(request);
-
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var message = await response.Content.ReadAsStringAsync();
-        //            message = JsonConvert.DeserializeObject<string>(message);
-        //            return message;
-        //        }
-        //        return "";
-        //    }
-        //}
+       
     }
 }
