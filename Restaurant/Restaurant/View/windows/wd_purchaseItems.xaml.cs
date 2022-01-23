@@ -58,11 +58,11 @@ namespace Restaurant.View.windows
             public bool value { get; set; }
         }
         List<keyValueBool> loadingList;
-        void loading_RefrishItems()
+       async void loading_RefrishItems()
         {
             try
             {
-                RefrishItems();
+               await RefrishItems();
             }
             catch (Exception)
             { }
@@ -480,6 +480,7 @@ namespace Restaurant.View.windows
                 if (sender != null)
                     HelpClass.StartAwait(grid_ucItems);
                 await FillCombo.RefreshPurchaseItems();
+               FillCombo.RefreshItemUnit();
                 RefrishItems();
                 Txb_searchitems_TextChanged(null, null);
                 if (sender != null)

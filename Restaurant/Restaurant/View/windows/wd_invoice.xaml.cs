@@ -212,6 +212,14 @@ namespace Restaurant.View.windows
                 else if (icon == "drafts")
                     FillCombo.invoices = await FillCombo.invoice.GetInvoicesByCreator(invoiceType, userId, duration);
             }
+            else if (page == "storageInv")
+            {
+                if (icon == "purInvoices" || icon == "retInvoice" )
+                    FillCombo.invoices = await FillCombo.invoice.getBranchInvoices(invoiceType, 0, branchId);
+
+                else if (icon == "drafts")
+                    FillCombo.invoices = await FillCombo.invoice.GetInvoicesByCreator(invoiceType, userId, duration);
+            }
             if (condition == "orders")
             {
                 invoices = await invoice.getUnHandeldOrders(invoiceType,branchCreatorId, branchId,duration,userId);

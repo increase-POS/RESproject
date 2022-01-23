@@ -771,6 +771,16 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
         }
+        public async Task<int> saveInvoiceWithItems(Invoice invoice, List<ItemTransfer> invoiceItems)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "Invoices/SaveWithItems";
+            var myContent = JsonConvert.SerializeObject(invoice);
+            parameters.Add("invoiceObject", myContent);
+            myContent = JsonConvert.SerializeObject(invoiceItems);
+            parameters.Add("itemsObject", myContent);
+           return await APIResult.post(method, parameters);
+        }
         public async Task<int> saveOrderStatus(invoiceStatus item)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
