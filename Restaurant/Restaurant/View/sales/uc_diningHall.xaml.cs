@@ -806,6 +806,134 @@ namespace Restaurant.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private void Btn_kitchen_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                //if (MainWindow.groupObject.HasPermissionAction(addRangePermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                //{
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_diningHallKitchen w = new wd_diningHallKitchen();
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+                // }
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_waiter_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                //if (MainWindow.groupObject.HasPermissionAction(addRangePermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                //{
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_selectUser w = new wd_selectUser();
+                w.userJob = "waiter";
+                w.ShowDialog();
+                if (w.isOk)
+                {
+                    if(w.userId > 0)
+                    {
+                        // change button content
+                        // change foreground color
+
+                    }
+                    else
+                    {
+                        // return button content to default
+                        // return foreground color to default
+                    }
+                }
+                Window.GetWindow(this).Opacity = 1;
+                // }
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_customer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                //if (MainWindow.groupObject.HasPermissionAction(addRangePermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                //{
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_selectCustomer w = new wd_selectCustomer();
+                w.ShowDialog();
+                if (w.isOk)
+                {
+                    if (w.customerId > 0)
+                    {
+                        // test if id chnage
+                        // change button content
+                        // change foreground color
+
+                    }
+                    else
+                    {
+                        // return button content to default
+                        // return foreground color to default
+                    }
+                }
+                Window.GetWindow(this).Opacity = 1;
+                // }
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_discount_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                //if (MainWindow.groupObject.HasPermissionAction(addRangePermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                //{
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_selectDiscount w = new wd_selectDiscount();
+                w.ShowDialog();
+                if (w.isOk)
+                {
+                     
+                }
+                Window.GetWindow(this).Opacity = 1;
+                // }
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
 
         
     }

@@ -71,7 +71,6 @@ namespace Restaurant.View.windows
             };
             BuildBillDesign();
         }
-
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

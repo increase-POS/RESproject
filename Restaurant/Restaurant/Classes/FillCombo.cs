@@ -97,7 +97,7 @@ namespace Restaurant.Classes
         #region job
         static public void FillUserJob(ComboBox cmb)
         {
-            #region fill process type
+            #region fill job
             var typelist = new[] {
                 //manager
                 new { Text = MainWindow.resourcemanager.GetString("trAdmin")       , Value = "admin" },
