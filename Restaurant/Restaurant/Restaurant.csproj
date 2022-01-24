@@ -396,6 +396,9 @@
     <Compile Include="View\windows\wd_branchesList.xaml.cs">
       <DependentUpon>wd_branchesList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_diningHallKitchen.xaml.cs">
+      <DependentUpon>wd_diningHallKitchen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_diningHallTables.xaml.cs">
       <DependentUpon>wd_diningHallTables.xaml</DependentUpon>
     </Compile>
@@ -422,6 +425,15 @@
     </Compile>
     <Compile Include="View\windows\wd_returnInvoice.xaml.cs">
       <DependentUpon>wd_returnInvoice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_selectCustomer.xaml.cs">
+      <DependentUpon>wd_selectCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_selectDiscount.xaml.cs">
+      <DependentUpon>wd_selectDiscount.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_selectUser.xaml.cs">
+      <DependentUpon>wd_selectUser.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_subscriptionFees.xaml.cs">
       <DependentUpon>wd_subscriptionFees.xaml</DependentUpon>
@@ -715,6 +727,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\windows\wd_diningHallKitchen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\windows\wd_diningHallTables.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -750,6 +766,18 @@
     <Page Include="View\windows\wd_returnInvoice.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_selectCustomer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_selectDiscount.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_selectUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_subscriptionFees.xaml">
       <SubType>Designer</SubType>
