@@ -95,7 +95,13 @@
                             </DataGridCheckBoxColumn.HeaderTemplate>
                         </DataGridCheckBoxColumn>
                         <!--<DataGridCheckBoxColumn  Binding="{Binding Path=isSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>-->
-                        <DataGridTextColumn Width="*"  Header="Item" IsReadOnly="True"    Binding="{Binding Path=itemName}">
+                        <DataGridTextColumn Width="*"  Header="Item-Unit"   >
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0}-{1}">
+                                    <Binding Path="itemName"></Binding>
+                                    <Binding Path="unitName"></Binding>
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Style.Triggers>
@@ -106,7 +112,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                     
+
                         <DataGridTextColumn Width="*"  Header="Quantity" IsReadOnly="False"    Binding="{Binding Path=quantity}">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="{x:Type TextBlock}">
