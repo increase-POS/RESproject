@@ -2290,9 +2290,9 @@ namespace Restaurant
                 case "storageMovements":
                     grid_main.Children.Add(uc_storageMovements.Instance);
                     break;
-                //case "consumptionRawMaterials":
-                //    grid_main.Children.Add(uc_consumptionRawMaterials.Instance);
-                //    break;
+                case "spendingOrder":
+                    grid_main.Children.Add(uc_spendingOrder.Instance);
+                    break;
                 case "itemsShortage":
                     grid_main.Children.Add(uc_itemsShortage.Instance);
                     break;
@@ -2306,7 +2306,7 @@ namespace Restaurant
                 //    grid_main.Children.Add(uc_preparingOrders.Instance);
                 //    break;
                 //52
-                case "kitchenOrder":
+                case "spendingRequest":
                     grid_main.Children.Add(uc_kitchenOrder.Instance);
                     break;
                 //case "posTransfers":

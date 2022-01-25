@@ -196,6 +196,7 @@
     <Compile Include="Classes\ApiClasses\Location.cs" />
     <Compile Include="Classes\ApiClasses\NotificationUser.cs" />
     <Compile Include="Classes\ApiClasses\Offer.cs" />
+    <Compile Include="Classes\ApiClasses\Package.cs" />
     <Compile Include="Classes\ApiClasses\Pos.cs" />
     <Compile Include="Classes\ApiClasses\reservations.cs" />
     <Compile Include="Classes\ApiClasses\Section.cs" />
@@ -258,11 +259,14 @@
     <Compile Include="View\delivery\uc_shippingCompanies.xaml.cs">
       <DependentUpon>uc_shippingCompanies.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\kitchen\uc_consumptionRawMaterials.xaml.cs">
+      <DependentUpon>uc_consumptionRawMaterials.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\kitchen\uc_kitchen.xaml.cs">
       <DependentUpon>uc_kitchen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\kitchen\uc_kitchenOrder.xaml.cs">
-      <DependentUpon>uc_kitchenOrder.xaml</DependentUpon>
+    <Compile Include="View\kitchen\uc_spendingRequest.xaml.cs">
+      <DependentUpon>uc_spendingRequest.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\kitchen\uc_menuSettings.xaml.cs">
       <DependentUpon>uc_menuSettings.xaml</DependentUpon>
@@ -345,8 +349,8 @@
     <Compile Include="View\settings\uc_settings.xaml.cs">
       <DependentUpon>uc_settings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\storage\movementsOperations\uc_consumptionRawMaterials.xaml.cs">
-      <DependentUpon>uc_consumptionRawMaterials.xaml</DependentUpon>
+    <Compile Include="View\storage\movementsOperations\uc_spendingOrder.xaml.cs">
+      <DependentUpon>uc_spendingOrder.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\storage\movementsOperations\uc_storageMovements.xaml.cs">
       <DependentUpon>uc_storageMovements.xaml</DependentUpon>
@@ -408,6 +412,9 @@
     <Compile Include="View\windows\wd_invoice.xaml.cs">
       <DependentUpon>wd_invoice.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_itemsUnitList.xaml.cs">
+      <DependentUpon>wd_itemsUnitList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_locationAddRange.xaml.cs">
       <DependentUpon>wd_locationAddRange.xaml</DependentUpon>
     </Compile>
@@ -440,6 +447,9 @@
     </Compile>
     <Compile Include="View\windows\wd_tags.xaml.cs">
       <DependentUpon>wd_tags.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_transItemsLocation.xaml.cs">
+      <DependentUpon>wd_transItemsLocation.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_units.xaml.cs">
       <DependentUpon>wd_units.xaml</DependentUpon>
@@ -543,11 +553,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\kitchen\uc_consumptionRawMaterials.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\kitchen\uc_kitchen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\kitchen\uc_kitchenOrder.xaml">
+    <Page Include="View\kitchen\uc_spendingRequest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -659,7 +673,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\storage\movementsOperations\uc_consumptionRawMaterials.xaml">
+    <Page Include="View\storage\movementsOperations\uc_spendingOrder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -743,6 +757,10 @@
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
+    <Page Include="View\windows\wd_itemsUnitList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\windows\wd_locationAddRange.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -786,6 +804,10 @@
     <Page Include="View\windows\wd_tags.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_transItemsLocation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_units.xaml">
       <SubType>Designer</SubType>

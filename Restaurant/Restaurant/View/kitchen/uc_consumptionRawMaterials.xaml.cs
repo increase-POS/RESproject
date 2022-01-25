@@ -26,15 +26,15 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace Restaurant.View.storage.movementsOperations
+namespace Restaurant.View.kitchen
 {
     /// <summary>
     /// Interaction logic for uc_consumptionRawMaterials.xaml
     /// </summary>
     public partial class uc_consumptionRawMaterials : UserControl
     {
-        string createPermission = "kitchenOrder_create";
-        string reportsPermission = "kitchenOrder_reports";
+        string createPermission = "consumptionRawMaterials_create";
+        string reportsPermission = "consumptionRawMaterials_reports";
         private static uc_consumptionRawMaterials _instance;
         public static uc_consumptionRawMaterials Instance
         {

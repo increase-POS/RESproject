@@ -70,12 +70,12 @@ namespace Restaurant.View.storage.movementsOperations
             }
         }
 
-        private void Btn_consumptionRawMaterials_Click(object sender, RoutedEventArgs e)
+        private void Btn_spendingOrder_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 grid_main.Children.Clear();
-                grid_main.Children.Add(uc_consumptionRawMaterials.Instance);
+                grid_main.Children.Add(uc_spendingOrder.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

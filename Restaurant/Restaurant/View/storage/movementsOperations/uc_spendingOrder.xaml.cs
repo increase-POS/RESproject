@@ -26,22 +26,22 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace Restaurant.View.kitchen
+namespace Restaurant.View.storage.movementsOperations
 {
     /// <summary>
-    /// Interaction logic for uc_kitchenOrder.xaml
+    /// Interaction logic for uc_spendingOrder.xaml
     /// </summary>
-    public partial class uc_kitchenOrder : UserControl
+    public partial class uc_spendingOrder : UserControl
     {
-        string createPermission = "kitchenOrder_create";
-        string reportsPermission = "kitchenOrder_reports";
-        private static uc_kitchenOrder _instance;
-        public static uc_kitchenOrder Instance
+        string createPermission = "spendingRequest_create";
+        string reportsPermission = "spendingRequest_reports";
+        private static uc_spendingOrder _instance;
+        public static uc_spendingOrder Instance
         {
             get
             {
                 //if (_instance == null)
-                _instance = new uc_kitchenOrder();
+                _instance = new uc_spendingOrder();
                 return _instance;
             }
             set
@@ -49,7 +49,7 @@ namespace Restaurant.View.kitchen
                 _instance = value;
             }
         }
-        public uc_kitchenOrder()
+        public uc_spendingOrder()
         {
             try
             {
@@ -256,7 +256,7 @@ namespace Restaurant.View.kitchen
             }
             catch { }
         }
-       
+
         #endregion
         #region navigation buttons
         private void navigateBtnActivate()
@@ -602,11 +602,11 @@ namespace Restaurant.View.kitchen
             }
             */
         }
-      
+
         #endregion
         #region events
-       
-      
+
+
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             try
@@ -1421,7 +1421,7 @@ namespace Restaurant.View.kitchen
             _Count = invoice.itemsCount;
             tb_count.Text = _Count.ToString();
 
-          
+
 
             // build invoice details grid
             await buildInvoiceDetails();
@@ -1461,7 +1461,7 @@ namespace Restaurant.View.kitchen
         }
         private void inputEditable()
         {
-          
+
             /*
             if (_ProcessType == "imd" || _ProcessType == "exd") // return invoice
             {

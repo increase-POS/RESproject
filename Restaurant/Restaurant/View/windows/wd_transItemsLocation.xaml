@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaurant.View.windows"
         mc:Ignorable="d" KeyDown="HandleKeyPress"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-         WindowStyle="None" WindowStartupLocation="CenterScreen"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        WindowStyle="None" WindowStartupLocation="CenterScreen"
         Title="Increase POS"        
         ResizeMode="NoResize" Margin="0"
-          Height="400" Width="550" Background="Transparent" AllowsTransparency="True"
+        Height="400" Width="550" Background="Transparent" AllowsTransparency="True"
         Loaded="Window_Loaded" MouseDown="Window_MouseDown">
     <Grid Grid.Column="1" Grid.Row="1" x:Name="grid_main"  >
         <Grid.RowDefinitions>
@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
         <Grid    >
             <Border  BorderThickness="0" Grid.Row="0" 
-                    CornerRadius="7,7,0,0"  Background="#178DD2">
+                    CornerRadius="7,7,0,0"  Background="{StaticResource SecondColor}">
                 <Grid>
 
                     <Button   IsCancel="true"  HorizontalAlignment="Right" VerticalAlignment="Center" Background="{x:Null}" 
@@ -70,9 +70,10 @@
                     <DataGrid.Resources>
                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"></SolidColorBrush>
                         <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
-                            <Setter Property="Background" Value="#e7f3fa" />
+                            <Setter Property="Background" Value="#F5D7C4" />
                             <Setter Property="BorderBrush" Value="White"/>
                             <Setter Property="BorderThickness" Value="0 0 1 0"/>
+                            <Setter Property="Foreground" Value="{StaticResource SecondColor}"/>
                         </Style>
                     </DataGrid.Resources>
                     <DataGrid.Columns>
@@ -163,9 +164,9 @@
                     </DataGrid.Columns>
                 </DataGrid>
 
-                <Button Content="Save" Grid.Row="5" Grid.ColumnSpan="5"
+                <Button Content="Save" Grid.Row="5" Grid.ColumnSpan="5" Foreground="White"
                        Margin="10,2.5" x:Name="btn_save" Click="Btn_save_Click"
-                          Background="#178DD2" BorderBrush="{x:Null}"  />
+                          Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  />
             </Grid>
 
         </Border>
