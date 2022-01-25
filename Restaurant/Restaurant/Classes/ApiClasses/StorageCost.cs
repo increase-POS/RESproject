@@ -78,5 +78,15 @@ namespace Restaurant.Classes
             string method = "StorageCost/Delete";
            return await APIResult.post(method, parameters);
         }
+        public async Task<int> setCostToUnits(List<int> itemUnitsIds, int storageCostId,int userId)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "StorageCost/setCostToUnits";
+            var myContent = JsonConvert.SerializeObject(itemUnitsIds);
+            parameters.Add("itemUnitsIds", myContent);
+            parameters.Add("storageCostId", storageCostId.ToString());
+            parameters.Add("userId", userId.ToString());
+            return await APIResult.post(method, parameters);
+        }
     }
 }

@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Security.Claims;
 using Newtonsoft.Json.Converters;
+using Restaurant.ApiClasses;
 
-namespace POS.Classes
+namespace Restaurant.Classes
 {
     public class Package
     {
-
         public int packageId { get; set; }
         public Nullable<int> parentIUId { get; set; }
         public Nullable<int> childIUId { get; set; }

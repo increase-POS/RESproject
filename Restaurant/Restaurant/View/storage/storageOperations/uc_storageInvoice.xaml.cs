@@ -65,7 +65,6 @@ namespace Restaurant.View.storage.storageOperations
         public static bool isFromReport = false;
         public static bool archived = false;
         Item item = new Item();
-        List<ItemUnit> barcodesList;
         List<ItemUnit> itemUnits;
         public List<Control> controls;
         public Invoice invoice = new Invoice();
@@ -108,7 +107,24 @@ namespace Restaurant.View.storage.storageOperations
             tt_error_next.Content = MainWindow.resourcemanager.GetString("trNext");
         }
         #region loading
-        List<keyValueBool> loadingList;      
+        List<keyValueBool> loadingList;
+        async void loading_RefrishItems()
+        {
+            try
+            {
+                await FillCombo.RefreshPurchaseItems();
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_RefrishItems"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
         #endregion
         public async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -130,8 +146,8 @@ namespace Restaurant.View.storage.storageOperations
                 }
 
                 translate();
-                //tb_barcode.Focus();
-                loading_fillBarcodeList();
+
+                //loading_fillBarcodeList();
                 setNotifications();
                 setTimer();
                 controls = new List<Control>();
@@ -139,7 +155,8 @@ namespace Restaurant.View.storage.storageOperations
                 #region loading
                 loadingList = new List<keyValueBool>();
                 bool isDone = true;
-               
+                loadingList.Add(new keyValueBool { key = "loading_RefrishItems", value = false });
+                loading_RefrishItems();
                 do
                 {
                     isDone = true;
@@ -158,10 +175,10 @@ namespace Restaurant.View.storage.storageOperations
                 }
                 while (!isDone);
                 #endregion
-                if (MainWindow.tax == 0)
-                    sp_tax.Visibility = Visibility.Collapsed;
-                else
-                    sp_tax.Visibility = Visibility.Visible;
+                //if (MainWindow.tax == 0)
+                //    sp_tax.Visibility = Visibility.Collapsed;
+                //else
+                //    sp_tax.Visibility = Visibility.Visible;
                 controls = new List<Control>();
                 FindControl(this.grid_main, controls);
               
@@ -516,6 +533,7 @@ namespace Restaurant.View.storage.storageOperations
             for (int i = 0; i < billDetails.Count; i++)
             {
                 itemT = new ItemTransfer();
+                itemT.invoiceId = 0;
                 itemT.quantity = billDetails[i].Count;
                 itemT.price = billDetails[i].Price;
                 itemT.itemUnitId = billDetails[i].itemUnitId;
@@ -549,6 +567,7 @@ namespace Restaurant.View.storage.storageOperations
             {
                 itemT = new ItemTransfer();
 
+                itemT.invoiceId = 0;
                 itemT.itemName = billDetails[i].Product;
                 itemT.itemId = billDetails[i].itemId;
                 itemT.unitName = billDetails[i].Unit;
@@ -593,12 +612,12 @@ namespace Restaurant.View.storage.storageOperations
                     invoice.paid = 0;
                     invoice.deserved = invoice.totalNet;
 
-                    int invoiceId = await FillCombo.invoice.saveInvoice(invoice);
+                    int invoiceId = await FillCombo.invoice.saveInvoiceWithItems(invoice, invoiceItems);
                     if (invoiceId != 0)
                     {
                         await invoice.recordPosCashTransfer(invoice, "pb");
                         await invoice.recordCashTransfer(invoice, "pb");
-                        await FillCombo.invoice.saveInvoiceItems(invoiceItems, invoiceId);
+                        //await FillCombo.invoice.saveInvoiceItems(invoiceItems, invoiceId);
 
                         #region notification Object
                         Notification not = new Notification()
@@ -908,11 +927,11 @@ namespace Restaurant.View.storage.storageOperations
         {
             decimal total = _Sum;
             decimal taxValue = 0;
-            decimal taxInputVal = 0;
-            if (!tb_taxValue.Text.Equals(""))
-                taxInputVal = decimal.Parse(tb_taxValue.Text);
-            if (total != 0)
-                taxValue = HelpClass.calcPercentage(total, taxInputVal);
+            //decimal taxInputVal = 0;
+            //if (!tb_taxValue.Text.Equals(""))
+            //    taxInputVal = decimal.Parse(tb_taxValue.Text);
+            //if (total != 0)
+            //    taxValue = HelpClass.calcPercentage(total, taxInputVal);
 
             if (_Sum != 0)
                 tb_sum.Text = HelpClass.DecTostring(_Sum);
@@ -1550,27 +1569,27 @@ namespace Restaurant.View.storage.storageOperations
 
         #endregion
         #region Barcode
-        async Task fillBarcodeList()
-        {
-            barcodesList = await FillCombo.itemUnit.getAllBarcodes();
-        }
-        async void loading_fillBarcodeList()
-        {
-            try
-            {
-                await fillBarcodeList();
-            }
-            catch (Exception)
-            { }
-            foreach (var item in loadingList)
-            {
-                if (item.key.Equals("loading_fillBarcodeList"))
-                {
-                    item.value = true;
-                    break;
-                }
-            }
-        }
+        //async Task fillBarcodeList()
+        //{
+        //    barcodesList = await FillCombo.itemUnit.getAllBarcodes();
+        //}
+        //async void loading_fillBarcodeList()
+        //{
+        //    try
+        //    {
+        //        await fillBarcodeList();
+        //    }
+        //    catch (Exception)
+        //    { }
+        //    foreach (var item in loadingList)
+        //    {
+        //        if (item.key.Equals("loading_fillBarcodeList"))
+        //        {
+        //            item.value = true;
+        //            break;
+        //        }
+        //    }
+        //}
         private async void HandleKeyPress(object sender, KeyEventArgs e)
         {
             try
@@ -1582,52 +1601,9 @@ namespace Restaurant.View.storage.storageOperations
                         tb_barcode.Focus();
                     _IsFocused = true;
                 }
-                if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) || e.KeyboardDevice.IsKeyDown(Key.RightCtrl))
-                {
-                    switch (e.Key)
-                    {
-                        case Key.P:
-                            //handle P key
-                            Btn_printInvoice_Click(null, null);
-                            break;
-                        case Key.S:
-                            //handle S key
-                            Btn_save_Click(btn_save, null);
-                            break;
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-
-            try
-            {
-
                 HelpClass.StartAwait(grid_main);
-                if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) || e.KeyboardDevice.IsKeyDown(Key.RightCtrl))
-                {
-                    switch (e.Key)
-                    {
-                        case Key.P:
-                            //handle D key
-                            //btn_printInvoice_Click(null, null);
-                            break;
-                        case Key.S:
-                            //handle X key
-                            Btn_save_Click(null, null);
-                            break;
-                    }
-                }
-
-
-
                 TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
-                if (elapsed.TotalMilliseconds > 50)
+                if (elapsed.TotalMilliseconds > 150)
                 {
                     _BarcodeStr = "";
                 }
@@ -1655,21 +1631,54 @@ namespace Restaurant.View.storage.storageOperations
 
                 if (e.Key.ToString() == "Return" && _BarcodeStr != "")
                 {
+                    if (_Sender != null)
+                    {
+                        TextBox tb = _Sender as TextBox;
+                        if (tb != null)
+                        {
+                            if (tb.Name == "tb_taxValue" )// remove barcode from text box
+                            {
+                                string tbString = tb.Text;
+                                string newStr = "";
+                                int startIndex = tbString.IndexOf(_BarcodeStr);
+                                if (startIndex != -1)
+                                    newStr = tbString.Remove(startIndex, _BarcodeStr.Length);
+
+                                tb.Text = newStr;
+                            }
+                        }
+                    }
+                    _IsFocused = false;
                     await dealWithBarcode(_BarcodeStr);
                     tb_barcode.Text = _BarcodeStr;
                     _BarcodeStr = "";
+                    
                     e.Handled = true;
                 }
                 _Sender = null;
-
+                tb_barcode.Clear();
+                if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) || e.KeyboardDevice.IsKeyDown(Key.RightCtrl))
+                {
+                    switch (e.Key)
+                    {
+                        case Key.P:
+                            //handle P key
+                            Btn_printInvoice_Click(null, null);
+                            break;
+                        case Key.S:
+                            //handle S key
+                            Btn_save_Click(btn_save, null);
+                            break;
+                    }
+                }
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+        
         }
         private async Task dealWithBarcode(string barcode)
         {
@@ -1688,10 +1697,10 @@ namespace Restaurant.View.storage.storageOperations
                     await fillInvoiceInputs(invoice);
                     break;
                 default: // if barcode for item
-                         // get item matches barcode
-                    if (barcodesList != null)
+                   // get item matches barcode
+                    if (FillCombo.itemUnitList != null && _InvoiceType == "isd")
                     {
-                        ItemUnit unit1 = barcodesList.ToList().Find(c => c.barcode == barcode.Trim());
+                        ItemUnit unit1 = FillCombo.itemUnitList.Find(c => c.barcode == barcode.Trim());
 
                         // get item matches the barcode
                         if (unit1 != null)
@@ -1737,7 +1746,6 @@ namespace Restaurant.View.storage.storageOperations
         {
             try
             {
-
                 HelpClass.StartAwait(grid_main);
                 if (e.Key == Key.Return)
                 {
@@ -1747,14 +1755,11 @@ namespace Restaurant.View.storage.storageOperations
                         barcode = tb_barcode.Text;
                         await dealWithBarcode(barcode);
                     }
-
                 }
-
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }

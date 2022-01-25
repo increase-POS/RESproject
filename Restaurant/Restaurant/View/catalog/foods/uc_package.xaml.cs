@@ -1451,11 +1451,9 @@ namespace Restaurant.View.catalog.foods
 
         private void Btn_items_Click(object sender, RoutedEventArgs e)
         {
-            /*
             try
             {
-
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 //items
                 if (item.itemId > 0)
                 {
@@ -1465,8 +1463,8 @@ namespace Restaurant.View.catalog.foods
                         Window.GetWindow(this).Opacity = 0.2;
                         wd_itemsUnitList w = new wd_itemsUnitList();
                         w.itemId = item.itemId;
-                        w.itemUnitId = itemUnitId;
-                        w.CallerName = "";
+                        //w.itemUnitId = itemUnitId;
+                        //w.CallerName = "";
                         w.ShowDialog();
                         Window.GetWindow(this).Opacity = 1;
                     }
@@ -1481,7 +1479,6 @@ namespace Restaurant.View.catalog.foods
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
 
         int _int = 0;

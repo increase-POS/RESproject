@@ -165,8 +165,6 @@ namespace Restaurant.View.storage.storageOperations
                 {
                     HelpClass.StartAwait(grid_main);
 
-
-
                     storageCost = new StorageCost();
                     if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
@@ -184,9 +182,6 @@ namespace Restaurant.View.storage.storageOperations
                         else
                         {
                             Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-
-                         
-
                             Clear();
                             await RefreshStorageCostsList();
                             await Search();
@@ -200,7 +195,6 @@ namespace Restaurant.View.storage.storageOperations
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -448,14 +442,14 @@ namespace Restaurant.View.storage.storageOperations
             searchText = tb_search.Text.ToLower();
             storageCostsQuery = storageCosts.Where(s => ( s.name.ToLower().Contains(searchText) 
             ) && s.isActive == tgl_storageCostState);
-            RefreshCustomersView();
+            RefreshStorageCostView();
         }
         async Task<IEnumerable<StorageCost>> RefreshStorageCostsList()
         {
             storageCosts = await storageCost.Get();
             return storageCosts;
         }
-        void RefreshCustomersView()
+        void RefreshStorageCostView()
         {
             dg_storageCost.ItemsSource = storageCostsQuery;
             txt_count.Text = storageCostsQuery.Count().ToString();

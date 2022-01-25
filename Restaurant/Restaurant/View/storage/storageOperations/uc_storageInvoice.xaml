@@ -387,7 +387,7 @@
                                 </Path>
                             </StackPanel>
                         </Button>
-                        <StackPanel x:Name="sp_tax" Visibility="Visible" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
+                        <!--<StackPanel x:Name="sp_tax" Visibility="Visible" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
                                     Margin="0,0,10,0"  >
                             <TextBlock Grid.Row="0"  Text="TAX" x:Name="txt_tax" Foreground="{StaticResource MainColor}" FontWeight="Bold" FontSize="18"  
                                   VerticalAlignment="Center" 
@@ -406,7 +406,7 @@
                             <TextBlock    Foreground="#4E4E4E" Text="%"
                         HorizontalAlignment="Left" VerticalAlignment="Center"
                                   FontWeight="Bold"  FontSize="12"/>
-                        </StackPanel>
+                        </StackPanel>-->
                     </StackPanel>
                     <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
                                     Margin="0,0,10,0"  >
