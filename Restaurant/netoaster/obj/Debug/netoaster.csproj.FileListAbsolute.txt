@@ -220,3 +220,17 @@ D:\increase\Resturant\Restaurant\netoaster\obj\Debug\netoaster.csproj.GenerateRe
 D:\increase\Resturant\Restaurant\netoaster\obj\Debug\netoaster.csproj.CoreCompileInputs.cache
 D:\increase\Resturant\Restaurant\netoaster\obj\Debug\netoaster.dll
 D:\increase\Resturant\Restaurant\netoaster\obj\Debug\netoaster.pdb
+D:\myproj\posproject5\Restaurant\netoaster\bin\Debug\netoaster.dll
+D:\myproj\posproject5\Restaurant\netoaster\bin\Debug\netoaster.pdb
+D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\ToasterWindow.g.cs
+D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\netoaster_MarkupCompile.cache
+D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\netoaster_MarkupCompile.lref
+D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\Themes\Generic.baml
+D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\ToasterWindow.baml
+D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\netoaster.g.resources
+D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\netoaster.Properties.Resources.resources
+D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\netoaster.csproj.GenerateResource.cache
+D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\netoaster.csproj.CoreCompileInputs.cache
+D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\netoaster.dll
+D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\netoaster.pdb

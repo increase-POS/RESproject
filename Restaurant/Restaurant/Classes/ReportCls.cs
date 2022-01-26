@@ -10,11 +10,12 @@ using System.Resources;
 using System.Reflection;
 using System.Globalization;
 using System.Collections;
+// Restaurant.Classes
 namespace Restaurant.Classes
 {
     class ReportCls
     {
-      List<CurrencyInfo> currencies = new List<CurrencyInfo>();
+        List<CurrencyInfo> currencies = new List<CurrencyInfo>();
         public static void clearFolder(string FolderName)
         {
             string filename = "";
@@ -85,16 +86,30 @@ namespace Restaurant.Classes
         public string PathUp(string path, int levelnum, string addtopath)
         {
             int pos1 = 0;
-            for (int i = 1; i <= levelnum; i++)
-            {
-                pos1 = path.LastIndexOf("\\");
-                path = path.Substring(0, pos1);
-            }
+            levelnum = 0;
+            //for (int i = 1; i <= levelnum; i++)
+            //{
+            //    //pos1 = path.LastIndexOf("\\");
+            //    //path = path.Substring(0, pos1);
+            //}
 
             string newPath = path + addtopath;
+            try
+            {
+                FileAttributes attr = File.GetAttributes(newPath);
+                if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                { }
+                else
+                {
+                    string finalDir = Path.GetDirectoryName(newPath);
+                    if (!Directory.Exists(finalDir))
+                        Directory.CreateDirectory(finalDir);
+                    if (!File.Exists(newPath))
+                        File.Create(newPath);
+                }
+            }
+            catch { }
             return newPath;
-            //addtopath = addtopath.Substring(1);
-            //return addtopath;
         }
 
         public string TimeToString(TimeSpan? time)
@@ -292,12 +307,13 @@ namespace Restaurant.Classes
             bool isArabic;
             if (MainWindow.Reportlang.Equals("en"))
             {
-                MainWindow.resourcemanagerreport = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly());
+                
+                MainWindow.resourcemanagerreport = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                 isArabic = false;
             }
             else
             {
-                MainWindow.resourcemanagerreport = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
+                MainWindow.resourcemanagerreport = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                 isArabic = true;
             }
             return isArabic;
@@ -464,7 +480,7 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trans_num_txt", trans_num_txt));
             return paramarr;
         }
-        public string ConvertAmountToWords(Nullable<decimal>  amount)
+        public string ConvertAmountToWords(Nullable<decimal> amount)
         {
             Fillcurrency();
             string amount_in_words = "";
@@ -593,18 +609,31 @@ namespace Restaurant.Classes
 
         public string GetLogoImagePath()
         {
-            string imageName = MainWindow.logoImage;
-            string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            string tmpPath = Path.Combine(dir, @"Thumb\setting");
-            tmpPath = Path.Combine(tmpPath, imageName);
-            /*
-                  
-                  
-             * */
+            try
+            {
+                string imageName = MainWindow.logoImage;
+                string dir = Directory.GetCurrentDirectory();
+                string tmpPath = Path.Combine(dir, @"Thumb\setting");
+                tmpPath = Path.Combine(tmpPath, imageName);
+                if (File.Exists(tmpPath))
+                {
 
-            //string addpath = @"\Thumb\setting\" ;
+                    return tmpPath;
+                }
+                else
+                {
+                    return Path.Combine(Directory.GetCurrentDirectory(), @"Thumb\setting\emptylogo.png");
+                }
 
-            return tmpPath;
+
+
+                //string addpath = @"\Thumb\setting\" ;
+
+            }
+            catch
+            {
+                return Path.Combine(Directory.GetCurrentDirectory(), @"Thumb\setting\emptylogo.png");
+            }
         }
 
         //
@@ -612,7 +641,8 @@ namespace Restaurant.Classes
         public string GetPath(string localpath)
         {
             //string imageName = MainWindow.logoImage;
-            string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            //string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string dir = Directory.GetCurrentDirectory();
             string tmpPath = Path.Combine(dir, localpath);
 
 
@@ -637,7 +667,7 @@ namespace Restaurant.Classes
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
             {
-                if (invoice.invType == "or" || invoice.invType == "po" || invoice.invType == "pod")
+                if (invoice.invType == "or" || invoice.invType == "po" || invoice.invType == "pos" || invoice.invType == "pod" || invoice.invType == "ors")
                 {
                     addpath = @"\Reports\Purchase\Ar\ArInvPurOrderReport.rdlc";
                 }
@@ -649,7 +679,7 @@ namespace Restaurant.Classes
             }
             else
             {
-                if (invoice.invType == "or" || invoice.invType == "po" || invoice.invType == "pod")
+                if (invoice.invType == "or" || invoice.invType == "po" || invoice.invType == "pos" || invoice.invType == "pod" || invoice.invType == "ors")
                 {
                     addpath = @"\Reports\Purchase\En\InvPurOrderReport.rdlc";
                 }
@@ -675,230 +705,234 @@ namespace Restaurant.Classes
             return totalheight;
 
         }
-        /*
-        public string GetreceiptInvoiceRdlcpath(Invoice invoice)
-        {
-            string addpath;
-            bool isArabic = checkLang();
-            if (isArabic)
-            {
+        //public string GetreceiptInvoiceRdlcpath(Invoice invoice)
+        //{
+        //    string addpath;
+        //    bool isArabic = checkLang();
+        //    if (isArabic)
+        //    {
 
-                if (invoice.invType == "q" || invoice.invType == "qd")
-                {
-                    addpath = @"\Reports\Sale\Ar\ArInvPurQtReport.rdlc";
-                }
-                else if (invoice.invType == "or" || invoice.invType == "ord")
-                {
-                    addpath = @"\Reports\Sale\Ar\ArInvPurOrderReport.rdlc";
-                }
-                else
-                {
+        //        if (invoice.invType == "q" || invoice.invType == "qd" || invoice.invType == "qs")
+        //        {
+        //            addpath = @"\Reports\Sale\Ar\ArInvPurQtReport.rdlc";
+        //        }
+        //        else if (invoice.invType == "or" || invoice.invType == "ord" || invoice.invType == "ors")
+        //        {
+        //            addpath = @"\Reports\Sale\Ar\ArInvPurOrderReport.rdlc";
+        //        }
+        //        else
+        //        {
 
-                    if (MainWindow.salePaperSize == "10cm")
-                    {
-                        addpath = @"\Reports\Sale\Ar\LargeSaleReport.rdlc";
-                        View.uc_receiptInvoice.width = 400;//400 =10cm
-                        View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
+        //            if (MainWindow.salePaperSize == "10cm")
+        //            {
+        //                addpath = @"\Reports\Sale\Ar\LargeSaleReport.rdlc";
+        //                View.uc_receiptInvoice.width = 400;//400 =10cm
+        //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
 
-                    }
-                    else if (MainWindow.salePaperSize == "8cm")
-                    {
-                        addpath = @"\Reports\Sale\Ar\MediumSaleReport.rdlc";
-                        View.uc_receiptInvoice.width = 315;//315 =8cm
-                        View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
-
-
-                    }
-                    else if (MainWindow.salePaperSize == "5.7cm")
-                    {
-                        addpath = @"\Reports\Sale\Ar\SmallSaleReport.rdlc";
-                        View.uc_receiptInvoice.width = 224;//224 =5.7cm
-                        View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 460);
-
-                    }
-                    else //MainWindow.salePaperSize == "A4"
-                    {
-
-                        addpath = @"\Reports\Sale\Ar\ArInvPurReport.rdlc";
-                    }
-
-                    //   addpath = @"\Reports\Sale\Ar\LargeSaleReport.rdlc";
-                    //   addpath = @"\Reports\Sale\Ar\MediumSaleReport.rdlc";
-                    //   addpath = @"\Reports\Sale\Ar\SmallSaleReport.rdlc";
-                }
-
-            }
-            else
-            {
-                if (invoice.invType == "q" || invoice.invType == "qd")
-                {
-                    addpath = @"\Reports\Sale\En\InvPurQtReport.rdlc";
-                }
-                else if (invoice.invType == "or" || invoice.invType == "ord")
-                {
-                    addpath = @"\Reports\Sale\En\InvPurOrderReport.rdlc";
-                }
-                else
-                {
-                    if (MainWindow.salePaperSize == "10cm")
-                    {
-                        addpath = @"\Reports\Sale\En\LargeSaleReport.rdlc";
-                        View.uc_receiptInvoice.width = 400;//400 =10cm
-                        View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
-
-                    }
-                    else if (MainWindow.salePaperSize == "8cm")
-                    {
-                        addpath = @"\Reports\Sale\En\MediumSaleReport.rdlc";
-                        View.uc_receiptInvoice.width = 315;//315 =8cm
-                        View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
-
-                    }
-                    else if (MainWindow.salePaperSize == "5.7cm")
-                    {
-                        addpath = @"\Reports\Sale\En\SmallSaleReport.rdlc";
-                        View.uc_receiptInvoice.width = 224;//224 =5.7cm
-                        View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 460);
-
-                    }
-                    else //MainWindow.salePaperSize == "A4"
-                    {
-
-                        addpath = @"\Reports\Sale\En\InvPurReport.rdlc";
-                    }
-                    //  addpath = @"\Reports\Sale\En\InvPurReport.rdlc";
-                    //    addpath = @"\Reports\Sale\En\LargeSaleReport.rdlc";
-                    //   addpath = @"\Reports\Sale\En\MediumSaleReport.rdlc";
-                    // addpath = @"\Reports\Sale\En\SmallSaleReport.rdlc";
-                }
-
-            }
+        //            }
+        //            else if (MainWindow.salePaperSize == "8cm")
+        //            {
+        //                addpath = @"\Reports\Sale\Ar\MediumSaleReport.rdlc";
+        //                View.uc_receiptInvoice.width = 315;//315 =8cm
+        //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
 
 
-            //
+        //            }
+        //            else if (MainWindow.salePaperSize == "5.7cm")
+        //            {
+        //                addpath = @"\Reports\Sale\Ar\SmallSaleReport.rdlc";
+        //                View.uc_receiptInvoice.width = 224;//224 =5.7cm
+        //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 460);
 
-            string reppath = PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-            return reppath;
-        }
-        public string GetreceiptInvoiceRdlcpath(Invoice invoice, int isPreview)
-        {
-            string addpath;
-            bool isArabic = checkLang();
-            if (isArabic)
-            {
+        //            }
+        //            else //MainWindow.salePaperSize == "A4"
+        //            {
 
-                if ((invoice.invType == "q" || invoice.invType == "qd"))
-                {
-                    addpath = @"\Reports\Sale\Ar\ArInvPurQtReport.rdlc";
-                }
-                else if (invoice.invType == "or" || invoice.invType == "ord")
-                {
-                    addpath = @"\Reports\Sale\Ar\ArInvPurOrderReport.rdlc";
-                }
-                else
-                {
+        //                addpath = @"\Reports\Sale\Ar\ArInvPurReport.rdlc";
+        //            }
 
-                    if (MainWindow.salePaperSize == "10cm" && isPreview == 1)
-                    {
-                        addpath = @"\Reports\Sale\Ar\LargeSaleReport.rdlc";
-                        View.uc_receiptInvoice.width = 400;//400 =10cm
-                        View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
+        //            //   addpath = @"\Reports\Sale\Ar\LargeSaleReport.rdlc";
+        //            //   addpath = @"\Reports\Sale\Ar\MediumSaleReport.rdlc";
+        //            //   addpath = @"\Reports\Sale\Ar\SmallSaleReport.rdlc";
+        //        }
 
-                    }
-                    else if (MainWindow.salePaperSize == "8cm" && isPreview == 1)
-                    {
-                        addpath = @"\Reports\Sale\Ar\MediumSaleReport.rdlc";
-                        View.uc_receiptInvoice.width = 315;//315 =8cm
-                        View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
+        //    }
+        //    else
+        //    {
+        //        if (invoice.invType == "q" || invoice.invType == "qd" || invoice.invType == "qs")
+        //        {
+        //            addpath = @"\Reports\Sale\En\InvPurQtReport.rdlc";
+        //        }
+        //        else if (invoice.invType == "or" || invoice.invType == "ord" || invoice.invType == "ors")
+        //        {
+        //            addpath = @"\Reports\Sale\En\InvPurOrderReport.rdlc";
+        //        }
+        //        else
+        //        {
+        //            if (MainWindow.salePaperSize == "10cm")
+        //            {
+        //                addpath = @"\Reports\Sale\En\LargeSaleReport.rdlc";
+        //                View.uc_receiptInvoice.width = 400;//400 =10cm
+        //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
 
+        //            }
+        //            else if (MainWindow.salePaperSize == "8cm")
+        //            {
+        //                addpath = @"\Reports\Sale\En\MediumSaleReport.rdlc";
+        //                View.uc_receiptInvoice.width = 315;//315 =8cm
+        //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
 
-                    }
-                    else if (MainWindow.salePaperSize == "5.7cm" && isPreview == 1)
-                    {
-                        addpath = @"\Reports\Sale\Ar\SmallSaleReport.rdlc";
-                        View.uc_receiptInvoice.width = 224;//224 =5.7cm
-                        View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 460);
+        //            }
+        //            else if (MainWindow.salePaperSize == "5.7cm")
+        //            {
+        //                addpath = @"\Reports\Sale\En\SmallSaleReport.rdlc";
+        //                View.uc_receiptInvoice.width = 224;//224 =5.7cm
+        //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 460);
 
-                    }
-                    else //MainWindow.salePaperSize == "A4"
-                    {
+        //            }
+        //            else //MainWindow.salePaperSize == "A4"
+        //            {
 
-                        addpath = @"\Reports\Sale\Ar\ArInvPurReport.rdlc";
-                    }
+        //                addpath = @"\Reports\Sale\En\InvPurReport.rdlc";
+        //            }
+        //            //  addpath = @"\Reports\Sale\En\InvPurReport.rdlc";
+        //            //    addpath = @"\Reports\Sale\En\LargeSaleReport.rdlc";
+        //            //   addpath = @"\Reports\Sale\En\MediumSaleReport.rdlc";
+        //            // addpath = @"\Reports\Sale\En\SmallSaleReport.rdlc";
+        //        }
 
-                    //   addpath = @"\Reports\Sale\Ar\LargeSaleReport.rdlc";
-                    //   addpath = @"\Reports\Sale\Ar\MediumSaleReport.rdlc";
-                    //   addpath = @"\Reports\Sale\Ar\SmallSaleReport.rdlc";
-                }
-
-            }
-            else
-            {
-                if (invoice.invType == "q" || invoice.invType == "qd")
-                {
-                    addpath = @"\Reports\Sale\En\InvPurQtReport.rdlc";
-                }
-                else if (invoice.invType == "or" || invoice.invType == "ord")
-                {
-                    addpath = @"\Reports\Sale\En\InvPurOrderReport.rdlc";
-                }
-                else
-                {
-                    if (MainWindow.salePaperSize == "10cm" && isPreview == 1)
-                    {
-                        addpath = @"\Reports\Sale\En\LargeSaleReport.rdlc";
-                        View.uc_receiptInvoice.width = 400;//400 =10cm
-                        View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
-
-                    }
-                    else if (MainWindow.salePaperSize == "8cm" && isPreview == 1)
-                    {
-                        addpath = @"\Reports\Sale\En\MediumSaleReport.rdlc";
-                        View.uc_receiptInvoice.width = 315;//315 =8cm
-                        View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
-
-                    }
-                    else if (MainWindow.salePaperSize == "5.7cm" && isPreview == 1)
-                    {
-                        addpath = @"\Reports\Sale\En\SmallSaleReport.rdlc";
-                        View.uc_receiptInvoice.width = 224;//224 =5.7cm
-                        View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 460);
-
-                    }
-                    else //MainWindow.salePaperSize == "A4"
-                    {
-
-                        addpath = @"\Reports\Sale\En\InvPurReport.rdlc";
-                    }
-                    //  addpath = @"\Reports\Sale\En\InvPurReport.rdlc";
-                    //    addpath = @"\Reports\Sale\En\LargeSaleReport.rdlc";
-                    //   addpath = @"\Reports\Sale\En\MediumSaleReport.rdlc";
-                    // addpath = @"\Reports\Sale\En\SmallSaleReport.rdlc";
-                }
-
-            }
+        //    }
 
 
-            //
+        //    //
 
-            string reppath = PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-            return reppath;
-        }
-        */
+        //    string reppath = PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+        //    return reppath;
+        //}
+
+        //public string GetreceiptInvoiceRdlcpath(Invoice invoice, int isPreview)
+        //{
+        //    string addpath;
+        //    bool isArabic = checkLang();
+        //    if (isArabic)
+        //    {
+
+        //        if ((invoice.invType == "q" || invoice.invType == "qd" || invoice.invType == "qs"))
+        //        {
+        //            addpath = @"\Reports\Sale\Ar\ArInvPurQtReport.rdlc";
+        //        }
+        //        else if (invoice.invType == "or" || invoice.invType == "ord" || invoice.invType == "ors")
+        //        {
+        //            addpath = @"\Reports\Sale\Ar\ArInvPurOrderReport.rdlc";
+        //        }
+        //        else
+        //        {
+
+        //            if (MainWindow.salePaperSize == "10cm" && isPreview == 1)
+        //            {
+        //                addpath = @"\Reports\Sale\Ar\LargeSaleReport.rdlc";
+        //                View.uc_receiptInvoice.width = 400;//400 =10cm
+        //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
+
+        //            }
+        //            else if (MainWindow.salePaperSize == "8cm" && isPreview == 1)
+        //            {
+        //                addpath = @"\Reports\Sale\Ar\MediumSaleReport.rdlc";
+        //                View.uc_receiptInvoice.width = 315;//315 =8cm
+        //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
+
+
+        //            }
+        //            else if (MainWindow.salePaperSize == "5.7cm" && isPreview == 1)
+        //            {
+        //                addpath = @"\Reports\Sale\Ar\SmallSaleReport.rdlc";
+        //                View.uc_receiptInvoice.width = 224;//224 =5.7cm
+        //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 460);
+
+        //            }
+        //            else //MainWindow.salePaperSize == "A4"
+        //            {
+
+        //                addpath = @"\Reports\Sale\Ar\ArInvPurReport.rdlc";
+        //            }
+
+        //            //   addpath = @"\Reports\Sale\Ar\LargeSaleReport.rdlc";
+        //            //   addpath = @"\Reports\Sale\Ar\MediumSaleReport.rdlc";
+        //            //   addpath = @"\Reports\Sale\Ar\SmallSaleReport.rdlc";
+        //        }
+
+        //    }
+        //    else
+        //    {
+        //        if (invoice.invType == "q" || invoice.invType == "qd" || invoice.invType == "qs")
+        //        {
+        //            addpath = @"\Reports\Sale\En\InvPurQtReport.rdlc";
+        //        }
+        //        else if (invoice.invType == "or" || invoice.invType == "ord" || invoice.invType == "ors")
+        //        {
+        //            addpath = @"\Reports\Sale\En\InvPurOrderReport.rdlc";
+        //        }
+        //        else
+        //        {
+        //            if (MainWindow.salePaperSize == "10cm" && isPreview == 1)
+        //            {
+        //                addpath = @"\Reports\Sale\En\LargeSaleReport.rdlc";
+        //                View.uc_receiptInvoice.width = 400;//400 =10cm
+        //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
+
+        //            }
+        //            else if (MainWindow.salePaperSize == "8cm" && isPreview == 1)
+        //            {
+        //                addpath = @"\Reports\Sale\En\MediumSaleReport.rdlc";
+        //                View.uc_receiptInvoice.width = 315;//315 =8cm
+        //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
+
+        //            }
+        //            else if (MainWindow.salePaperSize == "5.7cm" && isPreview == 1)
+        //            {
+        //                addpath = @"\Reports\Sale\En\SmallSaleReport.rdlc";
+        //                View.uc_receiptInvoice.width = 224;//224 =5.7cm
+        //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 460);
+
+        //            }
+        //            else //MainWindow.salePaperSize == "A4"
+        //            {
+
+        //                addpath = @"\Reports\Sale\En\InvPurReport.rdlc";
+        //            }
+        //            //  addpath = @"\Reports\Sale\En\InvPurReport.rdlc";
+        //            //    addpath = @"\Reports\Sale\En\LargeSaleReport.rdlc";
+        //            //   addpath = @"\Reports\Sale\En\MediumSaleReport.rdlc";
+        //            // addpath = @"\Reports\Sale\En\SmallSaleReport.rdlc";
+        //        }
+
+        //    }
+
+
+        //    //
+
+        //    string reppath = PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+        //    return reppath;
+        //}
         public List<ReportParameter> fillPurInvReport(Invoice invoice, List<ReportParameter> paramarr)
         {
             checkLang();
 
             decimal disval = calcpercentval(invoice.discountType, invoice.discountValue, invoice.total);
-            decimal totalafterdis;
-            if (invoice.total != null)
-            {
-                totalafterdis = (decimal)invoice.total - disval;
-            }
-            else
-            {
-                totalafterdis = 0;
-            }
+            decimal manualdisval = calcpercentval(invoice.manualDiscountType, invoice.manualDiscountValue, invoice.total);
+            invoice.discountValue = disval + manualdisval;
+            invoice.discountType = "1";
+
+
+            //decimal totalafterdis;
+            //if (invoice.total != null)
+            //{
+            //    totalafterdis = (decimal)invoice.total - disval;
+            //}
+            //else
+            //{
+            //    totalafterdis = 0;
+            //}
             string userName = invoice.uuserName + " " + invoice.uuserLast;
             // string agentName = (invoice.agentCompany != null || invoice.agentCompany != "") ? invoice.agentCompany.Trim()
             //    : ((invoice.agentName != null || invoice.agentName != "") ? invoice.agentName.Trim() : "-");
@@ -1000,16 +1034,21 @@ namespace Restaurant.Classes
             string userName = invoice.uuserName + " " + invoice.uuserLast;
 
             //  rep.DataSources.Add(new ReportDataSource("DataSetBank", banksQuery));
+
             decimal disval = calcpercentval(invoice.discountType, invoice.discountValue, invoice.total);
-            decimal totalafterdis;
-            if (invoice.total != null)
-            {
-                totalafterdis = (decimal)invoice.total - disval;
-            }
-            else
-            {
-                totalafterdis = 0;
-            }
+            decimal manualdisval = calcpercentval(invoice.manualDiscountType, invoice.manualDiscountValue, invoice.total);
+            invoice.discountValue = disval + manualdisval;
+            invoice.discountType = "1";
+
+            //  decimal totalafterdis;
+            //if (invoice.total != null)
+            //{
+            //    totalafterdis = (decimal)invoice.total - disval;
+            //}
+            //else
+            //{
+            //    totalafterdis = 0;
+            //}
 
             // discountType
             //  decimal taxval = calcpercentval("2", invoice.tax, totalafterdis);
@@ -1058,9 +1097,10 @@ namespace Restaurant.Classes
             {
                 paramarr.Add(new ReportParameter("watermark", "0"));
             }
-
+         //   paramarr.Add(new ReportParameter("shippingCost", DecTostring(invoice.shippingCost)));
 
             return paramarr;
+
         }
         public static List<ItemTransferInvoice> converter(List<ItemTransferInvoice> query)
         {
@@ -1100,9 +1140,9 @@ namespace Restaurant.Classes
         {
             try
             {
-              
+
                 byte[] arr = File.ReadAllBytes(source);
-              
+
                 arr = Encrypt(arr);
 
                 File.WriteAllBytes(dest, arr);
@@ -1115,7 +1155,7 @@ namespace Restaurant.Classes
 
         }
 
-   
+
 
         public static byte[] Encrypt(byte[] ordinary)
         {
@@ -1155,17 +1195,17 @@ namespace Restaurant.Classes
         }
         public void DelFile(string fileName)
         {
-          
-                bool inuse = false;
 
-                inuse = IsFileInUse(fileName);
-                if (inuse == false)
-                {
-                    File.Delete(fileName);
-                }
+            bool inuse = false;
 
-         
-           
+            inuse = IsFileInUse(fileName);
+            if (inuse == false)
+            {
+                File.Delete(fileName);
+            }
+
+
+
 
 
 
@@ -1196,8 +1236,94 @@ namespace Restaurant.Classes
         //////////
 
 
+        public static bool encodestring(string sourcetext, string dest)
+        {
+            try
+            {
+                byte[] arr = ConvertToBytes(sourcetext);
+                //  byte[] arr = File.ReadAllBytes(source);
+
+                arr = Encrypt(arr);
+
+                File.WriteAllBytes(dest, arr);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        private static byte[] ConvertToBytes(string text)
+        {
+            return System.Text.Encoding.Unicode.GetBytes(text);
+        }
+
+        public static string Decrypt(string EncryptedText)
+        {
+            byte[] b = ConvertToBytes(EncryptedText);
+            b = Decrypt(b);
+            return ConvertToText(b);
+        }
+        public static string DeCompressThenDecrypt(string text)
+        {
+            var bytes = Encoding.UTF8.GetBytes(text);
+            text = Encoding.UTF8.GetString(bytes);
+
+            return (Decrypt(text));
+        }
+        public static bool decodefile(string Source, string DestPath)
+        {
+            try
+            {
+                byte[] restorearr = File.ReadAllBytes(Source);
+
+                restorearr = Decrypt(restorearr);
+                File.WriteAllBytes(DestPath, restorearr);
+                return true;
+
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static string decodetoString(string Source)
+        {
+            try
+            {
+                byte[] restorearr = File.ReadAllBytes(Source);
+
+                restorearr = Decrypt(restorearr);
+                return ConvertToText(restorearr);
+                // File.WriteAllBytes(DestPath, restorearr);
 
 
+            }
+            catch
+            {
+                return "0";
+            }
+        }
+        private static string ConvertToText(byte[] ByteAarry)
+        {
+            return System.Text.Encoding.Unicode.GetString(ByteAarry);
+        }
+        public static byte[] Decrypt(byte[] Encrypted)
+        {
+            BitArray enc = ToBits(Encrypted);
+            BitArray XorH = SubBits(enc, 0, enc.Length / 2);
+            XorH = XorH.Not();
+            BitArray RHH = SubBits(enc, enc.Length / 2, enc.Length / 2);
+            RHH = RHH.Not();
+            BitArray LHH = XorH.Xor(RHH);
+            BitArray bits = ConcateBits(LHH, RHH);
+            byte[] decr = new byte[bits.Length / 8];
+            bits.CopyTo(decr, 0);
+            return decr;
+        }
 
     }
 }

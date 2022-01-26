@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using POS;
+using Restaurant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,16 +12,16 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Security.Claims;
 
+using Restaurant.ApiClasses;
 
-
-namespace POS.Classes
+namespace Restaurant.Classes
 {
     public class UserSetValues
     {
         public int id { get; set; }
         public Nullable<int> userId { get; set; }
         public Nullable<int> valId { get; set; }
-        public string notes { get; set; }
+        public string note { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }

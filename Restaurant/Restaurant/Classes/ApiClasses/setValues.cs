@@ -17,23 +17,18 @@ using Microsoft.Win32;
 
 using System.Security.Claims;
 using Restaurant.ApiClasses;
-
 namespace Restaurant.Classes
 {
     public class SetValues
     {
         public int valId { get; set; }
         public string value { get; set; }
-        public int isDefault { get; set; }
-        public int isSystem { get; set; }
+        public Nullable<int> isDefault { get; set; }
+        public Nullable<int> isSystem { get; set; }
         public string notes { get; set; }
         public Nullable<int> settingId { get; set; }
-
-
-
         //setting
         public string name { get; set; }
-         
         public async Task<List<SetValues>> GetAll()
         {
 
@@ -429,8 +424,9 @@ namespace Restaurant.Classes
                 try
                 {
                     // configure trmporery path
-                    string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                    string tmpPath = Path.Combine(dir, Global.TMPFolder);
+                    //string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                    string dir = Directory.GetCurrentDirectory();
+                    string tmpPath = Path.Combine(dir, Global.TMPSettingFolder);
                     tmpPath = Path.Combine(tmpPath, imageName + extension);
                     if (System.IO.File.Exists(tmpPath))
                     {
@@ -546,7 +542,7 @@ namespace Restaurant.Classes
                 client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
                 HttpRequestMessage request = new HttpRequestMessage();
                 request.RequestUri = new Uri(Global.APIUri + "setValues/GetImage?imageName=" + imageName);
-                request.Headers.Add("APIKey", Global.APIKey);
+                //request.Headers.Add("APIKey", Global.APIKey);
                 request.Method = HttpMethod.Get;
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response = await client.SendAsync(request);
@@ -558,7 +554,8 @@ namespace Restaurant.Classes
                     byteImg = await response.Content.ReadAsByteArrayAsync();
 
                     // configure trmporery path
-                    string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                    //string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                    string dir = Directory.GetCurrentDirectory();
                     string tmpPath = Path.Combine(dir, Global.TMPSettingFolder);
                     if (!Directory.Exists(tmpPath))
                         Directory.CreateDirectory(tmpPath);
@@ -600,8 +597,9 @@ namespace Restaurant.Classes
                             bitmapImage.StreamSource = memoryStream;
                             bitmapImage.EndInit();
                          Bitmap serial_bitmap = new Bitmap(memoryStream);
-                         string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                         string tmpPath = System.IO.Path.Combine(dir, Global.TMPSettingFolder);
+                         //string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                            string dir = Directory.GetCurrentDirectory();
+                            string tmpPath = System.IO.Path.Combine(dir, Global.TMPSettingFolder);
                          tmpPath = System.IO.Path.Combine(tmpPath, imageName);
                          serial_bitmap.Save(tmpPath);
                         }
