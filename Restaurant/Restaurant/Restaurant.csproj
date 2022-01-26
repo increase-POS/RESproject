@@ -198,8 +198,11 @@
     <Compile Include="Classes\ApiClasses\Offer.cs" />
     <Compile Include="Classes\ApiClasses\Package.cs" />
     <Compile Include="Classes\ApiClasses\Pos.cs" />
+    <Compile Include="Classes\ApiClasses\PosSetting.cs" />
+    <Compile Include="Classes\ApiClasses\Printers.cs" />
     <Compile Include="Classes\ApiClasses\reservations.cs" />
     <Compile Include="Classes\ApiClasses\Section.cs" />
+    <Compile Include="Classes\ApiClasses\SettingCls.cs" />
     <Compile Include="Classes\ApiClasses\setValues.cs" />
     <Compile Include="Classes\ApiClasses\ShippingCompanies.cs" />
     <Compile Include="Classes\ApiClasses\StorageCost.cs" />
@@ -207,6 +210,7 @@
     <Compile Include="Classes\ApiClasses\Tables.cs" />
     <Compile Include="Classes\ApiClasses\Tag.cs" />
     <Compile Include="Classes\ApiClasses\Unit.cs" />
+    <Compile Include="Classes\ApiClasses\userSetValues.cs" />
     <Compile Include="Classes\BillDetails.cs" />
     <Compile Include="Classes\CatigoriesAndItemsView.cs" />
     <Compile Include="Classes\clsReports.cs" />
@@ -216,6 +220,7 @@
     <Compile Include="Classes\numberToWord\ToWord.cs" />
     <Compile Include="Classes\Pagination.cs" />
     <Compile Include="Classes\ReportCls.cs" />
+    <Compile Include="Classes\SectionData.cs" />
     <Compile Include="Classes\Statistics.cs" />
     <Compile Include="controlTemplate\uc_squareCard.xaml.cs">
       <DependentUpon>uc_squareCard.xaml</DependentUpon>
@@ -838,10 +843,46 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\SectionData\banksData\Ar\ArBank.rdlc" />
+    <EmbeddedResource Include="Reports\SectionData\banksData\En\EnBank.rdlc" />
+    <Content Include="Reports\SectionData\hallDivide\Ar\ArHallSections.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\hallDivide\Ar\ArTables.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\hallDivide\En\EnHallSections.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\hallDivide\En\EnTables.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\persons\Ar\ArCustomers.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\persons\En\EnCustomers.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\persons\Ar\ArUsers.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\persons\Ar\ArVendors.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\persons\En\EnUsers.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\persons\En\EnVendors.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="fonts\barcodeFont.ttf" />
     <Resource Include="fonts\cairo-font\cairo bold.ttf" />
     <Resource Include="fonts\cairo-font\cairo-light.ttf" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Restaurant.Classes.Agent.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.ApiClasses.Tables.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.Section.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.User.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -857,6 +898,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Reports\SectionData\branchesStores\Ar\" />
+    <Folder Include="Reports\SectionData\branchesStores\En\" />
     <Folder Include="View\home\" />
     <Folder Include="View\reports\" />
   </ItemGroup>
@@ -877,8 +920,15 @@
     <Resource Include="Thumb\agents\tmp.txt" />
     <Resource Include="Thumb\cards\tmp.txt" />
     <Resource Include="Thumb\items\tmp.txt" />
-    <Resource Include="Thumb\report\tmp.txt" />
-    <Resource Include="Thumb\setting\tmp.txt" />
+    <Content Include="Thumb\report\tmp.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Thumb\setting\emptylogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Thumb\setting\tmp.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Thumb\tmp.txt" />
     <Resource Include="Thumb\users\tmp.txt" />
   </ItemGroup>

@@ -57,7 +57,7 @@ namespace Restaurant
         public static string first = "";
         public static string second = "";
         public static string lang;
-        public static string Reportlang = "en";
+        public static string Reportlang = "ar";
         public static string companyName;
         public static string Email;
         public static string Fax;
@@ -115,9 +115,12 @@ namespace Restaurant
         public static string docPapersize;
         public static string Allow_print_inv_count;
         public static Boolean go_out = false;
-        //static public PosSetting posSetting = new PosSetting();
-        //internal static List<Pos> posList = new List<Pos>();
+        static public PosSetting posSetting = new PosSetting();
+        internal static List<Pos> posList = new List<Pos>();
+        static SettingCls setModel = new SettingCls();
+        static SetValues valueModel = new SetValues();
 
+        internal static int? posID=1;
         //static public List<Item> InvoiceglobalItemsList = new List<Item>();
         static public List<ItemUnit> InvoiceGlobalItemUnitsList = new List<ItemUnit>();
         //static public List<Item> InvoiceglobalSaleUnitsList = new List<Item>();
@@ -126,8 +129,8 @@ namespace Restaurant
         //public ItemUnit globalItemUnit = new ItemUnit();
         //public List<ItemUnit> globalItemUnitsList = new List<ItemUnit>();
         //static public Unit saleUnit = new Unit();
-       
-        /*
+
+        
         public static async Task Getprintparameter()
         {
             List<SetValues> printList = new List<SetValues>();
@@ -194,7 +197,6 @@ namespace Restaurant
             await GetReportlang();
             await getPrintersNames();
         }
-        */
         static public MainWindow mainWindow;
         public MainWindow()
         {
@@ -2307,7 +2309,7 @@ namespace Restaurant
                 //    break;
                 //52
                 case "spendingRequest":
-                    grid_main.Children.Add(uc_kitchenOrder.Instance);
+                 //   grid_main.Children.Add(uc_kitchenOrder.Instance);
                     break;
                 //case "posTransfers":
                 //    grid_main.Children.Add(uc_posTransfers.Instance);
