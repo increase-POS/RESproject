@@ -24,18 +24,16 @@ namespace Restaurant.View.windows
     {
         public int itemId = 0 , itemUnitId = 0;
 
-        public bool isActive;
         public string CallerName;//"IUList"
 
         ItemUnit itemUnit = new ItemUnit();
-        ItemUnit itemUnitModel = new ItemUnit();
         List<ItemUnit> allItemUnitsSource = new List<ItemUnit>();
         List<ItemUnit> allItemUnits = new List<ItemUnit>();
 
         Package package = new Package();
         Package packageModel = new Package();
         List<Package> allIPackagesSource = new List<Package>();
-        List<Package> allPackages = new List<Package>();
+       public List<Package> allPackages = new List<Package>();
 
         //ItemUnitUser itemUnitUserModel = new ItemUnitUser();
         List<ItemUnit> selectedItemUnitsSource = new List<ItemUnit>();
@@ -88,53 +86,23 @@ namespace Restaurant.View.windows
 
                 translat();
                 #endregion
-
-                allItemUnitsSource = await itemUnitModel.Getall();
-                allItemUnits.AddRange(allItemUnitsSource);
-                for (int i = 0; i < allItemUnits.Count; i++)
+                #region item units for package
+                if (CallerName == "package")
                 {
-                    //remove parent package itemunit
-                    if (allItemUnits[i].itemUnitId == itemUnitId)
-                    { allItemUnits.Remove(allItemUnits[i]); break; }
+                    allItemUnitsSource = FillCombo.itemUnitList.Where(x => x.type == "SalesNormal").ToList();
+                    allItemUnits.AddRange(allItemUnitsSource);
+                    for (int i = 0; i < allItemUnits.Count; i++)
+                    {
+                        //remove parent package itemunit
+                        if (allItemUnits[i].itemUnitId == itemUnitId)
+                        { allItemUnits.Remove(allItemUnits[i]); break; }
 
-                }
-                foreach (var iu in allItemUnits)
-                {
-                    iu.itemName = iu.itemName + "-" + iu.unitName;
-                }
-
-                //if (CallerName.Equals("IUList"))
-                //{
-                //    dg_selectedItems.Columns[1].Visibility = Visibility.Collapsed;
-
-                //    selectedItemUnitsSource = await itemUnitUserModel.GetByUserId(MainWindow.userID.Value);
-
-                //    //remove selected itemunits from source itemunits
-                //    foreach (var p in selectedItemUnitsSource)
-                //    {
-                //        for (int i = 0; i < allItemUnits.Count; i++)
-                //        {
-                //            //remove saved itemunits
-                //            if (p.itemUnitId == allItemUnits[i].itemUnitId)
-                //            {
-                //                allItemUnits.Remove(allItemUnits[i]);
-                //            }
-                //        }
-                //    }
-                //    selectedItemUnits.AddRange(selectedItemUnitsSource);
-                //    foreach (var p in selectedItemUnits)
-                //    {
-                //        foreach (var iu in allItemUnits)
-                //            if (p.itemUnitId == iu.itemUnitId)
-                //                p.notes = iu.itemName + "-" + iu.unitName;
-                //    }
-
-                //    dg_selectedItems.ItemsSource = selectedItemUnits;
-                //    dg_allItems.SelectedValuePath = "id";
-                //    dg_allItems.DisplayMemberPath = "notes";
-                //}
-                //else
-                {
+                    }
+                    foreach (var iu in allItemUnits)
+                    {
+                        //iu.itemName = iu.itemName + "-" + iu.mainUnit;
+                        iu.itemName = iu.itemName ;
+                    }
                     allIPackagesSource = await packageModel.GetChildsByParentId(itemUnitId);
 
                     //remove selected itemunits from source itemunits
@@ -160,12 +128,18 @@ namespace Restaurant.View.windows
                     dg_selectedItems.ItemsSource = allPackages;
                     dg_allItems.SelectedValuePath = "packageId";
                     dg_allItems.DisplayMemberPath = "notes";
-                }
-                dg_allItems.ItemsSource = allItemUnits;
-                dg_allItems.SelectedValuePath = "itemUnitId";
-                dg_allItems.DisplayMemberPath = "itemName";
 
-                if (sender != null)
+                    dg_allItems.ItemsSource = allItemUnits;
+                    dg_allItems.SelectedValuePath = "itemUnitId";
+                    dg_allItems.DisplayMemberPath = "itemName";
+                }
+                #endregion
+                #region storageCost
+                else if (CallerName == "storageCost")
+                {
+                }
+                #endregion
+                    if (sender != null)
                     HelpClass.EndAwait(grid_offerList);
             }
             catch (Exception ex)
@@ -200,7 +174,7 @@ namespace Restaurant.View.windows
 
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
-            isActive = false;
+            DialogResult = false;
             this.Close();
         }
 
@@ -256,24 +230,21 @@ namespace Restaurant.View.windows
                 itemUnit = dg_allItems.SelectedItem as ItemUnit;
                 if (itemUnit != null)
                 {
-                    if (CallerName.Equals(""))
-                    {
-                        Package p = new Package();
+                    Package p = new Package();
 
-                        p.parentIUId = itemUnitId;
-                        p.childIUId = itemUnit.itemUnitId;
-                        p.quantity = 1;
-                        p.isActive = 1;
-                        p.notes = itemUnit.itemName;
-                        p.createUserId = MainWindow.userLogin.userId;
+                    p.parentIUId = itemUnitId;
+                    p.childIUId = itemUnit.itemUnitId;
+                    p.quantity = 1;
+                    p.isActive = 1;
+                    p.notes = itemUnit.itemName;
+                    p.createUserId = MainWindow.userLogin.userId;
 
-                        allItemUnits.Remove(itemUnit);
-                        allPackages.Add(p);
+                    allItemUnits.Remove(itemUnit);
+                    allPackages.Add(p);
 
-                        dg_allItems.ItemsSource = allItemUnits;
-                        dg_selectedItems.ItemsSource = allPackages;
+                    dg_allItems.ItemsSource = allItemUnits;
+                    dg_selectedItems.ItemsSource = allPackages;
 
-                    }
                     //else
                     //{
                     //    ItemUnit iu = new ItemUnit();
@@ -358,7 +329,7 @@ namespace Restaurant.View.windows
             try
             {
                 int x = 0;
-                if (CallerName.Equals(""))
+                if (CallerName.Equals("package"))
                     x = allPackages.Count;
                 else
                     x = selectedItemUnits.Count;
@@ -381,9 +352,9 @@ namespace Restaurant.View.windows
                 if (sender != null)
                     HelpClass.StartAwait(grid_offerList);
 
-                await package.UpdatePackByParentId(itemUnitId, allPackages, MainWindow.userLogin.userId);
+               
 
-                isActive = true;
+                DialogResult = true;
                 this.Close();
 
                 if (sender != null)

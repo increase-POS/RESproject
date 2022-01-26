@@ -480,7 +480,7 @@
                     BorderThickness="1" Opacity="1" Margin="5,5,5,5"  />
                     <Border Grid.Row="1" Grid.ColumnSpan="3">
                         <Button x:Name="btn_items" Click="Btn_items_Click"   Content="items" materialDesign:ButtonAssist.CornerRadius="7"
-                          Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                          IsEnabled="False" Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                     Margin="1,1"   Foreground="White" />
                     </Border>
 
