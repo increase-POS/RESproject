@@ -90,8 +90,9 @@ namespace Restaurant.View.catalog.foods
         byte tgl_itemState;
         string searchText = "";
         public static List<string> requiredControlList;
-        List<Unit> units;
-        Unit unit = new Unit();
+        int itemUnitId = 0;
+        //Unit unit = new Unit();
+        Package package = new Package();
         #region for barcode
         DateTime _lastKeystroke = new DateTime(0);
         static private string _BarcodeStr = "";
@@ -639,9 +640,10 @@ namespace Restaurant.View.catalog.foods
         {
             item = new Item();
             item.price = 0;
+            itemUnitId = 0;
             generateBarcode();
             this.DataContext = item;
-            //cb_tagId.ItemsSource = null;
+            btn_items.IsEnabled = false;
             #region image
             HelpClass.clearImg(btn_image);
             #endregion
@@ -1047,6 +1049,9 @@ namespace Restaurant.View.catalog.foods
                 this.DataContext = item;
                 drawBarcode(item.barcode);
                 await getImg();
+                btn_items.IsEnabled = true;
+                var uQuery = FillCombo.itemUnitList.Where(iu => iu.itemId == item.itemId).FirstOrDefault();
+                itemUnitId = uQuery.itemUnitId;
                 #region delete
                 if (item.canDelete)
                     btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
@@ -1430,7 +1435,7 @@ namespace Restaurant.View.catalog.foods
  
             //tb_barcode.Text = barcodeString;
             HelpClass.validateEmpty("trErrorEmptyBarcodeToolTip", p_error_barcode);
-            drawBarcode(tb_barcode.Text);
+            drawBarcode(barcodeString);
         }
 
         static public string generateRandomBarcode()
@@ -1449,7 +1454,7 @@ namespace Restaurant.View.catalog.foods
         }
         #endregion
 
-        private void Btn_items_Click(object sender, RoutedEventArgs e)
+        private async void Btn_items_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -1463,9 +1468,11 @@ namespace Restaurant.View.catalog.foods
                         Window.GetWindow(this).Opacity = 0.2;
                         wd_itemsUnitList w = new wd_itemsUnitList();
                         w.itemId = item.itemId;
-                        //w.itemUnitId = itemUnitId;
-                        //w.CallerName = "";
+                        w.itemUnitId = itemUnitId;
+                        w.CallerName = "package";
                         w.ShowDialog();
+                        if(w.DialogResult == true)
+                            await package.UpdatePackByParentId(itemUnitId, w.allPackages, MainWindow.userLogin.userId);
                         Window.GetWindow(this).Opacity = 1;
                     }
                     else
