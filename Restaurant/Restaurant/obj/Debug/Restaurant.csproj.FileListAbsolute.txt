@@ -918,3 +918,9 @@ D:\myproj\posproject5\Restaurant\Restaurant\bin\Debug\Thumb\setting\emptylogo.pn
 D:\myproj\posproject5\Restaurant\Restaurant\bin\Debug\Thumb\setting\tmp.txt
 D:\myproj\posproject5\Restaurant\Restaurant\bin\Debug\Reports\SectionData\hallDivide\Ar\ArHallSections.rdlc
 D:\myproj\posproject5\Restaurant\Restaurant\bin\Debug\Reports\SectionData\hallDivide\En\EnHallSections.rdlc
+D:\myproj\posproject5\Restaurant\Restaurant\bin\Debug\Reports\SectionData\persons\Ar\ArCustomers.rdlc
+D:\myproj\posproject5\Restaurant\Restaurant\bin\Debug\Reports\SectionData\persons\En\EnCustomers.rdlc
+D:\myproj\posproject5\Restaurant\Restaurant\bin\Debug\Reports\SectionData\persons\Ar\ArUsers.rdlc
+D:\myproj\posproject5\Restaurant\Restaurant\bin\Debug\Reports\SectionData\persons\Ar\ArVendors.rdlc
+D:\myproj\posproject5\Restaurant\Restaurant\bin\Debug\Reports\SectionData\persons\En\EnUsers.rdlc
+D:\myproj\posproject5\Restaurant\Restaurant\bin\Debug\Reports\SectionData\persons\En\EnVendors.rdlc

@@ -857,12 +857,32 @@
     <Content Include="Reports\SectionData\hallDivide\En\EnTables.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\SectionData\persons\Ar\ArCustomers.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\persons\En\EnCustomers.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\persons\Ar\ArUsers.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\persons\Ar\ArVendors.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\persons\En\EnUsers.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\persons\En\EnVendors.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="fonts\barcodeFont.ttf" />
     <Resource Include="fonts\cairo-font\cairo bold.ttf" />
     <Resource Include="fonts\cairo-font\cairo-light.ttf" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Restaurant.Classes.Agent.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ApiClasses.Tables.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Section.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.User.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -880,8 +900,6 @@
   <ItemGroup>
     <Folder Include="Reports\SectionData\branchesStores\Ar\" />
     <Folder Include="Reports\SectionData\branchesStores\En\" />
-    <Folder Include="Reports\SectionData\persons\Ar\" />
-    <Folder Include="Reports\SectionData\persons\En\" />
     <Folder Include="View\home\" />
     <Folder Include="View\reports\" />
   </ItemGroup>

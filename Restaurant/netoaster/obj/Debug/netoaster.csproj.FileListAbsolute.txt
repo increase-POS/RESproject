@@ -234,3 +234,4 @@ D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\netoaster.csproj.GenerateRe
 D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\netoaster.csproj.CoreCompileInputs.cache
 D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\netoaster.dll
 D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\netoaster.pdb
+D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache

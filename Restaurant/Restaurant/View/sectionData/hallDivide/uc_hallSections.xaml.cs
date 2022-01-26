@@ -922,6 +922,7 @@ namespace Restaurant.View.sectionData.hallDivide
                     SectionData.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
                 {
+
                     #region
                     BuildReport();
                     LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
@@ -980,6 +981,7 @@ namespace Restaurant.View.sectionData.hallDivide
             {
                 if (sender != null)
                     SectionData.EndAwait(grid_main);
+            
                 //   SectionData.ExceptionMessage(ex, this);
             }
         }

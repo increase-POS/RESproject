@@ -57,7 +57,7 @@ namespace Restaurant
         public static string first = "";
         public static string second = "";
         public static string lang;
-        public static string Reportlang = "en";
+        public static string Reportlang = "ar";
         public static string companyName;
         public static string Email;
         public static string Fax;
