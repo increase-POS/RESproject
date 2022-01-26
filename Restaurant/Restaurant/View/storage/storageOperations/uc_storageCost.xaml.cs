@@ -82,6 +82,7 @@ namespace Restaurant.View.storage.storageOperations
         }
 
         string basicsPermission = "storageCost_basics";
+        string itemsPermission = "storageCost_items";
         StorageCost storageCost = new StorageCost();
         IEnumerable<StorageCost> storageCostsQuery;
         IEnumerable<StorageCost> storageCosts;
@@ -774,22 +775,26 @@ namespace Restaurant.View.storage.storageOperations
         */
         #endregion
 
-        private void Btn_items_Click(object sender, RoutedEventArgs e)
+        private async void Btn_items_Click(object sender, RoutedEventArgs e)
         {
             try
-            {/*
+            {
                 HelpClass.StartAwait(grid_main);
                 //tables
-                if (MainWindow.groupObject.HasPermissionAction(selectLocationPermission, MainWindow.groupObjects, "one"))
+                if (MainWindow.groupObject.HasPermissionAction(itemsPermission, MainWindow.groupObjects, "one"))
                 {
 
                     Window.GetWindow(this).Opacity = 0.2;
-                    wd_tablesList w = new wd_tablesList();
-                    w.sectionId = section.sectionId;
+                    wd_itemsUnitList w = new wd_itemsUnitList();
+                    w.CallerName = "storageCost";
+                    w.storageCostId = storageCost.storageCostId;
                     w.ShowDialog();
-                    if (w.isActive)
+                    if (w.DialogResult == true)
                     {
-                       await tables.saveTablesSection(w.selectedTables, section.sectionId, MainWindow.userLogin.userId);
+                        List<int> itemsUnitsIds = new List<int>();
+                        foreach (ItemUnit u in w.selectedItemUnits)
+                            itemsUnitsIds.Add(u.itemUnitId);
+                       await storageCost.setCostToUnits( itemsUnitsIds, storageCost.storageCostId, MainWindow.userLogin.userId);
 
                     }
                     Window.GetWindow(this).Opacity = 1;
@@ -798,7 +803,7 @@ namespace Restaurant.View.storage.storageOperations
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
-                */
+             
             }
             catch (Exception ex)
             {

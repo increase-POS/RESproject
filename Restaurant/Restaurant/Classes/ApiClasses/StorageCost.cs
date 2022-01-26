@@ -88,5 +88,20 @@ namespace Restaurant.Classes
             parameters.Add("userId", userId.ToString());
             return await APIResult.post(method, parameters);
         }
+        public async Task<List<ItemUnit>> GetStorageCostUnits(int storageCostId)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("storageCostId", storageCostId.ToString());
+            List<ItemUnit> items = new List<ItemUnit>();
+            IEnumerable<Claim> claims = await APIResult.getList("StorageCost/GetStorageCostUnits",parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<ItemUnit>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
     }
 }
