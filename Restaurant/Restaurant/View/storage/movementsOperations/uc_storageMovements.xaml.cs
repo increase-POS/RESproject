@@ -292,7 +292,7 @@ namespace Restaurant.View.storage.movementsOperations
         {
             try
             {
-                await FillCombo.fillBranchesNoCurrentDefault(cb_branch,"bs");
+                await FillCombo.fillBranchesNoCurrentDefault(cb_branch,"s");
             }
             catch (Exception)
             { }

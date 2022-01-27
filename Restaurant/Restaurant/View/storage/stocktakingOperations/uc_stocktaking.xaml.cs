@@ -132,14 +132,11 @@ namespace Restaurant.View.storage.stocktakingOperations
                 setTimer();
 
                 translate();
-                //await fillInventoryDetails();
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -160,10 +157,9 @@ namespace Restaurant.View.storage.stocktakingOperations
 
             txt_inventoryDetails.Text = MainWindow.resourcemanager.GetString("trStocktakingDetails");
             txt_titleDataGrid.Text = MainWindow.resourcemanager.GetString("trStocktakingItems");
-            //btn_archive.Content = MainWindow.resourcemanager.GetString("trArchive");
             btn_archive.Content = MainWindow.resourcemanager.GetString("trSave");
 
-            bdr_archive.Background = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
+            //bdr_archive.Background = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
             txt_newDraft.Text = MainWindow.resourcemanager.GetString("trNew");
             txt_drafts.Text = MainWindow.resourcemanager.GetString("trDraft");
             txt_inventory.Text = MainWindow.resourcemanager.GetString("trInventory");
@@ -331,14 +327,14 @@ namespace Restaurant.View.storage.stocktakingOperations
                 btn_archive.IsEnabled = true;
                 btn_deleteInventory.Visibility = Visibility.Collapsed;
                 btn_archive.Content = MainWindow.resourcemanager.GetString("trSave");
-                bdr_archive.Background = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
+               //bdr_archive.Background = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
             }
             else if (_InventoryType == "n") // normal saved
             {
                 dg_items.Columns[4].IsReadOnly = true;
                 dg_items.Columns[5].IsReadOnly = true;
                 btn_archive.Content = MainWindow.resourcemanager.GetString("trArchive");
-                bdr_archive.Background = Application.Current.Resources["mediumRed"] as SolidColorBrush;
+               // bdr_archive.Background = Application.Current.Resources["mediumRed"] as SolidColorBrush;
                 if (HelpClass.isAdminPermision())
                     btn_deleteInventory.Visibility = Visibility.Visible;
                 bool shortageManipulated = await inventory.shortageIsManipulated(inventory.inventoryId);
@@ -428,6 +424,9 @@ namespace Restaurant.View.storage.stocktakingOperations
                 inventory.branchId = MainWindow.branchLogin.branchId;
                 inventory.posId = MainWindow.posLogin.posId;
                 inventory.createUserId = MainWindow.userLogin.userId;
+                inventory.isActive = 1;
+                if(invType == "d")
+                    inventory.num = await inventory.generateInvNumber("ind", MainWindow.branchLogin.branchId);
             }
             if (invType == "n")
                 inventory.num = await inventory.generateInvNumber("in", MainWindow.branchLogin.branchId);
@@ -450,26 +449,21 @@ namespace Restaurant.View.storage.stocktakingOperations
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
-                //if (inventory.inventoryId != 0 && inventory != null)
-                //{
                 if (!_InventoryType.Equals("n") && invItemsLocations.Count > 0)
                 {
                     await addInventory("d"); // d:draft
                     clearInventory();
                 }
                 else
-                    //}
                     await fillItemLocations();
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -477,14 +471,12 @@ namespace Restaurant.View.storage.stocktakingOperations
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 inventory = await inventory.getByBranch("d", MainWindow.branchLogin.branchId);
                 if (inventory.inventoryId == 0)
                 {
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trNoDraft"), animation: ToasterAnimation.FadeIn);
-
                 }
                 else
                 {
@@ -499,12 +491,11 @@ namespace Restaurant.View.storage.stocktakingOperations
                     }
                 }
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -512,8 +503,7 @@ namespace Restaurant.View.storage.stocktakingOperations
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (_InventoryType.Equals("d") && invItemsLocations.Count > 0)
                 {
@@ -537,13 +527,11 @@ namespace Restaurant.View.storage.stocktakingOperations
                         await fillInventoryDetails();
                     }
                 }
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -551,8 +539,7 @@ namespace Restaurant.View.storage.stocktakingOperations
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(createInventoryPermission, MainWindow.groupObjects, "one"))
                 {
@@ -569,8 +556,7 @@ namespace Restaurant.View.storage.stocktakingOperations
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -578,8 +564,7 @@ namespace Restaurant.View.storage.stocktakingOperations
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(archivingPermission, MainWindow.groupObjects, "one") || MainWindow.groupObject.HasPermissionAction(createInventoryPermission, MainWindow.groupObjects, "one"))
                 {
@@ -600,12 +585,11 @@ namespace Restaurant.View.storage.stocktakingOperations
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
