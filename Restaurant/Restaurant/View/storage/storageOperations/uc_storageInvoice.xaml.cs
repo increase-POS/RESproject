@@ -889,7 +889,7 @@ namespace Restaurant.View.storage.storageOperations
                     if (index == -1)//item doesn't exist in bill
                     {
                         // create new row in bill details data grid
-                        addRowToBill(item.name, itemId, defaultPurUnit.mainUnit, defaultPurUnit.itemUnitId, 1, 0, 0);
+                        addRowToBill(item.name, itemId, defaultPurUnit.unitName, defaultPurUnit.itemUnitId, 1, 0, 0);
                     }
                     else // item exist prevoiusly in list
                     {

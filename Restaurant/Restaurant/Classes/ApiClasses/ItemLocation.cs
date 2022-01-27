@@ -592,42 +592,9 @@ namespace Restaurant.Classes
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "ItemsLocations/getAmountInBranch";
 
-
-            parameters.Add("invoiceId", invoiceId.ToString());
-
             parameters.Add("branchId", branchId.ToString());
             parameters.Add("itemUnitId", itemUnitId.ToString());
-
-
-
            return await APIResult.post(method, parameters);
-
-
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "ItemsLocations/getAmountInBranch?itemUnitId=" + itemUnitId + "&branchId=" + branchId);
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Get;
-            //    //set content type
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    var response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var AvailableAmount = await response.Content.ReadAsStringAsync();
-            //        return int.Parse(AvailableAmount);
-            //    }
-            //    return 0;
-            //}
         }
         public async Task<int> getAmountInLocation(int itemUnitId, int branchId , int locationId)
         {

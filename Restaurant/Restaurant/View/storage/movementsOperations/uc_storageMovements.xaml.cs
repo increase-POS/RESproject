@@ -66,31 +66,33 @@ namespace Restaurant.View.storage.movementsOperations
             }
         }
         ObservableCollection<BillDetailsPurchase> billDetails = new ObservableCollection<BillDetailsPurchase>();
-        public static bool archived = false;
-        public static bool isFromReport = false;
-        List<ItemUnit> barcodesList;
-        List<ItemUnit> itemUnits;
+        
         public Invoice invoice = new Invoice();
         Invoice generatedInvoice = new Invoice();
-        List<Invoice> invoices;
         List<ItemTransfer> invoiceItems;
         List<ItemTransfer> mainInvoiceItems;
-         public List<Control> controls;
+        List<ItemUnit> itemUnits;
+        public List<Control> controls;
         static public string _ProcessType = "imd"; //draft import
 
         static private int _SequenceNum = 0;
         static private int _Count = 0;
         static private int _invoiceId;
-        // for barcode
+        #region for barcode
         DateTime _lastKeystroke = new DateTime(0);
         static private string _BarcodeStr = "";
         static private string _SelectedProcess = "";
         static private int _SelectedBranch = -1;
         bool _IsFocused = false;
-         private static DispatcherTimer timer;
-        Item item = new Item();
-        IEnumerable<Item> items;
         public static List<string> requiredControlList;
+        #endregion
+        #region for notifications
+        private static DispatcherTimer timer;
+        public static bool archived = false;
+        public static bool isFromReport = false;
+        #endregion
+        Item item = new Item();
+        
         private void translate()
         {
             ////////////////////////////////----Order----/////////////////////////////////
@@ -110,8 +112,7 @@ namespace Restaurant.View.storage.movementsOperations
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 MainWindow.mainWindow.KeyDown -= HandleKeyPress;
                 timer.Stop();
@@ -146,9 +147,8 @@ namespace Restaurant.View.storage.movementsOperations
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "branch",  };
+                HelpClass.StartAwait(grid_main);
+                requiredControlList = new List<string> { "cb_branch" };
 
                 MainWindow.mainWindow.KeyDown += HandleKeyPress;
 
@@ -167,9 +167,34 @@ namespace Restaurant.View.storage.movementsOperations
                 setNotifications();
                 setTimer();
                 FillCombo.FillMovementsProcessType(cb_processType);
-                await FillCombo.fillBranchesWithoutCurrent(cb_branch);
-                await RefrishItems();
-                await fillBarcodeList();
+                //await FillCombo.fillBranchesWithoutCurrent(cb_branch);
+              // await RefrishItems();
+                #region loading
+                loadingList = new List<keyValueBool>();
+                bool isDone = true;
+                loadingList.Add(new keyValueBool { key = "loading_RefrishItems", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_fillBranchesWithoutCurrent", value = false });
+
+                loading_RefrishItems();
+                loading_fillBranchesWithoutCurrent();
+                do
+                {
+                    isDone = true;
+                    foreach (var item in loadingList)
+                    {
+                        if (item.value == false)
+                        {
+                            isDone = false;
+                            break;
+                        }
+                    }
+                    if (!isDone)
+                    {
+                        await Task.Delay(0500);
+                    }
+                }
+                while (!isDone);
+                #endregion
                 //List all the UIElement in the VisualTree
                 controls = new List<Control>();
                 FindControl(this.grid_main, controls);
@@ -194,19 +219,19 @@ namespace Restaurant.View.storage.movementsOperations
                     md_shortage.Visibility = Visibility.Collapsed;
                 }
 
-                if (MainWindow.groupObject.HasPermissionAction(packagePermission, MainWindow.groupObjects, "one"))
-                    btn_package.Visibility = Visibility.Visible;
-                else
-                    btn_package.Visibility = Visibility.Collapsed;
+                //if (MainWindow.groupObject.HasPermissionAction(packagePermission, MainWindow.groupObjects, "one"))
+                //    btn_package.Visibility = Visibility.Visible;
+                //else
+                //    btn_package.Visibility = Visibility.Collapsed;
 
-                if (MainWindow.groupObject.HasPermissionAction(unitConversionPermission, MainWindow.groupObjects, "one"))
-                    btn_unitConversion.Visibility = Visibility.Visible;
-                else
-                    btn_unitConversion.Visibility = Visibility.Collapsed;
+                //if (MainWindow.groupObject.HasPermissionAction(unitConversionPermission, MainWindow.groupObjects, "one"))
+                //    btn_unitConversion.Visibility = Visibility.Visible;
+                //else
+                //    btn_unitConversion.Visibility = Visibility.Collapsed;
 
-                if (!MainWindow.groupObject.HasPermissionAction(packagePermission, MainWindow.groupObjects, "one")
-                    && !MainWindow.groupObject.HasPermissionAction(unitConversionPermission, MainWindow.groupObjects, "one"))
-                    bdr_package_converter.Visibility = Visibility.Collapsed;
+                //if (!MainWindow.groupObject.HasPermissionAction(packagePermission, MainWindow.groupObjects, "one")
+                //    && !MainWindow.groupObject.HasPermissionAction(unitConversionPermission, MainWindow.groupObjects, "one"))
+                //    bdr_package_converter.Visibility = Visibility.Collapsed;
 
 
                 #endregion
@@ -244,6 +269,43 @@ namespace Restaurant.View.storage.movementsOperations
                 }
             }
         }
+        #region loading
+        List<keyValueBool> loadingList;
+        async void loading_RefrishItems()
+        {
+            try
+            {
+                await FillCombo.RefreshPurchaseItems();
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_RefrishItems"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_fillBranchesWithoutCurrent()
+        {
+            try
+            {
+                await FillCombo.fillBranchesNoCurrentDefault(cb_branch,"s");
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_fillBranchesWithoutCurrent"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        #endregion
         #region timer to refresh notifications
         private void setTimer()
         {
@@ -351,8 +413,8 @@ namespace Restaurant.View.storage.movementsOperations
         #region navigation buttons
         private void navigateBtnActivate()
         {
-            int index = invoices.IndexOf(invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
-            if (index == invoices.Count - 1)
+            int index = FillCombo.invoices.IndexOf(FillCombo.invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
+            if (index == FillCombo.invoices.Count - 1)
                 btn_next.IsEnabled = false;
             else
                 btn_next.IsEnabled = true;
@@ -366,24 +428,21 @@ namespace Restaurant.View.storage.movementsOperations
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
-                int index = invoices.IndexOf(invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
+                int index = FillCombo.invoices.IndexOf(FillCombo.invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
                 index++;
                 clearProcess();
-                invoice = invoices[index];
+                invoice = FillCombo.invoices[index];
                 _ProcessType = invoice.invType;
                 _invoiceId = invoice.invoiceId;
                 navigateBtnActivate();
                 await fillOrderInputs(invoice);
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -391,25 +450,21 @@ namespace Restaurant.View.storage.movementsOperations
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                 HelpClass.StartAwait(grid_main);
 
-                int index = invoices.IndexOf(invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
+                int index = FillCombo.invoices.IndexOf(FillCombo.invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
                 index--;
                 clearProcess();
-                invoice = invoices[index];
+                invoice = FillCombo.invoices[index];
                 _ProcessType = invoice.invType;
                 _invoiceId = invoice.invoiceId;
                 navigateBtnActivate();
                 await fillOrderInputs(invoice);
-
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -507,9 +562,9 @@ namespace Restaurant.View.storage.movementsOperations
         {
             tb_barcode.Text = barcode;
             // get item matches barcode
-            if (barcodesList != null)
+            if (FillCombo.itemUnitList != null)
             {
-                ItemUnit unit1 = barcodesList.ToList().Find(c => c.barcode == tb_barcode.Text.Trim());
+                ItemUnit unit1 = FillCombo.itemUnitList.Find(c => c.barcode == tb_barcode.Text.Trim());
 
                 // get item matches the barcode
                 if (unit1 != null)
@@ -522,9 +577,9 @@ namespace Restaurant.View.storage.movementsOperations
                         if (index == -1)//item doesn't exist in bill
                         {
                             // get item units
-                            itemUnits = await FillCombo.itemUnit.GetItemUnits(itemId);
+                            itemUnits = FillCombo.itemUnitList.Where(c => c.itemId == itemId).ToList();
                             //get item from list
-                            item = items.ToList().Find(i => i.itemId == itemId);
+                            item = FillCombo.purchaseItems.Find(i => i.itemId == itemId);
 
                             int count = 1;
                             _Count++;
@@ -572,10 +627,6 @@ namespace Restaurant.View.storage.movementsOperations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        async Task fillBarcodeList()
-        {
-            barcodesList = await FillCombo.itemUnit.Getall();
-        }
         #endregion
         #region save
         private async Task save()
@@ -606,7 +657,7 @@ namespace Restaurant.View.storage.movementsOperations
                     if (invoice.invNumber == null)
                         invoice.invNumber = await invoice.generateInvNumber("im", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
                     // save invoice in DB
-                    invoiceId = await invoice.saveInvoice(invoice);
+                    invoiceId = await invoice.saveInvoiceWithItems(invoice,invoiceItems);
                     if (invoiceId != 0)
                     {
                         #region notification Object
@@ -639,11 +690,11 @@ namespace Restaurant.View.storage.movementsOperations
                                 invoice.branchId = (int)cb_branch.SelectedValue;
                             invoice.updateUserId = MainWindow.userLogin.userId;
                         }
-                        int exportId = await invoice.saveInvoice(invoice);
+                        int exportId = await invoice.saveInvoiceWithItems(invoice,invoiceItems);
 
                         // add order details                      
-                        await invoice.saveInvoiceItems(invoiceItems, invoiceId);
-                        await invoice.saveInvoiceItems(invoiceItems, exportId);
+                        //await invoice.saveInvoiceItems(invoiceItems, invoiceId);
+                        //await invoice.saveInvoiceItems(invoiceItems, exportId);
 
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                     }
@@ -660,7 +711,7 @@ namespace Restaurant.View.storage.movementsOperations
                     if (invoice.invNumber == null)
                         invoice.invNumber = await invoice.generateInvNumber("ex", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
                     // save invoice in DB
-                    invoiceId = await invoice.saveInvoice(invoice);
+                    invoiceId = await invoice.saveInvoiceWithItems(invoice,invoiceItems);
 
                     if (invoiceId != 0)
                     {
@@ -683,11 +734,11 @@ namespace Restaurant.View.storage.movementsOperations
                                 invoice.branchId = (int)cb_branch.SelectedValue;
                             invoice.updateUserId = MainWindow.userLogin.userId;
                         }
-                        int importId = await invoice.saveInvoice(invoice);
+                        int importId = await invoice.saveInvoiceWithItems(invoice,invoiceItems);
 
                         // add order details
-                        await invoice.saveInvoiceItems(invoiceItems, invoiceId);
-                        await invoice.saveInvoiceItems(invoiceItems, importId);
+                       // await invoice.saveInvoiceItems(invoiceItems, invoiceId);
+                        //await invoice.saveInvoiceItems(invoiceItems, importId);
 
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                     }
@@ -699,10 +750,10 @@ namespace Restaurant.View.storage.movementsOperations
                     invoice.invType = "ex";
                     invoice.updateUserId = MainWindow.userLogin.userId;
                     // save invoice in DB
-                    invoiceId = await invoice.saveInvoice(invoice);
+                    invoiceId = await invoice.saveInvoiceWithItems(invoice,invoiceItems);
                     if (invoiceId != 0)
                     {
-                        await invoice.saveInvoiceItems(invoiceItems, invoiceId);
+                       // await invoice.saveInvoiceItems(invoiceItems, invoiceId);
                         await invoice.saveInvoiceItems(invoiceItems, invoice.invoiceMainId.Value);
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                     }
@@ -717,7 +768,7 @@ namespace Restaurant.View.storage.movementsOperations
         private async Task<bool> validateOrder()
         {
             bool valid = true;
-            if (cb_branch.SelectedIndex == -1 || billDetails.Count == 0)
+            if (billDetails.Count == 0)
                 valid = false;
 
             valid = await checkItemsAmounts();
@@ -729,104 +780,110 @@ namespace Restaurant.View.storage.movementsOperations
         }
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {
-            /*
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (
-                            (
-                                (_ProcessType == "im" || _ProcessType == "imd")
-                            &&
-                                 (MainWindow.groupObject.HasPermissionAction(importPermission, MainWindow.groupObjects, "one"))
-                            )
-                        ||
-                            (
-                                (_ProcessType == "ex" || _ProcessType == "exd" || _ProcessType == "exw")
-                            &&
-                                (MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one"))
-                            )
+                    (
+                        (_ProcessType == "im" || _ProcessType == "imd")
+                    &&
+                            (MainWindow.groupObject.HasPermissionAction(importPermission, MainWindow.groupObjects, "one"))
+                    )
+                ||
+                    (
+                        (_ProcessType == "ex" || _ProcessType == "exd" || _ProcessType == "exw")
+                    &&
+                        (MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one"))
+                    )
                    )
                 {
-                    bool valid = await validateOrder();
-                    if (valid)
+                    if (HelpClass.validate(requiredControlList, this))
                     {
-                        wd_transItemsLocation w;
-                        switch (_ProcessType)
+                        
                         {
-                            case "exw":
-                            case "exd":
-                                Window.GetWindow(this).Opacity = 0.2;
-                                w = new wd_transItemsLocation();
-                                List<ItemTransfer> orderList = new List<ItemTransfer>();
-                                List<int> ordersIds = new List<int>();
-                                foreach (BillDetailsPurchase d in billDetails)
-                                {
-                                    if (d.Count == 0)
+                            if (HelpClass.validate(requiredControlList, this))
+                            { 
+                                wd_transItemsLocation w;
+                            switch (_ProcessType)
+                            {
+                                case "exw":
+                                case "exd":
+                                        //bool valid = true;
+                                        //if(_ProcessType == "exw")
+                                        //    valid = await validateOrder();
+                                        //if (valid)
+                                    Window.GetWindow(this).Opacity = 0.2;
+                                    w = new wd_transItemsLocation();
+                                    List<ItemTransfer> orderList = new List<ItemTransfer>();
+                                    List<int> ordersIds = new List<int>();
+                                    foreach (BillDetailsPurchase d in billDetails)
                                     {
-                                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorQuantIsZeroToolTip"), animation: ToasterAnimation.FadeIn);
-                                        
+                                        if (d.Count == 0)
+                                        {
+                                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorQuantIsZeroToolTip"), animation: ToasterAnimation.FadeIn);
+
                                             HelpClass.EndAwait(grid_main);
-                                        return;
-                                    }
-                                    else
-                                    {
-                                        orderList.Add(new ItemTransfer()
-                                        {
-                                            itemName = d.Product,
-                                            itemId = d.itemId,
-                                            unitName = d.Unit,
-                                            itemUnitId = d.itemUnitId,
-                                            quantity = d.Count,
-                                            invoiceId = d.OrderId,
-                                        });
-                                        ordersIds.Add(d.OrderId);
-                                    }
-                                }
-                                w.orderList = orderList;
-                                if (w.ShowDialog() == true)
-                                {
-                                    if (w.selectedItemsLocations != null)
-                                    {
-                                        List<ItemLocation> itemsLocations = w.selectedItemsLocations;
-                                        List<ItemLocation> readyItemsLoc = new List<ItemLocation>();
-
-                                        // _ProcessType ="ex";
-                                        for (int i = 0; i < itemsLocations.Count; i++)
-                                        {
-                                            if (itemsLocations[i].isSelected == true)
-                                                readyItemsLoc.Add(itemsLocations[i]);
+                                            return;
                                         }
-                                        #region notification Object
-                                        Notification not = new Notification()
+                                        else
                                         {
-                                            title = "trExceedMaxLimitAlertTilte",
-                                            ncontent = "trExceedMaxLimitAlertContent",
-                                            msgType = "alert",
-                                            createDate = DateTime.Now,
-                                            updateDate = DateTime.Now,
-                                            createUserId = MainWindow.userLogin.userId,
-                                            updateUserId = MainWindow.userLogin.userId,
-                                        };
-                                        #endregion
-                                        await FillCombo.itemLocation.recieptOrder(readyItemsLoc, orderList, (int)cb_branch.SelectedValue, MainWindow.userLogin.userId, "storageAlerts_minMaxItem", not);
-                                        await save();
+                                            orderList.Add(new ItemTransfer()
+                                            {
+                                                itemName = d.Product,
+                                                itemId = d.itemId,
+                                                unitName = d.Unit,
+                                                itemUnitId = d.itemUnitId,
+                                                quantity = d.Count,
+                                                invoiceId = d.OrderId,
+                                            });
+                                            ordersIds.Add(d.OrderId);
+                                        }
                                     }
-                                }
-                                Window.GetWindow(this).Opacity = 1;
-                                break;
-                            case "emw":
-                                //process transfer items
-                                await save();
-                                break;
-                            default:
-                                await save();
-                                break;
-                        }
-                        setNotifications();
+                                    w.orderList = orderList;
+                                        w.ShowDialog();
+                                    if (w.DialogResult == true)
+                                    {
+                                        if (w.selectedItemsLocations != null)
+                                        {
+                                            List<ItemLocation> itemsLocations = w.selectedItemsLocations;
+                                            List<ItemLocation> readyItemsLoc = new List<ItemLocation>();
 
-                    }
+                                            for (int i = 0; i < itemsLocations.Count; i++)
+                                            {
+                                                if (itemsLocations[i].isSelected == true)
+                                                    readyItemsLoc.Add(itemsLocations[i]);
+                                            }
+                                            #region notification Object
+                                            Notification not = new Notification()
+                                            {
+                                                title = "trExceedMaxLimitAlertTilte",
+                                                ncontent = "trExceedMaxLimitAlertContent",
+                                                msgType = "alert",
+                                                createDate = DateTime.Now,
+                                                updateDate = DateTime.Now,
+                                                createUserId = MainWindow.userLogin.userId,
+                                                updateUserId = MainWindow.userLogin.userId,
+                                            };
+                                                #endregion
+                                            await FillCombo.itemLocation.recieptOrder(readyItemsLoc, orderList, (int)cb_branch.SelectedValue, MainWindow.userLogin.userId, "storageAlerts_minMaxItem", not);
+                                            await save();
+                                        }
+                                    }
+                                    Window.GetWindow(this).Opacity = 1;
+                                    break;
+                                case "emw":
+                                    //process transfer items
+                                    await save();
+                                    break;
+                                default:
+                                    await save();
+                                    break;
+                            }
+                            setNotifications();
+                        }
+                        }
+                }
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -839,7 +896,6 @@ namespace Restaurant.View.storage.movementsOperations
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private async Task saveDraft()
         {
@@ -869,7 +925,7 @@ namespace Restaurant.View.storage.movementsOperations
                     if (invoice.invNumber == null)
                         invoice.invNumber = await invoice.generateInvNumber("im", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
                     // save invoice in DB
-                    invoiceId = await invoice.saveInvoice(invoice);
+                    invoiceId = await invoice.saveInvoiceWithItems(invoice,invoiceItems);
                     if (invoiceId != 0)
                     {
                         // expot order
@@ -880,6 +936,8 @@ namespace Restaurant.View.storage.movementsOperations
                             invoice.invoiceMainId = invoiceId;
                             if (cb_branch.SelectedIndex != -1)
                                 invoice.branchId = (int)cb_branch.SelectedValue;
+                            else
+                                invoice.branchId = MainWindow.branchLogin.branchId;
                             invoice.invNumber = await invoice.generateInvNumber("ex", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
                             invoice.createUserId = MainWindow.userLogin.userId;
                         }
@@ -888,13 +946,15 @@ namespace Restaurant.View.storage.movementsOperations
                             invoice = await invoice.getgeneratedInvoice(invoiceId);
                             if (cb_branch.SelectedIndex != -1)
                                 invoice.branchId = (int)cb_branch.SelectedValue;
+                            else
+                                invoice.branchId = MainWindow.branchLogin.branchId;
                             invoice.updateUserId = MainWindow.userLogin.userId;
                         }
-                        int exportId = await invoice.saveInvoice(invoice);
+                        int exportId = await invoice.saveInvoiceWithItems(invoice,invoiceItems);
 
                         // add order details                      
-                        await invoice.saveInvoiceItems(invoiceItems, invoiceId);
-                        await invoice.saveInvoiceItems(invoiceItems, exportId);
+                        //await invoice.saveInvoiceItems(invoiceItems, invoiceId);
+                        //await invoice.saveInvoiceItems(invoiceItems, exportId);
 
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                     }
@@ -910,7 +970,7 @@ namespace Restaurant.View.storage.movementsOperations
                     if (invoice.invNumber == null)
                         invoice.invNumber = await invoice.generateInvNumber("ex", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
                     // save invoice in DB
-                    invoiceId = await invoice.saveInvoice(invoice);
+                    invoiceId = await invoice.saveInvoiceWithItems(invoice,invoiceItems);
 
                     if (invoiceId != 0)
                     {
@@ -932,19 +992,18 @@ namespace Restaurant.View.storage.movementsOperations
                                 invoice.branchId = (int)cb_branch.SelectedValue;
                             invoice.updateUserId = MainWindow.userLogin.userId;
                         }
-                        int importId = await invoice.saveInvoice(invoice);
+                        int importId = await invoice.saveInvoiceWithItems(invoice,invoiceItems);
 
                         // add order details
-                        await invoice.saveInvoiceItems(invoiceItems, invoiceId);
-                        await invoice.saveInvoiceItems(invoiceItems, importId);
+                        //await invoice.saveInvoiceItems(invoiceItems, invoiceId);
+                        //await invoice.saveInvoiceItems(invoiceItems, importId);
 
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                     }
                     else
                         Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     break;
-            }
-            clearProcess();
+            }          
         }
         private async Task<int> getAvailableAmount(int itemId, int itemUnitId, int branchId, int ID)
         {
@@ -1291,7 +1350,6 @@ namespace Restaurant.View.storage.movementsOperations
         {
             try
             {
-
                 HelpClass.StartAwait(grid_main);
 
                 if (invoice.invoiceId != 0)
@@ -1300,12 +1358,10 @@ namespace Restaurant.View.storage.movementsOperations
                 cb_processType.IsEnabled = false;
                 await buildShortageInvoiceDetails();
 
-
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1335,7 +1391,6 @@ namespace Restaurant.View.storage.movementsOperations
                     Total = total,
                 });
             }
-
             tb_barcode.Focus();
 
             refrishBillDetails();
@@ -1345,80 +1400,70 @@ namespace Restaurant.View.storage.movementsOperations
         #region btn
         private async void Btn_orders_Click(object sender, RoutedEventArgs e)
         {
-            /*
-                        try
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_invoice w = new wd_invoice();
+
+                if ((
+                        MainWindow.groupObject.HasPermissionAction(importPermission, MainWindow.groupObjects, "one")
+
+                        ) &&
+                        (
+                        MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one")
+
+                        ))
+                    w.invoiceType = "im ,ex";
+                else if (MainWindow.groupObject.HasPermissionAction(importPermission, MainWindow.groupObjects, "one") )
+                    w.invoiceType = "im";
+                else if (MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one") )
+                    w.invoiceType = "ex";
+
+
+                w.title = MainWindow.resourcemanager.GetString("trOrders");
+                w.branchId = MainWindow.branchLogin.branchId;
+                w.icon = "orders";
+                w.page = "storageMov";
+                if (w.ShowDialog() == true)
+                {
+                    if (w.invoice != null)
+                    {
+                        invoice = w.invoice;
+                        _ProcessType = invoice.invType;
+                        _invoiceId = invoice.invoiceId;
+                        isFromReport = false;
+                        archived = false;
+                        setNotifications();
+                        await fillOrderInputs(invoice);
+                        if (_ProcessType == "im")// set title to bill
                         {
+                            //  mainInvoiceItems = invoiceItems;
 
-                                HelpClass.StartAwait(grid_main);
-
-
-                            Window.GetWindow(this).Opacity = 0.2;
-                            wd_invoice w = new wd_invoice();
-
-                            if ((
-                                   MainWindow.groupObject.HasPermissionAction(importPermission, MainWindow.groupObjects, "one")
-
-                                   ) &&
-                                 (
-                                 MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one")
-
-                                 ))
-                                w.invoiceType = "im ,ex";
-                            else if (MainWindow.groupObject.HasPermissionAction(importPermission, MainWindow.groupObjects, "one") )
-                                w.invoiceType = "im";
-                            else if (MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one") )
-                                w.invoiceType = "ex";
-
-
-
-                            w.condition = "order";
-                            w.title = MainWindow.resourcemanager.GetString("trOrders");
-                            w.branchId = MainWindow.branchLogin.branchId;
-
-                            if (w.ShowDialog() == true)
-                            {
-                                if (w.invoice != null)
-                                {
-                                    invoice = w.invoice;
-                                    _ProcessType = invoice.invType;
-                                    _invoiceId = invoice.invoiceId;
-                                    isFromReport = false;
-                                    archived = false;
-                                    setNotifications();
-                                    await fillOrderInputs(invoice);
-                                    if (_ProcessType == "im")// set title to bill
-                                    {
-                                        //  mainInvoiceItems = invoiceItems;
-
-                                    }
-                                    else if (_ProcessType == "ex")
-                                    {
-                                        //   mainInvoiceItems = await invoiceModel.GetInvoicesItems(invoice.invoiceMainId.Value);
-
-                                    }
-                                    invoices = await invoice.getBranchInvoices(w.invoiceType, 0, MainWindow.branchLogin.branchId);
-                                    navigateBtnActivate();
-                                }
-                            }
-                            Window.GetWindow(this).Opacity = 1;
-
-                                HelpClass.EndAwait(grid_main);
                         }
-                        catch (Exception ex)
+                        else if (_ProcessType == "ex")
                         {
+                            //   mainInvoiceItems = await invoiceModel.GetInvoicesItems(invoice.invoiceMainId.Value);
 
-                                HelpClass.EndAwait(grid_main);
-                            HelpClass.ExceptionMessage(ex, this);
                         }
-            */
+                        navigateBtnActivate();
+                    }
+                }
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private async void Btn_ordersWait_Click(object sender, RoutedEventArgs e)
         {
-            /*
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one") )
                 {
@@ -1428,7 +1473,8 @@ namespace Restaurant.View.storage.movementsOperations
                     w.invoiceType = "exw";
                     w.title = MainWindow.resourcemanager.GetString("trOrders");
                     w.branchId = MainWindow.branchLogin.branchId;
-
+                    w.icon = "ordersWait";
+                    w.page = "storageMov";
                     if (w.ShowDialog() == true)
                     {
                         if (w.invoice != null)
@@ -1438,7 +1484,6 @@ namespace Restaurant.View.storage.movementsOperations
                             _invoiceId = invoice.invoiceId;
                             setNotifications();
                             await fillOrderInputs(invoice);
-                            invoices = await invoice.getBranchInvoices(w.invoiceType, 0, MainWindow.branchLogin.branchId);
                             navigateBtnActivate();
                         }
                     }
@@ -1455,7 +1500,6 @@ namespace Restaurant.View.storage.movementsOperations
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private void Btn_package_Click(object sender, RoutedEventArgs e)
         {
@@ -1523,21 +1567,16 @@ namespace Restaurant.View.storage.movementsOperations
         }
         private async void Btn_items_Click(object sender, RoutedEventArgs e)
         {
-            /*
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
-
+                HelpClass.StartAwait(grid_main);
                 //items
-
                 Window.GetWindow(this).Opacity = 0.2;
-                wd_items w = new wd_items();
-                w.CardType = "movement";
+                wd_purchaseItems w = new wd_purchaseItems();
+
                 w.ShowDialog();
                 if (w.isActive)
                 {
-                    // ChangeItemIdEvent(w.selectedItem);
                     for (int i = 0; i < w.selectedItems.Count; i++)
                     {
                         int itemId = w.selectedItems[i];
@@ -1547,16 +1586,13 @@ namespace Restaurant.View.storage.movementsOperations
                 }
 
                 Window.GetWindow(this).Opacity = 1;
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private async void Btn_newDraft_Click(object sender, RoutedEventArgs e)
         {
@@ -1565,14 +1601,23 @@ namespace Restaurant.View.storage.movementsOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (billDetails.Count != 0)
+                if (billDetails.Count != 0 && (_ProcessType == "imd" || _ProcessType == "exd"))
                 {
-                    await saveDraft();
-                    setNotifications();
+                    #region Accept
+                    MainWindow.mainWindow.Opacity = 0.2;
+                    wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                    w.contentText = MainWindow.resourcemanager.GetString("trSaveInvoiceNotification");
+                    w.ShowDialog();
+                    MainWindow.mainWindow.Opacity = 1;
+                    #endregion
+                    if (w.isOk)
+                    {
+                        await saveDraft();
+                        setNotifications();
+                    }
+                    clearProcess();
                 }
-
-
-                HelpClass.EndAwait(grid_main);
+            HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -1583,106 +1628,65 @@ namespace Restaurant.View.storage.movementsOperations
         }
         private async void Btn_draft_Click(object sender, RoutedEventArgs e)
         {
-            /*
-                        try
-                        {
-
-                                HelpClass.StartAwait(grid_main);
-
-                            Window.GetWindow(this).Opacity = 0.2;
-                            wd_invoice w = new wd_invoice();
-                            string invoiceType = "imd ,exd";
-                            int duration = 2;
-                            w.invoiceType = invoiceType;
-                            w.userId = MainWindow.userLogin.userId;
-                            w.duration = duration; // view drafts which updated during 2 last days 
-                            w.title = MainWindow.resourcemanager.GetString("trDrafts");
-                            // w.branchId = MainWindow.branchLogin.branchId;
-
-                            if (w.ShowDialog() == true)
-                            {
-                                if (w.invoice != null)
-                                {
-                                    invoice = w.invoice;
-                                    _ProcessType = invoice.invType;
-                                    _invoiceId = invoice.invoiceId;
-                                    isFromReport = false;
-                                    archived = false;
-                                    setNotifications();
-                                    await fillOrderInputs(invoice);
-                                    if (_ProcessType == "imd")// set title to bill
-                                    {
-                                        //  mainInvoiceItems = invoiceItems;
-
-                                    }
-                                    else if (_ProcessType == "exd")
-                                    {
-                                        //   mainInvoiceItems = await invoiceModel.GetInvoicesItems(invoice.invoiceMainId.Value);
-
-                                    }
-                                    invoices = await invoice.GetInvoicesByCreator(invoiceType, MainWindow.userLogin.userId, duration);
-                                    navigateBtnActivate();
-                                }
-                            }
-                            Window.GetWindow(this).Opacity = 1;
-
-                                HelpClass.EndAwait(grid_main);
-                        }
-                        catch (Exception ex)
-                        {
-
-                                HelpClass.EndAwait(grid_main);
-                            HelpClass.ExceptionMessage(ex, this);
-                        }
-                        */
-        }
-
-        #endregion
-        #region DataGrid
-        void deleteRowFromOrderItems(object sender, RoutedEventArgs e)
-        {
             try
             {
 
-                HelpClass.StartAwait(grid_main);
+                    HelpClass.StartAwait(grid_main);
 
-                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
-                    if (vis is DataGridRow)
-                    {
-                        BillDetailsPurchase row = (BillDetailsPurchase)dg_billDetails.SelectedItems[0];
-                        int index = dg_billDetails.SelectedIndex;
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_invoice w = new wd_invoice();
+                string invoiceType = "imd ,exd";
+                int duration = 2;
+                w.invoiceType = invoiceType;
+                w.userId = MainWindow.userLogin.userId;
+                w.duration = duration; // view drafts which updated during 2 last days 
+                w.icon = "drafts";
+                w.page = "storageMov";
+                w.title = MainWindow.resourcemanager.GetString("trDrafts");
 
-                        // remove item from bill
-                        billDetails.RemoveAt(index);
-
-                        ObservableCollection<BillDetailsPurchase> data = (ObservableCollection<BillDetailsPurchase>)dg_billDetails.ItemsSource;
-                        data.Remove(row);
-
-                        // calculate new total
-                        //refreshTotalValue();
-                    }
-                _SequenceNum = 0;
-                for (int i = 0; i < billDetails.Count; i++)
+                if (w.ShowDialog() == true)
                 {
-                    _SequenceNum++;
-                    billDetails[i].ID = _SequenceNum;
-                }
-                refrishBillDetails();
+                    if (w.invoice != null)
+                    {
+                        invoice = w.invoice;
+                        _ProcessType = invoice.invType;
+                        _invoiceId = invoice.invoiceId;
+                        isFromReport = false;
+                        archived = false;
+                        setNotifications();
+                        await fillOrderInputs(invoice);
+                        //if (_ProcessType == "imd")// set title to bill
+                        //{
+                        //    //  mainInvoiceItems = invoiceItems;
 
-                HelpClass.EndAwait(grid_main);
+                        //}
+                        //else if (_ProcessType == "exd")
+                        //{
+                        //    //   mainInvoiceItems = await invoiceModel.GetInvoicesItems(invoice.invoiceMainId.Value);
+
+                        //}
+                        navigateBtnActivate();
+                    }
+                }
+                Window.GetWindow(this).Opacity = 1;
+
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
 
-                HelpClass.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+
         }
+
+        #endregion
+        #region DataGrid
         void deleteRowFromInvoiceItems(object sender, RoutedEventArgs e)
         {
             try
             {
-
                 for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                     if (vis is DataGridRow)
                     {
@@ -1699,12 +1703,14 @@ namespace Restaurant.View.storage.movementsOperations
 
                         tb_count.Text = _Count.ToString();
                     }
+                _SequenceNum = 0;
+
                 for (int i = 0; i < billDetails.Count; i++)
                 {
                     _SequenceNum++;
                     billDetails[i].ID = _SequenceNum;
                 }
-
+                refrishBillDetails();
             }
             catch (Exception ex)
             {
@@ -1898,10 +1904,6 @@ namespace Restaurant.View.storage.movementsOperations
         }
         #endregion
         #region billdetails
-        async Task RefrishItems()
-        {
-            items = await FillCombo.item.Get();
-        }
         private void addRowToBill(string itemName, int itemId, string unitName, int itemUnitId, int count)
         {
             // increase sequence for each read
@@ -1945,20 +1947,20 @@ namespace Restaurant.View.storage.movementsOperations
         }
         public async Task ChangeItemIdEvent(int itemId)
         {
-            if (items != null) item = items.ToList().Find(c => c.itemId == itemId);
+            item = FillCombo.purchaseItems.Find(c => c.itemId == itemId);
 
             if (item != null)
             {
                 this.DataContext = item;
 
                 // get item units
-                itemUnits = await FillCombo.itemUnit.GetItemUnits(item.itemId);
+                itemUnits = FillCombo.itemUnitList.Where(a => a.itemId == item.itemId).ToList();
                 // search for default unit for purchase
-                var defaultPurUnit = itemUnits.ToList().Find(c => c.defaultPurchase == 1);
+                var defaultPurUnit = itemUnits.Find(c => c.defaultPurchase == 1);
                 if (defaultPurUnit != null)
                 {
                     // create new row in bill details data grid
-                    addRowToBill(item.name, itemId, defaultPurUnit.mainUnit, defaultPurUnit.itemUnitId, 1);
+                    addRowToBill(item.name, itemId, defaultPurUnit.unitName, defaultPurUnit.itemUnitId, 1);
 
                     //_Count++;
                     //refrishBillDetails();
@@ -2070,6 +2072,7 @@ namespace Restaurant.View.storage.movementsOperations
                 cb_branch.IsEnabled = true;
                 tb_barcode.IsEnabled = true;
                 btn_save.IsEnabled = true;
+                btn_items.IsEnabled = true;
             }
             else if (_ProcessType == "im" || _ProcessType == "ex")
             {
@@ -2078,7 +2081,7 @@ namespace Restaurant.View.storage.movementsOperations
                 cb_branch.IsEnabled = false;
                 tb_barcode.IsEnabled = false;
                 btn_save.IsEnabled = false;
-
+                btn_items.IsEnabled = false;
             }
             else if (_ProcessType == "imw")
             {
@@ -2087,6 +2090,7 @@ namespace Restaurant.View.storage.movementsOperations
                 cb_branch.IsEnabled = false;
                 tb_barcode.IsEnabled = false;
                 btn_save.IsEnabled = true;
+                btn_items.IsEnabled = false;
             }
             else if (_ProcessType == "exw")
             {

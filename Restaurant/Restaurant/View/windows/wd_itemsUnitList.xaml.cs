@@ -22,7 +22,7 @@ namespace Restaurant.View.windows
     /// </summary>
     public partial class wd_itemsUnitList : Window
     {
-        public int itemId = 0 , itemUnitId = 0;
+        public int itemId = 0 , itemUnitId = 0, storageCostId = 0;
 
         public string CallerName;//"IUList"
 
@@ -31,12 +31,12 @@ namespace Restaurant.View.windows
         List<ItemUnit> allItemUnits = new List<ItemUnit>();
 
         Package package = new Package();
-        Package packageModel = new Package();
+        StorageCost storageCost = new StorageCost();
         List<Package> allIPackagesSource = new List<Package>();
        public List<Package> allPackages = new List<Package>();
 
-        //ItemUnitUser itemUnitUserModel = new ItemUnitUser();
-        List<ItemUnit> selectedItemUnitsSource = new List<ItemUnit>();
+        List<ItemUnit> allItemsUnitsSource = new List<ItemUnit>();
+
         public List<ItemUnit> selectedItemUnits = new List<ItemUnit>();
 
         string searchText = "";
@@ -89,6 +89,7 @@ namespace Restaurant.View.windows
                 #region item units for package
                 if (CallerName == "package")
                 {
+                    quantity.Visibility = Visibility.Visible;
                     allItemUnitsSource = FillCombo.itemUnitList.Where(x => x.type == "SalesNormal").ToList();
                     allItemUnits.AddRange(allItemUnitsSource);
                     for (int i = 0; i < allItemUnits.Count; i++)
@@ -98,12 +99,7 @@ namespace Restaurant.View.windows
                         { allItemUnits.Remove(allItemUnits[i]); break; }
 
                     }
-                    foreach (var iu in allItemUnits)
-                    {
-                        //iu.itemName = iu.itemName + "-" + iu.mainUnit;
-                        iu.itemName = iu.itemName ;
-                    }
-                    allIPackagesSource = await packageModel.GetChildsByParentId(itemUnitId);
+                    allIPackagesSource = await package.GetChildsByParentId(itemUnitId);
 
                     //remove selected itemunits from source itemunits
                     foreach (var p in allIPackagesSource)
@@ -137,6 +133,34 @@ namespace Restaurant.View.windows
                 #region storageCost
                 else if (CallerName == "storageCost")
                 {
+                    quantity.Visibility = Visibility.Collapsed;
+                    allItemUnitsSource = FillCombo.itemUnitList.Select( x => new ItemUnit() { itemId = x.itemId, itemName = x.itemName, unitName = x.unitName,itemUnitId = x.itemUnitId }).ToList();
+                    allItemUnits.AddRange(allItemUnitsSource);
+
+                    allItemsUnitsSource = await storageCost.GetStorageCostUnits(storageCostId);
+                    selectedItemUnits.AddRange(allItemsUnitsSource);
+                    foreach (var iu in allItemUnitsSource)
+                            iu.itemName= iu.itemName + "-" + iu.unitName;
+                    //remove selected itemunits from source itemunits
+                    foreach (var u in allItemsUnitsSource)
+                    {
+                        for (int i = 0; i < allItemUnits.Count; i++)
+                        {
+                            //remove saved itemunits
+                            if (u.itemUnitId == allItemUnits[i].itemUnitId)
+                            {
+                                allItemUnits.Remove(allItemUnits[i]);
+                            }
+                        }
+                    }
+
+                    dg_selectedItems.ItemsSource = selectedItemUnits;
+                    dg_selectedItems.SelectedValuePath = "itemUnitId";
+                    dg_selectedItems.DisplayMemberPath = "itemName";
+
+                    dg_allItems.ItemsSource = allItemUnits;
+                    dg_allItems.SelectedValuePath = "itemUnitId";
+                    dg_allItems.DisplayMemberPath = "itemName";
                 }
                 #endregion
                     if (sender != null)
@@ -230,39 +254,40 @@ namespace Restaurant.View.windows
                 itemUnit = dg_allItems.SelectedItem as ItemUnit;
                 if (itemUnit != null)
                 {
-                    Package p = new Package();
+                    if (CallerName == "package")
+                    {
+                        Package p = new Package();
 
-                    p.parentIUId = itemUnitId;
-                    p.childIUId = itemUnit.itemUnitId;
-                    p.quantity = 1;
-                    p.isActive = 1;
-                    p.notes = itemUnit.itemName;
-                    p.createUserId = MainWindow.userLogin.userId;
+                        p.parentIUId = itemUnitId;
+                        p.childIUId = itemUnit.itemUnitId;
+                        p.quantity = 1;
+                        p.isActive = 1;
+                        p.notes = itemUnit.itemName;
+                        p.createUserId = MainWindow.userLogin.userId;
 
-                    allItemUnits.Remove(itemUnit);
-                    allPackages.Add(p);
+                        allItemUnits.Remove(itemUnit);
+                        allPackages.Add(p);
 
-                    dg_allItems.ItemsSource = allItemUnits;
-                    dg_selectedItems.ItemsSource = allPackages;
+                        dg_allItems.ItemsSource = allItemUnits;
+                        dg_selectedItems.ItemsSource = allPackages;
+                    }
+                    else
+                    {
+                        ItemUnit p = new ItemUnit();
 
-                    //else
-                    //{
-                    //    ItemUnit iu = new ItemUnit();
+                        p.itemUnitId = itemUnit.itemUnitId;
+                        p.itemName = itemUnit.itemName;
+                        p.unitName = itemUnit.unitName;
+                        p.isActive = 1;
+                        p.createUserId = MainWindow.userLogin.userId;
 
-                    //    iu.itemUnitId = itemUnit.itemUnitId;
-                    //    iu.userId = MainWindow.userID;
-                    //    iu.isActive = 1;
-                    //    iu.notes = itemUnit.itemName;
-                    //    iu.createUserId = MainWindow.userID;
+                        allItemUnits.Remove(itemUnit);
+                        selectedItemUnits.Add(p);
 
-                    //    allItemUnits.Remove(itemUnit);
-                    //    selectedItemUnits.Add(iu);
+                        dg_allItems.ItemsSource = allItemUnits;
+                        dg_selectedItems.ItemsSource = selectedItemUnits;
 
-                    //    dg_allItems.ItemsSource = allItemUnits;
-                    //    dg_selectedItems.ItemsSource = selectedItemUnits;
-
-                        
-                    //}
+                    }
 
                     dg_allItems.Items.Refresh();
                     dg_selectedItems.Items.Refresh();
@@ -280,8 +305,8 @@ namespace Restaurant.View.windows
             {
                 ItemUnit i = new ItemUnit();
 
-                //if (CalleraNme.Equals(""))
-                //{
+               if (CallerName.Equals("package"))
+                {
                     package = dg_selectedItems.SelectedItem as Package;
                     if (package != null)
                     {
@@ -293,29 +318,25 @@ namespace Restaurant.View.windows
 
                         dg_selectedItems.ItemsSource = allPackages;
                     }
-                //}
-                //else
-                //{
-                //    itemUnitUser = dg_selectedItems.SelectedItem as ItemUnit;
-                //    if(itemUnitUser != null)
-                //    {
-                //        i = allItemUnitsSource.Where(s => s.itemUnitId == itemUnitUser.itemUnitId.Value).FirstOrDefault();
+                }
+                else
+                {
+                    itemUnit = dg_selectedItems.SelectedItem as ItemUnit;
+                    if (itemUnit != null)
+                    {
+                        i = allItemUnitsSource.Where(s => s.itemUnitId == itemUnit.itemUnitId).FirstOrDefault();
 
-                //        allItemUnits.Add(i);
+                        allItemUnits.Add(i);
 
-                //        selectedItemUnits.Remove(itemUnitUser);
+                        selectedItemUnits.Remove(itemUnit);
 
-                //        dg_selectedItems.ItemsSource = selectedItemUnits;
-                //    }
-                //}
+                        dg_selectedItems.ItemsSource = selectedItemUnits;
+                    }
+                }
 
                 dg_allItems.ItemsSource = allItemUnits;
 
                 dg_allItems.Items.Refresh();
-                // for solve problem
-                //this.dg_selectedItems.CancelEdit();
-                //this.dg_selectedItems.CancelEdit();
-                ////////////
                 dg_selectedItems.Items.Refresh();
             }
             catch (Exception ex)

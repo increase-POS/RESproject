@@ -166,7 +166,7 @@ namespace Restaurant.Classes
             //    return items;
             //}
         }
-        public async Task<List<ItemUnit>> GetItemUnits(int itemId)
+        public async Task<List<ItemUnit>> GetItemUnits(int itemId = 0)
         {
 
             List<ItemUnit> list = new List<ItemUnit>();
@@ -183,45 +183,7 @@ namespace Restaurant.Classes
                     list.Add(JsonConvert.DeserializeObject<ItemUnit>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
                 }
             }
-            return list;
-
-            //List<ItemUnit> items = null;
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "ItemsUnits/Get?itemId=" + itemId);
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Get;
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    HttpResponseMessage response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var jsonString = await response.Content.ReadAsStringAsync();
-            //        jsonString = jsonString.Replace("\\", string.Empty);
-            //        jsonString = jsonString.Trim('"');
-            //        // fix date format
-            //        JsonSerializerSettings settings = new JsonSerializerSettings
-            //        {
-            //            Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-            //            DateParseHandling = DateParseHandling.None
-            //        };
-            //        items = JsonConvert.DeserializeObject<List<ItemUnit>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-            //        return items;
-            //    }
-            //    else //web api sent error response 
-            //    {
-            //        items = new List<ItemUnit>();
-            //    }
-            //    return items;
-            //}
+            return list;         
         }
 
         public List<ItemUnit> GetIUbyItem(int itemId, List<ItemUnit>AllIU,List<Unit>AllUnits)

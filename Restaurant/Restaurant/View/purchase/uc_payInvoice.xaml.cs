@@ -75,8 +75,6 @@ namespace Restaurant.View.purchase
         public static bool isFromReport = false;
         public static bool archived = false;
         Item item = new Item();
-        IEnumerable<Item> items;
-       // List<ItemUnit> barcodesList;
         List<ItemUnit> itemUnits;
         public Invoice invoice = new Invoice();
         List<ItemTransfer> invoiceItems;
@@ -1647,7 +1645,7 @@ namespace Restaurant.View.purchase
                     if (index == -1)//item doesn't exist in bill
                     {
                         // create new row in bill details data grid
-                        addRowToBill(item.name, itemId, defaultPurUnit.mainUnit, defaultPurUnit.itemUnitId, 1, 0, 0);
+                        addRowToBill(item.name, itemId, defaultPurUnit.unitName, defaultPurUnit.itemUnitId, 1, 0, 0);
                     }
                     else // item exist prevoiusly in list
                     {
@@ -1903,7 +1901,7 @@ namespace Restaurant.View.purchase
                                 {
                                     // get item units
                                     //itemUnits = await FillCombo.itemUnit.GetItemUnits(itemId);
-                                    itemUnits = FillCombo.itemUnitList.ToList().Where(c => c.itemId == itemId).ToList();
+                                    itemUnits = FillCombo.itemUnitList.Where(c => c.itemId == itemId).ToList();
                                     //get item from list
                                     item = FillCombo.purchaseItems.ToList().Find(i => i.itemId == itemId);
 
