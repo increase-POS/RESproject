@@ -98,7 +98,9 @@ namespace Restaurant.View.sales.promotion
             try
             {
                 HelpClass.StartAwait(grid_main);
+
                 requiredControlList = new List<string> { "name", "mobile" };
+
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
@@ -111,12 +113,13 @@ namespace Restaurant.View.sales.promotion
                 }
                 translate();
 
-
+                await Search();
                 /*
                 Keyboard.Focus(tb_code);
                 await RefreshCustomersList();
                 await Search();
                 */
+
                 Clear();
                 HelpClass.EndAwait(grid_main);
             }
@@ -144,7 +147,78 @@ namespace Restaurant.View.sales.promotion
                     coupon = new Coupon();
                     if (HelpClass.validate(requiredControlList, this) )
                     {
-                      
+                        //bool codeNotExist = await SectionData.CouponCodeNotExist(tb_code.Text, 0);
+
+                        //bool isEndDateSmaller = false;
+                        //if ((dp_startDate.SelectedDate != null) && (dp_endDate.SelectedDate != null))
+                        //    if (dp_endDate.SelectedDate < dp_startDate.SelectedDate) isEndDateSmaller = true;
+
+                        //bool isMaxInvoiceValueSmaller = false;
+                        //try
+                        //{
+                        //    if (!decimal.Parse(tb_MaxInvoiceValue.Text).Equals(0))
+                        //        if (decimal.Parse(tb_MaxInvoiceValue.Text) < decimal.Parse(tb_MinInvoiceValue.Text)) isMaxInvoiceValueSmaller = true;
+                        //}
+                        //catch { }
+                        //if ((!codeNotExist) || (isEndDateSmaller) || (isMaxInvoiceValueSmaller))
+                        //{
+                        //    if (!codeNotExist)
+                        //        SectionData.showTextBoxValidate(tb_code, p_errorCode, tt_errorCode, "trDuplicateCodeToolTip");
+                        //    if (isEndDateSmaller)
+                        //    {
+                        //        SectionData.showDatePickerValidate(dp_startDate, p_errorStartDate, tt_errorStartDate, "trErrorEndDateSmallerToolTip");
+                        //        SectionData.showDatePickerValidate(dp_endDate, p_errorEndDate, tt_errorEndDate, "trErrorEndDateSmallerToolTip");
+                        //    }
+                        //    if (isMaxInvoiceValueSmaller)
+                        //    {
+                        //        SectionData.showTextBoxValidate(tb_MinInvoiceValue, p_errorMinInvoiceValue, tt_errorMinInvoiceValue, "trErrorMaxInvoiceSmallerToolTip");
+                        //        SectionData.showTextBoxValidate(tb_MaxInvoiceValue, p_errorMaxInvoiceValue, tt_errorMaxInvoiceValue, "trErrorMaxInvoiceSmallerToolTip");
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    Coupon coupon = new Coupon();
+
+                        //    coupon.code = tb_code.Text;
+                        //    coupon.name = tb_name.Text;
+                        //    coupon.notes = tb_note.Text;
+                        //    coupon.barcode = tb_barcode.Text;
+                        //    coupon.isActive = Convert.ToByte(tgl_ActiveCoupon.IsChecked);
+                        //    coupon.discountType = Convert.ToByte(cb_typeDiscount.SelectedValue);
+                        //    if (dp_startDate.SelectedDate != null)
+                        //        coupon.startDate = DateTime.Parse(dp_startDate.Text);
+                        //    if (dp_endDate.SelectedDate != null)
+                        //        coupon.endDate = DateTime.Parse(dp_endDate.Text);
+                        //    coupon.discountValue = decimal.Parse(tb_discountValue.Text);
+                        //    if (!tb_MinInvoiceValue.Text.Equals(""))
+                        //        coupon.invMin = decimal.Parse(tb_MinInvoiceValue.Text);
+                        //    else
+                        //        coupon.invMin = 0;
+                        //    if (!tb_MaxInvoiceValue.Text.Equals(""))
+                        //        coupon.invMax = decimal.Parse(tb_MaxInvoiceValue.Text);
+                        //    else
+                        //        coupon.invMax = 0;
+                        //    if (string.IsNullOrWhiteSpace(tb_quantity.Text))
+                        //        coupon.quantity = 0;
+                        //    else
+                        //        coupon.quantity = Int32.Parse(tb_quantity.Text);
+                        //    coupon.remainQ = coupon.quantity;
+                        //    coupon.createUserId = MainWindow.userID; ;
+
+                        //    int s = await couponModel.save(coupon);
+
+                        //    if (s > 0)
+                        //    {
+                        //        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                        //        Btn_clear_Click(null, null);
+
+                        //        await RefreshCouponsList();
+                        //        Tb_search_TextChanged(null, null);
+                        //    }
+                        //    else
+                        //        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        //}
+
 
                     }
                     HelpClass.EndAwait(grid_main);
@@ -392,22 +466,23 @@ namespace Restaurant.View.sales.promotion
         }
         #endregion
         #region Refresh & Search
-        /*
+        
         async Task Search()
         {
             //search
             if (coupons is null)
                 await RefreshCustomersList();
             searchText = tb_search.Text.ToLower();
-            couponsQuery = coupons.Where(s => (s.code.ToLower().Contains(searchText) ||
-            s.name.ToLower().Contains(searchText) ||
-            s.mobile.ToLower().Contains(searchText)
-            ) && s.isActive == tgl_couponState);
+            couponsQuery = coupons;
+            //couponsQuery = coupons.Where(s => (s.code.ToLower().Contains(searchText) ||
+            //s.name.ToLower().Contains(searchText) ||
+            //s.mobile.ToLower().Contains(searchText)
+            //) && s.isActive == tgl_couponState);
             RefreshCustomersView();
         }
         async Task<IEnumerable<Coupon>> RefreshCustomersList()
         {
-            coupons = await coupon.Get("c");
+            coupons = await coupon.Get();
             return coupons;
         }
         void RefreshCustomersView()
@@ -415,7 +490,7 @@ namespace Restaurant.View.sales.promotion
             dg_coupon.ItemsSource = couponsQuery;
             txt_count.Text = couponsQuery.Count().ToString();
         }
-        */
+        
         #endregion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
