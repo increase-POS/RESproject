@@ -769,7 +769,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
 
                     #region
                     BuildReport();
-                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, MainWindow.rep_print_count == null ? short.Parse("1") : short.Parse(MainWindow.rep_print_count));
+                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
                     #endregion
                 }
                 else

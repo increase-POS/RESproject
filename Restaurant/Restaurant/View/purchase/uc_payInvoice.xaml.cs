@@ -786,11 +786,11 @@ namespace Restaurant.View.purchase
                             {
                                 Thread t = new Thread(() =>
                                 {
-                                    if (MainWindow.print_on_save_pur == "1")
+                                    if (FillCombo.print_on_save_pur == "1")
                                     {
                                         printPurInvoice();
                                     }
-                                    if (MainWindow.email_on_save_pur == "1")
+                                    if (FillCombo.email_on_save_pur == "1")
                                     {
                                         sendPurEmail();
                                     }
@@ -2860,7 +2860,7 @@ namespace Restaurant.View.purchase
             {
                 prInvoice = await FillCombo.invoice.GetByInvoiceId(invoice.invoiceId);
 
-                if (int.Parse(MainWindow.Allow_print_inv_count) <= prInvoice.printedcount)
+                if (int.Parse(FillCombo.Allow_print_inv_count) <= prInvoice.printedcount)
                 {
                     this.Dispatcher.Invoke(() =>
                     {
@@ -2958,7 +2958,7 @@ namespace Restaurant.View.purchase
 
                                     rep.Refresh();
 
-                                    if (int.Parse(MainWindow.Allow_print_inv_count) > prInvoice.printedcount)
+                                    if (int.Parse(FillCombo.Allow_print_inv_count) > prInvoice.printedcount)
                                     {
 
                                         this.Dispatcher.Invoke(() =>
@@ -3023,7 +3023,7 @@ namespace Restaurant.View.purchase
 
                 prInvoice = await FillCombo.invoice.GetByInvoiceId(invoice.invoiceId);
 
-                if (int.Parse(MainWindow.Allow_print_inv_count) <= prInvoice.printedcount)
+                if (int.Parse(FillCombo.Allow_print_inv_count) <= prInvoice.printedcount)
                 {
                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trYouExceedLimit"), animation: ToasterAnimation.FadeIn);
 
@@ -3136,7 +3136,7 @@ namespace Restaurant.View.purchase
 
                             rep.Refresh();
 
-                            if (int.Parse(MainWindow.Allow_print_inv_count) > prInvoice.printedcount)
+                            if (int.Parse(FillCombo.Allow_print_inv_count) > prInvoice.printedcount)
                             {
 
                                 LocalReportExtensions.ExportToPDF(rep, pdfpath);
@@ -3144,8 +3144,6 @@ namespace Restaurant.View.purchase
                                 int res = 0;
 
                                 res = await FillCombo.invoice.updateprintstat(prInvoice.invoiceId, 1, false, true);
-
-
 
                                 prInvoice.printedcount = prInvoice.printedcount + 1;
 
@@ -3275,7 +3273,7 @@ namespace Restaurant.View.purchase
 
                             paramarr.Add(new ReportParameter("isOrginal", prInvoice.isOrginal.ToString()));
 
-                            for (int i = 1; i <= short.Parse(MainWindow.pur_copy_count); i++)
+                            for (int i = 1; i <= short.Parse(FillCombo.pur_copy_count); i++)
                             {
                                 if (i > 1)
                                 {
@@ -3295,14 +3293,14 @@ namespace Restaurant.View.purchase
 
                                 rep.Refresh();
 
-                                if (int.Parse(MainWindow.Allow_print_inv_count) > prInvoice.printedcount)
+                                if (int.Parse(FillCombo.Allow_print_inv_count) > prInvoice.printedcount)
                                 {
 
                                     this.Dispatcher.Invoke(() =>
                                     {
 
 
-                                        LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.sale_printer_name, 1);
+                                        LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.sale_printer_name, 1);
 
 
 
@@ -3333,7 +3331,7 @@ namespace Restaurant.View.purchase
 
                             this.Dispatcher.Invoke(() =>
                             {
-                                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
+                                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, short.Parse(FillCombo.rep_print_count));
                             });
 
                         }

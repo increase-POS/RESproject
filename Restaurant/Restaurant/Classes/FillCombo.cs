@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Text;
+using System;
 namespace Restaurant.Classes
 {
     public class FillCombo
@@ -480,10 +481,103 @@ namespace Restaurant.Classes
         }
         #endregion
 
+        #region reportSetting
+
+        static public PosSetting posSetting = new PosSetting();
+        internal static List<Pos> posList = new List<Pos>();
+        static SettingCls setModel = new SettingCls();
+        static SetValues valueModel = new SetValues();
+
+        public static string sale_copy_count;
+        public static string pur_copy_count;
+        public static string print_on_save_sale;
+        public static string print_on_save_pur;
+        public static string email_on_save_sale;
+        public static string email_on_save_pur;
+        public static string rep_printer_name;
+        public static string sale_printer_name;
+        public static string salePaperSize;
+        public static string rep_print_count;
+        public static string docPapersize;
+        public static string Allow_print_inv_count;
+        public static async Task Getprintparameter()
+        {
+            List<SetValues> printList = new List<SetValues>();
+            printList = await valueModel.GetBySetvalNote("print");
+            sale_copy_count = printList.Where(X => X.name == "sale_copy_count").FirstOrDefault().value;
+
+            pur_copy_count = printList.Where(X => X.name == "pur_copy_count").FirstOrDefault().value;
+
+            print_on_save_sale = printList.Where(X => X.name == "print_on_save_sale").FirstOrDefault().value;
+
+            print_on_save_pur = printList.Where(X => X.name == "print_on_save_pur").FirstOrDefault().value;
+
+            email_on_save_sale = printList.Where(X => X.name == "email_on_save_sale").FirstOrDefault().value;
+
+            email_on_save_pur = printList.Where(X => X.name == "email_on_save_pur").FirstOrDefault().value;
+
+            sale_copy_count = printList.Where(X => X.name == "sale_copy_count").FirstOrDefault().value;
+
+            pur_copy_count = printList.Where(X => X.name == "pur_copy_count").FirstOrDefault().value;
+
+            rep_print_count = printList.Where(X => X.name == "rep_copy_count").FirstOrDefault().value;
+
+            Allow_print_inv_count = printList.Where(X => X.name == "Allow_print_inv_count").FirstOrDefault().value;
+        }
+        public static async Task GetReportlang()
+        {
+            List<SetValues> replangList = new List<SetValues>();
+            replangList = await valueModel.GetBySetName("report_lang");
+           MainWindow.Reportlang = replangList.Where(r => r.isDefault == 1).FirstOrDefault().value;
+
+        }
+        public static async Task getPrintersNames()
+        {
+
+            posSetting = new PosSetting();
+
+            posSetting = await posSetting.GetByposId((int)MainWindow.posID);
+            posSetting = posSetting.MaindefaultPrinterSetting(posSetting);
+
+            if (posSetting.repname is null || posSetting.repname == "")
+            {
+                rep_printer_name = "";
+            }
+            else
+            {
+                rep_printer_name = Encoding.UTF8.GetString(Convert.FromBase64String(posSetting.repname));
+            }
+            if (posSetting.salname is null || posSetting.salname == "")
+            {
+                posSetting.salname = "";
+            }
+            else
+            {
+                sale_printer_name = Encoding.UTF8.GetString(Convert.FromBase64String(posSetting.salname));
+            }
+
+            salePaperSize = posSetting.saleSizeValue;
+            docPapersize = posSetting.docPapersize;
+
+        }
+        public static async Task getprintSitting()
+        {
+            await Getprintparameter();
+            await GetReportlang();
+            await getPrintersNames();
+        }
+
+
+        #endregion
+
         static public ItemLocation itemLocation = new ItemLocation();
         static public Invoice invoice = new Invoice();
         static public List<Invoice> invoices;
         static public ShippingCompanies ShipCompany = new ShippingCompanies();
         static public User user = new User();
+
+
+
+
     }
 }

@@ -1726,7 +1726,7 @@ namespace Restaurant.View.purchase
                         this.Dispatcher.Invoke(() =>
                         {
 
-                            LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.pur_copy_count));
+                            LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, short.Parse(FillCombo.pur_copy_count));
                         });
                     }
                 }

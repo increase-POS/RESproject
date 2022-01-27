@@ -843,8 +843,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\SectionData\banksData\Ar\ArBank.rdlc" />
-    <EmbeddedResource Include="Reports\SectionData\banksData\En\EnBank.rdlc" />
+    <Content Include="Reports\SectionData\banksData\Ar\ArBank.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\banksData\Ar\ArCard.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\banksData\En\EnBank.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Reports\SectionData\hallDivide\Ar\ArHallSections.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -875,12 +882,37 @@
     <Content Include="Reports\SectionData\persons\En\EnVendors.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\SectionData\branchesStores\Ar\ArBranches.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\branchesStores\En\EnBranches.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\branchesStores\Ar\ArPos.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\branchesStores\Ar\ArStores.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\branchesStores\En\EnPos.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\branchesStores\En\EnStores.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\banksData\En\EnCard.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="fonts\barcodeFont.ttf" />
     <Resource Include="fonts\cairo-font\cairo bold.ttf" />
     <Resource Include="fonts\cairo-font\cairo-light.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Restaurant.Classes.Agent.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ApiClasses.Tables.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.Bank.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.Branch.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.Card.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.Pos.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Section.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.User.datasource" />
     <None Include="Properties\Settings.settings">
@@ -898,8 +930,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Reports\SectionData\branchesStores\Ar\" />
-    <Folder Include="Reports\SectionData\branchesStores\En\" />
     <Folder Include="View\home\" />
     <Folder Include="View\reports\" />
   </ItemGroup>

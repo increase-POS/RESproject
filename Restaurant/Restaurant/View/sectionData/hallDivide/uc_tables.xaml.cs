@@ -462,6 +462,7 @@ namespace Restaurant.View.sectionData.hallDivide
             }
         }
         #endregion
+
         #region Refresh & Search
         async Task Search()
         {
@@ -486,6 +487,7 @@ namespace Restaurant.View.sectionData.hallDivide
             txt_count.Text = tablesQuery.Count().ToString();
         }
         #endregion
+
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
@@ -571,6 +573,8 @@ namespace Restaurant.View.sectionData.hallDivide
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        #endregion
+
         #region report
         //report  parameters
         ReportCls reportclass = new ReportCls();
@@ -652,7 +656,7 @@ namespace Restaurant.View.sectionData.hallDivide
                 {
                     #region
                     BuildReport();
-                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
+                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
                     #endregion
                 }
                 else
