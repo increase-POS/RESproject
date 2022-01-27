@@ -211,7 +211,7 @@
                             </StackPanel>
                         </Button>
                     </materialDesign:Badged>
-                    <Border Visibility="Collapsed" x:Name="bdr_package_converter"  Background="White" Margin="7.5,10"   CornerRadius="0,0,0,0"  
+                    <!--<Border Visibility="Collapsed" x:Name="bdr_package_converter"  Background="White" Margin="7.5,10"   CornerRadius="0,0,0,0"  
                             Width="1" BorderThickness="0,0,1,0" BorderBrush="{StaticResource LightMainColor}" />
 
                     <Button Visibility="Collapsed" Grid.Column="4" BorderBrush="{x:Null}" Padding="0"  Margin="5,10,5,0" Height="auto"
@@ -302,7 +302,7 @@
                                            FontWeight="Regular" FontSize="8" TextAlignment="Center" Width="35"
                                            HorizontalAlignment="Center"/>
                         </StackPanel>
-                    </Button>
+                    </Button>-->
 
 
 

@@ -231,6 +231,8 @@ namespace Restaurant.View.windows
             {
                 if (icon == "drafts")
                     FillCombo.invoices = await FillCombo.invoice.GetInvoicesByCreator(invoiceType, userId, duration);
+                else if(icon == "orders" || icon == "ordersWait")
+                    FillCombo.invoices = await FillCombo.invoice.getBranchInvoices(invoiceType, branchCreatorId, branchId);               
             }
             #endregion
             if (condition == "orders")

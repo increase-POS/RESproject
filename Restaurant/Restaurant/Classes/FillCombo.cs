@@ -74,6 +74,27 @@ namespace Restaurant.Classes
             cmb.DisplayMemberPath = "name";
             cmb.SelectedIndex = -1;
         }
+        static public async Task fillBranchesNoCurrentDefault(ComboBox cmb, string type = "")
+        {
+            List<Branch> branches = new List<Branch>();
+
+            if (branchesAllWithoutMain is null)
+                await RefreshBranchesAllWithoutMain();
+            if (BranchesByBranchandUser is null)
+                await RefreshByBranchandUser();
+
+            if (HelpClass.isAdminPermision())
+                branches = branchesAllWithoutMain;
+            else
+                branches = BranchesByBranchandUser;
+
+            branch = branches.Where(s => s.branchId == MainWindow.branchLogin.branchId).FirstOrDefault<Branch>();
+            branches.Remove(branch);
+            cmb.ItemsSource = branches.Where(b => b.type != type && b.branchId != 1);
+            cmb.SelectedValuePath = "branchId";
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedIndex = -1;
+        }
         #endregion
         #region PayType
         static public void FillDefaultPayType(ComboBox cmb)
