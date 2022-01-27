@@ -459,6 +459,84 @@ namespace Restaurant.Classes
 
         }
 
+        public static void BranchesReport(IEnumerable<Branch> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            rep.DataSources.Add(new ReportDataSource("DataSetBranch", Query));
+            //title
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trBranch")));
+            //table columns
+            paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trBranchAddress", MainWindow.resourcemanagerreport.GetString("trAddress")));
+            paramarr.Add(new ReportParameter("trNote", MainWindow.resourcemanagerreport.GetString("trNote")));
+
+        }
+        public static void PosReport(IEnumerable<Pos> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            rep.DataSources.Add(new ReportDataSource("DataSetPos", Query));
+            //title
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trPOS")));
+            //table columns
+            paramarr.Add(new ReportParameter("trPosCode", MainWindow.resourcemanagerreport.GetString("trPosCode")));
+            paramarr.Add(new ReportParameter("trPosName", MainWindow.resourcemanagerreport.GetString("trPosName")));
+            paramarr.Add(new ReportParameter("trBranchName", MainWindow.resourcemanagerreport.GetString("trBranchName")));
+            paramarr.Add(new ReportParameter("trNote", MainWindow.resourcemanagerreport.GetString("trNote")));
+
+        }
+        public static void StoresReport(IEnumerable<Branch> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            rep.DataSources.Add(new ReportDataSource("DataSetBranch", Query));
+            //title
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trStore")));
+            //table columns
+            paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trBranchAddress", MainWindow.resourcemanagerreport.GetString("trAddress")));
+            paramarr.Add(new ReportParameter("trNote", MainWindow.resourcemanagerreport.GetString("trNote")));
+
+        }
+
+
+
+        public static void BanksReport(IEnumerable<Bank> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            rep.DataSources.Add(new ReportDataSource("DataSetBank", Query));
+            //title
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trBank")));
+            //table columns
+            paramarr.Add(new ReportParameter("trBankName", MainWindow.resourcemanagerreport.GetString("trBankName")));
+            paramarr.Add(new ReportParameter("trAccNumber", MainWindow.resourcemanagerreport.GetString("trAccNumber")));
+            paramarr.Add(new ReportParameter("trBankAddress", MainWindow.resourcemanagerreport.GetString("trAddress")));
+            paramarr.Add(new ReportParameter("trMobile", MainWindow.resourcemanagerreport.GetString("trMobile")));
+
+        }
+
+        public static void CardsReport(IEnumerable<Card> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            rep.DataSources.Add(new ReportDataSource("DataSetCard", Query));
+            //title
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trCard")));
+            //table columns
+            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trNote", MainWindow.resourcemanagerreport.GetString("trNote")));
+  
+        }
+
         public static void ErrorsReport(IEnumerable<ErrorClass> Query, LocalReport rep, string reppath)
         {
             rep.ReportPath = reppath;

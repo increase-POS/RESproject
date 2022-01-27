@@ -7,31 +7,23 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>bf00d0c1-5bf0-4e92-b207-394588bcd624</rd:DataSourceID>
+      <rd:DataSourceID>70d633eb-6155-44d2-bd9f-b446397fbaaf</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="DataSetUser">
+    <DataSet Name="DataSetCard">
       <Query>
         <DataSourceName>RestaurantClasses</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="address">
-          <DataField>address</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="balance">
-          <DataField>balance</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="balanceType">
-          <DataField>balanceType</DataField>
-          <rd:TypeName>System.Byte</rd:TypeName>
-        </Field>
         <Field Name="canDelete">
           <DataField>canDelete</DataField>
           <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="cardId">
+          <DataField>cardId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="createDate">
           <DataField>createDate</DataField>
@@ -41,17 +33,9 @@
           <DataField>createUserId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
-        <Field Name="email">
-          <DataField>email</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="fullName">
-          <DataField>fullName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="groupId">
-          <DataField>groupId</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        <Field Name="hasProcessNum">
+          <DataField>hasProcessNum</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
         </Field>
         <Field Name="image">
           <DataField>image</DataField>
@@ -61,40 +45,12 @@
           <DataField>isActive</DataField>
           <rd:TypeName>System.Byte</rd:TypeName>
         </Field>
-        <Field Name="isAdmin">
-          <DataField>isAdmin</DataField>
-          <rd:TypeName>System.Boolean</rd:TypeName>
-        </Field>
-        <Field Name="isOnline">
-          <DataField>isOnline</DataField>
-          <rd:TypeName>System.Byte</rd:TypeName>
-        </Field>
-        <Field Name="job">
-          <DataField>job</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="lastname">
-          <DataField>lastname</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="mobile">
-          <DataField>mobile</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="name">
           <DataField>name</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="notes">
           <DataField>notes</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="password">
-          <DataField>password</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="phone">
-          <DataField>phone</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="updateDate">
@@ -105,23 +61,11 @@
           <DataField>updateUserId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
-        <Field Name="userId">
-          <DataField>userId</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="username">
-          <DataField>username</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="workHours">
-          <DataField>workHours</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>Restaurant.Classes</rd:DataSetName>
-        <rd:TableName>User</rd:TableName>
-        <rd:ObjectDataSourceType>Restaurant.Classes.User, Restaurant, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>Card</rd:TableName>
+        <rd:ObjectDataSourceType>Restaurant.Classes.Card, Restaurant, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
@@ -129,59 +73,17 @@
     <ReportSection>
       <Body>
         <ReportItems>
-          <Textbox Name="agentTitle">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>=Parameters!trTitle.Value</Value>
-                    <Style>
-                      <FontFamily>Montserrat</FontFamily>
-                      <FontSize>20pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                      <Color>#178dd2</Color>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Center</TextAlign>
-                </Style>
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>agentTitle</rd:DefaultName>
-            <Top>0.37422cm</Top>
-            <Left>1.18768cm</Left>
-            <Height>1.21167cm</Height>
-            <Width>18.5cm</Width>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Tablix Name="TablixAr">
+          <Tablix Name="TablixEn">
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
                   <Width>2.5cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>4cm</Width>
+                  <Width>7.62479cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>4cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>4cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>4cm</Width>
+                  <Width>8.37521cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -190,14 +92,14 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox35">
+                        <Textbox Name="Textbox33">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>الرقم</Value>
+                                  <Value>No.</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
                                     <FontWeight>Bold</FontWeight>
@@ -209,7 +111,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox35</rd:DefaultName>
+                          <rd:DefaultName>Textbox33</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -226,7 +128,7 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox4">
+                        <Textbox Name="Textbox1">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -262,14 +164,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox6">
+                        <Textbox Name="Textbox3">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Parameters!trJob.Value</Value>
+                                  <Value>=Parameters!trNote.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
                                     <FontWeight>Bold</FontWeight>
@@ -296,78 +198,6 @@
                         </Textbox>
                       </CellContents>
                     </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox7">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Parameters!trWorkHours.Value</Value>
-                                  <Style>
-                                    <FontFamily>Montserrat</FontFamily>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox5</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>None</Style>
-                            </Border>
-                            <BackgroundColor>WhiteSmoke</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox8">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Parameters!trNote.Value</Value>
-                                  <Style>
-                                    <FontFamily>Montserrat</FontFamily>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox2</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BackgroundColor>WhiteSmoke</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
@@ -375,7 +205,7 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox36">
+                        <Textbox Name="Textbox34">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -393,7 +223,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox36</rd:DefaultName>
+                          <rd:DefaultName>Textbox34</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -409,14 +239,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="name2">
+                        <Textbox Name="name">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!fullName.Value</Value>
+                                  <Value>=Fields!name.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
                                   </Style>
@@ -427,7 +257,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>name1</rd:DefaultName>
+                          <rd:DefaultName>name</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -443,75 +273,7 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="accNumber2">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!job.Value</Value>
-                                  <Style>
-                                    <FontFamily>Montserrat</FontFamily>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>accNumber</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="address2">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!workHours.Value</Value>
-                                  <Style>
-                                    <FontFamily>Montserrat</FontFamily>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>address</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="mobile2">
+                        <Textbox Name="notes">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -529,7 +291,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>mobile</rd:DefaultName>
+                          <rd:DefaultName>notes</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -541,6 +303,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -552,8 +315,6 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
-                <TablixMember />
-                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -562,17 +323,15 @@
                   <KeepWithGroup>After</KeepWithGroup>
                 </TablixMember>
                 <TablixMember>
-                  <Group Name="Details2" />
+                  <Group Name="Details" />
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <LayoutDirection>RTL</LayoutDirection>
-            <DataSetName>DataSetUser</DataSetName>
+            <DataSetName>DataSetCard</DataSetName>
             <Top>2.05861cm</Top>
             <Left>1.18768cm</Left>
             <Height>1.2cm</Height>
             <Width>18.5cm</Width>
-            <ZIndex>1</ZIndex>
             <Style>
               <Border>
                 <Color>LightGrey</Color>
@@ -580,6 +339,43 @@
               </Border>
             </Style>
           </Tablix>
+          <Textbox Name="agentTitle">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Parameters!trTitle.Value</Value>
+                    <Style>
+                      <FontFamily>Montserrat</FontFamily>
+                      <FontSize>20pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>#178dd2</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>agentTitle</rd:DefaultName>
+            <Top>0.37422cm</Top>
+            <Left>1.18768cm</Left>
+            <Height>1.21167cm</Height>
+            <Width>18.5cm</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
         <Height>3.746cm</Height>
         <Style>
@@ -591,7 +387,7 @@
       <Width>21cm</Width>
       <Page>
         <PageHeader>
-          <Height>4.4765cm</Height>
+          <Height>4.43416cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -600,7 +396,7 @@
               <Value>=Parameters!logoImage.Value</Value>
               <Sizing>FitProportional</Sizing>
               <Top>0.55928cm</Top>
-              <Left>16.68769cm</Left>
+              <Left>1.18768cm</Left>
               <Height>3cm</Height>
               <Width>3cm</Width>
               <Style>
@@ -638,16 +434,14 @@
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
+                  <Style />
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
               <Top>0.24999in</Top>
-              <Left>0.46759in</Left>
+              <Left>4.86626in</Left>
               <Height>0.3587in</Height>
-              <Width>3.20147in</Width>
+              <Width>2.8848in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -666,7 +460,15 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>:العنوان</Value>
+                      <Value>Address: </Value>
+                      <Style>
+                        <FontFamily>Montserrat</FontFamily>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>DimGray</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Parameters!Address.Value</Value>
                       <Style>
                         <FontFamily>Montserrat</FontFamily>
                         <FontWeight>Bold</FontWeight>
@@ -675,15 +477,15 @@
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Right</TextAlign>
+                    <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>0.62257in</Top>
-              <Left>3.13426in</Left>
+              <Left>4.86626in</Left>
               <Height>0.25in</Height>
-              <Width>0.5348in</Width>
+              <Width>2.8848in</Width>
               <ZIndex>3</ZIndex>
               <Style>
                 <Border>
@@ -702,7 +504,15 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>:هاتف</Value>
+                      <Value>Tel: </Value>
+                      <Style>
+                        <FontFamily>Montserrat</FontFamily>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>DimGray</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Parameters!Tel.Value</Value>
                       <Style>
                         <FontFamily>Montserrat</FontFamily>
                         <FontWeight>Bold</FontWeight>
@@ -711,15 +521,15 @@
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Right</TextAlign>
+                    <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>0.88646in</Top>
-              <Left>3.26831in</Left>
+              <Left>4.86626in</Left>
               <Height>0.25in</Height>
-              <Width>0.40075in</Width>
+              <Width>2.8848in</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <Border>
@@ -738,7 +548,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value xml:space="preserve"> </Value>
+                      <Value>Fax: </Value>
                       <Style>
                         <FontFamily>Montserrat</FontFamily>
                         <FontWeight>Bold</FontWeight>
@@ -755,15 +565,15 @@
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Right</TextAlign>
+                    <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>1.13646in</Top>
-              <Left>0.46759in</Left>
+              <Left>4.86626in</Left>
               <Height>0.25in</Height>
-              <Width>2.79447in</Width>
+              <Width>2.8848in</Width>
               <ZIndex>5</ZIndex>
               <Style>
                 <Border>
@@ -782,7 +592,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value xml:space="preserve"> </Value>
+                      <Value>Email: </Value>
                       <Style>
                         <FontFamily>Montserrat</FontFamily>
                         <FontWeight>Bold</FontWeight>
@@ -799,176 +609,16 @@
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Right</TextAlign>
+                    <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>1.38646in</Top>
-              <Left>0.46759in</Left>
+              <Left>4.86626in</Left>
               <Height>0.25in</Height>
-              <Width>2.33333in</Width>
+              <Width>2.8848in</Width>
               <ZIndex>6</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox21">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value xml:space="preserve"> </Value>
-                      <Style>
-                        <FontFamily>Montserrat</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DimGray</Color>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>=Parameters!Address.Value</Value>
-                      <Style>
-                        <FontFamily>Montserrat</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DimGray</Color>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.62257in</Top>
-              <Left>0.46759in</Left>
-              <Height>0.25in</Height>
-              <Width>2.66667in</Width>
-              <ZIndex>7</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox29">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>:فاكس</Value>
-                      <Style>
-                        <FontFamily>Montserrat</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DimGray</Color>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>1.13646in</Top>
-              <Left>3.2716in</Left>
-              <Height>0.25in</Height>
-              <Width>0.39746in</Width>
-              <ZIndex>8</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox22">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value xml:space="preserve"> </Value>
-                      <Style>
-                        <FontFamily>Montserrat</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DimGray</Color>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>=Parameters!Tel.Value</Value>
-                      <Style>
-                        <FontFamily>Montserrat</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DimGray</Color>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.88646in</Top>
-              <Left>0.46759in</Left>
-              <Height>0.25in</Height>
-              <Width>2.80072in</Width>
-              <ZIndex>9</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox30">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>:بريد الكتروني</Value>
-                      <Style>
-                        <FontFamily>Montserrat</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DimGray</Color>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>1.38646in</Top>
-              <Left>2.80092in</Left>
-              <Height>0.25in</Height>
-              <Width>0.86813in</Width>
-              <ZIndex>10</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -984,6 +634,7 @@
             <Border>
               <Style>None</Style>
             </Border>
+            <BackgroundColor>White</BackgroundColor>
           </Style>
         </PageHeader>
         <PageFooter>
@@ -998,23 +649,42 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>صفحة</Value>
+                      <Value>Page </Value>
+                      <Style>
+                        <FontFamily>Montserrat</FontFamily>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Globals!PageNumber</Value>
+                      <Style>
+                        <FontFamily>Montserrat</FontFamily>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value> of </Value>
+                      <Style>
+                        <FontFamily>Montserrat</FontFamily>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Globals!TotalPages</Value>
                       <Style>
                         <FontFamily>Montserrat</FontFamily>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
+                  <Style />
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox9</rd:DefaultName>
               <Top>0.03528cm</Top>
-              <Left>18.61434cm</Left>
+              <Left>1.18768cm</Left>
               <Height>0.6cm</Height>
-              <Width>1.07334cm</Width>
+              <Width>7cm</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1039,14 +709,12 @@
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style>
-                    <TextAlign>Left</TextAlign>
-                  </Style>
+                  <Style />
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>ExecutionTime</rd:DefaultName>
-              <Top>0.03529cm</Top>
-              <Left>1.18768cm</Left>
+              <Top>0.03528cm</Top>
+              <Left>13.89885cm</Left>
               <Height>0.6cm</Height>
               <Width>5.78883cm</Width>
               <ZIndex>1</ZIndex>
@@ -1073,116 +741,12 @@
                 <BackgroundColor>#4e4e4e</BackgroundColor>
               </Style>
             </Rectangle>
-            <Textbox Name="Textbox10">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=Globals!PageNumber</Value>
-                      <Style>
-                        <FontFamily>Montserrat</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox9</rd:DefaultName>
-              <Top>0.03529cm</Top>
-              <Left>17.60451cm</Left>
-              <Height>0.6cm</Height>
-              <Width>1.00983cm</Width>
-              <ZIndex>3</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox12">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>من</Value>
-                      <Style>
-                        <FontFamily>Montserrat</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox9</rd:DefaultName>
-              <Top>0.03529cm</Top>
-              <Left>16.99684cm</Left>
-              <Height>0.6cm</Height>
-              <Width>0.60767cm</Width>
-              <ZIndex>4</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox11">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=Globals!TotalPages</Value>
-                      <Style>
-                        <FontFamily>Montserrat</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox9</rd:DefaultName>
-              <Top>0.03529cm</Top>
-              <Left>14.23017cm</Left>
-              <Height>0.6cm</Height>
-              <Width>2.76667cm</Width>
-              <ZIndex>5</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
           </ReportItems>
           <Style>
             <Border>
               <Style>None</Style>
             </Border>
+            <BackgroundColor>White</BackgroundColor>
           </Style>
         </PageFooter>
         <PageHeight>29.7cm</PageHeight>
@@ -1226,12 +790,6 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
-    <ReportParameter Name="Num">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
     <ReportParameter Name="companyName">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
@@ -1268,18 +826,6 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
-    <ReportParameter Name="trJob">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="trWorkHours">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
     <ReportParameter Name="trNote">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
@@ -1290,7 +836,7 @@
   <ReportParametersLayout>
     <GridLayoutDefinition>
       <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>6</NumberOfRows>
+      <NumberOfRows>7</NumberOfRows>
       <CellDefinitions>
         <CellDefinition>
           <ColumnIndex>0</ColumnIndex>
@@ -1311,11 +857,6 @@
           <ColumnIndex>1</ColumnIndex>
           <RowIndex>1</RowIndex>
           <ParameterName>lang</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
-          <ColumnIndex>0</ColumnIndex>
-          <RowIndex>2</RowIndex>
-          <ParameterName>Num</ParameterName>
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>1</ColumnIndex>
@@ -1348,18 +889,8 @@
           <ParameterName>logoImage</ParameterName>
         </CellDefinition>
         <CellDefinition>
-          <ColumnIndex>1</ColumnIndex>
-          <RowIndex>5</RowIndex>
-          <ParameterName>trJob</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
-          <ColumnIndex>2</ColumnIndex>
-          <RowIndex>5</RowIndex>
-          <ParameterName>trWorkHours</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
           <ColumnIndex>3</ColumnIndex>
-          <RowIndex>5</RowIndex>
+          <RowIndex>3</RowIndex>
           <ParameterName>trNote</ParameterName>
         </CellDefinition>
       </CellDefinitions>

@@ -7,11 +7,11 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>bf00d0c1-5bf0-4e92-b207-394588bcd624</rd:DataSourceID>
+      <rd:DataSourceID>19824000-2493-43b8-a186-5fc48a0b2c46</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="DataSetUser">
+    <DataSet Name="DataSetBranch">
       <Query>
         <DataSourceName>RestaurantClasses</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
@@ -23,15 +23,23 @@
         </Field>
         <Field Name="balance">
           <DataField>balance</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
-        <Field Name="balanceType">
-          <DataField>balanceType</DataField>
-          <rd:TypeName>System.Byte</rd:TypeName>
+        <Field Name="branchId">
+          <DataField>branchId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="canDelete">
           <DataField>canDelete</DataField>
           <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="code">
+          <DataField>code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="count">
+          <DataField>count</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="createDate">
           <DataField>createDate</DataField>
@@ -41,41 +49,33 @@
           <DataField>createUserId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
+        <Field Name="deserved">
+          <DataField>deserved</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="discountType">
+          <DataField>discountType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="discountValue">
+          <DataField>discountValue</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
         <Field Name="email">
           <DataField>email</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="fullName">
-          <DataField>fullName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="groupId">
-          <DataField>groupId</DataField>
+        <Field Name="invoiceId">
+          <DataField>invoiceId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
-        <Field Name="image">
-          <DataField>image</DataField>
+        <Field Name="invType">
+          <DataField>invType</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="isActive">
           <DataField>isActive</DataField>
           <rd:TypeName>System.Byte</rd:TypeName>
-        </Field>
-        <Field Name="isAdmin">
-          <DataField>isAdmin</DataField>
-          <rd:TypeName>System.Boolean</rd:TypeName>
-        </Field>
-        <Field Name="isOnline">
-          <DataField>isOnline</DataField>
-          <rd:TypeName>System.Byte</rd:TypeName>
-        </Field>
-        <Field Name="job">
-          <DataField>job</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="lastname">
-          <DataField>lastname</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="mobile">
           <DataField>mobile</DataField>
@@ -89,12 +89,40 @@
           <DataField>notes</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="password">
-          <DataField>password</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+        <Field Name="paid">
+          <DataField>paid</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="parentId">
+          <DataField>parentId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="phone">
           <DataField>phone</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="posCode">
+          <DataField>posCode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="posName">
+          <DataField>posName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="tax">
+          <DataField>tax</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="total">
+          <DataField>total</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="totalNet">
+          <DataField>totalNet</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="type">
+          <DataField>type</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="updateDate">
@@ -105,23 +133,11 @@
           <DataField>updateUserId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
-        <Field Name="userId">
-          <DataField>userId</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="username">
-          <DataField>username</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="workHours">
-          <DataField>workHours</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>Restaurant.Classes</rd:DataSetName>
-        <rd:TableName>User</rd:TableName>
-        <rd:ObjectDataSourceType>Restaurant.Classes.User, Restaurant, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>Branch</rd:TableName>
+        <rd:ObjectDataSourceType>Restaurant.Classes.Branch, Restaurant, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
@@ -233,7 +249,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Parameters!trName.Value</Value>
+                                  <Value>=Parameters!trCode.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
                                     <FontWeight>Bold</FontWeight>
@@ -269,7 +285,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Parameters!trJob.Value</Value>
+                                  <Value>=Parameters!trName.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
                                     <FontWeight>Bold</FontWeight>
@@ -305,7 +321,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Parameters!trWorkHours.Value</Value>
+                                  <Value>=Parameters!trBranchAddress.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
                                     <FontWeight>Bold</FontWeight>
@@ -416,7 +432,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!fullName.Value</Value>
+                                  <Value>=Fields!code.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
                                   </Style>
@@ -450,7 +466,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!job.Value</Value>
+                                  <Value>=Fields!name.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
                                   </Style>
@@ -484,7 +500,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!workHours.Value</Value>
+                                  <Value>=Fields!address.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
                                   </Style>
@@ -541,6 +557,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -567,7 +584,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <LayoutDirection>RTL</LayoutDirection>
-            <DataSetName>DataSetUser</DataSetName>
+            <DataSetName>DataSetBranch</DataSetName>
             <Top>2.05861cm</Top>
             <Left>1.18768cm</Left>
             <Height>1.2cm</Height>
@@ -1203,6 +1220,17 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="trCode">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value>Code</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
     <ReportParameter Name="trName">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
@@ -1268,13 +1296,7 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
-    <ReportParameter Name="trJob">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="trWorkHours">
+    <ReportParameter Name="trBranchAddress">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
@@ -1296,6 +1318,11 @@
           <ColumnIndex>0</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>trTitle</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>trCode</ParameterName>
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>2</ColumnIndex>
@@ -1350,15 +1377,10 @@
         <CellDefinition>
           <ColumnIndex>1</ColumnIndex>
           <RowIndex>5</RowIndex>
-          <ParameterName>trJob</ParameterName>
+          <ParameterName>trBranchAddress</ParameterName>
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>2</ColumnIndex>
-          <RowIndex>5</RowIndex>
-          <ParameterName>trWorkHours</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
-          <ColumnIndex>3</ColumnIndex>
           <RowIndex>5</RowIndex>
           <ParameterName>trNote</ParameterName>
         </CellDefinition>
