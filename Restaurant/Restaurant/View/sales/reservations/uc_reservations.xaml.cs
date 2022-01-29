@@ -1,10 +1,13 @@
-﻿using Restaurant.Classes;
-using Restaurant.View.sales.promotion;
-using Restaurant.View.sales.reservations;
+﻿using netoaster;
+using Restaurant.Classes;
+using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,19 +19,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Restaurant.View.sales
+namespace Restaurant.View.sales.reservations
 {
     /// <summary>
-    /// Interaction logic for uc_sales.xaml
+    /// Interaction logic for uc_reservations.xaml
     /// </summary>
-    public partial class uc_sales : UserControl
+    public partial class uc_reservations : UserControl
     {
-        private static uc_sales _instance;
-        public static uc_sales Instance
+        private static uc_reservations _instance;
+        public static uc_reservations Instance
         {
             get
             {
-                _instance = new uc_sales();
+                _instance = new uc_reservations();
                 return _instance;
             }
             set
@@ -36,16 +39,10 @@ namespace Restaurant.View.sales
                 _instance = value;
             }
         }
-        public uc_sales()
+        public uc_reservations()
         {
-            try
-            {
-                InitializeComponent();
-            }
-            catch
-            { }
+            InitializeComponent();
         }
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -54,44 +51,15 @@ namespace Restaurant.View.sales
         {
             Instance = null;
             GC.Collect();
+
         }
 
-        private void Btn_promotion_Click(object sender, RoutedEventArgs e)
+        private void Btn_reservationTable_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 grid_main.Children.Clear();
-                grid_main.Children.Add(uc_promotion.Instance);
-
-                Button button = sender as Button;
-                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void Btn_reservations_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_reservations.Instance);
-
-                Button button = sender as Button;
-                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void Btn_diningHall_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_diningHall.Instance);
+                grid_main.Children.Add(uc_reservationTable.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -102,7 +70,20 @@ namespace Restaurant.View.sales
             }
         }
 
-        
+        private void Btn_reservationsUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_reservationsUpdate.Instance);
 
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

@@ -1,11 +1,8 @@
 ﻿using netoaster;
 using Restaurant.Classes;
-using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -19,14 +16,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Restaurant.View.sales
+namespace Restaurant.View.sales.reservations
 {
     /// <summary>
-    /// Interaction logic for uc_reservations.xaml
+    /// Interaction logic for uc_reservationsUpdate.xaml
     /// </summary>
-    public partial class uc_reservations : UserControl
+    public partial class uc_reservationsUpdate : UserControl
     {
-        public uc_reservations()
+        public uc_reservationsUpdate()
         {
             try
             {
@@ -34,28 +31,28 @@ namespace Restaurant.View.sales
                 if (System.Windows.SystemParameters.PrimaryScreenWidth >= 1440)
                 {
                     txt_deleteButton.Visibility = Visibility.Visible;
-                    txt_addButton.Visibility = Visibility.Visible;
+                    //txt_addButton.Visibility = Visibility.Visible;
                     txt_updateButton.Visibility = Visibility.Visible;
-                    txt_add_Icon.Visibility = Visibility.Visible;
+                    //txt_add_Icon.Visibility = Visibility.Visible;
                     txt_update_Icon.Visibility = Visibility.Visible;
                     txt_delete_Icon.Visibility = Visibility.Visible;
                 }
                 else if (System.Windows.SystemParameters.PrimaryScreenWidth >= 1360)
                 {
-                    txt_add_Icon.Visibility = Visibility.Collapsed;
+                    //txt_add_Icon.Visibility = Visibility.Collapsed;
                     txt_update_Icon.Visibility = Visibility.Collapsed;
                     txt_delete_Icon.Visibility = Visibility.Collapsed;
                     txt_deleteButton.Visibility = Visibility.Visible;
-                    txt_addButton.Visibility = Visibility.Visible;
+                    //txt_addButton.Visibility = Visibility.Visible;
                     txt_updateButton.Visibility = Visibility.Visible;
 
                 }
                 else
                 {
                     txt_deleteButton.Visibility = Visibility.Collapsed;
-                    txt_addButton.Visibility = Visibility.Collapsed;
+                    //txt_addButton.Visibility = Visibility.Collapsed;
                     txt_updateButton.Visibility = Visibility.Collapsed;
-                    txt_add_Icon.Visibility = Visibility.Visible;
+                    //txt_add_Icon.Visibility = Visibility.Visible;
                     txt_update_Icon.Visibility = Visibility.Visible;
                     txt_delete_Icon.Visibility = Visibility.Visible;
 
@@ -66,13 +63,13 @@ namespace Restaurant.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private static uc_reservations _instance;
-        public static uc_reservations Instance
+        private static uc_reservationsUpdate _instance;
+        public static uc_reservationsUpdate Instance
         {
             get
             {
                 //if (_instance == null)
-                _instance = new uc_reservations();
+                _instance = new uc_reservationsUpdate();
                 return _instance;
             }
             set
@@ -81,7 +78,7 @@ namespace Restaurant.View.sales
             }
         }
 
-        string basicsPermission = "reservations_basics";
+        string basicsPermission = "reservationsUpdate_basics";
         //User user = new User();
         //IEnumerable<User> usersQuery;
         //IEnumerable<User> users;
@@ -121,12 +118,12 @@ namespace Restaurant.View.sales
                 requiredControlList = new List<string> { "" };
                 if (MainWindow.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
+                    //MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
+                    //MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
@@ -170,7 +167,7 @@ namespace Restaurant.View.sales
         private void translate()
         {
 
-            
+
 
 
         }
@@ -224,7 +221,7 @@ namespace Restaurant.View.sales
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete"))
                 {
                     HelpClass.StartAwait(grid_main);
-                   
+
                     HelpClass.EndAwait(grid_main);
                 }
                 else
@@ -268,7 +265,7 @@ namespace Restaurant.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-       
+
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -284,13 +281,13 @@ namespace Restaurant.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Dg_user_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Dg_reservation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
                 //selection
-              
+
 
                 HelpClass.clearValidate(requiredControlList, this);
                 HelpClass.EndAwait(grid_main);
@@ -355,7 +352,7 @@ namespace Restaurant.View.sales
             //user.workHours = "0";
             //this.DataContext = user;
 
-           
+
 
 
             // last 

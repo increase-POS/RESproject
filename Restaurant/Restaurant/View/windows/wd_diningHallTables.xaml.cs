@@ -87,7 +87,7 @@ namespace Restaurant.View.windows
             }
         }
 
-        #region
+        #region table
         List<Tables> tablesList = new List<Tables>();
          
         void BuildBillDesign()

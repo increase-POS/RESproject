@@ -8,10 +8,10 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
          WindowStyle="None" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" Margin="0"  
-        Title="wd_itemsList" Height="600" Width="800"  Background="Transparent" AllowsTransparency="True" 
+        Title="wd_itemsList" Height="600" Width="900"  Background="Transparent" AllowsTransparency="True" 
         Loaded="Window_Loaded"  
         MouseDown="Window_MouseDown" >
-    <Grid Grid.Column="1" Grid.Row="1"   x:Name="grid_ucInvoice" >
+    <Grid Grid.Column="1" Grid.Row="1" x:Name="grid_main"  >
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
@@ -33,18 +33,12 @@
         </Grid>
         <Border BorderThickness="1,0,1,1"  Grid.Row="1"
                     CornerRadius="0,0,7,7" BorderBrush="#999999"  Background="#F1F5F8">
-            <Grid x:Name="grid_main" Margin="20 10" >
+            <Grid  Margin="20 10" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1.5*"/>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
                     <Border Margin="0,10,10,5" Grid.Row="0"  Background="White" CornerRadius="10">
                         <Border.Effect>
                             <DropShadowEffect
@@ -73,53 +67,15 @@
                                     </Style>
                                 </DataGrid.Resources>
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Width="*"  Header="No." Binding="{Binding Path=ssssssss}"/>
-                                    <DataGridTextColumn Width="*"  Header="remaining time" Binding="{Binding Path=ssssssss}"/>
-                                    <DataGridTextColumn Width="*"  Header="status" Binding="{Binding Path=ssssssss}"/>
-                                    <DataGridTextColumn Width="*"  Header="notes" Binding="{Binding Path=notes}"/>
+                                    <DataGridTextColumn Width="1*"  Header="No." Binding="{Binding Path=ssssssss}"/>
+                                    <DataGridTextColumn Width="2*"  Header="item name" Binding="{Binding Path=ssssssss}"/>
+                                    <DataGridTextColumn Width="2*"  Header="remaining time" Binding="{Binding Path=ssssssss}"/>
+                                    <DataGridTextColumn Width="2*"  Header="status" Binding="{Binding Path=ssssssss}"/>
+                                    <DataGridTextColumn Width="2*"  Header="notes" Binding="{Binding Path=notes}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
-
                         </Grid>
                     </Border>
-                    <Border Margin="0,10,10,5" Grid.Row="1"  Background="White" CornerRadius="10">
-                        <Border.Effect>
-                            <DropShadowEffect
-                          ShadowDepth="1"
-                          Direction="360"
-                          Color="Gray"
-                          Opacity="0.3"
-                         BlurRadius="10"/>
-                        </Border.Effect>
-                        <Grid  Grid.Row="1" >
-                            <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGridOrderItems" BorderThickness="0" 
-                            Background="White"/>
-                            <DataGrid  Margin="5,5,5,5" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
-                       x:Name="dg_orderItems"   AutoGenerateColumns="False"   Background="White"
-                        ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
-                                <DataGrid.OpacityMask>
-                                    <VisualBrush Visual="{Binding ElementName=brd_roundDataGridOrderItems}"/>
-                                </DataGrid.OpacityMask>
-                                <DataGrid.Resources>
-                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"></SolidColorBrush>
-                                    <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
-                                        <Setter Property="Background" Value="#F5D7C4" />
-                                        <Setter Property="BorderBrush" Value="White"/>
-                                        <Setter Property="BorderThickness" Value="0 0 1 0"/>
-                                        <Setter Property="Foreground" Value="{StaticResource SecondColor}"/>
-                                    </Style>
-                                </DataGrid.Resources>
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Width="*"  Header="No." Binding="{Binding Path=ssssssss}"/>
-                                    <DataGridTextColumn Width="*"  Header="name" Binding="{Binding Path=ssssssss}"/>
-                                    <DataGridTextColumn Width="*"  Header="count" Binding="{Binding Path=ssssssss}"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-
-                        </Grid>
-                    </Border>
-
-                </Grid>
 
                 <Grid Margin="10 10 0 5" Grid.Column="1"  >
                     <Grid.RowDefinitions>
@@ -192,7 +148,7 @@
                                     </DataGrid.Resources>
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Width="*"  Header="No." Binding="{Binding Path=ssssssss}"/>
-                                        <DataGridTextColumn Width="*"  Header="name" Binding="{Binding Path=ssssssss}"/>
+                                        <DataGridTextColumn Width="2*"  Header="name" Binding="{Binding Path=ssssssss}"/>
                                         <DataGridTextColumn Width="*"  Header="count" Binding="{Binding Path=ssssssss}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
