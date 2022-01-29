@@ -480,7 +480,6 @@ namespace Restaurant.Classes
             return purchaseItems;
         }
         #endregion
-
         #region reportSetting
 
         static public PosSetting posSetting = new PosSetting();
@@ -569,7 +568,20 @@ namespace Restaurant.Classes
 
 
         #endregion
+        #region coupon
+        static public Coupon coupon = new Coupon();
+        static public void fillDiscountType(ComboBox cmb)
+        {
+            var dislist = new[] {
+            new { Text = MainWindow.resourcemanager.GetString("trValueDiscount"), Value = "1" },
+            new { Text = MainWindow.resourcemanager.GetString("trPercentageDiscount"), Value = "2" },
+             };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = dislist;
 
+        }
+        #endregion
         static public ItemLocation itemLocation = new ItemLocation();
         static public Invoice invoice = new Invoice();
         static public List<Invoice> invoices;
