@@ -2890,4 +2890,7 @@
   <data name="trMainCourses" xml:space="preserve">
     <value>الوجبات الرئيسية</value>
   </data>
+  <data name="trSaveStockTakingNotification" xml:space="preserve">
+    <value>هل تريد حفظ الجرد في المسودات</value>
+  </data>
 </root>

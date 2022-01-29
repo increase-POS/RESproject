@@ -2914,4 +2914,7 @@ Please add Email in setting</value>
   <data name="trMainCourses" xml:space="preserve">
     <value>MainCourses</value>
   </data>
+  <data name="trSaveStockTakingNotification" xml:space="preserve">
+    <value>Do you want save the stock taking in drafts?</value>
+  </data>
 </root>
