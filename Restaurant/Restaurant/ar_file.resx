@@ -2893,4 +2893,10 @@
   <data name="trSaveStockTakingNotification" xml:space="preserve">
     <value>هل تريد حفظ الجرد في المسودات</value>
   </data>
+  <data name="trMonth" xml:space="preserve">
+    <value>شهر</value>
+  </data>
+  <data name="trYear" xml:space="preserve">
+    <value>عام</value>
+  </data>
 </root>

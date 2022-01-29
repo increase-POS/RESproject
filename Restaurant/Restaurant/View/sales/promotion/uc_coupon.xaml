@@ -104,8 +104,8 @@
                         <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                         <DataGrid  Margin="5,5,5,45" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
-                       x:Name="dg_coupon" SelectionChanged="Dg_coupon_SelectionChanged"  AutoGenerateColumns="False"   Background="White"
-                        ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
+                                   x:Name="dg_coupon" SelectionChanged="Dg_coupon_SelectionChanged"  AutoGenerateColumns="False"   Background="White"
+                                   ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
                             <DataGrid.OpacityMask>
                                 <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
                             </DataGrid.OpacityMask>
@@ -195,11 +195,9 @@
                         <StackPanel  Orientation="Horizontal" >
 
                             <Button x:Name="btn_pdf"   Background="{x:Null}"   Margin="10,0,5,0"
-                          Padding="0" Height="35" 
-                          BorderBrush="{x:Null}"   >
-                                <materialDesign:PackIcon Foreground="#D20A0A" Kind="FilePdf"  
-                                
-                          Width="22" Height="22">
+                                    Padding="0" Height="35" 
+                                    BorderBrush="{x:Null}" Click="Btn_pdf_Click"   >
+                                <materialDesign:PackIcon Foreground="#D20A0A" Kind="FilePdf"  Width="22" Height="22">
                                     <materialDesign:PackIcon.ToolTip>
                                         <ToolTip x:Name="tt_report" Content="Report"
                                               Placement="left" 
@@ -209,12 +207,12 @@
                                     </materialDesign:PackIcon.ToolTip>
                                 </materialDesign:PackIcon>
                             </Button>
-                            <Button   Background="{x:Null}"    Margin="5,0,5,0"
-                          Padding="0" Height="35"  x:Name="btn_print"
-                          BorderBrush="{x:Null}"   >
+                            <Button  Background="{x:Null}"    Margin="5,0,5,0"
+                                     Padding="0" Height="35"  x:Name="btn_print"
+                                     BorderBrush="{x:Null}" Click="Btn_print_Click"   >
                                 <materialDesign:PackIcon Foreground="#313131" Kind="Printer"  
-                              HorizontalAlignment="Center" 
-                      Width="22" Height="22">
+                                                         HorizontalAlignment="Center" 
+                                                         Width="22" Height="22">
                                     <materialDesign:PackIcon.ToolTip>
                                         <ToolTip x:Name="tt_print" Content="Print"
                                               Placement="left" 
@@ -226,7 +224,7 @@
                             </Button>
                             <Button FlowDirection="LeftToRight"   Background="{x:Null}"    Grid.Column="2" Margin="2.5,0,2.5,0" 
                             Padding="0" Height="20" Width="25"   x:Name="btn_pieChart"   
-                                       BorderBrush="{x:Null}"  >
+                                       BorderBrush="{x:Null}" Click="Btn_pieChart_Click"  >
                                 <Grid Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Path Width="8.8" Height="9.6" Stretch="Fill" Data="M27.7,8.3l-10.2,7.8l9.1,9.1c2.1-2.5,3.4-5.7,3.4-9.2C30,13.1,29.1,10.5,27.7,8.3z" Fill="#DD191B"
                               RenderTransformOrigin="5,5" >
@@ -270,8 +268,8 @@
                                 </Grid>
                             </Button>
                             <Button   Background="{x:Null}"    Grid.Column="3" Margin="5,0,5,0" 
-                            Padding="0" Height="35"   x:Name="btn_exportToExcel"   
-                                       BorderBrush="{x:Null}">
+                                      Padding="0" Height="35"   x:Name="btn_exportToExcel"   
+                                       BorderBrush="{x:Null}" Click="Btn_exportToExcel_Click">
                                 <Path Fill="#378500" Stretch="Fill"
                           Width="20" Height="20" 
                            FlowDirection="LeftToRight" Data="M25.162,3H16v2.984h3.031v2.031H16V10h3v2h-3v2h3v2h-3v2h3v2h-3v3h9.162   C25.623,23,26,22.609,26,22.13V3.87C26,3.391,25.623,3,25.162,3z M24,20h-4v-2h4V20z M24,16h-4v-2h4V16z M24,12h-4v-2h4V12z M24,8   h-4V6h4V8z 
@@ -288,7 +286,7 @@
                             </Button>
                             <Button   Background="{x:Null}"    Grid.Column="3" Margin="0,1,5,-2" 
                             Padding="0" Height="Auto"   x:Name="btn_preview"   
-                                       BorderBrush="{x:Null}">
+                                       BorderBrush="{x:Null}" Click="Btn_preview_Click">
                                 <Grid FlowDirection="LeftToRight">
                                     <Path Fill="#4E4E4E" Stretch="Fill"
                           Width="15" Height="18" 
@@ -387,13 +385,13 @@
                     <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid>
                             <TextBox x:Name="tb_code"  Text="{Binding code, Mode=OneWay}" Padding="10,5,0,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="code..."  
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="code..."  
                                      Foreground="#4E4E4E"  
-                                      MaxLength="50" BorderThickness="0"
+                                     MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"   Margin="4,0"  
-                                 LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
+                                     LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_code"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
@@ -421,20 +419,19 @@
                     <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid>
                             <TextBox x:Name="tb_barcode" Grid.Row="8"  Padding="10,0,5,0"  
-                                         Text="{Binding barcode, Mode=OneWay}"
-                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                         materialDesign:HintAssist.Hint="barcode..."    
-                           Foreground="#4E4E4E"  TextBlock.FontSize="12"  
+                                     Text="{Binding barcode, Mode=OneWay}"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="barcode..."    
+                                     Foreground="#4E4E4E"  TextBlock.FontSize="12"  
                                      BorderThickness="0"  Tag="int"
-                                 BorderBrush="AliceBlue" MaxLength="100" PreviewTextInput="Number_PreviewTextInput"
-                    materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                  Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown"
-                                         KeyDown="Tb_barcode_KeyDown"/>
+                                     BorderBrush="AliceBlue" 
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     Height="40"   Margin="4,0"  />
 
                             <Path Fill="#E81123" x:Name="p_error_barcode" Stretch="Fill" Margin="5,5,15,5"
-                              HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15" 
-                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z"/>
+                                  HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15" 
+                                  Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z"/>
 
                         </Grid>
                     </Border>
@@ -652,8 +649,8 @@
                     <Border Grid.Row="1" Grid.ColumnSpan="3">
                         <Button x:Name="btn_printBarcode"     Content="Print Barcode "
                                 materialDesign:ButtonAssist.CornerRadius="7"
-                          Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
-                    Margin="1,1"   Foreground="White" />
+                                Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                                Margin="1,1"   Foreground="White" Click="Btn_printBarcode_Click" />
                     </Border>
 
                     <Border Grid.Row="2">

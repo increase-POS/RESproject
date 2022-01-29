@@ -2917,4 +2917,10 @@ Please add Email in setting</value>
   <data name="trSaveStockTakingNotification" xml:space="preserve">
     <value>Do you want save the stock taking in drafts?</value>
   </data>
+  <data name="trMonth" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="trYear" xml:space="preserve">
+    <value>Year</value>
+  </data>
 </root>

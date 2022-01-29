@@ -102,9 +102,8 @@ namespace Restaurant.Classes
             toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
             p_error.ToolTip = toolTip;
             #endregion
-           
-
         }
+
         public static void clearValidate( Path p_error)
         {
             p_error.Visibility = Visibility.Collapsed;
@@ -1007,8 +1006,22 @@ namespace Restaurant.Classes
             }
             _count = count;
         }
+        static public void drawBarcode(string barcodeStr , Image img)
+        {//barcode image
+            // create encoding object
+            Zen.Barcode.Code128BarcodeDraw barcode = Zen.Barcode.BarcodeDrawFactory.Code128WithChecksum;
 
-       
+            if (barcodeStr != "")
+            {
+                System.Drawing.Bitmap serial_bitmap = (System.Drawing.Bitmap)barcode.Draw(barcodeStr, 60);
+                System.Drawing.ImageConverter ic = new System.Drawing.ImageConverter();
+                //generate bitmap
+                img.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(serial_bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            }
+            else
+                img.Source = null;
+        }
+
     }
 
     

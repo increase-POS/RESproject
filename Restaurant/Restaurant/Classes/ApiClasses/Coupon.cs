@@ -37,8 +37,6 @@ namespace Restaurant.Classes
         public string barcode { get; set; }
         public Nullable<int> membershipId { get; set; }
         public Boolean canDelete { get; set; }
-
-         
         public string state { get; set; }
         public async Task<List<Coupon>> Get()
         {
@@ -53,6 +51,8 @@ namespace Restaurant.Classes
             }
             return items;
         }
+
+
         public async Task<List<Coupon>> GetEffictiveCoupons()
         {
             List<Coupon> items = new List<Coupon>();
@@ -66,6 +66,8 @@ namespace Restaurant.Classes
             }
             return items;
         }
+
+
         public async Task<Coupon> getById(int itemId)
         {
             Coupon item = new Coupon();
@@ -84,6 +86,7 @@ namespace Restaurant.Classes
             }
             return item;
         }
+
 
          // get is exist
         public async Task<Coupon> Existcode(string code)
@@ -104,6 +107,8 @@ namespace Restaurant.Classes
             }
             return item;
         }
+
+
         public async Task<Coupon> getCouponByBarCode(string barcode)
         {
             Coupon item = new Coupon();
@@ -122,6 +127,8 @@ namespace Restaurant.Classes
             }
             return item;
         }
+
+
         public async Task<int> save(Coupon item)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();

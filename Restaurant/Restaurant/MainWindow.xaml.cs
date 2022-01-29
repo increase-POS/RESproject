@@ -56,7 +56,7 @@ namespace Restaurant
         public static string secondPath = "";
         public static string first = "";
         public static string second = "";
-        public static string lang;
+        public static string lang = "ar";
         public static string Reportlang = "ar";
         public static string companyName;
         public static string Email;
@@ -83,7 +83,22 @@ namespace Restaurant
         public static string menuIsOpen = "close";
         //public static List<ItemUnitUser> itemUnitsUsers = new List<ItemUnitUser>();
         //public static ItemUnitUser itemUnitsUser = new ItemUnitUser();
-
+        
+        /////////// print setting////////////////////
+        public static string sale_copy_count;
+        public static string pur_copy_count;
+        public static string print_on_save_sale;
+        public static string print_on_save_pur;
+        public static string email_on_save_sale;
+        public static string email_on_save_pur;
+        public static string rep_printer_name;
+        public static string sale_printer_name;
+        public static string salePaperSize;
+        public static string rep_print_count;
+        public static string docPapersize;
+        public static string Allow_print_inv_count;
+        /////////////////////////////////////////////
+       
         Object objectModel = new Object();
         List<Object> listObjects = new List<Object>();
         static public GroupObject groupObject = new GroupObject();
@@ -888,6 +903,7 @@ namespace Restaurant
                 //SelectAllText
                 EventManager.RegisterClassHandler(typeof(System.Windows.Controls.TextBox), System.Windows.Controls.TextBox.GotKeyboardFocusEvent, new RoutedEventHandler(SelectAllText));
 
+                //lang = "ar";
 
                 //SetNotificationsLocation();
 

@@ -1,13 +1,17 @@
-﻿using netoaster;
+﻿using Microsoft.Reporting.WinForms;
+using Microsoft.Win32;
+using netoaster;
 using Restaurant.Classes;
 using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -99,8 +103,15 @@ namespace Restaurant.View.sales.promotion
             {
                 HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "name", "mobile" };
+                requiredControlList = new List<string> { "name", "code", "discountType", "discountValue" };
 
+                FillCombo.fillDiscountType(cb_discountType);
+
+                //fill membership combo
+
+                img_barcode.Source = null;
+
+                #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
@@ -112,15 +123,14 @@ namespace Restaurant.View.sales.promotion
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
+                #endregion
 
                 await Search();
-                /*
+                
                 Keyboard.Focus(tb_code);
-                await RefreshCustomersList();
-                await Search();
-                */
 
                 Clear();
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -133,9 +143,55 @@ namespace Restaurant.View.sales.promotion
 
         private void translate()
         {
-            //txt_title.Text = MainWindow.resourcemanager.GetString("trCustomer");
+            txt_title.Text = MainWindow.resourcemanager.GetString("trCoupon");
+            txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+
+            txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, MainWindow.resourcemanager.GetString("trCodeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_barcode, MainWindow.resourcemanager.GetString("trBarcode")+"...");
+            txt_isActiveCoupon.Text = MainWindow.resourcemanager.GetString("trActive");
+            txt_contentInformatin.Text = MainWindow.resourcemanager.GetString("trDetails");
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_membershipId, MainWindow.resourcemanager.GetString("trMembership")+"...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_discountType, MainWindow.resourcemanager.GetString("trTypeDiscountHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_discountValue, MainWindow.resourcemanager.GetString("trDiscountValueHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_startDate, MainWindow.resourcemanager.GetString("trStartDateHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_endDate, MainWindow.resourcemanager.GetString("trEndDateHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_invMin, MainWindow.resourcemanager.GetString("trMinimumInvoiceValueHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_invMax, MainWindow.resourcemanager.GetString("trMaximumInvoiceValueHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_quantity, MainWindow.resourcemanager.GetString("trQuantityHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+
+            txt_addButton.Text = MainWindow.resourcemanager.GetString("trAdd");
+            txt_updateButton.Text = MainWindow.resourcemanager.GetString("trUpdate");
+            txt_deleteButton.Text = MainWindow.resourcemanager.GetString("trDelete");
+
+            tt_add_Button.Content = MainWindow.resourcemanager.GetString("trAdd");
+            tt_update_Button.Content = MainWindow.resourcemanager.GetString("trUpdate");
+            tt_delete_Button.Content = MainWindow.resourcemanager.GetString("trDelete");
+
+            dg_coupon.Columns[0].Header = MainWindow.resourcemanager.GetString("trCode");
+            dg_coupon.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
+            dg_coupon.Columns[2].Header = MainWindow.resourcemanager.GetString("trValue");
+            dg_coupon.Columns[3].Header = MainWindow.resourcemanager.GetString("trQuantity");
+            dg_coupon.Columns[4].Header = MainWindow.resourcemanager.GetString("trRemainQuantity");
+            dg_coupon.Columns[5].Header = MainWindow.resourcemanager.GetString("trvalidity");
+
+            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
+            tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
+            tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
+            tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
+            tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
+            tt_pieChart.Content = MainWindow.resourcemanager.GetString("trPieChart");
+            tt_preview.Content = MainWindow.resourcemanager.GetString("trPreview");
+            tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
+
+            btn_printBarcode.Content = MainWindow.resourcemanager.GetString("trPrintBarcode");
 
         }
+
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//add
@@ -147,93 +203,101 @@ namespace Restaurant.View.sales.promotion
                     coupon = new Coupon();
                     if (HelpClass.validate(requiredControlList, this) )
                     {
-                        //bool codeNotExist = await SectionData.CouponCodeNotExist(tb_code.Text, 0);
+                        #region validate
+                        bool isCodeExist = false;
+                        Coupon existCoupon = await coupon.Existcode(tb_code.Text);
+                        if (existCoupon != null) isCodeExist = true;
 
-                        //bool isEndDateSmaller = false;
-                        //if ((dp_startDate.SelectedDate != null) && (dp_endDate.SelectedDate != null))
-                        //    if (dp_endDate.SelectedDate < dp_startDate.SelectedDate) isEndDateSmaller = true;
+                        bool isEndDateSmaller = false;
+                        if ((dp_startDate.SelectedDate != null) && (dp_endDate.SelectedDate != null))
+                            if (dp_endDate.SelectedDate < dp_startDate.SelectedDate) isEndDateSmaller = true;
 
-                        //bool isMaxInvoiceValueSmaller = false;
-                        //try
-                        //{
-                        //    if (!decimal.Parse(tb_MaxInvoiceValue.Text).Equals(0))
-                        //        if (decimal.Parse(tb_MaxInvoiceValue.Text) < decimal.Parse(tb_MinInvoiceValue.Text)) isMaxInvoiceValueSmaller = true;
-                        //}
-                        //catch { }
-                        //if ((!codeNotExist) || (isEndDateSmaller) || (isMaxInvoiceValueSmaller))
-                        //{
-                        //    if (!codeNotExist)
-                        //        SectionData.showTextBoxValidate(tb_code, p_errorCode, tt_errorCode, "trDuplicateCodeToolTip");
-                        //    if (isEndDateSmaller)
-                        //    {
-                        //        SectionData.showDatePickerValidate(dp_startDate, p_errorStartDate, tt_errorStartDate, "trErrorEndDateSmallerToolTip");
-                        //        SectionData.showDatePickerValidate(dp_endDate, p_errorEndDate, tt_errorEndDate, "trErrorEndDateSmallerToolTip");
-                        //    }
-                        //    if (isMaxInvoiceValueSmaller)
-                        //    {
-                        //        SectionData.showTextBoxValidate(tb_MinInvoiceValue, p_errorMinInvoiceValue, tt_errorMinInvoiceValue, "trErrorMaxInvoiceSmallerToolTip");
-                        //        SectionData.showTextBoxValidate(tb_MaxInvoiceValue, p_errorMaxInvoiceValue, tt_errorMaxInvoiceValue, "trErrorMaxInvoiceSmallerToolTip");
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    Coupon coupon = new Coupon();
+                        bool isMaxInvoiceValueSmaller = false;
+                        try
+                        {
+                            if (!decimal.Parse(tb_invMax.Text).Equals(0))
+                                if (decimal.Parse(tb_invMax.Text) < decimal.Parse(tb_invMin.Text)) isMaxInvoiceValueSmaller = true;
+                        }
+                        catch { }
+                        if ((isCodeExist) || (isEndDateSmaller) || (isMaxInvoiceValueSmaller))
+                        {
+                            if (isCodeExist)
+                                HelpClass.SetValidate(p_error_code , "trDuplicateCodeToolTip");
+                            if (isEndDateSmaller)
+                            {
+                                HelpClass.SetValidate(p_error_startDate, "trErrorEndDateSmallerToolTip");
+                                HelpClass.SetValidate(p_error_endDate, "trErrorEndDateSmallerToolTip");
+                            }
+                            if (isMaxInvoiceValueSmaller)
+                            {
+                                HelpClass.SetValidate(p_error_invMin, "trErrorMaxInvoiceSmallerToolTip");
+                                HelpClass.SetValidate(p_error_invMax, "trErrorMaxInvoiceSmallerToolTip");
+                            }
+                           
+                        }
+                        #endregion
+                        else
+                        {
+                            #region add
+                            coupon = new Coupon();
 
-                        //    coupon.code = tb_code.Text;
-                        //    coupon.name = tb_name.Text;
-                        //    coupon.notes = tb_note.Text;
-                        //    coupon.barcode = tb_barcode.Text;
-                        //    coupon.isActive = Convert.ToByte(tgl_ActiveCoupon.IsChecked);
-                        //    coupon.discountType = Convert.ToByte(cb_typeDiscount.SelectedValue);
-                        //    if (dp_startDate.SelectedDate != null)
-                        //        coupon.startDate = DateTime.Parse(dp_startDate.Text);
-                        //    if (dp_endDate.SelectedDate != null)
-                        //        coupon.endDate = DateTime.Parse(dp_endDate.Text);
-                        //    coupon.discountValue = decimal.Parse(tb_discountValue.Text);
-                        //    if (!tb_MinInvoiceValue.Text.Equals(""))
-                        //        coupon.invMin = decimal.Parse(tb_MinInvoiceValue.Text);
-                        //    else
-                        //        coupon.invMin = 0;
-                        //    if (!tb_MaxInvoiceValue.Text.Equals(""))
-                        //        coupon.invMax = decimal.Parse(tb_MaxInvoiceValue.Text);
-                        //    else
-                        //        coupon.invMax = 0;
-                        //    if (string.IsNullOrWhiteSpace(tb_quantity.Text))
-                        //        coupon.quantity = 0;
-                        //    else
-                        //        coupon.quantity = Int32.Parse(tb_quantity.Text);
-                        //    coupon.remainQ = coupon.quantity;
-                        //    coupon.createUserId = MainWindow.userID; ;
+                            coupon.code = tb_code.Text;
+                            coupon.name = tb_name.Text;
+                            coupon.notes = tb_notes.Text;
+                            coupon.barcode = tb_barcode.Text;
+                            coupon.isActive = Convert.ToByte(tgl_isActiveCoupon.IsChecked);
+                            coupon.discountType = Convert.ToByte(cb_discountType.SelectedValue);////?????
+                            coupon.discountValue = decimal.Parse(tb_discountValue.Text);
 
-                        //    int s = await couponModel.save(coupon);
+                            if (dp_startDate.SelectedDate != null)
+                                coupon.startDate = DateTime.Parse(dp_startDate.Text);
+                            if (dp_endDate.SelectedDate != null)
+                                coupon.endDate = DateTime.Parse(dp_endDate.Text);
+                            if (!tb_invMin.Text.Equals(""))
+                                coupon.invMin = decimal.Parse(tb_invMin.Text);
+                            else
+                                coupon.invMin = 0;
+                            if (!tb_invMax.Text.Equals(""))
+                                coupon.invMax = decimal.Parse(tb_invMax.Text);
+                            else
+                                coupon.invMax = 0;
+                            if (string.IsNullOrWhiteSpace(tb_quantity.Text))
+                                coupon.quantity = 0;
+                            else
+                                coupon.quantity = Int32.Parse(tb_quantity.Text);
+                            coupon.remainQ = coupon.quantity;
+                            coupon.membershipId = 0;///????????????
+                            coupon.createUserId = MainWindow.userLogin.userId;
 
-                        //    if (s > 0)
-                        //    {
-                        //        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                        //        Btn_clear_Click(null, null);
+                            int s = await coupon.save(coupon);
 
-                        //        await RefreshCouponsList();
-                        //        Tb_search_TextChanged(null, null);
-                        //    }
-                        //    else
-                        //        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                        //}
+                            if (s > 0)
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                Clear();
 
+                                await RefreshCustomersList();
+                                await Search();
+                            }
+                            else
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        #endregion
+                        }
 
                     }
-                    HelpClass.EndAwait(grid_main);
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         private async void Btn_update_Click(object sender, RoutedEventArgs e)
         {//update
             try
@@ -241,10 +305,86 @@ namespace Restaurant.View.sales.promotion
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") )
                 {
                     HelpClass.StartAwait(grid_main);
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+                    
+                    if (HelpClass.validate(requiredControlList, this))
                     {
-                        
+                        #region validate
+                        bool isCodeExist = false;
+                        Coupon existCoupon = await coupon.Existcode(tb_code.Text);
+                        if ((existCoupon != null) && (existCoupon.cId != coupon.cId))
+                            isCodeExist = true;
 
+                        bool isEndDateSmaller = false;
+                        if ((dp_startDate.SelectedDate != null) && (dp_endDate.SelectedDate != null))
+                            if (dp_endDate.SelectedDate < dp_startDate.SelectedDate) isEndDateSmaller = true;
+
+                        bool isMaxInvoiceValueSmaller = false;
+                        try
+                        {
+                            if (!decimal.Parse(tb_invMax.Text).Equals(0))
+                                if (decimal.Parse(tb_invMax.Text) < decimal.Parse(tb_invMin.Text)) isMaxInvoiceValueSmaller = true;
+                        }
+                        catch { }
+                        if ((isCodeExist) || (isEndDateSmaller) || (isMaxInvoiceValueSmaller))
+                        {
+                            if (isCodeExist)
+                                HelpClass.SetValidate(p_error_code, "trDuplicateCodeToolTip");
+                            if (isEndDateSmaller)
+                            {
+                                HelpClass.SetValidate(p_error_startDate, "trErrorEndDateSmallerToolTip");
+                                HelpClass.SetValidate(p_error_endDate, "trErrorEndDateSmallerToolTip");
+                            }
+                            if (isMaxInvoiceValueSmaller)
+                            {
+                                HelpClass.SetValidate(p_error_invMin, "trErrorMaxInvoiceSmallerToolTip");
+                                HelpClass.SetValidate(p_error_invMax, "trErrorMaxInvoiceSmallerToolTip");
+                            }
+                            #endregion
+                    }
+                    else
+                    {
+                        #region update
+                        coupon.code = tb_code.Text;
+                        coupon.name = tb_name.Text;
+                        coupon.notes = tb_notes.Text;
+                        coupon.barcode = tb_barcode.Text;
+                        coupon.isActive = Convert.ToByte(tgl_isActiveCoupon.IsChecked);
+                        coupon.discountType = Convert.ToByte(cb_discountType.SelectedValue);
+                        coupon.discountValue = decimal.Parse(tb_discountValue.Text);
+
+                        if (dp_startDate.SelectedDate != null)
+                            coupon.startDate = DateTime.Parse(dp_startDate.Text);
+                        if (dp_endDate.SelectedDate != null)
+                            coupon.endDate = DateTime.Parse(dp_endDate.Text);
+                        if (!tb_invMin.Text.Equals(""))
+                            coupon.invMin = decimal.Parse(tb_invMin.Text);
+                        else
+                            coupon.invMin = 0;
+                        if (!tb_invMax.Text.Equals(""))
+                            coupon.invMax = decimal.Parse(tb_invMax.Text);
+                        else
+                            coupon.invMax = 0;
+                        if (string.IsNullOrWhiteSpace(tb_quantity.Text))
+                            coupon.quantity = 0;
+                        else
+                            coupon.quantity = Int32.Parse(tb_quantity.Text);
+                        coupon.remainQ = coupon.quantity;
+                        coupon.membershipId = 0;///????????????
+                        coupon.createUserId = MainWindow.userLogin.userId;
+
+                        int s = await coupon.save(coupon);
+
+                        if (s > 0)
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+
+                            await Search();
+                        }
+                        else
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        
+                        }
+                        #endregion
                     }
                     HelpClass.EndAwait(grid_main);
                 }
@@ -258,11 +398,11 @@ namespace Restaurant.View.sales.promotion
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         private async void Btn_delete_Click(object sender, RoutedEventArgs e)
-        {
-            /*
+        {//delete
             try
-            {//delete
+            {
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") )
                 {
                     HelpClass.StartAwait(grid_main);
@@ -323,9 +463,8 @@ namespace Restaurant.View.sales.promotion
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
-        /*
+        
         private async Task activate()
         {//activate
             coupon.isActive = 1;
@@ -339,18 +478,15 @@ namespace Restaurant.View.sales.promotion
                 await Search();
             }
         }
-        */
+        
         #endregion
+
         #region events
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
-                /*
-                HelpClass.StartAwait(grid_main);
                 await Search();
-                HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
@@ -362,14 +498,15 @@ namespace Restaurant.View.sales.promotion
         {
             try
             {
-                /*
                 HelpClass.StartAwait(grid_main);
                 if (coupons is null)
                     await RefreshCustomersList();
+
                 tgl_couponState = 1;
+
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
@@ -381,14 +518,16 @@ namespace Restaurant.View.sales.promotion
         {
             try
             {
-                /*
                 HelpClass.StartAwait(grid_main);
+
                 if (coupons is null)
                     await RefreshCustomersList();
+
                 tgl_couponState = 0;
+
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
@@ -424,6 +563,9 @@ namespace Restaurant.View.sales.promotion
                     this.DataContext = coupon;
                     if (coupon != null)
                     {
+                        tb_barcode.Text = coupon.barcode;
+                        HelpClass.drawBarcode(coupon.barcode , img_barcode);
+
                         #region delete
                         if (coupon.canDelete)
                             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
@@ -447,15 +589,14 @@ namespace Restaurant.View.sales.promotion
             }
         }
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
+        {//refresh
             try
-            {//refresh
-                /*
+            {
                 HelpClass.StartAwait(grid_main);
+                tb_search.Text = "";
                 await RefreshCustomersList();
                 await Search();
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
@@ -465,6 +606,7 @@ namespace Restaurant.View.sales.promotion
             }
         }
         #endregion
+
         #region Refresh & Search
         
         async Task Search()
@@ -472,12 +614,21 @@ namespace Restaurant.View.sales.promotion
             //search
             if (coupons is null)
                 await RefreshCustomersList();
+
             searchText = tb_search.Text.ToLower();
             couponsQuery = coupons;
-            //couponsQuery = coupons.Where(s => (s.code.ToLower().Contains(searchText) ||
-            //s.name.ToLower().Contains(searchText) ||
-            //s.mobile.ToLower().Contains(searchText)
-            //) && s.isActive == tgl_couponState);
+            couponsQuery = coupons.Where(s => 
+            (
+            s.code.ToLower().Contains(searchText) 
+            ||
+            s.name.ToLower().Contains(searchText) 
+            ||
+            s.discountType.ToString().ToLower().Contains(searchText)
+            ||
+            s.discountValue.ToString().ToLower().Contains(searchText)
+            ) 
+            && s.isActive == tgl_couponState
+            );
             RefreshCustomersView();
         }
         async Task<IEnumerable<Coupon>> RefreshCustomersList()
@@ -492,6 +643,7 @@ namespace Restaurant.View.sales.promotion
         }
         
         #endregion
+
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
@@ -501,14 +653,10 @@ namespace Restaurant.View.sales.promotion
             HelpClass.clearValidate(requiredControlList, this);
         }
         string input;
-        decimal _decimal = 0;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
+        {//only  digits
             try
             {
-
-
-                //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
                 if (textBox.Tag.ToString() == "int")
@@ -519,8 +667,8 @@ namespace Restaurant.View.sales.promotion
                 else if (textBox.Tag.ToString() == "decimal")
                 {
                     input = e.Text;
+                    decimal _decimal;
                     e.Handled = !decimal.TryParse(textBox.Text + input, out _decimal);
-
                 }
             }
             catch (Exception ex)
@@ -559,12 +707,20 @@ namespace Restaurant.View.sales.promotion
             try
             {
                 HelpClass.validate(requiredControlList, this);
+                string name = sender.GetType().Name;
+                var txb = sender as TextBox;
+                if ((sender as TextBox).Name == "tb_code")
+                {
+                    tb_barcode.Text = genBarCode(tb_code.Text);
+                    HelpClass.drawBarcode(tb_barcode.Text, img_barcode);
+                }
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+      
         private void validateEmpty_LostFocus(object sender, RoutedEventArgs e)
         {
             try
@@ -578,43 +734,24 @@ namespace Restaurant.View.sales.promotion
         }
 
         #endregion
-        #region report
-        /*
-        // report
+      
+        #region barcode
+        private string genBarCode(string code)
+        {
+            string s = "cop-" + code;
+            return s;
+        }
+        #endregion
+
+        #region reports
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
-        public void BuildReport()
-        {
-            List<ReportParameter> paramarr = new List<ReportParameter>();
-
-            string addpath;
-            bool isArabic = ReportCls.checkLang();
-            if (isArabic)
+        private void Btn_printBarcode_Click(object sender, RoutedEventArgs e)
+        {//print barcode
+            if (tb_barcode.Text != null && tb_barcode.Text != "")
             {
-                addpath = @"\Reports\Sale\Ar\PackageReport.rdlc";
-            }
-            else
-                addpath = @"\Reports\Sale\En\PackageReport.rdlc";
-            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-            ReportCls.checkLang();
-
-            clsReports.packageReport(itemsQuery, rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
-            clsReports.Header(paramarr);
-
-            rep.SetParameters(paramarr);
-
-            rep.Refresh();
-        }
-        public void pdfpackage()
-        {
-
-            BuildReport();
-
-            this.Dispatcher.Invoke(() =>
-            {
+                buildbarcodereport();
                 saveFileDialog.Filter = "PDF|*.pdf;";
 
                 if (saveFileDialog.ShowDialog() == true)
@@ -622,59 +759,72 @@ namespace Restaurant.View.sales.promotion
                     string filepath = saveFileDialog.FileName;
                     LocalReportExtensions.ExportToPDF(rep, filepath);
                 }
-            });
+            }
+            else
+            {
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trBarcodeEmpty"), animation: ToasterAnimation.FadeIn);
+            }
         }
+
+        public void buildbarcodereport()
+        {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+
+            addpath = @"\Reports\Sale\coupon\coupExport.rdlc";
+
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+            ReportCls.checkLang();
+
+            clsReports.couponExportReport(rep, reppath, paramarr, tb_barcode.Text);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+        }
+
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {//pdf
             try
             {
-
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
                 {
                     /////////////////////////////////////
                     Thread t1 = new Thread(() =>
                     {
-                        pdfpackage();
+                        pdfPurCoupon();
                     });
                     t1.Start();
                     //////////////////////////////////////
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
-        public void printpackage()
-        {
-            BuildReport();
 
-            this.Dispatcher.Invoke(() =>
-            {
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
-            });
-        }
         private void Btn_print_Click(object sender, RoutedEventArgs e)
         {//print
             try
             {
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
                 {
                     /////////////////////////////////////
                     Thread t1 = new Thread(() =>
                     {
-                        printpackage();
+                        printPurCoupon();
                     });
                     t1.Start();
                     //////////////////////////////////////
@@ -682,63 +832,137 @@ namespace Restaurant.View.sales.promotion
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                    
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
         {//pie
             try
             {
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
-                    win_lvcCatalog win = new win_lvcCatalog(itemsQuery, 3);
+                    win_lvcSales win = new win_lvcSales(couponsQuery, 1);
                     win.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
                     #endregion
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
+        {//excel
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                {
+                    #region
+                    //Thread t1 = new Thread(() =>
+                    //{
+                    List<ReportParameter> paramarr = new List<ReportParameter>();
+
+                    string addpath;
+                    bool isArabic = ReportCls.checkLang();
+                    if (isArabic)
+                    {
+                        addpath = @"\Reports\Sale\Ar\CouponReport.rdlc";
+                    }
+                    else addpath = @"\Reports\Sale\En\CouponReport.rdlc";
+                    string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+                    ReportCls.checkLang();
+
+                    clsReports.couponReport(couponsQuery, rep, reppath, paramarr);
+                    clsReports.setReportLanguage(paramarr);
+                    clsReports.Header(paramarr);
+
+                    rep.SetParameters(paramarr);
+
+                    rep.Refresh();
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        saveFileDialog.Filter = "EXCEL|*.xls;";
+                        if (saveFileDialog.ShowDialog() == true)
+                        {
+                            string filepath = saveFileDialog.FileName;
+                            LocalReportExtensions.ExportToExcel(rep, filepath);
+                        }
+                    });
+
+                    //});
+                    //t1.Start();
+                    #endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
         private void Btn_preview_Click(object sender, RoutedEventArgs e)
         {//preview
             try
             {
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
-                    /////////////////////
                     string pdfpath = "";
+
+                    List<ReportParameter> paramarr = new List<ReportParameter>();
+
                     pdfpath = @"\Thumb\report\temp.pdf";
                     pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
-                    BuildReport();
+
+                    string addpath;
+                    bool isArabic = ReportCls.checkLang();
+                    if (isArabic)
+                    {
+                        addpath = @"\Reports\Sale\Ar\CouponReport.rdlc";
+                    }
+                    else addpath = @"\Reports\Sale\En\CouponReport.rdlc";
+                    string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+                    ReportCls.checkLang();
+
+                    clsReports.couponReport(couponsQuery, rep, reppath, paramarr);
+                    clsReports.setReportLanguage(paramarr);
+                    clsReports.Header(paramarr);
+
+                    rep.SetParameters(paramarr);
+
+                    rep.Refresh();
+
                     LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                    ///////////////////
                     wd_previewPdf w = new wd_previewPdf();
                     w.pdfPath = pdfpath;
                     if (!string.IsNullOrEmpty(w.pdfPath))
@@ -751,205 +975,76 @@ namespace Restaurant.View.sales.promotion
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
-        public void ExcelPackage()
+        public async void pdfPurCoupon()
         {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
 
-            BuildReport();
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
+                addpath = @"\Reports\Sale\Ar\CouponReport.rdlc";
+            }
+            else addpath = @"\Reports\Sale\En\CouponReport.rdlc";
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
+            ReportCls.checkLang();
+
+            clsReports.couponReport(couponsQuery, rep, reppath, paramarr);
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
             this.Dispatcher.Invoke(() =>
             {
-                saveFileDialog.Filter = "EXCEL|*.xls;";
+                saveFileDialog.Filter = "PDF|*.pdf;";
+
                 if (saveFileDialog.ShowDialog() == true)
                 {
                     string filepath = saveFileDialog.FileName;
-                    LocalReportExtensions.ExportToExcel(rep, filepath);
+                    LocalReportExtensions.ExportToPDF(rep, filepath);
                 }
             });
         }
-        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
-        {//excel
-            try
-            {
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
-                {
-                    Thread t1 = new Thread(() =>
-                    {
-                        ExcelPackage();
+        public async void printPurCoupon()
+        {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
 
-                    });
-                    t1.Start();
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-            }
-            catch (Exception ex)
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
             {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                addpath = @"\Reports\Sale\Ar\CouponReport.rdlc";
             }
+            else addpath = @"\Reports\Sale\En\CouponReport.rdlc";
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+            ReportCls.checkLang();
+
+            clsReports.couponReport(couponsQuery, rep, reppath, paramarr);
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+            rep.Refresh();
+            this.Dispatcher.Invoke(() =>
+            {
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
+            });
         }
-        */
         #endregion
 
-        #region barcode
-        /*List<ItemUnit> barcodesList;
-        static private int _InternalCounter = 0;
-        private Boolean checkBarcodeValidity(string barcode)
-        {
-            if (FillCombo.itemUnitList != null)
-            {
-                var exist = FillCombo.itemUnitList.Where(x => x.barcode == barcode && x.itemId != item.itemId).FirstOrDefault();
-                if (exist != null)
-                    return false;
-                else
-                    return true;
-            }
-            return true;
-        }
-        */
-        private void Tb_barcode_KeyDown(object sender, KeyEventArgs e)
-        {
-            /*
-            try
-            {
-                TextBox tb = (TextBox)sender;
-                string barCode = tb_barcode.Text;
-                if (e.Key == Key.Return && barCode.Length == 13)
-                {
-                    if (isBarcodeCorrect(barCode) == false)
-                    {
-                        item.barcode = "";
-                        this.DataContext = item;
-
-                    }
-                    else
-                        drawBarcode(barCode);
-                }
-                else if (barCode.Length == 13 || barCode.Length == 12)
-                    drawBarcode(barCode);
-                else
-                    drawBarcode("");
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.ExceptionMessage(ex, this);
-            }
-            */
-        }
-        /*
-        private bool isBarcodeCorrect(string barCode)
-        {
-            char checkDigit;
-            char[] barcodeData;
-
-            char cd = barCode[0];
-            barCode = barCode.Substring(1);
-            barcodeData = barCode.ToCharArray();
-            checkDigit = Mod10CheckDigit(barcodeData);
-
-            if (checkDigit != cd)
-            {
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorBarcodeToolTip"), animation: ToasterAnimation.FadeIn);
-                return false;
-            }
-            else
-                return true;
-        }
-        public static char Mod10CheckDigit(char[] data)
-        {
-            // Start the checksum calculation from the right most position.
-            int factor = 3;
-            int weight = 0;
-            int length = data.Length;
-
-            for (int i = 0; i <= length - 1; i++)
-            {
-                weight += (data[i] - '0') * factor;
-                factor = (factor == 3) ? 1 : 3;
-            }
-
-            return (char)(((10 - (weight % 10)) % 10) + '0');
-
-        }
-        private void drawBarcode(string barcodeStr)
-        {
-            try
-            {
-                // configur check sum metrics
-                BarcodeSymbology s = BarcodeSymbology.CodeEan13;
-
-                BarcodeDraw drawObject = BarcodeDrawFactory.GetSymbology(s);
-
-                BarcodeMetrics barcodeMetrics = drawObject.GetDefaultMetrics(60);
-                barcodeMetrics.Scale = 2;
-
-                if (barcodeStr != "")
-                {
-                    if (barcodeStr.Length == 13)
-                        barcodeStr = barcodeStr.Substring(1);//remove check sum from barcode string
-                    var barcodeImage = drawObject.Draw(barcodeStr, barcodeMetrics);
-
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        barcodeImage.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                        byte[] imageBytes = ms.ToArray();
-
-                        img_barcode.Source = ImageProcess.ByteToImage(imageBytes);
-                    }
-                }
-                else
-                    img_barcode.Source = null;
-            }
-            catch { img_barcode.Source = null; }
-
-        }
-        private async void generateBarcode()
-        {
-            string barcodeString = "";
-            barcodeString = generateRandomBarcode();
-            if (FillCombo.itemUnitList != null)
-            {
-                if (!checkBarcodeValidity(barcodeString))
-                    barcodeString = generateRandomBarcode();
-            }
-            item.barcode = barcodeString;
-            this.DataContext = item;
-            //tb_barcode.Text = barcodeString;
-            HelpClass.validateEmpty("trErrorEmptyBarcodeToolTip", p_error_barcode);
-            drawBarcode(tb_barcode.Text);
-        }
-        static public string generateRandomBarcode()
-        {
-            var now = DateTime.Now;
-
-            var days = (int)(now - new DateTime(2000, 1, 1)).TotalDays;
-            var seconds = (int)(now - DateTime.Today).TotalSeconds;
-
-            var counter = _InternalCounter++ % 100;
-            string randomBarcode = days.ToString("00000") + seconds.ToString("00000") + counter.ToString("00");
-            char[] barcodeData = randomBarcode.ToCharArray();
-            char checkDigit = Mod10CheckDigit(barcodeData);
-            return checkDigit + randomBarcode;
-
-        }
-        */
-        #endregion        
     }
 }
