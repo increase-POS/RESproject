@@ -33,12 +33,12 @@ namespace Restaurant.View.storage.stocktakingOperations
     public partial class uc_stocktaking : UserControl
      {
          List<ItemLocation> itemsLocations;
-        ItemLocation itemLocationModel = new ItemLocation();
         InventoryItemLocation invItemModel = new InventoryItemLocation();
         List<InventoryItemLocation> invItemsLocations = new List<InventoryItemLocation>();
 
         Inventory inventory = new Inventory();
         private static DispatcherTimer timer;
+        int _DocCount = 0;
         bool firstTimeForDatagrid = true;
 
         string _InventoryType = "d";
@@ -87,8 +87,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                     #region Accept
                     MainWindow.mainWindow.Opacity = 0.2;
                     wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                    //w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxActivate");
-                    w.contentText = "Do you want save pay invoice in drafts?";
+                    w.contentText = MainWindow.resourcemanager.GetString("trSaveStockTakingNotification");
                     w.ShowDialog();
                     MainWindow.mainWindow.Opacity = 1;
                     #endregion
@@ -169,7 +168,7 @@ namespace Restaurant.View.storage.stocktakingOperations
             txt_shortageTitle.Text = MainWindow.resourcemanager.GetString("trShortages");
             txt_destroyTitle.Text = MainWindow.resourcemanager.GetString("trDestructives");
         }
-        #region timer to refresh notifications
+        #region refresh notifications
         private void setTimer()
         {
             timer = new DispatcherTimer();
@@ -192,24 +191,19 @@ namespace Restaurant.View.storage.stocktakingOperations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        #endregion
+        
         private async Task refreshDocCount(int inventoryId)
-        {
-            DocImage doc = new DocImage();
-            int docCount = await doc.GetDocCount("Inventory", inventoryId);
-
-            int previouseCount = 0;
-            if (md_docImage.Badge != null && md_docImage.Badge.ToString() != "") previouseCount = int.Parse(md_docImage.Badge.ToString());
-
-            if (docCount > 9)
+        {        
+            try
             {
-                docCount = 9;
-                md_docImage.Badge = "+" + docCount.ToString();
+                DocImage doc = new DocImage();
+                int docCount = await doc.GetDocCount("Inventory", inventoryId);
+
+                HelpClass.refreshNotification(md_docImage, ref _DocCount, docCount);
             }
-            else if (docCount == 0) md_docImage.Badge = "";
-            else
-                md_docImage.Badge = docCount.ToString();
+            catch { }
         }
+        #endregion
         private async Task fillItemLocations()
         {
             int sequence = 0;
@@ -220,7 +214,7 @@ namespace Restaurant.View.storage.stocktakingOperations
             inventory = await inventory.getByBranch("d", MainWindow.branchLogin.branchId);
             if (inventory.inventoryId == 0)// there is no draft in branch
             {
-                itemsLocations = await itemLocationModel.getAll(MainWindow.branchLogin.branchId);
+                itemsLocations = await FillCombo.itemLocation.getAll(MainWindow.branchLogin.branchId);
 
                 foreach (ItemLocation il in itemsLocations)
                 {
@@ -271,7 +265,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                 inventory = await inventory.getByBranch("d", MainWindow.branchLogin.branchId);
             if (inventory.inventoryId == 0)// there is no draft in branch
             {
-                itemsLocations = await itemLocationModel.getAll(MainWindow.branchLogin.branchId);
+                itemsLocations = await FillCombo.itemLocation.getAll(MainWindow.branchLogin.branchId);
                 foreach (ItemLocation il in itemsLocations)
                 {
                     sequence++;
@@ -507,7 +501,19 @@ namespace Restaurant.View.storage.stocktakingOperations
 
                 if (_InventoryType.Equals("d") && invItemsLocations.Count > 0)
                 {
-                    await addInventory("d"); // d:draft
+                    #region Accept
+                    MainWindow.mainWindow.Opacity = 0.2;
+                    wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                    w.contentText = MainWindow.resourcemanager.GetString("trSaveStockTakingNotification");
+                    w.ShowDialog();
+                    MainWindow.mainWindow.Opacity = 1;
+                    #endregion
+                    if (w.isOk)
+                    {
+                        await addInventory("d"); // d:draft
+                    }
+                    else
+                        clearInventory();
                 }
                 inventory = await inventory.getByBranch("n", MainWindow.branchLogin.branchId);
                 if (inventory.inventoryId == 0)

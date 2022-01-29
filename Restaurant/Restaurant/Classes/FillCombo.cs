@@ -395,6 +395,31 @@ namespace Restaurant.Classes
         }
         #endregion
         #endregion
+        #region User
+        static public User user = new User();
+        static public List<User> usersList;
+
+        static public async Task<IEnumerable<User>> RefreshUsers()
+        {
+            usersList = await user.Get();
+            return usersList;
+        }
+
+        static public async Task FillComboUsers(ComboBox cmb)
+        {
+            if (usersList is null)
+                await RefreshUsers();
+            var users = usersList.Where(x => x.isActive == 1 && x.isAdmin != true).ToList();
+            user = new User();
+            user.userId = 0;
+            user.name = "-";
+            users.Insert(0, user);
+            cmb.ItemsSource = users;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "userId";
+            cmb.SelectedIndex = -1;
+        }
+        #endregion
         #region fill cards combo
         static public Card card = new Card();
         static public List<Card> cardsList;
@@ -586,7 +611,7 @@ namespace Restaurant.Classes
         static public Invoice invoice = new Invoice();
         static public List<Invoice> invoices;
         static public ShippingCompanies ShipCompany = new ShippingCompanies();
-        static public User user = new User();
+        
 
 
 

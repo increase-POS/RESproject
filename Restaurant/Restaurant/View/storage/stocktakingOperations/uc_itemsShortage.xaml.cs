@@ -42,7 +42,6 @@ namespace Restaurant.View.storage.stocktakingOperations
         {
             get
             {
-                //if (_instance == null)
                 _instance = new uc_itemsShortage();
                 return _instance;
             }
@@ -54,9 +53,10 @@ namespace Restaurant.View.storage.stocktakingOperations
         string savePermission = "itemsShortage_save";
         string reportsPermission = "itemsShortage_reports";
 
+        InventoryItemLocation invItemLocModel = new InventoryItemLocation();
         InventoryItemLocation invItemLoc = new InventoryItemLocation();
+        IEnumerable<InventoryItemLocation> inventoriesItems;
         IEnumerable<InventoryItemLocation> invItemLocsQuery;
-        IEnumerable<InventoryItemLocation> invItemLocs;
         byte tgl_invItemLocState;
         string searchText = "";
         public static List<string> requiredControlList;
@@ -84,6 +84,8 @@ namespace Restaurant.View.storage.stocktakingOperations
                 translate();
 
                 Keyboard.Focus(tb_amount);
+                await refreshShortageDetails();
+                await FillCombo.FillComboUsers(cb_user);
                 await Search();
                 Clear();
                 HelpClass.EndAwait(grid_main);
@@ -95,6 +97,13 @@ namespace Restaurant.View.storage.stocktakingOperations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        #region loading
+        private async Task refreshShortageDetails()
+        {
+            inventoriesItems = await invItemLocModel.GetShortageItem(MainWindow.branchLogin.branchId);
+            dg_invItemLoc.ItemsSource = inventoriesItems;
+        }
+        #endregion
         private void translate()
         {
 
@@ -124,7 +133,7 @@ namespace Restaurant.View.storage.stocktakingOperations
             btn_refresh.ToolTip = MainWindow.resourcemanager.GetString("trRefresh");
 
         }
-        #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
+        #region Add  - Search - Tgl - Clear - DG_SelectionChanged - refresh 
 
         private async void Btn_shortage_Click(object sender, RoutedEventArgs e)
         {
@@ -134,86 +143,70 @@ namespace Restaurant.View.storage.stocktakingOperations
 
                 if (MainWindow.groupObject.HasPermissionAction(savePermission, MainWindow.groupObjects, "one")  )
                 {
-                    /*
-                    if (invItemLoc.id != 0)
+                    if (HelpClass.validate(requiredControlList, this))
                     {
-                        bool valid = validateDistroy();
-                        if (valid)
+                        int itemUnitId = 0;
+                        int itemId = 0;
+                        int invoiceId = 0;
+                        string serialNum = "";
+
+                        itemUnitId = invItemLoc.itemUnitId;
+                        itemId = invItemLoc.itemId;
+                        invItemLoc.notes = tb_notes.Text;
+                        invItemLoc.fallCause = tb_fallCause.Text;
+                        #region add invoice
+
+                        decimal price = (decimal)invItemLoc.avgPurchasePrice;
+                        decimal total = price * int.Parse(tb_amount.Text);
+                        FillCombo.invoice = new Invoice();
+                        FillCombo.invoice.invNumber = await FillCombo.invoice.generateInvNumber("sh",MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+                        FillCombo.invoice.branchCreatorId = MainWindow.branchLogin.branchId;
+                        FillCombo.invoice.posId = MainWindow.posID.Value;
+                        FillCombo.invoice.createUserId = MainWindow.userLogin.userId;
+                        FillCombo.invoice.invType = "sh"; // shortage
+                        FillCombo.invoice.total = total;
+                        FillCombo.invoice.totalNet = total;
+                        FillCombo.invoice.paid = 0;
+                        FillCombo.invoice.deserved = FillCombo.invoice.totalNet;
+                        FillCombo.invoice.notes = tb_notes.Text;
+
+                        if (cb_user.SelectedIndex != -1 && cb_user.SelectedIndex != 0)
+                            FillCombo.invoice.userId = (int)cb_user.SelectedValue;
+                        #endregion
+
+                        List<ItemTransfer> orderList = new List<ItemTransfer>();
+
+
+                        orderList.Add(new ItemTransfer()
                         {
-                            int itemUnitId = 0;
-                            int itemId = 0;
-                            int invoiceId = 0;
-                            string serialNum = "";
-
-                            itemUnitId = invItemLoc.itemUnitId;
-                            itemId = invItemLoc.itemId;
-                            invItemLoc.notes = tb_notes.Text;
-                            invItemLoc.fallCause = tb_reasonOfShortage.Text;
-                            #region add invoice
-
-                            decimal price = (decimal)invItemLoc.avgPurchasePrice;
-                            decimal total = price * int.Parse(tb_amount.Text);
-
-                            invoiceModel.invNumber = await invoiceModel.generateInvNumber("sh", branchModel.code, MainWindow.branchID.Value);
-                            invoiceModel.branchCreatorId = MainWindow.branchID.Value;
-                            invoiceModel.posId = MainWindow.posID.Value;
-                            invoiceModel.createUserId = MainWindow.userID.Value;
-                            invoiceModel.invType = "sh"; // shortage
-                            invoiceModel.total = total;
-                            invoiceModel.totalNet = total;
-                            invoiceModel.paid = 0;
-                            invoiceModel.deserved = invoiceModel.totalNet;
-                            invoiceModel.notes = tb_notes.Text;
-
+                            itemName = invItemLoc.itemName,
+                            itemId = invItemLoc.itemId,
+                            unitName = invItemLoc.unitName,
+                            itemUnitId = invItemLoc.itemUnitId,
+                            quantity = (long)invItemLoc.amount,
+                            itemSerial = serialNum,
+                            price = price,
+                            invoiceId = 0,
+                            inventoryItemLocId = invItemLoc.id,
+                            createUserId = MainWindow.userLogin.userId,
+                        });
+                        invoiceId = await FillCombo.invoice.saveInvoiceWithItems(FillCombo.invoice,orderList);
+                        if (invoiceId != 0)
+                        {
+                            FillCombo.invoice.invoiceId = invoiceId;
+                            //await invoiceModel.saveInvoiceItems(orderList, invoiceId);
+                            await invItemLoc.fallItem(invItemLoc);
                             if (cb_user.SelectedIndex != -1 && cb_user.SelectedIndex != 0)
-                                invoiceModel.userId = (int)cb_user.SelectedValue;
-                            #endregion
-
-                            List<ItemTransfer> orderList = new List<ItemTransfer>();
-                            if (_ItemType == "sn")
-                                serialNum = tb_serialNum.Text;
-
-                            if (lst_serials.Items.Count > 0)
-                            {
-                                for (int j = 0; j < lst_serials.Items.Count; j++)
-                                {
-                                    serialNum += lst_serials.Items[j];
-                                    if (j != lst_serials.Items.Count - 1)
-                                        serialNum += ",";
-                                }
-                            }
-
-                            orderList.Add(new ItemTransfer()
-                            {
-                                itemName = invItemLoc.itemName,
-                                itemId = invItemLoc.itemId,
-                                unitName = invItemLoc.unitName,
-                                itemUnitId = invItemLoc.itemUnitId,
-                                quantity = invItemLoc.amount,
-                                itemSerial = serialNum,
-                                price = price,
-                                invoiceId = 0,
-                                inventoryItemLocId = invItemLoc.id,
-                                createUserId = MainWindow.userID,
-                            });
-                            invoiceId = await invoiceModel.saveInvoice(invoiceModel);
-                            if (invoiceId != 0)
-                            {
-                                invoiceModel.invoiceId = invoiceId;
-                                await invoiceModel.saveInvoiceItems(orderList, invoiceId);
-                                await invItemLoc.fallItem(invItemLoc);
-                                if (cb_user.SelectedIndex != -1 && cb_user.SelectedIndex != 0)
-                                    await recordCash(invoiceModel);
-                                await refreshShortageDetails();
-                                Btn_clear_Click(null, null);
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                            }
-                            else
-                                Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                          
+                                await invItemLoc.ShortageRecordCash(FillCombo.invoice, (int)cb_user.SelectedValue);
+                            await refreshShortageDetails();
+                            Search();
+                            Clear();
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                         }
+                        else
+                            Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                          
                     }
-                    */
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -225,6 +218,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        
         #endregion
         #region events
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
@@ -246,8 +240,8 @@ namespace Restaurant.View.storage.stocktakingOperations
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (invItemLocs is null)
-                    await RefreshInventoryItemLocationsList();
+                if (inventoriesItems is null)
+                    await refreshShortageDetails();
                 tgl_invItemLocState = 1;
                 await Search();
                 HelpClass.EndAwait(grid_main);
@@ -263,8 +257,8 @@ namespace Restaurant.View.storage.stocktakingOperations
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (invItemLocs is null)
-                    await RefreshInventoryItemLocationsList();
+                if (inventoriesItems is null)
+                    await refreshShortageDetails();
                 tgl_invItemLocState = 0;
                 await Search();
                 HelpClass.EndAwait(grid_main);
@@ -303,7 +297,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                     this.DataContext = invItemLoc;
                     if (invItemLoc != null)
                     {
-
+                        btn_shortage.IsEnabled = true;
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
@@ -321,7 +315,7 @@ namespace Restaurant.View.storage.stocktakingOperations
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
-                await RefreshInventoryItemLocationsList();
+                await refreshShortageDetails();
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -337,17 +331,11 @@ namespace Restaurant.View.storage.stocktakingOperations
         async Task Search()
         {
             //search
-            if (invItemLocs is null)
-                await RefreshInventoryItemLocationsList();
-            //searchText = tb_search.Text.ToLower();
-            //invItemLocsQuery = invItemLocs.Where(s => (s.name.ToLower().Contains(searchText) ||
-            //s.accNumber.ToLower().Contains(searchText)) && s.isActive == tgl_invItemLocState);
+            if (inventoriesItems is null)
+                await refreshShortageDetails();
+            searchText = tb_search.Text.ToLower();
+            invItemLocsQuery = inventoriesItems.Where(s => s.itemName.ToLower().Contains(searchText));
             RefreshInventoryItemLocationsView();
-        }
-        async Task<IEnumerable<InventoryItemLocation>> RefreshInventoryItemLocationsList()
-        {
-            //invItemLocs = await invItemLoc.Get();
-            return invItemLocs;
         }
         void RefreshInventoryItemLocationsView()
         {
@@ -359,8 +347,7 @@ namespace Restaurant.View.storage.stocktakingOperations
         void Clear()
         {
             this.DataContext = new InventoryItemLocation();
-
-
+            btn_shortage.IsEnabled = false;
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }

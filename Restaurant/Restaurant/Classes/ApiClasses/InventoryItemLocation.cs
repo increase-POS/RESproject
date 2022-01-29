@@ -146,7 +146,54 @@ namespace Restaurant.Classes
             string method = "InventoryItemLocation/Delete";
             return await APIResult.post(method, parameters);
         }
+        public async Task ShortageRecordCash(Invoice invoice, int userId)
+        {
+            User user = new User();
+            decimal newBalance = 0;
+            //user = await user.getUserById(userId);
+            user = FillCombo.usersList.Where(x => x.userId == userId).FirstOrDefault();
+            CashTransfer cashTrasnfer = new CashTransfer();
+            cashTrasnfer.posId = MainWindow.posID;
+            cashTrasnfer.userId = userId;
+            cashTrasnfer.invId = invoice.invoiceId;
+            cashTrasnfer.createUserId = invoice.createUserId;
+            cashTrasnfer.processType = "balance";
+            cashTrasnfer.side = "u"; // user
+            cashTrasnfer.transType = "d"; //deposit
+            cashTrasnfer.transNum = await cashTrasnfer.generateCashNumber("du");
 
+            if (user.balanceType == 0)
+            {
+                if (invoice.totalNet <= (decimal)user.balance)
+                {
+                    invoice.paid = invoice.totalNet;
+                    invoice.deserved = 0;
+                    newBalance = user.balance - (decimal)invoice.totalNet;
+                    user.balance = newBalance;
+                }
+                else
+                {
+                    invoice.paid = (decimal)user.balance;
+                    invoice.deserved = invoice.totalNet - (decimal)user.balance;
+                    newBalance = (decimal)invoice.totalNet - user.balance;
+                    user.balance = newBalance;
+                    user.balanceType = 1;
+                }
+
+                cashTrasnfer.cash = invoice.paid;
+
+                await invoice.saveInvoice(invoice);
+                await cashTrasnfer.Save(cashTrasnfer); //add cash transfer
+                await user.save(user);
+            }
+            else if (user.balanceType == 1)
+            {
+                newBalance = user.balance + (decimal)invoice.totalNet;
+                user.balance = newBalance;
+                await user.save(user);
+            }
+            await FillCombo.RefreshUsers();
+        }
     }
 }
 
