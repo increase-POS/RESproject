@@ -89,7 +89,7 @@ namespace Restaurant.View.windows
         {
             try
             { 
-                dg_Invoice.ItemsSource = invoices.Where(x => x.invNumber.ToLower().Contains(txb_search.Text)).ToList();
+                dg_Invoice.ItemsSource = FillCombo.invoices.Where(x => x.invNumber.ToLower().Contains(txb_search.Text)).ToList();
                 txt_count.Text = dg_Invoice.Items.Count.ToString() ;
 
             }
@@ -120,9 +120,9 @@ namespace Restaurant.View.windows
                 translat();
                 #endregion
                 dg_Invoice.Columns[0].Visibility = Visibility.Collapsed;
-                #region hide Total column in grid if invoice is import/export order/purchase order
+                #region hide Total column in grid if invoice is import/export order/purchase order/ spending request order
 
-                string[] invTypeArray = new string[] { "imd" ,"exd","im","ex" ,"exw","pod","po" };
+                string[] invTypeArray = new string[] { "imd" ,"exd","im","ex" ,"exw","pod","po","srd","sr","srw","src" };
                 var invTypes = invTypeArray.ToList();
                 List<string> invTypeL = invoiceType.Split(',').ToList();
                 var inCommen = invTypeL.Any(s => invTypes.Contains(s));
@@ -235,31 +235,41 @@ namespace Restaurant.View.windows
                     FillCombo.invoices = await FillCombo.invoice.getBranchInvoices(invoiceType, branchCreatorId, branchId);               
             }
             #endregion
-            if (condition == "orders")
+            #region spending Request
+            else if (page == "spendingRequest")
             {
-                invoices = await invoice.getUnHandeldOrders(invoiceType,branchCreatorId, branchId,duration,userId);
+                if (icon == "drafts")
+                    FillCombo.invoices = await FillCombo.invoice.GetInvoicesByCreator(invoiceType, userId, duration);
+                if (icon == "spendingRequest")
+                    FillCombo.invoices = await FillCombo.invoice.GetInvoicesByCreator(invoiceType, userId, duration);
             }
-            else if(condition == "return")
-                invoices = await invoice.getInvoicesToReturn(invoiceType, userId);
-            else if(condition == "admin")
-                invoices = await invoice.GetInvoicesForAdmin(invoiceType, duration);
-            else
-            {
-                if (userId != 0 && (invoiceStatus == "" || invoiceStatus == null))/// to display draft invoices
-                    invoices = await invoice.GetInvoicesByCreator(invoiceType, userId, duration);
-                else if (branchId != 0 && branchCreatorId != 0) // to get invoices to make return from it
-                    invoices = await invoice.getBranchInvoices(invoiceType, branchCreatorId, branchId);
-                else if (branchCreatorId != 0)
-                    invoices = await invoice.getBranchInvoices(invoiceType, branchCreatorId);
-                else if (invoiceStatus != "" && branchId != 0) // get return invoice in storage
-                    invoices = await invoice.getBranchInvoices(invoiceType, branchCreatorId, branchId);
-                else if (branchId != 0) // get export/ import orders
-                    invoices = await invoice.GetOrderByType(invoiceType, branchId);
-                else if (invoiceStatus != "" && userId != 0) // get sales invoices to get deliver accept on it
-                    invoices = await invoice.getDeliverOrders(invoiceType, invoiceStatus, userId);
-                else
-                    invoices = await invoice.GetInvoicesByType(invoiceType, branchId);
-            }
+            #endregion
+
+            //if (condition == "orders")
+            //{
+            //    invoices = await invoice.getUnHandeldOrders(invoiceType,branchCreatorId, branchId,duration,userId);
+            //}
+            //else if(condition == "return")
+            //    invoices = await invoice.getInvoicesToReturn(invoiceType, userId);
+            //else if(condition == "admin")
+            //    invoices = await invoice.GetInvoicesForAdmin(invoiceType, duration);
+            //else
+            //{
+            //    if (userId != 0 && (invoiceStatus == "" || invoiceStatus == null))/// to display draft invoices
+            //        invoices = await invoice.GetInvoicesByCreator(invoiceType, userId, duration);
+            //    else if (branchId != 0 && branchCreatorId != 0) // to get invoices to make return from it
+            //        invoices = await invoice.getBranchInvoices(invoiceType, branchCreatorId, branchId);
+            //    else if (branchCreatorId != 0)
+            //        invoices = await invoice.getBranchInvoices(invoiceType, branchCreatorId);
+            //    else if (invoiceStatus != "" && branchId != 0) // get return invoice in storage
+            //        invoices = await invoice.getBranchInvoices(invoiceType, branchCreatorId, branchId);
+            //    else if (branchId != 0) // get export/ import orders
+            //        invoices = await invoice.GetOrderByType(invoiceType, branchId);
+            //    else if (invoiceStatus != "" && userId != 0) // get sales invoices to get deliver accept on it
+            //        invoices = await invoice.getDeliverOrders(invoiceType, invoiceStatus, userId);
+            //    else
+            //        invoices = await invoice.GetInvoicesByType(invoiceType, branchId);
+            //}
             
 
         }
