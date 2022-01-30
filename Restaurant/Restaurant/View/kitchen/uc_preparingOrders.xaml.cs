@@ -1,6 +1,5 @@
 ﻿using netoaster;
 using Restaurant.Classes;
-using Restaurant.Classes.ApiClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,19 +16,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Restaurant.View.sales.reservations
+namespace Restaurant.View.kitchen
 {
     /// <summary>
-    /// Interaction logic for uc_reservationTable.xaml
+    /// Interaction logic for uc_preparingOrders.xaml
     /// </summary>
-    public partial class uc_reservationTable : UserControl
-     {
-        public uc_reservationTable()
+    public partial class uc_preparingOrders : UserControl
+    {
+        public uc_preparingOrders()
         {
             try
             {
                 InitializeComponent();
-              
+               
 
             }
             catch (Exception ex)
@@ -37,13 +36,13 @@ namespace Restaurant.View.sales.reservations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private static uc_reservationTable _instance;
-        public static uc_reservationTable Instance
+        private static uc_preparingOrders _instance;
+        public static uc_preparingOrders Instance
         {
             get
             {
                 //if (_instance == null)
-                _instance = new uc_reservationTable();
+                _instance = new uc_preparingOrders();
                 return _instance;
             }
             set
@@ -52,7 +51,7 @@ namespace Restaurant.View.sales.reservations
             }
         }
 
-        string basicsPermission = "reservationTable_basics";
+        string basicsPermission = "preparingOrders_basics";
         //User user = new User();
         //IEnumerable<User> usersQuery;
         //IEnumerable<User> users;
@@ -127,27 +126,27 @@ namespace Restaurant.View.sales.reservations
                 while (!isDone);
                 #endregion
 
-                tablesList = new List<Tables>()
+
+                itemsList = new List<itemsOrder>()
             {
-                new Tables{ name = "Table-001", personsCount=2, status="empty"},
-                new Tables{ name = "Table-002", personsCount=3, status="open"},
-                new Tables{ name = "Table-003", personsCount=4, status="reservated"},
-                new Tables{ name = "Table-004", personsCount=5, status="empty"},
-                new Tables{ name = "Table-005", personsCount=6, status="empty"},
-                new Tables{ name = "Table-006", personsCount=7, status="reservated"},
-                new Tables{ name = "Table-007", personsCount=8, status="open"},
-                new Tables{ name = "Table-008", personsCount=9, status="open"},
-                new Tables{ name = "Table-009", personsCount=10, status="reservated"},
-                new Tables{ name = "Table-010", personsCount=11, status="empty"},
-                new Tables{ name = "Table-011", personsCount=6, status="empty"},
-                new Tables{ name = "Table-012", personsCount=12, status="open"},
-                new Tables{ name = "Table-013", personsCount=2, status="reservated"},
-                new Tables{ name = "Table-014", personsCount=8, status="empty"},
-                new Tables{ name = "Table-015", personsCount=3, status="empty"},
-                new Tables{ name = "Table-016", personsCount=9, status="reservated"},
-                new Tables{ name = "Table-017", personsCount=5, status="open"},
+                new itemsOrder{  sequence=1, name = "Cheese", count=2},
+                new itemsOrder{  sequence=2, name = "Egg", count=45},
+                new itemsOrder{  sequence=3, name = "Butter", count=5},
+                new itemsOrder{  sequence=4, name = "Margarine", count=2},
+                new itemsOrder{  sequence=5, name = "Yogurt", count=5},
+                new itemsOrder{  sequence=6, name = "Cottage cheese", count=7},
+                new itemsOrder{  sequence=7, name = "Ice cream", count=5},
+                new itemsOrder{  sequence=8, name = "Cream", count=33},
+                new itemsOrder{  sequence=9, name = "Sandwich", count=4},
+                new itemsOrder{  sequence=10, name = "Sausage", count=45},
+                new itemsOrder{  sequence=11, name = "Hamburger", count=78},
+                new itemsOrder{  sequence=12, name = "Hot dog", count=3},
+                new itemsOrder{  sequence=13, name = "Bread", count=2},
+                new itemsOrder{  sequence=14, name = "Cheese", count=2},
+                new itemsOrder{  sequence=15, name = "Egg", count=45},
+                new itemsOrder{  sequence=16, name = "Butter", count=5},
             };
-                BuildTablesDesign();
+                BuildOrderItemsDesign();
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -166,7 +165,7 @@ namespace Restaurant.View.sales.reservations
 
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
-        private async void Btn_add_Click(object sender, RoutedEventArgs e)
+        private async void Btn_save_Click(object sender, RoutedEventArgs e)
         { //add
             try
             {
@@ -189,6 +188,7 @@ namespace Restaurant.View.sales.reservations
             }
         }
         
+
 
         #endregion
         #region events
@@ -222,7 +222,24 @@ namespace Restaurant.View.sales.reservations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
+        private async void Dg_reservation_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //selection
+
+
+                HelpClass.clearValidate(requiredControlList, this);
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {
             try
             {//refresh
@@ -281,8 +298,6 @@ namespace Restaurant.View.sales.reservations
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);
-           
-
         }
         string input;
         decimal _decimal = 0;
@@ -590,225 +605,79 @@ namespace Restaurant.View.sales.reservations
         }
         */
         #endregion
-        private void Cb_customerId_KeyUp(object sender, KeyEventArgs e)
+        #region items
+        class itemsOrder
         {
-            try
-            {
-                cb_customerId.ItemsSource = FillCombo.customersList.Where(x => x.name.Contains(cb_customerId.Text));
-
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            public int sequence { get; set; }
+            public string name { get; set; }
+            public int count { get; set; }
         }
-
-        private async void Cb_table_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        List<itemsOrder> itemsList = new List<itemsOrder>();
+        void BuildOrderItemsDesign()
         {
-            try
+            sp_items.Children.Clear();
+            foreach (var item in itemsList)
             {
-                HelpClass.StartAwait(grid_main);
-                /*
-                string s = _BarcodeStr;
-                if (cb_coupon.SelectedIndex != -1)
-                {
-                    couponModel = coupons.ToList().Find(c => c.cId == (int)cb_coupon.SelectedValue);
-                    if (couponModel != null)
-                    {
-                        s = couponModel.barcode;
-                        await dealWithBarcode(s);
-                    }
-                    cb_coupon.SelectedIndex = -1;
-                    cb_coupon.SelectedItem = "";
-                }
-                */
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void Btn_clearTable_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                /*
-                _Discount = 0;
-                selectedCoupons.Clear();
-                lst_coupons.Items.Clear();
-                cb_coupon.SelectedIndex = -1;
-                cb_coupon.SelectedItem = "";
-                refreshTotalValue();
-                */
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        #region table
-        List<Tables> tablesList = new List<Tables>();
-        void BuildTablesDesign()
-        {
-            wp_tablesContainer.Children.Clear();
-            foreach (var item in tablesList)
-            {
-                #region button
-                Button tableButton = new Button();
-                tableButton.Tag = item.name;
-                tableButton.Margin = new Thickness(5);
-                tableButton.Padding = new Thickness(0);
-                tableButton.Background = null;
-                tableButton.BorderBrush = null;
-
-                if (item.personsCount <= 2)
-                {
-                    tableButton.Height = 90;
-                    tableButton.Width = 80;
-                }
-                else if (item.personsCount == 3)
-                {
-                    tableButton.Height = 130;
-                    tableButton.Width = 90;
-                }
-                else if (item.personsCount == 4)
-                {
-                    tableButton.Height = 140;
-                    tableButton.Width = 100;
-                }
-                else if (item.personsCount == 5)
-                {
-                    tableButton.Height = 150;
-                    tableButton.Width = 110;
-                }
-                else if (item.personsCount == 6)
-                {
-                    tableButton.Height = 160;
-                    tableButton.Width = 120;
-                }
-                else if (item.personsCount == 7)
-                {
-                    tableButton.Height = 170;
-                    tableButton.Width = 130;
-                }
-                else if (item.personsCount == 8)
-                {
-                    tableButton.Height = 180;
-                    tableButton.Width = 140;
-                }
-                else if (item.personsCount == 9)
-                {
-                    tableButton.Height = 190;
-                    tableButton.Width = 150;
-                }
-                else if (item.personsCount > 9)
-                {
-                    tableButton.Height = 200;
-                    tableButton.Width = 160;
-                }
-
-                tableButton.Click += tableButton_Click;
-
                 #region Grid Container
                 Grid gridContainer = new Grid();
-                int rowCount = 3;
-                RowDefinition[] rd = new RowDefinition[rowCount];
-                for (int i = 0; i < rowCount; i++)
+                int colCount = 3;
+                ColumnDefinition[] cd = new ColumnDefinition[colCount];
+                for (int i = 0; i < colCount; i++)
                 {
-                    rd[i] = new RowDefinition();
+                    cd[i] = new ColumnDefinition();
                 }
-                rd[0].Height = new GridLength(1, GridUnitType.Star);
-                rd[1].Height = new GridLength(20, GridUnitType.Pixel);
-                rd[2].Height = new GridLength(20, GridUnitType.Pixel);
-                for (int i = 0; i < rowCount; i++)
+                cd[0].Width = new GridLength(1, GridUnitType.Auto);
+                cd[1].Width = new GridLength(1, GridUnitType.Star);
+                cd[2].Width = new GridLength(1, GridUnitType.Auto);
+                for (int i = 0; i < colCount; i++)
                 {
-                    gridContainer.RowDefinitions.Add(rd[i]);
+                    gridContainer.ColumnDefinitions.Add(cd[i]);
                 }
                 /////////////////////////////////////////////////////
-                #region Path table
-                Path pathTable = new Path();
-                pathTable.Stretch = Stretch.Fill;
-                pathTable.Margin = new Thickness(5);
-
-                if (item.status == "open")
-                    pathTable.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
-                else if (item.status == "reservated")
-                    pathTable.Fill = Application.Current.Resources["BlueTables"] as SolidColorBrush;
-                else
-                    pathTable.Fill = Application.Current.Resources["GreenTables"] as SolidColorBrush;
-
-                if (item.personsCount <= 2)
-                    pathTable.Data = App.Current.Resources["tablePersons2"] as Geometry;
-                else if (item.personsCount == 3)
-                    pathTable.Data = App.Current.Resources["tablePersons3"] as Geometry;
-                else if (item.personsCount == 4)
-                    pathTable.Data = App.Current.Resources["tablePersons4"] as Geometry;
-                else if (item.personsCount == 5)
-                    pathTable.Data = App.Current.Resources["tablePersons5"] as Geometry;
-                else if (item.personsCount == 6)
-                    pathTable.Data = App.Current.Resources["tablePersons6"] as Geometry;
-                else if (item.personsCount == 7)
-                    pathTable.Data = App.Current.Resources["tablePersons7"] as Geometry;
-                else if (item.personsCount == 8)
-                    pathTable.Data = App.Current.Resources["tablePersons8"] as Geometry;
-                else if (item.personsCount == 9)
-                    pathTable.Data = App.Current.Resources["tablePersons9"] as Geometry;
-                else if (item.personsCount > 9)
-                    pathTable.Data = App.Current.Resources["tablePersons9Plus"] as Geometry;
-
-                gridContainer.Children.Add(pathTable);
-                #endregion
-                #region   personCount 
-                if (item.personsCount > 9)
-                {
-                    var itemPersonCountText = new TextBlock();
-                    itemPersonCountText.Text = item.personsCount.ToString();
-                    itemPersonCountText.Foreground = Application.Current.Resources["White"] as SolidColorBrush;
-                    itemPersonCountText.FontSize = 32;
-                    itemPersonCountText.VerticalAlignment = VerticalAlignment.Center;
-                    itemPersonCountText.HorizontalAlignment = HorizontalAlignment.Center;
-                    gridContainer.Children.Add(itemPersonCountText);
-                }
+                #region   sequence
+                var itemSequenceText = new TextBlock();
+                itemSequenceText.Text = item.sequence + ".";
+                itemSequenceText.Margin = new Thickness(5);
+                itemSequenceText.Foreground = Application.Current.Resources["ThickGrey"] as SolidColorBrush;
+                itemSequenceText.FontWeight = FontWeights.SemiBold;
+                itemSequenceText.VerticalAlignment = VerticalAlignment.Center;
+                itemSequenceText.HorizontalAlignment = HorizontalAlignment.Left;
+                Grid.SetColumn(itemSequenceText, 0);
+               
+                gridContainer.Children.Add(itemSequenceText);
                 #endregion
                 #region   name
                 var itemNameText = new TextBlock();
-                itemNameText.Text = item.name;
+                itemNameText.Text = item.name + ".";
+                itemNameText.Margin = new Thickness(5);
+                itemNameText.Foreground = Application.Current.Resources["ThickGrey"] as SolidColorBrush;
+                itemNameText.FontWeight = FontWeights.SemiBold;
                 itemNameText.VerticalAlignment = VerticalAlignment.Center;
-                itemNameText.HorizontalAlignment = HorizontalAlignment.Center;
-                itemNameText.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
-                Grid.SetRow(itemNameText, 1);
+                itemNameText.HorizontalAlignment = HorizontalAlignment.Left;
+                Grid.SetColumn(itemNameText, 1);
+
                 gridContainer.Children.Add(itemNameText);
                 #endregion
-                #region   status
-                var itemStatusText = new TextBlock();
-                itemStatusText.Text = item.status;
-                itemStatusText.VerticalAlignment = VerticalAlignment.Center;
-                itemStatusText.HorizontalAlignment = HorizontalAlignment.Center;
-                itemStatusText.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
-                Grid.SetRow(itemStatusText, 2);
-                gridContainer.Children.Add(itemStatusText);
-                #endregion
-                tableButton.Content = gridContainer;
+                #region   count
+                var itemCountText = new TextBlock();
+                itemCountText.Text = item.count + ".";
+                itemCountText.Margin = new Thickness(5);
+                itemCountText.Foreground = Application.Current.Resources["ThickGrey"] as SolidColorBrush;
+                itemCountText.FontWeight = FontWeights.SemiBold;
+                itemCountText.VerticalAlignment = VerticalAlignment.Center;
+                itemCountText.HorizontalAlignment = HorizontalAlignment.Left;
+                Grid.SetColumn(itemCountText, 1);
 
+                gridContainer.Children.Add(itemCountText);
                 #endregion
-                wp_tablesContainer.Children.Add(tableButton);
+                sp_items.Children.Add(gridContainer);
                 #endregion
             }
         }
-        void tableButton_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            string tableName = button.Tag.ToString();
-            var table = tablesList.Where(x => x.name == tableName).FirstOrDefault();
-            MessageBox.Show("Hey you Click me! I'm  " + table.name + " & person Count is " + table.personsCount);
-        }
+        
         #endregion
+
+
+
     }
 }

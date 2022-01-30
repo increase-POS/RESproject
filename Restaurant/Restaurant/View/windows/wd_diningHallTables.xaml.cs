@@ -69,7 +69,7 @@ namespace Restaurant.View.windows
                 new Tables{ name = "Table-016", personsCount=9, status="reservated"},
                 new Tables{ name = "Table-017", personsCount=5, status="open"},
             };
-            BuildBillDesign();
+            BuildTablesDesign();
         }
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
@@ -90,7 +90,7 @@ namespace Restaurant.View.windows
         #region table
         List<Tables> tablesList = new List<Tables>();
          
-        void BuildBillDesign()
+        void BuildTablesDesign()
         {
             wp_tablesContainer.Children.Clear();
 

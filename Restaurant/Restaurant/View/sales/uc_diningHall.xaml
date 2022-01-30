@@ -417,6 +417,23 @@
                         </Button>
                         
                         <Border    Margin="7.5,10"   CornerRadius="0,0,0,0"  Width="2" BorderThickness="0" Background="{StaticResource MainColor}" />
+                        <materialDesign:Badged VerticalAlignment="Center" Margin="5,10,5,0"
+                    BadgeBackground="{StaticResource Red}" Badge="5"  BadgeForeground="White" Name="md_ordersAlerts" >
+                            <Button Grid.Column="4" BorderBrush="{x:Null}" Padding="0"  Height="auto"
+                    Background="{x:Null}" x:Name="btn_ordersAlerts"   >
+                                <StackPanel>
+
+                                    <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                           Width="30" Height="30"  FlowDirection="LeftToRight"
+                           Data="{StaticResource waiterHand}" />
+                                    <TextBlock Text="orders" x:Name="txt_ordersAlerts" Foreground="{StaticResource MainColor}" 
+                                           FontWeight="Regular" FontSize="8" TextAlignment="Center" Width="35"
+                                           HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </materialDesign:Badged>
+
+                        <Border    Margin="7.5,10"   CornerRadius="0,0,0,0"  Width="2" BorderThickness="0" Background="{StaticResource MainColor}" />
 
                         <Button DockPanel.Dock="Right" Grid.Column="3" BorderBrush="{x:Null}" Padding="0"   Margin="5,10,5,5" Height="auto"
                     Background="{x:Null}" x:Name="btn_preview"     >

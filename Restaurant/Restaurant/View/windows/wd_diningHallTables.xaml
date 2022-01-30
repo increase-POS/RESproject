@@ -388,24 +388,55 @@
 
                     <ScrollViewer Background="White"  Grid.Row="1"  VerticalScrollBarVisibility="Auto" >
                         <StackPanel>
-                            <DockPanel Visibility="Visible"
-                                Margin="10 0" LastChildFill="True" Grid.Row="2">
-                                <TextBlock  Text="empty table"  Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
+                            <DockPanel Margin="10 0"
+                                 LastChildFill="True">
+                                <TextBlock  Text="empty table/invoice details/next reservation"  Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
                                 <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
                             </DockPanel>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock  Grid.Row="0" Grid.Column="0" 
+                                    Text="table name"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
+                                <TextBlock  Grid.Row="0" Grid.Column="1" 
+                                    Text="Table-156"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Right"  VerticalAlignment="Center"  />
+
+                                <TextBlock  Grid.Row="1" Grid.Column="0" 
+                                    Text="table status"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                                <TextBlock  Grid.Row="1" Grid.Column="1" 
+                                    Text="empty"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+
+
+                            </Grid>
+                            <!--#region empty -->
                             <Grid Visibility="Visible"
                                 x:Name="grid_emptyTableDetails">
                                 <TextBlock    Text="this table is available"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" TextWrapping="Wrap" />
                             </Grid>
-                            <DockPanel Visibility="Visible"
-                                       Margin="10 0" LastChildFill="True" Grid.Row="2">
-                                <TextBlock  Text="invoice details"   Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
-                                <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
-                            </DockPanel>
+                         <!--#endregion-->
+                            <!--#region  open-->
                             <Grid  x:Name="grid_openTableDetails" Visibility="Visible">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
@@ -417,52 +448,73 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                                <TextBlock  Grid.Row="0" Grid.Column="0" 
+                                    Text="invoice code"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                                <TextBlock  Grid.Row="0" Grid.Column="1" 
                                     Text="inv-000035"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"   VerticalAlignment="Center" />
-
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
                                 <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="customer"
+                                    Text="start time"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
                                 <TextBlock  Grid.Row="1" Grid.Column="1" 
+                                    Text="12:15 AM"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                              
+                                <TextBlock  Grid.Row="2" Grid.Column="0" 
+                                    Text="Expected end time "
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                                <TextBlock  Grid.Row="2" Grid.Column="1" 
+                                    Text="3:00 AM"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+
+                                <TextBlock  Grid.Row="3" Grid.Column="0" 
+                                    Text="customer"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                                <TextBlock  Grid.Row="3" Grid.Column="1" 
                                     Text="cus-005"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
 
-                                <TextBlock  Grid.Row="2" Grid.Column="0" 
+                                <TextBlock  Grid.Row="4" Grid.Column="0" 
                                     Text="membership"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="2" Grid.Column="1" 
+                                <TextBlock  Grid.Row="4" Grid.Column="1" 
                                     Text="VIP"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"  VerticalAlignment="Center"  />
 
-                                <TextBlock  Grid.Row="3" Grid.Column="0" 
+                                <TextBlock  Grid.Row="5" Grid.Column="0" 
                                     Text="water"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="3" Grid.Column="1" 
+                                <TextBlock  Grid.Row="5" Grid.Column="1" 
                                     Text="user-000005"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"  VerticalAlignment="Center"  />
 
-                                <TextBlock  Grid.Row="4" Grid.Column="0" 
+                                <TextBlock  Grid.Row="6" Grid.Column="0" 
                                     Text="Totoal"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="4" Grid.Column="1" 
+                                <TextBlock  Grid.Row="6" Grid.Column="1" 
                                     Text="15.25 KD"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right" VerticalAlignment="Center"   />
 
-                                <TextBlock  Grid.Row="5" Grid.Column="0" 
+                                <TextBlock  Grid.Row="7" Grid.Column="0" 
                                     Text="preparing orders"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center" />
-                                <Button  Grid.Row="5" Grid.Column="1" 
+                                <Button  Grid.Row="7" Grid.Column="1" 
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"  VerticalAlignment="Center" 
                                   Padding="0" Background="{x:Null}" BorderBrush="{x:Null}"  >
@@ -475,12 +527,16 @@
 
 
                             </Grid>
-                            <DockPanel Visibility="Visible"  Margin="10 0" LastChildFill="True" Grid.Row="2">
-                                <TextBlock  Text="next reservation"    Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
+                            <!--#endregion-->
+                            <!--#region  reservated-->
+                            <DockPanel Visibility="Visible" x:Name="dp_reservatedTableTitle"  Margin="10 0"
+                                 LastChildFill="True">
+                                <TextBlock  Text="next reservation"  Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
                                 <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
                             </DockPanel>
                             <Grid x:Name="grid_reservatedTableDetails" Visibility="Visible">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
@@ -506,7 +562,7 @@
                                    HorizontalAlignment="Right"  VerticalAlignment="Center"  />
 
                                 <TextBlock  Grid.Row="2" Grid.Column="0" 
-                                    Text="Time"
+                                    Text="start time"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
                                 <TextBlock  Grid.Row="2" Grid.Column="1" 
@@ -515,28 +571,38 @@
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
 
                                 <TextBlock  Grid.Row="3" Grid.Column="0" 
+                                    Text="end time"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                                <TextBlock  Grid.Row="3" Grid.Column="1" 
+                                    Text="03:00 AM"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+
+                                <TextBlock  Grid.Row="4" Grid.Column="0" 
                                     Text="Person count"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="3" Grid.Column="1" 
+                                <TextBlock  Grid.Row="4" Grid.Column="1" 
                                     Text="8"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right" VerticalAlignment="Center"   />
 
-                                <TextBlock  Grid.Row="4" Grid.Column="0" 
+                                <TextBlock  Grid.Row="5" Grid.Column="0" 
                                     Text="customer"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="4" Grid.Column="1" 
+                                <TextBlock  Grid.Row="5" Grid.Column="1" 
                                     Text="cus-002"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"  VerticalAlignment="Center"  />
                             </Grid>
-                           
+                            <!--#endregion-->
+
                         </StackPanel>
                     </ScrollViewer>
 
-                    <Border Grid.Row="3" Background="White" CornerRadius="0 0 7 7">
+                    <Border Visibility="Collapsed" Grid.Row="3" Background="White" CornerRadius="0 0 7 7">
                         <StackPanel  Grid.Row="3" Margin="5,5,5,10" >
                             <Border Background="White" Grid.ColumnSpan="3"  Height="1"  BorderBrush="{StaticResource MainColor}" 
                     BorderThickness="1" Opacity="1" Margin="5,5,5,5"  />
@@ -559,6 +625,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 
                                 <Button Grid.Column="0" BorderBrush="{x:Null}" Padding="0" 
@@ -612,14 +679,26 @@
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
                                     </Grid>
                                 </Button>
+                                <Button Grid.Column="3" BorderBrush="{x:Null}" Padding="0" 
+                                  Margin="5 5 2.5 5 " Height="auto"
+                                Background="{x:Null}" VerticalAlignment="Top"  >
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                           Width="35" Height="35" FlowDirection="LeftToRight"
+                           Data="{StaticResource splitTables}"/>
+                                        <TextBlock  Text="split table"  Grid.Row="1" 
+                                                    FontWeight="Regular" FontSize="10" TextAlignment="Center"
+                                                    Foreground="{StaticResource MainColor}"
+                                                     HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                                    </Grid>
+                                </Button>
+                               
                                 
-                                <Border Grid.Row="1" Grid.ColumnSpan="3">
-                                    <Button    Content="split table"
-                                    materialDesign:ButtonAssist.CornerRadius="7"
-                              Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
-                        Margin="1,1"   Foreground="White" />
-                                </Border>
-                             <Border Grid.Row="2" Grid.ColumnSpan="3">
+                             <Border Grid.Row="2" Grid.ColumnSpan="4">
                                     <Button    Content="select"
                                     materialDesign:ButtonAssist.CornerRadius="7"
                               Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
