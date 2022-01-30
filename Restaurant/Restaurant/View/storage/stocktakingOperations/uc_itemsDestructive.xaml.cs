@@ -37,13 +37,13 @@ namespace Restaurant.View.storage.stocktakingOperations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private static uc_itemsShortage _instance;
-        public static uc_itemsShortage Instance
+        private static uc_itemsDestructive _instance;
+        public static uc_itemsDestructive Instance
         {
             get
             {
                 //if (_instance == null)
-                _instance = new uc_itemsShortage();
+                _instance = new uc_itemsDestructive();
                 return _instance;
             }
             set
@@ -51,12 +51,13 @@ namespace Restaurant.View.storage.stocktakingOperations
                 _instance = value;
             }
         }
-        string destroyPermission = "itemsShortage_destroy";
-        string reportsPermission = "itemsShortage_reports";
+        string destroyPermission = "itemsDestructive_destroy";
+        string reportsPermission = "itemsDestructive_reports";
 
         InventoryItemLocation invItemLoc = new InventoryItemLocation();
         IEnumerable<InventoryItemLocation> invItemLocsQuery;
         IEnumerable<InventoryItemLocation> invItemLocs;
+        IEnumerable<Item> items;
         byte tgl_invItemLocState;
         string searchText = "";
         public static List<string> requiredControlList;
@@ -70,7 +71,7 @@ namespace Restaurant.View.storage.stocktakingOperations
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "amount", "fallCause" };
+                requiredControlList = new List<string> { "amount", "cause" };
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
@@ -82,8 +83,10 @@ namespace Restaurant.View.storage.stocktakingOperations
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-
                 Keyboard.Focus(tb_amount);
+                await refreshDestroyDetails();
+                await FillCombo.FillComboUsers(cb_user);
+                items = await FillCombo.FillComboPurchaseItemsHasQuant(cb_item);
                 await Search();
                 Clear();
                 HelpClass.EndAwait(grid_main);
@@ -97,14 +100,43 @@ namespace Restaurant.View.storage.stocktakingOperations
         }
         private void translate()
         {
+            txt_title.Text = MainWindow.resourcemanager.GetString("trDestructiveItem");
+            txt_destroy.Text = MainWindow.resourcemanager.GetString("trDestructionInfo");
+            txt_manually.Text = MainWindow.resourcemanager.GetString("trManually");
 
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_itemName, MainWindow.resourcemanager.GetString("trItem") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_amount, MainWindow.resourcemanager.GetString("trAmount") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_user, MainWindow.resourcemanager.GetString("trUser") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cause, MainWindow.resourcemanager.GetString("trReason") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNote") + "...");
+
+            btn_destroy.Content = MainWindow.resourcemanager.GetString("trDestroy");
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+            tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
+
+            dg_invItemLoc.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");
+            dg_invItemLoc.Columns[1].Header = MainWindow.resourcemanager.GetString("trDate");
+            dg_invItemLoc.Columns[2].Header = MainWindow.resourcemanager.GetString("trSection") + "-" + MainWindow.resourcemanager.GetString("trLocation");
+            dg_invItemLoc.Columns[3].Header = MainWindow.resourcemanager.GetString("trItem") + "-" + MainWindow.resourcemanager.GetString("trUnit");
+            dg_invItemLoc.Columns[4].Header = MainWindow.resourcemanager.GetString("trAmount");
+
+            tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
+            tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
+            tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
+            tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
 
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
+        private async Task refreshDestroyDetails()
+        {
+            dg_invItemLoc.ItemsSource = null;
+            invItemLocs = await invItemLoc.GetItemToDestroy(MainWindow.branchLogin.branchId);
+            dg_invItemLoc.ItemsSource = invItemLocs.ToList();
+        }
 
         private async void Btn_destroy_Click(object sender, RoutedEventArgs e)
         {
-            /*
             try
             {
                 if (sender != null)
@@ -112,8 +144,7 @@ namespace Restaurant.View.storage.stocktakingOperations
 
                 if (MainWindow.groupObject.HasPermissionAction(destroyPermission, MainWindow.groupObjects, "one") )
                 {
-                    bool valid = validateDistroy();
-                    if (valid)
+                    if(HelpClass.validate(requiredControlList, this))
                     {
                         int itemUnitId = 0;
                         int itemId = 0;
@@ -129,34 +160,25 @@ namespace Restaurant.View.storage.stocktakingOperations
                             itemUnitId = (int)cb_unit.SelectedValue;
                             itemId = (int)cb_item.SelectedValue;
                         }
-                        if (_ItemType == "sn")
-                            serialNum = tb_serialNum.Text;
-                        invItemLoc.cause = tb_reasonOfDestroy.Text;
+
+                        invItemLoc.cause = tb_cause.Text;
                         invItemLoc.notes = tb_notes.Text;
-                        if (lst_serials.Items.Count > 0)
-                        {
-                            for (int j = 0; j < lst_serials.Items.Count; j++)
-                            {
-                                serialNum += lst_serials.Items[j];
-                                if (j != lst_serials.Items.Count - 1)
-                                    serialNum += ",";
-                            }
-                        }
-                        // decimal price = await invoiceModel.GetAvgItemPrice(itemUnitId, itemId);
+
                         decimal price = 0;
                         decimal total = 0;
 
                         #region invoice Object
-                        invoiceModel.invNumber = await invoiceModel.generateInvNumber("ds", branchModel.code, MainWindow.branchID.Value);
-                        invoiceModel.branchCreatorId = MainWindow.branchID.Value;
-                        invoiceModel.posId = MainWindow.posID.Value;
-                        invoiceModel.createUserId = MainWindow.userID.Value;
-                        invoiceModel.invType = "d"; // destroy                      
-                        invoiceModel.paid = 0;
-                        invoiceModel.deserved = invoiceModel.totalNet;
-                        invoiceModel.notes = tb_notes.Text;
+                        FillCombo.invoice = new Invoice();
+                        FillCombo.invoice.invNumber = await FillCombo.invoice.generateInvNumber("ds", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+                        FillCombo.invoice.branchCreatorId = MainWindow.branchLogin.branchId;
+                        FillCombo.invoice.posId = MainWindow.posID.Value;
+                        FillCombo.invoice.createUserId = MainWindow.userLogin.userId;
+                        FillCombo.invoice.invType = "d"; // destroy                      
+                        FillCombo.invoice.paid = 0;
+                        FillCombo.invoice.deserved = FillCombo.invoice.totalNet;
+                        FillCombo.invoice.notes = tb_notes.Text;
                         if (cb_user.SelectedIndex != -1 && cb_user.SelectedIndex != 0)
-                            invoiceModel.userId = (int)cb_user.SelectedValue;
+                            FillCombo.invoice.userId = (int)cb_user.SelectedValue;
                         #endregion
                         List<ItemTransfer> orderList = new List<ItemTransfer>();
                         #region notification Object
@@ -167,63 +189,55 @@ namespace Restaurant.View.storage.stocktakingOperations
                             msgType = "alert",
                             createDate = DateTime.Now,
                             updateDate = DateTime.Now,
-                            createUserId = MainWindow.userID.Value,
-                            updateUserId = MainWindow.userID.Value,
+                            createUserId = MainWindow.userLogin.userId,
+                            updateUserId = MainWindow.userLogin.userId,
                         };
                         #endregion
                         if (invItemLoc.id != 0)
                         {
                             price = (decimal)invItemLoc.avgPurchasePrice;
                             total = price * int.Parse(tb_amount.Text);
-                            invoiceModel.total = total;
-                            invoiceModel.totalNet = total;
-                            //int amount = await itemLocationModel.getAmountByItemLocId((int)invItemLoc.itemLocationId);
-                            //if (amount >= invItemLoc.amountDestroyed)
-                            //{
+                            FillCombo.invoice.total = total;
+                            FillCombo.invoice.totalNet = total;
+
                             orderList.Add(new ItemTransfer()
                             {
                                 itemName = invItemLoc.itemName,
                                 itemId = invItemLoc.itemId,
                                 unitName = invItemLoc.unitName,
                                 itemUnitId = invItemLoc.itemUnitId,
-                                quantity = invItemLoc.amountDestroyed,
+                                quantity = (int)invItemLoc.amountDestroyed,
                                 itemSerial = serialNum,
                                 price = price,
                                 invoiceId = 0,
                                 inventoryItemLocId = invItemLoc.id,
-                                createUserId = MainWindow.userID,
+                                createUserId = MainWindow.userLogin.userId,
                             });
-                            invoiceId = await invoiceModel.saveInvoice(invoiceModel);
+                            invoiceId = await FillCombo.invoice.saveInvoiceWithItems(FillCombo.invoice, orderList);
                             if (invoiceId != 0)
                             {
-                                invoiceModel.invoiceId = invoiceId;
-                                await invoiceModel.saveInvoiceItems(orderList, invoiceId);
+                                FillCombo.invoice.invoiceId = invoiceId;
                                 await invItemLoc.distroyItem(invItemLoc);
                                 if (cb_user.SelectedIndex != -1 && cb_user.SelectedIndex != 0)
-                                    await recordCash(invoiceModel);
+                                    await invItemLoc.ShortageRecordCash(FillCombo.invoice, (int)cb_user.SelectedValue);
 
-                                await itemLocationModel.decreaseItemLocationQuantity((int)invItemLoc.itemLocationId, (int)invItemLoc.amountDestroyed, MainWindow.userID.Value, "storageAlerts_minMaxItem", not);
+                                await FillCombo.itemLocation.decreaseItemLocationQuantity((int)invItemLoc.itemLocationId, (int)invItemLoc.amountDestroyed, MainWindow.userLogin.userId, "storageAlerts_minMaxItem", not);
                                 await refreshDestroyDetails();
-                                Btn_clear_Click(null, null);
+                                Clear();
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                             }
                             else
                                 Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
-                            //}
-                            //else
-                            //{
-                            //    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trDestroyAmountMoreExist"), animation: ToasterAnimation.FadeIn);
-                            //}
                         }
                         else
                         {
-                            var avgPrice = items.Where(x => x.itemId == (int)cb_item.SelectedValue).Select(x => x.avgPurchasePrice).Single();
+                            var avgPrice = items.ToList().Where(x => x.itemId == (int)cb_item.SelectedValue).Select(x => x.avgPurchasePrice).Single();
                             if (avgPrice != null)
                                 price = (decimal)avgPrice;
                             total = price * int.Parse(tb_amount.Text);
-                            invoiceModel.total = total;
-                            invoiceModel.totalNet = total;
+                            FillCombo.invoice.total = total;
+                            FillCombo.invoice.totalNet = total;
                             orderList.Add(new ItemTransfer()
                             {
                                 itemName = cb_item.SelectedItem.ToString(),
@@ -233,9 +247,9 @@ namespace Restaurant.View.storage.stocktakingOperations
                                 quantity = long.Parse(tb_amount.Text),
                                 itemSerial = serialNum,
                                 price = price,
-                                cause = tb_reasonOfDestroy.Text,
+                                cause = tb_cause.Text,
                                 invoiceId = 0,
-                                createUserId = MainWindow.userID,
+                                createUserId = MainWindow.userLogin.userId,
                             });
                             // اتلاف عنصر يدوياً بدون جرد
                             Window.GetWindow(this).Opacity = 0.2;
@@ -249,24 +263,22 @@ namespace Restaurant.View.storage.stocktakingOperations
                                     List<ItemLocation> itemsLocations = w.selectedItemsLocations;
                                     List<ItemLocation> readyItemsLoc = new List<ItemLocation>();
 
-                                    // _ProcessType ="ex";
                                     for (int i = 0; i < itemsLocations.Count; i++)
                                     {
                                         if (itemsLocations[i].isSelected == true)
                                             readyItemsLoc.Add(itemsLocations[i]);
                                     }
 
-                                    invoiceId = await invoiceModel.saveInvoice(invoiceModel);
+                                    invoiceId = await FillCombo.invoice.saveInvoiceWithItems(FillCombo.invoice, orderList);
                                     if (invoiceId != 0)
                                     {
-                                        await invoiceModel.saveInvoiceItems(orderList, invoiceId);
                                         for (int i = 0; i < readyItemsLoc.Count; i++)
                                         {
                                             int itemLocId = readyItemsLoc[i].itemsLocId;
                                             int quantity = (int)readyItemsLoc[i].quantity;
-                                            await itemLocationModel.decreaseItemLocationQuantity(itemLocId, quantity, MainWindow.userID.Value, "storageAlerts_minMaxItem", not);
+                                            await FillCombo.itemLocation.decreaseItemLocationQuantity(itemLocId, quantity, MainWindow.userLogin.userId, "storageAlerts_minMaxItem", not);
                                         }
-                                        Btn_clear_Click(null, null);
+                                        Clear();
                                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                                     }
                                     else
@@ -288,7 +300,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+            
         }
         #endregion
         #region events
@@ -306,41 +318,8 @@ namespace Restaurant.View.storage.stocktakingOperations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Tgl_isActive_Checked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (invItemLocs is null)
-                    await RefreshInventoryItemLocationsList();
-                tgl_invItemLocState = 1;
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (invItemLocs is null)
-                    await RefreshInventoryItemLocationsList();
-                tgl_invItemLocState = 0;
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
+       
 
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -368,7 +347,9 @@ namespace Restaurant.View.storage.stocktakingOperations
                     this.DataContext = invItemLoc;
                     if (invItemLoc != null)
                     {
-
+                        grid_itemUnit.Visibility = Visibility.Collapsed;
+                        tb_amount.IsEnabled = false;
+                        tb_amount.IsEnabled = false;
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
@@ -386,7 +367,7 @@ namespace Restaurant.View.storage.stocktakingOperations
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
-                await RefreshInventoryItemLocationsList();
+                await refreshDestroyDetails();
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -403,16 +384,10 @@ namespace Restaurant.View.storage.stocktakingOperations
         {
             //search
             if (invItemLocs is null)
-                await RefreshInventoryItemLocationsList();
-            //searchText = tb_search.Text.ToLower();
-            //invItemLocsQuery = invItemLocs.Where(s => (s.name.ToLower().Contains(searchText) ||
-            //s.accNumber.ToLower().Contains(searchText)) && s.isActive == tgl_invItemLocState);
+                await refreshDestroyDetails();
+            searchText = tb_search.Text.ToLower();
+            invItemLocsQuery = invItemLocs.Where(s => (s.itemName.ToLower().Contains(searchText) ||s.unitName.ToLower().Contains(searchText)));
             RefreshInventoryItemLocationsView();
-        }
-        async Task<IEnumerable<InventoryItemLocation>> RefreshInventoryItemLocationsList()
-        {
-            //invItemLocs = await invItemLoc.Get();
-            return invItemLocs;
         }
         void RefreshInventoryItemLocationsView()
         {
@@ -425,7 +400,7 @@ namespace Restaurant.View.storage.stocktakingOperations
         {
             this.DataContext = new InventoryItemLocation();
 
-
+            cb_item.SelectedIndex = -1;
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
@@ -735,48 +710,64 @@ namespace Restaurant.View.storage.stocktakingOperations
         }
         */
         #endregion
+        #region tgl
         private void Tgl_manually_Checked(object sender, RoutedEventArgs e)
         {
-            /*
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                    HelpClass.StartAwait(grid_main);
 
                 tglManuallyChecking();
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
 
         private void Tgl_manually_Unchecked(object sender, RoutedEventArgs e)
         {
-            /*
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                    HelpClass.StartAwait(grid_main);
 
                 tglManuallyChecking();
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
+        void tglManuallyChecking()
+        {
+            if (tgl_manually.IsChecked == true)
+            {
+                tb_itemName.Visibility = Visibility.Collapsed;
+                grid_itemUnit.Visibility = Visibility.Visible;
+                tb_amount.IsEnabled = true;
+                requiredControlList = new List<string> { "amount", "cause","item","unit" };
+            }
+            else
+            {
+                tb_itemName.Visibility = Visibility.Visible;
+                grid_itemUnit.Visibility = Visibility.Collapsed;
+                tb_amount.IsEnabled = false;
+                requiredControlList = new List<string> { "amount", "cause" };
+            }
 
+            Clear();
+        }
+        #endregion
         private void Tb_serialNum_KeyDown(object sender, KeyEventArgs e)
         {
             /*
@@ -819,62 +810,35 @@ namespace Restaurant.View.storage.stocktakingOperations
             }
             */
         }
-        private void Btn_clearSerial_Click(object sender, RoutedEventArgs e)
-        {
-            /*
-            try
-            {
-
-                _serialCount = 0;
-                lst_serials.Items.Clear();
-            }
-            catch (Exception ex)
-            {
-                SectionData.ExceptionMessage(ex, this);
-            }
-            */
-        }
         private async void Cb_item_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            /*
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                    HelpClass.StartAwait(grid_main);
 
-
-                if (cb_item.SelectedValue != null && cb_item.SelectedIndex != -1)
-                    if (int.Parse(cb_item.SelectedValue.ToString()) != -1)
+                    if (cb_item.SelectedIndex != -1)
                     {
-                        var list = await itemUnit.GetItemUnits(int.Parse(cb_item.SelectedValue.ToString()));
+                        var list = FillCombo.itemUnitList.Where(x => x.itemId == int.Parse(cb_item.SelectedValue.ToString())).ToList();
                         cb_unit.ItemsSource = list;
                         cb_unit.SelectedValuePath = "itemUnitId";
-                        cb_unit.DisplayMemberPath = "mainUnit";
+                        cb_unit.DisplayMemberPath = "unitName";
                         cb_unit.SelectedIndex = 0;
-                        int itemId = (int)cb_item.SelectedValue;
-                        Item item = items.ToList().Find(x => x.itemId == itemId);
-                        _ItemType = item.type;
-                        if (item.type == "sn")
-                        {
-                            grid_serial.Visibility = Visibility.Visible;
-                        }
-                        else
-                        {
-                            grid_serial.Visibility = Visibility.Collapsed;
-                        }
 
                     }
-                Btn_clearSerial_Click(null, null);
+                else
+                    {
+                        cb_unit.ItemsSource = null;
+                    }
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private void Cb_item_KeyUp(object sender, KeyEventArgs e)
         {
@@ -885,7 +849,7 @@ namespace Restaurant.View.storage.stocktakingOperations
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
             */
         }

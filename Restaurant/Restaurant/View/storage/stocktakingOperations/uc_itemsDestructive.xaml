@@ -51,13 +51,7 @@
                                     BorderBrush="#737373"   BorderThickness="0" Margin="4,0"   />
                     </Grid>
                 </Border>
-                <TextBlock    x:Name="txt_active" Grid.Column="3"
-                                   Margin="5,0,5,0" Text="Active" Foreground="{StaticResource SecondColor}"
-                                   HorizontalAlignment="Left" VerticalAlignment="Center"
-                                   FontSize="12"/>
-                <ToggleButton Grid.Column="4" Background="{StaticResource MainColor}"   x:Name="tgl_isActive"   Checked="Tgl_isActive_Checked" Unchecked="Tgl_isActive_Unchecked"
-                             VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="True" 
-                                          Margin="0" Height="13" Width="28" />
+
                 <Button   FlowDirection="LeftToRight"  Width="40" Height="40" x:Name="btn_refresh" Click="Btn_refresh_Click" Grid.Row="0" Grid.Column="5" Padding="0" 
                             materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
                           Background="{x:Null}" BorderBrush="{x:Null}"   Style="{StaticResource SmallButtonCircleRotate}"
@@ -334,8 +328,12 @@
                                               Margin="0" Height="13" Width="28" />
                     </StackPanel>
 
-                    <Border Grid.Row="0" Margin="10,5,10,5" CornerRadius="10" BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                    <Border Grid.Row="2" Margin="10,5,10,5" CornerRadius="10" BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="82*"/>
+                                <ColumnDefinition Width="147*"/>
+                            </Grid.ColumnDefinitions>
                             <TextBox x:Name="tb_itemName"  Text="{Binding itemName, Mode=OneWay}" Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="item Name..."  
@@ -343,11 +341,11 @@
                                       MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"   Margin="4,0"  
-                                 LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
-                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_itemName"
+                                 LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" Grid.ColumnSpan="2" />
+                            <Path Fill="#E81123"   Stretch="Fill" Margin="0,12.5,15,12.5" x:Name="p_error_itemName"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z" Grid.Column="1">
                             </Path>
                         </Grid>
                     </Border>
@@ -369,7 +367,7 @@
                                   StaysOpenOnEdit="True"
                                   KeyUp="Cb_item_KeyUp">
                                 </ComboBox>
-                                <Path Fill="#E81123" Grid.Row="1" x:Name="p_errorItem" Stretch="Fill" Margin="5,5,15,5"
+                                <Path Fill="#E81123" Grid.Row="1" x:Name="p_error_item" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
@@ -391,7 +389,7 @@
               Height="40"  
                   BorderBrush="#737373"   BorderThickness="0" Margin="4,0"  >
                                 </ComboBox>
-                                <Path Fill="#E81123" Grid.Row="1" x:Name="p_errorUnit" Stretch="Fill" Margin="5,5,15,5"
+                                <Path Fill="#E81123" Grid.Row="1" x:Name="p_error_unit" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right"   Visibility="Collapsed"   Grid.Column="1" 
                          VerticalAlignment="Center" Width="15"  Height="15"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
@@ -404,7 +402,7 @@
 
                             </Grid>
                         </Border>
-                        
+
                     </Grid>
 
                     <Border Grid.Row="1" Margin="10,5,10,5" CornerRadius="10" BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
@@ -446,15 +444,15 @@
 
                     <Border Grid.Row="0" Margin="10,5,10,5" CornerRadius="10" BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid>
-                            <TextBox x:Name="tb_fallCause"  Text="{Binding fallCause, Mode=OneWay}" Padding="10,5,0,0" 
+                            <TextBox x:Name="tb_cause"  Text="{Binding cause, Mode=OneWay}" Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="fallCause..."  
+                                      materialDesign:HintAssist.Hint="cause..."  
                                      Foreground="#4E4E4E"  
                                       MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"   Margin="4,0"  
                                  LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
-                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_fallCause"
+                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_cause"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
@@ -462,7 +460,7 @@
                         </Grid>
                     </Border>
 
-                    <Grid x:Name="grid_serial"  Grid.Row="7" Visibility="Collapsed">
+                    <!--<Grid x:Name="grid_serial"  Grid.Row="7" Visibility="Collapsed">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
@@ -505,7 +503,7 @@
                         </Button>
                         <Separator Margin="5,0" Grid.Row="1"  Background="#DFDFDF" VerticalAlignment="Center" Width="auto" />
                         <ListView Grid.Row="2" x:Name="lst_serials"/>
-                    </Grid>
+                    </Grid>-->
 
                     <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >

@@ -2923,4 +2923,16 @@ Please add Email in setting</value>
   <data name="trYear" xml:space="preserve">
     <value>Year</value>
   </data>
+  <data name="trDestroy" xml:space="preserve">
+    <value>Destroy</value>
+  </data>
+  <data name="trDestructiveItem" xml:space="preserve">
+    <value>Destructive Item</value>
+  </data>
+  <data name="trManually" xml:space="preserve">
+    <value>Manually</value>
+  </data>
+  <data name="trReason" xml:space="preserve">
+    <value>Reason</value>
+  </data>
 </root>

@@ -181,36 +181,7 @@ namespace Restaurant.Classes
             parameters.Add("final", final.ToString());
 
             string method = "Items/Delete";
-           return await APIResult.post(method, parameters);
-            //string message = "false";
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "Items/Delete?itemId=" + itemId + "&userId="+userId+"&final="+final);
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Post;
-            //    //set content type
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    var response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        message = await response.Content.ReadAsStringAsync();
-            //        message = JsonConvert.DeserializeObject<string>(message);
-            //     bool   res = bool.Parse(message);
-
-            //        return res;
-            //    }
-            //    return bool.Parse(message);   
-            // }
+           return await APIResult.post(method, parameters);         
         }
 
         // get codes of all items
@@ -283,12 +254,32 @@ namespace Restaurant.Classes
             }
             return item;
         }
-       
-        public async Task<List<Item>> GetItemsWichHasUnits()
+        public async Task<List<Item>> GetItemsHasQuant(int branchId)
+        {
+            List<Item> list = new List<Item>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("branchId", branchId.ToString());
+
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("ItemsLocations/GetItemsHasQuantity", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<Item>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+        }
+        public async Task<List<Item>> GetItemsWichHasUnits(List<string> type)
         {
             List<Item> items = new List<Item>();
-
-            IEnumerable<Claim> claims = await APIResult.getList("items/GetItemsWichHasUnits");
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var myContent = JsonConvert.SerializeObject(type);
+            parameters.Add("type", myContent);
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("items/GetItemsWichHasUnits",parameters);
 
             foreach (Claim c in claims)
             {

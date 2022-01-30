@@ -2899,4 +2899,16 @@
   <data name="trYear" xml:space="preserve">
     <value>عام</value>
   </data>
+  <data name="trDestroy" xml:space="preserve">
+    <value>إتلاف</value>
+  </data>
+  <data name="trDestructiveItem" xml:space="preserve">
+    <value>العنصر المتلف</value>
+  </data>
+  <data name="trManually" xml:space="preserve">
+    <value>يدوي</value>
+  </data>
+  <data name="trReason" xml:space="preserve">
+    <value>السبب</value>
+  </data>
 </root>

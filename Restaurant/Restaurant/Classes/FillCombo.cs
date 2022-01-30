@@ -504,6 +504,17 @@ namespace Restaurant.Classes
             purchaseItems = await item.GetPurchaseItems();
             return purchaseItems;
         }
+        static public async Task<IEnumerable<Item>> FillComboPurchaseItemsHasQuant(ComboBox cmb)
+        {
+            var items = await item.GetItemsHasQuant(MainWindow.branchLogin.branchId);
+
+            cmb.ItemsSource = items;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "itemId";
+            cmb.SelectedIndex = -1;
+
+            return items;
+        }
         #endregion
         #region reportSetting
 
