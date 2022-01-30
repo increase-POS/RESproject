@@ -270,6 +270,9 @@
     <Compile Include="View\kitchen\uc_kitchen.xaml.cs">
       <DependentUpon>uc_kitchen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\kitchen\uc_preparingOrders.xaml.cs">
+      <DependentUpon>uc_preparingOrders.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\kitchen\uc_spendingRequest.xaml.cs">
       <DependentUpon>uc_spendingRequest.xaml</DependentUpon>
     </Compile>
@@ -311,6 +314,9 @@
     </Compile>
     <Compile Include="View\sales\uc_sales.xaml.cs">
       <DependentUpon>uc_sales.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sales\win_lvcSales.xaml.cs">
+      <DependentUpon>win_lvcSales.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\sectionData\banksData\uc_banks.xaml.cs">
       <DependentUpon>uc_banks.xaml</DependentUpon>
@@ -572,6 +578,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\kitchen\uc_preparingOrders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\kitchen\uc_spendingRequest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -627,6 +637,10 @@
     <Page Include="View\sales\uc_sales.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sales\win_lvcSales.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\sectionData\banksData\uc_banks.xaml">
       <SubType>Designer</SubType>
