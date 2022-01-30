@@ -61,7 +61,7 @@ namespace Restaurant.View.kitchen
             }
         }
         
-             string spendRequestPermission = "spendRequest_invoice";
+        string spendRequestPermission = "spendRequest_invoice";
         ObservableCollection<BillDetailsPurchase> billDetails = new ObservableCollection<BillDetailsPurchase>();
         public static bool archived = false;
         public static bool isFromReport = false;
@@ -69,7 +69,6 @@ namespace Restaurant.View.kitchen
         List<ItemUnit> itemUnits;
         public Invoice invoice = new Invoice();
         List<ItemTransfer> invoiceItems;
-        List<ItemTransfer> mainInvoiceItems;
         
         static public string _InvoiceType = "srd"; //draft spending request
 
@@ -82,7 +81,11 @@ namespace Restaurant.View.kitchen
         bool _IsFocused = false;
         public List<Control> controls;
         #endregion
+        #region notification parameter
         private static DispatcherTimer timer;
+        int _DraftCount = 0;
+        int _InvCount = 0;
+        #endregion
         Item item = new Item();
         IEnumerable<Item> items;
         public static List<string> requiredControlList;
@@ -216,13 +219,12 @@ namespace Restaurant.View.kitchen
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        #endregion
-        #region notifications
         private void setNotifications()
         {
             try
             {
                 refreshDraftNotification();
+                refreshOrdersNotification();
             }
             catch (Exception ex)
             {
@@ -233,31 +235,32 @@ namespace Restaurant.View.kitchen
         {
             try
             {
-                string invoiceType = "imd ,exd";
+                string invoiceType = "srd";
                 int duration = 2;
                 int draftCount = await invoice.GetCountByCreator(invoiceType, MainWindow.userLogin.userId, duration);
-                if ((invoice.invType == "imd" || invoice.invType == "exd"))
+                if (invoice.invType == "srd" )
                     draftCount--;
-
-                int previouseCount = 0;
-                if (md_draftsCount.Badge != null && md_draftsCount.Badge.ToString() != "") previouseCount = int.Parse(md_draftsCount.Badge.ToString());
-
-                if (draftCount != previouseCount)
-                {
-                    if (draftCount > 9)
-                    {
-                        draftCount = 9;
-                        md_draftsCount.Badge = "+" + draftCount.ToString();
-                    }
-                    else if (draftCount == 0) md_draftsCount.Badge = "";
-                    else
-                        md_draftsCount.Badge = draftCount.ToString();
-                }
+                HelpClass.refreshNotification(md_draftsCount, ref _DraftCount, draftCount);              
             }
             catch { }
         }
-       
+        private async void refreshOrdersNotification()
+        {
+            try
+            {
+                string invoiceType = "sr ,srw ,src ";
+                int duration = 1;
+                int invCount = await invoice.GetCountByCreator(invoiceType, MainWindow.userLogin.userId, duration);
+                if (invoice != null && (invoice.invType == "sr" || invoice.invType == "srw" || invoice.invType == "src") && !isFromReport)
+                    invCount--;
+
+                HelpClass.refreshNotification(md_invoices, ref _InvCount, invCount);
+            }
+            catch { }
+        }
+
         #endregion
+
         #region navigation buttons
         private void navigateBtnActivate()
         {
@@ -415,45 +418,66 @@ namespace Restaurant.View.kitchen
         }
         private async Task dealWithBarcode(string barcode)
         {
-            tb_barcode.Text = barcode;
-            // get item matches barcode
-            if (barcodesList != null)
+            int codeindex = barcode.IndexOf("-");
+            string prefix = "";
+            if (codeindex >= 0)
+                prefix = barcode.Substring(0, codeindex);
+            prefix = prefix.ToLower();
+            barcode = barcode.ToLower();
+            switch (prefix)
             {
-                ItemUnit unit1 = barcodesList.ToList().Find(c => c.barcode == tb_barcode.Text.Trim());
-
-                // get item matches the barcode
-                if (unit1 != null)
-                {
-                    int itemId = (int)unit1.itemId;
-                    if (unit1.itemId != 0)
+                case "sr":// this barcode for invoice               
+                    Btn_newDraft_Click(null, null);
+                    invoice = await FillCombo.invoice.GetInvoicesByNum(barcode);
+                    _InvoiceType = invoice.invType;
+                    if (_InvoiceType.Equals("sr") || _InvoiceType.Equals("srw") || _InvoiceType.Equals("src"))
                     {
-                        int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == unit1.itemUnitId).FirstOrDefault());
-
-                        if (index == -1)//item doesn't exist in bill
-                        {
-                            // get item units
-                            itemUnits = await FillCombo.itemUnit.GetItemUnits(itemId);
-                            //get item from list
-                            item = items.ToList().Find(i => i.itemId == itemId);
-
-                            int count = 1;
-                            _Count++;
-
-                            addRowToBill(item.name, item.itemId, unit1.mainUnit, unit1.itemUnitId, count);
-                        }
-                        else // item exist prevoiusly in list
-                        {
-                            billDetails[index].Count++;
-                            _Count++;
-                        }
-                        refrishBillDetails();
+                        await fillInvoiceInputs(invoice);
                     }
-                }
-                else
-                {
-                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorItemNotFoundToolTip"), animation: ToasterAnimation.FadeIn);
-                }
+                    break;
+
+                default: // if barcode for item
+                         // get item matches barcode
+                    if (FillCombo.itemUnitList != null)
+                    {
+                        // ItemUnit unit1 = barcodesList.ToList().Find(c => c.barcode == barcode.Trim());
+                        ItemUnit unit1 = FillCombo.itemUnitList.ToList().Find(c => c.barcode == barcode.Trim() && FillCombo.purchaseTypes.Contains(c.type));
+
+                        // get item matches the barcode
+                        if (unit1 != null)
+                        {
+                            int itemId = (int)unit1.itemId;
+                            if (unit1.itemId != 0)
+                            {
+                                int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == unit1.itemUnitId && p.OrderId == 0).FirstOrDefault());
+
+                                if (index == -1)//item doesn't exist in bill
+                                {
+                                    // get item units
+                                    //itemUnits = await FillCombo.itemUnit.GetItemUnits(itemId);
+                                    itemUnits = FillCombo.itemUnitList.Where(c => c.itemId == itemId).ToList();
+                                    //get item from list
+                                    item = FillCombo.purchaseItems.ToList().Find(i => i.itemId == itemId);
+
+                                    int count = 1; 
+                                    addRowToBill(item.name, item.itemId, unit1.mainUnit, unit1.itemUnitId, count);
+                                }
+                                else // item exist prevoiusly in list
+                                {
+                                    billDetails[index].Count++;
+                                    billDetails[index].Total = billDetails[index].Count * billDetails[index].Price;
+                                }
+                                refrishBillDetails();
+                            }
+                        }
+                        else
+                        {
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorItemNotFoundToolTip"), animation: ToasterAnimation.FadeIn);
+                        }
+                    }
+                    break;
             }
+
             tb_barcode.Clear();
         }
         private async void Tb_barcode_KeyDown(object sender, KeyEventArgs e)
@@ -503,7 +527,7 @@ namespace Restaurant.View.kitchen
                         {
                             await addInvoice("srw");
                             clear();
-                            refreshDraftNotification();
+                            setNotifications();
                         }
                     }
                 }
@@ -941,7 +965,7 @@ namespace Restaurant.View.kitchen
                     {
                         await saveDraft();
                         clear();
-                        refreshDraftNotification();
+                        setNotifications();
                     }
                     else
                         clear();
