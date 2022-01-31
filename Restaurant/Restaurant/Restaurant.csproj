@@ -220,7 +220,6 @@
     <Compile Include="Classes\numberToWord\ToWord.cs" />
     <Compile Include="Classes\Pagination.cs" />
     <Compile Include="Classes\ReportCls.cs" />
-    <Compile Include="Classes\SectionData.cs" />
     <Compile Include="Classes\Statistics.cs" />
     <Compile Include="controlTemplate\uc_squareCard.xaml.cs">
       <DependentUpon>uc_squareCard.xaml</DependentUpon>
@@ -363,6 +362,9 @@
     <Compile Include="View\sectionData\uc_sectionData.xaml.cs">
       <DependentUpon>uc_sectionData.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\settings\reportsSettings\uc_reportsSettings.xaml.cs">
+      <DependentUpon>uc_reportsSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\settings\uc_settings.xaml.cs">
       <DependentUpon>uc_settings.xaml</DependentUpon>
     </Compile>
@@ -446,6 +448,15 @@
     </Compile>
     <Compile Include="View\windows\wd_purchaseItems.xaml.cs">
       <DependentUpon>wd_purchaseItems.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_reportCopyCountSetting.xaml.cs">
+      <DependentUpon>wd_reportCopyCountSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_reportPrinterSetting.xaml.cs">
+      <DependentUpon>wd_reportPrinterSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_reportSystmSetting.xaml.cs">
+      <DependentUpon>wd_reportSystmSetting.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_returnInvoice.xaml.cs">
       <DependentUpon>wd_returnInvoice.xaml</DependentUpon>
@@ -702,6 +713,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\settings\reportsSettings\uc_reportsSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\settings\uc_settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -811,6 +826,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_purchaseItems.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_reportCopyCountSetting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_reportPrinterSetting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_reportSystmSetting.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

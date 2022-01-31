@@ -791,10 +791,10 @@ namespace Restaurant.View.sectionData.persons
             //pdf
             try
             {
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                
+                    HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") )
                 {
                     #region
                     BuildReport();
@@ -810,14 +810,14 @@ namespace Restaurant.View.sectionData.persons
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                //SectionData.ExceptionMessage(ex, this);
+                
+                    HelpClass.EndAwait(grid_main);
+                //HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -825,9 +825,9 @@ namespace Restaurant.View.sectionData.persons
         {
             try
             {
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                
+                    HelpClass.StartAwait(grid_main);
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") )
                 {
 
                     #region
@@ -838,14 +838,14 @@ namespace Restaurant.View.sectionData.persons
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                //  SectionData.ExceptionMessage(ex, this);
+                
+                    HelpClass.EndAwait(grid_main);
+                //  HelpClass.ExceptionMessage(ex, this);
             }
 
         }
@@ -854,10 +854,10 @@ namespace Restaurant.View.sectionData.persons
         {
             try
             {
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                
+                    HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") )
                 {
                     #region
                     //Thread t1 = new Thread(() =>
@@ -881,15 +881,15 @@ namespace Restaurant.View.sectionData.persons
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                
+                    HelpClass.EndAwait(grid_main);
 
-                //   SectionData.ExceptionMessage(ex, this);
+                //   HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -897,9 +897,9 @@ namespace Restaurant.View.sectionData.persons
         {
             try
             {
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                
+                    HelpClass.StartAwait(grid_main);
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") )
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
@@ -927,14 +927,14 @@ namespace Restaurant.View.sectionData.persons
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                // SectionData.ExceptionMessage(ex, this);
+                
+                    HelpClass.EndAwait(grid_main);
+                // HelpClass.ExceptionMessage(ex, this);
             }
 
         }

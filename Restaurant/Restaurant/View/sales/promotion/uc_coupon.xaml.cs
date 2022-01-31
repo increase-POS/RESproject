@@ -791,7 +791,7 @@ namespace Restaurant.View.sales.promotion
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") )
                 {
                     /////////////////////////////////////
                     Thread t1 = new Thread(() =>
@@ -819,7 +819,7 @@ namespace Restaurant.View.sales.promotion
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") )
                 {
                     /////////////////////////////////////
                     Thread t1 = new Thread(() =>
@@ -848,7 +848,7 @@ namespace Restaurant.View.sales.promotion
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") )
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
@@ -875,7 +875,7 @@ namespace Restaurant.View.sales.promotion
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") )
                 {
                     #region
                     //Thread t1 = new Thread(() =>
@@ -932,7 +932,7 @@ namespace Restaurant.View.sales.promotion
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") )
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;

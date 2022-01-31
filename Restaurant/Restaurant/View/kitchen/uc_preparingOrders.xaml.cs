@@ -648,10 +648,10 @@ namespace Restaurant.View.kitchen
                 #endregion
                 #region   name
                 var itemNameText = new TextBlock();
-                itemNameText.Text = item.name + ".";
+                itemNameText.Text = item.name;
                 itemNameText.Margin = new Thickness(5);
                 itemNameText.Foreground = Application.Current.Resources["ThickGrey"] as SolidColorBrush;
-                itemNameText.FontWeight = FontWeights.SemiBold;
+                //itemNameText.FontWeight = FontWeights.SemiBold;
                 itemNameText.VerticalAlignment = VerticalAlignment.Center;
                 itemNameText.HorizontalAlignment = HorizontalAlignment.Left;
                 Grid.SetColumn(itemNameText, 1);
@@ -660,18 +660,18 @@ namespace Restaurant.View.kitchen
                 #endregion
                 #region   count
                 var itemCountText = new TextBlock();
-                itemCountText.Text = item.count + ".";
-                itemCountText.Margin = new Thickness(5);
+                itemCountText.Text = item.count.ToString();
+                itemCountText.Margin = new Thickness(5, 5 ,10 , 5);
                 itemCountText.Foreground = Application.Current.Resources["ThickGrey"] as SolidColorBrush;
-                itemCountText.FontWeight = FontWeights.SemiBold;
+                //itemCountText.FontWeight = FontWeights.SemiBold;
                 itemCountText.VerticalAlignment = VerticalAlignment.Center;
                 itemCountText.HorizontalAlignment = HorizontalAlignment.Left;
-                Grid.SetColumn(itemCountText, 1);
+                Grid.SetColumn(itemCountText, 2);
 
                 gridContainer.Children.Add(itemCountText);
                 #endregion
-                sp_items.Children.Add(gridContainer);
                 #endregion
+                sp_items.Children.Add(gridContainer);
             }
         }
         

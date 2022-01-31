@@ -377,8 +377,8 @@
                                     VerticalAlignment="Center" FontWeight="SemiBold"
                                     Margin="5,5,5,5"/>
                     <ScrollViewer Background="White"  Grid.Row="1" Margin="0 0 -5 0" VerticalScrollBarVisibility="Auto" >
-                        <StackPanel x:Name="sp_items" Grid.Row="1" >
-                                <Grid>
+                        <StackPanel x:Name="sp_items" Grid.Row="1" Margin=" 5 0 " >
+                                <!--<Grid>
                                     <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="auto"/>
                                             <ColumnDefinition Width="*"/>
@@ -407,7 +407,7 @@
                                         Foreground="{StaticResource ThickGrey}" FontWeight="SemiBold"
                                         VerticalAlignment="Center" HorizontalAlignment="Left"
                                         Margin="5"/>
-                                        <TextBlock  Text="Egg" Grid.Column="1"
+                                        <TextBlock  Text="Eggggggggggggggggggggggggg" Grid.Column="1"
                                         Foreground="{StaticResource ThickGrey}" 
                                         VerticalAlignment="Center" HorizontalAlignment="Left"
                                         Margin="5"/>
@@ -472,159 +472,11 @@
                                         Foreground="{StaticResource ThickGrey}" 
                                         VerticalAlignment="Center" HorizontalAlignment="Right"
                                         Margin="5"/>
-                                    </Grid>
-                                <Grid Grid.Row="5">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock  Text="6." Grid.Column="0"
-                                        Foreground="{StaticResource ThickGrey}" FontWeight="SemiBold"
-                                        VerticalAlignment="Center" HorizontalAlignment="Left"
-                                        Margin="5"/>
-                                        <TextBlock  Text="Cottage cheese" Grid.Column="1"
-                                        Foreground="{StaticResource ThickGrey}" 
-                                        VerticalAlignment="Center" HorizontalAlignment="Left"
-                                        Margin="5"/>
-                                        <TextBlock  Text="85" Grid.Column="2"
-                                        Foreground="{StaticResource ThickGrey}" 
-                                        VerticalAlignment="Center" HorizontalAlignment="Right"
-                                        Margin="5"/>
-                                    </Grid>
-                                <Grid Grid.Row="6">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock  Text="7." Grid.Column="0"
-                                        Foreground="{StaticResource ThickGrey}" FontWeight="SemiBold"
-                                        VerticalAlignment="Center" HorizontalAlignment="Left"
-                                        Margin="5"/>
-                                        <TextBlock  Text="Ice cream" Grid.Column="1"
-                                        Foreground="{StaticResource ThickGrey}" 
-                                        VerticalAlignment="Center" HorizontalAlignment="Left"
-                                        Margin="5"/>
-                                        <TextBlock  Text="15" Grid.Column="2"
-                                        Foreground="{StaticResource ThickGrey}" 
-                                        VerticalAlignment="Center" HorizontalAlignment="Right"
-                                        Margin="5"/>
-                                    </Grid>
-                                <Grid Grid.Row="7">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock  Text="8." Grid.Column="0"
-                                        Foreground="{StaticResource ThickGrey}" FontWeight="SemiBold"
-                                        VerticalAlignment="Center" HorizontalAlignment="Left"
-                                        Margin="5"/>
-                                        <TextBlock  Text="Cream" Grid.Column="1"
-                                        Foreground="{StaticResource ThickGrey}" 
-                                        VerticalAlignment="Center" HorizontalAlignment="Left"
-                                        Margin="5"/>
-                                        <TextBlock  Text="12" Grid.Column="2"
-                                        Foreground="{StaticResource ThickGrey}" 
-                                        VerticalAlignment="Center" HorizontalAlignment="Right"
-                                        Margin="5"/>
-                                    </Grid>
-                                <Grid Grid.Row="8">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock  Text="9." Grid.Column="0"
-                                        Foreground="{StaticResource ThickGrey}" FontWeight="SemiBold"
-                                        VerticalAlignment="Center" HorizontalAlignment="Left"
-                                        Margin="5"/>
-                                        <TextBlock  Text="Sandwich" Grid.Column="1"
-                                        Foreground="{StaticResource ThickGrey}" 
-                                        VerticalAlignment="Center" HorizontalAlignment="Left"
-                                        Margin="5"/>
-                                        <TextBlock  Text="9" Grid.Column="2"
-                                        Foreground="{StaticResource ThickGrey}" 
-                                        VerticalAlignment="Center" HorizontalAlignment="Right"
-                                        Margin="5"/>
-                                    </Grid>
-                                <Grid Grid.Row="9">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock  Text="10." Grid.Column="0"
-                                        Foreground="{StaticResource ThickGrey}" FontWeight="SemiBold"
-                                        VerticalAlignment="Center" HorizontalAlignment="Left"
-                                        Margin="5"/>
-                                        <TextBlock  Text="Sausage" Grid.Column="1"
-                                        Foreground="{StaticResource ThickGrey}" 
-                                        VerticalAlignment="Center" HorizontalAlignment="Left"
-                                        Margin="5"/>
-                                        <TextBlock  Text="2" Grid.Column="2"
-                                        Foreground="{StaticResource ThickGrey}" 
-                                        VerticalAlignment="Center" HorizontalAlignment="Right"
-                                        Margin="5"/>
-                                    </Grid>
-                                <Grid Grid.Row="10">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock  Text="11." Grid.Column="0"
-                                        Foreground="{StaticResource ThickGrey}" FontWeight="SemiBold"
-                                        VerticalAlignment="Center" HorizontalAlignment="Left"
-                                        Margin="5"/>
-                                        <TextBlock  Text="Hamburger" Grid.Column="1"
-                                        Foreground="{StaticResource ThickGrey}" 
-                                        VerticalAlignment="Center" HorizontalAlignment="Left"
-                                        Margin="5"/>
-                                        <TextBlock  Text="84" Grid.Column="2"
-                                        Foreground="{StaticResource ThickGrey}" 
-                                        VerticalAlignment="Center" HorizontalAlignment="Right"
-                                        Margin="5"/>
-                                    </Grid>
-                                <Grid Grid.Row="11">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock  Text="12." Grid.Column="0"
-                                        Foreground="{StaticResource ThickGrey}" FontWeight="SemiBold"
-                                        VerticalAlignment="Center" HorizontalAlignment="Left"
-                                        Margin="5"/>
-                                        <TextBlock  Text="Hot dog" Grid.Column="1"
-                                        Foreground="{StaticResource ThickGrey}" 
-                                        VerticalAlignment="Center" HorizontalAlignment="Left"
-                                        Margin="5"/>
-                                        <TextBlock  Text="3" Grid.Column="2"
-                                        Foreground="{StaticResource ThickGrey}" 
-                                        VerticalAlignment="Center" HorizontalAlignment="Right"
-                                        Margin="5"/>
-                                    </Grid>
-                            <Grid Grid.Row="12">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock  Text="13." Grid.Column="0"
-                                        Foreground="{StaticResource ThickGrey}" FontWeight="SemiBold"
-                                        VerticalAlignment="Center" HorizontalAlignment="Left"
-                                        Margin="5"/>
-                                <TextBlock  Text="Bread" Grid.Column="1"
-                                        Foreground="{StaticResource ThickGrey}" 
-                                        VerticalAlignment="Center" HorizontalAlignment="Left"
-                                        Margin="5"/>
-                                <TextBlock  Text="8" Grid.Column="2"
-                                        Foreground="{StaticResource ThickGrey}" 
-                                        VerticalAlignment="Center" HorizontalAlignment="Right"
-                                        Margin="5"/>
-                            </Grid>
+                                    </Grid>-->
+                                
+                            
+                            
+                            
                         </StackPanel>
                         </ScrollViewer>
                     </Grid>

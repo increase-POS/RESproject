@@ -63,7 +63,7 @@ namespace Restaurant.View.sales
         //    }
         //    catch (Exception ex)
         //    {
-        //        SectionData.ExceptionMessage(ex, this);
+        //        HelpClass.ExceptionMessage(ex, this);
         //    }
         //}
 
@@ -77,7 +77,7 @@ namespace Restaurant.View.sales
         //    }
         //    catch (Exception ex)
         //    {
-        //        SectionData.ExceptionMessage(ex, this);
+        //        HelpClass.ExceptionMessage(ex, this);
         //    }
         //}
 
@@ -620,7 +620,7 @@ namespace Restaurant.View.sales
                 selectedChart = 1;
                 fillSelectedChart();
 
-                SectionData.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
