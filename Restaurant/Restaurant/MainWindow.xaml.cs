@@ -40,6 +40,8 @@ using Restaurant.View.sales.promotion;
 using Restaurant.View.delivery;
 using Restaurant.View.sectionData.banksData;
 using Restaurant.View.catalog.rawMaterials;
+using Restaurant.View.settings.reportsSettings;
+using Restaurant.View.sales.reservations;
 
 namespace Restaurant
 {
@@ -1145,7 +1147,6 @@ namespace Restaurant
 
 
         }
-
         void timer_Tick(object sender, EventArgs e)
         {
             try
@@ -2140,9 +2141,9 @@ namespace Restaurant
                 case "banksData":
                     grid_main.Children.Add(uc_banksData.Instance);
                     break;
-                //case "tables":
-                //    grid_main.Children.Add(uc_tables.Instance);
-                //    break;
+                case "tables":
+                    grid_main.Children.Add(uc_tables.Instance);
+                    break;
                 case "hallSections":
                     grid_main.Children.Add(uc_hallSections.Instance);
                     break;
@@ -2245,12 +2246,12 @@ namespace Restaurant
                 case "stocktaking":
                     grid_main.Children.Add(uc_stocktaking.Instance);
                     break;
-                //case "preparingOrders":
-                //    grid_main.Children.Add(uc_preparingOrders.Instance);
-                //    break;
+                case "preparingOrders":
+                    grid_main.Children.Add(uc_preparingOrders.Instance);
+                    break;
                 //52
                 case "spendingRequest":
-                 //   grid_main.Children.Add(uc_kitchenOrder.Instance);
+                    grid_main.Children.Add(uc_spendingRequest.Instance);
                     break;
                 //case "posTransfers":
                 //    grid_main.Children.Add(uc_posTransfers.Instance);
@@ -2276,9 +2277,9 @@ namespace Restaurant
                 //case "general":
                 //    grid_main.Children.Add(uc_general.Instance);
                 //    break;
-                //case "reportsSettings":
-                //    grid_main.Children.Add(uc_reportsSettings.Instance);
-                //    break;
+                case "reportsSettings":
+                    grid_main.Children.Add(uc_reportsSettings.Instance);
+                    break;
                 //62
                 //case "permissions":
                 //    grid_main.Children.Add(uc_permissions.Instance);
@@ -2292,9 +2293,9 @@ namespace Restaurant
                 case "promotion":
                     grid_main.Children.Add(uc_promotion.Instance);
                     break;
-                //case "reservations":
-                //    grid_main.Children.Add(uc_reservations.Instance);
-                //    break;
+                case "reservations":
+                    grid_main.Children.Add(uc_reservations.Instance);
+                    break;
                 case "diningHall":
                     grid_main.Children.Add(uc_diningHall.Instance);
                     break;
@@ -2304,22 +2305,63 @@ namespace Restaurant
                 //case "salesStatistic":
                 //    grid_main.Children.Add(uc_salesStatistic.Instance);
                 //    break;
-                //case "membership":
-                //    grid_main.Children.Add(uc_membership.Instance);
-                //    break;
-                //case "coupon":
-                //    grid_main.Children.Add(uc_coupon.Instance);
-                //break;
+                case "membership":
+                    grid_main.Children.Add(uc_membership.Instance);
+                    break;
+                case "coupon":
+                    grid_main.Children.Add(uc_coupon.Instance);
+                    break;
                 //72
-                //case "offer":
-                //    grid_main.Children.Add(uc_offer.Instance);
-                //    break;
+                case "offer":
+                    grid_main.Children.Add(uc_offer.Instance);
+                    break;
                 //case "quotation":
                 //    grid_main.Children.Add(uc_quotation.Instance);
                 //    break;
                 //case "medals":
                 //    grid_main.Children.Add(uc_medals.Instance);
                 //    break;
+
+                //75  package
+                case "package":
+                    grid_main.Children.Add(uc_package.Instance);
+                    break;
+                //76  deliveryManagement
+                //case "deliveryManagement":
+                //    grid_main.Children.Add(uc_deliveryManagement.Instance);
+                //    break;
+                //77  shippingCompanies
+                case "shippingCompanies":
+                    grid_main.Children.Add(uc_shippingCompanies.Instance);
+                    break;
+                //78  itemsRawMaterials
+                case "itemsRawMaterials":
+                    grid_main.Children.Add(uc_itemsRawMaterials.Instance);
+                    break;
+                //79  units
+                case "units":
+                    grid_main.Children.Add(uc_units.Instance);
+                    break;
+                //80  menuSettings
+                case "menuSettings":
+                    grid_main.Children.Add(uc_menuSettings.Instance);
+                    break;
+                //81  itemsCosting
+                case "itemsCosting":
+                    grid_main.Children.Add(uc_itemsCosting.Instance);
+                    break;
+                //82  consumptionRawMaterials
+                case "consumptionRawMaterials":
+                    grid_main.Children.Add(uc_consumptionRawMaterials.Instance);
+                    break;
+                //83  reservationTable
+                case "reservationTable":
+                    grid_main.Children.Add(uc_reservationTable.Instance);
+                    break;
+                //84  reservationsUpdate
+                case "reservationsUpdate":
+                    grid_main.Children.Add(uc_reservationsUpdate.Instance);
+                    break;
 
                 default:
                     return;
