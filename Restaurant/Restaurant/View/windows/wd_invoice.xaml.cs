@@ -244,7 +244,13 @@ namespace Restaurant.View.windows
                     FillCombo.invoices = await FillCombo.invoice.GetInvoicesByCreator(invoiceType, userId, duration);
             }
             #endregion
-
+            #region spending order in storage
+            else if (page == "spendingOrder")
+            {
+                if (icon == "waitingOrders")
+                    FillCombo.invoices = await FillCombo.invoice.getBranchInvoices(invoiceType, branchCreatorId, branchId);
+            }
+            #endregion
             //if (condition == "orders")
             //{
             //    invoices = await invoice.getUnHandeldOrders(invoiceType,branchCreatorId, branchId,duration,userId);
@@ -270,7 +276,7 @@ namespace Restaurant.View.windows
             //    else
             //        invoices = await invoice.GetInvoicesByType(invoiceType, branchId);
             //}
-            
+
 
         }
         private void Dg_Invoice_SelectionChanged(object sender, SelectionChangedEventArgs e)

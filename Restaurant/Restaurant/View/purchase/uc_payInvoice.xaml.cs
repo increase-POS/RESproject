@@ -895,6 +895,11 @@ namespace Restaurant.View.purchase
         private bool validateItemUnits()
         {
             bool valid = true;
+            if (billDetails.Count == 0)
+            {
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trAddInvoiceWithoutItems"), animation: ToasterAnimation.FadeIn);
+                return false;
+            }
             for (int i = 0; i < billDetails.Count; i++)
             {
                 if (billDetails[i].itemUnitId == 0)

@@ -551,7 +551,7 @@ namespace Restaurant.View.kitchen
         }
         private async Task addInvoice(string invType)
         {
-            if (invType == "sr")
+            if (invType == "srw")
             {
                 invoice.invNumber = await invoice.generateInvNumber("sr", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
             }
@@ -597,6 +597,11 @@ namespace Restaurant.View.kitchen
         private bool validateItemUnits()
         {
             bool valid = true;
+            if (billDetails.Count == 0)
+            {
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trAddInvoiceWithoutItems"), animation: ToasterAnimation.FadeIn);
+                return false;
+            }
             for (int i = 0; i < billDetails.Count; i++)
             {
                 if (billDetails[i].itemUnitId == 0)

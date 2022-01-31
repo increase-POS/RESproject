@@ -33,7 +33,7 @@ namespace Restaurant.View.storage.movementsOperations
     /// </summary>
     public partial class uc_spendingOrder : UserControl
     {
-        string createPermission = "spendingRequest_create";
+        string approvePermission = "spendingOrder_approve";
         string reportsPermission = "spendingRequest_reports";
         private static uc_spendingOrder _instance;
         public static uc_spendingOrder Instance
@@ -61,30 +61,32 @@ namespace Restaurant.View.storage.movementsOperations
             }
         }
         ObservableCollection<BillDetailsPurchase> billDetails = new ObservableCollection<BillDetailsPurchase>();
-        public static bool archived = false;
-        public static bool isFromReport = false;
-        List<ItemUnit> barcodesList;
-        List<ItemUnit> itemUnits;
+        
         public Invoice invoice = new Invoice();
         Invoice generatedInvoice = new Invoice();
-        List<Invoice> invoices;
         List<ItemTransfer> invoiceItems;
         List<ItemTransfer> mainInvoiceItems;
+        List<ItemUnit> itemUnits;
         public List<Control> controls;
-        static public string _ProcessType = "imd"; //draft import
 
         static private int _SequenceNum = 0;
         static private int _Count = 0;
         static private int _invoiceId;
-        // for barcode
+        static public string _InvoiceType = "srw"; //spending request waiting
+        #region for barcode
+
         DateTime _lastKeystroke = new DateTime(0);
         static private string _BarcodeStr = "";
-        static private string _SelectedProcess = "";
-        static private int _SelectedBranch = -1;
         bool _IsFocused = false;
+        #endregion
+        #region notification
         private static DispatcherTimer timer;
+        int _OrdersCount = 0;
+        public static bool archived = false;
+        public static bool isFromReport = false;
+        #endregion
         Item item = new Item();
-        IEnumerable<Item> items;
+       // IEnumerable<Item> items;
         public static List<string> requiredControlList;
         private void translate()
         {
@@ -107,23 +109,7 @@ namespace Restaurant.View.storage.movementsOperations
                 HelpClass.StartAwait(grid_main);
 
                 MainWindow.mainWindow.KeyDown -= HandleKeyPress;
-                timer.Stop();
-                if (billDetails.Count > 0 && (_ProcessType == "imd" || _ProcessType == "exd"))
-                {
-                    #region Accept
-                    MainWindow.mainWindow.Opacity = 0.2;
-                    wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                    w.contentText = "Do you want save sale invoice in drafts?";
-                    w.ShowDialog();
-                    MainWindow.mainWindow.Opacity = 1;
-                    #endregion
-                    if (w.isOk)
-                        Btn_newDraft_Click(null, null);
-                    else
-                        clearProcess();
-                }
-                else
-                    clearProcess();
+                timer.Stop();              
                 Instance = null;
                 GC.Collect();
 
@@ -159,8 +145,6 @@ namespace Restaurant.View.storage.movementsOperations
                 translate();
                 setNotifications();
                 setTimer();
-                await RefrishItems();
-                await fillBarcodeList();
                 //List all the UIElement in the VisualTree
                 controls = new List<Control>();
                 FindControl(this.grid_main, controls);
@@ -222,37 +206,22 @@ namespace Restaurant.View.storage.movementsOperations
         {
             try
             {
-                refreshDraftNotification();
+                refreshOrdersNotification();
             }
             catch (Exception ex)
             {
-                //HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void refreshDraftNotification()
+        private async void refreshOrdersNotification()
         {
             try
             {
-                string invoiceType = "imd ,exd";
-                int duration = 2;
-                int draftCount = await invoice.GetCountByCreator(invoiceType, MainWindow.userLogin.userId, duration);
-                if ((invoice.invType == "imd" || invoice.invType == "exd"))
-                    draftCount--;
+                string invoiceType = "srw";
+                int ordersCount = await invoice.GetCountBranchInvoices(invoiceType, 0, MainWindow.branchLogin.branchId);
+                if (invoice.invType == "srw")
+                    ordersCount--;
 
-                int previouseCount = 0;
-                if (md_draftsCount.Badge != null && md_draftsCount.Badge.ToString() != "") previouseCount = int.Parse(md_draftsCount.Badge.ToString());
-
-                if (draftCount != previouseCount)
-                {
-                    if (draftCount > 9)
-                    {
-                        draftCount = 9;
-                        md_draftsCount.Badge = "+" + draftCount.ToString();
-                    }
-                    else if (draftCount == 0) md_draftsCount.Badge = "";
-                    else
-                        md_draftsCount.Badge = draftCount.ToString();
-                }
+                HelpClass.refreshNotification(md_ordersCount, ref _OrdersCount, ordersCount);
             }
             catch { }
         }
@@ -261,8 +230,8 @@ namespace Restaurant.View.storage.movementsOperations
         #region navigation buttons
         private void navigateBtnActivate()
         {
-            int index = invoices.IndexOf(invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
-            if (index == invoices.Count - 1)
+            int index = FillCombo.invoices.IndexOf(FillCombo.invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
+            if (index == FillCombo.invoices.Count - 1)
                 btn_next.IsEnabled = false;
             else
                 btn_next.IsEnabled = true;
@@ -279,14 +248,13 @@ namespace Restaurant.View.storage.movementsOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                int index = invoices.IndexOf(invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
+                int index = FillCombo.invoices.IndexOf(FillCombo.invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
                 index++;
-                clearProcess();
-                invoice = invoices[index];
-                _ProcessType = invoice.invType;
+                clear();
+                invoice = FillCombo.invoices[index];
                 _invoiceId = invoice.invoiceId;
                 navigateBtnActivate();
-                await fillOrderInputs(invoice);
+                await fillInvoiceInputs(invoice);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -304,14 +272,13 @@ namespace Restaurant.View.storage.movementsOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                int index = invoices.IndexOf(invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
+                int index = FillCombo.invoices.IndexOf(FillCombo.invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
                 index--;
-                clearProcess();
-                invoice = invoices[index];
-                _ProcessType = invoice.invType;
+                clear();
+                invoice = FillCombo.invoices[index];
                 _invoiceId = invoice.invoiceId;
                 navigateBtnActivate();
-                await fillOrderInputs(invoice);
+                await fillInvoiceInputs(invoice);
 
 
                 HelpClass.EndAwait(grid_main);
@@ -415,45 +382,66 @@ namespace Restaurant.View.storage.movementsOperations
         }
         private async Task dealWithBarcode(string barcode)
         {
-            tb_barcode.Text = barcode;
-            // get item matches barcode
-            if (barcodesList != null)
+            int codeindex = barcode.IndexOf("-");
+            string prefix = "";
+            if (codeindex >= 0)
+                prefix = barcode.Substring(0, codeindex);
+            prefix = prefix.ToLower();
+            barcode = barcode.ToLower();
+            switch (prefix)
             {
-                ItemUnit unit1 = barcodesList.ToList().Find(c => c.barcode == tb_barcode.Text.Trim());
-
-                // get item matches the barcode
-                if (unit1 != null)
-                {
-                    int itemId = (int)unit1.itemId;
-                    if (unit1.itemId != 0)
+                case "sr":// this barcode for invoice               
+                    Btn_newDraft_Click(null, null);
+                    invoice = await FillCombo.invoice.GetInvoicesByNum(barcode);
+                    _InvoiceType = invoice.invType;
+                    if (invoice.invType == "srw")
                     {
-                        int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == unit1.itemUnitId).FirstOrDefault());
-
-                        if (index == -1)//item doesn't exist in bill
-                        {
-                            // get item units
-                            itemUnits = await FillCombo.itemUnit.GetItemUnits(itemId);
-                            //get item from list
-                            item = items.ToList().Find(i => i.itemId == itemId);
-
-                            int count = 1;
-                            _Count++;
-
-                            addRowToBill(item.name, item.itemId, unit1.mainUnit, unit1.itemUnitId, count);
-                        }
-                        else // item exist prevoiusly in list
-                        {
-                            billDetails[index].Count++;
-                            _Count++;
-                        }
-                        refrishBillDetails();
+                        await fillInvoiceInputs(invoice);
                     }
-                }
-                else
-                {
-                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorItemNotFoundToolTip"), animation: ToasterAnimation.FadeIn);
-                }
+                    break;
+
+                default: // if barcode for item
+                         // get item matches barcode
+                    if (FillCombo.itemUnitList != null)
+                    {
+                        // ItemUnit unit1 = barcodesList.ToList().Find(c => c.barcode == barcode.Trim());
+                        ItemUnit unit1 = FillCombo.itemUnitList.ToList().Find(c => c.barcode == barcode.Trim() && FillCombo.purchaseTypes.Contains(c.type));
+
+                        // get item matches the barcode
+                        if (unit1 != null)
+                        {
+                            int itemId = (int)unit1.itemId;
+                            if (unit1.itemId != 0)
+                            {
+                                int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == unit1.itemUnitId && p.OrderId == 0).FirstOrDefault());
+
+                                if (index == -1)//item doesn't exist in bill
+                                {
+                                    // get item units
+                                    //itemUnits = await FillCombo.itemUnit.GetItemUnits(itemId);
+                                    itemUnits = FillCombo.itemUnitList.Where(c => c.itemId == itemId).ToList();
+                                    //get item from list
+                                    item = FillCombo.purchaseItems.ToList().Find(i => i.itemId == itemId);
+
+                                    int count = 1;
+                                    addRowToBill(item.name, item.itemId, unit1.mainUnit, unit1.itemUnitId, count);
+                                }
+                                else // item exist prevoiusly in list
+                                {
+                                    billDetails[index].Count++;
+                                    billDetails[index].Total = billDetails[index].Count * billDetails[index].Price;
+                                }
+                                refrishBillDetails();
+                            }
+                        }
+                        else
+                        {
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorItemNotFoundToolTip"), animation: ToasterAnimation.FadeIn);
+                        }
+                    }
+                    break;
             }
+
             tb_barcode.Clear();
         }
         private async void Tb_barcode_KeyDown(object sender, KeyEventArgs e)
@@ -482,111 +470,112 @@ namespace Restaurant.View.storage.movementsOperations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        async Task fillBarcodeList()
-        {
-            barcodesList = await FillCombo.itemUnit.Getall();
-        }
         #endregion
         #region save
+        private bool validateItemUnits()
+        {
+            bool valid = true;
+            if (billDetails.Count == 0)
+            {
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trAddInvoiceWithoutItems"), animation: ToasterAnimation.FadeIn);
+                return false;
+            }
+            for (int i = 0; i < billDetails.Count; i++)
+            {
+                if (billDetails[i].itemUnitId == 0)
+                {
+                    valid = false;
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trItemWithNoUnit"), animation: ToasterAnimation.FadeIn);
+
+                    return valid;
+                }
+            }
+            return valid;
+        }
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {
-            /*
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
-
-                if (
-                            (
-                                (_ProcessType == "im" || _ProcessType == "imd")
-                            &&
-                                 (MainWindow.groupObject.HasPermissionAction(importPermission, MainWindow.groupObjects, "one"))
-                            )
-                        ||
-                            (
-                                (_ProcessType == "ex" || _ProcessType == "exd" || _ProcessType == "exw")
-                            &&
-                                (MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one"))
-                            )
-                   )
-                {
-                    bool valid = await validateOrder();
+                HelpClass.StartAwait(grid_main);
+                if (MainWindow.groupObject.HasPermissionAction(approvePermission, MainWindow.groupObjects, "one"))
+                    {
+                    bool valid = validateItemUnits();
                     if (valid)
                     {
                         wd_transItemsLocation w;
-                        switch (_ProcessType)
+                        Window.GetWindow(this).Opacity = 0.2;
+                        w = new wd_transItemsLocation();
+                        List<ItemTransfer> orderList = new List<ItemTransfer>();
+                        List<int> ordersIds = new List<int>();
+                        foreach (BillDetailsPurchase d in billDetails)
                         {
-                            case "exw":
-                            case "exd":
-                                Window.GetWindow(this).Opacity = 0.2;
-                                w = new wd_transItemsLocation();
-                                List<ItemTransfer> orderList = new List<ItemTransfer>();
-                                List<int> ordersIds = new List<int>();
-                                foreach (BillDetailsPurchase d in billDetails)
+                            if (d.Count == 0)
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorQuantIsZeroToolTip"), animation: ToasterAnimation.FadeIn);
+                                HelpClass.EndAwait(grid_main);
+                                return;
+                            }
+                            else
+                            {
+                                orderList.Add(new ItemTransfer()
                                 {
-                                    if (d.Count == 0)
-                                    {
-                                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorQuantIsZeroToolTip"), animation: ToasterAnimation.FadeIn);
-                                        
-                                            HelpClass.EndAwait(grid_main);
-                                        return;
-                                    }
-                                    else
-                                    {
-                                        orderList.Add(new ItemTransfer()
-                                        {
-                                            itemName = d.Product,
-                                            itemId = d.itemId,
-                                            unitName = d.Unit,
-                                            itemUnitId = d.itemUnitId,
-                                            quantity = d.Count,
-                                            invoiceId = d.OrderId,
-                                        });
-                                        ordersIds.Add(d.OrderId);
-                                    }
-                                }
-                                w.orderList = orderList;
-                                if (w.ShowDialog() == true)
-                                {
-                                    if (w.selectedItemsLocations != null)
-                                    {
-                                        List<ItemLocation> itemsLocations = w.selectedItemsLocations;
-                                        List<ItemLocation> readyItemsLoc = new List<ItemLocation>();
-
-                                        // _ProcessType ="ex";
-                                        for (int i = 0; i < itemsLocations.Count; i++)
-                                        {
-                                            if (itemsLocations[i].isSelected == true)
-                                                readyItemsLoc.Add(itemsLocations[i]);
-                                        }
-                                        #region notification Object
-                                        Notification not = new Notification()
-                                        {
-                                            title = "trExceedMaxLimitAlertTilte",
-                                            ncontent = "trExceedMaxLimitAlertContent",
-                                            msgType = "alert",
-                                            createDate = DateTime.Now,
-                                            updateDate = DateTime.Now,
-                                            createUserId = MainWindow.userLogin.userId,
-                                            updateUserId = MainWindow.userLogin.userId,
-                                        };
-                                        #endregion
-                                        await FillCombo.itemLocation.recieptOrder(readyItemsLoc, orderList, (int)cb_branch.SelectedValue, MainWindow.userLogin.userId, "storageAlerts_minMaxItem", not);
-                                        await save();
-                                    }
-                                }
-                                Window.GetWindow(this).Opacity = 1;
-                                break;
-                            case "emw":
-                                //process transfer items
-                                await save();
-                                break;
-                            default:
-                                await save();
-                                break;
+                                    itemName = d.Product,
+                                    itemId = d.itemId,
+                                    unitName = d.Unit,
+                                    itemUnitId = d.itemUnitId,
+                                    quantity = d.Count,
+                                    invoiceId = d.OrderId,
+                                });
+                                ordersIds.Add(d.OrderId);
+                            }
                         }
-                        setNotifications();
+                        w.orderList = orderList;
+                        if (w.ShowDialog() == true)
+                        {
+                            if (w.selectedItemsLocations != null)
+                            {
+                                List<ItemLocation> itemsLocations = w.selectedItemsLocations;
+                                List<ItemLocation> readyItemsLoc = new List<ItemLocation>();
 
+                                for (int i = 0; i < itemsLocations.Count; i++)
+                                {
+                                    if (itemsLocations[i].isSelected == true)
+                                        readyItemsLoc.Add(itemsLocations[i]);
+                                }
+                                #region notification Object
+                                Notification not = new Notification()
+                                {
+                                    title = "trSpendingOrderAlertTilte",
+                                    ncontent = "trSpendingOrderApproveAlertContent",
+                                    msgType = "alert",
+                                    createDate = DateTime.Now,
+                                    updateDate = DateTime.Now,
+                                    createUserId = MainWindow.userLogin.userId,
+                                    updateUserId = MainWindow.userLogin.userId,
+                                };
+                                #endregion
+                                #region invoice 
+                                invoice.invType = "sr";
+                                invoice.updateUserId = MainWindow.userLogin.userId;
+                                #endregion
+                                int res = await invoice.saveInvoice(invoice);
+                                if(res >0)
+                                {
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+                                    await not.save(not, MainWindow.branchLogin.branchId, "spendingOrderAlert_approve", "");
+                                    await FillCombo.itemLocation.transferToKitchen(readyItemsLoc, orderList, MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
+                                    setNotifications();
+                                    clear();
+                                }
+                                else
+                                    Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+
+                            }
+                        }
+                        Window.GetWindow(this).Opacity = 1;
+
+                        
                     }
                 }
                 else
@@ -600,7 +589,6 @@ namespace Restaurant.View.storage.movementsOperations
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
 
         #endregion
@@ -828,131 +816,49 @@ namespace Restaurant.View.storage.movementsOperations
         #region btn
         private async void Btn_orders_Click(object sender, RoutedEventArgs e)
         {
-            /*
-                        try
-                        {
-
-                                HelpClass.StartAwait(grid_main);
-
-
-                            Window.GetWindow(this).Opacity = 0.2;
-                            wd_invoice w = new wd_invoice();
-
-                            if ((
-                                   MainWindow.groupObject.HasPermissionAction(importPermission, MainWindow.groupObjects, "one")
-
-                                   ) &&
-                                 (
-                                 MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one")
-
-                                 ))
-                                w.invoiceType = "im ,ex";
-                            else if (MainWindow.groupObject.HasPermissionAction(importPermission, MainWindow.groupObjects, "one") )
-                                w.invoiceType = "im";
-                            else if (MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one") )
-                                w.invoiceType = "ex";
-
-
-
-                            w.condition = "order";
-                            w.title = MainWindow.resourcemanager.GetString("trOrders");
-                            w.branchId = MainWindow.branchLogin.branchId;
-
-                            if (w.ShowDialog() == true)
-                            {
-                                if (w.invoice != null)
-                                {
-                                    invoice = w.invoice;
-                                    _ProcessType = invoice.invType;
-                                    _invoiceId = invoice.invoiceId;
-                                    isFromReport = false;
-                                    archived = false;
-                                    setNotifications();
-                                    await fillOrderInputs(invoice);
-                                    if (_ProcessType == "im")// set title to bill
-                                    {
-                                        //  mainInvoiceItems = invoiceItems;
-
-                                    }
-                                    else if (_ProcessType == "ex")
-                                    {
-                                        //   mainInvoiceItems = await invoiceModel.GetInvoicesItems(invoice.invoiceMainId.Value);
-
-                                    }
-                                    invoices = await invoice.getBranchInvoices(w.invoiceType, 0, MainWindow.branchLogin.branchId);
-                                    navigateBtnActivate();
-                                }
-                            }
-                            Window.GetWindow(this).Opacity = 1;
-
-                                HelpClass.EndAwait(grid_main);
-                        }
-                        catch (Exception ex)
-                        {
-
-                                HelpClass.EndAwait(grid_main);
-                            HelpClass.ExceptionMessage(ex, this);
-                        }
-            */
-        }
-        private async void Btn_ordersWait_Click(object sender, RoutedEventArgs e)
-        {
-            /*
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_invoice w = new wd_invoice();
 
-                if (MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one") )
+                w.invoiceType = "srw";
+                w.title = MainWindow.resourcemanager.GetString("trOrders");
+                w.branchId = MainWindow.branchLogin.branchId;
+                w.icon = "waitingOrders";
+                w.page = "spendingOrder";
+
+                if (w.ShowDialog() == true)
                 {
-                    Window.GetWindow(this).Opacity = 0.2;
-                    wd_invoice w = new wd_invoice();
-
-                    w.invoiceType = "exw";
-                    w.title = MainWindow.resourcemanager.GetString("trOrders");
-                    w.branchId = MainWindow.branchLogin.branchId;
-
-                    if (w.ShowDialog() == true)
+                    if (w.invoice != null)
                     {
-                        if (w.invoice != null)
-                        {
-                            invoice = w.invoice;
-                            _ProcessType = invoice.invType;
-                            _invoiceId = invoice.invoiceId;
-                            setNotifications();
-                            await fillOrderInputs(invoice);
-                            invoices = await invoice.getBranchInvoices(w.invoiceType, 0, MainWindow.branchLogin.branchId);
-                            navigateBtnActivate();
-                        }
+                        invoice = w.invoice;
+                        _InvoiceType = invoice.invType;
+                        _invoiceId = invoice.invoiceId;
+                        isFromReport = false;
+                        archived = false;
+                        setNotifications();
+                        await fillInvoiceInputs(invoice);
+                        navigateBtnActivate();
                     }
-                    Window.GetWindow(this).Opacity = 1;
                 }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                
-                    HelpClass.EndAwait(grid_main);
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
-        }
+        }       
         private async void Btn_items_Click(object sender, RoutedEventArgs e)
         {
-            /*
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
-
-                //items
+                HelpClass.StartAwait(grid_main);
 
                 Window.GetWindow(this).Opacity = 0.2;
-                wd_items w = new wd_items();
-                w.CardType = "movement";
+                wd_purchaseItems w = new wd_purchaseItems();
                 w.ShowDialog();
                 if (w.isActive)
                 {
@@ -966,39 +872,36 @@ namespace Restaurant.View.storage.movementsOperations
                 }
 
                 Window.GetWindow(this).Opacity = 1;
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private async void Btn_newDraft_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            //try
+            //{
 
-                HelpClass.StartAwait(grid_main);
+            //    HelpClass.StartAwait(grid_main);
 
-                if (billDetails.Count != 0)
-                {
-                    //await saveDraft();
-                    setNotifications();
-                }
+            //    if (billDetails.Count != 0)
+            //    {
+            //        //await saveDraft();
+            //        setNotifications();
+            //    }
 
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
 
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
         private async void Btn_draft_Click(object sender, RoutedEventArgs e)
         {
@@ -1058,45 +961,6 @@ namespace Restaurant.View.storage.movementsOperations
 
         #endregion
         #region DataGrid
-        void deleteRowFromOrderItems(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-
-                HelpClass.StartAwait(grid_main);
-
-                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
-                    if (vis is DataGridRow)
-                    {
-                        BillDetailsPurchase row = (BillDetailsPurchase)dg_billDetails.SelectedItems[0];
-                        int index = dg_billDetails.SelectedIndex;
-
-                        // remove item from bill
-                        billDetails.RemoveAt(index);
-
-                        ObservableCollection<BillDetailsPurchase> data = (ObservableCollection<BillDetailsPurchase>)dg_billDetails.ItemsSource;
-                        data.Remove(row);
-
-                        // calculate new total
-                        //refreshTotalValue();
-                    }
-                _SequenceNum = 0;
-                for (int i = 0; i < billDetails.Count; i++)
-                {
-                    _SequenceNum++;
-                    billDetails[i].ID = _SequenceNum;
-                }
-                refrishBillDetails();
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
         void deleteRowFromInvoiceItems(object sender, RoutedEventArgs e)
         {
             try
@@ -1118,12 +982,13 @@ namespace Restaurant.View.storage.movementsOperations
 
                         tb_count.Text = _Count.ToString();
                     }
+                _SequenceNum = 0;
                 for (int i = 0; i < billDetails.Count; i++)
                 {
                     _SequenceNum++;
                     billDetails[i].ID = _SequenceNum;
                 }
-
+                refrishBillDetails();
             }
             catch (Exception ex)
             {
@@ -1132,100 +997,57 @@ namespace Restaurant.View.storage.movementsOperations
             }
         }
         private async void Dg_billDetails_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {/*
+        {
             try
             {
-                //
-                //    HelpClass.StartAwait(grid_main);
-
+                TextBlock tb = new TextBlock();
                 TextBox t = e.EditingElement as TextBox;  // Assumes columns are all TextBoxes
+
                 var columnName = e.Column.Header.ToString();
 
                 BillDetailsPurchase row = e.Row.Item as BillDetailsPurchase;
-                int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == row.itemUnitId && p.OrderId == row.OrderId).FirstOrDefault());
+                int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == row.itemUnitId).FirstOrDefault());
 
                 TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
                 if (elapsed.TotalMilliseconds < 100)
                 {
-                    if (columnName == MainWindow.resourcemanager.GetString("trQuantity"))
+                    if (columnName == MainWindow.resourcemanager.GetString("trQTR"))
                         t.Text = billDetails[index].Count.ToString();
                 }
                 else
                 {
-                    int availableAmount = 0;
-
                     int oldCount = 0;
-                    if (!t.Text.Equals(""))
-                        oldCount = int.Parse(t.Text);
-                    else
-                        oldCount = 0;
-                    int newCount = 0;
+                    long newCount = 0;
                     //"tb_amont"
                     if (columnName == MainWindow.resourcemanager.GetString("trQuantity"))
                     {
-                        if (_ProcessType == "exd")
+                        newCount = int.Parse(t.Text);
+                        if (newCount < 0)
                         {
-                            availableAmount = await getAvailableAmount(row.itemId, row.itemUnitId, MainWindow.branchLogin.branchId, row.ID);
-                            if (availableAmount < oldCount)
-                            {
+                            newCount = 0;
+                            t.Text = "0";
+                        }
 
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorAmountNotAvailableToolTip"), animation: ToasterAnimation.FadeIn);
-                                newCount = newCount + availableAmount;
-                                t.Text = availableAmount.ToString();
-                            }
-                            else
-                            {
-                                if (!t.Text.Equals(""))
-                                    newCount = int.Parse(t.Text);
-                                else
-                                    newCount = 0;
-                                if (newCount < 0)
-                                {
-                                    newCount = 0;
-                                    t.Text = "0";
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (!t.Text.Equals(""))
-                                newCount = int.Parse(t.Text);
-                            else
-                                newCount = 0;
-                        }
                     }
                     else
                         newCount = row.Count;
 
-                    if (row.OrderId != 0)
+                    oldCount = row.Count;
+
+                    //validateAvailableAmount(row, newCount, index, tb );
+                    int availableAmount = await getAvailableAmount(row.itemId, row.itemUnitId, MainWindow.branchLogin.branchId, row.ID);
+                    if (availableAmount < newCount )
                     {
-                        ItemTransfer item = mainInvoiceItems.ToList().Find(i => i.itemUnitId == row.itemUnitId && i.invoiceId == row.OrderId);
-                        if (newCount > item.quantity)
-                        {
-                            // return old value 
-                            t.Text = item.quantity.ToString();
-
-                            newCount = (int)item.quantity;
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
-                        }
-                    }
-
-
-                    _Count -= oldCount;
-                    _Count += newCount;
-
-                    //  refresh count text box
-                    tb_count.Text = _Count.ToString();
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorAmountNotAvailableToolTip"), animation: ToasterAnimation.FadeIn); 
+                        newCount = availableAmount;
+                        tb = dg_billDetails.Columns[4].GetCellContent(dg_billDetails.Items[index]) as TextBlock;
+                        tb.Text = newCount.ToString();
+                        row.Count = (int)newCount;
+                    }                     
 
                     // update item in billdetails           
                     billDetails[index].Count = (int)newCount;
-                    if (invoiceItems != null)
-                        invoiceItems[index].quantity = (int)newCount;
                 }
-                //
-                //    HelpClass.EndAwait(grid_main);
-                //refrishDataGridItems();
-
             }
             catch (Exception ex)
             {
@@ -1233,7 +1055,7 @@ namespace Restaurant.View.storage.movementsOperations
                 //    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+         
         }
         private void DataGrid_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -1318,10 +1140,6 @@ namespace Restaurant.View.storage.movementsOperations
         }
         #endregion
         #region billdetails
-        async Task RefrishItems()
-        {
-            items = await FillCombo.item.Get();
-        }
         private void addRowToBill(string itemName, int itemId, string unitName, int itemUnitId, int count)
         {
             // increase sequence for each read
@@ -1365,14 +1183,14 @@ namespace Restaurant.View.storage.movementsOperations
         }
         public async Task ChangeItemIdEvent(int itemId)
         {
-            if (items != null) item = items.ToList().Find(c => c.itemId == itemId);
+            item = FillCombo.purchaseItems.ToList().Find(c => c.itemId == itemId);
 
             if (item != null)
             {
                 this.DataContext = item;
 
                 // get item units
-                itemUnits = await FillCombo.itemUnit.GetItemUnits(item.itemId);
+                itemUnits = FillCombo.itemUnitList.Where(a => a.itemId == item.itemId).ToList();
                 // search for default unit for purchase
                 var defaultPurUnit = itemUnits.ToList().Find(c => c.defaultPurchase == 1);
                 if (defaultPurUnit != null)
@@ -1390,13 +1208,11 @@ namespace Restaurant.View.storage.movementsOperations
                 _Count++;
             }
         }
-        private void clearProcess()
+        private void clear()
         {
             _Count = 0;
             _SequenceNum = 0;
-            _SelectedBranch = -1;
-            _SelectedProcess = "imd";
-            _ProcessType = "imd";
+            _InvoiceType = "srw";
             isFromReport = false;
             archived = false;
             invoice = new Invoice();
@@ -1412,16 +1228,10 @@ namespace Restaurant.View.storage.movementsOperations
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
-        public async Task fillOrderInputs(Invoice invoice)
+        public async Task fillInvoiceInputs(Invoice invoice)
         {
-            if (invoice.invoiceMainId == null)
-                generatedInvoice = await invoice.getgeneratedInvoice(invoice.invoiceId);
-            else
-                generatedInvoice = await invoice.GetByInvoiceId((int)invoice.invoiceMainId);
             _Count = invoice.itemsCount;
             tb_count.Text = _Count.ToString();
-
-
 
             // build invoice details grid
             await buildInvoiceDetails();
@@ -1498,6 +1308,44 @@ namespace Restaurant.View.storage.movementsOperations
                 btn_next.Visibility = Visibility.Visible;
                 btn_previous.Visibility = Visibility.Visible;
             }
+        }
+        #endregion
+        #region available amount - 
+        private async Task<int> getAvailableAmount(int itemId, int itemUnitId, int branchId, int ID)
+        {
+            var itemUnits = FillCombo.itemUnitList.Where(a => a.itemId == itemId).ToList();
+            int availableAmount = await FillCombo.itemLocation.getAmountInBranch(itemUnitId, branchId);
+            var smallUnits = await FillCombo.itemUnit.getSmallItemUnits(itemId, itemUnitId);
+            foreach (ItemUnit u in itemUnits)
+            {
+                var isInBill = billDetails.ToList().Find(x => x.itemUnitId == (int)u.itemUnitId && x.ID != ID); // unit exist in invoice
+                if (isInBill != null)
+                {
+                    var isSmall = smallUnits.Find(x => x.itemUnitId == (int)u.itemUnitId);
+                    int unitValue = 0;
+
+                    int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == u.itemUnitId).FirstOrDefault());
+                    int quantity = billDetails[index].Count;
+                    if (itemUnitId == u.itemUnitId)
+                    { }
+                    else if (isSmall != null) // from-unit is bigger than to-unit
+                    {
+                        unitValue = await FillCombo.itemUnit.largeToSmallUnitQuan(itemUnitId, (int)u.itemUnitId);
+                        quantity = quantity / unitValue;
+                    }
+                    else
+                    {
+                        unitValue = await FillCombo.itemUnit.smallToLargeUnit(itemUnitId, (int)u.itemUnitId);
+
+                        if (unitValue != 0)
+                        {
+                            quantity = quantity * unitValue;
+                        }
+                    }
+                    availableAmount -= quantity;
+                }
+            }
+            return availableAmount;
         }
         #endregion
     }
