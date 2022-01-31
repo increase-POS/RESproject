@@ -2935,4 +2935,70 @@ Please add Email in setting</value>
   <data name="trReason" xml:space="preserve">
     <value>Reason</value>
   </data>
+  <data name="trBranchesAndStores" xml:space="preserve">
+    <value>Branches And Stores</value>
+  </data>
+  <data name="trConsumptionRawMaterials" xml:space="preserve">
+    <value>Consumption Materials</value>
+  </data>
+  <data name="trDeliveryManagement" xml:space="preserve">
+    <value>Delivery Management</value>
+  </data>
+  <data name="trDiningHall" xml:space="preserve">
+    <value>Dining Hall</value>
+  </data>
+  <data name="trFoods" xml:space="preserve">
+    <value>Foods</value>
+  </data>
+  <data name="trHallDivide" xml:space="preserve">
+    <value>Hall Divide</value>
+  </data>
+  <data name="trHallSections" xml:space="preserve">
+    <value>Sections</value>
+  </data>
+  <data name="trItemsCosting" xml:space="preserve">
+    <value>Items Costing</value>
+  </data>
+  <data name="trKitchen" xml:space="preserve">
+    <value>kitchen</value>
+  </data>
+  <data name="trMenuSettings" xml:space="preserve">
+    <value>Menu Settings</value>
+  </data>
+  <data name="trMovementsOperations" xml:space="preserve">
+    <value>Movements</value>
+  </data>
+  <data name="trPersons" xml:space="preserve">
+    <value>Persons</value>
+  </data>
+  <data name="trPreparingOrders" xml:space="preserve">
+    <value>Preparing Orders</value>
+  </data>
+  <data name="trReservations" xml:space="preserve">
+    <value>Reservations</value>
+  </data>
+  <data name="trReservationsUpdate" xml:space="preserve">
+    <value>Reservations Update</value>
+  </data>
+  <data name="trReservationTable" xml:space="preserve">
+    <value>Reservation Table</value>
+  </data>
+  <data name="trSpendingOrder" xml:space="preserve">
+    <value>Spending Order</value>
+  </data>
+  <data name="trSpendingRequest" xml:space="preserve">
+    <value>Spending Request</value>
+  </data>
+  <data name="trStocktakingOperations" xml:space="preserve">
+    <value>Stocktaking</value>
+  </data>
+  <data name="trStorageDivide" xml:space="preserve">
+    <value>Storage Divide</value>
+  </data>
+  <data name="trStorageOperations" xml:space="preserve">
+    <value>Storage Operations</value>
+  </data>
+  <data name="trTakeAway" xml:space="preserve">
+    <value>Take Away</value>
+  </data>
 </root>

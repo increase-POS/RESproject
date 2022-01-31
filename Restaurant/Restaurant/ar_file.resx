@@ -2911,4 +2911,70 @@
   <data name="trReason" xml:space="preserve">
     <value>السبب</value>
   </data>
+  <data name="trBranchesAndStores" xml:space="preserve">
+    <value>الفروع والمخازن</value>
+  </data>
+  <data name="trConsumptionRawMaterials" xml:space="preserve">
+    <value>استهلاك المواد</value>
+  </data>
+  <data name="trDeliveryManagement" xml:space="preserve">
+    <value>ادارة التوصيل</value>
+  </data>
+  <data name="trDiningHall" xml:space="preserve">
+    <value>قاعة الطعام</value>
+  </data>
+  <data name="trFoods" xml:space="preserve">
+    <value>المطعم</value>
+  </data>
+  <data name="trHallDivide" xml:space="preserve">
+    <value>تقسيم القاعة</value>
+  </data>
+  <data name="trHallSections" xml:space="preserve">
+    <value>الاقسام</value>
+  </data>
+  <data name="trItemsCosting" xml:space="preserve">
+    <value>تكليف العناصر</value>
+  </data>
+  <data name="trKitchen" xml:space="preserve">
+    <value>المطبخ</value>
+  </data>
+  <data name="trMenuSettings" xml:space="preserve">
+    <value>قائمة الطعام</value>
+  </data>
+  <data name="trMovementsOperations" xml:space="preserve">
+    <value>التنقلات</value>
+  </data>
+  <data name="trPersons" xml:space="preserve">
+    <value>الأشخاص</value>
+  </data>
+  <data name="trPreparingOrders" xml:space="preserve">
+    <value>تحضير الطلبات</value>
+  </data>
+  <data name="trReservations" xml:space="preserve">
+    <value>الحجوزات</value>
+  </data>
+  <data name="trReservationsUpdate" xml:space="preserve">
+    <value>تعديل الحجز</value>
+  </data>
+  <data name="trReservationTable" xml:space="preserve">
+    <value>حجز الطاولات</value>
+  </data>
+  <data name="trSpendingOrder" xml:space="preserve">
+    <value>امر صرف</value>
+  </data>
+  <data name="trSpendingRequest" xml:space="preserve">
+    <value>طلب صرف</value>
+  </data>
+  <data name="trStocktakingOperations" xml:space="preserve">
+    <value>الجرد</value>
+  </data>
+  <data name="trStorageDivide" xml:space="preserve">
+    <value>تقسيم المخزن</value>
+  </data>
+  <data name="trStorageOperations" xml:space="preserve">
+    <value>عمليات التخزين</value>
+  </data>
+  <data name="trTakeAway" xml:space="preserve">
+    <value>Take Away</value>
+  </data>
 </root>
