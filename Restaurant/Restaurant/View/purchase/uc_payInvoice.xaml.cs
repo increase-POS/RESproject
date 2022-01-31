@@ -2818,11 +2818,11 @@ namespace Restaurant.View.purchase
                 if (MainWindow.groupObject.HasPermissionAction(paymentsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     ////////////////////////////
-                    Thread t1 = new Thread(() =>
-                    {
+                   // Thread t1 = new Thread(() =>
+                  //  {
                         pdfPurInvoice();
-                    });
-                    t1.Start();
+                    //});
+                    //t1.Start();
                     ////////////////////////////
                 }
                 else
@@ -2866,7 +2866,7 @@ namespace Restaurant.View.purchase
                 {
                     prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
 
-                    if (int.Parse(MainWindow.Allow_print_inv_count) <= prInvoice.printedcount)
+                    if (int.Parse(FillCombo.Allow_print_inv_count) <= prInvoice.printedcount)
                     {
                         this.Dispatcher.Invoke(() =>
                         {
@@ -2965,7 +2965,7 @@ namespace Restaurant.View.purchase
 
                                         rep.Refresh();
 
-                                        if (int.Parse(MainWindow.Allow_print_inv_count) > prInvoice.printedcount)
+                                        if (int.Parse(FillCombo.Allow_print_inv_count) > prInvoice.printedcount)
                                         {
 
                                             this.Dispatcher.Invoke(() =>
@@ -3035,7 +3035,7 @@ namespace Restaurant.View.purchase
                     }
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 this.Dispatcher.Invoke(() =>
                 {
@@ -3056,7 +3056,7 @@ namespace Restaurant.View.purchase
 
                     prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
 
-                    if (int.Parse(MainWindow.Allow_print_inv_count) <= prInvoice.printedcount)
+                    if (int.Parse(FillCombo.Allow_print_inv_count) <= prInvoice.printedcount)
                     {
                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trYouExceedLimit"), animation: ToasterAnimation.FadeIn);
 
@@ -3172,7 +3172,7 @@ namespace Restaurant.View.purchase
 
                                 rep.Refresh();
 
-                                if (int.Parse(MainWindow.Allow_print_inv_count) > prInvoice.printedcount)
+                                if (int.Parse(FillCombo.Allow_print_inv_count) > prInvoice.printedcount)
                                 {
 
                                     LocalReportExtensions.ExportToPDF(rep, pdfpath);
@@ -3315,7 +3315,26 @@ namespace Restaurant.View.purchase
                             clsReports.setReportLanguage(paramarr);
                             clsReports.Header(paramarr);
                             paramarr = reportclass.fillPurInvReport(prInvoice, paramarr);
-                            multiplePaytable(paramarr);
+
+                            //
+                            //   multiplePaytable(paramarr);
+                            if ((prInvoice.invType == "p" || prInvoice.invType == "pw" || prInvoice.invType == "pbd" || prInvoice.invType == "pb"))
+                            {
+                                CashTransfer cachModel = new CashTransfer();
+                                List<PayedInvclass> payedList = new List<PayedInvclass>();
+                                payedList = await cachModel.GetPayedByInvId(prInvoice.invoiceId);
+                                mailpayedList = payedList;
+                                decimal sump = payedList.Sum(x => x.cash);
+                                decimal deservd = (decimal)prInvoice.totalNet - sump;
+                                paramarr.Add(new ReportParameter("cashTr", MainWindow.resourcemanagerreport.GetString("trCashType")));
+
+                                paramarr.Add(new ReportParameter("sumP", reportclass.DecTostring(sump)));
+                                paramarr.Add(new ReportParameter("deserved", reportclass.DecTostring(deservd)));
+                                rep.DataSources.Add(new ReportDataSource("DataSetPayedInvclass", payedList));
+
+
+                            }
+                            //
                             rep.SetParameters(paramarr);
                             rep.Refresh();
 
@@ -3326,7 +3345,7 @@ namespace Restaurant.View.purchase
 
                                 paramarr.Add(new ReportParameter("isOrginal", prInvoice.isOrginal.ToString()));
 
-                                for (int i = 1; i <= short.Parse(MainWindow.pur_copy_count); i++)
+                                for (int i = 1; i <= short.Parse(FillCombo.pur_copy_count); i++)
                                 {
                                     if (i > 1)
                                     {
@@ -3346,14 +3365,14 @@ namespace Restaurant.View.purchase
 
                                     rep.Refresh();
 
-                                    if (int.Parse(MainWindow.Allow_print_inv_count) > prInvoice.printedcount)
+                                    if (int.Parse(FillCombo.Allow_print_inv_count) > prInvoice.printedcount)
                                     {
 
                                         this.Dispatcher.Invoke(() =>
                                         {
 
 
-                                            LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.sale_printer_name, 1);
+                                            LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.sale_printer_name, 1);
 
 
 
@@ -3404,7 +3423,7 @@ namespace Restaurant.View.purchase
                     //
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 this.Dispatcher.Invoke(() =>
                 {
@@ -3414,6 +3433,7 @@ namespace Restaurant.View.purchase
 
             }
         }
+
 
         public async void sendPurEmail()
         {
@@ -3719,12 +3739,12 @@ namespace Restaurant.View.purchase
                     prInvoiceId = invoice.invoiceId;
 
                     ////////////////////////////
-                    Thread t1 = new Thread(() =>
-                    {
+                    //Thread t1 = new Thread(() =>
+                    //{
                         printPurInvoice();
 
-                    });
-                    t1.Start();
+                    //});
+                    //t1.Start();
                     ////////////////////////////
                 }
                 else

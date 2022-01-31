@@ -669,11 +669,11 @@ namespace Restaurant.Classes
             {
                 if (invoice.invType == "or" || invoice.invType == "po" || invoice.invType == "pos" || invoice.invType == "pod" || invoice.invType == "ors")
                 {
-                    addpath = @"\Reports\Purchase\Ar\ArInvPurOrderReport.rdlc";
+                    addpath = @"\Reports\Purchase\Ar\ArPurOrderInv.rdlc";
                 }
                 else
                 {
-                    addpath = @"\Reports\Purchase\Ar\ArInvPurReport.rdlc";
+                    addpath = @"\Reports\Purchase\Ar\ArPurInv.rdlc";
                 }
 
             }
@@ -681,11 +681,11 @@ namespace Restaurant.Classes
             {
                 if (invoice.invType == "or" || invoice.invType == "po" || invoice.invType == "pos" || invoice.invType == "pod" || invoice.invType == "ors")
                 {
-                    addpath = @"\Reports\Purchase\En\InvPurOrderReport.rdlc";
+                    addpath = @"\Reports\Purchase\En\EnPurOrderInv.rdlc";
                 }
                 else
                 {
-                    addpath = @"\Reports\Purchase\En\InvPurReport.rdlc";
+                    addpath = @"\Reports\Purchase\En\EnPurInv.rdlc";
                 }
             }
 
