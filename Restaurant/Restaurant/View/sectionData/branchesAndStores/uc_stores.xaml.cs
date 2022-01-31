@@ -751,7 +751,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                 
                     HelpClass.EndAwait(grid_main);
             }
-            catch 
+            catch (Exception ex)
             {
                 
                     HelpClass.EndAwait(grid_main);

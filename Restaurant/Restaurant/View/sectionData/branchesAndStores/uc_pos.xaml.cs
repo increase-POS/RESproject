@@ -660,7 +660,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
             {
                 
                     HelpClass.EndAwait(grid_main);
-                 .ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
