@@ -850,7 +850,7 @@ namespace Restaurant.View.sectionData.persons
             {
                 
                     HelpClass.EndAwait(grid_main);
-                //HelpClass.ExceptionMessage(ex, this);
+              HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -878,7 +878,7 @@ namespace Restaurant.View.sectionData.persons
             {
                 
                     HelpClass.EndAwait(grid_main);
-                //  HelpClass.ExceptionMessage(ex, this);
+               HelpClass.ExceptionMessage(ex, this);
             }
 
         }
@@ -922,7 +922,7 @@ namespace Restaurant.View.sectionData.persons
                 
                     HelpClass.EndAwait(grid_main);
 
-                //   HelpClass.ExceptionMessage(ex, this);
+                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -967,7 +967,7 @@ namespace Restaurant.View.sectionData.persons
             {
                 
                     HelpClass.EndAwait(grid_main);
-                // HelpClass.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         #endregion

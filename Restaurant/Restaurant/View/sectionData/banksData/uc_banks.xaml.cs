@@ -727,7 +727,7 @@ namespace Restaurant.View.sectionData.banksData
             {
                 
                     HelpClass.EndAwait(grid_main);
-                //HelpClass.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -772,7 +772,7 @@ namespace Restaurant.View.sectionData.banksData
             {
                 
                     HelpClass.EndAwait(grid_main);
-                // HelpClass.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
 
         }
@@ -801,7 +801,7 @@ namespace Restaurant.View.sectionData.banksData
             {
                 
                     HelpClass.EndAwait(grid_main);
-                //  HelpClass.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -844,7 +844,7 @@ namespace Restaurant.View.sectionData.banksData
                 
                     HelpClass.EndAwait(grid_main);
 
-                //   HelpClass.ExceptionMessage(ex, this);
+                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 

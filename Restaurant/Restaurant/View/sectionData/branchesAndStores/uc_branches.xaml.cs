@@ -759,7 +759,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
             {
                 
                     HelpClass.EndAwait(grid_main);
-                //HelpClass.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -787,7 +787,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
             {
                 
                     HelpClass.EndAwait(grid_main);
-                //  HelpClass.ExceptionMessage(ex, this);
+                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -830,7 +830,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                 
                     HelpClass.EndAwait(grid_main);
 
-                //   HelpClass.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -875,7 +875,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
             {
                 
                     HelpClass.EndAwait(grid_main);
-                // HelpClass.ExceptionMessage(ex, this);
+                  HelpClass.ExceptionMessage(ex, this);
             }
 
         }

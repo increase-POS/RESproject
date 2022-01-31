@@ -773,7 +773,7 @@ namespace Restaurant.View.sectionData.banksData
             {
                 
                     HelpClass.EndAwait(grid_main);
-                //HelpClass.ExceptionMessage(ex, this);
+                 HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void Btn_print_Click(object sender, RoutedEventArgs e)
@@ -800,7 +800,7 @@ namespace Restaurant.View.sectionData.banksData
             {
                 
                     HelpClass.EndAwait(grid_main);
-                //  HelpClass.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -843,7 +843,7 @@ namespace Restaurant.View.sectionData.banksData
                 
                     HelpClass.EndAwait(grid_main);
 
-                //   HelpClass.ExceptionMessage(ex, this);
+                    HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -888,7 +888,7 @@ namespace Restaurant.View.sectionData.banksData
             {
                 
                     HelpClass.EndAwait(grid_main);
-                // HelpClass.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
 
         }
