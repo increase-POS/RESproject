@@ -266,6 +266,9 @@
     <Compile Include="View\kitchen\uc_consumptionRawMaterials.xaml.cs">
       <DependentUpon>uc_consumptionRawMaterials.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\kitchen\uc_itemsCosting.xaml.cs">
+      <DependentUpon>uc_itemsCosting.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\kitchen\uc_kitchen.xaml.cs">
       <DependentUpon>uc_kitchen.xaml</DependentUpon>
     </Compile>
@@ -582,6 +585,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\kitchen\uc_consumptionRawMaterials.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\kitchen\uc_itemsCosting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

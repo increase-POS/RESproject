@@ -407,7 +407,7 @@
                                         Foreground="{StaticResource ThickGrey}" FontWeight="SemiBold"
                                         VerticalAlignment="Center" HorizontalAlignment="Left"
                                         Margin="5"/>
-                                        <TextBlock  Text="Eggggggggggggggggggggggggg" Grid.Column="1"
+                                        <TextBlock  Text="Egg" Grid.Column="1"
                                         Foreground="{StaticResource ThickGrey}" 
                                         VerticalAlignment="Center" HorizontalAlignment="Left"
                                         Margin="5"/>
