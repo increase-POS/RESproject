@@ -71,7 +71,7 @@ namespace Restaurant.Classes
         //    foreach (var c in bondsQuery)
         //    {
 
-        //        c.amount = decimal.Parse(SectionData.DecTostring(c.amount));
+        //        c.amount = decimal.Parse(HelpClass.DecTostring(c.amount));
         //    }
         //    rep.DataSources.Add(new ReportDataSource("DataSetBond", bondsQuery));
 
@@ -114,7 +114,7 @@ namespace Restaurant.Classes
         //                break;
         //        }
         //        o.status = status;
-        //        o.deserved = decimal.Parse(SectionData.DecTostring(o.deserved));
+        //        o.deserved = decimal.Parse(HelpClass.DecTostring(o.deserved));
         //    }
         //    rep.DataSources.Add(new ReportDataSource("DataSetInvoice", invoiceQuery));
         //}
@@ -126,7 +126,7 @@ namespace Restaurant.Classes
 
             foreach (var o in invoiceQuery)
             {
-                o.deserved = decimal.Parse(SectionData.DecTostring(o.deserved));
+                o.deserved = decimal.Parse(HelpClass.DecTostring(o.deserved));
             }
             DeliverStateConv(paramarr);
 
@@ -166,7 +166,7 @@ namespace Restaurant.Classes
             foreach (var c in cash)
             {
                 ///////////////////
-                c.cash = decimal.Parse(SectionData.DecTostring(c.cash));
+                c.cash = decimal.Parse(HelpClass.DecTostring(c.cash));
                 string s;
                 switch (c.processType)
                 {
@@ -239,7 +239,7 @@ namespace Restaurant.Classes
             //foreach (var c in cash)
             //{
             //    ///////////////////
-            //    c.cash = decimal.Parse(SectionData.DecTostring(c.cash));
+            //    c.cash = decimal.Parse(HelpClass.DecTostring(c.cash));
             //    string s;
             //    switch (c.processType)
             //    {
@@ -265,7 +265,7 @@ namespace Restaurant.Classes
             foreach (var c in cash)
             {
 
-                c.cash = decimal.Parse(SectionData.DecTostring(c.cash));
+                c.cash = decimal.Parse(HelpClass.DecTostring(c.cash));
             }
 
             AccountSideConv(paramarr);
@@ -297,7 +297,7 @@ namespace Restaurant.Classes
             foreach (var c in cash)
             {
 
-                c.cash = decimal.Parse(SectionData.DecTostring(c.cash));
+                c.cash = decimal.Parse(HelpClass.DecTostring(c.cash));
             }
             DateFormConv(paramarr);
             AccountSideConv(paramarr);
@@ -324,7 +324,7 @@ namespace Restaurant.Classes
             foreach (var c in cash)
             {
 
-                c.cash = decimal.Parse(SectionData.DecTostring(c.cash));
+                c.cash = decimal.Parse(HelpClass.DecTostring(c.cash));
             }
             paramarr.Add(new ReportParameter("trPull", MainWindow.resourcemanagerreport.GetString("trPull")));
             paramarr.Add(new ReportParameter("trDeposit", MainWindow.resourcemanagerreport.GetString("trDeposit")));
@@ -553,9 +553,9 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             foreach (var c in CouponQuery2)
             {
-                c.discountValue = decimal.Parse(SectionData.DecTostring(c.discountValue));
-                c.invMin = decimal.Parse(SectionData.DecTostring(c.invMin));
-                c.invMax = decimal.Parse(SectionData.DecTostring(c.invMax));
+                c.discountValue = decimal.Parse(HelpClass.DecTostring(c.discountValue));
+                c.invMin = decimal.Parse(HelpClass.DecTostring(c.invMin));
+                c.invMax = decimal.Parse(HelpClass.DecTostring(c.invMax));
 
                 string state = "";
 
@@ -634,7 +634,7 @@ namespace Restaurant.Classes
             foreach (var o in OfferQuery)
             {
 
-                o.discountValue = decimal.Parse(SectionData.DecTostring(o.discountValue));
+                o.discountValue = decimal.Parse(HelpClass.DecTostring(o.discountValue));
             }
 
             rep.DataSources.Add(new ReportDataSource("DataSetOffer", OfferQuery));
@@ -683,18 +683,18 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             foreach (var r in tempquery)
             {
-                r.CopdiscountValue = decimal.Parse(SectionData.DecTostring(r.CopdiscountValue));
-                r.couponTotalValue = decimal.Parse(SectionData.DecTostring(r.couponTotalValue));//
-                r.OdiscountValue = decimal.Parse(SectionData.DecTostring(r.OdiscountValue));
-                r.offerTotalValue = decimal.Parse(SectionData.DecTostring(r.offerTotalValue));
-                r.ITprice = decimal.Parse(SectionData.DecTostring(r.ITprice));
-                r.subTotal = decimal.Parse(SectionData.DecTostring(r.subTotal));
-                r.totalNet = decimal.Parse(SectionData.DecTostring(r.totalNet));
-                r.discountValue = decimal.Parse(SectionData.DecTostring(r.discountValue));
-                r.tax = decimal.Parse(SectionData.DecTostring(r.tax));
+                r.CopdiscountValue = decimal.Parse(HelpClass.DecTostring(r.CopdiscountValue));
+                r.couponTotalValue = decimal.Parse(HelpClass.DecTostring(r.couponTotalValue));//
+                r.OdiscountValue = decimal.Parse(HelpClass.DecTostring(r.OdiscountValue));
+                r.offerTotalValue = decimal.Parse(HelpClass.DecTostring(r.offerTotalValue));
+                r.ITprice = decimal.Parse(HelpClass.DecTostring(r.ITprice));
+                r.subTotal = decimal.Parse(HelpClass.DecTostring(r.subTotal));
+                r.totalNet = decimal.Parse(HelpClass.DecTostring(r.totalNet));
+                r.discountValue = decimal.Parse(HelpClass.DecTostring(r.discountValue));
+                r.tax = decimal.Parse(HelpClass.DecTostring(r.tax));
                 if (r.itemAvg != null)
                 {
-                    r.itemAvg = double.Parse(SectionData.DecTostring(decimal.Parse(r.itemAvg.ToString())));
+                    r.itemAvg = double.Parse(HelpClass.DecTostring(decimal.Parse(r.itemAvg.ToString())));
 
                 }
             }
@@ -761,7 +761,7 @@ Parameters!trValueDiscount.Value)
         //    }
         //    else
         //    {
-        //        date = SectionData.DateToString(tempquery.FirstOrDefault().updateDate);
+        //        date = HelpClass.DateToString(tempquery.FirstOrDefault().updateDate);
         //    }
         //    paramarr.Add(new ReportParameter("isTax", MainWindow.invoiceTax_bool.ToString()));
         //    paramarr.Add(new ReportParameter("invDate", date));
@@ -776,9 +776,9 @@ Parameters!trValueDiscount.Value)
             foreach (var r in tempquery)
             {
 
-                r.totalNet = decimal.Parse(SectionData.DecTostring(r.totalNet));
-                r.invoiceProfit = decimal.Parse(SectionData.DecTostring(r.invoiceProfit));
-                r.itemProfit = decimal.Parse(SectionData.DecTostring(r.itemProfit));
+                r.totalNet = decimal.Parse(HelpClass.DecTostring(r.totalNet));
+                r.invoiceProfit = decimal.Parse(HelpClass.DecTostring(r.invoiceProfit));
+                r.itemProfit = decimal.Parse(HelpClass.DecTostring(r.itemProfit));
 
             }
             rep.DataSources.Add(new ReportDataSource("DataSetProfit", tempquery));
@@ -983,7 +983,7 @@ Parameters!trValueDiscount.Value)
         {
             foreach (var i in invoiceItems)
             {
-                i.price = decimal.Parse(SectionData.DecTostring(i.price));
+                i.price = decimal.Parse(HelpClass.DecTostring(i.price));
             }
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
@@ -1000,14 +1000,14 @@ Parameters!trValueDiscount.Value)
             foreach (var r in storageQuery)
             {
                 if (r.startDate != null)
-                    r.startDate = DateTime.Parse(SectionData.DateToString(r.startDate));//
+                    r.startDate = DateTime.Parse(HelpClass.DateToString(r.startDate));//
                 if (r.endDate != null)
-                    r.endDate = DateTime.Parse(SectionData.DateToString(r.endDate));
-                //r.inventoryDate = DateTime.Parse(SectionData.DateToString(r.inventoryDate));
-                //r.IupdateDate = DateTime.Parse(SectionData.DateToString(r.IupdateDate));
+                    r.endDate = DateTime.Parse(HelpClass.DateToString(r.endDate));
+                //r.inventoryDate = DateTime.Parse(HelpClass.DateToString(r.inventoryDate));
+                //r.IupdateDate = DateTime.Parse(HelpClass.DateToString(r.IupdateDate));
 
-                //r.diffPercentage = decimal.Parse(SectionData.DecTostring(r.diffPercentage));
-                r.storageCostValue = decimal.Parse(SectionData.DecTostring(r.storageCostValue));
+                //r.diffPercentage = decimal.Parse(HelpClass.DecTostring(r.diffPercentage));
+                r.storageCostValue = decimal.Parse(HelpClass.DecTostring(r.storageCostValue));
             }
             rep.DataSources.Add(new ReportDataSource("DataSetStorage", storageQuery));
         }
@@ -1034,11 +1034,11 @@ Parameters!trValueDiscount.Value)
             foreach (var r in Query)
             {
 
-                //r.inventoryDate = DateTime.Parse(SectionData.DateToString(r.inventoryDate));
-                //r.IupdateDate = DateTime.Parse(SectionData.DateToString(r.IupdateDate));
+                //r.inventoryDate = DateTime.Parse(HelpClass.DateToString(r.inventoryDate));
+                //r.IupdateDate = DateTime.Parse(HelpClass.DateToString(r.IupdateDate));
 
-                r.diffPercentage = decimal.Parse(SectionData.DecTostring(r.diffPercentage));
-                //r.storageCostValue = decimal.Parse(SectionData.DecTostring(r.storageCostValue));
+                r.diffPercentage = decimal.Parse(HelpClass.DecTostring(r.diffPercentage));
+                //r.storageCostValue = decimal.Parse(HelpClass.DecTostring(r.storageCostValue));
             }
 
 
@@ -1056,15 +1056,15 @@ Parameters!trValueDiscount.Value)
             //foreach (var r in Query)
             //{
             //    //if (r.startDate != null)
-            //    //    r.startDate = DateTime.Parse(SectionData.DateToString(r.startDate));//
+            //    //    r.startDate = DateTime.Parse(HelpClass.DateToString(r.startDate));//
             //    //if (r.endDate != null)
-            //    //    r.endDate = DateTime.Parse(SectionData.DateToString(r.endDate));
+            //    //    r.endDate = DateTime.Parse(HelpClass.DateToString(r.endDate));
 
-            //    //r.inventoryDate = DateTime.Parse(SectionData.DateToString(r.inventoryDate));
-            //    //r.IupdateDate = DateTime.Parse(SectionData.DateToString(r.IupdateDate));
+            //    //r.inventoryDate = DateTime.Parse(HelpClass.DateToString(r.inventoryDate));
+            //    //r.IupdateDate = DateTime.Parse(HelpClass.DateToString(r.IupdateDate));
 
-            //    //r.diffPercentage = decimal.Parse(SectionData.DecTostring(r.diffPercentage));
-            //    //r.storageCostValue = decimal.Parse(SectionData.DecTostring(r.storageCostValue));
+            //    //r.diffPercentage = decimal.Parse(HelpClass.DecTostring(r.diffPercentage));
+            //    //r.storageCostValue = decimal.Parse(HelpClass.DecTostring(r.storageCostValue));
             //}
 
 
@@ -1154,8 +1154,8 @@ Parameters!trValueDiscount.Value)
             rep.DataSources.Clear();
             foreach (var r in cashTransfers)
             {
-                r.updateDate = DateTime.Parse(SectionData.DateToString(r.updateDate));
-                r.cash = decimal.Parse(SectionData.DecTostring(r.cash));
+                r.updateDate = DateTime.Parse(HelpClass.DateToString(r.updateDate));
+                r.cash = decimal.Parse(HelpClass.DecTostring(r.cash));
 
 
             }
@@ -1168,8 +1168,8 @@ Parameters!trValueDiscount.Value)
             rep.DataSources.Clear();
             foreach (CashTransferSts r in cashTransfers)
             {
-                r.updateDate = DateTime.Parse(SectionData.DateToString(r.updateDate));
-                r.cash = decimal.Parse(SectionData.DecTostring(r.cash));
+                r.updateDate = DateTime.Parse(HelpClass.DateToString(r.updateDate));
+                r.cash = decimal.Parse(HelpClass.DecTostring(r.cash));
 
               //  r.paymentreport = StsStatementPaymentConvert(r.Description3);
 
@@ -1186,7 +1186,7 @@ Parameters!trValueDiscount.Value)
             foreach (var r in query)
             {
 
-                r.balance = decimal.Parse(SectionData.DecTostring(r.balance));
+                r.balance = decimal.Parse(HelpClass.DecTostring(r.balance));
             }
             rep.DataSources.Add(new ReportDataSource("DataSetBalanceSTS", query));
             paramarr.Add(new ReportParameter("title", MainWindow.resourcemanagerreport.GetString("trBalance")));
@@ -1331,7 +1331,7 @@ Parameters!trValueDiscount.Value)
             rep.DataSources.Clear();
             foreach (var r in categoryQuery)
             {
-                r.taxes = decimal.Parse(SectionData.DecTostring(r.taxes));
+                r.taxes = decimal.Parse(HelpClass.DecTostring(r.taxes));
             }
             rep.DataSources.Add(new ReportDataSource("DataSetCategory", categoryQuery));
             paramarr.Add(new ReportParameter("Title", MainWindow.resourcemanagerreport.GetString("trCategories")));
@@ -1354,7 +1354,7 @@ Parameters!trValueDiscount.Value)
             rep.DataSources.Clear();
             foreach (var r in itemQuery)
             {
-                r.taxes = decimal.Parse(SectionData.DecTostring(r.taxes));
+                r.taxes = decimal.Parse(HelpClass.DecTostring(r.taxes));
             }
             rep.DataSources.Add(new ReportDataSource("DataSetItem", itemQuery));
             paramarr.Add(new ReportParameter("Title", MainWindow.resourcemanagerreport.GetString("trItems")));
@@ -1381,7 +1381,7 @@ Parameters!trValueDiscount.Value)
             rep.DataSources.Clear();
             foreach (var s in storageCostQuery)
             {
-                s.cost = decimal.Parse(SectionData.DecTostring(s.cost));
+                s.cost = decimal.Parse(HelpClass.DecTostring(s.cost));
             }
             rep.DataSources.Add(new ReportDataSource("DataSetStorageCost", storageCostQuery));
             paramarr.Add(new ReportParameter("Title", MainWindow.resourcemanagerreport.GetString("trStorageCost")));
