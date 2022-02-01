@@ -1041,7 +1041,7 @@ namespace Restaurant.View.sales.promotion
             rep.Refresh();
             this.Dispatcher.Invoke(() =>
             {
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, short.Parse(FillCombo.rep_print_count));
             });
         }
         #endregion

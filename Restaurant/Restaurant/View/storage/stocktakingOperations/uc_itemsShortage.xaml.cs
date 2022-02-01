@@ -161,7 +161,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                         FillCombo.invoice = new Invoice();
                         FillCombo.invoice.invNumber = await FillCombo.invoice.generateInvNumber("sh",MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
                         FillCombo.invoice.branchCreatorId = MainWindow.branchLogin.branchId;
-                        FillCombo.invoice.posId = MainWindow.posID.Value;
+                        FillCombo.invoice.posId = MainWindow.posLogin.posId;
                         FillCombo.invoice.createUserId = MainWindow.userLogin.userId;
                         FillCombo.invoice.invType = "sh"; // shortage
                         FillCombo.invoice.total = total;

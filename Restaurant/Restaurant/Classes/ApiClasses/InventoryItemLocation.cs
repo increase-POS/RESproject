@@ -153,7 +153,7 @@ namespace Restaurant.Classes
             //user = await user.getUserById(userId);
             user = FillCombo.usersList.Where(x => x.userId == userId).FirstOrDefault();
             CashTransfer cashTrasnfer = new CashTransfer();
-            cashTrasnfer.posId = MainWindow.posID;
+            cashTrasnfer.posId = MainWindow.posLogin.posId;
             cashTrasnfer.userId = userId;
             cashTrasnfer.invId = invoice.invoiceId;
             cashTrasnfer.createUserId = invoice.createUserId;
