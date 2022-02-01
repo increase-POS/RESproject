@@ -17,7 +17,7 @@ namespace Restaurant.Classes
     public class Notification
     {
         public int notUserId { get; set; }
-        public Nullable<int> notId { get; set; }
+        public int notId { get; set; }
         public Nullable<int> userId { get; set; }
         public bool isRead { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
@@ -35,7 +35,7 @@ namespace Restaurant.Classes
         public string path { get; set; }
 
       
-        public Nullable<byte> isActive { get; set; }
+        public byte isActive { get; set; }
 
         //***********************************************
         public async Task<int> save(Notification obj, int branchId, string objectName, string prefix,

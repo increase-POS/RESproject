@@ -350,6 +350,10 @@
                     <TextBlock Text="spending request" x:Name="txt_titleDataGridInvoice" Foreground="{StaticResource MainColor}" FontWeight="Bold" FontSize="18"  
                                      VerticalAlignment="Center" 
                                        HorizontalAlignment="Left" Margin="10,10,5,5"/>
+                    <TextBlock Grid.Row="0"  Text="" x:Name="txt_invNumber"  Foreground="#4E4E4E" 
+                                   FontWeight="SemiBold" FontSize="14"  
+                                  VerticalAlignment="Center"  
+                                       HorizontalAlignment="Right" Margin="5,10,10,5"/>
                     <DataGrid x:Name="dg_billDetails"  Margin="5,5" Grid.Row="1"   Grid.ColumnSpan="2"    Background="White"
                       materialDesign:DataGridAssist.CornerRadius="5" Visibility="Visible"
                          IsReadOnly="False" CanUserAddRows="False"  PreviewKeyDown="Dg_billDetails_PreviewKeyDown"

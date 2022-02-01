@@ -515,6 +515,18 @@ namespace Restaurant.Classes
 
             return items;
         }
+        static public async Task<IEnumerable<Item>> FillComboPurchaseItems(ComboBox cmb)
+        {
+            if (purchaseItems == null)
+                await RefreshPurchaseItems();
+
+            cmb.ItemsSource = purchaseItems;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "itemId";
+            cmb.SelectedIndex = -1;
+
+            return purchaseItems;
+        }
         #endregion
         #region reportSetting
 
