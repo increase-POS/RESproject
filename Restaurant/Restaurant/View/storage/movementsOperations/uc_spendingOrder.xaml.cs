@@ -72,7 +72,7 @@ namespace Restaurant.View.storage.movementsOperations
         static private int _SequenceNum = 0;
         static private int _Count = 0;
         static private int _invoiceId;
-        static public string _InvoiceType = "srw"; //spending request waiting
+        static public string _InvoiceType = "sr"; //spending request waiting
         #region for barcode
 
         DateTime _lastKeystroke = new DateTime(0);
@@ -145,6 +145,7 @@ namespace Restaurant.View.storage.movementsOperations
                 translate();
                 setNotifications();
                 setTimer();
+                await FillCombo.RefreshPurchaseItems();
                 //List all the UIElement in the VisualTree
                 controls = new List<Control>();
                 FindControl(this.grid_main, controls);
@@ -402,7 +403,7 @@ namespace Restaurant.View.storage.movementsOperations
 
                 default: // if barcode for item
                          // get item matches barcode
-                    if (FillCombo.itemUnitList != null)
+                    if (FillCombo.itemUnitList != null && _InvoiceType == "srw")
                     {
                         // ItemUnit unit1 = barcodesList.ToList().Find(c => c.barcode == barcode.Trim());
                         ItemUnit unit1 = FillCombo.itemUnitList.ToList().Find(c => c.barcode == barcode.Trim() && FillCombo.purchaseTypes.Contains(c.type));
@@ -471,7 +472,7 @@ namespace Restaurant.View.storage.movementsOperations
             }
         }
         #endregion
-        #region save
+        #region save - delete
         private bool validateItemUnits()
         {
             bool valid = true;
@@ -541,19 +542,7 @@ namespace Restaurant.View.storage.movementsOperations
                                 {
                                     if (itemsLocations[i].isSelected == true)
                                         readyItemsLoc.Add(itemsLocations[i]);
-                                }
-                                #region notification Object
-                                Notification not = new Notification()
-                                {
-                                    title = "trSpendingOrderAlertTilte",
-                                    ncontent = "trSpendingOrderApproveAlertContent",
-                                    msgType = "alert",
-                                    createDate = DateTime.Now,
-                                    updateDate = DateTime.Now,
-                                    createUserId = MainWindow.userLogin.userId,
-                                    updateUserId = MainWindow.userLogin.userId,
-                                };
-                                #endregion
+                                }                             
                                 #region invoice 
                                 invoice.invType = "sr";
                                 invoice.updateUserId = MainWindow.userLogin.userId;
@@ -563,7 +552,20 @@ namespace Restaurant.View.storage.movementsOperations
                                 {
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
-                                    await not.save(not, MainWindow.branchLogin.branchId, "spendingOrderAlert_approve", "");
+                                    #region notification Object
+                                    Notification not = new Notification()
+                                    {
+                                        title = "trSpendingOrderAlertTilte",
+                                        ncontent = "trSpendingOrderApproveAlertContent",
+                                        msgType = "alert",
+                                        createDate = DateTime.Now,
+                                        updateDate = DateTime.Now,
+                                        createUserId = MainWindow.userLogin.userId,
+                                        updateUserId = MainWindow.userLogin.userId,
+                                    };
+                                    await not.save(not, MainWindow.branchLogin.branchId, "spendingOrderAlert_approve", MainWindow.userLogin.fullName);
+                                    #endregion
+
                                     await FillCombo.itemLocation.transferToKitchen(readyItemsLoc, orderList, MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                                     setNotifications();
                                     clear();
@@ -590,7 +592,47 @@ namespace Restaurant.View.storage.movementsOperations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private async void Btn_deleteInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+                if (invoice.invoiceId != 0)
+                {
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+                    wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                    w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                    w.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
+                    if (w.isOk)
+                    {
+                        invoice.invType = "src";
+                        invoice.updateUserId = MainWindow.userLogin.userId;
+                        int res = await FillCombo.invoice.saveInvoice(invoice);
+                        if (res > 0)
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
+                            clear();
+                            setNotifications();
+                        }
+                        else
+                            Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    }
+                }
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         #endregion
         #region events
 
@@ -1212,7 +1254,7 @@ namespace Restaurant.View.storage.movementsOperations
         {
             _Count = 0;
             _SequenceNum = 0;
-            _InvoiceType = "srw";
+            _InvoiceType = "sr";
             isFromReport = false;
             archived = false;
             invoice = new Invoice();
@@ -1221,7 +1263,8 @@ namespace Restaurant.View.storage.movementsOperations
             billDetails.Clear();
 
             refrishBillDetails();
-            inputEditable();
+
+            btn_deleteInvoice.Visibility = Visibility.Collapsed;
             btn_next.Visibility = Visibility.Collapsed;
             btn_previous.Visibility = Visibility.Collapsed;
 
@@ -1232,7 +1275,7 @@ namespace Restaurant.View.storage.movementsOperations
         {
             _Count = invoice.itemsCount;
             tb_count.Text = _Count.ToString();
-
+            txt_invNumber.Text = invoice.invNumber.ToString();
             // build invoice details grid
             await buildInvoiceDetails();
 
@@ -1271,38 +1314,17 @@ namespace Restaurant.View.storage.movementsOperations
         }
         private void inputEditable()
         {
+            if (_InvoiceType == "srw") // spending order waiting
+            {
+                btn_items.IsEnabled = true;
+            }
+            else
+            {
+                btn_items.IsEnabled = false;
 
-            /*
-            if (_ProcessType == "imd" || _ProcessType == "exd") // return invoice
-            {
-                dg_billDetails.Columns[0].Visibility = Visibility.Visible; //make delete hidden
-                dg_billDetails.Columns[4].IsReadOnly = false; //make count read only
-                tb_barcode.IsEnabled = true;
-                btn_save.IsEnabled = true;
-            }
-            else if (_ProcessType == "im" || _ProcessType == "ex")
-            {
-                dg_billDetails.Columns[0].Visibility = Visibility.Collapsed; //make delete hidden
-                dg_billDetails.Columns[4].IsReadOnly = true; //make count read only
-                tb_barcode.IsEnabled = false;
-                btn_save.IsEnabled = false;
-
-            }
-            else if (_ProcessType == "imw")
-            {
-                dg_billDetails.Columns[0].Visibility = Visibility.Collapsed; //make delete hidden
-                dg_billDetails.Columns[4].IsReadOnly = true; //make count read only
-                tb_barcode.IsEnabled = false;
-                btn_save.IsEnabled = true;
-            }
-            else if (_ProcessType == "exw")
-            {
-                dg_billDetails.Columns[0].Visibility = Visibility.Visible; //make delete hidden
-                dg_billDetails.Columns[4].IsReadOnly = false; //make count read only
-                tb_barcode.IsEnabled = false;
-                btn_save.IsEnabled = true;
-            }
-            */
+            }         
+    
+            btn_deleteInvoice.Visibility = Visibility.Visible;
             if (!isFromReport)
             {
                 btn_next.Visibility = Visibility.Visible;
@@ -1348,5 +1370,7 @@ namespace Restaurant.View.storage.movementsOperations
             return availableAmount;
         }
         #endregion
+
+       
     }
 }

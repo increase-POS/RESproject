@@ -65,7 +65,6 @@ namespace Restaurant.View.kitchen
         ObservableCollection<BillDetailsPurchase> billDetails = new ObservableCollection<BillDetailsPurchase>();
         public static bool archived = false;
         public static bool isFromReport = false;
-        List<ItemUnit> barcodesList;
         List<ItemUnit> itemUnits;
         public Invoice invoice = new Invoice();
         List<ItemTransfer> invoiceItems;
@@ -162,8 +161,7 @@ namespace Restaurant.View.kitchen
                 translate();
                 setNotifications();
                 setTimer();
-                await RefrishItems();
-                await fillBarcodeList();
+                await FillCombo.RefreshPurchaseItems();
                 //List all the UIElement in the VisualTree
                 controls = new List<Control>();
                 FindControl(this.grid_main, controls);
@@ -438,9 +436,8 @@ namespace Restaurant.View.kitchen
 
                 default: // if barcode for item
                          // get item matches barcode
-                    if (FillCombo.itemUnitList != null)
+                    if (FillCombo.itemUnitList != null && _InvoiceType == "srd")
                     {
-                        // ItemUnit unit1 = barcodesList.ToList().Find(c => c.barcode == barcode.Trim());
                         ItemUnit unit1 = FillCombo.itemUnitList.ToList().Find(c => c.barcode == barcode.Trim() && FillCombo.purchaseTypes.Contains(c.type));
 
                         // get item matches the barcode
@@ -454,7 +451,6 @@ namespace Restaurant.View.kitchen
                                 if (index == -1)//item doesn't exist in bill
                                 {
                                     // get item units
-                                    //itemUnits = await FillCombo.itemUnit.GetItemUnits(itemId);
                                     itemUnits = FillCombo.itemUnitList.Where(c => c.itemId == itemId).ToList();
                                     //get item from list
                                     item = FillCombo.purchaseItems.ToList().Find(i => i.itemId == itemId);
@@ -506,10 +502,6 @@ namespace Restaurant.View.kitchen
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        async Task fillBarcodeList()
-        {
-            barcodesList = await FillCombo.itemUnit.Getall();
-        }
         #endregion
         #region save
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
@@ -528,6 +520,20 @@ namespace Restaurant.View.kitchen
                             await addInvoice("srw");
                             clear();
                             setNotifications();
+                            #region notification Object
+                            Notification not = new Notification()
+                            {
+                                title = "trSpendingOrderAlertTilte",
+                                ncontent = "trSpendingOrderAlertContent",
+                                msgType = "alert",
+                                createDate = DateTime.Now,
+                                updateDate = DateTime.Now,
+                                createUserId = MainWindow.userLogin.userId,
+                                updateUserId = MainWindow.userLogin.userId,
+                            };
+                           
+                            await not.save(not, MainWindow.branchLogin.branchId, "spendingOrderAlert_request", MainWindow.userLogin.fullName);
+                            #endregion
                         }
                     }
                 }
@@ -1256,10 +1262,6 @@ namespace Restaurant.View.kitchen
         }
         #endregion
         #region billdetails
-        async Task RefrishItems()
-        {
-            items = await FillCombo.item.Get();
-        }
         private void addRowToBill(string itemName, int itemId, string unitName, int itemUnitId, int count)
         {
             // increase sequence for each read
@@ -1357,7 +1359,7 @@ namespace Restaurant.View.kitchen
         {
             _Count = invoice.itemsCount;
             tb_count.Text = _Count.ToString();
-
+            txt_invNumber.Text = invoice.invNumber.ToString();
             // build invoice details grid
             await buildInvoiceDetails();
 

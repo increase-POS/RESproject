@@ -224,10 +224,10 @@ namespace Restaurant.View.storage.movementsOperations
                 //else
                 //    btn_package.Visibility = Visibility.Collapsed;
 
-                //if (MainWindow.groupObject.HasPermissionAction(unitConversionPermission, MainWindow.groupObjects, "one"))
-                //    btn_unitConversion.Visibility = Visibility.Visible;
-                //else
-                //    btn_unitConversion.Visibility = Visibility.Collapsed;
+                if (MainWindow.groupObject.HasPermissionAction(unitConversionPermission, MainWindow.groupObjects, "one"))
+                    btn_unitConversion.Visibility = Visibility.Visible;
+                else
+                    btn_unitConversion.Visibility = Visibility.Collapsed;
 
                 //if (!MainWindow.groupObject.HasPermissionAction(packagePermission, MainWindow.groupObjects, "one")
                 //    && !MainWindow.groupObject.HasPermissionAction(unitConversionPermission, MainWindow.groupObjects, "one"))
@@ -236,8 +236,8 @@ namespace Restaurant.View.storage.movementsOperations
 
                 #endregion
 
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
                 tb_barcode.Focus();
             }
             catch (Exception ex)
@@ -1534,12 +1534,10 @@ namespace Restaurant.View.storage.movementsOperations
             */
         }
         private void Btn_unitConversion_Click(object sender, RoutedEventArgs e)
-        {
-            /*
+        { 
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(unitConversionPermission, MainWindow.groupObjects, "one") )
                 {
@@ -1563,7 +1561,6 @@ namespace Restaurant.View.storage.movementsOperations
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private async void Btn_items_Click(object sender, RoutedEventArgs e)
         {
