@@ -3743,13 +3743,13 @@ namespace Restaurant.View.purchase
                 {
                     prInvoiceId = invoice.invoiceId;
 
-                    ////////////////////////////
-                    //Thread t1 = new Thread(() =>
-                    //{
+                    //////////////////////////
+                    Thread t1 = new Thread(() =>
+                    {
                         printPurInvoice();
 
-                    //});
-                    //t1.Start();
+                    });
+                    t1.Start();
                     ////////////////////////////
                 }
                 else

@@ -40,7 +40,7 @@ namespace Restaurant.View.windows
         BrushConverter bc = new BrushConverter();
 
         // printer
-        /*
+        
         List<Papersize> papersizeList = new List<Papersize>();
         List<Printers> printersList = new List<Printers>();
         Printers repprinterRow = new Printers();
@@ -54,7 +54,7 @@ namespace Restaurant.View.windows
 
         Printers printerModel = new Printers();
         Papersize papersizeModel = new Papersize();
-        */
+      
 
         public List<Printers> getsystemPrinters()
         {
@@ -74,7 +74,7 @@ namespace Restaurant.View.windows
             return printerList;
         }
 
-        /*
+      
         public async Task<PosSetting> GetdefaultposSetting(PosSetting oldsetting)
         {
             Papersize papersizeModel = new Papersize();
@@ -151,7 +151,7 @@ namespace Restaurant.View.windows
         async Task GetposSetting()
         {
 
-            possettingModel = await possettingModel.GetByposId((int)MainWindow.posID);
+            possettingModel = await possettingModel.GetByposId((int)MainWindow.posLogin.posId);
 
             possettingModel = await GetdefaultposSetting(possettingModel);
           //  papersizeList = await papersizeModel.GetAll();
@@ -308,7 +308,7 @@ namespace Restaurant.View.windows
 
 
 
-            possettingModel.posId = MainWindow.posID;
+            possettingModel.posId = MainWindow.posLogin.posId;
             possettingModel.reportPrinterId = reportPrinterId;
             possettingModel.saleInvPrinterId = saleInvPrinterId;
             ////
@@ -374,7 +374,7 @@ namespace Restaurant.View.windows
             return msg.ToString();
     }
 
-        */
+        
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -383,7 +383,7 @@ namespace Restaurant.View.windows
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
-            /*
+        
             try
             {
                 if (sender != null)
@@ -391,14 +391,14 @@ namespace Restaurant.View.windows
 
                 #region translate
 
-                if (winLogIn.lang.Equals("en"))
+                if (MainWindow.lang.Equals("en"))
                 {
-                    winLogIn.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    winLogIn.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
 
@@ -416,21 +416,21 @@ namespace Restaurant.View.windows
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+          
         }
 
 
         private void translate()
         {
-            /*
-            txt_title.Text = winLogIn.resourcemanager.GetString("trPrinterSettings");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_repname, winLogIn.resourcemanager.GetString("trReportPrinterName")+"...");//
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_salname, winLogIn.resourcemanager.GetString("trReportSalesName") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_saleInvPaperSize, winLogIn.resourcemanager.GetString("trSalesPaperSize") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_docpapersize, winLogIn.resourcemanager.GetString("trDocPaperSize") + "...");
+           
+            txt_title.Text = MainWindow.resourcemanager.GetString("trPrinterSettings");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_repname, MainWindow.resourcemanager.GetString("trReportPrinterName")+"...");//
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_salname, MainWindow.resourcemanager.GetString("trReportSalesName") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_saleInvPaperSize, MainWindow.resourcemanager.GetString("trSalesPaperSize") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_docpapersize, MainWindow.resourcemanager.GetString("trDocPaperSize") + "...");
 
-            btn_save.Content = winLogIn.resourcemanager.GetString("trSave");
-        */
+            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+        
         }
 
         private void HandleKeyPress(object sender, KeyEventArgs e)
@@ -476,12 +476,12 @@ namespace Restaurant.View.windows
 
 
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
-        {/*
+        { 
             string msg = "";
             msg = await Saveprinters();
 
             await refreshWindow();
-            await MainWindow.getPrintersNames();
+            await FillCombo.getPrintersNames();
             if (int.Parse(msg) > 0)
             {
                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
@@ -493,7 +493,7 @@ namespace Restaurant.View.windows
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             }
 
-            */
+             
 
         }
     }

@@ -15,6 +15,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Resources;
+using System.Reflection;
+using netoaster;
+
 
 namespace Restaurant.View.settings.reportsSettings
 {
@@ -36,6 +40,9 @@ namespace Restaurant.View.settings.reportsSettings
                 _instance = value;
             }
         }
+
+      
+
         public uc_reportsSettings()
         {
             try
@@ -46,9 +53,112 @@ namespace Restaurant.View.settings.reportsSettings
             { }
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        public class Replang
         {
+            public int langId { get; set; }
+            public string lang { get; set; }
+            public string trlang { get; set; }
+            public Nullable<int> isDefault { get; set; }
 
+        }
+
+        SetValues setvalueModel = new SetValues();
+        List<SetValues> replangList = new List<SetValues>();
+        SetValues replangrow = new SetValues();
+        static SettingCls setModel = new SettingCls();
+        static SettingCls set = new SettingCls();
+        static SetValues valueModel = new SetValues();
+        static SetValues printCount = new SetValues();
+        static int printCountId = 0;
+        List<Replang> langcomboList = new List<Replang>();
+
+
+        async Task fillRepLang()
+        {
+            langcomboList = new List<Replang>();
+            replangList = await setvalueModel.GetBySetName("report_lang");
+            foreach (var reprow in replangList)
+            {
+                //  trEnglish resourcemanager.GetString("trMenu");
+                //trArabic
+                Replang comborow = new Replang();
+                comborow.langId = reprow.valId;
+                comborow.lang = reprow.value;
+
+                if (reprow.value == "ar")
+                {
+                    comborow.trlang = MainWindow.resourcemanager.GetString("trArabic");
+                }
+                else if (reprow.value == "en")
+                {
+                    comborow.trlang = MainWindow.resourcemanager.GetString("trEnglish");
+                }
+                else
+                {
+                    comborow.trlang = "";
+                }
+
+                langcomboList.Add(comborow);
+            }
+            cb_reportlang.ItemsSource = langcomboList;
+            cb_reportlang.DisplayMemberPath = "trlang";
+            cb_reportlang.SelectedValuePath = "langId";
+            replangrow = replangList.Where(r => r.isDefault == 1).FirstOrDefault();
+            cb_reportlang.SelectedValue = replangrow.valId;
+        }
+
+        public static async Task<SetValues> getDefaultPrintCount()
+        {
+            List<SettingCls> settingsCls = await setModel.GetAll();
+            List<SetValues> settingsValues = await valueModel.GetAll();
+            set = settingsCls.Where(s => s.name == "Allow_print_inv_count").FirstOrDefault<SettingCls>();
+            printCountId = set.settingId;
+            printCount = settingsValues.Where(i => i.settingId == printCountId).FirstOrDefault();
+            return printCount;
+        }
+
+        private async void   UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+                MainWindow.mainWindow.initializationMainTrack(this.Tag.ToString() );
+
+
+                #region translate
+                if (MainWindow.lang.Equals("en"))
+                {
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.LeftToRight;
+                }
+                else
+                {
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.RightToLeft;
+                }
+
+                translate();
+                #endregion
+
+                ///naji code
+                ///
+                await fillRepLang();
+                #region get default print count
+                await getDefaultPrintCount();
+                if (printCount != null)
+                    tb_printCount.Text = printCount.value;
+                #endregion
+
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -102,9 +212,30 @@ namespace Restaurant.View.settings.reportsSettings
 
         #endregion
 
-        private void Btn_reportlang_Click(object sender, RoutedEventArgs e)
+
+        private void translate()
         {
-            /*
+            txt_printCount.Text = MainWindow.resourcemanager.GetString("trPrintCount");
+            tb_printCount.Text = MainWindow.resourcemanager.GetString("trPrintCount");
+
+            txt_reportlang.Text = MainWindow.resourcemanager.GetString("trLanguage");
+
+            txt_systmSetting.Text = MainWindow.resourcemanager.GetString("trSystemSetting");
+            txt_systmSettingHint.Text = MainWindow.resourcemanager.GetString("trSystemSetting") + "...";
+
+            txt_printerSetting.Text = MainWindow.resourcemanager.GetString("trPrinterSettings");
+            txt_printerSettingHint.Text = MainWindow.resourcemanager.GetString("trPrinterSettings") + "...";
+
+            txt_copyCount.Text = MainWindow.resourcemanager.GetString("trCopyCount");
+            txt_copyCountHint.Text = MainWindow.resourcemanager.GetString("trCopyCount") + "...";
+
+            txt_printCount.Text = MainWindow.resourcemanager.GetString("trPrintCount");
+        }
+
+    
+        private async void Btn_reportlang_Click(object sender, RoutedEventArgs e)
+        {
+
             try
             {
                 //  string msg = "";
@@ -115,7 +246,7 @@ namespace Restaurant.View.settings.reportsSettings
                     replangrow.isDefault = 1;
                     msg = await setvalueModel.Save(replangrow);
                     //  replangrow.valId=
-                    await MainWindow.GetReportlang();
+                    await FillCombo.GetReportlang();
                     await fillRepLang();
                     if (msg > 0)
                     {
@@ -129,11 +260,11 @@ namespace Restaurant.View.settings.reportsSettings
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+
         }
 
         private void Btn_systmSetting_Click(object sender, RoutedEventArgs e)
@@ -221,17 +352,26 @@ namespace Restaurant.View.settings.reportsSettings
                         }
         }
 
-        private void Btn_printCount_Click(object sender, RoutedEventArgs e)
+        private async void Btn_printCount_Click(object sender, RoutedEventArgs e)
         {
-            /*
+            
             //save print count
             try
             {
                 
                     HelpClass.StartAwait(grid_main);
 
-                HelpClass.validateEmptyTextBox(tb_printCount, p_errorPrintCount, tt_errorPrintCount, "trEmptyPrintCount");
-                if (!tb_printCount.Text.Equals(""))
+                //  HelpClass.validateEmptyTextBox(tb_printCount, p_errorPrintCount, tt_errorPrintCount, "trEmptyPrintCount");
+                HelpClass.clearValidate(p_error_printCount);
+                if (tb_printCount.Text.Equals(""))
+                {
+                    HelpClass.SetValidate( p_error_printCount,"trEmptyPrintCount");
+                }
+              else  if (tb_printCount.Text.Equals("0"))
+                {
+                    HelpClass.SetValidate(p_error_printCount, "trzeroPrintCount");
+                }
+                else
                 {
 
                     if (printCount == null)
@@ -245,7 +385,7 @@ namespace Restaurant.View.settings.reportsSettings
                     if (!s.Equals(0))
                     {
                         //update tax in main window
-                        MainWindow.Allow_print_inv_count = printCount.value;
+                        FillCombo.Allow_print_inv_count = printCount.value;
 
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
                     }
@@ -262,7 +402,7 @@ namespace Restaurant.View.settings.reportsSettings
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+           
         }
         #region Numeric 
 

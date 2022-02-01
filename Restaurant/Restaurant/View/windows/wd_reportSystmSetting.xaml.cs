@@ -104,11 +104,11 @@ namespace Restaurant.View.windows
                 tgl_emailOnSaveSale.IsChecked = false;
             }
 
-            /*
+           /*
             tgl_printOnSaveSale
             tgl_emailOnSavePur
             tgl_emailOnSaveSale
-            */
+           */
           
         }
 
@@ -119,7 +119,7 @@ namespace Restaurant.View.windows
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
-            /*
+           
             try
             {
 
@@ -128,14 +128,14 @@ namespace Restaurant.View.windows
 
                 #region translate
 
-                if (winLogIn.lang.Equals("en"))
+                if (MainWindow.lang.Equals("en"))
                 {
-                    winLogIn.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    winLogIn.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
 
@@ -155,22 +155,22 @@ namespace Restaurant.View.windows
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+ 
         }
 
 
         private void translate()
         {
-            /*
-            txt_title.Text = winLogIn.resourcemanager.GetString("trSystemSetting");
+         
+            txt_title.Text = MainWindow.resourcemanager.GetString("trSystemSetting");
 
-            txt_printOnSavePur.Text = winLogIn.resourcemanager.GetString("trPrintOnSavePurchase");
-            txt_emailOnSavePur.Text = winLogIn.resourcemanager.GetString("trEmailOnSavePurchase");
-            txt_printOnSaveSale.Text = winLogIn.resourcemanager.GetString("trPrintOnSaveSale");
-            txt_emailOnSaveSale.Text = winLogIn.resourcemanager.GetString("trEmailOnSaveSale");
+            txt_printOnSavePur.Text = MainWindow.resourcemanager.GetString("trPrintOnSavePurchase");
+            txt_emailOnSavePur.Text = MainWindow.resourcemanager.GetString("trEmailOnSavePurchase");
+            txt_printOnSaveSale.Text = MainWindow.resourcemanager.GetString("trPrintOnSaveSale");
+            txt_emailOnSaveSale.Text = MainWindow.resourcemanager.GetString("trEmailOnSaveSale");
 
-            btn_save.Content = winLogIn.resourcemanager.GetString("trSave");
-       */
+            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+ 
         }
 
         private void HandleKeyPress(object sender, KeyEventArgs e)
@@ -209,13 +209,13 @@ namespace Restaurant.View.windows
             }
             catch (Exception ex)
             {
-                //HelpClass.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {
-            /*
+           
           //  string msg = "";
             int msg = 0;
             if ((bool)tgl_printOnSavePur.IsChecked)
@@ -261,7 +261,7 @@ namespace Restaurant.View.windows
 
 
             await Getprintparameter();
-            await MainWindow.Getprintparameter();
+            await FillCombo.Getprintparameter();
             if (msg > 0)
             {
                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
@@ -271,7 +271,7 @@ namespace Restaurant.View.windows
             
             else
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-       */
+        
         }
     }
 }

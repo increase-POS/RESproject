@@ -1616,13 +1616,78 @@ namespace Restaurant.View.purchase
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
         Invoice prInvoice = new Invoice();
+        Invoice invoiceModel = new Invoice();
+     Branch   branchModel = new Branch();
+        //print
+        public async Task<string> SavePurOrderpdf()
+        {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+            string pdfpath = "";
+
+            //
+
+            if (invoice.invoiceId > 0)
+            {
+                prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
+                pdfpath = @"\Thumb\report\File.pdf";
+                pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+                string reppath = reportclass.GetpayInvoiceRdlcpath(prInvoice);
+                invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                if (prInvoice.agentId != null)
+                {
+                    Agent agentinv = new Agent();
+                    agentinv = await agentinv.getAgentById((int)prInvoice.agentId); 
+
+                    prInvoice.agentCode = agentinv.code;
+                    //new lines
+                    prInvoice.agentName = agentinv.name;
+                    prInvoice.agentCompany = agentinv.company;
+                }
+                else
+                {
+
+                    prInvoice.agentCode = "-";
+                    //new lines
+                    prInvoice.agentName = "-";
+                    prInvoice.agentCompany = "-";
+                }
+
+                invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                Branch branch = new Branch();
+                branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                if (branch.branchId > 0)
+                {
+                    prInvoice.branchName = branch.name;
+                }
+
+                User employ = new User();
+                employ = await employ.getUserById((int)prInvoice.updateUserId);
+                prInvoice.uuserName = employ.name;
+                prInvoice.uuserLast = employ.lastname;
+
+                ReportCls.checkLang();
+
+                clsReports.purchaseInvoiceReport(invoiceItems, rep, reppath);
+                clsReports.setReportLanguage(paramarr);
+                clsReports.Header(paramarr);
+                paramarr = reportclass.fillPurInvReport(prInvoice, paramarr);
+
+                rep.SetParameters(paramarr);
+                rep.Refresh();
+
+                LocalReportExtensions.ExportToPDF(rep, pdfpath);
+
+            }
+
+            return pdfpath;
+        }
         //print
         private async void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {//pdf
             try
             {
-
-                HelpClass.StartAwait(grid_main);
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     Thread t1 = new Thread(() =>
@@ -1633,22 +1698,24 @@ namespace Restaurant.View.purchase
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
-                HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+
         private async void btn_printInvoice_Click(object sender, RoutedEventArgs e)
         {//print
             try
             {
-
-                HelpClass.StartAwait(grid_main);
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     Thread t1 = new Thread(() =>
@@ -1659,21 +1726,22 @@ namespace Restaurant.View.purchase
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
-                HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         public async void printPurInvoice()
         {
             if (invoice.invoiceId > 0)
             {
-                prInvoice = await FillCombo.invoice.GetByInvoiceId(invoice.invoiceId);
+                prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
 
                 if (prInvoice.invType == "pd" || prInvoice.invType == "sd" || prInvoice.invType == "qd"
                                    || prInvoice.invType == "sbd" || prInvoice.invType == "pbd"
@@ -1690,9 +1758,9 @@ namespace Restaurant.View.purchase
                     string reppath = reportclass.GetpayInvoiceRdlcpath(prInvoice);
                     if (prInvoice.invoiceId > 0)
                     {
-                        invoiceItems = await FillCombo.invoice.GetInvoicesItems(prInvoice.invoiceId);
+                        invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
                         Agent agentinv = new Agent();
-                        agentinv = FillCombo.vendorsList.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
+                        agentinv =await agentinv.getAgentById( (int)prInvoice.agentId) ;
 
                         User employ = new User();
                         employ = await employ.getUserById((int)prInvoice.updateUserId);
@@ -1704,9 +1772,9 @@ namespace Restaurant.View.purchase
                         prInvoice.agentName = agentinv.name;
                         prInvoice.agentCompany = agentinv.company;
 
-                        invoiceItems = await FillCombo.invoice.GetInvoicesItems(prInvoice.invoiceId);
+                        invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
                         Branch branch = new Branch();
-                        branch = await FillCombo.branch.getBranchById((int)prInvoice.branchCreatorId);
+                        branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
                         if (branch.branchId > 0)
                         {
                             prInvoice.branchName = branch.name;
@@ -1736,7 +1804,7 @@ namespace Restaurant.View.purchase
         {
             if (invoice.invoiceId > 0)
             {
-                prInvoice = await FillCombo.invoice.GetByInvoiceId(invoice.invoiceId);
+                prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
 
                 if (prInvoice.invType == "pd" || prInvoice.invType == "sd" || prInvoice.invType == "qd"
                    || prInvoice.invType == "sbd" || prInvoice.invType == "pbd"
@@ -1753,9 +1821,9 @@ namespace Restaurant.View.purchase
                     string reppath = reportclass.GetpayInvoiceRdlcpath(invoice);
                     if (prInvoice.invoiceId > 0)
                     {
-                        invoiceItems = await FillCombo.invoice.GetInvoicesItems(prInvoice.invoiceId);
+                        invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
                         Agent agentinv = new Agent();
-                        agentinv = FillCombo.vendorsList.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
+                        agentinv = await agentinv.getAgentById((int)prInvoice.agentId);  
 
                         prInvoice.agentCode = agentinv.code;
                         //new lines
@@ -1769,7 +1837,7 @@ namespace Restaurant.View.purchase
 
 
                         Branch branch = new Branch();
-                        branch = await FillCombo.branch.getBranchById((int)prInvoice.branchCreatorId);
+                        branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
                         if (branch.branchId > 0)
                         {
                             prInvoice.branchName = branch.name;
@@ -1805,15 +1873,15 @@ namespace Restaurant.View.purchase
         {//preview
             try
             {
-
-                HelpClass.StartAwait(grid_main);
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     #region
                     if (invoice.invoiceId > 0)
                     {
-                        prInvoice = await FillCombo.invoice.GetByInvoiceId(invoice.invoiceId);
+                        prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
                         Window.GetWindow(this).Opacity = 0.2;
 
                         List<ReportParameter> paramarr = new List<ReportParameter>();
@@ -1824,11 +1892,11 @@ namespace Restaurant.View.purchase
                         string reppath = reportclass.GetpayInvoiceRdlcpath(invoice);
                         if (prInvoice.invoiceId > 0)
                         {
-                            invoiceItems = await FillCombo.invoice.GetInvoicesItems(prInvoice.invoiceId);
+                            invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
                             if (prInvoice.agentId != null)
                             {
                                 Agent agentinv = new Agent();
-                                agentinv = FillCombo.vendorsList.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
+                                agentinv = await agentinv.getAgentById((int)prInvoice.agentId);  
 
                                 prInvoice.agentCode = agentinv.code;
                                 //new lines
@@ -1843,9 +1911,9 @@ namespace Restaurant.View.purchase
                                 prInvoice.agentCompany = "-";
                             }
 
-                            invoiceItems = await FillCombo.invoice.GetInvoicesItems(prInvoice.invoiceId);
+                            invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
                             Branch branch = new Branch();
-                            branch = await FillCombo.branch.getBranchById((int)prInvoice.branchCreatorId);
+                            branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
                             if (branch.branchId > 0)
                             {
                                 prInvoice.branchName = branch.name;
@@ -1888,22 +1956,23 @@ namespace Restaurant.View.purchase
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
-                HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         private async void Btn_emailMessage_Click(object sender, RoutedEventArgs e)
         {//email
             try
             {
-
-                HelpClass.StartAwait(grid_main);
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     /////////////////////////////
@@ -1916,13 +1985,13 @@ namespace Restaurant.View.purchase
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
-                HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1932,7 +2001,8 @@ namespace Restaurant.View.purchase
             EmailClass mailtosend = new EmailClass();
             email = await email.GetByBranchIdandSide((int)MainWindow.branchLogin.branchId, "purchase");
             Agent toAgent = new Agent();
-            toAgent = FillCombo.vendorsList.Where(x => x.agentId == invoice.agentId).FirstOrDefault();
+            toAgent = await toAgent.getAgentById((int)invoice.agentId) ;
+            //  int? itemcount = invoiceItems.Count();
             if (email.emailId == 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trNoEmailForThisDept"), animation: ToasterAnimation.FadeIn);
             else
@@ -1975,68 +2045,7 @@ namespace Restaurant.View.purchase
                 }
             }
         }
-        public async Task<string> SavePurOrderpdf()
-        {
-            List<ReportParameter> paramarr = new List<ReportParameter>();
-            string pdfpath = "";
 
-            //
-
-            if (invoice.invoiceId > 0)
-            {
-                prInvoice = await FillCombo.invoice.GetByInvoiceId(invoice.invoiceId);
-                pdfpath = @"\Thumb\report\File.pdf";
-                pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
-                string reppath = reportclass.GetpayInvoiceRdlcpath(prInvoice);
-                invoiceItems = await FillCombo.invoice.GetInvoicesItems(prInvoice.invoiceId);
-                if (prInvoice.agentId != null)
-                {
-                    Agent agentinv = new Agent();
-                    agentinv = FillCombo.vendorsList.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
-
-                    prInvoice.agentCode = agentinv.code;
-                    //new lines
-                    prInvoice.agentName = agentinv.name;
-                    prInvoice.agentCompany = agentinv.company;
-                }
-                else
-                {
-
-                    prInvoice.agentCode = "-";
-                    //new lines
-                    prInvoice.agentName = "-";
-                    prInvoice.agentCompany = "-";
-                }
-
-                invoiceItems = await FillCombo.invoice.GetInvoicesItems(prInvoice.invoiceId);
-                Branch branch = new Branch();
-                branch = await FillCombo.branch.getBranchById((int)prInvoice.branchCreatorId);
-                if (branch.branchId > 0)
-                {
-                    prInvoice.branchName = branch.name;
-                }
-
-                User employ = new User();
-                employ = await employ.getUserById((int)prInvoice.updateUserId);
-                prInvoice.uuserName = employ.name;
-                prInvoice.uuserLast = employ.lastname;
-
-                ReportCls.checkLang();
-
-                clsReports.purchaseInvoiceReport(invoiceItems, rep, reppath);
-                clsReports.setReportLanguage(paramarr);
-                clsReports.Header(paramarr);
-                paramarr = reportclass.fillPurInvReport(prInvoice, paramarr);
-
-                rep.SetParameters(paramarr);
-                rep.Refresh();
-
-                LocalReportExtensions.ExportToPDF(rep, pdfpath);
-
-            }
-
-            return pdfpath;
-        }
         #endregion
 
         #region btn

@@ -197,6 +197,7 @@
     <Compile Include="Classes\ApiClasses\NotificationUser.cs" />
     <Compile Include="Classes\ApiClasses\Offer.cs" />
     <Compile Include="Classes\ApiClasses\Package.cs" />
+    <Compile Include="Classes\ApiClasses\PaperSize.cs" />
     <Compile Include="Classes\ApiClasses\Pos.cs" />
     <Compile Include="Classes\ApiClasses\PosSetting.cs" />
     <Compile Include="Classes\ApiClasses\Printers.cs" />

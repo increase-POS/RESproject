@@ -72,7 +72,7 @@ namespace Restaurant.View.windows
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
-            /*
+            
             try
             {
                 if (sender != null)
@@ -80,14 +80,14 @@ namespace Restaurant.View.windows
 
                 #region translate
 
-                if (winLogIn.lang.Equals("en"))
+                if (MainWindow.lang.Equals("en"))
                 {
-                    winLogIn.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    winLogIn.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
 
@@ -107,20 +107,20 @@ namespace Restaurant.View.windows
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+             
         }
 
 
         private void translate()
         {
-            /*
-            txt_title.Text = winLogIn.resourcemanager.GetString("trCopyCount");
+           
+            txt_title.Text = MainWindow.resourcemanager.GetString("trCopyCount");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_purCopyCount, MainWindow.resourcemanager.GetString("trPurchasesCopyCount"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_saleCopyCount, MainWindow.resourcemanager.GetString("trSalesCopyCount"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_repPrintCount, MainWindow.resourcemanager.GetString("trReportsCopyCount"));
 
-            btn_save.Content = winLogIn.resourcemanager.GetString("trSave");
-            */
+            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+             
         }
 
         private void HandleKeyPress(object sender, KeyEventArgs e)
@@ -159,13 +159,13 @@ namespace Restaurant.View.windows
             }
             catch (Exception ex)
             {
-                //HelpClass.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {
-            /*
+           
 
             int msg;
             sale_copy_countrow.value = (string)tb_saleCopyCount.Text;
@@ -183,7 +183,7 @@ namespace Restaurant.View.windows
                 msg = await setvalueModel.Save(rep_copy_countrow);
 
                 await refreshWindow();
-                await MainWindow.Getprintparameter();
+                await FillCombo.Getprintparameter();
                 if (msg > 0)
                 {
                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
@@ -195,7 +195,7 @@ namespace Restaurant.View.windows
                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                 }
             }
-          */
+          
 
         }
 
@@ -213,24 +213,25 @@ namespace Restaurant.View.windows
         }
         private void validateEmpty(string name, object sender)
         {
-            /*
+           
             try
             {
                 if (name == "TextBox")
                 {
+                    HelpClass.SetValidate(p_errorRepPrintCount, "trEmptyError");
                     if ((sender as TextBox).Name == "tb_purCopyCount")
-                        HelpClass.validateEmptyTextBox((TextBox)sender, p_errorPurCopyCount, tt_errorPurCopyCount, "trEmptyError");
+                        HelpClass.SetValidate(p_errorPurCopyCount, "trEmptyError");
                     else if ((sender as TextBox).Name == "tb_saleCopyCount")
-                        HelpClass.validateEmptyTextBox((TextBox)sender, p_errorSaleCopyCount, tt_errorSaleCopyCount, "trEmptyError");
+                        HelpClass.SetValidate(p_errorSaleCopyCount, "trEmptyError");
                     else if ((sender as TextBox).Name == "tb_repPrintCount")
-                        HelpClass.validateEmptyTextBox((TextBox)sender, p_errorRepPrintCount, tt_errorRepPrintCount, "trEmptyError");
+                        HelpClass.SetValidate(p_errorRepPrintCount, "trEmptyError");
                 }
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+            
         }
 
 
