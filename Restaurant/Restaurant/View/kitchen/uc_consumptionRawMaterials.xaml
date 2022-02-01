@@ -438,30 +438,6 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Border BorderThickness="0"  Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="2"   Height="50" Margin="10,10,5,10"
-                    CornerRadius="7" BorderBrush="Black" Background="White" Padding="0" x:Name="brd_returnInvoice">
-                    <Border.Effect>
-                        <DropShadowEffect
-                          ShadowDepth="1"
-                          Direction="360"
-                          Color="Gray"
-                          Opacity="0.3"
-                         BlurRadius="10"/>
-                    </Border.Effect>
-                    <Button Grid.Column="8" BorderBrush="{x:Null}"     Margin="5,10,5,0" Height="auto" 
-                             x:Name="btn_returnInvoice"
-                    Background="{x:Null}"   Padding="0"    >
-                        <StackPanel>
-                            <Path Fill="{StaticResource MainColor}" Stretch="Fill"  x:Name="path_itemsIcon1"
-                         Height="25" Width="25"
-                           FlowDirection="LeftToRight"  Data="M12,0C5.4,0,0,5.4,0,12s5.4,12,12,12s12-5.4,12-12S18.6,0,12,0z M15.2,18.9c5.7-5.9-0.6-10.8-5-7.7L12,13H6V7l1.8,1.8
-	C15.7,2.8,24,13.3,15.2,18.9z"/>
-                            <TextBlock Text="return" x:Name="txt_returnInvoice"  Foreground="{StaticResource MainColor}" 
-                                           FontWeight="Regular" FontSize="8" TextAlignment="Center" Width="35"
-                                           HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                </Border>
 
                 <Border BorderThickness="0"  Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="2"   Height="50" Margin="10,10,5,10"
                     CornerRadius="7" BorderBrush="Black" Background="White" Padding="0" x:Name="brd_total">
