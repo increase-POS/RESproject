@@ -88,18 +88,18 @@ namespace Restaurant
         //public static ItemUnitUser itemUnitsUser = new ItemUnitUser();
         
         /////////// print setting////////////////////
-        public static string sale_copy_count;
-        public static string pur_copy_count;
-        public static string print_on_save_sale;
-        public static string print_on_save_pur;
-        public static string email_on_save_sale;
-        public static string email_on_save_pur;
-        public static string rep_printer_name;
-        public static string sale_printer_name;
-        public static string salePaperSize;
-        public static string rep_print_count;
-        public static string docPapersize;
-        public static string Allow_print_inv_count;
+        //public static string sale_copy_count;
+        //public static string pur_copy_count;
+        //public static string print_on_save_sale;
+        //public static string print_on_save_pur;
+        //public static string email_on_save_sale;
+        //public static string email_on_save_pur;
+        //public static string rep_printer_name;
+        //public static string sale_printer_name;
+        //public static string salePaperSize;
+        //public static string rep_print_count;
+        //public static string docPapersize;
+        //public static string Allow_print_inv_count;
         /////////////////////////////////////////////
        
         Object objectModel = new Object();
@@ -124,7 +124,7 @@ namespace Restaurant
         public static Boolean go_out = false;
       
 
-        internal static int? posID=1;
+        //internal static int? posID=1;
         //static public List<Item> InvoiceglobalItemsList = new List<Item>();
         static public List<ItemUnit> InvoiceGlobalItemUnitsList = new List<ItemUnit>();
         //static public List<Item> InvoiceglobalSaleUnitsList = new List<Item>();
