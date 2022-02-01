@@ -354,8 +354,9 @@
                                    FontWeight="SemiBold" FontSize="14"  
                                   VerticalAlignment="Center"  
                                        HorizontalAlignment="Right" Margin="5,10,10,5"/>
-                    <Button Grid.Column="5" BorderBrush="{x:Null}" Padding="0"   Margin="10,5,5,5" Height="auto"
-                                    Background="{x:Null}" Visibility="Visible"
+                    <Button Grid.Column="5" BorderBrush="{x:Null}" Padding="0"   Margin="10,5,10,5" Height="auto"
+                                    Background="{x:Null}" Visibility="Collapsed"
+                            HorizontalAlignment="Right"
                                     x:Name="btn_deleteInvoice" Click="Btn_deleteInvoice_Click"  >
                         <Path Fill="{StaticResource mediumRed}" Stretch="Fill"  
                                        Width="20" Height="20"  
