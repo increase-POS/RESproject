@@ -17,6 +17,8 @@
             <converters:SectionLocationFreeZoneConverter x:Key="SectionLocationFreeZoneConverter"/>
             <converters:dateFrameConverter x:Key="dateFrameConverter"/>
             <converters:enabledCouponConverter x:Key="enabledCouponConverter"/>
+            <converters:notificationsTitleConverter x:Key="notificationsTitleConverter"/>
+            <converters:notificationsContentConverter x:Key="notificationsContentConverter"/>
 
 
 

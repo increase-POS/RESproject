@@ -868,7 +868,9 @@
 
                     </Border>
                     <Border x:Name="path_notification" >
-                        <Path  Fill="{StaticResource MainColor}" VerticalAlignment="Top" Margin="0,-20,70,0" Stretch="Fill"  Grid.ColumnSpan="2" HorizontalAlignment="Right"
+                        <Path  Fill="{StaticResource MainColor}" VerticalAlignment="Top" 
+                               Margin="0,-20,70,0" Stretch="Fill"  Grid.ColumnSpan="2" 
+                               HorizontalAlignment="Right"
                                Grid.Column="0"   
                      Width="35" Height="25"  
                               Data="M31,12l19,38H0l19-38C21.5,7,28.5,7,31,12z"/>

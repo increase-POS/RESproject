@@ -42,6 +42,7 @@ using Restaurant.View.sectionData.banksData;
 using Restaurant.View.catalog.rawMaterials;
 using Restaurant.View.settings.reportsSettings;
 using Restaurant.View.sales.reservations;
+using Restaurant.View.windows;
 
 namespace Restaurant
 {
@@ -87,18 +88,18 @@ namespace Restaurant
         //public static ItemUnitUser itemUnitsUser = new ItemUnitUser();
         
         /////////// print setting////////////////////
-        //public static string sale_copy_count;
-        //public static string pur_copy_count;
-        //public static string print_on_save_sale;
-        //public static string print_on_save_pur;
-        //public static string email_on_save_sale;
-        //public static string email_on_save_pur;
-        //public static string rep_printer_name;
-        //public static string sale_printer_name;
-        //public static string salePaperSize;
-        //public static string rep_print_count;
-        //public static string docPapersize;
-        //public static string Allow_print_inv_count;
+        public static string sale_copy_count;
+        public static string pur_copy_count;
+        public static string print_on_save_sale;
+        public static string print_on_save_pur;
+        public static string email_on_save_sale;
+        public static string email_on_save_pur;
+        public static string rep_printer_name;
+        public static string sale_printer_name;
+        public static string salePaperSize;
+        public static string rep_print_count;
+        public static string docPapersize;
+        public static string Allow_print_inv_count;
         /////////////////////////////////////////////
        
         Object objectModel = new Object();
@@ -123,7 +124,7 @@ namespace Restaurant
         public static Boolean go_out = false;
       
 
-        //internal static int? posID=1;
+        internal static int? posID=1;
         //static public List<Item> InvoiceglobalItemsList = new List<Item>();
         static public List<ItemUnit> InvoiceGlobalItemUnitsList = new List<ItemUnit>();
         //static public List<Item> InvoiceglobalSaleUnitsList = new List<Item>();
@@ -1877,19 +1878,20 @@ namespace Restaurant
 
             return String.Empty;
         }
-        //List<NotificationUser> notifications;
+        #region  Notification
+        List<NotificationUser> notifications;
+        NotificationUser notificationUser = new NotificationUser();
         private async void BTN_notifications_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                /*
                 if (bdrMain.Visibility == Visibility.Collapsed)
                 {
                     bdrMain.Visibility = Visibility.Visible;
                     bdrMain.RenderTransform = Animations.borderAnimation(-25, bdrMain, true);
-                    notifications = await notificationUser.GetByUserId(userID.Value, "alert", posID.Value);
+                    notifications = await notificationUser.GetByUserId(userLogin.userId, "alert", posLogin.posId);
                     IEnumerable<NotificationUser> orderdNotifications = notifications.OrderByDescending(x => x.createDate);
-                    await notificationUser.setAsRead(userID.Value, posID.Value, "alert");
+                    await notificationUser.setAsRead(userLogin.userId, posLogin.posId, "alert");
                     md_notificationCount.Badge = "";
                     if (notifications.Count == 0)
                     {
@@ -1953,22 +1955,19 @@ namespace Restaurant
                 {
                     bdrMain.Visibility = Visibility.Collapsed;
                 }
-                */
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
-       
         private void Btn_showAll_Click(object sender, RoutedEventArgs e)
         {
-            //Window.GetWindow(this).Opacity = 0.2;
-            //wd_notifications w = new wd_notifications();
-            //w.notifications = notifications;
-            //w.ShowDialog();
-            //Window.GetWindow(this).Opacity = 1;
+            Window.GetWindow(this).Opacity = 0.2;
+            wd_notifications w = new wd_notifications();
+            w.notifications = notifications;
+            w.ShowDialog();
+            Window.GetWindow(this).Opacity = 1;
         }
         private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -2007,6 +2006,9 @@ namespace Restaurant
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        #endregion
+
         private void Btn_info_Click(object sender, RoutedEventArgs e)
         {
             try
