@@ -35,6 +35,7 @@ namespace Restaurant.View.kitchen
     {
         string createPermission = "spendingRequest_create";
         string reportsPermission = "spendingRequest_reports";
+        string returnPermission = "spendingRequest_return";
         private static uc_spendingRequest _instance;
         public static uc_spendingRequest Instance
         {
@@ -67,6 +68,7 @@ namespace Restaurant.View.kitchen
         public static bool isFromReport = false;
         List<ItemUnit> itemUnits;
         public Invoice invoice = new Invoice();
+        List<ItemTransfer> mainInvoiceItems;
         List<ItemTransfer> invoiceItems;
         
         static public string _InvoiceType = "srd"; //draft spending request
@@ -96,10 +98,12 @@ namespace Restaurant.View.kitchen
             dg_billDetails.Columns[3].Header = MainWindow.resourcemanager.GetString("trUnit");
             dg_billDetails.Columns[4].Header = MainWindow.resourcemanager.GetString("trQuantity");
 
+            txt_titleDataGridInvoice.Text = MainWindow.resourcemanager.GetString("trSpendingRequest");
+
             tt_error_previous.Content = MainWindow.resourcemanager.GetString("trPrevious");
             tt_error_next.Content = MainWindow.resourcemanager.GetString("trNext");
 
-
+            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -233,10 +237,10 @@ namespace Restaurant.View.kitchen
         {
             try
             {
-                string invoiceType = "srd";
+                string invoiceType = "srd , srbd";
                 int duration = 2;
                 int draftCount = await invoice.GetCountByCreator(invoiceType, MainWindow.userLogin.userId, duration);
-                if (invoice.invType == "srd" )
+                if (invoice.invType == "srd" || invoice.invType == "srbd" )
                     draftCount--;
                 HelpClass.refreshNotification(md_draftsCount, ref _DraftCount, draftCount);              
             }
@@ -517,22 +521,38 @@ namespace Restaurant.View.kitchen
                         bool valid = validateItemUnits();
                         if (valid)
                         {
-                            await addInvoice("srw");
-                            clear();
-                            setNotifications();
-                            #region notification Object
-                            Notification not = new Notification()
+                            #region spending request
+                            if ( _InvoiceType == "srd")
                             {
-                                title = "trSpendingOrderAlertTilte",
-                                ncontent = "trSpendingOrderAlertContent",
-                                msgType = "alert",
-                                createDate = DateTime.Now,
-                                updateDate = DateTime.Now,
-                                createUserId = MainWindow.userLogin.userId,
-                                updateUserId = MainWindow.userLogin.userId,
-                            };
-                           
-                            await not.save(not, MainWindow.branchLogin.branchId, "spendingOrderAlert_request", MainWindow.userLogin.fullName);
+                                await addInvoice("srw");
+                                clear();
+                                setNotifications();
+                                #region notification Object
+                                Notification not = new Notification()
+                                {
+                                    title = "trSpendingOrderAlertTilte",
+                                    ncontent = "trSpendingOrderAlertContent",
+                                    msgType = "alert",
+                                    createDate = DateTime.Now,
+                                    updateDate = DateTime.Now,
+                                    createUserId = MainWindow.userLogin.userId,
+                                    updateUserId = MainWindow.userLogin.userId,
+                                };
+
+                                await not.save(not, MainWindow.branchLogin.branchId, "spendingOrderAlert_request", MainWindow.userLogin.fullName);
+                                #endregion
+                            }
+                            #endregion
+                            #region bounce spending request
+                            else if (_InvoiceType == "srbd")
+                            {
+                                await addInvoice("srb");
+                                
+                                // decrease amounts from kitchen
+                                await FillCombo.itemLocation.returnSpendingOrder(invoiceItems,MainWindow.branchLogin.branchId,MainWindow.userLogin.userId);
+                                clear();
+                                setNotifications();
+                            }
                             #endregion
                         }
                     }
@@ -557,12 +577,26 @@ namespace Restaurant.View.kitchen
         }
         private async Task addInvoice(string invType)
         {
+            if (invoice.invType == "sr"  && (invType == "srb" || invType == "srbd")) // spending request will be bounce   or  bounce draft , save another invoice in db
+            {
+                invoice.invoiceMainId = invoice.invoiceId;
+                invoice.invoiceId = 0;
+                if(invType == "srb")
+                    invoice.invNumber = await invoice.generateInvNumber("srb", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+                else
+                    invoice.invNumber = await invoice.generateInvNumber("srbd", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+
+                invoice.branchCreatorId = MainWindow.branchLogin.branchId;
+                invoice.posId = MainWindow.posLogin.posId;
+            }
             if (invType == "srw")
             {
                 invoice.invNumber = await invoice.generateInvNumber("sr", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
             }
             else if (invType == "srd" && invoice.invoiceId == 0)
                 invoice.invNumber = await invoice.generateInvNumber("srd", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+            else if(invoice.invType == "srbd" && invType == "srb")
+                invoice.invNumber = await invoice.generateInvNumber("srb", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
 
             invoice.invType = invType;
 
@@ -843,6 +877,58 @@ namespace Restaurant.View.kitchen
         }
         #endregion
         #region btn
+        private async void Btn_returnInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (MainWindow.groupObject.HasPermissionAction(returnPermission, MainWindow.groupObjects, "one"))
+                {
+                    if (_InvoiceType == "sr")
+                    {
+                        _InvoiceType = "srbd"; // spending request bounce draft
+                        isFromReport = true;
+                        archived = false;
+                        await fillInvoiceInputs(invoice);
+                        txt_titleDataGridInvoice.Text = MainWindow.resourcemanager.GetString("trReturnedInvoice");
+                        btn_save.Content = MainWindow.resourcemanager.GetString("trReturn");
+                        setNotifications();
+                    }
+                    else
+                    {
+                        //await saveBeforeExit();
+                        Window.GetWindow(this).Opacity = 0.2;
+                        wd_returnInvoice w = new wd_returnInvoice();
+                        w.fromPurchase = true;
+                        w.userId = MainWindow.userLogin.userId;
+                        w.invoiceType = "sr";
+                        if (w.ShowDialog() == true)
+                        {
+                            _InvoiceType = "srbd";
+                            invoice = w.invoice;
+                            isFromReport = true;
+                            archived = false;
+                            await fillInvoiceInputs(invoice);
+                            txt_titleDataGridInvoice.Text = MainWindow.resourcemanager.GetString("trReturnedInvoice");
+                            btn_save.Content = MainWindow.resourcemanager.GetString("trReturn");
+                            setNotifications();
+                        }
+                        Window.GetWindow(this).Opacity = 1;
+                    }
+                    mainInvoiceItems = invoiceItems;
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private async void Btn_orders_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -963,7 +1049,7 @@ namespace Restaurant.View.kitchen
 
                 HelpClass.StartAwait(grid_main);
 
-                if (billDetails.Count > 0 && _InvoiceType == "srd")
+                if (billDetails.Count > 0 && ( _InvoiceType == "srd" || _InvoiceType == "srbd"))
                 {
                     #region Accept
                     MainWindow.mainWindow.Opacity = 0.2;
@@ -1002,7 +1088,7 @@ namespace Restaurant.View.kitchen
 
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_invoice w = new wd_invoice();
-                string invoiceType = "srd";
+                string invoiceType = "srd , srbd";
                 int duration = 2;
                 w.invoiceType = invoiceType;
                 w.userId = MainWindow.userLogin.userId;
@@ -1351,6 +1437,9 @@ namespace Restaurant.View.kitchen
             inputEditable();
             btn_next.Visibility = Visibility.Collapsed;
             btn_previous.Visibility = Visibility.Collapsed;
+            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            txt_titleDataGridInvoice.Text = MainWindow.resourcemanager.GetString("trSpendingRequest");
+
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);
@@ -1399,9 +1488,19 @@ namespace Restaurant.View.kitchen
         private void inputEditable()
         {
           
-            if (_InvoiceType == "srd") 
+            if (_InvoiceType == "srd" ) 
             {
                 dg_billDetails.Columns[0].Visibility = Visibility.Visible; //make delete hidden
+                dg_billDetails.Columns[3].IsReadOnly = false; // unit 
+                dg_billDetails.Columns[4].IsReadOnly = false; //make count read only
+                tb_barcode.IsEnabled = true;
+                btn_save.IsEnabled = true;
+                btn_items.IsEnabled = true;
+            }
+            if (_InvoiceType == "srbd") 
+            {
+                dg_billDetails.Columns[0].Visibility = Visibility.Visible; //make delete hidden
+                dg_billDetails.Columns[3].IsReadOnly = true; // unit 
                 dg_billDetails.Columns[4].IsReadOnly = false; //make count read only
                 tb_barcode.IsEnabled = true;
                 btn_save.IsEnabled = true;
@@ -1410,6 +1509,7 @@ namespace Restaurant.View.kitchen
             else if (_InvoiceType == "srw" || _InvoiceType == "sr" || _InvoiceType == "src")
             {
                 dg_billDetails.Columns[0].Visibility = Visibility.Collapsed; //make delete hidden
+                dg_billDetails.Columns[3].IsReadOnly = true; // unit 
                 dg_billDetails.Columns[4].IsReadOnly = true; //make count read only
                 tb_barcode.IsEnabled = false;
                 btn_save.IsEnabled = false;
@@ -1423,5 +1523,7 @@ namespace Restaurant.View.kitchen
             }
         }
         #endregion
+
+      
     }
 }

@@ -457,7 +457,7 @@
                     </Border.Effect>
                     <Button Grid.Column="8" BorderBrush="{x:Null}"    
                             Margin="5,10,5,0" Height="auto" 
-                             x:Name="btn_returnInvoice"
+                             x:Name="btn_returnInvoice" Click="Btn_returnInvoice_Click"
                     Background="{x:Null}"   Padding="0"    >
                         <StackPanel>
                             <Path Fill="{StaticResource MainColor}" Stretch="Fill"  x:Name="path_itemsIcon1"
