@@ -226,6 +226,8 @@
     </Compile>
     <Compile Include="converters\deliveryTypeConverter.cs" />
     <Compile Include="converters\enabledCouponConverter.cs" />
+    <Compile Include="converters\notificationsContentConverter.cs" />
+    <Compile Include="converters\notificationsTitleConverter.cs" />
     <Compile Include="converters\SectionLocationFreeZoneConverter.cs" />
     <Compile Include="converters\translateCategoryNameConverter.cs" />
     <Compile Include="converters\unitItemsListConverter.cs" />
@@ -445,6 +447,9 @@
     </Compile>
     <Compile Include="View\windows\wd_logIn.xaml.cs">
       <DependentUpon>wd_logIn.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_notifications.xaml.cs">
+      <DependentUpon>wd_notifications.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_previewPdf.xaml.cs">
       <DependentUpon>wd_previewPdf.xaml</DependentUpon>
@@ -825,6 +830,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_logIn.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_notifications.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
