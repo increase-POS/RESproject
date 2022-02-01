@@ -367,9 +367,9 @@ namespace Restaurant.View.settings.reportsSettings
                 {
                     HelpClass.SetValidate( p_error_printCount,"trEmptyPrintCount");
                 }
-              else  if (tb_printCount.Text.Equals("0"))
+              else  if (int.Parse(tb_printCount.Text)<=0 )
                 {
-                    HelpClass.SetValidate(p_error_printCount, "trzeroPrintCount");
+                    HelpClass.SetValidate(p_error_printCount, "trMustBeMoreThanZero");
                 }
                 else
                 {

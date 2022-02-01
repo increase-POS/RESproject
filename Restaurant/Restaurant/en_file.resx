@@ -3001,4 +3001,46 @@ Please add Email in setting</value>
   <data name="trTakeAway" xml:space="preserve">
     <value>Take Away</value>
   </data>
+  <data name="trSystemSetting" xml:space="preserve">
+    <value>System Settings</value>
+  </data>
+  <data name="trCopyCount" xml:space="preserve">
+    <value>Copies Count</value>
+  </data>
+  <data name="trDocPaperSize" xml:space="preserve">
+    <value>Documents paper size</value>
+  </data>
+  <data name="trEmailOnSavePurchase" xml:space="preserve">
+    <value>Send an email when saving a purchases invoice</value>
+  </data>
+  <data name="trEmailOnSaveSale" xml:space="preserve">
+    <value>Send an email when saving a sales invoice</value>
+  </data>
+  <data name="trPrinterSettings" xml:space="preserve">
+    <value>Printer Settings</value>
+  </data>
+  <data name="trPrintOnSavePurchase" xml:space="preserve">
+    <value>Print when saving a purchases invoice</value>
+  </data>
+  <data name="trPrintOnSaveSale" xml:space="preserve">
+    <value>Print when saving a sales invoice</value>
+  </data>
+  <data name="trPurchasesCopyCount" xml:space="preserve">
+    <value>Purchases invoice copies count</value>
+  </data>
+  <data name="trReportPrinterName" xml:space="preserve">
+    <value>Reports printer</value>
+  </data>
+  <data name="trReportSalesName" xml:space="preserve">
+    <value>Sales invoice printer</value>
+  </data>
+  <data name="trReportsCopyCount" xml:space="preserve">
+    <value>Reports copies count</value>
+  </data>
+  <data name="trSalesCopyCount" xml:space="preserve">
+    <value>Sales invoice copies count</value>
+  </data>
+  <data name="trSalesPaperSize" xml:space="preserve">
+    <value>Sales invoice paper size</value>
+  </data>
 </root>
