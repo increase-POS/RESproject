@@ -1,4 +1,5 @@
 ﻿using Restaurant.Classes;
+using Restaurant.View.settings.emailsGeneral;
 using Restaurant.View.settings.reportsSettings;
 using System;
 using System.Collections.Generic;
@@ -66,6 +67,22 @@ namespace Restaurant.View.settings
             {
                 grid_main.Children.Clear();
                 grid_main.Children.Add(uc_reportsSettings.Instance);
+
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        
+        private void Btn_emailsGeneral_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_emailsGeneral.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

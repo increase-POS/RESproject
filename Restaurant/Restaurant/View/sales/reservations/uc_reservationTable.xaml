@@ -38,6 +38,14 @@
               
                 <Border  Height="40" Width="50" CornerRadius="7"  
                            Background="{StaticResource SecondColor}" >
+                    <Border.Effect>
+                        <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                    </Border.Effect>
                     <Path Fill="White" Stretch="Fill"
                               HorizontalAlignment="Center" Grid.Column="0"  
                          VerticalAlignment="Center" Width="17.5" Height="17.5" 
@@ -49,6 +57,14 @@
 	C97.6,44.8,95.2,45.5,92.7,45.5z"/>
                 </Border>
                 <Border Background="White" Grid.Column="1" Grid.ColumnSpan="3" CornerRadius="10" Margin="10,5,5,5"    BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                    <Border.Effect>
+                        <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                    </Border.Effect>
                     <Grid   >
                         <TextBox Margin="4,0" x:Name="tb_searchPersonsCount"  
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
@@ -66,6 +82,14 @@
                     </Grid>
                 </Border>
                 <Border Grid.Column="4"  Grid.ColumnSpan="3" CornerRadius="10"   Margin="5,5,10,5"     BorderThickness="1" BorderBrush="{StaticResource LightGrey}" Background="White">
+                    <Border.Effect>
+                        <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                    </Border.Effect>
                     <Grid   >
                         <ComboBox x:Name="cb_searchSection"     
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
@@ -111,6 +135,14 @@
 
                 <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" CornerRadius="10" Margin="10,5,5,5"  BorderThickness="1" 
                                             BorderBrush="{StaticResource LightGrey}" Background="White">
+                    <Border.Effect>
+                        <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                    </Border.Effect>
                     <Grid>
                         <DatePicker  x:Name="dp_searchDate" 
                                         Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
@@ -125,6 +157,14 @@
                 </Border>
                 <Border Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" CornerRadius="10" Margin="5,5,5,5"   BorderThickness="1"  
                                             BorderBrush="{StaticResource LightGrey}" Background="White">
+                    <Border.Effect>
+                        <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                    </Border.Effect>
                     <Grid>
                         <materialDesign:TimePicker  x:Name="tp_searchStartTime" 
                              Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
@@ -141,6 +181,14 @@
                 </Border>
                 <Border Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="2" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1"   
                                             BorderBrush="{StaticResource LightGrey}" Background="White">
+                    <Border.Effect>
+                        <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                    </Border.Effect>
                     <Grid>
                         <materialDesign:TimePicker  x:Name="tp_searchEndTime" 
                              Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
@@ -371,8 +419,16 @@
             </Border>
         </Grid>
 
-
-        <Grid Margin="10 60 0 5" Grid.Column="1"  >
+        <Border Margin="10 60 0 5" Grid.Column="1"  >
+            <Border.Effect>
+                <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+            </Border.Effect>
+            <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -631,6 +687,7 @@
             </Border>
 
         </Grid>
+        </Border>
 
     </Grid>
 </UserControl>

@@ -25,6 +25,14 @@
             </Grid.ColumnDefinitions>
             <Border BorderThickness="0"  Height="auto"  Grid.Column="0"  Margin="10,0,0,0"
                     CornerRadius="7" BorderBrush="Black" Background="{StaticResource MainColor}" Padding="0">
+                <Border.Effect>
+                    <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                </Border.Effect>
                 <Button Grid.Column="8" BorderBrush="{x:Null}"     Height="auto" Click="Btn_items_Click"
                     Background="{x:Null}" x:Name="btn_items" Padding="0"    >
                     <StackPanel>
@@ -305,7 +313,7 @@
                                 <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5"
                                             HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                                             VerticalAlignment="Center" Width="15"  Height="15"
-                                            Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z"/>
+                                           Data="{StaticResource infoCircle}"/>
 
                             </Grid>
                         </Border>
@@ -318,6 +326,14 @@
 
             <Border BorderThickness="0"  Grid.Column="0" Grid.Row="2"  Height="50"   Margin="5,5,10,10"
                     CornerRadius="7" BorderBrush="Black" Background="{StaticResource MainColor}" Padding="0">
+                <Border.Effect>
+                    <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                </Border.Effect>
                 <Button Content="Save" Height="auto" BorderBrush="{x:Null}"  FontSize="22"
                         Foreground="White" FontWeight="Bold" x:Name="btn_save"
                 Background="{x:Null}" Click="Btn_save_Click" IsEnabled="True" />

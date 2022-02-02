@@ -93,7 +93,7 @@
                             </StackPanel>
                             <Button Tag="residentialSectors" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                     Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
-                                  BorderThickness="0" x:Name="btn_residentialSectors"  Click="Btn_persons_Click"
+                                  BorderThickness="0" x:Name="btn_residentialSectors"  Click="Btn_residentialSectors_Click"
                                  Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
                                 <StackPanel    Orientation="Horizontal">

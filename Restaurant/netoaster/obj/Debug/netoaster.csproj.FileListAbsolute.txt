@@ -204,7 +204,6 @@ E:\GitHub\RESproject\Restaurant\netoaster\obj\Debug\netoaster.csproj.GenerateRes
 E:\GitHub\RESproject\Restaurant\netoaster\obj\Debug\netoaster.csproj.CoreCompileInputs.cache
 E:\GitHub\RESproject\Restaurant\netoaster\obj\Debug\netoaster.dll
 E:\GitHub\RESproject\Restaurant\netoaster\obj\Debug\netoaster.pdb
-E:\GitHub\RESproject\Restaurant\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache
 D:\increase\Resturant\Restaurant\netoaster\bin\Debug\netoaster.dll
 D:\increase\Resturant\Restaurant\netoaster\bin\Debug\netoaster.pdb
 D:\increase\Resturant\Restaurant\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache

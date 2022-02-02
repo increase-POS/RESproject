@@ -1055,6 +1055,14 @@
             </Border>
             <Border  Grid.Row="3" Grid.Column="0" Height="40" Tag="ssssssss" Background="{StaticResource MainColor}" CornerRadius="7.5"  
                      Margin="0 15 5 0"  Padding="0">
+                <Border.Effect>
+                    <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                </Border.Effect>
                 <Button  Content="Pay"    FontSize="20" FontWeight="Bold"
                     materialDesign:ButtonAssist.CornerRadius="7" Height="40"
                           Background="{x:Null}" BorderBrush="{x:Null}"

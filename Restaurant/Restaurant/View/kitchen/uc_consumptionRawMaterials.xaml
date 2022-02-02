@@ -25,6 +25,14 @@
             </Grid.ColumnDefinitions>
             <Border BorderThickness="0"  Height="auto"  Grid.Column="0"  Margin="10,0,0,0"
                     CornerRadius="7" BorderBrush="Black" Background="{StaticResource MainColor}" Padding="0">
+                <Border.Effect>
+                    <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                </Border.Effect>
                 <Button Grid.Column="8" BorderBrush="{x:Null}"     Height="auto" Click="Btn_items_Click"
                     Background="{x:Null}" x:Name="btn_items" Padding="0"    >
                     <StackPanel>
@@ -317,6 +325,14 @@
 
             <Border BorderThickness="0"  Grid.Column="0" Grid.Row="2"  Height="50"   Margin="5,5,10,10"
                     CornerRadius="7" BorderBrush="Black" Background="{StaticResource MainColor}" Padding="0">
+                <Border.Effect>
+                    <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                </Border.Effect>
                 <Button Content="Save" Height="auto" BorderBrush="{x:Null}"  FontSize="22"
                         Foreground="White" FontWeight="Bold" x:Name="btn_save"
                 Background="{x:Null}" Click="Btn_save_Click" IsEnabled="True" />

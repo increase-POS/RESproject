@@ -4,13 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Restaurant.View.kitchen"
-             mc:Ignorable="d"  Tag="itemsRawMaterials"  Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
+             mc:Ignorable="d"  Tag="itemsCosting"  Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="870" d:DesignWidth="950">
     <Grid x:Name="grid_main" Margin="20 10" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2.5*"/>
-            <!--<ColumnDefinition x:Name="gridWidth" Width="*" MinWidth="225"/>-->
+            <ColumnDefinition x:Name="gridWidth" Width="*" MinWidth="225"/>
         </Grid.ColumnDefinitions>
         <Grid>
             <Grid.RowDefinitions>
@@ -211,7 +211,15 @@
                     </Grid.ColumnDefinitions>
                     <Border Height="40" Width="50" CornerRadius="7"  
                            Background="{StaticResource SecondColor}" >
-                        <Path Fill="White" Stretch="Fill"
+                    <Border.Effect>
+                        <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                    </Border.Effect>
+                    <Path Fill="White" Stretch="Fill"
                               HorizontalAlignment="Center" Grid.Column="0"  
                          VerticalAlignment="Center" Width="17.5" Height="17.5" 
                               Data="M111.6,16.4c-17.9-17.9-47-17.9-65,0C31,32.1,28.7,56.7,41.3,75c1,1.4,2,2.7,3.1,4L40.3,83l-4.9-4.9L5.9,108.2
@@ -222,7 +230,15 @@
 	C97.6,44.8,95.2,45.5,92.7,45.5z"/>
                     </Border>
                     <Border Background="White" Grid.Column="1" CornerRadius="10" Margin="15,10"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                        <Grid   >
+                    <Border.Effect>
+                        <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                    </Border.Effect>
+                    <Grid   >
 
                             <TextBox x:Name="tb_search" Grid.Column="1"    Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -234,7 +250,15 @@
                         </Grid>
                     </Border>
                     <Border Grid.Column="2"   CornerRadius="10"   Margin="5,10,10,10"     BorderThickness="1" BorderBrush="{StaticResource LightGrey}" Background="White">
-                        <Grid   >
+                    <Border.Effect>
+                        <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                    </Border.Effect>
+                    <Grid   >
                             <ComboBox x:Name="cb_searchTags"     
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                   materialDesign:HintAssist.Hint="tags..."  
@@ -286,7 +310,15 @@
 
                 </Grid>
             <Border Margin="0,0,5,5" Grid.Row="2"  Background="White" CornerRadius="10">
-                    <Grid>
+                <Border.Effect>
+                    <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                </Border.Effect>
+                <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
                             <RowDefinition />
@@ -498,12 +530,396 @@
                     </Grid>
                 </Border>
             <Border  Grid.Row="3" Height="40"  Background="{StaticResource MainColor}" CornerRadius="7.5"  
-                     Margin="0 10 5 10"  Padding="0">
+                     Margin="0 10 5 5"  Padding="0">
+                <Border.Effect>
+                    <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                </Border.Effect>
                 <Button  Content="update"    FontSize="20" FontWeight="Bold"
                     materialDesign:ButtonAssist.CornerRadius="7" Height="40"
                           Background="{x:Null}" BorderBrush="{x:Null}"
                        Foreground="White"  />
             </Border>
         </Grid>
+        <Border Margin="10 120 0 5" Grid.Column="1"  Background="White" CornerRadius="7">
+            <Border.Effect>
+                <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+            </Border.Effect>
+
+
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border  Background="{StaticResource MainColor}"   CornerRadius="7 7 0 0">
+
+                <Grid  Height="40" Margin="10 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Path Fill="White" Stretch="Fill"
+                           VerticalAlignment="Center" 
+                        Width="20" Height="20"
+                        Data="M233,125c1.2-0.5,2.4-1,3.6-1.5c0.4-0.2,0.8-0.3,1.1-0.5c3.5-1.4,6.9-2.8,10.4-4.2c1-0.4,1.6-0.3,2.1,0.8c1,2,2.1,3.9,2.9,6
+	c1.1,2.8,2.3,5.5,3.4,8.3c0.9-0.5,2-0.7,3-0.6c0.4-0.2,0.8-0.4,1.3-0.6c2.3-0.9,4.4-1.7,6.6-2.4c1.8-0.6,2.5-0.2,3.2,1.6
+	c0.4,0.9,0.7,1.8,1.1,2.7h77.5c0-0.3,0.1-0.5,0.1-0.7c0-0.4,0-0.8,0-1.2c-0.7-12.3-4.1-23.8-10.8-34.2c-14.2-22.3-34.5-36.3-60-42.8
+	c-6.9-1.8-13.9-2.9-21.1-3.4c-0.8-0.1-1.7,0-1.9-1.2c-0.2-1.1-0.1-2.2,1-2.7c0.7-0.4,1.5-0.6,2.3-0.8c2.7-0.6,5-1.8,7-3.6
+	c2.5-2.3,2.5-5.7,0-8c-1-0.9-2.1-1.7-3.4-2.2c-4.9-2.3-10.1-3.1-15.4-2.1c-3.8,0.7-7.5,1.7-10.3,4.6c-1.5,1.6-2.2,3.4-1.2,5.5
+	c1.5,3.1,4.2,4.5,7.7,5.3c-1.1-1.3-2-2.3-2.8-3.3c-1.1-1.4-1.1-2.8-0.2-4.4c1.4-2.3,5.9-4,8.7-3c-0.7,0.4-1.4,0.8-2,1.1
+	c-4.4,2.5-4.8,4.1-1.8,8.2c1.4,1.9,2.2,4,2.5,6.3c-0.1,0.1-0.2,0.2-0.3,0.2c-2.7,0.3-5.4,0.5-8.1,0.8c-16.5,2-32,7.2-46,16.3
+	c-16.7,10.9-29.3,25.4-36.1,44.4c-2.4,6.7-3.7,13.6-3.5,20.9h56C217.5,131.4,225.3,128.2,233,125z M177.5,124.4h-12.1
+	c0.4-2.2,0.6-4.3,1.3-6.3c7.9-23.7,23.5-40.6,46.1-50.8c4.8-2.2,10.1-3.3,15.1-4.9c0.2-0.1,0.4,0,1,0.1c-0.5,0.4-0.7,0.6-1,0.7
+	C213.8,68,203,77.2,194.3,89c-5.4,7.3-10.4,14.8-13.5,23.4C179.5,116.2,178.6,120.2,177.5,124.4z M185.7,124.3
+	c0.7-3.3,1.2-6.6,2.3-9.8c5.4-16.1,14.6-29.5,28.4-39.5c4.2-3,8.9-5,14-6c0.3-0.1,0.6-0.1,1.3-0.1c-19.8,13.8-33.8,31.2-37.9,55.3
+	H185.7z M157,150.5c4.7,0,9.5,0,14.2,0c-4.4,1.8-8.8,3.6-13.2,5.4c-0.6-0.6-1.1-1.2-1.7-1.8c-0.5-0.6-1-1.1-1.4-1.8
+	c-0.2-0.4-0.5-1-0.4-1.3c0.1-0.3,0.8-0.4,1.2-0.5C156.1,150.4,156.6,150.5,157,150.5z M181.6,146.2c-12.7,0-25.4,0-38.1,0
+	c-4.6,0-9-0.8-13-3c-1.8-1-3.4-2.4-5.1-3.7c-0.2-0.2-0.4-0.6-0.3-0.8c0.1-0.3,0.5-0.5,0.8-0.5c0.3-0.1,0.7,0,1,0
+	c24.8,0,49.6,0,74.4,0C194.8,140.7,188.2,143.5,181.6,146.2z M378,138.6c-0.2,0.4-0.3,0.8-0.6,1.1c-2.9,3-6.6,4.7-10.6,5.8
+	c-3,0.8-6,1.1-9.1,0.7c-5.5-0.7-9.9,1.1-13,5.8c-5.1,7.8-12.5,11.1-21.6,11.1c-13.3-0.1-26.5-0.2-39.8-0.3
+	c-3.4-8.2-6.8-16.5-10.1-24.7c34.3,0,68.6,0,102.9,0c0.2,0,0.4-0.1,0.6,0C377.2,138.2,377.6,138.4,378,138.6z M333,172.4
+	c-9.3-0.2-17.1,7.3-17.2,16.6c-0.2,9.4,7.3,17.2,16.7,17.3c9.9,0.1,17.1-7.7,17.2-16.7C349.8,180.2,342.4,172.6,333,172.4z
+	 M336.5,195.8c-0.9,0.4-1.8,0.6-2.7,0.9c-0.1,0.5-0.1,1.1-0.2,1.7c-0.5,0-0.9,0-1.5,0c0-0.6-0.1-1.1-0.1-1.8
+	c-2.4-0.5-4.7-1.2-5.3-4.2c1.1-0.1,2.2-0.6,3,0.8c0.4,0.7,1.3,1,2,1.5c0.1-0.1,0.2-0.2,0.3-0.4c0-1.4,0-2.8,0-4.3
+	c-2.3-0.8-5.2-1.1-4.9-4.6c0.3-2.7,2.5-3.3,4.8-3.7c0-0.4,0.1-0.9,0.1-1.4c0.5,0,1,0,1.5,0c0.1,0.5,0.1,0.9,0.2,1.4
+	c2.1,0.4,4.1,1.1,4.7,3.7c-1.2,0.1-2.3,0.5-3.1-0.9c-0.2-0.4-0.9-0.6-1.7-1.1c0,1.5,0,2.6,0,3.8c0,0.3,0.4,0.6,0.7,0.7
+	c0.7,0.3,1.5,0.5,2.2,0.8c1.5,0.7,2.3,1.8,2.3,3.4C338.9,193.9,338,195.1,336.5,195.8z M336.2,192.4c0.1,1.2-0.6,1.8-2.5,2.1
+	c0-1.4,0-2.7,0-4C335.3,190.6,336.2,191.3,336.2,192.4z M332,183.7c0,1.2,0,2.4,0,3.6c-1.7-0.3-2.4-0.8-2.3-1.9
+	C329.7,184.4,330.4,183.9,332,183.7z M292.5,170.8c-0.6-0.4-1.4-1.1-1.4-1.7c0-0.6,0.7-1.4,1.3-1.6c1.5-0.7,3.1-1.3,4.7-1.6
+	c7.6-1.4,15.2-1.4,22.8,0.3c1.2,0.3,2.4,0.7,3.5,1.3c1.8,0.9,1.9,2.4,0,3.2c-2,0.9-4.2,1.5-6.4,1.9c-3,0.5-6.2,0.6-7.9,0.8
+	c-5.8-0.1-10.2-0.3-14.5-1.6C294,171.5,293.2,171.3,292.5,170.8z M291,174.5c0.1-0.5,0-1,0-1.8c8.3,3.3,16.8,3,25.4,2.3
+	c-1.1,1.5-2.1,2.9-3.1,4.2c-0.2,0.3-0.6,0.5-1,0.5c-6.2,0.3-12.3,0.3-18.2-1.6c-0.4-0.1-0.7-0.3-1.1-0.4
+	C291.5,177.1,290.8,176.2,291,174.5z M312.3,196.5c0.3,1,0.9,1.8,1.4,3c-6.5,0.4-12.6,0.4-18.7-1.3c-0.4-0.1-0.8-0.3-1.2-0.4
+	c-2.8-1.1-3.1-1.5-2.6-4.9c2.7,0.6,5.5,1.5,8.2,1.8c3.5,0.4,7.1,0.5,10.7,0.5C311.2,195.2,311.9,195.3,312.3,196.5z M291.2,179.4
+	c6.6,2.8,13.5,2.8,20.6,2.7c-0.3,1.4-0.6,2.7-1,4c-0.1,0.2-0.6,0.4-0.9,0.4c-5.1,0.1-10.2-0.1-15.2-1.5c-0.4-0.1-0.7-0.2-1.1-0.4
+	C291,183.5,290.7,183.1,291.2,179.4z M291.2,185.9c6.2,2.6,12.8,2.8,19.4,2.8c0.1,1.5,0.3,2.8,0.4,4.2c-0.3,0.1-0.5,0.2-0.8,0.2
+	c-4.9,0.1-9.7-0.1-14.5-1.2c-0.5-0.1-1.1-0.3-1.6-0.5C291,190.3,290.5,189.3,291.2,185.9z M287.5,181.9c0,0.1,0.1,0.3,0.1,0.4
+	c-0.2,0.9-0.8,1.3-1.6,1.7c-7.8,3.2-15.6,6.5-23.4,9.7c-7.7,3.2-15.4,6.4-23.2,9.6c-8.2,3.4-16.4,6.8-24.6,10.1
+	c-6.5,2.7-13,5.3-19.5,8c-1.3,0.5-2.6,1.1-3.9,1.7c-0.4,0.1-0.8,0.2-1.1,0.2c-1-0.3-1.7-1-2.1-2c-1.3-3-2.5-6-3.8-9.1
+	c1.2-0.4,2.3-0.8,3.4-1.2c0.5-0.2,0.7,0.3,0.8,0.6c0.7,1.6,1.4,3.2,2.1,4.9c0.8,1.9,0.8,1.9,2.7,1.1c5-2,10-4.1,15-6.1
+	c0.6-0.2,0.7-0.5,0.4-1c-0.9-2-2.2-3.7-3.6-5.3c-0.3-0.3-0.6-0.7-0.9-1.1c2.5-1,4.9-2.1,7.4-3c4.7-1.9,9.5-3.9,14.3-5.7
+	c1.1-0.4,2.4-0.6,3.6-0.8c1-0.2,2.1-0.3,3.2-0.5c0.5-0.1,0.7,0,0.9,0.5c0.4,0.9,0.8,1.8,1.3,2.6c0.5,0.7,1.1,0.7,1.8,0.2
+	c0.4-0.3,0.5-0.7,0.4-1.1c-0.2-0.9-0.5-1.8-0.8-2.6c-0.2-0.5-0.1-0.8,0.3-1.2c3.3-2.9,7.3-4.6,11.4-6.3c5-2,9.9-4.1,14.8-6.1
+	c0.3-0.1,0.6-0.2,1-0.3c0,2.9,0.5,5.6,1.3,8.4c0.5-0.2,1-0.3,1.5-0.5c5.1-2.1,10.1-4.2,15.2-6.3c0.7-0.3,0.9-0.6,0.6-1.3
+	c-1.7-4.2-3.3-8.5-5-12.7c-0.5-1.3-1.1-2.7-1.7-4.1c-1.4,0.8-2.8,1.5-4.2,2.3c-0.3-0.6-0.5-1.1-0.8-1.6c-0.9-2.2-1.8-4.3-2.7-6.5
+	c-0.4-1-0.4-1,0.6-1.4c0.6-0.2,1.1-0.4,1.7-0.6c0.6-0.2,1.1-0.3,1.8-0.5c-0.4-1-0.7-2-1.1-2.9c-1.9-4.6-3.8-9.3-5.7-14
+	c-0.2-0.4-0.4-0.5-0.8-0.4c-1.3,0.4-2.6,0.8-4.1,1.3c-0.4-1.2-0.8-2.5-1.3-3.9c2.1-0.8,4.1-1.6,6.2-2.3c1.7-0.5,2.3-0.2,2.9,1.4
+	c5.8,14.2,11.6,28.3,17.4,42.5c0.7,1.6,1.2,3.3,1.8,5C287.4,181.7,287.5,181.7,287.5,181.9z M252.1,180.6c5.5-2.3,10.9-4.7,16.3-6.9
+	c1.6-0.7,1.7-1.4,1.2-2.7c-0.9-2.4-1.8-4.7-2.8-7.1c-4.8-11.8-9.7-23.6-14.6-35.4c-0.8-1.8-1.7-3.6-2.6-5.4c-0.5-1-1-1.1-1.9-0.7
+	c-4.6,1.9-9.1,3.7-13.6,5.6c-8.4,3.4-16.8,6.9-25.2,10.3c-9.3,3.8-18.6,7.7-28,11.5c-8.1,3.4-16.3,6.7-24.4,10.1
+	c-1.4,0.6-2.8,1.2-4.2,1.9c-1,0.5-1.3,1.2-1,2.2c0,0.1,0.1,0.4,0.2,0.6c1,2.4,1.9,4.8,2.9,7.2c3.6,8.9,7.3,17.8,11,26.6
+	c1.9,4.5,3.9,9.1,5.9,13.6c0.5,1.1,1.2,1.3,2.3,0.9c3.6-1.4,7.2-2.9,10.8-4.3c12.6-5.1,25.2-10.3,37.8-15.5
+	C232.1,188.9,242.1,184.8,252.1,180.6z M258.1,153.9c0.9,2.1,1.9,4.2,2.8,6.4c1.4,3.3,2.6,6.6,4,9.9c0.1,0.2,0.1,0.3,0.2,0.6
+	c-5.8,2.4-11.5,4.8-17.3,7.2c-0.2-0.4-0.4-0.8-0.5-1.2c-3-9,1.3-19.1,9.9-23.3C257.6,153.3,257.9,153.4,258.1,153.9z M234,132.5
+	c4.1-1.7,8.2-3.4,12.4-5.2c0.6-0.3,0.9-0.1,1.1,0.5c1.4,3.3,2.8,6.7,4.2,10c0.8,1.9,1.5,3.8,2.2,5.7c0.4,1.3,0.4,1.4-0.9,1.6
+	c-2.2,0.4-4.4,0.9-6.5,0.9c-5.9-0.1-13.5-3.8-16.6-11.4c0-0.1,0-0.1,0-0.3C231.2,133.7,232.6,133.1,234,132.5z M163.4,182
+	c-0.1,0.1-0.2,0-0.4,0.1c-2.3-5.8-4.7-11.6-7.1-17.4c1.2-0.5,2.3-1,3.5-1.5c4.3-1.8,8.7-3.5,13-5.3c0.9-0.4,1.1-0.3,1.5,0.7
+	c1.1,3,1.2,6.1,0.7,9.2c-1,5.8-4.2,10.2-9.1,13.3C164.8,181.4,164.1,181.7,163.4,182z M173.9,208.3c-0.5-1.1-0.9-2.1-1.3-3.1
+	c-1.7-4.2-3.4-8.3-5.1-12.5c-0.8-1.9-0.5-2.3,1.5-2.8c7.3-1.6,13.6,0.4,18.8,5.6c1.5,1.4,2.6,3.1,3.3,5c0.1,0.2,0.1,0.4,0.2,0.7
+	C185.6,203.6,179.8,205.9,173.9,208.3z M220.6,181.1c-0.6,0.5-1.2,0.9-1.8,1.4c-0.4,0.3-0.5,0.6-0.3,1.1c0.3,0.8,0.6,1.6,0.8,2.4
+	c0.1,0.6,0,1.1-0.6,1.4c-0.7,0.3-1.3,0.2-1.7-0.4c-0.4-0.7-0.7-1.4-1.1-2.1c-0.1-0.3-0.3-0.6-0.4-0.9c-1.2,0.1-2.4,0.3-3.6,0.4
+	c-3,0.2-5.6-0.8-7.8-2.9c-0.8-0.7-1.4-1.6-1.7-2.8c-0.3-1.3,0.3-2.6,1.3-3.2c1.2-0.7,2.5-0.5,3.6,0.5c1,0.9,2,2,3.1,2.8
+	c0.7,0.5,1.6,0.6,2.4,0.7c0.7,0.1,0.8-0.2,0.6-0.8c-1.1-2.7-2.3-5.4-3.4-8.2c-0.2-0.4-0.4-0.4-0.8-0.4c-1.5,0-2.9,0.1-4.4,0
+	c-3.8-0.2-6.2-2.2-7.4-5.8c-0.1-0.4-0.3-0.8-0.4-1.2c-0.8-2.6-0.2-5,1.6-7.1c0.9-1.1,2.1-2,3.2-2.9c0.6-0.5,0.8-0.9,0.5-1.6
+	c-0.3-0.7-0.5-1.4-0.7-2.1c-0.2-0.7,0.1-1.3,0.9-1.6c0.6-0.3,1.1-0.1,1.5,0.6c0.4,0.7,0.8,1.4,1,2.2c0.2,0.6,0.5,0.8,1.2,0.7
+	c1.2-0.2,2.5-0.3,3.7-0.3c2.4,0.1,4.4,1.2,6.1,2.9c0.4,0.4,0.7,0.8,0.9,1.3c0.6,1.1,0.3,2.2-0.5,3c-1.1,1.1-1.9,1.2-3.2,0.5
+	c-0.6-0.3-1.1-0.8-1.5-1.2c-1.1-1.3-2.6-1.8-4.4-1.7c0.6,1.6,1.2,3.1,1.8,4.6c0.4,1,0.9,2,1.3,3c0.2,0.5,0.5,0.7,1.1,0.7
+	c1.4,0,2.7-0.1,4.1-0.1c1.8,0,3.6,0.4,5.1,1.4c2.3,1.4,3.3,3.6,3.9,6.1C225.4,175.5,223.6,178.5,220.6,181.1z M218.6,176.5
+	c-0.5,0.7-1.1,1.4-1.6,2c-0.1,0-0.2,0-0.3-0.1c-0.4-0.9-0.9-1.8-1.3-2.8c-0.7-1.7-1.4-3.5-2.2-5.2c-0.2-0.6,0-0.8,0.6-0.8
+	c0.5,0,1.1,0,1.6,0.1C218.8,170.1,220.4,173.6,218.6,176.5z M204.4,156.8c1.1,2.6,2.2,5.1,3.3,7.6c-1.6,0.5-4.2-0.4-4.8-1.7
+	C201.8,160.5,202.3,158.4,204.4,156.8z"/>
+
+
+                    <TextBlock Grid.Column="1" Text="items costing" x:Name="txt_title" Margin="10,0,0,0"  Foreground="White" 
+                     FontSize="14"     VerticalAlignment="Center" 
+                           FontWeight="Bold" />
+                    <Button   x:Name="btn_clear"  Grid.Column="3" Padding="0" 
+                               VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}"   >
+                        <materialDesign:PackIcon Foreground="White" Kind="RefreshCircle"   Width="30" Height="30">
+                            <materialDesign:PackIcon.ToolTip>
+                                <ToolTip x:Name="tt_clear" Placement="left" HorizontalOffset="5" 
+                                             PlacementRectangle="50,0,0,0" VerticalOffset="20"/>
+                            </materialDesign:PackIcon.ToolTip>
+                        </materialDesign:PackIcon>
+                    </Button>
+
+                </Grid>
+            </Border>
+
+            <ScrollViewer  Grid.Row="1"  VerticalScrollBarVisibility="Auto" Margin="0 0 0 10" >
+                <StackPanel>
+                    <DockPanel Margin="10 0"
+                                 LastChildFill="True">
+                        <TextBlock  Text="details"  Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
+                        <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
+                    </DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MinWidth="100"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock  Grid.Row="0" Grid.Column="0" 
+                                    Text="code" FontWeight="SemiBold"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
+                        <TextBlock  Grid.Row="0" Grid.Column="1" 
+                                    Text="item-156"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Right"  VerticalAlignment="Center"  />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MinWidth="100"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock  Grid.Row="1" Grid.Column="0" 
+                                    Text="name" FontWeight="SemiBold"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                        <TextBlock  Grid.Row="1" Grid.Column="1" 
+                                    Text="Hamburger"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MinWidth="100"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock  Grid.Row="1" Grid.Column="0" 
+                                    Text="purchasePrice" FontWeight="SemiBold"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                        <TextBlock  Grid.Row="1" Grid.Column="1" 
+                                    Text="800"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MinWidth="100"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock  Grid.Row="1" Grid.Column="0" 
+                                    Text="price" FontWeight="SemiBold"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                        <TextBlock  Grid.Row="1" Grid.Column="1" 
+                                    Text="1000"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MinWidth="100"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock  Grid.Row="1" Grid.Column="0" 
+                                    Text="priceWithService" FontWeight="SemiBold"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                        <TextBlock  Grid.Row="1" Grid.Column="1" 
+                                    Text="1100"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                    </Grid>
+
+
+                    <!--#endregion-->
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <Border Visibility="Collapsed" Grid.Row="3" Background="White" CornerRadius="0 0 7 7">
+                <StackPanel  Grid.Row="3" Margin="5,5,5,10" >
+                    <Border Background="White" Grid.ColumnSpan="3"  Height="1"  BorderBrush="{StaticResource MainColor}" 
+                    BorderThickness="1" Opacity="1" Margin="5,5,5,5"  />
+                    <Grid x:Name="grid_emptyTableButtons" Visibility="Visible" >
+                        <Border Grid.Row="0" Grid.ColumnSpan="3">
+                            <Button    Content="Open"
+                                    materialDesign:ButtonAssist.CornerRadius="7"
+                              Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                        Margin="1,1"   Foreground="White" />
+                        </Border>
+                    </Grid>
+
+                    <Grid x:Name="grid_openTableButtons"  Visibility="Visible" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0" BorderBrush="{x:Null}" Padding="0" 
+                                  Margin="5 5 2.5 5 " Height="auto"
+                                Background="{x:Null}" VerticalAlignment="Top"  >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                           Width="35" Height="35" FlowDirection="LeftToRight"
+                           Data="{StaticResource mergeInvoice}"/>
+                                <TextBlock  Text="merge invoice"  Grid.Row="1" 
+                                                    FontWeight="Regular" FontSize="10" TextAlignment="Center"
+                                                    Foreground="{StaticResource MainColor}"
+                                                     HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                            </Grid>
+                        </Button>
+                        <Button Grid.Column="1" BorderBrush="{x:Null}" Padding="0" 
+                                  Margin="5 5 2.5 5 " Height="auto"
+                                Background="{x:Null}" VerticalAlignment="Top"  >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                           Width="35" Height="35" FlowDirection="LeftToRight"
+                           Data="{StaticResource mergeTables}"/>
+                                <TextBlock  Text="merge table"  Grid.Row="1" 
+                                                    FontWeight="Regular" FontSize="10" TextAlignment="Center"
+                                                    Foreground="{StaticResource MainColor}"
+                                                     HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                            </Grid>
+                        </Button>
+                        <Button Grid.Column="2" BorderBrush="{x:Null}" Padding="0" 
+                                  Margin="5 5 2.5 5 " Height="auto"
+                                Background="{x:Null}" VerticalAlignment="Top"  >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                           Width="35" Height="35" FlowDirection="LeftToRight"
+                           Data="{StaticResource changeTables}"/>
+                                <TextBlock  Text="change table"  Grid.Row="1" 
+                                                    FontWeight="Regular" FontSize="10" TextAlignment="Center"
+                                                    Foreground="{StaticResource MainColor}"
+                                                     HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                            </Grid>
+                        </Button>
+                        <Button Grid.Column="3" BorderBrush="{x:Null}" Padding="0" 
+                                  Margin="5 5 2.5 5 " Height="auto"
+                                Background="{x:Null}" VerticalAlignment="Top"  >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                           Width="35" Height="35" FlowDirection="LeftToRight"
+                           Data="{StaticResource splitTables}"/>
+                                <TextBlock  Text="split table"  Grid.Row="1" 
+                                                    FontWeight="Regular" FontSize="10" TextAlignment="Center"
+                                                    Foreground="{StaticResource MainColor}"
+                                                     HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                            </Grid>
+                        </Button>
+
+
+                        <Border Grid.Row="2" Grid.ColumnSpan="4">
+                            <Button    Content="select"
+                                    materialDesign:ButtonAssist.CornerRadius="7"
+                              Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                        Margin="1,1"   Foreground="White" />
+                        </Border>
+                    </Grid>
+
+                    <Grid x:Name="grid_reservatedTableButtons" Visibility="Visible">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" BorderBrush="{x:Null}" Padding="0" 
+                                  Margin="5 5 2.5 5 " Height="auto"
+                                Background="{x:Null}" VerticalAlignment="Top"  >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                           Width="35" Height="35" FlowDirection="LeftToRight"
+                           Data="{StaticResource splitTables}"/>
+                                <TextBlock  Text="split table"  Grid.Row="1" 
+                                                    FontWeight="Regular" FontSize="10" TextAlignment="Center"
+                                                    Foreground="{StaticResource MainColor}"
+                                                     HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                            </Grid>
+                        </Button>
+                        <Button Grid.Column="1" BorderBrush="{x:Null}" Padding="0" 
+                                  Margin="5 5 2.5 5 " Height="auto" 
+                                Background="{x:Null}" VerticalAlignment="Top"  >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                           Width="35" Height="35" FlowDirection="LeftToRight"
+                           Data="{StaticResource confirmReservation}"/>
+                                <TextBlock  Text="confirm and open"  Grid.Row="1" 
+                                                    FontWeight="Regular" FontSize="10" TextAlignment="Center"
+                                                    Foreground="{StaticResource MainColor}"
+                                                     HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                            </Grid>
+                        </Button>
+                        <Button Grid.Column="3" BorderBrush="{x:Null}" Padding="0" 
+                                  Margin="5 5 2.5 5 " Height="auto" 
+                                Background="{x:Null}" VerticalAlignment="Top"  >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                           Width="35" Height="35" FlowDirection="LeftToRight"
+                           Data="{StaticResource cancleReservation}"/>
+                                <TextBlock  Text="cancel and open"  Grid.Row="1" 
+                                                    FontWeight="Regular" FontSize="10" TextAlignment="Center"
+                                                    Foreground="{StaticResource MainColor}"
+                                                     HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                            </Grid>
+                        </Button>
+
+
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </Grid>
+        </Border>
+
     </Grid>
 </UserControl>

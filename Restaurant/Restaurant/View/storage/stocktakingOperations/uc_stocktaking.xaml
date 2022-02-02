@@ -20,6 +20,15 @@
 
         <Border BorderThickness="0"  Height="auto"  Grid.Column="0" Grid.ColumnSpan="1" Margin="10,0,5,0"
                     CornerRadius="7" BorderBrush="Black" Background="White" Padding="0">
+
+            <Border.Effect>
+                <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+            </Border.Effect>
             <StackPanel  Orientation="Horizontal" Margin="10,0">
 
 
@@ -74,6 +83,15 @@
         </Border>
         <Border BorderThickness="0"   Grid.Column="2"  
                     CornerRadius="7" BorderBrush="Black" Background="White" Padding="0" Margin="5,0,10,0">
+
+            <Border.Effect>
+                <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+            </Border.Effect>
             <DockPanel   Margin="10,0" LastChildFill="False">
                 <materialDesign:Badged VerticalAlignment="Center" Margin="5,10,5,0"  DockPanel.Dock="Right" 
                       BadgeBackground="{StaticResource Red}"  BadgeForeground="White" Name="md_docImage">
@@ -182,6 +200,15 @@
             </Grid.RowDefinitions>
             <Border BorderThickness="0"   Grid.Column="0" Grid.Row="0"   Margin="5,10,10,10"
                     CornerRadius="7" BorderBrush="Black" Background="White" Padding="0">
+
+                <Border.Effect>
+                    <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                </Border.Effect>
                 <Grid   Margin="0" >
                     <Grid.RowDefinitions >
                         <RowDefinition Height="auto"/>
@@ -205,6 +232,15 @@
             <Border BorderThickness="0"  Grid.Column="0" Grid.Row="1"  Height="50"   Margin="5,5,10,10"
                     CornerRadius="7" x:Name="bdr_archive" BorderBrush="Black" Background="{StaticResource SecondColor}" Padding="0">
 
+
+                <Border.Effect>
+                    <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                </Border.Effect>
                 <Button Content="Archive" Height="auto" BorderBrush="{x:Null}"  FontSize="22" FontWeight="Bold" x:Name="btn_archive"
                 Background="{x:Null}" Foreground="White"
                         Click="Btn_archive_Click" IsEnabled="True" />
@@ -219,6 +255,15 @@
             </Grid.RowDefinitions>
             <Border BorderThickness="0"   Grid.Column="0" Grid.Row="0"    Margin="10,10,5,5"
                     CornerRadius="7" BorderBrush="Black" Background="White" Padding="0">
+
+                <Border.Effect>
+                    <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                </Border.Effect>
                 <Grid   Margin="0" >
                     <Grid.RowDefinitions >
                         <RowDefinition Height="auto"/>
@@ -326,6 +371,15 @@
                 </Grid.ColumnDefinitions>
                 <Border BorderThickness="0"  Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="2"   Height="50" Margin="10,10,5,10"
                     CornerRadius="7" BorderBrush="Black" Background="White" Padding="0" x:Name="brd_totalDescount">
+
+                    <Border.Effect>
+                        <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                    </Border.Effect>
                     <StackPanel Orientation="Horizontal" Margin="5,0" VerticalAlignment="Center" >
 
                         <TextBlock Text="Shortage" x:Name="txt_shortageTitle" Foreground="{StaticResource MainColor}" FontWeight="Bold" 
@@ -338,6 +392,15 @@
                 </Border>
                 <Border BorderThickness="0"  Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="2"   Height="50" Margin="5,10,5,10"
                     CornerRadius="7" BorderBrush="Black" Background="White" Padding="0" x:Name="brd_total">
+
+                    <Border.Effect>
+                        <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                    </Border.Effect>
                     <StackPanel Orientation="Horizontal" Margin="5,0" VerticalAlignment="Center" >
                         <TextBlock Text="Destructive" x:Name="txt_destroyTitle" Foreground="{StaticResource MainColor}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" 
                                Margin="2,0,5,0" FontSize="22"/>
