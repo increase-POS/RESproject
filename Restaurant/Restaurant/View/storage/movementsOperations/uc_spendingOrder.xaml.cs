@@ -1261,7 +1261,7 @@ namespace Restaurant.View.storage.movementsOperations
             generatedInvoice = new Invoice();
             tb_barcode.Clear();
             billDetails.Clear();
-
+            txt_invNumber.Text = "";
             refrishBillDetails();
 
             btn_deleteInvoice.Visibility = Visibility.Collapsed;

@@ -3043,4 +3043,7 @@ Please add Email in setting</value>
   <data name="trSalesPaperSize" xml:space="preserve">
     <value>Sales invoice paper size</value>
   </data>
+  <data name="trNoInvoice" xml:space="preserve">
+    <value>The invoice does not exist</value>
+  </data>
 </root>

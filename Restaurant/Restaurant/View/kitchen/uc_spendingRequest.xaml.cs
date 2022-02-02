@@ -890,6 +890,7 @@ namespace Restaurant.View.kitchen
                         isFromReport = true;
                         archived = false;
                         await fillInvoiceInputs(invoice);
+                        mainInvoiceItems = invoiceItems;
                         txt_titleDataGridInvoice.Text = MainWindow.resourcemanager.GetString("trReturnedInvoice");
                         btn_save.Content = MainWindow.resourcemanager.GetString("trReturn");
                         setNotifications();
@@ -899,7 +900,7 @@ namespace Restaurant.View.kitchen
                         //await saveBeforeExit();
                         Window.GetWindow(this).Opacity = 0.2;
                         wd_returnInvoice w = new wd_returnInvoice();
-                        w.fromPurchase = true;
+                        w.page = "spendingOrder";
                         w.userId = MainWindow.userLogin.userId;
                         w.invoiceType = "sr";
                         if (w.ShowDialog() == true)
@@ -1161,13 +1162,10 @@ namespace Restaurant.View.kitchen
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Dg_billDetails_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {/*
+        private void Dg_billDetails_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
             try
             {
-                //
-                //    HelpClass.StartAwait(grid_main);
-
                 TextBox t = e.EditingElement as TextBox;  // Assumes columns are all TextBoxes
                 var columnName = e.Column.Header.ToString();
 
@@ -1182,63 +1180,35 @@ namespace Restaurant.View.kitchen
                 }
                 else
                 {
-                    int availableAmount = 0;
-
-                    int oldCount = 0;
-                    if (!t.Text.Equals(""))
-                        oldCount = int.Parse(t.Text);
-                    else
-                        oldCount = 0;
+                    int oldCount  = row.Count;
                     int newCount = 0;
+                    if (!t.Text.Equals(""))
+                        newCount = int.Parse(t.Text);
+                    else
+                        newCount = 0;
+                   
                     //"tb_amont"
                     if (columnName == MainWindow.resourcemanager.GetString("trQuantity"))
                     {
-                        if (_ProcessType == "exd")
+                        if (_InvoiceType == "srbd")
                         {
-                            availableAmount = await getAvailableAmount(row.itemId, row.itemUnitId, MainWindow.branchLogin.branchId, row.ID);
-                            if (availableAmount < oldCount)
+                            ItemTransfer item = mainInvoiceItems.ToList().Find(i => i.itemUnitId == row.itemUnitId);
+                            if (newCount > item.quantity)
                             {
+                                // return old value 
+                                t.Text = item.quantity.ToString();
 
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorAmountNotAvailableToolTip"), animation: ToasterAnimation.FadeIn);
-                                newCount = newCount + availableAmount;
-                                t.Text = availableAmount.ToString();
-                            }
-                            else
-                            {
-                                if (!t.Text.Equals(""))
-                                    newCount = int.Parse(t.Text);
-                                else
-                                    newCount = 0;
-                                if (newCount < 0)
-                                {
-                                    newCount = 0;
-                                    t.Text = "0";
-                                }
+                                newCount = (int)item.quantity;
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
                             }
                         }
                         else
                         {
-                            if (!t.Text.Equals(""))
-                                newCount = int.Parse(t.Text);
-                            else
-                                newCount = 0;
+                            newCount = row.Count;
                         }
                     }
                     else
                         newCount = row.Count;
-
-                    if (row.OrderId != 0)
-                    {
-                        ItemTransfer item = mainInvoiceItems.ToList().Find(i => i.itemUnitId == row.itemUnitId && i.invoiceId == row.OrderId);
-                        if (newCount > item.quantity)
-                        {
-                            // return old value 
-                            t.Text = item.quantity.ToString();
-
-                            newCount = (int)item.quantity;
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
-                        }
-                    }
 
 
                     _Count -= oldCount;
@@ -1249,21 +1219,13 @@ namespace Restaurant.View.kitchen
 
                     // update item in billdetails           
                     billDetails[index].Count = (int)newCount;
-                    if (invoiceItems != null)
-                        invoiceItems[index].quantity = (int)newCount;
                 }
-                //
-                //    HelpClass.EndAwait(grid_main);
-                //refrishDataGridItems();
 
             }
             catch (Exception ex)
             {
-                //
-                //    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private void DataGrid_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -1432,7 +1394,7 @@ namespace Restaurant.View.kitchen
             invoice = new Invoice();
             tb_barcode.Clear();
             billDetails.Clear();
-
+            txt_invNumber.Text = "";
             refrishBillDetails();
             inputEditable();
             btn_next.Visibility = Visibility.Collapsed;
@@ -1504,7 +1466,7 @@ namespace Restaurant.View.kitchen
                 dg_billDetails.Columns[4].IsReadOnly = false; //make count read only
                 tb_barcode.IsEnabled = true;
                 btn_save.IsEnabled = true;
-                btn_items.IsEnabled = true;
+                btn_items.IsEnabled = false;
             }
             else if (_InvoiceType == "srw" || _InvoiceType == "sr" || _InvoiceType == "src")
             {

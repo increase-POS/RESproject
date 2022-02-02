@@ -930,7 +930,7 @@ namespace Restaurant.Classes
         public async Task<int> returnSpendingOrder(List<ItemTransfer> invoiceItems, int branchId, int userId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            string method = "ItemsLocations/returnInvoice";
+            string method = "ItemsLocations/returnSpendingOrder";
 
             var myContent = JsonConvert.SerializeObject(invoiceItems);
             parameters.Add("Object", myContent);

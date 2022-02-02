@@ -25,13 +25,12 @@ namespace Restaurant.View.windows
     {
         public Invoice invoice;
         public int userId;      
-        public bool fromPurchase = false;
+        public string page = "";
         public string invoiceType;
         bool _IsFocused = false;
         public List<Control> controls;
         DateTime _lastKeystroke = new DateTime(0);
         static private string _BarcodeStr = "";
-        Invoice invoiceModel = new Invoice();
         public wd_returnInvoice()
         {
             try
@@ -157,18 +156,22 @@ namespace Restaurant.View.windows
             prefix = prefix.ToLower();
             barcode = barcode.ToLower();
  
-            if (prefix == "pi" && fromPurchase)
+            if (prefix == "pi" && page=="purchase")              
             {
-                invoice = await invoiceModel.GetInvoicesByBarcodeAndUser(barcode,MainWindow.userLogin.userId);                
+                invoice = await FillCombo.invoice.GetInvoicesByBarcodeAndUser(barcode,MainWindow.userLogin.userId);
+                if (invoice == null) // check if agent invoice number
+                {
+                    invoice = await FillCombo.invoice.getInvoiceByNumAndUser(invoiceType, barcode, MainWindow.userLogin.userId);
+                }
             }
-            else if(prefix == "si" && !fromPurchase)
-            {
-                invoice = await invoiceModel.GetInvoicesByBarcodeAndUser(barcode, MainWindow.userLogin.userId);
-            }
-            if (invoice == null) // check if agent invoice number
-            {
-                invoice = await invoiceModel.getInvoiceByNumAndUser(invoiceType ,barcode, MainWindow.userLogin.userId);
-            }
+            else if (prefix == "sr" && page == "spendingOrder")
+                invoice = await FillCombo.invoice.GetInvoicesByBarcodeAndUser(barcode, MainWindow.userLogin.userId);
+
+            //else if(prefix == "si" && !fromPurchase)
+            //{
+            //    invoice = await invoiceModel.GetInvoicesByBarcodeAndUser(barcode, MainWindow.userLogin.userId);
+            //}
+            
             if (invoice != null)
             {
                 DialogResult = true;
@@ -190,11 +193,11 @@ namespace Restaurant.View.windows
                 #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                 }
 
                 translate();

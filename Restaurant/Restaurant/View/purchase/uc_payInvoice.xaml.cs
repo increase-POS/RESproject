@@ -2703,7 +2703,7 @@ namespace Restaurant.View.purchase
                         await saveBeforeExit();
                         Window.GetWindow(this).Opacity = 0.2;
                         wd_returnInvoice w = new wd_returnInvoice();
-                        w.fromPurchase = true;
+                        w.page = "purchase";
                         w.userId = MainWindow.userLogin.userId;
                         w.invoiceType = "p";
                         if (w.ShowDialog() == true)
