@@ -35,7 +35,6 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        //public int selectedItem { get; set; }
         public List<int> selectedItems { get; set; }
         List<Item> items;
         List<Item> itemsQuery;
@@ -50,7 +49,7 @@ namespace Restaurant.View.windows
         CatigoriesAndItemsView catigoriesAndItemsView = new CatigoriesAndItemsView();
 
         public bool isActive;
-
+        public string CardType = "";
         #region loading
         public class loadingThread
         {
@@ -162,13 +161,19 @@ namespace Restaurant.View.windows
     
         async Task<IEnumerable<Item>> RefrishItems()
         {
-            // int branchId = MainWindow.branchLogin.branchId;
-            if (FillCombo.purchaseItems == null)
-                await FillCombo.RefreshPurchaseItems();
-
             selectedItems = new List<int>();
-            items = FillCombo.purchaseItems.Where( x => x.itemUnitId != null).ToList();
-
+            // int branchId = MainWindow.branchLogin.branchId;
+            if (CardType == "consumption")
+            {
+                items = await FillCombo.item.GetKitchenItems(category.categoryId, MainWindow.branchLogin.branchId);
+            }
+            else //purchase: payInvoice - purchase Order - spending request - items movement
+            {
+                if (FillCombo.purchaseItems == null)
+                    await FillCombo.RefreshPurchaseItems();
+                
+                items = FillCombo.purchaseItems.Where(x => x.itemUnitId != null).ToList();
+            }
             //if (CardType.Equals("sales"))
             //{
             //    defaultSale = 1;

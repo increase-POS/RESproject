@@ -173,6 +173,24 @@ namespace Restaurant.Classes
             }
             return items;            
         }
+        public async Task<List<Item>> GetKitchenItems(int categoryId, int branchId)
+        {
+            List<Item> items = new List<Item>() ;
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("categoryId", categoryId.ToString());
+            parameters.Add("branchId", branchId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("items/GetKitchenItems", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<Item>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;            
+        }
         public async Task<int> delete(int itemId, int userId,Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();

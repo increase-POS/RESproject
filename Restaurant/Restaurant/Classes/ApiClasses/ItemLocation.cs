@@ -331,40 +331,19 @@ namespace Restaurant.Classes
             parameters.Add("notificationObj", myContent1);
 
            return await APIResult.post(method, parameters);
+        }
+        public async Task<int> decreaseAmountsInKitchen(List<ItemTransfer> invoiceItems, int branchId, int userId)
+        {
 
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "ItemsLocations/decreaseAmountsInKitchen";
 
+            var myContent = JsonConvert.SerializeObject(invoiceItems);
+            parameters.Add("Object", myContent);
+            parameters.Add("branchId", branchId.ToString());
+            parameters.Add("userId", userId.ToString());
 
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //// 
-            //var myContent = JsonConvert.SerializeObject(invoiceItems);
-            //var myContent1 = JsonConvert.SerializeObject(not);
-
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    // encoding parameter to get special characters
-            //    myContent = HttpUtility.UrlEncode(myContent);
-            //    myContent1 = HttpUtility.UrlEncode(myContent1);
-            //    request.RequestUri = new Uri(Global.APIUri + "ItemsLocations/decraseAmounts?itemLocationObject=" + myContent + "&branchId=" + branchId+ 
-            //                            "&userId="+userId + "&objectName=" + objectName + "&notificationObj="+myContent1);
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Post;
-            //    //set content type
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    var response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        return true;
-            //    }
-            //    return false;
-            //}
+           return await APIResult.post(method, parameters);
         }
         public async Task<int> unlockItem(ItemLocation il, int branchId)
         {

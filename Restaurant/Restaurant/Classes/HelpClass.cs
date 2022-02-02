@@ -807,21 +807,28 @@ namespace Restaurant.Classes
         }
         public static bool chkImgChng(string imageName, DateTime updateDate, string TMPFolder)
         {
-            string dir = System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName;
-            string tmpPath = System.IO.Path.Combine(dir, TMPFolder);
-            tmpPath = System.IO.Path.Combine(tmpPath, imageName);
-            DateTime mofdifyDate;
-            if (!System.IO.File.Exists(tmpPath))
+            try
+            {
+                string dir = System.IO.Directory.GetCurrentDirectory();
+                string tmpPath = System.IO.Path.Combine(dir, TMPFolder);
+                tmpPath = System.IO.Path.Combine(tmpPath, imageName);
+                DateTime mofdifyDate;
+                if (!System.IO.File.Exists(tmpPath))
+                {
+                    return true;
+                }
+                else
+                {
+                    mofdifyDate = System.IO.File.GetLastWriteTime(tmpPath);
+                    if (mofdifyDate < updateDate)
+                        return true;
+                }
+                return false;
+            }
+            catch
             {
                 return true;
             }
-            else
-            {
-                mofdifyDate = System.IO.File.GetLastWriteTime(tmpPath);
-                if (mofdifyDate < updateDate)
-                    return true;
-            }
-            return false;
         }
         public static byte[] readLocalImage(string imageName, string TMPFolder)
         {

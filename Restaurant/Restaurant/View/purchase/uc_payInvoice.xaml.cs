@@ -114,7 +114,8 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                await FillCombo.RefreshPurchaseItems();
+                if (FillCombo.purchaseItems == null)
+                    await FillCombo.RefreshPurchaseItems();
             }
             catch (Exception)
             { }
