@@ -568,6 +568,40 @@ namespace Restaurant.Classes
 
         }
 
+
+        public static void ItemsDestructive(IEnumerable<InventoryItemLocation> invoiceItems, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            rep.DataSources.Add(new ReportDataSource("DataSetItemsDestructive", invoiceItems)); 
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trDestroy")));// tt
+            paramarr.Add(new ReportParameter("trNum", MainWindow.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trSection", MainWindow.resourcemanagerreport.GetString("trSection") + "-" + MainWindow.resourcemanagerreport.GetString("trLocation")));
+            paramarr.Add(new ReportParameter("trItem", MainWindow.resourcemanagerreport.GetString("trItem") + "-" + MainWindow.resourcemanagerreport.GetString("trUnit")));
+           
+            paramarr.Add(new ReportParameter("trQuantity", MainWindow.resourcemanagerreport.GetString("trAmount")));
+            DateFormConv(paramarr);
+                
+        }
+        public static void ItemsShortage(IEnumerable<InventoryItemLocation> invoiceItems, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            rep.DataSources.Add(new ReportDataSource("DataSetItemsShortage", invoiceItems));
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trShortage")));// tt
+            paramarr.Add(new ReportParameter("trNum", MainWindow.resourcemanagerreport.GetString("trInventoryNum")));
+            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trSection", MainWindow.resourcemanagerreport.GetString("trSectionLocation")));
+            paramarr.Add(new ReportParameter("trItem", MainWindow.resourcemanagerreport.GetString("trItemUnit") ));
+
+            paramarr.Add(new ReportParameter("trQuantity", MainWindow.resourcemanagerreport.GetString("trAmount")));
+            DateFormConv(paramarr);
+
+        }
+
         public static void ErrorsReport(IEnumerable<ErrorClass> Query, LocalReport rep, string reppath)
         {
             rep.ReportPath = reppath;
@@ -1454,11 +1488,11 @@ Parameters!trValueDiscount.Value)
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetItemsExport", invoiceItems));
-            paramarr.Add(new ReportParameter("Title", MainWindow.resourcemanagerreport.GetString("trItemsImport/Export")));// tt
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trItemsImport/Export")));// tt
             paramarr.Add(new ReportParameter("trNum", MainWindow.resourcemanagerreport.GetString("trNum")));
             paramarr.Add(new ReportParameter("trItem", MainWindow.resourcemanagerreport.GetString("trItem")));
             paramarr.Add(new ReportParameter("trUnit", MainWindow.resourcemanagerreport.GetString("trUnit")));
-            paramarr.Add(new ReportParameter("trAmount", MainWindow.resourcemanagerreport.GetString("trQuantity")));
+            paramarr.Add(new ReportParameter("trQuantity", MainWindow.resourcemanagerreport.GetString("trQuantity")));
         }
         public static void ReceiptPurchaseReport(IEnumerable<ItemTransfer> invoiceItems, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {

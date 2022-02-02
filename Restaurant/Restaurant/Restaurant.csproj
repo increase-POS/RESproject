@@ -372,15 +372,6 @@
     <Compile Include="View\sectionData\uc_sectionData.xaml.cs">
       <DependentUpon>uc_sectionData.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\settings\emailsGeneral\uc_emailsGeneral.xaml.cs">
-      <DependentUpon>uc_emailsGeneral.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\settings\emailsGeneral\uc_emailsSetting.xaml.cs">
-      <DependentUpon>uc_emailsSetting.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\settings\emailsGeneral\uc_emailsTamplates.xaml.cs">
-      <DependentUpon>uc_emailsTamplates.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\settings\reportsSettings\uc_reportsSettings.xaml.cs">
       <DependentUpon>uc_reportsSettings.xaml</DependentUpon>
     </Compile>
@@ -746,18 +737,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\settings\emailsGeneral\uc_emailsGeneral.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\settings\emailsGeneral\uc_emailsSetting.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\settings\emailsGeneral\uc_emailsTamplates.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="View\settings\reportsSettings\uc_reportsSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1023,13 +1002,31 @@
     <Content Include="Reports\Purchase\En\EnPurOrderInv.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\Storage\movementsOperations\Ar\ArStorageMovements.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Storage\movementsOperations\En\EnStorageMovements.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Storage\stocktackingOperations\Ar\ArItemsDestructive.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Storage\stocktackingOperations\Ar\ArItemsShortage.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Storage\stocktackingOperations\En\EnItemsDestructive.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Storage\stocktackingOperations\En\EnItemsShortage.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Reports\Storage\storageDivide\Ar\ArLocations.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\Storage\storageDivide\En\EnLocations.rdlc">
+    <Content Include="Reports\Storage\storageDivide\Ar\ArSection.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\Storage\storageDivide\Ar\ArSection.rdlc">
+    <Content Include="Reports\Storage\storageDivide\En\EnLocations.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\Storage\storageDivide\En\EnSection.rdlc">
@@ -1063,14 +1060,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Reports\Storage\movementsOperations\Ar\" />
-    <Folder Include="Reports\Storage\movementsOperations\En\" />
-    <Folder Include="Reports\Storage\stocktackingOperations\Ar\" />
-    <Folder Include="Reports\Storage\stocktackingOperations\En\" />
     <Folder Include="Reports\Storage\storageOperations\Ar\" />
     <Folder Include="Reports\Storage\storageOperations\En\" />
     <Folder Include="View\home\" />
     <Folder Include="View\reports\" />
+    <Folder Include="View\settings\emailsGeneral\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="pic\increase-login-bg-rtl.png" />

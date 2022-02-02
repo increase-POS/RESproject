@@ -32,14 +32,14 @@ namespace Restaurant.View.storage.movementsOperations
     /// Interaction logic for uc_storageMovements.xaml
     /// </summary>
     public partial class uc_storageMovements : UserControl
-     {
+    {
         string importPermission = "storageMovements_import";
         string exportPermission = "storageMovements_export";
-        string reportsPermission ="storageMovements_reports";
+        string reportsPermission = "storageMovements_reports";
         string packagePermission = "storageMovements_package";
         string unitConversionPermission = "storageMovements_unitConversion";
         string initializeShortagePermission = "storageMovements_initializeShortage";
-         private static uc_storageMovements _instance;
+        private static uc_storageMovements _instance;
         public static uc_storageMovements Instance
         {
             get
@@ -66,7 +66,7 @@ namespace Restaurant.View.storage.movementsOperations
             }
         }
         ObservableCollection<BillDetailsPurchase> billDetails = new ObservableCollection<BillDetailsPurchase>();
-        
+
         public Invoice invoice = new Invoice();
         Invoice generatedInvoice = new Invoice();
         List<ItemTransfer> invoiceItems;
@@ -92,7 +92,7 @@ namespace Restaurant.View.storage.movementsOperations
         public static bool isFromReport = false;
         #endregion
         Item item = new Item();
-        
+
         private void translate()
         {
             ////////////////////////////////----Order----/////////////////////////////////
@@ -134,13 +134,13 @@ namespace Restaurant.View.storage.movementsOperations
                     clearProcess();
                 Instance = null;
                 GC.Collect();
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
             }
         }
         public async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -168,7 +168,7 @@ namespace Restaurant.View.storage.movementsOperations
                 setTimer();
                 FillCombo.FillMovementsProcessType(cb_processType);
                 //await FillCombo.fillBranchesWithoutCurrent(cb_branch);
-              // await RefrishItems();
+                // await RefrishItems();
                 #region loading
                 loadingList = new List<keyValueBool>();
                 bool isDone = true;
@@ -242,7 +242,7 @@ namespace Restaurant.View.storage.movementsOperations
             }
             catch (Exception ex)
             {
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -292,7 +292,7 @@ namespace Restaurant.View.storage.movementsOperations
         {
             try
             {
-                await FillCombo.fillBranchesNoCurrentDefault(cb_branch,"s");
+                await FillCombo.fillBranchesNoCurrentDefault(cb_branch, "s");
             }
             catch (Exception)
             { }
@@ -450,7 +450,7 @@ namespace Restaurant.View.storage.movementsOperations
         {
             try
             {
-                 HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 int index = FillCombo.invoices.IndexOf(FillCombo.invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
                 index--;
@@ -657,7 +657,7 @@ namespace Restaurant.View.storage.movementsOperations
                     if (invoice.invNumber == null)
                         invoice.invNumber = await invoice.generateInvNumber("im", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
                     // save invoice in DB
-                    invoiceId = await invoice.saveInvoiceWithItems(invoice,invoiceItems);
+                    invoiceId = await invoice.saveInvoiceWithItems(invoice, invoiceItems);
                     if (invoiceId != 0)
                     {
                         #region notification Object
@@ -690,7 +690,7 @@ namespace Restaurant.View.storage.movementsOperations
                                 invoice.branchId = (int)cb_branch.SelectedValue;
                             invoice.updateUserId = MainWindow.userLogin.userId;
                         }
-                        int exportId = await invoice.saveInvoiceWithItems(invoice,invoiceItems);
+                        int exportId = await invoice.saveInvoiceWithItems(invoice, invoiceItems);
 
                         // add order details                      
                         //await invoice.saveInvoiceItems(invoiceItems, invoiceId);
@@ -711,7 +711,7 @@ namespace Restaurant.View.storage.movementsOperations
                     if (invoice.invNumber == null)
                         invoice.invNumber = await invoice.generateInvNumber("ex", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
                     // save invoice in DB
-                    invoiceId = await invoice.saveInvoiceWithItems(invoice,invoiceItems);
+                    invoiceId = await invoice.saveInvoiceWithItems(invoice, invoiceItems);
 
                     if (invoiceId != 0)
                     {
@@ -734,10 +734,10 @@ namespace Restaurant.View.storage.movementsOperations
                                 invoice.branchId = (int)cb_branch.SelectedValue;
                             invoice.updateUserId = MainWindow.userLogin.userId;
                         }
-                        int importId = await invoice.saveInvoiceWithItems(invoice,invoiceItems);
+                        int importId = await invoice.saveInvoiceWithItems(invoice, invoiceItems);
 
                         // add order details
-                       // await invoice.saveInvoiceItems(invoiceItems, invoiceId);
+                        // await invoice.saveInvoiceItems(invoiceItems, invoiceId);
                         //await invoice.saveInvoiceItems(invoiceItems, importId);
 
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
@@ -750,10 +750,10 @@ namespace Restaurant.View.storage.movementsOperations
                     invoice.invType = "ex";
                     invoice.updateUserId = MainWindow.userLogin.userId;
                     // save invoice in DB
-                    invoiceId = await invoice.saveInvoiceWithItems(invoice,invoiceItems);
+                    invoiceId = await invoice.saveInvoiceWithItems(invoice, invoiceItems);
                     if (invoiceId != 0)
                     {
-                       // await invoice.saveInvoiceItems(invoiceItems, invoiceId);
+                        // await invoice.saveInvoiceItems(invoiceItems, invoiceId);
                         await invoice.saveInvoiceItems(invoiceItems, invoice.invoiceMainId.Value);
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                     }
@@ -800,100 +800,100 @@ namespace Restaurant.View.storage.movementsOperations
                 {
                     if (HelpClass.validate(requiredControlList, this))
                     {
-                        
+
                         {
                             if (HelpClass.validate(requiredControlList, this))
-                            { 
-                                wd_transItemsLocation w;
-                            switch (_ProcessType)
                             {
-                                case "exw":
-                                case "exd":
+                                wd_transItemsLocation w;
+                                switch (_ProcessType)
+                                {
+                                    case "exw":
+                                    case "exd":
                                         //bool valid = true;
                                         //if(_ProcessType == "exw")
                                         //    valid = await validateOrder();
                                         //if (valid)
-                                    Window.GetWindow(this).Opacity = 0.2;
-                                    w = new wd_transItemsLocation();
-                                    List<ItemTransfer> orderList = new List<ItemTransfer>();
-                                    List<int> ordersIds = new List<int>();
-                                    foreach (BillDetailsPurchase d in billDetails)
-                                    {
-                                        if (d.Count == 0)
+                                        Window.GetWindow(this).Opacity = 0.2;
+                                        w = new wd_transItemsLocation();
+                                        List<ItemTransfer> orderList = new List<ItemTransfer>();
+                                        List<int> ordersIds = new List<int>();
+                                        foreach (BillDetailsPurchase d in billDetails)
                                         {
-                                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorQuantIsZeroToolTip"), animation: ToasterAnimation.FadeIn);
-
-                                            HelpClass.EndAwait(grid_main);
-                                            return;
-                                        }
-                                        else
-                                        {
-                                            orderList.Add(new ItemTransfer()
+                                            if (d.Count == 0)
                                             {
-                                                itemName = d.Product,
-                                                itemId = d.itemId,
-                                                unitName = d.Unit,
-                                                itemUnitId = d.itemUnitId,
-                                                quantity = d.Count,
-                                                invoiceId = d.OrderId,
-                                            });
-                                            ordersIds.Add(d.OrderId);
-                                        }
-                                    }
-                                    w.orderList = orderList;
-                                        w.ShowDialog();
-                                    if (w.DialogResult == true)
-                                    {
-                                        if (w.selectedItemsLocations != null)
-                                        {
-                                            List<ItemLocation> itemsLocations = w.selectedItemsLocations;
-                                            List<ItemLocation> readyItemsLoc = new List<ItemLocation>();
+                                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorQuantIsZeroToolTip"), animation: ToasterAnimation.FadeIn);
 
-                                            for (int i = 0; i < itemsLocations.Count; i++)
-                                            {
-                                                if (itemsLocations[i].isSelected == true)
-                                                    readyItemsLoc.Add(itemsLocations[i]);
+                                                HelpClass.EndAwait(grid_main);
+                                                return;
                                             }
-                                            #region notification Object
-                                            Notification not = new Notification()
+                                            else
                                             {
-                                                title = "trExceedMaxLimitAlertTilte",
-                                                ncontent = "trExceedMaxLimitAlertContent",
-                                                msgType = "alert",
-                                                createDate = DateTime.Now,
-                                                updateDate = DateTime.Now,
-                                                createUserId = MainWindow.userLogin.userId,
-                                                updateUserId = MainWindow.userLogin.userId,
-                                            };
-                                                #endregion
-                                            await FillCombo.itemLocation.recieptOrder(readyItemsLoc, orderList, (int)cb_branch.SelectedValue, MainWindow.userLogin.userId, "storageAlerts_minMaxItem", not);
-                                            await save();
+                                                orderList.Add(new ItemTransfer()
+                                                {
+                                                    itemName = d.Product,
+                                                    itemId = d.itemId,
+                                                    unitName = d.Unit,
+                                                    itemUnitId = d.itemUnitId,
+                                                    quantity = d.Count,
+                                                    invoiceId = d.OrderId,
+                                                });
+                                                ordersIds.Add(d.OrderId);
+                                            }
                                         }
-                                    }
-                                    Window.GetWindow(this).Opacity = 1;
-                                    break;
-                                case "emw":
-                                    //process transfer items
-                                    await save();
-                                    break;
-                                default:
-                                    await save();
-                                    break;
+                                        w.orderList = orderList;
+                                        w.ShowDialog();
+                                        if (w.DialogResult == true)
+                                        {
+                                            if (w.selectedItemsLocations != null)
+                                            {
+                                                List<ItemLocation> itemsLocations = w.selectedItemsLocations;
+                                                List<ItemLocation> readyItemsLoc = new List<ItemLocation>();
+
+                                                for (int i = 0; i < itemsLocations.Count; i++)
+                                                {
+                                                    if (itemsLocations[i].isSelected == true)
+                                                        readyItemsLoc.Add(itemsLocations[i]);
+                                                }
+                                                #region notification Object
+                                                Notification not = new Notification()
+                                                {
+                                                    title = "trExceedMaxLimitAlertTilte",
+                                                    ncontent = "trExceedMaxLimitAlertContent",
+                                                    msgType = "alert",
+                                                    createDate = DateTime.Now,
+                                                    updateDate = DateTime.Now,
+                                                    createUserId = MainWindow.userLogin.userId,
+                                                    updateUserId = MainWindow.userLogin.userId,
+                                                };
+                                                #endregion
+                                                await FillCombo.itemLocation.recieptOrder(readyItemsLoc, orderList, (int)cb_branch.SelectedValue, MainWindow.userLogin.userId, "storageAlerts_minMaxItem", not);
+                                                await save();
+                                            }
+                                        }
+                                        Window.GetWindow(this).Opacity = 1;
+                                        break;
+                                    case "emw":
+                                        //process transfer items
+                                        await save();
+                                        break;
+                                    default:
+                                        await save();
+                                        break;
+                                }
+                                setNotifications();
                             }
-                            setNotifications();
                         }
-                        }
-                }
+                    }
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -925,7 +925,7 @@ namespace Restaurant.View.storage.movementsOperations
                     if (invoice.invNumber == null)
                         invoice.invNumber = await invoice.generateInvNumber("im", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
                     // save invoice in DB
-                    invoiceId = await invoice.saveInvoiceWithItems(invoice,invoiceItems);
+                    invoiceId = await invoice.saveInvoiceWithItems(invoice, invoiceItems);
                     if (invoiceId != 0)
                     {
                         // expot order
@@ -950,7 +950,7 @@ namespace Restaurant.View.storage.movementsOperations
                                 invoice.branchId = MainWindow.branchLogin.branchId;
                             invoice.updateUserId = MainWindow.userLogin.userId;
                         }
-                        int exportId = await invoice.saveInvoiceWithItems(invoice,invoiceItems);
+                        int exportId = await invoice.saveInvoiceWithItems(invoice, invoiceItems);
 
                         // add order details                      
                         //await invoice.saveInvoiceItems(invoiceItems, invoiceId);
@@ -970,7 +970,7 @@ namespace Restaurant.View.storage.movementsOperations
                     if (invoice.invNumber == null)
                         invoice.invNumber = await invoice.generateInvNumber("ex", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
                     // save invoice in DB
-                    invoiceId = await invoice.saveInvoiceWithItems(invoice,invoiceItems);
+                    invoiceId = await invoice.saveInvoiceWithItems(invoice, invoiceItems);
 
                     if (invoiceId != 0)
                     {
@@ -992,7 +992,7 @@ namespace Restaurant.View.storage.movementsOperations
                                 invoice.branchId = (int)cb_branch.SelectedValue;
                             invoice.updateUserId = MainWindow.userLogin.userId;
                         }
-                        int importId = await invoice.saveInvoiceWithItems(invoice,invoiceItems);
+                        int importId = await invoice.saveInvoiceWithItems(invoice, invoiceItems);
 
                         // add order details
                         //await invoice.saveInvoiceItems(invoiceItems, invoiceId);
@@ -1003,7 +1003,7 @@ namespace Restaurant.View.storage.movementsOperations
                     else
                         Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     break;
-            }          
+            }
         }
         private async Task<int> getAvailableAmount(int itemId, int itemUnitId, int branchId, int ID)
         {
@@ -1071,7 +1071,7 @@ namespace Restaurant.View.storage.movementsOperations
         {
 
         }
-       
+
         private void Cb_processType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -1186,6 +1186,60 @@ namespace Restaurant.View.storage.movementsOperations
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
+        private void BuildReport()
+        {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            //D:\myproj\posproject5\Restaurant\Restaurant\Reports\Storage\movementsOperations\En\EnStorageMovements.rdlc
+            if (isArabic)
+            {//ItemsExport
+                addpath = @"\Reports\Storage\movementsOperations\Ar\ArStorageMovements.rdlc";
+            }
+            else
+            {
+                addpath = @"\Reports\Storage\movementsOperations\En\EnStorageMovements.rdlc";
+            }
+
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+            ReportCls.checkLang();
+          
+            clsReports.ItemsExportReport(invoiceItems, rep, reppath, paramarr);
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+        }
+        private void printExport()
+        {
+            BuildReport();
+
+            this.Dispatcher.Invoke(() =>
+            {
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, short.Parse(FillCombo.rep_print_count));
+            });
+        }
+        private void pdfExport()
+        {
+
+            BuildReport();
+
+            this.Dispatcher.Invoke(() =>
+            {
+                saveFileDialog.Filter = "PDF|*.pdf;";
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string filepath = saveFileDialog.FileName;
+                    LocalReportExtensions.ExportToPDF(rep, filepath);
+                }
+            });
+
+        }
         private void Btn_preview_Click(object sender, RoutedEventArgs e)
         {//preview
             try
@@ -1231,30 +1285,7 @@ namespace Restaurant.View.storage.movementsOperations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void BuildReport()
-        {
-            List<ReportParameter> paramarr = new List<ReportParameter>();
-
-            string addpath;
-            bool isArabic = ReportCls.checkLang();
-            if (isArabic)
-            {//ItemsExport
-                addpath = @"\Reports\Store\Ar\ArItemsExportReport.rdlc";
-            }
-            else
-                addpath = @"\Reports\Store\En\ItemsExportReport.rdlc";
-            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-            ReportCls.checkLang();
-
-            clsReports.ItemsExportReport(invoiceItems, rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
-            clsReports.Header(paramarr);
-
-            rep.SetParameters(paramarr);
-
-            rep.Refresh();
-        }
+      
         private void Btn_printInvoice_Click(object sender, RoutedEventArgs e)
         {//print
             try
@@ -1288,15 +1319,7 @@ namespace Restaurant.View.storage.movementsOperations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void printExport()
-        {
-            BuildReport();
-
-            this.Dispatcher.Invoke(() =>
-            {
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, short.Parse(FillCombo.rep_print_count));
-            });
-        }
+      
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {//pdf
             try
@@ -1327,23 +1350,7 @@ namespace Restaurant.View.storage.movementsOperations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void pdfExport()
-        {
-
-            BuildReport();
-
-            this.Dispatcher.Invoke(() =>
-            {
-                saveFileDialog.Filter = "PDF|*.pdf;";
-
-                if (saveFileDialog.ShowDialog() == true)
-                {
-                    string filepath = saveFileDialog.FileName;
-                    LocalReportExtensions.ExportToPDF(rep, filepath);
-                }
-            });
-
-        }
+      
         #endregion
         #region shortage
         private async void Btn_shortageInvoice_Click(object sender, RoutedEventArgs e)
@@ -1416,9 +1423,9 @@ namespace Restaurant.View.storage.movementsOperations
 
                         ))
                     w.invoiceType = "im ,ex";
-                else if (MainWindow.groupObject.HasPermissionAction(importPermission, MainWindow.groupObjects, "one") )
+                else if (MainWindow.groupObject.HasPermissionAction(importPermission, MainWindow.groupObjects, "one"))
                     w.invoiceType = "im";
-                else if (MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one") )
+                else if (MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one"))
                     w.invoiceType = "ex";
 
 
@@ -1465,7 +1472,7 @@ namespace Restaurant.View.storage.movementsOperations
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one") )
+                if (MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one"))
                 {
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_invoice w = new wd_invoice();
@@ -1491,13 +1498,13 @@ namespace Restaurant.View.storage.movementsOperations
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1534,12 +1541,12 @@ namespace Restaurant.View.storage.movementsOperations
             */
         }
         private void Btn_unitConversion_Click(object sender, RoutedEventArgs e)
-        { 
+        {
             try
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(unitConversionPermission, MainWindow.groupObjects, "one") )
+                if (MainWindow.groupObject.HasPermissionAction(unitConversionPermission, MainWindow.groupObjects, "one"))
                 {
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_unitConversion w = new wd_unitConversion();
@@ -1552,13 +1559,13 @@ namespace Restaurant.View.storage.movementsOperations
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1614,7 +1621,7 @@ namespace Restaurant.View.storage.movementsOperations
                     }
                     clearProcess();
                 }
-            HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -1628,7 +1635,7 @@ namespace Restaurant.View.storage.movementsOperations
             try
             {
 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_invoice w = new wd_invoice();
@@ -1667,12 +1674,12 @@ namespace Restaurant.View.storage.movementsOperations
                 }
                 Window.GetWindow(this).Opacity = 1;
 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
 
