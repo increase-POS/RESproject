@@ -176,6 +176,7 @@
     </ApplicationDefinition>
     <Compile Include="ar_file.Designer.cs" />
     <Compile Include="Classes\ApiClasses\Agent.cs" />
+    <Compile Include="Classes\ApiClasses\ResidentialSectors.cs" />
     <Compile Include="Classes\ApiClasses\Bank.cs" />
     <Compile Include="Classes\ApiClasses\Branch.cs" />
     <Compile Include="Classes\ApiClasses\BranchesUsers.cs" />
