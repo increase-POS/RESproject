@@ -1002,6 +1002,18 @@
     <Content Include="Reports\Purchase\En\EnPurOrderInv.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\Storage\storageDivide\Ar\ArLocations.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Storage\storageDivide\En\EnLocations.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Storage\storageDivide\Ar\ArSection.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Storage\storageDivide\En\EnSection.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="fonts\barcodeFont.ttf" />
     <Resource Include="fonts\cairo-font\cairo bold.ttf" />
     <Resource Include="fonts\cairo-font\cairo-light.ttf" />
@@ -1011,6 +1023,7 @@
     <None Include="Properties\DataSources\Restaurant.Classes.Bank.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Branch.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Card.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.Location.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Pos.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Section.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.User.datasource" />
@@ -1029,6 +1042,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Reports\Storage\movementsOperations\Ar\" />
+    <Folder Include="Reports\Storage\movementsOperations\En\" />
+    <Folder Include="Reports\Storage\stocktackingOperations\Ar\" />
+    <Folder Include="Reports\Storage\stocktackingOperations\En\" />
+    <Folder Include="Reports\Storage\storageOperations\Ar\" />
+    <Folder Include="Reports\Storage\storageOperations\En\" />
     <Folder Include="View\home\" />
     <Folder Include="View\reports\" />
   </ItemGroup>
