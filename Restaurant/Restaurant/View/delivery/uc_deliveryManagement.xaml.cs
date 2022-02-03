@@ -633,5 +633,105 @@ namespace Restaurant.View.delivery
         }
         */
         #endregion
+
+        private void FieldDataGridChecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox cb = sender as CheckBox;
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void FieldDataGridUnchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox cb = sender as CheckBox;
+                var index = dg_orders.SelectedIndex;
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void search_Checking(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox cb = sender as CheckBox;
+                /*
+                if (cb.IsFocused)
+                {
+                    if (cb.Name == "chk_readyForDelivery")
+                    {
+                        chk_freezone.IsChecked = false;
+                        chk_locked.IsChecked = false;
+                        btn_transfer.Visibility = Visibility.Visible;
+                        btn_locked.Visibility = Visibility.Collapsed;
+                        dg_itemsStorage.Columns[6].Visibility = Visibility.Collapsed; //make order num column unvisible
+                        dg_itemsStorage.Columns[3].Visibility = Visibility.Visible;
+                        dg_itemsStorage.Columns[4].Visibility = Visibility.Visible;
+                    }
+                    else if (cb.Name == "chk_withDeliveryMan")
+                    {
+                        chk_stored.IsChecked = false;
+                        chk_locked.IsChecked = false;
+                        btn_transfer.Visibility = Visibility.Visible;
+                        btn_locked.Visibility = Visibility.Collapsed;
+                        dg_itemsStorage.Columns[6].Visibility = Visibility.Collapsed; //make order num column unvisible
+                        dg_itemsStorage.Columns[3].Visibility = Visibility.Visible;
+                        dg_itemsStorage.Columns[4].Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        chk_stored.IsChecked = false;
+                        chk_freezone.IsChecked = false;
+                        btn_locked.Visibility = Visibility.Visible;
+                        btn_transfer.Visibility = Visibility.Collapsed;
+                        dg_itemsStorage.Columns[6].Visibility = Visibility.Visible; //make order num column visible
+                        dg_itemsStorage.Columns[3].Visibility = Visibility.Collapsed;
+                        dg_itemsStorage.Columns[4].Visibility = Visibility.Collapsed;
+                    }
+                }
+                HelpClass.StartAwait(grid_main);
+                await RefreshItemLocationsList();
+                await Search();
+                */
+                Clear();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void chk_uncheck(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox cb = sender as CheckBox;
+                if (cb.IsFocused)
+                {
+                    if (cb.Name == "chk_readyForDelivery")
+                        chk_readyForDelivery.IsChecked = true;
+                    else if (cb.Name == "chk_withDeliveryMan")
+                        chk_withDeliveryMan.IsChecked = true;
+                    else
+                        chk_inTheWay.IsChecked = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

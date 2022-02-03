@@ -23,12 +23,12 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid   >
-
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
                         <ColumnDefinition  Width="auto"  />
                         <ColumnDefinition  Width="auto"  />
                         <ColumnDefinition  Width="auto"  />
@@ -69,11 +69,12 @@
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="Enter Here To Start Search ...."  
                                      Foreground="#4E4E4E"  TextChanged="Tb_search_TextChanged"
-                                      MaxLength="50" 
+                                      MaxLength="50" Height="40"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                     BorderBrush="#737373"   BorderThickness="0" Margin="4,0"  />
                         </Grid>
                     </Border>
+
                     <Button   FlowDirection="LeftToRight"  Width="40" Height="40" 
                               x:Name="btn_refresh" Click="Btn_refresh_Click"
                               Grid.Row="0" Grid.Column="5" Margin="10,5,10,5"
@@ -109,6 +110,57 @@
                                               VerticalOffset="25"/>
                         </Button.ToolTip>
                     </Button>
+
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition  Width="*"  />
+                        <ColumnDefinition  Width="auto"  />
+                    </Grid.ColumnDefinitions>
+                    
+                    <Border Background="White" Grid.Column="0" CornerRadius="10"    Margin="60,5,10,5"  BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        <Border.Effect>
+                            <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                        </Border.Effect>
+                        <Grid>
+                            <ComboBox x:Name="cb_searchUser"  Grid.Row="1"
+                                      SelectedValue="{Binding userId,Mode=OneWay}"
+                                  Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                  materialDesign:HintAssist.Hint="delivery man..."  
+                                  Grid.Column="1" Height="40"   
+                                 BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
+                                  LostFocus="validateEmpty_LostFocus" />
+                        </Grid>
+
+                    </Border>
+                    <StackPanel  Grid.Column="2"  Margin="0 0 10 0"   Orientation="Horizontal" >
+                        <CheckBox x:Name="chk_readyForDelivery"  IsChecked="True"
+                                                          Background="{StaticResource MainColor}"
+                                                          Content="Ready for delivery"
+                                                          Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
+                                                          Checked="search_Checking"
+                                                          Unchecked="chk_uncheck"/>
+                        <CheckBox x:Name="chk_withDeliveryMan" 
+                                                          Background="{StaticResource MainColor}"
+                                                          Content="With delivery man" 
+                                                          Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
+                                                          Checked="search_Checking"
+                                                          Unchecked="chk_uncheck"/>
+                        <CheckBox x:Name="chk_inTheWay" 
+                                                          Background="{StaticResource MainColor}"
+                                                          Content="In the way"
+                                                          Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
+                                                          Checked="search_Checking"
+                                                          Unchecked="chk_uncheck"/>
+                        <!--<Border  DockPanel.Dock="Right"   Margin="7.5,10"    CornerRadius="0,0,0,0"  Width="2" BorderThickness="0" Background="{StaticResource LightMainColor}" />-->
+
+                    </StackPanel>
 
                 </Grid>
             </Grid>
@@ -147,6 +199,24 @@
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
+                                <DataGridCheckBoxColumn  Binding="{Binding false, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False" IsThreeState="False">
+                                    <DataGridCheckBoxColumn.ElementStyle>
+                                        <Style
+                                        TargetType="CheckBox">
+                                            <EventSetter
+                                            Event="CheckBox.Checked"
+                                            Handler="FieldDataGridChecked" />
+                                            <EventSetter
+                                            Event="CheckBox.Unchecked"
+                                            Handler="FieldDataGridUnchecked" />
+                                        </Style>
+                                    </DataGridCheckBoxColumn.ElementStyle>
+                                    <DataGridCheckBoxColumn.HeaderTemplate >
+                                        <DataTemplate >
+                                            <CheckBox  Checked="FieldDataGridChecked" Unchecked="FieldDataGridUnchecked" Margin="2" />
+                                        </DataTemplate>
+                                    </DataGridCheckBoxColumn.HeaderTemplate>
+                                </DataGridCheckBoxColumn>
                                 <DataGridTextColumn Width="*"  Header="code"   Binding="{Binding Path=ssssssss}"/>
                                 <DataGridTextColumn Width="*"  Header="delivery man"   Binding="{Binding Path=ssssssss}"/>
                                 <DataGridTextColumn Width="*"  Header="delivery time"   Binding="{Binding Path=ssssssss}"/>
@@ -273,7 +343,7 @@
                                     </Path>
                                 </Grid>
                             </Button>
-                            <TextBlock   Background="{x:Null}" x:Name="txt_count"   Grid.Column="4" Margin="0,0,0,5" 
+                            <TextBlock   Background="{x:Null}" x:Name="txt_count"   Grid.Column="4"  
                             Padding="10"   Text="0" Foreground="#378500" FontSize="12"  >
                                 <TextBlock.ToolTip>
                                     <ToolTip x:Name="tt_count" Content="Customers Count"
@@ -291,7 +361,7 @@
             </Border>
 
         </Grid>
-        <Border Margin="10 50 0 5" Grid.Column="1"  >
+        <Border Margin="10 105 0 5" Grid.Column="1"  >
             <Border.Effect>
                 <DropShadowEffect
                           ShadowDepth="1"
