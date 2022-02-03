@@ -352,7 +352,6 @@
                         <TextBlock x:Name="txt_infoTitle" Text="Title" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
                         <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
                     </DockPanel>
-
                     <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid>
                             <TextBox x:Name="tb_title"  Text="{Binding title, Mode=OneWay}" Padding="10,5,0,0" 
@@ -370,12 +369,10 @@
                             </Path>
                         </Grid>
                     </Border>
-
                     <DockPanel Margin="10 0" LastChildFill="True"  >
                         <TextBlock x:Name="txt_infoBody" Text="Body" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
                         <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
                     </DockPanel>
-
                     <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                             <TextBox  x:Name="tb_text1" Text="{Binding text1, Mode=OneWay}"
@@ -393,7 +390,6 @@
                             </Path>
                         </Grid>
                     </Border>
-
                     <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                             <TextBox  x:Name="tb_text2" Text="{Binding text2, Mode=OneWay}"
@@ -415,7 +411,6 @@
                         <TextBlock x:Name="txt_infoEmailSupport" Text="Email Support" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
                         <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
                     </DockPanel>
-
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
