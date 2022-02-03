@@ -3025,4 +3025,22 @@
   <data name="trUnlimited" xml:space="preserve">
     <value>غير محدود</value>
   </data>
+  <data name="trPurchaseOrdersEmailTemplate" xml:space="preserve">
+    <value>قالب بريد طلبات الشراء</value>
+  </data>
+  <data name="trPurchasesEmailTemplate" xml:space="preserve">
+    <value>قالب بريد فاتورة المشتريات</value>
+  </data>
+  <data name="trQuotationsEmailTemplate" xml:space="preserve">
+    <value>قالب بريد عروض الأسعار</value>
+  </data>
+  <data name="trRequirementsEmailTemplate" xml:space="preserve">
+    <value>قالب بريد المطالبة بالمستحقات</value>
+  </data>
+  <data name="trSalesEmailTemplate" xml:space="preserve">
+    <value>قالب بريد فاتورة المبيعات</value>
+  </data>
+  <data name="trSalesOrdersEmailTemplate" xml:space="preserve">
+    <value>قالب بريد طلبات المبيعات</value>
+  </data>
 </root>

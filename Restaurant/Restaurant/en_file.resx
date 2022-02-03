@@ -3049,4 +3049,22 @@ Please add Email in setting</value>
   <data name="trUnlimited" xml:space="preserve">
     <value>Unlimited</value>
   </data>
+  <data name="trPurchaseOrdersEmailTemplate" xml:space="preserve">
+    <value>purchase orders email template</value>
+  </data>
+  <data name="trPurchasesEmailTemplate" xml:space="preserve">
+    <value>Purchases email template</value>
+  </data>
+  <data name="trQuotationsEmailTemplate" xml:space="preserve">
+    <value>Quotations email template</value>
+  </data>
+  <data name="trRequirementsEmailTemplate" xml:space="preserve">
+    <value>Requirements email template</value>
+  </data>
+  <data name="trSalesEmailTemplate" xml:space="preserve">
+    <value>Sales email template</value>
+  </data>
+  <data name="trSalesOrdersEmailTemplate" xml:space="preserve">
+    <value>Sales orders email template</value>
+  </data>
 </root>
