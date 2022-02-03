@@ -420,6 +420,26 @@ namespace Restaurant.Classes
             cmb.SelectedIndex = -1;
         }
         #endregion
+        #region ResidentialSectors
+        static public ResidentialSectors residentialSec = new ResidentialSectors();
+        static public List<ResidentialSectors> residentialSecsList;
+
+        static public async Task<IEnumerable<ResidentialSectors>> RefreshResidentialSectors()
+        {
+            residentialSecsList = await residentialSec.Get();
+            return residentialSecsList;
+        }
+
+        static public async Task FillComboResidentialSectors(ComboBox cmb)
+        {
+            if (residentialSecsList is null)
+                await RefreshResidentialSectors();
+            cmb.ItemsSource = residentialSecsList;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "residentSecId";
+            cmb.SelectedIndex = -1;
+        }
+        #endregion
         #region fill cards combo
         static public Card card = new Card();
         static public List<Card> cardsList;
