@@ -29,7 +29,7 @@ namespace Restaurant.Classes
         public static Branch branchModel = new Branch();
         public static Category categoryModel = new Category();
         public static Pos posModel = new Pos();
-        //public static Offer offerModel = new Offer();
+        public static Offer offerModel = new Offer();
         //public static CashTransfer cashModel = new CashTransfer();
         //public static Coupon couponModel = new Coupon();
 
@@ -144,6 +144,15 @@ namespace Restaurant.Classes
                     List<Pos> poss = await posModel.Get();
 
                     if (poss.Any(p => p.code == randomNum && p.posId != id))
+                        iscodeExist = true;
+                    else
+                        iscodeExist = false;
+                }
+                else if (_class.Equals("Offer"))
+                {
+                    List<Offer> offer = await offerModel.Get();
+
+                    if (offer.Any(o => o.code == randomNum && o.offerId != id))
                         iscodeExist = true;
                     else
                         iscodeExist = false;

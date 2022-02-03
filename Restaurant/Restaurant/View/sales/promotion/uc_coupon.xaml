@@ -176,7 +176,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Width="*"  Header="Quantity" Binding="{Binding Path=quantity}">
+                                <DataGridTextColumn Width="*"  Header="Quantity" Binding="{Binding Path=quantity , Converter={StaticResource unlimitedCouponConverter}}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>

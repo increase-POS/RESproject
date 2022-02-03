@@ -3046,4 +3046,7 @@ Please add Email in setting</value>
   <data name="trNoInvoice" xml:space="preserve">
     <value>The invoice does not exist</value>
   </data>
+  <data name="trUnlimited" xml:space="preserve">
+    <value>Unlimited</value>
+  </data>
 </root>

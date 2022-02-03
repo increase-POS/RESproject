@@ -3022,4 +3022,7 @@
   <data name="trNoInvoice" xml:space="preserve">
     <value>الفاتورة غير موجودة</value>
   </data>
+  <data name="trUnlimited" xml:space="preserve">
+    <value>غير محدود</value>
+  </data>
 </root>

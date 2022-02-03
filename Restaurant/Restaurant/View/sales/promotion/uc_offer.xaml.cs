@@ -97,7 +97,12 @@ namespace Restaurant.View.sales.promotion
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "name", "mobile" };
+
+                requiredControlList = new List<string> { "code" , "name", "discounttype" , "discountValue" , "startDate" , "endDate"};
+
+                FillCombo.fillDiscountType(cb_discountType);
+
+                #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
@@ -109,13 +114,14 @@ namespace Restaurant.View.sales.promotion
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-
+                #endregion
 
                 /*
                 Keyboard.Focus(tb_code);
                 await RefreshCustomersList();
-                await Search();
                 */
+                await Search();
+
                 Clear();
                 HelpClass.EndAwait(grid_main);
             }
@@ -185,11 +191,39 @@ namespace Restaurant.View.sales.promotion
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add"))
                 {
                     HelpClass.StartAwait(grid_main);
+
                     offer = new Offer();
+
+                    bool isCodeExist = await HelpClass.isCodeExist(tb_code.Text ,"","Offer" , 0);
+
+                    bool isEndDateSmaller = false;
+                    if (dp_endDate.SelectedDate < dp_startDate.SelectedDate) isEndDateSmaller = true;
+
                     if (HelpClass.validate(requiredControlList, this))
                     {
+                        //if ((isCodeExist) || (isEndDateSmaller))
+                        //{
+                        //    if (isCodeExist)
+                        //        SectionData.showTextBoxValidate(tb_code, p_errorCode, tt_errorCode, "trDuplicateCodeToolTip");
 
-
+                        //    if (isEndDateSmaller)
+                        //    {
+                        //        SectionData.showDatePickerValidate(dp_startDate, p_errorStartDate, tt_errorStartDate, "trErrorEndDateSmallerToolTip");
+                        //        SectionData.showDatePickerValidate(dp_endDate, p_errorEndDate, tt_errorEndDate, "trErrorEndDateSmallerToolTip");
+                        //    }
+                        //}
+                            offer.name = tb_name.Text;
+                        offer.code = tb_code.Text;
+                        offer.isActive = Convert.ToByte(tgl_isActiveOffer.IsChecked);
+                        offer.discountType = Convert.ToString(cb_discountType.SelectedValue);
+                        offer.discountValue = decimal.Parse(tb_discountValue.Text);
+                        if (dp_startDate.SelectedDate != null)
+                            offer.startDate = DateTime.Parse(dp_startDate.Text);
+                        if (dp_endDate.SelectedDate != null)
+                            offer.endDate = DateTime.Parse(dp_endDate.Text);
+                        offer.createUserId = MainWindow.userLogin.userId;
+                        offer.notes = tb_notes.Text;
+                   
                     }
                     HelpClass.EndAwait(grid_main);
                 }
@@ -311,6 +345,7 @@ namespace Restaurant.View.sales.promotion
         }
         */
         #endregion
+
         #region events
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -435,23 +470,25 @@ namespace Restaurant.View.sales.promotion
             }
         }
         #endregion
+
         #region Refresh & Search
-        /*
+        
         async Task Search()
         {
             //search
             if (offers is null)
                 await RefreshCustomersList();
             searchText = tb_search.Text.ToLower();
-            offersQuery = offers.Where(s => (s.code.ToLower().Contains(searchText) ||
-            s.name.ToLower().Contains(searchText) ||
-            s.mobile.ToLower().Contains(searchText)
-            ) && s.isActive == tgl_offerState);
+            offersQuery = offers;
+            //    .Where(s => (s.code.ToLower().Contains(searchText) ||
+            //s.name.ToLower().Contains(searchText) ||
+            //s.mobile.ToLower().Contains(searchText)
+            //) && s.isActive == tgl_offerState);
             RefreshCustomersView();
         }
         async Task<IEnumerable<Offer>> RefreshCustomersList()
         {
-            offers = await offer.Get("c");
+            offers = await offer.Get();
             return offers;
         }
         void RefreshCustomersView()
@@ -459,8 +496,9 @@ namespace Restaurant.View.sales.promotion
             dg_offer.ItemsSource = offersQuery;
             txt_count.Text = offersQuery.Count().ToString();
         }
-        */
+        
         #endregion
+
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
@@ -547,6 +585,7 @@ namespace Restaurant.View.sales.promotion
         }
 
         #endregion
+
         #region report
         /*
         // report

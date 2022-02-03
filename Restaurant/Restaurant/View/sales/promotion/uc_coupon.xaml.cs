@@ -246,7 +246,7 @@ namespace Restaurant.View.sales.promotion
                             coupon.notes = tb_notes.Text;
                             coupon.barcode = tb_barcode.Text;
                             coupon.isActive = Convert.ToByte(tgl_isActiveCoupon.IsChecked);
-                            coupon.discountType = Convert.ToByte(cb_discountType.SelectedValue);////?????
+                            coupon.discountType = Convert.ToByte(cb_discountType.SelectedValue);
                             coupon.discountValue = decimal.Parse(tb_discountValue.Text);
 
                             if (dp_startDate.SelectedDate != null)
