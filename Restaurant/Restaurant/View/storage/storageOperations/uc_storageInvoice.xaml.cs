@@ -1413,35 +1413,38 @@ namespace Restaurant.View.storage.storageOperations
         }
         #endregion
         #region report
-        private void Btn_printInvoice_Click(object sender, RoutedEventArgs e)
-        {//print
-            try
-            {
-                HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
-                {
-                    if (invoiceItems != null)
-                    {
-                        Thread t1 = new Thread(() =>
-                        {
-                            printReceipt();
-                        });
-                        t1.Start();
-                    }
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+        ReportCls reportclass = new ReportCls();
+        LocalReport rep = new LocalReport();
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+        
+        private void BuildReport()
+        {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
             {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
+                addpath = @"\Reports\Storage\storageOperations\Ar\ArStorageInvoice.rdlc";
             }
+            else
+            {
+                addpath = @"\Reports\Storage\storageOperations\En\EnStorageInvoice.rdlc";
+            }
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+            //D:\myproj\posproject5\Restaurant\Restaurant\View\storage\storageOperations\uc_ItemsStorage.xaml.cs
+       
+
+            clsReports.StorageInvoice(invoiceItems, rep, reppath, paramarr);
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
         }
-        private void printReceipt()
+        private void PrintRep()
         {
             BuildReport();
 
@@ -1450,8 +1453,9 @@ namespace Restaurant.View.storage.storageOperations
                 LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
             });
         }
-        private void pdfReceipt()
+        private void PdfRep()
         {
+
             BuildReport();
 
             this.Dispatcher.Invoke(() =>
@@ -1464,34 +1468,9 @@ namespace Restaurant.View.storage.storageOperations
                     LocalReportExtensions.ExportToPDF(rep, filepath);
                 }
             });
+
         }
-        ReportCls reportclass = new ReportCls();
-        LocalReport rep = new LocalReport();
-        SaveFileDialog saveFileDialog = new SaveFileDialog();
-        private void BuildReport()
-        {
-            List<ReportParameter> paramarr = new List<ReportParameter>();
-            //ReceiptPurchase
-            string addpath;
-            bool isArabic = ReportCls.checkLang();
-            if (isArabic)
-            {
-                addpath = @"\Reports\Store\Ar\ArReceiptPurchaseReport.rdlc";//////??????????
-            }
-            else
-                addpath = @"\Reports\Store\En\ReceiptPurchaseReport.rdlc";/////////////?????????????
-            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
-            ReportCls.checkLang();
-
-            clsReports.ReceiptPurchaseReport(invoiceItems, rep, reppath, paramarr);/////??????????????
-            clsReports.setReportLanguage(paramarr);
-            clsReports.Header(paramarr);
-
-            rep.SetParameters(paramarr);
-
-            rep.Refresh();
-        }
         private void Btn_preview_Click(object sender, RoutedEventArgs e)
         {//preview
             try
@@ -1509,6 +1488,7 @@ namespace Restaurant.View.storage.storageOperations
                         string pdfpath = "";
                         pdfpath = @"\Thumb\report\temp.pdf";
                         pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+
                         BuildReport();
                         LocalReportExtensions.ExportToPDF(rep, pdfpath);
                         ///////////////////
@@ -1520,8 +1500,8 @@ namespace Restaurant.View.storage.storageOperations
                             w.wb_pdfWebViewer.Dispose();
                         }
                         Window.GetWindow(this).Opacity = 1;
-                        //////////////////////////////////////
                     }
+                    //////////////////////////////////////
                     #endregion
                 }
                 else
@@ -1549,7 +1529,7 @@ namespace Restaurant.View.storage.storageOperations
                     {
                         Thread t1 = new Thread(() =>
                         {
-                            pdfReceipt();
+                            PdfRep();
                         });
                         t1.Start();
                     }
@@ -1566,7 +1546,38 @@ namespace Restaurant.View.storage.storageOperations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private void Btn_printInvoice_Click(object sender, RoutedEventArgs e)
+        {//print
+            try
+            {
 
+                HelpClass.StartAwait(grid_main);
+
+                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                {
+
+                    if (invoiceItems != null)
+                    {
+                        Thread t1 = new Thread(() =>
+                        {
+                            PrintRep();
+                        });
+                        t1.Start();
+                    }
+
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         #endregion
         #region Barcode
         //async Task fillBarcodeList()

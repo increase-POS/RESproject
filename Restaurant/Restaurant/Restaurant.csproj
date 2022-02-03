@@ -1060,6 +1060,36 @@
     <Content Include="Reports\Storage\storageDivide\En\EnSection.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\Storage\stocktackingOperations\Ar\ArStocktaking.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Storage\stocktackingOperations\En\EnStocktaking.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Storage\storageOperations\Ar\ArItemsStorage.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Storage\storageOperations\En\EnItemsStorage.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Storage\storageOperations\Ar\ArStorageInvoice.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Storage\storageOperations\En\EnStorageInvoice.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Storage\storageOperations\Ar\ArStorageCost.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Storage\storageOperations\En\EnStorageCost.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Storage\movementsOperations\Ar\ArSpendingOrder.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Storage\movementsOperations\En\EnSpendingOrder.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="fonts\barcodeFont.ttf" />
     <Resource Include="fonts\cairo-font\cairo bold.ttf" />
     <Resource Include="fonts\cairo-font\cairo-light.ttf" />
@@ -1069,9 +1099,12 @@
     <None Include="Properties\DataSources\Restaurant.Classes.Bank.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Branch.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Card.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.ItemLocation.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.ItemTransfer2.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Location.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Pos.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Section.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.StorageCost.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.User.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -1088,8 +1121,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Reports\Storage\storageOperations\Ar\" />
-    <Folder Include="Reports\Storage\storageOperations\En\" />
     <Folder Include="View\home\" />
     <Folder Include="View\reports\" />
   </ItemGroup>
