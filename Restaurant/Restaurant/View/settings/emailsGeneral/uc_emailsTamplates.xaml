@@ -145,7 +145,7 @@
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Width="*"  Header="Name"     Binding="{Binding Path=name}"/>
+                                <DataGridTextColumn Width="*"  Header="Name"     Binding="{Binding Path=trName}"/>
                             </DataGrid.Columns>
                         </DataGrid>
 

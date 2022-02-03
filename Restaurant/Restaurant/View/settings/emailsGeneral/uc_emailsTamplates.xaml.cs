@@ -15,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Resources;
+using System.Reflection;
 
 namespace Restaurant.View.settings.emailsGeneral
 {
@@ -59,6 +61,9 @@ namespace Restaurant.View.settings.emailsGeneral
         SettingCls sett = new SettingCls();
         IEnumerable<SettingCls> setQuery;
         IEnumerable<SettingCls> setQueryView;
+
+      
+
         string searchText = "";
         public static List<string> requiredControlList;
 
@@ -76,22 +81,24 @@ namespace Restaurant.View.settings.emailsGeneral
                 requiredControlList = new List<string> { "name", };
                 if (MainWindow.lang.Equals("en"))
                 {
-                    //MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
+                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    //MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
+                     MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
 
+                RefreshSettingsList();
 
+               // RefreshSetttingsView();
                 Keyboard.Focus(tb_title);
-                /*
-                await Search();
-                Clear();
-                */
+                 
+                //await Search();
+                //Clear();
+                 
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -229,12 +236,12 @@ namespace Restaurant.View.settings.emailsGeneral
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Dg_setValues_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Dg_setValues_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
+          
                 //selection
                 if (dg_setValues.SelectedIndex != -1)
                 {
@@ -242,9 +249,12 @@ namespace Restaurant.View.settings.emailsGeneral
                     {
                         sett = dg_setValues.SelectedItem as SettingCls;
 
-                        List<SettingCls> settLst = await setModel.GetAll();
-                        SettingCls setting = settLst.Where(s => s.settingId == sett.settingId).FirstOrDefault();
-                        setValuessQuery = await setValuesModel.GetBySetName(setting.name);
+                        setValuessQuery = await setValuesModel.GetBySetName(sett.name);
+
+                        //List<SettingCls> settLst = await setModel.GetAll();
+                        //SettingCls setting = settLst.Where(s => s.settingId == sett.settingId).FirstOrDefault();
+
+                        //setValuessQuery = await setValuesModel.GetBySetName(setting.name);
                         tb_title.Text = setValuessQuery.Where(x => x.notes == "title").FirstOrDefault() is null ? ""
                         : setValuessQuery.Where(x => x.notes == "title").FirstOrDefault().value.ToString();
                         tb_text1.Text = setValuessQuery.Where(x => x.notes == "text1").FirstOrDefault() is null ? ""
@@ -279,7 +289,7 @@ namespace Restaurant.View.settings.emailsGeneral
 
 
                 }
-                */
+               
                 HelpClass.clearValidate(requiredControlList, this);
                 HelpClass.EndAwait(grid_main);
             }
@@ -312,44 +322,86 @@ namespace Restaurant.View.settings.emailsGeneral
         #endregion
 
         #region Refresh & Search
-        /*
-        async Task Search()
+          async void RefreshSettingsList()
         {
-            //search
-            if (tables is null)
-                await RefreshTablesList();
-            searchText = tb_search.Text.ToLower();
-            tablesQuery = tables.Where(s => (
-            s.name.ToLower().Contains(searchText)
-            ) && s.isActive == tgl_tableState);
-            RefreshTablessView();
+            setQuery = await setModel.GetByNotes("emailtemp");
+            foreach ( SettingCls row in setQuery )
+            {
+                switch (row.name)
+                {
+                    case "pur_email_temp":
+                        row.trName = MainWindow.resourcemanager.GetString("trPurchasesEmailTemplate");
+                        break;
+                    case "pur_order_email_temp":
+                        row.trName = MainWindow.resourcemanager.GetString("trPurchaseOrdersEmailTemplate");
+                        break;
+                    case "sale_email_temp":
+                        row.trName = MainWindow.resourcemanager.GetString("trSalesEmailTemplate");
+                        break;
+                    case "sale_order_email_temp":
+                        row.trName = MainWindow.resourcemanager.GetString("trSalesOrdersEmailTemplate");
+                        break;
+                    case "quotation_email_temp":
+                        row.trName = MainWindow.resourcemanager.GetString("trQuotationsEmailTemplate");
+                        break;
+                    case "required_email_temp":
+                        row.trName = MainWindow.resourcemanager.GetString("trRequirementsEmailTemplate");
+                        break;
+
+                }
+                }
+         
+            dg_setValues.ItemsSource = setQuery;
+         
         }
-        async Task<IEnumerable<Tables>> RefreshTablesList()
-        {
-            tables = await table.Get(MainWindow.branchLogin.branchId);
-            // tables = tables.Where(x => x.branchId == MainWindow.branchLogin.branchId );
-            return tables;
-        }
-        void RefreshTablessView()
-        {
-            dg_table.ItemsSource = tablesQuery;
-            txt_count.Text = tablesQuery.Count().ToString();
-        }
-        */
+        //void RefreshSetttingsView()
+        //{
+        //    setQuery.ToList()[0].name = MainWindow.resourcemanager.GetString("trPurchaseOrdersEmailTemplate");
+        //    setQuery.ToList()[1].name = MainWindow.resourcemanager.GetString("trSalesEmailTemplate");
+        //    setQuery.ToList()[2].name = MainWindow.resourcemanager.GetString("trSalesOrdersEmailTemplate");
+        //    setQuery.ToList()[3].name = MainWindow.resourcemanager.GetString("trQuotationsEmailTemplate");
+        //    setQuery.ToList()[4].name = MainWindow.resourcemanager.GetString("trRequirementsEmailTemplate");
+        //    setQuery.ToList()[5].name = MainWindow.resourcemanager.GetString("trPurchasesEmailTemplate");
+        //    dg_setValues.ItemsSource = setQuery;
+        //}
+
+        //async Task Search()
+        //{
+        //    //search
+        //    if (tables is null)
+        //        await RefreshTablesList();
+        //    searchText = tb_search.Text.ToLower();
+        //    tablesQuery = tables.Where(s => (
+        //    s.name.ToLower().Contains(searchText)
+        //    ) && s.isActive == tgl_tableState);
+        //    RefreshTablessView();
+        //}
+        //async Task<IEnumerable<Tables>> RefreshTablesList()
+        //{
+        //    tables = await table.Get(MainWindow.branchLogin.branchId);
+        //    // tables = tables.Where(x => x.branchId == MainWindow.branchLogin.branchId );
+        //    return tables;
+        //}
+        //void RefreshTablessView()
+        //{
+        //    dg_table.ItemsSource = tablesQuery;
+        //    txt_count.Text = tablesQuery.Count().ToString();
+        //}
+
         #endregion
 
         #region validate - clearValidate - textChange - lostFocus - . . . . 
 
-            /*
-        void Clear()
-        {
-            this.DataContext = new Tables();
-            dg_table.SelectedIndex = -1;
-            // last 
-            HelpClass.clearValidate(requiredControlList, this);
+        /*
+    void Clear()
+    {
+        this.DataContext = new Tables();
+        dg_table.SelectedIndex = -1;
+        // last 
+        HelpClass.clearValidate(requiredControlList, this);
 
-        }
-        */
+    }
+    */
         string input;
         decimal _decimal = 0;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
