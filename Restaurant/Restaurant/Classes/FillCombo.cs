@@ -654,7 +654,5 @@ namespace Restaurant.Classes
         static public ShippingCompanies ShipCompany = new ShippingCompanies();
 
 
-
-
     }
 }

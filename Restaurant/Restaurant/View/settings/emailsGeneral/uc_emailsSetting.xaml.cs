@@ -116,6 +116,8 @@ namespace Restaurant.View.settings.emailsGeneral
                 Keyboard.Focus(tb_name);
                 await Search();
                 Clear();
+                FillCombo.FillSideCombo(cb_side);
+               await FillCombo. fillComboBranchesAllWithoutMain(cb_branchId);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
