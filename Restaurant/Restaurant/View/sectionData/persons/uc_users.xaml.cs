@@ -103,7 +103,7 @@ namespace Restaurant.View.sectionData.persons
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "name", "lastname", "mobile", "job", "username", "password" };
+                requiredControlList = new List<string> { "name", "lastname", "mobile", "job", "username" };
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());

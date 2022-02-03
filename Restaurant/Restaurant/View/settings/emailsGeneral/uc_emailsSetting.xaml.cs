@@ -586,6 +586,7 @@ namespace Restaurant.View.settings.emailsGeneral
         {
             try
             {
+                tb_password.Text = pb_password.Password;
                 HelpClass.validate(requiredControlList, this);
                 p_error_password.Visibility = Visibility.Collapsed;
             }
