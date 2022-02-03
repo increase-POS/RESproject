@@ -47,6 +47,8 @@ namespace Restaurant.Classes
         public string payType { get; set; }
         public bool canReserve { get; set; }
         public string disallowReason { get; set; }
+        public Nullable<int> residentSecId { get; set; }
+        public string GPSAddress { get; set; }
 
         public Boolean canDelete { get; set; }
 
