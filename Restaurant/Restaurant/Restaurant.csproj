@@ -233,6 +233,7 @@
     <Compile Include="converters\SectionLocationFreeZoneConverter.cs" />
     <Compile Include="converters\translateCategoryNameConverter.cs" />
     <Compile Include="converters\unitItemsListConverter.cs" />
+    <Compile Include="converters\unlimitedCouponConverter.cs" />
     <Compile Include="en_file.Designer.cs" />
     <Compile Include="View\accounts\uc_accounts.xaml.cs">
       <DependentUpon>uc_accounts.xaml</DependentUpon>

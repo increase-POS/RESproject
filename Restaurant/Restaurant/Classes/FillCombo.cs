@@ -630,6 +630,24 @@ namespace Restaurant.Classes
 
         }
         #endregion
+
+        #region Email
+        static public void FillSideCombo(ComboBox COMBO)
+        {
+            #region fill deposit to combo
+            var list = new[] {
+  new { Text = MainWindow.resourcemanager.GetString("trAccounting")  , Value = "accounting" },
+            new { Text = MainWindow.resourcemanager.GetString("trSales")  , Value = "sales" },
+            new { Text = MainWindow.resourcemanager.GetString("trPurchases")  , Value = "purchase" },
+
+             };
+            COMBO.DisplayMemberPath = "Text";
+            COMBO.SelectedValuePath = "Value";
+            COMBO.ItemsSource = list;
+            #endregion
+
+        }
+        #endregion
         static public ItemLocation itemLocation = new ItemLocation();
         static public Invoice invoice = new Invoice();
         static public List<Invoice> invoices;
