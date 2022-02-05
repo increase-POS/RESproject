@@ -813,7 +813,26 @@ namespace Restaurant.View.kitchen
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-        }      
+        }
+        private void Btn_itemsStorage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_itemsStorage w = new wd_itemsStorage();
+                w.ShowDialog();
+
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private async void Btn_items_Click(object sender, RoutedEventArgs e)
         {
             try
