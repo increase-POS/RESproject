@@ -1060,7 +1060,7 @@ namespace Restaurant.View.storage.movementsOperations
                 TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
                 if (elapsed.TotalMilliseconds < 100)
                 {
-                    if (columnName == MainWindow.resourcemanager.GetString("trQTR"))
+                    if (columnName == MainWindow.resourcemanager.GetString("trQuantity"))
                         t.Text = billDetails[index].Count.ToString();
                 }
                 else

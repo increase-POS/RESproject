@@ -120,9 +120,9 @@ namespace Restaurant.View.windows
                 translat();
                 #endregion
                 dg_Invoice.Columns[0].Visibility = Visibility.Collapsed;
-                #region hide Total column in grid if invoice is import/export order/purchase order/ spending request order
+                #region hide Total column in grid if invoice is import/export order/purchase order/ spending request order/Food Beverages Consumption
 
-                string[] invTypeArray = new string[] { "imd" ,"exd","im","ex" ,"exw","pod","po","srd","sr","srw","src" };
+                string[] invTypeArray = new string[] { "imd" ,"exd","im","ex" ,"exw","pod","po","srd","sr","srw","src" ,"fbc"};
                 var invTypes = invTypeArray.ToList();
                 List<string> invTypeL = invoiceType.Split(',').ToList();
                 var inCommen = invTypeL.Any(s => invTypes.Contains(s));
@@ -248,6 +248,13 @@ namespace Restaurant.View.windows
             else if (page == "spendingOrder")
             {
                 if (icon == "waitingOrders")
+                    FillCombo.invoices = await FillCombo.invoice.getBranchInvoices(invoiceType, branchCreatorId, branchId);
+            }
+            #endregion
+            #region spending order in storage
+            else if (page == "consumption")
+            {
+                if (icon == "invoices")
                     FillCombo.invoices = await FillCombo.invoice.getBranchInvoices(invoiceType, branchCreatorId, branchId);
             }
             #endregion
