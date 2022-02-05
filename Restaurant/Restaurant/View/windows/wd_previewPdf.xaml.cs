@@ -38,17 +38,17 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_branchList);
                 translate();
                 wb_pdfWebViewer.Navigate(new Uri(pdfPath));
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_branchList);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_branchList);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -59,7 +59,6 @@ namespace Restaurant.View.windows
             txt_title.Text = MainWindow.resourcemanager.GetString("trPreview");
             
         }
-        
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             try
@@ -75,7 +74,6 @@ namespace Restaurant.View.windows
                 //Btn_save_Click(null, null);
             }
         }
-
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
            
