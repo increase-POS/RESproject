@@ -96,10 +96,21 @@ namespace Restaurant.View.storage.movementsOperations
             dg_billDetails.Columns[3].Header = MainWindow.resourcemanager.GetString("trUnit");
             dg_billDetails.Columns[4].Header = MainWindow.resourcemanager.GetString("trQuantity");
 
+            txt_orders.Text = MainWindow.resourcemanager.GetString("trOrders");
+            txt_items.Text = MainWindow.resourcemanager.GetString("trItems");
+            txt_printInvoice.Text = MainWindow.resourcemanager.GetString("trPrint");
+            txt_pdf.Text = MainWindow.resourcemanager.GetString("trPdf");
+            txt_preview.Text = MainWindow.resourcemanager.GetString("trPreview");
+            txt_count.Text = MainWindow.resourcemanager.GetString("trCount");
+
+            txt_titleDataGridInvoice.Text = MainWindow.resourcemanager.GetString("trSpendingOrder");
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_barcode, MainWindow.resourcemanager.GetString("trBarcodeHint"));
+
             tt_error_previous.Content = MainWindow.resourcemanager.GetString("trPrevious");
             tt_error_next.Content = MainWindow.resourcemanager.GetString("trNext");
 
-
+            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {

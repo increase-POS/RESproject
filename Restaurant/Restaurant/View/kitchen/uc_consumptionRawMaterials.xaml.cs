@@ -91,9 +91,21 @@ namespace Restaurant.View.kitchen
             dg_billDetails.Columns[3].Header = MainWindow.resourcemanager.GetString("trUnit");
             dg_billDetails.Columns[4].Header = MainWindow.resourcemanager.GetString("trQuantity");
 
+            txt_orders.Text = MainWindow.resourcemanager.GetString("trOrders");
+            txt_newDraft.Text = MainWindow.resourcemanager.GetString("trNew");
+            txt_items.Text = MainWindow.resourcemanager.GetString("trItems");
+            txt_printInvoice.Text = MainWindow.resourcemanager.GetString("trPrint");
+            txt_pdf.Text = MainWindow.resourcemanager.GetString("trPdf");
+            txt_preview.Text = MainWindow.resourcemanager.GetString("trPreview");
+            txt_count.Text = MainWindow.resourcemanager.GetString("trCount");
+            txt_titleDataGridInvoice.Text = MainWindow.resourcemanager.GetString("trConsumptionRawMaterials");
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_barcode, MainWindow.resourcemanager.GetString("trBarcodeHint"));
+
             tt_error_previous.Content = MainWindow.resourcemanager.GetString("trPrevious");
             tt_error_next.Content = MainWindow.resourcemanager.GetString("trNext");
 
+            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
 
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -774,6 +786,14 @@ namespace Restaurant.View.kitchen
         }
         #endregion
         #region btn
+        private void Btn_newDraft_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                clear();
+            }
+            catch { }
+        }
         private async void Btn_orders_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -821,8 +841,8 @@ namespace Restaurant.View.kitchen
                 HelpClass.StartAwait(grid_main);
 
                 Window.GetWindow(this).Opacity = 0.2;
-                wd_itemsStorage w = new wd_itemsStorage();
-                w.ShowDialog();
+               // wd_itemsStorage w = new wd_itemsStorage();
+                //w.ShowDialog();
 
                 Window.GetWindow(this).Opacity = 1;
                 HelpClass.EndAwait(grid_main);
@@ -1295,5 +1315,7 @@ namespace Restaurant.View.kitchen
             }
         }
         #endregion
+
+        
     }
 }

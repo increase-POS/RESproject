@@ -132,18 +132,18 @@
                     </Border>-->
 
 
-                    <!--<Button Grid.Column="1" BorderBrush="{x:Null}"  
+                    <Button Grid.Column="1" BorderBrush="{x:Null}"  
                     Background="{x:Null}" x:Name="btn_newDraft" Padding="0" Margin="5,10,5,0" Height="auto"
                     Click="Btn_newDraft_Click">
                         <StackPanel>
                             <Path Fill="{StaticResource SecondColor}" Stretch="Fill" Height="30" Width="30" x:Name="path_newDraft"
                             
                           Data="M406.87,122.88c-.75,21.08-6.3,37.9-18.63,51.9-14.76,16.76-33.28,24.79-55.74,21.13-22.91-3.74-38.67-17.49-47.94-38.11-12.33-27.41-10.73-54.58,5.95-79.81C303.78,57.92,323,48,347.37,49.75c14.09,1,26.28,7.08,36.35,16.87C400.22,82.69,406.93,102.76,406.87,122.88Zm-76.44,12.06v30.35h21.95V134.84h26.7V110.31h-3.34c-6.62,0-13.24-.07-19.86,0-2.12,0-2.85-.6-2.82-2.77.12-7.1.05-14.2.05-21.3,0-2.09,0-4.18,0-6.63-7.32,0-14.3,0-21.28.09-.48,0-1.32,1.27-1.36,2-.15,3.07-.07,6.14-.07,9.21v19.37H303.67v24.65Z" />
-                            <TextBlock Text="new Draft" x:Name="txt_newDraft" Foreground="{StaticResource MainColor}" 
+                            <TextBlock Text="new" x:Name="txt_newDraft" Foreground="{StaticResource MainColor}" 
                                            FontWeight="Regular" FontSize="8" TextAlignment="Center" Width="35"
                                            HorizontalAlignment="Center"/>
                         </StackPanel>
-                    </Button>-->
+                    </Button>
                     <!--<materialDesign:Badged VerticalAlignment="Center" Margin="5,10,5,0" 
                       BadgeBackground="{StaticResource Red}"  BadgeForeground="White" Name="md_draftsCount">
                         <Button Grid.Column="2" BorderBrush="{x:Null}" Padding="0" Height="auto"
@@ -183,7 +183,7 @@
                     </materialDesign:Badged>
                     <materialDesign:Badged VerticalAlignment="Center" Margin="5,10,5,0" 
                       BadgeBackground="{StaticResource Red}"  BadgeForeground="White" >
-                        <Button Grid.Column="4" BorderBrush="{x:Null}" Padding="0"  Height="auto"
+                        <!--<Button Grid.Column="4" BorderBrush="{x:Null}" Padding="0"  Height="auto"
                     Background="{x:Null}" x:Name="btn_itemsStorage"  Click="Btn_itemsStorage_Click" >
                             <StackPanel>
                                 <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
@@ -193,7 +193,7 @@
                                            FontWeight="Regular" FontSize="8" TextAlignment="Center" Width="35"
                                            HorizontalAlignment="Center"/>
                             </StackPanel>
-                        </Button>
+                        </Button>-->
                     </materialDesign:Badged>
                 </StackPanel>
             </Border>
