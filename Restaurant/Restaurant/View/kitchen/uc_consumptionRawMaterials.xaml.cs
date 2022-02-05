@@ -920,13 +920,10 @@ namespace Restaurant.View.kitchen
             }
         }
         private async void Dg_billDetails_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {/*
+        {
             try
             {
-                //
-                //    HelpClass.StartAwait(grid_main);
-
-                TextBox t = e.EditingElement as TextBox;  // Assumes columns are all TextBoxes
+                TextBox t = e.EditingElement as TextBox;
                 var columnName = e.Column.Header.ToString();
 
                 BillDetailsPurchase row = e.Row.Item as BillDetailsPurchase;
@@ -935,44 +932,37 @@ namespace Restaurant.View.kitchen
                 TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
                 if (elapsed.TotalMilliseconds < 100)
                 {
-                    if (columnName == MainWindow.resourcemanager.GetString("trQuantity"))
-                        t.Text = billDetails[index].Count.ToString();
+                    t.Text = billDetails[index].Count.ToString();
                 }
                 else
                 {
                     int availableAmount = 0;
 
-                    int oldCount = 0;
-                    if (!t.Text.Equals(""))
-                        oldCount = int.Parse(t.Text);
-                    else
-                        oldCount = 0;
+                    int oldCount = row.Count;
                     int newCount = 0;
+                    if (columnName == MainWindow.resourcemanager.GetString("trQuantity"))
+                    {
+                        newCount = int.Parse(t.Text);
+                        if (newCount < 0)
+                        {
+                            newCount = 0;
+                            t.Text = "0";
+                        }
+
+                    }
+                    else
+                        newCount = row.Count;
                     //"tb_amont"
                     if (columnName == MainWindow.resourcemanager.GetString("trQuantity"))
                     {
-                        if (_ProcessType == "exd")
+                        availableAmount = await getAvailableAmount(row.itemId, row.itemUnitId, MainWindow.branchLogin.branchId, row.ID);
+                        if (availableAmount < newCount)
                         {
-                            availableAmount = await getAvailableAmount(row.itemId, row.itemUnitId, MainWindow.branchLogin.branchId, row.ID);
-                            if (availableAmount < oldCount)
-                            {
 
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorAmountNotAvailableToolTip"), animation: ToasterAnimation.FadeIn);
-                                newCount = newCount + availableAmount;
-                                t.Text = availableAmount.ToString();
-                            }
-                            else
-                            {
-                                if (!t.Text.Equals(""))
-                                    newCount = int.Parse(t.Text);
-                                else
-                                    newCount = 0;
-                                if (newCount < 0)
-                                {
-                                    newCount = 0;
-                                    t.Text = "0";
-                                }
-                            }
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorAmountNotAvailableToolTip"), animation: ToasterAnimation.FadeIn);
+                            newCount =  availableAmount;
+                            t.Text = newCount.ToString();
+                            row.Count = (int)newCount;
                         }
                         else
                         {
@@ -980,23 +970,16 @@ namespace Restaurant.View.kitchen
                                 newCount = int.Parse(t.Text);
                             else
                                 newCount = 0;
+                            if (newCount < 0)
+                            {
+                                newCount = 0;
+                                t.Text = "0";
+                            }
                         }
                     }
                     else
                         newCount = row.Count;
 
-                    if (row.OrderId != 0)
-                    {
-                        ItemTransfer item = mainInvoiceItems.ToList().Find(i => i.itemUnitId == row.itemUnitId && i.invoiceId == row.OrderId);
-                        if (newCount > item.quantity)
-                        {
-                            // return old value 
-                            t.Text = item.quantity.ToString();
-
-                            newCount = (int)item.quantity;
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
-                        }
-                    }
 
 
                     _Count -= oldCount;
@@ -1012,7 +995,7 @@ namespace Restaurant.View.kitchen
                 }
                 //
                 //    HelpClass.EndAwait(grid_main);
-                //refrishDataGridItems();
+                refrishDataGridItems();
 
             }
             catch (Exception ex)
@@ -1021,7 +1004,42 @@ namespace Restaurant.View.kitchen
                 //    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+        }
+        private async Task<int> getAvailableAmount(int itemId, int itemUnitId, int branchId, int ID)
+        {
+            var itemUnits = FillCombo.itemUnitList.Where(a => a.itemId == itemId).ToList();
+            int availableAmount = await FillCombo.itemLocation.getAmountInBranch(itemUnitId, branchId,1);
+            var smallUnits = await FillCombo.itemUnit.getSmallItemUnits(itemId, itemUnitId);
+            foreach (ItemUnit u in itemUnits)
+            {
+                var isInBill = billDetails.ToList().Find(x => x.itemUnitId == (int)u.itemUnitId && x.ID != ID); // unit exist in invoice
+                if (isInBill != null)
+                {
+                    var isSmall = smallUnits.Find(x => x.itemUnitId == (int)u.itemUnitId);
+                    int unitValue = 0;
+
+                    int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == u.itemUnitId).FirstOrDefault());
+                    int quantity = billDetails[index].Count;
+                    if (itemUnitId == u.itemUnitId)
+                    { }
+                    else if (isSmall != null) // from-unit is bigger than to-unit
+                    {
+                        unitValue = await FillCombo.itemUnit.largeToSmallUnitQuan(itemUnitId, (int)u.itemUnitId);
+                        quantity = quantity / unitValue;
+                    }
+                    else
+                    {
+                        unitValue = await FillCombo.itemUnit.smallToLargeUnit(itemUnitId, (int)u.itemUnitId);
+
+                        if (unitValue != 0)
+                        {
+                            quantity = quantity * unitValue;
+                        }
+                    }
+                    availableAmount -= quantity;
+                }
+            }
+            return availableAmount;
         }
         private void DataGrid_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {

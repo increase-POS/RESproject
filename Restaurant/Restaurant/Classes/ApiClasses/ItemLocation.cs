@@ -566,13 +566,14 @@ namespace Restaurant.Classes
 
             return await APIResult.post(method, parameters);
         }
-        public async Task<int> getAmountInBranch(int itemUnitId, int branchId)
+        public async Task<int> getAmountInBranch(int itemUnitId, int branchId,int isKitchen = 0)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "ItemsLocations/getAmountInBranch";
 
             parameters.Add("branchId", branchId.ToString());
             parameters.Add("itemUnitId", itemUnitId.ToString());
+            parameters.Add("isKitchen", isKitchen.ToString());
            return await APIResult.post(method, parameters);
         }
         public async Task<int> getAmountInLocation(int itemUnitId, int branchId , int locationId)
