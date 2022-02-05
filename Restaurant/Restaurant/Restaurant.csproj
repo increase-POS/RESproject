@@ -233,11 +233,15 @@
     <Compile Include="converters\notificationsTitleConverter.cs" />
     <Compile Include="converters\SectionLocationFreeZoneConverter.cs" />
     <Compile Include="converters\translateCategoryNameConverter.cs" />
+    <Compile Include="converters\transTypeConverter.cs" />
     <Compile Include="converters\unitItemsListConverter.cs" />
     <Compile Include="converters\unlimitedCouponConverter.cs" />
     <Compile Include="en_file.Designer.cs" />
     <Compile Include="View\accounts\uc_accounts.xaml.cs">
       <DependentUpon>uc_accounts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\accounts\uc_posTransfers.xaml.cs">
+      <DependentUpon>uc_posTransfers.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\accounts\uc_subscriptions.xaml.cs">
       <DependentUpon>uc_subscriptions.xaml</DependentUpon>
@@ -268,6 +272,9 @@
     </Compile>
     <Compile Include="View\delivery\uc_deliveryManagement.xaml.cs">
       <DependentUpon>uc_deliveryManagement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\delivery\uc_driversManagement.xaml.cs">
+      <DependentUpon>uc_driversManagement.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\delivery\uc_shippingCompanies.xaml.cs">
       <DependentUpon>uc_shippingCompanies.xaml</DependentUpon>
@@ -458,6 +465,9 @@
     <Compile Include="View\windows\wd_itemsOfferList.xaml.cs">
       <DependentUpon>wd_itemsOfferList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_itemsStorage.xaml.cs">
+      <DependentUpon>wd_itemsStorage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_itemsUnitList.xaml.cs">
       <DependentUpon>wd_itemsUnitList.xaml</DependentUpon>
     </Compile>
@@ -574,6 +584,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\accounts\uc_posTransfers.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\accounts\uc_subscriptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -611,6 +625,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\delivery\uc_deliveryManagement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\delivery\uc_driversManagement.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -863,6 +881,10 @@
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="View\windows\wd_itemsOfferList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_itemsStorage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
