@@ -254,8 +254,6 @@ namespace Restaurant.View.sectionData.persons
                     HelpClass.StartAwait(grid_main);
                     if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
-                       
-
                         //payType
                         string payType = "";
                         if (cb_payType.SelectedIndex != -1)
@@ -494,13 +492,17 @@ namespace Restaurant.View.sectionData.persons
             }
         }
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
+        {//refresh
             try
-            {//refresh
+            {
 
                 HelpClass.StartAwait(grid_main);
+
+                tb_search.Text = "";
+                searchText = "";
                 await RefreshCustomersList();
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -787,12 +789,11 @@ namespace Restaurant.View.sectionData.persons
 
         }
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
-        {
-            //pdf
+        {//pdf
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") )
                 {
@@ -816,7 +817,7 @@ namespace Restaurant.View.sectionData.persons
             catch (Exception ex)
             {
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -940,5 +941,10 @@ namespace Restaurant.View.sectionData.persons
         }
 
         #endregion
+
+        private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
+        {//pie
+
+        }
     }
 }

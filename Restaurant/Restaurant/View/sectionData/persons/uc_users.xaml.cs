@@ -503,8 +503,12 @@ namespace Restaurant.View.sectionData.persons
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
+
+                tb_search.Text = "";
+                searchText = "";
                 await RefreshUsersList();
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)

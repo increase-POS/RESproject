@@ -186,8 +186,6 @@ namespace Restaurant.View.sectionData.persons
                 {
                     HelpClass.StartAwait(grid_main);
 
-               
-
                 agent = new Agent();
                 if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                 {
@@ -205,11 +203,11 @@ namespace Restaurant.View.sectionData.persons
                     agent.code = await agent.generateCodeNumber("c");
                     agent.name = tb_name.Text;
                     agent.company = tb_company.Text;
-                        if (cb_residentSecId.SelectedIndex != -1)
-                            agent.residentSecId = (int)cb_residentSecId.SelectedValue;
-                        agent.address = tb_address.Text;
-                        agent.GPSAddress = tb_GPSAddress.Text;
-                        agent.email = tb_email.Text;
+                    if (cb_residentSecId.SelectedIndex != -1)
+                        agent.residentSecId = (int)cb_residentSecId.SelectedValue;
+                    agent.address = tb_address.Text;
+                    agent.GPSAddress = tb_GPSAddress.Text;
+                    agent.email = tb_email.Text;
                     agent.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text;
                     if (!tb_phone.Text.Equals(""))
                         agent.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
@@ -530,8 +528,12 @@ namespace Restaurant.View.sectionData.persons
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
+
+                tb_search.Text = "";
+                searchText = "";
                 await RefreshCustomersList();
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)

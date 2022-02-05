@@ -176,6 +176,7 @@
     </ApplicationDefinition>
     <Compile Include="ar_file.Designer.cs" />
     <Compile Include="Classes\ApiClasses\Agent.cs" />
+    <Compile Include="Classes\ApiClasses\ItemUnitOffer.cs" />
     <Compile Include="Classes\ApiClasses\ResidentialSectors.cs" />
     <Compile Include="Classes\ApiClasses\Bank.cs" />
     <Compile Include="Classes\ApiClasses\Branch.cs" />
@@ -453,6 +454,9 @@
     </Compile>
     <Compile Include="View\windows\wd_invoice.xaml.cs">
       <DependentUpon>wd_invoice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_itemsOfferList.xaml.cs">
+      <DependentUpon>wd_itemsOfferList.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_itemsUnitList.xaml.cs">
       <DependentUpon>wd_itemsUnitList.xaml</DependentUpon>
@@ -857,6 +861,10 @@
     <Page Include="View\windows\wd_invoice.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="View\windows\wd_itemsOfferList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_itemsUnitList.xaml">
       <Generator>MSBuild:Compile</Generator>

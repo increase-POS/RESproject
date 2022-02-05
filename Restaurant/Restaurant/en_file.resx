@@ -3067,4 +3067,7 @@ Please add Email in setting</value>
   <data name="trSalesOrdersEmailTemplate" xml:space="preserve">
     <value>Sales orders email template</value>
   </data>
+  <data name="trCoupons" xml:space="preserve">
+    <value>Coupons</value>
+  </data>
 </root>

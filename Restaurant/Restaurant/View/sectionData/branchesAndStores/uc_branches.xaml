@@ -125,11 +125,15 @@
 
 
                     <Grid  Grid.Row="1" >
-                        <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
-                            Background="White"/>
-                        <DataGrid  Margin="5,5,5,45" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="11*"/>
+                            <ColumnDefinition Width="21*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Margin="5,5,5,17" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
+                            Background="White" Grid.ColumnSpan="2"/>
+                        <DataGrid  Margin="5,5,5,45"  IsReadOnly="True"   HeadersVisibility="Column"
                        x:Name="dg_branch" SelectionChanged="Dg_branch_SelectionChanged"  AutoGenerateColumns="False"   Background="White"
-                        ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
+                        ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2" Grid.ColumnSpan="2">
                             <DataGrid.OpacityMask>
                                 <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
                             </DataGrid.OpacityMask>
@@ -167,6 +171,17 @@
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Width="*"  Header="mobile" Binding="{Binding Path=mobile}">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding isActive}" Value="0">
+                                                    <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="*"  Header="address" Binding="{Binding Path=address}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>
@@ -337,22 +352,22 @@
                          BlurRadius="10"/>
             </Border.Effect>
             <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Border  Background="{StaticResource MainColor}"   CornerRadius="7 7 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border  Background="{StaticResource MainColor}"   CornerRadius="7 7 0 0">
 
-                <Grid  Height="40" Margin="10 0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Path Fill="White" Stretch="Fill"
+                    <Grid  Height="40" Margin="10 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Path Fill="White" Stretch="Fill"
                            VerticalAlignment="Center" 
                         Width="20" Height="20"
                               Data="M72.1,67.2h21.4c1.3,0,2.3,1,2.3,2.3v12.8c0,1.3-1,2.3-2.3,2.3H72.1c-1.3,0-2.3-1-2.3-2.3V69.5
@@ -363,25 +378,25 @@
 	c2.7-2.6,6.2-4.2,9.9-4.6h3.8c3.7,0.4,7.1,2,9.8,4.6c4.2,4.2,10.8,5,15.9,1.8c0.8-0.5,1.6-1.1,2.3-1.8C118,47,122,45.4,126.2,45.3
 	C126.4,45.3,126.2,45.3,126.2,45.3z"/>
 
-                    <TextBlock Grid.Column="1" Text="Branch" x:Name="txt_title" Margin="10,0,0,0"  Foreground="White" 
+                        <TextBlock Grid.Column="1" Text="Branch" x:Name="txt_title" Margin="10,0,0,0"  Foreground="White" 
                      FontSize="14"     VerticalAlignment="Center" 
                            FontWeight="Bold" />
-                    <Button   x:Name="btn_clear" Click="Btn_clear_Click" Grid.Column="3" Padding="0" 
+                        <Button   x:Name="btn_clear" Click="Btn_clear_Click" Grid.Column="3" Padding="0" 
                                VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}"   >
-                        <materialDesign:PackIcon Foreground="White" Kind="RefreshCircle"   Width="30" Height="30">
-                            <materialDesign:PackIcon.ToolTip>
-                                <ToolTip x:Name="tt_clear" Placement="left" HorizontalOffset="5" 
+                            <materialDesign:PackIcon Foreground="White" Kind="RefreshCircle"   Width="30" Height="30">
+                                <materialDesign:PackIcon.ToolTip>
+                                    <ToolTip x:Name="tt_clear" Placement="left" HorizontalOffset="5" 
                                              PlacementRectangle="50,0,0,0" VerticalOffset="20"/>
-                            </materialDesign:PackIcon.ToolTip>
-                        </materialDesign:PackIcon>
-                    </Button>
+                                </materialDesign:PackIcon.ToolTip>
+                            </materialDesign:PackIcon>
+                        </Button>
 
-                </Grid>
-            </Border>
+                    </Grid>
+                </Border>
 
-            <ScrollViewer Background="White"  Grid.Row="1"   VerticalScrollBarVisibility="Auto"   >
-                <StackPanel>
-                    <!--<Grid >
+                <ScrollViewer Background="White"  Grid.Row="1"   VerticalScrollBarVisibility="Auto"   >
+                    <StackPanel>
+                        <!--<Grid >
                         <Grid.RowDefinitions >
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
@@ -396,14 +411,14 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>-->
-                    <DockPanel Margin="10 0" LastChildFill="True"  >
-                        <TextBlock x:Name="txt_baseInformation" Text="Base Infomation" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
-                        <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
-                    </DockPanel>
-                    
+                        <DockPanel Margin="10 0" LastChildFill="True"  >
+                            <TextBlock x:Name="txt_baseInformation" Text="Base Infomation" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
+                            <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
+                        </DockPanel>
+
                         <Border Grid.ColumnSpan="2"   CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                        <Grid>
-                            <TextBox x:Name="tb_code"  Text="{Binding code, Mode=OneWay}" Padding="10,5,0,0" 
+                            <Grid>
+                                <TextBox x:Name="tb_code"  Text="{Binding code, Mode=OneWay}" Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="code..."  
                                      Foreground="#4E4E4E"  
@@ -412,14 +427,14 @@
                                      Height="40"   Margin="4,0"  
                                      PreviewKeyDown="Spaces_PreviewKeyDown" PreviewTextInput="Code_PreviewTextInput"
                                  LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
-                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_code"
+                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_code"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                              Data="{StaticResource infoCircle}">
-                            </Path>
-                        </Grid>
+                                </Path>
+                            </Grid>
 
-                    </Border>
+                        </Border>
 
                         <Border Grid.Row="1" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid>
@@ -440,7 +455,7 @@
                         </Border>
                         <Border Grid.Row="3" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid   >
-                            <ComboBox x:Name="cb_parentId" SelectedValue="{Binding parentId, Mode=OneWay}"
+                                <ComboBox x:Name="cb_parentId" SelectedValue="{Binding parentId, Mode=OneWay}"
                                       TextBlock.Foreground="#4E4E4E"
                                          Margin="4,0"
                                       materialDesign:HintAssist.Hint="Parent Branch..."    
@@ -452,7 +467,7 @@
                                       FontFamily="{StaticResource Font-cairo-light}"   
                                       Grid.Row="3"  LostFocus="validateEmpty_LostFocus" />
 
-                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,20,5" x:Name="p_error_parentId"
+                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,20,5" x:Name="p_error_parentId"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                              Data="{StaticResource infoCircle}">
@@ -462,32 +477,32 @@
 
 
 
-                    <DockPanel Margin="10 0" LastChildFill="True" Grid.Row="4">
-                        <TextBlock  Text="Contact Information"   x:Name="txt_contactInformation"
+                        <DockPanel Margin="10 0" LastChildFill="True" Grid.Row="4">
+                            <TextBlock  Text="Contact Information"   x:Name="txt_contactInformation"
                                   Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
-                        <Separator Background="{StaticResource MainColor}"    Margin="5,0,5,0"
+                            <Separator Background="{StaticResource MainColor}"    Margin="5,0,5,0"
                                       Grid.Column="1" VerticalAlignment="Center" />
 
-                    </DockPanel>
-                    <!--#region  Phone-->
-                    <Grid  Grid.Row="5"  >
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                            <Grid   >
-                                <ComboBox   x:Name="cb_areaMobile" Padding="10,0,5,0" 
+                        </DockPanel>
+                        <!--#region  Phone-->
+                        <Grid  Grid.Row="5"  >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Row="1" Grid.Column="0" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                <Grid   >
+                                    <ComboBox   x:Name="cb_areaMobile" Padding="10,0,5,0" 
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
                                           TextBlock.Foreground="#4E4E4E"  TextBlock.FontSize="12" Margin="4,0"
                                           VerticalAlignment="Center" BorderThickness="0"
                                           Height="40" Width="60"    />
-                            </Grid>
-                        </Border>
+                                </Grid>
+                            </Border>
 
-                        <Border Grid.Row="1" Grid.Column="1" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                            <Grid   >
-                                <TextBox Margin="4,0" x:Name="tb_mobile"  
+                            <Border Grid.Row="1" Grid.Column="1" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                <Grid   >
+                                    <TextBox Margin="4,0" x:Name="tb_mobile"  
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
                                          Text="{Binding mobile, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
                                          materialDesign:HintAssist.Hint="Mobile..."   Foreground="#4E4E4E"
@@ -495,63 +510,63 @@
                                          materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" 
                                         Tag="int"  PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
                                           LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
-                                <Path Fill="#E81123" Stretch="Fill"    x:Name="p_error_mobile" 
+                                    <Path Fill="#E81123" Stretch="Fill"    x:Name="p_error_mobile" 
                                       HorizontalAlignment="Right" Visibility="Collapsed"   VerticalAlignment="Center" 
                                       Width="15"  Height="15" Margin="5,5,15,5" 
                                       Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17L11,17 L11,15 L13,15 L13,17 Z">
-                                </Path>
-                            </Grid>
-                        </Border>
+                                    </Path>
+                                </Grid>
+                            </Border>
 
-                    </Grid>
-                    <Grid   Grid.Column="1" Grid.Row="6" >
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Border Grid.Row="1" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                            <Grid   >
-                                <ComboBox x:Name="cb_areaPhone" Padding="10,0,5,0" TextBlock.Foreground="#4E4E4E"
+                        </Grid>
+                        <Grid   Grid.Column="1" Grid.Row="6" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Row="1" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                <Grid   >
+                                    <ComboBox x:Name="cb_areaPhone" Padding="10,0,5,0" TextBlock.Foreground="#4E4E4E"
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
                                       
                        Height="40" Margin="4,0"   Width="60"   BorderThickness="0" 
                                       SelectionChanged="Cb_areaPhone_SelectionChanged"/>
-                            </Grid>
-                        </Border>
+                                </Grid>
+                            </Border>
 
-                        <Border Visibility="Collapsed" x:Name="brd_areaPhoneLocal" Grid.Row="1" Grid.Column="1" 
+                            <Border Visibility="Collapsed" x:Name="brd_areaPhoneLocal" Grid.Row="1" Grid.Column="1" 
                                 CornerRadius="10" Margin="5,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                            <Grid>
-                                <ComboBox  x:Name="cb_areaPhoneLocal" Padding="10,0,5,0"
+                                <Grid>
+                                    <ComboBox  x:Name="cb_areaPhoneLocal" Padding="10,0,5,0"
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
                                  
                         TextBlock.Foreground="#4E4E4E" Margin="4,0"
                          Height="40" Width="60"    BorderThickness="0"   />
-                            </Grid>
-                        </Border>
+                                </Grid>
+                            </Border>
 
-                        <Border Grid.Row="1" Grid.Column="2" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                            <Grid   >
-                                <TextBox x:Name="tb_phone"  Text="{Binding phone, Mode=OneWay}"   Padding="10,0,5,0" 
+                            <Border Grid.Row="1" Grid.Column="2" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                <Grid   >
+                                    <TextBox x:Name="tb_phone"  Text="{Binding phone, Mode=OneWay}"   Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                      BorderThickness="0" materialDesign:HintAssist.Hint="Phone..."    
                            Foreground="#4E4E4E"   materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                      MaxLength="9"    Height="40"   Margin="4,0" 
                                      Tag="decimal"     PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"/>
-                                <Path Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
+                                    <Path Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right"    Visibility="Collapsed"  
                          VerticalAlignment="Center" Width="15"  Height="15"
                              Data="{StaticResource infoCircle}">
-                                </Path>
-                            </Grid>
-                        </Border>
+                                    </Path>
+                                </Grid>
+                            </Border>
 
-                    </Grid>
-                    <!--#endregion-->
-                    <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                        <Grid   >
-                            <TextBox x:Name="tb_email"  Text="{Binding email, Mode=OneWay}" Padding="10,0,5,0" 
+                        </Grid>
+                        <!--#endregion-->
+                        <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Grid   >
+                                <TextBox x:Name="tb_email"  Text="{Binding email, Mode=OneWay}" Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="email..."  
                                      Foreground="#4E4E4E"  
@@ -559,16 +574,16 @@
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"  Margin="4,0" 
                                      LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
-                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_email" 
+                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_email" 
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                              Data="{StaticResource infoCircle}">
-                            </Path>
-                        </Grid>
-                    </Border>
-                    <Border Grid.Row="9" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                        <Grid   >
-                            <TextBox  x:Name="tb_address" Text="{Binding address, Mode=OneWay}"
+                                </Path>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="9" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Grid   >
+                                <TextBox  x:Name="tb_address" Text="{Binding address, Mode=OneWay}"
                                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                   Padding="10,0,5,0"  
                                  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
@@ -576,23 +591,23 @@
                                   Foreground="#4E4E4E"
                                  Margin="4,0"  BorderThickness="0"
                             Grid.Column="1"  Height="70" TextWrapping="Wrap"/>
-                            <Path Fill="#E81123" Grid.Row="8" Stretch="Fill" Margin="5,5,15,5"
+                                <Path Fill="#E81123" Grid.Row="8" Stretch="Fill" Margin="5,5,15,5"
                                   HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                              VerticalAlignment="Center" Width="15"  Height="15"
                                  Data="{StaticResource infoCircle}">
-                            </Path>
+                                </Path>
 
-                        </Grid>
-                    </Border>
-                    <DockPanel Margin="10 0" LastChildFill="True" Grid.Row="2">
-                        <TextBlock  Text="More Information"   x:Name="txt_contentInformatin" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
-                        <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
-                    </DockPanel>
+                            </Grid>
+                        </Border>
+                        <DockPanel Margin="10 0" LastChildFill="True" Grid.Row="2">
+                            <TextBlock  Text="More Information"   x:Name="txt_contentInformatin" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
+                            <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
+                        </DockPanel>
 
 
-                    <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                        <Grid   >
-                            <TextBox  x:Name="tb_notes" Text="{Binding notes, Mode=OneWay}"
+                        <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Grid   >
+                                <TextBox  x:Name="tb_notes" Text="{Binding notes, Mode=OneWay}"
                                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                   Padding="10,0,5,0"  
                                  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
@@ -600,107 +615,107 @@
                                   Foreground="#4E4E4E"
                                  Margin="4,0"  BorderThickness="0"
                             Grid.Column="1"  Height="70" TextWrapping="Wrap"/>
-                        </Grid>
-                    </Border>
+                            </Grid>
+                        </Border>
 
 
-                    <!--</Grid>-->
-                </StackPanel>
-            </ScrollViewer>
+                        <!--</Grid>-->
+                    </StackPanel>
+                </ScrollViewer>
 
-            <Border Grid.Row="3" Background="White" CornerRadius="0 0 7 7">
-                <Grid  Grid.Row="3" Margin="5,5,5,10" >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border Background="White" Grid.ColumnSpan="3"  Height="1"  BorderBrush="{StaticResource MainColor}" 
+                <Border Grid.Row="3" Background="White" CornerRadius="0 0 7 7">
+                    <Grid  Grid.Row="3" Margin="5,5,5,10" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Background="White" Grid.ColumnSpan="3"  Height="1"  BorderBrush="{StaticResource MainColor}" 
                     BorderThickness="1" Opacity="1" Margin="5,5,5,5"  />
-                    <Border Grid.Row="1" Grid.ColumnSpan="3">
+                        <Border Grid.Row="1" Grid.ColumnSpan="3">
 
-                        <Button x:Name="btn_stores"   Content="Stores/Branch" materialDesign:ButtonAssist.CornerRadius="7"
+                            <Button x:Name="btn_stores"   Content="Stores/Branch" materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                     Margin="1,1" Click="Btn_stores_Click" Foreground="White" />
-                    </Border>
-                    <Border Grid.Row="2">
+                        </Border>
+                        <Border Grid.Row="2">
 
-                        <Button x:Name="btn_add"  materialDesign:ButtonAssist.CornerRadius="7"
+                            <Button x:Name="btn_add"  materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                     Margin="1,1" Click="Btn_add_Click" Foreground="White" >
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <materialDesign:PackIcon Name="txt_add_Icon" Kind="PlusThick" Foreground="White" VerticalAlignment="Center" Width="15"  Height="15" Margin="0,1,2,0">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <materialDesign:PackIcon Name="txt_add_Icon" Kind="PlusThick" Foreground="White" VerticalAlignment="Center" Width="15"  Height="15" Margin="0,1,2,0">
 
-                                </materialDesign:PackIcon>
-                                <TextBlock Visibility="Collapsed" Name="txt_addButton" Text="Add" Foreground="White" VerticalAlignment="Center">
+                                    </materialDesign:PackIcon>
+                                    <TextBlock Visibility="Collapsed" Name="txt_addButton" Text="Add" Foreground="White" VerticalAlignment="Center">
 
-                                </TextBlock>
+                                    </TextBlock>
 
-                            </StackPanel>
-                        </Button>
-                        <Border.ToolTip>
-                            <ToolTip x:Name="tt_add_Button" Content="Add"
+                                </StackPanel>
+                            </Button>
+                            <Border.ToolTip>
+                                <ToolTip x:Name="tt_add_Button" Content="Add"
                                     Placement="left" 
                                     HorizontalOffset="15"
                                     PlacementRectangle="50,0,0,0"
                                     VerticalOffset="30"/>
-                        </Border.ToolTip>
-                    </Border>
-                    <Border Grid.Row="2" Grid.Column="1">
-                        <Button x:Name="btn_update"   materialDesign:ButtonAssist.CornerRadius="7"
+                            </Border.ToolTip>
+                        </Border>
+                        <Border Grid.Row="2" Grid.Column="1">
+                            <Button x:Name="btn_update"   materialDesign:ButtonAssist.CornerRadius="7"
                         Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                    Margin="1,1"  Click="Btn_update_Click" >
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <materialDesign:PackIcon Name="txt_update_Icon" Foreground="White" Kind="Edit" VerticalAlignment="Center" Width="15" Height="15" Margin="0,1,2,0">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <materialDesign:PackIcon Name="txt_update_Icon" Foreground="White" Kind="Edit" VerticalAlignment="Center" Width="15" Height="15" Margin="0,1,2,0">
 
-                                </materialDesign:PackIcon>
-                                <TextBlock Foreground="White" Visibility="Collapsed" Name="txt_updateButton" Text="Update" VerticalAlignment="Center">
+                                    </materialDesign:PackIcon>
+                                    <TextBlock Foreground="White" Visibility="Collapsed" Name="txt_updateButton" Text="Update" VerticalAlignment="Center">
 
-                                </TextBlock>
+                                    </TextBlock>
 
-                            </StackPanel>
-                        </Button>
-                        <Border.ToolTip>
+                                </StackPanel>
+                            </Button>
+                            <Border.ToolTip>
 
-                            <ToolTip x:Name="tt_update_Button" Content="Update"
+                                <ToolTip x:Name="tt_update_Button" Content="Update"
                                     Placement="left" 
                                     HorizontalOffset="15"
                                     PlacementRectangle="50,0,0,0"
                                     VerticalOffset="30"/>
 
-                        </Border.ToolTip>
-                    </Border>
-                    <Border Grid.Row="2" Grid.Column="2">
-                        <Button x:Name="btn_delete"  materialDesign:ButtonAssist.CornerRadius="7"
+                            </Border.ToolTip>
+                        </Border>
+                        <Border Grid.Row="2" Grid.Column="2">
+                            <Button x:Name="btn_delete"  materialDesign:ButtonAssist.CornerRadius="7"
                         Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" Foreground="White"
                     Margin="1,1"  Click="Btn_delete_Click" >
-                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
-                                <materialDesign:PackIcon Name="txt_delete_Icon" Kind="Delete" Foreground="White" VerticalAlignment="Center" Width="15" Height="15" Margin="0,1,2,0">
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <materialDesign:PackIcon Name="txt_delete_Icon" Kind="Delete" Foreground="White" VerticalAlignment="Center" Width="15" Height="15" Margin="0,1,2,0">
 
-                                </materialDesign:PackIcon>
-                                <TextBlock Visibility="Collapsed" Name="txt_deleteButton" Foreground="White" Width="auto" Text="Delete" VerticalAlignment="Center">
+                                    </materialDesign:PackIcon>
+                                    <TextBlock Visibility="Collapsed" Name="txt_deleteButton" Foreground="White" Width="auto" Text="Delete" VerticalAlignment="Center">
 
-                                </TextBlock>
-                            </StackPanel>
-                        </Button>
-                        <Border.ToolTip>
-                            <ToolTip x:Name="tt_delete_Button" Content="delete"
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Border.ToolTip>
+                                <ToolTip x:Name="tt_delete_Button" Content="delete"
                                     Placement="left" 
                                     HorizontalOffset="15"
                                     PlacementRectangle="50,0,0,0"
                                     VerticalOffset="30"/>
-                        </Border.ToolTip>
-                    </Border>
-                </Grid>
+                            </Border.ToolTip>
+                        </Border>
+                    </Grid>
 
-            </Border>
+                </Border>
 
-        </Grid>
+            </Grid>
 
         </Border>
 

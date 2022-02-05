@@ -3043,4 +3043,7 @@
   <data name="trSalesOrdersEmailTemplate" xml:space="preserve">
     <value>قالب بريد طلبات المبيعات</value>
   </data>
+  <data name="trCoupons" xml:space="preserve">
+    <value>الكوبونات</value>
+  </data>
 </root>

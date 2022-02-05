@@ -72,13 +72,13 @@
                                    HorizontalAlignment="Left" VerticalAlignment="Center"
                                    FontSize="12"/>
                 <ToggleButton Grid.Column="4" Background="{StaticResource MainColor}"   x:Name="tgl_isActive"   Checked="Tgl_isActive_Checked" Unchecked="Tgl_isActive_Unchecked"
-                             VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="True" 
-                                          Margin="0" Height="13" Width="28" />
+                              VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="True" 
+                              Margin="0" Height="13" Width="28" />
                 <Button   FlowDirection="LeftToRight"  Width="40" Height="40" x:Name="btn_refresh" Click="Btn_refresh_Click" Grid.Row="0" Grid.Column="5" Padding="0" 
-                            materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
+                          materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
                           Background="{x:Null}" BorderBrush="{x:Null}"   Style="{StaticResource SmallButtonCircleRotate}"
-                               RenderTransformOrigin="0.5,0.5"
-                            DataContext="M896,0L896,0C401.2,0,0,401.2,0,896v0c0,494.8,401.2,896,896,896h0c494.8,0,896-401.2,896-896v0C1792,401.2,1390.8,0,896,0z
+                          RenderTransformOrigin="0.5,0.5"
+                          DataContext="M896,0L896,0C401.2,0,0,401.2,0,896v0c0,494.8,401.2,896,896,896h0c494.8,0,896-401.2,896-896v0C1792,401.2,1390.8,0,896,0z
 	 M1451.3,1021c-31.9,133.7-98.8,242.1-200.6,325.2c-101.8,83.1-221,124.6-357.7,124.6c-72.8,0-143.3-13.7-211.4-41.2
 	s-128.8-66.6-182.2-117.5l-96.5,96.5c-9.5,9.5-20.7,14.2-33.7,14.2s-24.2-4.7-33.7-14.2c-9.5-9.5-14.2-20.7-14.2-33.7v-335.3
 	c0-13,4.7-24.2,14.2-33.7s20.7-14.2,33.7-14.2h335.3c13,0,24.2,4.7,33.7,14.2c9.5,9.5,14.2,20.7,14.2,33.7c0,13-4.7,24.2-14.2,33.7
@@ -207,11 +207,9 @@
                         <StackPanel  Orientation="Horizontal" >
 
                             <Button x:Name="btn_pdf"   Background="{x:Null}"   Margin="10,0,5,0"
-                          Padding="0" Height="35" 
-                          BorderBrush="{x:Null}"   >
+                                    Padding="0" Height="35"  BorderBrush="{x:Null}" Click="Btn_pdf_Click"   >
                                 <materialDesign:PackIcon Foreground="#D20A0A" Kind="FilePdf"  
-                                
-                          Width="22" Height="22">
+                                                         Width="22" Height="22">
                                     <materialDesign:PackIcon.ToolTip>
                                         <ToolTip x:Name="tt_report" Content="Report"
                                               Placement="left" 
@@ -222,8 +220,8 @@
                                 </materialDesign:PackIcon>
                             </Button>
                             <Button   Background="{x:Null}"    Margin="5,0,5,0"
-                          Padding="0" Height="35"  x:Name="btn_print"
-                          BorderBrush="{x:Null}"   >
+                                      Padding="0" Height="35"  x:Name="btn_print"
+                                      BorderBrush="{x:Null}" Click="Btn_print_Click"   >
                                 <materialDesign:PackIcon Foreground="#313131" Kind="Printer"  
                               HorizontalAlignment="Center" 
                       Width="22" Height="22">
@@ -237,8 +235,8 @@
                                 </materialDesign:PackIcon>
                             </Button>
                             <Button FlowDirection="LeftToRight"   Background="{x:Null}"    Grid.Column="2" Margin="2.5,0,2.5,0" 
-                            Padding="0" Height="20" Width="25"   x:Name="btn_pieChart"   
-                                       BorderBrush="{x:Null}"  >
+                                    Padding="0" Height="20" Width="25"   x:Name="btn_pieChart"   
+                                    BorderBrush="{x:Null}" Click="Btn_pieChart_Click"  >
                                 <Grid Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Path Width="8.8" Height="9.6" Stretch="Fill" Data="M27.7,8.3l-10.2,7.8l9.1,9.1c2.1-2.5,3.4-5.7,3.4-9.2C30,13.1,29.1,10.5,27.7,8.3z" Fill="#DD191B"
                               RenderTransformOrigin="5,5" >
@@ -282,8 +280,8 @@
                                 </Grid>
                             </Button>
                             <Button   Background="{x:Null}"    Grid.Column="3" Margin="5,0,5,0" 
-                            Padding="0" Height="35"   x:Name="btn_exportToExcel"   
-                                       BorderBrush="{x:Null}">
+                                      Padding="0" Height="35"   x:Name="btn_exportToExcel"   
+                                      BorderBrush="{x:Null}" Click="Btn_exportToExcel_Click" >
                                 <Path Fill="#378500" Stretch="Fill"
                           Width="20" Height="20" 
                            FlowDirection="LeftToRight" Data="M25.162,3H16v2.984h3.031v2.031H16V10h3v2h-3v2h3v2h-3v2h3v2h-3v3h9.162   C25.623,23,26,22.609,26,22.13V3.87C26,3.391,25.623,3,25.162,3z M24,20h-4v-2h4V20z M24,16h-4v-2h4V16z M24,12h-4v-2h4V12z M24,8   h-4V6h4V8z 
@@ -299,8 +297,8 @@
                                 </Path>
                             </Button>
                             <Button   Background="{x:Null}"    Grid.Column="3" Margin="0,1,5,-2" 
-                            Padding="0" Height="Auto"   x:Name="btn_preview"   
-                                       BorderBrush="{x:Null}">
+                                      Padding="0" Height="Auto"   x:Name="btn_preview"   
+                                      BorderBrush="{x:Null}" Click="Btn_preview_Click" >
                                 <Grid FlowDirection="LeftToRight">
                                     <Path Fill="#4E4E4E" Stretch="Fill"
                           Width="15" Height="18" 
@@ -463,11 +461,11 @@
                             <TextBox x:Name="tb_name"  Text="{Binding name, Mode=OneWay}" Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="name..."  
-                                     Foreground="#4E4E4E"  
+                                      Foreground="#4E4E4E"  
                                       MaxLength="50" BorderThickness="0"
-                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"   Margin="4,0"  
-                                 LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
+                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                      Height="40"   Margin="4,0"  
+                                      LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_name"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
@@ -514,14 +512,14 @@
                         <Border Grid.Row="8" Grid.Column="1" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid   >
                                 <ComboBox x:Name="cb_discountType"    SelectedValue="{Binding discountType, Mode=OneWay}"
-                                  Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
-                                  materialDesign:HintAssist.Hint="type..."  
-                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                   Grid.Column="0" Height="40"  Margin="4,0"
-                                  BorderBrush="#737373" BorderThickness="0"  />
+                                          Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
+                                          materialDesign:HintAssist.Hint="type..."  
+                                          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                          Grid.Column="0" Height="40"  Margin="4,0"
+                                          BorderBrush="#737373" BorderThickness="0"  />
                                 <Path Fill="#E81123" x:Name="p_error_discountType" Stretch="Fill" Margin="5,5,15,5"
-                              HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15" 
+                                      HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
+                                      VerticalAlignment="Center" Width="15"  Height="15" 
                              Data="{StaticResource infoCircle}"/>
 
                             </Grid>
@@ -662,8 +660,8 @@
                     <Border Grid.Row="1" Grid.ColumnSpan="3">
                         <Button x:Name="btn_items"     Content="items"
                                 materialDesign:ButtonAssist.CornerRadius="7"
-                          Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
-                    Margin="1,1"   Foreground="White" />
+                                Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                                Margin="1,1"   Foreground="White" Click="Btn_items_Click" />
                     </Border>
 
                     <Border Grid.Row="2">
@@ -715,8 +713,8 @@
                     </Border>
                     <Border Grid.Row="2" Grid.Column="2">
                         <Button x:Name="btn_delete"  materialDesign:ButtonAssist.CornerRadius="7"
-                        Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" Foreground="White"
-                    Margin="1,1"  Click="Btn_delete_Click" >
+                                Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" Foreground="White"
+                                Margin="1,1"  Click="Btn_delete_Click" >
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
                                 <materialDesign:PackIcon Name="txt_delete_Icon" Kind="Delete" Foreground="White" VerticalAlignment="Center" Width="15" Height="15" Margin="0,1,2,0">
 

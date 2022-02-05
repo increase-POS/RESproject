@@ -107,7 +107,10 @@ namespace Restaurant.View.sectionData.branchesAndStores
                 try
                 {
                     HelpClass.StartAwait(grid_main);
+
                     requiredControlList = new List<string> { "code","name", "parentId", "mobile" };
+
+                    #region translate
                     if (MainWindow.lang.Equals("en"))
                     {
                         MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
@@ -119,13 +122,14 @@ namespace Restaurant.View.sectionData.branchesAndStores
                         grid_main.FlowDirection = FlowDirection.RightToLeft;
                     }
                     translate();
+                    #endregion
 
-                await FillCombo.fillComboBranchParent(cb_parentId);
-                await FillCombo.fillCountries(cb_areaMobile);
-                await FillCombo.fillCountries(cb_areaPhone);
-                btn_stores.IsEnabled = false;
+                    await FillCombo.fillComboBranchParent(cb_parentId);
+                    await FillCombo.fillCountries(cb_areaMobile);
+                    await FillCombo.fillCountries(cb_areaPhone);
+                    btn_stores.IsEnabled = false;
 
-                Keyboard.Focus(tb_code);
+                    Keyboard.Focus(tb_code);
                      await Search();
                     Clear();
                     HelpClass.EndAwait(grid_main);
@@ -160,8 +164,9 @@ namespace Restaurant.View.sectionData.branchesAndStores
 
             dg_branch.Columns[0].Header = MainWindow.resourcemanager.GetString("trCode");
             dg_branch.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
-            dg_branch.Columns[2].Header = MainWindow.resourcemanager.GetString("trAddress");
-            dg_branch.Columns[3].Header = MainWindow.resourcemanager.GetString("trNote");
+            dg_branch.Columns[2].Header = MainWindow.resourcemanager.GetString("trMobile");
+            dg_branch.Columns[3].Header = MainWindow.resourcemanager.GetString("trAddress");
+            dg_branch.Columns[4].Header = MainWindow.resourcemanager.GetString("trNote");
 
             btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
 

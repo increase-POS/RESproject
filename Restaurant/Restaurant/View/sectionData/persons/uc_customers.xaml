@@ -77,10 +77,10 @@
                              VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="True" 
                                           Margin="0" Height="13" Width="28" />
                 <Button   FlowDirection="LeftToRight"  Width="40" Height="40" x:Name="btn_refresh" Click="Btn_refresh_Click" Grid.Row="0" Grid.Column="5" Padding="0" 
-                            materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
+                          materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
                           Background="{x:Null}" BorderBrush="{x:Null}"   Style="{StaticResource SmallButtonCircleRotate}"
-                               RenderTransformOrigin="0.5,0.5"
-                            DataContext="M896,0L896,0C401.2,0,0,401.2,0,896v0c0,494.8,401.2,896,896,896h0c494.8,0,896-401.2,896-896v0C1792,401.2,1390.8,0,896,0z
+                          RenderTransformOrigin="0.5,0.5"
+                          DataContext="M896,0L896,0C401.2,0,0,401.2,0,896v0c0,494.8,401.2,896,896,896h0c494.8,0,896-401.2,896-896v0C1792,401.2,1390.8,0,896,0z
 	 M1451.3,1021c-31.9,133.7-98.8,242.1-200.6,325.2c-101.8,83.1-221,124.6-357.7,124.6c-72.8,0-143.3-13.7-211.4-41.2
 	s-128.8-66.6-182.2-117.5l-96.5,96.5c-9.5,9.5-20.7,14.2-33.7,14.2s-24.2-4.7-33.7-14.2c-9.5-9.5-14.2-20.7-14.2-33.7v-335.3
 	c0-13,4.7-24.2,14.2-33.7s20.7-14.2,33.7-14.2h335.3c13,0,24.2,4.7,33.7,14.2c9.5,9.5,14.2,20.7,14.2,33.7c0,13-4.7,24.2-14.2,33.7
@@ -765,8 +765,8 @@
                     <Border Grid.Row="1">
 
                         <Button x:Name="btn_add"  materialDesign:ButtonAssist.CornerRadius="7"
-                          Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
-                    Margin="1,1" Click="Btn_add_Click" Foreground="White" >
+                                Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                                Margin="1,1" Click="Btn_add_Click" Foreground="White" >
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <materialDesign:PackIcon Name="txt_add_Icon" Kind="PlusThick" Foreground="White" VerticalAlignment="Center" Width="15"  Height="15" Margin="0,1,2,0">
 

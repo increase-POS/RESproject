@@ -1,12 +1,17 @@
-﻿using netoaster;
+﻿using Microsoft.Reporting.WinForms;
+using Microsoft.Win32;
+using netoaster;
 using Restaurant.Classes;
+using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -81,11 +86,17 @@ namespace Restaurant.View.sales.promotion
         }
 
         string basicsPermission = "offer_basics";
+        string itemsPermission = "offer_items";
+
+        ItemUnit itemUnitsModel = new ItemUnit();
+        IEnumerable<ItemUnit> itemUnits;
         Offer offer = new Offer();
         IEnumerable<Offer> offersQuery;
         IEnumerable<Offer> offers;
         byte tgl_offerState;
+
         string searchText = "";
+
         public static List<string> requiredControlList;
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -98,7 +109,7 @@ namespace Restaurant.View.sales.promotion
             {
                 HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "code" , "name", "discounttype" , "discountValue" , "startDate" , "endDate"};
+                requiredControlList = new List<string> { "code" , "name", "discountType" , "discountValue" , "startDate" , "endDate"};
 
                 FillCombo.fillDiscountType(cb_discountType);
 
@@ -116,18 +127,16 @@ namespace Restaurant.View.sales.promotion
                 translate();
                 #endregion
 
-                /*
-                Keyboard.Focus(tb_code);
-                await RefreshCustomersList();
-                */
                 await Search();
 
+                //Keyboard.Focus(tb_code);
+
                 Clear();
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -192,8 +201,7 @@ namespace Restaurant.View.sales.promotion
                 {
                     HelpClass.StartAwait(grid_main);
 
-                    offer = new Offer();
-
+                    #region validate
                     bool isCodeExist = await HelpClass.isCodeExist(tb_code.Text ,"","Offer" , 0);
 
                     bool isEndDateSmaller = false;
@@ -201,29 +209,62 @@ namespace Restaurant.View.sales.promotion
 
                     if (HelpClass.validate(requiredControlList, this))
                     {
-                        //if ((isCodeExist) || (isEndDateSmaller))
-                        //{
-                        //    if (isCodeExist)
-                        //        SectionData.showTextBoxValidate(tb_code, p_errorCode, tt_errorCode, "trDuplicateCodeToolTip");
+                        if ((isCodeExist) || (isEndDateSmaller))
+                        {
+                            if (isCodeExist)
+                                HelpClass.SetValidate(p_error_code, "trDuplicateCodeToolTip");
 
-                        //    if (isEndDateSmaller)
-                        //    {
-                        //        SectionData.showDatePickerValidate(dp_startDate, p_errorStartDate, tt_errorStartDate, "trErrorEndDateSmallerToolTip");
-                        //        SectionData.showDatePickerValidate(dp_endDate, p_errorEndDate, tt_errorEndDate, "trErrorEndDateSmallerToolTip");
-                        //    }
-                        //}
+                            if (isEndDateSmaller)
+                            {
+                                HelpClass.SetValidate(p_error_startDate, "trErrorEndDateSmallerToolTip");
+                                HelpClass.SetValidate(p_error_endDate, "trErrorEndDateSmallerToolTip");
+                            }
+                        }
+                        #endregion
+
+                        else
+                        {
+                            #region add
+                            string startDateStr = dp_startDate.SelectedDate.Value.ToShortDateString();
+                            string startTimeStr = "00:00 AM";
+                            if (tp_startTime.Text != null)
+                                startTimeStr = tp_startTime.SelectedTime.Value.ToShortTimeString();
+                            DateTime startDateTime = DateTime.Parse(startDateStr + " " + startTimeStr);
+
+                            string endDateStr = dp_endDate.SelectedDate.Value.ToShortDateString();
+                            string endTimeStr = "00:00 AM";
+                            if (tp_endTime.Text != null)
+                                endTimeStr = tp_endTime.SelectedTime.Value.ToShortTimeString();
+                            DateTime endDateTime = DateTime.Parse(endDateStr + " " + endTimeStr);
+
+                            offer = new Offer();
+
                             offer.name = tb_name.Text;
-                        offer.code = tb_code.Text;
-                        offer.isActive = Convert.ToByte(tgl_isActiveOffer.IsChecked);
-                        offer.discountType = Convert.ToString(cb_discountType.SelectedValue);
-                        offer.discountValue = decimal.Parse(tb_discountValue.Text);
-                        if (dp_startDate.SelectedDate != null)
-                            offer.startDate = DateTime.Parse(dp_startDate.Text);
-                        if (dp_endDate.SelectedDate != null)
-                            offer.endDate = DateTime.Parse(dp_endDate.Text);
-                        offer.createUserId = MainWindow.userLogin.userId;
-                        offer.notes = tb_notes.Text;
-                   
+                            offer.code = tb_code.Text;
+                            offer.isActive = Convert.ToByte(tgl_isActiveOffer.IsChecked);
+                            offer.discountType = Convert.ToString(cb_discountType.SelectedValue);
+                            offer.discountValue = decimal.Parse(tb_discountValue.Text);
+                            if (dp_startDate.SelectedDate != null)
+                                offer.startDate = startDateTime;
+                            if (dp_endDate.SelectedDate != null)
+                                offer.endDate = endDateTime;
+                            offer.createUserId = MainWindow.userLogin.userId;
+                            offer.notes = tb_notes.Text;
+
+                            int s = await offer.save(offer);
+
+                            if (s > 0)
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                Clear();
+
+                                await RefreshOffersList();
+                                await Search();
+                            }
+                            else
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            #endregion
+                        }
                     }
                     HelpClass.EndAwait(grid_main);
                 }
@@ -245,10 +286,68 @@ namespace Restaurant.View.sales.promotion
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update"))
                 {
                     HelpClass.StartAwait(grid_main);
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+
+                    #region validate
+                    bool isCodeExist = await HelpClass.isCodeExist(tb_code.Text, "", "Offer", offer.offerId);
+
+                    bool isEndDateSmaller = false;
+                    if (dp_endDate.SelectedDate < dp_startDate.SelectedDate) isEndDateSmaller = true;
+
+                    if (HelpClass.validate(requiredControlList, this))
                     {
+                        if ((isCodeExist) || (isEndDateSmaller))
+                        {
+                            if (isCodeExist)
+                                HelpClass.SetValidate(p_error_code, "trDuplicateCodeToolTip");
 
+                            if (isEndDateSmaller)
+                            {
+                                HelpClass.SetValidate(p_error_startDate, "trErrorEndDateSmallerToolTip");
+                                HelpClass.SetValidate(p_error_endDate, "trErrorEndDateSmallerToolTip");
+                            }
+                        }
+                        #endregion
 
+                        else
+                        {
+                            #region update
+                            string startDateStr = dp_startDate.SelectedDate.Value.ToShortDateString();
+                            string startTimeStr = "00:00 AM";
+                            if (tp_startTime.Text != null)
+                                startTimeStr = tp_startTime.SelectedTime.Value.ToShortTimeString();
+                            DateTime startDateTime = DateTime.Parse(startDateStr + " " + startTimeStr);
+
+                            string endDateStr = dp_endDate.SelectedDate.Value.ToShortDateString();
+                            string endTimeStr = "00:00 AM";
+                            if (tp_endTime.Text != null)
+                                endTimeStr = tp_endTime.SelectedTime.Value.ToShortTimeString();
+                            DateTime endDateTime = DateTime.Parse(endDateStr + " " + endTimeStr);
+
+                            offer.name = tb_name.Text;
+                            offer.code = tb_code.Text;
+                            offer.isActive = Convert.ToByte(tgl_isActiveOffer.IsChecked);
+                            offer.discountType = Convert.ToString(cb_discountType.SelectedValue);
+                            offer.discountValue = decimal.Parse(tb_discountValue.Text);
+                            if (dp_startDate.SelectedDate != null)
+                                offer.startDate = startDateTime;
+                            if (dp_endDate.SelectedDate != null)
+                                offer.endDate = endDateTime;
+                            offer.createUserId = MainWindow.userLogin.userId;
+                            offer.notes = tb_notes.Text;
+
+                            int s = await offer.save(offer);
+
+                            if (s > 0)
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+
+                                await RefreshOffersList();
+                                await Search();
+                            }
+                            else
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            #endregion
+                        }
                     }
                     HelpClass.EndAwait(grid_main);
                 }
@@ -263,14 +362,13 @@ namespace Restaurant.View.sales.promotion
             }
         }
         private async void Btn_delete_Click(object sender, RoutedEventArgs e)
-        {
-            /*
+        {//delete
             try
-            {//delete
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") )
+            {
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete"))
                 {
                     HelpClass.StartAwait(grid_main);
-                    if (offer.cId != 0)
+                    if (offer.offerId != 0)
                     {
                         if ((!offer.canDelete) && (offer.isActive == 0))
                         {
@@ -302,14 +400,14 @@ namespace Restaurant.View.sales.promotion
                                 if (offer.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
                                 if ((!offer.canDelete) && (offer.isActive == 1)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
 
-                                int s = await offer.delete(offer.cId, MainWindow.userLogin.userId, offer.canDelete);
+                                int s = await offer.delete(offer.offerId, MainWindow.userLogin.userId, offer.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
-                                    await RefreshCustomersList();
+                                    await RefreshOffersList();
                                     await Search();
                                     Clear();
                                 }
@@ -327,9 +425,45 @@ namespace Restaurant.View.sales.promotion
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
-        /*
+
+        private async void Btn_items_Click(object sender, RoutedEventArgs e)
+        {//items
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+               
+                if (MainWindow.groupObject.HasPermissionAction(itemsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                {
+                    //HelpClass.clearValidate(tb_code, p_errorCode);
+
+                    itemUnits = await itemUnitsModel.Getall();
+
+                    Window.GetWindow(this).Opacity = 0.2;
+
+                    wd_itemsOfferList w = new wd_itemsOfferList();
+
+                    w.offerId = offer.offerId;
+                    w.ShowDialog();
+                    if (w.isActive)
+                    {
+
+                    }
+
+                    Window.GetWindow(this).Opacity = 1;
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
         private async Task activate()
         {//activate
             offer.isActive = 1;
@@ -339,11 +473,11 @@ namespace Restaurant.View.sales.promotion
             else
             {
                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
-                await RefreshCustomersList();
+                await RefreshOffersList();
                 await Search();
             }
         }
-        */
+
         #endregion
 
         #region events
@@ -351,11 +485,11 @@ namespace Restaurant.View.sales.promotion
         {
             try
             {
-                /*
                 HelpClass.StartAwait(grid_main);
+
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
@@ -367,14 +501,15 @@ namespace Restaurant.View.sales.promotion
         {
             try
             {
-                /*
                 HelpClass.StartAwait(grid_main);
+
                 if (offers is null)
-                    await RefreshCustomersList();
+                    await RefreshOffersList();
+
                 tgl_offerState = 1;
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
@@ -386,14 +521,15 @@ namespace Restaurant.View.sales.promotion
         {
             try
             {
-                /*
                 HelpClass.StartAwait(grid_main);
+
                 if (offers is null)
-                    await RefreshCustomersList();
+                    await RefreshOffersList();
+
                 tgl_offerState = 0;
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
@@ -452,19 +588,20 @@ namespace Restaurant.View.sales.promotion
             }
         }
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
+        {//refresh
             try
-            {//refresh
-                /*
+            {
                 HelpClass.StartAwait(grid_main);
-                await RefreshCustomersList();
+
+                searchText = "";
+                tb_search.Text = "";
+                await RefreshOffersList();
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -477,21 +614,26 @@ namespace Restaurant.View.sales.promotion
         {
             //search
             if (offers is null)
-                await RefreshCustomersList();
+                await RefreshOffersList();
+
             searchText = tb_search.Text.ToLower();
-            offersQuery = offers;
-            //    .Where(s => (s.code.ToLower().Contains(searchText) ||
-            //s.name.ToLower().Contains(searchText) ||
-            //s.mobile.ToLower().Contains(searchText)
-            //) && s.isActive == tgl_offerState);
-            RefreshCustomersView();
+           
+            offersQuery = offers.Where(s => (
+            s.code.ToLower().Contains(searchText) 
+            ||
+            s.name.ToLower().Contains(searchText)
+            ) 
+            && 
+            s.isActive == tgl_offerState);
+
+            RefreshOffersView();
         }
-        async Task<IEnumerable<Offer>> RefreshCustomersList()
+        async Task<IEnumerable<Offer>> RefreshOffersList()
         {
             offers = await offer.Get();
             return offers;
         }
-        void RefreshCustomersView()
+        void RefreshOffersView()
         {
             dg_offer.ItemsSource = offersQuery;
             txt_count.Text = offersQuery.Count().ToString();
@@ -502,20 +644,17 @@ namespace Restaurant.View.sales.promotion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            this.DataContext = new Offer();
-
-            // last 
             HelpClass.clearValidate(requiredControlList, this);
+
+            this.DataContext = new Offer();
         }
+
         string input;
         decimal _decimal = 0;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
+        { //only  digits
             try
             {
-
-
-                //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
                 if (textBox.Tag.ToString() == "int")
@@ -536,10 +675,9 @@ namespace Restaurant.View.sales.promotion
             }
         }
         private void Code_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
+        {//only english and digits
             try
             {
-                //only english and digits
                 Regex regex = new Regex("^[a-zA-Z0-9. -_?]*$");
                 if (!regex.IsMatch(e.Text))
                     e.Handled = true;
@@ -586,235 +724,6 @@ namespace Restaurant.View.sales.promotion
 
         #endregion
 
-        #region report
-        /*
-        // report
-        ReportCls reportclass = new ReportCls();
-        LocalReport rep = new LocalReport();
-        SaveFileDialog saveFileDialog = new SaveFileDialog();
-        public void BuildReport()
-        {
-            List<ReportParameter> paramarr = new List<ReportParameter>();
-
-            string addpath;
-            bool isArabic = ReportCls.checkLang();
-            if (isArabic)
-            {
-                addpath = @"\Reports\Sale\Ar\PackageReport.rdlc";
-            }
-            else
-                addpath = @"\Reports\Sale\En\PackageReport.rdlc";
-            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-            ReportCls.checkLang();
-
-            clsReports.packageReport(itemsQuery, rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
-            clsReports.Header(paramarr);
-
-            rep.SetParameters(paramarr);
-
-            rep.Refresh();
-        }
-        public void pdfpackage()
-        {
-
-            BuildReport();
-
-            this.Dispatcher.Invoke(() =>
-            {
-                saveFileDialog.Filter = "PDF|*.pdf;";
-
-                if (saveFileDialog.ShowDialog() == true)
-                {
-                    string filepath = saveFileDialog.FileName;
-                    LocalReportExtensions.ExportToPDF(rep, filepath);
-                }
-            });
-        }
-        private void Btn_pdf_Click(object sender, RoutedEventArgs e)
-        {//pdf
-            try
-            {
-
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
-                {
-                    /////////////////////////////////////
-                    Thread t1 = new Thread(() =>
-                    {
-                        pdfpackage();
-                    });
-                    t1.Start();
-                    //////////////////////////////////////
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
-            }
-        }
-        public void printpackage()
-        {
-            BuildReport();
-
-            this.Dispatcher.Invoke(() =>
-            {
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
-            });
-        }
-        private void Btn_print_Click(object sender, RoutedEventArgs e)
-        {//print
-            try
-            {
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
-
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
-                {
-                    /////////////////////////////////////
-                    Thread t1 = new Thread(() =>
-                    {
-                        printpackage();
-                    });
-                    t1.Start();
-                    //////////////////////////////////////
-
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
-            }
-        }
-        private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
-        {//pie
-            try
-            {
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
-
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
-                {
-                    #region
-                    Window.GetWindow(this).Opacity = 0.2;
-                    win_lvcCatalog win = new win_lvcCatalog(itemsQuery, 3);
-                    win.ShowDialog();
-                    Window.GetWindow(this).Opacity = 1;
-                    #endregion
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
-            }
-        }
-        private void Btn_preview_Click(object sender, RoutedEventArgs e)
-        {//preview
-            try
-            {
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
-
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
-                {
-                    #region
-                    Window.GetWindow(this).Opacity = 0.2;
-                    /////////////////////
-                    string pdfpath = "";
-                    pdfpath = @"\Thumb\report\temp.pdf";
-                    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
-                    BuildReport();
-                    LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                    ///////////////////
-                    wd_previewPdf w = new wd_previewPdf();
-                    w.pdfPath = pdfpath;
-                    if (!string.IsNullOrEmpty(w.pdfPath))
-                    {
-                        w.ShowDialog();
-                        w.wb_pdfWebViewer.Dispose();
-                    }
-                    Window.GetWindow(this).Opacity = 1;
-                    #endregion
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
-            }
-        }
-        public void ExcelPackage()
-        {
-
-            BuildReport();
-
-            this.Dispatcher.Invoke(() =>
-            {
-                saveFileDialog.Filter = "EXCEL|*.xls;";
-                if (saveFileDialog.ShowDialog() == true)
-                {
-                    string filepath = saveFileDialog.FileName;
-                    LocalReportExtensions.ExportToExcel(rep, filepath);
-                }
-            });
-        }
-        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
-        {//excel
-            try
-            {
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
-
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
-                {
-                    Thread t1 = new Thread(() =>
-                    {
-                        ExcelPackage();
-
-                    });
-                    t1.Start();
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
-            }
-        }
-        */
-        #endregion
-
         #region barcode
         /*List<ItemUnit> barcodesList;
         static private int _InternalCounter = 0;
@@ -831,6 +740,8 @@ namespace Restaurant.View.sales.promotion
             return true;
         }
         */
+       
+
         private void Tb_barcode_KeyDown(object sender, KeyEventArgs e)
         {
             /*
@@ -844,7 +755,6 @@ namespace Restaurant.View.sales.promotion
                     {
                         item.barcode = "";
                         this.DataContext = item;
-
                     }
                     else
                         drawBarcode(barCode);
@@ -861,6 +771,7 @@ namespace Restaurant.View.sales.promotion
             }
             */
         }
+
         /*
         private bool isBarcodeCorrect(string barCode)
         {
@@ -958,6 +869,231 @@ namespace Restaurant.View.sales.promotion
 
         }
         */
-        #endregion        
+        #endregion
+
+        #region report
+        
+        ReportCls reportclass = new ReportCls();
+        LocalReport rep = new LocalReport();
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+        public void BuildReport()
+        {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
+                addpath = @"\Reports\Sale\Ar\PackageReport.rdlc";
+            }
+            else
+                addpath = @"\Reports\Sale\En\PackageReport.rdlc";
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+            ReportCls.checkLang();
+
+            //clsReports.packageReport(offersQuery, rep, reppath, paramarr);
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+        }
+        public void pdfpackage()
+        {
+
+            BuildReport();
+
+            this.Dispatcher.Invoke(() =>
+            {
+                saveFileDialog.Filter = "PDF|*.pdf;";
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string filepath = saveFileDialog.FileName;
+                    LocalReportExtensions.ExportToPDF(rep, filepath);
+                }
+            });
+        }
+        public void printpackage()
+        {
+            BuildReport();
+
+            this.Dispatcher.Invoke(() =>
+            {
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
+            });
+        }
+
+        public void ExcelPackage()
+        {
+
+            BuildReport();
+
+            this.Dispatcher.Invoke(() =>
+            {
+                saveFileDialog.Filter = "EXCEL|*.xls;";
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string filepath = saveFileDialog.FileName;
+                    LocalReportExtensions.ExportToExcel(rep, filepath);
+                }
+            });
+        }
+       
+        private void Btn_pdf_Click(object sender, RoutedEventArgs e)
+        {//pdf
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+                {
+                    /////////////////////////////////////
+                    Thread t1 = new Thread(() =>
+                    {
+                        pdfpackage();
+                    });
+                    t1.Start();
+                    //////////////////////////////////////
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+               
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_print_Click(object sender, RoutedEventArgs e)
+        {//print
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+                {
+                    /////////////////////////////////////
+                    Thread t1 = new Thread(() =>
+                    {
+                        printpackage();
+                    });
+                    t1.Start();
+                    //////////////////////////////////////
+
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
+        private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
+        {//pie
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
+
+            //    if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
+            //    {
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+                    win_lvcSales win = new win_lvcSales(offersQuery, 2);
+                    win.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                //HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
+        }
+
+        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
+        {//excel
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+                {
+                    Thread t1 = new Thread(() =>
+                    {
+                        ExcelPackage();
+
+                    });
+                    t1.Start();
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_preview_Click(object sender, RoutedEventArgs e)
+        {//preview
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+                {
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+                    /////////////////////
+                    string pdfpath = "";
+                    pdfpath = @"\Thumb\report\temp.pdf";
+                    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+                    BuildReport();
+                    LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                    ///////////////////
+                    wd_previewPdf w = new wd_previewPdf();
+                    w.pdfPath = pdfpath;
+                    if (!string.IsNullOrEmpty(w.pdfPath))
+                    {
+                        w.ShowDialog();
+                        w.wb_pdfWebViewer.Dispose();
+                    }
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        #endregion
+
     }
 }

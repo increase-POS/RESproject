@@ -104,10 +104,13 @@ namespace Restaurant.View.sectionData.hallDivide
         }
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
+
                 requiredControlList = new List<string> { "x", "y", "z" };
+
+                #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
@@ -119,19 +122,22 @@ namespace Restaurant.View.sectionData.hallDivide
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-
+                #endregion
 
                 Keyboard.Focus(tb_name);
-                await Search();
-                Clear();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
 
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+                await Search();
+
+                Clear();
+
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void translate()
@@ -466,13 +472,16 @@ namespace Restaurant.View.sectionData.hallDivide
         #region Refresh & Search
         async Task Search()
         {
-            //search
             if (tables is null)
                 await RefreshTablesList();
+
             searchText = tb_search.Text.ToLower();
+
             tablesQuery = tables.Where(s => (
             s.name.ToLower().Contains(searchText)
-            ) && s.isActive == tgl_tableState);
+            ) 
+            && 
+            s.isActive == tgl_tableState);
             RefreshTablessView();
         }
         async Task<IEnumerable<Tables>> RefreshTablesList()
