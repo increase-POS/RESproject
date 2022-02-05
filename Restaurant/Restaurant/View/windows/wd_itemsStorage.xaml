@@ -107,7 +107,7 @@
                             <DataGridTextColumn Width="*"  Header="Item-Unit"   >
                                 <DataGridTextColumn.Binding>
                                     <MultiBinding StringFormat="{}{0}-{1}">
-                                        <Binding Path="itemName"></Binding>
+                                        <Binding Path="name"></Binding>
                                         <Binding Path="unitName"></Binding>
                                     </MultiBinding>
                                 </DataGridTextColumn.Binding>
@@ -121,7 +121,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="Quantity"     Binding="{Binding Path=quantity}">
+                            <DataGridTextColumn Width="*"  Header="Quantity"     Binding="{Binding Path=itemCount}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -132,7 +132,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="*"  Header="expiry date"  Binding="{Binding Path=endDate,Converter={StaticResource dateFrameConverter}}">
+                            <DataGridTextColumn Width="*"  Header="expire date"  Binding="{Binding Path=endDate,Converter={StaticResource dateFrameConverter}}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
@@ -182,9 +182,9 @@
                           VerticalAlignment="Bottom"/>
 
 
-                <Button Content="Select" Grid.Row="5" Grid.ColumnSpan="5"
+                <!--<Button Content="Select" Grid.Row="5" Grid.ColumnSpan="5"
                        Margin="10,2.5" x:Name="btn_select" Click="Btn_select_Click"
-                      Foreground="White"   Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  />
+                      Foreground="White"   Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  />-->
             </Grid>
 
         </Border>

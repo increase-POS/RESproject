@@ -97,7 +97,7 @@ namespace Restaurant.View.kitchen
             txt_printInvoice.Text = MainWindow.resourcemanager.GetString("trPrint");
             txt_pdf.Text = MainWindow.resourcemanager.GetString("trPdf");
             txt_preview.Text = MainWindow.resourcemanager.GetString("trPreview");
-            txt_count.Text = MainWindow.resourcemanager.GetString("trCount");
+            txt_count.Text = MainWindow.resourcemanager.GetString("trCount:");
             txt_titleDataGridInvoice.Text = MainWindow.resourcemanager.GetString("trConsumptionRawMaterials");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_barcode, MainWindow.resourcemanager.GetString("trBarcodeHint"));
@@ -841,8 +841,8 @@ namespace Restaurant.View.kitchen
                 HelpClass.StartAwait(grid_main);
 
                 Window.GetWindow(this).Opacity = 0.2;
-               // wd_itemsStorage w = new wd_itemsStorage();
-                //w.ShowDialog();
+                wd_itemsStorage w = new wd_itemsStorage();
+                w.ShowDialog();
 
                 Window.GetWindow(this).Opacity = 1;
                 HelpClass.EndAwait(grid_main);

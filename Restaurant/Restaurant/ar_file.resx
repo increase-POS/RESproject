@@ -3046,4 +3046,7 @@
   <data name="trCoupons" xml:space="preserve">
     <value>الكوبونات</value>
   </data>
+  <data name="trExpireDate" xml:space="preserve">
+    <value>انتهاء الصلاحية</value>
+  </data>
 </root>

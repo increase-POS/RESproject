@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,6 +22,10 @@ namespace Restaurant.View.windows
     /// </summary>
     public partial class wd_itemsStorage : Window
     {
+        List<Item> kitchenItems = new List<Item>();
+        List<Item> itemsQuery = new List<Item>();
+        int categoryId = 0;
+        public string txtItemSearch;
         public wd_itemsStorage()
         {
             try
@@ -45,7 +51,7 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -55,18 +61,18 @@ namespace Restaurant.View.windows
                 #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
-                    //MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    //MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translat();
                 #endregion
-
-
+                await refreshKitchenItems();
+                await Search();
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -79,6 +85,14 @@ namespace Restaurant.View.windows
         }
         private void translat()
         {
+            txt_title.Text = MainWindow.resourcemanager.GetString("trItemsStorage");
+            txt_countTitle.Text = MainWindow.resourcemanager.GetString("trCount:");
+
+            dg_items.Columns[0].Header = MainWindow.resourcemanager.GetString("trItemUnit");
+            dg_items.Columns[1].Header = MainWindow.resourcemanager.GetString("trQuantity");
+            dg_items.Columns[2].Header = MainWindow.resourcemanager.GetString("trExpireDate");
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
 
         }
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
@@ -97,9 +111,13 @@ namespace Restaurant.View.windows
             }
         }
 
-        private void Txb_search_TextChanged(object sender, TextChangedEventArgs e)
+        private async void Txb_search_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            try
+            {
+                await Search();
+            }
+            catch { }
         }
 
         private void Dg_items_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -111,10 +129,32 @@ namespace Restaurant.View.windows
         {
 
         }
-
-        private void Btn_select_Click(object sender, RoutedEventArgs e)
+   
+        async Task Search()
         {
+            //search
+            if (kitchenItems is null)
+                await refreshKitchenItems();
 
+            txtItemSearch = txb_search.Text.ToLower();
+
+            itemsQuery = kitchenItems;
+            itemsQuery = itemsQuery.Where(x => (x.code.ToLower().Contains(txtItemSearch) ||
+                x.name.ToLower().Contains(txtItemSearch) ||
+                x.details.ToLower().Contains(txtItemSearch)
+                )).ToList();
+
+            txt_count.Text = itemsQuery.Count.ToString();
+            RefreshItemView();
         }
+        private async Task refreshKitchenItems()
+        {
+            kitchenItems = await FillCombo.item.GetKitchenItemsWithUnits(MainWindow.branchLogin.branchId,categoryId);
+        }
+        void RefreshItemView()
+        {
+            dg_items.ItemsSource = itemsQuery;
+        }
+
     }
 }

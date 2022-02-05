@@ -3070,4 +3070,7 @@ Please add Email in setting</value>
   <data name="trCoupons" xml:space="preserve">
     <value>Coupons</value>
   </data>
+  <data name="trExpireDate" xml:space="preserve">
+    <value>Expire Date</value>
+  </data>
 </root>
