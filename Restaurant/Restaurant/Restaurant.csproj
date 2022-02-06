@@ -228,9 +228,11 @@
       <DependentUpon>uc_squareCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="converters\deliveryTypeConverter.cs" />
+    <Compile Include="converters\depositorNameConverter.cs" />
     <Compile Include="converters\enabledCouponConverter.cs" />
     <Compile Include="converters\notificationsContentConverter.cs" />
     <Compile Include="converters\notificationsTitleConverter.cs" />
+    <Compile Include="converters\processTypeConverter.cs" />
     <Compile Include="converters\SectionLocationFreeZoneConverter.cs" />
     <Compile Include="converters\translateCategoryNameConverter.cs" />
     <Compile Include="converters\transTypeConverter.cs" />
@@ -240,8 +242,14 @@
     <Compile Include="View\accounts\uc_accounts.xaml.cs">
       <DependentUpon>uc_accounts.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\accounts\uc_payments.xaml.cs">
+      <DependentUpon>uc_payments.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\accounts\uc_posTransfers.xaml.cs">
       <DependentUpon>uc_posTransfers.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\accounts\uc_received.xaml.cs">
+      <DependentUpon>uc_received.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\accounts\uc_subscriptions.xaml.cs">
       <DependentUpon>uc_subscriptions.xaml</DependentUpon>
@@ -584,9 +592,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\accounts\uc_payments.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\accounts\uc_posTransfers.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\accounts\uc_received.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\accounts\uc_subscriptions.xaml">
       <SubType>Designer</SubType>
