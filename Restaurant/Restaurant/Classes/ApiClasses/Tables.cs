@@ -63,5 +63,16 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
+
+        public async Task<int> AddTablesToSection(List<Tables> tablesList, int sectionId, int userId)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "Tables/AddTablesToSection";
+            var myContent = JsonConvert.SerializeObject(tablesList);
+            parameters.Add("itemObject", myContent);
+            parameters.Add("sectionId", sectionId.ToString());
+            parameters.Add("userId", userId.ToString());
+            return await APIResult.post(method, parameters);
+        }
     }
 }
