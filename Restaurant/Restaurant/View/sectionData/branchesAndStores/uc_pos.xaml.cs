@@ -467,13 +467,16 @@ namespace Restaurant.View.sectionData.branchesAndStores
             }
         }
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
+        {//refresh
             try
-            {//refresh
-
+            {
                 HelpClass.StartAwait(grid_main);
+
+                tb_search.Text = "";
+                searchText = "";
                 await RefreshPossList();
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)

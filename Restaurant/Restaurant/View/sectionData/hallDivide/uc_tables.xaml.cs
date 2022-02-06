@@ -104,11 +104,12 @@ namespace Restaurant.View.sectionData.hallDivide
         }
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "x", "y", "z" };
+                //requiredControlList = new List<string> { "x", "y", "z" };
+                requiredControlList = new List<string> { "name", "personsCount" };
 
                 #region translate
                 if (MainWindow.lang.Equals("en"))
@@ -130,14 +131,13 @@ namespace Restaurant.View.sectionData.hallDivide
 
                 Clear();
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void translate()
@@ -146,6 +146,7 @@ namespace Restaurant.View.sectionData.hallDivide
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_personsCount, MainWindow.resourcemanager.GetString("trPersonsCount") +"...");
 
             btn_refresh.ToolTip = MainWindow.resourcemanager.GetString("trRefresh");
             btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
@@ -182,14 +183,22 @@ namespace Restaurant.View.sectionData.hallDivide
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
-                    table = new Tables();
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+
+                    //bool isValidName = true;
+                    //isValidName = await chkNameValidate(tb_name.Text, MainWindow.branchLogin.branchId, 0);
+
+                    //if (HelpClass.validate(requiredControlList, this) && isValidName)
+                    if (HelpClass.validate(requiredControlList, this))
                     {
                         table = new Tables();
+
                         table.name = tb_name.Text;
+
                         if (tables.Where(x => x.name == table.name && x.branchId == MainWindow.branchLogin.branchId).Count() == 0)
                         {
-                            table.personsCount =int.Parse(tb_personsCount.Text);
+                            int count = 1;
+                            if (int.Parse(tb_personsCount.Text) != 0) count = int.Parse(tb_personsCount.Text);
+                            table.personsCount =count;
                             table.notes = tb_notes.Text;
                             table.createUserId = MainWindow.userLogin.userId;
                             table.updateUserId = MainWindow.userLogin.userId;
@@ -232,12 +241,19 @@ namespace Restaurant.View.sectionData.hallDivide
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+
+                    //bool isValidName = true;
+                    //isValidName = await chkNameValidate(tb_name.Text, MainWindow.branchLogin.branchId, table.tableId);
+
+                    //if (HelpClass.validate(requiredControlList, this) && isValidName)
+                    if (HelpClass.validate(requiredControlList, this))
                     {
                         table.name = tb_name.Text;
                         if (tables.Where(x => x.name == table.name && x.branchId == MainWindow.branchLogin.branchId && x.tableId != table.tableId).Count() == 0)
                         {
-                            table.personsCount =int.Parse(tb_personsCount.Text);
+                            int count = 1;
+                            if (int.Parse(tb_personsCount.Text) != 0) count = int.Parse(tb_personsCount.Text);
+                            table.personsCount = count;
                             table.notes = tb_notes.Text;
                             table.updateUserId = MainWindow.userLogin.userId;
                             table.sectionId = null;
@@ -267,10 +283,22 @@ namespace Restaurant.View.sectionData.hallDivide
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Btn_delete_Click(object sender, RoutedEventArgs e)
+
+        private async Task<bool> chkNameValidate(string name, int branch, int id)
         {
+            bool isValid = true;
+            if (tables == null)
+                await RefreshTablesList();
+            if (tables.Any(t => t.name == name && t.branchId == branch && t.tableId != id))
+                isValid = false;
+            if (!isValid)
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorDuplicateName"), animation: ToasterAnimation.FadeIn);
+            return isValid;
+        }
+        private async void Btn_delete_Click(object sender, RoutedEventArgs e)
+        {//delete
             try
-            {//delete
+            {
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
@@ -451,13 +479,17 @@ namespace Restaurant.View.sectionData.hallDivide
             }
         }
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
+        {//refresh
             try
-            {//refresh
+            {
 
                 HelpClass.StartAwait(grid_main);
+
+                searchText = "";
+                tb_search.Text = "";
                 await RefreshTablesList();
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -500,7 +532,10 @@ namespace Restaurant.View.sectionData.hallDivide
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            this.DataContext = new Tables();
+            table = new Tables();
+            table.personsCount = 1;
+            this.DataContext = table;
+
             dg_table.SelectedIndex = -1;
             // last 
             HelpClass.clearValidate(requiredControlList, this);
@@ -509,12 +544,9 @@ namespace Restaurant.View.sectionData.hallDivide
         string input;
         decimal _decimal = 0;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
+        {//only  digits
             try
             {
-
-
-                //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
                 if (textBox.Tag.ToString() == "int")
@@ -535,10 +567,9 @@ namespace Restaurant.View.sectionData.hallDivide
             }
         }
         private void Code_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
+        {//only english and digits
             try
             {
-                //only english and digits
                 Regex regex = new Regex("^[a-zA-Z0-9. -_?]*$");
                 if (!regex.IsMatch(e.Text))
                     e.Handled = true;
@@ -623,8 +654,7 @@ namespace Restaurant.View.sectionData.hallDivide
             //pdf
                 try
                 {
-                    
-                        HelpClass.StartAwait(grid_main);
+                    HelpClass.StartAwait(grid_main);
 
                     if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
                     {
@@ -643,11 +673,10 @@ namespace Restaurant.View.sectionData.hallDivide
                     else
                         Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                     
-                        HelpClass.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
                 }
                 catch (Exception ex)
                 {
-                    
                     HelpClass.EndAwait(grid_main);
                     HelpClass.ExceptionMessage(ex, this);
                 }
@@ -730,8 +759,7 @@ namespace Restaurant.View.sectionData.hallDivide
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
                 {
                     #region
@@ -759,21 +787,42 @@ namespace Restaurant.View.sectionData.hallDivide
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
         #endregion
 
-  
+        #region persons count
+        private int _numValue_personsCount = 0;
+        public int NumValue_personCount
+        {
+            get { return _numValue_personsCount; }
+            set
+            {
+                _numValue_personsCount = value;
+                tb_personsCount.Text = value.ToString();
+            }
+        }
+        private void countUp_Click(object sender, RoutedEventArgs e)
+        {
+            NumValue_personCount++;
+        }
+
+        private void countDown_Click(object sender, RoutedEventArgs e)
+        {
+            if (NumValue_personCount > 1)
+                NumValue_personCount--;
+        }
+        #endregion
+
 
         //private void Btn_addRange_Click(object sender, RoutedEventArgs e)
         //{

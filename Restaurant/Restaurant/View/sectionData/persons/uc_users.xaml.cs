@@ -104,6 +104,8 @@ namespace Restaurant.View.sectionData.persons
             {
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "name", "lastname", "mobile", "job", "username" };
+
+                #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
@@ -115,6 +117,7 @@ namespace Restaurant.View.sectionData.persons
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
+                #endregion
 
                 btn_stores.IsEnabled = false;
                 await FillCombo.fillCountries(cb_areaMobile);
@@ -187,7 +190,7 @@ namespace Restaurant.View.sectionData.persons
                 {
                     //chk duplicate userName
                     bool duplicateUserName = false;
-                duplicateUserName = await chkIfUserNameIsExists(tb_name.Text, 0);
+                duplicateUserName = await chkIfUserNameIsExists(tb_username.Text, 0);
                 //chk password length
                 bool passLength = false;
                 passLength = chkPasswordLength(pb_password.Password);
@@ -200,7 +203,7 @@ namespace Restaurant.View.sectionData.persons
                         user.password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password);
                         user.name = tb_name.Text;
                         user.lastname = tb_lastname.Text;
-                        user.job = cb_job.Text;
+                        user.job = cb_job.SelectedValue.ToString();
                         user.workHours = tb_workHours.Text;
                         user.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text; ;
                         if (!tb_phone.Text.Equals(""))
@@ -259,7 +262,7 @@ namespace Restaurant.View.sectionData.persons
                 {
                     //chk duplicate userName
                     bool duplicateUserName = false;
-                duplicateUserName = await chkIfUserNameIsExists(tb_name.Text, user.userId);
+                duplicateUserName = await chkIfUserNameIsExists(tb_username.Text, user.userId);
 
                 if (HelpClass.validate(requiredControlList, this) && duplicateUserName && HelpClass.IsValidEmail(this))
                 {
@@ -267,7 +270,7 @@ namespace Restaurant.View.sectionData.persons
                         user.password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password);
                         user.name = tb_name.Text;
                         user.lastname = tb_lastname.Text;
-                        user.job = cb_job.Text;
+                        user.job = cb_job.SelectedValue.ToString();
                         user.workHours = tb_workHours.Text;
                         user.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text; ;
                         if (!tb_phone.Text.Equals(""))

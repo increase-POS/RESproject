@@ -3049,4 +3049,7 @@
   <data name="trExpireDate" xml:space="preserve">
     <value>انتهاء الصلاحية</value>
   </data>
+  <data name="trErrorDuplicateName" xml:space="preserve">
+    <value>الاسم موجود مسبقاً</value>
+  </data>
 </root>

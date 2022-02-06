@@ -187,12 +187,13 @@ namespace Restaurant.View.sectionData.hallDivide
                 {
                     HelpClass.StartAwait(grid_main);
 
-
+                    bool isValidName = true;
+                    isValidName = await chkNameValidate(tb_name.Text , Convert.ToInt32(cb_branchId.SelectedValue) , 0);
 
                     section = new Section();
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
-                    {
 
+                    if (HelpClass.validate(requiredControlList, this) && isValidName)
+                    {
                         section = new Section();
                         section.name = tb_name.Text;
                         section.details = tb_details.Text;
@@ -203,14 +204,12 @@ namespace Restaurant.View.sectionData.hallDivide
                         section.isActive = 1;
                         section.type = "t";
 
-
                         int s = await section.save(section);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
                         {
                             Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-
 
                             Clear();
                             await RefreshSectionsList();
@@ -226,11 +225,11 @@ namespace Restaurant.View.sectionData.hallDivide
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         private async void Btn_update_Click(object sender, RoutedEventArgs e)
         {//update
             try
@@ -238,11 +237,13 @@ namespace Restaurant.View.sectionData.hallDivide
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+
+                    bool isValidName = true;
+                    isValidName = await chkNameValidate(tb_name.Text, Convert.ToInt32(cb_branchId.SelectedValue), section.sectionId);
+
+                    if (HelpClass.validate(requiredControlList, this) && isValidName)
                     {
-
-
-
+                       
                         section.name = tb_name.Text;
                         section.details = tb_details.Text;
                         section.branchId = Convert.ToInt32(cb_branchId.SelectedValue);
@@ -257,10 +258,7 @@ namespace Restaurant.View.sectionData.hallDivide
                             Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                             await RefreshSectionsList();
                             await Search();
-
-
                         }
-
                     }
                     HelpClass.EndAwait(grid_main);
                 }
@@ -274,6 +272,20 @@ namespace Restaurant.View.sectionData.hallDivide
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+
+        private async Task<bool> chkNameValidate(string name, int branch, int id)
+        {
+            bool isValid = true;
+            if (sections == null)
+                await RefreshSectionsList();
+            if (sections.Any(s => s.name == name && s.branchId == branch && s.sectionId != id))
+                isValid = false;
+            if (!isValid)
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorDuplicateName"), animation: ToasterAnimation.FadeIn);
+            return isValid;
+        }
+
         private async void Btn_delete_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -461,13 +473,16 @@ namespace Restaurant.View.sectionData.hallDivide
             }
         }
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
+        {//refresh
             try
-            {//refresh
-
+            {
                 HelpClass.StartAwait(grid_main);
+
+                tb_search.Text = "";
+                searchText = "";
                 await RefreshSectionsList();
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)

@@ -102,7 +102,9 @@ namespace Restaurant.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "name",  };
+                requiredControlList = new List<string> { "name"  };
+
+                #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
                     //MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
@@ -114,6 +116,7 @@ namespace Restaurant.View.sectionData
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
+                #endregion
 
                 Keyboard.Focus(tb_name);
                 await Search();
@@ -160,47 +163,32 @@ namespace Restaurant.View.sectionData
                 {
                     HelpClass.StartAwait(grid_main);
 
-
-
                     residential = new ResidentialSectors();
-                    if (HelpClass.validate(requiredControlList, this))
+
+                    bool isValidName = true;
+                    isValidName = await chkNameValidate(tb_name.Text, 0);
+
+                    if (HelpClass.validate(requiredControlList, this) && isValidName)
                     {
 
-                        bool isResidentialSectorsExist = await chkDuplicateResidentialSectors();
-                        if (isResidentialSectorsExist)
-                        {
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopResidentialSectorsExist"), animation: ToasterAnimation.FadeIn);
-                            #region Tooltip_name
-                            p_error_name.Visibility = Visibility.Visible;
-                            ToolTip toolTip_name = new ToolTip();
-                            toolTip_name.Content = MainWindow.resourcemanager.GetString("trPopResidentialSectorsExist");
-                            toolTip_name.Style = Application.Current.Resources["ToolTipError"] as Style;
-                            p_error_name.ToolTip = toolTip_name;
-                            #endregion
-                           
-                        }
+                        residential.name = tb_name.Text;
+                        residential.createUserId = MainWindow.userLogin.userId;
+                        residential.updateUserId = MainWindow.userLogin.userId;
+                        residential.notes = tb_notes.Text;
+                        residential.isActive = 1;
+
+                        int s = await residential.Save(residential);
+                        if (s <= 0)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
                         {
-
-                            residential.name = tb_name.Text;
-                            residential.createUserId = MainWindow.userLogin.userId;
-                            residential.updateUserId = MainWindow.userLogin.userId;
-                            residential.notes = tb_notes.Text;
-                            residential.isActive = 1;
-
-                            int s = await residential.Save(residential);
-                            if (s <= 0)
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                            else
-                            {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
 
 
-                                Clear();
-                                await RefreshCustomersList();
-                                await Search();
-                            }
+                            Clear();
+                            await RefreshCustomersList();
+                            await Search();
                         }
                     }
                     HelpClass.EndAwait(grid_main);
@@ -223,37 +211,26 @@ namespace Restaurant.View.sectionData
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") )
                 {
                     HelpClass.StartAwait(grid_main);
-                    if (HelpClass.validate(requiredControlList, this))
+
+
+                    bool isValidName = true;
+                    isValidName = await chkNameValidate(tb_name.Text, residential.residentSecId);
+
+                    if (HelpClass.validate(requiredControlList, this) && isValidName)
                     {
-                        bool isResidentialSectorsExist = await chkDuplicateResidentialSectors();
-                        if (isResidentialSectorsExist)
-                        {
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopResidentialSectorsExist"), animation: ToasterAnimation.FadeIn);
-                            #region Tooltip_name
-                            p_error_name.Visibility = Visibility.Visible;
-                            ToolTip toolTip_name = new ToolTip();
-                            toolTip_name.Content = MainWindow.resourcemanager.GetString("trPopResidentialSectorsExist");
-                            toolTip_name.Style = Application.Current.Resources["ToolTipError"] as Style;
-                            p_error_name.ToolTip = toolTip_name;
-                            #endregion
-                          
-                        }
+                        residential.name = tb_name.Text;
+                        residential.updateUserId = MainWindow.userLogin.userId;
+                        residential.notes = tb_notes.Text;
+
+                        int s = await residential.Save(residential);
+                        if (s <= 0)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
                         {
-                            residential.name = tb_name.Text;
-                            residential.updateUserId = MainWindow.userLogin.userId;
-                            residential.notes = tb_notes.Text;
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                            await RefreshCustomersList();
+                            await Search();
 
-                            int s = await residential.Save(residential);
-                            if (s <= 0)
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                            else
-                            {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                                await RefreshCustomersList();
-                                await Search();
-
-                            }
                         }
                     }
                     HelpClass.EndAwait(grid_main);
@@ -451,13 +428,16 @@ namespace Restaurant.View.sectionData
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
+
+                searchText = "";
+                tb_search.Text = "";
                 await RefreshCustomersList();
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -577,26 +557,19 @@ namespace Restaurant.View.sectionData
         #endregion
 
 
-        private async Task<bool> chkDuplicateResidentialSectors()
+        private async Task<bool> chkNameValidate(string name , int id)
         {
-            bool b = false;
-
-
-            List<ResidentialSectors> residentials = await residential.Get();
-            ResidentialSectors residential1 = new ResidentialSectors();
-
-            for (int i = 0; i < residentials.Count(); i++)
-            {
-                residential1 = residentials[i];
-                if ((residential1.name.Equals(tb_name.Text.Trim())) &&
-                    (residential1.residentSecId != residential.residentSecId))
-                { b = true; break; }
-            }
-
-            return b;
+            bool isValid = true;
+            if (residentials == null)
+                await RefreshCustomersList();
+            if (residentials.Any(s => s.name == name && s.residentSecId != id))
+                isValid = false;
+            if (!isValid)
+                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorDuplicateName"), animation: ToasterAnimation.FadeIn);
+            return isValid;
         }
+
         #region report
-        /*
         //report  parameters
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
@@ -620,7 +593,7 @@ namespace Restaurant.View.sectionData
                 addpath = @"\Reports\SectionData\residentialsData\En\EnResidentialSectors.rdlc";
             }
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-            clsReports.ResidentialSectorssReport(residentialsQuery, rep, reppath, paramarr);
+            //clsReports.ResidentialSectorssReport(residentialsQuery, rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
@@ -630,9 +603,52 @@ namespace Restaurant.View.sectionData
 
         }
 
+        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
+        {//excel
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
+                {
+                    #region
+                    //Thread t1 = new Thread(() =>
+                    //{
+                    BuildReport();
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        saveFileDialog.Filter = "EXCEL|*.xls;";
+                        if (saveFileDialog.ShowDialog() == true)
+                        {
+                            string filepath = saveFileDialog.FileName;
+                            LocalReportExtensions.ExportToExcel(rep, filepath);
+                        }
+                    });
+
+
+                    //});
+                    //t1.Start();
+                    #endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {
-
             //pdf
             try
             {
@@ -664,13 +680,13 @@ namespace Restaurant.View.sectionData
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+
         }
 
         private void Btn_preview_Click(object sender, RoutedEventArgs e)
-        {
+        {//preview
             try
             {
-
                 HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
                 {
@@ -713,7 +729,7 @@ namespace Restaurant.View.sectionData
         }
 
         private void Btn_print_Click(object sender, RoutedEventArgs e)
-        {
+        {//print
             try
             {
 
@@ -739,50 +755,6 @@ namespace Restaurant.View.sectionData
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
-        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-
-                HelpClass.StartAwait(grid_main);
-
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
-                {
-                    #region
-                    //Thread t1 = new Thread(() =>
-                    //{
-                    BuildReport();
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        saveFileDialog.Filter = "EXCEL|*.xls;";
-                        if (saveFileDialog.ShowDialog() == true)
-                        {
-                            string filepath = saveFileDialog.FileName;
-                            LocalReportExtensions.ExportToExcel(rep, filepath);
-                        }
-                    });
-
-
-                    //});
-                    //t1.Start();
-                    #endregion
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        */
         #endregion
 
     }

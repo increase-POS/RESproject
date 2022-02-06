@@ -79,10 +79,10 @@
                              VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="True" 
                                           Margin="0" Height="13" Width="28" />
                 <Button   FlowDirection="LeftToRight"  Width="40" Height="40" x:Name="btn_refresh" Click="Btn_refresh_Click" Grid.Row="0" Grid.Column="5" Padding="0" 
-                            materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
+                          materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
                           Background="{x:Null}" BorderBrush="{x:Null}"   Style="{StaticResource SmallButtonCircleRotate}"
-                               RenderTransformOrigin="0.5,0.5"
-                            DataContext="M896,0L896,0C401.2,0,0,401.2,0,896v0c0,494.8,401.2,896,896,896h0c494.8,0,896-401.2,896-896v0C1792,401.2,1390.8,0,896,0z
+                          RenderTransformOrigin="0.5,0.5"
+                          DataContext="M896,0L896,0C401.2,0,0,401.2,0,896v0c0,494.8,401.2,896,896,896h0c494.8,0,896-401.2,896-896v0C1792,401.2,1390.8,0,896,0z
 	 M1451.3,1021c-31.9,133.7-98.8,242.1-200.6,325.2c-101.8,83.1-221,124.6-357.7,124.6c-72.8,0-143.3-13.7-211.4-41.2
 	s-128.8-66.6-182.2-117.5l-96.5,96.5c-9.5,9.5-20.7,14.2-33.7,14.2s-24.2-4.7-33.7-14.2c-9.5-9.5-14.2-20.7-14.2-33.7v-335.3
 	c0-13,4.7-24.2,14.2-33.7s20.7-14.2,33.7-14.2h335.3c13,0,24.2,4.7,33.7,14.2c9.5,9.5,14.2,20.7,14.2,33.7c0,13-4.7,24.2-14.2,33.7
@@ -419,17 +419,17 @@
                             </Path>
                         </Grid>
                     </Border>
-                    <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                    <!--<Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid>
                             <TextBox x:Name="tb_personsCount" Grid.Row="8"  Padding="10,0,5,0"  
-                                         Text="{Binding personsCount, Mode=OneWay}"
-                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                         materialDesign:HintAssist.Hint="persons count..."    
-                           Foreground="#4E4E4E"  TextBlock.FontSize="12"  
+                                     Text="{Binding personsCount, Mode=OneWay}"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="persons count..."    
+                                     Foreground="#4E4E4E"  TextBlock.FontSize="12"  
                                      BorderThickness="0" Tag="int"
-                                 BorderBrush="AliceBlue" MaxLength="100" PreviewTextInput="Number_PreviewTextInput"
-                    materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                  Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
+                                     BorderBrush="AliceBlue" MaxLength="100" PreviewTextInput="Number_PreviewTextInput"
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
 
                             <Path Fill="#E81123" x:Name="p_error_personsCount" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
@@ -437,11 +437,36 @@
                              Data="{StaticResource infoCircle}"/>
 
                         </Grid>
-                    </Border>
+                    </Border>-->
+                        <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Grid>
+                                <TextBox x:Name="tb_personsCount" Grid.Row="8"  Padding="10,0,5,0"  
+                                         Text="{Binding personsCount, Mode=OneWay}"
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="persons count..."    
+                                         Foreground="#4E4E4E"  TextBlock.FontSize="12"  
+                                         BorderThickness="0" 
+                                         BorderBrush="AliceBlue" MaxLength="2" Tag="int" 
+                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                         Height="40"   Margin="4,0"  
+                                         PreviewKeyDown="Spaces_PreviewKeyDown"
+                                         TextChanged="ValidateEmpty_TextChange"
+                                         PreviewTextInput="Number_PreviewTextInput" />
+                                <Button x:Name="countUp_personsCount"   FontSize="10" Padding="0,5,0,0" Content="▲" Width="20" Height="20" Click="countUp_Click"
+                                        Margin="12,0,5,5" VerticalAlignment="Top" HorizontalAlignment="Right" 
+                                        Foreground="#737373"       Background="{x:Null}" BorderThickness="0" />
+                                <Button x:Name="countDown_personsCount"   FontSize="10" Padding="0,0,0,5" Content="▼" Width="20" Height="20" Click="countDown_Click" 
+                                        Margin="12,5,5,0"  VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                                        Foreground="#737373"       Background="{x:Null}" BorderThickness="0"/>
+                                <Path Fill="#E81123" x:Name="p_error_personsCount" Stretch="Fill" Margin="5,5,15,5"
+                                      HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
+                                      VerticalAlignment="Center" Width="15"  Height="15" 
+                                      Data="{StaticResource infoCircle}"/>
+                            </Grid>
+                        </Border>
 
 
-
-                    <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                             <TextBox  x:Name="tb_notes" Text="{Binding notes, Mode=OneWay}"
                                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -481,8 +506,9 @@
                     <Border Grid.Row="2">
 
                         <Button x:Name="btn_add"  materialDesign:ButtonAssist.CornerRadius="7"
-                          Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
-                    Margin="1,1" Click="Btn_add_Click" Foreground="White" >
+                                Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                                Margin="1,1"  Foreground="White" 
+                                Click="Btn_add_Click">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <materialDesign:PackIcon Name="txt_add_Icon" Kind="PlusThick" Foreground="White" VerticalAlignment="Center" Width="15"  Height="15" Margin="0,1,2,0">
 

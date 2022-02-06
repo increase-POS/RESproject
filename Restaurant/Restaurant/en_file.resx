@@ -3073,4 +3073,7 @@ Please add Email in setting</value>
   <data name="trExpireDate" xml:space="preserve">
     <value>Expire Date</value>
   </data>
+  <data name="trErrorDuplicateName" xml:space="preserve">
+    <value>Name already exists</value>
+  </data>
 </root>

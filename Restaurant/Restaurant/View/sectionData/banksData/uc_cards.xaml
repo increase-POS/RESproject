@@ -74,9 +74,11 @@
                                    HorizontalAlignment="Left" VerticalAlignment="Center"
                                    FontSize="12"/>
                 <ToggleButton Grid.Column="4" Background="{StaticResource MainColor}"   x:Name="tgl_cardIsActive"   Checked="Tgl_isActive_Checked" Unchecked="Tgl_isActive_Unchecked"
-                             VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="True" 
-                                          Margin="0" Height="13" Width="28" />
-                <Button   FlowDirection="LeftToRight"  Width="40" Height="40" x:Name="btn_refresh" Click="Btn_refresh_Click" Grid.Row="0" Grid.Column="5" Padding="0" 
+                              VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="True" 
+                              Margin="0" Height="13" Width="28" />
+                <Button   FlowDirection="LeftToRight"  Width="40" Height="40" x:Name="btn_refresh" 
+                          Click="Btn_refresh_Click" 
+                          Grid.Row="0" Grid.Column="5" Padding="0" 
                             materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
                           Background="{x:Null}" BorderBrush="{x:Null}"   Style="{StaticResource SmallButtonCircleRotate}"
                                RenderTransformOrigin="0.5,0.5"
