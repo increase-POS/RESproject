@@ -68,25 +68,31 @@
                     </Grid>
                 </Border>
                 <StackPanel  Grid.Column="2"    Orientation="Horizontal" >
-                    <CheckBox x:Name="chk_stored"  
-                                                          Background="{StaticResource MainColor}"
-                                                          Content="Stored"
-                                                          Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
-                                                          Checked="search_Checking"
-                                                          Unchecked="chk_uncheck"/>
-                    <CheckBox x:Name="chk_freezone" 
-                                                          Background="{StaticResource MainColor}"
-                                                          Content="Freezone" IsChecked="True"
-                                                          Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
-                                                          Checked="search_Checking"
-                                                          Unchecked="chk_uncheck"/>
-                    <CheckBox x:Name="chk_locked" 
-                                                          Background="{StaticResource MainColor}"
-                                                          Content="Reserved"
-                                                          Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
-                                                          Checked="search_Checking"
-                                                          Unchecked="chk_uncheck"/>
-                    <Border  DockPanel.Dock="Right"   Margin="7.5,10"    CornerRadius="0,0,0,0"  Width="2" BorderThickness="0" Background="{StaticResource LightMainColor}" />
+                    <Border Grid.Column="4" Margin="5" Background="White" CornerRadius="16" Height="40">
+                        <CheckBox x:Name="chk_stored"  
+                             Background="{StaticResource MainColor}"
+                             Content="Stored"  Margin="0" Height="40" 
+                             Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
+                             Checked="search_Checking"
+                             Unchecked="chk_uncheck"/>
+                    </Border>
+                    <Border Grid.Column="4" Margin="5" Background="White" CornerRadius="16" Height="40">
+                        <CheckBox x:Name="chk_freezone" 
+                             Background="{StaticResource MainColor}" IsChecked="True"
+                             Content="Freezone"  Margin="0" Height="40" 
+                             Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
+                             Checked="search_Checking"
+                             Unchecked="chk_uncheck"/>
+                    </Border>
+                    <Border Grid.Column="4" Margin="5" Background="White" CornerRadius="16" Height="40">
+                        <CheckBox x:Name="chk_locked" 
+                             Background="{StaticResource MainColor}"
+                             Content="Reserved"  Margin="0" Height="40"
+                             Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
+                             Checked="search_Checking"
+                             Unchecked="chk_uncheck"/>
+                    </Border>
+                        <Border  DockPanel.Dock="Right"   Margin="7.5,10"    CornerRadius="0,0,0,0"  Width="2" BorderThickness="0" Background="{StaticResource LightMainColor}" />
 
                 </StackPanel>
 
