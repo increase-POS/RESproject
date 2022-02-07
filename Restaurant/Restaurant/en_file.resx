@@ -3076,4 +3076,13 @@ Please add Email in setting</value>
   <data name="trErrorDuplicateName" xml:space="preserve">
     <value>Name already exists</value>
   </data>
+  <data name="trPriceWithService" xml:space="preserve">
+    <value>Price With Service</value>
+  </data>
+  <data name="trPrimeCost" xml:space="preserve">
+    <value>prime cost</value>
+  </data>
+  <data name="trTagsHint" xml:space="preserve">
+    <value>Tags...</value>
+  </data>
 </root>

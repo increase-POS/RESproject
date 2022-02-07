@@ -667,7 +667,7 @@
                 <StackPanel>
                     <DockPanel Margin="10 0"
                                  LastChildFill="True">
-                        <TextBlock  Text="details"  Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock  Text="details" Name="txt_details" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
                         <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
                     </DockPanel>
                     <Grid>
@@ -675,7 +675,7 @@
                             <ColumnDefinition Width="*" MinWidth="100"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock  Grid.Row="0" Grid.Column="0" x:Name="tb_code"
+                        <TextBlock  Grid.Row="0" Grid.Column="0" x:Name="txt_code"
                                     Text="code" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center"  />
@@ -689,7 +689,7 @@
                             <ColumnDefinition Width="*" MinWidth="100"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock  Grid.Row="1" Grid.Column="0" x:Name="tb_name"
+                        <TextBlock  Grid.Row="1" Grid.Column="0" x:Name="txt_name"
                                     Text="name" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
@@ -702,7 +702,7 @@
                             <ColumnDefinition Width="*" MinWidth="100"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock  Grid.Row="1" Grid.Column="0" x:Name="tb_purchasePrice"
+                        <TextBlock  Grid.Row="1" Grid.Column="0" x:Name="txt_purchasePrice"
                                     Text="purchasePrice" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
@@ -716,7 +716,7 @@
                             <ColumnDefinition Width="*" MinWidth="100"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock  Grid.Row="1" Grid.Column="0" x:Name="tb_price"
+                        <TextBlock  Grid.Row="1" Grid.Column="0" x:Name="txt_price"
                                     Text="price" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
@@ -730,7 +730,7 @@
                             <ColumnDefinition Width="*" MinWidth="100"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock  Grid.Row="1" Grid.Column="0" x:Name="tb_priceWithService"
+                        <TextBlock  Grid.Row="1" Grid.Column="0" x:Name="txt_priceWithService"
                                     Text="priceWithService" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />

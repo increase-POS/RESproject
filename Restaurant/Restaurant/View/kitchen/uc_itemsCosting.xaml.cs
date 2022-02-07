@@ -3,6 +3,7 @@ using Restaurant.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -45,37 +46,89 @@ namespace Restaurant.View.kitchen
         }
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            catalogMenuList = new List<string> { "allMenu", "appetizers", "beverages", "fastFood", "mainCourses", "desserts" };
-            categoryBtns = new List<Button> {btn_appetizers,btn_beverages,btn_fastFood,btn_mainCourses, btn_desserts };
-            #region loading
-            loadingList = new List<keyValueBool>();
-            bool isDone = true;
-            loadingList.Add(new keyValueBool { key = "loading_RefrishItems", value = false });
-            loadingList.Add(new keyValueBool { key = "loading_RefrishCategories", value = false });
-
-            loading_RefrishItems();
-            loading_RefrishCategories();
-            do
+            try
             {
-                isDone = true;
-                foreach (var item in loadingList)
+                HelpClass.StartAwait(grid_main);
+                if (MainWindow.lang.Equals("en"))
                 {
-                    if (item.value == false)
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.LeftToRight;
+                }
+                else
+                {
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.RightToLeft;
+                }
+                translate();
+
+                catalogMenuList = new List<string> { "allMenu", "appetizers", "beverages", "fastFood", "mainCourses", "desserts" };
+                categoryBtns = new List<Button> { btn_appetizers, btn_beverages, btn_fastFood, btn_mainCourses, btn_desserts };
+                #region loading
+                loadingList = new List<keyValueBool>();
+                bool isDone = true;
+                loadingList.Add(new keyValueBool { key = "loading_RefrishItems", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_RefrishCategories", value = false });
+
+                loading_RefrishItems();
+                loading_RefrishCategories();
+                do
+                {
+                    isDone = true;
+                    foreach (var item in loadingList)
                     {
-                        isDone = false;
-                        break;
+                        if (item.value == false)
+                        {
+                            isDone = false;
+                            break;
+                        }
+                    }
+                    if (!isDone)
+                    {
+                        await Task.Delay(0500);
                     }
                 }
-                if (!isDone)
-                {
-                    await Task.Delay(0500);
-                }
+                while (!isDone);
+                #endregion
+                //enable categories buttons
+                HelpClass.activateCategoriesButtons(FillCombo.salesItems, FillCombo.categoriesList, categoryBtns);
+                await Search();
+                HelpClass.EndAwait(grid_main);
             }
-            while (!isDone);
-            #endregion
-            //enable categories buttons
-            HelpClass.activateCategoriesButtons(FillCombo.salesItems, FillCombo.categoriesList, categoryBtns);
-            await Search();
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void translate()
+        {
+            txt_title.Text = MainWindow.resourcemanager.GetString("trItemsCosting");
+            btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
+            btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
+            btn_refresh.ToolTip = MainWindow.resourcemanager.GetString("trRefresh");
+            btn_pdf.ToolTip = MainWindow.resourcemanager.GetString("trPdf");
+            btn_print.ToolTip = MainWindow.resourcemanager.GetString("trPrint");
+            btn_pieChart.ToolTip = MainWindow.resourcemanager.GetString("trPieChart");
+            btn_exportToExcel.ToolTip = MainWindow.resourcemanager.GetString("trExcel");
+            btn_preview.ToolTip = MainWindow.resourcemanager.GetString("trPreview");
+            txt_count.ToolTip = MainWindow.resourcemanager.GetString("trCount");
+
+            dg_items.Columns[0].Header = MainWindow.resourcemanager.GetString("trItem");
+            dg_items.Columns[1].Header = MainWindow.resourcemanager.GetString("trPrimeCost");
+            dg_items.Columns[2].Header = MainWindow.resourcemanager.GetString("trPrice");
+            dg_items.Columns[2].Header = MainWindow.resourcemanager.GetString("trPriceWithService");
+
+            txt_details.Text = MainWindow.resourcemanager.GetString("trDetails");
+            txt_code.Text = MainWindow.resourcemanager.GetString("trCode");
+            txt_name.Text = MainWindow.resourcemanager.GetString("trName");
+            txt_purchasePrice.Text = MainWindow.resourcemanager.GetString("trPrimeCost");
+            txt_price.Text = MainWindow.resourcemanager.GetString("trPrice");
+            txt_priceWithService.Text = MainWindow.resourcemanager.GetString("trPriceWithService");
+            txt_allMenu.Text = MainWindow.resourcemanager.GetString("trAll");
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchTags, MainWindow.resourcemanager.GetString("trTagsHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
         }
         #region loading
         List<keyValueBool> loadingList;

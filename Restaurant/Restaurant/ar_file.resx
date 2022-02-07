@@ -3052,4 +3052,13 @@
   <data name="trErrorDuplicateName" xml:space="preserve">
     <value>الاسم موجود مسبقاً</value>
   </data>
+  <data name="trPriceWithService" xml:space="preserve">
+    <value>السعر مع الخدمة</value>
+  </data>
+  <data name="trPrimeCost" xml:space="preserve">
+    <value>Prime Cost</value>
+  </data>
+  <data name="trTagsHint" xml:space="preserve">
+    <value>الصنف...</value>
+  </data>
 </root>
