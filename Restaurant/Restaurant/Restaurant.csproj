@@ -242,6 +242,12 @@
     <Compile Include="View\accounts\uc_accounts.xaml.cs">
       <DependentUpon>uc_accounts.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\accounts\uc_banksAccounting.xaml.cs">
+      <DependentUpon>uc_banksAccounting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\accounts\uc_ordersAccounting.xaml.cs">
+      <DependentUpon>uc_ordersAccounting.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\accounts\uc_payments.xaml.cs">
       <DependentUpon>uc_payments.xaml</DependentUpon>
     </Compile>
@@ -455,6 +461,9 @@
     <Compile Include="View\windows\wd_acceptCancelPopup.xaml.cs">
       <DependentUpon>wd_acceptCancelPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_acceptUser.xaml.cs">
+      <DependentUpon>wd_acceptUser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_branchesList.xaml.cs">
       <DependentUpon>wd_branchesList.xaml</DependentUpon>
     </Compile>
@@ -589,6 +598,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\accounts\uc_accounts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\accounts\uc_banksAccounting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\accounts\uc_ordersAccounting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -873,6 +890,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_acceptCancelPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_acceptUser.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
