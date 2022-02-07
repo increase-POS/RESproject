@@ -3052,13 +3052,43 @@
   <data name="trErrorDuplicateName" xml:space="preserve">
     <value>الاسم موجود مسبقاً</value>
   </data>
+  <data name="trDaysOfWeek" xml:space="preserve">
+    <value>أيام الأسبوع</value>
+  </data>
+  <data name="trFriday" xml:space="preserve">
+    <value>الجمعة</value>
+  </data>
+  <data name="trMinute" xml:space="preserve">
+    <value>دقيقة</value>
+  </data>
+  <data name="trMonday" xml:space="preserve">
+    <value>الاثنين</value>
+  </data>
+  <data name="trPreparingTimeHint" xml:space="preserve">
+    <value>وقت التحضير...</value>
+  </data>
   <data name="trPriceWithService" xml:space="preserve">
     <value>السعر مع الخدمة</value>
   </data>
   <data name="trPrimeCost" xml:space="preserve">
     <value>Prime Cost</value>
   </data>
+  <data name="trSaturday" xml:space="preserve">
+    <value>السبت</value>
+  </data>
+  <data name="trSunday" xml:space="preserve">
+    <value>الأحد</value>
+  </data>
   <data name="trTagsHint" xml:space="preserve">
     <value>الصنف...</value>
+  </data>
+  <data name="trThursday" xml:space="preserve">
+    <value>الخميس</value>
+  </data>
+  <data name="trTuesday" xml:space="preserve">
+    <value>الثلاثاء</value>
+  </data>
+  <data name="trWednsday" xml:space="preserve">
+    <value>الأربعاء</value>
   </data>
 </root>

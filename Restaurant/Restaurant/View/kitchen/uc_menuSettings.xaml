@@ -490,7 +490,7 @@
 
                         </Grid>
                     </Border>
-                        <TextBlock  Text="minutes" Grid.Column="1"
+                        <TextBlock  Text="minutes" Grid.Column="1" Name="txt_minute"
                             Foreground="{StaticResource ThickGrey}" FontSize="14"
                                     VerticalAlignment="Center" HorizontalAlignment="Right"
                             Margin="5,5,15,5"/>

@@ -55,6 +55,7 @@ namespace Restaurant.View.kitchen
         string updatePermission = "menuSettings_update";
         byte tgl_itemState;
         string searchText = "";
+        int categoryId = 0;
         public static List<string> requiredControlList;
         //List<Unit> units;
         Unit unit = new Unit();
@@ -79,6 +80,7 @@ namespace Restaurant.View.kitchen
                 catigoriesAndItemsView.ucmenuSettings = this;
 
                 catalogMenuList = new List<string> { "allMenu", "appetizers", "beverages", "fastFood", "mainCourses", "desserts" };
+                categoryBtns = new List<Button> { btn_appetizers, btn_beverages, btn_fastFood, btn_mainCourses, btn_desserts };
                 requiredControlList = new List<string> { "code", "name", "type" };
                 if (MainWindow.lang.Equals("en"))
                 {
@@ -92,7 +94,10 @@ namespace Restaurant.View.kitchen
                 }
                 translate();
 
-                await RefreshItemsList();
+                await fillItemsList();
+                await refrishCategories();
+                //enable categories buttons
+                HelpClass.activateCategoriesButtons(FillCombo.salesItems, FillCombo.categoriesList, categoryBtns);
                 await Search();
                 Clear();
                 HelpClass.EndAwait(grid_main);
@@ -106,8 +111,28 @@ namespace Restaurant.View.kitchen
         }
         private void translate()
         {
+            txt_title.Text = MainWindow.resourcemanager.GetString("trItems");
+            txt_daysOfWeek.Text = MainWindow.resourcemanager.GetString("trDaysOfWeek");
+            txt_minute.Text = MainWindow.resourcemanager.GetString("trMinute");
+            txt_activeItem.Text = MainWindow.resourcemanager.GetString("trActive");
+            txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
+
+            chb_all.Content = MainWindow.resourcemanager.GetString("trAll");
+            chb_sat.Content = MainWindow.resourcemanager.GetString("trSaturday");
+            chb_sun.Content = MainWindow.resourcemanager.GetString("trSunday");
+            chb_mon.Content = MainWindow.resourcemanager.GetString("trMonday");
+            chb_tues.Content = MainWindow.resourcemanager.GetString("trTuesday");
+            chb_wed.Content = MainWindow.resourcemanager.GetString("trWednsday");
+            chb_thur.Content = MainWindow.resourcemanager.GetString("trThursday");
+            chb_fri.Content = MainWindow.resourcemanager.GetString("trFriday");
 
             btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
+            btn_refresh.ToolTip = MainWindow.resourcemanager.GetString("trRefresh");
+            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_preparingTime, MainWindow.resourcemanager.GetString("trPreparingTimeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private void Btn_save_Click(object sender, RoutedEventArgs e)
@@ -290,31 +315,45 @@ namespace Restaurant.View.kitchen
         }
         #endregion
         #region Refresh & Search
-
-        /*
+        async Task RefreshItemsList()
+        {
+            await FillCombo.RefreshSalesItems();
+        }
         async Task Search()
         {
             //search
-            if (items is null)
-                await RefreshItemsList();
-            searchText = tb_search.Text.ToLower();
-            itemsQuery = items.Where(s => (s.code.ToLower().Contains(searchText) ||
-            s.name.ToLower().Contains(searchText) ||
-            s.mobile.ToLower().Contains(searchText)
-            ) && s.isActive == tgl_itemState);
-            RefreshCustomersView();
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                searchText = tb_search.Text;
+                itemsQuery = FillCombo.salesItems.
+                Where(x => (x.code.ToLower().Contains(searchText) ||
+                    x.name.ToLower().Contains(searchText) ||
+                    x.details.ToLower().Contains(searchText)
+                     || x.code.ToLower().Contains(searchText)
+                    ) && x.isActive == tgl_itemState);
+
+                if (categoryId > 0)
+                    itemsQuery = itemsQuery.Where(x => x.categoryId == categoryId).ToList();
+
+                pageIndex = 1;
+                #region
+
+
+                if (btns is null)
+                    btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
-        async Task<IEnumerable<Item>> RefreshItemsList()
-        {
-            items = await item.Get("c");
-            return items;
-        }
-        void RefreshCustomersView()
-        {
-            dg_item.ItemsSource = itemsQuery;
-            txt_count.Text = itemsQuery.Count().ToString();
-        }
-        */
         #endregion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
@@ -651,11 +690,15 @@ namespace Restaurant.View.kitchen
         Item item = new Item();
         IEnumerable<Item> items;
         IEnumerable<Item> itemsQuery;
-        async Task<IEnumerable<Item>> RefreshItemsList()
+        async Task fillItemsList()
         {
-            items = await item.Get();
-            //items = items.Where(x => FillCombo.purchaseTypes.Contains(x.type)).ToList();
-            return items;
+            if (FillCombo.salesItems == null)
+                await FillCombo.RefreshSalesItems();
+        }
+        async Task refrishCategories()
+        {
+            if (FillCombo.categoriesList == null)
+                await FillCombo.RefreshCategory();
         }
         void RefrishItemsCard(IEnumerable<Item> _items)
         {
@@ -670,56 +713,17 @@ namespace Restaurant.View.kitchen
         {
             try
             {
-                //HelpClass.StartAwait(grid_main);
-                item = items.Where(x => x.itemId == itemId).FirstOrDefault();
+                item = FillCombo.salesItems.Where(x => x.itemId == itemId).FirstOrDefault();
                 this.DataContext = item;
                 HelpClass.clearValidate(requiredControlList, this);
-                //HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                //HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
         #endregion
-        #region Search Y
 
-
-        async Task Search()
-        {
-            //search
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                if (items is null)
-                    await RefreshItemsList();
-                searchText = tb_search.Text;
-                itemsQuery = items.
-                Where(x => (x.code.ToLower().Contains(searchText) ||
-                    x.name.ToLower().Contains(searchText) ||
-                    x.details.ToLower().Contains(searchText)
-                    // || x.categoryName.ToLower().Contains(searchText)
-                    ) && x.isActive == tgl_itemState);
-                pageIndex = 1;
-                #region
-
-
-                if (btns is null)
-                    btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
-                #endregion
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        #endregion
         #region Pagination Y
         Pagination pagination = new Pagination();
         Button[] btns;
@@ -886,7 +890,8 @@ namespace Restaurant.View.kitchen
 
         #region catalogMenu
         public static List<string> catalogMenuList;
-        private void catalogMenu_Click(object sender, RoutedEventArgs e)
+        public static List<Button> categoryBtns;
+        private async void catalogMenu_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -895,6 +900,10 @@ namespace Restaurant.View.kitchen
                 //    path_appetizers
                 //    txt_appetizers
                 string senderTag = (sender as Button).Tag.ToString();
+                if (senderTag != "allMenu")
+                    categoryId = FillCombo.categoriesList.Where(x => x.categoryCode == senderTag).FirstOrDefault().categoryId;
+                else
+                    categoryId = -1;
                 #region refresh colors
                 foreach (var control in catalogMenuList)
                 {
@@ -926,7 +935,7 @@ namespace Restaurant.View.kitchen
                 }
                 #endregion
                 refreshCatalogTags(senderTag);
-
+                await Search();
             }
             catch { }
         }

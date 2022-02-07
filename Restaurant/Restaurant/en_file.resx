@@ -3076,13 +3076,43 @@ Please add Email in setting</value>
   <data name="trErrorDuplicateName" xml:space="preserve">
     <value>Name already exists</value>
   </data>
+  <data name="trDaysOfWeek" xml:space="preserve">
+    <value>Days of week</value>
+  </data>
+  <data name="trFriday" xml:space="preserve">
+    <value>Friday</value>
+  </data>
+  <data name="trMinute" xml:space="preserve">
+    <value>Minute</value>
+  </data>
+  <data name="trMonday" xml:space="preserve">
+    <value>Monday</value>
+  </data>
+  <data name="trPreparingTimeHint" xml:space="preserve">
+    <value>Preparing time...</value>
+  </data>
   <data name="trPriceWithService" xml:space="preserve">
     <value>Price With Service</value>
   </data>
   <data name="trPrimeCost" xml:space="preserve">
     <value>prime cost</value>
   </data>
+  <data name="trSaturday" xml:space="preserve">
+    <value>Saturday</value>
+  </data>
+  <data name="trSunday" xml:space="preserve">
+    <value>Sunday</value>
+  </data>
   <data name="trTagsHint" xml:space="preserve">
     <value>Tags...</value>
+  </data>
+  <data name="trThursday" xml:space="preserve">
+    <value>Thursday</value>
+  </data>
+  <data name="trTuesday" xml:space="preserve">
+    <value>Tuesday</value>
+  </data>
+  <data name="trWednsday" xml:space="preserve">
+    <value>Wednsday</value>
   </data>
 </root>
