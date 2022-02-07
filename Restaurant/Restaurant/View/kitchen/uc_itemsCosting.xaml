@@ -117,7 +117,7 @@
                           Opacity="0.3"
                          BlurRadius="10"/>
                     </Border.Effect>
-                    <Button  x:Name="btn_fastFood" Tag="fastFood" Click="catalogMenu_Click" IsEnabled="False" Height="100" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <Button  x:Name="btn_fastFood" Tag="fastFood" Click="catalogMenu_Click" Height="100" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -143,7 +143,7 @@
                           Opacity="0.3"
                          BlurRadius="10"/>
                     </Border.Effect>
-                    <Button  x:Name="btn_mainCourses" Tag="mainCourses" Click="catalogMenu_Click" IsEnabled="False" Height="100" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <Button  x:Name="btn_mainCourses" Tag="mainCourses" Click="catalogMenu_Click"  Height="100" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -264,17 +264,18 @@
                                   materialDesign:HintAssist.Hint="tags..."  
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                   Grid.Column="0" Height="40"  Margin="4,0"
-                                  BorderBrush="#737373" BorderThickness="0"  />
+                                  BorderBrush="#737373" BorderThickness="0" 
+                                  SelectionChanged="Cb_searchTags_SelectionChanged"/>
 
                         </Grid>
                     </Border>
-                    <TextBlock    x:Name="txt_active" Grid.Column="3"
+                    <!--<TextBlock    x:Name="txt_active" Grid.Column="3"
                                    Margin="5,0,5,0" Text="Active" Foreground="{StaticResource SecondColor}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"
                                    FontSize="12"/>
                     <ToggleButton Grid.Column="4" Background="{StaticResource MainColor}"   x:Name="tgl_isActive"   Checked="Tgl_isActive_Checked" Unchecked="Tgl_isActive_Unchecked"
                              VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="True" 
-                                          Margin="0" Height="13" Width="28" />
+                                          Margin="0" Height="13" Width="28" />-->
                     <Button   FlowDirection="LeftToRight"  Width="40" Height="40" x:Name="btn_refresh" Click="Btn_refresh_Click" Grid.Row="0" Grid.Column="5" Padding="0" 
                             materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
                           Background="{x:Null}" BorderBrush="{x:Null}"   Style="{StaticResource SmallButtonCircleRotate}"
@@ -347,7 +348,7 @@
                                     </Style>
                                 </DataGrid.Resources>
                                 <DataGrid.Columns>
-                                <DataGridTextColumn Width="*" IsReadOnly="True" Header="itemName" Binding="{Binding Path=itemName}">
+                                <DataGridTextColumn Width="*" IsReadOnly="True" Header="itemName" Binding="{Binding Path=name}">
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Style.Triggers>
@@ -358,7 +359,7 @@
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                <DataGridTextColumn Width="*" IsReadOnly="False" Header="purchasePrice"  Binding="{Binding Path=purchasePrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <DataGridTextColumn Width="*" IsReadOnly="False" Header="purchasePrice"  Binding="{Binding Path=avgPurchasePrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Style.Triggers>
@@ -539,10 +540,10 @@
                           Opacity="0.3"
                          BlurRadius="10"/>
                 </Border.Effect>
-                <Button  Content="update"    FontSize="20" FontWeight="Bold"
+                <Button  Content="update" Name="btn_update"   FontSize="20" FontWeight="Bold"
                     materialDesign:ButtonAssist.CornerRadius="7" Height="40"
                           Background="{x:Null}" BorderBrush="{x:Null}"
-                       Foreground="White"  />
+                       Foreground="White" Click="Btn_update_Click"  />
             </Border>
         </Grid>
         <Border Margin="10 120 0 5" Grid.Column="1"  Background="White" CornerRadius="7">
@@ -649,6 +650,7 @@
                      FontSize="14"     VerticalAlignment="Center" 
                            FontWeight="Bold" />
                     <Button   x:Name="btn_clear"  Grid.Column="3" Padding="0" 
+                              Click="Btn_clear_Click"
                                VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}"   >
                         <materialDesign:PackIcon Foreground="White" Kind="RefreshCircle"   Width="30" Height="30">
                             <materialDesign:PackIcon.ToolTip>
@@ -673,12 +675,12 @@
                             <ColumnDefinition Width="*" MinWidth="100"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock  Grid.Row="0" Grid.Column="0" 
+                        <TextBlock  Grid.Row="0" Grid.Column="0" x:Name="tb_code"
                                     Text="code" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center"  />
                         <TextBlock  Grid.Row="0" Grid.Column="1" 
-                                    Text="item-156"
+                                    Text="{Binding Path=code}"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"  VerticalAlignment="Center"  />
                     </Grid>
@@ -687,12 +689,11 @@
                             <ColumnDefinition Width="*" MinWidth="100"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock  Grid.Row="1" Grid.Column="0" 
+                        <TextBlock  Grid.Row="1" Grid.Column="0" x:Name="tb_name"
                                     Text="name" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                        <TextBlock  Grid.Row="1" Grid.Column="1" 
-                                    Text="Hamburger"
+                        <TextBlock  Grid.Row="1" Grid.Column="1" Text="{Binding Path=name}"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
                     </Grid>
@@ -701,12 +702,12 @@
                             <ColumnDefinition Width="*" MinWidth="100"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock  Grid.Row="1" Grid.Column="0" 
+                        <TextBlock  Grid.Row="1" Grid.Column="0" x:Name="tb_purchasePrice"
                                     Text="purchasePrice" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
                         <TextBlock  Grid.Row="1" Grid.Column="1" 
-                                    Text="800"
+                                    Text="{Binding Path=avgPurchasePrice}"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
                     </Grid>
@@ -715,12 +716,12 @@
                             <ColumnDefinition Width="*" MinWidth="100"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock  Grid.Row="1" Grid.Column="0" 
+                        <TextBlock  Grid.Row="1" Grid.Column="0" x:Name="tb_price"
                                     Text="price" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
                         <TextBlock  Grid.Row="1" Grid.Column="1" 
-                                    Text="1000"
+                                    Text="{Binding Path=price}"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
                     </Grid>
@@ -729,12 +730,12 @@
                             <ColumnDefinition Width="*" MinWidth="100"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock  Grid.Row="1" Grid.Column="0" 
+                        <TextBlock  Grid.Row="1" Grid.Column="0" x:Name="tb_priceWithService"
                                     Text="priceWithService" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
                         <TextBlock  Grid.Row="1" Grid.Column="1" 
-                                    Text="1100"
+                                    Text="{Binding Path=priceWithService}"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
                     </Grid>

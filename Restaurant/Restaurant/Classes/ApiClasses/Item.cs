@@ -96,6 +96,15 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
         }
+        public async Task<int> saveItemsCosting(List<Item> items)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "Items/saveItemsCosting";
+
+            var myContent = JsonConvert.SerializeObject(items);
+            parameters.Add("itemObject", myContent);
+           return await APIResult.post(method, parameters);
+        }
         public async Task<int> saveSaleItem(Item item, ItemUnit itemUnit)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -144,6 +153,20 @@ namespace Restaurant.Classes
         {
             List<Item> items = new List<Item>();
             IEnumerable<Claim> claims = await APIResult.getList("items/GetPurchaseItems");
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<Item>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
+        public async Task<List<Item>> GetAllSalesItems()
+        {
+            List<Item> items = new List<Item>();
+            IEnumerable<Claim> claims = await APIResult.getList("items/GetAllSalesItems");
 
             foreach (Claim c in claims)
             {

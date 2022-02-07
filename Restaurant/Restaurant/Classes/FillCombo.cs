@@ -244,6 +244,24 @@ namespace Restaurant.Classes
             cmb.SelectedValuePath = "tagId";
             cmb.DisplayMemberPath = "tagName";
         }
+        public static async Task fillTagsWithDefault(ComboBox cmb, int categoryId)
+        {
+            List<Tag> tags;
+            if (categoryId == -1)
+                tags = new List<Tag>();
+            else
+            {
+                tags = await tag.Get(categoryId);
+
+                var newTag = new Tag();
+                newTag.tagId = 0;
+                newTag.tagName = "-";
+                tags.Insert(0, newTag);
+            }
+            cmb.ItemsSource = tags;
+            cmb.SelectedValuePath = "tagId";
+            cmb.DisplayMemberPath = "tagName";
+        }
         #endregion
         #region Unit
         static public Unit unit = new Unit();
@@ -546,6 +564,11 @@ namespace Restaurant.Classes
             cmb.SelectedIndex = -1;
 
             return purchaseItems;
+        }
+        static public async Task<IEnumerable<Item>> RefreshSalesItems()
+        {
+            salesItems = await item.GetAllSalesItems();
+            return salesItems;
         }
         #endregion
         #region reportSetting

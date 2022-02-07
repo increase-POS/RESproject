@@ -1,4 +1,5 @@
-﻿using Restaurant.Classes;
+﻿using netoaster;
+using Restaurant.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,22 +35,89 @@ namespace Restaurant.View.kitchen
                 _instance = value;
             }
         }
+        string basicsPermission = "itemsCosting_save";
+        List<Item> itemsQuery = new List<Item>();
+        string searchText = "";
+        int categoryId = 0;
         public uc_itemsCosting()
         {
             InitializeComponent();
         }
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             catalogMenuList = new List<string> { "allMenu", "appetizers", "beverages", "fastFood", "mainCourses", "desserts" };
-            List<ItemUnit> itemUnitsList = new List<ItemUnit> {
-                new ItemUnit { itemName = "Cheese", purchasePrice=800, price=1150, priceWithService=1200 ,isActive = 1},
-                new ItemUnit { itemName = "Egg", purchasePrice=600, price=850, priceWithService=900 ,isActive = 1},
-                new ItemUnit { itemName = "Butter", purchasePrice=1200, price=1400, priceWithService=1500,isActive = 1 },
-                new ItemUnit { itemName = "Yogurt", purchasePrice=450, price=450, priceWithService=500,isActive = 1 },
-                new ItemUnit { itemName = "Hamburger", purchasePrice=300, price=350, priceWithService=350 ,isActive = 1}
-            };
-            dg_items.ItemsSource = itemUnitsList;
+            categoryBtns = new List<Button> {btn_appetizers,btn_beverages,btn_fastFood,btn_mainCourses, btn_desserts };
+            #region loading
+            loadingList = new List<keyValueBool>();
+            bool isDone = true;
+            loadingList.Add(new keyValueBool { key = "loading_RefrishItems", value = false });
+            loadingList.Add(new keyValueBool { key = "loading_RefrishCategories", value = false });
+
+            loading_RefrishItems();
+            loading_RefrishCategories();
+            do
+            {
+                isDone = true;
+                foreach (var item in loadingList)
+                {
+                    if (item.value == false)
+                    {
+                        isDone = false;
+                        break;
+                    }
+                }
+                if (!isDone)
+                {
+                    await Task.Delay(0500);
+                }
+            }
+            while (!isDone);
+            #endregion
+            //enable categories buttons
+            HelpClass.activateCategoriesButtons(FillCombo.salesItems, FillCombo.categoriesList, categoryBtns);
+            await Search();
         }
+        #region loading
+        List<keyValueBool> loadingList;
+        async void loading_RefrishItems()
+        {
+            try
+            {
+                if (FillCombo.salesItems == null)
+                    await FillCombo.RefreshSalesItems();
+               
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_RefrishItems"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_RefrishCategories()
+        {
+            try
+            {
+                if (FillCombo.categoriesList == null)
+                    await FillCombo.RefreshCategory();
+
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_RefrishCategories"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        #endregion
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             Instance = null;
@@ -57,13 +125,20 @@ namespace Restaurant.View.kitchen
         }
         #region catalogMenu
         public static List<string> catalogMenuList;
-
-        private void catalogMenu_Click(object sender, RoutedEventArgs e)
+        public static List<Button> categoryBtns;
+        private async void catalogMenu_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                
                 string senderTag = (sender as Button).Tag.ToString();
+                if (senderTag != "allMenu")
+                    categoryId = FillCombo.categoriesList.Where(x => x.categoryCode == senderTag).FirstOrDefault().categoryId;
+                else
+                    categoryId = -1;
+                await refreshCategoryTag();
+
+
                 #region refresh colors
                 foreach (var control in catalogMenuList)
                 {
@@ -94,7 +169,7 @@ namespace Restaurant.View.kitchen
                         textBlock.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                 }
                 #endregion
-                //refreshCatalogTags(senderTag);
+               await Search();
             }
             catch { }
         }
@@ -107,7 +182,7 @@ namespace Restaurant.View.kitchen
             try
             {
                 HelpClass.StartAwait(grid_main);
-                //await Search();
+                await Search();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -116,18 +191,13 @@ namespace Restaurant.View.kitchen
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Tgl_isActive_Checked(object sender, RoutedEventArgs e)
+        private async void Cb_searchTags_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                /*
                 HelpClass.StartAwait(grid_main);
-                if (tables is null)
-                    await RefreshTablesList();
-                tgl_tableState = 1;
                 await Search();
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
@@ -135,18 +205,13 @@ namespace Restaurant.View.kitchen
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
+        private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                /*
                 HelpClass.StartAwait(grid_main);
-                if (tables is null)
-                    await RefreshTablesList();
-                tgl_tableState = 0;
-                await Search();
+                Clear();
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
@@ -155,28 +220,17 @@ namespace Restaurant.View.kitchen
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
-        //private void Btn_clear_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        HelpClass.StartAwait(grid_main);
-        //        Clear();
-        //        HelpClass.EndAwait(grid_main);
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        HelpClass.EndAwait(grid_main);
-        //        HelpClass.ExceptionMessage(ex, this);
-        //    }
-        //}
+      
         private async void Dg_items_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
-
+                if (dg_items.SelectedIndex != -1)
+                {
+                    FillCombo.item = dg_items.SelectedItem as Item;
+                    this.DataContext = FillCombo.item;
+                }
 
                 //HelpClass.clearValidate(requiredControlList, this);
                 HelpClass.EndAwait(grid_main);
@@ -193,10 +247,10 @@ namespace Restaurant.View.kitchen
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
-                /*
-                await RefreshUsersList();
+
+                await RefreshItemsList();
                 await Search();
-                */
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -206,37 +260,108 @@ namespace Restaurant.View.kitchen
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        private async void Btn_update_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "one"))
+                {
+                    //save
+                    int res = await FillCombo.item.saveItemsCosting(itemsQuery);
+                    if (res > 0)
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                        await FillCombo.RefreshSalesItems();
+                    }
+                    else
+                        Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+
         #endregion
-        #region Refresh & Search
-        /*
+
+        #region Refresh & Search & clear
+
         async Task Search()
         {
             //search
-            if (users is null)
-                await RefreshUsersList();
-            searchText = tb_search.Text.ToLower();
-            usersQuery = users.Where(s => (s.name.ToLower().Contains(searchText) ||
-            s.job.ToLower().Contains(searchText)
-            ) && s.isActive == tgl_userState);
-            RefreshCustomersView();
-        }
-        async Task<IEnumerable<User>> RefreshUsersList()
-        {
+            try
+            {
+                searchText = tb_search.Text.ToLower();
 
-            users = await user.Get();
-            return users;
+                itemsQuery = FillCombo.salesItems.Where(s => s.name.ToLower().Contains(searchText) 
+                                                        || s.code.ToLower().Contains(searchText) 
+                                                        || s.details.ToLower().Contains(searchText))
+                    .Select(x => new Item()
+                    {
+                        itemId = x.itemId,
+                        name = x.name,
+                        code = x.code,
+                        itemUnitId = x.itemUnitId,
+                        avgPurchasePrice = x.avgPurchasePrice,
+                        price = x.price,
+                        priceWithService = x.priceWithService,
+                        isActive = x.isActive,
+                        categoryId = x.categoryId,
+                        tagId = x.tagId,
+                    }).ToList();
 
+                if (categoryId > 0)
+                    itemsQuery = itemsQuery.Where(x => x.categoryId == categoryId).ToList();
+
+                if (cb_searchTags.SelectedIndex > 0)
+                    itemsQuery = itemsQuery.Where(x => x.tagId == (int)cb_searchTags.SelectedValue).ToList();
+
+                RefreshItemsView();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
-        void RefreshCustomersView()
+        async Task RefreshItemsList()
         {
-            dg_user.ItemsSource = usersQuery;
-            txt_count.Text = usersQuery.Count().ToString();
+            await FillCombo.RefreshSalesItems();
+            HelpClass.activateCategoriesButtons(FillCombo.salesItems, FillCombo.categoriesList, categoryBtns);
         }
-        */
+        void RefreshItemsView()
+        {
+            dg_items.ItemsSource = itemsQuery;
+            txt_count.Text = itemsQuery.Count().ToString();
+        }
+
+        private void Clear()
+        {
+            try
+            {
+                dg_items.SelectedIndex = -1;
+                FillCombo.item = new Item();
+                this.DataContext = FillCombo.item;
+            }
+            catch { }
+        }
+        private async Task refreshCategoryTag()
+        {
+            await FillCombo.fillTagsWithDefault(cb_searchTags,categoryId);
+        }
+
         #endregion
-       
 
-
-        
+ 
     }
 }
