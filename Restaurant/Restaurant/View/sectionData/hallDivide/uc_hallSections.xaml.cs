@@ -603,30 +603,28 @@ namespace Restaurant.View.sectionData.hallDivide
     
 
         private async void Btn_tables_Click(object sender, RoutedEventArgs e)
-        {
+        {//tables
             try
-            {/*
+            {
                 HelpClass.StartAwait(grid_main);
-                //tables
-                if (MainWindow.groupObject.HasPermissionAction(selectLocationPermission, MainWindow.groupObjects, "one"))
-                {
+                
+                //if (MainWindow.groupObject.HasPermissionAction(selectLocationPermission, MainWindow.groupObjects, "one"))
+                //{
+                //    Window.GetWindow(this).Opacity = 0.2;
+                //    wd_tablesList w = new wd_tablesList();
+                //    w.sectionId = section.sectionId;
+                //    w.ShowDialog();
+                //    if (w.isActive)
+                //    {
+                //       //await tables.saveTablesSection(w.selectedTables, section.sectionId, MainWindow.userLogin.userId);
 
-                    Window.GetWindow(this).Opacity = 0.2;
-                    wd_tablesList w = new wd_tablesList();
-                    w.sectionId = section.sectionId;
-                    w.ShowDialog();
-                    if (w.isActive)
-                    {
-                       await tables.saveTablesSection(w.selectedTables, section.sectionId, MainWindow.userLogin.userId);
-
-                    }
-                    Window.GetWindow(this).Opacity = 1;
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                //    }
+                //    Window.GetWindow(this).Opacity = 1;
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
@@ -670,8 +668,7 @@ namespace Restaurant.View.sectionData.hallDivide
         }
 
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
-        {
-            //pdf
+        {//pdf
             try
             {
                 
@@ -820,6 +817,35 @@ namespace Restaurant.View.sectionData.hallDivide
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
+        {//pie
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
+                {
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+                    win_lvc win = new win_lvc(sectionsQuery, 7);
+                    win.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
         #endregion
+
+
     }
 }

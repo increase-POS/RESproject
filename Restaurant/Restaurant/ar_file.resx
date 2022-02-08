@@ -3091,13 +3091,16 @@
   <data name="trWednsday" xml:space="preserve">
     <value>الأربعاء</value>
   </data>
-  <data name="trActive_" xml:space="preserve">
-    <value>فعال</value>
+  <data name="trCards" xml:space="preserve">
+    <value>بطاقات الدفع</value>
   </data>
-  <data name="trItemName" xml:space="preserve">
-    <value>اسم العنصر</value>
+  <data name="trPOSs" xml:space="preserve">
+    <value>نقاط البيع</value>
   </data>
-  <data name="trItemNameHint" xml:space="preserve">
-    <value>اسم العنصر...</value>
+  <data name="trResidentialSectors" xml:space="preserve">
+    <value>القطاعات السكنية</value>
+  </data>
+  <data name="trSections" xml:space="preserve">
+    <value>الأقسام</value>
   </data>
 </root>

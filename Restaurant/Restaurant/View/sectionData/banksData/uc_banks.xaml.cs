@@ -665,6 +665,7 @@ namespace Restaurant.View.sectionData.banksData
 
             return b;
         }
+
         #region report
         //report  parameters
         ReportCls reportclass = new ReportCls();
@@ -849,8 +850,34 @@ namespace Restaurant.View.sectionData.banksData
                  HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
+        {//pie
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
+                {
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+                    win_lvc win = new win_lvc(banksQuery, 5);
+                    win.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         #endregion
+
 
     }
 }

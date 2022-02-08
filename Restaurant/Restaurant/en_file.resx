@@ -3115,13 +3115,16 @@ Please add Email in setting</value>
   <data name="trWednsday" xml:space="preserve">
     <value>Wednsday</value>
   </data>
-  <data name="trActive_" xml:space="preserve">
-    <value>Active</value>
+  <data name="trCards" xml:space="preserve">
+    <value>Credit cards</value>
   </data>
-  <data name="trItemName" xml:space="preserve">
-    <value>Item Name</value>
+  <data name="trPOSs" xml:space="preserve">
+    <value>POS</value>
   </data>
-  <data name="trItemNameHint" xml:space="preserve">
-    <value>Item Name...</value>
+  <data name="trResidentialSectors" xml:space="preserve">
+    <value>Residential Sectors</value>
+  </data>
+  <data name="trSections" xml:space="preserve">
+    <value>Sections</value>
   </data>
 </root>

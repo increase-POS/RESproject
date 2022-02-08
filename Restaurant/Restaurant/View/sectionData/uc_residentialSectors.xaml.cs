@@ -648,8 +648,7 @@ namespace Restaurant.View.sectionData
         }
 
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
-        {
-            //pdf
+        { //pdf
             try
             {
 
@@ -685,11 +684,11 @@ namespace Restaurant.View.sectionData
 
         private void Btn_preview_Click(object sender, RoutedEventArgs e)
         {//preview
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
-                {
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
+            //    if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
+            //    {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
 
@@ -707,24 +706,22 @@ namespace Restaurant.View.sectionData
                     {
                         w.ShowDialog();
                         w.wb_pdfWebViewer.Dispose();
-
-
                     }
                     Window.GetWindow(this).Opacity = 1;
                     #endregion
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+            //    }
+            //    else
+            //        Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
 
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
 
         }
 
@@ -755,7 +752,36 @@ namespace Restaurant.View.sectionData
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
+        {//pie
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
+                {
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+                    win_lvc win = new win_lvc(residentialsQuery, 9);
+                    win.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
         #endregion
+
 
     }
 }
