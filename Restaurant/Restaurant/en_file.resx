@@ -3115,4 +3115,13 @@ Please add Email in setting</value>
   <data name="trWednsday" xml:space="preserve">
     <value>Wednsday</value>
   </data>
+  <data name="trActive_" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="trItemName" xml:space="preserve">
+    <value>Item Name</value>
+  </data>
+  <data name="trItemNameHint" xml:space="preserve">
+    <value>Item Name...</value>
+  </data>
 </root>

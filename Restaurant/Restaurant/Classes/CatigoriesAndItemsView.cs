@@ -117,6 +117,32 @@ namespace Restaurant.Classes
                 }
             }
         }
+        public void  FN_refrishCatalogItem(List<MenuSetting> items, string cardType)
+        {
+            gridCatigorieItems.Children.Clear();
+            gridCatigorieItems_ActualHeight = gridCatigorieItems.ActualHeight/3;
+            gridCatigorieItems_ActualWidth = gridCatigorieItems.ActualWidth/5;
+            int row = 0;
+            int column = 0;
+            foreach (var item in items)
+            {
+
+                CardViewItems itemCardView = new CardViewItems();
+                itemCardView.menuSetting = item;
+                itemCardView.cardType = cardType;
+                itemCardView.row = row;
+                itemCardView.column = column;
+                FN_createRectangelCard(itemCardView);
+               
+
+                column++;
+                if (column == 5)
+                {
+                    column = 0;
+                    row++;
+                }
+            }
+        }
 
         uc_squareCard FN_createRectangelCard(CardViewItems itemCardView, string BorderBrush = "#DFDFDF")
         {

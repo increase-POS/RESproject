@@ -3091,4 +3091,13 @@
   <data name="trWednsday" xml:space="preserve">
     <value>الأربعاء</value>
   </data>
+  <data name="trActive_" xml:space="preserve">
+    <value>فعال</value>
+  </data>
+  <data name="trItemName" xml:space="preserve">
+    <value>اسم العنصر</value>
+  </data>
+  <data name="trItemNameHint" xml:space="preserve">
+    <value>اسم العنصر...</value>
+  </data>
 </root>

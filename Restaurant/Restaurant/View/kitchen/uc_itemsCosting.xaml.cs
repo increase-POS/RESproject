@@ -118,7 +118,7 @@ namespace Restaurant.View.kitchen
             dg_items.Columns[0].Header = MainWindow.resourcemanager.GetString("trItem");
             dg_items.Columns[1].Header = MainWindow.resourcemanager.GetString("trPrimeCost");
             dg_items.Columns[2].Header = MainWindow.resourcemanager.GetString("trPrice");
-            dg_items.Columns[2].Header = MainWindow.resourcemanager.GetString("trPriceWithService");
+            dg_items.Columns[3].Header = MainWindow.resourcemanager.GetString("trPriceWithService");
 
             txt_details.Text = MainWindow.resourcemanager.GetString("trDetails");
             txt_code.Text = MainWindow.resourcemanager.GetString("trCode");
