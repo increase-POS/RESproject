@@ -1,4 +1,6 @@
-﻿using Restaurant.Classes;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Restaurant.Classes;
 using Restaurant.controlTemplate;
 using Restaurant.View;
 using Restaurant.View.catalog;
@@ -117,32 +119,7 @@ namespace Restaurant.Classes
                 }
             }
         }
-        public void  FN_refrishCatalogItem(List<MenuSetting> items, string cardType)
-        {
-            gridCatigorieItems.Children.Clear();
-            gridCatigorieItems_ActualHeight = gridCatigorieItems.ActualHeight/3;
-            gridCatigorieItems_ActualWidth = gridCatigorieItems.ActualWidth/5;
-            int row = 0;
-            int column = 0;
-            foreach (var item in items)
-            {
-
-                CardViewItems itemCardView = new CardViewItems();
-                itemCardView.menuSetting = item;
-                itemCardView.cardType = cardType;
-                itemCardView.row = row;
-                itemCardView.column = column;
-                FN_createRectangelCard(itemCardView);
-               
-
-                column++;
-                if (column == 5)
-                {
-                    column = 0;
-                    row++;
-                }
-            }
-        }
+       
 
         uc_squareCard FN_createRectangelCard(CardViewItems itemCardView, string BorderBrush = "#DFDFDF")
         {
@@ -155,6 +132,7 @@ namespace Restaurant.Classes
             uc.MouseDown += this.ucItemMouseDown;
             return uc;
         }
+
         private void ucItemMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount > 0)

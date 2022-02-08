@@ -10,7 +10,6 @@ namespace Restaurant.Classes
     {
         public Item item { get; set; }
         public Category category { get; set; }
-        public MenuSetting menuSetting { get; set; }
         public User user { get; set; }
         public Agent agent { get; set; }
         public int row { get; set; }

@@ -1060,6 +1060,28 @@ namespace Restaurant.Classes
                     categoryBtn.IsEnabled = true;
             }
         }
+        static public void activateCategoriesButtons(List<MenuSetting> items, List<Category> categories, List<Button> btns)
+        {
+            foreach (Category cat in categories)
+            {
+                string btn_name = "btn_" + cat.categoryCode;
+                Button categoryBtn = new Button();
+                foreach(Button btn in btns)
+                {
+                    if (btn.Name == btn_name)
+                    {
+                        categoryBtn = btn;
+                        break;
+                    }
+                }
+
+                var isExist = items.Where(x => x.categoryId == cat.categoryId).FirstOrDefault();
+                if (isExist == null)
+                    categoryBtn.IsEnabled = false;
+                else
+                    categoryBtn.IsEnabled = true;
+            }
+        }
 
     }
 

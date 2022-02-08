@@ -334,7 +334,7 @@ namespace Restaurant.Classes
             }
 
         }
-        public IEnumerable<User> refrishPagination(IEnumerable<User> _items, int pageIndex, Button[] btns  )
+        public IEnumerable<User> refrishPagination(IEnumerable<User> _items, int pageIndex, Button[] btns  ) 
         {
             try
             {
