@@ -18,6 +18,8 @@ using System.Windows.Navigation;
 using Microsoft.Win32;
 using Restaurant.View.windows;
 using System.Windows.Shapes;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Restaurant.View.kitchen
 {
@@ -56,6 +58,8 @@ namespace Restaurant.View.kitchen
         byte tgl_itemState;
         string searchText = "";
         int categoryId = 0;
+        List<string> weekDays = new List<string>() { "sat","sun", "mon","tues","wed","thur","fri" };
+        List<string> selectedDays = new List<string>();
         public static List<string> requiredControlList;
         //List<Unit> units;
         Unit unit = new Unit();
@@ -94,10 +98,10 @@ namespace Restaurant.View.kitchen
                 }
                 translate();
 
-                await fillItemsList();
+                await RefreshItemsList();
                 await refrishCategories();
                 //enable categories buttons
-                HelpClass.activateCategoriesButtons(FillCombo.salesItems, FillCombo.categoriesList, categoryBtns);
+                HelpClass.activateCategoriesButtons(items, FillCombo.categoriesList, categoryBtns);
                 await Search();
                 Clear();
                 HelpClass.EndAwait(grid_main);
@@ -115,7 +119,7 @@ namespace Restaurant.View.kitchen
             txt_daysOfWeek.Text = MainWindow.resourcemanager.GetString("trDaysOfWeek");
             txt_minute.Text = MainWindow.resourcemanager.GetString("trMinute");
             txt_activeItem.Text = MainWindow.resourcemanager.GetString("trActive");
-            txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
+            txt_active.Text = MainWindow.resourcemanager.GetString("trActive_");
 
             chb_all.Content = MainWindow.resourcemanager.GetString("trAll");
             chb_sat.Content = MainWindow.resourcemanager.GetString("trSaturday");
@@ -135,9 +139,65 @@ namespace Restaurant.View.kitchen
 
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
-        private void Btn_save_Click(object sender, RoutedEventArgs e)
+        private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+                if (MainWindow.groupObject.HasPermissionAction(updatePermission, MainWindow.groupObjects, "one"))
+                {
+                    //save
+                    var menuSet = new MenuSetting();
+                    menuSet.itemUnitId = item.itemUnitId;
+                    menuSet.branchId = MainWindow.branchLogin.branchId;
+                    foreach(string str in selectedDays)
+                    {
+                        switch (str)
+                        {
+                            case "sat":
+                                menuSet.sat = true;
+                                break;
+                            case "sun":
+                                menuSet.sun = true;
+                                break;
+                            case "mon":
+                                menuSet.mon = true;
+                                break;
+                            case "tues":
+                                menuSet.tues = true;
+                                break;
+                            case "wed":
+                                menuSet.wed = true;
+                                break;
+                            case "thur":
+                                menuSet.thur = true;
+                                break;
+                            case "fri":
+                                menuSet.fri = true;
+                                break;
+                        }
+                    }
+                    int res = await menuSetting.saveItemMenuSetting(menuSet);
+                    if (res > 0)
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                        await FillCombo.RefreshSalesItems();
+                    }
+                    else
+                        Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         #endregion
         #region events
@@ -315,10 +375,7 @@ namespace Restaurant.View.kitchen
         }
         #endregion
         #region Refresh & Search
-        async Task RefreshItemsList()
-        {
-            await FillCombo.RefreshSalesItems();
-        }
+
         async Task Search()
         {
             //search
@@ -327,12 +384,13 @@ namespace Restaurant.View.kitchen
                 HelpClass.StartAwait(grid_main);
 
                 searchText = tb_search.Text;
-                itemsQuery = FillCombo.salesItems.
-                Where(x => (x.code.ToLower().Contains(searchText) ||
+                if (items == null)
+                    await RefreshItemsList();
+                itemsQuery = items.Where(x => (x.code.ToLower().Contains(searchText) ||
                     x.name.ToLower().Contains(searchText) ||
                     x.details.ToLower().Contains(searchText)
                      || x.code.ToLower().Contains(searchText)
-                    ) && x.isActive == tgl_itemState);
+                    ) && x.isActive == tgl_itemState).ToList();
 
                 if (categoryId > 0)
                     itemsQuery = itemsQuery.Where(x => x.categoryId == categoryId).ToList();
@@ -358,10 +416,7 @@ namespace Restaurant.View.kitchen
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            item = new Item();
-            item.taxes = 0;
-            item.min = 0;
-            item.max = 0;
+            item = new MenuSetting();
 
             this.DataContext = item;
 
@@ -687,24 +742,26 @@ namespace Restaurant.View.kitchen
         #region  Cards
         CatigoriesAndItemsView catigoriesAndItemsView = new CatigoriesAndItemsView();
         #region Refrish Y
-        Item item = new Item();
-        IEnumerable<Item> items;
-        IEnumerable<Item> itemsQuery;
-        async Task fillItemsList()
+        MenuSetting item = new MenuSetting();
+        MenuSetting menuSetting = new MenuSetting();
+        List<MenuSetting> items;
+        List<MenuSetting> itemsQuery;
+        async Task RefreshItemsList()
         {
-            if (FillCombo.salesItems == null)
-                await FillCombo.RefreshSalesItems();
+            items = await menuSetting.Get(MainWindow.branchLogin.branchId);
         }
         async Task refrishCategories()
         {
             if (FillCombo.categoriesList == null)
                 await FillCombo.RefreshCategory();
         }
-        void RefrishItemsCard(IEnumerable<Item> _items)
+        void RefrishItemsCard(IEnumerable<MenuSetting> _items)
         {
             grid_itemContainerCard.Children.Clear();
             catigoriesAndItemsView.gridCatigorieItems = grid_itemContainerCard;
-            catigoriesAndItemsView.FN_refrishCatalogItem(_items.ToList(), "purchase");
+            string jsonItem = JsonConvert.SerializeObject(_items);
+            List<Item> it = JsonConvert.DeserializeObject<List<Item>>(jsonItem, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+            catigoriesAndItemsView.FN_refrishCatalogItem(it.ToList(), "purchase");
         }
         #endregion
         #region Get Id By Click  Y
@@ -713,7 +770,7 @@ namespace Restaurant.View.kitchen
         {
             try
             {
-                item = FillCombo.salesItems.Where(x => x.itemId == itemId).FirstOrDefault();
+                item = items.Where(x => x.itemId == itemId).FirstOrDefault();
                 this.DataContext = item;
                 HelpClass.clearValidate(requiredControlList, this);
             }
@@ -1034,14 +1091,31 @@ namespace Restaurant.View.kitchen
                 if (checkBox.Name == "chb_all")
                 {
                     chb_sat.IsChecked =
-              chb_sun.IsChecked =
-              chb_mon.IsChecked =
-              chb_tues.IsChecked =
-              chb_wed.IsChecked =
-              chb_thur.IsChecked =
-              chb_fri.IsChecked = true;
+                    chb_sun.IsChecked =
+                    chb_mon.IsChecked =
+                    chb_tues.IsChecked =
+                    chb_wed.IsChecked =
+                    chb_thur.IsChecked =
+                    chb_fri.IsChecked = true;
                     wp_daysWeek.IsEnabled = false;
+
+                    selectedDays = new List<string>();
+                    selectedDays.AddRange(weekDays);
                 }
+                else if (checkBox.Name == "chb_sat")
+                    selectedDays.Add("sat");
+                else if (checkBox.Name == "chb_sun")
+                    selectedDays.Add("sun");
+                else if (checkBox.Name == "chb_mon")
+                    selectedDays.Add("mon");
+                else if (checkBox.Name == "chb_tues")
+                    selectedDays.Add("tues");
+                else if (checkBox.Name == "chb_wed")
+                    selectedDays.Add("wed");
+                else if (checkBox.Name == "chb_thu")
+                    selectedDays.Add("thur");
+                else if (checkBox.Name == "chb_fri")
+                    selectedDays.Add("fri");
                
             }
             catch (Exception ex)
@@ -1057,14 +1131,30 @@ namespace Restaurant.View.kitchen
                 if (checkBox.Name == "chb_all")
                 {
                     chb_sat.IsChecked =
-            chb_sun.IsChecked =
-            chb_mon.IsChecked =
-            chb_tues.IsChecked =
-            chb_wed.IsChecked =
-            chb_thur.IsChecked =
-            chb_fri.IsChecked = false;
+                    chb_sun.IsChecked =
+                    chb_mon.IsChecked =
+                    chb_tues.IsChecked =
+                    chb_wed.IsChecked =
+                    chb_thur.IsChecked =
+                    chb_fri.IsChecked = false;
                     wp_daysWeek.IsEnabled = true;
+
+                    selectedDays = new List<string>();
                 }
+                else if (checkBox.Name == "chb_sat")
+                    selectedDays.Remove("sat");
+                else if (checkBox.Name == "chb_sun")
+                    selectedDays.Remove("sun");
+                else if (checkBox.Name == "chb_mon")
+                    selectedDays.Remove("mon");
+                else if (checkBox.Name == "chb_tues")
+                    selectedDays.Remove("tues");
+                else if (checkBox.Name == "chb_wed")
+                    selectedDays.Remove("wed");
+                else if (checkBox.Name == "chb_thu")
+                    selectedDays.Remove("thu");
+                else if (checkBox.Name == "chb_fri")
+                    selectedDays.Remove("fri");
             }
             catch (Exception ex)
             {
