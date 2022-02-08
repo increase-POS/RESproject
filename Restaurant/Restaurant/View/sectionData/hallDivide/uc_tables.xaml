@@ -333,7 +333,7 @@
         </Grid>
 
 
-        <Border Margin="10 60 0 5" Grid.Column="1"  >
+        <Border Margin="10 10 0 5" Grid.Column="1"  >
             <Border.Effect>
                 <DropShadowEffect
                           ShadowDepth="1"

@@ -177,6 +177,7 @@
     <Compile Include="ar_file.Designer.cs" />
     <Compile Include="Classes\ApiClasses\Agent.cs" />
     <Compile Include="Classes\ApiClasses\ItemUnitOffer.cs" />
+    <Compile Include="Classes\ApiClasses\MenuSetting.cs" />
     <Compile Include="Classes\ApiClasses\ResidentialSectors.cs" />
     <Compile Include="Classes\ApiClasses\Bank.cs" />
     <Compile Include="Classes\ApiClasses\Branch.cs" />
@@ -397,6 +398,9 @@
     </Compile>
     <Compile Include="View\sectionData\uc_sectionData.xaml.cs">
       <DependentUpon>uc_sectionData.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sectionData\win_lvc.xaml.cs">
+      <DependentUpon>win_lvc.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\settings\emailsGeneral\uc_emailsGeneral.xaml.cs">
       <DependentUpon>uc_emailsGeneral.xaml</DependentUpon>
@@ -808,6 +812,10 @@
     <Page Include="View\sectionData\uc_sectionData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sectionData\win_lvc.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\settings\emailsGeneral\uc_emailsGeneral.xaml">
       <Generator>MSBuild:Compile</Generator>

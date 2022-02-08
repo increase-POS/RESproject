@@ -28,6 +28,7 @@
                 <Grid   >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition  Width="auto"  />
                         <ColumnDefinition  Width="auto"  />
@@ -361,7 +362,7 @@
             </Border>
 
         </Grid>
-        <Border Margin="10 105 0 5" Grid.Column="1"  >
+        <Border Margin="10 10 0 5" Grid.Column="1"  >
             <Border.Effect>
                 <DropShadowEffect
                           ShadowDepth="1"

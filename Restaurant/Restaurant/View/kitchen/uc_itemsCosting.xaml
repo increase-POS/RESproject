@@ -546,7 +546,7 @@
                        Foreground="White" Click="Btn_update_Click"  />
             </Border>
         </Grid>
-        <Border Margin="10 120 0 5" Grid.Column="1"  Background="White" CornerRadius="7">
+        <Border Margin="10 10 0 5" Grid.Column="1"  Background="White" CornerRadius="7">
             <Border.Effect>
                 <DropShadowEffect
                           ShadowDepth="1"
