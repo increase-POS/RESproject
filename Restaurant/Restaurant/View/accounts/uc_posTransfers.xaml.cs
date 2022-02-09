@@ -1,8 +1,11 @@
-﻿using netoaster;
+﻿using Microsoft.Reporting.WinForms;
+using Microsoft.Win32;
+using netoaster;
 using Restaurant.Classes;
 using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -106,7 +109,9 @@ namespace Restaurant.View.accounts
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "name", "accNumber", "mobile", "phone" };
+                requiredControlList = new List<string> { "cash", "fromBranch", "pos1", "toBranch" , "pos2" };
+                
+                #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -116,6 +121,8 @@ namespace Restaurant.View.accounts
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
+                #endregion
+
                 dp_searchStartDate.SelectedDate = DateTime.Now.Date;
                 dp_searchEndDate.SelectedDate = DateTime.Now.Date;
 
@@ -199,7 +206,16 @@ namespace Restaurant.View.accounts
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_pos1, MainWindow.resourcemanager.GetString("trFromPosHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_pos2, MainWindow.resourcemanager.GetString("trToPosHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_state, MainWindow.resourcemanager.GetString("trStateHint"));
+
+            chb_all.Content = MainWindow.resourcemanager.GetString("trAll");
+            chk_unConfirmed.Content = MainWindow.resourcemanager.GetString("trUnConfirmed");
+            chk_waiting.Content = MainWindow.resourcemanager.GetString("trWaiting");
+            chk_createdOper.Content = MainWindow.resourcemanager.GetString("trCreatedOper");
+            chk_confirmed.Content = MainWindow.resourcemanager.GetString("trConfirmed");
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchStartDate, MainWindow.resourcemanager.GetString("trStartDate"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchEndDate, MainWindow.resourcemanager.GetString("trEndDate"));
 
             dg_posAccounts.Columns[0].Header = MainWindow.resourcemanager.GetString("trTransferNumberTooltip");
             dg_posAccounts.Columns[1].Header = MainWindow.resourcemanager.GetString("trFromPos");
@@ -230,63 +246,57 @@ namespace Restaurant.View.accounts
                 {
                     HelpClass.StartAwait(grid_main);
 
-                    /*
                     #region validate
-                    //chk empty cash
-                    HelpClass.validateEmptyTextBox(tb_cash, p_errorCash, tt_errorCash, "trEmptyCashToolTip");
-                    //chk empty pos1
-                    HelpClass.validateEmptyComboBox(cb_pos1, p_errorPos1, tt_errorPos1, "trErrorEmptyFromPosToolTip");
-                    //chk empty pos2
-                    HelpClass.validateEmptyComboBox(cb_pos2, p_errorPos2, tt_errorPos2, "trErrorEmptyToPosToolTip");
                     //chk if 2 pos is the same
-                    bool isSame = false;
-                    if (cb_pos1.SelectedValue == cb_pos2.SelectedValue)
-                        isSame = true;
-                    if ((cb_pos1.SelectedIndex != -1) && (cb_pos2.SelectedIndex != -1) && (cb_pos1.SelectedValue == cb_pos2.SelectedValue))
-                    {
-                        HelpClass.showComboBoxValidate(cb_pos1, p_errorPos1, tt_errorPos1, "trErrorSamePos");
-                        HelpClass.showComboBoxValidate(cb_pos2, p_errorPos2, tt_errorPos2, "trErrorSamePos");
-                    }
+                    //bool isSame = false;
+                    //if (cb_pos1.SelectedValue == cb_pos2.SelectedValue)
+                    //    isSame = true;
+                    //if ((cb_pos1.SelectedIndex != -1) && (cb_pos2.SelectedIndex != -1) && (cb_pos1.SelectedValue == cb_pos2.SelectedValue))
+                    //{
+                    //    HelpClass.showComboBoxValidate(cb_pos1 , p_error_pos1 , tt_error_Pos1 , "trErrorSamePos");
+                    //    HelpClass.showComboBoxValidate(cb_pos2, p_error_pos2, tt_error_Pos2, "trErrorSamePos");
+                    //}
 
                     #endregion
 
                     #region add
-
-                    if ((!tb_cash.Text.Equals("")) && (!cb_pos1.Text.Equals("")) && (!cb_pos2.Text.Equals("")) && !isSame )
+                    //if (HelpClass.validate(requiredControlList, this) && !isSame)
+                    if (HelpClass.validate(requiredControlList, this))
                     {
                         Pos pos = await posModel.getById(Convert.ToInt32(cb_pos1.SelectedValue));
                         if (pos.balance < decimal.Parse(tb_cash.Text))
                         { Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn); }
                         else
                         {
-                            //first operation
+                            #region first operation
                             CashTransfer cash1 = new CashTransfer();
 
                             cash1.transType = "p";//pull
                             cash1.transNum = await cashModel.generateCashNumber(cash1.transType + "p");
                             cash1.cash = decimal.Parse(tb_cash.Text);
-                            cash1.createUserId = MainWindow.userID.Value;
-                            cash1.notes = tb_note.Text;
-                            cash1.posIdCreator = MainWindow.posID.Value;
-                            if (Convert.ToInt32(cb_pos1.SelectedValue) == MainWindow.posID)
+                            cash1.createUserId = MainWindow.userLogin.userId;
+                            cash1.notes = tb_notes.Text;
+                            cash1.posIdCreator = MainWindow.posLogin.posId;
+                            if (Convert.ToInt32(cb_pos1.SelectedValue) == MainWindow.posLogin.posId)
                                 cash1.isConfirm = 1;
                             else cash1.isConfirm = 0;
                             cash1.side = "p";//pos
                             cash1.posId = Convert.ToInt32(cb_pos1.SelectedValue);
+                            #endregion
 
                             int s1 = await cashModel.Save(cash1);
 
                             if (!s1.Equals(0))
                             {
-                                //second operation
+                                #region second operation
                                 CashTransfer cash2 = new CashTransfer();
 
                                 cash2.transType = "d";//deposite
                                 cash2.transNum = await cashModel.generateCashNumber(cash2.transType + "p");
                                 cash2.cash = decimal.Parse(tb_cash.Text);
-                                cash2.createUserId = MainWindow.userID.Value;
-                                cash2.posIdCreator = MainWindow.posID.Value;
-                                if (Convert.ToInt32(cb_pos2.SelectedValue) == MainWindow.posID)
+                                cash2.createUserId = MainWindow.userLogin.userId;
+                                cash2.posIdCreator = MainWindow.posLogin.posId;
+                                if (Convert.ToInt32(cb_pos2.SelectedValue) == MainWindow.posLogin.posId)
                                     cash2.isConfirm = 1;
                                 else cash2.isConfirm = 0;
                                 cash2.side = "p";//pos
@@ -294,23 +304,24 @@ namespace Restaurant.View.accounts
                                 cash2.cashTransIdSource = s1;//id from first operation
 
                                 int s2 = await cashModel.Save(cash2);
+                                #endregion
 
                                 if (!s2.Equals(0))
                                 {
                                     #region notification Object
                                     int pos1 = 0;
                                     int pos2 = 0;
-                                    if ((int)cb_pos1.SelectedValue != MainWindow.posID.Value)
+                                    if ((int)cb_pos1.SelectedValue != MainWindow.posLogin.posId)
                                         pos1 = (int)cb_pos1.SelectedValue;
-                                    if ((int)cb_pos2.SelectedValue != MainWindow.posID.Value)
+                                    if ((int)cb_pos2.SelectedValue != MainWindow.posLogin.posId)
                                         pos2 = (int)cb_pos2.SelectedValue;
                                     Notification not = new Notification()
                                     {
                                         title = "trTransferAlertTilte",
                                         ncontent = "trTransferAlertContent",
                                         msgType = "alert",
-                                        createUserId = MainWindow.userID.Value,
-                                        updateUserId = MainWindow.userID.Value,
+                                        createUserId = MainWindow.userLogin.userId,
+                                        updateUserId = MainWindow.userLogin.userId,
                                     };
                                     if (pos1 != 0)
                                         await not.save(not, (int)cb_pos1.SelectedValue, "accountsAlerts_transfers", cb_pos2.Text, 0, pos1);
@@ -320,19 +331,17 @@ namespace Restaurant.View.accounts
                                     #endregion
 
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                                    Btn_clear_Click(null, null);
-
+                                    Clear();
                                     await RefreshCashesList();
-                                    Tb_search_TextChanged(null, null);
+                                    await Search();
                                 }
                                 else
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             }
                         }
                     }
-
                     #endregion
-                    */
+
                     HelpClass.EndAwait(grid_main);
                 }
                 else
@@ -353,6 +362,49 @@ namespace Restaurant.View.accounts
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update"))
                 {
                     HelpClass.StartAwait(grid_main);
+
+                    #region update
+                    if (HelpClass.validate(requiredControlList, this))
+                    {
+                        Pos pos = await posModel.getById(Convert.ToInt32(cb_pos1.SelectedValue));
+                        if (pos.balance < decimal.Parse(tb_cash.Text))
+                        { Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn); }
+                        else
+                        {
+                            #region first operation
+                            //first operation (pull)
+                            cashtrans2.cash = decimal.Parse(tb_cash.Text);
+                            cashtrans2.notes = tb_notes.Text;
+                            cashtrans2.posId = Convert.ToInt32(cb_pos1.SelectedValue);
+
+                            int s1 = await cashModel.Save(cashtrans2);
+                            #endregion
+
+                            if (!s1.Equals(0))
+                            {
+                                #region second operation
+                                //second operation (deposit)
+                                cashtrans3.cash = decimal.Parse(tb_cash.Text);
+                                cashtrans3.posId = Convert.ToInt32(cb_pos2.SelectedValue);
+                                cashtrans3.notes = tb_notes.Text;
+
+                                int s2 = await cashModel.Save(cashtrans3);
+                                #endregion
+
+                                if (!s2.Equals(0))
+                                {
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+
+                                    await RefreshCashesList();
+                                    await Search();
+                                }
+                                else
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            }
+                        }
+                    }
+                    #endregion
+
                     /*
                     #region validate
                     //chk empty cash
@@ -417,12 +469,12 @@ namespace Restaurant.View.accounts
             }
         }
         private async void Btn_delete_Click(object sender, RoutedEventArgs e)
-        {
+        {//delete
             try
-            {//delete
+            {
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") )
                 {
-                HelpClass.StartAwait(grid_main);
+                    HelpClass.StartAwait(grid_main);
                     if (cashtrans.cashTransId != 0)
                     {
                         #region
@@ -466,7 +518,6 @@ namespace Restaurant.View.accounts
         {//confirm
             try
             {
-                
                 if (cashtrans.cashTransId != 0)
                 {
                     HelpClass.StartAwait(grid_main);
@@ -551,7 +602,6 @@ namespace Restaurant.View.accounts
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -561,35 +611,34 @@ namespace Restaurant.View.accounts
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 await RefreshCashesList();
                 Tb_search_TextChanged(null, null);
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         private async void dp_SelectedStartDateChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 await RefreshCashesList();
                 Tb_search_TextChanged(null, null);
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -597,8 +646,76 @@ namespace Restaurant.View.accounts
         {//selection
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
+
+                if (dg_posAccounts.SelectedIndex != -1)
+                {
+                    cashtrans = dg_posAccounts.SelectedItem as CashTransfer;
+                    this.DataContext = cashtrans;
+                    if (cashtrans != null)
+                    {
+                        //creator pos is login pos
+                        if (cashtrans.posIdCreator == MainWindow.posLogin.posId)
+                        {
+                            btn_update.IsEnabled = true;
+                            btn_delete.IsEnabled = true;
+                        }
+                        else
+                        {
+                            btn_update.IsEnabled = false;
+                            btn_delete.IsEnabled = false;
+                        }
+                        //login pos is operation pos
+                        if (cashtrans.posId == MainWindow.posLogin.posId)
+                        {
+                            if (cashtrans.isConfirm != 1)
+                            {
+                                btn_confirm.Content = MainWindow.resourcemanager.GetString("trConfirm");
+                                btn_confirm.IsEnabled = true;
+                            }
+                            else
+                            {
+                                btn_confirm.Content = MainWindow.resourcemanager.GetString("trIsConfirmed");
+                                btn_confirm.IsEnabled = false;
+                            }
+                        }
+                        else
+                        {
+                            btn_confirm.IsEnabled = false;
+                            if (cashtrans.isConfirm != 1)
+                                btn_confirm.Content = MainWindow.resourcemanager.GetString("trConfirm");
+                            else
+                                btn_confirm.Content = MainWindow.resourcemanager.GetString("trIsConfirmed");
+                        }
+
+                        #region get two pos
+
+                        cashes2 = await cashModel.GetbySourcId("p", cashtrans.cashTransId);
+                        //to insure that the pull operation is in cashtrans2 
+                        if (cashtrans.transType == "p")
+                        {
+                            cashtrans2 = cashes2.ToList()[0] as CashTransfer;
+                            cashtrans3 = cashes2.ToList()[1] as CashTransfer;
+                        }
+                        else if (cashtrans.transType == "d")
+                        {
+                            cashtrans2 = cashes2.ToList()[1] as CashTransfer;
+                            cashtrans3 = cashes2.ToList()[0] as CashTransfer;
+                        }
+
+                        cb_fromBranch.SelectedValue = (await posModel.getById(cashtrans2.posId.Value)).branchId;
+                        cb_pos1.SelectedValue = cashtrans2.posId;
+
+                        cb_toBranch.SelectedValue = (await posModel.getById(cashtrans3.posId.Value)).branchId;
+                        cb_pos2.SelectedValue = cashtrans3.posId;
+
+                        if ((cashtrans2.isConfirm == 1) && (cashtrans3.isConfirm == 1))
+                            btn_update.IsEnabled = false;
+                        //else
+                        //    btn_update.IsEnabled = true;
+                        #endregion
+                    }
+                }
                 /*
                 HelpClass.clearValidate(tb_cash, p_errorCash);
                 HelpClass.clearComboBoxValidate(cb_pos1, p_errorPos1);
@@ -675,23 +792,23 @@ namespace Restaurant.View.accounts
                     }
                 }
                 */
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
+        {//refresh
             try
-            {//refresh
-
+            {
                 HelpClass.StartAwait(grid_main);
 
+                tb_search.Text = "";
+                searchText = "";
                 await RefreshCashesList();
                 await Search();
 
@@ -699,7 +816,6 @@ namespace Restaurant.View.accounts
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -707,145 +823,138 @@ namespace Restaurant.View.accounts
         #endregion
         #region Refresh & Search
         async Task Search()
-        {
-            //search
+        {//search
             if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "show") )
             {
                 try
                 {
-                    /*
                     if (cashes is null)
                         await RefreshCashesList();
+
                     searchText = tb_search.Text;
+                    
                     if (chb_all.IsChecked == false)
                     {
-                        switch (Convert.ToInt32(cb_state.SelectedValue))
-                        {
-                            case 0://inconfirmed
-                                cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
-                                 || s.transType.Contains(searchText)
-                                 || s.cash.ToString().Contains(searchText)
-                                 || s.posName.Contains(searchText)
-                                 )
-                                && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
-                                && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
-                                && s.posId == MainWindow.posID.Value
-                                && s.isConfirm == 0
-                                );
-                                break;
-                            case 1://waiting
-                                cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                        //unConfirmed
+                        if(chk_unConfirmed.IsChecked == true) 
+                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
                                 || s.transType.Contains(searchText)
                                 || s.cash.ToString().Contains(searchText)
                                 || s.posName.Contains(searchText)
                                 )
-                                && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
-                                && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
-                                && s.posId == MainWindow.posID.Value
-                                && s.isConfirm == 1
-                                //&& another is not confirmed 
-                                && s.isConfirm2 == 0
-                                );
-                                break;
-                            case 2://confirmed
-                                cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
-                                || s.transType.Contains(searchText)
-                                || s.cash.ToString().Contains(searchText)
-                                || s.posName.Contains(searchText)
-                                )
-                                && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
-                                && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
-                                && s.posId == MainWindow.posID.Value
-                                && s.isConfirm == 1
-                                //&& another is confirmed
-                                && s.isConfirm2 == 1
-                                );
-                                break;
-                            case 3://created by me
-                                cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
-                                || s.transType.Contains(searchText)
-                                || s.cash.ToString().Contains(searchText)
-                                || s.posName.Contains(searchText)
-                                )
-                                && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
-                                && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
-                                && s.posIdCreator == MainWindow.posID.Value
-                                );
-                                break;
-                            default://no select
-                                cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
-                                || s.transType.Contains(searchText)
-                                || s.cash.ToString().Contains(searchText)
-                                || s.posName.Contains(searchText)
-                                )
-                               && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
-                               && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
-                               );
-                                break;
-                        }
+                            && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
+                            && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
+                            && s.posId == MainWindow.posLogin.posId
+                            && s.isConfirm == 0
+                            );
+                        //waiting
+                        else if(chk_waiting.IsChecked == true)
+                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                            || s.transType.Contains(searchText)
+                            || s.cash.ToString().Contains(searchText)
+                            || s.posName.Contains(searchText)
+                            )
+                            && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
+                            && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
+                            && s.posId == MainWindow.posLogin.posId
+                            && s.isConfirm == 1
+                            //&& another is not confirmed 
+                            && s.isConfirm2 == 0
+                            );
+                        //confirmed
+                        else if(chk_confirmed.IsChecked == true)
+                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                            || s.transType.Contains(searchText)
+                            || s.cash.ToString().Contains(searchText)
+                            || s.posName.Contains(searchText)
+                            )
+                            && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
+                            && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
+                            && s.posId == MainWindow.posLogin.posId
+                            && s.isConfirm == 1
+                            //&& another is confirmed
+                            && s.isConfirm2 == 1
+                            );
+                         //created by me
+                         else if(chk_createdOper.IsChecked == true)
+                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                            || s.transType.Contains(searchText)
+                            || s.cash.ToString().Contains(searchText)
+                            || s.posName.Contains(searchText)
+                            )
+                            && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
+                            && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
+                            && s.posIdCreator == MainWindow.posLogin.posId
+                            );
+                           
+                         else//no select
+                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                            || s.transType.Contains(searchText)
+                            || s.cash.ToString().Contains(searchText)
+                            || s.posName.Contains(searchText)
+                            )
+                            && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
+                            && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
+                            );
                     }
                     else
                     {
-                        switch (Convert.ToInt32(cb_state.SelectedValue))
-                        {
-                            case 0://inconfirmed
-                                cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
-                                 || s.transType.Contains(searchText)
-                                 || s.cash.ToString().Contains(searchText)
-                                 || s.posName.Contains(searchText)
-                                 )
-                                && s.posId == MainWindow.posID.Value
-                                && s.isConfirm == 0
-                                );
-                                break;
-                            case 1://waiting
-                                cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                        //inconfirmed
+                        if(chk_unConfirmed.IsChecked == true)
+                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
                                 || s.transType.Contains(searchText)
                                 || s.cash.ToString().Contains(searchText)
                                 || s.posName.Contains(searchText)
                                 )
-                                && s.posId == MainWindow.posID.Value
-                                && s.isConfirm == 1
-                                //&& another is not confirmed 
-                                && s.isConfirm2 == 0
-                                );
-                                break;
-                            case 2://confirmed
-                                cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
-                                || s.transType.Contains(searchText)
-                                || s.cash.ToString().Contains(searchText)
-                                || s.posName.Contains(searchText)
-                                )
-                                && s.posId == MainWindow.posID.Value
-                                && s.isConfirm == 1
-                                //&& another is confirmed
-                                && s.isConfirm2 == 1
-                                );
-                                break;
-                            case 3://created by me
-                                cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
-                                || s.transType.Contains(searchText)
-                                || s.cash.ToString().Contains(searchText)
-                                || s.posName.Contains(searchText)
-                                )
-                                && s.posIdCreator == MainWindow.posID.Value
-                                );
-                                break;
-                            default://no select
-                                cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
-                                || s.transType.Contains(searchText)
-                                || s.cash.ToString().Contains(searchText)
-                                || s.posName.Contains(searchText)
-                                )
-                               );
-                                break;
-                        }
+                            && s.posId == MainWindow.posLogin.posId
+                            && s.isConfirm == 0
+                            );
+                        //waiting
+                        else if(chk_waiting.IsChecked == true)
+                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                            || s.transType.Contains(searchText)
+                            || s.cash.ToString().Contains(searchText)
+                            || s.posName.Contains(searchText)
+                            )
+                            && s.posId == MainWindow.posLogin.posId
+                            && s.isConfirm == 1
+                            //&& another is not confirmed 
+                            && s.isConfirm2 == 0
+                            );
+                        //confirmed
+                        else if(chk_confirmed.IsChecked == true)
+                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                            || s.transType.Contains(searchText)
+                            || s.cash.ToString().Contains(searchText)
+                            || s.posName.Contains(searchText)
+                            )
+                            && s.posId == MainWindow.posLogin.posId
+                            && s.isConfirm == 1
+                            //&& another is confirmed
+                            && s.isConfirm2 == 1
+                            );
+                        //created by me
+                        else if(chk_createdOper.IsChecked == true)
+                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                            || s.transType.Contains(searchText)
+                            || s.cash.ToString().Contains(searchText)
+                            || s.posName.Contains(searchText)
+                            )
+                            && s.posIdCreator == MainWindow.posLogin.posId
+                            );
+                        else//no select
+                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                            || s.transType.Contains(searchText)
+                            || s.cash.ToString().Contains(searchText)
+                            || s.posName.Contains(searchText)
+                            )
+                            );
                     }
-
+                    
                     RefreshCashView();
                     cashesQueryExcel = cashesQuery.ToList();
                     txt_count.Text = cashesQuery.Count().ToString();
-                    */
+                    
                 }
                 catch { }
             }
@@ -867,11 +976,11 @@ namespace Restaurant.View.accounts
         {
             this.DataContext = new Bank();
 
+            cb_fromBranch.SelectedIndex = -1;
+            cb_pos1.SelectedIndex = -1;
+            cb_toBranch.SelectedIndex = -1;
+            cb_pos2.SelectedIndex = -1;
 
-
-
-
-            // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
         string input;
@@ -880,8 +989,6 @@ namespace Restaurant.View.accounts
         {
             try
             {
-
-
                 //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
@@ -953,7 +1060,6 @@ namespace Restaurant.View.accounts
 
         #endregion
         #region report
-        /*
         //report  parameters
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
@@ -962,7 +1068,6 @@ namespace Restaurant.View.accounts
         // end report parameters
         public void BuildReport()
         {
-
             List<ReportParameter> paramarr = new List<ReportParameter>();
 
             string addpath;
@@ -976,7 +1081,7 @@ namespace Restaurant.View.accounts
                 addpath = @"\Reports\SectionData\banksData\En\EnBank.rdlc";
             }
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-            clsReports.BanksReport(banksQuery, rep, reppath, paramarr);
+            //clsReports.BanksReport(banksQuery, rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
@@ -986,9 +1091,7 @@ namespace Restaurant.View.accounts
 
         }
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
-        {
-
-            //pdf
+        {//pdf
             try
             {
 
@@ -1022,10 +1125,9 @@ namespace Restaurant.View.accounts
         }
 
         private void Btn_preview_Click(object sender, RoutedEventArgs e)
-        {
+        {//preview
             try
             {
-
                 HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
                 {
@@ -1046,8 +1148,6 @@ namespace Restaurant.View.accounts
                     {
                         w.ShowDialog();
                         w.wb_pdfWebViewer.Dispose();
-
-
                     }
                     Window.GetWindow(this).Opacity = 1;
                     #endregion
@@ -1068,14 +1168,13 @@ namespace Restaurant.View.accounts
         }
 
         private void Btn_print_Click(object sender, RoutedEventArgs e)
-        {
+        {//print
             try
             {
-
                 HelpClass.StartAwait(grid_main);
+
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
                 {
-
                     #region
                     BuildReport();
                     LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
@@ -1084,22 +1183,19 @@ namespace Restaurant.View.accounts
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
         
         private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
-        {
+        {//excel
             try
             {
-
                 HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
@@ -1117,7 +1213,6 @@ namespace Restaurant.View.accounts
                             LocalReportExtensions.ExportToExcel(rep, filepath);
                         }
                     });
-
 
                     //});
                     //t1.Start();
@@ -1137,14 +1232,14 @@ namespace Restaurant.View.accounts
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        */
+        
         #endregion
         private void Cb_pos1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//pos1selection
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
+
                 int bToId = Convert.ToInt32(cb_toBranch.SelectedValue);
                 int pFromId = Convert.ToInt32(cb_pos1.SelectedValue);
                 var toPos = poss.Where(p => p.branchId == bToId && p.posId != pFromId);
@@ -1152,14 +1247,12 @@ namespace Restaurant.View.accounts
                 cb_pos2.DisplayMemberPath = "name";
                 cb_pos2.SelectedValuePath = "posId";
                 cb_pos2.SelectedIndex = -1;
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1171,8 +1264,7 @@ namespace Restaurant.View.accounts
         {//fill pos1
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 int bFromId = Convert.ToInt32(cb_fromBranch.SelectedValue);
                 var fromPos = poss.Where(p => p.branchId == bFromId);
@@ -1180,9 +1272,8 @@ namespace Restaurant.View.accounts
                 cb_pos1.DisplayMemberPath = "name";
                 cb_pos1.SelectedValuePath = "posId";
                 cb_pos1.SelectedIndex = -1;
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -1195,8 +1286,7 @@ namespace Restaurant.View.accounts
         { //fill pos combo2
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 int bToId = Convert.ToInt32(cb_toBranch.SelectedValue);
                 int pFromId = Convert.ToInt32(cb_pos1.SelectedValue);
@@ -1205,9 +1295,8 @@ namespace Restaurant.View.accounts
                 cb_pos2.DisplayMemberPath = "name";
                 cb_pos2.SelectedValuePath = "posId";
                 cb_pos2.SelectedIndex = -1;
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -1249,47 +1338,41 @@ namespace Restaurant.View.accounts
         {
             try
             {
-                /*
                 CheckBox cb = sender as CheckBox;
                 if (cb.IsFocused)
                 {
-                    if (cb.Name == "chk_stored")
+                    if (cb.Name == "chk_unConfirmed")
                     {
-                        chk_freezone.IsChecked = false;
-                        chk_locked.IsChecked = false;
-                        btn_transfer.Visibility = Visibility.Visible;
-                        btn_locked.Visibility = Visibility.Collapsed;
-                        dg_itemsStorage.Columns[6].Visibility = Visibility.Collapsed; //make order num column unvisible
-                        dg_itemsStorage.Columns[3].Visibility = Visibility.Visible;
-                        dg_itemsStorage.Columns[4].Visibility = Visibility.Visible;
+                        chk_waiting.IsChecked = false;
+                        chk_confirmed.IsChecked = false;
+                        chk_createdOper.IsChecked = false;
                     }
-                    else if (cb.Name == "chk_freezone")
+                    else if (cb.Name == "chk_waiting")
                     {
-                        chk_stored.IsChecked = false;
-                        chk_locked.IsChecked = false;
-                        btn_transfer.Visibility = Visibility.Visible;
-                        btn_locked.Visibility = Visibility.Collapsed;
-                        dg_itemsStorage.Columns[6].Visibility = Visibility.Collapsed; //make order num column unvisible
-                        dg_itemsStorage.Columns[3].Visibility = Visibility.Visible;
-                        dg_itemsStorage.Columns[4].Visibility = Visibility.Visible;
+                        chk_unConfirmed.IsChecked = false;
+                        chk_confirmed.IsChecked = false;
+                        chk_createdOper.IsChecked = false;
                     }
-                    else
+                    else if (cb.Name == "chk_confirmed")
                     {
-                        chk_stored.IsChecked = false;
-                        chk_freezone.IsChecked = false;
-                        btn_locked.Visibility = Visibility.Visible;
-                        btn_transfer.Visibility = Visibility.Collapsed;
-                        dg_itemsStorage.Columns[6].Visibility = Visibility.Visible; //make order num column visible
-                        dg_itemsStorage.Columns[3].Visibility = Visibility.Collapsed;
-                        dg_itemsStorage.Columns[4].Visibility = Visibility.Collapsed;
+                        chk_unConfirmed.IsChecked = false;
+                        chk_waiting.IsChecked = false;
+                        chk_createdOper.IsChecked = false;
+                    }
+                    else if(cb.Name == "chk_createdOper")
+                    {
+                        chk_unConfirmed.IsChecked = false;
+                        chk_confirmed.IsChecked = false;
+                        chk_waiting.IsChecked = false;
                     }
                 }
                 HelpClass.StartAwait(grid_main);
-                await RefreshItemLocationsList();
+
+                await RefreshCashesList();
                 await Search();
                 Clear();
+
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
@@ -1302,18 +1385,18 @@ namespace Restaurant.View.accounts
         {
             try
             {
-                /*
                 CheckBox cb = sender as CheckBox;
                 if (cb.IsFocused)
                 {
-                    if (cb.Name == "chk_stored")
-                        chk_stored.IsChecked = true;
-                    else if (cb.Name == "chk_freezone")
-                        chk_freezone.IsChecked = true;
-                    else
-                        chk_locked.IsChecked = true;
+                    if (cb.Name == "chk_unConfirmed")
+                        chk_unConfirmed.IsChecked = true;
+                    else if (cb.Name == "chk_confirmed")
+                        chk_confirmed.IsChecked = true;
+                    else if (cb.Name == "chk_waiting")
+                        chk_waiting.IsChecked = true;
+                    else if (cb.Name == "chk_createdOper")
+                        chk_createdOper.IsChecked = true;
                 }
-                */
             }
             catch (Exception ex)
             {
