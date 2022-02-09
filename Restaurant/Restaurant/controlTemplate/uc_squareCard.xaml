@@ -27,7 +27,7 @@
         <Grid.RowDefinitions>
             <RowDefinition x:Name="grid_mainRow" Height="*"/> 
             <RowDefinition Height="22"/> 
-            <RowDefinition Height="18"/> 
+            <RowDefinition Height="18" /> 
         </Grid.RowDefinitions>
         <Border  CornerRadius="10" BorderBrush="{Binding squareCardBorderBrush }" 
              BorderThickness="1.2" x:Name="brd_main" Padding="0"

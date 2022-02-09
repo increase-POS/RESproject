@@ -20,15 +20,14 @@ using System.Windows.Shapes;
 using Microsoft.Win32;
 using System.IO;
 using Restaurant.View.windows;
-
 namespace Restaurant.View.catalog.rawMaterials
 {
     /// <summary>
-    /// Interaction logic for uc_itemsRawMaterials.xaml
+    /// Interaction logic for uc_categorie.xaml
     /// </summary>
-    public partial class uc_itemsRawMaterials : UserControl
+    public partial class uc_categorie : UserControl
     {
-        public uc_itemsRawMaterials()
+        public uc_categorie()
         {
             try
             {
@@ -68,13 +67,13 @@ namespace Restaurant.View.catalog.rawMaterials
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private static uc_itemsRawMaterials _instance;
-        public static uc_itemsRawMaterials Instance
+        private static uc_categorie _instance;
+        public static uc_categorie Instance
         {
             get
             {
                 //if (_instance == null)
-                _instance = new uc_itemsRawMaterials();
+                _instance = new uc_categorie();
                 return _instance;
             }
             set
@@ -82,9 +81,8 @@ namespace Restaurant.View.catalog.rawMaterials
                 _instance = value;
             }
         }
-        string basicsPermission = "itemsRawMaterials_basics";
-        string unitsPermission = "itemsRawMaterials_units";
-        byte tgl_itemState;
+        string basicsPermission = "categorie_basics";
+        byte tgl_categorieState;
         string searchText = "";
         public static List<string> requiredControlList;
         //List<Unit> units;
@@ -107,28 +105,21 @@ namespace Restaurant.View.catalog.rawMaterials
                 MainWindow.mainWindow.KeyDown += HandleKeyPress;
                 // for pagination onTop Always
                 btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
-                catigoriesAndItemsView.ucitemsRawMaterials = this;
-                btn_units.IsEnabled = false;
+                catigoriesAndItemsView.uccategorie = this;
 
-                requiredControlList = new List<string> { "code", "name" , "type" };
+                requiredControlList = new List<string> { "code", "name" };
                 if (MainWindow.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-              
-                FillCombo.FillCategoryPurchase(cb_categoryId);
-                FillCombo.FillItemTypePurchase(cb_type);
-                FillCombo.FillUnits(cb_maxUnitId);
-                FillCombo.FillUnits(cb_minUnitId);
-                Keyboard.Focus(tb_code);
-                await RefreshItemsList();
+
+                Keyboard.Focus(tb_categoryCode);
+                await RefreshCategorysList();
                 await Search();
                 Clear();
                 HelpClass.EndAwait(grid_main);
@@ -139,34 +130,27 @@ namespace Restaurant.View.catalog.rawMaterials
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-        }      
+        }
         private void translate()
         {
 
             txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_details, MainWindow.resourcemanager.GetString("trDetailsHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, MainWindow.resourcemanager.GetString("trCode"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_categoryCode, MainWindow.resourcemanager.GetString("trCode"));
 
 
             txt_contentInformatin.Text = MainWindow.resourcemanager.GetString("trMoreInformation");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_categoryId, MainWindow.resourcemanager.GetString("trSelectCategorieHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_taxes, MainWindow.resourcemanager.GetString("trTax") + "...");
+             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_taxes, MainWindow.resourcemanager.GetString("trTax") + "...");
 
-
-            txt_minAndMax.Text = MainWindow.resourcemanager.GetString("trMinAndMaxOfItem");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_min, MainWindow.resourcemanager.GetString("trMinHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_max, MainWindow.resourcemanager.GetString("trMaxHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_minUnitId, MainWindow.resourcemanager.GetString("trSelectUnitHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_maxUnitId, MainWindow.resourcemanager.GetString("trSelectUnitHint"));
 
             btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
             btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
             btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
 
-          
-        
+
+
 
 
         }
@@ -179,51 +163,34 @@ namespace Restaurant.View.catalog.rawMaterials
                 {
                     HelpClass.StartAwait(grid_main);
 
-                    item = new Item();
+                    categorie = new Category();
                     if (HelpClass.validate(requiredControlList, this))
                     {
                         Boolean codeAvailable = checkCodeAvailabiltiy();
                         if (codeAvailable)
                         {
-                            int? categoryId = null;
-                            if (cb_categoryId.SelectedIndex != -1)
-                                categoryId = (int)cb_categoryId.SelectedValue;
+                         
 
-                            int min = 0;
-                            int max = 0;
+                         
                             decimal taxes = 0;
 
-                            if (tb_min.Text != "")
-                                min = int.Parse(tb_min.Text);
-                            if (tb_max.Text != "")
-                                max = int.Parse(tb_max.Text);
+                         
                             if (tb_taxes.Text != "")
                                 taxes = decimal.Parse(tb_taxes.Text);
 
-                            Nullable<int> minUnitId = null;
-                            if (cb_minUnitId.SelectedIndex != -1)
-                                minUnitId = (int)cb_minUnitId.SelectedValue;
-                            Nullable<int> maxUnitId = null;
-                            if (cb_maxUnitId.SelectedIndex != -1)
-                                maxUnitId = (int)cb_maxUnitId.SelectedValue;
+                        
 
-                            item = new Item();
-                            item.code = tb_code.Text;
-                            item.name = tb_name.Text;
-                            item.details = tb_details.Text;
-                            item.notes = tb_notes.Text;
-                            item.image = "";
-                            item.taxes = taxes;
-                            item.isActive = 1;
-                            item.min = min;
-                            item.max = max;
-                            item.categoryId = categoryId;
-                            item.createUserId = MainWindow.userLogin.userId;
-                            item.updateUserId = MainWindow.userLogin.userId;
-                            item.minUnitId = minUnitId;
-                            item.maxUnitId = maxUnitId;
-                            item.type = cb_type.SelectedValue.ToString();
-                            int res = await item.save(item);
+                            categorie = new Category();
+                            categorie.categoryCode = tb_categoryCode.Text;
+                            categorie.name = tb_name.Text;
+                            categorie.details = tb_details.Text;
+                            categorie.notes = tb_notes.Text;
+                            categorie.image = "";
+                            categorie.taxes = taxes;
+                            categorie.isActive = 1;
+                            categorie.createUserId = MainWindow.userLogin.userId;
+                            categorie.updateUserId = MainWindow.userLogin.userId;
+                            int res = await categorie.save(categorie);
                             if (res == -1)// إظهار رسالة الترقية
                                 Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);
 
@@ -231,15 +198,15 @@ namespace Restaurant.View.catalog.rawMaterials
                                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
-                                item.itemId = res;
+                                categorie.categoryId = res;
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
-                                int itemId = res;
+                                int categorieId = res;
 
                                 if (openFileDialog.FileName != "")
-                                    await item.uploadImage(openFileDialog.FileName, Md5Encription.MD5Hash("Inc-m" + itemId.ToString()), itemId);
+                                    await categorie.uploadImage(openFileDialog.FileName, Md5Encription.MD5Hash("Inc-m" + categorieId.ToString()), categorieId);
                                 Clear();
-                                await RefreshItemsList();
+                                await RefreshCategorysList();
                                 await Search();
                             }
                         }
@@ -259,48 +226,28 @@ namespace Restaurant.View.catalog.rawMaterials
         {//update
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") )
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update"))
                 {
                     HelpClass.StartAwait(grid_main);
                     if (HelpClass.validate(requiredControlList, this))
                     {
-                        Boolean codeAvailable = checkCodeAvailabiltiy(item.code);
+                        Boolean codeAvailable = checkCodeAvailabiltiy(categorie.categoryCode);
                         if (codeAvailable)
                         {
-                            int? categoryId = null;
-                            if (cb_categoryId.SelectedIndex != -1)
-                                categoryId = (int)cb_categoryId.SelectedValue;
 
-                            int min = 0;
-                            int max = 0;
                             decimal taxes = 0;
-                            if (tb_min.Text != "")
-                                min = int.Parse(tb_min.Text);
-                            if (tb_max.Text != "")
-                                max = int.Parse(tb_max.Text);
                             if (tb_taxes.Text != "")
                                 taxes = decimal.Parse(tb_taxes.Text);
 
-                            Nullable<int> minUnitId = null;
-                            if (cb_minUnitId.SelectedIndex != -1)
-                                minUnitId = (int)cb_minUnitId.SelectedValue;
-                            Nullable<int> maxUnitId = null;
-                            if (cb_maxUnitId.SelectedIndex != -1)
-                                maxUnitId = (int)cb_maxUnitId.SelectedValue;
-                            item.code = tb_code.Text;
-                            item.name = tb_name.Text;
-                            item.details = tb_details.Text;
-                                item.notes = tb_notes.Text;
-                                item.taxes = taxes;
-                            item.min = min;
-                            item.max = max;
-                            item.categoryId = categoryId;
-                            item.updateUserId = MainWindow.userLogin.userId;
-                            item.minUnitId = minUnitId;
-                            item.maxUnitId = maxUnitId;
-                            item.type = cb_type.SelectedValue.ToString();
+                       
+                            categorie.categoryCode = tb_categoryCode.Text;
+                            categorie.name = tb_name.Text;
+                            categorie.details = tb_details.Text;
+                            categorie.notes = tb_notes.Text;
+                            categorie.taxes = taxes;
+                            categorie.updateUserId = MainWindow.userLogin.userId;
 
-                            int res = await item.save(item);
+                            int res = await categorie.save(categorie);
                             if (res == -1)// إظهار رسالة الترقية
                                 Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);
 
@@ -308,14 +255,14 @@ namespace Restaurant.View.catalog.rawMaterials
                                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
-                                item.itemId = res;
+                                categorie.categoryId = res;
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
                                 if (openFileDialog.FileName != "")
-                                    await item.uploadImage(openFileDialog.FileName, Md5Encription.MD5Hash("Inc-m" + item.itemId.ToString()), item.itemId);
+                                    await categorie.uploadImage(openFileDialog.FileName, Md5Encription.MD5Hash("Inc-m" + categorie.categoryId.ToString()), categorie.categoryId);
 
                                 Clear();
-                                await RefreshItemsList();
+                                await RefreshCategorysList();
                                 await Search();
                             }
                         }
@@ -339,9 +286,9 @@ namespace Restaurant.View.catalog.rawMaterials
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
-                    if (item.itemId != 0)
+                    if (categorie.categoryId != 0)
                     {
-                        if ((!item.canDelete) && (item.isActive == 0))
+                        if ((!categorie.canDelete) && (categorie.isActive == 0))
                         {
                             #region
                             Window.GetWindow(this).Opacity = 0.2;
@@ -361,9 +308,9 @@ namespace Restaurant.View.catalog.rawMaterials
                             #region
                             Window.GetWindow(this).Opacity = 0.2;
                             wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                            if (item.canDelete)
+                            if (categorie.canDelete)
                                 w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
-                            if (!item.canDelete)
+                            if (!categorie.canDelete)
                                 w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
@@ -371,17 +318,17 @@ namespace Restaurant.View.catalog.rawMaterials
                             if (w.isOk)
                             {
                                 string popupContent = "";
-                                if (item.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
-                                if ((!item.canDelete) && (item.isActive == 1)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+                                if (categorie.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
+                                if ((!categorie.canDelete) && (categorie.isActive == 1)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
 
-                                int s = await item.delete(item.itemId, MainWindow.userLogin.userId, item.canDelete);
+                                int s = await categorie.delete(categorie.categoryId, MainWindow.userLogin.userId, categorie.canDelete);
                                 if (s < 0)
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
-                                    await RefreshItemsList();
+                                    await RefreshCategorysList();
                                     await Search();
                                     Clear();
                                 }
@@ -402,14 +349,14 @@ namespace Restaurant.View.catalog.rawMaterials
         }
         private async Task activate()
         {//activate
-            item.isActive = 1;
-            int s = await item.save(item);
+            categorie.isActive = 1;
+            int s = await categorie.save(categorie);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
             {
                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
-                await RefreshItemsList();
+                await RefreshCategorysList();
                 await Search();
             }
         }
@@ -434,9 +381,9 @@ namespace Restaurant.View.catalog.rawMaterials
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (items is null)
-                    await RefreshItemsList();
-                tgl_itemState = 1;
+                if (categories is null)
+                    await RefreshCategorysList();
+                tgl_categorieState = 1;
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -451,9 +398,9 @@ namespace Restaurant.View.catalog.rawMaterials
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (items is null)
-                    await RefreshItemsList();
-                tgl_itemState = 0;
+                if (categories is null)
+                    await RefreshCategorysList();
+                tgl_categorieState = 0;
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -481,8 +428,9 @@ namespace Restaurant.View.catalog.rawMaterials
         }
         private async void HandleKeyPress(object sender, KeyEventArgs e)
         {
+            /*
             try
-                {
+            {
                 TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
                 if (elapsed.TotalMilliseconds > 150)
                 {
@@ -508,19 +456,19 @@ namespace Restaurant.View.catalog.rawMaterials
                 // process barcode 
                 if (e.Key.ToString() == "Return" && _BarcodeStr != "")
                 {
-                    // get item matches barcode
-                    if (FillCombo.itemUnitList != null)
+                    // get categorie matches barcode
+                    if (FillCombo.categorieUnitList != null)
                     {
-                         var ob = FillCombo.itemUnitList.ToList().Find(c => c.barcode == _BarcodeStr && FillCombo.purchaseTypes.Contains(c.type));
+                        var ob = FillCombo.categorieUnitList.ToList().Find(c => c.barcode == _BarcodeStr && FillCombo.purchaseTypes.Contains(c.type));
                         if (ob != null)
                         {
-                            int itemId = (int) ob.itemId;
-                            ChangeItemIdEvent(itemId);
+                            int categorieId = (int)ob.categorieId;
+                            ChangeCategoryIdEvent(categorieId);
                         }
                         else
                         {
                             Clear();
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorItemNotFoundToolTip"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorCategoryNotFoundToolTip"), animation: ToasterAnimation.FadeIn);
                         }
                     }
                     _BarcodeStr = "";
@@ -531,52 +479,15 @@ namespace Restaurant.View.catalog.rawMaterials
                 _BarcodeStr = "";
                 HelpClass.ExceptionMessage(ex, this);
             }
+            */
         }
-        //private async void Dg_item_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        HelpClass.StartAwait(grid_main);
-        //        //selection
-        //        if (dg_item.SelectedIndex != -1)
-        //        {
-        //            item = dg_item.SelectedItem as Item;
-        //            this.DataContext = item;
-        //            if (item != null)
-        //            {
-        //                await getImg();
-        //                #region delete
-        //                if (item.canDelete)
-        //                    btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
-        //                else
-        //                {
-        //                    if (item.isActive == 0)
-        //                        btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
-        //                    else
-        //                        btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
-        //                }
-        //                #endregion
-        //                HelpClass.getMobile(item.mobile, cb_areaMobile, tb_mobile);
-        //                HelpClass.getPhone(item.phone, cb_areaPhone, cb_areaPhoneLocal, tb_phone);
-        //                HelpClass.getPhone(item.fax, cb_areaFax, cb_areaFaxLocal, tb_fax);
-        //            }
-        //        }
-        //        HelpClass.clearValidate(requiredControlList, this);
-        //        HelpClass.EndAwait(grid_main);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        HelpClass.EndAwait(grid_main);
-        //        HelpClass.ExceptionMessage(ex, this);
-        //    }
-        //}
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {
             try
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
-                await RefreshItemsList();
+                await RefreshCategorysList();
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -590,44 +501,17 @@ namespace Restaurant.View.catalog.rawMaterials
         #endregion
         #region Refresh & Search
 
-        /*
-        async Task Search()
-        {
-            //search
-            if (items is null)
-                await RefreshItemsList();
-            searchText = tb_search.Text.ToLower();
-            itemsQuery = items.Where(s => (s.code.ToLower().Contains(searchText) ||
-            s.name.ToLower().Contains(searchText) ||
-            s.mobile.ToLower().Contains(searchText)
-            ) && s.isActive == tgl_itemState);
-            RefreshCustomersView();
-        }
-        async Task<IEnumerable<Item>> RefreshItemsList()
-        {
-            items = await item.Get("c");
-            return items;
-        }
-        void RefreshCustomersView()
-        {
-            dg_item.ItemsSource = itemsQuery;
-            txt_count.Text = itemsQuery.Count().ToString();
-        }
-        */
+      
         #endregion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            item = new Item();
-            item.taxes = 0;
-            item.min = 0;
-            item.max = 0;
-
-            this.DataContext = item;       
+            categorie = new Category();
+            categorie.taxes = 0;
+            this.DataContext = categorie;
             #region image
             HelpClass.clearImg(btn_image);
             #endregion
-            btn_units.IsEnabled = false;
             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
             // last 
             HelpClass.clearValidate(requiredControlList, this);
@@ -752,13 +636,13 @@ namespace Restaurant.View.catalog.rawMaterials
         }
         private async Task getImg()
         {
-            if (string.IsNullOrEmpty(item.image))
+            if (string.IsNullOrEmpty(categorie.image))
             {
                 HelpClass.clearImg(btn_image);
             }
             else
             {
-                byte[] imageBuffer = await item.downloadImage(item.image); // read this as BLOB from your DB
+                byte[] imageBuffer = await categorie.downloadImage(categorie.image); // read this as BLOB from your DB
 
                 var bitmapImage = new BitmapImage();
                 if (imageBuffer != null)
@@ -774,7 +658,7 @@ namespace Restaurant.View.catalog.rawMaterials
                     btn_image.Background = new ImageBrush(bitmapImage);
                     // configure trmporary path
                     string dir = Directory.GetCurrentDirectory();
-                    string tmpPath = System.IO.Path.Combine(dir, Global.TMPItemsFolder, item.image);
+                    string tmpPath = System.IO.Path.Combine(dir, Global.TMPFolder, categorie.image);
                     openFileDialog.FileName = tmpPath;
                 }
                 else
@@ -804,7 +688,7 @@ namespace Restaurant.View.catalog.rawMaterials
 
             ReportCls.checkLang();
 
-            clsReports.packageReport(itemsQuery, rep, reppath, paramarr);
+            clsReports.packageReport(categoriesQuery, rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
@@ -833,9 +717,9 @@ namespace Restaurant.View.catalog.rawMaterials
             try
             {
 
-               
-                    HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+                if (sender != null)
+                    SectionData.StartAwait(grid_main);
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
                 {
                     /////////////////////////////////////
                     Thread t1 = new Thread(() =>
@@ -847,14 +731,14 @@ namespace Restaurant.View.catalog.rawMaterials
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-               
-                    HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+                SectionData.ExceptionMessage(ex, this);
             }
         }
         public void printpackage()
@@ -870,10 +754,10 @@ namespace Restaurant.View.catalog.rawMaterials
         {//print
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                if (sender != null)
+                    SectionData.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
                 {
                     /////////////////////////////////////
                     Thread t1 = new Thread(() =>
@@ -887,52 +771,52 @@ namespace Restaurant.View.catalog.rawMaterials
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-               
-                    HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+                SectionData.ExceptionMessage(ex, this);
             }
         }
         private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
         {//pie
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                if (sender != null)
+                    SectionData.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
-                    win_lvcCatalog win = new win_lvcCatalog(itemsQuery, 3);
+                    win_lvcCatalog win = new win_lvcCatalog(categoriesQuery, 3);
                     win.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
                     #endregion
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-               
-                    HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+                SectionData.ExceptionMessage(ex, this);
             }
         }
         private void Btn_preview_Click(object sender, RoutedEventArgs e)
         {//preview
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                if (sender != null)
+                    SectionData.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
@@ -955,14 +839,14 @@ namespace Restaurant.View.catalog.rawMaterials
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-               
-                    HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+                SectionData.ExceptionMessage(ex, this);
             }
         }
         public void ExcelPackage()
@@ -984,10 +868,10 @@ namespace Restaurant.View.catalog.rawMaterials
         {//excel
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                if (sender != null)
+                    SectionData.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
                 {
                     Thread t1 = new Thread(() =>
                     {
@@ -998,14 +882,14 @@ namespace Restaurant.View.catalog.rawMaterials
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-               
-                    HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+                SectionData.ExceptionMessage(ex, this);
             }
         }
         */
@@ -1013,45 +897,44 @@ namespace Restaurant.View.catalog.rawMaterials
         #region  Cards
         CatigoriesAndItemsView catigoriesAndItemsView = new CatigoriesAndItemsView();
         #region Refrish Y
-        Item item = new Item();
-        IEnumerable<Item> items;
-        IEnumerable<Item> itemsQuery;
-        async Task<IEnumerable<Item>> RefreshItemsList()
+        Category categorie = new Category();
+        IEnumerable<Category> categories;
+        IEnumerable<Category> categoriesQuery;
+        async Task<IEnumerable<Category>> RefreshCategorysList()
         {
-            items = await item.Get();
-            items = items.Where(x => FillCombo.purchaseTypes.Contains(x.type)).ToList();
-            return items;
+            categories = await categorie.Get();
+            categories = categories.Where(x => x.type == "p").ToList();
+            return categories;
         }
-        void RefrishItemsCard(IEnumerable<Item> _items)
+        void RefrishCategorysCard(IEnumerable<Category> _categories)
         {
             grid_itemContainerCard.Children.Clear();
             catigoriesAndItemsView.gridCatigorieItems = grid_itemContainerCard;
-            catigoriesAndItemsView.FN_refrishCatalogItem(_items.ToList(), "purchase");
+            catigoriesAndItemsView.FN_refrishCatalogItem_category(_categories.ToList(), "Category",5);
         }
         #endregion
         #region Get Id By Click  Y
 
-        public async void ChangeItemIdEvent(int itemId)
+        public async void ChangeIdEvent(int categorieId)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
-                item = items.Where(x => x.itemId == itemId).FirstOrDefault();
-                this.DataContext = item;
+                categorie = categories.Where(x => x.categoryId == categorieId).FirstOrDefault();
+                this.DataContext = categorie;
                 await getImg();
-                btn_units.IsEnabled = true;
-                #region delete
-                if (item.canDelete)
+                 #region delete
+                if (categorie.canDelete)
                     btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
                 else
                 {
-                    if (item.isActive == 0)
+                    if (categorie.isActive == 0)
                         btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
                     else
                         btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
                 }
                 #endregion
-                HelpClass.clearValidate(requiredControlList,this);
+                HelpClass.clearValidate(requiredControlList, this);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -1071,22 +954,22 @@ namespace Restaurant.View.catalog.rawMaterials
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (items is null)
-                    await RefreshItemsList();
+                if (categories is null)
+                    await RefreshCategorysList();
                 searchText = tb_search.Text;
-                itemsQuery = items.
-                Where(x => (x.code.ToLower().Contains(searchText) ||
+                categoriesQuery = categories.
+                Where(x => (x.categoryCode.ToLower().Contains(searchText) ||
                     x.name.ToLower().Contains(searchText) ||
                     x.details.ToLower().Contains(searchText)
-                     || x.categoryId.ToString().ToLower().Contains(categoryIdSearch)
-                    ) && x.isActive == tgl_itemState);
-                 pageIndex = 1;
+                    // || x.categoryName.ToLower().Contains(searchText)
+                    ) && x.isActive == tgl_categorieState);
+                pageIndex = 1;
                 #region
 
 
                 if (btns is null)
                     btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns));
                 #endregion
 
                 HelpClass.EndAwait(grid_main);
@@ -1107,18 +990,18 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             try
             {
-               
+                if (sender != null)
                     HelpClass.StartAwait(grid_main);
 
-                itemsQuery = items.ToList();
+                categoriesQuery = categories.ToList();
 
                 if (tb_pageNumberSearch.Text.Equals(""))
                 {
                     pageIndex = 1;
                 }
-                else if (((itemsQuery.Count() - 1) / 9) + 1 < int.Parse(tb_pageNumberSearch.Text))
+                else if (((categoriesQuery.Count() - 1) / 9) + 1 < int.Parse(tb_pageNumberSearch.Text))
                 {
-                    pageIndex = ((itemsQuery.Count() - 1) / 9) + 1;
+                    pageIndex = ((categoriesQuery.Count() - 1) / 9) + 1;
                 }
                 else
                 {
@@ -1127,15 +1010,15 @@ namespace Restaurant.View.catalog.rawMaterials
 
                 #region
 
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns));
                 #endregion
 
-               
+                if (sender != null)
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
+                if (sender != null)
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1146,21 +1029,21 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             try
             {
-               
+                if (sender != null)
                     HelpClass.StartAwait(grid_main);
 
                 pageIndex = 1;
                 #region
-                itemsQuery = items.ToList();
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                categoriesQuery = categories.ToList();
+                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns));
                 #endregion
 
-               
+                if (sender != null)
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
+                if (sender != null)
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1169,22 +1052,22 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             try
             {
-               
+                if (sender != null)
                     HelpClass.StartAwait(grid_main);
 
                 pageIndex = int.Parse(btn_prevPage.Content.ToString());
                 #region
-                itemsQuery = items.ToList();
+                categoriesQuery = categories.ToList();
 
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns));
                 #endregion
 
-               
+                if (sender != null)
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
+                if (sender != null)
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1193,21 +1076,21 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             try
             {
-               
+                if (sender != null)
                     HelpClass.StartAwait(grid_main);
 
                 pageIndex = int.Parse(btn_activePage.Content.ToString());
                 #region
-                itemsQuery = items.ToList();
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                categoriesQuery = categories.ToList();
+                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns));
                 #endregion
 
-               
+                if (sender != null)
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
+                if (sender != null)
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1216,21 +1099,21 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             try
             {
-               
+                if (sender != null)
                     HelpClass.StartAwait(grid_main);
 
                 pageIndex = int.Parse(btn_nextPage.Content.ToString());
                 #region
-                itemsQuery = items.ToList();
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                categoriesQuery = categories.ToList();
+                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns));
                 #endregion
 
-               
+                if (sender != null)
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
+                if (sender != null)
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1239,22 +1122,22 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             try
             {
-               
+                if (sender != null)
                     HelpClass.StartAwait(grid_main);
 
-                itemsQuery = items.ToList();
-                pageIndex = ((itemsQuery.Count() - 1) / 9) + 1;
+                categoriesQuery = categories.ToList();
+                pageIndex = ((categoriesQuery.Count() - 1) / 9) + 1;
                 #region
-                itemsQuery = items.ToList();
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                categoriesQuery = categories.ToList();
+                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns));
                 #endregion
 
-               
+                if (sender != null)
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
+                if (sender != null)
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1263,129 +1146,35 @@ namespace Restaurant.View.catalog.rawMaterials
         #endregion
         private Boolean checkCodeAvailabiltiy(string oldCode = "")
         {
-            string code = tb_code.Text;
+            string code = tb_categoryCode.Text;
 
-            if (code != oldCode && items.ToList().Count > 0)
+            if (code != oldCode && categories.ToList().Count > 0)
             {
-                var match = items.Where(x => x.code.Contains(code)).FirstOrDefault();
+                var match = categories.Where(x => x.categoryCode.Contains(code)).FirstOrDefault();
 
                 if (match != null)
                 {
                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trDuplicateCodeToolTip"), animation: ToasterAnimation.FadeIn);
                     #region Tooltip_code
-                    p_error_code.Visibility = Visibility.Visible;
+                    p_error_categoryCode.Visibility = Visibility.Visible;
                     ToolTip toolTip_code = new ToolTip();
                     toolTip_code.Content = MainWindow.resourcemanager.GetString("trDuplicateCodeToolTip");
                     toolTip_code.Style = Application.Current.Resources["ToolTipError"] as Style;
-                    p_error_code.ToolTip = toolTip_code;
+                    p_error_categoryCode.ToolTip = toolTip_code;
                     #endregion
                     return false;
                 }
                 else
                 {
-                    HelpClass.clearValidate(p_error_code);
+                    HelpClass.clearValidate(p_error_categoryCode);
                     return true;
                 }
             }
             else
             {
-                HelpClass.clearValidate(p_error_code);
+                HelpClass.clearValidate(p_error_categoryCode);
                 return true;
             }
         }
-        private void Btn_units_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                //units
-                if (MainWindow.groupObject.HasPermissionAction(unitsPermission, MainWindow.groupObjects, "one"))
-                {
-                    Window.GetWindow(this).Opacity = 0.2;
-                    wd_units w = new wd_units();
-                    w.item = item;
-                    //w.units = units;
-                    w.ShowDialog();
-                    Window.GetWindow(this).Opacity = 1;
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        #region category
-        List<Category> categories;
-        List<Category> categoriesQuery;
-        Category category = new Category();
-        Category categoryModel = new Category();
-        string categoryIdSearch = "";
-        
-        async Task<IEnumerable<Category>> RefreshCategorysList()
-        {
-            categories = await categoryModel.Get();
-            categories = categories.Where(x => x.type == "p").ToList();
-            return categories;
-        }
-        async Task RefrishCategoriesCard()
-        {
-            if (categories is null)
-                await RefreshCategorysList();
-            categoriesQuery = categories.Where(x => x.isActive == 1 ).ToList();
-            catigoriesAndItemsView.gridCatigories = grid_categoryCards;
-            generateCoulmnCategoriesGrid(categoriesQuery.Count());
-            catigoriesAndItemsView.FN_refrishCatalogItem_category(categoriesQuery.ToList(), "Category", -1);
-        }
-        void generateCoulmnCategoriesGrid(int column)
-        {
-
-            #region
-            grid_categoryCards.ColumnDefinitions.Clear();
-            ColumnDefinition[] cd = new ColumnDefinition[column];
-            for (int i = 0; i < column; i++)
-            {
-                cd[i] = new ColumnDefinition();
-                cd[i].Width = new GridLength(150, GridUnitType.Pixel);
-                grid_categoryCards.ColumnDefinitions.Add(cd[i]);
-            }
-            #endregion
-
-        }
-        public async Task ChangeCategoryIdEvent(int categoryId)
-        {
-            //category = categories.ToList().Find(c => c.categoryId == categoryId);
-            categoryIdSearch = categoryId.ToString();
-            await RefreshItemsList();
-            await Search();
-        }
-        private async void Btn_getAllCategory_Click(object sender, RoutedEventArgs e)
-        {
-
-            try
-            {
-               
-                HelpClass.StartAwait(grid_main);
-                categoryIdSearch = "";
-                await RefrishCategoriesCard();
-                await RefreshItemsList();
-                await Search();
-
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-               
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        #endregion
-
     }
 }

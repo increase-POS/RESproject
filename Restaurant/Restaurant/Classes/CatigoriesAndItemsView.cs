@@ -33,10 +33,12 @@ namespace Restaurant.Classes
         public uc_package ucpackage;
         public uc_menuSettings ucmenuSettings;
         public wd_purchaseItems wdPurchaseItems;
+        public uc_categorie uccategorie;
 
         public Grid gridCatigories;
         public Grid gridCatigorieItems;
         private int _idItem;
+        private int _idCategory;
         //private int _iddiningHall;
         //private int _iditemsRawMaterials;
         //private int _iditemsFoods;
@@ -47,6 +49,14 @@ namespace Restaurant.Classes
             {
                 _idItem = value;
                 INotifyPropertyChangedIdCatigorieItems();
+            }
+        }
+        public int idCategory
+        {
+            get => _idCategory; set
+            {
+                _idCategory = value;
+                INotifyPropertyChangedIdCatigorie();
             }
         }
         //public int idwdItems
@@ -85,19 +95,124 @@ namespace Restaurant.Classes
             {
                 wdPurchaseItems.ChangeItemIdEvent(idItem);
             }
+           
         }
-      
+        private void INotifyPropertyChangedIdCatigorie()
+        {
+            
+            if (uccategorie != null)
+            {
+                uccategorie.ChangeIdEvent(idCategory);
+            }
+        }
+
+
+        #region Catalog category
+
+
+        private int pastCatalogItem_category = -1;
+        double gridCatigorieItems_ActualHeight_category = 0;
+        double gridCatigorieItems_ActualWidth_category = 0;
+        public void FN_refrishCatalogItem_category(List<Category> items, string cardType, int columnCount)
+        {
+            gridCatigories.Children.Clear();
+            if(columnCount != -1)
+            {
+                gridCatigorieItems_ActualHeight_category = gridCatigories.ActualHeight / 3;
+                gridCatigorieItems_ActualWidth_category = gridCatigories.ActualWidth / 5;
+            }
+            else
+            {
+                gridCatigorieItems_ActualHeight_category = gridCatigories.ActualHeight;
+                gridCatigorieItems_ActualWidth_category = gridCatigories.ActualWidth;
+            }
+            int row = 0;
+            int column = 0;
+            foreach (var item in items)
+            {
+
+                CardViewItems itemCardView = new CardViewItems();
+                itemCardView.category = item;
+                itemCardView.cardType = cardType;
+                itemCardView.row = row;
+                itemCardView.column = column;
+                FN_createRectangelCard_category(itemCardView);
+
+
+                if (column != -1)
+                {
+                    column++;
+                    if (column == columnCount)
+                    {
+                        column = 0;
+                        row++;
+                    }
+                }
+                else
+                {
+                    column++;
+                }
+            }
+        }
+
+
+        uc_squareCard FN_createRectangelCard_category(CardViewItems itemCardView, string BorderBrush = "#DFDFDF")
+        {
+            uc_squareCard uc = new uc_squareCard(itemCardView, gridCatigorieItems_ActualHeight_category, gridCatigorieItems_ActualWidth_category);
+            uc.squareCardBorderBrush = BorderBrush;
+            uc.Name = "CardName" + itemCardView.category.categoryId;
+            Grid.SetRow(uc, itemCardView.row);
+            Grid.SetColumn(uc, itemCardView.column);
+            gridCatigories.Children.Add(uc);
+            uc.MouseDown += this.ucItemMouseDown_category;
+            return uc;
+        }
+
+        private void ucItemMouseDown_category(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount > 0)
+                doubleClickItem_category(sender);
+        }
+        private void doubleClickItem_category(object sender)
+        {
+            try
+            {
+                uc_squareCard uc = (uc_squareCard)sender;
+                uc = gridCatigories.Children.OfType<uc_squareCard>().Where(x => x.Name.ToString() == "CardName" + uc.cardViewitem.category.categoryId).FirstOrDefault();
+
+                uc.squareCardBorderBrush = "#D35400";
+
+                if (pastCatalogItem_category != -1 && pastCatalogItem_category != uc.cardViewitem.category.categoryId)
+                {
+                    var pastUc = new uc_squareCard() { contentId = pastCatalogItem_category };
+                    pastUc = gridCatigories.Children.OfType<uc_squareCard>().Where(x => x.Name.ToString() == "CardName" + pastUc.contentId).FirstOrDefault();
+                    if (pastUc != null)
+                    {
+                        pastUc.squareCardBorderBrush = "#DFDFDF";
+                    }
+
+                }
+                pastCatalogItem_category = uc.cardViewitem.category.categoryId;
+                idCategory = uc.cardViewitem.category.categoryId;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        #endregion
+
         #region Catalog Items
 
 
         private int pastCatalogItem = -1;
         double gridCatigorieItems_ActualHeight = 0;
         double gridCatigorieItems_ActualWidth = 0;
-        public void  FN_refrishCatalogItem(List<Item> items, string cardType)
+        public void FN_refrishCatalogItem(List<Item> items, string cardType)
         {
             gridCatigorieItems.Children.Clear();
-            gridCatigorieItems_ActualHeight = gridCatigorieItems.ActualHeight/3;
-            gridCatigorieItems_ActualWidth = gridCatigorieItems.ActualWidth/5;
+            gridCatigorieItems_ActualHeight = gridCatigorieItems.ActualHeight / 3;
+            gridCatigorieItems_ActualWidth = gridCatigorieItems.ActualWidth / 5;
             int row = 0;
             int column = 0;
             foreach (var item in items)
@@ -109,7 +224,7 @@ namespace Restaurant.Classes
                 itemCardView.row = row;
                 itemCardView.column = column;
                 FN_createRectangelCard(itemCardView);
-               
+
 
                 column++;
                 if (column == 5)
@@ -119,11 +234,11 @@ namespace Restaurant.Classes
                 }
             }
         }
-       
+
 
         uc_squareCard FN_createRectangelCard(CardViewItems itemCardView, string BorderBrush = "#DFDFDF")
         {
-            uc_squareCard uc = new uc_squareCard(itemCardView, gridCatigorieItems_ActualHeight , gridCatigorieItems_ActualWidth);
+            uc_squareCard uc = new uc_squareCard(itemCardView, gridCatigorieItems_ActualHeight, gridCatigorieItems_ActualWidth);
             uc.squareCardBorderBrush = BorderBrush;
             uc.Name = "CardName" + itemCardView.item.itemId;
             Grid.SetRow(uc, itemCardView.row);
@@ -166,8 +281,6 @@ namespace Restaurant.Classes
             }
         }
         #endregion
-
-
 
     }
 }

@@ -270,6 +270,9 @@
     <Compile Include="View\catalog\foods\uc_package.xaml.cs">
       <DependentUpon>uc_package.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\catalog\rawMaterials\uc_categorie.xaml.cs">
+      <DependentUpon>uc_categorie.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\catalog\rawMaterials\uc_itemsRawMaterials.xaml.cs">
       <DependentUpon>uc_itemsRawMaterials.xaml</DependentUpon>
     </Compile>
@@ -641,6 +644,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\catalog\foods\uc_package.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\catalog\rawMaterials\uc_categorie.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

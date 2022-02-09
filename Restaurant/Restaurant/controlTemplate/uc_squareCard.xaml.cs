@@ -104,7 +104,6 @@ namespace Restaurant.controlTemplate
 
             //////////////
             #endregion
-
             #region   Title
             var titleText = new TextBlock();
             titleText.Text = cardViewitem.item.name;
@@ -145,7 +144,6 @@ namespace Restaurant.controlTemplate
                 grid_main.Children.Add(subTitleText);
             }
             #endregion
-
             if (cardViewitem.item.isNew == 1)
             //if (true)
             {
@@ -211,6 +209,88 @@ namespace Restaurant.controlTemplate
                 this.ToolTip = MainWindow.resourcemanager.GetString("trCount: ") + cardViewitem.item.itemCount + " " + cardViewitem.item.unitName;
                 //tt_name.Content = "Count" + cardViewitem.item.itemCount;
             }
+
+        }
+        async void CreateCategoryCard()
+        {
+
+            #region Grid Container
+            Grid gridContainer = new Grid();
+           
+            /////////////////////////////////////////////////////
+
+            brd_main.Child = gridContainer;
+            if (brd_main.Height > brd_main.Width)
+                brd_main.Height = brd_main.Width;
+            else
+                brd_main.Width = brd_main.Height;
+
+            #endregion
+            grid_main.FlowDirection = FlowDirection.LeftToRight;
+            #region Image
+            Category category = new Category();
+            Button buttonImage = new Button();
+            buttonImage.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFFFF"));
+            if (brd_main.Height != 0)
+                buttonImage.Height = brd_main.Height - 2;
+            buttonImage.Width = buttonImage.Height;
+            buttonImage.BorderThickness = new Thickness(0);
+            buttonImage.Padding = new Thickness(0);
+            buttonImage.FlowDirection = FlowDirection.LeftToRight;
+            MaterialDesignThemes.Wpf.ButtonAssist.SetCornerRadius(buttonImage, (new CornerRadius(10)));
+            bool isModified = HelpClass.chkImgChng(cardViewitem.category.image, (DateTime)cardViewitem.category.updateDate, Global.TMPFolder);
+            if (isModified && cardViewitem.category.image != "")
+                HelpClass.getImg("Category", cardViewitem.category.image, buttonImage);
+            else
+                HelpClass.getLocalImg("Category", cardViewitem.category.image, buttonImage);
+            gridContainer.Children.Add(buttonImage);
+
+            //////////////
+            #endregion
+            #region   Title
+            var titleText = new TextBlock();
+            titleText.Text = cardViewitem.category.name;
+            //titleText.FontSize = 12;
+            //titleText.FontFamily = App.Current.Resources["Font-cairo-bold"] as FontFamily;
+            titleText.Margin = new Thickness(1, 5, 1, 1);
+            titleText.FontWeight = FontWeights.Bold;
+            titleText.VerticalAlignment = VerticalAlignment.Center;
+            titleText.HorizontalAlignment = HorizontalAlignment.Center;
+            //titleText.TextWrapping = TextWrapping.Wrap;
+            titleText.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            Grid.SetRow(titleText, 1);
+            /////////////////////////////////
+            grid_main.Children.Add(titleText);
+
+            #endregion
+            #region  price
+            grid_main.RowDefinitions[2].Height = new GridLength(0);
+            /*
+            if (cardViewitem.cardType == "sales")
+            {
+                var subTitleText = new TextBlock();
+                try
+                {
+                    subTitleText.Text = HelpClass.DecTostring(cardViewitem.category.priceTax);
+                }
+                catch
+                {
+                    subTitleText.Text = "";
+                }
+                subTitleText.Margin = new Thickness(1);
+                //subTitleText.FontWeight = FontWeights.Regular;
+                subTitleText.VerticalAlignment = VerticalAlignment.Center;
+                subTitleText.HorizontalAlignment = HorizontalAlignment.Center;
+                //subTitleText.FontSize = 10;
+                //subTitleText.TextWrapping = TextWrapping.Wrap;
+                subTitleText.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                Grid.SetRow(subTitleText, 2);
+                /////////////////////////////////
+                grid_main.Children.Add(subTitleText);
+            }
+            */
+            #endregion
+
         }
         void InitializeControls()
         {
@@ -218,8 +298,10 @@ namespace Restaurant.controlTemplate
             //    CreateUserCard(cardViewitem.cardType, cardViewitem.user.name, cardViewitem.user.job, cardViewitem.user.mobile, cardViewitem.user.image);
             //else if (cardViewitem.cardType == "Agent")
             //    CreateUserCard(cardViewitem.cardType, cardViewitem.agent.name, cardViewitem.agent.company, cardViewitem.agent.mobile, cardViewitem.agent.image);
-            //else
-                CreateItemCard();
+            if (cardViewitem.cardType == "Category")
+                CreateCategoryCard();
+            else
+            CreateItemCard();
 
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
