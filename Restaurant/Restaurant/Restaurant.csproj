@@ -534,6 +534,9 @@
     <Compile Include="View\windows\wd_subscriptionFees.xaml.cs">
       <DependentUpon>wd_subscriptionFees.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_tablesList.xaml.cs">
+      <DependentUpon>wd_tablesList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_tags.xaml.cs">
       <DependentUpon>wd_tags.xaml</DependentUpon>
     </Compile>
@@ -992,6 +995,10 @@
     <Page Include="View\windows\wd_subscriptionFees.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_tablesList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_tags.xaml">
       <SubType>Designer</SubType>
