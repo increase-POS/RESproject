@@ -233,3 +233,19 @@ D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\netoaster.csproj.GenerateRe
 D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\netoaster.csproj.CoreCompileInputs.cache
 D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\netoaster.dll
 D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\netoaster.pdb
+E:\Restaurant 9-2-2022\netoaster\bin\Debug\netoaster.dll
+E:\Restaurant 9-2-2022\netoaster\bin\Debug\netoaster.pdb
+E:\Restaurant 9-2-2022\netoaster\obj\Debug\ToasterWindow.g.cs
+E:\Restaurant 9-2-2022\netoaster\obj\Debug\GeneratedInternalTypeHelper.g.cs
+E:\Restaurant 9-2-2022\netoaster\obj\Debug\netoaster_MarkupCompile.cache
+E:\Restaurant 9-2-2022\netoaster\obj\Debug\netoaster_MarkupCompile.lref
+E:\Restaurant 9-2-2022\netoaster\obj\Debug\Themes\Generic.baml
+E:\Restaurant 9-2-2022\netoaster\obj\Debug\ToasterWindow.baml
+E:\Restaurant 9-2-2022\netoaster\obj\Debug\netoaster.g.resources
+E:\Restaurant 9-2-2022\netoaster\obj\Debug\netoaster.Properties.Resources.resources
+E:\Restaurant 9-2-2022\netoaster\obj\Debug\netoaster.csproj.GenerateResource.cache
+E:\Restaurant 9-2-2022\netoaster\obj\Debug\netoaster.csproj.CoreCompileInputs.cache
+E:\Restaurant 9-2-2022\netoaster\obj\Debug\netoaster.dll
+E:\Restaurant 9-2-2022\netoaster\obj\Debug\netoaster.pdb
+E:\Restaurant 9-2-2022\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache
+E:\GitHub\RESproject\Restaurant\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache
