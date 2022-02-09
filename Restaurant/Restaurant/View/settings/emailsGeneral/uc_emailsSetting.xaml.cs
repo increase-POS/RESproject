@@ -232,6 +232,7 @@ namespace Restaurant.View.settings.emailsGeneral
                         sysEmail.email = tb_email.Text;
                         //   sysEmail.password = pb_password.Password;
                         sysEmail.password = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(pb_password.Password));
+
                         sysEmail.name = tb_name.Text;
                         sysEmail.port = int.Parse(tb_port.Text);
                         sysEmail.isSSL = tgl_isSSL.IsChecked.Value;
@@ -422,6 +423,8 @@ namespace Restaurant.View.settings.emailsGeneral
                 {
                     sysEmail = dg_sysEmail.SelectedItem as SysEmails;
                     this.DataContext = sysEmail;
+                    pb_password.Password = Encoding.UTF8.GetString(Convert.FromBase64String(sysEmail.password));
+
                     if (sysEmail != null)
                     {
                         #region delete
@@ -492,8 +495,7 @@ namespace Restaurant.View.settings.emailsGeneral
             sysEmail = new SysEmails();
             this.DataContext = sysEmail;
 
-           
-
+            pb_password.Password = "";
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);

@@ -420,29 +420,29 @@
                     <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                             <TextBox x:Name="tb_password"   Padding="10,5,0,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="password..."  
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="password..."  
                                      Foreground="#4E4E4E"   Visibility="Collapsed"
-                                      MaxLength="50" BorderThickness="0"
+                                     MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"   Margin="4,0" />
-                            <PasswordBox   x:Name="pb_password" Padding="10,5,5,5"   
-                                Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
-                                  materialDesign:HintAssist.Hint="Password..."    
-                                 Foreground="#4E4E4E"  
-                                  MaxLength="20" BorderThickness="0"
-                                 materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                 Height="40"   Margin="4,0"   
-                                 LostFocus="validateEmpty_LostFocus" PasswordChanged="ValidateEmpty_PasswordChanged"/>
+                            <PasswordBox  x:Name="pb_password" Padding="10,5,5,5"   
+                                          Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                                          materialDesign:HintAssist.Hint="Password..."    
+                                          Foreground="#4E4E4E"  
+                                          MaxLength="20" BorderThickness="0"
+                                          materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                          Height="40"   Margin="4,0"   
+                                          LostFocus="validateEmpty_LostFocus" PasswordChanged="ValidateEmpty_PasswordChanged"/>
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,30,5" x:Name="p_error_password"
-                              HorizontalAlignment="Right"     Visibility="Collapsed" 
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                             Data="{StaticResource infoCircle}">
+                                  HorizontalAlignment="Right"     Visibility="Collapsed" 
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                                  Data="{StaticResource infoCircle}">
                             </Path>
                             <Path Fill="#7e7e7e"  Stretch="Fill" Margin="5,5,5,5"
-                              HorizontalAlignment="Right"    Visibility="Visible" 
-                         VerticalAlignment="Center" Width="20"  Height="15" x:Name="p_showPassword" 
-                              Data="M11,0.5C6,0.5,1.7,3.6,0,8c1.7,4.4,6,7.5,11,7.5s9.3-3.1,11-7.5C20.3,3.6,16,0.5,11,0.5z M11,13
+                                  HorizontalAlignment="Right"    Visibility="Visible" 
+                                  VerticalAlignment="Center" Width="20"  Height="15" x:Name="p_showPassword" 
+                                  Data="M11,0.5C6,0.5,1.7,3.6,0,8c1.7,4.4,6,7.5,11,7.5s9.3-3.1,11-7.5C20.3,3.6,16,0.5,11,0.5z M11,13
 	c-2.8,0-5-2.2-5-5s2.2-5,5-5s5,2.2,5,5S13.8,13,11,13z M11,5C9.3,5,8,6.3,8,8s1.3,3,3,3s3-1.3,3-3S12.7,5,11,5z"  
                                   MouseEnter="P_showPassword_MouseEnter" 
                                   MouseLeave="P_showPassword_MouseLeave">
@@ -608,8 +608,8 @@
                     </Border>
                     <Border Grid.Row="2" Grid.Column="1">
                         <Button x:Name="btn_update"   materialDesign:ButtonAssist.CornerRadius="7"
-                        Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
-                   Margin="1,1"  Click="Btn_update_Click" >
+                                Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                                Margin="1,1"  Click="Btn_update_Click" >
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <materialDesign:PackIcon Name="txt_update_Icon" Foreground="White" Kind="Edit" VerticalAlignment="Center" Width="15" Height="15" Margin="0,1,2,0">
 
