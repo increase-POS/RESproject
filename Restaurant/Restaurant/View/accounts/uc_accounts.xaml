@@ -59,7 +59,7 @@
 	s1-0.4,1-1V4c0-0.1,0-0.3-0.1-0.4C8.8,3.4,8.6,3.2,8.4,3.1C8.1,3,7.9,3,7.6,3.1c-0.1,0-0.2,0.1-0.3,0.2l-1,1c-0.4,0.4-0.4,1,0,1.4
 	C6.5,5.9,6.7,6,7,6z M25,0v13H3V0H25z M23,2H5v9h18V2z"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                            <TextBlock x:Name="txt_posTransfersInfo" Text="Transfers" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
+                                <TextBlock x:Name="txt_posTransfersInfo" Tag="posTransfers" Text="Transfers" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_posTransfersHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="posTransfers" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
@@ -106,7 +106,7 @@
                          VerticalAlignment="Center" Height="80" Width="80"
                               Data="{StaticResource payments}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                            <TextBlock x:Name="txt_paymentsInfo" Text="Payments"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
+                                <TextBlock x:Name="txt_paymentsInfo" Tag="payments" Text="Payments"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_paymentsHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="payments" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
@@ -153,7 +153,7 @@
                          VerticalAlignment="Center" Height="80" Width="80"
                               Data="{StaticResource received}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                            <TextBlock x:Name="txt_receivedInfo" Text="Received"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
+                                <TextBlock x:Name="txt_receivedInfo" Tag="received" Text="Received"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_receivedHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="received"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
@@ -200,7 +200,7 @@
                          VerticalAlignment="Center" Height="80" Width="80"
                               Data="{StaticResource bank}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                            <TextBlock x:Name="txt_banksAccountingInfo" Text="banksAccounting"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
+                                <TextBlock x:Name="txt_banksAccountingInfo" Tag="banksAccounting" Text="banksAccounting"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_banksAccountingHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="banksAccounting" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
@@ -247,7 +247,7 @@
                          VerticalAlignment="Center" Height="80" Width="80"
                               Data="{StaticResource subscriptions}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                            <TextBlock x:Name="txt_subscriptionsInfo" Text="subscriptions"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
+                                <TextBlock x:Name="txt_subscriptionsInfo" Tag="subscriptions" Text="subscriptions"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_subscriptionsHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="subscriptions" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
@@ -294,7 +294,7 @@
                          VerticalAlignment="Center" Height="80" Width="80"
                               Data="{StaticResource deliveryMan}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                            <TextBlock x:Name="txt_ordersAccountingInfo" Text="orders"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
+                                <TextBlock x:Name="txt_ordersAccountingInfo" Tag="ordersAccounting" Text="orders"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_ordersAccountingHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="ordersAccounting" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"

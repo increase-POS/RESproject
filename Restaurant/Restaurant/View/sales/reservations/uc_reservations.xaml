@@ -41,7 +41,7 @@
                          VerticalAlignment="Center" Height="80" Width="80"
                               Data="{StaticResource reserveAdd}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_reservationTableInfo" Text="reservationTable" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
+                                <TextBlock x:Name="txt_reservationTableInfo" Tag="reservationTable" Text="reservationTable" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
                                 <TextBlock x:Name="txt_reservationTableHint" Text="create reservation..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                             </StackPanel>
                             <Button Tag="reservationTable" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
@@ -88,7 +88,7 @@
                          VerticalAlignment="Center" Height="80" Width="80" FlowDirection="LeftToRight" 
                               Data="{StaticResource reserveUpdate}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_reservationsUpdateInfo" Text="reservationsUpdate"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
+                                <TextBlock x:Name="txt_reservationsUpdateInfo" Tag="reservationsUpdate" Text="reservationsUpdate"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                                 <TextBlock x:Name="txt_reservationsUpdateHint" Text="update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                             </StackPanel>
                             <Button Tag="reservationsUpdate" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"

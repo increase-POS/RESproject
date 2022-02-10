@@ -128,6 +128,7 @@ namespace Restaurant.View.catalog.rawMaterials
                 FillCombo.FillUnits(cb_maxUnitId);
                 FillCombo.FillUnits(cb_minUnitId);
                 Keyboard.Focus(tb_code);
+                await RefrishCategoriesCard();
                 await RefreshItemsList();
                 await Search();
                 Clear();
@@ -1078,8 +1079,8 @@ namespace Restaurant.View.catalog.rawMaterials
                 Where(x => (x.code.ToLower().Contains(searchText) ||
                     x.name.ToLower().Contains(searchText) ||
                     x.details.ToLower().Contains(searchText)
-                     || x.categoryId.ToString().ToLower().Contains(categoryIdSearch)
-                    ) && x.isActive == tgl_itemState);
+                    ) && x.isActive == tgl_itemState
+                    && x.categoryId.ToString().ToLower().Contains(categoryIdSearch));
                  pageIndex = 1;
                 #region
 
@@ -1350,13 +1351,13 @@ namespace Restaurant.View.catalog.rawMaterials
             for (int i = 0; i < column; i++)
             {
                 cd[i] = new ColumnDefinition();
-                cd[i].Width = new GridLength(150, GridUnitType.Pixel);
+                cd[i].Width = new GridLength(1, GridUnitType.Auto);
                 grid_categoryCards.ColumnDefinitions.Add(cd[i]);
             }
             #endregion
 
         }
-        public async Task ChangeCategoryIdEvent(int categoryId)
+        public async void ChangeCategoryIdEvent(int categoryId)
         {
             //category = categories.ToList().Find(c => c.categoryId == categoryId);
             categoryIdSearch = categoryId.ToString();

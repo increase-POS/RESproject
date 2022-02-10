@@ -42,7 +42,7 @@
                          VerticalAlignment="Center" Height="80" Width="80"
                               Data="M4,10h3v7H4V10z M10.5,10h3v7h-3V10z M2,19h20v3H2V19z M17,10h3v7h-3V10z M12,1L2,6v2h20V6L12,1z"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                            <TextBlock x:Name="txt_banksInfo" Text="Banks" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
+                                <TextBlock x:Name="txt_banksInfo" Tag="banks" Text="Banks" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_banksHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="banks" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
@@ -165,7 +165,7 @@
 	C24,34.3,24,34.3,24,34.3C24,34.3,24,34.3,24,34.3z M23.5,4C23.5,4,23.5,4,23.5,4C23.5,4,23.5,4,23.5,4C23.5,4,23.5,4,23.5,4
 	C23.5,4,23.5,4,23.5,4z"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                            <TextBlock x:Name="txt_cardsInfo" Text="Methods Type"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
+                                <TextBlock x:Name="txt_cardsInfo"  Tag="cards" Text="Methods Type"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_cardsHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="cards"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"

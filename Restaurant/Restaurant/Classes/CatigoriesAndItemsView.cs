@@ -99,10 +99,18 @@ namespace Restaurant.Classes
         }
         private void INotifyPropertyChangedIdCatigorie()
         {
-            
+
             if (uccategorie != null)
             {
-                uccategorie.ChangeIdEvent(idCategory);
+                uccategorie.ChangeCategoryIdEvent(idCategory);
+            }
+            if (ucitemsRawMaterials != null)
+            {
+                ucitemsRawMaterials.ChangeCategoryIdEvent(idCategory);
+            }
+            if (wdPurchaseItems != null)
+            {
+                wdPurchaseItems.ChangeCategoryIdEvent(idCategory);
             }
         }
 

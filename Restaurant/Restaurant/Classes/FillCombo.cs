@@ -11,6 +11,16 @@ namespace Restaurant.Classes
 {
     public class FillCombo
     {
+        #region  Object
+        static public Object objectModel = new Object();
+        static public List<Object> objectsList;
+        static public async Task<IEnumerable<Object>> RefreshObjects()
+        {
+            objectsList = await objectModel.GetAll();
+            return objectsList;
+        }
+
+        #endregion
         #region branch
         static public Branch branch = new Branch();
         static public List<Branch> branchsList ;
@@ -215,9 +225,9 @@ namespace Restaurant.Classes
             #region FillCategoryPurchase
             if (categoriesList is null)
                 await RefreshCategory();
-            cmb.ItemsSource = categoriesList.Where(x=>x.type == "p").ToList();
+            cmb.ItemsSource = categoriesList.Where(x=>x.type == "p" && x.isActive == 1).ToList();
             cmb.SelectedValuePath = "categoryId";
-            //cmb.DisplayMemberPath = "name";
+            cmb.DisplayMemberPath = "name";
             #endregion
         }
         static public async void FillCategorySale(ComboBox cmb)

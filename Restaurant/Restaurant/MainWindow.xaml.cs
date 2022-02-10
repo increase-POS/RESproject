@@ -43,6 +43,7 @@ using Restaurant.View.catalog.rawMaterials;
 using Restaurant.View.settings.reportsSettings;
 using Restaurant.View.sales.reservations;
 using Restaurant.View.windows;
+using Restaurant.View.settings.emailsGeneral;
 
 namespace Restaurant
 {
@@ -2115,9 +2116,9 @@ namespace Restaurant
                 case "sales":
                     grid_main.Children.Add(uc_sales.Instance);
                     break;
-                //case "delivery":
-                //    grid_main.Children.Add(uc_delivery.Instance);
-                //    break;
+                case "delivery":
+                    grid_main.Children.Add(uc_delivery.Instance);
+                    break;
                 case "accounts":
                     grid_main.Children.Add(uc_accounts.Instance);
                     break;
@@ -2255,27 +2256,27 @@ namespace Restaurant
                 case "spendingRequest":
                     grid_main.Children.Add(uc_spendingRequest.Instance);
                     break;
-                //case "posTransfers":
-                //    grid_main.Children.Add(uc_posTransfers.Instance);
-                //    break;
-                //case "payments":
-                //    grid_main.Children.Add(uc_payments.Instance);
-                //    break;
-                //case "received":
-                //    grid_main.Children.Add(uc_received.Instance);
-                //    break;
-                //case "banksAccounting":
-                //    grid_main.Children.Add(uc_banksAccounting.Instance);
-                //    break;
+                case "posTransfers":
+                    grid_main.Children.Add(uc_posTransfers.Instance);
+                    break;
+                case "payments":
+                    grid_main.Children.Add(uc_payments.Instance);
+                    break;
+                case "received":
+                    grid_main.Children.Add(uc_received.Instance);
+                    break;
+                case "banksAccounting":
+                    grid_main.Children.Add(uc_banksAccounting.Instance);
+                    break;
                 //case "accountsStatistic":
                 //    grid_main.Children.Add(uc_accountsStatistic.Instance);
                 //    break;
-                //case "subscriptions":
-                //    grid_main.Children.Add(uc_subscriptions.Instance);
-                //    break;
-                //case "ordersAccounting":
-                //    grid_main.Children.Add(uc_ordersAccounting.Instance);
-                //    break;
+                case "subscriptions":
+                    grid_main.Children.Add(uc_subscriptions.Instance);
+                    break;
+                case "ordersAccounting":
+                    grid_main.Children.Add(uc_ordersAccounting.Instance);
+                    break;
                 //case "general":
                 //    grid_main.Children.Add(uc_general.Instance);
                 //    break;
@@ -2329,9 +2330,9 @@ namespace Restaurant
                     grid_main.Children.Add(uc_package.Instance);
                     break;
                 //76  deliveryManagement
-                //case "deliveryManagement":
-                //    grid_main.Children.Add(uc_deliveryManagement.Instance);
-                //    break;
+                case "deliveryManagement":
+                    grid_main.Children.Add(uc_deliveryManagement.Instance);
+                    break;
                 //77  shippingCompanies
                 case "shippingCompanies":
                     grid_main.Children.Add(uc_shippingCompanies.Instance);
@@ -2364,6 +2365,44 @@ namespace Restaurant
                 case "reservationsUpdate":
                     grid_main.Children.Add(uc_reservationsUpdate.Instance);
                     break;
+                //85  residentialSectors
+                case "residentialSectors":
+                    grid_main.Children.Add(uc_residentialSectors.Instance);
+                    break;
+                //86  emailsGeneral
+                case "emailsGeneral":
+                    grid_main.Children.Add(uc_emailsGeneral.Instance);
+                    break;
+                //87  emailsSetting
+                case "emailsSetting":
+                    grid_main.Children.Add(uc_emailsSetting.Instance);
+                    break;
+                //88  emailsTamplates
+                case "emailsTamplates":
+                    grid_main.Children.Add(uc_emailsTamplates.Instance);
+                    break;
+                //89  driversManagement
+                case "driversManagement":
+                    grid_main.Children.Add(uc_driversManagement.Instance);
+                    break;
+                //90  categorie
+                case "categorie":
+                    grid_main.Children.Add(uc_categorie.Instance);
+                    break;
+
+                //91  alerts
+                //92  storageAlerts
+                //93  kitchenAlerts
+                //94  saleAlerts
+                //95  accountsAlerts
+                //96  storageAlerts_minMaxItem
+                //97  storageAlerts_ImpExp
+                //98  storageAlerts_ctreatePurchaseInvoice
+                //99  storageAlerts_ctreatePurchaseReturnInvoice
+                //100 storageAlerts_spendingOrderApprove
+                //101 kitchenAlerts_spendingOrderRequest
+                //102 saleAlerts_executeOrder
+
 
                 default:
                     return;

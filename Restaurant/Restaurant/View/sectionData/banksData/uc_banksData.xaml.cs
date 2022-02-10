@@ -40,15 +40,34 @@ namespace Restaurant.View.sectionData.banksData
             InitializeComponent();
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-           
-        }
-
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             Instance = null;
             GC.Collect();
+        }
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            #region translate
+            if (MainWindow.lang.Equals("en"))
+                grid_main.FlowDirection = FlowDirection.LeftToRight;
+            else
+                grid_main.FlowDirection = FlowDirection.RightToLeft;
+            #endregion
+            translate();
+        }
+        private async void translate()
+        {
+            if (FillCombo.objectsList is null)
+                await FillCombo.RefreshObjects();
+            List<TextBlock> textBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
+                .Where(x => x.Name.Contains("Info") && x.Tag != null).ToList();
+            foreach (var item in textBlocksList)
+            {
+                item.Text = MainWindow.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translate
+               );
+            }
+
         }
 
         private void Btn_banks_Click(object sender, RoutedEventArgs e)

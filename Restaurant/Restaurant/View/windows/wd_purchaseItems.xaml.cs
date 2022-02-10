@@ -38,11 +38,11 @@ namespace Restaurant.View.windows
         public List<int> selectedItems { get; set; }
         List<Item> items;
         List<Item> itemsQuery;
-        Category category = new Category();
+        //Category category = new Category();
 
-        List<int> categoryIds = new List<int>();
-        Boolean all = true;
-        List<string> categoryNames = new List<string>();
+        //List<int> categoryIds = new List<int>();
+        //Boolean all = true;
+        //List<string> categoryNames = new List<string>();
         public byte tglCategoryState = 1;
         public byte tglItemState = 1;
         public string txtItemSearch;
@@ -83,8 +83,8 @@ namespace Restaurant.View.windows
             try
             {
                 if (sender != null)
-                    HelpClass.StartAwait(grid_ucItems);
-                grid_ucItems.Opacity = 1;
+                    HelpClass.StartAwait(grid_main);
+                grid_main.Opacity = 1;
 
                 // for pagination onTop Always
                 btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
@@ -94,12 +94,12 @@ namespace Restaurant.View.windows
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
-                    grid_ucItems.FlowDirection = FlowDirection.LeftToRight;
+                    grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
-                    grid_ucItems.FlowDirection = FlowDirection.RightToLeft;
+                    grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
                 #endregion
@@ -128,16 +128,16 @@ namespace Restaurant.View.windows
                 }
                 while (!isDone);
                 #endregion
-
-                Txb_searchitems_TextChanged(null, null);
+                await RefrishCategoriesCard();
+                Txb_searchitems_TextChanged(txb_searchitems, null);
                
                 if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -258,7 +258,7 @@ namespace Restaurant.View.windows
             try
             {
                 if (sender != null)
-                    HelpClass.StartAwait(grid_ucItems);
+                    HelpClass.StartAwait(grid_main);
 
                 if (FillCombo.purchaseItems is null)
                     await FillCombo.RefreshPurchaseItems();
@@ -267,15 +267,15 @@ namespace Restaurant.View.windows
 
                 #region
                 itemsQuery = items;
-                if (categoryIds.Count > 0 && all == false)
-                {
-                    itemsQuery = itemsQuery.Where(x => x.categoryId != null).ToList().Where(x => categoryIds.Contains((int)x.categoryId)).ToList();
-                }
+                //if (categoryIds.Count > 0 && all == false)
+                //{
+                //    itemsQuery = itemsQuery.Where(x => x.categoryId != null).ToList().Where(x => categoryIds.Contains((int)x.categoryId)).ToList();
+                //}
 
                 itemsQuery = itemsQuery.Where(x => (x.code.ToLower().Contains(txtItemSearch) ||
                 x.name.ToLower().Contains(txtItemSearch) ||
                 x.details.ToLower().Contains(txtItemSearch)
-                )).ToList();
+                ) && x.categoryId.ToString().Contains(categoryIdSearch)).ToList();
 
                 if (btns is null)
                     btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
@@ -284,12 +284,12 @@ namespace Restaurant.View.windows
                 //RefrishItemsDatagrid(itemsQuery);
 
                 if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -305,7 +305,7 @@ namespace Restaurant.View.windows
             try
             {
                 if (sender != null)
-                    HelpClass.StartAwait(grid_ucItems);
+                    HelpClass.StartAwait(grid_main);
 
                 itemsQuery = items.Where(x => x.isActive == tglItemState).ToList();
 
@@ -331,12 +331,12 @@ namespace Restaurant.View.windows
                 #endregion
 
                 if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -347,7 +347,7 @@ namespace Restaurant.View.windows
             try
             {
                 if (sender != null)
-                    HelpClass.StartAwait(grid_ucItems);
+                    HelpClass.StartAwait(grid_main);
 
                 pageIndex = 1;
                 #region
@@ -359,12 +359,12 @@ namespace Restaurant.View.windows
                 #endregion
 
                 if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -373,7 +373,7 @@ namespace Restaurant.View.windows
             try
             {
                 if (sender != null)
-                    HelpClass.StartAwait(grid_ucItems);
+                    HelpClass.StartAwait(grid_main);
 
                 pageIndex = int.Parse(btn_prevPage.Content.ToString());
                 #region
@@ -385,12 +385,12 @@ namespace Restaurant.View.windows
                 #endregion
 
                 if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -399,7 +399,7 @@ namespace Restaurant.View.windows
             try
             {
                 if (sender != null)
-                    HelpClass.StartAwait(grid_ucItems);
+                    HelpClass.StartAwait(grid_main);
 
                 pageIndex = int.Parse(btn_activePage.Content.ToString());
                 #region
@@ -411,12 +411,12 @@ namespace Restaurant.View.windows
                 #endregion
 
                 if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -425,7 +425,7 @@ namespace Restaurant.View.windows
             try
             {
                 if (sender != null)
-                    HelpClass.StartAwait(grid_ucItems);
+                    HelpClass.StartAwait(grid_main);
 
                 pageIndex = int.Parse(btn_nextPage.Content.ToString());
                 #region
@@ -437,12 +437,12 @@ namespace Restaurant.View.windows
                 #endregion
 
                 if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -451,9 +451,9 @@ namespace Restaurant.View.windows
             try
             {
                 if (sender != null)
-                    HelpClass.StartAwait(grid_ucItems);
+                    HelpClass.StartAwait(grid_main);
 
-                itemsQuery = items.Where(x => x.isActive == tglCategoryState).ToList();
+                itemsQuery = items.Where(x => x.isActive == 1).ToList();
                 pageIndex = ((itemsQuery.Count() - 1) / 9) + 1;
                 #region
                 itemsQuery = items.Where(x => (x.code.ToLower().Contains(txtItemSearch) ||
@@ -464,12 +464,12 @@ namespace Restaurant.View.windows
                 #endregion
 
                 if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -483,18 +483,18 @@ namespace Restaurant.View.windows
             try
             {
                 if (sender != null)
-                    HelpClass.StartAwait(grid_ucItems);
+                    HelpClass.StartAwait(grid_main);
                 await FillCombo.RefreshPurchaseItems();
                FillCombo.RefreshItemUnit();
                 RefrishItems();
                 Txb_searchitems_TextChanged(null, null);
                 if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    HelpClass.EndAwait(grid_ucItems);
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -528,7 +528,7 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
+        /*
         private void categories_Checked(object sender, RoutedEventArgs e)
         {
             CheckBox checkBox = sender as CheckBox;
@@ -554,7 +554,6 @@ namespace Restaurant.View.windows
             }
             Txb_searchitems_TextChanged(null, null);
         }
-
         private void categories_Unchecked(object sender, RoutedEventArgs e)
         {
             CheckBox checkBox = sender as CheckBox;
@@ -579,5 +578,76 @@ namespace Restaurant.View.windows
             }
             Txb_searchitems_TextChanged(null, null);
         }
+        */
+        #region category
+        List<Category> categories;
+        List<Category> categoriesQuery;
+        Category category = new Category();
+        Category categoryModel = new Category();
+        string categoryIdSearch = "";
+
+        async Task<IEnumerable<Category>> RefreshCategorysList()
+        {
+            categories = await categoryModel.Get();
+            categories = categories.Where(x => x.type == "p").ToList();
+            return categories;
+        }
+        async Task RefrishCategoriesCard()
+        {
+            if (categories is null)
+                await RefreshCategorysList();
+            categoriesQuery = categories.Where(x => x.isActive == 1).ToList();
+            catigoriesAndItemsView.gridCatigories = grid_categoryCards;
+            generateCoulmnCategoriesGrid(categoriesQuery.Count());
+            catigoriesAndItemsView.FN_refrishCatalogItem_category(categoriesQuery.ToList(), "Category", -1);
+        }
+        void generateCoulmnCategoriesGrid(int column)
+        {
+
+            #region
+            grid_categoryCards.ColumnDefinitions.Clear();
+            ColumnDefinition[] cd = new ColumnDefinition[column];
+            for (int i = 0; i < column; i++)
+            {
+                cd[i] = new ColumnDefinition();
+                cd[i].Width = new GridLength(1, GridUnitType.Auto);
+                grid_categoryCards.ColumnDefinitions.Add(cd[i]);
+            }
+            #endregion
+
+        }
+        public  void ChangeCategoryIdEvent(int categoryId)
+        {
+            category = categories.ToList().Find(c => c.categoryId == categoryId);
+            categoryIdSearch = categoryId.ToString();
+            //await RefreshItemsList();
+            //await Search();
+            Txb_searchitems_TextChanged(txb_searchitems, null);
+
+        }
+        private async void Btn_getAllCategory_Click(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+                categoryIdSearch = "";
+                await RefrishCategoriesCard();
+                //await RefreshItemsList();
+                //await Search();
+                Txb_searchitems_TextChanged(txb_searchitems, null);
+
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        #endregion
     }
 }

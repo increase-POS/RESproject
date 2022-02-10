@@ -41,7 +41,7 @@
                          VerticalAlignment="Center" Height="80" Width="80"
                               Data="{StaticResource invoice}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                            <TextBlock x:Name="txt_payInvoiceInfo" Text="Pay Invoice" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
+                                <TextBlock x:Name="txt_payInvoiceInfo" Tag="payInvoice" Text="Pay Invoice" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_payInvoiceHint" Text="Pay Invoice" FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="payInvoice" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
@@ -111,7 +111,7 @@
 	v-1c0-1.1-0.9-2-2-2h-1c-1.1,0-2,0.9-2,2v1h-2c-0.5,0-1,0.4-1,1v1C11.5,7.1,11.9,7.5,12.5,7.5z M17,3.5c0.3,0,0.5,0.2,0.5,0.5
 	S17.3,4.5,17,4.5S16.5,4.3,16.5,4S16.7,3.5,17,3.5z M4.1,16.8L4.1,16.8l0-0.7h0V16.8z M29.9,18.5L29.9,18.5l0-0.7h0V18.5z"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                            <TextBlock x:Name="txt_purchaseOrderInfo" Text="Purchase Order"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
+                                <TextBlock x:Name="txt_purchaseOrderInfo" Tag="purchaseOrder" Text="Purchase Order"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_purchaseOrderHint" Text="Purchase Order" FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="purchaseOrder"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
@@ -164,7 +164,7 @@
 	h14.3L60.6,79.8L60.6,79.8z M84.8,65.7h3.7v6.5h-3.7v7.7h-8.4v-7.7h-14L61.9,67l14.5-23.4v-0.1h8.4L84.8,65.7L84.8,65.7z M69.9,65.7
 	h6.5V54.5l-0.5,0.9L69.9,65.7L69.9,65.7z"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                            <TextBlock x:Name="txt_purchaseStatisticInfo" Text="Statistic"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
+                                <TextBlock x:Name="txt_purchaseStatisticInfo" Tag="purchaseStatistic" Text="Statistic"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
                             <TextBlock x:Name="txt_purchaseStatisticHint" Text="Daily Statistic" FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="purchaseStatistic" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"

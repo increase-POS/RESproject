@@ -51,7 +51,7 @@
                             <ScrollViewer Grid.Row="1"  Grid.Column="1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto"
                                           Height="auto" 
                                           ScrollViewer.CanContentScroll="True">
-                                <Grid  x:Name="grid_categoryCards" />
+                                <Grid  x:Name="grid_categoryCards"   />
                             </ScrollViewer>
                         </Border>
                     </Grid>
@@ -84,7 +84,7 @@
                             <ColumnDefinition  Width="auto"  />
                             <ColumnDefinition  Width="auto"  />
                         </Grid.ColumnDefinitions>
-                        <Border Background="White" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        <Border Background="White" Grid.Column="0" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Border.Effect>
                                 <DropShadowEffect
                           ShadowDepth="1"
@@ -388,7 +388,7 @@
                         </Grid>
                     </Border>
 
-                    <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                    <!--<Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                             <ComboBox x:Name="cb_categoryId"    SelectedValue="{Binding categoryId, Mode=OneWay}"
                                         ItemsSource="{Binding}"
@@ -409,8 +409,24 @@
                          VerticalAlignment="Center" Width="15"  Height="15" 
                              Data="{StaticResource infoCircle}"/>
                         </Grid>
-                    </Border>
-                    <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                    </Border>-->
+                        <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Grid   >
+                                <ComboBox x:Name="cb_categoryId"    SelectedValue="{Binding categoryId, Mode=OneWay}"
+                                  Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
+                                  materialDesign:HintAssist.Hint="category..."  
+                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                  TextBlock.FontSize="12"  
+                                  Grid.Column="0" Height="40"  Margin="4,0"
+                                  BorderBrush="#737373" BorderThickness="0"  />
+                                <Path Fill="#E81123" x:Name="p_error_categoryId" Stretch="Fill" Margin="5,5,15,5"
+                              HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
+                         VerticalAlignment="Center" Width="15"  Height="15" 
+                             Data="{StaticResource infoCircle}"/>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                             <ComboBox x:Name="cb_type"    SelectedValue="{Binding type, Mode=OneWay}"
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"

@@ -915,7 +915,7 @@ namespace Restaurant.View.catalog.rawMaterials
         #endregion
         #region Get Id By Click  Y
 
-        public async void ChangeIdEvent(int categorieId)
+        public async void ChangeCategoryIdEvent(int categorieId)
         {
             try
             {
