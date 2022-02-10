@@ -246,8 +246,7 @@
                         <StackPanel  Orientation="Horizontal" >
 
                             <Button x:Name="btn_pdf"   Background="{x:Null}"   Margin="10,0,5,0"
-                          Padding="0" Height="35" 
-                          BorderBrush="{x:Null}"  >
+                                    Padding="0" Height="35" BorderBrush="{x:Null}" Click="Btn_pdf_Click_1"  >
                                 <materialDesign:PackIcon Foreground="#D20A0A" Kind="FilePdf"  
                           Width="22" Height="22">
                                     <materialDesign:PackIcon.ToolTip>
@@ -260,8 +259,8 @@
                                 </materialDesign:PackIcon>
                             </Button>
                             <Button   Background="{x:Null}" Margin="0,0,5,0" 
-                            Padding="0" Height="35"   x:Name="btn_preview"  
-                                       BorderBrush="{x:Null}">
+                                      Padding="0" Height="35"   x:Name="btn_preview"  
+                                      BorderBrush="{x:Null}" Click="Btn_preview_Click_1" >
                                 <Grid FlowDirection="LeftToRight">
                                     <Path Fill="#4E4E4E" Stretch="Fill"
                           Width="15" Height="18" 
@@ -280,9 +279,54 @@
                                     </Path>
                                 </Grid>
                             </Button>
+                            <Button FlowDirection="LeftToRight"   Background="{x:Null}"    Grid.Column="2" Margin="2.5,0,2.5,0" 
+                            Padding="0" Height="20" Width="25"   x:Name="btn_pieChart"   
+                                       BorderBrush="{x:Null}" Click="Btn_pieChart_Click"  >
+                                <Grid Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Path Width="8.8" Height="9.6" Stretch="Fill" Data="M27.7,8.3l-10.2,7.8l9.1,9.1c2.1-2.5,3.4-5.7,3.4-9.2C30,13.1,29.1,10.5,27.7,8.3z" Fill="#DD191B"
+                              RenderTransformOrigin="5,5" >
+                                        <Path.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform />
+                                                <SkewTransform/>
+                                                <RotateTransform Angle="0"/>
+                                                <TranslateTransform  X="6.5" Y="0.2"/>
+                                            </TransformGroup>
+                                        </Path.RenderTransform>
+                                    </Path>
+                                    <Path Width="7.2" Height="7.2" Stretch="Fill" Data="M17,14l9.4-7.3c-2.4-2.6-5.7-4.4-9.4-4.7V14z" Fill="#F74110" RenderTransformOrigin="0,0">
+                                        <Path.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform />
+                                                <SkewTransform/>
+                                                <RotateTransform/>
+                                                <TranslateTransform  X="6.2" Y="-6"/>
+                                            </TransformGroup>
+                                        </Path.RenderTransform>
+                                    </Path>
+                                    <Path Fill="#377EB8" Width="16" Height="17" Stretch="Fill" Data="M15.3,16.7C15.3,16.7,15.3,16.7,15.3,16.7C15.2,16.6,15.2,16.6,15.3,16.7c-0.1-0.1-0.1-0.2-0.1-0.2c0-0.1-0.1-0.1-0.1-0.2
+   s0-0.1,0-0.2c0,0,0-0.1,0-0.1V2.1C7.7,2.6,2,8.6,2,16c0,7.7,6.3,14,14,14c3.5,0,6.7-1.3,9.2-3.4L15.3,16.7z" RenderTransformOrigin="0,0">
+                                        <Path.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform ScaleX="1"/>
+                                                <SkewTransform/>
+                                                <RotateTransform/>
+                                                <TranslateTransform/>
+                                            </TransformGroup>
+                                        </Path.RenderTransform>
+                                        <Path.ToolTip>
+                                            <ToolTip x:Name="tt_pieChart" Content="Pie Chart"
+                                              Placement="left" 
+                                              HorizontalOffset="35"
+                                              PlacementRectangle="50,0,0,0"
+                                              VerticalOffset="-35"/>
+                                        </Path.ToolTip>
+                                    </Path>
+                                </Grid>
+                            </Button>
                             <Button   Background="{x:Null}"    Margin="5,0,5,0"
-                          Padding="0" Height="35"  x:Name="btn_print"
-                          BorderBrush="{x:Null}"  >
+                                      Padding="0" Height="35"  x:Name="btn_print"
+                                      BorderBrush="{x:Null}" Click="Btn_print_Click_1"  >
                                 <materialDesign:PackIcon Foreground="#313131" Kind="Printer"  
                       Width="22" Height="22">
                                     <materialDesign:PackIcon.ToolTip>
@@ -295,8 +339,8 @@
                                 </materialDesign:PackIcon>
                             </Button>
                             <Button   Background="{x:Null}" Margin="5,0,5,0" 
-                            Padding="0" Height="35"   x:Name="btn_exportToExcel" 
-                                       BorderBrush="{x:Null}" >
+                                      Padding="0" Height="35"   x:Name="btn_exportToExcel" 
+                                      BorderBrush="{x:Null}" Click="Btn_exportToExcel_Click_1" >
                                 <Path Fill="#378500" Stretch="Fill"
                           Width="20" Height="20" 
                            FlowDirection="LeftToRight" Data="M25.162,3H16v2.984h3.031v2.031H16V10h3v2h-3v2h3v2h-3v2h3v2h-3v3h9.162   C25.623,23,26,22.609,26,22.13V3.87C26,3.391,25.623,3,25.162,3z M24,20h-4v-2h4V20z M24,16h-4v-2h4V16z M24,12h-4v-2h4V12z M24,8   h-4V6h4V8z 

@@ -106,9 +106,9 @@ namespace Restaurant.View.accounts
         }
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "cash", "fromBranch", "pos1", "toBranch" , "pos2" };
                 
                 #region translate
@@ -184,17 +184,18 @@ namespace Restaurant.View.accounts
                 */
                 #endregion
 
+                await RefreshCashesList();
+
                await Search();
 
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
         private void translate()
         {
@@ -240,27 +241,13 @@ namespace Restaurant.View.accounts
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//add
-            try
-            {
+            //try
+            //{
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") )
                 {
-                    HelpClass.StartAwait(grid_main);
-
-                    #region validate
-                    //chk if 2 pos is the same
-                    //bool isSame = false;
-                    //if (cb_pos1.SelectedValue == cb_pos2.SelectedValue)
-                    //    isSame = true;
-                    //if ((cb_pos1.SelectedIndex != -1) && (cb_pos2.SelectedIndex != -1) && (cb_pos1.SelectedValue == cb_pos2.SelectedValue))
-                    //{
-                    //    HelpClass.showComboBoxValidate(cb_pos1 , p_error_pos1 , tt_error_Pos1 , "trErrorSamePos");
-                    //    HelpClass.showComboBoxValidate(cb_pos2, p_error_pos2, tt_error_Pos2, "trErrorSamePos");
-                    //}
-
-                    #endregion
+                    //HelpClass.StartAwait(grid_main);
 
                     #region add
-                    //if (HelpClass.validate(requiredControlList, this) && !isSame)
                     if (HelpClass.validate(requiredControlList, this))
                     {
                         Pos pos = await posModel.getById(Convert.ToInt32(cb_pos1.SelectedValue));
@@ -342,18 +329,18 @@ namespace Restaurant.View.accounts
                     }
                     #endregion
 
-                    HelpClass.EndAwait(grid_main);
+                    //HelpClass.EndAwait(grid_main);
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-            }
-            catch (Exception ex)
-            {
+            //}
+            //catch (Exception ex)
+            //{
 
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
         private async void Btn_update_Click(object sender, RoutedEventArgs e)
         {//update
@@ -405,6 +392,7 @@ namespace Restaurant.View.accounts
                     }
                     #endregion
 
+                    #region old
                     /*
                     #region validate
                     //chk empty cash
@@ -456,6 +444,8 @@ namespace Restaurant.View.accounts
                     }
                     #endregion
                     */
+                    #endregion
+
                     HelpClass.EndAwait(grid_main);
                 }
                 else
@@ -1403,6 +1393,31 @@ namespace Restaurant.View.accounts
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        #region reports
+        private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
+
+        private void Btn_pdf_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_preview_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_print_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_exportToExcel_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+        #endregion
     }
 }

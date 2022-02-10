@@ -3103,4 +3103,10 @@
   <data name="trSections" xml:space="preserve">
     <value>الأقسام</value>
   </data>
+  <data name="trUserConfirm" xml:space="preserve">
+    <value>عليك الحصول على تأكيد المستخدم</value>
+  </data>
+  <data name="trUserConfirmation" xml:space="preserve">
+    <value>تأكيد المستخدم</value>
+  </data>
 </root>

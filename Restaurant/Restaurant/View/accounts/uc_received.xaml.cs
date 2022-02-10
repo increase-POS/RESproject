@@ -97,9 +97,9 @@ namespace Restaurant.View.accounts
         {//load
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
+                requiredControlList = new List<string> { "cash", "depositTo", "paymentProcessType" };
 
                 #region translate
                 if (MainWindow.lang.Equals("en"))
@@ -114,8 +114,6 @@ namespace Restaurant.View.accounts
                 }
                 translate();
                 #endregion
-
-             
 
                 dp_searchEndDate.SelectedDate = DateTime.Now;
                 dp_searchStartDate.SelectedDate = DateTime.Now;
@@ -169,15 +167,13 @@ namespace Restaurant.View.accounts
 
                 btn_image.IsEnabled = false;
 
-                Tb_search_TextChanged(null, null);
+                await Search();
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -273,12 +269,11 @@ namespace Restaurant.View.accounts
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 Tb_search_TextChanged(null, null);
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -292,17 +287,15 @@ namespace Restaurant.View.accounts
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 Tb_search_TextChanged(null, null);
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -460,17 +453,15 @@ namespace Restaurant.View.accounts
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 await Search();
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1121,7 +1112,7 @@ namespace Restaurant.View.accounts
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 /*
                 switch (cb_paymentProcessType.SelectedIndex)
                 {
@@ -1204,7 +1195,7 @@ namespace Restaurant.View.accounts
             catch (Exception ex)
             {
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1215,7 +1206,7 @@ namespace Restaurant.View.accounts
          //{
          //    
          //        HelpClass.StartAwait(grid_main);
-         /*
+         
             btn_invoices.IsEnabled = false;
             switch (cb_depositFrom.SelectedIndex)
             {
@@ -1226,6 +1217,7 @@ namespace Restaurant.View.accounts
                     btn_invoices.Visibility = Visibility.Visible;
                     cb_depositorU.Visibility = Visibility.Collapsed;
                     cb_depositorSh.Visibility = Visibility.Collapsed;
+                    requiredControlList = new List<string> { "cash", "depositTo", "paymentProcessType" , "depositorV" };
                     break;
                 case 1://customer
                     cb_depositorC.SelectedIndex = -1;
@@ -1234,6 +1226,7 @@ namespace Restaurant.View.accounts
                     btn_invoices.Visibility = Visibility.Visible;
                     cb_depositorU.Visibility = Visibility.Collapsed;
                     cb_depositorSh.Visibility = Visibility.Collapsed;
+                    requiredControlList = new List<string> { "cash", "depositTo", "paymentProcessType", "depositorC" };
                     break;
                 case 2://user
                     cb_depositorU.SelectedIndex = -1;
@@ -1242,6 +1235,7 @@ namespace Restaurant.View.accounts
                     btn_invoices.Visibility = Visibility.Visible;
                     cb_depositorU.Visibility = Visibility.Visible;
                     cb_depositorSh.Visibility = Visibility.Collapsed;
+                    requiredControlList = new List<string> { "cash", "depositTo", "paymentProcessType", "depositorU" };
                     break;
                 case 3://other
                     cb_depositorV.Visibility = Visibility.Collapsed;
@@ -1249,25 +1243,27 @@ namespace Restaurant.View.accounts
                     btn_invoices.Visibility = Visibility.Collapsed;
                     cb_depositorU.Visibility = Visibility.Collapsed;
                     cb_depositorSh.Visibility = Visibility.Collapsed;
-                    HelpClass.clearComboBoxValidate(cb_depositorV, p_error_depositor);
-                    HelpClass.clearComboBoxValidate(cb_depositorC, p_error_depositor);
-                    HelpClass.clearComboBoxValidate(cb_depositorU, p_error_depositor);
-                    HelpClass.clearComboBoxValidate(cb_depositorSh, p_error_depositor);
+                    requiredControlList = new List<string> { "cash", "depositTo", "paymentProcessType"};
+                    //HelpClass.clearComboBoxValidate(cb_depositorV, p_error_depositor);
+                    //HelpClass.clearComboBoxValidate(cb_depositorC, p_error_depositor);
+                    //HelpClass.clearComboBoxValidate(cb_depositorU, p_error_depositor);
+                    //HelpClass.clearComboBoxValidate(cb_depositorSh, p_error_depositor);
                     cb_depositorV.Text = "";
                     cb_depositorC.Text = "";
                     cb_depositorU.Text = "";
                     cb_depositorSh.Text = "";
                     break;
                 case 4://shipping company
-                    cb_depositorU.SelectedIndex = -1;
+                    cb_depositorSh.SelectedIndex = -1;
                     cb_depositorV.Visibility = Visibility.Collapsed;
                     cb_depositorC.Visibility = Visibility.Collapsed;
                     btn_invoices.Visibility = Visibility.Visible;
                     cb_depositorU.Visibility = Visibility.Collapsed;
                     cb_depositorSh.Visibility = Visibility.Visible;
+                    requiredControlList = new List<string> { "cash", "depositTo", "paymentProcessType", "depositorSh" };
                     break;
             }
-            */
+            
             //    
             //        HelpClass.EndAwait(grid_main);
             //}

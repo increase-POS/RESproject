@@ -3127,4 +3127,10 @@ Please add Email in setting</value>
   <data name="trSections" xml:space="preserve">
     <value>Sections</value>
   </data>
+  <data name="trUserConfirm" xml:space="preserve">
+    <value>You have to get user confirmation</value>
+  </data>
+  <data name="trUserConfirmation" xml:space="preserve">
+    <value>User Confirmation</value>
+  </data>
 </root>

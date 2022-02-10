@@ -92,6 +92,7 @@ namespace Restaurant.View.accounts
             txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trTransaferDetails");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
             txt_title.Text = MainWindow.resourcemanager.GetString("trBankAccounts");
+            chb_all.Content = MainWindow.resourcemanager.GetString("trAll");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, MainWindow.resourcemanager.GetString("trCashHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_depositNumber, MainWindow.resourcemanager.GetString("trDepositeNumHint"));
@@ -107,6 +108,7 @@ namespace Restaurant.View.accounts
                     btn_add.Content = MainWindow.resourcemanager.GetString("trPull");
             }
             catch { btn_add.Content = MainWindow.resourcemanager.GetString("trSave"); }
+
             dg_bankAccounts.Columns[0].Header = MainWindow.resourcemanager.GetString("trTransferNumberTooltip");
             dg_bankAccounts.Columns[1].Header = MainWindow.resourcemanager.GetString("trBank");
             dg_bankAccounts.Columns[2].Header = MainWindow.resourcemanager.GetString("trDepositeNumTooltip");
@@ -125,16 +127,17 @@ namespace Restaurant.View.accounts
             btn_printInvoice.Content = MainWindow.resourcemanager.GetString("trPrint");
             btn_pdf.Content = MainWindow.resourcemanager.GetString("trPdfBtn");
         }
+
         private void Btn_confirm_Click(object sender, RoutedEventArgs e)
         {//confirm
 
         }
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            try
-            {
-               
-                    HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
+                requiredControlList = new List<string> { "cash", "opperationType", "user", "bank"};
 
                 btn_add.IsEnabled = true;
                 dp_searchEndDate.SelectedDate = DateTime.Now;
@@ -174,23 +177,17 @@ namespace Restaurant.View.accounts
                     cb_bank.SelectedIndex = -1;
                 }
                 catch { }
-                #endregion
+            #endregion
 
                 #region translate
-
                 if (MainWindow.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
-
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
-
                 }
-
                 translate();
                 #endregion
 
@@ -213,30 +210,27 @@ namespace Restaurant.View.accounts
 
                 btn_image.IsEnabled = false;
 
-                Tb_search_TextChanged(null, null);
-
+                await RefreshCashesList();
+                await Search();
                
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private async void dp_SelectedStartDateChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
-                await RefreshCashesList();
-                Tb_search_TextChanged(null, null);
-
+                await Search();
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -251,34 +245,26 @@ namespace Restaurant.View.accounts
             try
             {
                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
-                await RefreshCashesList();
-                Tb_search_TextChanged(null, null);
-
+                await Search();
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
         private void Dg_bankAccounts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
-            /*
             try
             {
                
-                    HelpClass.StartAwait(grid_main);
-                HelpClass.clearValidate(tb_cash, p_error_cash);
-                HelpClass.clearValidate(tb_depositNumber, p_error_depositNumber);
-                HelpClass.clearComboBoxValidate(cb_opperationType, p_error_opperationType);
-                HelpClass.clearComboBoxValidate(cb_user, p_error_user);
-                HelpClass.clearComboBoxValidate(cb_bank, p_error_bank);
+                HelpClass.StartAwait(grid_main);
+
                 if (dg_bankAccounts.SelectedIndex != -1)
                 {
                     cashtrans = dg_bankAccounts.SelectedItem as CashTransfer;
@@ -287,8 +273,6 @@ namespace Restaurant.View.accounts
                     if (cashtrans != null)
                     {
                         btn_image.IsEnabled = true;
-
-                        tb_cash.Text = HelpClass.DecTostring(cashtrans.cash);
 
                         cb_opperationType.SelectedValue = cashtrans.transType;
                         cb_user.SelectedValue = cashtrans.userId;
@@ -319,105 +303,85 @@ namespace Restaurant.View.accounts
 
                     }
                 }
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.clearValidate(requiredControlList, this);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
+        }
+
+        async Task Search()
+        {
+            if (cashes is null)
+                await RefreshCashesList();
+
+            if (chb_all.IsChecked == false)
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    searchText = tb_search.Text.ToLower();
+                    cashesQuery = cashes.Where(s => (s.transNum.ToLower().Contains(searchText)
+                    || s.cash.ToString().ToLower().Contains(searchText)
+                    || s.bankName.ToLower().Contains(searchText)
+                    || s.docNum.Contains(searchText)
+                    )
+                    && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
+                    && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
+                    );
+                });
+            }
+            else
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    searchText = tb_search.Text.ToLower();
+                    cashesQuery = cashes.Where(s => (s.transNum.ToLower().Contains(searchText)
+                    || s.cash.ToString().ToLower().Contains(searchText)
+                    || s.bankName.ToLower().Contains(searchText)
+                    || s.docNum.Contains(searchText)
+                    )
+                    );
+                });
+            }
+            RefreshCashView();
+            cashesQueryExcel = cashesQuery.ToList();
         }
 
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
         {//search
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
-                try
-                {
-                    if (cashes is null)
-                        await RefreshCashesList();
+                await Search();
 
-                    if (chb_all.IsChecked == false)
-                    {
-                        this.Dispatcher.Invoke(() =>
-                        {
-                            searchText = tb_search.Text.ToLower();
-                            cashesQuery = cashes.Where(s => (s.transNum.ToLower().Contains(searchText)
-                            || s.cash.ToString().ToLower().Contains(searchText)
-                            || s.bankName.ToLower().Contains(searchText)
-                            || s.docNum.Contains(searchText)
-                            )
-                            && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
-                            && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
-                            );
-                        });
-                    }
-                    else
-                    {
-                        this.Dispatcher.Invoke(() =>
-                        {
-                            searchText = tb_search.Text.ToLower();
-                            cashesQuery = cashes.Where(s => (s.transNum.ToLower().Contains(searchText)
-                            || s.cash.ToString().ToLower().Contains(searchText)
-                            || s.bankName.ToLower().Contains(searchText)
-                            || s.docNum.Contains(searchText)
-                            )
-                            );
-                        });
-                    }
-                    RefreshCashView();
-                    cashesQueryExcel = cashesQuery.ToList();
-                }
-                catch { }
-
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//save
-            try
-            {
-               
-                    HelpClass.StartAwait(grid_main);
-                /*
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
+
                 if (MainWindow.groupObject.HasPermissionAction(createPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
+                    //new
                     if (cashtrans.cashTransId == 0)
                     {
-                        #region validate
-                        //chk empty cash
-                        HelpClass.validateEmptyTextBox(tb_cash, p_error_cash, tt_errorCash, "trEmptyCashToolTip");
-                        //chk empty dicount type
-                        HelpClass.validateEmptyComboBox(cb_opperationType, p_error_opperationType, tt_errorOpperationType, "trErrorEmptyOpperationTypeToolTip");
-                        //chk empty user
-                        HelpClass.validateEmptyComboBox(cb_user, p_error_user, tt_errorUser, "trErrorEmptyUserToolTip");
-                        //chk empty bank
-                        HelpClass.validateEmptyComboBox(cb_bank, p_error_bank, tt_errorBank, "trErrorEmptyBankToolTip");
                         //chk user confirmation
                         bool isuserConfirmed = w.isOk;
-                        #endregion
 
-                        #region add
-                        if ((!tb_cash.Text.Equals("")) &&
-                            (!cb_opperationType.Text.Equals("")) && (!cb_user.Text.Equals("")) &&
-                            (!cb_bank.Text.Equals("")) &&
-                            (isuserConfirmed)
-                            )
-
+                        if (HelpClass.validate(requiredControlList, this) && isuserConfirmed)
                         {
                             CashTransfer cash = new CashTransfer();
 
@@ -440,23 +404,29 @@ namespace Restaurant.View.accounts
 
                             if (!s.Equals(0))
                             {
-
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                                Btn_clear_Click(null, null);
 
-                                dg_bankAccounts.ItemsSource = await RefreshCashesList();
-                                Tb_search_TextChanged(null, null);
+                                Clear();
+                                await RefreshCashesList();
+                                await Search();
                             }
                             else
                                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         }
+                        else
+                        {
+                        if (!isuserConfirmed)
+                            HelpClass.showComboBoxValidate(cb_user , p_error_user , tt_error_user , "trUserConfirm");
+                        }
                     }
+                    //exist 
                     else
                     {
                         if (cashtrans.isConfirm == 0)
                         {
                             //chk empty deposite number
-                            HelpClass.validateEmptyTextBox(tb_depositNumber, p_error_depositNumber, tt_errorDepositNumber, "trEmptyDepositNumberToolTip");
+                            HelpClass.validateEmpty(tb_depositNumber.Text, p_error_depositNumber);
+
                             if (!tb_depositNumber.Text.Equals(""))
                             {
                                 cashtrans.isConfirm = 1;
@@ -470,8 +440,8 @@ namespace Restaurant.View.accounts
                                     btn_add.IsEnabled = false;
                                     btn_add.Content = MainWindow.resourcemanager.GetString("trCompleted");
 
-                                    dg_bankAccounts.ItemsSource = await RefreshCashesList();
-                                    Tb_search_TextChanged(null, null);
+                                    await RefreshCashesList();
+                                    await Search();
 
                                     decimal ammount = cashtrans.cash;
                                     if (cashtrans.transType.Equals("d")) ammount *= -1;
@@ -481,21 +451,115 @@ namespace Restaurant.View.accounts
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             }
                         }
-                        #endregion
                     }
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                */
-               
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-               
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+
+                    #region
+                    /*
+                    if (MainWindow.groupObject.HasPermissionAction(createPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                    {
+                        if (cashtrans.cashTransId == 0)
+                        {
+                            #region validate
+                            //chk empty cash
+                            HelpClass.validateEmptyTextBox(tb_cash, p_error_cash, tt_errorCash, "trEmptyCashToolTip");
+                            //chk empty dicount type
+                            HelpClass.validateEmptyComboBox(cb_opperationType, p_error_opperationType, tt_errorOpperationType, "trErrorEmptyOpperationTypeToolTip");
+                            //chk empty user
+                            HelpClass.validateEmptyComboBox(cb_user, p_error_user, tt_errorUser, "trErrorEmptyUserToolTip");
+                            //chk empty bank
+                            HelpClass.validateEmptyComboBox(cb_bank, p_error_bank, tt_errorBank, "trErrorEmptyBankToolTip");
+                            //chk user confirmation
+                            bool isuserConfirmed = w.isOk;
+                            #endregion
+
+                            #region add
+                            if ((!tb_cash.Text.Equals("")) &&
+                                (!cb_opperationType.Text.Equals("")) && (!cb_user.Text.Equals("")) &&
+                                (!cb_bank.Text.Equals("")) &&
+                                (isuserConfirmed)
+                                )
+
+                            {
+                                CashTransfer cash = new CashTransfer();
+
+                                cash.transType = cb_opperationType.SelectedValue.ToString();
+                                cash.userId = Convert.ToInt32(cb_user.SelectedValue);
+                                try
+                                {
+                                    cash.transNum = await cashModel.generateCashNumber(cb_opperationType.SelectedValue.ToString() + "bn");
+                                }
+                                catch { }
+                                cash.cash = decimal.Parse(tb_cash.Text);
+                                cash.createUserId = MainWindow.userLogin.userId;
+                                cash.notes = tb_notes.Text;
+                                cash.posId = MainWindow.posLogin.posId;
+                                cash.side = "bn";
+                                cash.isConfirm = 0;
+                                cash.bankId = Convert.ToInt32(cb_bank.SelectedValue);
+
+                                int s = await cashModel.Save(cash);
+
+                                if (!s.Equals(0))
+                                {
+
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                    Btn_clear_Click(null, null);
+
+                                    dg_bankAccounts.ItemsSource = await RefreshCashesList();
+                                    Tb_search_TextChanged(null, null);
+                                }
+                                else
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            }
+                        }
+                        else
+                        {
+                            if (cashtrans.isConfirm == 0)
+                            {
+                                //chk empty deposite number
+                                HelpClass.validateEmptyTextBox(tb_depositNumber, p_error_depositNumber, tt_errorDepositNumber, "trEmptyDepositNumberToolTip");
+                                if (!tb_depositNumber.Text.Equals(""))
+                                {
+                                    cashtrans.isConfirm = 1;
+                                    cashtrans.docNum = tb_depositNumber.Text;
+
+                                    int s = await cashModel.Save(cashtrans);
+
+                                    if (!s.Equals(0))
+                                    {
+                                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trCompleted"), animation: ToasterAnimation.FadeIn);
+                                        btn_add.IsEnabled = false;
+                                        btn_add.Content = MainWindow.resourcemanager.GetString("trCompleted");
+
+                                        dg_bankAccounts.ItemsSource = await RefreshCashesList();
+                                        Tb_search_TextChanged(null, null);
+
+                                        decimal ammount = cashtrans.cash;
+                                        if (cashtrans.transType.Equals("d")) ammount *= -1;
+                                        await calcBalance(ammount);
+                                    }
+                                    else
+                                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                }
+                            }
+                            #endregion
+                        }
+                    }
+                    else
+                        Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    */
+                    #endregion
+
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private async Task calcBalance(decimal ammount)
@@ -520,57 +584,27 @@ namespace Restaurant.View.accounts
 
         private async void Btn_clear_Click(object sender, RoutedEventArgs e)
         {//clear
-            /*
             try
             {
+                HelpClass.StartAwait(grid_main);
+
+                Clear();
                
-                    HelpClass.StartAwait(grid_main);
-
-                cashtrans.cashTransId = 0;
-                try
-                { tb_transNum.Text = await HelpClass.generateNumber(Convert.ToChar(cb_opperationType.SelectedValue), "bn"); }
-                catch { }
-                btn_add.IsEnabled = true;
-                cb_opperationType.IsEnabled = true;
-                cb_user.IsEnabled = true;
-                cb_bank.IsEnabled = true;
-                tb_cash.IsEnabled = true;
-                tb_depositNumber.IsEnabled = false;
-                tb_notes.IsEnabled = true;
-                btn_image.IsEnabled = false;
-
-                tb_cash.Clear();
-                tb_depositNumber.Clear();
-                cb_opperationType.SelectedIndex = -1;
-                cb_bank.SelectedIndex = -1;
-                cb_user.SelectedIndex = -1;
-                tb_notes.Clear();
-
-                HelpClass.clearValidate(tb_cash, p_error_cash);
-                HelpClass.clearValidate(tb_depositNumber, p_error_depositNumber);
-                HelpClass.clearComboBoxValidate(cb_opperationType, p_error_opperationType);
-                HelpClass.clearComboBoxValidate(cb_user, p_error_user);
-                HelpClass.clearComboBoxValidate(cb_bank, p_error_bank);
-                p_confirmUser.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#E65B65"));
-
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
 
         private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
         {//excel
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
@@ -629,8 +663,7 @@ namespace Restaurant.View.accounts
         {//image
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(createPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
@@ -661,19 +694,18 @@ namespace Restaurant.View.accounts
         {//refresh
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
+                searchText = "";
+                tb_search.Text = "";
                 await RefreshCashesList();
-                Tb_search_TextChanged(null, null);
-
+                await Search();
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -738,10 +770,18 @@ namespace Restaurant.View.accounts
 
         private void Tb_validateEmptyLostFocus(object sender, RoutedEventArgs e)
         {
+            //try
+            //{
+            //    string name = sender.GetType().Name;
+            //    validateEmpty(name, sender);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
             try
             {
-                string name = sender.GetType().Name;
-                validateEmpty(name, sender);
+                HelpClass.validate(requiredControlList, this);
             }
             catch (Exception ex)
             {
@@ -794,8 +834,7 @@ namespace Restaurant.View.accounts
         }
 
         private void OnlyInt(object sender, TextCompositionEventArgs e)
-        {
-            //only int
+        {//only int
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
 
@@ -856,6 +895,7 @@ namespace Restaurant.View.accounts
             }
         }
 
+        #region grid reports
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -891,8 +931,7 @@ namespace Restaurant.View.accounts
         {//pdf
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
@@ -925,8 +964,7 @@ namespace Restaurant.View.accounts
         {//print
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     #region
@@ -938,12 +976,12 @@ namespace Restaurant.View.accounts
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -952,8 +990,7 @@ namespace Restaurant.View.accounts
         {//preview
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     #region
@@ -986,46 +1023,16 @@ namespace Restaurant.View.accounts
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
-        private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
-        {//pie
-            /*
-            try
-            {
-               
-                    HelpClass.StartAwait(grid_main);
-                /////////////////////
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
-                {
-                    Window.GetWindow(this).Opacity = 0.2;
-                    win_lvc win = new win_lvc(banksQuery, 2);
-                    win.ShowDialog();
-                    Window.GetWindow(this).Opacity = 1;
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                /////////////////////
-               
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-               
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-            */
-
-        }
+     
         public void getBankData(List<ReportParameter> paramarr)
         {
             string pay = "";
@@ -1092,7 +1099,6 @@ namespace Restaurant.View.accounts
 
         }
 
-
         public void buildBankDocReport()
         {
           /*
@@ -1141,8 +1147,7 @@ namespace Restaurant.View.accounts
         {// doc
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
@@ -1164,14 +1169,13 @@ namespace Restaurant.View.accounts
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1180,8 +1184,7 @@ namespace Restaurant.View.accounts
         {//doc
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
@@ -1221,8 +1224,7 @@ namespace Restaurant.View.accounts
         {//doc
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
@@ -1256,26 +1258,24 @@ namespace Restaurant.View.accounts
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
-      
+        #endregion
 
         private async void Chb_all_Checked(object sender, RoutedEventArgs e)
         {
             try
             {
                 dp_searchStartDate.IsEnabled =
-            dp_searchEndDate.IsEnabled = false;
+                dp_searchEndDate.IsEnabled = false;
 
                 Btn_refresh_Click(btn_refresh, null);
 
@@ -1302,23 +1302,35 @@ namespace Restaurant.View.accounts
 
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
-        {
+        {//clear
             this.DataContext = new Agent();
 
+            //try
+            //{ tb_transNum.Text = await HelpClass.generateNumber(Convert.ToChar(cb_opperationType.SelectedValue), "bn"); }
+            //catch { }
+            btn_add.IsEnabled = true;
+            cb_opperationType.IsEnabled = true;
+            cb_user.IsEnabled = true;
+            cb_bank.IsEnabled = true;
+            tb_cash.IsEnabled = true;
+            tb_depositNumber.IsEnabled = false;
+            tb_notes.IsEnabled = true;
+            btn_image.IsEnabled = false;
 
+            cb_opperationType.SelectedIndex = -1;
+            cb_bank.SelectedIndex = -1;
+            cb_user.SelectedIndex = -1;
 
-            // last 
+            p_confirmUser.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#E65B65"));
+
             HelpClass.clearValidate(requiredControlList, this);
         }
         string input;
         decimal _decimal = 0;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
+        { //only  digits
             try
             {
-
-
-                //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
                 if (textBox.Tag.ToString() == "int")
@@ -1330,7 +1342,6 @@ namespace Restaurant.View.accounts
                 {
                     input = e.Text;
                     e.Handled = !decimal.TryParse(textBox.Text + input, out _decimal);
-
                 }
             }
             catch (Exception ex)
@@ -1339,10 +1350,9 @@ namespace Restaurant.View.accounts
             }
         }
         private void Code_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
+        {//only english and digits
             try
             {
-                //only english and digits
                 Regex regex = new Regex("^[a-zA-Z0-9. -_?]*$");
                 if (!regex.IsMatch(e.Text))
                     e.Handled = true;
@@ -1389,5 +1399,177 @@ namespace Restaurant.View.accounts
 
         #endregion
 
+        #region reports
+
+        private void Btn_pdf1_Click(object sender, RoutedEventArgs e)
+        {//pdf
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                {
+                    #region
+                    BuildReport();
+                    saveFileDialog.Filter = "PDF|*.pdf;";
+
+                    if (saveFileDialog.ShowDialog() == true)
+                    {
+                        string filepath = saveFileDialog.FileName;
+                        LocalReportExtensions.ExportToPDF(rep, filepath);
+                    }
+                    #endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
+        private void Btn_preview1_Click_1(object sender, RoutedEventArgs e)
+        {//preview
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                {
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+
+                    string pdfpath = "";
+
+                    //
+                    pdfpath = @"\Thumb\report\temp.pdf";
+                    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+
+                    BuildReport();
+
+                    LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                    wd_previewPdf w = new wd_previewPdf();
+                    w.pdfPath = pdfpath;
+                    if (!string.IsNullOrEmpty(w.pdfPath))
+                    {
+                        w.ShowDialog();
+                        w.wb_pdfWebViewer.Dispose();
+                    }
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
+        private void Btn_print_Click_1(object sender, RoutedEventArgs e)
+        {//print
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                {
+                    #region
+                    BuildReport();
+                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
+                    #endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
+        private void Btn_exportToExcel_Click_1(object sender, RoutedEventArgs e)
+        {//excel
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                {
+                    #region
+                    //Thread t1 = new Thread(() =>
+                    //{
+                    BuildReport();
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        saveFileDialog.Filter = "EXCEL|*.xls;";
+                        if (saveFileDialog.ShowDialog() == true)
+                        {
+                            string filepath = saveFileDialog.FileName;
+                            LocalReportExtensions.ExportToExcel(rep, filepath);
+                        }
+                    });
+
+                    //});
+                    //t1.Start();
+                    #endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
+        {//pie
+            /*
+            try
+            {
+               
+                    HelpClass.StartAwait(grid_main);
+                /////////////////////
+                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                {
+                    Window.GetWindow(this).Opacity = 0.2;
+                    win_lvc win = new win_lvc(banksQuery, 2);
+                    win.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                /////////////////////
+               
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+               
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+            */
+
+        }
+        #endregion
     }
 }

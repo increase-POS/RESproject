@@ -82,7 +82,7 @@ namespace Restaurant.Classes
         public string updateUserLName { get; set; }
         public string cardName { get; set; }
         public Nullable<System.DateTime> bondDeserveDate { get; set; }
-        public byte bondIsRecieved { get; set; }
+        public Nullable<byte> bondIsRecieved { get; set; }
         public string agentCompany { get; set; }
 
         public string shippingCompanyName { get; set; }

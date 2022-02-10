@@ -94,11 +94,11 @@ namespace Restaurant.View.accounts
         }
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            try
-            {
-                
-                    HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
+                requiredControlList = new List<string> { "cash", "depositTo", "paymentProcessType"};
 
                 #region translate
                 if (MainWindow.lang.Equals("en"))
@@ -111,8 +111,6 @@ namespace Restaurant.View.accounts
                 }
                 translate();
                 #endregion
-
-                
 
                 dp_searchEndDate.SelectedDate = DateTime.Now;
                 dp_searchStartDate.SelectedDate = DateTime.Now;
@@ -167,16 +165,14 @@ namespace Restaurant.View.accounts
                 btn_image.IsEnabled = false;
 
                 await Search();
-
                 
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void translate()
@@ -184,6 +180,7 @@ namespace Restaurant.View.accounts
             txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trTransaferDetails");
             txt_title.Text = MainWindow.resourcemanager.GetString("trPayments");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+            chb_all.Content = MainWindow.resourcemanager.GetString("trAll");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_depositTo, MainWindow.resourcemanager.GetString("trDepositToHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_recipientV, MainWindow.resourcemanager.GetString("trRecipientHint"));
@@ -224,7 +221,6 @@ namespace Restaurant.View.accounts
         {//confirm
 
         }
-
 
         void InitializeCardsPic(IEnumerable<Card> cards)
         {
@@ -317,19 +313,16 @@ namespace Restaurant.View.accounts
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 await RefreshCashesList();
                 await Search();
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -337,27 +330,22 @@ namespace Restaurant.View.accounts
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 await RefreshCashesList();
                 await Search();
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
         private void Dg_paymentsAccounts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
-         
-            
             /*
             //try
          //{
@@ -491,17 +479,17 @@ namespace Restaurant.View.accounts
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
+                searchText = "";
+                tb_search.Text = "";
                 await Search();
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -513,103 +501,104 @@ namespace Restaurant.View.accounts
         {//save
             try
             {
+                HelpClass.StartAwait(grid_main);
                 
-                    HelpClass.StartAwait(grid_main);
-                /*
                 s = 0; s1 = 0;
                 if (MainWindow.groupObject.HasPermissionAction(createPermission, MainWindow.groupObjects, "one") )
                 {
                     #region validate
-                    //chk empty cash
-                    HelpClass.validateEmptyTextBox(tb_cash, p_error_cash, tt_errorCash, "trEmptyCashToolTip");
+                    ////chk empty cash
+                    //HelpClass.validateEmptyTextBox(tb_cash, p_error_cash, tt_errorCash, "trEmptyCashToolTip");
 
-                    //chk empty doc date
-                    TextBox dpDate = (TextBox)dp_docDate.Template.FindName("PART_TextBox", dp_docDate);
+                    ////chk empty doc date
+                    //TextBox dpDate = (TextBox)dp_docDate.Template.FindName("PART_TextBox", dp_docDate);
 
-                    if (grid_document.IsVisible)
-                    {
-                        HelpClass.validateEmptyTextBox(dpDate, p_error_docDate, tt_errorDocDate, "trEmptyDocDateToolTip");
-                    }
-                    else
-                    {
-
-                    }
-                    //chk empty doc num
-                    if (grid_cheque.IsVisible)
-                    {
-                        HelpClass.validateEmptyTextBox(tb_docNumCheque, p_error_docNumCheque, tt_errorDocNumCheque, "trEmptyDocNumToolTip");
-                    }
-                    else
-                    {
-                        HelpClass.clearValidate(tb_docNumCheque, p_error_docNumCheque);
-                    }
-                    ////chk empty process num
-                    //if (tb_docNumCard.IsVisible)
+                    //if (grid_document.IsVisible)
                     //{
-                    //    HelpClass.validateEmptyTextBox(tb_docNumCard, p_error_docCard, tt_docNumCard, "trEmptyProcessNumToolTip");
+                    //    HelpClass.validateEmptyTextBox(dpDate, p_error_docDate, tt_errorDocDate, "trEmptyDocDateToolTip");
                     //}
                     //else
                     //{
-                    //    HelpClass.clearValidate(tb_docNumCard, p_error_docCard);
+
                     //}
-                    //chk empty deposit to
-                    HelpClass.validateEmptyComboBox(cb_depositTo, p_error_depositTo, tt_errorDepositTo, "trErrorEmptyDepositToToolTip");
+                    ////chk empty doc num
+                    //if (grid_cheque.IsVisible)
+                    //{
+                    //    HelpClass.validateEmptyTextBox(tb_docNumCheque, p_error_docNumCheque, tt_errorDocNumCheque, "trEmptyDocNumToolTip");
+                    //}
+                    //else
+                    //{
+                    //    HelpClass.clearValidate(tb_docNumCheque, p_error_docNumCheque);
+                    //}
+                    //////chk empty process num
+                    ////if (tb_docNumCard.IsVisible)
+                    ////{
+                    ////    HelpClass.validateEmptyTextBox(tb_docNumCard, p_error_docCard, tt_docNumCard, "trEmptyProcessNumToolTip");
+                    ////}
+                    ////else
+                    ////{
+                    ////    HelpClass.clearValidate(tb_docNumCard, p_error_docCard);
+                    ////}
+                    ////chk empty deposit to
+                    //HelpClass.validateEmptyComboBox(cb_depositTo, p_error_depositTo, tt_errorDepositTo, "trErrorEmptyDepositToToolTip");
 
-                    //chk empty recipient
-                    if (cb_recipientV.IsVisible)
-                        HelpClass.validateEmptyComboBox(cb_recipientV, p_error_recipient, tt_errorRecipient, "trErrorEmptyRecipientToolTip");
-                    else
-                        HelpClass.clearComboBoxValidate(cb_recipientV, p_error_recipient);
+                    ////chk empty recipient
+                    //if (cb_recipientV.IsVisible)
+                    //    HelpClass.validateEmptyComboBox(cb_recipientV, p_error_recipient, tt_errorRecipient, "trErrorEmptyRecipientToolTip");
+                    //else
+                    //    HelpClass.clearComboBoxValidate(cb_recipientV, p_error_recipient);
 
-                    if (cb_recipientC.IsVisible)
-                        HelpClass.validateEmptyComboBox(cb_recipientC, p_error_recipient, tt_errorRecipient, "trErrorEmptyRecipientToolTip");
-                    else
-                        HelpClass.clearComboBoxValidate(cb_recipientC, p_error_recipient);
+                    //if (cb_recipientC.IsVisible)
+                    //    HelpClass.validateEmptyComboBox(cb_recipientC, p_error_recipient, tt_errorRecipient, "trErrorEmptyRecipientToolTip");
+                    //else
+                    //    HelpClass.clearComboBoxValidate(cb_recipientC, p_error_recipient);
 
-                    if (cb_recipientU.IsVisible)
-                        HelpClass.validateEmptyComboBox(cb_recipientU, p_error_recipient, tt_errorRecipient, "trErrorEmptyRecipientToolTip");
-                    else
-                        HelpClass.clearComboBoxValidate(cb_recipientU, p_error_recipient);
+                    //if (cb_recipientU.IsVisible)
+                    //    HelpClass.validateEmptyComboBox(cb_recipientU, p_error_recipient, tt_errorRecipient, "trErrorEmptyRecipientToolTip");
+                    //else
+                    //    HelpClass.clearComboBoxValidate(cb_recipientU, p_error_recipient);
 
-                    if (cb_recipientSh.IsVisible)
-                        HelpClass.validateEmptyComboBox(cb_recipientSh, p_error_recipient, tt_errorRecipient, "trErrorEmptyRecipientToolTip");
-                    else
-                        HelpClass.clearComboBoxValidate(cb_recipientSh, p_error_recipient);
+                    //if (cb_recipientSh.IsVisible)
+                    //    HelpClass.validateEmptyComboBox(cb_recipientSh, p_error_recipient, tt_errorRecipient, "trErrorEmptyRecipientToolTip");
+                    //else
+                    //    HelpClass.clearComboBoxValidate(cb_recipientSh, p_error_recipient);
 
-                    //chk empty payment type
-                    HelpClass.validateEmptyComboBox(cb_paymentProcessType, p_error_paymentProcessType, tt_errorpaymentProcessType, "trErrorEmptyPaymentTypeToolTip");
+                    ////chk empty payment type
+                    //HelpClass.validateEmptyComboBox(cb_paymentProcessType, p_error_paymentProcessType, tt_errorpaymentProcessType, "trErrorEmptyPaymentTypeToolTip");
 
-                    //chk enough money
-                    if ((!tb_cash.Text.Equals("")) && (!await chkEnoughBalance(decimal.Parse(tb_cash.Text))))
-                        HelpClass.showTextBoxValidate(tb_cash, p_error_cash, tt_errorCash, "trPopNotEnoughBalance");
+                    ////chk enough money
+                    //if ((!tb_cash.Text.Equals("")) && (!await chkEnoughBalance(decimal.Parse(tb_cash.Text))))
+                    //    HelpClass.showTextBoxValidate(tb_cash, p_error_cash, tt_errorCash, "trPopNotEnoughBalance");
 
-                    //chk empty card 
-                    if (gd_card.IsVisible)
-                        HelpClass.validateEmptyTextBlock(txt_card, p_error_card, tt_errorCard, "trSelectCreditCard");
-                    else
-                        HelpClass.clearTextBlockValidate(txt_card, p_error_card);
-                    //chk enough money
+                    ////chk empty card 
+                    //if (gd_card.IsVisible)
+                    //    HelpClass.validateEmptyTextBlock(txt_card, p_error_card, tt_errorCard, "trSelectCreditCard");
+                    //else
+                    //    HelpClass.clearTextBlockValidate(txt_card, p_error_card);
+                    ////chk enough money
                     bool enoughMoney = true;
                     if ((!cb_paymentProcessType.Text.Equals("")) && (cb_paymentProcessType.SelectedValue.ToString().Equals("cash")) &&
                         (!await chkEnoughBalance(decimal.Parse(tb_cash.Text))))
                     {
                         enoughMoney = false;
-                        HelpClass.showTextBoxValidate(tb_cash, p_error_cash, tt_errorCash, "trPopNotEnoughBalance");
+                        //HelpClass.showTextBoxValidate(tb_cash, p_error_cash, tt_errorCash, "trPopNotEnoughBalance");
+                        HelpClass.SetValidate(p_error_cash, "trPopNotEnoughBalance");
                     }
                     #endregion
 
                     #region save
 
-                    if ((!tb_cash.Text.Equals("")) && (!cb_depositTo.Text.Equals("")) && (!cb_paymentProcessType.Text.Equals("")) &&
-                   (((cb_recipientV.IsVisible) && (!cb_recipientV.Text.Equals(""))) || (!cb_recipientV.IsVisible)) &&
-                   (((cb_recipientC.IsVisible) && (!cb_recipientC.Text.Equals(""))) || (!cb_recipientC.IsVisible)) &&
-                   (((cb_recipientU.IsVisible) && (!cb_recipientU.Text.Equals(""))) || (!cb_recipientU.IsVisible)) &&
-                   (((cb_recipientSh.IsVisible) && (!cb_recipientSh.Text.Equals(""))) || (!cb_recipientSh.IsVisible)) &&
-                   (((tb_docNumCheque.IsVisible) && (!tb_docNumCheque.Text.Equals(""))) || (!tb_docNumCheque.IsVisible)) &&
-                   (((dp_docDate.IsVisible) && (!dp_docDate.Text.Equals(""))) || (!dp_docDate.IsVisible)) &&
-                   (((gd_card.IsVisible) && (!txt_card.Text.Equals(""))) || (!gd_card.IsVisible)) &&
-                    enoughMoney
-                   )
+                   // if ((!tb_cash.Text.Equals("")) && (!cb_depositTo.Text.Equals("")) && (!cb_paymentProcessType.Text.Equals("")) &&
+                   //(((cb_recipientV.IsVisible) && (!cb_recipientV.Text.Equals(""))) || (!cb_recipientV.IsVisible)) &&
+                   //(((cb_recipientC.IsVisible) && (!cb_recipientC.Text.Equals(""))) || (!cb_recipientC.IsVisible)) &&
+                   //(((cb_recipientU.IsVisible) && (!cb_recipientU.Text.Equals(""))) || (!cb_recipientU.IsVisible)) &&
+                   //(((cb_recipientSh.IsVisible) && (!cb_recipientSh.Text.Equals(""))) || (!cb_recipientSh.IsVisible)) &&
+                   //(((tb_docNumCheque.IsVisible) && (!tb_docNumCheque.Text.Equals(""))) || (!tb_docNumCheque.IsVisible)) &&
+                   //(((dp_docDate.IsVisible) && (!dp_docDate.Text.Equals(""))) || (!dp_docDate.IsVisible)) &&
+                   //(((gd_card.IsVisible) && (!txt_card.Text.Equals(""))) || (!gd_card.IsVisible)) &&
+                   // enoughMoney
+                   //)
+                   if(HelpClass.validate(requiredControlList, this) && enoughMoney)
                     {
                         string recipient = cb_depositTo.SelectedValue.ToString();
                         int agentid = 0;
@@ -650,7 +639,7 @@ namespace Restaurant.View.accounts
                             cash.docNum = tb_docNumCheque.Text;
 
                         if (cb_paymentProcessType.SelectedValue.ToString().Equals("doc"))
-                        {
+                        {/////////////////////??????????????????????????????????????
                             int res = await saveBond(cash.docNum, cash.cash, dp_docDate.SelectedDate.Value, "p");
                             cash.bondId = res;
                         }
@@ -670,14 +659,14 @@ namespace Restaurant.View.accounts
                                 await calcBalance(cash.cash, recipient, agentid);
 
                             if ((cb_recipientU.IsVisible) && (cash.side == "u"))
-                                await calcUserBalance(Convert.ToSingle(cash.cash), cash.userId.Value);
+                                await calcUserBalance(cash.cash, cash.userId.Value);
 
                             if (cb_recipientSh.IsVisible)
                                 await calcShippingComBalance(cash.cash, cash.shippingCompanyId.Value);
 
                             Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                            Btn_clear_Click(null, null);
 
+                            Clear();
                             await RefreshCashesList();
                             await Search();
                         }
@@ -689,14 +678,13 @@ namespace Restaurant.View.accounts
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-                */
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -708,23 +696,24 @@ namespace Restaurant.View.accounts
             { return true; }
             else { return false; }
         }
-        /*
+       
         private async Task<int> saveBond(string num, decimal ammount, Nullable<DateTime> date, string type)
         {
-            Bonds bond = new Bonds();
-            bond.number = num;
-            bond.amount = ammount;
-            bond.deserveDate = date;
-            bond.type = type;
-            bond.isRecieved = 0;
-            bond.createUserId = MainWindow.userID.Value;
+            int s = 0;
+            //Bonds bond = new Bonds();
+            //bond.number = num;
+            //bond.amount = ammount;
+            //bond.deserveDate = date;
+            //bond.type = type;
+            //bond.isRecieved = 0;
+            //bond.createUserId = MainWindow.userID.Value;
 
-            int s = await bondModel.Save(bond);
+            //int s = await bondModel.Save(bond);
 
             return s;
 
         }
-        */
+        
         private async Task calcBalance(decimal ammount, string recipient, int agentid)
         {//balance for pos
             int s = 0;
@@ -786,86 +775,23 @@ namespace Restaurant.View.accounts
 
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {//clear
-
-            /*
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
-                btn_image.IsEnabled = false;
-                btn_add.IsEnabled = true;
-                btn_invoices.Visibility = Visibility.Collapsed;
-                btn_invoices.IsEnabled = false;
-                tb_cash.IsReadOnly = false;
-                tb_transNum.Text = "";
-                cb_depositTo.SelectedIndex = -1;
-                cb_paymentProcessType.SelectedIndex = -1;
-                _SelectedCard = -1;
-                gd_card.Visibility = Visibility.Collapsed;
-                p_error_docCard.Visibility = Visibility.Collapsed;
-                p_error_docNum.Visibility = Visibility.Collapsed;
-                p_error_docNumCheque.Visibility = Visibility.Collapsed;
-                tb_docNum.Clear();
-                tb_docNumCheque.Clear();
-                tb_docNumCard.Clear();
-                dp_docDate.SelectedDate = null;
-                tb_cash.Clear();
-                tb_notes.Clear();
-                cb_recipientV.Visibility = Visibility.Collapsed;
-                cb_recipientC.Visibility = Visibility.Collapsed;
-                cb_recipientU.Visibility = Visibility.Collapsed;
-                cb_recipientSh.Visibility = Visibility.Collapsed;
-                if (grid_document.IsVisible)
-                {
-                    TextBox dpDate = (TextBox)dp_docDate.Template.FindName("PART_TextBox", dp_docDate);
-                    HelpClass.clearValidate(dpDate, p_error_docDate);
-                }
-                grid_document.Visibility = Visibility.Collapsed;
-                grid_cheque.Visibility = Visibility.Collapsed;
-                HelpClass.clearValidate(tb_docNum, p_error_docNum);
-                HelpClass.clearValidate(tb_cash, p_error_cash);
-                HelpClass.clearValidate(tb_docNumCheque, p_error_docNumCheque);
-                HelpClass.clearValidate(tb_docNumCard, p_error_docCard);
-                HelpClass.clearComboBoxValidate(cb_depositTo, p_error_depositTo);
-                HelpClass.clearComboBoxValidate(cb_recipientV, p_error_recipient);
-                HelpClass.clearComboBoxValidate(cb_recipientC, p_error_recipient);
-                HelpClass.clearComboBoxValidate(cb_recipientU, p_error_recipient);
-                HelpClass.clearComboBoxValidate(cb_recipientSh, p_error_recipient);
-                HelpClass.clearComboBoxValidate(cb_paymentProcessType, p_error_paymentProcessType);
-                HelpClass.clearTextBlockValidate(txt_card, p_error_card);
-                ///////////////////////////
-                btn_add.IsEnabled = true;
-                cb_depositTo.IsEnabled = true;
-                cb_recipientV.IsEnabled = true;
-                cb_recipientC.IsEnabled = true;
-                cb_recipientU.IsEnabled = true;
-                cb_recipientSh.IsEnabled = true;
-                cb_paymentProcessType.IsEnabled = true;
-                tb_docNum.IsEnabled = true;
-                dp_docDate.IsEnabled = true;
-                tb_docNumCheque.IsEnabled = true;
-                tb_docNumCard.IsEnabled = true;
-                dp_docDateCheque.IsEnabled = true;
-                gd_card.IsEnabled = true;
-                tb_cash.IsEnabled = true;
-                tb_note.IsEnabled = true;
-                /////////////////////////
+                Clear();
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
 
         async Task<IEnumerable<CashTransfer>> RefreshCashesList()
         {
-            //cashes = await cashModel.GetCashTransferAsync("p", "all");
             cashes = await cashModel.GetCashBond("p", "all");
             cashes = cashes.Where(x => (x.processType != "balance")).GroupBy(x => x.transNum).Select(x => new CashTransfer
             {
@@ -922,8 +848,8 @@ namespace Restaurant.View.accounts
         }
         async Task Search()
         {
-            try
-            {
+            //try
+            //{
                 if (cashes is null)
                     await RefreshCashesList();
 
@@ -953,16 +879,15 @@ namespace Restaurant.View.accounts
                 }
                 cashesQueryExcel = cashesQuery.ToList();
                 RefreshCashView();
-            }
-            catch { }
+            //}
+            //catch { }
         }
 
         private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
         {//excel
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") )
                 {
@@ -989,14 +914,13 @@ namespace Restaurant.View.accounts
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1161,9 +1085,8 @@ namespace Restaurant.View.accounts
         {//deposit selection
             try
             {
+                HelpClass.StartAwait(grid_main);
                 
-                    HelpClass.StartAwait(grid_main);
-                /*
                 switch (cb_depositTo.SelectedIndex)
                 {
                     case 0://vendor
@@ -1174,9 +1097,10 @@ namespace Restaurant.View.accounts
                         cb_recipientC.Visibility = Visibility.Collapsed;
                         cb_recipientU.Visibility = Visibility.Collapsed;
                         cb_recipientSh.Visibility = Visibility.Collapsed;
-                        HelpClass.clearComboBoxValidate(cb_recipientC, p_error_recipient);
-                        HelpClass.clearComboBoxValidate(cb_recipientU, p_error_recipient);
-                        HelpClass.clearComboBoxValidate(cb_recipientSh, p_error_recipient);
+                        requiredControlList = new List<string> { "cash", "depositTo", "paymentProcessType" , "recipientV" };
+                        //HelpClass.clearComboBoxValidate(cb_recipientC, p_error_recipient);
+                        //HelpClass.clearComboBoxValidate(cb_recipientU, p_error_recipient);
+                        //HelpClass.clearComboBoxValidate(cb_recipientSh, p_error_recipient);
                         break;
                     case 1://customer
                         cb_recipientC.SelectedIndex = -1;
@@ -1186,9 +1110,10 @@ namespace Restaurant.View.accounts
                         cb_recipientC.Visibility = Visibility.Visible;
                         cb_recipientU.Visibility = Visibility.Collapsed;
                         cb_recipientSh.Visibility = Visibility.Collapsed;
-                        HelpClass.clearComboBoxValidate(cb_recipientV, p_error_recipient);
-                        HelpClass.clearComboBoxValidate(cb_recipientU, p_error_recipient);
-                        HelpClass.clearComboBoxValidate(cb_recipientSh, p_error_recipient);
+                        requiredControlList = new List<string> { "cash", "depositTo", "paymentProcessType", "recipientC" };
+                        //HelpClass.clearComboBoxValidate(cb_recipientV, p_error_recipient);
+                        //HelpClass.clearComboBoxValidate(cb_recipientU, p_error_recipient);
+                        //HelpClass.clearComboBoxValidate(cb_recipientSh, p_error_recipient);
                         break;
                     case 2://user
                         cb_recipientU.SelectedIndex = -1;
@@ -1198,9 +1123,10 @@ namespace Restaurant.View.accounts
                         cb_recipientC.Visibility = Visibility.Collapsed;
                         cb_recipientU.Visibility = Visibility.Visible;
                         cb_recipientSh.Visibility = Visibility.Collapsed;
-                        HelpClass.clearComboBoxValidate(cb_recipientV, p_error_recipient);
-                        HelpClass.clearComboBoxValidate(cb_recipientC, p_error_recipient);
-                        HelpClass.clearComboBoxValidate(cb_recipientSh, p_error_recipient);
+                        requiredControlList = new List<string> { "cash", "depositTo", "paymentProcessType", "recipientU" };
+                        //HelpClass.clearComboBoxValidate(cb_recipientV, p_error_recipient);
+                        //HelpClass.clearComboBoxValidate(cb_recipientC, p_error_recipient);
+                        //HelpClass.clearComboBoxValidate(cb_recipientSh, p_error_recipient);
                         break;
                     case 3://salary
                         cb_recipientU.SelectedIndex = -1;
@@ -1210,9 +1136,10 @@ namespace Restaurant.View.accounts
                         cb_recipientC.Visibility = Visibility.Collapsed;
                         cb_recipientU.Visibility = Visibility.Visible;
                         cb_recipientSh.Visibility = Visibility.Collapsed;
-                        HelpClass.clearComboBoxValidate(cb_recipientV, p_error_recipient);
-                        HelpClass.clearComboBoxValidate(cb_recipientC, p_error_recipient);
-                        HelpClass.clearComboBoxValidate(cb_recipientSh, p_error_recipient);
+                        requiredControlList = new List<string> { "cash", "depositTo", "paymentProcessType", "recipientU" };
+                        //HelpClass.clearComboBoxValidate(cb_recipientV, p_error_recipient);
+                        //HelpClass.clearComboBoxValidate(cb_recipientC, p_error_recipient);
+                        //HelpClass.clearComboBoxValidate(cb_recipientSh, p_error_recipient);
                         break;
                     case 4: //general expenses
                     case 5://administrative pull
@@ -1223,10 +1150,11 @@ namespace Restaurant.View.accounts
                         cb_recipientU.Visibility = Visibility.Collapsed;
                         cb_recipientSh.Visibility = Visibility.Collapsed;
                         cb_recipientV.Text = ""; cb_recipientC.Text = ""; cb_recipientU.Text = ""; cb_recipientSh.Text = "";
-                        HelpClass.clearComboBoxValidate(cb_recipientV, p_error_recipient);
-                        HelpClass.clearComboBoxValidate(cb_recipientC, p_error_recipient);
-                        HelpClass.clearComboBoxValidate(cb_recipientU, p_error_recipient);
-                        HelpClass.clearComboBoxValidate(cb_recipientSh, p_error_recipient);
+                        requiredControlList = new List<string> { "cash", "depositTo", "paymentProcessType"};
+                        //HelpClass.clearComboBoxValidate(cb_recipientV, p_error_recipient);
+                        //HelpClass.clearComboBoxValidate(cb_recipientC, p_error_recipient);
+                        //HelpClass.clearComboBoxValidate(cb_recipientU, p_error_recipient);
+                        //HelpClass.clearComboBoxValidate(cb_recipientSh, p_error_recipient);
                         break;
                     case 6://shipping company
                         cb_recipientSh.SelectedIndex = -1;
@@ -1236,19 +1164,18 @@ namespace Restaurant.View.accounts
                         cb_recipientC.Visibility = Visibility.Collapsed;
                         cb_recipientU.Visibility = Visibility.Collapsed;
                         cb_recipientSh.Visibility = Visibility.Visible;
-                        HelpClass.clearComboBoxValidate(cb_recipientV, p_error_recipient);
-                        HelpClass.clearComboBoxValidate(cb_recipientC, p_error_recipient);
-                        HelpClass.clearComboBoxValidate(cb_recipientU, p_error_recipient);
+                        requiredControlList = new List<string> { "cash", "depositTo", "paymentProcessType", "recipientSh" };
+                        //HelpClass.clearComboBoxValidate(cb_recipientV, p_error_recipient);
+                        //HelpClass.clearComboBoxValidate(cb_recipientC, p_error_recipient);
+                        //HelpClass.clearComboBoxValidate(cb_recipientU, p_error_recipient);
                         break;
                 }
-                */
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1610,8 +1537,6 @@ namespace Restaurant.View.accounts
 
         }
 
-
-
         private void Tb_EnglishDigit_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {//only english and digits
             Regex regex = new Regex("^[a-zA-Z0-9. -_?]*$");
@@ -1633,6 +1558,8 @@ namespace Restaurant.View.accounts
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        #region doc reports
         public void BuildReport()
         {
             List<ReportParameter> paramarr = new List<ReportParameter>();
@@ -1659,8 +1586,7 @@ namespace Restaurant.View.accounts
         {//print
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") )
                 {
                     #region
@@ -1672,12 +1598,11 @@ namespace Restaurant.View.accounts
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1687,7 +1612,7 @@ namespace Restaurant.View.accounts
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 /////////////////////
                 if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") )
                 {
@@ -1715,44 +1640,12 @@ namespace Restaurant.View.accounts
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 /////////////////////
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-
-        }
-
-        private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
-        {//pie
-            try
-            {
-                
-                    HelpClass.StartAwait(grid_main);
-                /////////////////////
-                /*
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") )
-                {
-                    Window.GetWindow(this).Opacity = 0.2;
-                    //cashesQueryExcel = cashesQuery.ToList();
-                    win_lvc win = new win_lvc(cashesQueryExcel, 8);
-                    win.ShowDialog();
-                    Window.GetWindow(this).Opacity = 1;
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-               */
-                /////////////////////
-                
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
 
@@ -1762,8 +1655,7 @@ namespace Restaurant.View.accounts
         {//pdf
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
                 {
@@ -1781,20 +1673,18 @@ namespace Restaurant.View.accounts
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        #endregion
 
-        
         private async void Chb_all_Checked(object sender, RoutedEventArgs e)
         {
             try
@@ -1825,25 +1715,80 @@ namespace Restaurant.View.accounts
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
             this.DataContext = new Agent();
 
+            ///////////////////////////////
+            /// btn_image.IsEnabled = false;
+            btn_add.IsEnabled = true;
+            btn_invoices.Visibility = Visibility.Collapsed;
+            btn_invoices.IsEnabled = false;
+            tb_cash.IsReadOnly = false;
+            //tb_transNum.Text = "";
+            cb_depositTo.SelectedIndex = -1;
+            cb_paymentProcessType.SelectedIndex = -1;
+            _SelectedCard = -1;
+            gd_card.Visibility = Visibility.Collapsed;
+            //p_error_docCard.Visibility = Visibility.Collapsed;
+            //p_error_docNum.Visibility = Visibility.Collapsed;
+            //p_error_docNumCheque.Visibility = Visibility.Collapsed;
+            //tb_docNum.Clear();
+            //tb_docNumCheque.Clear();
+            //tb_docNumCard.Clear();
+            dp_docDate.SelectedDate = null;
+            //tb_cash.Clear();
+            //tb_notes.Clear();
+            cb_recipientV.Visibility = Visibility.Collapsed;
+            cb_recipientC.Visibility = Visibility.Collapsed;
+            cb_recipientU.Visibility = Visibility.Collapsed;
+            cb_recipientSh.Visibility = Visibility.Collapsed;
+            //if (grid_document.IsVisible)
+            //{
+            //    TextBox dpDate = (TextBox)dp_docDate.Template.FindName("PART_TextBox", dp_docDate);
+            //    HelpClass.clearValidate(dpDate, p_error_docDate);
+            //}
+            grid_document.Visibility = Visibility.Collapsed;
+            grid_cheque.Visibility = Visibility.Collapsed;
+            //HelpClass.clearValidate(tb_docNum, p_error_docNum);
+            //HelpClass.clearValidate(tb_cash, p_error_cash);
+            //HelpClass.clearValidate(tb_docNumCheque, p_error_docNumCheque);
+            //HelpClass.clearValidate(tb_docNumCard, p_error_docCard);
+            //HelpClass.clearComboBoxValidate(cb_depositTo, p_error_depositTo);
+            //HelpClass.clearComboBoxValidate(cb_recipientV, p_error_recipient);
+            //HelpClass.clearComboBoxValidate(cb_recipientC, p_error_recipient);
+            //HelpClass.clearComboBoxValidate(cb_recipientU, p_error_recipient);
+            //HelpClass.clearComboBoxValidate(cb_recipientSh, p_error_recipient);
+            //HelpClass.clearComboBoxValidate(cb_paymentProcessType, p_error_paymentProcessType);
+            //HelpClass.clearTextBlockValidate(txt_card, p_error_card);
+            ///////////////////////////
+            btn_add.IsEnabled = true;
+            cb_depositTo.IsEnabled = true;
+            cb_recipientV.IsEnabled = true;
+            cb_recipientC.IsEnabled = true;
+            cb_recipientU.IsEnabled = true;
+            cb_recipientSh.IsEnabled = true;
+            cb_paymentProcessType.IsEnabled = true;
+            tb_docNum.IsEnabled = true;
+            dp_docDate.IsEnabled = true;
+            tb_docNumCheque.IsEnabled = true;
+            tb_docNumCard.IsEnabled = true;
+            dp_docDateCheque.IsEnabled = true;
+            gd_card.IsEnabled = true;
+            tb_cash.IsEnabled = true;
+            tb_notes.IsEnabled = true;
+            /////////////////////////
 
-
-            // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
         string input;
         decimal _decimal = 0;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
+        {//only  digits
             try
             {
-
-
-                //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
                 if (textBox.Tag.ToString() == "int")
@@ -1855,7 +1800,6 @@ namespace Restaurant.View.accounts
                 {
                     input = e.Text;
                     e.Handled = !decimal.TryParse(textBox.Text + input, out _decimal);
-
                 }
             }
             catch (Exception ex)
@@ -1864,10 +1808,9 @@ namespace Restaurant.View.accounts
             }
         }
         private void Code_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
+        {//only english and digits
             try
             {
-                //only english and digits
                 Regex regex = new Regex("^[a-zA-Z0-9. -_?]*$");
                 if (!regex.IsMatch(e.Text))
                     e.Handled = true;
@@ -1912,6 +1855,59 @@ namespace Restaurant.View.accounts
             }
         }
 
+        #endregion
+
+        #region reports
+        private void Btn_pdf1_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_preview1_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_print_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_exportToExcel_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
+        {//pie
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+                /////////////////////
+                /*
+                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") )
+                {
+                    Window.GetWindow(this).Opacity = 0.2;
+                    //cashesQueryExcel = cashesQuery.ToList();
+                    win_lvc win = new win_lvc(cashesQueryExcel, 8);
+                    win.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+               */
+                /////////////////////
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
         #endregion
     }
 }
