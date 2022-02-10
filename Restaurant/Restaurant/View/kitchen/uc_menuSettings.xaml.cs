@@ -151,6 +151,13 @@ namespace Restaurant.View.kitchen
                     var menuSet = new MenuSetting();
                     menuSet.itemUnitId = item.itemUnitId;
                     menuSet.branchId = MainWindow.branchLogin.branchId;
+                    if(tgl_isActive.IsChecked == true)
+                        menuSet.isActive = 1;
+                    else
+                        menuSet.isActive = 0;
+
+                    menuSet.createUserId = MainWindow.userLogin.userId;
+                    menuSet.updateUserId = MainWindow.userLogin.userId;
                     foreach(string str in selectedDays)
                     {
                         switch (str)

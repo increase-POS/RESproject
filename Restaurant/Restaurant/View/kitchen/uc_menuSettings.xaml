@@ -516,49 +516,49 @@
                                           Margin="0" />
                     </StackPanel>
                     <Separator  Background="{StaticResource LightMainColor}" VerticalAlignment="Center" Width="auto" Margin="10 0"  />
-                    <StackPanel x:Name="sp_daysWeek" Margin="10" >
+                    <StackPanel x:Name="sp_daysWeek" Margin="10" IsEnabled="False">
                         
                     <CheckBox x:Name="chb_all"  Content="All" Margin="5"
                                     Background="{StaticResource MainColor}"
-                                  FontWeight="SemiBold" IsChecked="True" IsEnabled="False"
+                                  FontWeight="SemiBold" IsChecked="True" 
                                   Checked="Chb_all_Checked" Unchecked="Chb_all_Unchecked"
                                     Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"/>
 
-                        <WrapPanel x:Name="wp_daysWeek" >
+                            <WrapPanel x:Name="wp_daysWeek" IsEnabled="False" >
                         <CheckBox x:Name="chb_sat"  Content="Saturday " Margin="5"
-                                  IsChecked="{Binding sat, Mode=OneWay}" IsEnabled="False"
+                                  IsChecked="{Binding sat, Mode=OneWay}" 
                                   Checked="Chb_all_Checked" Unchecked="Chb_all_Unchecked"
                                     Background="{StaticResource MainColor}"
                                     Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"/>
                         <CheckBox x:Name="chb_sun"  Content="Sunday " Margin="5"
-                                  IsChecked="{Binding sun, Mode=OneWay}" IsEnabled="False"
+                                  IsChecked="{Binding sun, Mode=OneWay}" 
                                   Checked="Chb_all_Checked" Unchecked="Chb_all_Unchecked"
                                     Background="{StaticResource MainColor}"
                                     Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"/>
                         <CheckBox x:Name="chb_mon"  Content="Monday" Margin="5"
-                                  IsChecked="{Binding mon , Mode=OneWay}" IsEnabled="False"
+                                  IsChecked="{Binding mon , Mode=OneWay}" 
                                   Checked="Chb_all_Checked" Unchecked="Chb_all_Unchecked"
                                     Background="{StaticResource MainColor}" 
                                     Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"/>
                         <CheckBox x:Name="chb_tues"  Content="Tuesday" Margin="5"
-                                  IsChecked="{Binding tues , Mode=OneWay}" IsEnabled="False"
+                                  IsChecked="{Binding tues , Mode=OneWay}" 
                                   Checked="Chb_all_Checked" Unchecked="Chb_all_Unchecked"
                                     Background="{StaticResource MainColor}"
                                     Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"/>
                         <CheckBox x:Name="chb_wed"  Content="Wednesday" Margin="5"
                                   IsChecked="{Binding wed , Mode=OneWay}"
                                   Checked="Chb_all_Checked" Unchecked="Chb_all_Unchecked"
-                                    Background="{StaticResource MainColor}" IsEnabled="False"
+                                    Background="{StaticResource MainColor}" 
                                     Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"/>
                         <CheckBox x:Name="chb_thur"  Content="Thursday" Margin="5"
                                   IsChecked="{Binding thur , Mode=OneWay}"
                                   Checked="Chb_all_Checked" Unchecked="Chb_all_Unchecked"
-                                    Background="{StaticResource MainColor}" IsEnabled="False"
+                                    Background="{StaticResource MainColor}" 
                                     Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"/>
                         <CheckBox x:Name="chb_fri"  Content="Friday" Margin="5"
                                   IsChecked="{Binding fri , Mode=OneWay}"
                                   Checked="Chb_all_Checked" Unchecked="Chb_all_Unchecked"
-                                    Background="{StaticResource MainColor}" IsEnabled="False"
+                                    Background="{StaticResource MainColor}" 
                                     Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"/>
                        
                     </WrapPanel>
