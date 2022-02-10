@@ -574,7 +574,7 @@ namespace Restaurant.View.storage.movementsOperations
                                         createUserId = MainWindow.userLogin.userId,
                                         updateUserId = MainWindow.userLogin.userId,
                                     };
-                                    await not.save(not, MainWindow.branchLogin.branchId, "spendingOrderAlert_approve", MainWindow.userLogin.fullName);
+                                    await not.save(not, MainWindow.branchLogin.branchId, "storageAlerts_spendingOrderApprove", MainWindow.userLogin.fullName);
                                     #endregion
 
                                     await FillCombo.itemLocation.transferToKitchen(readyItemsLoc, orderList, MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);

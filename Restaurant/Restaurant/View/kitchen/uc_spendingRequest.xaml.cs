@@ -539,7 +539,7 @@ namespace Restaurant.View.kitchen
                                     updateUserId = MainWindow.userLogin.userId,
                                 };
 
-                                await not.save(not, MainWindow.branchLogin.branchId, "spendingOrderAlert_request", MainWindow.userLogin.fullName);
+                                await not.save(not, MainWindow.branchLogin.branchId, "kitchenAlerts_spendingOrderRequest", MainWindow.userLogin.fullName);
                                 #endregion
                             }
                             #endregion
