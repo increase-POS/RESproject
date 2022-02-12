@@ -3109,4 +3109,7 @@
   <data name="trUserConfirmation" xml:space="preserve">
     <value>تأكيد المستخدم</value>
   </data>
+  <data name="trActive_" xml:space="preserve">
+    <value>فعال</value>
+  </data>
 </root>

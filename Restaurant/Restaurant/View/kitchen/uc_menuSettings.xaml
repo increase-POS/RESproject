@@ -510,7 +510,7 @@
                                    Margin="5,0,5,0" Text="Active" Foreground="{StaticResource SecondColor}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <ToggleButton Grid.Column="4" Background="{StaticResource MainColor}" 
-                                  IsChecked="{Binding itemActive, Mode=OneWay}"
+                                  IsChecked="{Binding isActive, Mode=OneWay}"
                                   x:Name="tgl_isActiveItem"   Checked="Tgl_isActiveItem_Checked" Unchecked="Tgl_isActiveItem_Unchecked"
                              VerticalAlignment="Center" Padding="10,15,5,5"  
                                           Margin="0" />

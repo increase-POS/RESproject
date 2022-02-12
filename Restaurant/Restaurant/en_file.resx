@@ -3133,4 +3133,7 @@ Please add Email in setting</value>
   <data name="trUserConfirmation" xml:space="preserve">
     <value>User Confirmation</value>
   </data>
+  <data name="trActive_" xml:space="preserve">
+    <value>Active</value>
+  </data>
 </root>

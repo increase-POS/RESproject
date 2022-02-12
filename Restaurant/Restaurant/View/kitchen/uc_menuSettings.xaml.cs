@@ -85,7 +85,7 @@ namespace Restaurant.View.kitchen
 
                 catalogMenuList = new List<string> { "allMenu", "appetizers", "beverages", "fastFood", "mainCourses", "desserts" };
                 categoryBtns = new List<Button> { btn_appetizers, btn_beverages, btn_fastFood, btn_mainCourses, btn_desserts };
-                requiredControlList = new List<string> { "code", "name", "type" };
+                requiredControlList = new List<string> { "preparingTime" };
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
@@ -97,13 +97,13 @@ namespace Restaurant.View.kitchen
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-
+                Clear();
                 await RefreshItemsList();
                 await refrishCategories();
                 //enable categories buttons
                 HelpClass.activateCategoriesButtons(items, FillCombo.categoriesList, categoryBtns);
                 await Search();
-                Clear();
+                
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -148,52 +148,70 @@ namespace Restaurant.View.kitchen
                 if (MainWindow.groupObject.HasPermissionAction(updatePermission, MainWindow.groupObjects, "one"))
                 {
                     //save
-                    var menuSet = new MenuSetting();
-                    menuSet.itemUnitId = item.itemUnitId;
-                    menuSet.branchId = MainWindow.branchLogin.branchId;
-                    if(tgl_isActive.IsChecked == true)
-                        menuSet.isActive = 1;
+                    #region validate controls
+                    if (tgl_isActiveItem.IsChecked == true)
+                        requiredControlList = new List<string>() { "preparingTime" };
                     else
-                        menuSet.isActive = 0;
+                        requiredControlList = new List<string>();
+                    #endregion
 
-                    menuSet.createUserId = MainWindow.userLogin.userId;
-                    menuSet.updateUserId = MainWindow.userLogin.userId;
-                    foreach(string str in selectedDays)
+                    #region save
+                    if (HelpClass.validate(requiredControlList, this))
                     {
-                        switch (str)
+                        var menuSet = new MenuSetting();
+                        if (item.menuSettingId == null)
+                            menuSet.menuSettingId = 0;
+                        else
+                            menuSet.menuSettingId = item.menuSettingId;
+                        menuSet.itemUnitId = item.itemUnitId;
+                        menuSet.preparingTime = int.Parse(tb_preparingTime.Text);
+                        menuSet.branchId = MainWindow.branchLogin.branchId;
+                        if (tgl_isActiveItem.IsChecked == true)
+                            menuSet.isActive = 1;
+                        else
+                            menuSet.isActive = 0;
+
+                        menuSet.createUserId = MainWindow.userLogin.userId;
+                        menuSet.updateUserId = MainWindow.userLogin.userId;
+                        foreach (string str in selectedDays)
                         {
-                            case "sat":
-                                menuSet.sat = true;
-                                break;
-                            case "sun":
-                                menuSet.sun = true;
-                                break;
-                            case "mon":
-                                menuSet.mon = true;
-                                break;
-                            case "tues":
-                                menuSet.tues = true;
-                                break;
-                            case "wed":
-                                menuSet.wed = true;
-                                break;
-                            case "thur":
-                                menuSet.thur = true;
-                                break;
-                            case "fri":
-                                menuSet.fri = true;
-                                break;
+                            switch (str)
+                            {
+                                case "sat":
+                                    menuSet.sat = true;
+                                    break;
+                                case "sun":
+                                    menuSet.sun = true;
+                                    break;
+                                case "mon":
+                                    menuSet.mon = true;
+                                    break;
+                                case "tues":
+                                    menuSet.tues = true;
+                                    break;
+                                case "wed":
+                                    menuSet.wed = true;
+                                    break;
+                                case "thur":
+                                    menuSet.thur = true;
+                                    break;
+                                case "fri":
+                                    menuSet.fri = true;
+                                    break;
+                            }
                         }
+                        int res = await menuSetting.saveItemMenuSetting(menuSet);
+                        if (res > 0)
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                            await RefreshItemsList();
+                            await Search();
+                            Clear();
+                        }
+                        else
+                            Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     }
-                    int res = await menuSetting.saveItemMenuSetting(menuSet);
-                    if (res > 0)
-                    {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                        await FillCombo.RefreshSalesItems();
-                    }
-                    else
-                        Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-
+                    #endregion
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -420,13 +438,43 @@ namespace Restaurant.View.kitchen
             }
         }
         #endregion
-        #region validate - clearValidate - textChange - lostFocus - . . . . 
+        #region validate - clearValidate - textChange - lostFocus - checkAllCheckBox . . . . 
+        void checkAllCheckBox()
+        {
+            chb_all.IsChecked =
+            chb_sat.IsChecked =
+                        chb_sun.IsChecked =
+                        chb_mon.IsChecked =
+                        chb_tues.IsChecked =
+                        chb_wed.IsChecked =
+                        chb_thur.IsChecked =
+                        chb_fri.IsChecked = true;
+
+            wp_daysWeek.IsEnabled = false;
+
+            selectedDays = new List<string>();
+            selectedDays.AddRange(weekDays);
+        }
+        void unCheckAllCheckBox()
+        {
+            chb_sat.IsChecked =
+                        chb_sun.IsChecked =
+                        chb_mon.IsChecked =
+                        chb_tues.IsChecked =
+                        chb_wed.IsChecked =
+                        chb_thur.IsChecked =
+                        chb_fri.IsChecked = false;
+            wp_daysWeek.IsEnabled = true;
+        }
         void Clear()
         {
             item = new MenuSetting();
 
             this.DataContext = item;
 
+            #region selected days
+            checkAllCheckBox();
+            #endregion
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
@@ -777,8 +825,44 @@ namespace Restaurant.View.kitchen
         {
             try
             {
+                Clear();
                 item = items.Where(x => x.itemId == itemId).FirstOrDefault();
                 this.DataContext = item;
+
+                #region selected days
+                selectedDays = new List<string>();
+                if (item.menuSettingId != null)
+                {
+                    foreach (string day in weekDays)
+                    {
+                        var propertyInfo = item.GetType().GetProperty(day);
+                        bool value = (bool)propertyInfo.GetValue(item);
+                        CheckBox cb = ((CheckBox)FindName("chb_" + day));
+                        if (value == true)
+                            selectedDays.Add(day);
+
+                    }
+                    if (selectedDays.Count == weekDays.Count)
+                        checkAllCheckBox();
+                    else
+                    {
+                        chb_all.IsChecked = false;
+                        unCheckAllCheckBox();
+                    }
+
+                    // check selected days
+                    if (chb_all.IsChecked == false)
+                    {
+                        foreach (string day in selectedDays)
+                        {
+                            CheckBox cb = ((CheckBox)FindName("chb_" + day));
+                            cb.IsChecked = true;
+
+                        }
+                    }
+                }
+
+                #endregion
                 HelpClass.clearValidate(requiredControlList, this);
             }
             catch (Exception ex)
@@ -1095,34 +1179,25 @@ namespace Restaurant.View.kitchen
             try
             {
                 CheckBox checkBox = sender as CheckBox;
-                if (checkBox.Name == "chb_all")
+                if (checkBox.IsFocused)
                 {
-                    chb_sat.IsChecked =
-                    chb_sun.IsChecked =
-                    chb_mon.IsChecked =
-                    chb_tues.IsChecked =
-                    chb_wed.IsChecked =
-                    chb_thur.IsChecked =
-                    chb_fri.IsChecked = true;
-                    wp_daysWeek.IsEnabled = false;
-
-                    selectedDays = new List<string>();
-                    selectedDays.AddRange(weekDays);
+                    if (checkBox.Name == "chb_all")
+                        checkAllCheckBox();                      
+                    else if (checkBox.Name == "chb_sat")
+                        selectedDays.Add("sat");
+                    else if (checkBox.Name == "chb_sun")
+                        selectedDays.Add("sun");
+                    else if (checkBox.Name == "chb_mon")
+                        selectedDays.Add("mon");
+                    else if (checkBox.Name == "chb_tues")
+                        selectedDays.Add("tues");
+                    else if (checkBox.Name == "chb_wed")
+                        selectedDays.Add("wed");
+                    else if (checkBox.Name == "chb_thur")
+                        selectedDays.Add("thur");
+                    else if (checkBox.Name == "chb_fri")
+                        selectedDays.Add("fri");
                 }
-                else if (checkBox.Name == "chb_sat")
-                    selectedDays.Add("sat");
-                else if (checkBox.Name == "chb_sun")
-                    selectedDays.Add("sun");
-                else if (checkBox.Name == "chb_mon")
-                    selectedDays.Add("mon");
-                else if (checkBox.Name == "chb_tues")
-                    selectedDays.Add("tues");
-                else if (checkBox.Name == "chb_wed")
-                    selectedDays.Add("wed");
-                else if (checkBox.Name == "chb_thu")
-                    selectedDays.Add("thur");
-                else if (checkBox.Name == "chb_fri")
-                    selectedDays.Add("fri");
                
             }
             catch (Exception ex)
@@ -1135,33 +1210,28 @@ namespace Restaurant.View.kitchen
             try
             {
                 CheckBox checkBox = sender as CheckBox;
-                if (checkBox.Name == "chb_all")
+                if (checkBox.IsFocused)
                 {
-                    chb_sat.IsChecked =
-                    chb_sun.IsChecked =
-                    chb_mon.IsChecked =
-                    chb_tues.IsChecked =
-                    chb_wed.IsChecked =
-                    chb_thur.IsChecked =
-                    chb_fri.IsChecked = false;
-                    wp_daysWeek.IsEnabled = true;
-
-                    selectedDays = new List<string>();
+                    if (checkBox.Name == "chb_all")
+                    {
+                        unCheckAllCheckBox();
+                        selectedDays = new List<string>();
+                    }
+                    else if (checkBox.Name == "chb_sat")
+                        selectedDays.Remove("sat");
+                    else if (checkBox.Name == "chb_sun")
+                        selectedDays.Remove("sun");
+                    else if (checkBox.Name == "chb_mon")
+                        selectedDays.Remove("mon");
+                    else if (checkBox.Name == "chb_tues")
+                        selectedDays.Remove("tues");
+                    else if (checkBox.Name == "chb_wed")
+                        selectedDays.Remove("wed");
+                    else if (checkBox.Name == "chb_thu")
+                        selectedDays.Remove("thu");
+                    else if (checkBox.Name == "chb_fri")
+                        selectedDays.Remove("fri");
                 }
-                else if (checkBox.Name == "chb_sat")
-                    selectedDays.Remove("sat");
-                else if (checkBox.Name == "chb_sun")
-                    selectedDays.Remove("sun");
-                else if (checkBox.Name == "chb_mon")
-                    selectedDays.Remove("mon");
-                else if (checkBox.Name == "chb_tues")
-                    selectedDays.Remove("tues");
-                else if (checkBox.Name == "chb_wed")
-                    selectedDays.Remove("wed");
-                else if (checkBox.Name == "chb_thu")
-                    selectedDays.Remove("thu");
-                else if (checkBox.Name == "chb_fri")
-                    selectedDays.Remove("fri");
             }
             catch (Exception ex)
             {
