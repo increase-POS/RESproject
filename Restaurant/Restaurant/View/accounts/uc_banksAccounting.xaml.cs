@@ -884,7 +884,8 @@ namespace Restaurant.View.accounts
         {//select user
             try
             {
-                if ((cb_user.SelectedIndex != -1) && (!tb_cash.Text.Equals("")))
+                //if ((cb_user.SelectedIndex != -1) && (!tb_cash.Text.Equals("")))
+                if (cb_user.SelectedIndex != -1)
                     btn_confirmUser.IsEnabled = true;
                 else
                     btn_confirmUser.IsEnabled = false;
@@ -1303,7 +1304,7 @@ namespace Restaurant.View.accounts
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {//clear
-            this.DataContext = new Agent();
+            this.DataContext = new CashTransfer();
 
             //try
             //{ tb_transNum.Text = await HelpClass.generateNumber(Convert.ToChar(cb_opperationType.SelectedValue), "bn"); }

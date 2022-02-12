@@ -50,41 +50,36 @@ namespace Restaurant.View.windows
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 #region translate
 
-                if (MainWindow.lang.Equals("en"))
+            if (MainWindow.lang.Equals("en"))
             {
-                MainWindow.resourcemanager = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly());
                 grid_acceptUser.FlowDirection = FlowDirection.LeftToRight;
-
             }
             else
             {
-                MainWindow.resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
                 grid_acceptUser.FlowDirection = FlowDirection.RightToLeft;
-
             }
 
             translate();
                 #endregion
               
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void translate()
         {
-            txt_user.Text = MainWindow.resourcemanager.GetString("trUserConfirm");
+            txt_user.Text = MainWindow.resourcemanager.GetString("trUserConfirmation");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_userName, MainWindow.resourcemanager.GetString("trUserNameHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_password, MainWindow.resourcemanager.GetString("trPasswordHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(pb_password, MainWindow.resourcemanager.GetString("trPasswordHint"));
-
 
             btn_confirmation.Content = MainWindow.resourcemanager.GetString("trConfirm");
 
@@ -129,7 +124,6 @@ namespace Restaurant.View.windows
         }
         private async Task chkUser()
         {
-            /*
             string password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password);
 
             User user = await userModel.getUserById(userID);
@@ -143,10 +137,9 @@ namespace Restaurant.View.windows
                 this.Close();
             else
             {
-                HelpClass.showPasswordValidate(pb_password, p_error_password, tt_errorPassword, "trErrorPasswordToolTip");
-                p_showPassword.Visibility = Visibility.Collapsed;
+                HelpClass.SetValidate(p_error_password,  "trErrorPasswordToolTip");
+                //p_showPassword.Visibility = Visibility.Collapsed;
             }
-            */
         }
 
         private void P_showPassword_MouseEnter(object sender, MouseEventArgs e)
@@ -154,6 +147,7 @@ namespace Restaurant.View.windows
             try
             {
                 tb_password.Text = pb_password.Password;
+                MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_password, MainWindow.resourcemanager.GetString("trPasswordHint"));
                 tb_password.Visibility = Visibility.Visible;
                 pb_password.Visibility = Visibility.Collapsed;
             }
@@ -176,80 +170,68 @@ namespace Restaurant.View.windows
         }
         private void Tb_userName_LostFocus(object sender, RoutedEventArgs e)
         {
-            /*
             try
             { 
-                HelpClass.validateEmptyTextBox(tb_userName, p_error_userName, tt_errorUserName, "trEmptyUserNameToolTip");
+                if(tb_userName.Text.Equals(""))
+                    HelpClass.SetValidate(p_error_userName, "trEmptyUserNameToolTip");
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private void Tb_userName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            /*
             try
             {
-                HelpClass.validateEmptyTextBox(tb_userName, p_error_userName, tt_errorUserName, "trEmptyUserNameToolTip");
+                if (tb_userName.Text.Equals(""))
+                    HelpClass.SetValidate(p_error_userName,  "trEmptyUserNameToolTip");
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private void Tb_password_LostFocus(object sender, RoutedEventArgs e)
         {
-            /*
             try
             {
-                if (pb_password.Password.Equals(""))
+                if (tb_password.Text.Equals(""))
                 {
-                    p_error_password.Visibility = Visibility.Visible;
-                    tt_errorPassword.Content = MainWindow.resourcemanager.GetString("trEmptyPasswordToolTip");
-                    pb_password.Background = (Brush)bc.ConvertFrom("#15FF0000");
-                    p_showPassword.Visibility = Visibility.Collapsed;
+                    HelpClass.SetValidate(p_error_password, "trEmptyPasswordToolTip");
                 }
                 else
                 {
-                    pb_password.Background = (Brush)bc.ConvertFrom("#f8f8f8");
-                    p_error_password.Visibility = Visibility.Collapsed;
-                    p_showPassword.Visibility = Visibility.Visible;
+                    HelpClass.clearValidate(p_error_password);
                 }
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private void Tb_password_TextChanged(object sender, TextChangedEventArgs e)
         {
-            /*
             try
             {
-                HelpClass.clearValidate(tb_password, p_error_password);
+                HelpClass.clearValidate(p_error_password);
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private void Pb_password_PasswordChanged(object sender, RoutedEventArgs e)
         {
-           /* 
              try
             {
-                HelpClass.clearPasswordValidate(pb_password, p_error_password);
+                if (pb_password.Password.Equals(""))
+                    HelpClass.SetValidate(p_error_password, "trEmptyPasswordToolTip");
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

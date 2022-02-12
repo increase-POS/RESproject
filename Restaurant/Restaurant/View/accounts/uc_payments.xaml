@@ -372,7 +372,7 @@
                      FontSize="14"     VerticalAlignment="Center" 
                            FontWeight="Bold" />
                         <Button   x:Name="btn_clear" Click="Btn_clear_Click" Grid.Column="3" Padding="0" 
-                               VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}"   >
+                                  VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}"   >
                             <materialDesign:PackIcon Foreground="White" Kind="RefreshCircle"   Width="30" Height="30">
                                 <materialDesign:PackIcon.ToolTip>
                                     <ToolTip x:Name="tt_clear" Placement="left" HorizontalOffset="5" 
@@ -393,17 +393,18 @@
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid>
                                 <TextBox x:Name="tb_transNum"  Text="{Binding transNum, Mode=OneWay}" Padding="10,5,0,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="trans num..."  
-                                     Foreground="#4E4E4E" IsReadOnly="True" 
-                                      MaxLength="50" BorderThickness="0"
-                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"   Margin="4,0"  
-                                 LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
+                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                          materialDesign:HintAssist.Hint="trans num..."  
+                                          Foreground="#4E4E4E" IsReadOnly="True" 
+                                          MaxLength="50" BorderThickness="0"
+                                          materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                          Height="40"   Margin="4,0"  
+                                          LostFocus="validateEmpty_LostFocus" 
+                                          TextChanged="ValidateEmpty_TextChange" />
                                 <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_transNum"
-                              HorizontalAlignment="Right" Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                             Data="{StaticResource infoCircle}">
+                                      HorizontalAlignment="Right" Visibility="Collapsed"   
+                                      VerticalAlignment="Center" Width="15"  Height="15"
+                                      Data="{StaticResource infoCircle}">
                                 </Path>
                             </Grid>
                         </Border>
@@ -429,18 +430,18 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <Border  Visibility="Collapsed" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Border x:Name="bdr_recipientV" Visibility="Collapsed" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                 <Grid>
                                     <ComboBox x:Name="cb_recipientV"  Grid.Row="3"
-                                  Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
-                                  materialDesign:HintAssist.Hint="Recipient..."
-                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                  BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
-                                  Grid.Column="0" Height="40"  
-                                  LostFocus="Tb_validateEmptyLostFocus" SelectionChanged="Cb_recipientV_SelectionChanged"/>
+                                              Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
+                                              materialDesign:HintAssist.Hint="Recipient..."
+                                              Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                              BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
+                                              Grid.Column="0" Height="40"  
+                                              LostFocus="Tb_validateEmptyLostFocus" SelectionChanged="Cb_recipientV_SelectionChanged"/>
                                 </Grid>
                             </Border>
-                            <Border  Visibility="Collapsed" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Border x:Name="bdr_recipientC" Visibility="Collapsed" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                 <Grid>
                                     <ComboBox x:Name="cb_recipientC"  Grid.Row="2"
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
@@ -451,7 +452,7 @@
                                   LostFocus="Tb_validateEmptyLostFocus" SelectionChanged="Cb_recipientC_SelectionChanged"/>
                                 </Grid>
                             </Border>
-                            <Border  Visibility="Collapsed" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Border x:Name="bdr_recipientU"  Visibility="Collapsed" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                 <Grid>
                                     <ComboBox x:Name="cb_recipientU"  Grid.Row="3"
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
@@ -462,7 +463,7 @@
                                   LostFocus="Tb_validateEmptyLostFocus"/>
                                 </Grid>
                             </Border>
-                            <Border  Visibility="Collapsed" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Border x:Name="bdr_recipientSh"  Visibility="Collapsed" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                 <Grid>
                                     <ComboBox x:Name="cb_recipientSh"  Grid.Row="3"
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
@@ -474,12 +475,12 @@
                                 </Grid>
                             </Border>
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,30,5" x:Name="p_error_recipient"
-                              HorizontalAlignment="Right" Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                             Data="{StaticResource infoCircle}">
+                                  HorizontalAlignment="Right" Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                                  Data="{StaticResource infoCircle}">
                             </Path>
                             <Button Grid.Column="1"
-                                x:Name="btn_invoices" Grid.Row="3" Visibility="Collapsed"   Padding="0"    HorizontalAlignment="Right"
+                                    x:Name="btn_invoices" Grid.Row="3" Visibility="Collapsed"   Padding="0"    HorizontalAlignment="Right"
                                     Background="{x:Null}" BorderBrush="{x:Null}" Click="Btn_invoices_Click" VerticalAlignment="Center"      
                                     Margin="5,1,10,1"   ToolTip="invoices" TabIndex="13" IsEnabled="False">
 
@@ -501,18 +502,18 @@
                         <Border Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid>
                                 <ComboBox x:Name="cb_paymentProcessType"  Grid.Row="4"
-                                  Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
-                                  materialDesign:HintAssist.Hint="Payment Process Type..." 
-                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                  Grid.Column="0" Height="40"
-                                 BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
-                                  SelectionChanged="Cb_paymentProcessType_SelectionChanged" 
-                                  LostFocus="Tb_validateEmptyLostFocus"/>
+                                          Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
+                                          materialDesign:HintAssist.Hint="Payment Process Type..." 
+                                          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                          Grid.Column="0" Height="40"
+                                          BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
+                                          SelectionChanged="Cb_paymentProcessType_SelectionChanged" 
+                                          LostFocus="Tb_validateEmptyLostFocus"/>
                                 <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5"
-                                              Name="p_error_paymentProcessType"
-                                                HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
-                                                VerticalAlignment="Center" Width="15"  Height="15"
-                                               Data="{StaticResource infoCircle}"/>
+                                        Name="p_error_paymentProcessType"
+                                        HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
+                                        VerticalAlignment="Center" Width="15"  Height="15"
+                                        Data="{StaticResource infoCircle}"/>
 
                             </Grid>
                         </Border>
@@ -570,7 +571,7 @@
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"   Margin="4,0"  
                                     PreviewTextInput="Code_PreviewTextInput" PreviewKeyDown="PreventSpaces" 
-                                 LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
+                                    LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
                                     <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_docNumCheque"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
@@ -611,18 +612,17 @@
                             <DockPanel x:Name="dkp_cards" Grid.ColumnSpan="2" LastChildFill="False" HorizontalAlignment="Center">
 
                             </DockPanel>
-                            <Grid Grid.Row="1" Grid.Column="0" Margin="5 0" >
+                            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5 0" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Row="1" Grid.Column="1"  x:Name="txt_card"  Margin="2.5" 
-                       Foreground="#4E4E4E" Text=""  Background="White"
-                        HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="1" Grid.Column="1"  x:Name="txt_card"  Margin="2.5"
+                                           Foreground="#4E4E4E" Text=""  Background="White"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 <Path Grid.Row="1"  Grid.Column="2"  x:Name="p_error_card" Fill="#E81123" Stretch="Fill"
-                                              Margin="2.5"
-                              HorizontalAlignment="Right"  Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15"
+                                      Margin="2.5" HorizontalAlignment="Right"  Visibility="Collapsed"   
+                                      VerticalAlignment="Center" Width="15"  Height="15"
                               Data="{StaticResource infoCircle}"/>
                             </Grid>
                         </Grid>
@@ -656,7 +656,7 @@
 
                         <Border Grid.Row="1" Grid.Column="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid   >
-                                <TextBox Margin="4,0" x:Name="tb_cash"  
+                                <TextBox Margin="4,0" x:Name="tb_cash"  Padding="10,5,0,0" 
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
                                          Text="{Binding Path =cash,Converter={StaticResource accuracyConverter }}" 
                                          BorderThickness="0" 

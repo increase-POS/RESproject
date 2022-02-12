@@ -186,7 +186,7 @@ namespace Restaurant.View.accounts
 
                 await RefreshCashesList();
 
-               await Search();
+                await Search();
 
             //    HelpClass.EndAwait(grid_main);
             //}
@@ -392,60 +392,6 @@ namespace Restaurant.View.accounts
                     }
                     #endregion
 
-                    #region old
-                    /*
-                    #region validate
-                    //chk empty cash
-                    HelpClass.validateEmptyTextBox(tb_cash, p_errorCash, tt_errorCash, "trEmptyCashToolTip");
-                    //chk empty user
-                    HelpClass.validateEmptyComboBox(cb_pos1, p_errorPos1, tt_errorPos1, "trErrorEmptyFromPosToolTip");
-                    //chk empty bank
-                    HelpClass.validateEmptyComboBox(cb_pos2, p_errorPos2, tt_errorPos2, "trErrorEmptyToPosToolTip");
-                    //chk if 2 pos is the same
-                    bool isSame = false;
-                    if (cb_pos1.SelectedValue == cb_pos2.SelectedValue)
-                        isSame = true;
-                    if ((cb_pos1.SelectedIndex != -1) && (cb_pos2.SelectedIndex != -1) && (cb_pos1.SelectedValue == cb_pos2.SelectedValue))
-                    {
-                        HelpClass.showComboBoxValidate(cb_pos1, p_errorPos1, tt_errorPos1, "trErrorSamePos");
-                        HelpClass.showComboBoxValidate(cb_pos2, p_errorPos2, tt_errorPos2, "trErrorSamePos");
-                    }
-                    #endregion
-
-                    #region update
-                    if ((!tb_cash.Text.Equals("")) && (!cb_pos1.Text.Equals("")) && (!cb_pos2.Text.Equals("")) && !isSame)
-                    {
-                        //first operation (pull)
-                        cashtrans2.cash = decimal.Parse(tb_cash.Text);
-                        cashtrans2.notes = tb_note.Text;
-                        cashtrans2.posId = Convert.ToInt32(cb_pos1.SelectedValue);
-
-                        int s1 = await cashModel.Save(cashtrans2);
-
-                        if (!s1.Equals(0))
-                        {
-                            //second operation (deposit)
-                            cashtrans3.cash = decimal.Parse(tb_cash.Text);
-                            cashtrans3.posId = Convert.ToInt32(cb_pos2.SelectedValue);
-                            cashtrans3.notes = tb_note.Text;
-
-                            int s2 = await cashModel.Save(cashtrans3);
-
-                            if (!s2.Equals(0))
-                            {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-
-                                await RefreshCashesList();
-                                Tb_search_TextChanged(null, null);
-                            }
-                            else
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                        }
-                    }
-                    #endregion
-                    */
-                    #endregion
-
                     HelpClass.EndAwait(grid_main);
                 }
                 else
@@ -535,7 +481,7 @@ namespace Restaurant.View.accounts
                             else//error then do not confirm
                                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
-                    HelpClass.EndAwait(grid_main);
+                            HelpClass.EndAwait(grid_main);
                         }
                         //there is not enough balance
                         else
@@ -634,9 +580,9 @@ namespace Restaurant.View.accounts
         }
         private async void Dg_posAccounts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
                 if (dg_posAccounts.SelectedIndex != -1)
                 {
@@ -706,89 +652,14 @@ namespace Restaurant.View.accounts
                         #endregion
                     }
                 }
-                /*
-                HelpClass.clearValidate(tb_cash, p_errorCash);
-                HelpClass.clearComboBoxValidate(cb_pos1, p_errorPos1);
-                HelpClass.clearComboBoxValidate(cb_pos2, p_errorPos2);
-
-                if (dg_posAccounts.SelectedIndex != -1)
-                {
-                    cashtrans = dg_posAccounts.SelectedItem as CashTransfer;
-                    this.DataContext = cashtrans;
-
-                    if (cashtrans != null)
-                    {
-                        tb_cash.Text = HelpClass.DecTostring(cashtrans.cash);
-
-                        //creator pos is login pos
-                        if (cashtrans.posIdCreator == MainWindow.posID.Value)
-                        {
-                            btn_update.IsEnabled = true;
-                            btn_delete.IsEnabled = true;
-                        }
-                        else
-                        {
-                            btn_update.IsEnabled = false;
-                            btn_delete.IsEnabled = false;
-                        }
-                        //login pos is operation pos
-                        if (cashtrans.posId == MainWindow.posID.Value)
-                        {
-                            if (cashtrans.isConfirm != 1)
-                            { btn_confirm.Content = MainWindow.resourcemanager.GetString("trConfirm");
-                                btn_confirm.IsEnabled = true; }
-                            else
-                            { btn_confirm.Content = MainWindow.resourcemanager.GetString("trIsConfirmed");
-                                btn_confirm.IsEnabled = false; }
-                        }
-                        else
-                        {
-
-                            btn_confirm.IsEnabled = false;
-                            if (cashtrans.isConfirm != 1)
-                                btn_confirm.Content = MainWindow.resourcemanager.GetString("trConfirm");
-                            else
-                                btn_confirm.Content = MainWindow.resourcemanager.GetString("trIsConfirmed");
-                        }
-
-                        #region get two pos
-
-                        cashes2 = await cashModel.GetbySourcId("p", cashtrans.cashTransId);
-                        //to insure that the pull operation is in cashtrans2 
-                        if (cashtrans.transType == "p")
-                        {
-                            cashtrans2 = cashes2.ToList()[0] as CashTransfer;
-                            cashtrans3 = cashes2.ToList()[1] as CashTransfer;
-                        }
-                        else if (cashtrans.transType == "d")
-                        {
-                            cashtrans2 = cashes2.ToList()[1] as CashTransfer;
-                            cashtrans3 = cashes2.ToList()[0] as CashTransfer;
-                        }
-
-                        cb_fromBranch.SelectedValue = (MainWindow.posList.Where(x => x.posId == cashtrans2.posId).FirstOrDefault() as Pos).branchId;
-                        cb_pos1.SelectedValue = cashtrans2.posId;
-
-                        cb_toBranch.SelectedValue = (MainWindow.posList.Where(x => x.posId == cashtrans3.posId).FirstOrDefault() as Pos).branchId;
-                        cb_pos2.SelectedValue = cashtrans3.posId;
-
-
-
-                        if ((cashtrans2.isConfirm == 1) && (cashtrans3.isConfirm == 1))
-                            btn_update.IsEnabled = false;
-                        //else
-                        //    btn_update.IsEnabled = true;
-                        #endregion
-                    }
-                }
-                */
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+               
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
