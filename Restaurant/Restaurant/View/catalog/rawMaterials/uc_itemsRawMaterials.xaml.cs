@@ -1019,8 +1019,8 @@ namespace Restaurant.View.catalog.rawMaterials
         IEnumerable<Item> itemsQuery;
         async Task<IEnumerable<Item>> RefreshItemsList()
         {
-            items = await item.Get();
-            items = items.Where(x => FillCombo.purchaseTypes.Contains(x.type)).ToList();
+            items = await FillCombo.RefreshPurchaseItems();
+            //items = FillCombo.purchaseItems.Where(x => FillCombo.purchaseTypes.Contains(x.type)).ToList();
             return items;
         }
         void RefrishItemsCard(IEnumerable<Item> _items)
@@ -1081,6 +1081,7 @@ namespace Restaurant.View.catalog.rawMaterials
                     x.details.ToLower().Contains(searchText)
                     ) && x.isActive == tgl_itemState
                     && x.categoryId.ToString().ToLower().Contains(categoryIdSearch));
+
                  pageIndex = 1;
                 #region
 
