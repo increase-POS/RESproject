@@ -133,26 +133,21 @@ namespace Restaurant.View.catalog.rawMaterials
         }
         private void translate()
         {
-
+            txt_title.Text = MainWindow.resourcemanager.GetString("trCategorie");
             txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
+            txt_contentInformatin.Text = MainWindow.resourcemanager.GetString("trMoreInformation");
+            txt_active.Text = MainWindow.resourcemanager.GetString("trActive_");
+
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_details, MainWindow.resourcemanager.GetString("trDetailsHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_categoryCode, MainWindow.resourcemanager.GetString("trCode"));
-
-
-            txt_contentInformatin.Text = MainWindow.resourcemanager.GetString("trMoreInformation");
-             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_taxes, MainWindow.resourcemanager.GetString("trTax") + "...");
-
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_taxes, MainWindow.resourcemanager.GetString("trTaxesHint") );
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint") );
 
             btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
             btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
             btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
-
-
-
-
-
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
@@ -168,17 +163,10 @@ namespace Restaurant.View.catalog.rawMaterials
                     {
                         Boolean codeAvailable = checkCodeAvailabiltiy();
                         if (codeAvailable)
-                        {
-                         
-
-                         
-                            decimal taxes = 0;
-
-                         
+                        {                                                
+                            decimal taxes = 0;                        
                             if (tb_taxes.Text != "")
-                                taxes = decimal.Parse(tb_taxes.Text);
-
-                        
+                                taxes = decimal.Parse(tb_taxes.Text);                        
 
                             categorie = new Category();
                             categorie.categoryCode = tb_categoryCode.Text;
@@ -187,6 +175,7 @@ namespace Restaurant.View.catalog.rawMaterials
                             categorie.notes = tb_notes.Text;
                             categorie.image = "";
                             categorie.taxes = taxes;
+                            categorie.type = "p";
                             categorie.isActive = 1;
                             categorie.createUserId = MainWindow.userLogin.userId;
                             categorie.updateUserId = MainWindow.userLogin.userId;
@@ -510,6 +499,7 @@ namespace Restaurant.View.catalog.rawMaterials
             categorie.taxes = 0;
             this.DataContext = categorie;
             #region image
+            openFileDialog.FileName = "";
             HelpClass.clearImg(btn_image);
             #endregion
             btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
@@ -902,14 +892,13 @@ namespace Restaurant.View.catalog.rawMaterials
         IEnumerable<Category> categoriesQuery;
         async Task<IEnumerable<Category>> RefreshCategorysList()
         {
-            categories = await categorie.Get();
-            categories = categories.Where(x => x.type == "p").ToList();
+            categories = await categorie.Get("p");
             return categories;
         }
         void RefrishCategorysCard(IEnumerable<Category> _categories)
         {
             grid_itemContainerCard.Children.Clear();
-            catigoriesAndItemsView.gridCatigorieItems = grid_itemContainerCard;
+            catigoriesAndItemsView.gridCatigories = grid_itemContainerCard;
             catigoriesAndItemsView.FN_refrishCatalogItem_category(_categories.ToList(), "Category",5);
         }
         #endregion
