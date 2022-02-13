@@ -49,17 +49,24 @@ namespace Restaurant.View.storage.stocktakingOperations
             Instance = null;
             GC.Collect();
         }
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            #region translate
-            if (MainWindow.lang.Equals("en"))
-                grid_main.FlowDirection = FlowDirection.LeftToRight;
-            else
-                grid_main.FlowDirection = FlowDirection.RightToLeft;
-            #endregion
-            translate();
+            try
+            {
+                #region translate
+                if (MainWindow.lang.Equals("en"))
+                    grid_main.FlowDirection = FlowDirection.LeftToRight;
+                else
+                    grid_main.FlowDirection = FlowDirection.RightToLeft;
+                await translate();
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
-        private async void translate()
+        private async Task translate()
         {
             if (FillCombo.objectsList is null)
                 await FillCombo.RefreshObjects();

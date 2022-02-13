@@ -676,7 +676,6 @@ namespace Restaurant.View.catalog.foods
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private void Code_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             try
