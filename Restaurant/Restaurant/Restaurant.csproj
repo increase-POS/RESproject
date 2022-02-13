@@ -486,6 +486,9 @@
     <Compile Include="View\windows\wd_invoice.xaml.cs">
       <DependentUpon>wd_invoice.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_invoicesList.xaml.cs">
+      <DependentUpon>wd_invoicesList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_itemsOfferList.xaml.cs">
       <DependentUpon>wd_itemsOfferList.xaml</DependentUpon>
     </Compile>
@@ -934,6 +937,10 @@
     <Page Include="View\windows\wd_invoice.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="View\windows\wd_invoicesList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_itemsOfferList.xaml">
       <Generator>MSBuild:Compile</Generator>
