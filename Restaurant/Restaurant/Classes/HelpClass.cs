@@ -51,6 +51,13 @@ namespace Restaurant.Classes
                 return true;
             return false;
         }
+        static public bool isSupportPermision()
+        {
+            //if (MainWindow.userLogin.userId == 1 || MainWindow.userLogin.userId == 2)
+            if (MainWindow.userLogin.isAdmin == true && MainWindow.userLogin.username == "Support@Increase")
+                return true;
+            return false;
+        }
         public static bool validateEmpty(string str, Path p_error)
         {
             bool isValid = true;

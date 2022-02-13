@@ -2071,7 +2071,7 @@ namespace Restaurant
         Button initializationMainButton(Object _object, bool isLast)
         {
             Button button = new Button();
-            button.Content = ">" + _object.translate;
+            button.Content = ">" + MainWindow.resourcemanager.GetString(_object.translate);
             button.Tag = _object.name;
             button.Click += MainButton_Click;
             button.Background = null;
