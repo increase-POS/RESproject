@@ -388,51 +388,57 @@ namespace Restaurant.Classes
                 // get file extension
                 var ext = imagePath.Substring(imagePath.LastIndexOf('.'));
                 var extension = ext.ToLower();
+                string fileName = imageName + extension;
                 try
                 {
                     // configure trmporery path
                     string dir = Directory.GetCurrentDirectory();
                     string tmpPath = Path.Combine(dir, Global.TMPItemsFolder);
+
                     string[] files = System.IO.Directory.GetFiles(tmpPath, imageName + ".*");
                     foreach (string f in files)
                     {
                         System.IO.File.Delete(f);
                     }
                     tmpPath = Path.Combine(tmpPath, imageName + extension);
-                   
-                    // resize image
-                    ImageProcess imageP = new ImageProcess(150, imagePath);
-                    imageP.ScaleImage(tmpPath);
 
-                    // read image file
-                    var stream = new FileStream(tmpPath, FileMode.Open, FileAccess.Read);
-
-                    // create http client request
-                    using (var client = new HttpClient())
+                    if (imagePath != tmpPath) // edit mode
                     {
-                        client.BaseAddress = new Uri(Global.APIUri);
-                        client.Timeout = System.TimeSpan.FromSeconds(3600);
-                        string boundary = string.Format("----WebKitFormBoundary{0}", DateTime.Now.Ticks.ToString("x"));
-                        HttpContent content = new StreamContent(stream);
-                        content.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
-                        content.Headers.Add("client", "true");
+                        // resize image
+                        ImageProcess imageP = new ImageProcess(150, imagePath);
+                        imageP.ScaleImage(tmpPath);
 
-                        string fileName = imageName + extension;
-                        content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-                        {
-                            Name = imageName,
-                            FileName = fileName
-                        };
-                        form.Add(content, "fileToUpload");
+                        // read image file
+                        var stream = new FileStream(tmpPath, FileMode.Open, FileAccess.Read);
 
-                        var response = await client.PostAsync(@"items/PostItemImage", form);
-                        if (response.IsSuccessStatusCode)
+                        // create http client request
+                        using (var client = new HttpClient())
                         {
-                            // save image name in DB
-                            await updateImage(itemId,fileName);
+                            client.BaseAddress = new Uri(Global.APIUri);
+                            client.Timeout = System.TimeSpan.FromSeconds(3600);
+                            string boundary = string.Format("----WebKitFormBoundary{0}", DateTime.Now.Ticks.ToString("x"));
+                            HttpContent content = new StreamContent(stream);
+                            content.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
+                            content.Headers.Add("client", "true");
+
+
+                            content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+                            {
+                                Name = imageName,
+                                FileName = fileName
+                            };
+                            form.Add(content, "fileToUpload");
+
+                            var response = await client.PostAsync(@"items/PostItemImage", form);
                         }
+                        stream.Dispose();
                     }
-                    stream.Dispose();
+                    // save image name in DB
+                    Item item = new Item();
+                    item.itemId = itemId;
+                    item.image = fileName;
+                    await updateImage(itemId, fileName);
+
                     return true;
                 }
                 catch
