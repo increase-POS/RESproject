@@ -176,8 +176,10 @@
     </ApplicationDefinition>
     <Compile Include="ar_file.Designer.cs" />
     <Compile Include="Classes\ApiClasses\Agent.cs" />
+    <Compile Include="Classes\ApiClasses\AvtivateServer.cs" />
     <Compile Include="Classes\ApiClasses\ItemUnitOffer.cs" />
     <Compile Include="Classes\ApiClasses\MenuSetting.cs" />
+    <Compile Include="Classes\ApiClasses\ProgramDetails.cs" />
     <Compile Include="Classes\ApiClasses\ResidentialSectors.cs" />
     <Compile Include="Classes\ApiClasses\Bank.cs" />
     <Compile Include="Classes\ApiClasses\Branch.cs" />
@@ -416,6 +418,9 @@
     </Compile>
     <Compile Include="View\settings\reportsSettings\uc_reportsSettings.xaml.cs">
       <DependentUpon>uc_reportsSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\settings\uc_general.xaml.cs">
+      <DependentUpon>uc_general.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\settings\uc_settings.xaml.cs">
       <DependentUpon>uc_settings.xaml</DependentUpon>
@@ -845,6 +850,10 @@
     <Page Include="View\settings\reportsSettings\uc_reportsSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\settings\uc_general.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\settings\uc_settings.xaml">
       <SubType>Designer</SubType>
