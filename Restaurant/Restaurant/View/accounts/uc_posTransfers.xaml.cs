@@ -106,9 +106,9 @@ namespace Restaurant.View.accounts
         }
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "cash", "fromBranch", "pos1", "toBranch" , "pos2" };
                 
                 #region translate
@@ -188,14 +188,14 @@ namespace Restaurant.View.accounts
 
                 await Search();
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
 
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private void translate()
         {
@@ -241,11 +241,11 @@ namespace Restaurant.View.accounts
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//add
-            //try
-            //{
+            try
+            {
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") )
                 {
-                    //HelpClass.StartAwait(grid_main);
+                    HelpClass.StartAwait(grid_main);
 
                     #region add
                     if (HelpClass.validate(requiredControlList, this))
@@ -329,18 +329,18 @@ namespace Restaurant.View.accounts
                     }
                     #endregion
 
-                    //HelpClass.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-            //}
-            //catch (Exception ex)
-            //{
+            }
+            catch (Exception ex)
+            {
 
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private async void Btn_update_Click(object sender, RoutedEventArgs e)
         {//update
@@ -580,9 +580,9 @@ namespace Restaurant.View.accounts
         }
         private async void Dg_posAccounts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 if (dg_posAccounts.SelectedIndex != -1)
                 {
@@ -643,6 +643,7 @@ namespace Restaurant.View.accounts
                         cb_pos1.SelectedValue = cashtrans2.posId;
 
                         cb_toBranch.SelectedValue = (await posModel.getById(cashtrans3.posId.Value)).branchId;
+                        Cb_toBranch_SelectionChanged(cb_toBranch , null);
                         cb_pos2.SelectedValue = cashtrans3.posId;
 
                         if ((cashtrans2.isConfirm == 1) && (cashtrans3.isConfirm == 1))
@@ -652,15 +653,15 @@ namespace Restaurant.View.accounts
                         #endregion
                     }
                 }
-               
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.clearValidate(requiredControlList, this);
+            HelpClass.EndAwait(grid_main);
         }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+        }
+    }
 
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh
@@ -698,10 +699,12 @@ namespace Restaurant.View.accounts
                     {
                         //unConfirmed
                         if(chk_unConfirmed.IsChecked == true) 
-                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                            cashesQuery = cashes.Where(s => (
+                                   s.transNum.Contains(searchText)
                                 || s.transType.Contains(searchText)
                                 || s.cash.ToString().Contains(searchText)
                                 || s.posName.Contains(searchText)
+                                || s.pos2Name.Contains(searchText)
                                 )
                             && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
                             && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
@@ -710,10 +713,12 @@ namespace Restaurant.View.accounts
                             );
                         //waiting
                         else if(chk_waiting.IsChecked == true)
-                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                            cashesQuery = cashes.Where(s => (
+                               s.transNum.Contains(searchText)
                             || s.transType.Contains(searchText)
                             || s.cash.ToString().Contains(searchText)
                             || s.posName.Contains(searchText)
+                            || s.pos2Name.Contains(searchText)
                             )
                             && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
                             && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
@@ -724,10 +729,12 @@ namespace Restaurant.View.accounts
                             );
                         //confirmed
                         else if(chk_confirmed.IsChecked == true)
-                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                            cashesQuery = cashes.Where(s => (
+                               s.transNum.Contains(searchText)
                             || s.transType.Contains(searchText)
                             || s.cash.ToString().Contains(searchText)
                             || s.posName.Contains(searchText)
+                            || s.pos2Name.Contains(searchText)
                             )
                             && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
                             && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
@@ -738,10 +745,12 @@ namespace Restaurant.View.accounts
                             );
                          //created by me
                          else if(chk_createdOper.IsChecked == true)
-                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                            cashesQuery = cashes.Where(s => (
+                               s.transNum.Contains(searchText)
                             || s.transType.Contains(searchText)
                             || s.cash.ToString().Contains(searchText)
                             || s.posName.Contains(searchText)
+                            || s.pos2Name.Contains(searchText)
                             )
                             && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
                             && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
@@ -749,10 +758,12 @@ namespace Restaurant.View.accounts
                             );
                            
                          else//no select
-                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                            cashesQuery = cashes.Where(s => (
+                               s.transNum.Contains(searchText)
                             || s.transType.Contains(searchText)
                             || s.cash.ToString().Contains(searchText)
                             || s.posName.Contains(searchText)
+                            || s.pos2Name.Contains(searchText)
                             )
                             && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
                             && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
@@ -762,20 +773,24 @@ namespace Restaurant.View.accounts
                     {
                         //inconfirmed
                         if(chk_unConfirmed.IsChecked == true)
-                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                            cashesQuery = cashes.Where(s => (
+                                   s.transNum.Contains(searchText)
                                 || s.transType.Contains(searchText)
                                 || s.cash.ToString().Contains(searchText)
                                 || s.posName.Contains(searchText)
+                                || s.pos2Name.Contains(searchText)
                                 )
                             && s.posId == MainWindow.posLogin.posId
                             && s.isConfirm == 0
                             );
                         //waiting
                         else if(chk_waiting.IsChecked == true)
-                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                            cashesQuery = cashes.Where(s => (
+                               s.transNum.Contains(searchText)
                             || s.transType.Contains(searchText)
                             || s.cash.ToString().Contains(searchText)
                             || s.posName.Contains(searchText)
+                            || s.pos2Name.Contains(searchText)
                             )
                             && s.posId == MainWindow.posLogin.posId
                             && s.isConfirm == 1
@@ -784,10 +799,12 @@ namespace Restaurant.View.accounts
                             );
                         //confirmed
                         else if(chk_confirmed.IsChecked == true)
-                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                            cashesQuery = cashes.Where(s => (
+                               s.transNum.Contains(searchText)
                             || s.transType.Contains(searchText)
                             || s.cash.ToString().Contains(searchText)
                             || s.posName.Contains(searchText)
+                            || s.pos2Name.Contains(searchText)
                             )
                             && s.posId == MainWindow.posLogin.posId
                             && s.isConfirm == 1
@@ -796,18 +813,22 @@ namespace Restaurant.View.accounts
                             );
                         //created by me
                         else if(chk_createdOper.IsChecked == true)
-                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                            cashesQuery = cashes.Where(s => (
+                               s.transNum.Contains(searchText)
                             || s.transType.Contains(searchText)
                             || s.cash.ToString().Contains(searchText)
                             || s.posName.Contains(searchText)
+                            || s.pos2Name.Contains(searchText)
                             )
                             && s.posIdCreator == MainWindow.posLogin.posId
                             );
                         else//no select
-                            cashesQuery = cashes.Where(s => (s.transNum.Contains(searchText)
+                            cashesQuery = cashes.Where(s => (
+                               s.transNum.Contains(searchText)
                             || s.transType.Contains(searchText)
                             || s.cash.ToString().Contains(searchText)
                             || s.posName.Contains(searchText)
+                            || s.pos2Name.Contains(searchText)
                             )
                             );
                     }
@@ -1132,7 +1153,7 @@ namespace Restaurant.View.accounts
                 cb_pos1.ItemsSource = fromPos;
                 cb_pos1.DisplayMemberPath = "name";
                 cb_pos1.SelectedValuePath = "posId";
-                cb_pos1.SelectedIndex = -1;
+                //cb_pos1.SelectedIndex = -1;
                 
                 HelpClass.EndAwait(grid_main);
             }
@@ -1155,7 +1176,7 @@ namespace Restaurant.View.accounts
                 cb_pos2.ItemsSource = toPos;
                 cb_pos2.DisplayMemberPath = "name";
                 cb_pos2.SelectedValuePath = "posId";
-                cb_pos2.SelectedIndex = -1;
+                //cb_pos2.SelectedIndex = -1;
                 
                 HelpClass.EndAwait(grid_main);
             }

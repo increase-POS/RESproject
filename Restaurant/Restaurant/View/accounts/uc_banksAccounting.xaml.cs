@@ -323,10 +323,11 @@ namespace Restaurant.View.accounts
                 this.Dispatcher.Invoke(() =>
                 {
                     searchText = tb_search.Text.ToLower();
-                    cashesQuery = cashes.Where(s => (s.transNum.ToLower().Contains(searchText)
+                    cashesQuery = cashes.Where(s => (
+                       s.transNum.ToLower().Contains(searchText)
                     || s.cash.ToString().ToLower().Contains(searchText)
                     || s.bankName.ToLower().Contains(searchText)
-                    || s.docNum.Contains(searchText)
+                    || (s.docNum != null ? s.docNum.ToLower().Contains(searchText) : false)
                     )
                     && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
                     && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
@@ -338,10 +339,11 @@ namespace Restaurant.View.accounts
                 this.Dispatcher.Invoke(() =>
                 {
                     searchText = tb_search.Text.ToLower();
-                    cashesQuery = cashes.Where(s => (s.transNum.ToLower().Contains(searchText)
+                    cashesQuery = cashes.Where(s => (
+                       s.transNum.ToLower().Contains(searchText)
                     || s.cash.ToString().ToLower().Contains(searchText)
                     || s.bankName.ToLower().Contains(searchText)
-                    || s.docNum.Contains(searchText)
+                    || (s.docNum != null ? s.docNum.ToLower().Contains(searchText) : false)
                     )
                     );
                 });
@@ -352,19 +354,19 @@ namespace Restaurant.View.accounts
 
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
         {//search
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
                 await Search();
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
@@ -692,22 +694,22 @@ namespace Restaurant.View.accounts
 
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
                 searchText = "";
                 tb_search.Text = "";
                 await RefreshCashesList();
                 await Search();
                
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void PreventSpaces(object sender, KeyEventArgs e)

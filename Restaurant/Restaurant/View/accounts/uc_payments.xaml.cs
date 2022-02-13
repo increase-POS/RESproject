@@ -1360,9 +1360,8 @@ namespace Restaurant.View.accounts
 
         private void Btn_invoices_Click(object sender, RoutedEventArgs e)
         {//invoices
-            /*
-            try
-            {
+            //try
+            //{
                 invoicesLst.Clear();
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_invoicesList w = new wd_invoicesList();
@@ -1382,12 +1381,11 @@ namespace Restaurant.View.accounts
                     invoicesLst.AddRange(w.selectedInvoices);
                 }
                 Window.GetWindow(this).Opacity = 1;
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-            */
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void Btn_salaries_Click(object sender, RoutedEventArgs e)
