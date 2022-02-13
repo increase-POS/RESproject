@@ -3136,4 +3136,7 @@ Please add Email in setting</value>
   <data name="trActive_" xml:space="preserve">
     <value>Active</value>
   </data>
+  <data name="trSelectOnDayAtLeast" xml:space="preserve">
+    <value>Select one day at least</value>
+  </data>
 </root>

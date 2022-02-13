@@ -16,13 +16,13 @@ namespace Restaurant.Classes
         public Nullable<long> menuSettingId { get; set; }
         public Nullable<int> itemUnitId { get; set; }
         public Nullable<int> branchId { get; set; }
-        public Nullable<bool> sat { get; set; }
-        public Nullable<bool> sun { get; set; }
-        public Nullable<bool> mon { get; set; }
-        public Nullable<bool> tues { get; set; }
-        public Nullable<bool> wed { get; set; }
-        public Nullable<bool> thur { get; set; }
-        public Nullable<bool> fri { get; set; }
+        public bool sat { get; set; }
+        public bool sun { get; set; }
+        public bool mon { get; set; }
+        public bool tues { get; set; }
+        public bool wed { get; set; }
+        public bool thur { get; set; }
+        public bool fri { get; set; }
         public Nullable<int> preparingTime { get; set; }
         public Nullable<byte> isActive { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
@@ -49,7 +49,7 @@ namespace Restaurant.Classes
         public async Task<int> saveItemMenuSetting(MenuSetting item)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            string method = "MenuSetting/Save";
+            string method = "MenuSettings/Save";
 
             var myContent = JsonConvert.SerializeObject(item);
             parameters.Add("itemObject", myContent);

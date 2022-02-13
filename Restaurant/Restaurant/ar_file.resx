@@ -3112,4 +3112,7 @@
   <data name="trActive_" xml:space="preserve">
     <value>فعال</value>
   </data>
+  <data name="trSelectOnDayAtLeast" xml:space="preserve">
+    <value>اختر يوم واحد على الأقل</value>
+  </data>
 </root>
