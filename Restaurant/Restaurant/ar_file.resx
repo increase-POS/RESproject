@@ -3115,4 +3115,10 @@
   <data name="trSelectOnDayAtLeast" xml:space="preserve">
     <value>اختر يوم واحد على الأقل</value>
   </data>
+  <data name="trBranchPOSCustomer" xml:space="preserve">
+    <value>الفرع, نقطة البيع, العميل</value>
+  </data>
+  <data name="trCouponOfferPackage" xml:space="preserve">
+    <value>الكوبون, العروض, الحزمة</value>
+  </data>
 </root>

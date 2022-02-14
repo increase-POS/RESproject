@@ -3139,4 +3139,10 @@ Please add Email in setting</value>
   <data name="trSelectOnDayAtLeast" xml:space="preserve">
     <value>Select one day at least</value>
   </data>
+  <data name="trBranchPOSCustomer" xml:space="preserve">
+    <value>Branch, POS, Customer</value>
+  </data>
+  <data name="trCouponOfferPackage" xml:space="preserve">
+    <value>Coupon, Offers, Package</value>
+  </data>
 </root>
