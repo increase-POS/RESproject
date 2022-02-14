@@ -1,4 +1,5 @@
 ﻿using Restaurant.Classes;
+using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -113,6 +114,35 @@ namespace Restaurant.View.settings.emailsGeneral
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+
+        private void Btn_systmSetting_Click(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+                //if (MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one") )
+                //{
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_reportSystmSetting w = new wd_reportSystmSetting();
+                w.windowType = "e";
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
         }
     }
 }

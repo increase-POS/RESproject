@@ -278,6 +278,7 @@ namespace Restaurant.View.settings.reportsSettings
                 //{
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_reportSystmSetting w = new wd_reportSystmSetting();
+                w.windowType = "r";
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
                 //}
