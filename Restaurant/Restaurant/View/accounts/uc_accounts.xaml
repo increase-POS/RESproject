@@ -19,14 +19,14 @@
         <ScrollViewer Grid.Row="1" Margin="5,0,-5,0">
             <WrapPanel Margin="20 15" HorizontalAlignment="Left" >
                 <!--#region posTransfers-->
-                <Border Tag="posTransfers" Background="White" CornerRadius="7.5" Height="155"  Width="340"   Margin="15 10" >
+                <Border Tag="posTransfers" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
                     <Border.Effect>
                         <DropShadowEffect
                           ShadowDepth="1"
                           Direction="360"
                           Color="Gray"
                           Opacity="0.3"
-                         BlurRadius="10"/>
+                         BlurRadius="10"/> 
                     </Border.Effect>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -35,10 +35,10 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
-                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="155" Width="10"/>
+                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
-                         VerticalAlignment="Center" Height="80" Width="80"
+                         VerticalAlignment="Center" Height="50" Width="50"
                               Data="M33,12c0-0.6,0.4-1,1-1h5c0.6,0,1,0.4,1,1c0,0.6-0.4,1-1,1h-5C33.4,13,33,12.6,33,12z M34,17h5c0.6,0,1-0.4,1-1
 	c0-0.6-0.4-1-1-1h-5c-0.6,0-1,0.4-1,1C33,16.6,33.4,17,34,17z M58,50v8H0v-8H58z M20,54c0-0.6-0.4-1-1-1H5c-0.6,0-1,0.4-1,1
 	s0.4,1,1,1h14C19.6,55,20,54.6,20,54z M55,54c0-0.6-0.4-1-1-1h-1c-0.6,0-1,0.4-1,1s0.4,1,1,1h1C54.6,55,55,54.6,55,54z M4,50h50v-4
@@ -59,8 +59,8 @@
 	s1-0.4,1-1V4c0-0.1,0-0.3-0.1-0.4C8.8,3.4,8.6,3.2,8.4,3.1C8.1,3,7.9,3,7.6,3.1c-0.1,0-0.2,0.1-0.3,0.2l-1,1c-0.4,0.4-0.4,1,0,1.4
 	C6.5,5.9,6.7,6,7,6z M25,0v13H3V0H25z M23,2H5v9h18V2z"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_posTransfersInfo" Tag="posTransfers" Text="Transfers" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
-                            <TextBlock x:Name="txt_posTransfersHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_posTransfersInfo" Tag="posTransfers" Text="Transfers" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
+                                <TextBlock x:Name="txt_posTransfersHint" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="posTransfers" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
@@ -84,7 +84,7 @@
                 </Border>
                 <!--#endregion-->
                 <!--#region payments-->
-                <Border Tag="payments" Background="White" CornerRadius="7.5" Height="155"  Width="340"   Margin="15 10" >
+                <Border Tag="payments" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
                     <Border.Effect>
                         <DropShadowEffect
                           ShadowDepth="1"
@@ -100,14 +100,14 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
-                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="155" Width="10"/>
+                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
-                         VerticalAlignment="Center" Height="80" Width="80"
+                         VerticalAlignment="Center" Height="50" Width="50"
                               Data="{StaticResource payments}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_paymentsInfo" Tag="payments" Text="Payments"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
-                            <TextBlock x:Name="txt_paymentsHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_paymentsInfo" Tag="payments" Text="Payments"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
+                                <TextBlock x:Name="txt_paymentsHint" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="payments" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
@@ -131,7 +131,7 @@
                 </Border>
                 <!--#endregion-->
                 <!--#region received-->
-                <Border Tag="received" Background="White" CornerRadius="7.5" Height="155"  Width="340"   Margin="15 10" >
+                <Border Tag="received" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
                     <Border.Effect>
                         <DropShadowEffect
                           ShadowDepth="1"
@@ -147,14 +147,14 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
-                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="155" Width="10"/>
+                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
-                         VerticalAlignment="Center" Height="80" Width="80"
+                         VerticalAlignment="Center" Height="50" Width="50"
                               Data="{StaticResource received}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_receivedInfo" Tag="received" Text="Received"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
-                            <TextBlock x:Name="txt_receivedHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_receivedInfo" Tag="received" Text="Received"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
+                                <TextBlock x:Name="txt_receivedHint" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="received"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
@@ -178,7 +178,7 @@
                 </Border>
                 <!--#endregion-->
                 <!--#region banksAccounting-->
-                <Border Tag="banksAccounting" Background="White" CornerRadius="7.5" Height="155"  Width="340"   Margin="15 10" >
+                <Border Tag="banksAccounting" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
                     <Border.Effect>
                         <DropShadowEffect
                           ShadowDepth="1"
@@ -194,14 +194,14 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
-                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="155" Width="10"/>
+                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
-                         VerticalAlignment="Center" Height="80" Width="80"
+                         VerticalAlignment="Center" Height="50" Width="50"
                               Data="{StaticResource bank}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_banksAccountingInfo" Tag="banksAccounting" Text="banksAccounting"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
-                            <TextBlock x:Name="txt_banksAccountingHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_banksAccountingInfo" Tag="banksAccounting" Text="banksAccounting"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
+                                <TextBlock x:Name="txt_banksAccountingHint" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="banksAccounting" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
@@ -225,7 +225,7 @@
                 </Border>
                 <!--#endregion-->
                 <!--#region subscriptions-->
-                <Border Tag="subscriptions" Background="White" CornerRadius="7.5" Height="155"  Width="340"   Margin="15 10" >
+                <Border Tag="subscriptions" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
                     <Border.Effect>
                         <DropShadowEffect
                           ShadowDepth="1"
@@ -241,14 +241,14 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
-                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="155" Width="10"/>
+                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
-                         VerticalAlignment="Center" Height="80" Width="80"
+                         VerticalAlignment="Center" Height="50" Width="50"
                               Data="{StaticResource subscriptions}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_subscriptionsInfo" Tag="subscriptions" Text="subscriptions"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
-                            <TextBlock x:Name="txt_subscriptionsHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_subscriptionsInfo" Tag="subscriptions" Text="subscriptions"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
+                                <TextBlock x:Name="txt_subscriptionsHint" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="subscriptions" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
@@ -272,7 +272,7 @@
                 </Border>
                 <!--#endregion-->
                 <!--#region ordersAccounting-->
-                <Border Tag="ordersAccounting" Background="White" CornerRadius="7.5" Height="155"  Width="340"   Margin="15 10" >
+                <Border Tag="ordersAccounting" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
                     <Border.Effect>
                         <DropShadowEffect
                           ShadowDepth="1"
@@ -288,14 +288,14 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
-                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="155" Width="10"/>
+                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
-                         VerticalAlignment="Center" Height="80" Width="80"
+                         VerticalAlignment="Center" Height="50" Width="50"
                               Data="{StaticResource deliveryMan}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_ordersAccountingInfo" Tag="ordersAccounting" Text="orders"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
-                            <TextBlock x:Name="txt_ordersAccountingHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_ordersAccountingInfo" Tag="ordersAccounting" Text="orders"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
+                                <TextBlock x:Name="txt_ordersAccountingHint" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="ordersAccounting" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  

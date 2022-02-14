@@ -19,7 +19,7 @@
             <ScrollViewer Grid.Row="1" Margin="5,0,-5,0">
                 <WrapPanel Margin="20 15" HorizontalAlignment="Left" >
                     <!--#region reportlang-->
-                    <Border Tag="reportlang" Background="White" CornerRadius="7.5" Height="155"  Width="340"   Margin="15 10" >
+                    <Border Tag="reportlang" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
                         <Border.Effect>
                             <DropShadowEffect
                           ShadowDepth="1"
@@ -35,14 +35,14 @@
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
-                            <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="155" Width="10"/>
+                            <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
-                         VerticalAlignment="Center" Height="80" Width="80"
+                         VerticalAlignment="Center" Height="50" Width="50"
                             FlowDirection="LeftToRight"  Data="{StaticResource language}" />
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_reportlang" Text="language" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
-                                <Border Grid.Row="0" CornerRadius="10" Margin="0,5,0,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                <TextBlock x:Name="txt_reportlang" Text="language" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
+                                <Border Grid.Row="0" CornerRadius="10" Margin="0,5,0,5"   Width="165" BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                     <Grid>
                                         <ComboBox Grid.Column="0" x:Name="cb_reportlang"   Padding="10,0,5,0" 
                                                   TextBlock.Foreground="#4E4E4E"
@@ -76,7 +76,7 @@
                     </Border>
                     <!--#endregion-->
                     <!--#region systmSetting-->
-                    <Border Tag="systmSetting" Background="White" CornerRadius="7.5" Height="155"  Width="340"   Margin="15 10" >
+                    <Border Tag="systmSetting" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
                         <Border.Effect>
                             <DropShadowEffect
                           ShadowDepth="1"
@@ -92,14 +92,14 @@
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
-                            <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="155" Width="10"/>
+                            <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
-                         VerticalAlignment="Center" Height="80" Width="80"
+                         VerticalAlignment="Center" Height="50" Width="50"
                               Data="{StaticResource system}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_systmSetting" Text="Systm Setting" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
-                                <TextBlock x:Name="txt_systmSettingHint" Text="systmSetting..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_systmSetting" Text="Systm Setting" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
+                                <TextBlock x:Name="txt_systmSettingHint" Text="systmSetting..."  Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                             </StackPanel>
                             <Button Tag="systmSetting"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
@@ -124,7 +124,7 @@
                     </Border>
                     <!--#endregion-->
                     <!--#region printerSetting-->
-                    <Border Tag="printerSetting" Background="White" CornerRadius="7.5" Height="155"  Width="340"   Margin="15 10" >
+                    <Border Tag="printerSetting" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
                         <Border.Effect>
                             <DropShadowEffect
                           ShadowDepth="1"
@@ -140,14 +140,14 @@
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
-                            <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="155" Width="10"/>
+                            <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
-                         VerticalAlignment="Center" Height="80" Width="80"
+                         VerticalAlignment="Center" Height="50" Width="50"
                               Data="{StaticResource printer}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_printerSetting" Text="printer setting" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
-                                <TextBlock x:Name="txt_printerSettingHint" Text="printerSetting..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_printerSetting" Text="printer setting" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
+                                <TextBlock x:Name="txt_printerSettingHint" Text="printerSetting..."  Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                             </StackPanel>
                             <Button Tag="printerSetting"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
@@ -172,7 +172,7 @@
                     </Border>
                     <!--#endregion-->
                     <!--#region copyCount-->
-                    <Border Tag="copyCount" Background="White" CornerRadius="7.5" Height="155"  Width="340"   Margin="15 10" >
+                    <Border Tag="copyCount" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
                         <Border.Effect>
                             <DropShadowEffect
                           ShadowDepth="1"
@@ -188,14 +188,14 @@
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
-                            <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="155" Width="10"/>
+                            <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
-                         VerticalAlignment="Center" Height="80" Width="80"
+                         VerticalAlignment="Center" Height="50" Width="50"
                              FlowDirection="LeftToRight"  Data="{StaticResource numbers}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_copyCount" Text="copy count" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
-                                <TextBlock x:Name="txt_copyCountHint" Text="copyCount..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_copyCount" Text="copy count" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
+                                <TextBlock x:Name="txt_copyCountHint" Text="copyCount..."  Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                             </StackPanel>
                             <Button Tag="copyCount"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
@@ -220,7 +220,7 @@
                     </Border>
                     <!--#endregion-->
                     <!--#region printCount-->
-                    <Border Tag="printCount" Background="White" CornerRadius="7.5" Height="155"  Width="340"   Margin="15 10" >
+                    <Border Tag="printCount" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
                         <Border.Effect>
                             <DropShadowEffect
                           ShadowDepth="1"
@@ -236,21 +236,21 @@
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
-                            <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="155" Width="10"/>
+                            <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
-                         VerticalAlignment="Center" Height="80" Width="80"
+                         VerticalAlignment="Center" Height="50" Width="50"
                             FlowDirection="LeftToRight"   Data="{StaticResource numbers}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_printCount" Text="print count" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
-                                <Grid >
+                                <TextBlock x:Name="txt_printCount" Text="print count" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
+                                <Grid  Width="165">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
                                     <Border Grid.Row="0" CornerRadius="10" Margin="0,5,0,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                                    <Grid>
+                                    <Grid> 
                                         <TextBox Margin="4,0" x:Name="tb_printCount"  
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
                                          Text="{Binding printCount, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
@@ -262,10 +262,10 @@
                                   HorizontalAlignment="Right"  Grid.Row="0"  Visibility="Collapsed" 
                                   VerticalAlignment="Center" Width="15"  Height="15"
                                  Data="{StaticResource infoCircle}"/>
-                                            <!--<Button x:Name="btn_cmdUp" Click="Btn_cmdUp_Click" FontSize="20" Padding="0,-4,0,0" Content="▲" Width="18" Height="18" 
+                                            <!--<Button x:Name="btn_cmdUp" Click="Btn_cmdUp_Click" FontSize="16" Padding="0,-4,0,0" Content="▲" Width="18" Height="18" 
                                          Margin="12,0,15,5" VerticalAlignment="Top" HorizontalAlignment="Right" 
                                         Foreground="#737373"       Background="{x:Null}" BorderThickness="0" />
-                                            <Button x:Name="btn_cmdDown" Click="Btn_cmdDown_Click"  FontSize="20" Padding="0,-4,0,0" Content="▼" Width="18" Height="18"  
+                                            <Button x:Name="btn_cmdDown" Click="Btn_cmdDown_Click"  FontSize="16" Padding="0,-4,0,0" Content="▼" Width="18" Height="18"  
                                               Margin="12,0,15,2"  VerticalAlignment="Bottom" HorizontalAlignment="Right"
                                               Foreground="#737373"       Background="{x:Null}" BorderThickness="0"/>-->
 

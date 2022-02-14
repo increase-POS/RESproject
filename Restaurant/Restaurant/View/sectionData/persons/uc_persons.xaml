@@ -9,7 +9,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="800" d:DesignWidth="1000" >
     <Grid x:Name="grid_main">
-        <Grid>
+        <Grid> 
             <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -19,7 +19,7 @@
         <ScrollViewer Grid.Row="1" Margin="5,0,-5,0">
             <WrapPanel Margin="20 15" HorizontalAlignment="Left" >
                 <!--#region vendors-->
-                <Border Tag="vendors" Background="White" CornerRadius="7.5" Height="155"  Width="340"   Margin="15 10" >
+                <Border Tag="vendors" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
                     <Border.Effect>
                         <DropShadowEffect
                           ShadowDepth="1"
@@ -35,14 +35,14 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
-                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="155" Width="10"/>
+                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
-                         VerticalAlignment="Center" Height="80" Width="80"
+                         VerticalAlignment="Center" Height="50" Width="50"
                               Data="{StaticResource vendor}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_vendorsInfo" Tag="vendors" Text="Vendors" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
-                            <TextBlock x:Name="txt_vendorsHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_vendorsInfo" Tag="vendors" Text="Vendors" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
+                                <TextBlock x:Name="txt_vendorsHint" Text="add, update, delete, ..."  Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="vendors" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
@@ -66,7 +66,7 @@
                 </Border>
                 <!--#endregion-->
                 <!--#region customers-->
-                <Border Tag="customers" Background="White" CornerRadius="7.5" Height="155"  Width="340"   Margin="15 10" >
+                <Border Tag="customers" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
                     <Border.Effect>
                         <DropShadowEffect
                           ShadowDepth="1"
@@ -82,14 +82,14 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
-                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="155" Width="10"/>
+                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
-                         VerticalAlignment="Center" Height="80" Width="80"
+                         VerticalAlignment="Center" Height="50" Width="50"
                               Data="{StaticResource customer}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_customersInfo" Tag="customers" Text="Customers"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
-                            <TextBlock x:Name="txt_customersHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_customersInfo" Tag="customers" Text="Customers"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
+                                <TextBlock x:Name="txt_customersHint" Text="add, update, delete, ..."  Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="customers" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
@@ -113,7 +113,7 @@
                 </Border>
                 <!--#endregion-->
                 <!--#region users-->
-                <Border Tag="users" Background="White" CornerRadius="7.5" Height="155"  Width="340"   Margin="15 10" >
+                <Border Tag="users" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
                     <Border.Effect>
                         <DropShadowEffect
                           ShadowDepth="1"
@@ -129,14 +129,14 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
-                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="155" Width="10"/>
+                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
-                         VerticalAlignment="Center" Height="80" Width="80"
+                         VerticalAlignment="Center" Height="50" Width="50"
                               Data="{StaticResource user}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_usersInfo" Tag="users" Text="Users"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
-                            <TextBlock x:Name="txt_usersHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_usersInfo" Tag="users" Text="Users"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
+                                <TextBlock x:Name="txt_usersHint" Text="add, update, delete, ..."  Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button   Tag="users"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  

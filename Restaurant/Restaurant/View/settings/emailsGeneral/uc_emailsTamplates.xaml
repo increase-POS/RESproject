@@ -72,7 +72,7 @@
                 <!--<TextBlock    x:Name="txt_active" Grid.Column="3"
                                    Margin="5,0,5,0" Text="Active" Foreground="{StaticResource SecondColor}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"
-                                   FontSize="12"/>
+                                   />
                 <ToggleButton Grid.Column="4" Background="{StaticResource MainColor}"   x:Name="tgl_isActive"   Checked="Tgl_isActive_Checked" Unchecked="Tgl_isActive_Unchecked"
                              VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="True" 
                                           Margin="0" Height="13" Width="28" />-->
@@ -269,7 +269,7 @@
                                 </Grid>
                             </Button>
                             <TextBlock   Background="{x:Null}" x:Name="txt_count"   Grid.Column="4" Margin="0,0,0,5" 
-                            Padding="10"   Text="0" Foreground="#378500" FontSize="12"  >
+                            Padding="10"   Text="0" Foreground="#378500"   >
                                 <TextBlock.ToolTip>
                                     <ToolTip x:Name="tt_count" Content="Customers Count"
                                               Placement="left" 
@@ -349,7 +349,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>-->
                     <DockPanel Margin="10 0" LastChildFill="True"  >
-                        <TextBlock x:Name="txt_infoTitle" Text="Title" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
+                        <TextBlock x:Name="txt_infoTitle" Text="Title" Foreground="{StaticResource SecondColor}"  FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
                         <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
                     </DockPanel>
                     <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
@@ -370,7 +370,7 @@
                         </Grid>
                     </Border>
                     <DockPanel Margin="10 0" LastChildFill="True"  >
-                        <TextBlock x:Name="txt_infoBody" Text="Body" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
+                        <TextBlock x:Name="txt_infoBody" Text="Body" Foreground="{StaticResource SecondColor}"  FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
                         <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
                     </DockPanel>
                     <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
@@ -408,7 +408,7 @@
                         </Grid>
                     </Border>
                     <DockPanel Margin="10 0" LastChildFill="True"  >
-                        <TextBlock x:Name="txt_infoEmailSupport" Text="Email Support" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
+                        <TextBlock x:Name="txt_infoEmailSupport" Text="Email Support" Foreground="{StaticResource SecondColor}"  FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
                         <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
                     </DockPanel>
                     <Grid>

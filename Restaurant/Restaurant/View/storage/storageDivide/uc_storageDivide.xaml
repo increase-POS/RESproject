@@ -19,7 +19,7 @@
         <ScrollViewer Grid.Row="1" Margin="5,0,-5,0">
             <WrapPanel Margin="20 15" HorizontalAlignment="Left" >
                 <!--#region locations-->
-                <Border Tag="locations" Background="White" CornerRadius="7.5" Height="155"  Width="340"   Margin="15 10" >
+                <Border Tag="locations" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
                     <Border.Effect>
                         <DropShadowEffect
                           ShadowDepth="1"
@@ -35,10 +35,10 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
-                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="155" Width="10"/>
+                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
-                         VerticalAlignment="Center" Height="80" Width="80"
+                         VerticalAlignment="Center" Height="50" Width="50"
                               Data="M259.8,181h145.9v-70.6c0-9.2-3-12.2-12.3-12.2c-40.6,0-81.2-0.1-121.8,0c-8.9,0-11.8,3-11.8,11.9c-0.1,22.4,0,44.7,0,67.1
 	V181z M373.5,113H394v61.2l0,0l-10.4-11.3l-10.1,11.3l0,0V113z M248.1,181v-4.2c0-22.4,0.1-44.7,0-67.1c0-8.2-3.3-11.5-11.5-11.5
 	c-40.9-0.1-81.7-0.1-122.6,0c-8.7,0-11.9,3.2-11.9,11.9V181H248.1z M216.1,113h20.5v61.2l0,0l-10.4-11.3l-10.1,11.3l0,0V113z
@@ -52,8 +52,8 @@
 	h-11.6H99.3v-0.3h-8.4v-93h337.8L428.7,185.6L428.7,185.6z M393,209.2H272.6c-10.2,0-12.9,2.7-12.9,13v69.7h146v-69.6
 	C405.7,211.9,403.2,209.2,393,209.2z M394.1,285.1L394.1,285.1l-10.4-11.3l-10.1,11.3l0,0v-61.2h20.5V285.1z"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_locationsInfo" Tag="locations" Text="Locations" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
-                            <TextBlock x:Name="txt_locationsHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_locationsInfo" Tag="locations" Text="Locations" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
+                                <TextBlock x:Name="txt_locationsHint" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="locations"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
@@ -77,7 +77,7 @@
                 </Border>
                 <!--#endregion-->
                 <!--#region storageSections-->
-                <Border Tag="storageSections" Background="White" CornerRadius="7.5" Height="155"  Width="340"   Margin="15 10" >
+                <Border Tag="storageSections" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
                     <Border.Effect>
                         <DropShadowEffect
                           ShadowDepth="1"
@@ -91,12 +91,12 @@
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                             <ColumnDefinition Width="3*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
+                        </Grid.ColumnDefinitions> 
                         <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
-                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="155" Width="10"/>
+                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
-                         VerticalAlignment="Center" Height="80" Width="80"
+                         VerticalAlignment="Center" Height="50" Width="50"
                                Data="M30.1,49.6c-0.3-0.1-0.6-0.2-0.9-0.3c-1.4-0.7-2.1-1.8-2.1-3.2c0-1.7,0-3.4,0-5.1c0-2.1,1.6-3.6,3.7-3.6
 	c5.1,0,10.2,0,15.2,0c2.1,0,3.6,1.6,3.6,3.7c0,1.6,0,3.3,0,4.9c0,1.9-1.1,3.2-2.9,3.7c-0.1,0-0.1,0-0.2,0.1
 	C41,49.6,35.6,49.6,30.1,49.6z M45.9,12.7c2.2,0,3.7-1.5,3.7-3.7c0-1.6,0-3.2,0-4.8c0-2.3-1.5-3.8-3.8-3.8c-5,0-10,0-14.9,0
@@ -109,8 +109,8 @@
 	c-1.7,0-3.4,0-5.1,0L0.4,11.3C0.4,13,0.4,14.7,0.4,16.4z M0.4,26.5L22.9,3.9c-0.1-0.9-0.4-1.8-1.1-2.5C21.6,1.2,21.3,1,21,0.8
 	L0.4,21.4C0.4,23.1,0.4,24.8,0.4,26.5z"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_storageSectionsInfo" Tag="storageSections" Text="Sections"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
-                            <TextBlock x:Name="txt_storageSectionsHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_storageSectionsInfo" Tag="storageSections" Text="Sections"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
+                                <TextBlock x:Name="txt_storageSectionsHint" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="storageSections" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  

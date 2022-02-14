@@ -9,7 +9,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="800" d:DesignWidth="1000" >
     <Grid x:Name="grid_main">
-        <Grid>
+        <Grid> 
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -20,7 +20,7 @@
         <ScrollViewer Grid.Row="1" Margin="5,0,-5,0">
             <WrapPanel Margin="20 15" HorizontalAlignment="Left" >
                 <!--#region banks-->
-                <Border Tag="banks" Background="White" CornerRadius="7.5" Height="155"  Width="340"   Margin="15 10" >
+                <Border Tag="banks" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
                     <Border.Effect>
                         <DropShadowEffect
                           ShadowDepth="1"
@@ -36,14 +36,14 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
-                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="155" Width="10"/>
+                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
-                         VerticalAlignment="Center" Height="80" Width="80"
+                         VerticalAlignment="Center" Height="50" Width="50"
                               Data="M4,10h3v7H4V10z M10.5,10h3v7h-3V10z M2,19h20v3H2V19z M17,10h3v7h-3V10z M12,1L2,6v2h20V6L12,1z"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_banksInfo" Tag="banks" Text="Banks" HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="20"></TextBlock>
-                            <TextBlock x:Name="txt_banksHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_banksInfo" Tag="banks" Text="Banks" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
+                                <TextBlock x:Name="txt_banksHint" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="banks" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
@@ -67,7 +67,7 @@
                 </Border>
                 <!--#endregion-->
                 <!--#region cards-->
-                <Border Tag="cards" Background="White" CornerRadius="7.5" Height="155"  Width="340"   Margin="15 10" >
+                <Border Tag="cards" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
                     <Border.Effect>
                         <DropShadowEffect
                           ShadowDepth="1"
@@ -83,10 +83,10 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
-                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="155" Width="10"/>
+                        <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
-                         VerticalAlignment="Center" Height="80" Width="80"
+                         VerticalAlignment="Center" Height="50" Width="50"
                               Data="M14.3,21.7C14.3,21.7,14.3,21.7,14.3,21.7l0,1.1c0,0,0,0.1,0,0.1c0,0-0.1,0-0.1,0c0,0-0.1,0-0.1,0
 	c0,0,0-0.1,0-0.1v-1c0,0,0-0.1,0-0.1c0,0,0.1,0,0.1,0C14.2,21.6,14.3,21.6,14.3,21.7z M15.4,21.6c0,0-0.1,0-0.1,0c0,0,0,0.1,0,0.1v1
 	c0,0,0,0.1,0,0.1c0,0,0.1,0,0.1,0c0,0,0.1,0,0.1,0c0,0,0-0.1,0-0.1v-1c0,0,0-0.1,0-0.1C15.5,21.6,15.4,21.6,15.4,21.6z M11.7,22.9
@@ -165,8 +165,8 @@
 	C24,34.3,24,34.3,24,34.3C24,34.3,24,34.3,24,34.3z M23.5,4C23.5,4,23.5,4,23.5,4C23.5,4,23.5,4,23.5,4C23.5,4,23.5,4,23.5,4
 	C23.5,4,23.5,4,23.5,4z"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_cardsInfo"  Tag="cards" Text="Methods Type"  HorizontalAlignment="Right" Width="210" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="20"></TextBlock>
-                            <TextBlock x:Name="txt_cardsHint" Text="add, update, delete, ..." FontSize="12" Margin="5,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_cardsInfo"  Tag="cards" Text="Methods Type"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
+                                <TextBlock x:Name="txt_cardsHint" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="cards"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
