@@ -1731,28 +1731,24 @@ namespace Restaurant.View.accounts
         {//pie
             try
             {
-
                 HelpClass.StartAwait(grid_main);
                 /////////////////////
-                /*
                 if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") )
                 {
                     Window.GetWindow(this).Opacity = 0.2;
                     //cashesQueryExcel = cashesQuery.ToList();
-                    win_lvc win = new win_lvc(cashesQueryExcel, 8);
+                    win_IvcAccount win = new win_IvcAccount(cashes, 1);
                     win.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-               */
                 /////////////////////
 
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }

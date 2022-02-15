@@ -1616,17 +1616,15 @@ namespace Restaurant.View.accounts
 
         private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
         {//pie
-            /*
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 /////////////////////
                 if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     Window.GetWindow(this).Opacity = 0.2;
                     //cashesQueryExcel = cashesQuery.ToList();
-                    win_lvc win = new win_lvc(cashesQueryExcel, 8);
+                    win_IvcAccount win = new win_IvcAccount(cashesQuery, 1);
                     win.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
                 }
@@ -1634,15 +1632,14 @@ namespace Restaurant.View.accounts
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 /////////////////////
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
 
         
