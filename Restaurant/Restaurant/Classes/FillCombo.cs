@@ -7,6 +7,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Text;
 using System;
+using Restaurant.Classes.ApiClasses;
+
 namespace Restaurant.Classes
 {
     public class FillCombo
@@ -705,6 +707,7 @@ namespace Restaurant.Classes
         static public Invoice invoice = new Invoice();
         static public List<Invoice> invoices;
         static public ShippingCompanies ShipCompany = new ShippingCompanies();
+        static public Tables table = new Tables();
 
 
     }

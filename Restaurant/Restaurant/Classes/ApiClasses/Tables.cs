@@ -63,6 +63,21 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
+        internal async Task<IEnumerable<Tables>> GetTablesStatusInfo(int branchId = 0)
+        {
+            List<Tables> items = new List<Tables>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("branchId", branchId.ToString());
+            IEnumerable<Claim> claims = await APIResult.getList("Tables/GetTablesStatusInfo", parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<Tables>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
 
         public async Task<int> AddTablesToSection(List<Tables> tablesList, int sectionId, int userId)
         {

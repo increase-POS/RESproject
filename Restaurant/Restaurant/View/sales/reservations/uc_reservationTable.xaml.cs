@@ -4,6 +4,8 @@ using Restaurant.Classes.ApiClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -92,22 +94,23 @@ namespace Restaurant.View.sales.reservations
                 requiredControlList = new List<string> { "" };
                 if (MainWindow.lang.Equals("en"))
                 {
-                    //MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    //MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
                 #region loading
                 loadingList = new List<keyValueBool>();
                 bool isDone = true;
-                //loadingList.Add(new keyValueBool { key = "loading_fillCustomerCombo", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_tables", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_fillCustomerCombo", value = false });
 
-
-                //loading_fillCustomerCombo();
+                loading_tables();
+                loading_fillCustomerCombo();
                 do
                 {
                     isDone = true;
@@ -165,7 +168,41 @@ namespace Restaurant.View.sales.reservations
 
 
         }
-        #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
+        #region loading
+        async Task loading_fillCustomerCombo()
+        {
+            try
+            {
+                await FillCombo.FillComboCustomers(cb_customerId);
+            }
+            catch { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_fillCustomerCombo"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async Task loading_tables()
+        {
+            try
+            {
+                await FillCombo.table.GetTablesStatusInfo(MainWindow.branchLogin.branchId);
+            }
+            catch { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_tables"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        #endregion
+        #region Add - Update - Delete - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         { //add
             try
