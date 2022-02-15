@@ -233,6 +233,7 @@
     <Compile Include="converters\deliveryTypeConverter.cs" />
     <Compile Include="converters\depositorNameConverter.cs" />
     <Compile Include="converters\enabledCouponConverter.cs" />
+    <Compile Include="converters\invoiceStatusConverter.cs" />
     <Compile Include="converters\notificationsContentConverter.cs" />
     <Compile Include="converters\notificationsTitleConverter.cs" />
     <Compile Include="converters\processTypeConverter.cs" />
@@ -262,6 +263,9 @@
     </Compile>
     <Compile Include="View\accounts\uc_subscriptions.xaml.cs">
       <DependentUpon>uc_subscriptions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\accounts\win_IvcAccount.xaml.cs">
+      <DependentUpon>win_IvcAccount.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\catalog\foods\uc_foods.xaml.cs">
       <DependentUpon>uc_foods.xaml</DependentUpon>
@@ -325,6 +329,21 @@
     </Compile>
     <Compile Include="View\purchase\uc_purchaseOrder.xaml.cs">
       <DependentUpon>uc_purchaseOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\accountsReports\uc_accountsReports.xaml.cs">
+      <DependentUpon>uc_accountsReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\purchaseReports\uc_purchaseReports.xaml.cs">
+      <DependentUpon>uc_purchaseReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\salesReports\uc_salesReports.xaml.cs">
+      <DependentUpon>uc_salesReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\storageReports\uc_storageReports.xaml.cs">
+      <DependentUpon>uc_storageReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\uc_reports.xaml.cs">
+      <DependentUpon>uc_reports.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\sales\promotion\uc_coupon.xaml.cs">
       <DependentUpon>uc_coupon.xaml</DependentUpon>
@@ -643,6 +662,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\accounts\win_IvcAccount.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\catalog\foods\uc_foods.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -724,6 +747,26 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\purchase\uc_purchaseOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\accountsReports\uc_accountsReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\purchaseReports\uc_purchaseReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\salesReports\uc_salesReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\storageReports\uc_storageReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\uc_reports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1228,7 +1271,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="View\home\" />
-    <Folder Include="View\reports\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="pic\increase-login-bg-rtl.png" />
