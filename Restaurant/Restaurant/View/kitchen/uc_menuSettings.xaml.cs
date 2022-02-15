@@ -58,6 +58,7 @@ namespace Restaurant.View.kitchen
         byte tgl_itemState;
         string searchText = "";
         int categoryId = 0;
+        int tagId = 0;
         List<string> weekDays = new List<string>() { "sat","sun", "mon","tues","wed","thur","fri" };
         List<string> selectedDays = new List<string>();
         public static List<string> requiredControlList;
@@ -159,57 +160,66 @@ namespace Restaurant.View.kitchen
                     if (HelpClass.validate(requiredControlList, this))
                     {
                         var menuSet = new MenuSetting();
-                        if (item.menuSettingId == null)
-                            menuSet.menuSettingId = 0;
-                        else
-                            menuSet.menuSettingId = item.menuSettingId;
-                        menuSet.itemUnitId = item.itemUnitId;
-                        menuSet.preparingTime = int.Parse(tb_preparingTime.Text);
-                        menuSet.branchId = MainWindow.branchLogin.branchId;
+
                         if (tgl_isActiveItem.IsChecked == true)
                             menuSet.isActive = 1;
                         else
                             menuSet.isActive = 0;
-
-                        menuSet.createUserId = MainWindow.userLogin.userId;
-                        menuSet.updateUserId = MainWindow.userLogin.userId;
-                        foreach (string str in selectedDays)
+                        if (menuSet.isActive == 1 && selectedDays.Count == 0)
                         {
-                            switch (str)
-                            {
-                                case "sat":
-                                    menuSet.sat = true;
-                                    break;
-                                case "sun":
-                                    menuSet.sun = true;
-                                    break;
-                                case "mon":
-                                    menuSet.mon = true;
-                                    break;
-                                case "tues":
-                                    menuSet.tues = true;
-                                    break;
-                                case "wed":
-                                    menuSet.wed = true;
-                                    break;
-                                case "thur":
-                                    menuSet.thur = true;
-                                    break;
-                                case "fri":
-                                    menuSet.fri = true;
-                                    break;
-                            }
-                        }
-                        int res = await menuSetting.saveItemMenuSetting(menuSet);
-                        if (res > 0)
-                        {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                            await RefreshItemsList();
-                            await Search();
-                            Clear();
+                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectOnDayAtLeast"), animation: ToasterAnimation.FadeIn);
                         }
                         else
-                            Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        {
+                            if (item.menuSettingId == null)
+                                menuSet.menuSettingId = 0;
+                            else
+                                menuSet.menuSettingId = item.menuSettingId;
+                            menuSet.itemUnitId = item.itemUnitId;
+                            menuSet.preparingTime = int.Parse(tb_preparingTime.Text);
+                            menuSet.branchId = MainWindow.branchLogin.branchId;
+
+
+                            menuSet.createUserId = MainWindow.userLogin.userId;
+                            menuSet.updateUserId = MainWindow.userLogin.userId;
+                            foreach (string str in selectedDays)
+                            {
+                                switch (str)
+                                {
+                                    case "sat":
+                                        menuSet.sat = true;
+                                        break;
+                                    case "sun":
+                                        menuSet.sun = true;
+                                        break;
+                                    case "mon":
+                                        menuSet.mon = true;
+                                        break;
+                                    case "tues":
+                                        menuSet.tues = true;
+                                        break;
+                                    case "wed":
+                                        menuSet.wed = true;
+                                        break;
+                                    case "thur":
+                                        menuSet.thur = true;
+                                        break;
+                                    case "fri":
+                                        menuSet.fri = true;
+                                        break;
+                                }
+                            }
+                            int res = await menuSetting.saveItemMenuSetting(menuSet);
+                            if (res > 0)
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                                await RefreshItemsList();
+                                await Search();
+                                Clear();
+                            }
+                            else
+                                Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        }
                     }
                     #endregion
                 }
@@ -417,9 +427,15 @@ namespace Restaurant.View.kitchen
                      || x.code.ToLower().Contains(searchText)
                     ) && x.isActive == tgl_itemState).ToList();
 
+                #region search for category
                 if (categoryId > 0)
                     itemsQuery = itemsQuery.Where(x => x.categoryId == categoryId).ToList();
+                #endregion
 
+                #region search for tag
+                if (tagId > 0)
+                    itemsQuery = itemsQuery.Where(x => x.tagId == tagId).ToList();
+                #endregion
                 pageIndex = 1;
                 #region
 
@@ -1043,10 +1059,7 @@ namespace Restaurant.View.kitchen
         {
             try
             {
-                //bdr_allMenu
-                //btn_appetizers
-                //    path_appetizers
-                //    txt_appetizers
+                tagId = 0;
                 string senderTag = (sender as Button).Tag.ToString();
                 if (senderTag != "allMenu")
                     categoryId = FillCombo.categoriesList.Where(x => x.categoryCode == senderTag).FirstOrDefault().categoryId;
@@ -1087,17 +1100,18 @@ namespace Restaurant.View.kitchen
             }
             catch { }
         }
-        public static List<string> tagsList;
-        void refreshCatalogTags(string tag)
+        public static List<Tag> tagsList;
+        async void refreshCatalogTags(string tag)
         {
-            tagsList = new List<string> { "Orient", "Western", "Eastern" };
+            //tagsList = new List<string> { "Orient", "Western", "Eastern" };
+            tagsList = await FillCombo.tag.Get(categoryId);
             sp_menuTags.Children.Clear();
             foreach (var item in tagsList)
             {
                 #region  
                 Button button = new Button();
-                button.Content = item;
-                button.Tag = "catalogTags-" + item;
+                button.Content = item.tagName;
+                button.Tag = "catalogTags-" + item.tagName;
                 button.FontSize = 10;
                 button.Height = 25;
                 button.Padding = new Thickness(5);
@@ -1115,7 +1129,7 @@ namespace Restaurant.View.kitchen
                 #endregion
             }
         }
-        void buttonCatalogTags_Click(object sender, RoutedEventArgs e)
+       async void buttonCatalogTags_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -1123,12 +1137,13 @@ namespace Restaurant.View.kitchen
                 #region refresh colors
                 foreach (var control in tagsList)
                 {
-                    Button button = FindControls.FindVisualChildren<Button>(this).Where(x => x.Tag != null && x.Tag.ToString() == "catalogTags-" + control)
+                    Button button = FindControls.FindVisualChildren<Button>(this).Where(x => x.Tag != null && x.Tag.ToString() == "catalogTags-" + control.tagName)
                         .FirstOrDefault();
                     if (button.Tag.ToString() == senderTag)
                     {
                         button.Foreground = Application.Current.Resources["White"] as SolidColorBrush;
                         button.Background = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                        tagId = control.tagId;
                     }
                     else
                     {
@@ -1137,7 +1152,7 @@ namespace Restaurant.View.kitchen
                     }
                 }
                 #endregion
-
+                await Search();
             }
             catch { }
         }
