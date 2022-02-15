@@ -47,7 +47,6 @@ namespace Restaurant.View.storage
             catch
             { }
         }
-
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             Instance = null;
@@ -74,15 +73,31 @@ namespace Restaurant.View.storage
         {
             if (FillCombo.objectsList is null)
                 await FillCombo.RefreshObjects();
-            List<TextBlock> textBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
-                .Where(x => x.Name.Contains("Info") && x.Tag != null).ToList();
-            foreach (var item in textBlocksList)
-            {
-                item.Text = MainWindow.resourcemanager.GetString(
-               FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translate
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_mainTitle.Text = MainWindow.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
                );
+            // Info
+            List<TextBlock> InfoTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
+                .Where(x => x.Name.Contains("Info") && x.Tag != null).ToList();
+            foreach (var item in InfoTextBlocksList)
+            {
+                if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translate))
+                    item.Text = MainWindow.resourcemanager.GetString(
+                   FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translate
+                   );
             }
-
+            // Hint
+            List<TextBlock> HintTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
+                .Where(x => x.Name.Contains("Hint") && x.Tag != null).ToList();
+            foreach (var item in HintTextBlocksList)
+            {
+                if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translateHint))
+                    item.Text = MainWindow.resourcemanager.GetString(
+                   FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translateHint
+                   );
+            }
         }
 
         private void Btn_storageDivide_Click(object sender, RoutedEventArgs e)

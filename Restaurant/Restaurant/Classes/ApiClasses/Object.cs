@@ -23,6 +23,7 @@ namespace Restaurant.Classes
         public Nullable<int> parentObjectId { get; set; }
         public string objectType { get; set; }
         public string translate { get; set; }
+        public string translateHint { get; set; }
 
 
         public string note { get; set; }

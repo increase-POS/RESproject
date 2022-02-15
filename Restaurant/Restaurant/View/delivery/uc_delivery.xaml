@@ -80,7 +80,7 @@
 	c3.1,0,5.5,2.5,5.5,5.5c0,3.1-2.5,5.5-5.5,5.5C13.5,38.9,11,36.4,11,33.3L11,33.3z"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_deliveryManagementInfo" Tag="deliveryManagement" Text="Delivery Management" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
-                                <TextBlock x:Name="txt_deliveryManagementHint" Text="Delivery management ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_deliveryManagementHint" Tag="deliveryManagement" Text="Delivery management ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                             </StackPanel>
                             <Button Tag="deliveryManagement"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                     Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
@@ -149,7 +149,7 @@
 	c-5.4,4.5-5.6,13.5-0.3,18c3.3,2.8,8.2,3,11.8,0.4C394.3,211.6,395.2,208.4,395.3,206z"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_driversManagementInfo" Tag="driversManagement" Text="drivers management" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
-                                <TextBlock x:Name="txt_driversManagementHint" Text="drivers management ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_driversManagementHint" Tag="driversManagement" Text="drivers management ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                             </StackPanel>
                             <Button Tag="driversManagement"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                     Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
@@ -218,7 +218,7 @@
 	C101.9,271,106.1,267,106.2,262z"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_shippingCompaniesInfo" Tag="shippingCompanies" Text="Shipping companies"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
-                                <TextBlock x:Name="txt_shippingCompaniesHint" Text="add, update, delete" Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_shippingCompaniesHint" Tag="shippingCompanies" Text="add, update, delete" Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                             </StackPanel>
                             <Button Tag="shippingCompanies" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                     Background="{StaticResource MainColor}" HorizontalAlignment="Right"  

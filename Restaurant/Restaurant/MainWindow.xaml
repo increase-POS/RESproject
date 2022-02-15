@@ -674,7 +674,7 @@
                     <Grid>
                         <Button  Width="200" Height="50" Grid.Row="7" HorizontalAlignment="Left"
                     Background="{x:Null}" BorderBrush="{x:Null}"     Tag="reports"
-                    Padding="0"  x:Name="btn_reports"    >
+                    Padding="0"  x:Name="btn_reports" Click="Btn_reports_Click"   >
                         <Button.ToolTip>
                             <ToolTip Content="Reports"  Visibility="Visible" x:Name="tt_reports"/>
                         </Button.ToolTip>

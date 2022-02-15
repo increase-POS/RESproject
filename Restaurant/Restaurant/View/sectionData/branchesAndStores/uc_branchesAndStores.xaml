@@ -49,7 +49,7 @@
 	C126.4,45.3,126.2,45.3,126.2,45.3z"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_branchesInfo" Tag="branches" Text="Branches" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
-                                <TextBlock x:Name="txt_branchesHint" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_branchesHint" Tag="branches" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="branches" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
@@ -111,7 +111,7 @@
 	c17.7,0,34.5-0.1,51.3,0.1c10.8,0.1,21.7,0.1,32.4,1.2c12.2,1.2,23.9,12.1,24.8,21.9C286.4,667.3,286.8,671.8,286.8,676.3z"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_storesInfo" Tag="stores" Text="Stores"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
-                                <TextBlock x:Name="txt_storesHint" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_storesHint" Tag="stores" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="stores"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
@@ -176,7 +176,7 @@
 	C6.5,5.9,6.7,6,7,6z M25,0v13H3V0H25z M23,2H5v9h18V2z"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_posInfo" Tag="pos" Text="POS"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
-                                <TextBlock x:Name="txt_posHint" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
+                                <TextBlock x:Name="txt_posHint" Tag="pos" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
                         </StackPanel>
                             <Button Tag="pos" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  

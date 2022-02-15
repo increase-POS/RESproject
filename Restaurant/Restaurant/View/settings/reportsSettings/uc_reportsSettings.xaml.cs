@@ -123,7 +123,6 @@ namespace Restaurant.View.settings.reportsSettings
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
-                MainWindow.mainWindow.initializationMainTrack(this.Tag.ToString() );
 
 
                 #region translate

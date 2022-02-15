@@ -44,6 +44,11 @@ using Restaurant.View.settings.reportsSettings;
 using Restaurant.View.sales.reservations;
 using Restaurant.View.windows;
 using Restaurant.View.settings.emailsGeneral;
+using Restaurant.View.reports;
+using Restaurant.View.reports.storageReports;
+using Restaurant.View.reports.purchaseReports;
+using Restaurant.View.reports.salesReports;
+using Restaurant.View.reports.accountsReports;
 
 namespace Restaurant
 {
@@ -1578,6 +1583,25 @@ namespace Restaurant
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private void Btn_reports_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                colorTextRefreash(txt_reports);
+                FN_pathVisible(path_openReports);
+                fn_ColorIconRefreash(path_iconReports);
+                grid_main.Children.Clear();
+                grid_main.Children.Add(uc_reports.Instance);
+
+                isHome = true;
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private void Btn_settings_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -2010,6 +2034,8 @@ namespace Restaurant
 
         #endregion
 
+        
+
         private void Btn_info_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -2122,9 +2148,9 @@ namespace Restaurant
                 case "accounts":
                     grid_main.Children.Add(uc_accounts.Instance);
                     break;
-                //case "reports":
-                //    grid_main.Children.Add(uc_reports.Instance);
-                //    break;
+                case "reports":
+                    grid_main.Children.Add(uc_reports.Instance);
+                    break;
                 case "sectionData":
                     grid_main.Children.Add(uc_sectionData.Instance);
                     break;
@@ -2181,22 +2207,27 @@ namespace Restaurant
                 case "foods":
                     grid_main.Children.Add(uc_foods.Instance);
                     break;
-                //case "appetizers":
-                //    grid_main.Children.Add(uc_appetizers.Instance);
-                //    break;
-                //case "beverages":
-                //    grid_main.Children.Add(uc_beverages.Instance);
-                //    break;
-                //case "fastFood":
-                //    grid_main.Children.Add(uc_fastFood.Instance);
-                //    break;
-                //32
-                //case "mainCourses":
-                //    grid_main.Children.Add(uc_mainCourses.Instance);
-                //    break;
-                //case "desserts":
-                //    grid_main.Children.Add(uc_desserts.Instance);
-                //    break;
+                case "appetizers":
+                    grid_main.Children.Add(uc_itemsFoods.Instance);
+                    uc_itemsFoods.categoryName = "appetizers";
+                    break;
+                case "beverages":
+                    grid_main.Children.Add(uc_itemsFoods.Instance);
+                    uc_itemsFoods.categoryName = "beverages";
+                    break;
+                case "fastFood":
+                    grid_main.Children.Add(uc_itemsFoods.Instance);
+                    uc_itemsFoods.categoryName = "fastFood";
+                    break;
+                    //32
+                case "mainCourses":
+                    grid_main.Children.Add(uc_itemsFoods.Instance);
+                    uc_itemsFoods.categoryName = "mainCourses";
+                    break;
+                case "desserts":
+                    grid_main.Children.Add(uc_itemsFoods.Instance);
+                    uc_itemsFoods.categoryName = "desserts";
+                    break;
                 case "payInvoice":
                     grid_main.Children.Add(uc_payInvoice.Instance);
                     break;
@@ -2403,6 +2434,110 @@ namespace Restaurant
                 //101 kitchenAlerts_spendingOrderRequest
                 //102 saleAlerts_executeOrder
 
+                //103 storageReports
+                case "storageReports":
+                    grid_main.Children.Add(uc_storageReports.Instance);
+                    break;
+                //104 purchaseReports
+                case "purchaseReports":
+                    grid_main.Children.Add(uc_purchaseReports.Instance);
+                    break;
+                //105 salesReports
+                case "salesReports":
+                    grid_main.Children.Add(uc_salesReports.Instance);
+                    break;
+                //106 accountsReports
+                case "accountsReports":
+                    grid_main.Children.Add(uc_accountsReports.Instance);
+                    break;
+                //107 stockStorageReports
+                //case "stockStorageReports":
+                //    grid_main.Children.Add(uc_stockStorageReports.Instance);
+                //    break;
+                //108 externalStorageReports
+                //case "externalStorageReports":
+                //    grid_main.Children.Add(uc_externalStorageReports.Instance);
+                //    break;
+                //109 internalStorageReports
+                //case "internalStorageReports":
+                //    grid_main.Children.Add(uc_internalStorageReports.Instance);
+                //    break;
+                //110 directStorageReports
+                //case "directStorageReports":
+                //    grid_main.Children.Add(uc_directStorageReports.Instance);
+                //    break;
+                //111 stocktakingStorageReports
+                //case "stocktakingStorageReports":
+                //    grid_main.Children.Add(uc_stocktakingStorageReports.Instance);
+                //    break;
+                //112 destroiedStorageReports
+                //case "destroiedStorageReports":
+                //    grid_main.Children.Add(uc_destroiedStorageReports.Instance);
+                //    break;
+                //113 invoicePurchaseReports
+                //case "invoicePurchaseReports":
+                //    grid_main.Children.Add(uc_invoicePurchaseReports.Instance);
+                //    break;
+                //114 itemPurchaseReports
+                //case "itemPurchaseReports":
+                //    grid_main.Children.Add(uc_itemPurchaseReports.Instance);
+                //    break;
+                //115 orderPurchaseReports
+                //case "orderPurchaseReports":
+                //    grid_main.Children.Add(uc_orderPurchaseReports.Instance);
+                //    break;
+                //116 invoiceSalesReports
+                //case "invoiceSalesReports":
+                //    grid_main.Children.Add(uc_invoiceSalesReports.Instance);
+                //    break;
+                //117 itemSalesReports
+                //case "itemSalesReports":
+                //    grid_main.Children.Add(uc_itemSalesReports.Instance);
+                //    break;
+                //118 promotionSalesReports
+                //case "promotionSalesReports":
+                //    grid_main.Children.Add(uc_promotionSalesReports.Instance);
+                //    break;
+                //119 orderSalesReports
+                //case "orderSalesReports":
+                //    grid_main.Children.Add(uc_orderSalesReports.Instance);
+                //    break;
+                //120 quotationSalesReports
+                //case "quotationSalesReports":
+                //    grid_main.Children.Add(uc_quotationSalesReports.Instance);
+                //    break;
+                //121 dailySalesReports
+                //case "dailySalesReports":
+                //    grid_main.Children.Add(uc_dailySalesReports.Instance);
+                //    break;
+                //122 paymentsAccountsReports
+                //case "paymentsAccountsReports":
+                //    grid_main.Children.Add(uc_paymentsAccountsReports.Instance);
+                //    break;
+                //123 recipientAccountsReports
+                //case "recipientAccountsReports":
+                //    grid_main.Children.Add(uc_recipientAccountsReports.Instance);
+                //    break;
+                //124 bankAccountsReports
+                //case "bankAccountsReports":
+                //    grid_main.Children.Add(uc_bankAccountsReports.Instance);
+                //    break;
+                //125 posAccountsReports
+                //case "posAccountsReports":
+                //    grid_main.Children.Add(uc_posAccountsReports.Instance);
+                //    break;
+                //126 statementAccountsReports
+                //case "statementAccountsReports":
+                //    grid_main.Children.Add(uc_statementAccountsReports.Instance);
+                //    break;
+                //127 fundAccountsReports
+                //case "fundAccountsReports":
+                //    grid_main.Children.Add(uc_fundAccountsReports.Instance);
+                //    break;
+                //128 profitsAccountsReports
+                //case "profitsAccountsReports":
+                //    grid_main.Children.Add(uc_profitsAccountsReports.Instance);
+                //    break;
 
                 default:
                     return;
