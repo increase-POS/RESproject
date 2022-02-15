@@ -22,13 +22,14 @@
             <converters:transTypeConverter x:Key="transTypeConverter"/>
             <converters:depositorNameConverter x:Key="depositorNameConverter"/>
             <converters:processTypeConverter x:Key="processTypeConverter"/>
-
+            <converters:invoiceStatusConverter x:Key="invoiceStatusConverter"/>
 
 
             <!--#region Fonts-->
             <FontFamily x:Key="BarcodeFont" >IDAHC39M Code 39 Barcode, /Restaurant;component/fonts/#IDAHC39M Code 39 Barcode, Arial</FontFamily>
             <FontFamily x:Key="Font-cairo-light" >cairo light, /Restaurant;component/fonts/cairo-font/#cairo light, Arial</FontFamily>
             <FontFamily x:Key="Font-cairo-bold" >cairo bold , /Restaurant;component/fonts/cairo-font/#cairo bold, Arial</FontFamily>
+            <!--#endregion-->
 
 
 
@@ -45,7 +46,6 @@
             </Style>-->
             <!--#endregion-->
 
-            <!--#endregion-->
             <Style x:Key="ToolTipError" TargetType="{x:Type ToolTip}" BasedOn="{StaticResource {x:Type ToolTip}}">
                 <Setter Property="Foreground" Value="Red"/>
                 <Setter Property="Background" Value="#15FF0000"/>
