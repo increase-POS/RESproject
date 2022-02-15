@@ -2330,7 +2330,7 @@ Please add Email in setting</value>
     <value>Please upgrade the application</value>
   </data>
   <data name="trImportExport" xml:space="preserve">
-    <value>Movements</value>
+    <value>Import, Export</value>
   </data>
   <data name="trItemsDestroy" xml:space="preserve">
     <value>Destructive</value>
@@ -2939,7 +2939,7 @@ Please add Email in setting</value>
     <value>Branches And Stores</value>
   </data>
   <data name="trConsumptionRawMaterials" xml:space="preserve">
-    <value>Consumption Materials</value>
+    <value>Consumption raw materials</value>
   </data>
   <data name="trDeliveryManagement" xml:space="preserve">
     <value>Delivery Management</value>
@@ -3144,5 +3144,107 @@ Please add Email in setting</value>
   </data>
   <data name="trCouponOfferPackage" xml:space="preserve">
     <value>Coupon, Offers, Package</value>
+  </data>
+  <data name="trAddUpdateDelete" xml:space="preserve">
+    <value>add, update, delete</value>
+  </data>
+  <data name="trAppetizersBeverages" xml:space="preserve">
+    <value>Appetizers, Beverages</value>
+  </data>
+  <data name="trBanksPaymentMethods" xml:space="preserve">
+    <value>Banks, Payment methods</value>
+  </data>
+  <data name="trBranchesStoresPOS" xml:space="preserve">
+    <value>Branches, Stores, POS</value>
+  </data>
+  <data name="trCashtransfers" xml:space="preserve">
+    <value>Cashtransfers</value>
+  </data>
+  <data name="trCategoriesItems" xml:space="preserve">
+    <value>Categories, Items</value>
+  </data>
+  <data name="trConsumption" xml:space="preserve">
+    <value>consumption</value>
+  </data>
+  <data name="trCreateReservation" xml:space="preserve">
+    <value>Create reservation</value>
+  </data>
+  <data name="trDailyStatistic" xml:space="preserve">
+    <value>Daily Statistic</value>
+  </data>
+  <data name="trDiningHallDivide" xml:space="preserve">
+    <value>Dining hall divide</value>
+  </data>
+  <data name="trDiningHallManagement" xml:space="preserve">
+    <value>Dining hall management</value>
+  </data>
+  <data name="trDriversManagement" xml:space="preserve">
+    <value>Drivers management</value>
+  </data>
+  <data name="trEmailsSettings" xml:space="preserve">
+    <value>Emails settings</value>
+  </data>
+  <data name="trEmailsTamplates" xml:space="preserve">
+    <value>Emails tamplates</value>
+  </data>
+  <data name="trGeneralSettings" xml:space="preserve">
+    <value>General settings</value>
+  </data>
+  <data name="trInvoicesItems" xml:space="preserve">
+    <value>Invoices, Items</value>
+  </data>
+  <data name="trLocationsSections" xml:space="preserve">
+    <value>Locations, Sections</value>
+  </data>
+  <data name="trMembershipCoupon" xml:space="preserve">
+    <value>Membership, Coupon</value>
+  </data>
+  <data name="trMovementsConsumption" xml:space="preserve">
+    <value>Movements, Consumption</value>
+  </data>
+  <data name="trPaymentsRecipient" xml:space="preserve">
+    <value>Payments, Recipient</value>
+  </data>
+  <data name="trPermissionsSettings" xml:space="preserve">
+    <value>Permissions settings</value>
+  </data>
+  <data name="trPreparingOrdersList" xml:space="preserve">
+    <value>Preparing orders list</value>
+  </data>
+  <data name="trReciptReturn" xml:space="preserve">
+    <value>Recipt, Return</value>
+  </data>
+  <data name="trReservationsTables" xml:space="preserve">
+    <value>Reservations tables</value>
+  </data>
+  <data name="trSelfServiceOrder" xml:space="preserve">
+    <value>self-service, order</value>
+  </data>
+  <data name="trShortageDestructive" xml:space="preserve">
+    <value>Shortage, Destructive</value>
+  </data>
+  <data name="trSMSSetting" xml:space="preserve">
+    <value>SMS Setting</value>
+  </data>
+  <data name="trStockExternal" xml:space="preserve">
+    <value>stock, external</value>
+  </data>
+  <data name="trStorageCostInvoices" xml:space="preserve">
+    <value>Storage cost,Invoices</value>
+  </data>
+  <data name="trStoredFreezone" xml:space="preserve">
+    <value>Stored, Freezone</value>
+  </data>
+  <data name="trSystmSetting" xml:space="preserve">
+    <value>Systm setting</value>
+  </data>
+  <data name="trUpdateDelete" xml:space="preserve">
+    <value>update, delete</value>
+  </data>
+  <data name="trUpdateMenuItems" xml:space="preserve">
+    <value>Update menu items</value>
+  </data>
+  <data name="trVendorsCustomerUsers" xml:space="preserve">
+    <value>Vendors, Customer, Users</value>
   </data>
 </root>
