@@ -517,7 +517,7 @@
                         </Border>
                         <Button Grid.Column="1"  Padding="0"    
                                 Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" 
-                                            x:Name="btn_addCustomer"  
+                                            x:Name="btn_addCustomer" Click="Btn_addCustomer_Click"  
                                 Margin="5 5 10 5" IsEnabled="True">
                             <Path Fill="#4E4E4E" Stretch="Fill"  
                     Width="27.5" Height="27.5"
@@ -568,7 +568,7 @@
                                 materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                 materialDesign:HintAssist.Hint="start time..."  
                                 Foreground="#4E4E4E"  
-                                Height="40"  
+                                Height="40" 
                                 LostFocus="validateEmpty_LostFocus"/>
                             <Path x:Name="p_error_reservationStartTime" Fill="#E81123" Stretch="Fill" Margin="5,5,30,5"
                               HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   

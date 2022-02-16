@@ -79,7 +79,7 @@ namespace Restaurant.View.sales.reservations
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "" };
+                requiredControlList = new List<string> { "reservationDate", "reservationStartTime" , "reservationEndTime" , "personsCount" };
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
@@ -209,7 +209,7 @@ namespace Restaurant.View.sales.reservations
             }
         }
         #endregion
-        #region Add - Update - Delete - Tgl - Clear - DG_SelectionChanged - refresh
+        #region Add - Update - Delete - Tgl - Clear - DG_SelectionChanged - refresh - validate
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         { //add
             try
@@ -217,7 +217,25 @@ namespace Restaurant.View.sales.reservations
                 HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add"))
                 {
-
+                    if (HelpClass.validate(requiredControlList, this))
+                    {
+                        bool valid = await validateReservationTime();
+                        if (valid)
+                        {
+                            TablesReservation reserve = new TablesReservation();
+                            if (cb_customerId.SelectedIndex > 0)
+                                reserve.customerId = (int)cb_customerId.SelectedValue;
+                            reserve.reservationDate = dp_reservationDate.SelectedDate;
+                            // reserve.reservationTime = (TimeSpan)tp_reservationStartTime.SelectedTime;
+                            //reserve.endTime = (TimeSpan)tp_reservationStartTime.SelectedTime;
+                            reserve.personsCount = int.Parse(tb_personsCount.Text);
+                            reserve.notes = tb_notes.Text;
+                            reserve.createUserId = MainWindow.userLogin.userId;
+                            reserve.isActive = 1;
+                            //save
+                            int res = await reserve.addReservation(reserve);
+                        }
+                    }
 
                 }
                 else
@@ -233,7 +251,10 @@ namespace Restaurant.View.sales.reservations
             }
         }
 
-
+        async Task<Boolean> validateReservationTime()
+        {
+            return true;
+        }
         #endregion
         #region events
         private async void Cb_searchSection_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -291,6 +312,36 @@ namespace Restaurant.View.sales.reservations
                 await Search();
                 */
                 HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_addCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                /*
+                HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_updateVendor w = new wd_updateVendor();
+                //// pass agent id to update windows
+                w.agent.agentId = 0;
+                w.type = "v";
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+                if (w.isOk == true)
+                {
+                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                    await FillCombo.RefreshVendors();
+                    await FillCombo.FillComboVendors(cb_vendor);
+                }
+
+                HelpClass.EndAwait(grid_main);
+                */
             }
             catch (Exception ex)
             {
@@ -882,8 +933,9 @@ namespace Restaurant.View.sales.reservations
             var table = tablesList.Where(x => x.name == tableName).FirstOrDefault();
             MessageBox.Show("Hey you Click me! I'm  " + table.name + " & person Count is " + table.personsCount);
         }
+
         #endregion
 
-    
+        
     }
 }
