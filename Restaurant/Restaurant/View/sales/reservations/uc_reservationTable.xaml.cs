@@ -25,13 +25,13 @@ namespace Restaurant.View.sales.reservations
     /// Interaction logic for uc_reservationTable.xaml
     /// </summary>
     public partial class uc_reservationTable : UserControl
-     {
+    {
         public uc_reservationTable()
         {
             try
             {
                 InitializeComponent();
-              
+
 
             }
             catch (Exception ex)
@@ -59,33 +59,21 @@ namespace Restaurant.View.sales.reservations
         //IEnumerable<User> usersQuery;
         //IEnumerable<User> users;
         //byte tgl_userState;
-        string searchText = "";
+        #region for search
+        int personCount = 0;
+        int sectionId = 0;
+        DateTime searchDate;
+        DateTime startTime;
+        DateTime endTime;
+        #endregion
         public static List<string> requiredControlList;
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             Instance = null;
             GC.Collect();
         }
-        #region loading
-        List<keyValueBool> loadingList;
-        //async void loading_fillCustomerCombo()
-        //{
-        //    try
-        //    {
-        //        await FillCombo.FillComboCustomers(cb_customerId);
-        //    }
-        //    catch (Exception)
-        //    { }
-        //    foreach (var item in loadingList)
-        //    {
-        //        if (item.key.Equals("loading_fillCustomerCombo"))
-        //        {
-        //            item.value = true;
-        //            break;
-        //        }
-        //    }
-        //}
-        #endregion
+      
+
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
@@ -108,9 +96,11 @@ namespace Restaurant.View.sales.reservations
                 bool isDone = true;
                 loadingList.Add(new keyValueBool { key = "loading_tables", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_fillCustomerCombo", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_fillSectionCombo", value = false });
 
                 loading_tables();
                 loading_fillCustomerCombo();
+                loading_fillSectionCombo();
                 do
                 {
                     isDone = true;
@@ -130,27 +120,27 @@ namespace Restaurant.View.sales.reservations
                 while (!isDone);
                 #endregion
 
-            //    tablesList = new List<Tables>()
-            //{
-            //    new Tables{ name = "Table-001", personsCount=2, status="empty"},
-            //    new Tables{ name = "Table-002", personsCount=3, status="open"},
-            //    new Tables{ name = "Table-003", personsCount=4, status="reservated"},
-            //    new Tables{ name = "Table-004", personsCount=5, status="empty"},
-            //    new Tables{ name = "Table-005", personsCount=6, status="empty"},
-            //    new Tables{ name = "Table-006", personsCount=7, status="reservated"},
-            //    new Tables{ name = "Table-007", personsCount=8, status="open"},
-            //    new Tables{ name = "Table-008", personsCount=9, status="open"},
-            //    new Tables{ name = "Table-009", personsCount=10, status="reservated"},
-            //    new Tables{ name = "Table-010", personsCount=11, status="empty"},
-            //    new Tables{ name = "Table-011", personsCount=6, status="empty"},
-            //    new Tables{ name = "Table-012", personsCount=12, status="open"},
-            //    new Tables{ name = "Table-013", personsCount=2, status="reservated"},
-            //    new Tables{ name = "Table-014", personsCount=8, status="empty"},
-            //    new Tables{ name = "Table-015", personsCount=3, status="empty"},
-            //    new Tables{ name = "Table-016", personsCount=9, status="reservated"},
-            //    new Tables{ name = "Table-017", personsCount=5, status="open"},
-            //};
-                BuildTablesDesign();
+                //    tablesList = new List<Tables>()
+                //{
+                //    new Tables{ name = "Table-001", personsCount=2, status="empty"},
+                //    new Tables{ name = "Table-002", personsCount=3, status="open"},
+                //    new Tables{ name = "Table-003", personsCount=4, status="reservated"},
+                //    new Tables{ name = "Table-004", personsCount=5, status="empty"},
+                //    new Tables{ name = "Table-005", personsCount=6, status="empty"},
+                //    new Tables{ name = "Table-006", personsCount=7, status="reservated"},
+                //    new Tables{ name = "Table-007", personsCount=8, status="open"},
+                //    new Tables{ name = "Table-008", personsCount=9, status="open"},
+                //    new Tables{ name = "Table-009", personsCount=10, status="reservated"},
+                //    new Tables{ name = "Table-010", personsCount=11, status="empty"},
+                //    new Tables{ name = "Table-011", personsCount=6, status="empty"},
+                //    new Tables{ name = "Table-012", personsCount=12, status="open"},
+                //    new Tables{ name = "Table-013", personsCount=2, status="reservated"},
+                //    new Tables{ name = "Table-014", personsCount=8, status="empty"},
+                //    new Tables{ name = "Table-015", personsCount=3, status="empty"},
+                //    new Tables{ name = "Table-016", personsCount=9, status="reservated"},
+                //    new Tables{ name = "Table-017", personsCount=5, status="open"},
+                //};
+               await Search();
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -169,6 +159,7 @@ namespace Restaurant.View.sales.reservations
 
         }
         #region loading
+        List<keyValueBool> loadingList;
         async Task loading_fillCustomerCombo()
         {
             try
@@ -185,11 +176,27 @@ namespace Restaurant.View.sales.reservations
                 }
             }
         }
+        async Task loading_fillSectionCombo()
+        {
+            try
+            {
+                await FillCombo.FillComboSectionsWithDefault(cb_searchSection);
+            }
+            catch { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_fillSectionCombo"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
         async Task loading_tables()
         {
             try
             {
-               tablesList =  await FillCombo.table.GetTablesStatusInfo(MainWindow.branchLogin.branchId);
+                await refreshTablesList();
             }
             catch { }
             foreach (var item in loadingList)
@@ -225,16 +232,30 @@ namespace Restaurant.View.sales.reservations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        
+
 
         #endregion
         #region events
+        private async void Cb_searchSection_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
-                //await Search();
+                await Search();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -259,7 +280,7 @@ namespace Restaurant.View.sales.reservations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
+        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {
             try
             {//refresh
@@ -280,31 +301,45 @@ namespace Restaurant.View.sales.reservations
         }
         #endregion
         #region Refresh & Search
-        /*
+
         async Task Search()
         {
             //search
-            if (users is null)
-                await RefreshUsersList();
-            searchText = tb_search.Text.ToLower();
-            usersQuery = users.Where(s => (s.name.ToLower().Contains(searchText) ||
-            s.job.ToLower().Contains(searchText)
-            ) && s.isActive == tgl_userState);
-            RefreshCustomersView();
-        }
-        async Task<IEnumerable<User>> RefreshUsersList()
-        {
+            if (tablesList is null)
+                await refreshTablesList();
 
-            users = await user.Get();
-            return users;
+            tablesQuery = tablesList;
+            try
+            {
+                personCount = int.Parse(tb_searchPersonsCount.Text);
+                tablesQuery = tablesQuery.Where(s => s.personsCount == personCount).ToList();
+            }
+            catch { }
 
+            if (cb_searchSection.SelectedIndex > 0)
+            {
+                sectionId = (int)cb_searchSection.SelectedValue;
+                tablesQuery = tablesQuery.Where(s => s.sectionId == sectionId).ToList();
+            }
+            else
+                sectionId = 0;
+
+            if (dp_searchDate.SelectedDate != null)
+                searchDate =(DateTime) dp_searchDate.SelectedDate;
+
+            if (tp_searchStartTime.SelectedTime != null)
+                startTime = (DateTime)tp_searchStartTime.SelectedTime;
+            if (tp_searchEndTime.SelectedTime != null)
+                endTime = (DateTime)tp_searchEndTime.SelectedTime;
+
+            //tablesQuery = tablesList.Where(s => s.personsCount == personCount && s.sectionId == sectionId).ToList();
+
+            BuildTablesDesign();
         }
-        void RefreshCustomersView()
+        async Task refreshTablesList()
         {
-            dg_user.ItemsSource = usersQuery;
-            txt_count.Text = usersQuery.Count().ToString();
+            tablesList =  await FillCombo.table.GetTablesStatusInfo(MainWindow.branchLogin.branchId);
         }
-        */
         #endregion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
@@ -692,10 +727,11 @@ namespace Restaurant.View.sales.reservations
 
         #region table
         List<Tables> tablesList = new List<Tables>();
+        List<Tables> tablesQuery = new List<Tables>();
         void BuildTablesDesign()
         {
             wp_tablesContainer.Children.Clear();
-            foreach (var item in tablesList)
+            foreach (var item in tablesQuery)
             {
                 #region button
                 Button tableButton = new Button();
@@ -847,5 +883,7 @@ namespace Restaurant.View.sales.reservations
             MessageBox.Show("Hey you Click me! I'm  " + table.name + " & person Count is " + table.personsCount);
         }
         #endregion
+
+    
     }
 }

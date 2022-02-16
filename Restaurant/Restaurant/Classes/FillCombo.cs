@@ -505,6 +505,23 @@ namespace Restaurant.Classes
             cmb.SelectedValuePath = "sectionId";
             cmb.SelectedIndex = -1;
         }
+        static public async Task FillComboSectionsWithDefault(ComboBox cmb)
+        {
+            if (sectionsByBranchList is null)
+                await RefreshSectionsByBranch();
+
+            List<Section> sections = new List<Section>();
+            sections = sectionsByBranchList.ToList();
+            var sec = new Section();
+            sec.sectionId = 0;
+            sec.name = "-";
+            sections.Insert(0, sec);
+
+            cmb.ItemsSource = sections;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "sectionId";
+            cmb.SelectedIndex = -1;
+        }
         #endregion
         #region location
 
