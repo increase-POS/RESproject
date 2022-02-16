@@ -9,7 +9,7 @@
         Title="Increase Restaurant"
          WindowStyle="None" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" Margin="0"
-         Height="170" Width="300"  Background="Transparent" AllowsTransparency="True" MouseDown="Window_MouseDown"
+         Height="225" Width="300"  Background="Transparent" AllowsTransparency="True" MouseDown="Window_MouseDown"
         Loaded="Window_Loaded" Closing="Window_Closing" >
     <Grid Grid.Column="1" Grid.Row="1"    x:Name="grid_main">
         <Grid.RowDefinitions>
@@ -51,6 +51,7 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
@@ -86,7 +87,13 @@
                 <ToggleButton x:Name="tgl_emailOnSaveSale" Grid.Row="3"  Grid.Column="1"    IsChecked="True"
                                  VerticalAlignment="Center" Padding="10,0,5,0"
                                               Margin="10" Height="13" Width="28" />
-
+                <TextBlock x:Name="txt_showHeader" Grid.Row="4" Grid.Column="0" 
+                                Margin="10" Text="Show header" Foreground="#6e6e6e"
+                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                                  FontSize="12"/>
+                <ToggleButton x:Name="tgl_showHeader" Grid.Row="4" Grid.Column="1"    IsChecked="True"
+                                 VerticalAlignment="Center" Padding="10,0,5,0" 
+                                              Margin="10" Height="13" Width="28" />
                 <Button   Grid.Row="5" Grid.ColumnSpan="2"   Content="save" materialDesign:ButtonAssist.CornerRadius="7"
                        Margin="10,2.5" x:Name="btn_save" Click="Btn_save_Click" Foreground="White"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" />

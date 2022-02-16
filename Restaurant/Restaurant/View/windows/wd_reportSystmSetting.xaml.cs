@@ -145,7 +145,9 @@ namespace Restaurant.View.windows
                 #endregion
                 if (windowType == "r")
                 {
-                    txt_printOnSavePur.Visibility =
+                    txt_showHeader.Visibility =
+                  tgl_showHeader.Visibility =
+                   txt_printOnSavePur.Visibility =
                     tgl_printOnSavePur.Visibility =
                     txt_printOnSaveSale.Visibility =
                     tgl_printOnSaveSale.Visibility = Visibility.Visible;
@@ -157,7 +159,9 @@ namespace Restaurant.View.windows
                 }
                 else if (windowType == "e")
                 {
-                    txt_printOnSavePur.Visibility =
+                    txt_showHeader.Visibility =
+                  tgl_showHeader.Visibility =
+                   txt_printOnSavePur.Visibility =
                      tgl_printOnSavePur.Visibility =
                      txt_printOnSaveSale.Visibility =
                      tgl_printOnSaveSale.Visibility = Visibility.Collapsed;
