@@ -63,7 +63,7 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
-        internal async Task<IEnumerable<Tables>> GetTablesStatusInfo(int branchId = 0)
+        internal async Task<List<Tables>> GetTablesStatusInfo(int branchId = 0)
         {
             List<Tables> items = new List<Tables>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();

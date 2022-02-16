@@ -130,26 +130,26 @@ namespace Restaurant.View.sales.reservations
                 while (!isDone);
                 #endregion
 
-                tablesList = new List<Tables>()
-            {
-                new Tables{ name = "Table-001", personsCount=2, status="empty"},
-                new Tables{ name = "Table-002", personsCount=3, status="open"},
-                new Tables{ name = "Table-003", personsCount=4, status="reservated"},
-                new Tables{ name = "Table-004", personsCount=5, status="empty"},
-                new Tables{ name = "Table-005", personsCount=6, status="empty"},
-                new Tables{ name = "Table-006", personsCount=7, status="reservated"},
-                new Tables{ name = "Table-007", personsCount=8, status="open"},
-                new Tables{ name = "Table-008", personsCount=9, status="open"},
-                new Tables{ name = "Table-009", personsCount=10, status="reservated"},
-                new Tables{ name = "Table-010", personsCount=11, status="empty"},
-                new Tables{ name = "Table-011", personsCount=6, status="empty"},
-                new Tables{ name = "Table-012", personsCount=12, status="open"},
-                new Tables{ name = "Table-013", personsCount=2, status="reservated"},
-                new Tables{ name = "Table-014", personsCount=8, status="empty"},
-                new Tables{ name = "Table-015", personsCount=3, status="empty"},
-                new Tables{ name = "Table-016", personsCount=9, status="reservated"},
-                new Tables{ name = "Table-017", personsCount=5, status="open"},
-            };
+            //    tablesList = new List<Tables>()
+            //{
+            //    new Tables{ name = "Table-001", personsCount=2, status="empty"},
+            //    new Tables{ name = "Table-002", personsCount=3, status="open"},
+            //    new Tables{ name = "Table-003", personsCount=4, status="reservated"},
+            //    new Tables{ name = "Table-004", personsCount=5, status="empty"},
+            //    new Tables{ name = "Table-005", personsCount=6, status="empty"},
+            //    new Tables{ name = "Table-006", personsCount=7, status="reservated"},
+            //    new Tables{ name = "Table-007", personsCount=8, status="open"},
+            //    new Tables{ name = "Table-008", personsCount=9, status="open"},
+            //    new Tables{ name = "Table-009", personsCount=10, status="reservated"},
+            //    new Tables{ name = "Table-010", personsCount=11, status="empty"},
+            //    new Tables{ name = "Table-011", personsCount=6, status="empty"},
+            //    new Tables{ name = "Table-012", personsCount=12, status="open"},
+            //    new Tables{ name = "Table-013", personsCount=2, status="reservated"},
+            //    new Tables{ name = "Table-014", personsCount=8, status="empty"},
+            //    new Tables{ name = "Table-015", personsCount=3, status="empty"},
+            //    new Tables{ name = "Table-016", personsCount=9, status="reservated"},
+            //    new Tables{ name = "Table-017", personsCount=5, status="open"},
+            //};
                 BuildTablesDesign();
 
                 HelpClass.EndAwait(grid_main);
@@ -189,7 +189,7 @@ namespace Restaurant.View.sales.reservations
         {
             try
             {
-                await FillCombo.table.GetTablesStatusInfo(MainWindow.branchLogin.branchId);
+               tablesList =  await FillCombo.table.GetTablesStatusInfo(MainWindow.branchLogin.branchId);
             }
             catch { }
             foreach (var item in loadingList)
