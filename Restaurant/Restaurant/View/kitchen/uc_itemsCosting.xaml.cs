@@ -91,6 +91,8 @@ namespace Restaurant.View.kitchen
                 while (!isDone);
                 #endregion
                 //enable categories buttons
+                if (FillCombo.salesItems is null)
+                    await FillCombo.RefreshSalesItems();
                 HelpClass.activateCategoriesButtons(FillCombo.salesItems, FillCombo.categoriesList, categoryBtns);
                 await Search();
                 HelpClass.EndAwait(grid_main);
