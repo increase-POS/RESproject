@@ -51,23 +51,23 @@ namespace Restaurant.View.windows
         {
             tablesList = new List<Tables>()
             {
-                new Tables{ name = "Table-001", personsCount=2, status="empty"},
-                new Tables{ name = "Table-002", personsCount=3, status="open"},
-                new Tables{ name = "Table-003", personsCount=4, status="reservated"},
-                new Tables{ name = "Table-004", personsCount=5, status="empty"},
-                new Tables{ name = "Table-005", personsCount=6, status="empty"},
-                new Tables{ name = "Table-006", personsCount=7, status="reservated"},
-                new Tables{ name = "Table-007", personsCount=8, status="open"},
-                new Tables{ name = "Table-008", personsCount=9, status="open"},
-                new Tables{ name = "Table-009", personsCount=10, status="reservated"},
-                new Tables{ name = "Table-010", personsCount=11, status="empty"},
-                new Tables{ name = "Table-011", personsCount=6, status="empty"},
-                new Tables{ name = "Table-012", personsCount=12, status="open"},
-                new Tables{ name = "Table-013", personsCount=2, status="reservated"},
-                new Tables{ name = "Table-014", personsCount=8, status="empty"},
-                new Tables{ name = "Table-015", personsCount=3, status="empty"},
-                new Tables{ name = "Table-016", personsCount=9, status="reservated"},
-                new Tables{ name = "Table-017", personsCount=5, status="open"},
+                new Tables{ name = "Table-001", personsCount=2, status="closed"},
+                new Tables{ name = "Table-002", personsCount=3, status="opened"},
+                new Tables{ name = "Table-003", personsCount=4, status="reserved"},
+                new Tables{ name = "Table-004", personsCount=5, status="closed"},
+                new Tables{ name = "Table-005", personsCount=6, status="closed"},
+                new Tables{ name = "Table-006", personsCount=7, status="reserved"},
+                new Tables{ name = "Table-007", personsCount=8, status="opened"},
+                new Tables{ name = "Table-008", personsCount=9, status="opened"},
+                new Tables{ name = "Table-009", personsCount=10, status="reserved"},
+                new Tables{ name = "Table-010", personsCount=11, status="closed"},
+                new Tables{ name = "Table-011", personsCount=6, status="closed"},
+                new Tables{ name = "Table-012", personsCount=12, status="opened"},
+                new Tables{ name = "Table-013", personsCount=2, status="reserved"},
+                new Tables{ name = "Table-014", personsCount=8, status="closed"},
+                new Tables{ name = "Table-015", personsCount=3, status="closed"},
+                new Tables{ name = "Table-016", personsCount=9, status="reserved"},
+                new Tables{ name = "Table-017", personsCount=5, status="opened"},
             };
             BuildTablesDesign();
         }
@@ -176,9 +176,9 @@ namespace Restaurant.View.windows
                 pathTable.Stretch = Stretch.Fill;
                 pathTable.Margin = new Thickness(5);
 
-                if (item.status == "open")
+                if (item.status == "opened" || item.status == "openedReserved")
                     pathTable.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
-                else if (item.status == "reservated") 
+                else if (item.status == "reserved") 
                     pathTable.Fill = Application.Current.Resources["BlueTables"] as SolidColorBrush;
                 else
                     pathTable.Fill = Application.Current.Resources["GreenTables"] as SolidColorBrush;

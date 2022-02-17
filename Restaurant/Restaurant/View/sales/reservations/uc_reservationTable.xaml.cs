@@ -122,25 +122,27 @@ namespace Restaurant.View.sales.reservations
 
                 //    tablesList = new List<Tables>()
                 //{
-                //    new Tables{ name = "Table-001", personsCount=2, status="empty"},
-                //    new Tables{ name = "Table-002", personsCount=3, status="open"},
-                //    new Tables{ name = "Table-003", personsCount=4, status="reservated"},
-                //    new Tables{ name = "Table-004", personsCount=5, status="empty"},
-                //    new Tables{ name = "Table-005", personsCount=6, status="empty"},
-                //    new Tables{ name = "Table-006", personsCount=7, status="reservated"},
-                //    new Tables{ name = "Table-007", personsCount=8, status="open"},
-                //    new Tables{ name = "Table-008", personsCount=9, status="open"},
-                //    new Tables{ name = "Table-009", personsCount=10, status="reservated"},
-                //    new Tables{ name = "Table-010", personsCount=11, status="empty"},
-                //    new Tables{ name = "Table-011", personsCount=6, status="empty"},
-                //    new Tables{ name = "Table-012", personsCount=12, status="open"},
-                //    new Tables{ name = "Table-013", personsCount=2, status="reservated"},
-                //    new Tables{ name = "Table-014", personsCount=8, status="empty"},
-                //    new Tables{ name = "Table-015", personsCount=3, status="empty"},
-                //    new Tables{ name = "Table-016", personsCount=9, status="reservated"},
-                //    new Tables{ name = "Table-017", personsCount=5, status="open"},
+                //    new Tables{ name = "Table-001", personsCount=2, status="closed"},
+                //    new Tables{ name = "Table-002", personsCount=3, status="opened"},
+                //    new Tables{ name = "Table-003", personsCount=4, status="reserved"},
+                //    new Tables{ name = "Table-004", personsCount=5, status="closed"},
+                //    new Tables{ name = "Table-005", personsCount=6, status="closed"},
+                //    new Tables{ name = "Table-006", personsCount=7, status="reserved"},
+                //    new Tables{ name = "Table-007", personsCount=8, status="opened"},
+                //    new Tables{ name = "Table-008", personsCount=9, status="opened"},
+                //    new Tables{ name = "Table-009", personsCount=10, status="reserved"},
+                //    new Tables{ name = "Table-010", personsCount=11, status="closed"},
+                //    new Tables{ name = "Table-011", personsCount=6, status="closed"},
+                //    new Tables{ name = "Table-012", personsCount=12, status="opened"},
+                //    new Tables{ name = "Table-013", personsCount=2, status="reserved"},
+                //    new Tables{ name = "Table-014", personsCount=8, status="closed"},
+                //    new Tables{ name = "Table-015", personsCount=3, status="closed"},
+                //    new Tables{ name = "Table-016", personsCount=9, status="reserved"},
+                //    new Tables{ name = "Table-017", personsCount=5, status="opened"},
                 //};
                await Search();
+                var list = await FillCombo.table.Get(MainWindow.branchLogin.branchId);
+                dg_tables.ItemsSource = list;
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -536,9 +538,9 @@ namespace Restaurant.View.sales.reservations
             try
             {
 
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+               
+                    HelpClass.StartAwait(grid_main);
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
                 {
                     /////////////////////////////////////
                     Thread t1 = new Thread(() =>
@@ -550,14 +552,14 @@ namespace Restaurant.View.sales.reservations
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
+               
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+               
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         public void printpackage()
@@ -573,10 +575,10 @@ namespace Restaurant.View.sales.reservations
         {//print
             try
             {
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
+               
+                    HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
                 {
                     /////////////////////////////////////
                     Thread t1 = new Thread(() =>
@@ -590,24 +592,24 @@ namespace Restaurant.View.sales.reservations
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
+               
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+               
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
         {//pie
             try
             {
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
+               
+                    HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
@@ -618,24 +620,24 @@ namespace Restaurant.View.sales.reservations
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
+               
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+               
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void Btn_preview_Click(object sender, RoutedEventArgs e)
         {//preview
             try
             {
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
+               
+                    HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
@@ -658,14 +660,14 @@ namespace Restaurant.View.sales.reservations
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
+               
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+               
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         public void ExcelPackage()
@@ -687,10 +689,10 @@ namespace Restaurant.View.sales.reservations
         {//excel
             try
             {
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
+               
+                    HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
                 {
                     Thread t1 = new Thread(() =>
                     {
@@ -701,17 +703,40 @@ namespace Restaurant.View.sales.reservations
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
+               
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+               
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         */
+        #endregion
+        #region Button In DataGrid
+
+        void cancelRowinDatagrid(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        Tables row = (Tables)dg_tables.SelectedItems[0];
+                        MessageBox.Show(row.name);
+                    }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         #endregion
         private void Cb_customerId_KeyUp(object sender, KeyEventArgs e)
         {
@@ -861,9 +886,9 @@ namespace Restaurant.View.sales.reservations
                 pathTable.Stretch = Stretch.Fill;
                 pathTable.Margin = new Thickness(5);
 
-                if (item.status == "open")
+                if (item.status == "opened" || item.status == "openedReserved")
                     pathTable.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
-                else if (item.status == "reservated")
+                else if (item.status == "reserved")
                     pathTable.Fill = Application.Current.Resources["BlueTables"] as SolidColorBrush;
                 else
                     pathTable.Fill = Application.Current.Resources["GreenTables"] as SolidColorBrush;

@@ -453,6 +453,8 @@ namespace Restaurant.View.sectionData.hallDivide
                 if (dg_table.SelectedIndex != -1)
                 {
                     table = dg_table.SelectedItem as Tables;
+                    tb_personsCount.Text = table.personsCount.ToString();
+                    NumValue_personCount = table.personsCount;
                     this.DataContext = table;
                     if (table != null)
                     {
@@ -533,7 +535,8 @@ namespace Restaurant.View.sectionData.hallDivide
         void Clear()
         {
             table = new Tables();
-            table.personsCount = 1;
+            tb_personsCount.Text = "1";
+            NumValue_personCount = 1;
             this.DataContext = table;
 
             dg_table.SelectedIndex = -1;
