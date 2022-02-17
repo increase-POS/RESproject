@@ -105,6 +105,7 @@
                             materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
                           Background="{x:Null}" BorderBrush="{x:Null}"   Style="{StaticResource SmallButtonCircleRotate}"
                                RenderTransformOrigin="0.5,0.5"
+                          Click="Btn_refresh_Click"
                             DataContext="M896,0L896,0C401.2,0,0,401.2,0,896v0c0,494.8,401.2,896,896,896h0c494.8,0,896-401.2,896-896v0C1792,401.2,1390.8,0,896,0z
 	 M1451.3,1021c-31.9,133.7-98.8,242.1-200.6,325.2c-101.8,83.1-221,124.6-357.7,124.6c-72.8,0-143.3-13.7-211.4-41.2
 	s-128.8-66.6-182.2-117.5l-96.5,96.5c-9.5,9.5-20.7,14.2-33.7,14.2s-24.2-4.7-33.7-14.2c-9.5-9.5-14.2-20.7-14.2-33.7v-335.3
@@ -152,7 +153,8 @@
                                          SelectedDate="{Binding reservationDate, Mode=OneWay}" Padding="10,0,5,0"  
                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                         materialDesign:HintAssist.Hint="date..."  
-                                        Foreground="#4E4E4E"   Height="40"    />
+                                        Foreground="#4E4E4E"   Height="40" 
+                                     SelectedDateChanged="Dp_searchDate_SelectedDateChanged"/>
 
                     </Grid>
                 </Border>
@@ -171,13 +173,13 @@
                              Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
                                BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                                 TextBlock.Foreground="#4E4E4E"
-                                SelectedTime="{Binding reservationTime, Mode=OneWay}"
+                                SelectedTime="{Binding Time, Mode=OneWay}"
                                  Padding="10,0,5,0"  
                                 materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                 materialDesign:HintAssist.Hint="start time..."  
                                 Foreground="#4E4E4E"  
                                 Height="40"  
-                                LostFocus="validateEmpty_LostFocus"/>
+                                SelectedTimeChanged="Tp_searchTime_SelectedTimeChanged"/>
                     </Grid>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="2" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1"   
@@ -201,7 +203,8 @@
                                 materialDesign:HintAssist.Hint="end time..."  
                                 Foreground="#4E4E4E"  
                                 Height="40"  
-                                LostFocus="validateEmpty_LostFocus"/>
+                                LostFocus="validateEmpty_LostFocus"
+                                SelectedTimeChanged="Tp_searchTime_SelectedTimeChanged"/>
                     </Grid>
                 </Border>
 
@@ -566,7 +569,8 @@
                                 materialDesign:HintAssist.Hint="start time..."  
                                 Foreground="#4E4E4E"  
                                 Height="40" 
-                                LostFocus="validateEmpty_LostFocus"/>
+                                LostFocus="validateEmpty_LostFocus"                       
+                                SelectedTimeChanged="Tp_reservationStartTime_SelectedTimeChanged"/>
                             <Path x:Name="p_error_reservationStartTime" Fill="#E81123" Stretch="Fill" Margin="5,5,30,5"
                               HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"

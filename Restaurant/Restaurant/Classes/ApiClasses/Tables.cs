@@ -63,11 +63,14 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
-        internal async Task<List<Tables>> GetTablesStatusInfo(int branchId = 0)
+        internal async Task<List<Tables>> GetTablesStatusInfo(int branchId, string dateSearch,string startTimeSearch, string endTimeSearch)
         {
             List<Tables> items = new List<Tables>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("branchId", branchId.ToString());
+            parameters.Add("dateSearch", dateSearch);
+            parameters.Add("startTimeSearch", startTimeSearch);
+            parameters.Add("endTimeSearch", endTimeSearch);
             IEnumerable<Claim> claims = await APIResult.getList("Tables/GetTablesStatusInfo", parameters);
             foreach (Claim c in claims)
             {
@@ -87,6 +90,17 @@ namespace Restaurant.Classes.ApiClasses
             parameters.Add("itemObject", myContent);
             parameters.Add("sectionId", sectionId.ToString());
             parameters.Add("userId", userId.ToString());
+            return await APIResult.post(method, parameters);
+        }
+
+        public async Task<int> checkTableAvailabiltiy(int tableId, string reservationDate, string startTime, string endTime)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "Tables/checkTableAvailabiltiy";
+            parameters.Add("tableId", tableId.ToString());
+            parameters.Add("reservationDate", reservationDate);
+            parameters.Add("startTime", startTime);
+            parameters.Add("endTime", endTime);
             return await APIResult.post(method, parameters);
         }
     }

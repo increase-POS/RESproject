@@ -55,16 +55,13 @@ namespace Restaurant.View.sales.reservations
         }
 
         string basicsPermission = "reservationTable_basics";
-        //User user = new User();
-        //IEnumerable<User> usersQuery;
+        List<Tables> selectedTables = new List<Tables>();
+        TablesReservation TablesReservation = new TablesReservation();
         //IEnumerable<User> users;
         //byte tgl_userState;
         #region for search
         int personCount = 0;
         int sectionId = 0;
-        DateTime searchDate;
-        DateTime startTime;
-        DateTime endTime;
         #endregion
         public static List<string> requiredControlList;
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -119,32 +116,12 @@ namespace Restaurant.View.sales.reservations
                 }
                 while (!isDone);
                 #endregion
-
-                //    tablesList = new List<Tables>()
-                //{
-                //    new Tables{ name = "Table-001", personsCount=2, status="closed"},
-                //    new Tables{ name = "Table-002", personsCount=3, status="opened"},
-                //    new Tables{ name = "Table-003", personsCount=4, status="reserved"},
-                //    new Tables{ name = "Table-004", personsCount=5, status="closed"},
-                //    new Tables{ name = "Table-005", personsCount=6, status="closed"},
-                //    new Tables{ name = "Table-006", personsCount=7, status="reserved"},
-                //    new Tables{ name = "Table-007", personsCount=8, status="opened"},
-                //    new Tables{ name = "Table-008", personsCount=9, status="opened"},
-                //    new Tables{ name = "Table-009", personsCount=10, status="reserved"},
-                //    new Tables{ name = "Table-010", personsCount=11, status="closed"},
-                //    new Tables{ name = "Table-011", personsCount=6, status="closed"},
-                //    new Tables{ name = "Table-012", personsCount=12, status="opened"},
-                //    new Tables{ name = "Table-013", personsCount=2, status="reserved"},
-                //    new Tables{ name = "Table-014", personsCount=8, status="closed"},
-                //    new Tables{ name = "Table-015", personsCount=3, status="closed"},
-                //    new Tables{ name = "Table-016", personsCount=9, status="reserved"},
-                //    new Tables{ name = "Table-017", personsCount=5, status="opened"},
-                //};
+            
                await Search();
-                var list = await FillCombo.table.Get(MainWindow.branchLogin.branchId);
-                dg_tables.ItemsSource = list;
+               
+               dg_tables.ItemsSource = selectedTables;
 
-                HelpClass.EndAwait(grid_main);
+               HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -196,11 +173,11 @@ namespace Restaurant.View.sales.reservations
         }
         async Task loading_tables()
         {
-            try
+            //try
             {
                 await refreshTablesList();
             }
-            catch { }
+            //catch { }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_tables"))
@@ -228,14 +205,33 @@ namespace Restaurant.View.sales.reservations
                             if (cb_customerId.SelectedIndex > 0)
                                 reserve.customerId = (int)cb_customerId.SelectedValue;
                             reserve.reservationDate = dp_reservationDate.SelectedDate;
-                            // reserve.reservationTime = (TimeSpan)tp_reservationStartTime.SelectedTime;
-                            //reserve.endTime = (TimeSpan)tp_reservationStartTime.SelectedTime;
+
+                          //  DateTime? _datetime = tp_reservationStartTime.SelectedTime;
+                           // String Time = _datetime.Value.Hour + ":" + _datetime.Value.Minute + ":" + _datetime.Value.Second + " " ;
+                          //  reserve.reservationTime = TimeSpan.Parse(Time);
+                           reserve.reservationTime = tp_reservationStartTime.SelectedTime;
+
+                            // _datetime = tp_reservationEndTime.SelectedTime;
+                            //  Time = _datetime.Value.Hour + ":" + _datetime.Value.Minute;
+                            //  reserve.endTime = TimeSpan.Parse(Time);
+                            reserve.endTime = tp_reservationEndTime.SelectedTime;
+
                             reserve.personsCount = int.Parse(tb_personsCount.Text);
                             reserve.notes = tb_notes.Text;
                             reserve.createUserId = MainWindow.userLogin.userId;
                             reserve.isActive = 1;
                             //save
-                            int res = await reserve.addReservation(reserve);
+                            int res = await reserve.addReservation(reserve, selectedTables);
+                            if(res > 0)
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                Clear();
+                                await refreshTablesList();
+                              
+                            }
+                            else
+                                Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+
                         }
                     }
 
@@ -255,6 +251,13 @@ namespace Restaurant.View.sales.reservations
 
         async Task<Boolean> validateReservationTime()
         {
+            foreach(Tables tb in selectedTables)
+            {
+               //int reserved = await FillCombo.table.checkTableAvailabiltiy(tb.tableId, 
+               //                                         dp_reservationDate.SelectedDate.ToString(),
+               //                                         tp_reservationStartTime.SelectedTime.ToString(),
+               //                                         tp_reservationEndTime.SelectedTime.ToString());
+            }
             return true;
         }
         #endregion
@@ -309,15 +312,43 @@ namespace Restaurant.View.sales.reservations
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
-                /*
-                await RefreshUsersList();
+                await refreshTablesList();
                 await Search();
-                */
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
 
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void Dp_searchDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void Tp_searchTime_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -352,13 +383,30 @@ namespace Restaurant.View.sales.reservations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private void Tp_reservationStartTime_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            try
+            {
+                if (tp_reservationStartTime.SelectedTime != null)
+                {
+                    TimeSpan startTime =TimeSpan.Parse(tp_reservationStartTime.SelectedTime.ToString().Split(' ')[1]);
+                    TimeSpan timeStaying = TimeSpan.FromHours(MainWindow.time_staying);
+
+                    tp_reservationEndTime.SelectedTime = tp_reservationStartTime.SelectedTime.Value.Add(timeStaying);
+                }
+            }
+            catch { }
+        }
         #endregion
         #region Refresh & Search
 
         async Task Search()
         {
             //search
-            if (tablesList is null)
+            if (tablesList is null 
+                || dp_searchDate.SelectedDate != null 
+                || tp_searchStartTime.SelectedTime != null 
+                || tp_searchStartTime.SelectedTime != null)
                 await refreshTablesList();
 
             tablesQuery = tablesList;
@@ -377,32 +425,20 @@ namespace Restaurant.View.sales.reservations
             else
                 sectionId = 0;
 
-            if (dp_searchDate.SelectedDate != null)
-                searchDate =(DateTime) dp_searchDate.SelectedDate;
-
-            if (tp_searchStartTime.SelectedTime != null)
-                startTime = (DateTime)tp_searchStartTime.SelectedTime;
-            if (tp_searchEndTime.SelectedTime != null)
-                endTime = (DateTime)tp_searchEndTime.SelectedTime;
-
-            //tablesQuery = tablesList.Where(s => s.personsCount == personCount && s.sectionId == sectionId).ToList();
-
             BuildTablesDesign();
         }
         async Task refreshTablesList()
         {
-            tablesList =  await FillCombo.table.GetTablesStatusInfo(MainWindow.branchLogin.branchId);
+            tablesList =  await FillCombo.table.GetTablesStatusInfo(MainWindow.branchLogin.branchId,dp_searchDate.SelectedDate.ToString(), tp_reservationStartTime.SelectedTime.ToString(),tp_searchEndTime.SelectedTime.ToString());
         }
         #endregion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            //user = new User();
-            //user.workHours = "0";
-            //this.DataContext = user;
-
-
-
+            selectedTables.Clear();
+            dg_tables.ItemsSource = null;
+            dg_tables.ItemsSource = selectedTables;
+            this.DataContext = TablesReservation ;
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);
@@ -726,7 +762,9 @@ namespace Restaurant.View.sales.reservations
                     if (vis is DataGridRow)
                     {
                         Tables row = (Tables)dg_tables.SelectedItems[0];
-                        MessageBox.Show(row.name);
+                        selectedTables.Remove(row);
+                        dg_tables.ItemsSource = null;
+                        dg_tables.ItemsSource = selectedTables;
                     }
                 HelpClass.EndAwait(grid_main);
             }
@@ -956,11 +994,22 @@ namespace Restaurant.View.sales.reservations
             var button = sender as Button;
             string tableName = button.Tag.ToString();
             var table = tablesList.Where(x => x.name == tableName).FirstOrDefault();
-            MessageBox.Show("Hey you Click me! I'm  " + table.name + " & person Count is " + table.personsCount);
+            if (!selectedTables.Contains(table))
+            {
+                selectedTables.Add(table);
+                dg_tables.ItemsSource = null;
+                dg_tables.ItemsSource = selectedTables;
+            }
         }
+
+
+
 
         #endregion
 
-        
+        private void Btn_refresh_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
