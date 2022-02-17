@@ -619,6 +619,7 @@ namespace Restaurant.Classes
         public static string rep_print_count;
         public static string docPapersize;
         public static string Allow_print_inv_count;
+        public static string show_header;
         public static async Task Getprintparameter()
         {
             List<SetValues> printList = new List<SetValues>();
@@ -642,6 +643,7 @@ namespace Restaurant.Classes
             rep_print_count = printList.Where(X => X.name == "rep_copy_count").FirstOrDefault().value;
 
             Allow_print_inv_count = printList.Where(X => X.name == "Allow_print_inv_count").FirstOrDefault().value;
+            show_header = printList.Where(X => X.name == "show_header").FirstOrDefault().value;
         }
         public static async Task GetReportlang()
         {
