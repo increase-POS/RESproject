@@ -15,7 +15,7 @@ using Restaurant.ApiClasses;
 
 namespace Restaurant.Classes
 {
-   public class Object
+    public class Object
     {
 
         public int objectId { get; set; }
@@ -35,6 +35,7 @@ namespace Restaurant.Classes
         public Boolean canDelete { get; set; }
 
         List<Object> plist = new List<Object>();
+        List<Object> clist = new List<Object>();
 
         public async Task<List<Object>> GetAll()
         {
@@ -97,7 +98,7 @@ namespace Restaurant.Classes
             //}
         }
 
-      
+
         public List<Object> GetParents(List<Object> all, string objName)
         {
             plist = new List<Object>();
@@ -146,7 +147,19 @@ namespace Restaurant.Classes
 
             return ptempob;
         }
+        static public List<Object> findChildrenList(string objectName, List<Object> all)
+        {
+            try
+            {
+                int objectId = FillCombo.objectsList.Where(x => x.name == objectName.ToString()).FirstOrDefault().objectId;
+                return all.Where(x => x.parentObjectId == objectId).ToList();
+            }
+           catch
+            {
+                return new List<Object>();
+            }
 
+        }
         public async Task<int> Save(Object newObject)
         {
 
