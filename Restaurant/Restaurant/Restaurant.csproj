@@ -441,6 +441,9 @@
     <Compile Include="View\settings\uc_general.xaml.cs">
       <DependentUpon>uc_general.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\settings\uc_permissions.xaml.cs">
+      <DependentUpon>uc_permissions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\settings\uc_settings.xaml.cs">
       <DependentUpon>uc_settings.xaml</DependentUpon>
     </Compile>
@@ -897,6 +900,10 @@
     <Page Include="View\settings\uc_general.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\settings\uc_permissions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\settings\uc_settings.xaml">
       <SubType>Designer</SubType>
