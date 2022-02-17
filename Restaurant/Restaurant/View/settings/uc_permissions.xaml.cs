@@ -84,6 +84,7 @@ namespace Restaurant.View.settings
 
         string basicsPermission = "permissions_basics";
         string usersPermission = "Permissions_users";
+        string _parentObjectName = "categories";
         Group group = new Group();
         IEnumerable<Group> groupsQuery;
         IEnumerable<Group> groups;
@@ -666,41 +667,48 @@ namespace Restaurant.View.settings
             {
                 Button button = sender as Button;
                 paint(button.Tag.ToString());
-                isEnabledButtons(button.Tag.ToString());
+                //isEnabledButtons(button.Tag.ToString());
                 //grid_home.Visibility = Visibility.Visible;
                 //btn_home.Opacity = 1;
+                List<Object> list =   Object.findChildrenList(button.Tag.ToString(), FillCombo.objectsList);
+                string s = "";
+                foreach (var item in list)
+                {
+                    s += item.name+" \n";
+                }
+                MessageBox.Show(s);
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void isEnabledButtons(string tag)
-        {
-            // btn
-            List<Button> tabsButtonsList = FindControls.FindVisualChildren<Button>(this)
-                .Where(x =>  x.Tag != null).ToList();
-            foreach (var item in tabsButtonsList)
-            {
-                if (item.Tag.ToString() == tag)
-                {
-                    item.IsEnabled = false;
-                    item.Opacity = 1;
-                }
-                else
-                    item.IsEnabled = true;
-            }
-            //btn_home.IsEnabled = true;
-            //btn_catalog.IsEnabled = true;
-            //btn_store.IsEnabled = true;
-            //btn_sale.IsEnabled = true;
-            //btn_purchase.IsEnabled = true;
-            //btn_sectionData.IsEnabled = true;
-            //btn_reports.IsEnabled = true;
-            //btn_settings.IsEnabled = true;
-            //btn_alerts.IsEnabled = true;
-            //btn_account.IsEnabled = true;
-        }
+        //private void isEnabledButtons(string tag)
+        //{
+        //    // btn
+        //    List<Button> tabsButtonsList = FindControls.FindVisualChildren<Button>(this)
+        //        .Where(x =>  x.Tag != null).ToList();
+        //    foreach (var item in tabsButtonsList)
+        //    {
+        //        if (item.Tag.ToString() == tag)
+        //        {
+        //            item.IsEnabled = false;
+        //            item.Opacity = 1;
+        //        }
+        //        else
+        //            item.IsEnabled = true;
+        //    }
+        //    //btn_home.IsEnabled = true;
+        //    //btn_catalog.IsEnabled = true;
+        //    //btn_store.IsEnabled = true;
+        //    //btn_sale.IsEnabled = true;
+        //    //btn_purchase.IsEnabled = true;
+        //    //btn_sectionData.IsEnabled = true;
+        //    //btn_reports.IsEnabled = true;
+        //    //btn_settings.IsEnabled = true;
+        //    //btn_alerts.IsEnabled = true;
+        //    //btn_account.IsEnabled = true;
+        //}
         public void paint(string tag)
         {
             bdrMain.RenderTransform = Animations.borderAnimation(50, bdrMain, true);
@@ -741,6 +749,313 @@ namespace Restaurant.View.settings
             grid_account.Visibility = Visibility.Hidden;
             */
         }
+        #endregion
+        #region   secondLevel
+        /*
+        void BuildObjectsDesign(List<Object> objectsChildren)
+        {
+            grid_secondLevel.Children.Clear();
+
+            //   < Border  BorderBrush = "#E8E8E8" Grid.RowSpan = "3"
+            //    BorderThickness = "1" Margin = "0,10" >
+
+            //      < Border Grid.Column = "3" BorderBrush = "#E8E8E8" Grid.RowSpan = "3"
+            //    BorderThickness = "1" Margin = "0,10" >
+
+            //      < Border Grid.Column = "5" BorderBrush = "#E8E8E8" Grid.RowSpan = "3"
+            //    BorderThickness = "1" Margin = "0,10" >
+            Border border;
+            for (int i = 0; i < 3; i++)
+            {
+                border = new Border();
+                Grid.SetColumn(border, (i*2)+1);
+                border.BorderBrush = Application.Current.Resources["veryLightGrey"] as SolidColorBrush;
+
+
+                itemNameText.Text = item.name;
+                itemNameText.VerticalAlignment = VerticalAlignment.Center;
+                itemNameText.HorizontalAlignment = HorizontalAlignment.Center;
+                gridContainer.Children.Add(itemNameText);
+
+                tableButton.Tag = item.name;
+                tableButton.Margin = new Thickness(5);
+                tableButton.Padding = new Thickness(0);
+                tableButton.Background = null;
+                tableButton.BorderBrush = null;
+            }
+           
+
+            foreach (var item in objectsChildren)
+            {
+
+                #region button
+                Button tableButton = new Button();
+                tableButton.Tag = item.name;
+                tableButton.Margin = new Thickness(5);
+                tableButton.Padding = new Thickness(0);
+                tableButton.Background = null;
+                tableButton.BorderBrush = null;
+
+                if (item.personsCount <= 2)
+                {
+                    tableButton.Height = 90;
+                    tableButton.Width = 80;
+                }
+                else if (item.personsCount == 3)
+                {
+                    tableButton.Height = 130;
+                    tableButton.Width = 90;
+                }
+                else if (item.personsCount == 4)
+                {
+                    tableButton.Height = 140;
+                    tableButton.Width = 100;
+                }
+                else if (item.personsCount == 5)
+                {
+                    tableButton.Height = 150;
+                    tableButton.Width = 110;
+                }
+                else if (item.personsCount == 6)
+                {
+                    tableButton.Height = 160;
+                    tableButton.Width = 120;
+                }
+                else if (item.personsCount == 7)
+                {
+                    tableButton.Height = 170;
+                    tableButton.Width = 130;
+                }
+                else if (item.personsCount == 8)
+                {
+                    tableButton.Height = 180;
+                    tableButton.Width = 140;
+                }
+                else if (item.personsCount == 9)
+                {
+                    tableButton.Height = 190;
+                    tableButton.Width = 150;
+                }
+                else if (item.personsCount > 9)
+                {
+                    tableButton.Height = 200;
+                    tableButton.Width = 160;
+                }
+
+                tableButton.Click += tableButton_Click;
+
+                #region Grid Container
+                Grid gridContainer = new Grid();
+                int rowCount = 3;
+                RowDefinition[] rd = new RowDefinition[rowCount];
+                for (int i = 0; i < rowCount; i++)
+                {
+                    rd[i] = new RowDefinition();
+                }
+                rd[0].Height = new GridLength(1, GridUnitType.Star);
+                rd[1].Height = new GridLength(20, GridUnitType.Pixel);
+                rd[2].Height = new GridLength(20, GridUnitType.Pixel);
+                for (int i = 0; i < rowCount; i++)
+                {
+                    gridContainer.RowDefinitions.Add(rd[i]);
+                }
+                /////////////////////////////////////////////////////
+                #region Path table
+                Path pathTable = new Path();
+                pathTable.Stretch = Stretch.Fill;
+                pathTable.Margin = new Thickness(5);
+
+                if (item.status == "opened" || item.status == "openedReserved")
+                    pathTable.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                else if (item.status == "reserved")
+                    pathTable.Fill = Application.Current.Resources["BlueTables"] as SolidColorBrush;
+                else
+                    pathTable.Fill = Application.Current.Resources["GreenTables"] as SolidColorBrush;
+
+                if (item.personsCount <= 2)
+                    pathTable.Data = App.Current.Resources["tablePersons2"] as Geometry;
+                else if (item.personsCount == 3)
+                    pathTable.Data = App.Current.Resources["tablePersons3"] as Geometry;
+                else if (item.personsCount == 4)
+                    pathTable.Data = App.Current.Resources["tablePersons4"] as Geometry;
+                else if (item.personsCount == 5)
+                    pathTable.Data = App.Current.Resources["tablePersons5"] as Geometry;
+                else if (item.personsCount == 6)
+                    pathTable.Data = App.Current.Resources["tablePersons6"] as Geometry;
+                else if (item.personsCount == 7)
+                    pathTable.Data = App.Current.Resources["tablePersons7"] as Geometry;
+                else if (item.personsCount == 8)
+                    pathTable.Data = App.Current.Resources["tablePersons8"] as Geometry;
+                else if (item.personsCount == 9)
+                    pathTable.Data = App.Current.Resources["tablePersons9"] as Geometry;
+                else if (item.personsCount > 9)
+                    pathTable.Data = App.Current.Resources["tablePersons9Plus"] as Geometry;
+
+                gridContainer.Children.Add(pathTable);
+                #endregion
+                #region   personCount 
+                if (item.personsCount > 9)
+                {
+                    var itemPersonCountText = new TextBlock();
+                    itemPersonCountText.Text = item.personsCount.ToString();
+                    itemPersonCountText.Foreground = Application.Current.Resources["White"] as SolidColorBrush;
+                    itemPersonCountText.FontSize = 32;
+                    itemPersonCountText.VerticalAlignment = VerticalAlignment.Center;
+                    itemPersonCountText.HorizontalAlignment = HorizontalAlignment.Center;
+                    gridContainer.Children.Add(itemPersonCountText);
+                }
+                #endregion
+                #region   name
+                var itemNameText = new TextBlock();
+                itemNameText.Text = item.name;
+                itemNameText.VerticalAlignment = VerticalAlignment.Center;
+                itemNameText.HorizontalAlignment = HorizontalAlignment.Center;
+                itemNameText.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                Grid.SetRow(itemNameText, 1);
+                gridContainer.Children.Add(itemNameText);
+                #endregion
+                #region   status
+                var itemStatusText = new TextBlock();
+                itemStatusText.Text = item.status;
+                itemStatusText.VerticalAlignment = VerticalAlignment.Center;
+                itemStatusText.HorizontalAlignment = HorizontalAlignment.Center;
+                itemStatusText.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                Grid.SetRow(itemStatusText, 2);
+                gridContainer.Children.Add(itemStatusText);
+                #endregion
+                tableButton.Content = gridContainer;
+
+                #endregion
+                wp_tablesContainer.Children.Add(tableButton);
+                #endregion
+            }
+        }
+        void tableButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            string tableName = button.Tag.ToString();
+            var table = tablesList.Where(x => x.name == tableName).FirstOrDefault();
+            MessageBox.Show("Hey you Click me! I'm  " + table.name + " & person Count is " + table.personsCount);
+        }
+        */
+        private void btn_secondLevelClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                
+                HelpClass.StartAwait(grid_main);
+                Button button = sender as Button;
+                paintSecondLevel();
+                foreach (Path path in FindControls.FindVisualChildren<Path>(this))
+                {
+                    // do something with tb here
+                    if (path.Name == "path_" + button.Tag)
+                    {
+                        path.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#178DD2"));
+                        break;
+                    }
+                }
+                foreach (TextBlock textBlock in FindControls.FindVisualChildren<TextBlock>(this))
+                {
+                    if (textBlock.Name == "txt_" + button.Tag)
+                    {
+                        textBlock.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#178DD2"));
+                        break;
+                    }
+                }
+
+                _parentObjectName = button.Tag.ToString();
+                Tb_search_TextChanged(null, null);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        public void paintSecondLevel()
+        {
+            paintHome();
+            /*
+            paintCatalog();
+            paintStore();
+            paintPurchase();
+            paintSale();
+            paintAccounts();
+            paintSectionData();
+            paintSettings();
+            paintAlerts();
+            paintReports();
+            */
+        }
+
+        public void paintHome()
+        {
+            /*
+            path_dashboard.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#67686d"));
+            txt_dashboard.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#67686d"));
+            */
+        }
+        #endregion
+        #region groupObjects
+        /*
+        IEnumerable<GroupObject> groupObjectsQuery;
+        IEnumerable<GroupObject> groupObjects;
+        void RefreshGroupObjectsView()
+        {
+            dg_permissions.ItemsSource = groupObjectsQuery;
+        }
+        private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
+        {//search
+            try
+            {
+                if (sender != null)
+                    SectionData.StartAwait(grid_main);
+                if (groupObjects is null)
+                    await RefreshGroupObjectList();
+                searchText = tb_searchGroup.Text;
+                groupObjectsQuery = groupObjects.Where(s => s.groupId == group.groupId
+                && s.objectType != "basic" && s.parentObjectName == _parentObjectName);
+                RefreshGroupObjectsView();
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+                SectionData.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender != null)
+                    SectionData.StartAwait(grid_main);
+                await RefreshGroupObjectList();
+                Tb_search_TextChanged(null, null);
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    SectionData.EndAwait(grid_main);
+                SectionData.ExceptionMessage(ex, this);
+            }
+        }
+        async Task<IEnumerable<GroupObject>> RefreshGroupObjectList()
+        {
+            groupObjects = await groupObject.GetAll();
+            return groupObjects;
+        }
+        */
+
         #endregion
         private void Btn_usersList_Click(object sender, RoutedEventArgs e)
         {
