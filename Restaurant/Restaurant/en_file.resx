@@ -3247,4 +3247,22 @@ Please add Email in setting</value>
   <data name="trVendorsCustomerUsers" xml:space="preserve">
     <value>Vendors, Customer, Users</value>
   </data>
+  <data name="trAddCustomer" xml:space="preserve">
+    <value>Add Customer</value>
+  </data>
+  <data name="trEndTimeHint" xml:space="preserve">
+    <value>End Time...</value>
+  </data>
+  <data name="trPersonsCountHint" xml:space="preserve">
+    <value>Persons Count...</value>
+  </data>
+  <data name="trReservationDaterHint" xml:space="preserve">
+    <value>Reservation Date...</value>
+  </data>
+  <data name="trStartTimeHint" xml:space="preserve">
+    <value>Start Time...</value>
+  </data>
+  <data name="trTheTables" xml:space="preserve">
+    <value>Tables</value>
+  </data>
 </root>

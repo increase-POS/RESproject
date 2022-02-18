@@ -3223,4 +3223,22 @@
   <data name="trVendorsCustomerUsers" xml:space="preserve">
     <value>الموردون, العملاء, المستخدمون</value>
   </data>
+  <data name="trAddCustomer" xml:space="preserve">
+    <value>إضافة زبون</value>
+  </data>
+  <data name="trEndTimeHint" xml:space="preserve">
+    <value>وقت الانتهاء...</value>
+  </data>
+  <data name="trPersonsCountHint" xml:space="preserve">
+    <value>عدد الأشخاص...</value>
+  </data>
+  <data name="trReservationDaterHint" xml:space="preserve">
+    <value>تاريخ الحجز ...</value>
+  </data>
+  <data name="trStartTimeHint" xml:space="preserve">
+    <value>وقت البداية...</value>
+  </data>
+  <data name="trTheTables" xml:space="preserve">
+    <value>الطاولات</value>
+  </data>
 </root>
