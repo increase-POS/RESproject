@@ -1,8 +1,11 @@
 ﻿using netoaster;
 using Restaurant.Classes;
+using Restaurant.Classes.ApiClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -79,8 +82,8 @@ namespace Restaurant.View.sales.reservations
         }
 
         string basicsPermission = "reservationsUpdate_basics";
-        //User user = new User();
-        //IEnumerable<User> usersQuery;
+        IEnumerable<TablesReservation> reservationsList;
+        TablesReservation reservation = new TablesReservation();
         //IEnumerable<User> users;
         //byte tgl_userState;
         string searchText = "";
@@ -92,6 +95,23 @@ namespace Restaurant.View.sales.reservations
         }
         #region loading
         List<keyValueBool> loadingList;
+        async Task loading_reservaitions()
+        {
+            //try
+            {
+                await refreshReservaitionsList();
+            }
+            //catch { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_reservaitions"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+       
         async void loading_fillCustomerCombo()
         {
             try
@@ -109,6 +129,11 @@ namespace Restaurant.View.sales.reservations
                 }
             }
         }
+
+        async Task refreshReservaitionsList()
+        {
+            reservationsList = await reservation.Get();
+        }
         #endregion
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
@@ -118,21 +143,22 @@ namespace Restaurant.View.sales.reservations
                 requiredControlList = new List<string> { "" };
                 if (MainWindow.lang.Equals("en"))
                 {
-                    //MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    //MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
+                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
                 #region loading
                 loadingList = new List<keyValueBool>();
                 bool isDone = true;
+                loadingList.Add(new keyValueBool { key = "loading_reservaitions", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_fillCustomerCombo", value = false });
 
-
+                loading_reservaitions();
                 loading_fillCustomerCombo();
                 do
                 {

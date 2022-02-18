@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Restaurant.ApiClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,6 +39,22 @@ namespace Restaurant.Classes.ApiClasses
             myContent = JsonConvert.SerializeObject(tables);
             parameters.Add("tables", myContent);
             return await APIResult.post(method, parameters);
+        }
+        internal async Task<IEnumerable<TablesReservation>> Get(int branchId = 0, int sectionId = 0)
+        {
+            List<TablesReservation> items = new List<TablesReservation>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("branchId", branchId.ToString());
+            parameters.Add("sectionId", sectionId.ToString());
+            IEnumerable<Claim> claims = await APIResult.getList("Tables/GetReservations", parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<TablesReservation>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
         }
     }
 }
