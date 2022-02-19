@@ -83,6 +83,7 @@ namespace Restaurant.View.sales.reservations
 
         string basicsPermission = "reservationsUpdate_basics";
         IEnumerable<TablesReservation> reservationsList;
+        IEnumerable<TablesReservation> reservationsQuery;
         TablesReservation reservation = new TablesReservation();
         //IEnumerable<User> users;
         //byte tgl_userState;
@@ -129,11 +130,7 @@ namespace Restaurant.View.sales.reservations
                 }
             }
         }
-
-        async Task refreshReservaitionsList()
-        {
-            reservationsList = await reservation.Get();
-        }
+      
         #endregion
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
@@ -178,6 +175,8 @@ namespace Restaurant.View.sales.reservations
                 }
                 while (!isDone);
                 #endregion
+                await Search();
+
                 btn_confirm.IsEnabled = false;
                 btn_cancel.IsEnabled = false;
 
@@ -314,7 +313,11 @@ namespace Restaurant.View.sales.reservations
                 HelpClass.StartAwait(grid_main);
                 //selection
 
-
+                if (dg_reservation.SelectedIndex != -1)
+                {
+                    reservation = dg_reservation.SelectedItem as TablesReservation;
+                    this.DataContext = reservation;
+                }
                 HelpClass.clearValidate(requiredControlList, this);
                 HelpClass.EndAwait(grid_main);
             }
@@ -345,31 +348,26 @@ namespace Restaurant.View.sales.reservations
         }
         #endregion
         #region Refresh & Search
-        /*
+
         async Task Search()
         {
             //search
-            if (users is null)
-                await RefreshUsersList();
+            if (reservationsList is null)
+                await refreshReservaitionsList();
             searchText = tb_search.Text.ToLower();
-            usersQuery = users.Where(s => (s.name.ToLower().Contains(searchText) ||
-            s.job.ToLower().Contains(searchText)
-            ) && s.isActive == tgl_userState);
-            RefreshCustomersView();
+            reservationsQuery = reservationsList.Where(s => s.code.ToLower().Contains(searchText) ||
+            s.status.ToLower().Contains(searchText));
+            RefreshReservationsView();
         }
-        async Task<IEnumerable<User>> RefreshUsersList()
+        async Task refreshReservaitionsList()
         {
-
-            users = await user.Get();
-            return users;
-
+            reservationsList = await reservation.Get(MainWindow.branchLogin.branchId);
         }
-        void RefreshCustomersView()
+        void RefreshReservationsView()
         {
-            dg_user.ItemsSource = usersQuery;
-            txt_count.Text = usersQuery.Count().ToString();
+            dg_reservation.ItemsSource = reservationsQuery;
+            txt_count.Text = reservationsQuery.Count().ToString();
         }
-        */
         #endregion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()

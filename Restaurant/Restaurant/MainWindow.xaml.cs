@@ -85,6 +85,7 @@ namespace Restaurant
         internal static decimal? tax;
         internal static int? itemCost;
         internal static string dateFormat;
+        internal static string timeFormat;
         internal static string accuracy;
         internal static decimal? StorageCost;
         public static int Idletime = 5;

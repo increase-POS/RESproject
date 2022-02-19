@@ -93,11 +93,12 @@ namespace Restaurant.Classes.ApiClasses
             return await APIResult.post(method, parameters);
         }
 
-        public async Task<int> checkTableAvailabiltiy(int tableId, string reservationDate, string startTime, string endTime)
+        public async Task<int> checkTableAvailabiltiy(int tableId,int branchId, string reservationDate, string startTime, string endTime)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Tables/checkTableAvailabiltiy";
             parameters.Add("tableId", tableId.ToString());
+            parameters.Add("branchId", branchId.ToString());
             parameters.Add("reservationDate", reservationDate);
             parameters.Add("startTime", startTime);
             parameters.Add("endTime", endTime);

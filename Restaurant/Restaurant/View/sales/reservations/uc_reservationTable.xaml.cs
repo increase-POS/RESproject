@@ -222,21 +222,32 @@ namespace Restaurant.View.sales.reservations
                         if (valid)
                         {
                             TablesReservation reserve = new TablesReservation();
+                        reserve.branchId = MainWindow.branchLogin.branchId;
+                        reserve.code = await reserve.generateReserveCode("tr",MainWindow.branchLogin.code,MainWindow.branchLogin.branchId);
                             if (cb_customerId.SelectedIndex > 0)
                                 reserve.customerId = (int)cb_customerId.SelectedValue;
                             reserve.reservationDate = dp_reservationDate.SelectedDate;
 
+                        #region reservation time period                      
                         DateTime startTime = DateTime.Parse(dp_reservationDate.SelectedDate.ToString().Split(' ')[0]
                                 + ' ' + tp_reservationStartTime.SelectedTime.ToString().Split(' ')[1]
                                 + ' ' + tp_reservationStartTime.SelectedTime.ToString().Split(' ')[2]);
 
-                        DateTime endTime = DateTime.Parse(dp_reservationDate.SelectedDate.ToString().Split(' ')[0]
+                        var dateOfStartTime = DateTime.Parse(tp_reservationStartTime.SelectedTime.ToString().Split(' ')[0]);
+                        var dateOfEndTime = DateTime.Parse(tp_reservationEndTime.SelectedTime.ToString().Split(' ')[0]);
+                        var difference = (dateOfEndTime - dateOfStartTime).Days;
+                        DateTime reservationEndDate = DateTime.Parse(dp_reservationDate.SelectedDate.ToString().Split(' ')[0]) ;
+                        if (difference > 0)
+                        {
+                            reservationEndDate = DateTime.Parse(dp_reservationDate.SelectedDate.ToString().Split(' ')[0]).AddDays(1);
+                        }
+                        DateTime endTime = DateTime.Parse(reservationEndDate.ToString().Split(' ')[0]
                                             + ' ' + tp_reservationEndTime.SelectedTime.ToString().Split(' ')[1]
                                             + ' ' + tp_reservationEndTime.SelectedTime.ToString().Split(' ')[2]);
 
                         reserve.reservationTime = startTime;
                         reserve.endTime = endTime;
-
+                        #endregion
                         reserve.personsCount = int.Parse(tb_personsCount.Text);
                         reserve.notes = tb_notes.Text;
                         reserve.createUserId = MainWindow.userLogin.userId;
@@ -283,7 +294,7 @@ namespace Restaurant.View.sales.reservations
                                 + ' ' + tp_reservationEndTime.SelectedTime.ToString().Split(' ')[2]);
             foreach (Tables tb in selectedTables)
             {
-                int notReserved = await FillCombo.table.checkTableAvailabiltiy(tb.tableId,
+                int notReserved = await FillCombo.table.checkTableAvailabiltiy(tb.tableId,MainWindow.branchLogin.branchId,
                                                          dp_reservationDate.SelectedDate.ToString(),
                                                          startTime.ToString(),
                                                          endTime.ToString());

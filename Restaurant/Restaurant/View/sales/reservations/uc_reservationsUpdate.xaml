@@ -159,7 +159,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Width="*"  Header="Date" Binding="{Binding Path=reservationDate}">
+                                <DataGridTextColumn Width="*"  Header="Date" Binding="{Binding Path=reservationDate, Converter={StaticResource dateFrameConverter }}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>
@@ -170,7 +170,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Width="*"  Header="Time" Binding="{Binding Path=reservationTime}">
+                                <DataGridTextColumn Width="*"  Header="Time" Binding="{Binding Path=reservationTime, Converter={StaticResource timeFrameConverter }}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>
