@@ -67,12 +67,12 @@ namespace Restaurant
         public static string second = "";
         public static string lang = "ar";
         public static string Reportlang = "ar";
-        public static string companyName;
-        public static string Email;
-        public static string Fax;
-        public static string Mobile;
-        public static string Address;
-        //public static CountryCode Region;
+        //public static string companyName;
+        //public static string Email;
+        //public static string Fax;
+        //public static string Mobile;
+        //public static string Address;
+
         public static string Currency;
         public static int CurrencyId;
         public static string Phone;
@@ -100,10 +100,10 @@ namespace Restaurant
         //public static string print_on_save_pur;
         //public static string email_on_save_sale;
         //public static string email_on_save_pur;
-        public static string rep_printer_name;
+        //public static string rep_printer_name;
         //public static string sale_printer_name;
         //public static string salePaperSize;
-        public static string rep_print_count;
+        //public static string rep_print_count;
         //public static string docPapersize;
         //public static string Allow_print_inv_count;
         /////////////////////////////////////////////
@@ -114,7 +114,7 @@ namespace Restaurant
         static public List<GroupObject> groupObjects = new List<GroupObject>();
         //static SettingCls setModel = new SettingCls();
         //static SetValues valueModel = new SetValues();
-        static int nameId, addressId, emailId, mobileId, phoneId, faxId, logoId, taxId;
+        //static int nameId, addressId, emailId, mobileId, phoneId, faxId, logoId, taxId;
         public static string logoImage;
 
 
@@ -861,6 +861,7 @@ namespace Restaurant
                 loading_RefreshVendors();
                 loading_RefreshCards();
               await  FillCombo.getprintSitting();
+                await FillCombo.loading_getDefaultSystemInfo();
 
                 //loading_getUserPath();
                 //loading_getTax();

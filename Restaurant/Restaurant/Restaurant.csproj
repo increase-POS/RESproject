@@ -501,6 +501,9 @@
     <Compile Include="View\windows\wd_branchesList.xaml.cs">
       <DependentUpon>wd_branchesList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_companyInfo.xaml.cs">
+      <DependentUpon>wd_companyInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_diningHallKitchen.xaml.cs">
       <DependentUpon>wd_diningHallKitchen.xaml</DependentUpon>
     </Compile>
@@ -978,6 +981,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_branchesList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_companyInfo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

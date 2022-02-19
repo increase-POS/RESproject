@@ -240,11 +240,11 @@ namespace Restaurant.Classes
 
             //header info
 
-            invheader = invheader.Replace("[[companyname]]", MainWindow.companyName.Trim());
-            invheader = invheader.Replace("[[phone]]", MainWindow.Phone.Trim());
-            invheader = invheader.Replace("[[Email]]", MainWindow.Email.Trim());
-            invheader = invheader.Replace("[[fax]]", MainWindow.Fax.Trim());
-            invheader = invheader.Replace("[[address]]", MainWindow.Address.Trim());
+            invheader = invheader.Replace("[[companyname]]", FillCombo.companyName.Trim());
+            invheader = invheader.Replace("[[phone]]", FillCombo.Phone.Trim());
+            invheader = invheader.Replace("[[Email]]", FillCombo.Email.Trim());
+            invheader = invheader.Replace("[[fax]]", FillCombo.Fax.Trim());
+            invheader = invheader.Replace("[[address]]", FillCombo.Address.Trim());
             invheader = invheader.Replace("[[trphone]]", MainWindow.resourcemanagerreport.GetString("trPhone").Trim() + ": ");
             invheader = invheader.Replace("[[trfax]]", MainWindow.resourcemanagerreport.GetString("trFax").Trim() + ": ");
             invheader = invheader.Replace("[[traddress]]", MainWindow.resourcemanagerreport.GetString("trAddress").Trim() + ": ");
@@ -502,11 +502,11 @@ namespace Restaurant.Classes
 
             //header info
 
-            invheader = invheader.Replace("[[companyname]]", MainWindow.companyName.Trim());
-            invheader = invheader.Replace("[[phone]]", MainWindow.Phone.Trim());
-            invheader = invheader.Replace("[[Email]]", MainWindow.Email.Trim());
-            invheader = invheader.Replace("[[fax]]", MainWindow.Fax.Trim());
-            invheader = invheader.Replace("[[address]]", MainWindow.Address.Trim());
+            invheader = invheader.Replace("[[companyname]]", FillCombo.companyName.Trim());
+            invheader = invheader.Replace("[[phone]]", FillCombo.Phone.Trim());
+            invheader = invheader.Replace("[[Email]]", FillCombo.Email.Trim());
+            invheader = invheader.Replace("[[fax]]", FillCombo.Fax.Trim());
+            invheader = invheader.Replace("[[address]]", FillCombo.Address.Trim());
             invheader = invheader.Replace("[[trphone]]", MainWindow.resourcemanagerreport.GetString("trPhone").Trim() + ": ");
             invheader = invheader.Replace("[[trfax]]", MainWindow.resourcemanagerreport.GetString("trFax").Trim() + ": ");
             invheader = invheader.Replace("[[traddress]]", MainWindow.resourcemanagerreport.GetString("trAddress").Trim() + ": ");
@@ -797,11 +797,11 @@ namespace Restaurant.Classes
 
             //header info
 
-            invheader = invheader.Replace("[[companyname]]", MainWindow.companyName.Trim());
-            invheader = invheader.Replace("[[phone]]", MainWindow.Phone.Trim());
-            invheader = invheader.Replace("[[Email]]", MainWindow.Email.Trim());
-            invheader = invheader.Replace("[[fax]]", MainWindow.Fax.Trim());
-            invheader = invheader.Replace("[[address]]", MainWindow.Address.Trim());
+            invheader = invheader.Replace("[[companyname]]", FillCombo.companyName.Trim());
+            invheader = invheader.Replace("[[phone]]", FillCombo.Phone.Trim());
+            invheader = invheader.Replace("[[Email]]", FillCombo.Email.Trim());
+            invheader = invheader.Replace("[[fax]]", FillCombo.Fax.Trim());
+            invheader = invheader.Replace("[[address]]", FillCombo.Address.Trim());
             invheader = invheader.Replace("[[trphone]]", MainWindow.resourcemanagerreport.GetString("trPhone").Trim() + ": ");
             invheader = invheader.Replace("[[trfax]]", MainWindow.resourcemanagerreport.GetString("trFax").Trim() + ": ");
             invheader = invheader.Replace("[[traddress]]", MainWindow.resourcemanagerreport.GetString("trAddress").Trim() + ": ");

@@ -33,7 +33,7 @@ namespace Restaurant.View.windows
     {
 
         //phone variabels
-        IEnumerable<Country> countrynum;
+        IEnumerable<CountryCode> countrynum;
         IEnumerable<City> citynum;
         IEnumerable<City> citynumofcountry;
         string imgFileName = "pic/no-image-icon-125x125.png";
@@ -43,7 +43,7 @@ namespace Restaurant.View.windows
         bool firstchangephone = true;
         bool firstchangefax = true;
 
-        Country countrycodes = new Country();
+        CountryCode countrycodes = new CountryCode();
         City cityCodes = new City();
         OpenFileDialog openFileDialog = new OpenFileDialog();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -185,15 +185,6 @@ namespace Restaurant.View.windows
         }
 
 
-
-
-
-
-
-
-
-
-
         private void Img_customer_Click(object sender, RoutedEventArgs e)
         {//select image
 
@@ -224,9 +215,9 @@ namespace Restaurant.View.windows
 
         //area code methods
 
-        async Task<IEnumerable<Country>> RefreshCountry()
+        async Task<IEnumerable<CountryCode>> RefreshCountry()
         {
-            countrynum = await countrycodes.GetAll();
+            countrynum = await countrycodes.GetAllCountries();
             return countrynum;
         }
         private async Task fillCountries()
@@ -249,9 +240,9 @@ namespace Restaurant.View.windows
             //cb_areaMobile.SelectedIndex = 8;
             //cb_areaPhone.SelectedIndex = 8;
             //cb_areaFax.SelectedIndex = 8;
-            cb_areaMobile.SelectedValue = MainWindow.Region.countryId;
-            cb_areaPhone.SelectedValue = MainWindow.Region.countryId;
-            cb_areaFax.SelectedValue = MainWindow.Region.countryId;
+            cb_areaMobile.SelectedValue = FillCombo.Region.countryId;
+            cb_areaPhone.SelectedValue = FillCombo.Region.countryId;
+            cb_areaFax.SelectedValue = FillCombo.Region.countryId;
         }
 
         async Task<IEnumerable<City>> RefreshCity()
@@ -552,7 +543,7 @@ namespace Restaurant.View.windows
 
         void Clear()
         {
-            this.DataContext = new Users();
+            this.DataContext = new User();
 
 
             #region mobile-Phone-fax-country

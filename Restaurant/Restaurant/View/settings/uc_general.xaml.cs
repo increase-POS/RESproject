@@ -414,11 +414,11 @@ namespace Restaurant.View.settings
                 if (MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one"))
                 {
                     Window.GetWindow(this).Opacity = 0.2;
-                    /*
+
                     wd_companyInfo w = new wd_companyInfo();
                     w.isFirstTime = false;
                     w.ShowDialog();
-                    */
+
                     Window.GetWindow(this).Opacity = 1;
                 }
                 else

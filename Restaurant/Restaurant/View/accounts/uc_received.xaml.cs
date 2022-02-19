@@ -1260,7 +1260,7 @@ namespace Restaurant.View.accounts
                     if (cashtrans.cashTransId > 0)
                     {
                         BuildvoucherReport();
-                        LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
+                        LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, short.Parse(FillCombo.rep_print_count));
 
                     }
                 }
@@ -1558,7 +1558,7 @@ namespace Restaurant.View.accounts
                 {
                     #region
                     BuildReport();
-                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
+                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, short.Parse(FillCombo.rep_print_count));
                     #endregion
                 }
                 else

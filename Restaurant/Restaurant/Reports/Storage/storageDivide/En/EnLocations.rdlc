@@ -183,7 +183,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -437,7 +436,7 @@
             <Top>2.05861cm</Top>
             <Left>1.18768cm</Left>
             <Height>1.2cm</Height>
-            <Width>18.50001cm</Width>
+            <Width>18.50002cm</Width>
             <Style>
               <Border>
                 <Color>LightGrey</Color>
@@ -505,6 +504,9 @@
               <Left>1.18768cm</Left>
               <Height>3cm</Height>
               <Width>3cm</Width>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -517,6 +519,9 @@
               <Height>0.17391in</Height>
               <Width>21cm</Width>
               <ZIndex>1</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -549,6 +554,9 @@
               <Height>0.3587in</Height>
               <Width>2.8848in</Width>
               <ZIndex>2</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -593,6 +601,9 @@
               <Height>0.25in</Height>
               <Width>2.8848in</Width>
               <ZIndex>3</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -637,6 +648,9 @@
               <Height>0.25in</Height>
               <Width>2.8848in</Width>
               <ZIndex>4</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -681,6 +695,9 @@
               <Height>0.25in</Height>
               <Width>2.8848in</Width>
               <ZIndex>5</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -725,6 +742,9 @@
               <Height>0.25in</Height>
               <Width>2.8848in</Width>
               <ZIndex>6</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -840,6 +860,9 @@
               <Height>0.2cm</Height>
               <Width>21cm</Width>
               <ZIndex>2</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -950,6 +973,12 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="show_header">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -1020,6 +1049,11 @@
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>4</RowIndex>
           <ParameterName>trSection</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>4</RowIndex>
+          <ParameterName>show_header</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

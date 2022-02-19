@@ -347,6 +347,12 @@ namespace Restaurant.Classes
         public static CountryCode countrycodes = new CountryCode();
         public static City cityCodes = new City();
 
+        public static CountryCode Region = new CountryCode();
+        static public void fillRegion()
+        {
+            Region = countrynum.Where(C => C.isDefault == 1).FirstOrDefault();
+
+        }
         static async Task<IEnumerable<CountryCode>> RefreshCountry()
         {
             countrynum = await countrycodes.GetAllCountries();
@@ -599,6 +605,132 @@ namespace Restaurant.Classes
             salesItems = await item.GetAllSalesItems();
             return salesItems;
         }
+        #endregion
+
+        #region Company Info
+
+      
+        static int nameId, addressId, emailId, mobileId, phoneId, faxId, logoId, taxId;
+        public static string logoImage;
+        public static string companyName;
+        public static string Email;
+        public static string Fax;
+        public static string Mobile;
+        public static string Address;
+        public static string Phone;
+       
+        public static async Task<int> loading_getDefaultSystemInfo()
+        {
+            try
+            {
+                List<SettingCls> settingsCls = await setModel.GetAll();
+                List<SetValues> settingsValues = await valueModel.GetAll();
+                SettingCls set = new SettingCls();
+                SetValues setV = new SetValues();
+                List<char> charsToRemove = new List<char>() { '@', '_', ',', '.', '-' };
+                #region get company name
+
+                //get company name
+                set = settingsCls.Where(s => s.name == "com_name").FirstOrDefault<SettingCls>();
+                nameId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == nameId).FirstOrDefault();
+                if (setV != null)
+                    companyName = setV.value;
+
+
+                #endregion
+
+                #region  get company address
+
+                //get company address
+                set = settingsCls.Where(s => s.name == "com_address").FirstOrDefault<SettingCls>();
+                addressId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == addressId).FirstOrDefault();
+                if (setV != null)
+                    Address = setV.value;
+
+                #endregion
+
+                #region  get company email
+
+                //get company email
+                set = settingsCls.Where(s => s.name == "com_email").FirstOrDefault<SettingCls>();
+                emailId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == emailId).FirstOrDefault();
+                if (setV != null)
+                    Email = setV.value;
+
+                #endregion
+
+                #region  get company mobile
+
+                //get company mobile
+                set = settingsCls.Where(s => s.name == "com_mobile").FirstOrDefault<SettingCls>();
+                mobileId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == mobileId).FirstOrDefault();
+                if (setV != null)
+                {
+                    charsToRemove.ForEach(x => setV.value = setV.value.Replace(x.ToString(), String.Empty));
+                    Mobile = setV.value;
+                }
+
+                #endregion
+
+                #region  get company phone
+
+                //get company phone
+                set = settingsCls.Where(s => s.name == "com_phone").FirstOrDefault<SettingCls>();
+                phoneId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == phoneId).FirstOrDefault();
+                if (setV != null)
+                {
+                    charsToRemove.ForEach(x => setV.value = setV.value.Replace(x.ToString(), String.Empty));
+                    Phone = setV.value;
+                }
+
+                #endregion
+
+                #region  get company fax
+
+                //get company fax
+                set = settingsCls.Where(s => s.name == "com_fax").FirstOrDefault<SettingCls>();
+                faxId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == faxId).FirstOrDefault();
+                if (setV != null)
+                {
+                    charsToRemove.ForEach(x => setV.value = setV.value.Replace(x.ToString(), String.Empty));
+                    Fax = setV.value;
+                }
+
+                #endregion
+
+                #region   get company logo
+                //get company logo
+                set = settingsCls.Where(s => s.name == "com_logo").FirstOrDefault<SettingCls>();
+                logoId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == logoId).FirstOrDefault();
+                if (setV != null)
+                {
+                    logoImage = setV.value;
+                    await setV.getImg(logoImage);
+                }
+
+                return 1;
+                #endregion
+            }
+            catch (Exception)
+            { return 0; }
+            //foreach (var item in loadingList)
+            //{
+            //    if (item.key.Equals("loading_getDefaultSystemInfo"))
+            //    {
+            //        item.value = true;
+            //        break;
+            //    }
+            //}
+
+        }
+
         #endregion
         #region reportSetting
 

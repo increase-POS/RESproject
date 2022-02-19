@@ -330,11 +330,11 @@ namespace Restaurant.Classes
                 title = MainWindow.resourcemanagerreport.GetString("trReceiptVoucher");
 
 
-            string company_name = MainWindow.companyName;
-            string comapny_address = MainWindow.Address;
-            string company_phone = MainWindow.Phone;
-            string company_fax = MainWindow.Fax;
-            string company_email = MainWindow.Email;
+            string company_name = FillCombo.companyName;
+            string comapny_address = FillCombo.Address;
+            string company_phone = FillCombo.Phone;
+            string company_fax = FillCombo.Fax;
+            string company_email = FillCombo.Email;
             //   string company_logo_img = GetLogoImagePath();
             //string amount = cashtrans.cash.ToString();
             string amount = DecTostring(cashtrans.cash);

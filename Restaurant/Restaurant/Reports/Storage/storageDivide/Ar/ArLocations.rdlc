@@ -410,7 +410,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -506,6 +505,9 @@
               <Left>16.68769cm</Left>
               <Height>3cm</Height>
               <Width>3cm</Width>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -518,6 +520,9 @@
               <Height>0.17391in</Height>
               <Width>21cm</Width>
               <ZIndex>1</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -552,6 +557,9 @@
               <Height>0.3587in</Height>
               <Width>3.20147in</Width>
               <ZIndex>2</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -588,6 +596,9 @@
               <Height>0.25in</Height>
               <Width>0.5348in</Width>
               <ZIndex>3</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -624,6 +635,9 @@
               <Height>0.25in</Height>
               <Width>0.40075in</Width>
               <ZIndex>4</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -668,6 +682,9 @@
               <Height>0.25in</Height>
               <Width>2.79447in</Width>
               <ZIndex>5</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -712,6 +729,9 @@
               <Height>0.25in</Height>
               <Width>2.33333in</Width>
               <ZIndex>6</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -756,6 +776,9 @@
               <Height>0.25in</Height>
               <Width>2.66667in</Width>
               <ZIndex>7</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -792,6 +815,9 @@
               <Height>0.25in</Height>
               <Width>0.39746in</Width>
               <ZIndex>8</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -836,6 +862,9 @@
               <Height>0.25in</Height>
               <Width>2.80072in</Width>
               <ZIndex>9</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -872,6 +901,9 @@
               <Height>0.25in</Height>
               <Width>0.86813in</Width>
               <ZIndex>10</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -969,6 +1001,9 @@
               <Height>0.2cm</Height>
               <Width>21cm</Width>
               <ZIndex>2</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1183,6 +1218,12 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="show_header">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -1253,6 +1294,11 @@
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>4</RowIndex>
           <ParameterName>trSection</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>4</RowIndex>
+          <ParameterName>show_header</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>
