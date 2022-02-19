@@ -81,18 +81,18 @@ namespace Restaurant.Classes
 
         //}
 
-        public static void bondsDocReport(LocalReport rep, string reppath, List<ReportParameter> paramarr)
-        {
-            rep.ReportPath = reppath;
-            rep.EnableExternalImages = true;
-            rep.DataSources.Clear();
+        //public static void bondsDocReport(LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        //{
+        //    rep.ReportPath = reppath;
+        //    rep.EnableExternalImages = true;
+        //    rep.DataSources.Clear();
 
 
 
-            DateFormConv(paramarr);
+        //    DateFormConv(paramarr);
 
 
-        }
+        //}
         //public static void orderReport(IEnumerable<Invoice> invoiceQuery, LocalReport rep, string reppath)
         //{
         //    rep.ReportPath = reppath;
@@ -151,8 +151,6 @@ namespace Restaurant.Classes
 
         public static void bankAccReport(IEnumerable<CashTransfer> cash, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
-
-
 
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
@@ -386,7 +384,7 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetTables", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trTables")));
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trTheTables")));
             //table columns
             paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
             paramarr.Add(new ReportParameter("trPersonsCount", MainWindow.resourcemanagerreport.GetString("trPersonsCount")));
@@ -402,7 +400,7 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetHallSections", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trSection")));
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trSections")));
             //table columns
             paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
             paramarr.Add(new ReportParameter("trDetails", MainWindow.resourcemanagerreport.GetString("trDetails")));
@@ -418,7 +416,7 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetAgent", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trCustomer")));
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trCustomers")));
             //table columns
             paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
             paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
@@ -434,7 +432,7 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetAgent", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trVendor")));
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trVendors")));
             //table columns
             paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
             paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
@@ -450,7 +448,7 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetUser", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trUser")));
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trUsers")));
             //table columns
             paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
             paramarr.Add(new ReportParameter("trJob", MainWindow.resourcemanagerreport.GetString("trJob")));
@@ -466,7 +464,7 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetBranch", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trBranch")));
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trBranches")));
             //table columns
             paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
             paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
@@ -481,7 +479,7 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetPos", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trPOS")));
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trPOSs")));
             //table columns
             paramarr.Add(new ReportParameter("trPosCode", MainWindow.resourcemanagerreport.GetString("trPosCode")));
             paramarr.Add(new ReportParameter("trPosName", MainWindow.resourcemanagerreport.GetString("trPosName")));
@@ -496,7 +494,7 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetBranch", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trStore")));
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trStores")));
             //table columns
             paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
             paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
@@ -514,7 +512,7 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetBank", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trBank")));
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trBanks")));
             //table columns
             paramarr.Add(new ReportParameter("trBankName", MainWindow.resourcemanagerreport.GetString("trBankName")));
             paramarr.Add(new ReportParameter("trAccNumber", MainWindow.resourcemanagerreport.GetString("trAccNumber")));
@@ -530,7 +528,7 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetCard", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trCard")));
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trCards")));
             //table columns
             paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
             paramarr.Add(new ReportParameter("trNote", MainWindow.resourcemanagerreport.GetString("trNote")));
@@ -545,7 +543,7 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetLocation", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trLocation")));
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trLocations")));
             //table columns
             paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
             paramarr.Add(new ReportParameter("trSection", MainWindow.resourcemanagerreport.GetString("trSection")));
@@ -560,7 +558,7 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetSection", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trSection")));
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trSections")));
             //table columns
             paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
             paramarr.Add(new ReportParameter("trBranchStore", MainWindow.resourcemanagerreport.GetString("trBranch/Store")));
@@ -575,7 +573,7 @@ namespace Restaurant.Classes
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetItemsDestructive", invoiceItems)); 
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trDestroy")));// tt
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trDestructives")));// tt
             paramarr.Add(new ReportParameter("trNum", MainWindow.resourcemanagerreport.GetString("trNo.")));
             paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
             paramarr.Add(new ReportParameter("trSection", MainWindow.resourcemanagerreport.GetString("trSection") + "-" + MainWindow.resourcemanagerreport.GetString("trLocation")));
@@ -592,7 +590,7 @@ namespace Restaurant.Classes
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetItemsShortage", invoiceItems));
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trShortage")));// tt
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trShortages")));// tt
             paramarr.Add(new ReportParameter("trNum", MainWindow.resourcemanagerreport.GetString("trInventoryNum")));
             paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
             paramarr.Add(new ReportParameter("trSection", MainWindow.resourcemanagerreport.GetString("trSectionLocation")));
@@ -627,7 +625,7 @@ namespace Restaurant.Classes
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetItemsStorage", invoiceItems));
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trLocationt")));// tt
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trLocations")));// tt
             paramarr.Add(new ReportParameter("trNum", MainWindow.resourcemanagerreport.GetString("trNum")));
             paramarr.Add(new ReportParameter("trItemUnit", MainWindow.resourcemanagerreport.GetString("trItemUnit")));
             paramarr.Add(new ReportParameter("trSectionLocation", MainWindow.resourcemanagerreport.GetString("trSectionLocation")));
@@ -724,7 +722,7 @@ namespace Restaurant.Classes
 
             rep.DataSources.Add(new ReportDataSource("DataSetCoupon", CouponQuery2));
             paramarr.Add(new ReportParameter("dateForm", MainWindow.dateFormat));
-            paramarr.Add(new ReportParameter("Title", MainWindow.resourcemanagerreport.GetString("trCoupon")));
+            paramarr.Add(new ReportParameter("Title", MainWindow.resourcemanagerreport.GetString("trCoupons")));
             paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
             paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
             paramarr.Add(new ReportParameter("trDiscount", MainWindow.resourcemanagerreport.GetString("trValue")));
