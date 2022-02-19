@@ -24,6 +24,7 @@ namespace Restaurant.Classes
         public string objectType { get; set; }
         public string translate { get; set; }
         public string translateHint { get; set; }
+        public string icon { get; set; }
 
 
         public string note { get; set; }
