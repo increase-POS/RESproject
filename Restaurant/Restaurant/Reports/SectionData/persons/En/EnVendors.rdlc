@@ -966,6 +966,9 @@
               <Height>0.2cm</Height>
               <Width>21cm</Width>
               <ZIndex>2</ZIndex>
+              <Visibility>
+                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
