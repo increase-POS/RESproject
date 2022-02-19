@@ -116,7 +116,7 @@ namespace Restaurant
         //static SettingCls setModel = new SettingCls();
         //static SetValues valueModel = new SetValues();
         //static int nameId, addressId, emailId, mobileId, phoneId, faxId, logoId, taxId;
-        public static string logoImage;
+        //public static string logoImage;
 
 
         ImageBrush myBrush = new ImageBrush();
