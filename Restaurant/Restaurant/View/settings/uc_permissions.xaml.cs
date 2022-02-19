@@ -676,6 +676,7 @@ namespace Restaurant.View.settings
                 {
                     s += item.name+" \n";
                 }
+                BuildObjectsDesign(list);
                 MessageBox.Show(s);
             }
             catch (Exception ex)
@@ -751,193 +752,90 @@ namespace Restaurant.View.settings
         }
         #endregion
         #region   secondLevel
-        /*
         void BuildObjectsDesign(List<Object> objectsChildren)
         {
             grid_secondLevel.Children.Clear();
 
-            //   < Border  BorderBrush = "#E8E8E8" Grid.RowSpan = "3"
-            //    BorderThickness = "1" Margin = "0,10" >
-
-            //      < Border Grid.Column = "3" BorderBrush = "#E8E8E8" Grid.RowSpan = "3"
-            //    BorderThickness = "1" Margin = "0,10" >
-
-            //      < Border Grid.Column = "5" BorderBrush = "#E8E8E8" Grid.RowSpan = "3"
-            //    BorderThickness = "1" Margin = "0,10" >
             Border border;
             for (int i = 0; i < 3; i++)
             {
                 border = new Border();
                 Grid.SetColumn(border, (i*2)+1);
+                Grid.SetRowSpan(border, 3);
                 border.BorderBrush = Application.Current.Resources["veryLightGrey"] as SolidColorBrush;
-
-
-                itemNameText.Text = item.name;
-                itemNameText.VerticalAlignment = VerticalAlignment.Center;
-                itemNameText.HorizontalAlignment = HorizontalAlignment.Center;
-                gridContainer.Children.Add(itemNameText);
-
-                tableButton.Tag = item.name;
-                tableButton.Margin = new Thickness(5);
-                tableButton.Padding = new Thickness(0);
-                tableButton.Background = null;
-                tableButton.BorderBrush = null;
+                border.BorderThickness = new Thickness(1);
+                border.Margin = new Thickness(0, 10, 0, 10);
+                grid_secondLevel.Children.Add(border);
             }
-           
 
+            int count = 0;
+            int div, mod;
             foreach (var item in objectsChildren)
             {
-
+                
                 #region button
-                Button tableButton = new Button();
-                tableButton.Tag = item.name;
-                tableButton.Margin = new Thickness(5);
-                tableButton.Padding = new Thickness(0);
-                tableButton.Background = null;
-                tableButton.BorderBrush = null;
+                Button mainButton = new Button();
+                mainButton.Name = "btn_" + item.name;
+                mainButton.Tag = item.name;
+                mainButton.Padding = new Thickness(0);
+                mainButton.Margin = new Thickness(5,0, 5, 0);
+                mainButton.BorderBrush = null;
+                mainButton.Background = null;
+                mainButton.Height = Double.NaN;
+                mainButton.HorizontalContentAlignment =HorizontalAlignment.Stretch;
+                div = count / 8;
+                mod = count % 8; //remainder 
+                Grid.SetRow(mainButton, div);
+                Grid.SetColumn(mainButton, mod);
+                mainButton.Click += btn_secondLevelClick;
 
-                if (item.personsCount <= 2)
-                {
-                    tableButton.Height = 90;
-                    tableButton.Width = 80;
-                }
-                else if (item.personsCount == 3)
-                {
-                    tableButton.Height = 130;
-                    tableButton.Width = 90;
-                }
-                else if (item.personsCount == 4)
-                {
-                    tableButton.Height = 140;
-                    tableButton.Width = 100;
-                }
-                else if (item.personsCount == 5)
-                {
-                    tableButton.Height = 150;
-                    tableButton.Width = 110;
-                }
-                else if (item.personsCount == 6)
-                {
-                    tableButton.Height = 160;
-                    tableButton.Width = 120;
-                }
-                else if (item.personsCount == 7)
-                {
-                    tableButton.Height = 170;
-                    tableButton.Width = 130;
-                }
-                else if (item.personsCount == 8)
-                {
-                    tableButton.Height = 180;
-                    tableButton.Width = 140;
-                }
-                else if (item.personsCount == 9)
-                {
-                    tableButton.Height = 190;
-                    tableButton.Width = 150;
-                }
-                else if (item.personsCount > 9)
-                {
-                    tableButton.Height = 200;
-                    tableButton.Width = 160;
-                }
+                #region StackPanel Container
+                StackPanel sp = new StackPanel();
+                sp.Orientation = Orientation.Horizontal;
 
-                tableButton.Click += tableButton_Click;
-
-                #region Grid Container
-                Grid gridContainer = new Grid();
-                int rowCount = 3;
-                RowDefinition[] rd = new RowDefinition[rowCount];
-                for (int i = 0; i < rowCount; i++)
-                {
-                    rd[i] = new RowDefinition();
-                }
-                rd[0].Height = new GridLength(1, GridUnitType.Star);
-                rd[1].Height = new GridLength(20, GridUnitType.Pixel);
-                rd[2].Height = new GridLength(20, GridUnitType.Pixel);
-                for (int i = 0; i < rowCount; i++)
-                {
-                    gridContainer.RowDefinitions.Add(rd[i]);
-                }
                 /////////////////////////////////////////////////////
                 #region Path table
-                Path pathTable = new Path();
-                pathTable.Stretch = Stretch.Fill;
-                pathTable.Margin = new Thickness(5);
-
-                if (item.status == "opened" || item.status == "openedReserved")
-                    pathTable.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
-                else if (item.status == "reserved")
-                    pathTable.Fill = Application.Current.Resources["BlueTables"] as SolidColorBrush;
+                Path path = new Path();
+                path.Name = "path_"+ item.name;
+                 if(count == 0)
+                    path.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
                 else
-                    pathTable.Fill = Application.Current.Resources["GreenTables"] as SolidColorBrush;
-
-                if (item.personsCount <= 2)
-                    pathTable.Data = App.Current.Resources["tablePersons2"] as Geometry;
-                else if (item.personsCount == 3)
-                    pathTable.Data = App.Current.Resources["tablePersons3"] as Geometry;
-                else if (item.personsCount == 4)
-                    pathTable.Data = App.Current.Resources["tablePersons4"] as Geometry;
-                else if (item.personsCount == 5)
-                    pathTable.Data = App.Current.Resources["tablePersons5"] as Geometry;
-                else if (item.personsCount == 6)
-                    pathTable.Data = App.Current.Resources["tablePersons6"] as Geometry;
-                else if (item.personsCount == 7)
-                    pathTable.Data = App.Current.Resources["tablePersons7"] as Geometry;
-                else if (item.personsCount == 8)
-                    pathTable.Data = App.Current.Resources["tablePersons8"] as Geometry;
-                else if (item.personsCount == 9)
-                    pathTable.Data = App.Current.Resources["tablePersons9"] as Geometry;
-                else if (item.personsCount > 9)
-                    pathTable.Data = App.Current.Resources["tablePersons9Plus"] as Geometry;
-
-                gridContainer.Children.Add(pathTable);
-                #endregion
-                #region   personCount 
-                if (item.personsCount > 9)
-                {
-                    var itemPersonCountText = new TextBlock();
-                    itemPersonCountText.Text = item.personsCount.ToString();
-                    itemPersonCountText.Foreground = Application.Current.Resources["White"] as SolidColorBrush;
-                    itemPersonCountText.FontSize = 32;
-                    itemPersonCountText.VerticalAlignment = VerticalAlignment.Center;
-                    itemPersonCountText.HorizontalAlignment = HorizontalAlignment.Center;
-                    gridContainer.Children.Add(itemPersonCountText);
-                }
+                    path.Fill = Application.Current.Resources["Grey"] as SolidColorBrush;
+                path.Width = 25;
+                path.Height = 25;
+                path.Margin = new Thickness(0, 0, 15, 0);
+                path.Data = App.Current.Resources[item.icon] as Geometry;
+                path.Stretch = Stretch.Fill;
+                sp.Children.Add(path);
                 #endregion
                 #region   name
-                var itemNameText = new TextBlock();
-                itemNameText.Text = item.name;
-                itemNameText.VerticalAlignment = VerticalAlignment.Center;
-                itemNameText.HorizontalAlignment = HorizontalAlignment.Center;
-                itemNameText.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
-                Grid.SetRow(itemNameText, 1);
-                gridContainer.Children.Add(itemNameText);
-                #endregion
-                #region   status
-                var itemStatusText = new TextBlock();
-                itemStatusText.Text = item.status;
-                itemStatusText.VerticalAlignment = VerticalAlignment.Center;
-                itemStatusText.HorizontalAlignment = HorizontalAlignment.Center;
-                itemStatusText.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
-                Grid.SetRow(itemStatusText, 2);
-                gridContainer.Children.Add(itemStatusText);
-                #endregion
-                tableButton.Content = gridContainer;
+                var itemText = new TextBlock();
+                itemText.Name = "txt_" + item.name;
+                // translate
+                if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == item.name).FirstOrDefault().translate))
+                    itemText.Text = MainWindow.resourcemanager.GetString(
+                   FillCombo.objectsList.Where(x => x.name == item.name).FirstOrDefault().translate
+                   );
+                itemText.Margin = new Thickness(5, 5, 5, 2.5);
+                itemText.VerticalAlignment = VerticalAlignment.Bottom;
+                itemText.FontSize = 14;
+                if(count == 0)
+                    itemText.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                else
+                    itemText.Foreground = Application.Current.Resources["Grey"] as SolidColorBrush;
 
+                sp.Children.Add(itemText);
                 #endregion
-                wp_tablesContainer.Children.Add(tableButton);
+
+                mainButton.Content = sp;
                 #endregion
+                grid_secondLevel.Children.Add(mainButton);
+                #endregion
+                count+=2;
             }
         }
-        void tableButton_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            string tableName = button.Tag.ToString();
-            var table = tablesList.Where(x => x.name == tableName).FirstOrDefault();
-            MessageBox.Show("Hey you Click me! I'm  " + table.name + " & person Count is " + table.personsCount);
-        }
-        */
+       
+
         private void btn_secondLevelClick(object sender, RoutedEventArgs e)
         {
             try
