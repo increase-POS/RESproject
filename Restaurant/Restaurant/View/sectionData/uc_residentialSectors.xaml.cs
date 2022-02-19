@@ -586,14 +586,14 @@ namespace Restaurant.View.sectionData
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
             {
-                addpath = @"\Reports\SectionData\residentialsData\Ar\ArResidentialSectors.rdlc";
+                addpath = @"\Reports\SectionData\residentialSectors\Ar\ArResidentialSectors.rdlc";
             }
             else
             {
-                addpath = @"\Reports\SectionData\residentialsData\En\EnResidentialSectors.rdlc";
+                addpath = @"\Reports\SectionData\residentialSectors\En\EnResidentialSectors.rdlc";
             }
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-            //clsReports.ResidentialSectorssReport(residentialsQuery, rep, reppath, paramarr);
+             clsReports.ResidentialSectorReport(residentialsQuery, rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
@@ -684,16 +684,16 @@ namespace Restaurant.View.sectionData
 
         private void Btn_preview_Click(object sender, RoutedEventArgs e)
         {//preview
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
-            //    if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
-            //    {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
+                {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
 
                     string pdfpath = "";
-                    //
+
                     pdfpath = @"\Thumb\report\temp.pdf";
                     pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
 
@@ -709,19 +709,19 @@ namespace Restaurant.View.sectionData
                     }
                     Window.GetWindow(this).Opacity = 1;
                     #endregion
-            //    }
-            //    else
-            //        Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
 
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
 
         }
 

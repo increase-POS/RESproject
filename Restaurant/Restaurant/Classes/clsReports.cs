@@ -466,8 +466,10 @@ namespace Restaurant.Classes
             //title
             paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trBranches")));
             //table columns
+
             paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
             paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trMobile", MainWindow.resourcemanagerreport.GetString("trMobile")));
             paramarr.Add(new ReportParameter("trBranchAddress", MainWindow.resourcemanagerreport.GetString("trAddress")));
             paramarr.Add(new ReportParameter("trNote", MainWindow.resourcemanagerreport.GetString("trNote")));
 
@@ -498,6 +500,7 @@ namespace Restaurant.Classes
             //table columns
             paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
             paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trMobile", MainWindow.resourcemanagerreport.GetString("trMobile")));
             paramarr.Add(new ReportParameter("trBranchAddress", MainWindow.resourcemanagerreport.GetString("trAddress")));
             paramarr.Add(new ReportParameter("trNote", MainWindow.resourcemanagerreport.GetString("trNote")));
 
@@ -689,6 +692,22 @@ namespace Restaurant.Classes
 
         }
 
+
+        public static void ResidentialSectorReport(IEnumerable<ResidentialSectors> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            rep.DataSources.Add(new ReportDataSource("DataResidentialSectors", Query));
+            //title
+            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trResidentialSectors")));
+            //table columns
+           
+            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
+
+            paramarr.Add(new ReportParameter("trNote", MainWindow.resourcemanagerreport.GetString("trNote")));
+
+        } 
         public static void ErrorsReport(IEnumerable<ErrorClass> Query, LocalReport rep, string reppath)
         {
             rep.ReportPath = reppath;

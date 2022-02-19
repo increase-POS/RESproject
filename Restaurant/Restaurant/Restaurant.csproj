@@ -1254,6 +1254,12 @@
     <Content Include="Reports\Storage\movementsOperations\En\EnSpendingOrder.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\SectionData\residentialSectors\Ar\ArResidentialSectors.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\residentialSectors\En\EnResidentialSectors.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="fonts\barcodeFont.ttf" />
     <Resource Include="fonts\cairo-font\cairo bold.ttf" />
     <Resource Include="fonts\cairo-font\cairo-light.ttf" />
@@ -1267,6 +1273,7 @@
     <None Include="Properties\DataSources\Restaurant.Classes.ItemTransfer2.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Location.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Pos.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.ResidentialSectors.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Section.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.StorageCost.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.User.datasource" />
