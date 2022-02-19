@@ -491,7 +491,8 @@ namespace Restaurant.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (cb_areaPhone.SelectedValue != null && !firstchangephone)
+              //  if (cb_areaPhone.SelectedValue != null && !firstchangephone)
+                    if (cb_areaPhone.SelectedValue != null )
                 {
                     if (cb_areaPhone.SelectedIndex >= 0)
                     {
@@ -515,7 +516,8 @@ namespace Restaurant.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (cb_areaFax.SelectedValue != null && !firstchangefax)
+             //   if (cb_areaFax.SelectedValue != null && !firstchangefax)
+                    if (cb_areaFax.SelectedValue != null  )
                 {
                     if (cb_areaFax.SelectedIndex >= 0)
                     {
