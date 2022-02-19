@@ -15,6 +15,7 @@ namespace Restaurant.Classes.ApiClasses
         public long reservationId { get; set; }
         public string code { get; set; }
         public Nullable<int> customerId { get; set; }
+        public Nullable<int> branchId { get; set; }
         public Nullable<System.DateTime> reservationDate { get; set; }
         public Nullable<System.DateTime> reservationTime { get; set; }
         public Nullable<System.DateTime> endTime { get; set; }
@@ -40,12 +41,11 @@ namespace Restaurant.Classes.ApiClasses
             parameters.Add("tables", myContent);
             return await APIResult.post(method, parameters);
         }
-        internal async Task<IEnumerable<TablesReservation>> Get(int branchId = 0, int sectionId = 0)
+        internal async Task<IEnumerable<TablesReservation>> Get(int branchId = 0)
         {
             List<TablesReservation> items = new List<TablesReservation>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("branchId", branchId.ToString());
-            parameters.Add("sectionId", sectionId.ToString());
             IEnumerable<Claim> claims = await APIResult.getList("Tables/GetReservations", parameters);
             foreach (Claim c in claims)
             {
@@ -55,6 +55,35 @@ namespace Restaurant.Classes.ApiClasses
                 }
             }
             return items;
+        }
+        public async Task<string> generateReserveCode(string reservCode, string branchCode, int branchId)
+        {
+            int sequence = await GetLastNumOfReserv(reservCode, branchId);
+            sequence++;
+            string strSeq = sequence.ToString();
+            if (sequence <= 999999)
+                strSeq = sequence.ToString().PadLeft(6, '0');
+            string invoiceNum = reservCode + "-" + branchCode + "-" + strSeq;
+            return invoiceNum;
+        }
+        public async Task<int> GetLastNumOfReserv(string reservCode, int branchId)
+        {
+            int count = 0;
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("reservCode", reservCode);
+            parameters.Add("branchId", branchId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Tables/GetLastNumOfReserv", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    count = int.Parse(c.Value);
+                    break;
+                }
+            }
+            return count;
         }
     }
 }
