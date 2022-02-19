@@ -238,6 +238,7 @@
     <Compile Include="converters\notificationsTitleConverter.cs" />
     <Compile Include="converters\processTypeConverter.cs" />
     <Compile Include="converters\SectionLocationFreeZoneConverter.cs" />
+    <Compile Include="converters\timeFrameConverter.cs" />
     <Compile Include="converters\translateCategoryNameConverter.cs" />
     <Compile Include="converters\transTypeConverter.cs" />
     <Compile Include="converters\unitItemsListConverter.cs" />
