@@ -671,6 +671,7 @@ namespace Restaurant.View.settings
                 //grid_home.Visibility = Visibility.Visible;
                 //btn_home.Opacity = 1;
                 List<Object> list =   Object.findChildrenList(button.Tag.ToString(), FillCombo.objectsList);
+                list = list.Where(x => x.objectType == "basic" || x.objectType == "alert").ToList();
                 string s = "";
                 foreach (var item in list)
                 {
@@ -764,7 +765,7 @@ namespace Restaurant.View.settings
                 Grid.SetRowSpan(border, 3);
                 border.BorderBrush = Application.Current.Resources["veryLightGrey"] as SolidColorBrush;
                 border.BorderThickness = new Thickness(1);
-                border.Margin = new Thickness(0, 10, 0, 10);
+                border.Margin = new Thickness(5, 10, 5, 10);
                 grid_secondLevel.Children.Add(border);
             }
 
@@ -775,7 +776,7 @@ namespace Restaurant.View.settings
                 
                 #region button
                 Button mainButton = new Button();
-                mainButton.Name = "btn_" + item.name;
+                mainButton.Name = "btn_" + item.name + "object";
                 mainButton.Tag = item.name;
                 mainButton.Padding = new Thickness(0);
                 mainButton.Margin = new Thickness(5,0, 5, 0);
@@ -796,7 +797,8 @@ namespace Restaurant.View.settings
                 /////////////////////////////////////////////////////
                 #region Path table
                 Path path = new Path();
-                path.Name = "path_"+ item.name;
+                path.Name = "path_"+ item.name + "object"; 
+                path.Tag = item.name; 
                  if(count == 0)
                     path.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
                 else
@@ -810,7 +812,8 @@ namespace Restaurant.View.settings
                 #endregion
                 #region   name
                 var itemText = new TextBlock();
-                itemText.Name = "txt_" + item.name;
+                itemText.Name = "txt_" + item.name + "object"; 
+                itemText.Tag = item.name ; 
                 // translate
                 if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == item.name).FirstOrDefault().translate))
                     itemText.Text = MainWindow.resourcemanager.GetString(
@@ -843,23 +846,26 @@ namespace Restaurant.View.settings
                 
                 HelpClass.StartAwait(grid_main);
                 Button button = sender as Button;
-                paintSecondLevel();
-                foreach (Path path in FindControls.FindVisualChildren<Path>(this))
+
+                List<Path> tabsPathsList = FindControls.FindVisualChildren<Path>(this)
+                .Where(x => x.Name.Contains("object") && x.Tag != null).ToList();
+                foreach (Path path in tabsPathsList)
                 {
                     // do something with tb here
-                    if (path.Name == "path_" + button.Tag)
-                    {
-                        path.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#178DD2"));
-                        break;
-                    }
+                    if (path.Name == "path_" + button.Tag + "object")
+                        path.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                    else
+                        path.Fill = Application.Current.Resources["Grey"] as SolidColorBrush;
+
                 }
-                foreach (TextBlock textBlock in FindControls.FindVisualChildren<TextBlock>(this))
+                List<TextBlock> tabsTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
+                .Where(x => x.Name.Contains("object") && x.Tag != null).ToList();
+                foreach (TextBlock textBlock in tabsTextBlocksList)
                 {
-                    if (textBlock.Name == "txt_" + button.Tag)
-                    {
-                        textBlock.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#178DD2"));
-                        break;
-                    }
+                    if (textBlock.Name == "txt_" + button.Tag + "object")
+                        textBlock.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                    else
+                        textBlock.Foreground = Application.Current.Resources["Grey"] as SolidColorBrush;
                 }
 
                 _parentObjectName = button.Tag.ToString();
@@ -874,30 +880,7 @@ namespace Restaurant.View.settings
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
-        public void paintSecondLevel()
-        {
-            paintHome();
-            /*
-            paintCatalog();
-            paintStore();
-            paintPurchase();
-            paintSale();
-            paintAccounts();
-            paintSectionData();
-            paintSettings();
-            paintAlerts();
-            paintReports();
-            */
-        }
-
-        public void paintHome()
-        {
-            /*
-            path_dashboard.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#67686d"));
-            txt_dashboard.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#67686d"));
-            */
-        }
+       
         #endregion
         #region groupObjects
         /*
