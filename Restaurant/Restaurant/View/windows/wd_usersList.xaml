@@ -18,7 +18,7 @@
 
         <Grid   >
             <Border  BorderThickness="0" Grid.Row="0" 
-                    CornerRadius="7,7,0,0"  Background="#178DD2">
+                    CornerRadius="7,7,0,0"  Background="{StaticResource SecondColor}">
                 <Grid>
 
                     <Button   IsCancel="true"  HorizontalAlignment="Right" VerticalAlignment="Center" Background="{x:Null}" 
@@ -201,7 +201,7 @@
 
                 <Button Content="Save" Grid.Row="5" Grid.ColumnSpan="5"
                        Margin="10,2.5" x:Name="btn_save" Click="Btn_save_Click"
-                          Background="#178DD2" BorderBrush="{x:Null}"  />
+                          Background="{StaticResource SecondColor}" Foreground="White" BorderBrush="{x:Null}"  />
             </Grid>
         </Border>
     </Grid>

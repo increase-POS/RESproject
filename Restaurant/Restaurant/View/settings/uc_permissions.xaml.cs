@@ -84,7 +84,9 @@ namespace Restaurant.View.settings
 
         string basicsPermission = "permissions_basics";
         string usersPermission = "Permissions_users";
-        string _parentObjectName = "categories";
+        string _parentObjectName = "";
+        Object objectModel = new Object();
+        List<Object> listObjects = new List<Object>();
         Group group = new Group();
         IEnumerable<Group> groupsQuery;
         IEnumerable<Group> groups;
@@ -224,7 +226,7 @@ namespace Restaurant.View.settings
         {//add
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") || HelpClass.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") )
                 {
                     HelpClass.StartAwait(grid_main);
 
@@ -262,8 +264,10 @@ namespace Restaurant.View.settings
 
 
                                 Clear();
+
                                 await RefreshGroupsList();
                                 await Search();
+                                await RefreshGroupObjectList();
                             }
                         }
                     }
@@ -284,7 +288,7 @@ namespace Restaurant.View.settings
         {//update
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") )
                 {
                     HelpClass.StartAwait(grid_main);
                     if (HelpClass.validate(requiredControlList, this))
@@ -316,7 +320,7 @@ namespace Restaurant.View.settings
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                                 await RefreshGroupsList();
                                 await Search();
-
+                                await RefreshGroupObjectList();
                             }
                         }
                     }
@@ -336,7 +340,7 @@ namespace Restaurant.View.settings
         {
             try
             {//delete
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") || HelpClass.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") )
                 {
                     HelpClass.StartAwait(grid_main);
                     if (group.groupId != 0)
@@ -380,6 +384,7 @@ namespace Restaurant.View.settings
 
                                     await RefreshGroupsList();
                                     await Search();
+                                    await RefreshGroupObjectList();
                                     Clear();
                                 }
                             }
@@ -500,6 +505,7 @@ namespace Restaurant.View.settings
                         #endregion
                     }
                 }
+                RefreshGroupObjectsView();
                 HelpClass.clearValidate(requiredControlList, this);
                 HelpClass.EndAwait(grid_main);
             }
@@ -540,14 +546,14 @@ namespace Restaurant.View.settings
             searchText = tb_search.Text.ToLower();
             groupsQuery = groups.Where(s => (s.name.ToLower().Contains(searchText)
             ) && s.isActive == tgl_groupState);
-            RefreshCustomersView();
+            RefreshGroupsView();
         }
         async Task<IEnumerable<Group>> RefreshGroupsList()
         {
             groups = await group.GetAll();
             return groups;
         }
-        void RefreshCustomersView()
+        void RefreshGroupsView()
         {
             dg_group.ItemsSource = groupsQuery;
         }
@@ -671,14 +677,17 @@ namespace Restaurant.View.settings
                 //grid_home.Visibility = Visibility.Visible;
                 //btn_home.Opacity = 1;
                 List<Object> list =   Object.findChildrenList(button.Tag.ToString(), FillCombo.objectsList);
-                list = list.Where(x => x.objectType == "basic" || x.objectType == "alert").ToList();
-                string s = "";
-                foreach (var item in list)
-                {
-                    s += item.name+" \n";
-                }
+                list = list.Where(x => x.objectType == "basic" || x.objectType == "basicAlert").ToList();
+                //string s = "";
+                //foreach (var item in list)
+                //{
+                //    s += item.name+" \n";
+                //}
                 BuildObjectsDesign(list);
-                MessageBox.Show(s);
+                initializationMainTrack(button.Tag.ToString());
+                _parentObjectName = button.Tag.ToString();
+                RefreshGroupObjectsView();
+                //MessageBox.Show(s);
             }
             catch (Exception ex)
             {
@@ -799,9 +808,9 @@ namespace Restaurant.View.settings
                 Path path = new Path();
                 path.Name = "path_"+ item.name + "object"; 
                 path.Tag = item.name; 
-                 if(count == 0)
-                    path.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
-                else
+                // if(count == 0)
+                //    path.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                //else
                     path.Fill = Application.Current.Resources["Grey"] as SolidColorBrush;
                 path.Width = 25;
                 path.Height = 25;
@@ -822,9 +831,9 @@ namespace Restaurant.View.settings
                 itemText.Margin = new Thickness(5, 5, 5, 2.5);
                 itemText.VerticalAlignment = VerticalAlignment.Bottom;
                 itemText.FontSize = 14;
-                if(count == 0)
-                    itemText.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
-                else
+                //if(count == 0)
+                //    itemText.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                //else
                     itemText.Foreground = Application.Current.Resources["Grey"] as SolidColorBrush;
 
                 sp.Children.Add(itemText);
@@ -844,15 +853,29 @@ namespace Restaurant.View.settings
             try
             {
                 
-                HelpClass.StartAwait(grid_main);
+                //HelpClass.StartAwait(grid_main);
                 Button button = sender as Button;
 
+                ////////////////////////
+                List<Object> list = Object.findChildrenList(button.Tag.ToString(), FillCombo.objectsList);
+                list = list.Where(x => x.objectType == "basic" || x.objectType == "basicAlert").ToList();
+                string s = "";
+                foreach (var item in list)
+                {
+                    s += item.name + " \n";
+                }
+
+
+                //////////////
+                if(list.Count == 0)
+                {
+                    //change colors
                 List<Path> tabsPathsList = FindControls.FindVisualChildren<Path>(this)
                 .Where(x => x.Name.Contains("object") && x.Tag != null).ToList();
                 foreach (Path path in tabsPathsList)
                 {
                     // do something with tb here
-                    if (path.Name == "path_" + button.Tag + "object")
+                    if (path.Tag ==  button.Tag )
                         path.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
                     else
                         path.Fill = Application.Current.Resources["Grey"] as SolidColorBrush;
@@ -862,14 +885,54 @@ namespace Restaurant.View.settings
                 .Where(x => x.Name.Contains("object") && x.Tag != null).ToList();
                 foreach (TextBlock textBlock in tabsTextBlocksList)
                 {
-                    if (textBlock.Name == "txt_" + button.Tag + "object")
+                    if (textBlock.Tag ==  button.Tag  )
                         textBlock.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                     else
                         textBlock.Foreground = Application.Current.Resources["Grey"] as SolidColorBrush;
                 }
 
+                }
+                else
+                {
+                    // Initialize buttons
+                    BuildObjectsDesign(list);
+                }
+
+
+
+                
+                ///////////////////////
                 _parentObjectName = button.Tag.ToString();
-                Tb_search_TextChanged(null, null);
+                //MessageBox.Show(_parentObjectName);
+                RefreshGroupObjectsView();
+                initializationMainTrack(button.Tag.ToString());
+                //HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                //HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        #endregion
+        #region groupObjects
+        GroupObject groupObject = new GroupObject();
+        IEnumerable<GroupObject> groupObjectsQuery;
+        IEnumerable<GroupObject> groupObjects;
+        async void RefreshGroupObjectsView()
+        {
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+                if (groupObjects is null)
+                    await RefreshGroupObjectList();
+                groupObjectsQuery = groupObjects.Where(s => s.groupId == group.groupId
+                && (s.objectType == "one" || s.objectType == "all" || s.objectType == "alert" )
+                && s.parentObjectName == _parentObjectName);
+                dg_permissions.ItemsSource = groupObjectsQuery;
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -881,71 +944,39 @@ namespace Restaurant.View.settings
             }
         }
        
-        #endregion
-        #region groupObjects
         /*
-        IEnumerable<GroupObject> groupObjectsQuery;
-        IEnumerable<GroupObject> groupObjects;
-        void RefreshGroupObjectsView()
-        {
-            dg_permissions.ItemsSource = groupObjectsQuery;
-        }
-        private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
-        {//search
-            try
-            {
-                if (sender != null)
-                    SectionData.StartAwait(grid_main);
-                if (groupObjects is null)
-                    await RefreshGroupObjectList();
-                searchText = tb_searchGroup.Text;
-                groupObjectsQuery = groupObjects.Where(s => s.groupId == group.groupId
-                && s.objectType != "basic" && s.parentObjectName == _parentObjectName);
-                RefreshGroupObjectsView();
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
+        private async void Btn_refreshGroupObjects_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (sender != null)
+                
                     SectionData.StartAwait(grid_main);
                 await RefreshGroupObjectList();
                 Tb_search_TextChanged(null, null);
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
                 SectionData.ExceptionMessage(ex, this);
             }
         }
+        */
         async Task<IEnumerable<GroupObject>> RefreshGroupObjectList()
         {
             groupObjects = await groupObject.GetAll();
             return groupObjects;
         }
-        */
-
         #endregion
         private void Btn_usersList_Click(object sender, RoutedEventArgs e)
         {
-            /*
             try
             {
                 
                     HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(usersPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(usersPermission, MainWindow.groupObjects, "one") )
                 {
                     if (group.groupId > 0)
                     {
@@ -969,17 +1000,15 @@ namespace Restaurant.View.settings
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
 
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {
-            /*
             try
             {
                 
                     HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") )
                 {
                     int s = 0;
                     foreach (var item in groupObjectsQuery)
@@ -1007,7 +1036,73 @@ namespace Restaurant.View.settings
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
+
+        #region Main Path
+        public void initializationMainTrack(string tag)
+        {
+            //sp_mainPath
+            sp_mainPath.Children.Clear();
+            List<Object> _listObjects = new List<Object>();
+            _listObjects = objectModel.GetParents(FillCombo.objectsList, tag);
+            int counter = 1;
+            bool isLast = false;
+            foreach (var item in _listObjects)
+            {
+                if (counter == _listObjects.Count)
+                    isLast = true;
+                else
+                    isLast = false;
+                sp_mainPath.Children.Add(initializationMainButton(item, isLast));
+                counter++;
+            }
+        }
+        Button initializationMainButton(Object _object, bool isLast)
+        {
+            Button button = new Button();
+            button.Content = ">" + MainWindow.resourcemanager.GetString(_object.translate);
+            button.Tag = _object.name;
+            button.Click += MainButton_Click;
+            button.Background = null;
+            button.Margin = new Thickness(5, 0, 0, 0);
+            button.BorderThickness = new Thickness(0);
+            button.Padding = new Thickness(0);
+            button.FontSize = 16;
+            if (isLast)
+                button.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            else
+                button.Foreground = Application.Current.Resources["Grey"] as SolidColorBrush;
+            return button;
+        }
+        void MainButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            initializationMainTrack(button.Tag.ToString());
+            /*
+            loadPath(button.Tag.ToString());
+            */
+            List<Object> list = Object.findChildrenList(button.Tag.ToString(), FillCombo.objectsList);
+            list = list.Where(x => x.objectType == "basic" || x.objectType == "basicAlert").ToList();
+            if(list.Count > 0)
+            BuildObjectsDesign(list);
+            _parentObjectName = button.Tag.ToString();
+            RefreshGroupObjectsView();
+        }
+        /*
+        void loadPath(string tag)
+        {
+            grid_main.Children.Clear();
+            switch (tag)
+            {
+                //2
+                //case "home":
+                //    grid_main.Children.Add(uc_home.Instance);
+                //    break;
+                default:
+                    return;
+            }
+        }
+        */
+        #endregion
     }
 }

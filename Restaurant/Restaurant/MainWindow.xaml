@@ -138,10 +138,10 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel x:Name="sp_mainPath" Orientation="Horizontal" Margin="10 5"
-                          VerticalAlignment="Center">
-                       
-                       
-                    </StackPanel>
+                          VerticalAlignment="Center"/>
+
+
+
                 </Grid>
                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="5">
                     <TextBlock Name="txt_cashTitle"    HorizontalAlignment="Right"   Foreground="{StaticResource SecondColor}"  FontSize="12" ></TextBlock>

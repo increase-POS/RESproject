@@ -2317,9 +2317,9 @@ namespace Restaurant
                     grid_main.Children.Add(uc_reportsSettings.Instance);
                     break;
                 //62
-                //case "permissions":
-                //    grid_main.Children.Add(uc_permissions.Instance);
-                //    break;
+                case "permissions":
+                    grid_main.Children.Add(uc_permissions.Instance);
+                    break;
                 //case "emailSettings":
                 //    grid_main.Children.Add(uc_emailSettings.Instance);
                 //    break;

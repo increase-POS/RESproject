@@ -39,20 +39,20 @@ namespace Restaurant.View.windows
 
         public bool isActive;
 
-        List<Users> allUsersSource = new List<Users>();
-        List<Users> selectedUsersSource = new List<Users>();
+        List<User> allUsersSource = new List<User>();
+        List<User> selectedUsersSource = new List<User>();
 
-        List<Users> allUsers = new List<Users>();
-        List<Users> selectedUsers = new List<Users>();
+        List<User> allUsers = new List<User>();
+        List<User> selectedUsers = new List<User>();
 
         public int groupId = 0;
 
-        Users userModel = new Users();
-        Users user = new Users();
+        User userModel = new User();
+        User user = new User();
 
         Group groupModel = new Group();
         /// <summary>
-        /// Selcted Users if selectedUsers Have Users At the beginning
+        /// Selcted User if selectedUsers Have User At the beginning
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -81,7 +81,7 @@ namespace Restaurant.View.windows
                 selectedUsersSource = await groupModel.GetUsersByGroupId(groupId);
                 foreach (var u in selectedUsersSource)
                 {
-                    u.fullName = u.name + " " + u.lastName;
+                    u.fullName = u.name + " " + u.lastname;
                 }
                 allUsers.AddRange(allUsersSource);
                 selectedUsers.AddRange(selectedUsersSource);
@@ -165,7 +165,7 @@ namespace Restaurant.View.windows
                 foreach (var u in selectedUsers)
                     userIds.Add(u.userId);
 
-                await groupModel.UpdateGroupIdInUsers(groupId, userIds, MainWindow.userID);
+                await groupModel.UpdateGroupIdInUsers(groupId, userIds, MainWindow.userLogin.userId);
 
                 isActive = true;
                 this.Close();
@@ -263,7 +263,7 @@ namespace Restaurant.View.windows
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
 
-                user = lst_allUsers.SelectedItem as Users;
+                user = lst_allUsers.SelectedItem as User;
                 if (user != null)
                 {
                     allUsers.Remove(user);
@@ -295,7 +295,7 @@ namespace Restaurant.View.windows
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
 
-                user = lst_selectedUsers.SelectedItem as Users;
+                user = lst_selectedUsers.SelectedItem as User;
                 if (user != null)
                 {
                     selectedUsers.Remove(user);
