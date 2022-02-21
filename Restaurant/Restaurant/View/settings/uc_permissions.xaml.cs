@@ -380,8 +380,8 @@ namespace Restaurant.View.settings
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
+                                    group.groupId = 0;
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
-
                                     await RefreshGroupsList();
                                     await Search();
                                     await RefreshGroupObjectList();

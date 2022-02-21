@@ -65,12 +65,10 @@ namespace Restaurant.View.windows
                 #region translate
                 if (MainWindow.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
 
@@ -78,6 +76,7 @@ namespace Restaurant.View.windows
                 #endregion
 
                 allUsersSource = await userModel.GetUsersActive();
+                allUsersSource = allUsersSource.Where(x => x.isAdmin != true).ToList();
                 selectedUsersSource = await groupModel.GetUsersByGroupId(groupId);
                 foreach (var u in selectedUsersSource)
                 {
