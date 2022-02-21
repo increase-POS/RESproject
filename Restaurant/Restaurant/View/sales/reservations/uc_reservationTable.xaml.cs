@@ -211,8 +211,8 @@ namespace Restaurant.View.sales.reservations
         #region Add - Update - Delete - Tgl - Clear - DG_SelectionChanged - refresh - validate
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         { //add
-            //try
-            //{
+            try
+            {
                 HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add"))
                 {
@@ -222,49 +222,49 @@ namespace Restaurant.View.sales.reservations
                         if (valid)
                         {
                             TablesReservation reserve = new TablesReservation();
-                        reserve.branchId = MainWindow.branchLogin.branchId;
-                        reserve.code = await reserve.generateReserveCode("tr",MainWindow.branchLogin.code,MainWindow.branchLogin.branchId);
+                            reserve.branchId = MainWindow.branchLogin.branchId;
+                            reserve.code = await reserve.generateReserveCode("tr",MainWindow.branchLogin.code,MainWindow.branchLogin.branchId);
                             if (cb_customerId.SelectedIndex > 0)
                                 reserve.customerId = (int)cb_customerId.SelectedValue;
                             reserve.reservationDate = dp_reservationDate.SelectedDate;
 
-                        #region reservation time period                      
-                        DateTime startTime = DateTime.Parse(dp_reservationDate.SelectedDate.ToString().Split(' ')[0]
-                                + ' ' + tp_reservationStartTime.SelectedTime.ToString().Split(' ')[1]
-                                + ' ' + tp_reservationStartTime.SelectedTime.ToString().Split(' ')[2]);
+                            #region reservation time period                      
+                            DateTime startTime = DateTime.Parse(dp_reservationDate.SelectedDate.ToString().Split(' ')[0]
+                                    + ' ' + tp_reservationStartTime.SelectedTime.ToString().Split(' ')[1]
+                                    + ' ' + tp_reservationStartTime.SelectedTime.ToString().Split(' ')[2]);
 
-                        var dateOfStartTime = DateTime.Parse(tp_reservationStartTime.SelectedTime.ToString().Split(' ')[0]);
-                        var dateOfEndTime = DateTime.Parse(tp_reservationEndTime.SelectedTime.ToString().Split(' ')[0]);
-                        var difference = (dateOfEndTime - dateOfStartTime).Days;
-                        DateTime reservationEndDate = DateTime.Parse(dp_reservationDate.SelectedDate.ToString().Split(' ')[0]) ;
-                        if (difference > 0)
-                        {
-                            reservationEndDate = DateTime.Parse(dp_reservationDate.SelectedDate.ToString().Split(' ')[0]).AddDays(1);
-                        }
-                        DateTime endTime = DateTime.Parse(reservationEndDate.ToString().Split(' ')[0]
-                                            + ' ' + tp_reservationEndTime.SelectedTime.ToString().Split(' ')[1]
-                                            + ' ' + tp_reservationEndTime.SelectedTime.ToString().Split(' ')[2]);
+                            var dateOfStartTime = DateTime.Parse(tp_reservationStartTime.SelectedTime.ToString().Split(' ')[0]);
+                            var dateOfEndTime = DateTime.Parse(tp_reservationEndTime.SelectedTime.ToString().Split(' ')[0]);
+                            var difference = (dateOfEndTime - dateOfStartTime).Days;
+                            DateTime reservationEndDate = DateTime.Parse(dp_reservationDate.SelectedDate.ToString().Split(' ')[0]) ;
+                            if (difference > 0)
+                            {
+                                reservationEndDate = DateTime.Parse(dp_reservationDate.SelectedDate.ToString().Split(' ')[0]).AddDays(1);
+                            }
+                            DateTime endTime = DateTime.Parse(reservationEndDate.ToString().Split(' ')[0]
+                                                + ' ' + tp_reservationEndTime.SelectedTime.ToString().Split(' ')[1]
+                                                + ' ' + tp_reservationEndTime.SelectedTime.ToString().Split(' ')[2]);
 
-                        reserve.reservationTime = startTime;
-                        reserve.endTime = endTime;
-                        #endregion
-                        reserve.personsCount = int.Parse(tb_personsCount.Text);
-                        reserve.notes = tb_notes.Text;
-                        reserve.createUserId = MainWindow.userLogin.userId;
-                        reserve.isActive = 1;
-                        //save
-                        int res = await reserve.addReservation(reserve, selectedTables);
-                        if(res > 0)
-                        {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                            Clear();
-                            await refreshTablesList();
-                              
-                        }
-                        else
-                            Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            reserve.reservationTime = startTime;
+                            reserve.endTime = endTime;
+                            #endregion
+                            reserve.personsCount = int.Parse(tb_personsCount.Text);
+                            reserve.notes = tb_notes.Text;
+                            reserve.createUserId = MainWindow.userLogin.userId;
+                            reserve.isActive = 1;
+                            //save
+                            int res = await reserve.addReservation(reserve, selectedTables);
+                            if(res > 0)
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                Clear();
+                                await refreshTablesList();
+                                    await Search();
+                            }
+                            else
+                                Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
-                        }
+                       }
                     }
 
                 }
@@ -272,13 +272,13 @@ namespace Restaurant.View.sales.reservations
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
+            }
+            catch (Exception ex)
+            {
 
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         async Task<Boolean> validateReservationTime()
@@ -350,6 +350,10 @@ namespace Restaurant.View.sales.reservations
             {
                 HelpClass.StartAwait(grid_main);
                 Clear();
+                tp_reservationStartTime.SelectedTime = null;
+                tp_reservationStartTime.Text = "";
+                tp_reservationEndTime.SelectedTime = null;
+                tp_reservationEndTime.Text = "";
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -482,7 +486,7 @@ namespace Restaurant.View.sales.reservations
         }
         async Task refreshTablesList()
         {
-            tablesList =  await FillCombo.table.GetTablesStatusInfo(MainWindow.branchLogin.branchId,dp_searchDate.SelectedDate.ToString(), tp_reservationStartTime.SelectedTime.ToString(),tp_searchEndTime.SelectedTime.ToString());
+            tablesList =  await FillCombo.table.GetTablesStatusInfo(MainWindow.branchLogin.branchId,dp_searchDate.SelectedDate.ToString(), tp_searchStartTime.SelectedTime.ToString(),tp_searchEndTime.SelectedTime.ToString());
         }
         #endregion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
@@ -492,6 +496,7 @@ namespace Restaurant.View.sales.reservations
             dg_tables.ItemsSource = null;
             dg_tables.ItemsSource = selectedTables;
             this.DataContext = TablesReservation ;
+
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);
@@ -1055,14 +1060,6 @@ namespace Restaurant.View.sales.reservations
             }
         }
 
-
-
-
         #endregion
-
-        private void Btn_refresh_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

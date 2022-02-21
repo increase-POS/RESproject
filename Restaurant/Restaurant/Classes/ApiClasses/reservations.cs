@@ -15,6 +15,8 @@ namespace Restaurant.Classes.ApiClasses
         public long reservationId { get; set; }
         public string code { get; set; }
         public Nullable<int> customerId { get; set; }
+        public string customerName { get; set; }
+
         public Nullable<int> branchId { get; set; }
         public Nullable<System.DateTime> reservationDate { get; set; }
         public Nullable<System.DateTime> reservationTime { get; set; }
@@ -29,6 +31,8 @@ namespace Restaurant.Classes.ApiClasses
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
 
+        public List<Tables> tables { get; set; }
+
         /////////////////////////////////
         internal async Task<int> addReservation(TablesReservation reservation, List<Tables> tables)
         {
@@ -39,6 +43,27 @@ namespace Restaurant.Classes.ApiClasses
 
             myContent = JsonConvert.SerializeObject(tables);
             parameters.Add("tables", myContent);
+            return await APIResult.post(method, parameters);
+        }
+        internal async Task<int> updateReservation(TablesReservation reservation, List<Tables> tables)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "Tables/updateReservation";
+            var myContent = JsonConvert.SerializeObject(reservation);
+            parameters.Add("itemObject", myContent);
+
+            myContent = JsonConvert.SerializeObject(tables);
+            parameters.Add("tables", myContent);
+            return await APIResult.post(method, parameters);
+        }
+        internal async Task<int> updateReservationStatus(long reservationId, string status, int userId)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "Tables/updateReservationStatus";
+            parameters.Add("reservationId", reservationId.ToString());
+            parameters.Add("status", status);
+            parameters.Add("userId", userId.ToString());
+
             return await APIResult.post(method, parameters);
         }
         internal async Task<IEnumerable<TablesReservation>> Get(int branchId = 0)

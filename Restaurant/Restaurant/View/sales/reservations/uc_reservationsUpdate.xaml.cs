@@ -1,6 +1,7 @@
 ﻿using netoaster;
 using Restaurant.Classes;
 using Restaurant.Classes.ApiClasses;
+using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -85,7 +86,7 @@ namespace Restaurant.View.sales.reservations
         IEnumerable<TablesReservation> reservationsList;
         IEnumerable<TablesReservation> reservationsQuery;
         TablesReservation reservation = new TablesReservation();
-        //IEnumerable<User> users;
+        List<Tables> selectedTables = new List<Tables>();
         //byte tgl_userState;
         string searchText = "";
         public static List<string> requiredControlList;
@@ -137,7 +138,7 @@ namespace Restaurant.View.sales.reservations
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "" };
+                requiredControlList = new List<string> { "reservationDate", "reservationStartTime", "reservationEndTime", "personsCount" };
                 if (MainWindow.lang.Equals("en"))
                 {
                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
@@ -191,21 +192,86 @@ namespace Restaurant.View.sales.reservations
         }
         private void translate()
         {
+            #region datagrid
+            dg_reservation.Columns[0].Header = MainWindow.resourcemanager.GetString("trCode");
+            dg_reservation.Columns[1].Header = MainWindow.resourcemanager.GetString("trDate");
+            dg_reservation.Columns[2].Header = MainWindow.resourcemanager.GetString("trTime");
+            dg_reservation.Columns[3].Header = MainWindow.resourcemanager.GetString("trCount");
+            dg_reservation.Columns[4].Header = MainWindow.resourcemanager.GetString("trCustomer");
+            dg_reservation.Columns[5].Header = MainWindow.resourcemanager.GetString("trStatus");
+            #endregion
+            txt_title.Text = MainWindow.resourcemanager.GetString("trReservations");
+            txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
+            txt_tables.Text = MainWindow.resourcemanager.GetString("trTables");
 
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customerId, MainWindow.resourcemanager.GetString("trCustomerHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_reservationDate, MainWindow.resourcemanager.GetString("trReservationDaterHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tp_reservationTime, MainWindow.resourcemanager.GetString("trStartTimeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tp_reservationEndTime, MainWindow.resourcemanager.GetString("trEndTimeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_personsCount, MainWindow.resourcemanager.GetString("trPersonsCountHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
 
-
+            btn_refresh.ToolTip = MainWindow.resourcemanager.GetString("trRefresh");
+            btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
 
         }
-        #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
-        private async void Btn_add_Click(object sender, RoutedEventArgs e)
-        { //add
+        #region Update - confirm - Search - Tgl - Clear - DG_SelectionChanged - refresh
+       
+        private async void Btn_update_Click(object sender, RoutedEventArgs e)
+        {//update
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add"))
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update"))
                 {
+                    if (HelpClass.validate(requiredControlList, this))
+                    {
+                        bool valid = await validateReservationTime();
+                        if (valid)
+                        {
+                            reservation.branchId = MainWindow.branchLogin.branchId;
+                            //reserve.code = await reserve.generateReserveCode("tr", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+                            if (cb_customerId.SelectedIndex > 0)
+                                reservation.customerId = (int)cb_customerId.SelectedValue;
+                            reservation.reservationDate = dp_reservationDate.SelectedDate;
 
+                            #region reservation time period                      
+                            DateTime startTime = DateTime.Parse(dp_reservationDate.SelectedDate.ToString().Split(' ')[0]
+                                    + ' ' + tp_reservationTime.SelectedTime.ToString().Split(' ')[1]
+                                    + ' ' + tp_reservationEndTime.SelectedTime.ToString().Split(' ')[2]);
 
+                            var dateOfStartTime = DateTime.Parse(tp_reservationTime.SelectedTime.ToString().Split(' ')[0]);
+                            var dateOfEndTime = DateTime.Parse(tp_reservationEndTime.SelectedTime.ToString().Split(' ')[0]);
+                            var difference = (dateOfEndTime - dateOfStartTime).Days;
+                            DateTime reservationEndDate = DateTime.Parse(dp_reservationDate.SelectedDate.ToString().Split(' ')[0]);
+                            if (difference > 0)
+                            {
+                                reservationEndDate = DateTime.Parse(dp_reservationDate.SelectedDate.ToString().Split(' ')[0]).AddDays(1);
+                            }
+                            DateTime endTime = DateTime.Parse(reservationEndDate.ToString().Split(' ')[0]
+                                                + ' ' + tp_reservationEndTime.SelectedTime.ToString().Split(' ')[1]
+                                                + ' ' + tp_reservationEndTime.SelectedTime.ToString().Split(' ')[2]);
+
+                            reservation.reservationTime = startTime;
+                            reservation.endTime = endTime;
+                            #endregion
+                            reservation.personsCount = int.Parse(tb_personsCount.Text);
+                            reservation.notes = tb_notes.Text;
+                            //save
+                            int res = await reservation.updateReservation(reservation, selectedTables);
+                            if (res > 0)
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                                Clear();
+                                await refreshReservaitionsList();
+                                await Search();
+
+                            }
+                            else
+                                Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+
+                        }
+                    }
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -214,24 +280,64 @@ namespace Restaurant.View.sales.reservations
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Btn_update_Click(object sender, RoutedEventArgs e)
-        {//update
-            try
+        async Task<Boolean> validateReservationTime()
+        {
+            bool valid = true;
+            string message = "";
+            DateTime startTime = DateTime.Parse(dp_reservationDate.SelectedDate.ToString().Split(' ')[0]
+                                + ' ' + tp_reservationTime.SelectedTime.ToString().Split(' ')[1]
+                                + ' ' + tp_reservationEndTime.SelectedTime.ToString().Split(' ')[2]);
+
+            DateTime endTime = DateTime.Parse(dp_reservationDate.SelectedDate.ToString().Split(' ')[0]
+                                + ' ' + tp_reservationEndTime.SelectedTime.ToString().Split(' ')[1]
+                                + ' ' + tp_reservationEndTime.SelectedTime.ToString().Split(' ')[2]);
+            foreach (Tables tb in selectedTables)
             {
-                HelpClass.StartAwait(grid_main);
+                int notReserved = await FillCombo.table.checkTableAvailabiltiy(tb.tableId, MainWindow.branchLogin.branchId,
+                                                         dp_reservationDate.SelectedDate.ToString(),
+                                                         startTime.ToString(),
+                                                         endTime.ToString(), reservation.reservationId);
+
+                if (notReserved == 0)
+                {
+                    valid = false;
+                    if (message == "")
+                        message += tb.name;
+                    else
+                        message += ", " + tb.name;
+                }
+                message += " ";
+                if (!valid)
+                    Toaster.ShowWarning(Window.GetWindow(this), message: message + MainWindow.resourcemanager.GetString("trReserved"), animation: ToasterAnimation.FadeIn);
+            }
+            return valid;
+        }
+        private async void Btn_confirm_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {//delete
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update"))
                 {
-
+                    HelpClass.StartAwait(grid_main);
+                    int res = await reservation.updateReservationStatus(reservation.reservationId,"confirm",MainWindow.userLogin.userId);
+                    if (res > 0)
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                        Clear();
+                        await refreshReservaitionsList();
+                        await Search();
+                    }
+                    else
+                        Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    HelpClass.EndAwait(grid_main);
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -246,7 +352,16 @@ namespace Restaurant.View.sales.reservations
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete"))
                 {
                     HelpClass.StartAwait(grid_main);
-
+                    int res = await reservation.updateReservationStatus(reservation.reservationId, "cancle", MainWindow.userLogin.userId);
+                    if (res > 0)
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                        Clear();
+                        await refreshReservaitionsList();
+                        await Search();
+                    }
+                    else
+                        Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     HelpClass.EndAwait(grid_main);
                 }
                 else
@@ -276,12 +391,40 @@ namespace Restaurant.View.sales.reservations
         */
         #endregion
         #region events
+        private void Btn_tables_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                MainWindow.mainWindow.Opacity = 0.2;
+
+                wd_tablesList w = new wd_tablesList();
+                w.page = "reservationUpdate";
+                w.reservationId = reservation.reservationId;
+                w.selectedTables = selectedTables;
+                w.ShowDialog();
+
+                if (w.DialogResult == true)
+                {
+                    selectedTables = w.selectedTables;
+                    dg_tables.ItemsSource = null;
+                    dg_tables.ItemsSource = selectedTables;
+                }
+                MainWindow.mainWindow.Opacity = 1;
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
-                //await Search();
+                await Search();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -317,26 +460,35 @@ namespace Restaurant.View.sales.reservations
                 {
                     reservation = dg_reservation.SelectedItem as TablesReservation;
                     this.DataContext = reservation;
+                    dg_tables.ItemsSource = null;
+                    selectedTables.Clear();
+                    if (reservation.tables.Count != 0)
+                    {
+                        selectedTables = reservation.tables;
+                        dg_tables.ItemsSource = selectedTables;
+                    }
+                    btn_tables.IsEnabled = true;
+                    btn_confirm.IsEnabled = true;
+                    btn_cancel.IsEnabled = true;
+
                 }
                 HelpClass.clearValidate(requiredControlList, this);
                 HelpClass.EndAwait(grid_main);
-            }
+        }
             catch (Exception ex)
             {
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
-            }
         }
+    }
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {
             try
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
-                /*
-                await RefreshUsersList();
+                await refreshReservaitionsList();
                 await Search();
-                */
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -372,15 +524,11 @@ namespace Restaurant.View.sales.reservations
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            //user = new User();
-            //user.workHours = "0";
-            //this.DataContext = user;
-
-
-
-
+            this.DataContext = new TablesReservation() ;
+            dg_tables.ItemsSource = null;
             // last 
             HelpClass.clearValidate(requiredControlList, this);
+            btn_tables.IsEnabled = false;
             btn_confirm.IsEnabled = false;
             btn_cancel.IsEnabled = false;
         }
@@ -461,6 +609,31 @@ namespace Restaurant.View.sales.reservations
             }
         }
 
+        #endregion
+        #region Button In DataGrid
+
+        void cancelRowinDatagrid(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        Tables row = (Tables)dg_tables.SelectedItems[0];
+                        selectedTables.Remove(row);
+                        dg_tables.ItemsSource = null;
+                        dg_tables.ItemsSource = selectedTables;
+                    }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         #endregion
         #region report
         /*
@@ -752,5 +925,7 @@ namespace Restaurant.View.sales.reservations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+   
     }
 }

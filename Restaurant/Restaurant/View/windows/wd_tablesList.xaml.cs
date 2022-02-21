@@ -25,14 +25,16 @@ namespace Restaurant.View.windows
     {
         public int sectionId = 0 ;
         public bool isActive;
+        public string page;
+        public long reservationId;
 
         Classes.Section section = new Classes.Section();
         Classes.Section sectionModel = new Classes.Section();
         IEnumerable<Tables> allTableSource;
-        IEnumerable<Tables> selectedTablesSource;
+         IEnumerable<Tables> selectedTablesSource;
         List<Tables> allTables = new List<Tables>();
         List<Tables> tablesQuery = new List<Tables>();
-        List<Tables> selectedTables = new List<Tables>();
+        public List<Tables> selectedTables = new List<Tables>();
         Tables tableModel = new Tables();
         Tables table = new Tables();
 
@@ -80,16 +82,28 @@ namespace Restaurant.View.windows
                 translat();
                 #endregion
 
-                #region 
-                section = await sectionModel.getById(sectionId);
+               
+                #region reservation Tables
+                if (page == "reservationUpdate")
+                {
 
-                allTableSource = await tableModel.Get(MainWindow.branchLogin.branchId , 0);
-                selectedTablesSource = await tableModel.Get(MainWindow.branchLogin.branchId, sectionId);
+                }
+                #endregion
 
+                #region section Tables
+                else
+                {
+                    section = await sectionModel.getById(sectionId);
+                  
+                    selectedTablesSource = await tableModel.Get(MainWindow.branchLogin.branchId, sectionId);
+                    selectedTables.AddRange(selectedTablesSource.ToList());
+                }
+                #endregion
+
+                #region
+                allTableSource = await tableModel.Get(MainWindow.branchLogin.branchId, 0);
                 allTables.AddRange(allTableSource.ToList());
-
-                selectedTables.AddRange(selectedTablesSource.ToList());
-                
+               
                 //remove selected items from all items
                 foreach (var i in selectedTables)
                 {
@@ -291,9 +305,16 @@ namespace Restaurant.View.windows
             try
             {
                 HelpClass.StartAwait(grid_tableList);
+                if (page == "reservationUpdate")
+                {
 
-                await tableModel.AddTablesToSection(selectedTables.ToList(), sectionId, MainWindow.userLogin.userId);
-
+                }
+                #region section tables
+                else
+                {
+                    await tableModel.AddTablesToSection(selectedTables.ToList(), sectionId, MainWindow.userLogin.userId);
+                }
+                #endregion
                 DialogResult = true;
                 this.Close();
 
