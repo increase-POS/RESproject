@@ -3265,4 +3265,7 @@ Please add Email in setting</value>
   <data name="trTheTables" xml:space="preserve">
     <value>Tables</value>
   </data>
+  <data name="trAlerts" xml:space="preserve">
+    <value>Alerts</value>
+  </data>
 </root>

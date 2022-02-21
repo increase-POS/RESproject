@@ -3241,4 +3241,7 @@
   <data name="trTheTables" xml:space="preserve">
     <value>الطاولات</value>
   </data>
+  <data name="trAlerts" xml:space="preserve">
+    <value>الإشعارات</value>
+  </data>
 </root>
