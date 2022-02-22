@@ -3286,4 +3286,13 @@ Please add Email in setting</value>
   <data name="trStatus" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="trEmpty" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="trOpened" xml:space="preserve">
+    <value>Opened</value>
+  </data>
+  <data name="trHide" xml:space="preserve">
+    <value>Hide</value>
+  </data>
 </root>

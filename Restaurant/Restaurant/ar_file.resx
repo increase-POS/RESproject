@@ -3262,4 +3262,13 @@
   <data name="trStatus" xml:space="preserve">
     <value>الحالة</value>
   </data>
+  <data name="trEmpty" xml:space="preserve">
+    <value>محجوزة</value>
+  </data>
+  <data name="trOpened" xml:space="preserve">
+    <value>مفتوحة</value>
+  </data>
+  <data name="trHide" xml:space="preserve">
+    <value>إخفاء</value>
+  </data>
 </root>
