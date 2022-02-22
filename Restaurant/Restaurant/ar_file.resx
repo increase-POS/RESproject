@@ -3247,4 +3247,19 @@
   <data name="trSelectItemFirst" xml:space="preserve">
     <value>اختر عنصر أولاً</value>
   </data>
+  <data name="trCanceled" xml:space="preserve">
+    <value>ملغى</value>
+  </data>
+  <data name="trCancel_" xml:space="preserve">
+    <value>إلغاء</value>
+  </data>
+  <data name="trCreator" xml:space="preserve">
+    <value>المنشئ</value>
+  </data>
+  <data name="trReceive" xml:space="preserve">
+    <value>استلام</value>
+  </data>
+  <data name="trStatus" xml:space="preserve">
+    <value>الحالة</value>
+  </data>
 </root>

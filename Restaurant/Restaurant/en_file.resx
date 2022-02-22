@@ -3271,4 +3271,19 @@ Please add Email in setting</value>
   <data name="trSelectItemFirst" xml:space="preserve">
     <value>Select Item First</value>
   </data>
+  <data name="trCanceled" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="trCancel_" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="trCreator" xml:space="preserve">
+    <value>Creator</value>
+  </data>
+  <data name="trReceive" xml:space="preserve">
+    <value>Receive</value>
+  </data>
+  <data name="trStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
 </root>
