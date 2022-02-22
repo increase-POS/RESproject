@@ -353,6 +353,18 @@ namespace Restaurant.Classes
                         if (!HelpClass.validateEmpty(datePicker.Text, path))
                             isValid = false;
                 }
+                //
+                //TimePicker
+                foreach (var control in requiredControlList)
+                {
+                    TimePicker timePicker = FindControls.FindVisualChildren<TimePicker>(userControl).Where(x => x.Name == "tp_" + control)
+                        .FirstOrDefault();
+                    Path path = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    if (timePicker != null && path != null)
+                        if (!HelpClass.validateEmpty(timePicker.Text, path))
+                            isValid = false;
+                }
                 //PasswordBox
                 foreach (var control in requiredControlList)
                 {
