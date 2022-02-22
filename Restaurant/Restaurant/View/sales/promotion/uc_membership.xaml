@@ -418,7 +418,7 @@
                                 </Path>
                             </Grid>
                         </Border>
-                    <Grid>
+                    <!--<Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -455,8 +455,8 @@
 
                             </Grid>
                         </Border>
-                    </Grid>
-                    <Grid>
+                    </Grid>-->
+                    <!--<Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -494,7 +494,7 @@
 
                             </Grid>
                         </Border>
-                    </Grid>
+                    </Grid>-->
                     <Border Grid.Row="8" Grid.Column="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                             <ComboBox x:Name="cb_subscriptionType"    SelectedValue="{Binding subscriptionType, Mode=OneWay}"
@@ -513,7 +513,7 @@
                     </Border>
 
                  
-                    <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                    <!--<Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid>
                             <TextBox x:Name="tb_barcode" Grid.Row="8"  Padding="10,0,5,0"  
                                          Text="{Binding barcode, Mode=OneWay}"
@@ -532,7 +532,7 @@
                              Data="{StaticResource infoCircle}"/>
 
                         </Grid>
-                    </Border>
+                    </Border>-->
 
 
 
@@ -549,8 +549,8 @@
                         </Grid>
                     </Border>
 
-                    <Image x:Name="img_barcode" Margin="10,5,10,5" Height="50" MaxWidth="250" Grid.Row="5"
-                               Stretch="Fill"  />
+                    <!--<Image x:Name="img_barcode" Margin="10,5,10,5" Height="50" MaxWidth="250" Grid.Row="5"
+                               Stretch="Fill"  />-->
 
 
 
@@ -573,19 +573,47 @@
                     </Grid.ColumnDefinitions>
                     <Border Background="White" Grid.ColumnSpan="3"  Height="1"  BorderBrush="{StaticResource MainColor}" 
                     BorderThickness="1" Opacity="1" Margin="5,5,5,5"  />
-                    <Border Grid.Row="1" Grid.ColumnSpan="3">
-                        <Button x:Name="btn_subscriptionFees"     Content="subscription fees"
-                                materialDesign:ButtonAssist.CornerRadius="7"
-                          Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
-                    Margin="1,1"   Foreground="White" />
-                    </Border>
-                    <Border Grid.Row="2" Grid.ColumnSpan="3">
-                        <Button x:Name="btn_customers"     Content="customers"
-                                materialDesign:ButtonAssist.CornerRadius="7"
-                          Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
-                    Margin="1,1"   Foreground="White" />
-                    </Border>
-                    <Border Grid.Row="3">
+                        <Grid  Grid.Row="2"  Grid.ColumnSpan="3"   >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" BorderBrush="{x:Null}" Padding="0" 
+                                Name="btn_customers"  Margin="5 5 2.5 5 " Height="auto"  
+                                Background="{x:Null}" VerticalAlignment="Top"  >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                           Width="35" Height="35" FlowDirection="LeftToRight"
+                           Data="{StaticResource customer}"/>
+                                    <TextBlock  Text="customers"  Grid.Row="1" 
+                                                    FontWeight="Regular" FontSize="10" TextAlignment="Center"
+                                                    Foreground="{StaticResource MainColor}"
+                                                     HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                                </Grid>
+                            </Button>
+                            <Button x:Name="btn_subscriptionFees" Grid.Column="2" BorderBrush="{x:Null}" Padding="0" 
+                                  Margin="5 5 2.5 5 " Height="auto"
+                                Background="{x:Null}" VerticalAlignment="Top"  >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                           Width="35" Height="35" FlowDirection="LeftToRight"
+                           Data="{StaticResource subscriptions}"/>
+                                    <TextBlock  Text="subscriptionFees"  Grid.Row="1" 
+                                                    FontWeight="Regular" FontSize="10" TextAlignment="Center"
+                                                    Foreground="{StaticResource MainColor}"
+                                                     HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                                </Grid>
+                            </Button>
+                        </Grid>
+                        <Border Grid.Row="3">
 
                         <Button x:Name="btn_add"  materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"

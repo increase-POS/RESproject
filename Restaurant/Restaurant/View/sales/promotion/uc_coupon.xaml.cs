@@ -154,7 +154,7 @@ namespace Restaurant.View.sales.promotion
             txt_isActiveCoupon.Text = MainWindow.resourcemanager.GetString("trActive");
             txt_contentInformatin.Text = MainWindow.resourcemanager.GetString("trDetails");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_membershipId, MainWindow.resourcemanager.GetString("trMembership")+"...");
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_membershipId, MainWindow.resourcemanager.GetString("trMembership")+"...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_discountType, MainWindow.resourcemanager.GetString("trTypeDiscountHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_discountValue, MainWindow.resourcemanager.GetString("trDiscountValueHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_startDate, MainWindow.resourcemanager.GetString("trStartDateHint"));
@@ -266,7 +266,7 @@ namespace Restaurant.View.sales.promotion
                             else
                                 coupon.quantity = Int32.Parse(tb_quantity.Text);
                             coupon.remainQ = coupon.quantity;
-                            coupon.membershipId = 0;///????????????
+                            //coupon.membershipId = 0;///????????????
                             coupon.createUserId = MainWindow.userLogin.userId;
 
                             int s = await coupon.save(coupon);
@@ -370,7 +370,7 @@ namespace Restaurant.View.sales.promotion
                         else
                             coupon.quantity = Int32.Parse(tb_quantity.Text);
                         coupon.remainQ = coupon.quantity;
-                        coupon.membershipId = 0;///????????????
+                        //coupon.membershipId = 0;///????????????
                         coupon.createUserId = MainWindow.userLogin.userId;
 
                         int s = await coupon.save(coupon);
