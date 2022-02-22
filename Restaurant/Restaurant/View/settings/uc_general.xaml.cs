@@ -1150,6 +1150,14 @@ namespace Restaurant.View.settings
             }
 
         }
+        private void Btn_maxDiscount_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Btn_timeStaying_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         private async void Btn_errorsExport_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -1317,6 +1325,9 @@ namespace Restaurant.View.settings
 
         string input;
         decimal _decimal = 0;
+
+       
+
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             try
