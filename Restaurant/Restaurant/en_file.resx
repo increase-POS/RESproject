@@ -3268,4 +3268,7 @@ Please add Email in setting</value>
   <data name="trAlerts" xml:space="preserve">
     <value>Alerts</value>
   </data>
+  <data name="trSelectItemFirst" xml:space="preserve">
+    <value>Select Item First</value>
+  </data>
 </root>

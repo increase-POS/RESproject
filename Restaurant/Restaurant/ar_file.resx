@@ -3244,4 +3244,7 @@
   <data name="trAlerts" xml:space="preserve">
     <value>الإشعارات</value>
   </data>
+  <data name="trSelectItemFirst" xml:space="preserve">
+    <value>اختر عنصر أولاً</value>
+  </data>
 </root>
