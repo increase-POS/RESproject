@@ -212,8 +212,10 @@ namespace Restaurant.View.sectionData
                 {
                     HelpClass.StartAwait(grid_main);
 
+                    if (residential.residentSecId > 0)
+                    {
 
-                    bool isValidName = true;
+                        bool isValidName = true;
                     isValidName = await chkNameValidate(tb_name.Text, residential.residentSecId);
 
                     if (HelpClass.validate(requiredControlList, this) && isValidName)
@@ -233,6 +235,11 @@ namespace Restaurant.View.sectionData
 
                         }
                     }
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
+
                     HelpClass.EndAwait(grid_main);
                 }
                 else
@@ -289,6 +296,7 @@ namespace Restaurant.View.sectionData
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
+                                    residential.residentSecId = 0;
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshCustomersList();

@@ -246,7 +246,10 @@ namespace Restaurant.View.sectionData.hallDivide
                     //isValidName = await chkNameValidate(tb_name.Text, MainWindow.branchLogin.branchId, table.tableId);
 
                     //if (HelpClass.validate(requiredControlList, this) && isValidName)
-                    if (HelpClass.validate(requiredControlList, this))
+
+                    if (table.tableId > 0)
+                    {
+                        if (HelpClass.validate(requiredControlList, this))
                     {
                         table.name = tb_name.Text;
                         if (tables.Where(x => x.name == table.name && x.branchId == MainWindow.branchLogin.branchId && x.tableId != table.tableId).Count() == 0)
@@ -271,6 +274,10 @@ namespace Restaurant.View.sectionData.hallDivide
                             Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trDublicateTables"), animation: ToasterAnimation.FadeIn);
 
                     }
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                     HelpClass.EndAwait(grid_main);
                 }
                 else
@@ -344,6 +351,7 @@ namespace Restaurant.View.sectionData.hallDivide
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
+                                    table.tableId = 0;
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshTablesList();

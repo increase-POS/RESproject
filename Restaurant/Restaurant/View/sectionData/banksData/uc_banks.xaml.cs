@@ -242,7 +242,9 @@ namespace Restaurant.View.sectionData.banksData
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
-                if (HelpClass.validate(requiredControlList, this) )
+                    if (bank.bankId > 0)
+                    {
+                        if (HelpClass.validate(requiredControlList, this) )
                 {
                     bool isBankExist = await chkDuplicateBank();
                     if (isBankExist)
@@ -286,7 +288,11 @@ namespace Restaurant.View.sectionData.banksData
                         }
                     }
                 }
-                HelpClass.EndAwait(grid_main);
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
+                    HelpClass.EndAwait(grid_main);
             }
                 else
                 Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -342,6 +348,7 @@ namespace Restaurant.View.sectionData.banksData
                                 Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
+                                    bank.bankId = 0;
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                 await RefreshCustomersList();

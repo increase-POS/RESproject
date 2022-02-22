@@ -185,7 +185,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
             {//add
                 try
                 {
-                    if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") || HelpClass.isAdminPermision())
+                    if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") )
                     {
                         HelpClass.StartAwait(grid_main);
 
@@ -255,56 +255,61 @@ namespace Restaurant.View.sectionData.branchesAndStores
                     HelpClass.ExceptionMessage(ex, this);
                 }
             }
-            private async void Btn_update_Click(object sender, RoutedEventArgs e)
-            {//update
+        private async void Btn_update_Click(object sender, RoutedEventArgs e)
+        {//update
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update"))
                 {
                     HelpClass.StartAwait(grid_main);
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+                    if (branch.branchId > 0)
                     {
-
-
-                        bool iscodeExist = await HelpClass.isCodeExist(tb_code.Text, "b", "Branch", branch.branchId);
-                        if (iscodeExist)
-                        {
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trDuplicateCodeToolTip"), animation: ToasterAnimation.FadeIn);
-                            #region Tooltip_code
-                            p_error_code.Visibility = Visibility.Visible;
-                            ToolTip toolTip_code = new ToolTip();
-                            toolTip_code.Content = MainWindow.resourcemanager.GetString("trDuplicateCodeToolTip");
-                            toolTip_code.Style = Application.Current.Resources["ToolTipError"] as Style;
-                            p_error_code.ToolTip = toolTip_code;
-                            #endregion
-                        }
-                        else
+                        if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                         {
 
-                            branch.code = tb_code.Text;
-                            branch.name = tb_name.Text;
-                            branch.notes = tb_notes.Text;
-                            branch.address = tb_address.Text;
-                            branch.email = tb_email.Text;
-                            branch.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text;
-                            if (!tb_phone.Text.Equals(""))
-                                branch.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
-                            branch.updateUserId = MainWindow.userLogin.userId;
-                            branch.parentId = Convert.ToInt32(cb_parentId.SelectedValue);
 
-                            int s = await branch.save(branch);
-                            if (s <= 0)
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            bool iscodeExist = await HelpClass.isCodeExist(tb_code.Text, "b", "Branch", branch.branchId);
+                            if (iscodeExist)
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trDuplicateCodeToolTip"), animation: ToasterAnimation.FadeIn);
+                                #region Tooltip_code
+                                p_error_code.Visibility = Visibility.Visible;
+                                ToolTip toolTip_code = new ToolTip();
+                                toolTip_code.Content = MainWindow.resourcemanager.GetString("trDuplicateCodeToolTip");
+                                toolTip_code.Style = Application.Current.Resources["ToolTipError"] as Style;
+                                p_error_code.ToolTip = toolTip_code;
+                                #endregion
+                            }
                             else
                             {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                                await RefreshBranchsList();
-                                await Search();
+
+                                branch.code = tb_code.Text;
+                                branch.name = tb_name.Text;
+                                branch.notes = tb_notes.Text;
+                                branch.address = tb_address.Text;
+                                branch.email = tb_email.Text;
+                                branch.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text;
+                                if (!tb_phone.Text.Equals(""))
+                                    branch.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
+                                branch.updateUserId = MainWindow.userLogin.userId;
+                                branch.parentId = Convert.ToInt32(cb_parentId.SelectedValue);
+
+                                int s = await branch.save(branch);
+                                if (s <= 0)
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                else
+                                {
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                                    await RefreshBranchsList();
+                                    await Search();
 
 
+                                }
                             }
                         }
                     }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
                     HelpClass.EndAwait(grid_main);
                 }
                 else
@@ -316,12 +321,12 @@ namespace Restaurant.View.sectionData.branchesAndStores
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            }
+        }
             private async void Btn_delete_Click(object sender, RoutedEventArgs e)
             {
                 try
                 {//delete
-                    if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") || HelpClass.isAdminPermision())
+                    if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") )
                     {
                         HelpClass.StartAwait(grid_main);
                         if (branch.branchId != 0)
@@ -361,6 +366,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                                         Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                     else
                                     {
+                                    branch.branchId = 0;
                                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                         await RefreshBranchsList();
@@ -676,7 +682,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
             try
             {
                     HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(storesPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(storesPermission, MainWindow.groupObjects, "one") )
                 {
                     Window.GetWindow(this).Opacity = 0.2;
 
