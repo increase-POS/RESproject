@@ -72,6 +72,17 @@ namespace Restaurant.View.settings.reportsSettings
         static int printCountId = 0;
         List<Replang> langcomboList = new List<Replang>();
 
+        private void fillPrintHeader()
+        {
+            cb_printHeader.DisplayMemberPath = "Text";
+            cb_printHeader.SelectedValuePath = "Value";
+            var typelist = new[] {
+                 new { Text = MainWindow.resourcemanager.GetString("trShow")       , Value = "show" },
+                 new { Text = MainWindow.resourcemanager.GetString("trHide")       , Value = "hide" },
+                };
+            cb_printHeader.ItemsSource = typelist;
+            cb_printHeader.SelectedIndex = 0;
+        }
 
         async Task fillRepLang()
         {
@@ -142,6 +153,7 @@ namespace Restaurant.View.settings.reportsSettings
 
                 ///naji code
                 ///
+                fillPrintHeader();
                 await fillRepLang();
                 #region get default print count
                 await getDefaultPrintCount();
@@ -447,6 +459,10 @@ namespace Restaurant.View.settings.reportsSettings
         }
 
         #endregion
-      
+
+        private void Btn_printHeader_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

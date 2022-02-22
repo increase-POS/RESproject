@@ -240,7 +240,7 @@
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
-                            FlowDirection="LeftToRight"   Data="{StaticResource numbers}"/>
+                            FlowDirection="LeftToRight"   Data="{StaticResource printFile}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_printCount" Text="print count" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
                                 <Grid  Width="165">
@@ -293,6 +293,63 @@
                             <Button Tag="printCount"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
                                 Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
                               BorderThickness="0" x:Name="btn_printCount"  Click="Btn_printCount_Click"
+                             Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
+                         HorizontalContentAlignment="Center" VerticalContentAlignment="Center" >
+                                <StackPanel    Orientation="Horizontal">
+                                    <TextBlock Text="save"    Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
+                                    <Path  Fill="{StaticResource White}" Stretch="Fill" 
+                          VerticalAlignment="Center" Height="15" Width="15"
+                              Data="{StaticResource save}" RenderTransformOrigin="0.5,0.5"/>
+
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                    </Border>
+                    <!--#endregion-->
+                    <!--#region printHeader-->
+                    <Border Tag="printHeader" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
+                        <Border.Effect>
+                            <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                        </Border.Effect>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
+                            <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
+                            <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
+                              HorizontalAlignment="Center" Grid.Column="1"  
+                         VerticalAlignment="Center" Height="50" Width="50"
+                            FlowDirection="LeftToRight"  Data="{StaticResource fileSetting}" />
+                            <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
+                                <TextBlock x:Name="txt_printHeader" Text="printHeader" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
+                                <Border Grid.Row="0" CornerRadius="10" Margin="0,5,0,5"   Width="165" BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                    <Grid>
+                                        <ComboBox Grid.Column="0" x:Name="cb_printHeader"   Padding="10,0,5,0" 
+                                                  TextBlock.Foreground="#4E4E4E"
+                                  TabIndex="3" VerticalAlignment="Center"   
+                                                  Height="40"
+                                  BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
+                                    materialDesign:HintAssist.Hint="printHeader..."  
+                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                                  FontFamily="{StaticResource Font-cairo-light}" />
+                                        <Path Fill="#E81123" Stretch="Fill" Margin="0,25,5,15" x:Name="p_error_printHeader"
+                                  HorizontalAlignment="Right"  Grid.Row="0"  Visibility="Collapsed" 
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                                 Data="{StaticResource infoCircle}"/>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                            <Button Tag="printHeader"  Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
+                                Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
+                              BorderThickness="0" x:Name="btn_printHeader"  Click="Btn_printHeader_Click"
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center" >
                                 <StackPanel    Orientation="Horizontal">
