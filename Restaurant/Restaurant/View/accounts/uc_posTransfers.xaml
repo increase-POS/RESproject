@@ -160,38 +160,54 @@
                 </Button>
                 </Grid>
                 <StackPanel Margin="60 0 0 0" Grid.Row="1"    Orientation="Horizontal" >
-                    <Border Grid.Column="4" Margin="5" Background="White" CornerRadius="16" Height="40">
+                    <Border  Margin="5" Background="White" CornerRadius="16" Height="40">
+                        <CheckBox x:Name="chk_deposit"  IsChecked="True"
+                          Background="{StaticResource MainColor}"
+                          Content="Deposit"
+                          Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
+                          Checked="search_Checking" Margin="0" Height="40"
+                          Unchecked="chk_uncheck"/>
+                    </Border>
+                    <Border  Margin="5" Background="White" CornerRadius="16" Height="40">
+                        <CheckBox x:Name="chk_receive" 
+                          Background="{StaticResource MainColor}"
+                          Content="Receive"  Margin="0" Height="40"
+                          Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
+                          Checked="search_Checking"
+                          Unchecked="chk_uncheck"/>
+                    </Border>
+                    <!--<Border Grid.Column="4" Margin="5" Background="White" CornerRadius="16" Height="40">
                         <CheckBox x:Name="chk_unConfirmed"  
                           Background="{StaticResource MainColor}"
                           Content="UnConfirmed"
                           Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
                           Checked="search_Checking" Margin="0" Height="40"
                           Unchecked="chk_uncheck"/>
-                    </Border>
-                    <Border Grid.Column="4" Margin="5" Background="White" CornerRadius="16" Height="40">
+                    </Border>-->
+                    <!--<Border Grid.Column="4" Margin="5" Background="White" CornerRadius="16" Height="40">
                         <CheckBox x:Name="chk_waiting" 
                           Background="{StaticResource MainColor}"
                           Content="Waiting"  Margin="0" Height="40"
                           Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
                           Checked="search_Checking"
                           Unchecked="chk_uncheck"/>
-                    </Border>
-                    <Border Grid.Column="4"  Margin="5" Background="White" CornerRadius="16" Height="40">
+                    </Border>-->
+                    <!--<Border Grid.Column="4"  Margin="5" Background="White" CornerRadius="16" Height="40">
                         <CheckBox x:Name="chk_confirmed" 
                           Background="{StaticResource MainColor}"
                           Content="Confirmed" Margin="0" Height="40"
                           Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
                           Checked="search_Checking"
                           Unchecked="chk_uncheck"/>
-                    </Border>
-                    <Border Grid.Column="4"  Margin="5" Background="White" CornerRadius="16" Height="40">
+                    </Border>-->
+                    <!--<Border Grid.Column="4"  Margin="5" Background="White" CornerRadius="16" Height="40">
                         <CheckBox x:Name="chk_createdOper" 
                           Background="{StaticResource MainColor}"
                           Content="CreatedOper" Margin="0" Height="40"
                           Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
                           Checked="search_Checking"
                           Unchecked="chk_uncheck"/>
-                    </Border>
+                    </Border>-->
                 </StackPanel>
 
 
@@ -232,10 +248,18 @@
                             </DataGrid.Resources>
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="*"  Header="Transfer number" Binding="{Binding Path=transNum}"/>
-                                <DataGridTextColumn Width="*"  Header="From pos"        Binding="{Binding Path=posName}"/>
-                                <DataGridTextColumn Width="*"  Header="To pos"          Binding="{Binding Path=pos2Name}"/>
-                                <DataGridTextColumn Width="*"  Header="type"            Binding="{Binding transType,Converter={StaticResource transTypeConverter }}"/>
+                                <DataGridTextColumn Width="*"  Header="Creator"         Binding="{Binding Path=posCreatorName}"/>
+                                <DataGridTextColumn Width="*"  Header="Dipositor"       Binding="{Binding Path=posName}"/>
+                                <DataGridTextColumn Width="*"  Header="Recepient"       Binding="{Binding Path=pos2Name}"/>
                                 <DataGridTextColumn Width="*"  Header="Date"            Binding="{Binding updateDate, Converter={StaticResource dateFrameConverter }}"/>
+                                <DataGridTextColumn Width="*"  Header="Status"           >
+                                    <DataGridTextColumn.Binding >
+                                        <MultiBinding Converter="{StaticResource posTransfersStatusConverter}" >
+                                            <Binding Path="isConfirm" />
+                                            <Binding Path="isConfirm2" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Width="*"  Header="Cash"            Binding="{Binding Path =cash,Converter={StaticResource accuracyConverter }}"/>
                             </DataGrid.Columns>
                         </DataGrid>
@@ -577,12 +601,11 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <!--<ColumnDefinition Width="*"/>-->
                         </Grid.ColumnDefinitions>
                         <Border Background="White" Grid.ColumnSpan="3"  Height="1"  BorderBrush="{StaticResource MainColor}" 
                     BorderThickness="1" Opacity="1" Margin="5,5,5,5"  />
-                        <Border Grid.Row="1">
-
+                        <Border Grid.Row="1" Grid.ColumnSpan="2">
                             <Button x:Name="btn_add"  materialDesign:ButtonAssist.CornerRadius="7"
                                     Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                                     Margin="1,1" Click="Btn_add_Click" Foreground="White" >
@@ -604,22 +627,18 @@
                                     VerticalOffset="30"/>
                             </Border.ToolTip>
                         </Border>
-                        <Border Grid.Row="1" Grid.Column="1">
+                        <!--<Border Grid.Row="1" Grid.Column="1" >
                             <Button x:Name="btn_update"   materialDesign:ButtonAssist.CornerRadius="7"
-                        Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
-                   Margin="1,1"  Click="Btn_update_Click" >
+                                    Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                                    Margin="1,1"  Click="Btn_update_Click" >
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <materialDesign:PackIcon Name="txt_update_Icon" Foreground="White" Kind="Edit" VerticalAlignment="Center" Width="15" Height="15" Margin="0,1,2,0">
-
                                     </materialDesign:PackIcon>
                                     <TextBlock Foreground="White" Visibility="Collapsed" Name="txt_updateButton" Text="Update" VerticalAlignment="Center">
-
                                     </TextBlock>
-
                                 </StackPanel>
                             </Button>
                             <Border.ToolTip>
-
                                 <ToolTip x:Name="tt_update_Button" Content="Update"
                                     Placement="left" 
                                     HorizontalOffset="15"
@@ -628,10 +647,10 @@
 
                             </Border.ToolTip>
                         </Border>
-                        <Border Grid.Row="1" Grid.Column="2">
+                        <Border Grid.Row="1" Grid.Column="2" >
                             <Button x:Name="btn_delete"  materialDesign:ButtonAssist.CornerRadius="7"
-                        Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" Foreground="White"
-                    Margin="1,1"  Click="Btn_delete_Click" >
+                                    Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" Foreground="White"
+                                    Margin="1,1"  Click="Btn_delete_Click" >
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
                                     <materialDesign:PackIcon Name="txt_delete_Icon" Kind="Delete" Foreground="White" VerticalAlignment="Center" Width="15" Height="15" Margin="0,1,2,0">
 
@@ -648,13 +667,18 @@
                                     PlacementRectangle="50,0,0,0"
                                     VerticalOffset="30"/>
                             </Border.ToolTip>
-                        </Border>
-                        <Border Grid.Row="2" Grid.ColumnSpan="3">
-
+                        </Border>-->
+                        <Border Grid.Row="2" Grid.Column="0">
                             <Button x:Name="btn_confirm"   Content="Confirm" materialDesign:ButtonAssist.CornerRadius="7"
-                          Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
-                                     IsEnabled="False"
-                    Margin="1,1" Click="Btn_confirm_Click" Foreground="White" />
+                                    Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                                    IsEnabled="False"
+                                    Margin="1,1" Click="Btn_confirm_Click" Foreground="White" />
+                        </Border>
+                        <Border Grid.Row="2" Grid.Column="1">
+                            <Button x:Name="btn_cancel"   Content="Cancel" materialDesign:ButtonAssist.CornerRadius="7"
+                                    Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                                    IsEnabled="False"
+                                    Margin="1,1"  Foreground="White" />
                         </Border>
                     </Grid>
 

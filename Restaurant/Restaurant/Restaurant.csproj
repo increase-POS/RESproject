@@ -236,6 +236,7 @@
     <Compile Include="converters\invoiceStatusConverter.cs" />
     <Compile Include="converters\notificationsContentConverter.cs" />
     <Compile Include="converters\notificationsTitleConverter.cs" />
+    <Compile Include="converters\posTransfersStatusConverter.cs" />
     <Compile Include="converters\processTypeConverter.cs" />
     <Compile Include="converters\SectionLocationFreeZoneConverter.cs" />
     <Compile Include="converters\timeFrameConverter.cs" />
@@ -576,6 +577,9 @@
     </Compile>
     <Compile Include="View\windows\wd_tags.xaml.cs">
       <DependentUpon>wd_tags.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_transfers.xaml.cs">
+      <DependentUpon>wd_transfers.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_transItemsLocation.xaml.cs">
       <DependentUpon>wd_transItemsLocation.xaml</DependentUpon>
@@ -1087,6 +1091,10 @@
     <Page Include="View\windows\wd_tags.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_transfers.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_transItemsLocation.xaml">
       <Generator>MSBuild:Compile</Generator>

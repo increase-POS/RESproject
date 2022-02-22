@@ -2067,6 +2067,23 @@ namespace Restaurant
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        internal static Pos posLogIn = new Pos();
+        internal static int? posID;
+        public static async Task refreshBalance()
+        {
+            try
+            {
+                posLogIn = await posLogIn.getById(posID.Value);
+                mainWindow.txt_cashValue.Text = HelpClass.DecTostring(posLogIn.balance);
+                mainWindow.txt_cashSympol.Text = MainWindow.Currency;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, mainWindow);
+            }
+
+        }
+
         private void clearImg()
         {
             Uri resourceUri = new Uri("pic/no-image-icon-90x90.png", UriKind.Relative);

@@ -25,6 +25,7 @@
             <converters:invoiceStatusConverter x:Key="invoiceStatusConverter"/>
             <converters:permissionsNameConverter x:Key="permissionsNameConverter"/>
             <converters:timeFrameConverter x:Key="timeFrameConverter"/>
+            <converters:posTransfersStatusConverter x:Key="posTransfersStatusConverter"/>
 
             <!--#region Fonts-->
             <FontFamily x:Key="BarcodeFont" >IDAHC39M Code 39 Barcode, /Restaurant;component/fonts/#IDAHC39M Code 39 Barcode, Arial</FontFamily>
@@ -2525,7 +2526,9 @@
             <SolidColorBrush x:Key="lightGreen" Color="#E2EFDA"/>
             <SolidColorBrush x:Key="GreenTables" Color="#27AE60"/>
             <SolidColorBrush x:Key="BlueTables" Color="#3498DB"/>
-            
+
+            <SolidColorBrush x:Key="MainColorRed" Color="#D22A17"/>
+
             <SolidColorBrush x:Key="White" Color="#FFFFFF"/>
             <!--#endregion-->
 
