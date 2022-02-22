@@ -227,7 +227,14 @@ namespace Restaurant.View.windows
                 #endregion
                 #region   status
                 var itemStatusText = new TextBlock();
-                itemStatusText.Text = item.status;
+
+                if (item.status == "opened" || item.status == "openedReserved")
+                    itemStatusText.Text = MainWindow.resourcemanager.GetString("trOpened");
+                else if (item.status == "reserved")
+                    itemStatusText.Text = MainWindow.resourcemanager.GetString("trReserved");
+                else
+                    itemStatusText.Text = MainWindow.resourcemanager.GetString("trEmpty");
+                //itemStatusText.Text = item.status;
                 itemStatusText.VerticalAlignment = VerticalAlignment.Center;
                 itemStatusText.HorizontalAlignment = HorizontalAlignment.Center;
                 itemStatusText.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;

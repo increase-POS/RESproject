@@ -150,6 +150,11 @@ namespace Restaurant.View.sales.reservations
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tp_searchEndTime, MainWindow.resourcemanager.GetString("trEndTimeHint"));
 
 
+            txt_statusEmpty.Text = MainWindow.resourcemanager.GetString("trEmpty");
+            txt_statusOpen.Text = MainWindow.resourcemanager.GetString("trOpened");
+            txt_statusReservated.Text = MainWindow.resourcemanager.GetString("trReserved");
+
+
             btn_refresh.ToolTip = MainWindow.resourcemanager.GetString("trRefresh");
             btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
             btn_addCustomer.ToolTip = MainWindow.resourcemanager.GetString("trAddCustomer");
@@ -1033,7 +1038,15 @@ namespace Restaurant.View.sales.reservations
                 #endregion
                 #region   status
                 var itemStatusText = new TextBlock();
-                itemStatusText.Text = item.status;
+                
+                if (item.status == "opened" || item.status == "openedReserved")
+                    itemStatusText.Text = MainWindow.resourcemanager.GetString("trOpened"); 
+                else if (item.status == "reserved")
+                    itemStatusText.Text = MainWindow.resourcemanager.GetString("trReserved");
+                else
+                    itemStatusText.Text = MainWindow.resourcemanager.GetString("trEmpty");
+
+                //itemStatusText.Text = item.status;
                 itemStatusText.VerticalAlignment = VerticalAlignment.Center;
                 itemStatusText.HorizontalAlignment = HorizontalAlignment.Center;
                 itemStatusText.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;

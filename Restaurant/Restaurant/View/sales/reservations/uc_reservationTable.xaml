@@ -406,13 +406,13 @@
                         </WrapPanel>
                     </ScrollViewer>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 5">
-                        <TextBlock  Text="Empty"   Margin="5 0"
+                        <TextBlock  Text="Empty"   Margin="5 0" x:Name="txt_statusEmpty"
                                       Foreground="{StaticResource GreenTables}"  />
                         <Rectangle Height="10" Width="10"  Margin="0 0 5 0" Fill="{StaticResource GreenTables}"/>
-                        <TextBlock  Text="Open"   Margin="5 0"
+                        <TextBlock  Text="Open"   Margin="5 0"  x:Name="txt_statusOpen"
                                       Foreground="{StaticResource MainColor}"  />
                         <Rectangle Height="10" Width="10"  Margin="0 0 5 0" Fill="{StaticResource MainColor}"/>
-                        <TextBlock  Text="Reservated"   Margin="5 0"
+                        <TextBlock  Text="Reservated"   Margin="5 0" x:Name="txt_statusReservated"
                                       Foreground="{StaticResource BlueTables}"  />
                         <Rectangle Height="10" Width="10" Margin="0 0 5 0" Fill="{StaticResource BlueTables}"/>
                     </StackPanel>
