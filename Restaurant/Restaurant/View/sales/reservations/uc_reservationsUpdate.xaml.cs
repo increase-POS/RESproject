@@ -224,7 +224,9 @@ namespace Restaurant.View.sales.reservations
                 HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update"))
                 {
-                    if (HelpClass.validate(requiredControlList, this))
+                    if (reservation.reservationId > 0)
+                    {
+                        if (HelpClass.validate(requiredControlList, this))
                     {
                         bool valid = await validateReservationTime();
                         if (valid)
@@ -272,6 +274,9 @@ namespace Restaurant.View.sales.reservations
 
                         }
                     }
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -355,6 +360,7 @@ namespace Restaurant.View.sales.reservations
                     int res = await reservation.updateReservationStatus(reservation.reservationId, "cancle", MainWindow.userLogin.userId);
                     if (res > 0)
                     {
+                        reservation.reservationId = 0;
                         Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                         Clear();
                         await refreshReservaitionsList();

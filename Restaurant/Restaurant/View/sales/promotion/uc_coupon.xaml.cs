@@ -305,8 +305,9 @@ namespace Restaurant.View.sales.promotion
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") )
                 {
                     HelpClass.StartAwait(grid_main);
-                    
-                    if (HelpClass.validate(requiredControlList, this))
+                    if (coupon.cId > 0)
+                    {
+                        if (HelpClass.validate(requiredControlList, this))
                     {
                         #region validate
                         bool isCodeExist = false;
@@ -386,6 +387,11 @@ namespace Restaurant.View.sales.promotion
                         }
                         #endregion
                     }
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
+
                     HelpClass.EndAwait(grid_main);
                 }
                 else
@@ -443,6 +449,7 @@ namespace Restaurant.View.sales.promotion
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
+                                    coupon.cId = 0;
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshCustomersList();

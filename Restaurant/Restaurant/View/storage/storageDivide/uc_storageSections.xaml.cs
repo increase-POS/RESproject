@@ -235,7 +235,9 @@ namespace Restaurant.View.storage.storageDivide
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+                    if (section.sectionId > 0)
+                    {
+                        if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
 
 
@@ -258,6 +260,10 @@ namespace Restaurant.View.storage.storageDivide
                             }
                        
                     }
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                     HelpClass.EndAwait(grid_main);
                 }
                 else
@@ -314,6 +320,7 @@ namespace Restaurant.View.storage.storageDivide
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
+                                    section.sectionId = 0;
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshSectionsList();

@@ -236,7 +236,10 @@ namespace Restaurant.View.delivery
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+                    if (shCompany.shippingCompanyId > 0)
+                    {
+
+                        if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
 
 
@@ -267,6 +270,10 @@ namespace Restaurant.View.delivery
                             
                         }
                     }
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                     HelpClass.EndAwait(grid_main);
                 }
                 else
@@ -323,6 +330,7 @@ namespace Restaurant.View.delivery
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
+                                    shCompany.shippingCompanyId = 0;
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshShippingCompaniesList();

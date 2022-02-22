@@ -291,7 +291,9 @@ namespace Restaurant.View.settings
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") )
                 {
                     HelpClass.StartAwait(grid_main);
-                    if (HelpClass.validate(requiredControlList, this))
+                    if (group.groupId > 0)
+                    {
+                        if (HelpClass.validate(requiredControlList, this))
                     {
                         bool isGroupExist = await chkDuplicateGroup();
                         if (isGroupExist)
@@ -324,6 +326,10 @@ namespace Restaurant.View.settings
                             }
                         }
                     }
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                     HelpClass.EndAwait(grid_main);
                 }
                 else

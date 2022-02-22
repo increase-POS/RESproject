@@ -237,8 +237,9 @@ namespace Restaurant.View.sectionData.hallDivide
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
-
-                    bool isValidName = true;
+                    if (section.sectionId > 0)
+                    {
+                        bool isValidName = true;
                     isValidName = await chkNameValidate(tb_name.Text, Convert.ToInt32(cb_branchId.SelectedValue), section.sectionId);
 
                     if (HelpClass.validate(requiredControlList, this) && isValidName)
@@ -260,6 +261,10 @@ namespace Restaurant.View.sectionData.hallDivide
                             await Search();
                         }
                     }
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                     HelpClass.EndAwait(grid_main);
                 }
                 else
@@ -330,6 +335,7 @@ namespace Restaurant.View.sectionData.hallDivide
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
+                                    section.sectionId = 0;
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshSectionsList();

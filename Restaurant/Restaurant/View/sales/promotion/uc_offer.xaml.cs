@@ -286,69 +286,74 @@ namespace Restaurant.View.sales.promotion
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update"))
                 {
                     HelpClass.StartAwait(grid_main);
-
-                    #region validate
-                    bool isCodeExist = await HelpClass.isCodeExist(tb_code.Text, "", "Offer", offer.offerId);
-
-                    bool isEndDateSmaller = false;
-                    if (dp_endDate.SelectedDate < dp_startDate.SelectedDate) isEndDateSmaller = true;
-
-                    if (HelpClass.validate(requiredControlList, this))
+                    if (offer.offerId > 0)
                     {
-                        if ((isCodeExist) || (isEndDateSmaller))
+                        #region validate
+                        bool isCodeExist = await HelpClass.isCodeExist(tb_code.Text, "", "Offer", offer.offerId);
+
+                        bool isEndDateSmaller = false;
+                        if (dp_endDate.SelectedDate < dp_startDate.SelectedDate) isEndDateSmaller = true;
+
+                        if (HelpClass.validate(requiredControlList, this))
                         {
-                            if (isCodeExist)
-                                HelpClass.SetValidate(p_error_code, "trDuplicateCodeToolTip");
-
-                            if (isEndDateSmaller)
+                            if ((isCodeExist) || (isEndDateSmaller))
                             {
-                                HelpClass.SetValidate(p_error_startDate, "trErrorEndDateSmallerToolTip");
-                                HelpClass.SetValidate(p_error_endDate, "trErrorEndDateSmallerToolTip");
+                                if (isCodeExist)
+                                    HelpClass.SetValidate(p_error_code, "trDuplicateCodeToolTip");
+
+                                if (isEndDateSmaller)
+                                {
+                                    HelpClass.SetValidate(p_error_startDate, "trErrorEndDateSmallerToolTip");
+                                    HelpClass.SetValidate(p_error_endDate, "trErrorEndDateSmallerToolTip");
+                                }
                             }
-                        }
-                        #endregion
-
-                        else
-                        {
-                            #region update
-                            string startDateStr = dp_startDate.SelectedDate.Value.ToShortDateString();
-                            string startTimeStr = "00:00 AM";
-                            if (tp_startTime.Text != null)
-                                startTimeStr = tp_startTime.SelectedTime.Value.ToShortTimeString();
-                            DateTime startDateTime = DateTime.Parse(startDateStr + " " + startTimeStr);
-
-                            string endDateStr = dp_endDate.SelectedDate.Value.ToShortDateString();
-                            string endTimeStr = "00:00 AM";
-                            if (tp_endTime.Text != null)
-                                endTimeStr = tp_endTime.SelectedTime.Value.ToShortTimeString();
-                            DateTime endDateTime = DateTime.Parse(endDateStr + " " + endTimeStr);
-
-                            offer.name = tb_name.Text;
-                            offer.code = tb_code.Text;
-                            offer.isActive = Convert.ToByte(tgl_isActiveOffer.IsChecked);
-                            offer.discountType = Convert.ToString(cb_discountType.SelectedValue);
-                            offer.discountValue = decimal.Parse(tb_discountValue.Text);
-                            if (dp_startDate.SelectedDate != null)
-                                offer.startDate = startDateTime;
-                            if (dp_endDate.SelectedDate != null)
-                                offer.endDate = endDateTime;
-                            offer.createUserId = MainWindow.userLogin.userId;
-                            offer.notes = tb_notes.Text;
-
-                            int s = await offer.save(offer);
-
-                            if (s > 0)
-                            {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-
-                                await RefreshOffersList();
-                                await Search();
-                            }
-                            else
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             #endregion
+
+                            else
+                            {
+                                #region update
+                                string startDateStr = dp_startDate.SelectedDate.Value.ToShortDateString();
+                                string startTimeStr = "00:00 AM";
+                                if (tp_startTime.Text != null)
+                                    startTimeStr = tp_startTime.SelectedTime.Value.ToShortTimeString();
+                                DateTime startDateTime = DateTime.Parse(startDateStr + " " + startTimeStr);
+
+                                string endDateStr = dp_endDate.SelectedDate.Value.ToShortDateString();
+                                string endTimeStr = "00:00 AM";
+                                if (tp_endTime.Text != null)
+                                    endTimeStr = tp_endTime.SelectedTime.Value.ToShortTimeString();
+                                DateTime endDateTime = DateTime.Parse(endDateStr + " " + endTimeStr);
+
+                                offer.name = tb_name.Text;
+                                offer.code = tb_code.Text;
+                                offer.isActive = Convert.ToByte(tgl_isActiveOffer.IsChecked);
+                                offer.discountType = Convert.ToString(cb_discountType.SelectedValue);
+                                offer.discountValue = decimal.Parse(tb_discountValue.Text);
+                                if (dp_startDate.SelectedDate != null)
+                                    offer.startDate = startDateTime;
+                                if (dp_endDate.SelectedDate != null)
+                                    offer.endDate = endDateTime;
+                                offer.createUserId = MainWindow.userLogin.userId;
+                                offer.notes = tb_notes.Text;
+
+                                int s = await offer.save(offer);
+
+                                if (s > 0)
+                                {
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+
+                                    await RefreshOffersList();
+                                    await Search();
+                                }
+                                else
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                #endregion
+                            }
                         }
                     }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                     HelpClass.EndAwait(grid_main);
                 }
                 else
@@ -405,6 +410,7 @@ namespace Restaurant.View.sales.promotion
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
+                                    offer.offerId = 0;
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshOffersList();

@@ -251,70 +251,78 @@ namespace Restaurant.View.sectionData.banksData
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+
+
+                    if (card.cardId > 0)
                     {
-
-
-                        byte active;
-                        try
+                        if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                         {
-                            active = byte.Parse((tgl_isActive.IsChecked.Value ? 1 : 0).ToString());
-                        }
-                        catch
-                        {
-                            active = 0;
-                        }
 
-                        bool isCardExist = await chkDuplicateCard();
 
-                        if (isCardExist)
-                        {
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopCardExist"), animation: ToasterAnimation.FadeIn);
-                            #region Tooltip_name
-                            p_error_name.Visibility = Visibility.Visible;
-                            ToolTip toolTip_name = new ToolTip();
-                            toolTip_name.Content = MainWindow.resourcemanager.GetString("trPopCardExist");
-                            toolTip_name.Style = Application.Current.Resources["ToolTipError"] as Style;
-                            p_error_name.ToolTip = toolTip_name;
-                            #endregion
-                        }
-                        else
-                        {
-                            card.name = tb_name.Text;
-                            card.hasProcessNum = tgl_hasProcessNum.IsChecked.Value;
+                            byte active;
+                            try
+                            {
+                                active = byte.Parse((tgl_isActive.IsChecked.Value ? 1 : 0).ToString());
+                            }
+                            catch
+                            {
+                                active = 0;
+                            }
 
-                            card.isActive = active;
+                            bool isCardExist = await chkDuplicateCard();
 
-                            card.notes = tb_notes.Text;
-                            card.createUserId = MainWindow.userLogin.userId;
-                            card.updateUserId = MainWindow.userLogin.userId;
-
-                            int s = await card.save(card);
-                            if (s <= 0)
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            if (isCardExist)
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopCardExist"), animation: ToasterAnimation.FadeIn);
+                                #region Tooltip_name
+                                p_error_name.Visibility = Visibility.Visible;
+                                ToolTip toolTip_name = new ToolTip();
+                                toolTip_name.Content = MainWindow.resourcemanager.GetString("trPopCardExist");
+                                toolTip_name.Style = Application.Current.Resources["ToolTipError"] as Style;
+                                p_error_name.ToolTip = toolTip_name;
+                                #endregion
+                            }
                             else
                             {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                                if (isImgPressed)
+                                card.name = tb_name.Text;
+                                card.hasProcessNum = tgl_hasProcessNum.IsChecked.Value;
+
+                                card.isActive = active;
+
+                                card.notes = tb_notes.Text;
+                                card.createUserId = MainWindow.userLogin.userId;
+                                card.updateUserId = MainWindow.userLogin.userId;
+
+                                int s = await card.save(card);
+                                if (s <= 0)
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                else
                                 {
-                                    int cardId = s;
-                                    string b = await card.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + cardId.ToString()), cardId);
-                                    card.image = b;
-                                    isImgPressed = false;
-                                    if (!b.Equals(""))
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                                    if (isImgPressed)
                                     {
-                                        await getImg();
+                                        int cardId = s;
+                                        string b = await card.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + cardId.ToString()), cardId);
+                                        card.image = b;
+                                        isImgPressed = false;
+                                        if (!b.Equals(""))
+                                        {
+                                            await getImg();
+                                        }
+                                        else
+                                        {
+                                            HelpClass.clearImg(btn_image);
+                                        }
                                     }
-                                    else
-                                    {
-                                        HelpClass.clearImg(btn_image);
-                                    }
+                                    await RefreshCardsList();
+                                    await Search();
                                 }
-                                await RefreshCardsList();
-                                await Search();
                             }
                         }
                     }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                     HelpClass.EndAwait(grid_main);
                 }
                 else
@@ -371,6 +379,7 @@ namespace Restaurant.View.sectionData.banksData
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
+                                    card.cardId = 0;
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshCardsList();

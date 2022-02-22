@@ -252,7 +252,9 @@ namespace Restaurant.View.sectionData.persons
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+                    if (agent.agentId > 0)
+                    {
+                        if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
                         //payType
                         string payType = "";
@@ -297,6 +299,10 @@ namespace Restaurant.View.sectionData.persons
                             }
                         }
                     }
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                     HelpClass.EndAwait(grid_main);
                 }
                 else
@@ -353,6 +359,7 @@ namespace Restaurant.View.sectionData.persons
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
+                                    agent.agentId = 0;
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshCustomersList();

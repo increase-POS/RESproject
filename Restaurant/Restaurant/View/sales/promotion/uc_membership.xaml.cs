@@ -237,80 +237,87 @@ namespace Restaurant.View.sales.promotion
         }
         private async void Btn_update_Click(object sender, RoutedEventArgs e)
         {//update
-/*
-            try
-            {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
-                {
-                    HelpClass.StartAwait(grid_main);
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
-                    {
-                        //deserve
-                        decimal maxDeserveValue = 0;
-                        if (!tb_upperLimit.Text.Equals(""))
-                            maxDeserveValue = decimal.Parse(tb_upperLimit.Text);
+         /*
+                     try
+                     {
+                         if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
+                         {
+                             HelpClass.StartAwait(grid_main);
+                             if (agent.id > 0)
+                                             {
 
-                        //payType
-                        string payType = "";
-                        if (cb_payType.SelectedIndex != -1)
-                            payType = cb_payType.SelectedValue.ToString();
+                             if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+                             {
+                                 //deserve
+                                 decimal maxDeserveValue = 0;
+                                 if (!tb_upperLimit.Text.Equals(""))
+                                     maxDeserveValue = decimal.Parse(tb_upperLimit.Text);
 
-                        //agent.code = "Us-000001";
-                        //agent.custname = tb_custname.Text;
-                        //tb_code.Text = await agent.generateCodeNumber("c");
-                        //agent.code = await agent.generateCodeNumber("c");
-                        agent.name = tb_name.Text;
-                        agent.company = tb_company.Text;
-                        agent.email = tb_email.Text;
-                        agent.address = tb_address.Text;
-                        agent.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text;
-                        if (!tb_phone.Text.Equals(""))
-                            agent.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
-                        if (!tb_fax.Text.Equals(""))
-                            agent.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
-                        agent.payType = payType;
-                        agent.isLimited = (bool)tgl_hasCredit.IsChecked;
-                        agent.updateUserId = MainWindow.userLogin.userId;
-                        agent.notes = tb_notes.Text;
-                        agent.maxDeserve = maxDeserveValue;
+                                 //payType
+                                 string payType = "";
+                                 if (cb_payType.SelectedIndex != -1)
+                                     payType = cb_payType.SelectedValue.ToString();
 
-                        int s = await agent.save(agent);
-                        if (s <= 0)
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                        else
-                        {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                            await RefreshCustomersList();
-                            await Search();
-                            if (isImgPressed)
-                            {
-                                int agentId = s;
-                                string b = await agent.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + agentId.ToString()), agentId);
-                                agent.image = b;
-                                isImgPressed = false;
-                                if (!b.Equals(""))
-                                {
-                                    await getImg();
-                                }
-                                else
-                                {
-                                    HelpClass.clearImg(btn_image);
-                                }
-                            }
-                        }
-                    }
-                    HelpClass.EndAwait(grid_main);
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                                 //agent.code = "Us-000001";
+                                 //agent.custname = tb_custname.Text;
+                                 //tb_code.Text = await agent.generateCodeNumber("c");
+                                 //agent.code = await agent.generateCodeNumber("c");
+                                 agent.name = tb_name.Text;
+                                 agent.company = tb_company.Text;
+                                 agent.email = tb_email.Text;
+                                 agent.address = tb_address.Text;
+                                 agent.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text;
+                                 if (!tb_phone.Text.Equals(""))
+                                     agent.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
+                                 if (!tb_fax.Text.Equals(""))
+                                     agent.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
+                                 agent.payType = payType;
+                                 agent.isLimited = (bool)tgl_hasCredit.IsChecked;
+                                 agent.updateUserId = MainWindow.userLogin.userId;
+                                 agent.notes = tb_notes.Text;
+                                 agent.maxDeserve = maxDeserveValue;
 
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-            */
+                                 int s = await agent.save(agent);
+                                 if (s <= 0)
+                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                 else
+                                 {
+                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                                     await RefreshCustomersList();
+                                     await Search();
+                                     if (isImgPressed)
+                                     {
+                                         int agentId = s;
+                                         string b = await agent.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + agentId.ToString()), agentId);
+                                         agent.image = b;
+                                         isImgPressed = false;
+                                         if (!b.Equals(""))
+                                         {
+                                             await getImg();
+                                         }
+                                         else
+                                         {
+                                             HelpClass.clearImg(btn_image);
+                                         }
+                                     }
+                                 }
+                             }
+                             }
+									else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+									
+                             HelpClass.EndAwait(grid_main);
+                         }
+                         else
+                             Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                     }
+                     catch (Exception ex)
+                     {
+                         HelpClass.EndAwait(grid_main);
+                         HelpClass.ExceptionMessage(ex, this);
+                     }
+                     */
         }
         private async void Btn_delete_Click(object sender, RoutedEventArgs e)
         {

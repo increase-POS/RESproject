@@ -212,7 +212,9 @@ namespace Restaurant.View.storage.storageOperations
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+                    if (storageCost.storageCostId > 0)
+                    {
+                        if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
                         storageCost.name = tb_name.Text;
                         storageCost.cost = decimal.Parse(tb_cost.Text);
@@ -230,6 +232,10 @@ namespace Restaurant.View.storage.storageOperations
                             
                         }
                     }
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                     HelpClass.EndAwait(grid_main);
                 }
                 else
@@ -286,6 +292,7 @@ namespace Restaurant.View.storage.storageOperations
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
+                                    storageCost.storageCostId = 0;
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshStorageCostsList();

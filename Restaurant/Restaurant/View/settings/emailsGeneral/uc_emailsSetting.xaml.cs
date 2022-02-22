@@ -226,8 +226,10 @@ namespace Restaurant.View.settings.emailsGeneral
                 HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update"))
                 {
+                    if (sysEmail.emailId > 0)
+                    {
 
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+                        if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
                         sysEmail.email = tb_email.Text;
                         //   sysEmail.password = pb_password.Password;
@@ -257,6 +259,10 @@ namespace Restaurant.View.settings.emailsGeneral
                         else
                             Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     }
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -313,6 +319,7 @@ namespace Restaurant.View.settings.emailsGeneral
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
+                                    sysEmail.emailId =  0;
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshUsersList();

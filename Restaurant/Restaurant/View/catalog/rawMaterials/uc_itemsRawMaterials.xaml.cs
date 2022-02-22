@@ -263,7 +263,9 @@ namespace Restaurant.View.catalog.rawMaterials
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") )
                 {
                     HelpClass.StartAwait(grid_main);
-                    if (HelpClass.validate(requiredControlList, this))
+                    if (item.itemId > 0)
+                    {
+                        if (HelpClass.validate(requiredControlList, this))
                     {
                         Boolean codeAvailable = checkCodeAvailabiltiy(item.code);
                         if (codeAvailable)
@@ -321,6 +323,10 @@ namespace Restaurant.View.catalog.rawMaterials
                             }
                         }
                     }
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                     HelpClass.EndAwait(grid_main);
                 }
                 else
@@ -380,6 +386,7 @@ namespace Restaurant.View.catalog.rawMaterials
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
+                                    item.itemId = 0;
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshItemsList();

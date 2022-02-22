@@ -157,7 +157,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
 
             dg_branch.Columns[0].Header = MainWindow.resourcemanager.GetString("trCode");
             dg_branch.Columns[1].Header = MainWindow.resourcemanager.GetString("trName");
-            dg_branch.Columns[2].Header = MainWindow.resourcemanager.GetString("trAddress");
+            dg_branch.Columns[2].Header = MainWindow.resourcemanager.GetString("trMobile");
             dg_branch.Columns[3].Header = MainWindow.resourcemanager.GetString("trNote");
 
             btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
@@ -247,7 +247,9 @@ namespace Restaurant.View.sectionData.branchesAndStores
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+                    if (branch.branchId > 0)
+                    {
+                        if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
 
 
@@ -290,6 +292,10 @@ namespace Restaurant.View.sectionData.branchesAndStores
                             }
                         }
                     }
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                     HelpClass.EndAwait(grid_main);
                 }
                 else
@@ -346,6 +352,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                                     Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
+                                    branch.branchId = 0;
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshBranchsList();
