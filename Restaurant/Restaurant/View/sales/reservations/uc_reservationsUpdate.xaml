@@ -593,7 +593,6 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Button Grid.Column="0" BorderBrush="{x:Null}" Padding="0" 
                                 Name="btn_tables"  Margin="5 5 2.5 5 " Height="auto" Click="Btn_tables_Click"
@@ -612,7 +611,7 @@
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
                             </Grid>
                         </Button>
-                        <Button Grid.Column="1" BorderBrush="{x:Null}" Padding="0" 
+                        <!--<Button Grid.Column="1" BorderBrush="{x:Null}" Padding="0" 
                                   Margin="5 5 2.5 5 " Height="auto"
                                 Background="{x:Null}" VerticalAlignment="Top"  >
                             <Grid>
@@ -628,8 +627,8 @@
                                                     Foreground="{StaticResource MainColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
                             </Grid>
-                        </Button>
-                        <Button x:Name="btn_confirm" Grid.Column="2" BorderBrush="{x:Null}" Padding="0" 
+                        </Button>-->
+                        <Button x:Name="btn_confirm" Grid.Column="1" BorderBrush="{x:Null}" Padding="0" 
                                   Margin="5 5 2.5 5 " Height="auto" IsEnabled="False"
                                 Background="{x:Null}" VerticalAlignment="Top" Click="Btn_confirm_Click" >
                             <Grid>
@@ -646,7 +645,7 @@
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
                             </Grid>
                         </Button>
-                        <Button x:Name="btn_cancel" Grid.Column="3" BorderBrush="{x:Null}" Padding="0" 
+                        <Button x:Name="btn_cancel" Grid.Column="2" BorderBrush="{x:Null}" Padding="0" 
                                   Margin="5 5 2.5 5 " Height="auto" IsEnabled="False"
                                 Background="{x:Null}" VerticalAlignment="Top"  >
                             <Grid>
