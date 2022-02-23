@@ -143,28 +143,47 @@
 
 
                 </Grid>
-                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="5">
+
+                <materialDesign:Badged Grid.Column="1" VerticalAlignment="Center" Margin="10 0"
+                    BadgeBackground="{StaticResource MainColorRed}"   BadgeForeground="White" Name="md_transfers" >
+                    <Button  x:Name="btn_transfers" Click="Btn_transfers_Click"
+                    Background="{x:Null}" BorderBrush="{x:Null}"  
+                    Padding="0"  >
+                        <Path Fill="{StaticResource SecondColor}"  Stretch="Fill"  
+                               Width="25" Height="25" 
+                         VerticalAlignment="Center" 
+                            Data="{StaticResource POS}"/>
+                    </Button>
+                </materialDesign:Badged>
+
+                <Button Grid.Column="3" x:Name="btn_applicationStop" Click="Btn_applicationStop_Click"
+                    Height="auto"  VerticalAlignment="Center" Margin="5"
+                     Background="{x:Null}" BorderBrush="{x:Null}" 
+                    Padding="0"    >
+                    <StackPanel>
                     <TextBlock Name="txt_cashTitle"    HorizontalAlignment="Right"   Foreground="{StaticResource SecondColor}"  FontSize="12" ></TextBlock>
                     <DockPanel>
                         <TextBlock Name="txt_cashSympol" Text="KWD"  Foreground="{StaticResource SecondColor}" HorizontalAlignment="Center"  FontSize="14" Margin="5,0,5,0"></TextBlock>
-                        <TextBlock Name="txt_cashValue"  Text="0.00" Foreground="Green"   HorizontalAlignment="Center"  FontSize="14" ></TextBlock>
+                            <TextBlock Name="txt_cashValue"  Text="0.00" Foreground="{StaticResource Green}"   HorizontalAlignment="Center"  FontSize="14" ></TextBlock>
                     </DockPanel>
                 </StackPanel>
-                <Border Grid.Column="2" Height="30" BorderBrush="{StaticResource Grey}" BorderThickness="1,0,0,0" Margin="5" VerticalAlignment="Center" ></Border>
+                </Button>
 
-                <StackPanel Grid.Column="3" VerticalAlignment="Center" Margin="5">
+                <Border Grid.Column="4" Height="30" BorderBrush="{StaticResource Grey}" BorderThickness="1,0,0,0" Margin="5" VerticalAlignment="Center" ></Border>
+
+                <StackPanel Grid.Column="5" VerticalAlignment="Center" Margin="5">
                     <TextBlock Name="txtTime" Text="05:51PM" HorizontalAlignment="Center" Foreground="{StaticResource SecondColor}"  FontSize="12" ></TextBlock>
                     <TextBlock Name="txtDate" Text="2021/5/1" Foreground="{StaticResource SecondColor}" HorizontalAlignment="Center"  FontSize="12" ></TextBlock>
                 </StackPanel>
-                <Border Grid.Column="4" Height="30" BorderBrush="{StaticResource Grey}" BorderThickness="1,0,0,0" Margin="5" VerticalAlignment="Center" ></Border>
-                <Button  Grid.Column="5" Name="btn_Keyboard"  Click="btn_Keyboard_Click"
+                <Border Grid.Column="6" Height="30" BorderBrush="{StaticResource Grey}" BorderThickness="1,0,0,0" Margin="5" VerticalAlignment="Center" ></Border>
+                <Button  Grid.Column="7" Name="btn_Keyboard"  Click="btn_Keyboard_Click"
                 Margin="5,10,5,10" ToolTip="" 
                     Background="{x:Null}" BorderBrush="{x:Null}" Width="auto" Height="auto" 
                     Padding="0" >
                     <materialDesign:PackIcon Foreground="{StaticResource SecondColor}" Kind="Keyboard"  FlowDirection="LeftToRight"
                                          Width="30" Height="30"/>
                 </Button>
-                <materialDesign:Badged     Height="auto" Grid.Column="6"  Name="md_notificationCount" Margin="10,10,10,10"
+                <materialDesign:Badged     Height="auto" Grid.Column="8"  Name="md_notificationCount" Margin="10,10,10,10"
                                            VerticalAlignment="Center"   
                       BadgeBackground="{StaticResource Red}"  BadgeForeground="White"  >
                     <Button Grid.Column="5" x:Name="BTN_notifications"
@@ -192,7 +211,7 @@
 
 
 
-                <StackPanel  Margin="0,0,0,0"   Grid.Column="7" VerticalAlignment="Center">
+                <StackPanel  Margin="0,0,0,0"   Grid.Column="9" VerticalAlignment="Center">
                     <Menu Background="#F1F5F8"  Padding="0" VerticalAlignment="Center">
                         <MenuItem Padding="0,0,0,0" >
                             <MenuItem.Header>

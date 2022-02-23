@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>increaseLogo.ico</ApplicationIcon>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx">
@@ -1140,7 +1140,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Resource Include="increaseLogo.ico" />
+    <Resource Include="favicon.ico" />
     <Content Include="Reports\SectionData\banksData\Ar\ArBank.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

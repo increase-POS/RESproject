@@ -79,7 +79,7 @@ namespace Restaurant
         internal static User userLogin; 
         internal static Pos posLogin; 
         internal static Branch branchLogin; 
-        
+        //internal static Pos posLogIn;
         bool isHome = false;
         internal static int? isInvTax;
         internal static decimal? tax;
@@ -918,12 +918,12 @@ namespace Restaurant
 
                 //SetNotificationsLocation();
 
-                if (sender != null)
+               
                     HelpClass.EndAwait(grid_mainWindow);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+               
                     HelpClass.EndAwait(grid_mainWindow);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1201,7 +1201,7 @@ namespace Restaurant
         {
             try
             {
-                if (sender != null)
+               
                     HelpClass.StartAwait(grid_mainWindow);
 
                 await close();
@@ -1209,12 +1209,12 @@ namespace Restaurant
                 Application.Current.Shutdown();
                 System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
 
-                if (sender != null)
+               
                     HelpClass.EndAwait(grid_mainWindow);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+               
                     HelpClass.EndAwait(grid_mainWindow);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1235,18 +1235,18 @@ namespace Restaurant
         {
             try
             {
-                if (sender != null)
+               
                     HelpClass.StartAwait(grid_mainWindow);
                 await close();
 
                 Application.Current.Shutdown();
 
-                if (sender != null)
+               
                     HelpClass.EndAwait(grid_mainWindow);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+               
                     HelpClass.EndAwait(grid_mainWindow);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1779,17 +1779,17 @@ namespace Restaurant
         {
             try
             {
-                if (sender != null)
+               
                     HelpClass.StartAwait(grid_mainWindow);
                 await close();
                 Application.Current.Shutdown();
 
-                if (sender != null)
+               
                     HelpClass.EndAwait(grid_mainWindow);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+               
                     HelpClass.EndAwait(grid_mainWindow);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -2067,13 +2067,45 @@ namespace Restaurant
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        
+        private void Btn_applicationStop_Click(object sender, RoutedEventArgs e)
+        {
+
+            HelpClass.StartAwait(grid_mainWindow);
+            /*
+            Window.GetWindow(this).Opacity = 0.2;
+            wd_applicationStop w = new wd_applicationStop();
+            w.ShowDialog();
+            if (w.status == "o")
+                txt_cashValue.Foreground = Application.Current.Resources["Green"] as SolidColorBrush;
+            else
+                txt_cashValue.Foreground = Application.Current.Resources["Red"] as SolidColorBrush;
+
+            Window.GetWindow(this).Opacity = 1;
+            */
+
+            HelpClass.EndAwait(grid_mainWindow);
+        }
+        private void Btn_transfers_Click(object sender, RoutedEventArgs e)
+        {
+           
+                HelpClass.StartAwait(grid_mainWindow);
+
+            Window.GetWindow(this).Opacity = 0.2;
+            wd_transfers w = new wd_transfers();
+            w.ShowDialog();
+            Window.GetWindow(this).Opacity = 1;
+
+
+            HelpClass.EndAwait(grid_mainWindow);
+        }
+        internal static Pos posLogIn = new Pos();
+        internal static int? posID;
         public static async Task refreshBalance()
         {
             try
             {
-                posLogin = await posLogin.getById(posLogin.posId);
-                mainWindow.txt_cashValue.Text = HelpClass.DecTostring(posLogin.balance);
+                posLogIn = await posLogIn.getById(posID.Value);
+                mainWindow.txt_cashValue.Text = HelpClass.DecTostring(posLogIn.balance);
                 mainWindow.txt_cashSympol.Text = MainWindow.Currency;
             }
             catch (Exception ex)
