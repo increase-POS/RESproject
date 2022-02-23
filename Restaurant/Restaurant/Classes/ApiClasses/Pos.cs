@@ -16,7 +16,6 @@ namespace Restaurant.Classes
 {
    public class Pos
     {
-
         public int posId { get; set; }
         public string code { get; set; }
         public string name { get; set; }
@@ -29,14 +28,13 @@ namespace Restaurant.Classes
         public byte isActive { get; set; }
         public string notes { get; set; }
         public decimal balanceAll { get; set; }
-
-
-
         public string branchName { get; set; }
         public string branchCode { get; set; }
-
         public Boolean canDelete { get; set; }
-         
+
+        public string boxState { get; set; }
+        public byte isAdminClose { get; set; }
+
         public async Task<List<Pos>> Get()
         {
             List<Pos> items = new List<Pos>();

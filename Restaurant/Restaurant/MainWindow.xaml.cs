@@ -79,7 +79,7 @@ namespace Restaurant
         internal static User userLogin; 
         internal static Pos posLogin; 
         internal static Branch branchLogin; 
-        //internal static Pos posLogIn;
+        
         bool isHome = false;
         internal static int? isInvTax;
         internal static decimal? tax;
@@ -2067,14 +2067,13 @@ namespace Restaurant
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        internal static Pos posLogIn = new Pos();
-        internal static int? posID;
+        
         public static async Task refreshBalance()
         {
             try
             {
-                posLogIn = await posLogIn.getById(posID.Value);
-                mainWindow.txt_cashValue.Text = HelpClass.DecTostring(posLogIn.balance);
+                posLogin = await posLogin.getById(posLogin.posId);
+                mainWindow.txt_cashValue.Text = HelpClass.DecTostring(posLogin.balance);
                 mainWindow.txt_cashSympol.Text = MainWindow.Currency;
             }
             catch (Exception ex)

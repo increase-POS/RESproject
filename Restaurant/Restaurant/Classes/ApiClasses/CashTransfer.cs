@@ -1167,6 +1167,28 @@ namespace Restaurant.Classes
             //}
         }
 
+        public async Task<List<CashTransfer>> GetCashTransferForPosById(string type, string side, int posId)
+        {
+            // string type, string side
+            List<CashTransfer> list = new List<CashTransfer>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("type", type.ToString());
+            parameters.Add("side", side.ToString());
+            parameters.Add("posId", posId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Cashtransfer/GetCashTransferForPosById", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<CashTransfer>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+
+
+        }
     }
 
 }

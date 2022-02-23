@@ -3443,6 +3443,29 @@ namespace Restaurant.Classes
 
         }
 
+        public async Task<List<CashTransfer>> GetBytypeAndSideForPos(string type, string side)
+        {
+            // string type, string side
+            List<CashTransfer> list = new List<CashTransfer>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("type", type.ToString());
+            parameters.Add("side", side.ToString());
+
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Statistics/GetBytypeAndSideForPos", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<CashTransfer>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+
+
+        }
+
         private string getProcessType(string value)
         {
             switch (value)
