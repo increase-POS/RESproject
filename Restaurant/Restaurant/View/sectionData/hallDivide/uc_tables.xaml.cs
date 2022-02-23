@@ -462,7 +462,7 @@ namespace Restaurant.View.sectionData.hallDivide
                 {
                     table = dg_table.SelectedItem as Tables;
                     tb_personsCount.Text = table.personsCount.ToString();
-                    NumValue_personCount = table.personsCount;
+                    numValue_personsCount = table.personsCount;
                     this.DataContext = table;
                     if (table != null)
                     {
@@ -544,7 +544,7 @@ namespace Restaurant.View.sectionData.hallDivide
         {
             table = new Tables();
             tb_personsCount.Text = "1";
-            NumValue_personCount = 1;
+            numValue_personsCount = 1;
             this.DataContext = table;
 
             dg_table.SelectedIndex = -1;
@@ -837,31 +837,57 @@ namespace Restaurant.View.sectionData.hallDivide
         }
         #endregion
 
-        #region persons count
-        private int _numValue_personsCount = 0;
-        public int NumValue_personCount
+       
+        #region NumericCount
+
+
+
+        private int _numValue_personsCount = 1;
+        public int numValue_personsCount
         {
-            get { return _numValue_personsCount; }
+            get
+            {
+                if (int.TryParse(tb_personsCount.Text, out _numValue_personsCount))
+                    _numValue_personsCount = int.Parse(tb_personsCount.Text);
+                return _numValue_personsCount;
+            }
             set
             {
                 _numValue_personsCount = value;
                 tb_personsCount.Text = value.ToString();
             }
         }
-        private void countUp_Click(object sender, RoutedEventArgs e)
+
+
+
+        private void Btn_countDown_Click(object sender, RoutedEventArgs e)
         {
-            NumValue_personCount++;
+            try
+            {
+                Button button = sender as Button;
+                if (button.Tag.ToString() == "personsCount" && numValue_personsCount > 0)
+                    numValue_personsCount--;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
-        private void countDown_Click(object sender, RoutedEventArgs e)
+        private void Btn_countUp_Click(object sender, RoutedEventArgs e)
         {
-            if (NumValue_personCount > 1)
-                NumValue_personCount--;
+            try
+            {
+                Button button = sender as Button;
+                if (button.Tag.ToString() == "personsCount")
+                    numValue_personsCount++;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
-
-       
         #endregion
-
 
         //private void Btn_addRange_Click(object sender, RoutedEventArgs e)
         //{

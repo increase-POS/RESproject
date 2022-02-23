@@ -438,7 +438,13 @@
 
                         </Grid>
                     </Border>-->
-                        <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Row="8" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid>
                                 <TextBox x:Name="tb_personsCount" Grid.Row="8"  Padding="10,0,5,0"  
                                          Text="{Binding personsCount, Mode=OneWay}"
@@ -452,19 +458,27 @@
                                          PreviewKeyDown="Spaces_PreviewKeyDown"
                                          TextChanged="ValidateEmpty_TextChange"
                                          PreviewTextInput="Number_PreviewTextInput" />
-                                <Button x:Name="countUp_personsCount"   FontSize="10" Padding="0,5,0,0" Content="▲" Width="20" Height="20" Click="countUp_Click"
-                                        Margin="12,0,5,5" VerticalAlignment="Top" HorizontalAlignment="Right" 
-                                        Foreground="#737373"       Background="{x:Null}" BorderThickness="0" />
-                                <Button x:Name="countDown_personsCount"   FontSize="10" Padding="0,0,0,5" Content="▼" Width="20" Height="20" Click="countDown_Click" 
-                                        Margin="12,5,5,0"  VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                                        Foreground="#737373"       Background="{x:Null}" BorderThickness="0"/>
                                 <Path Fill="#E81123" x:Name="p_error_personsCount" Stretch="Fill" Margin="5,5,15,5"
                                       HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
                                       VerticalAlignment="Center" Width="15"  Height="15" 
                                       Data="{StaticResource infoCircle}"/>
                             </Grid>
                         </Border>
-
+                            <Button  Click="Btn_countDown_Click" Tag="personsCount" 
+                                            Grid.Column="1"    Margin="5 0 1 0"
+                                    Height="35" Width="35"  Padding="0"
+                                        Background="{x:Null}"   BorderThickness="0">
+                                <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
+                                         Width="35" Height="35" Kind="MinusCircle" />
+                            </Button>
+                            <Button  Click="Btn_countUp_Click" Tag="personsCount" 
+                                            Grid.Column="2"     Margin="1  0 10 0"
+                                    Height="35" Width="35"  Padding="0"
+                                        Background="{x:Null}"   BorderThickness="0">
+                                <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
+                                         Width="35" Height="35" Kind="PlusCircle" />
+                            </Button>
+                        </Grid>
 
                         <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >

@@ -766,44 +766,6 @@ namespace Restaurant.View.sectionData.persons
             catch (Exception ex)
             { HelpClass.ExceptionMessage(ex, this); }
         }
-        #region Numeric workHours
-        private int _numValue_workHours = 0;
-        public int NumValue_workHours
-        {
-            get { return _numValue_workHours; }
-            set
-            {
-                _numValue_workHours = value;
-                tb_workHours.Text = value.ToString();
-            }
-        }
-        private void countUp_Click(object sender, RoutedEventArgs e)
-        {
-            NumValue_workHours++;
-        }
-        private void countDown_Click(object sender, RoutedEventArgs e)
-        {
-            if (NumValue_workHours >0)
-                NumValue_workHours--;
-        }
-        private void tb_discountValue_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            try
-            {
-                if (tb_workHours == null)
-                {
-                    return;
-                }
-                if (!int.TryParse(tb_workHours.Text, out _numValue_workHours))
-                    tb_workHours.Text = _numValue_workHours.ToString();
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        #endregion
 
         #region Password
         private void ValidateEmpty_PasswordChanged(object sender, RoutedEventArgs e)
@@ -1132,7 +1094,58 @@ namespace Restaurant.View.sectionData.persons
 
         }
         #endregion
+        #region NumericCount
 
+
+
+        private int _numValue_workHours = 1;
+        public int numValue_workHours
+        {
+            get
+            {
+                if (int.TryParse(tb_workHours.Text, out _numValue_workHours))
+                    _numValue_workHours = int.Parse(tb_workHours.Text);
+                return _numValue_workHours;
+            }
+            set
+            {
+                _numValue_workHours = value;
+                tb_workHours.Text = value.ToString();
+            }
+        }
+
+
+
+
+        private void Btn_countDown_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button;
+
+                if (button.Tag.ToString() == "workHours" && numValue_workHours > 0)
+                    numValue_workHours--;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_countUp_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button;
+                if (button.Tag.ToString() == "workHours")
+                    numValue_workHours++;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        #endregion
 
     }
 }

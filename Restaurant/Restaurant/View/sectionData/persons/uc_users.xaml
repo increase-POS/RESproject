@@ -588,12 +588,12 @@
                         <TextBlock  Text="Work Information"   x:Name="txt_workInformation" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
                         <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
                     </DockPanel>
-                    <Grid>
+                    <!--<Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                    <Border Grid.Row="8" Grid.Column="0" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        </Grid.ColumnDefinitions>-->
+                    <Border Grid.Row="8" Grid.Column="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                                 <ComboBox x:Name="cb_job" SelectedValue="{Binding job, Mode=OneWay}"
                                           Grid.Row="1"
@@ -615,8 +615,13 @@
 
                         </Grid>
                     </Border>
-
-                        <Border Grid.Row="8" Grid.Column="1" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Row="8" Grid.Column="0" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid>
                                 
                             <TextBox x:Name="tb_workHours" Grid.Row="8"  Padding="10,0,5,0"  
@@ -629,15 +634,24 @@
                                          PreviewTextInput="Number_PreviewTextInput"
                                          materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                          Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
-                                <Button x:Name="countUp_workHours"   FontSize="10" Padding="0,5,0,0" Content="▲" Width="20" Height="20" Click="countUp_Click"
-                                         Margin="12,0,5,5" VerticalAlignment="Top" HorizontalAlignment="Right" 
-                                        Foreground="#737373"       Background="{x:Null}" BorderThickness="0" />
-                                <Button x:Name="countDown_workHours"   FontSize="10" Padding="0,0,0,5" Content="▼" Width="20" Height="20" Click="countDown_Click" 
-                                              Margin="12,5,5,0"  VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                                              Foreground="#737373"       Background="{x:Null}" BorderThickness="0"/>
-                            </Grid>
+                                 </Grid>
                         </Border>
-                    </Grid>
+                            <Button  Click="Btn_countDown_Click" Tag="workHours" 
+                                            Grid.Column="1"    Margin="5 0 1 0"
+                                    Height="35" Width="35"  Padding="0"
+                                        Background="{x:Null}"   BorderThickness="0">
+                                <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
+                                         Width="35" Height="35" Kind="MinusCircle" />
+                            </Button>
+                            <Button  Click="Btn_countUp_Click" Tag="workHours" 
+                                            Grid.Column="2"     Margin="1  0 10 0"
+                                    Height="35" Width="35"  Padding="0"
+                                        Background="{x:Null}"   BorderThickness="0">
+                                <materialDesign:PackIcon   Foreground="{StaticResource SecondColor}"
+                                         Width="35" Height="35" Kind="PlusCircle" />
+                            </Button>
+                        </Grid>
+                        <!--</Grid>-->
 
 
                     <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
