@@ -77,7 +77,8 @@ namespace Restaurant.Classes
         public Nullable<int> itemUnitId { get; set; }
         public Nullable<int> offerId { get; set; }
         public Nullable<decimal> priceTax { get; set; }
-
+        public string discountType { get; set; }
+        public Nullable<decimal> discountValue { get; set; }
         public string parentName { get; set; }
         public string minUnitName { get; set; }
         public string maxUnitName { get; set; }
@@ -167,6 +168,23 @@ namespace Restaurant.Classes
         {
             List<Item> items = new List<Item>();
             IEnumerable<Claim> claims = await APIResult.getList("items/GetAllSalesItems");
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<Item>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
+        public async Task<List<Item>> GetAllSalesItemsInv(string day)
+        {
+            List<Item> items = new List<Item>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("day", day);
+
+            IEnumerable<Claim> claims = await APIResult.getList("items/GetAllSalesItemsInv",parameters);
 
             foreach (Claim c in claims)
             {

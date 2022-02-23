@@ -121,6 +121,7 @@ namespace Restaurant.View.kitchen
             txt_minute.Text = MainWindow.resourcemanager.GetString("trMinute");
             txt_activeItem.Text = MainWindow.resourcemanager.GetString("trActive");
             txt_active.Text = MainWindow.resourcemanager.GetString("trActive_");
+            txt_allMenu.Text = MainWindow.resourcemanager.GetString("trAll");
 
             chb_all.Content = MainWindow.resourcemanager.GetString("trAll");
             chb_sat.Content = MainWindow.resourcemanager.GetString("trSaturday");
@@ -1105,6 +1106,11 @@ namespace Restaurant.View.kitchen
         {
             //tagsList = new List<string> { "Orient", "Western", "Eastern" };
             tagsList = await FillCombo.tag.Get(categoryId);
+            Tag allTag = new Tag();
+            allTag.tagName = MainWindow.resourcemanager.GetString("trAll");
+            allTag.tagId = 0;
+            tagsList.Add(allTag);
+
             sp_menuTags.Children.Clear();
             foreach (var item in tagsList)
             {

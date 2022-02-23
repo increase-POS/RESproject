@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,6 +29,8 @@ namespace Restaurant.View.sales
     public partial class uc_diningHall : UserControl
     {
         private static uc_diningHall _instance;
+        string invoicePermission = "saleInvoice_invoice";
+
         public static uc_diningHall Instance
         {
             get
@@ -49,16 +53,122 @@ namespace Restaurant.View.sales
             { }
         }
         public static List<string> catalogMenuList;
-
+        public static List<Button> categoryBtns;
+        #region loading
+        List<keyValueBool> loadingList;
+        async Task loading_items()
+        {
+            //try
+            {
+                await refreshItemsList();
+            }
+            //catch { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_items"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async Task loading_categories()
+        {
+            //try
+            {
+                await refrishCategories();
+            }
+            //catch { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_categories"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async Task refrishCategories()
+        {
+            if (FillCombo.categoriesList == null)
+                await FillCombo.RefreshCategory();
+        }
+        #endregion
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             // for pagination onTop Always
             btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
             catigoriesAndItemsView.ucdiningHall = this;
-            FillBillDetailsList(0);
-            await Search();
 
             catalogMenuList = new List<string> { "allMenu", "appetizers", "beverages", "fastFood", "mainCourses", "desserts" };
+            categoryBtns = new List<Button> { btn_appetizers, btn_beverages, btn_fastFood, btn_mainCourses, btn_desserts };
+            #region translate
+            tb_moneyIcon.Text = MainWindow.Currency;
+            tb_moneyIconTotal.Text = MainWindow.Currency;
+            if (MainWindow.lang.Equals("en"))
+            {
+                MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
+                grid_main.FlowDirection = FlowDirection.LeftToRight;
+            }
+            else
+            {
+                MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
+                grid_main.FlowDirection = FlowDirection.RightToLeft;
+            }
+            translate();
+            #endregion
+            // Clear();
+
+            #region loading
+            loadingList = new List<keyValueBool>();
+            bool isDone = true;
+            loadingList.Add(new keyValueBool { key = "loading_items", value = false });
+            loadingList.Add(new keyValueBool { key = "loading_categories", value = false });
+
+            loading_items();
+            loading_categories();
+            do
+            {
+                isDone = true;
+                foreach (var item in loadingList)
+                {
+                    if (item.value == false)
+                    {
+                        isDone = false;
+                        break;
+                    }
+                }
+                if (!isDone)
+                {
+                    await Task.Delay(0500);
+                }
+            }
+            while (!isDone);
+            #endregion
+            HelpClass.activateCategoriesButtons(items, FillCombo.categoriesList, categoryBtns);
+           // FillBillDetailsList(0);
+            await Search();        
+        }
+        private void translate()
+        {
+            txt_orders.Text = MainWindow.resourcemanager.GetString("trOrders");         
+            txt_allMenu.Text = MainWindow.resourcemanager.GetString("trAll");
+            txt_ordersAlerts.Text = MainWindow.resourcemanager.GetString("trOrders");
+            txt_newDraft.Text = MainWindow.resourcemanager.GetString("trNew");
+            txt_preview.Text = MainWindow.resourcemanager.GetString("trPreview");
+            txt_pdf.Text = MainWindow.resourcemanager.GetString("trPdf");
+            txt_printInvoice.Text = MainWindow.resourcemanager.GetString("trPrint");
+            txt_subtotal.Text = MainWindow.resourcemanager.GetString("trSubTotal");
+            txt_totalDiscount.Text = MainWindow.resourcemanager.GetString("trDiscount");
+            txt_tax.Text = MainWindow.resourcemanager.GetString("trTax");
+            txt_total.Text = MainWindow.resourcemanager.GetString("trTotal");
+            txt_discount.Text = MainWindow.resourcemanager.GetString("trDiscount");
+            txt_customer.Text = MainWindow.resourcemanager.GetString("trCustomer");
+            txt_waiter.Text = MainWindow.resourcemanager.GetString("trWaiter");
+            txt_kitchen.Text = MainWindow.resourcemanager.GetString("trKitchen");
+            txt_tables.Text = MainWindow.resourcemanager.GetString("trTables");
+                   
+            btn_pay.Content = MainWindow.resourcemanager.GetString("trPay");
 
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -66,17 +176,16 @@ namespace Restaurant.View.sales
             Instance = null;
             GC.Collect();
         }
+       
         #region  Cards
         CatigoriesAndItemsView catigoriesAndItemsView = new CatigoriesAndItemsView();
         #region Refrish Y
         Item item = new Item();
-        IEnumerable<Item> items;
+        List<Item> items;
         IEnumerable<Item> itemsQuery;
-        async Task<IEnumerable<Item>> RefreshItemsList()
-        {
-            items = await item.Get();
-            return items;
-        }
+        int categoryId = 0;
+        int tagId = 0;
+        string _InvoiceType = "sd";
         void RefrishItemsCard(IEnumerable<Item> _items)
         {
             grid_itemContainerCard.Children.Clear();
@@ -88,11 +197,18 @@ namespace Restaurant.View.sales
 
         public void ChangeItemIdEvent(int itemId)
         {
-           
-           
+            try
+            {
+                if (item != null)
+                {
+                    item = items.Where(x => x.itemId == itemId).FirstOrDefault();
+                    addRowToBill(item);
+                }
+            }
+            catch { }
         }
         #endregion
-        #region Search Y
+        #region Search Y - refresh
 
 
         /// <summary>
@@ -105,11 +221,22 @@ namespace Restaurant.View.sales
             //search
             try
             {
-                    HelpClass.StartAwait(grid_main);
+               HelpClass.StartAwait(grid_main);
 
                 if (items is null)
-                    await RefreshItemsList();
+                    await refreshItemsList();
                 itemsQuery = items.ToList();
+
+                #region search for category
+                if (categoryId > 0)
+                    itemsQuery = itemsQuery.Where(x => x.categoryId == categoryId).ToList();
+                #endregion
+
+                #region search for tag
+                if (tagId > 0)
+                    itemsQuery = itemsQuery.Where(x => x.tagId == tagId).ToList();
+                #endregion
+
                 pageIndex = 1;
 
                 #region
@@ -120,13 +247,19 @@ namespace Restaurant.View.sales
                 RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
                 #endregion
 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+        async Task refreshItemsList()
+        {
+            DateTime dt = DateTime.Now;
+            string day = dt.DayOfWeek.ToString();
+           items = await FillCombo.item.GetAllSalesItemsInv(day.ToLower());
         }
         #endregion
         #region Pagination Y
@@ -293,15 +426,16 @@ namespace Restaurant.View.sales
         #endregion
         #endregion
         #region catalogMenu
-        private void catalogMenu_Click(object sender, RoutedEventArgs e)
+        private async void catalogMenu_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                //bdr_allMenu
-                //btn_appetizers
-                //    path_appetizers
-                //    txt_appetizers
+                tagId = 0;
                 string senderTag = (sender as Button).Tag.ToString();
+                if (senderTag != "allMenu")
+                    categoryId = FillCombo.categoriesList.Where(x => x.categoryCode == senderTag).FirstOrDefault().categoryId;
+                else
+                    categoryId = -1;
                 #region refresh colors
                 foreach (var control in catalogMenuList)
                 {
@@ -333,21 +467,25 @@ namespace Restaurant.View.sales
                 }
                 #endregion
                 refreshCatalogTags(senderTag);
-
+                await Search();
             }
             catch { }
         }
-        public static List<string> tagsList;
-        void refreshCatalogTags(string tag)
+        public static List<Tag> tagsList;
+        async void refreshCatalogTags(string tag)
         {
-           tagsList = new List<string> { "Orient", "Western", "Eastern" };
+            tagsList = await FillCombo.tag.Get(categoryId);
+            Tag allTag = new Tag();
+            allTag.tagName = MainWindow.resourcemanager.GetString("trAll");
+            allTag.tagId = 0;
+            tagsList.Add(allTag);
             sp_menuTags.Children.Clear();
             foreach (var item in tagsList)
             {
                 #region  
                 Button button = new Button();
-                button.Content = item;
-                button.Tag = "catalogTags-" + item;
+                button.Content = item.tagName;
+                button.Tag = "catalogTags-" + item.tagName;
                 button.FontSize = 10;
                 button.Height = 25;
                 button.Padding = new Thickness(5);
@@ -365,7 +503,7 @@ namespace Restaurant.View.sales
                 #endregion
             }
         }
-        void buttonCatalogTags_Click(object sender, RoutedEventArgs e)
+       async void buttonCatalogTags_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -373,12 +511,13 @@ namespace Restaurant.View.sales
                 #region refresh colors
                 foreach (var control in tagsList)
                 {
-                    Button button = FindControls.FindVisualChildren<Button>(this).Where(x => x.Tag != null && x.Tag.ToString() == "catalogTags-" + control)
-                        .FirstOrDefault();
+                    Button button = FindControls.FindVisualChildren<Button>(this).Where(x => x.Tag != null && x.Tag.ToString() == "catalogTags-" + control.tagName)
+                         .FirstOrDefault();
                     if (button.Tag.ToString() == senderTag)
                     {
                         button.Foreground = Application.Current.Resources["White"] as SolidColorBrush;
                         button.Background = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                        tagId = control.tagId;
                     }
                     else
                     {
@@ -387,7 +526,7 @@ namespace Restaurant.View.sales
                     }
                 }
                 #endregion
-
+                await Search();
             }
             catch { }
         }
@@ -395,6 +534,63 @@ namespace Restaurant.View.sales
         #region invoice
 
         ObservableCollection<BillDetailsSales> billDetailsList = new ObservableCollection<BillDetailsSales>();
+        int _SequenceNum = 0;
+        decimal _Sum = 0;
+        List<ItemTransfer> invoiceItems = new List<ItemTransfer>();
+        private void addRowToBill(Item item)
+        {
+            decimal total = 0;
+            var invoiceItem = billDetailsList.Where(x => x.itemId == item.itemId).FirstOrDefault();
+            #region add item to invoice
+            if (invoiceItem == null)
+            {
+                decimal price = 0;
+                decimal basicPrice = (decimal)item.price;
+                //if (FillCombo.itemsTax_bool == true)
+                //    price = (decimal)item.priceTax;
+                //else
+                    price = (decimal)item.price;
+
+                int offerId = 0;
+                string offerType = "1";
+                decimal offerValue = 0;
+                if (item.offerId != null)
+                {
+                    offerId = (int)item.offerId;
+                    offerType = item.discountType;
+                    offerValue = (decimal)item.discountValue;
+                }
+                // increase sequence for each read
+                _SequenceNum++;
+                total = (decimal)item.price;
+                billDetailsList.Add(new BillDetailsSales()
+                {
+                    index = _SequenceNum,
+                    image = item.image,
+                    itemId = item.itemId,
+                    itemUnitId = (int)item.itemUnitId,
+                    itemName = item.name,
+                    Count = 1,
+                    Price = (decimal)item.price,
+                    basicPrice = basicPrice,
+                    Total = (decimal)item.price,
+                    offerId = item.offerId,
+                    OfferType = offerType,
+                    OfferValue = offerValue,
+                });
+            }
+            #endregion
+            #region item already exist in invoice
+            else
+            {
+                invoiceItem.Count++;
+                total = invoiceItem.Price * invoiceItem.Count;
+                invoiceItem.Total = total;
+            }
+            #endregion
+            BuildBillDesign();
+            refreshTotal();
+        }
         private async Task FillBillDetailsList(int invoiceId)
         {
             ////get invoice items
@@ -488,6 +684,7 @@ namespace Restaurant.View.sales
             #endregion
             foreach (var item in billDetailsList)
             {
+                var it = items.Where(x => x.itemId == item.itemId).FirstOrDefault();
                 #region   index
                 var indexText = new TextBlock();
                 indexText.Text = (item.index + 1)+".";
@@ -526,12 +723,11 @@ namespace Restaurant.View.sales
                 MaterialDesignThemes.Wpf.ShadowAssist.SetShadowDepth(buttonImage, ShadowDepth.Depth0);
                 //MaterialDesignThemes.Wpf.ShadowAssist.SetShadowEdges(buttonImage,ShadowEdges.None);
 
-                //bool isModified = HelpClass.chkImgChng(cardViewitem.item.image, (DateTime)cardViewitem.item.updateDate, Global.TMPItemsFolder);
-                //if (isModified)
-                //    HelpClass.getImg("Item", cardViewitem.item.image, buttonImage);
-                //else
-                //    HelpClass.getLocalImg("Item", cardViewitem.item.image, buttonImage);
-                fillEllipse(buttonImage);
+                bool isModified = HelpClass.chkImgChng(item.image, (DateTime)it.updateDate, Global.TMPItemsFolder);
+                if (isModified)
+                   HelpClass.getImg("Item",item.image, buttonImage);
+                else
+                    HelpClass.getLocalImg("Item",item.image, buttonImage);
 
                 Grid.SetRow(buttonImage, item.index);
                 Grid.SetColumn(buttonImage, 1);
@@ -659,24 +855,25 @@ namespace Restaurant.View.sales
                 #endregion
             }
             sv_billDetail.Content = gridContainer;
-            refreshTotal();
         }
         void buttonPlus_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             int index = int.Parse(button.Tag.ToString().Replace("plus-", ""));
-            //MessageBox.Show("Hey you Click me! I'm Index: " + button.Tag);
+            index--;
             billDetailsList[index].Count++;
             billDetailsList[index].Total = billDetailsList[index].Count * billDetailsList[index].Price;
-            //BuildBillDesign();
             editBillRow(index);
             if (billDetailsList[index].Count == 2)
                 refreshDeleteButtonInvoice(index,billDetailsList[index].Count);
+            BuildBillDesign();
+            refreshTotal();
         }
         void buttonMinus_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             int index = int.Parse(button.Tag.ToString().Replace("minus-", ""));
+            index--;
             if (billDetailsList[index].Count < 2)
             {
                 billDetailsList.Remove(billDetailsList[index]);
@@ -686,7 +883,7 @@ namespace Restaurant.View.sales
                     item.index = counter;
                     counter++;
                 }
-                BuildBillDesign();
+              
             }
             else
             {
@@ -696,7 +893,8 @@ namespace Restaurant.View.sales
                 if (billDetailsList[index].Count == 1)
                     refreshDeleteButtonInvoice(index, billDetailsList[index].Count);
             }
-           
+            BuildBillDesign();
+            refreshTotal();
         }
         void refreshDeleteButtonInvoice(int index,int count)
         {
@@ -758,31 +956,138 @@ namespace Restaurant.View.sales
                 }
             }
 
-            refreshTotal();
+        
         }
         void refreshTotal()
         {
-            tb_subtotal.Text =
-                tb_total.Text = billDetailsList.Select(x => x.Total).Sum().ToString();
+            #region subtotal
+            _Sum = 0;
+            foreach(var item in billDetailsList)
+            {
+                _Sum += item.Total;
+            }
+            tb_subtotal.Text = _Sum.ToString();
+            #endregion
+
+            #region total
+            decimal total = _Sum;
+            tb_total.Text = _Sum.ToString();
+            #endregion
         }
-        void fillEllipse(Button img)
+        #endregion
+
+        #region adddraft - addInvoice - clear
+        private async Task addDraft()
+        {
+            if (billDetailsList.Count > 0 && _InvoiceType == "sd")
+            {
+                #region Accept
+                MainWindow.mainWindow.Opacity = 0.2;
+                wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                w.contentText = MainWindow.resourcemanager.GetString("trSaveInvoiceNotification");
+                w.ShowDialog();
+                MainWindow.mainWindow.Opacity = 1;
+                #endregion
+                if (w.isOk)
+                {
+                    await addInvoice("sd");
+                    clear();
+                    //refreshDraftNotification();
+                }
+                else
+                {
+                    clear();
+                }
+            }
+            else
+                clear();
+        }
+
+        async Task addInvoice(string invType)
         {
             try
             {
-                ImageBrush myBrush = new ImageBrush();
-                //Uri resourceUri = new Uri("/pic/90408.jpg", UriKind.Relative);
-                Uri resourceUri = new Uri("/pic/hana.jpg", UriKind.Relative);
-                StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
-                BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
-                myBrush.ImageSource = temp;
-                img.Background = myBrush;
+                #region invoice object
+                FillCombo.invoice.invNumber = await FillCombo.invoice.generateInvNumber("sd", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+                FillCombo.invoice.branchCreatorId = MainWindow.branchLogin.branchId;
+                FillCombo.invoice.branchId = MainWindow.branchLogin.branchId;
+                FillCombo.invoice.posId = MainWindow.posLogin.posId;
+                FillCombo.invoice.invType = invType;
+                if (!tb_totalDiscount.Text.Equals(""))
+                    FillCombo.invoice.discountValue = decimal.Parse(tb_totalDiscount.Text);
+                FillCombo.invoice.discountType = "1";
+
+                FillCombo.invoice.total = _Sum;
+                FillCombo.invoice.totalNet = decimal.Parse(tb_total.Text);
+                FillCombo.invoice.paid = 0;
+                FillCombo.invoice.deserved = FillCombo.invoice.totalNet;
+                if (tb_tax.Text != "")
+                    FillCombo.invoice.tax = decimal.Parse(tb_tax.Text);
+                else
+                    FillCombo.invoice.tax = 0;
+                #endregion
+                #region items transfer
+                invoiceItems = new List<ItemTransfer>();
+                ItemTransfer itemT;
+               foreach(var item in billDetailsList)
+                {
+                    itemT = new ItemTransfer();
+                    itemT.invoiceId = 0;
+                    itemT.quantity = item.Count;
+                    itemT.price = item.Price;
+                    itemT.itemUnitId = item.itemUnitId;
+                    itemT.offerId = item.offerId;
+                    itemT.offerType = decimal.Parse(item.OfferType);
+                    itemT.offerValue = item.OfferValue;
+                    itemT.itemTax = item.Tax;
+                    itemT.itemUnitPrice = item.basicPrice;
+                    itemT.createUserId = MainWindow.userLogin.userId;
+
+                    invoiceItems.Add(itemT);
+                }
+                #endregion
+                int res = await FillCombo.invoice.saveInvoiceWithItems(FillCombo.invoice, invoiceItems);
+                if(res > 0)
+                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                else
+                    Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             }
             catch
-            { }
+            {
+
+            }
         }
+        void clear()
+        {
+            _InvoiceType = "sd";
+            billDetailsList.Clear();
+            FillCombo.invoice = new Invoice();
 
+            //last
+            BuildBillDesign();
+            refreshTotal();
+        }
         #endregion
+        #region buttons new - orders - tables - customers - waiter - kitchen
 
+        private async void Btn_newDraft_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (MainWindow.groupObject.HasPermissionAction(invoicePermission, MainWindow.groupObjects, "one"))
+                {
+                    await addDraft();
+                }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private void Btn_tables_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -934,7 +1239,8 @@ namespace Restaurant.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        #endregion
 
-        
+
     }
 }

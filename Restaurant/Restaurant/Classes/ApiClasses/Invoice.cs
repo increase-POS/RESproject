@@ -30,6 +30,10 @@ namespace Restaurant.Classes
         public string itemSerial { get; set; }
         public Nullable<int> inventoryItemLocId { get; set; }
         public Nullable<int> offerId { get; set; }
+        public Nullable<decimal> offerValue { get; set; }
+        public Nullable<decimal> offerType { get; set; }
+        public Nullable<decimal> itemTax { get; set; }
+        public Nullable<decimal> itemUnitPrice { get; set; }
         public decimal profit { get; set; }
         public decimal purchasePrice { get; set; }
         public string cause { get; set; }
