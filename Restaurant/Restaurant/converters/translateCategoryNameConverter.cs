@@ -23,32 +23,32 @@ namespace Restaurant.converters
                 {
                     //sales
                     case "appetizers":
-                        s = MainWindow.resourcemanager.GetString("trAppetizers");
+                        s = AppSettings.resourcemanager.GetString("trAppetizers");
                         break;
                     case "beverages":
-                        s = MainWindow.resourcemanager.GetString("trBeverages");
+                        s = AppSettings.resourcemanager.GetString("trBeverages");
                         break;
                     case "fastFood":
-                        s = MainWindow.resourcemanager.GetString("trFastFood");
+                        s = AppSettings.resourcemanager.GetString("trFastFood");
                         break;
                     case "mainCourses":
-                        s = MainWindow.resourcemanager.GetString("trMainCourses");
+                        s = AppSettings.resourcemanager.GetString("trMainCourses");
                         break;
                     case "desserts":
-                        s = MainWindow.resourcemanager.GetString("trDesserts");
+                        s = AppSettings.resourcemanager.GetString("trDesserts");
                         break;
                     //purchase
                     case "RawMaterials":
-                        s = MainWindow.resourcemanager.GetString("trRawMaterials");
+                        s = AppSettings.resourcemanager.GetString("trRawMaterials");
                         break;
                     case "Vegetables":
-                        s = MainWindow.resourcemanager.GetString("trVegetables");
+                        s = AppSettings.resourcemanager.GetString("trVegetables");
                         break;
                     case "Meat":
-                        s = MainWindow.resourcemanager.GetString("trMeat");
+                        s = AppSettings.resourcemanager.GetString("trMeat");
                         break;
                     case "Drinks":
-                        s = MainWindow.resourcemanager.GetString("trDrinks");
+                        s = AppSettings.resourcemanager.GetString("trDrinks");
                         break;
                 }
                 return s;

@@ -391,14 +391,12 @@ namespace Restaurant.View.windows
 
                 #region translate
 
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
 
@@ -423,13 +421,13 @@ namespace Restaurant.View.windows
         private void translate()
         {
            
-            txt_title.Text = MainWindow.resourcemanager.GetString("trPrinterSettings");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_repname, MainWindow.resourcemanager.GetString("trReportPrinterName")+"...");//
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_salname, MainWindow.resourcemanager.GetString("trReportSalesName") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_saleInvPaperSize, MainWindow.resourcemanager.GetString("trSalesPaperSize") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_docpapersize, MainWindow.resourcemanager.GetString("trDocPaperSize") + "...");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trPrinterSettings");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_repname, AppSettings.resourcemanager.GetString("trReportPrinterName")+"...");//
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_salname, AppSettings.resourcemanager.GetString("trReportSalesName") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_saleInvPaperSize, AppSettings.resourcemanager.GetString("trSalesPaperSize") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_docpapersize, AppSettings.resourcemanager.GetString("trDocPaperSize") + "...");
 
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
         
         }
 
@@ -484,13 +482,13 @@ namespace Restaurant.View.windows
             await FillCombo.getPrintersNames();
             if (int.Parse(msg) > 0)
             {
-                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
                 await Task.Delay(1500);
                 this.Close();
             }
             else
             {
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             }
 
              

@@ -87,14 +87,12 @@ namespace Restaurant.View.kitchen
                 catalogMenuList = new List<string> { "allMenu", "appetizers", "beverages", "fastFood", "mainCourses", "desserts" };
                 categoryBtns = new List<Button> { btn_appetizers, btn_beverages, btn_fastFood, btn_mainCourses, btn_desserts };
                 requiredControlList = new List<string> { "preparingTime" };
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
@@ -116,28 +114,28 @@ namespace Restaurant.View.kitchen
         }
         private void translate()
         {
-            txt_title.Text = MainWindow.resourcemanager.GetString("trItems");
-            txt_daysOfWeek.Text = MainWindow.resourcemanager.GetString("trDaysOfWeek");
-            txt_minute.Text = MainWindow.resourcemanager.GetString("trMinute");
-            txt_activeItem.Text = MainWindow.resourcemanager.GetString("trActive");
-            txt_active.Text = MainWindow.resourcemanager.GetString("trActive_");
-            txt_allMenu.Text = MainWindow.resourcemanager.GetString("trAll");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trItems");
+            txt_daysOfWeek.Text = AppSettings.resourcemanager.GetString("trDaysOfWeek");
+            txt_minute.Text = AppSettings.resourcemanager.GetString("trMinute");
+            txt_activeItem.Text = AppSettings.resourcemanager.GetString("trActive");
+            txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");
+            txt_allMenu.Text = AppSettings.resourcemanager.GetString("trAll");
 
-            chb_all.Content = MainWindow.resourcemanager.GetString("trAll");
-            chb_sat.Content = MainWindow.resourcemanager.GetString("trSaturday");
-            chb_sun.Content = MainWindow.resourcemanager.GetString("trSunday");
-            chb_mon.Content = MainWindow.resourcemanager.GetString("trMonday");
-            chb_tues.Content = MainWindow.resourcemanager.GetString("trTuesday");
-            chb_wed.Content = MainWindow.resourcemanager.GetString("trWednsday");
-            chb_thur.Content = MainWindow.resourcemanager.GetString("trThursday");
-            chb_fri.Content = MainWindow.resourcemanager.GetString("trFriday");
+            chb_all.Content = AppSettings.resourcemanager.GetString("trAll");
+            chb_sat.Content = AppSettings.resourcemanager.GetString("trSaturday");
+            chb_sun.Content = AppSettings.resourcemanager.GetString("trSunday");
+            chb_mon.Content = AppSettings.resourcemanager.GetString("trMonday");
+            chb_tues.Content = AppSettings.resourcemanager.GetString("trTuesday");
+            chb_wed.Content = AppSettings.resourcemanager.GetString("trWednsday");
+            chb_thur.Content = AppSettings.resourcemanager.GetString("trThursday");
+            chb_fri.Content = AppSettings.resourcemanager.GetString("trFriday");
 
-            btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
-            btn_refresh.ToolTip = MainWindow.resourcemanager.GetString("trRefresh");
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
+            btn_refresh.ToolTip = AppSettings.resourcemanager.GetString("trRefresh");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_preparingTime, MainWindow.resourcemanager.GetString("trPreparingTimeHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_preparingTime, AppSettings.resourcemanager.GetString("trPreparingTimeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
 
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
@@ -168,7 +166,7 @@ namespace Restaurant.View.kitchen
                             menuSet.isActive = 0;
                         if (menuSet.isActive == 1 && selectedDays.Count == 0)
                         {
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectOnDayAtLeast"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectOnDayAtLeast"), animation: ToasterAnimation.FadeIn);
                         }
                         else
                         {
@@ -213,19 +211,19 @@ namespace Restaurant.View.kitchen
                             int res = await menuSetting.saveItemMenuSetting(menuSet);
                             if (res > 0)
                             {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                                 await RefreshItemsList();
                                 await Search();
                                 Clear();
                             }
                             else
-                                Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         }
                     }
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -342,7 +340,7 @@ namespace Restaurant.View.kitchen
                         else
                         {
                             Clear();
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorItemNotFoundToolTip"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorItemNotFoundToolTip"), animation: ToasterAnimation.FadeIn);
                         }
                     }
                     _BarcodeStr = "";
@@ -369,13 +367,13 @@ namespace Restaurant.View.kitchen
         //                await getImg();
         //                #region delete
         //                if (item.canDelete)
-        //                    btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+        //                    btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
         //                else
         //                {
         //                    if (item.isActive == 0)
-        //                        btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+        //                        btn_delete.Content = AppSettings.resourcemanager.GetString("trActive");
         //                    else
-        //                        btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+        //                        btn_delete.Content = AppSettings.resourcemanager.GetString("trInActive");
         //                }
         //                #endregion
         //                HelpClass.getMobile(item.mobile, cb_areaMobile, tb_mobile);
@@ -647,7 +645,7 @@ namespace Restaurant.View.kitchen
                     //////////////////////////////////////
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
                     SectionData.EndAwait(grid_main);
             }
@@ -686,7 +684,7 @@ namespace Restaurant.View.kitchen
 
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 
                     SectionData.EndAwait(grid_main);
@@ -715,7 +713,7 @@ namespace Restaurant.View.kitchen
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
                     SectionData.EndAwait(grid_main);
             }
@@ -755,7 +753,7 @@ namespace Restaurant.View.kitchen
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
                     SectionData.EndAwait(grid_main);
             }
@@ -798,7 +796,7 @@ namespace Restaurant.View.kitchen
                     t1.Start();
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
                     SectionData.EndAwait(grid_main);
             }
@@ -1107,7 +1105,7 @@ namespace Restaurant.View.kitchen
             //tagsList = new List<string> { "Orient", "Western", "Eastern" };
             tagsList = await FillCombo.tag.Get(categoryId);
             Tag allTag = new Tag();
-            allTag.tagName = MainWindow.resourcemanager.GetString("trAll");
+            allTag.tagName = AppSettings.resourcemanager.GetString("trAll");
             allTag.tagId = 0;
             tagsList.Add(allTag);
 

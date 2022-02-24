@@ -77,8 +77,8 @@ namespace Restaurant.View.settings.reportsSettings
             cb_printHeader.DisplayMemberPath = "Text";
             cb_printHeader.SelectedValuePath = "Value";
             var typelist = new[] {
-                 new { Text = MainWindow.resourcemanager.GetString("trShow")       , Value = "show" },
-                 new { Text = MainWindow.resourcemanager.GetString("trHide")       , Value = "hide" },
+                 new { Text = AppSettings.resourcemanager.GetString("trShow")       , Value = "show" },
+                 new { Text = AppSettings.resourcemanager.GetString("trHide")       , Value = "hide" },
                 };
             cb_printHeader.ItemsSource = typelist;
             cb_printHeader.SelectedIndex = 0;
@@ -98,11 +98,11 @@ namespace Restaurant.View.settings.reportsSettings
 
                 if (reprow.value == "ar")
                 {
-                    comborow.trlang = MainWindow.resourcemanager.GetString("trArabic");
+                    comborow.trlang = AppSettings.resourcemanager.GetString("trArabic");
                 }
                 else if (reprow.value == "en")
                 {
-                    comborow.trlang = MainWindow.resourcemanager.GetString("trEnglish");
+                    comborow.trlang = AppSettings.resourcemanager.GetString("trEnglish");
                 }
                 else
                 {
@@ -137,14 +137,12 @@ namespace Restaurant.View.settings.reportsSettings
 
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
 
@@ -226,21 +224,21 @@ namespace Restaurant.View.settings.reportsSettings
 
         private void translate()
         {
-            txt_printCount.Text = MainWindow.resourcemanager.GetString("trPrintCount");
-            tb_printCount.Text = MainWindow.resourcemanager.GetString("trPrintCount");
+            txt_printCount.Text = AppSettings.resourcemanager.GetString("trPrintCount");
+            tb_printCount.Text = AppSettings.resourcemanager.GetString("trPrintCount");
 
-            txt_reportlang.Text = MainWindow.resourcemanager.GetString("trLanguage");
+            txt_reportlang.Text = AppSettings.resourcemanager.GetString("trLanguage");
 
-            txt_systmSetting.Text = MainWindow.resourcemanager.GetString("trSystemSetting");
-            txt_systmSettingHint.Text = MainWindow.resourcemanager.GetString("trSystemSetting") + "...";
+            txt_systmSetting.Text = AppSettings.resourcemanager.GetString("trSystemSetting");
+            txt_systmSettingHint.Text = AppSettings.resourcemanager.GetString("trSystemSetting") + "...";
 
-            txt_printerSetting.Text = MainWindow.resourcemanager.GetString("trPrinterSettings");
-            txt_printerSettingHint.Text = MainWindow.resourcemanager.GetString("trPrinterSettings") + "...";
+            txt_printerSetting.Text = AppSettings.resourcemanager.GetString("trPrinterSettings");
+            txt_printerSettingHint.Text = AppSettings.resourcemanager.GetString("trPrinterSettings") + "...";
 
-            txt_copyCount.Text = MainWindow.resourcemanager.GetString("trCopyCount");
-            txt_copyCountHint.Text = MainWindow.resourcemanager.GetString("trCopyCount") + "...";
+            txt_copyCount.Text = AppSettings.resourcemanager.GetString("trCopyCount");
+            txt_copyCountHint.Text = AppSettings.resourcemanager.GetString("trCopyCount") + "...";
 
-            txt_printCount.Text = MainWindow.resourcemanager.GetString("trPrintCount");
+            txt_printCount.Text = AppSettings.resourcemanager.GetString("trPrintCount");
         }
 
     
@@ -261,11 +259,11 @@ namespace Restaurant.View.settings.reportsSettings
                     await fillRepLang();
                     if (msg > 0)
                     {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
                     }
                     else
                     {
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     }
                 }
             }
@@ -294,7 +292,7 @@ namespace Restaurant.View.settings.reportsSettings
                 Window.GetWindow(this).Opacity = 1;
                 //}
                 //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
                     HelpClass.EndAwait(grid_main);
             }
@@ -324,7 +322,7 @@ namespace Restaurant.View.settings.reportsSettings
                 Window.GetWindow(this).Opacity = 1;
                 //}
                 //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
                     HelpClass.EndAwait(grid_main);
             }
@@ -352,7 +350,7 @@ namespace Restaurant.View.settings.reportsSettings
                             Window.GetWindow(this).Opacity = 1;
                             //}
                             //else
-                            //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                            //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                             
                                 HelpClass.EndAwait(grid_main);
                         }
@@ -399,10 +397,10 @@ namespace Restaurant.View.settings.reportsSettings
                         //update tax in main window
                         FillCombo.Allow_print_inv_count = printCount.value;
 
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
                     }
                     else
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                 }
 
                 

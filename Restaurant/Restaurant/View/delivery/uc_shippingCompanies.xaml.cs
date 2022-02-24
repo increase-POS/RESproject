@@ -101,14 +101,12 @@ namespace Restaurant.View.delivery
             {
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "name", "realDeliveryCost", "deliveryCost", "deliveryType", "mobile" };
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
@@ -134,38 +132,38 @@ namespace Restaurant.View.delivery
         private void translate()
         {
 
-            txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            txt_title.Text = MainWindow.resourcemanager.GetString("trShippingCompanies");
-            txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_realDeliveryCost, MainWindow.resourcemanager.GetString("trRealDeliveryCostHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_deliveryCost, MainWindow.resourcemanager.GetString("trDeliveryCostHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_deliveryType, MainWindow.resourcemanager.GetString("trDeliveryTypeHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
-            txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mobile, MainWindow.resourcemanager.GetString("trMobileHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_phone, MainWindow.resourcemanager.GetString("trPhoneHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_email, MainWindow.resourcemanager.GetString("trEmailHint"));
-            txt_contentInformatin.Text = MainWindow.resourcemanager.GetString("trAnotherInfomation");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fax, MainWindow.resourcemanager.GetString("trFaxHint"));
+            txt_active.Text = AppSettings.resourcemanager.GetString("trActive");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+            txt_title.Text = AppSettings.resourcemanager.GetString("trShippingCompanies");
+            txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, AppSettings.resourcemanager.GetString("trNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_realDeliveryCost, AppSettings.resourcemanager.GetString("trRealDeliveryCostHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_deliveryCost, AppSettings.resourcemanager.GetString("trDeliveryCostHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_deliveryType, AppSettings.resourcemanager.GetString("trDeliveryTypeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
+            txt_contactInformation.Text = AppSettings.resourcemanager.GetString("trContactInformation");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mobile, AppSettings.resourcemanager.GetString("trMobileHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_phone, AppSettings.resourcemanager.GetString("trPhoneHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_email, AppSettings.resourcemanager.GetString("trEmailHint"));
+            txt_contentInformatin.Text = AppSettings.resourcemanager.GetString("trAnotherInfomation");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fax, AppSettings.resourcemanager.GetString("trFaxHint"));
 
-            dg_shCompany.Columns[0].Header = MainWindow.resourcemanager.GetString("trName");
-            dg_shCompany.Columns[1].Header = MainWindow.resourcemanager.GetString("trRealDeliveryCost");
-            dg_shCompany.Columns[2].Header = MainWindow.resourcemanager.GetString("trDeliveryCost");
-            dg_shCompany.Columns[3].Header = MainWindow.resourcemanager.GetString("trDeliveryType");
+            dg_shCompany.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
+            dg_shCompany.Columns[1].Header = AppSettings.resourcemanager.GetString("trRealDeliveryCost");
+            dg_shCompany.Columns[2].Header = AppSettings.resourcemanager.GetString("trDeliveryCost");
+            dg_shCompany.Columns[3].Header = AppSettings.resourcemanager.GetString("trDeliveryType");
 
-            btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
-            btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+            btn_add.Content = AppSettings.resourcemanager.GetString("trAdd");
+            btn_update.Content = AppSettings.resourcemanager.GetString("trUpdate");
+            btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
 
-            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
-            tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            tt_pieChart.Content = MainWindow.resourcemanager.GetString("trPieChart");
-            tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
+            tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
+            tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
+            tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
+            tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
+            tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
+            tt_pieChart.Content = AppSettings.resourcemanager.GetString("trPieChart");
+            tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
 
 
         }
@@ -205,10 +203,10 @@ namespace Restaurant.View.delivery
 
                         int s = await shCompany.save(shCompany);
                         if (s <= 0)
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
                         {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
                          
                             Clear();
@@ -219,7 +217,7 @@ namespace Restaurant.View.delivery
                     HelpClass.EndAwait(grid_main);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)
@@ -261,10 +259,10 @@ namespace Restaurant.View.delivery
 
                         int s = await shCompany.save(shCompany);
                         if (s <= 0)
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
                         {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                             await RefreshShippingCompaniesList();
                             await Search();
                             
@@ -272,12 +270,12 @@ namespace Restaurant.View.delivery
                     }
                     }
                     else
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
 
                     HelpClass.EndAwait(grid_main);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)
@@ -300,7 +298,7 @@ namespace Restaurant.View.delivery
                             #region
                             Window.GetWindow(this).Opacity = 0.2;
                             wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxActivate");
+                            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
@@ -313,25 +311,25 @@ namespace Restaurant.View.delivery
                             Window.GetWindow(this).Opacity = 0.2;
                             wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                             if (shCompany.canDelete)
-                                w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                                w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
                             if (!shCompany.canDelete)
-                                w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
+                                w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
                             if (w.isOk)
                             {
                                 string popupContent = "";
-                                if (shCompany.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
-                                if ((!shCompany.canDelete) && (shCompany.isActive == 1)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+                                if (shCompany.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
+                                if ((!shCompany.canDelete) && (shCompany.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
                                 int s = await shCompany.delete(shCompany.shippingCompanyId, MainWindow.userLogin.userId, shCompany.canDelete);
                                 if (s < 0)
-                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
                                     shCompany.shippingCompanyId = 0;
-                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshShippingCompaniesList();
                                     await Search();
@@ -343,7 +341,7 @@ namespace Restaurant.View.delivery
                     HelpClass.EndAwait(grid_main);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)
@@ -357,10 +355,10 @@ namespace Restaurant.View.delivery
             shCompany.isActive = 1;
             int s = await shCompany.save(shCompany);
             if (s <= 0)
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
             {
-                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
                 await RefreshShippingCompaniesList();
                 await Search();
             }
@@ -445,13 +443,13 @@ namespace Restaurant.View.delivery
                     {
                         #region delete
                         if (shCompany.canDelete)
-                            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+                            btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
                         else
                         {
                             if (shCompany.isActive == 0)
-                                btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+                                btn_delete.Content = AppSettings.resourcemanager.GetString("trActive");
                             else
-                                btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+                                btn_delete.Content = AppSettings.resourcemanager.GetString("trInActive");
                         }
                         #endregion
                         HelpClass.getMobile(shCompany.mobile, cb_areaMobile, tb_mobile);
@@ -725,7 +723,7 @@ namespace Restaurant.View.delivery
                     //////////////////////////////////////
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 if (sender != null)
                     SectionData.EndAwait(grid_main);
             }
@@ -764,7 +762,7 @@ namespace Restaurant.View.delivery
 
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 if (sender != null)
                     SectionData.EndAwait(grid_main);
@@ -793,7 +791,7 @@ namespace Restaurant.View.delivery
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 if (sender != null)
                     SectionData.EndAwait(grid_main);
             }
@@ -833,7 +831,7 @@ namespace Restaurant.View.delivery
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 if (sender != null)
                     SectionData.EndAwait(grid_main);
             }
@@ -876,7 +874,7 @@ namespace Restaurant.View.delivery
                     t1.Start();
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 if (sender != null)
                     SectionData.EndAwait(grid_main);
             }

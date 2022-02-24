@@ -71,10 +71,12 @@ namespace Restaurant.View.windows
                     HelpClass.StartAwait(grid_branchList);
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
-                { MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly()); grid_branchList.FlowDirection = FlowDirection.LeftToRight; }
+                if (AppSettings.lang.Equals("en"))
+                {
+  grid_branchList.FlowDirection = FlowDirection.LeftToRight; }
                 else
-                { MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly()); grid_branchList.FlowDirection = FlowDirection.RightToLeft; }
+                {
+   grid_branchList.FlowDirection = FlowDirection.RightToLeft; }
 
                 translat();
                 #endregion
@@ -140,22 +142,22 @@ namespace Restaurant.View.windows
 
         private void translat()
         {
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
 
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
-            dg_allStores.Columns[0].Header = MainWindow.resourcemanager.GetString("trBranch/Store");
-            dg_selectedStores.Columns[0].Header = MainWindow.resourcemanager.GetString("trBranch/Store");
+            dg_allStores.Columns[0].Header = AppSettings.resourcemanager.GetString("trBranch/Store");
+            dg_selectedStores.Columns[0].Header = AppSettings.resourcemanager.GetString("trBranch/Store");
 
-            txt_title.Text = MainWindow.resourcemanager.GetString("trBranchs/Stores");
-            txt_stores.Text = MainWindow.resourcemanager.GetString("trBranchs/Stores");
-            txt_selectedStores.Text = MainWindow.resourcemanager.GetString("trSelectedBranchs/Stores");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trBranchs/Stores");
+            txt_stores.Text = AppSettings.resourcemanager.GetString("trBranchs/Stores");
+            txt_selectedStores.Text = AppSettings.resourcemanager.GetString("trSelectedBranchs/Stores");
 
-            tt_search.Content = MainWindow.resourcemanager.GetString("trSearch");
-            tt_selectAllItem.Content = MainWindow.resourcemanager.GetString("trSelectAllItems");
-            tt_unselectAllItem.Content = MainWindow.resourcemanager.GetString("trUnSelectAllItems");
-            tt_selectItem.Content = MainWindow.resourcemanager.GetString("trSelectOneItem");
-            tt_unselectItem.Content = MainWindow.resourcemanager.GetString("trUnSelectOneItem");
+            tt_search.Content = AppSettings.resourcemanager.GetString("trSearch");
+            tt_selectAllItem.Content = AppSettings.resourcemanager.GetString("trSelectAllItems");
+            tt_unselectAllItem.Content = AppSettings.resourcemanager.GetString("trUnSelectAllItems");
+            tt_selectItem.Content = AppSettings.resourcemanager.GetString("trSelectOneItem");
+            tt_unselectItem.Content = AppSettings.resourcemanager.GetString("trUnSelectOneItem");
         }
         private void Dg_selectedStores_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {

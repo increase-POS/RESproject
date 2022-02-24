@@ -217,14 +217,14 @@ namespace Restaurant.View.windows
                 {
                     tb_fromQuantity.Text = branchQuantity.ToString();
 
-                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorAmountNotAvailableFromToolTip"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountNotAvailableFromToolTip"), animation: ToasterAnimation.FadeIn);
                     valid = false;
                     return valid;
                 }
             }
             if (isSmall == null && _ConversionQuantity > quantity)
             {
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorNoEnoughQuantityToolTip"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorNoEnoughQuantityToolTip"), animation: ToasterAnimation.FadeIn);
                 valid = false;
                 return valid;
             }
@@ -238,13 +238,13 @@ namespace Restaurant.View.windows
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
 
                 translate();
@@ -262,14 +262,14 @@ namespace Restaurant.View.windows
         }
         private void translate()
         {
-            txt_title.Text = MainWindow.resourcemanager.GetString("trUnitConversion");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_itemId, MainWindow.resourcemanager.GetString("trItemHint")); 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_fromUnit , MainWindow.resourcemanager.GetString("trFromUnitHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_toUnit, MainWindow.resourcemanager.GetString("trToUnitHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sectionLocation, MainWindow.resourcemanager.GetString("trFromLocationHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fromQuantity , MainWindow.resourcemanager.GetString("trQuantityHint"));
+            txt_title.Text = AppSettings.resourcemanager.GetString("trUnitConversion");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_itemId, AppSettings.resourcemanager.GetString("trItemHint")); 
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_fromUnit , AppSettings.resourcemanager.GetString("trFromUnitHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_toUnit, AppSettings.resourcemanager.GetString("trToUnitHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sectionLocation, AppSettings.resourcemanager.GetString("trFromLocationHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fromQuantity , AppSettings.resourcemanager.GetString("trQuantityHint"));
 
-            btn_save.Content = MainWindow.resourcemanager.GetString("trConvert");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trConvert");
         }
         //private async Task fillItemCombo()
         //{
@@ -316,10 +316,10 @@ namespace Restaurant.View.windows
                             if (res > 0)
                             {
                                 clearConversionInputs();
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                             }
                             else
-                                Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         }
                         else
                         {
@@ -327,10 +327,10 @@ namespace Restaurant.View.windows
                             if (res > 0)
                             {
                                 clearConversionInputs();
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                             }
                             else
-                                Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         }
                     }
                 }
@@ -465,7 +465,7 @@ namespace Restaurant.View.windows
                     quantity = int.Parse(tb_fromQuantity.Text);
                 if (locationQuantity < quantity)
                 {
-                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorAmountNotAvailableFromToolTip"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountNotAvailableFromToolTip"), animation: ToasterAnimation.FadeIn);
                     tb_fromQuantity.Text = locationQuantity.ToString();
 
                 }

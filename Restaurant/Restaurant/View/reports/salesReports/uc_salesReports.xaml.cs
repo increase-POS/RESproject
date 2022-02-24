@@ -53,7 +53,7 @@ namespace Restaurant.View.reports.salesReports
             try
             {
                 #region translate
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 else
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
@@ -71,7 +71,7 @@ namespace Restaurant.View.reports.salesReports
                 await FillCombo.RefreshObjects();
             // Title
             if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
-                txt_mainTitle.Text = MainWindow.resourcemanager.GetString(
+                txt_mainTitle.Text = AppSettings.resourcemanager.GetString(
                FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
                );
             // Info
@@ -80,7 +80,7 @@ namespace Restaurant.View.reports.salesReports
             foreach (var item in InfoTextBlocksList)
             {
                 if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translate))
-                    item.Text = MainWindow.resourcemanager.GetString(
+                    item.Text = AppSettings.resourcemanager.GetString(
                    FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translate
                    );
             }
@@ -90,7 +90,7 @@ namespace Restaurant.View.reports.salesReports
             foreach (var item in HintTextBlocksList)
             {
                 if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translateHint))
-                    item.Text = MainWindow.resourcemanager.GetString(
+                    item.Text = AppSettings.resourcemanager.GetString(
                    FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translateHint
                    );
             }

@@ -75,14 +75,12 @@ namespace Restaurant.View.storage.stocktakingOperations
             {
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "amount", "cause" };
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
@@ -103,31 +101,31 @@ namespace Restaurant.View.storage.stocktakingOperations
         }
         private void translate()
         {
-            txt_title.Text = MainWindow.resourcemanager.GetString("trDestructiveItem");
-            txt_destroy.Text = MainWindow.resourcemanager.GetString("trDestructionInfo");
-            txt_manually.Text = MainWindow.resourcemanager.GetString("trManually");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trDestructiveItem");
+            txt_destroy.Text = AppSettings.resourcemanager.GetString("trDestructionInfo");
+            txt_manually.Text = AppSettings.resourcemanager.GetString("trManually");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_itemName, MainWindow.resourcemanager.GetString("trItem") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_amount, MainWindow.resourcemanager.GetString("trAmount") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_user, MainWindow.resourcemanager.GetString("trUser") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cause, MainWindow.resourcemanager.GetString("trReason") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNote") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_itemName, AppSettings.resourcemanager.GetString("trItem") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_amount, AppSettings.resourcemanager.GetString("trAmount") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_user, AppSettings.resourcemanager.GetString("trUser") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cause, AppSettings.resourcemanager.GetString("trReason") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNote") + "...");
 
-            btn_destroy.Content = MainWindow.resourcemanager.GetString("trDestroy");
+            btn_destroy.Content = AppSettings.resourcemanager.GetString("trDestroy");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+            tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
 
-            dg_invItemLoc.Columns[0].Header = MainWindow.resourcemanager.GetString("trNo.");
-            dg_invItemLoc.Columns[1].Header = MainWindow.resourcemanager.GetString("trDate");
-            dg_invItemLoc.Columns[2].Header = MainWindow.resourcemanager.GetString("trSection") + "-" + MainWindow.resourcemanager.GetString("trLocation");
-            dg_invItemLoc.Columns[3].Header = MainWindow.resourcemanager.GetString("trItem") + "-" + MainWindow.resourcemanager.GetString("trUnit");
-            dg_invItemLoc.Columns[4].Header = MainWindow.resourcemanager.GetString("trAmount");
+            dg_invItemLoc.Columns[0].Header = AppSettings.resourcemanager.GetString("trNo.");
+            dg_invItemLoc.Columns[1].Header = AppSettings.resourcemanager.GetString("trDate");
+            dg_invItemLoc.Columns[2].Header = AppSettings.resourcemanager.GetString("trSection") + "-" + AppSettings.resourcemanager.GetString("trLocation");
+            dg_invItemLoc.Columns[3].Header = AppSettings.resourcemanager.GetString("trItem") + "-" + AppSettings.resourcemanager.GetString("trUnit");
+            dg_invItemLoc.Columns[4].Header = AppSettings.resourcemanager.GetString("trAmount");
 
-            tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
+            tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
+            tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
+            tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
+            tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
 
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
@@ -227,10 +225,10 @@ namespace Restaurant.View.storage.stocktakingOperations
                                 await FillCombo.itemLocation.decreaseItemLocationQuantity((int)invItemLoc.itemLocationId, (int)invItemLoc.amountDestroyed, MainWindow.userLogin.userId, "storageAlerts_minMaxItem", not);
                                 await refreshDestroyDetails();
                                 Clear();
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                             }
                             else
-                                Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                         }
                         else
@@ -282,10 +280,10 @@ namespace Restaurant.View.storage.stocktakingOperations
                                             await FillCombo.itemLocation.decreaseItemLocationQuantity(itemLocId, quantity, MainWindow.userLogin.userId, "storageAlerts_minMaxItem", not);
                                         }
                                         Clear();
-                                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                                     }
                                     else
-                                        Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                        Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 }
                             }
                             Window.GetWindow(this).Opacity = 1;
@@ -293,7 +291,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                     }
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 if (sender != null)
                     HelpClass.EndAwait(grid_main);
             }
@@ -567,7 +565,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                     }
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -613,7 +611,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -647,7 +645,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                     //////////////////////////////////////
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -688,7 +686,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
 
                 HelpClass.EndAwait(grid_main);
@@ -719,7 +717,7 @@ namespace Restaurant.View.storage.stocktakingOperations
         //            #endregion
         //        }
         //        else
-        //            Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+        //            Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
         //        if (sender != null)
         //            SectionData.EndAwait(grid_main);
         //    }
@@ -812,7 +810,7 @@ namespace Restaurant.View.storage.stocktakingOperations
 
                         if (_serialCount == itemCount)
                         {
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trWarningItemCountIs:") + " " + itemCount, animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trWarningItemCountIs:") + " " + itemCount, animation: ToasterAnimation.FadeIn);
                         }
                         else if (found == -1)
                         {
@@ -820,7 +818,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                             _serialCount++;
                         }
                         else
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trWarningSerialExists"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trWarningSerialExists"), animation: ToasterAnimation.FadeIn);
                     }
                     tb_serialNum.Clear();
                 }

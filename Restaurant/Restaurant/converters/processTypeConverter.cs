@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Restaurant.Classes;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -15,17 +16,17 @@ namespace Restaurant.converters
             string s = value as string;
             switch (value)
             {
-                case "cash": return MainWindow.resourcemanager.GetString("trCash");
+                case "cash": return AppSettings.resourcemanager.GetString("trCash");
                     //break;
-                case "doc": return MainWindow.resourcemanager.GetString("trDocument");
+                case "doc": return AppSettings.resourcemanager.GetString("trDocument");
                     //break;
-                case "cheque": return MainWindow.resourcemanager.GetString("trCheque");
+                case "cheque": return AppSettings.resourcemanager.GetString("trCheque");
                     //break;
-                case "balance": return MainWindow.resourcemanager.GetString("trCredit");
+                case "balance": return AppSettings.resourcemanager.GetString("trCredit");
                 //break;
-                case "card": return MainWindow.resourcemanager.GetString("trAnotherPaymentMethods");
+                case "card": return AppSettings.resourcemanager.GetString("trAnotherPaymentMethods");
                 //break;
-                case "inv": return MainWindow.resourcemanager.GetString("trInv");
+                case "inv": return AppSettings.resourcemanager.GetString("trInv");
                 //break;
                 default: return s;
                     //break;

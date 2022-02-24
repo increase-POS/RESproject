@@ -64,10 +64,12 @@ namespace Restaurant.View.windows
                     HelpClass.StartAwait(grid_locations);
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
-                { MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly()); grid_locations.FlowDirection = FlowDirection.LeftToRight; }
+                if (AppSettings.lang.Equals("en"))
+                { 
+  grid_locations.FlowDirection = FlowDirection.LeftToRight; }
                 else
-                { MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly()); grid_locations.FlowDirection = FlowDirection.RightToLeft; }
+                { 
+  grid_locations.FlowDirection = FlowDirection.RightToLeft; }
 
                 translat();
                 #endregion
@@ -121,22 +123,22 @@ namespace Restaurant.View.windows
 
         private void translat()
         {
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
-            lst_allLocations.Columns[0].Header = MainWindow.resourcemanager.GetString("trLocation");
-            lst_selectedLocations.Columns[0].Header = MainWindow.resourcemanager.GetString("trSelectedLocations");
+            lst_allLocations.Columns[0].Header = AppSettings.resourcemanager.GetString("trLocation");
+            lst_selectedLocations.Columns[0].Header = AppSettings.resourcemanager.GetString("trSelectedLocations");
 
-            txt_locations.Text = MainWindow.resourcemanager.GetString("trLocation");
-            txt_location.Text = MainWindow.resourcemanager.GetString("trLocation");
-            txt_selectedLocations.Text = MainWindow.resourcemanager.GetString("trSelectedLocations");
-            tt_searchX.Content = MainWindow.resourcemanager.GetString("trX");
-            tt_searchY.Content = MainWindow.resourcemanager.GetString("trY");
-            tt_searchZ.Content = MainWindow.resourcemanager.GetString("trZ");
+            txt_locations.Text = AppSettings.resourcemanager.GetString("trLocation");
+            txt_location.Text = AppSettings.resourcemanager.GetString("trLocation");
+            txt_selectedLocations.Text = AppSettings.resourcemanager.GetString("trSelectedLocations");
+            tt_searchX.Content = AppSettings.resourcemanager.GetString("trX");
+            tt_searchY.Content = AppSettings.resourcemanager.GetString("trY");
+            tt_searchZ.Content = AppSettings.resourcemanager.GetString("trZ");
 
-            tt_selectAllItem.Content = MainWindow.resourcemanager.GetString("trSelectAllItems");
-            tt_unselectAllItem.Content = MainWindow.resourcemanager.GetString("trUnSelectAllItems");
-            tt_selectItem.Content = MainWindow.resourcemanager.GetString("trSelectOneItem");
-            tt_unselectItem.Content = MainWindow.resourcemanager.GetString("trUnSelectOneItem");
+            tt_selectAllItem.Content = AppSettings.resourcemanager.GetString("trSelectAllItems");
+            tt_unselectAllItem.Content = AppSettings.resourcemanager.GetString("trUnSelectAllItems");
+            tt_selectItem.Content = AppSettings.resourcemanager.GetString("trSelectOneItem");
+            tt_unselectItem.Content = AppSettings.resourcemanager.GetString("trUnSelectOneItem");
 
         }
 

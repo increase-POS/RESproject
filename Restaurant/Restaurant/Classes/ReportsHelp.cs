@@ -10,11 +10,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace POS.Classes
+namespace Restaurant.Classes
 {
     class ReportsHelp
     {
-        public static void showSelectedStack(Grid grid,StackPanel stack)
+        public static void showSelectedStack(Grid grid, StackPanel stack)
         {
             foreach (StackPanel stackPanel in grid.Children)
             {
@@ -31,7 +31,7 @@ namespace POS.Classes
             }
         }
 
-        public static void isEnabledButtons(Grid grid,Button button)
+        public static void isEnabledButtons(Grid grid, Button button)
         {
             foreach (Border bdr in grid.Children)
             {
@@ -41,16 +41,16 @@ namespace POS.Classes
             button.Opacity = 1;
         }
 
-        public static void paintTabControlBorder(Grid grid,Border border)
+        public static void paintTabControlBorder(Grid grid, Border border)
         {
             foreach (Border bdr in grid.Children)
             {
-                bdr.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#4E4E4E"));
+                bdr.Background = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             }
             border.Background = Brushes.White;
         }
 
-        public static void showTabControlGrid(Grid grid,Grid grd)
+        public static void showTabControlGrid(Grid grid, Grid grd)
         {
             foreach (Grid item in grid.Children)
             {

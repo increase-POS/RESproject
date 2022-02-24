@@ -104,34 +104,34 @@ namespace Restaurant.View.purchase
         private void translate()
         {
             ////////////////////////////////----invoice----/////////////////////////////////
-            dg_billDetails.Columns[1].Header = MainWindow.resourcemanager.GetString("trNum");
-            dg_billDetails.Columns[2].Header = MainWindow.resourcemanager.GetString("trItem");
-            dg_billDetails.Columns[3].Header = MainWindow.resourcemanager.GetString("trUnit");
-            dg_billDetails.Columns[4].Header = MainWindow.resourcemanager.GetString("trQTR");
+            dg_billDetails.Columns[1].Header = AppSettings.resourcemanager.GetString("trNum");
+            dg_billDetails.Columns[2].Header = AppSettings.resourcemanager.GetString("trItem");
+            dg_billDetails.Columns[3].Header = AppSettings.resourcemanager.GetString("trUnit");
+            dg_billDetails.Columns[4].Header = AppSettings.resourcemanager.GetString("trQTR");
 
-            txt_shortageInvoice.Text = MainWindow.resourcemanager.GetString("trLack");
-            txt_payInvoice.Text = MainWindow.resourcemanager.GetString("trPurchaceOrder");
-            txt_vendor.Text = MainWindow.resourcemanager.GetString("trVendor");
-            tb_count.Text = MainWindow.resourcemanager.GetString("trCount:");
+            txt_shortageInvoice.Text = AppSettings.resourcemanager.GetString("trLack");
+            txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaceOrder");
+            txt_vendor.Text = AppSettings.resourcemanager.GetString("trVendor");
+            tb_count.Text = AppSettings.resourcemanager.GetString("trCount:");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_barcode, MainWindow.resourcemanager.GetString("trBarcodeHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendor, MainWindow.resourcemanager.GetString("trVendorHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_barcode, AppSettings.resourcemanager.GetString("trBarcodeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendor, AppSettings.resourcemanager.GetString("trVendorHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
 
-            txt_items.Text = MainWindow.resourcemanager.GetString("trItems");
-            txt_drafts.Text = MainWindow.resourcemanager.GetString("trOrders");
-            txt_newDraft.Text = MainWindow.resourcemanager.GetString("trNew");
-            txt_purchaseOrder.Text = MainWindow.resourcemanager.GetString("trReady");
-            txt_emailMessage.Text = MainWindow.resourcemanager.GetString("trSendEmail");
-            txt_preview.Text = MainWindow.resourcemanager.GetString("trPreview");
-            txt_pdf.Text = MainWindow.resourcemanager.GetString("trPdfBtn");
-            txt_printInvoice.Text = MainWindow.resourcemanager.GetString("trPrint");
-            txt_invoiceImages.Text = MainWindow.resourcemanager.GetString("trImages");
+            txt_items.Text = AppSettings.resourcemanager.GetString("trItems");
+            txt_drafts.Text = AppSettings.resourcemanager.GetString("trOrders");
+            txt_newDraft.Text = AppSettings.resourcemanager.GetString("trNew");
+            txt_purchaseOrder.Text = AppSettings.resourcemanager.GetString("trReady");
+            txt_emailMessage.Text = AppSettings.resourcemanager.GetString("trSendEmail");
+            txt_preview.Text = AppSettings.resourcemanager.GetString("trPreview");
+            txt_pdf.Text = AppSettings.resourcemanager.GetString("trPdfBtn");
+            txt_printInvoice.Text = AppSettings.resourcemanager.GetString("trPrint");
+            txt_invoiceImages.Text = AppSettings.resourcemanager.GetString("trImages");
 
-            tt_error_previous.Content = MainWindow.resourcemanager.GetString("trPrevious");
-            tt_error_next.Content = MainWindow.resourcemanager.GetString("trNext");
+            tt_error_previous.Content = AppSettings.resourcemanager.GetString("trPrevious");
+            tt_error_next.Content = AppSettings.resourcemanager.GetString("trNext");
 
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -203,14 +203,12 @@ namespace Restaurant.View.purchase
                 HelpClass.StartAwait(grid_main);
                 // for pagination
                 MainWindow.mainWindow.KeyDown += HandleKeyPress;
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
 
@@ -484,10 +482,10 @@ namespace Restaurant.View.purchase
                 }
                 await FillCombo.invoice.saveInvoiceItems(invoiceItems, invoiceId);
 
-                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
             }
             else
-                Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
             return invoiceId;
         }
@@ -498,7 +496,7 @@ namespace Restaurant.View.purchase
             requiredControlList = new List<string> { "vendor" };
             HelpClass.validate(requiredControlList, this);
             if (billDetails.Count == 0)
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trAddInvoiceWithoutItems"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trAddInvoiceWithoutItems"), animation: ToasterAnimation.FadeIn);
 
             if (cb_vendor.SelectedIndex != -1 && billDetails.Count > 0)
                 valid = true;
@@ -517,7 +515,7 @@ namespace Restaurant.View.purchase
                 {
                     MainWindow.mainWindow.Opacity = 0.2;
                     wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                    w.contentText = MainWindow.resourcemanager.GetString("trApproveOrderNotification");
+                    w.contentText = AppSettings.resourcemanager.GetString("trApproveOrderNotification");
 
                     w.ShowDialog();
                     if (!w.isOk)
@@ -527,7 +525,7 @@ namespace Restaurant.View.purchase
                     else
                     {
                         _InvoiceType = "po";
-                        btn_save.Content = MainWindow.resourcemanager.GetString("trSubmit");
+                        btn_save.Content = AppSettings.resourcemanager.GetString("trSubmit");
                     }
                     MainWindow.mainWindow.Opacity = 1;
 
@@ -558,7 +556,7 @@ namespace Restaurant.View.purchase
         private void Tgl_ActiveOffer_Unchecked(object sender, RoutedEventArgs e)
         {
             _InvoiceType = invoice.invType;
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
             if (tgl_ActiveOffer.IsChecked == true)
             {
                 dg_billDetails.Columns[3].IsReadOnly = true; //make unit read only
@@ -598,7 +596,7 @@ namespace Restaurant.View.purchase
                     }
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -617,7 +615,7 @@ namespace Restaurant.View.purchase
                 if (billDetails[i].itemUnitId == 0)
                 {
                     valid = false;
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trItemWithNoUnit"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trItemWithNoUnit"), animation: ToasterAnimation.FadeIn);
 
                     return valid;
                 }
@@ -638,7 +636,7 @@ namespace Restaurant.View.purchase
                         #region Accept
                         MainWindow.mainWindow.Opacity = 0.2;
                         wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                        w.contentText = MainWindow.resourcemanager.GetString("trSaveOrderNotification");
+                        w.contentText = AppSettings.resourcemanager.GetString("trSaveOrderNotification");
 
                         w.ShowDialog();
                         MainWindow.mainWindow.Opacity = 1;
@@ -683,8 +681,8 @@ namespace Restaurant.View.purchase
             isFromReport = false;
             archived = false;
             tgl_ActiveOffer.IsChecked = false;
-            txt_payInvoice.Text = MainWindow.resourcemanager.GetString("trPurchaseOrder");
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaseOrder");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
             refrishBillDetails();
             inputEditable();
@@ -703,7 +701,7 @@ namespace Restaurant.View.purchase
                 #region Accept
                 MainWindow.mainWindow.Opacity = 0.2;
                 wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                w.contentText = MainWindow.resourcemanager.GetString("trSaveOrderNotification");
+                w.contentText = AppSettings.resourcemanager.GetString("trSaveOrderNotification");
 
                 w.ShowDialog();
                 MainWindow.mainWindow.Opacity = 1;
@@ -943,12 +941,12 @@ namespace Restaurant.View.purchase
                         // set title to bill
                         if (_InvoiceType == "pod")
                         {
-                            txt_payInvoice.Text = MainWindow.resourcemanager.GetString("trPurchaceOrderDraft");
+                            txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaceOrderDraft");
                             brd_total.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFA926"));
                         }
                         else if (_InvoiceType == "po")
                         {
-                            txt_payInvoice.Text = MainWindow.resourcemanager.GetString("trOrders");
+                            txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trOrders");
                             brd_total.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFA926"));
                         }
 
@@ -995,7 +993,7 @@ namespace Restaurant.View.purchase
                         }
                         else
                         {
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorItemNotFoundToolTip"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorItemNotFoundToolTip"), animation: ToasterAnimation.FadeIn);
                         }
                     }
                     break;
@@ -1258,9 +1256,9 @@ namespace Restaurant.View.purchase
                 _invoiceId = invoice.invoiceId;
                 _InvoiceType = invoice.invType;
                 if (invoice.invType == "pod")
-                    txt_payInvoice.Text = MainWindow.resourcemanager.GetString("trPurchaceOrderDraft");
+                    txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaceOrderDraft");
                 else if (invoice.invType == "pos")
-                    txt_payInvoice.Text = MainWindow.resourcemanager.GetString("trPurchaceOrderSaved");
+                    txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaceOrderSaved");
                 navigateBtnActivate();
                 await fillInvoiceInputs(invoice);
             }
@@ -1388,7 +1386,7 @@ namespace Restaurant.View.purchase
                 TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
                 if (elapsed.TotalMilliseconds < 100)
                 {
-                    if (columnName == MainWindow.resourcemanager.GetString("trQTR"))
+                    if (columnName == AppSettings.resourcemanager.GetString("trQTR"))
                         t.Text = billDetails[index].Count.ToString();
                 }
                 else
@@ -1397,7 +1395,7 @@ namespace Restaurant.View.purchase
                     long newCount = 0;
 
                     //"tb_amont"
-                    if (columnName == MainWindow.resourcemanager.GetString("trQTR"))
+                    if (columnName == AppSettings.resourcemanager.GetString("trQTR"))
                         newCount = int.Parse(t.Text);
                     else
                         newCount = row.Count;
@@ -1418,7 +1416,7 @@ namespace Restaurant.View.purchase
                             t.Text = item.quantity.ToString();
 
                             newCount = (long)item.quantity;
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
                         }
                     }
 
@@ -1697,7 +1695,7 @@ namespace Restaurant.View.purchase
                     t1.Start();
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 if (sender != null)
                     HelpClass.EndAwait(grid_main);
             }
@@ -1725,7 +1723,7 @@ namespace Restaurant.View.purchase
                     t1.Start();
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 if (sender != null)
                     HelpClass.EndAwait(grid_main);
             }
@@ -1747,7 +1745,7 @@ namespace Restaurant.View.purchase
                                    || prInvoice.invType == "sbd" || prInvoice.invType == "pbd"
                                    || prInvoice.invType == "ord" || prInvoice.invType == "imd" || prInvoice.invType == "exd")
                 {
-                    Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPrintDraftInvoice"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPrintDraftInvoice"), animation: ToasterAnimation.FadeIn);
                 }
                 else
                 {
@@ -1810,7 +1808,7 @@ namespace Restaurant.View.purchase
                    || prInvoice.invType == "sbd" || prInvoice.invType == "pbd"
                    || prInvoice.invType == "ord" || prInvoice.invType == "imd" || prInvoice.invType == "exd")
                 {
-                    Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPrintDraftInvoice"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPrintDraftInvoice"), animation: ToasterAnimation.FadeIn);
                 }
                 else
                 {
@@ -1950,12 +1948,12 @@ namespace Restaurant.View.purchase
                     }
                     else
                     {
-                        Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSaveInvoiceToPreview"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSaveInvoiceToPreview"), animation: ToasterAnimation.FadeIn);
                     }
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 if (sender != null)
                     HelpClass.EndAwait(grid_main);
             }
@@ -1984,7 +1982,7 @@ namespace Restaurant.View.purchase
                     /////////////////////////////
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 if (sender != null)
                     HelpClass.EndAwait(grid_main);
             }
@@ -2004,19 +2002,19 @@ namespace Restaurant.View.purchase
             toAgent = await toAgent.getAgentById((int)invoice.agentId) ;
             //  int? itemcount = invoiceItems.Count();
             if (email.emailId == 0)
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trNoEmailForThisDept"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoEmailForThisDept"), animation: ToasterAnimation.FadeIn);
             else
             {
                 if (invoice.invoiceId == 0)
-                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trThereIsNoOrderToSen"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trThereIsNoOrderToSen"), animation: ToasterAnimation.FadeIn);
                 else
                 {
                     if (invoiceItems == null || invoiceItems.Count() == 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trThereIsNoItemsToSend"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trThereIsNoItemsToSend"), animation: ToasterAnimation.FadeIn);
                     else
                     {
                         if (toAgent.email.Trim() == "")
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trTheVendorHasNoEmail"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trTheVendorHasNoEmail"), animation: ToasterAnimation.FadeIn);
                         else
                         {
                             SetValues setvmodel = new SetValues();
@@ -2032,12 +2030,12 @@ namespace Restaurant.View.purchase
                                 string msg = mailtosend.Sendmail();
                                 if (msg == "Failure sending mail.")
                                 {
-                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trNoConnection"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoConnection"), animation: ToasterAnimation.FadeIn);
                                 }
                                 else if (msg == "mailsent")
-                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trMailSent"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trMailSent"), animation: ToasterAnimation.FadeIn);
                                 else
-                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trMailNotSent"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trMailNotSent"), animation: ToasterAnimation.FadeIn);
                             }));
 
                         }
@@ -2100,7 +2098,7 @@ namespace Restaurant.View.purchase
                 w.icon = "drafts";
                 w.userId = MainWindow.userLogin.userId;
                 w.duration = duration; // view drafts which created during 2 last days 
-                w.title = MainWindow.resourcemanager.GetString("trDrafts");
+                w.title = AppSettings.resourcemanager.GetString("trDrafts");
 
                 if (w.ShowDialog() == true)
                 {
@@ -2118,9 +2116,9 @@ namespace Restaurant.View.purchase
 
                         mainInvoiceItems = invoiceItems;
                         if (_InvoiceType == "pod")
-                            txt_payInvoice.Text = MainWindow.resourcemanager.GetString("trPurchaceOrderDraft");
+                            txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaceOrderDraft");
                         else
-                            txt_payInvoice.Text = MainWindow.resourcemanager.GetString("trPurchaceOrderSaved");
+                            txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaceOrderSaved");
 
                         navigateBtnActivate();
                     }
@@ -2160,13 +2158,13 @@ namespace Restaurant.View.purchase
                         Window.GetWindow(this).Opacity = 1;
                     }
                     else
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trChooseInvoiceToolTip"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trChooseInvoiceToolTip"), animation: ToasterAnimation.FadeIn);
 
 
 
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
 
                 HelpClass.EndAwait(grid_main);
@@ -2195,7 +2193,7 @@ namespace Restaurant.View.purchase
                 w.userId = MainWindow.userLogin.userId;
                 w.branchCreatorId = MainWindow.branchLogin.branchId;
                 w.duration = duration; // view purchase orders which updated during  last one day 
-                w.title = MainWindow.resourcemanager.GetString("trOrders");
+                w.title = AppSettings.resourcemanager.GetString("trOrders");
 
                 if (w.ShowDialog() == true)
                 {
@@ -2213,7 +2211,7 @@ namespace Restaurant.View.purchase
                         await fillInvoiceInputs(invoice);
 
                         mainInvoiceItems = invoiceItems;
-                        txt_payInvoice.Text = MainWindow.resourcemanager.GetString("trPurchaceOrder");
+                        txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaceOrder");
                         navigateBtnActivate();
                     }
                 }
@@ -2280,7 +2278,7 @@ namespace Restaurant.View.purchase
                 Window.GetWindow(this).Opacity = 1;
                 if (w.isOk == true)
                 {
-                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
                     await FillCombo.RefreshVendors();
                 }
 

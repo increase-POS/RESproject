@@ -56,7 +56,7 @@ namespace Restaurant.View.windows
         }
         private void translate()
         {
-            txt_title.Text = MainWindow.resourcemanager.GetString("trPreview");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trPreview");
             
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

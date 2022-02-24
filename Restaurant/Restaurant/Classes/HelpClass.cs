@@ -41,7 +41,7 @@ namespace Restaurant.Classes
         //public static void SetError(Control c, Path p_error, ToolTip tt_error, string tr)
         //{
         //    p_error.Visibility = Visibility.Visible;
-        //    tt_error.Content = MainWindow.resourcemanager.GetString(tr);
+        //    tt_error.Content = AppSettings.resourcemanager.GetString(tr);
         //    c.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
         //}
         static public bool isAdminPermision()
@@ -66,7 +66,7 @@ namespace Restaurant.Classes
                 p_error.Visibility = Visibility.Visible;
                 #region Tooltip
                 ToolTip toolTip = new ToolTip();
-                toolTip.Content = MainWindow.resourcemanager.GetString("trIsRequired");
+                toolTip.Content = AppSettings.resourcemanager.GetString("trIsRequired");
                 toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
                 p_error.ToolTip = toolTip;
                 #endregion
@@ -86,7 +86,7 @@ namespace Restaurant.Classes
                 p_error.Visibility = Visibility.Visible;
                 #region Tooltip
                 ToolTip toolTip = new ToolTip();
-                toolTip.Content = MainWindow.resourcemanager.GetString("trIsRequired");
+                toolTip.Content = AppSettings.resourcemanager.GetString("trIsRequired");
                 toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
                 p_error.ToolTip = toolTip;
                 #endregion
@@ -105,7 +105,7 @@ namespace Restaurant.Classes
             #region Tooltip error
             p_error.Visibility = Visibility.Visible;
             ToolTip toolTip = new ToolTip();
-            toolTip.Content = MainWindow.resourcemanager.GetString(tr);
+            toolTip.Content = AppSettings.resourcemanager.GetString(tr);
             toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
             p_error.ToolTip = toolTip;
             #endregion
@@ -183,7 +183,7 @@ namespace Restaurant.Classes
                 p_error.Visibility = Visibility.Visible;
                 #region Tooltip
                 ToolTip toolTip = new ToolTip();
-                toolTip.Content = MainWindow.resourcemanager.GetString("trIsRequired");
+                toolTip.Content = AppSettings.resourcemanager.GetString("trIsRequired");
                 toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
                 p_error.ToolTip = toolTip;
                 #endregion
@@ -202,7 +202,7 @@ namespace Restaurant.Classes
             if (cb.SelectedIndex == -1)
             {
                 p_error.Visibility = Visibility.Visible;
-                tt_error.Content = MainWindow.resourcemanager.GetString(tr);
+                tt_error.Content = AppSettings.resourcemanager.GetString(tr);
                 cb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
                 isValid = false;
             }
@@ -239,7 +239,7 @@ namespace Restaurant.Classes
                 if (!ValidatorExtensions.IsValid(tb.Text))
                 {
                     p_error.Visibility = Visibility.Visible;
-                    tt_error.Content = MainWindow.resourcemanager.GetString("trErrorEmailToolTip");
+                    tt_error.Content = AppSettings.resourcemanager.GetString("trErrorEmailToolTip");
                     tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
                 isValid = false;
                 }
@@ -258,7 +258,7 @@ namespace Restaurant.Classes
             if (tb.Text.Trim().Equals(""))
             {
                 p_error.Visibility = Visibility.Visible;
-                tt_error.Content = MainWindow.resourcemanager.GetString(tr);
+                tt_error.Content = AppSettings.resourcemanager.GetString(tr);
                 tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
             }
             else
@@ -273,7 +273,7 @@ namespace Restaurant.Classes
             if (dp.SelectedDate < DateTime.Now)
             {
                 p_error.Visibility = Visibility.Visible;
-                tt_error.Content = MainWindow.resourcemanager.GetString(tr);
+                tt_error.Content = AppSettings.resourcemanager.GetString(tr);
                 tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
             }
             else
@@ -451,7 +451,7 @@ namespace Restaurant.Classes
                         pathEmail.Visibility = Visibility.Visible;
                         #region Tooltip
                         ToolTip toolTip = new ToolTip();
-                        toolTip.Content = MainWindow.resourcemanager.GetString("trErrorEmailToolTip");
+                        toolTip.Content = AppSettings.resourcemanager.GetString("trErrorEmailToolTip");
                         toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
                         pathEmail.ToolTip = toolTip;
                         #endregion
@@ -488,7 +488,7 @@ namespace Restaurant.Classes
                         pathEmail.Visibility = Visibility.Visible;
                         #region Tooltip
                         ToolTip toolTip = new ToolTip();
-                        toolTip.Content = MainWindow.resourcemanager.GetString("trErrorEmailToolTip");
+                        toolTip.Content = AppSettings.resourcemanager.GetString("trErrorEmailToolTip");
                         toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
                         pathEmail.ToolTip = toolTip;
                         #endregion
@@ -535,19 +535,19 @@ namespace Restaurant.Classes
         public static void showTextBoxValidate(TextBox tb, Path p_error, ToolTip tt_error, string tr)
         {
             p_error.Visibility = Visibility.Visible;
-            tt_error.Content = MainWindow.resourcemanager.GetString(tr);
+            tt_error.Content = AppSettings.resourcemanager.GetString(tr);
             tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
         }
         public static void showPasswordValidate(PasswordBox tb, Path p_error, ToolTip tt_error, string tr)
         {
             p_error.Visibility = Visibility.Visible;
-            tt_error.Content = MainWindow.resourcemanager.GetString(tr);
+            tt_error.Content = AppSettings.resourcemanager.GetString(tr);
             tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
         }
         public static void showComboBoxValidate(ComboBox cb, Path p_error, ToolTip tt_error, string tr)
         {
             p_error.Visibility = Visibility.Visible;
-            tt_error.Content = MainWindow.resourcemanager.GetString(tr);
+            tt_error.Content = AppSettings.resourcemanager.GetString(tr);
             cb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
         }
 
@@ -556,7 +556,7 @@ namespace Restaurant.Classes
             TextBox tb = (TextBox)dp.Template.FindName("PART_TextBox", dp);
 
             p_error.Visibility = Visibility.Visible;
-            tt_error.Content = MainWindow.resourcemanager.GetString(tr);
+            tt_error.Content = AppSettings.resourcemanager.GetString(tr);
             tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
         }
 
@@ -565,7 +565,7 @@ namespace Restaurant.Classes
             TextBox tb = (TextBox)tp.Template.FindName("PART_TextBox", tp);
 
             p_error.Visibility = Visibility.Visible;
-            tt_error.Content = MainWindow.resourcemanager.GetString(tr);
+            tt_error.Content = AppSettings.resourcemanager.GetString(tr);
             tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
         }
 
@@ -576,7 +576,7 @@ namespace Restaurant.Classes
         //public static void validateDuplicateCode(TextBox tb, Path p_error, ToolTip tt_error ,string tr)
         //{
         //    p_error.Visibility = Visibility.Visible;
-        //    tt_error.Content = MainWindow.resourcemanager.GetString(tr);
+        //    tt_error.Content = AppSettings.resourcemanager.GetString(tr);
         //    tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
         //}
 
@@ -889,7 +889,7 @@ namespace Restaurant.Classes
             {
                 DateTimeFormatInfo dtfi = DateTimeFormatInfo.CurrentInfo;
 
-                switch (MainWindow.dateFormat)
+                switch (AppSettings.dateFormat)
                 {
                     case "ShortDatePattern":
                         sdate = date.Value.ToString(dtfi.ShortDatePattern);
@@ -923,7 +923,7 @@ namespace Restaurant.Classes
             {
                 decimal dc = decimal.Parse(dec.ToString());
 
-                switch (MainWindow.accuracy)
+                switch (AppSettings.accuracy)
                 {
                     case "0":
                         sdc = string.Format("{0:F0}", dc);
@@ -976,7 +976,7 @@ namespace Restaurant.Classes
             {
                 //Message
                 if (ex.HResult == -2146233088)
-                    Toaster.ShowError(window as Window, message: MainWindow.resourcemanager.GetString("trNoInternetConnection"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowError(window as Window, message: AppSettings.resourcemanager.GetString("trNoInternetConnection"), animation: ToasterAnimation.FadeIn);
                 else
                     Toaster.ShowError(window as Window, message: ex.HResult + " || " + ex.Message, animation: ToasterAnimation.FadeIn);
                 ErrorClass errorClass = new ErrorClass();
@@ -1101,7 +1101,133 @@ namespace Restaurant.Classes
                     categoryBtn.IsEnabled = true;
             }
         }
+        public static void ReportTabTitle(TextBlock textBlock, string firstTitle, string secondTitle)
+        {
 
+            //////////////////////////////////////////////////////////////////////////////
+            if (firstTitle == "invoice")
+                firstTitle = AppSettings.resourcemanager.GetString("trInvoices");
+            else if (firstTitle == "quotation")
+                firstTitle = AppSettings.resourcemanager.GetString("trQuotations");
+            else if (firstTitle == "promotion")
+                firstTitle = AppSettings.resourcemanager.GetString("trPromotion");
+            else if (firstTitle == "internal")
+                firstTitle = AppSettings.resourcemanager.GetString("trInternal");
+            else if (firstTitle == "external")
+                firstTitle = AppSettings.resourcemanager.GetString("trExternal");
+            else if (firstTitle == "direct")
+                firstTitle = AppSettings.resourcemanager.GetString("trDirectEntry");
+            else if (firstTitle == "banksReport")
+                firstTitle = AppSettings.resourcemanager.GetString("trBanks");
+            else if (firstTitle == "destroied")
+                firstTitle = AppSettings.resourcemanager.GetString("trDestructives");
+            else if (firstTitle == "usersReport")
+                firstTitle = AppSettings.resourcemanager.GetString("trUsers");
+            else if (firstTitle == "storageReports")
+                firstTitle = AppSettings.resourcemanager.GetString("trStorage");
+            else if (firstTitle == "stocktaking")
+                firstTitle = AppSettings.resourcemanager.GetString("trStocktaking");
+            else if (firstTitle == "stock")
+                firstTitle = AppSettings.resourcemanager.GetString("trStock");
+            else if (firstTitle == "saleOrders" || firstTitle == "purchaseOrders")
+                firstTitle = AppSettings.resourcemanager.GetString("trOrders");
+            else if (firstTitle == "saleItems" || firstTitle == "purchaseItem")
+                firstTitle = AppSettings.resourcemanager.GetString("trItems");
+            else if (firstTitle == "recipientReport")
+                //firstTitle = AppSettings.resourcemanager.GetString("trRecepient");
+                firstTitle = AppSettings.resourcemanager.GetString("trReceived");
+            else if (firstTitle == "accountStatement")
+                firstTitle = AppSettings.resourcemanager.GetString("trAccountStatement");
+            else if (firstTitle == "paymentsReport")
+                firstTitle = AppSettings.resourcemanager.GetString("trPayments");
+            else if (firstTitle == "posReports")
+                firstTitle = AppSettings.resourcemanager.GetString("trPOS");
+            else if (firstTitle == "dailySalesStatistic")
+                firstTitle = AppSettings.resourcemanager.GetString("trDailySales");
+            else if (firstTitle == "accountProfits")
+                firstTitle = AppSettings.resourcemanager.GetString("trProfits");
+            else if (firstTitle == "accountFund")
+                firstTitle = AppSettings.resourcemanager.GetString("trCashBalance");
+            else if (firstTitle == "saleTax")
+                firstTitle = AppSettings.resourcemanager.GetString("trTax");
+
+            //////////////////////////////////////////////////////////////////////////////
+
+            if (secondTitle == "branch")
+                secondTitle = AppSettings.resourcemanager.GetString("trBranches");
+            else if (secondTitle == "pos")
+                secondTitle = AppSettings.resourcemanager.GetString("trPOS");
+            else if (secondTitle == "vendors" || secondTitle == "vendor")
+                secondTitle = AppSettings.resourcemanager.GetString("trVendors");
+            else if (secondTitle == "customers" || secondTitle == "customer")
+                secondTitle = AppSettings.resourcemanager.GetString("trCustomers");
+            else if (secondTitle == "users" || secondTitle == "user")
+                secondTitle = AppSettings.resourcemanager.GetString("trUsers");
+            else if (secondTitle == "items" || secondTitle == "item")
+                secondTitle = AppSettings.resourcemanager.GetString("trItems");
+            else if (secondTitle == "coupon")
+                secondTitle = AppSettings.resourcemanager.GetString("trCoupon");
+            else if (secondTitle == "offers")
+                secondTitle = AppSettings.resourcemanager.GetString("trOffer");
+            else if (secondTitle == "invoice")
+                secondTitle = AppSettings.resourcemanager.GetString("tr_Invoice");
+            else if (secondTitle == "order")
+                secondTitle = AppSettings.resourcemanager.GetString("trOrders");
+            else if (secondTitle == "quotation")
+                secondTitle = AppSettings.resourcemanager.GetString("trQuotations");
+            else if (secondTitle == "operator")
+                secondTitle = AppSettings.resourcemanager.GetString("trOperator");
+            else if (secondTitle == "payments")
+                secondTitle = AppSettings.resourcemanager.GetString("trPayments");
+            else if (secondTitle == "recipient")
+                secondTitle = AppSettings.resourcemanager.GetString("trRecepient");
+            else if (secondTitle == "received")
+                secondTitle = AppSettings.resourcemanager.GetString("trReceived");
+            else if (secondTitle == "destroied")
+                secondTitle = AppSettings.resourcemanager.GetString("trDestructives");
+            else if (secondTitle == "agent")
+                secondTitle = AppSettings.resourcemanager.GetString("trCustomers");
+            else if (secondTitle == "stock")
+                secondTitle = AppSettings.resourcemanager.GetString("trStock");
+            else if (secondTitle == "external")
+                secondTitle = AppSettings.resourcemanager.GetString("trExternal");
+            else if (secondTitle == "internal")
+                secondTitle = AppSettings.resourcemanager.GetString("trInternal");
+            else if (secondTitle == "stocktaking")
+                secondTitle = AppSettings.resourcemanager.GetString("trStocktaking");
+            else if (secondTitle == "archives")
+                secondTitle = AppSettings.resourcemanager.GetString("trArchive");
+            else if (secondTitle == "shortfalls")
+                secondTitle = AppSettings.resourcemanager.GetString("trShortages");
+            else if (secondTitle == "location")
+                secondTitle = AppSettings.resourcemanager.GetString("trLocation");
+            else if (secondTitle == "collect")
+                secondTitle = AppSettings.resourcemanager.GetString("trCollect");
+            else if (secondTitle == "bestselling")
+                secondTitle = AppSettings.resourcemanager.GetString("trBestSeller");
+            else if (secondTitle == "bestbuys")
+                secondTitle = AppSettings.resourcemanager.GetString("trMostPurchased");
+            else if (secondTitle == "shipping")
+                secondTitle = AppSettings.resourcemanager.GetString("trShipping");
+            else if (secondTitle == "salary")
+                secondTitle = AppSettings.resourcemanager.GetString("trSalary");
+            else if (secondTitle == "generalExpenses")
+                secondTitle = AppSettings.resourcemanager.GetString("trGeneralExpenses");
+            else if (secondTitle == "administrativePull")
+                secondTitle = AppSettings.resourcemanager.GetString("trAdministrativePull");
+            else if (secondTitle == "administrativeDeposit")
+                secondTitle = AppSettings.resourcemanager.GetString("trAdministrativeDeposit");
+            else if (secondTitle == "deposit")
+                secondTitle = AppSettings.resourcemanager.GetString("trDeposit");
+            else if (secondTitle == "receive")
+                secondTitle = AppSettings.resourcemanager.GetString("trReceive");
+            else if (secondTitle == "invoice")
+                secondTitle = AppSettings.resourcemanager.GetString("trInvoice");
+            //////////////////////////////////////////////////////////////////////////////
+
+            textBlock.Text = firstTitle + " / " + secondTitle;
+
+        }
     }
 
     

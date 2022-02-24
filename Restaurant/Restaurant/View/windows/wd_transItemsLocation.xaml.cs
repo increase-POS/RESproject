@@ -43,15 +43,15 @@ namespace Restaurant.View.windows
 
         private void translate()
         {
-            txt_title.Text = MainWindow.resourcemanager.GetString("trSelectLocations");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trSelectLocations");
             ////////////////////////////////----Order----/////////////////////////////////
-            dg_itemsStorage.Columns[1].Header = MainWindow.resourcemanager.GetString("trItem");
-            dg_itemsStorage.Columns[2].Header = MainWindow.resourcemanager.GetString("trQuantity");
-            dg_itemsStorage.Columns[3].Header = MainWindow.resourcemanager.GetString("trLocation");
-            dg_itemsStorage.Columns[4].Header = MainWindow.resourcemanager.GetString("trStartDate");
-            dg_itemsStorage.Columns[5].Header = MainWindow.resourcemanager.GetString("trEndDate");
+            dg_itemsStorage.Columns[1].Header = AppSettings.resourcemanager.GetString("trItem");
+            dg_itemsStorage.Columns[2].Header = AppSettings.resourcemanager.GetString("trQuantity");
+            dg_itemsStorage.Columns[3].Header = AppSettings.resourcemanager.GetString("trLocation");
+            dg_itemsStorage.Columns[4].Header = AppSettings.resourcemanager.GetString("trStartDate");
+            dg_itemsStorage.Columns[5].Header = AppSettings.resourcemanager.GetString("trEndDate");
 
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
         }
         private void HandleKeyPress(object sender, KeyEventArgs e)
@@ -91,7 +91,7 @@ namespace Restaurant.View.windows
             {
                 if (_Quantity[i] < orderList[i].quantity)
                 {
-                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorAmountNotValidFromToolTip") + itemsLocations[i].itemName, animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountNotValidFromToolTip") + itemsLocations[i].itemName, animation: ToasterAnimation.FadeIn);
                     valid = false;
                     break;
                 }
@@ -142,14 +142,12 @@ namespace Restaurant.View.windows
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
             {
-                MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
             }
             else
             {
-                MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
             }
 
@@ -274,7 +272,7 @@ namespace Restaurant.View.windows
                         {
                             _Quantity[itemIndex] += basicCount;
                             t.Text = basicCount.ToString();
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
                         }
                         else
                         {

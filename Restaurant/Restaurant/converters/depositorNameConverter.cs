@@ -18,18 +18,18 @@ namespace Restaurant.converters
             switch (s.side)
             {
                 case "bnd":break;
-                case "v": name = MainWindow.resourcemanager.GetString("trVendor"); break;
-                case "c": name = MainWindow.resourcemanager.GetString("trCustomer"); break;
-                case "u": name = MainWindow.resourcemanager.GetString("trUser"); break;
-                case "s": name = MainWindow.resourcemanager.GetString("trSalary"); break;
-                case "e": name = MainWindow.resourcemanager.GetString("trGeneralExpenses"); break;
+                case "v": name = AppSettings.resourcemanager.GetString("trVendor"); break;
+                case "c": name = AppSettings.resourcemanager.GetString("trCustomer"); break;
+                case "u": name = AppSettings.resourcemanager.GetString("trUser"); break;
+                case "s": name = AppSettings.resourcemanager.GetString("trSalary"); break;
+                case "e": name = AppSettings.resourcemanager.GetString("trGeneralExpenses"); break;
                 case "m":
                     if(s.transType=="d")
-                        name = MainWindow.resourcemanager.GetString("trAdministrativeDeposit");
+                        name = AppSettings.resourcemanager.GetString("trAdministrativeDeposit");
                     if(s.transType == "p")
-                        name = MainWindow.resourcemanager.GetString("trAdministrativePull");
+                        name = AppSettings.resourcemanager.GetString("trAdministrativePull");
                     break;
-                case "sh": name = MainWindow.resourcemanager.GetString("trShippingCompany"); break;
+                case "sh": name = AppSettings.resourcemanager.GetString("trShippingCompany"); break;
                 default: break;
             }
 
@@ -40,7 +40,7 @@ namespace Restaurant.converters
             else if (!string.IsNullOrEmpty(s.shippingCompanyName))
                 name = name + " " + s.shippingCompanyName;
             else if ((s.side != "e") && (s.side != "m"))
-                name = name + " " + MainWindow.resourcemanager.GetString("trUnKnown");
+                name = name + " " + AppSettings.resourcemanager.GetString("trUnKnown");
 
             return name;
 

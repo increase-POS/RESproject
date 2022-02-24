@@ -111,14 +111,12 @@ namespace Restaurant.View.windows
             {
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "name" };
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
@@ -140,15 +138,15 @@ namespace Restaurant.View.windows
         }
         private void translate()
         {
-            //txt_title.Text = MainWindow.resourcemanager.GetString("trUnits");
-            txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
-            btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
-            btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
-            btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
+            //txt_title.Text = AppSettings.resourcemanager.GetString("trUnits");
+            txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
+            btn_add.Content = AppSettings.resourcemanager.GetString("trAdd");
+            btn_update.Content = AppSettings.resourcemanager.GetString("trUpdate");
+            btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             ///////////////////////////Barcode
-            //dg_tag.Columns[0].Header = MainWindow.resourcemanager.GetString("trUnit");
-            //dg_tag.Columns[1].Header = MainWindow.resourcemanager.GetString("trCountUnit");
+            //dg_tag.Columns[0].Header = AppSettings.resourcemanager.GetString("trUnit");
+            //dg_tag.Columns[1].Header = AppSettings.resourcemanager.GetString("trCountUnit");
 
 
         }
@@ -172,10 +170,10 @@ namespace Restaurant.View.windows
 
                     int s = await tag.Save(tag);
                     if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else
                     {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
                         Clear();
                         await RefreshTagsList();
@@ -207,10 +205,10 @@ namespace Restaurant.View.windows
                     tag.notes = tb_notes.Text;
                     int s = await tag.Save(tag);
                     if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else
                     {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                         await RefreshTagsList();
                         await Search();
 
@@ -238,7 +236,7 @@ namespace Restaurant.View.windows
                         #region
                         Window.GetWindow(this).Opacity = 0.2;
                         wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                        w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxActivate");
+                        w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
                         w.ShowDialog();
                         Window.GetWindow(this).Opacity = 1;
                         #endregion
@@ -251,24 +249,24 @@ namespace Restaurant.View.windows
                         Window.GetWindow(this).Opacity = 0.2;
                         wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                         if (tag.canDelete)
-                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
                         if (!tag.canDelete)
-                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
+                            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
                         w.ShowDialog();
                         Window.GetWindow(this).Opacity = 1;
                         #endregion
                         if (w.isOk)
                         {
                             string popupContent = "";
-                            if (tag.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
-                            if ((!tag.canDelete) && (tag.isActive == 1)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+                            if (tag.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
+                            if ((!tag.canDelete) && (tag.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
                             int s = await tag.Delete(tag.tagId, MainWindow.userLogin.userId, tag.canDelete);
                             if (s < 0)
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                 await RefreshTagsList();
                                 await Search();
@@ -290,10 +288,10 @@ namespace Restaurant.View.windows
             tag.isActive = 1;
             int s = await tag.Save(tag);
             if (s <= 0)
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
             {
-                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
                 await RefreshTagsList();
                 await Search();
             }
@@ -378,13 +376,13 @@ namespace Restaurant.View.windows
                     {
                         #region delete
                         if (tag.canDelete)
-                            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+                            btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
                         else
                         {
                             if (tag.isActive == 0)
-                                btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+                                btn_delete.Content = AppSettings.resourcemanager.GetString("trActive");
                             else
-                                btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+                                btn_delete.Content = AppSettings.resourcemanager.GetString("trInActive");
                         }
                         #endregion
                     }

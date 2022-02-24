@@ -1,13 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Restaurant.Classes
 {
-    class AppSettings
+    public class AppSettings
     {
-        static public bool itemsTax_bool = true;
+        public static ResourceManager resourcemanager;
+        public static ResourceManager resourcemanagerreport;
+
+        public static string lang = "ar";
+        public static string Reportlang = "ar";
+
+        public static string Currency;
+        public static int CurrencyId;
+
+
+        public static string companyName;
+        public static string Email;
+        public static string Fax;
+        public static string Mobile;
+        public static string Address;
+        public static string Phone;
+
+        public static string sale_copy_count;
+        public static string pur_copy_count;
+        public static string print_on_save_sale;
+        public static string print_on_save_pur;
+        public static string email_on_save_sale;
+        public static string email_on_save_pur;
+        public static string rep_printer_name;
+        public static string sale_printer_name;
+        public static string salePaperSize;
+        public static string rep_print_count;
+        public static string docPapersize;
+        public static string Allow_print_inv_count;
+        public static string show_header;
+
+        internal static int? isInvTax;
+        internal static decimal? tax;
+        //tax
+        internal static bool? invoiceTax_bool;
+        internal static decimal? invoiceTax_decimal;
+        internal static bool? itemsTax_bool;
+        internal static decimal? itemsTax_decimal;
+
+        internal static string dateFormat;
+        internal static string accuracy;
+        internal static string timeFormat;
     }
 }

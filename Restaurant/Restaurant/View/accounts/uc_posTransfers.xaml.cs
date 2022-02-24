@@ -100,7 +100,7 @@ namespace Restaurant.View.accounts
                 requiredControlList = new List<string> { "cash", "fromBranch", "pos1", "toBranch" , "pos2" };
                 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
@@ -165,50 +165,50 @@ namespace Restaurant.View.accounts
         }
         private void translate()
         {
-            txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trTransaferDetails");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            txt_title.Text = MainWindow.resourcemanager.GetString("trTransfers");
+            txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trTransaferDetails");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+            txt_title.Text = AppSettings.resourcemanager.GetString("trTransfers");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, MainWindow.resourcemanager.GetString("trCashHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_pos1, MainWindow.resourcemanager.GetString("trDepositor") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_pos2, MainWindow.resourcemanager.GetString("trRecepient") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, AppSettings.resourcemanager.GetString("trCashHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_pos1, AppSettings.resourcemanager.GetString("trDepositor") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_pos2, AppSettings.resourcemanager.GetString("trRecepient") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
 
-            chb_all.Content = MainWindow.resourcemanager.GetString("trAll");
-            chk_deposit.Content = MainWindow.resourcemanager.GetString("trDeposit");
-            chk_receive.Content = MainWindow.resourcemanager.GetString("trReceive");
+            chb_all.Content = AppSettings.resourcemanager.GetString("trAll");
+            chk_deposit.Content = AppSettings.resourcemanager.GetString("trDeposit");
+            chk_receive.Content = AppSettings.resourcemanager.GetString("trReceive");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchStartDate, MainWindow.resourcemanager.GetString("trStartDate"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchEndDate, MainWindow.resourcemanager.GetString("trEndDate"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchStartDate, AppSettings.resourcemanager.GetString("trStartDate"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchEndDate, AppSettings.resourcemanager.GetString("trEndDate"));
 
-            dg_posAccounts.Columns[0].Header = MainWindow.resourcemanager.GetString("trTransferNumberTooltip");
-            dg_posAccounts.Columns[1].Header = MainWindow.resourcemanager.GetString("trCreator");
+            dg_posAccounts.Columns[0].Header = AppSettings.resourcemanager.GetString("trTransferNumberTooltip");
+            dg_posAccounts.Columns[1].Header = AppSettings.resourcemanager.GetString("trCreator");
             if (chk_deposit.IsChecked == true)
             {
-                dg_posAccounts.Columns[2].Header = MainWindow.resourcemanager.GetString("trDepositor");
-                dg_posAccounts.Columns[3].Header = MainWindow.resourcemanager.GetString("trRecepient");
+                dg_posAccounts.Columns[2].Header = AppSettings.resourcemanager.GetString("trDepositor");
+                dg_posAccounts.Columns[3].Header = AppSettings.resourcemanager.GetString("trRecepient");
             }
             else if (chk_receive.IsChecked == true)
             {
-                dg_posAccounts.Columns[2].Header = MainWindow.resourcemanager.GetString("trRecepient");
-                dg_posAccounts.Columns[3].Header = MainWindow.resourcemanager.GetString("trDepositor");
+                dg_posAccounts.Columns[2].Header = AppSettings.resourcemanager.GetString("trRecepient");
+                dg_posAccounts.Columns[3].Header = AppSettings.resourcemanager.GetString("trDepositor");
             }
-            dg_posAccounts.Columns[5].Header = MainWindow.resourcemanager.GetString("trStatus");
-            dg_posAccounts.Columns[4].Header = MainWindow.resourcemanager.GetString("trDate");
-            dg_posAccounts.Columns[6].Header = MainWindow.resourcemanager.GetString("trCashTooltip");
+            dg_posAccounts.Columns[5].Header = AppSettings.resourcemanager.GetString("trStatus");
+            dg_posAccounts.Columns[4].Header = AppSettings.resourcemanager.GetString("trDate");
+            dg_posAccounts.Columns[6].Header = AppSettings.resourcemanager.GetString("trCashTooltip");
 
 
-            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
-            tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
+            tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
+            tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
+            tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
+            tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
+            tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
+            tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
 
-            btn_confirm.Content = MainWindow.resourcemanager.GetString("trConfirm");
-            btn_cancel.Content = MainWindow.resourcemanager.GetString("trCancel_");
-            btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
+            btn_confirm.Content = AppSettings.resourcemanager.GetString("trConfirm");
+            btn_cancel.Content = AppSettings.resourcemanager.GetString("trCancel_");
+            btn_add.Content = AppSettings.resourcemanager.GetString("trAdd");
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
@@ -226,7 +226,7 @@ namespace Restaurant.View.accounts
                         {
                         Pos pos = await posModel.getById(Convert.ToInt32(cb_pos1.SelectedValue));
                         if (pos.balance < decimal.Parse(tb_cash.Text))
-                        { Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn); }
+                        { Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn); }
                         else
                         {
                             //first operation
@@ -289,14 +289,14 @@ namespace Restaurant.View.accounts
 
                                     #endregion
 
-                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                                     Clear();
 
                                     await RefreshCashesList();
                                     await Search();
                                 }
                                 else
-                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             }
                         }
                     }
@@ -304,12 +304,12 @@ namespace Restaurant.View.accounts
                     //}
                     //else //box is closed
                     //{
-                    //    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trBoxIsClosed"), animation: ToasterAnimation.FadeIn);
+                    //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trBoxIsClosed"), animation: ToasterAnimation.FadeIn);
                     //}
                     HelpClass.EndAwait(grid_main);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)
@@ -331,7 +331,7 @@ namespace Restaurant.View.accounts
                     {
                         Pos pos = await posModel.getById(Convert.ToInt32(cb_pos1.SelectedValue));
                         if (pos.balance < decimal.Parse(tb_cash.Text))
-                        { Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn); }
+                        { Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn); }
                         else
                         {
                             #region first operation
@@ -356,13 +356,13 @@ namespace Restaurant.View.accounts
 
                                 if (!s2.Equals(0))
                                 {
-                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshCashesList();
                                     await Search();
                                 }
                                 else
-                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             }
                         }
                     }
@@ -371,7 +371,7 @@ namespace Restaurant.View.accounts
                     HelpClass.EndAwait(grid_main);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)
@@ -392,7 +392,7 @@ namespace Restaurant.View.accounts
                         #region
                         Window.GetWindow(this).Opacity = 0.2;
                         wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                        w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                        w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
                         w.ShowDialog();
                         Window.GetWindow(this).Opacity = 1;
                         #endregion
@@ -402,14 +402,14 @@ namespace Restaurant.View.accounts
 
                             if (b == 1)
                             {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
                                 //clear textBoxs
                                 Btn_clear_Click(sender, e);
                             }
                             else if (b == 0)
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopCanNotDeleteRequest"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopCanNotDeleteRequest"), animation: ToasterAnimation.FadeIn);
                             else
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                             await RefreshCashesList();
                             Tb_search_TextChanged(null, null);
@@ -418,7 +418,7 @@ namespace Restaurant.View.accounts
                     HelpClass.EndAwait(grid_main);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
             }
             catch (Exception ex)
             {
@@ -456,12 +456,12 @@ namespace Restaurant.View.accounts
                                     if (!s1.Equals(0))//tras done so confirm
                                         await confirmOpr();
                                     else//error then do not confirm
-                                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                                 }
                                 //there is not enough balance
                                 else
-                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn);
                             }
                             else
                             {
@@ -476,13 +476,13 @@ namespace Restaurant.View.accounts
                                     if (!s1.Equals(0))//tras done so confirm
                                         await confirmOpr();
                                     else//error then do not confirm
-                                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                                 }
 
                                 //there is not enough balance
                                 else
-                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn);
                             }
                             await MainWindow.refreshBalance();
                         }
@@ -490,7 +490,7 @@ namespace Restaurant.View.accounts
                 //}
                 //else //box is closed
                 //{
-                //    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trBoxIsClosed"), animation: ToasterAnimation.FadeIn);
+                //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trBoxIsClosed"), animation: ToasterAnimation.FadeIn);
                 //}
 
                 HelpClass.EndAwait(grid_main);
@@ -510,9 +510,9 @@ namespace Restaurant.View.accounts
                 await RefreshCashesList();
                 Tb_search_TextChanged(null, null);
 
-                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopConfirm"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopConfirm"), animation: ToasterAnimation.FadeIn);
 
-                btn_confirm.Content = MainWindow.resourcemanager.GetString("trIsConfirmed");
+                btn_confirm.Content = AppSettings.resourcemanager.GetString("trIsConfirmed");
                 btn_confirm.IsEnabled = false;
             }
         }
@@ -602,18 +602,18 @@ namespace Restaurant.View.accounts
                         {
                             if (cashtrans.isConfirm == 0)
                             {
-                                btn_confirm.Content = MainWindow.resourcemanager.GetString("trConfirm"); btn_confirm.IsEnabled = true;
-                                btn_cancel.Content = MainWindow.resourcemanager.GetString("trCancel_"); btn_cancel.IsEnabled = true;
+                                btn_confirm.Content = AppSettings.resourcemanager.GetString("trConfirm"); btn_confirm.IsEnabled = true;
+                                btn_cancel.Content = AppSettings.resourcemanager.GetString("trCancel_"); btn_cancel.IsEnabled = true;
                             }
                             else if (cashtrans.isConfirm == 1)
                             {
-                                btn_confirm.Content = MainWindow.resourcemanager.GetString("trIsConfirmed"); btn_confirm.IsEnabled = false;
-                                btn_cancel.Content = MainWindow.resourcemanager.GetString("trCancel_"); btn_cancel.IsEnabled = false;
+                                btn_confirm.Content = AppSettings.resourcemanager.GetString("trIsConfirmed"); btn_confirm.IsEnabled = false;
+                                btn_cancel.Content = AppSettings.resourcemanager.GetString("trCancel_"); btn_cancel.IsEnabled = false;
                             }
                             else if (cashtrans.isConfirm == 2)
                             {
-                                btn_confirm.Content = MainWindow.resourcemanager.GetString("trConfirm"); btn_confirm.IsEnabled = false;
-                                btn_cancel.Content = MainWindow.resourcemanager.GetString("trCanceled"); btn_cancel.IsEnabled = false;
+                                btn_confirm.Content = AppSettings.resourcemanager.GetString("trConfirm"); btn_confirm.IsEnabled = false;
+                                btn_cancel.Content = AppSettings.resourcemanager.GetString("trCanceled"); btn_cancel.IsEnabled = false;
                             }
                         }
                         else
@@ -622,20 +622,20 @@ namespace Restaurant.View.accounts
                             btn_cancel.IsEnabled = false;
                             if (cashtrans.isConfirm == 0)
                             {
-                                btn_confirm.Content = MainWindow.resourcemanager.GetString("trConfirm");
-                                btn_cancel.Content = MainWindow.resourcemanager.GetString("trCancel_");
+                                btn_confirm.Content = AppSettings.resourcemanager.GetString("trConfirm");
+                                btn_cancel.Content = AppSettings.resourcemanager.GetString("trCancel_");
                             }
                             else if (cashtrans.isConfirm == 1)
                             {
-                                btn_confirm.Content = MainWindow.resourcemanager.GetString("trIsConfirmed");
-                                btn_cancel.Content = MainWindow.resourcemanager.GetString("trCancel_");
+                                btn_confirm.Content = AppSettings.resourcemanager.GetString("trIsConfirmed");
+                                btn_cancel.Content = AppSettings.resourcemanager.GetString("trCancel_");
                                 btn_cancel.IsEnabled = false;
                             }
                             else if (cashtrans.isConfirm == 2)
                             {
-                                btn_confirm.Content = MainWindow.resourcemanager.GetString("trConfirm");
+                                btn_confirm.Content = AppSettings.resourcemanager.GetString("trConfirm");
                                 btn_confirm.IsEnabled = false;
-                                btn_cancel.Content = MainWindow.resourcemanager.GetString("trCanceled");
+                                btn_cancel.Content = AppSettings.resourcemanager.GetString("trCanceled");
                             }
                         }
 
@@ -916,7 +916,7 @@ namespace Restaurant.View.accounts
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -957,7 +957,7 @@ namespace Restaurant.View.accounts
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
 
                 HelpClass.EndAwait(grid_main);
@@ -985,7 +985,7 @@ namespace Restaurant.View.accounts
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -1023,7 +1023,7 @@ namespace Restaurant.View.accounts
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
 
                 HelpClass.EndAwait(grid_main);
@@ -1273,7 +1273,7 @@ namespace Restaurant.View.accounts
                     Window.GetWindow(this).Opacity = 1;
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 /////////////////////
 
                 HelpClass.EndAwait(grid_main);
@@ -1326,17 +1326,17 @@ namespace Restaurant.View.accounts
 
                         if ((!s2.Equals(0)) && (!s3.Equals(0)))
                         {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopCanceled"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopCanceled"), animation: ToasterAnimation.FadeIn);
                             await RefreshCashesList();
                             Tb_search_TextChanged(null, null);
                         }
                         else
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     }
                 //}
                 //else //box is closed
                 //{
-                //    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trBoxIsClosed"), animation: ToasterAnimation.FadeIn);
+                //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trBoxIsClosed"), animation: ToasterAnimation.FadeIn);
                 //}
                 
                 HelpClass.EndAwait(grid_main);

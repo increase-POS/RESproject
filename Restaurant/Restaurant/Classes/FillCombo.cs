@@ -114,12 +114,12 @@ namespace Restaurant.Classes
         {
             #region fill process type
             var typelist = new[] {
-                new { Text = MainWindow.resourcemanager.GetString("trCash")       , Value = "cash" },
-                new { Text = MainWindow.resourcemanager.GetString("trCredit") , Value = "balance" },
-                new { Text = MainWindow.resourcemanager.GetString("trAnotherPaymentMethods") , Value = "card" },
-                new { Text = MainWindow.resourcemanager.GetString("trMultiplePayment") , Value = "multiple" }, 
-                //new { Text = MainWindow.resourcemanager.GetString("trDocument")   , Value = "doc" },
-                //new { Text = MainWindow.resourcemanager.GetString("trCheque")     , Value = "cheque" },
+                new { Text = AppSettings.resourcemanager.GetString("trCash")       , Value = "cash" },
+                new { Text = AppSettings.resourcemanager.GetString("trCredit") , Value = "balance" },
+                new { Text = AppSettings.resourcemanager.GetString("trAnotherPaymentMethods") , Value = "card" },
+                new { Text = AppSettings.resourcemanager.GetString("trMultiplePayment") , Value = "multiple" }, 
+                //new { Text = AppSettings.resourcemanager.GetString("trDocument")   , Value = "doc" },
+                //new { Text = AppSettings.resourcemanager.GetString("trCheque")     , Value = "cheque" },
                  };
             cmb.DisplayMemberPath = "Text";
             cmb.SelectedValuePath = "Value";
@@ -134,33 +134,33 @@ namespace Restaurant.Classes
             #region fill job
             var typelist = new[] {
                 //manager
-                new { Text = MainWindow.resourcemanager.GetString("trAdmin")       , Value = "admin" },
-                new { Text = MainWindow.resourcemanager.GetString("trGeneralManager")       , Value = "generalManager" },
-                new { Text = MainWindow.resourcemanager.GetString("trAssistantManager")       , Value = "assistantManager" },
-                new { Text = MainWindow.resourcemanager.GetString("trPurchasingManager")       , Value = "purchasingManager" },
-                new { Text = MainWindow.resourcemanager.GetString("trSalesManager")       , Value = "salesManager" },
-                new { Text = MainWindow.resourcemanager.GetString("trAccountant")       , Value = "accountant" },
+                new { Text = AppSettings.resourcemanager.GetString("trAdmin")       , Value = "admin" },
+                new { Text = AppSettings.resourcemanager.GetString("trGeneralManager")       , Value = "generalManager" },
+                new { Text = AppSettings.resourcemanager.GetString("trAssistantManager")       , Value = "assistantManager" },
+                new { Text = AppSettings.resourcemanager.GetString("trPurchasingManager")       , Value = "purchasingManager" },
+                new { Text = AppSettings.resourcemanager.GetString("trSalesManager")       , Value = "salesManager" },
+                new { Text = AppSettings.resourcemanager.GetString("trAccountant")       , Value = "accountant" },
                 //Kitchen
-                new { Text = MainWindow.resourcemanager.GetString("trKitchenManager")       , Value = "kitchenManager" },
-                new { Text = MainWindow.resourcemanager.GetString("trExecutiveChef")       , Value = "executiveChef" },
-                new { Text = MainWindow.resourcemanager.GetString("trSousChef")       , Value = "sousChef" },
-                new { Text = MainWindow.resourcemanager.GetString("trChef")       , Value = "chef" },
-                new { Text = MainWindow.resourcemanager.GetString("trDishwasher")       , Value = "dishwasher" },
-                new { Text = MainWindow.resourcemanager.GetString("trKitchenEmployee")       , Value = "kitchenEmployee" },
+                new { Text = AppSettings.resourcemanager.GetString("trKitchenManager")       , Value = "kitchenManager" },
+                new { Text = AppSettings.resourcemanager.GetString("trExecutiveChef")       , Value = "executiveChef" },
+                new { Text = AppSettings.resourcemanager.GetString("trSousChef")       , Value = "sousChef" },
+                new { Text = AppSettings.resourcemanager.GetString("trChef")       , Value = "chef" },
+                new { Text = AppSettings.resourcemanager.GetString("trDishwasher")       , Value = "dishwasher" },
+                new { Text = AppSettings.resourcemanager.GetString("trKitchenEmployee")       , Value = "kitchenEmployee" },
                 //hall
-                new { Text = MainWindow.resourcemanager.GetString("trHeadWaiter")       , Value = "Headwaiter" },
-                new { Text = MainWindow.resourcemanager.GetString("trWaiter")       , Value = "waiter" },
-                new { Text = MainWindow.resourcemanager.GetString("trCashier")       , Value = "cashier" },
-                new { Text = MainWindow.resourcemanager.GetString("trReceptionist")       , Value = "receptionist" },
+                new { Text = AppSettings.resourcemanager.GetString("trHeadWaiter")       , Value = "Headwaiter" },
+                new { Text = AppSettings.resourcemanager.GetString("trWaiter")       , Value = "waiter" },
+                new { Text = AppSettings.resourcemanager.GetString("trCashier")       , Value = "cashier" },
+                new { Text = AppSettings.resourcemanager.GetString("trReceptionist")       , Value = "receptionist" },
                 //warehouse manager
-                new { Text = MainWindow.resourcemanager.GetString("trWarehouseManager")       , Value = "warehouseManager" },
-                new { Text = MainWindow.resourcemanager.GetString("trWarehouseEmployee")       , Value = "warehouseEmployee" },
+                new { Text = AppSettings.resourcemanager.GetString("trWarehouseManager")       , Value = "warehouseManager" },
+                new { Text = AppSettings.resourcemanager.GetString("trWarehouseEmployee")       , Value = "warehouseEmployee" },
                 //Delivery
-                new { Text = MainWindow.resourcemanager.GetString("trDeliveryManager")       , Value = "deliveryManager" },
-                new { Text = MainWindow.resourcemanager.GetString("trDeliveryEmployee")       , Value = "deliveryEmployee" },
+                new { Text = AppSettings.resourcemanager.GetString("trDeliveryManager")       , Value = "deliveryManager" },
+                new { Text = AppSettings.resourcemanager.GetString("trDeliveryEmployee")       , Value = "deliveryEmployee" },
                 //other
-                new { Text = MainWindow.resourcemanager.GetString("trCleaningEmployee")       , Value = "cleaningEmployee" },
-                new { Text = MainWindow.resourcemanager.GetString("trEmployee")       , Value = "employee" },
+                new { Text = AppSettings.resourcemanager.GetString("trCleaningEmployee")       , Value = "cleaningEmployee" },
+                new { Text = AppSettings.resourcemanager.GetString("trEmployee")       , Value = "employee" },
                  };
             cmb.DisplayMemberPath = "Text";
             cmb.SelectedValuePath = "Value";
@@ -180,8 +180,8 @@ namespace Restaurant.Classes
         {
             #region fill process type
             var typelist = new[] {
-                new { Text = MainWindow.resourcemanager.GetString("trNormal"), Value = "PurchaseNormal" },
-                new { Text = MainWindow.resourcemanager.GetString("trExpire") , Value = "PurchaseExpire" },
+                new { Text = AppSettings.resourcemanager.GetString("trNormal"), Value = "PurchaseNormal" },
+                new { Text = AppSettings.resourcemanager.GetString("trExpire") , Value = "PurchaseExpire" },
                  };
             cmb.DisplayMemberPath = "Text";
             cmb.SelectedValuePath = "Value";
@@ -195,8 +195,8 @@ namespace Restaurant.Classes
             #region fill process type
             var dislist = new[] {
             new { Text = "", Value = -1 },
-            new { Text = MainWindow.resourcemanager.GetString("trValueDiscount"), Value = 1 },
-            new { Text = MainWindow.resourcemanager.GetString("trPercentageDiscount"), Value = 2 },
+            new { Text = AppSettings.resourcemanager.GetString("trValueDiscount"), Value = 1 },
+            new { Text = AppSettings.resourcemanager.GetString("trPercentageDiscount"), Value = 2 },
              };
 
             cmb.DisplayMemberPath = "Text";
@@ -326,8 +326,8 @@ namespace Restaurant.Classes
         static public void FillDeliveryType(ComboBox cmb)
         {
             var typelist = new[] {
-                new { Text = MainWindow.resourcemanager.GetString("trLocaly")     , Value = "local" },
-                new { Text = MainWindow.resourcemanager.GetString("trShippingCompany")   , Value = "com" },
+                new { Text = AppSettings.resourcemanager.GetString("trLocaly")     , Value = "local" },
+                new { Text = AppSettings.resourcemanager.GetString("trShippingCompany")   , Value = "com" },
                  };
             cmb.DisplayMemberPath = "Text";
             cmb.SelectedValuePath = "Value";
@@ -558,8 +558,8 @@ namespace Restaurant.Classes
         {
             #region fill process type
             var processList = new[] {
-                 new { Text = MainWindow.resourcemanager.GetString("trImport"), Value = "im" },
-            new { Text = MainWindow.resourcemanager.GetString("trExport"), Value = "ex"},
+                 new { Text = AppSettings.resourcemanager.GetString("trImport"), Value = "im" },
+            new { Text = AppSettings.resourcemanager.GetString("trExport"), Value = "ex"},
             };
             cmb.DisplayMemberPath = "Text";
             cmb.SelectedValuePath = "Value";
@@ -781,7 +781,7 @@ namespace Restaurant.Classes
         {
             List<SetValues> replangList = new List<SetValues>();
             replangList = await valueModel.GetBySetName("report_lang");
-           MainWindow.Reportlang = replangList.Where(r => r.isDefault == 1).FirstOrDefault().value;
+            AppSettings.Reportlang = replangList.Where(r => r.isDefault == 1).FirstOrDefault().value;
 
         }
         public static async Task getPrintersNames()
@@ -827,8 +827,8 @@ namespace Restaurant.Classes
         static public void fillDiscountType(ComboBox cmb)
         {
             var dislist = new[] {
-            new { Text = MainWindow.resourcemanager.GetString("trValueDiscount"), Value = "1" },
-            new { Text = MainWindow.resourcemanager.GetString("trPercentageDiscount"), Value = "2" },
+            new { Text = AppSettings.resourcemanager.GetString("trValueDiscount"), Value = "1" },
+            new { Text = AppSettings.resourcemanager.GetString("trPercentageDiscount"), Value = "2" },
              };
             cmb.DisplayMemberPath = "Text";
             cmb.SelectedValuePath = "Value";
@@ -842,9 +842,9 @@ namespace Restaurant.Classes
         {
             #region fill deposit to combo
             var list = new[] {
-  new { Text = MainWindow.resourcemanager.GetString("trAccounting")  , Value = "accounting" },
-            new { Text = MainWindow.resourcemanager.GetString("trSales")  , Value = "sales" },
-            new { Text = MainWindow.resourcemanager.GetString("trPurchases")  , Value = "purchase" },
+  new { Text = AppSettings.resourcemanager.GetString("trAccounting")  , Value = "accounting" },
+            new { Text = AppSettings.resourcemanager.GetString("trSales")  , Value = "sales" },
+            new { Text = AppSettings.resourcemanager.GetString("trPurchases")  , Value = "purchase" },
 
              };
             COMBO.DisplayMemberPath = "Text";

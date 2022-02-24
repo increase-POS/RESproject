@@ -104,14 +104,12 @@ namespace Restaurant.View.sectionData.banksData
             {
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "name" };
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
@@ -133,26 +131,26 @@ namespace Restaurant.View.sectionData.banksData
 
         private void translate()
         {
-            txt_title.Text = MainWindow.resourcemanager.GetString("trPaymentMethods");
-            txt_hasProcessNum.Text = MainWindow.resourcemanager.GetString("trInputProcessNumber");
-            txt_cardIsActive.Text = txt_isActive.Text = MainWindow.resourcemanager.GetString("trActive");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
-            txt_addButton.Text = MainWindow.resourcemanager.GetString("trAdd");
-            txt_updateButton.Text = MainWindow.resourcemanager.GetString("trUpdate");
-            txt_deleteButton.Text = MainWindow.resourcemanager.GetString("trDelete");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trPaymentMethods");
+            txt_hasProcessNum.Text = AppSettings.resourcemanager.GetString("trInputProcessNumber");
+            txt_cardIsActive.Text = txt_isActive.Text = AppSettings.resourcemanager.GetString("trActive");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+            txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, AppSettings.resourcemanager.GetString("trNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
+            txt_addButton.Text = AppSettings.resourcemanager.GetString("trAdd");
+            txt_updateButton.Text = AppSettings.resourcemanager.GetString("trUpdate");
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
 
-            btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
-            tt_add_Button.Content = MainWindow.resourcemanager.GetString("trAdd");
-            tt_update_Button.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            tt_delete_Button.Content = MainWindow.resourcemanager.GetString("trDelete");
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
+            tt_add_Button.Content = AppSettings.resourcemanager.GetString("trAdd");
+            tt_update_Button.Content = AppSettings.resourcemanager.GetString("trUpdate");
+            tt_delete_Button.Content = AppSettings.resourcemanager.GetString("trDelete");
 
-            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
+            tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
+            tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
+            tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
+            tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
 
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
@@ -181,11 +179,11 @@ namespace Restaurant.View.sectionData.banksData
 
                         if (isCardExist)
                         {
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopCardExist"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopCardExist"), animation: ToasterAnimation.FadeIn);
                             #region Tooltip_name
                             p_error_name.Visibility = Visibility.Visible;
                             ToolTip toolTip_name = new ToolTip();
-                            toolTip_name.Content = MainWindow.resourcemanager.GetString("trPopCardExist");
+                            toolTip_name.Content = AppSettings.resourcemanager.GetString("trPopCardExist");
                             toolTip_name.Style = Application.Current.Resources["ToolTipError"] as Style;
                             p_error_name.ToolTip = toolTip_name;
                             #endregion
@@ -203,10 +201,10 @@ namespace Restaurant.View.sectionData.banksData
  
                             int s = await card.save(card);
                             if (s <= 0)
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
                                 if (isImgPressed)
                                 {
@@ -234,7 +232,7 @@ namespace Restaurant.View.sectionData.banksData
                     HelpClass.EndAwait(grid_main);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)
@@ -273,11 +271,11 @@ namespace Restaurant.View.sectionData.banksData
 
                             if (isCardExist)
                             {
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopCardExist"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopCardExist"), animation: ToasterAnimation.FadeIn);
                                 #region Tooltip_name
                                 p_error_name.Visibility = Visibility.Visible;
                                 ToolTip toolTip_name = new ToolTip();
-                                toolTip_name.Content = MainWindow.resourcemanager.GetString("trPopCardExist");
+                                toolTip_name.Content = AppSettings.resourcemanager.GetString("trPopCardExist");
                                 toolTip_name.Style = Application.Current.Resources["ToolTipError"] as Style;
                                 p_error_name.ToolTip = toolTip_name;
                                 #endregion
@@ -295,10 +293,10 @@ namespace Restaurant.View.sectionData.banksData
 
                                 int s = await card.save(card);
                                 if (s <= 0)
-                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
-                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                                     if (isImgPressed)
                                     {
                                         int cardId = s;
@@ -321,12 +319,12 @@ namespace Restaurant.View.sectionData.banksData
                         }
                     }
                     else
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
 
                     HelpClass.EndAwait(grid_main);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)
@@ -349,7 +347,7 @@ namespace Restaurant.View.sectionData.banksData
                             #region
                             Window.GetWindow(this).Opacity = 0.2;
                             wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxActivate");
+                            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
@@ -362,25 +360,25 @@ namespace Restaurant.View.sectionData.banksData
                             Window.GetWindow(this).Opacity = 0.2;
                             wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                             if (card.canDelete)
-                                w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                                w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
                             if (!card.canDelete)
-                                w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
+                                w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
                             if (w.isOk)
                             {
                                 string popupContent = "";
-                                if (card.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
-                                if ((!card.canDelete) && (card.isActive == 1)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+                                if (card.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
+                                if ((!card.canDelete) && (card.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
                                 int s = await card.delete(card.cardId, MainWindow.userLogin.userId, card.canDelete);
                                 if (s < 0)
-                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
                                     card.cardId = 0;
-                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshCardsList();
                                     await Search();
@@ -392,7 +390,7 @@ namespace Restaurant.View.sectionData.banksData
                     HelpClass.EndAwait(grid_main);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)
@@ -406,10 +404,10 @@ namespace Restaurant.View.sectionData.banksData
             card.isActive = 1;
             int s = await card.save(card);
             if (s <= 0)
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
             {
-                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
                 await RefreshCardsList();
                 await Search();
             }
@@ -495,13 +493,13 @@ namespace Restaurant.View.sectionData.banksData
                         await getImg();
                         #region delete
                         if (card.canDelete)
-                            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+                            btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
                         else
                         {
                             if (card.isActive == 0)
-                                btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+                                btn_delete.Content = AppSettings.resourcemanager.GetString("trActive");
                             else
-                                btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+                                btn_delete.Content = AppSettings.resourcemanager.GetString("trInActive");
                         }
                         #endregion
                     }
@@ -776,7 +774,7 @@ namespace Restaurant.View.sectionData.banksData
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
                     HelpClass.EndAwait(grid_main);
             }
@@ -802,7 +800,7 @@ namespace Restaurant.View.sectionData.banksData
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 
                     HelpClass.EndAwait(grid_main);
@@ -844,7 +842,7 @@ namespace Restaurant.View.sectionData.banksData
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 
                     HelpClass.EndAwait(grid_main);
@@ -890,7 +888,7 @@ namespace Restaurant.View.sectionData.banksData
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 
                     HelpClass.EndAwait(grid_main);
@@ -920,7 +918,7 @@ namespace Restaurant.View.sectionData.banksData
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }

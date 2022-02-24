@@ -245,9 +245,9 @@ namespace Restaurant.Classes
             invheader = invheader.Replace("[[Email]]", FillCombo.Email.Trim());
             invheader = invheader.Replace("[[fax]]", FillCombo.Fax.Trim());
             invheader = invheader.Replace("[[address]]", FillCombo.Address.Trim());
-            invheader = invheader.Replace("[[trphone]]", MainWindow.resourcemanagerreport.GetString("trPhone").Trim() + ": ");
-            invheader = invheader.Replace("[[trfax]]", MainWindow.resourcemanagerreport.GetString("trFax").Trim() + ": ");
-            invheader = invheader.Replace("[[traddress]]", MainWindow.resourcemanagerreport.GetString("trAddress").Trim() + ": ");
+            invheader = invheader.Replace("[[trphone]]", AppSettings.resourcemanagerreport.GetString("trPhone").Trim() + ": ");
+            invheader = invheader.Replace("[[trfax]]", AppSettings.resourcemanagerreport.GetString("trFax").Trim() + ": ");
+            invheader = invheader.Replace("[[traddress]]", AppSettings.resourcemanagerreport.GetString("trAddress").Trim() + ": ");
 
 
             //BODY
@@ -280,21 +280,21 @@ namespace Restaurant.Classes
 
             //  invoiceItems.
 
-            invitemtable = invitemtable.Replace("[[tritems]]", MainWindow.resourcemanagerreport.GetString("trItem").Trim());
-            invitemtable = invitemtable.Replace("[[trunit]]", MainWindow.resourcemanagerreport.GetString("trUnit").Trim());
-            invitemtable = invitemtable.Replace("[[trquantity]]", MainWindow.resourcemanagerreport.GetString("trQTR").Trim());
-            invitemtable = invitemtable.Replace("[[trtotalrow]]", MainWindow.resourcemanagerreport.GetString("trPrice").Trim());
+            invitemtable = invitemtable.Replace("[[tritems]]", AppSettings.resourcemanagerreport.GetString("trItem").Trim());
+            invitemtable = invitemtable.Replace("[[trunit]]", AppSettings.resourcemanagerreport.GetString("trUnit").Trim());
+            invitemtable = invitemtable.Replace("[[trquantity]]", AppSettings.resourcemanagerreport.GetString("trQTR").Trim());
+            invitemtable = invitemtable.Replace("[[trtotalrow]]", AppSettings.resourcemanagerreport.GetString("trPrice").Trim());
 
-            invbody = invbody.Replace("[[trinvoicecode]]", MainWindow.resourcemanagerreport.GetString("trInvoiceNumber").Trim() + ": ");
-            invbody = invbody.Replace("[[trinvoicedate]]", MainWindow.resourcemanagerreport.GetString("trDate").Trim() + ": ");
-            invbody = invbody.Replace("[[trinvoicetotal]]", MainWindow.resourcemanagerreport.GetString("trSum").Trim() + ": ");
-            invbody = invbody.Replace("[[currency]]", MainWindow.Currency);
+            invbody = invbody.Replace("[[trinvoicecode]]", AppSettings.resourcemanagerreport.GetString("trInvoiceNumber").Trim() + ": ");
+            invbody = invbody.Replace("[[trinvoicedate]]", AppSettings.resourcemanagerreport.GetString("trDate").Trim() + ": ");
+            invbody = invbody.Replace("[[trinvoicetotal]]", AppSettings.resourcemanagerreport.GetString("trSum").Trim() + ": ");
+            invbody = invbody.Replace("[[currency]]", AppSettings.Currency);
             //
-            invbody = invbody.Replace("[[trinvoicediscount]]", MainWindow.resourcemanagerreport.GetString("trDiscount").Trim() + ": ");
+            invbody = invbody.Replace("[[trinvoicediscount]]", AppSettings.resourcemanagerreport.GetString("trDiscount").Trim() + ": ");
 
-            invbody = invbody.Replace("[[trinvoicetax]]", MainWindow.resourcemanagerreport.GetString("trTax").Trim() + ": ");
+            invbody = invbody.Replace("[[trinvoicetax]]", AppSettings.resourcemanagerreport.GetString("trTax").Trim() + ": ");
 
-            invbody = invbody.Replace("[[trtotalnet]]", MainWindow.resourcemanagerreport.GetString("trTotal").Trim() + ": ");
+            invbody = invbody.Replace("[[trtotalnet]]", AppSettings.resourcemanagerreport.GetString("trTotal").Trim() + ": ");
 
             // string invoicenote = "Thank you for your cooperation. We have also enclosed our procurement specifications and conditions for your review <br/> Sincerely";
             string invoicenote = setvlist.Where(x => x.notes == "text2").FirstOrDefault() is null ? ""
@@ -507,9 +507,9 @@ namespace Restaurant.Classes
             invheader = invheader.Replace("[[Email]]", FillCombo.Email.Trim());
             invheader = invheader.Replace("[[fax]]", FillCombo.Fax.Trim());
             invheader = invheader.Replace("[[address]]", FillCombo.Address.Trim());
-            invheader = invheader.Replace("[[trphone]]", MainWindow.resourcemanagerreport.GetString("trPhone").Trim() + ": ");
-            invheader = invheader.Replace("[[trfax]]", MainWindow.resourcemanagerreport.GetString("trFax").Trim() + ": ");
-            invheader = invheader.Replace("[[traddress]]", MainWindow.resourcemanagerreport.GetString("trAddress").Trim() + ": ");
+            invheader = invheader.Replace("[[trphone]]", AppSettings.resourcemanagerreport.GetString("trPhone").Trim() + ": ");
+            invheader = invheader.Replace("[[trfax]]", AppSettings.resourcemanagerreport.GetString("trFax").Trim() + ": ");
+            invheader = invheader.Replace("[[traddress]]", AppSettings.resourcemanagerreport.GetString("trAddress").Trim() + ": ");
 
 
             //BODY
@@ -535,7 +535,7 @@ namespace Restaurant.Classes
                     decimal sump = mailpayedList.Sum(x => x.cash);
                     decimal deservd = (decimal)invoice.totalNet - sump;
 
-                    cashTr = MainWindow.resourcemanagerreport.GetString("trCashType");
+                    cashTr = AppSettings.resourcemanagerreport.GetString("trCashType");
                    
                     sumP = reportclass.DecTostring(sump);
                     deservedcash = reportclass.DecTostring(deservd);
@@ -545,7 +545,7 @@ namespace Restaurant.Classes
                     // foreach
                     string datapayrows = "";
                     string paymethod = "";
-                    payrow = payrow.Replace("[[currency]]", MainWindow.Currency);
+                    payrow = payrow.Replace("[[currency]]", AppSettings.Currency);
                     foreach (PayedInvclass row in mailpayedList)
                     {
                         string rowhtml = payrow;
@@ -588,11 +588,11 @@ namespace Restaurant.Classes
                 {
                     if (isArabic)
                     {
-                        invbody = invbody.Replace("[[invoicediscount]]", MainWindow.Currency + " " + repm.DecTostring(invoice.discountValue));
+                        invbody = invbody.Replace("[[invoicediscount]]", AppSettings.Currency + " " + repm.DecTostring(invoice.discountValue));
                     }
                     else
                     {
-                        invbody = invbody.Replace("[[invoicediscount]]", repm.DecTostring(invoice.discountValue) + " " + MainWindow.Currency);
+                        invbody = invbody.Replace("[[invoicediscount]]", repm.DecTostring(invoice.discountValue) + " " + AppSettings.Currency);
                     }
 
                 }
@@ -601,14 +601,14 @@ namespace Restaurant.Classes
                 if(invoice.tax==0 || invoice.tax == null)
                 {
                     invbody = invbody.Replace("[[invoicetax]]", repm.DecTostring(invoice.tax));
-                    invbody = invbody.Replace("[[trinvoicetax]]", MainWindow.resourcemanagerreport.GetString("trTax").Trim());
+                    invbody = invbody.Replace("[[trinvoicetax]]", AppSettings.resourcemanagerreport.GetString("trTax").Trim());
                     invbody= invbody.Replace("[[taxdiv]]","");
                 }
                 else
                 {
                    
                     taxdiv = taxdiv.Replace("[[invoicetax]]", repm.DecTostring(invoice.tax));
-                    taxdiv = taxdiv.Replace("[[trinvoicetax]]", MainWindow.resourcemanagerreport.GetString("trTax").Trim());
+                    taxdiv = taxdiv.Replace("[[trinvoicetax]]", AppSettings.resourcemanagerreport.GetString("trTax").Trim());
                     invbody = invbody.Replace("[[taxdiv]]", taxdiv);
                 }
             
@@ -619,25 +619,25 @@ namespace Restaurant.Classes
 
             //  invoiceItems.trQuantity trQTR
 
-            invitemtable = invitemtable.Replace("[[tritems]]", MainWindow.resourcemanagerreport.GetString("trItem").Trim());
-            invitemtable = invitemtable.Replace("[[trunit]]", MainWindow.resourcemanagerreport.GetString("trUnit").Trim());
-            invitemtable = invitemtable.Replace("[[trprice]]", MainWindow.resourcemanagerreport.GetString("trPrice").Trim());
-            invitemtable = invitemtable.Replace("[[trquantity]]", MainWindow.resourcemanagerreport.GetString("trQTR").Trim());
-            invitemtable = invitemtable.Replace("[[trtotalrow]]", MainWindow.resourcemanagerreport.GetString("trTotal").Trim());
+            invitemtable = invitemtable.Replace("[[tritems]]", AppSettings.resourcemanagerreport.GetString("trItem").Trim());
+            invitemtable = invitemtable.Replace("[[trunit]]", AppSettings.resourcemanagerreport.GetString("trUnit").Trim());
+            invitemtable = invitemtable.Replace("[[trprice]]", AppSettings.resourcemanagerreport.GetString("trPrice").Trim());
+            invitemtable = invitemtable.Replace("[[trquantity]]", AppSettings.resourcemanagerreport.GetString("trQTR").Trim());
+            invitemtable = invitemtable.Replace("[[trtotalrow]]", AppSettings.resourcemanagerreport.GetString("trTotal").Trim());
 
 
-            invbody = invbody.Replace("[[trinvoicecode]]", MainWindow.resourcemanagerreport.GetString("trInvoiceNumber").Trim() + ": ");
-            invbody = invbody.Replace("[[trinvoicedate]]", MainWindow.resourcemanagerreport.GetString("trDate").Trim() + ": ");
+            invbody = invbody.Replace("[[trinvoicecode]]", AppSettings.resourcemanagerreport.GetString("trInvoiceNumber").Trim() + ": ");
+            invbody = invbody.Replace("[[trinvoicedate]]", AppSettings.resourcemanagerreport.GetString("trDate").Trim() + ": ");
 
-            // invbody = invbody.Replace("[[trinvoicetotal]]", MainWindow.resourcemanagerreport.GetString("trSum").Trim() + ": ");
+            // invbody = invbody.Replace("[[trinvoicetotal]]", AppSettings.resourcemanagerreport.GetString("trSum").Trim() + ": ");
 
-            invbody = invbody.Replace("[[trinvoicetotal]]", MainWindow.resourcemanagerreport.GetString("trSum").Trim());
-            invbody = invbody.Replace("[[currency]]", MainWindow.Currency);
+            invbody = invbody.Replace("[[trinvoicetotal]]", AppSettings.resourcemanagerreport.GetString("trSum").Trim());
+            invbody = invbody.Replace("[[currency]]", AppSettings.Currency);
             //
 
-            invbody = invbody.Replace("[[trinvoicediscount]]", MainWindow.resourcemanagerreport.GetString("trDiscount").Trim());
+            invbody = invbody.Replace("[[trinvoicediscount]]", AppSettings.resourcemanagerreport.GetString("trDiscount").Trim());
          
-            invbody = invbody.Replace("[[trtotalnet]]", MainWindow.resourcemanagerreport.GetString("trTotal").Trim());
+            invbody = invbody.Replace("[[trtotalnet]]", AppSettings.resourcemanagerreport.GetString("trTotal").Trim());
 
 
             // string invoicenote = "Thank you for your cooperation. We have also enclosed our procurement specifications and conditions for your review <br/> Sincerely";
@@ -802,24 +802,24 @@ namespace Restaurant.Classes
             invheader = invheader.Replace("[[Email]]", FillCombo.Email.Trim());
             invheader = invheader.Replace("[[fax]]", FillCombo.Fax.Trim());
             invheader = invheader.Replace("[[address]]", FillCombo.Address.Trim());
-            invheader = invheader.Replace("[[trphone]]", MainWindow.resourcemanagerreport.GetString("trPhone").Trim() + ": ");
-            invheader = invheader.Replace("[[trfax]]", MainWindow.resourcemanagerreport.GetString("trFax").Trim() + ": ");
-            invheader = invheader.Replace("[[traddress]]", MainWindow.resourcemanagerreport.GetString("trAddress").Trim() + ": ");
+            invheader = invheader.Replace("[[trphone]]", AppSettings.resourcemanagerreport.GetString("trPhone").Trim() + ": ");
+            invheader = invheader.Replace("[[trfax]]", AppSettings.resourcemanagerreport.GetString("trFax").Trim() + ": ");
+            invheader = invheader.Replace("[[traddress]]", AppSettings.resourcemanagerreport.GetString("trAddress").Trim() + ": ");
 
 
             // string title = "Purchase Order";Required Amount: [[trreqamount]] [[reqamount]]
             //BODY
             if (isArabic)
             {
-                invbody = invbody.Replace("[[trreqamount]]", " " + ":" + MainWindow.resourcemanagerreport.GetString("trRequired").Trim());
+                invbody = invbody.Replace("[[trreqamount]]", " " + ":" + AppSettings.resourcemanagerreport.GetString("trRequired").Trim());
 
             }
             else
             {
-                invbody = invbody.Replace("[[trreqamount]]", MainWindow.resourcemanagerreport.GetString("trRequired").Trim() + ": ");
+                invbody = invbody.Replace("[[trreqamount]]", AppSettings.resourcemanagerreport.GetString("trRequired").Trim() + ": ");
 
             }
-            invbody = invbody.Replace("[[reqamount]]", total.Trim() + " " + MainWindow.Currency);
+            invbody = invbody.Replace("[[reqamount]]", total.Trim() + " " + AppSettings.Currency);
             string title = setvlist.Where(x => x.notes == "title").FirstOrDefault() is null ? ""
                 : setvlist.Where(x => x.notes == "title").FirstOrDefault().value.ToString();
             invheader = invheader.Replace("[[title]]", title.Trim());

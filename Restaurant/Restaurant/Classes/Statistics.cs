@@ -16,11 +16,144 @@ using Restaurant.ApiClasses;
 
 namespace Restaurant.Classes
 {
+    public class POSOpenCloseModel
+    {
+        public int cashTransId { get; set; }
+        public string transType { get; set; }
+        public Nullable<int> posId { get; set; }
 
+        public string transNum { get; set; }
+
+        public Nullable<decimal> cash { get; set; }//close
+
+        public string notes { get; set; }
+
+        public Nullable<byte> isConfirm { get; set; }
+        public Nullable<int> cashTransIdSource { get; set; }
+        public string side { get; set; }
+
+        public string posName { get; set; }
+
+
+
+        public string processType { get; set; }
+
+
+        public Nullable<int> branchId { get; set; }
+        public string branchName { get; set; }
+
+        public Nullable<System.DateTime> updateDate { get; set; }//close
+        public Nullable<System.DateTime> openDate { get; set; }
+        public Nullable<decimal> openCash { get; set; }
+        public Nullable<int> openCashTransId { get; set; }
+
+
+
+    }
+    public class ItemTransferInvoiceTax
+    {// new properties
+        public Nullable<System.DateTime> updateDate { get; set; }
+
+
+
+
+        public string agentCompany { get; set; }
+
+
+
+
+        // ItemTransfer
+        public int ITitemsTransId { get; set; }
+        public Nullable<int> ITitemUnitId { get; set; }
+        public Nullable<int> updateUserId { get; set; }
+        public Nullable<int> ITitemId { get; set; }
+        public Nullable<int> ITunitId { get; set; }
+        public string ITitemName { get; set; }
+        public string ITunitName { get; set; }
+
+        public Nullable<long> ITquantity { get; set; }
+        public Nullable<decimal> ITprice { get; set; }
+
+
+
+
+        public string ITnotes { get; set; }
+
+        public string ITbarcode { get; set; }
+
+        //invoice
+        public int invoiceId { get; set; }
+        public string invNumber { get; set; }
+        public Nullable<int> agentId { get; set; }
+
+        public string invType { get; set; }
+        public string discountType { get; set; }
+
+        public Nullable<decimal> discountValue { get; set; }
+        public Nullable<decimal> total { get; set; }
+        public Nullable<decimal> totalNet { get; set; }
+        public Nullable<decimal> paid { get; set; }
+        public Nullable<decimal> deserved { get; set; }
+        public Nullable<System.DateTime> deservedDate { get; set; }
+        public Nullable<System.DateTime> invDate { get; set; }
+        public Nullable<System.DateTime> IupdateDate { get; set; }
+        public Nullable<int> IupdateUserId { get; set; }
+
+        public string invCase { get; set; }
+
+        public string Inotes { get; set; }
+        public string vendorInvNum { get; set; }
+
+        public string branchName { get; set; }
+        public string posName { get; set; }
+        public Nullable<System.DateTime> vendorInvDate { get; set; }
+        public Nullable<int> branchId { get; set; }
+
+        public Nullable<decimal> tax { get; set; }
+        public Nullable<int> taxtype { get; set; }
+        public Nullable<int> posId { get; set; }
+
+        public string ITtype { get; set; }
+
+        public string branchType { get; set; }
+
+        public string posCode { get; set; }
+        public string agentName { get; set; }
+
+        public string agentType { get; set; }
+        public string agentCode { get; set; }
+
+        public string uuserName { get; set; }
+        public string uuserLast { get; set; }
+        public string uUserAccName { get; set; }
+        public Nullable<decimal> itemUnitPrice { get; set; }
+
+        public Nullable<decimal> totalwithTax { get; set; }
+        public Nullable<decimal> totalNoTax { get; set; }
+        public Nullable<decimal> subTotalTax { get; set; }
+        public Nullable<decimal> subTotalNotax { get; set; }
+
+        public Nullable<decimal> OneitemUnitTax { get; set; }
+        public Nullable<decimal> itemUnitTaxwithQTY { get; set; }
+        public Nullable<decimal> invTaxVal { get; set; }
+        public Nullable<decimal> OneItemOfferVal { get; set; }
+        public Nullable<decimal> OneItemPriceNoTax { get; set; }
+        public Nullable<decimal> ItemTaxes { get; set; }
+        public Nullable<decimal> OneItemPricewithTax { get; set; }
+
+        public Nullable<int> itemsRowsCount { get; set; }
+        // public Nullable<decimal> totalNet { get; set; }
+
+    }
     public class ItemUnitInvoiceProfit
     {
 
         /////////////// الارباح
+        public decimal shippingCost { get; set; }
+        public decimal realShippingCost { get; set; }
+        public decimal shippingProfit { get; set; }
+        public decimal totalNoShip { get; set; }
+        public decimal totalNetNoShip { get; set; }
         public string ITitemName { get; set; }
         public string ITunitName { get; set; }
         //public int ITitemsTransId { get; set; }*
@@ -97,7 +230,6 @@ namespace Restaurant.Classes
         public Nullable<byte> banchIsActive { get; set; }
 
     }
-
     public class CashTransferSts
     {
         public Nullable<int> invShippingCompanyId { get; set; }
@@ -210,7 +342,7 @@ namespace Restaurant.Classes
         public string docNum { get; set; }//
         public Nullable<int> bankId { get; set; }//
         public string processType { get; set; }//
-
+        public string paymentreport { get; set; }//
         public Nullable<int> cardId { get; set; }//
         public Nullable<int> bondId { get; set; }//
         public string invNumber { get; set; }//
@@ -218,21 +350,21 @@ namespace Restaurant.Classes
         public Nullable<decimal> totalNet { get; set; }//
         public string Description
         {
-            get => processType == "cash" ? description = MainWindow.resourcemanager.GetString("trCash")//
-                 : processType == "card" ? description = cardName + " " + MainWindow.resourcemanager.GetString("trNum:") + " : " + docNum
-                 : processType == "doc" ? description = MainWindow.resourcemanager.GetString("trBond") + " " + MainWindow.resourcemanager.GetString("trNum:") + " : " + bondNumber
-                 : processType == "cheque" ? description = MainWindow.resourcemanager.GetString("trCheque") + " " + MainWindow.resourcemanager.GetString("trNum:") + " : " + docNum
-                 : processType == "inv" ? description = MainWindow.resourcemanager.GetString("trInv")//yasmine
-                 : MainWindow.resourcemanager.GetString("trCredit");
+            get => processType == "cash" ? description = AppSettings.resourcemanager.GetString("trCash")//
+                 : processType == "card" ? description = cardName + " " + AppSettings.resourcemanager.GetString("trNum:") + " : " + docNum
+                 : processType == "doc" ? description = AppSettings.resourcemanager.GetString("trBond") + " " + AppSettings.resourcemanager.GetString("trNum:") + " : " + bondNumber
+                 : processType == "cheque" ? description = AppSettings.resourcemanager.GetString("trCheque") + " " + AppSettings.resourcemanager.GetString("trNum:") + " : " + docNum
+                 : processType == "inv" ? description = AppSettings.resourcemanager.GetString("trInv")//yasmine
+                 : AppSettings.resourcemanager.GetString("trCredit");
 
             set => description = value;
         }
         public string Description1
         {//
             get =>
-                description1 = (transType == "p" && processType != "inv") ? description1 = MainWindow.resourcemanager.GetString("trPaymentReceipt")
-                : description1 = (transType == "d" && processType != "inv") ? description1 = MainWindow.resourcemanager.GetString("trReceipt")
-                : invId > 0 && processType == "inv" ? description1 = MainWindow.resourcemanager.GetString("tr_Invoice") + " " + MainWindow.resourcemanager.GetString("trNum:") + " : " + invNumber
+                description1 = (transType == "p" && processType != "inv") ? description1 = AppSettings.resourcemanager.GetString("trPaymentReceipt")
+                : description1 = (transType == "d" && processType != "inv") ? description1 = AppSettings.resourcemanager.GetString("trReceipt")
+                : invId > 0 && processType == "inv" ? description1 = AppSettings.resourcemanager.GetString("tr_Invoice") + " " + AppSettings.resourcemanager.GetString("trNum:") + " : " + invNumber
                 : ""
                 ; set => description1 = value;
         }
@@ -243,7 +375,7 @@ namespace Restaurant.Classes
         public string Description3
         {
             get => bondId > 0 ?
-                description3 = MainWindow.resourcemanager.GetString("trBond") + " " + MainWindow.resourcemanager.GetString("trNum:") + " : " + bondNumber
+                description3 = AppSettings.resourcemanager.GetString("trBond") + " " + AppSettings.resourcemanager.GetString("trNum:") + " : " + bondNumber
                  :
                 processType;
 
@@ -255,8 +387,6 @@ namespace Restaurant.Classes
             get; set;
         }
     }
-   
-
     public class Storage
     {
 
@@ -345,8 +475,6 @@ namespace Restaurant.Classes
         public string ItemUnits { get => itemUnits = itemName + " - " + unitName; set => itemUnits = value; }
 
     }
-
-
     public class InventoryClass
 
     {
@@ -393,7 +521,6 @@ namespace Restaurant.Classes
         public int DestroyedCount { get; set; }
 
     }
-
     public class ItemUnitCombo
     {
 
@@ -413,9 +540,9 @@ namespace Restaurant.Classes
         public int OofferId { get; set; }
         public string Oname { get; set; }
     }
-
     public class ItemTransferInvoice
     {// new properties
+        public int archived { get; set; }
         public double? itemAvg { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public string causeFalls { get; set; }
@@ -499,40 +626,47 @@ namespace Restaurant.Classes
         public Nullable<byte> isApproved { get; set; }
         public Nullable<int> branchCreatorId { get; set; }
         public string branchCreatorName { get; set; }
+        public string ITtype { get; set; }
         private string invTypeNumber;//number
         //public string InvTypeNumber { get => invTypeNumber = invType + "-" + invNumber; set => invTypeNumber = value; }
         public string InvTypeNumber
         {
-            get => invType == "ex" ? invTypeNumber = MainWindow.resourcemanager.GetString("trExport") + "-" + invNumber
-                 : invType == "im" ? invTypeNumber = MainWindow.resourcemanager.GetString("trImport") + "-" + invNumber
-                 : invType == "p" ? invTypeNumber = MainWindow.resourcemanager.GetString("trPurchaseInvoice") + "-" + invNumber
-                 : invType == "pw" ? invTypeNumber = MainWindow.resourcemanager.GetString("trPurchaseInvoiceWaiting") + "-" + invNumber
-                 : invType == "s" ? invTypeNumber = MainWindow.resourcemanager.GetString("trSalesInvoice") + "-" + invNumber
-                 : invType == "sb" ? invTypeNumber = MainWindow.resourcemanager.GetString("trSalesReturnInvoice") + "-" + invNumber
-                 : invType == "pb" ? invTypeNumber = MainWindow.resourcemanager.GetString("trPurchaseReturnInvoice") + "-" + invNumber
-                 : invType == "pbw" ? invTypeNumber = MainWindow.resourcemanager.GetString("trPurchaseReturnInvoiceWaiting") + "-" + invNumber
-                 : invType == "pd" ? invTypeNumber = MainWindow.resourcemanager.GetString("trDraftPurchaseBill") + "-" + invNumber
-                 : invType == "sd" ? invTypeNumber = MainWindow.resourcemanager.GetString("trSalesDraft") + "-" + invNumber
-                 : invType == "sbd" ? invTypeNumber = MainWindow.resourcemanager.GetString("trSalesReturnDraft") + "-" + invNumber
-                 : invType == "pbd" ? invTypeNumber = MainWindow.resourcemanager.GetString("trPurchaseReturnDraft") + "-" + invNumber
-                 : invType == "ord" ? invTypeNumber = MainWindow.resourcemanager.GetString("trSaleOrderDraft") + "-" + invNumber
-                 : invType == "or" ? invTypeNumber = MainWindow.resourcemanager.GetString("trSaleOrder") + "-" + invNumber
-                 : invType == "pod" ? invTypeNumber = MainWindow.resourcemanager.GetString("trPurchaceOrderDraft") + "-" + invNumber
-                 : invType == "po" ? invTypeNumber = MainWindow.resourcemanager.GetString("trPurchaceOrder") + "-" + invNumber
-                 : invType == "qd" ? invTypeNumber = MainWindow.resourcemanager.GetString("trQuotationsDraft") + "-" + invNumber
-                 : invType == "q" ? invTypeNumber = MainWindow.resourcemanager.GetString("trQuotations") + "-" + invNumber
-                 : invType == "d" ? invTypeNumber = MainWindow.resourcemanager.GetString("trDestructive") + "-" + invNumber
-                 : invType == "sh" ? invTypeNumber = MainWindow.resourcemanager.GetString("trShortage") + "-" + invNumber
-                 : invType == "imd" ? invTypeNumber = MainWindow.resourcemanager.GetString("trImportDraft") + "-" + invNumber
-                 : invType == "imw" ? invTypeNumber = MainWindow.resourcemanager.GetString("trImportOrder") + "-" + invNumber
-                 : invType == "exd" ? invTypeNumber = MainWindow.resourcemanager.GetString("trExportDraft") + "-" + invNumber
-                 : invType == "exw" ? invTypeNumber = MainWindow.resourcemanager.GetString("trExportOrder") + "-" + invNumber
+            get => invType == "ex" ? invTypeNumber = AppSettings.resourcemanager.GetString("trExport") + "-" + invNumber
+                 : invType == "im" ? invTypeNumber = AppSettings.resourcemanager.GetString("trImport") + "-" + invNumber
+                 : invType == "p" ? invTypeNumber = AppSettings.resourcemanager.GetString("trPurchaseInvoice") + "-" + invNumber
+                 : invType == "pw" ? invTypeNumber = AppSettings.resourcemanager.GetString("trPurchaseInvoiceWaiting") + "-" + invNumber
+                 : invType == "s" ? invTypeNumber = AppSettings.resourcemanager.GetString("trSalesInvoice") + "-" + invNumber
+                 : invType == "sb" ? invTypeNumber = AppSettings.resourcemanager.GetString("trSalesReturnInvoice") + "-" + invNumber
+                 : invType == "pb" ? invTypeNumber = AppSettings.resourcemanager.GetString("trPurchaseReturnInvoice") + "-" + invNumber
+                 : invType == "pbw" ? invTypeNumber = AppSettings.resourcemanager.GetString("trPurchaseReturnInvoiceWaiting") + "-" + invNumber
+                 : invType == "pd" ? invTypeNumber = AppSettings.resourcemanager.GetString("trDraftPurchaseBill") + "-" + invNumber
+                 : invType == "sd" ? invTypeNumber = AppSettings.resourcemanager.GetString("trSalesDraft") + "-" + invNumber
+                 : invType == "sbd" ? invTypeNumber = AppSettings.resourcemanager.GetString("trSalesReturnDraft") + "-" + invNumber
+                 : invType == "pbd" ? invTypeNumber = AppSettings.resourcemanager.GetString("trPurchaseReturnDraft") + "-" + invNumber
+                 : invType == "ord" ? invTypeNumber = AppSettings.resourcemanager.GetString("trSaleOrderDraft") + "-" + invNumber
+                 : invType == "or" ? invTypeNumber = AppSettings.resourcemanager.GetString("trSaleOrder") + "-" + invNumber
+                 : invType == "ors" ? invTypeNumber = AppSettings.resourcemanager.GetString("trSaleOrder") + "-" + invNumber
+
+                : invType == "pod" ? invTypeNumber = AppSettings.resourcemanager.GetString("trPurchaceOrderDraft") + "-" + invNumber
+                 : invType == "po" ? invTypeNumber = AppSettings.resourcemanager.GetString("trPurchaceOrder") + "-" + invNumber
+                  : invType == "pos" ? invTypeNumber = AppSettings.resourcemanager.GetString("trPurchaceOrder") + "-" + invNumber
+
+                : invType == "qd" ? invTypeNumber = AppSettings.resourcemanager.GetString("trQuotationsDraft") + "-" + invNumber
+                 : invType == "q" ? invTypeNumber = AppSettings.resourcemanager.GetString("trQuotations") + "-" + invNumber
+                 : invType == "qs" ? invTypeNumber = AppSettings.resourcemanager.GetString("trQuotations") + "-" + invNumber
+
+                : invType == "d" ? invTypeNumber = AppSettings.resourcemanager.GetString("trDestructive") + "-" + invNumber
+                 : invType == "sh" ? invTypeNumber = AppSettings.resourcemanager.GetString("trShortage") + "-" + invNumber
+                 : invType == "imd" ? invTypeNumber = AppSettings.resourcemanager.GetString("trImportDraft") + "-" + invNumber
+                 : invType == "imw" ? invTypeNumber = AppSettings.resourcemanager.GetString("trImportOrder") + "-" + invNumber
+                 : invType == "exd" ? invTypeNumber = AppSettings.resourcemanager.GetString("trExportDraft") + "-" + invNumber
+                 : invType == "exw" ? invTypeNumber = AppSettings.resourcemanager.GetString("trExportOrder") + "-" + invNumber
 
                  : "";
             set => invTypeNumber = value;
         }
 
-            // for report
+        // for report
         public int countP { get; set; }
         public int countS { get; set; }
         public int count { get; set; }
@@ -545,6 +679,8 @@ namespace Restaurant.Classes
         public string posName { get; set; }
         public string posCode { get; set; }
         public string agentName { get; set; }
+
+
         public string agentType { get; set; }
         public string agentCode { get; set; }
         public string cuserName { get; set; }
@@ -554,11 +690,23 @@ namespace Restaurant.Classes
         public string uuserLast { get; set; }
         public string uUserAccName { get; set; }
         private string agentTypeAgent;
-        //public string AgentTypeAgent { get => agentType == "v" ? agentTypeAgent = MainWindow.resourcemanager.GetString("trVendor") + "-" + agentName : agentTypeAgent = MainWindow.resourcemanager.GetString("trCustomer") + "-" + agentName; set => agentTypeAgent = value; }
-        public string AgentTypeAgent { get => agentType == "" ? "-":
-                                                              agentType == "v" ? agentTypeAgent = MainWindow.resourcemanager.GetString("trVendor") + "-" + agentName : 
-                                                                                 agentTypeAgent = MainWindow.resourcemanager.GetString("trCustomer") + "-" + agentName;
-                                       set => agentTypeAgent = value; }
+        public string AgentTypeAgent
+        {
+            get => agentType == "v" ? agentTypeAgent = AppSettings.resourcemanager.GetString("trVendor") + "-"
+                                      :
+                                       agentTypeAgent = AppSettings.resourcemanager.GetString("trCustomer") + "-"
+                                       ;
+            set => agentTypeAgent = value;
+        }
+        private string agentNameAgent;
+        public string AgentNameAgent
+        {
+            get => agentName == "unknown" ? agentNameAgent = AppSettings.resourcemanager.GetString("trUnKnown")
+                                      :
+                                       agentTypeAgent = agentName
+                                       ;
+            set => agentTypeAgent = value;
+        }
 
         public int countPb { get; set; }
         public int countD { get; set; }
@@ -643,6 +791,7 @@ namespace Restaurant.Classes
         public string ITitemUnitName1 { get => ITitemUnitName = ITitemName + " - " + ITunitName; set => ITitemUnitName = value; }
         public int ImportCount { get => importCount; set => importCount = value; }
         public int ExportCount { get => exportCount; set => exportCount = value; }
+        public string processType { get; set; }
     }
     class Statistics
     {
@@ -700,7 +849,7 @@ namespace Restaurant.Classes
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("mainBranchId", mainBranchId.ToString());
             parameters.Add("userId", userId.ToString());
-           
+
             //#################
             IEnumerable<Claim> claims = await APIResult.getList("Statistics/GetPurinv", parameters);
 
@@ -1774,7 +1923,25 @@ namespace Restaurant.Classes
             //    return list;
             //}
         }
+        //حركة الإدخال المباشر
+        public async Task<List<ItemTransferInvoice>> GetDirectInMov(int mainBranchId, int userId)
+        {
+            List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
 
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Statistics/GetDirectInMov", parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<ItemTransferInvoice>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+        }
         //حركة الاصناف الداخلية بين الفروع
         public async Task<List<ItemTransferInvoice>> GetInternalMov(int mainBranchId, int userId)
         {
@@ -2526,9 +2693,76 @@ namespace Restaurant.Classes
 
         }
 
+        // الضرائب
+        public async Task<List<ItemTransferInvoiceTax>> GetInvItemTax(int mainBranchId, int userId)
+        {
+
+            List<ItemTransferInvoiceTax> list = new List<ItemTransferInvoiceTax>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
+
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Statistics/GetInvItemTax", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<ItemTransferInvoiceTax>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
 
 
+        }
 
+        public async Task<List<CashTransfer>> GetBytypeAndSideForPos(string type, string side)
+        {
+            // string type, string side
+            List<CashTransfer> list = new List<CashTransfer>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("type", type.ToString());
+            parameters.Add("side", side.ToString());
+
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Statistics/GetBytypeAndSideForPos", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<CashTransfer>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+
+
+        }
+
+
+        public async Task<List<POSOpenCloseModel>> GetPosCashOpenClose(int mainBranchId, int userId)
+        {
+
+            List<POSOpenCloseModel> list = new List<POSOpenCloseModel>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
+
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Statistics/GetPosCashOpenClose", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<POSOpenCloseModel>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+
+
+        }
         // combo
         #region
         public class VendorCombo
@@ -2543,7 +2777,7 @@ namespace Restaurant.Classes
             //public string VendorName { get => vendorName; set => vendorName = value; }
             public string VendorName
             {
-                get => vendorName == null ? vendorName = MainWindow.resourcemanager.GetString("trCashCustomer")
+                get => vendorName == null ? vendorName = AppSettings.resourcemanager.GetString("trCashCustomer")
                     : vendorName;
                 set => vendorName = value;
             }
@@ -2555,7 +2789,8 @@ namespace Restaurant.Classes
         {
             List<VendorCombo> iulist = new List<VendorCombo>();
 
-            iulist = ITInvoice.Where(g => g.side == x).GroupBy(g => g.agentId).Select(g => new VendorCombo { VendorId = g.FirstOrDefault().agentId, VendorName = g.FirstOrDefault().agentName }).ToList();
+            //iulist = ITInvoice.Where(g => g.side == x).GroupBy(g => g.agentId).Select(g => new VendorCombo { VendorId = g.FirstOrDefault().agentId, VendorName = g.FirstOrDefault().agentName }).ToList();
+            iulist = ITInvoice.Where(g => g.side == x).GroupBy(g => g.agentId).Select(g => new VendorCombo { VendorId = g.FirstOrDefault().agentId, VendorName = g.FirstOrDefault().agentName, Side = g.FirstOrDefault().side }).ToList();
             return iulist;
 
         }
@@ -2577,20 +2812,20 @@ namespace Restaurant.Classes
         }
         public class PaymentsTypeCombo
         {
-        ///typeeeeeeeeeeeeeeeee
+            ///typeeeeeeeeeeeeeeeee
             private string paymentsTypeName;
             private string paymentsTypeText;
 
             public string PaymentsTypeName { get => paymentsTypeName; set => paymentsTypeName = value; }
             public string PaymentsTypeText
             {
-                get => paymentsTypeName == "cash"    ? paymentsTypeText = MainWindow.resourcemanager.GetString("trCash")
-                    :  paymentsTypeName == "doc"     ? paymentsTypeText = MainWindow.resourcemanager.GetString("trDocument")
-                    :  paymentsTypeName == "cheque"  ? paymentsTypeText = MainWindow.resourcemanager.GetString("trCheque")
-                    :  paymentsTypeName == "balance" ? paymentsTypeText = MainWindow.resourcemanager.GetString("trCredit")
-                    :  paymentsTypeName == "card"    ? paymentsTypeText = MainWindow.resourcemanager.GetString("trCreditCard")
-                    :  paymentsTypeName == "inv"     ? paymentsTypeText = MainWindow.resourcemanager.GetString("trInv")
-                    :  "";
+                get => paymentsTypeName == "cash" ? paymentsTypeText = AppSettings.resourcemanager.GetString("trCash")
+                    : paymentsTypeName == "doc" ? paymentsTypeText = AppSettings.resourcemanager.GetString("trDocument")
+                    : paymentsTypeName == "cheque" ? paymentsTypeText = AppSettings.resourcemanager.GetString("trCheque")
+                    : paymentsTypeName == "balance" ? paymentsTypeText = AppSettings.resourcemanager.GetString("trCredit")
+                    : paymentsTypeName == "card" ? paymentsTypeText = AppSettings.resourcemanager.GetString("trCreditCard")
+                    : paymentsTypeName == "inv" ? paymentsTypeText = AppSettings.resourcemanager.GetString("trInv")
+                    : "";
                 set => paymentsTypeText = value;
             }
 
@@ -2604,7 +2839,7 @@ namespace Restaurant.Classes
 
         }
 
-        public List<PaymentsTypeCombo> getPaymentsTypeComboBySide(List<CashTransferSts> ITInvoice , string side)
+        public List<PaymentsTypeCombo> getPaymentsTypeComboBySide(List<CashTransferSts> ITInvoice, string side)
         {
             List<PaymentsTypeCombo> iulist = new List<PaymentsTypeCombo>();
 
@@ -2659,14 +2894,24 @@ namespace Restaurant.Classes
             public string BranchFromName { get => branchFromName; set => branchFromName = value; }
             public int? BranchFromId { get => branchFromId; set => branchFromId = value; }
         }
-        public List<branchFromCombo> getFromCombo(List<CashTransferSts> ITInvoice)
+        //public List<branchFromCombo> getFromCombo(List<CashTransferSts> ITInvoice)
+        //{
+        //    List<branchFromCombo> iulist = new List<branchFromCombo>();
+
+        //    iulist = ITInvoice.GroupBy(g => g.frombranchId).Select(g => new branchFromCombo { BranchFromId = g.FirstOrDefault().frombranchId, BranchFromName = g.FirstOrDefault().frombranchName }).ToList();
+        //    return iulist;
+
+        //}
+
+        public List<branchFromCombo> getFromCombo(List<CashTransfer> ITInvoice)
         {
             List<branchFromCombo> iulist = new List<branchFromCombo>();
 
-            iulist = ITInvoice.GroupBy(g => g.frombranchId).Select(g => new branchFromCombo { BranchFromId = g.FirstOrDefault().frombranchId, BranchFromName = g.FirstOrDefault().frombranchName }).ToList();
+            iulist = ITInvoice.GroupBy(g => g.branchId).Select(g => new branchFromCombo { BranchFromId = g.FirstOrDefault().branchId, BranchFromName = g.FirstOrDefault().branchName }).ToList();
             return iulist;
 
         }
+
         public class branchToCombo
         {
             private string branchToName;
@@ -2675,11 +2920,19 @@ namespace Restaurant.Classes
             public string BranchToName { get => branchToName; set => branchToName = value; }
             public int? BranchToId { get => branchToId; set => branchToId = value; }
         }
-        public List<branchToCombo> getToCombo(List<CashTransferSts> ITInvoice)
+        //public List<branchToCombo> getToCombo(List<CashTransferSts> ITInvoice)
+        //{
+        //    List<branchToCombo> iulist = new List<branchToCombo>();
+
+        //    iulist = ITInvoice.GroupBy(g => g.tobranchId).Select(g => new branchToCombo { BranchToId = g.FirstOrDefault().tobranchId, BranchToName = g.FirstOrDefault().tobranchName }).ToList();
+        //    return iulist;
+
+        //}
+        public List<branchToCombo> getToCombo(List<CashTransfer> ITInvoice)
         {
             List<branchToCombo> iulist = new List<branchToCombo>();
 
-            iulist = ITInvoice.GroupBy(g => g.tobranchId).Select(g => new branchToCombo { BranchToId = g.FirstOrDefault().tobranchId, BranchToName = g.FirstOrDefault().tobranchName }).ToList();
+            iulist = ITInvoice.GroupBy(g => g.branch2Id).Select(g => new branchToCombo { BranchToId = g.FirstOrDefault().branch2Id, BranchToName = g.FirstOrDefault().branch2Name }).ToList();
             return iulist;
 
         }
@@ -2693,13 +2946,21 @@ namespace Restaurant.Classes
             public int? PosFromId { get => posFromId; set => posFromId = value; }
             public int? BranchId { get => branchId; set => branchId = value; }
         }
-        public List<posFromCombo> getFromPosCombo(List<CashTransferSts> ITInvoice)
+        //public List<posFromCombo> getFromPosCombo(List<CashTransferSts> ITInvoice)
+        //{
+        //    List<posFromCombo> iulist = new List<posFromCombo>();
+
+        //    iulist = ITInvoice.GroupBy(g => g.fromposId).Select(g => new posFromCombo { PosFromId = g.FirstOrDefault().fromposId, PosFromName = g.FirstOrDefault().fromposName, BranchId = g.FirstOrDefault().frombranchId }).ToList();
+        //    return iulist;
+
+        //}
+
+        public List<posFromCombo> getFromPosCombo(List<CashTransfer> ITInvoice)
         {
             List<posFromCombo> iulist = new List<posFromCombo>();
 
-            iulist = ITInvoice.GroupBy(g => g.fromposId).Select(g => new posFromCombo { PosFromId = g.FirstOrDefault().fromposId, PosFromName = g.FirstOrDefault().fromposName, BranchId = g.FirstOrDefault().frombranchId }).ToList();
+            iulist = ITInvoice.GroupBy(g => g.posId).Select(g => new posFromCombo { PosFromId = g.FirstOrDefault().posId, PosFromName = g.FirstOrDefault().posName, BranchId = g.FirstOrDefault().branchId }).ToList();
             return iulist;
-
         }
         public class posToCombo
         {
@@ -2711,11 +2972,11 @@ namespace Restaurant.Classes
             public int? PosToId { get => posToId; set => posToId = value; }
             public int? BranchId { get => branchId; set => branchId = value; }
         }
-        public List<posToCombo> getToPosCombo(List<CashTransferSts> ITInvoice)
+        public List<posToCombo> getToPosCombo(List<CashTransfer> ITInvoice)
         {
             List<posToCombo> iulist = new List<posToCombo>();
 
-            iulist = ITInvoice.GroupBy(g => g.toposId).Select(g => new posToCombo { PosToId = g.FirstOrDefault().toposId, PosToName = g.FirstOrDefault().toposName, BranchId = g.FirstOrDefault().tobranchId }).ToList();
+            iulist = ITInvoice.GroupBy(g => g.pos2Id).Select(g => new posToCombo { PosToId = g.FirstOrDefault().pos2Id, PosToName = g.FirstOrDefault().pos2Name, BranchId = g.FirstOrDefault().branch2Id }).ToList();
             //iulist = ITInvoice.Where(g => g.toposId != posFromId).GroupBy(g => g.toposId).Select(g => new posToCombo { PosToId = g.FirstOrDefault().toposId, PosToName = g.FirstOrDefault().toposName, BranchId = g.FirstOrDefault().tobranchId }).ToList();
             return iulist;
 
@@ -2937,7 +3198,7 @@ namespace Restaurant.Classes
         }
 
         // يومية الصندوق الخاصة بالمستخدم
-        public async Task<List<CashTransferSts>> GetUserDailyStatement(int mainBranchId,int userId)
+        public async Task<List<CashTransferSts>> GetUserDailyStatement(int mainBranchId, int userId)
         {
             List<CashTransferSts> list = new List<CashTransferSts>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -3202,16 +3463,16 @@ namespace Restaurant.Classes
         public class internalTypeCombo
         {//type
             private int? branchId;
-            private string invType ;
+            private string invType;
 
             public int? BranchId { get => branchId; set => branchId = value; }
-          //  public string InvType { get => invType; set => invType = value; }
+            //  public string InvType { get => invType; set => invType = value; }
             public string InvType { get => invType; set => invType = value; }
-        public string trInvType { get; set; }
+            public string trInvType { get; set; }
             //public string InvType
             //{
-            //    get => invType == "ex" ? invType = MainWindow.resourcemanager.GetString("trExport")
-            //         : invType == "im" ? invType = MainWindow.resourcemanager.GetString("trImport")
+            //    get => invType == "ex" ? invType = AppSettings.resourcemanager.GetString("trExport")
+            //         : invType == "im" ? invType = AppSettings.resourcemanager.GetString("trImport")
             //         : "";
 
             //    set => invType = value;
@@ -3246,14 +3507,14 @@ namespace Restaurant.Classes
             private int? branchId;
             private string inventoryType;
             private string inventoryTypeText;
-            
+
             public int? BranchId { get => branchId; set => branchId = value; }
             public string InventoryType { get => inventoryType; set => inventoryType = value; }
             public string InventoryTypeText
             {
-                get => inventoryType == "a" ? inventoryTypeText = MainWindow.resourcemanager.GetString("trArchived")
-                     : inventoryType == "n" ? inventoryTypeText = MainWindow.resourcemanager.GetString("trSaved")
-                     : inventoryType == "d" ? inventoryTypeText = MainWindow.resourcemanager.GetString("trDraft")
+                get => inventoryType == "a" ? inventoryTypeText = AppSettings.resourcemanager.GetString("trArchived")
+                     : inventoryType == "n" ? inventoryTypeText = AppSettings.resourcemanager.GetString("trSaved")
+                     : inventoryType == "d" ? inventoryTypeText = AppSettings.resourcemanager.GetString("trDraft")
                      : "";
 
                 set => inventoryTypeText = value;
@@ -3308,31 +3569,34 @@ namespace Restaurant.Classes
         #endregion
 
 
-        public List<CashTransferSts> getstate(List<CashTransferSts> list , int tab)
+        public List<CashTransferSts> getstate(List<CashTransferSts> list, int tab, List<CashTransferSts> listAll)
         {
             List<CashTransferSts> list2 = new List<CashTransferSts>();
             IEnumerable<CashTransferSts> temp = list;
             if (tab == 1)
             {
-                temp = list.Where(t => ((((t.invShippingCompanyId == null && t.shipUserId == null && t.invAgentId != null) ||
-                                          (t.invShippingCompanyId != null && t.shipUserId != null && t.invAgentId != null))))) ;
+                temp = list.Where(t => (t.invShippingCompanyId == null && t.shipUserId == null && t.invAgentId != null) ||
+                                          (t.invShippingCompanyId != null && t.shipUserId != null && t.invAgentId != null));
             }
             else if (tab == 3)
             {
-                temp = list.Where(t => ((t.invShippingCompanyId != null && t.shipUserId == null && t.invAgentId != null)));
+                temp = list.Where(t => (t.invShippingCompanyId != null && t.shipUserId == null && t.invAgentId != null)
+                                     ||
+                                     (t.invShippingCompanyId != null && t.shipUserId == null && t.invAgentId == null)
+                );
             }
             list2 = temp.OrderBy(X => X.updateDate).GroupBy(obj => obj.transNum).Select(obj => new CashTransferSts
             {
                 bondIsRecieved = obj.FirstOrDefault().bondIsRecieved,
                 //processType = obj.FirstOrDefault().processType,
                 processType = (obj.FirstOrDefault().processType == "doc" && obj.FirstOrDefault().bondIsRecieved == 1)
-                ? list.Where(x => x.bondId == obj.FirstOrDefault().bondId && x.side == "bnd").FirstOrDefault().processType
+                ? (listAll.Where(x => x.bondId == obj.FirstOrDefault().bondId && x.side == "bnd").ToList().Count > 0
+                ? listAll.Where(x => x.bondId == obj.FirstOrDefault().bondId && x.side == "bnd").FirstOrDefault().processType : "-")
                 : obj.FirstOrDefault().processType,
-
                 bondNumber = obj.FirstOrDefault().bondNumber,
                 userId = obj.FirstOrDefault().userId,
                 agentId = obj.FirstOrDefault().agentId,
-                bondId =obj.FirstOrDefault().bondId,
+                bondId = obj.FirstOrDefault().bondId,
                 transNum = obj.FirstOrDefault().transNum,
                 updateDate = obj.FirstOrDefault().updateDate,
 
@@ -3346,9 +3610,9 @@ namespace Restaurant.Classes
                 updateUserAcc = obj.FirstOrDefault().updateUserAcc,
                 //  cardName = obj.FirstOrDefault().cardName,
                 // get pay type from other trans row of bond
-                cardName =(obj.FirstOrDefault().processType == "doc" && obj.FirstOrDefault().bondIsRecieved == 1)
-                ? list.Where(x=>x.bondId== obj.FirstOrDefault().bondId && x.side=="bnd").FirstOrDefault().cardName
-                
+                cardName = (obj.FirstOrDefault().processType == "doc" && obj.FirstOrDefault().bondIsRecieved == 1)
+                ? (listAll.Where(x => x.bondId == obj.FirstOrDefault().bondId && x.side == "bnd").ToList().Count > 0
+                ? listAll.Where(x => x.bondId == obj.FirstOrDefault().bondId && x.side == "bnd").FirstOrDefault().cardName : "-")
                 : obj.FirstOrDefault().cardName,
 
                 bondDeserveDate = obj.FirstOrDefault().bondDeserveDate,
@@ -3372,8 +3636,8 @@ namespace Restaurant.Classes
 
                 invShippingCompanyId = obj.FirstOrDefault().invShippingCompanyId,
                 invShippingCompanyName = obj.FirstOrDefault().invShippingCompanyName,
-                shipUserId = obj.FirstOrDefault().shipUserId ,
-                invAgentId = obj.FirstOrDefault().invAgentId ,
+                shipUserId = obj.FirstOrDefault().shipUserId,
+                invAgentId = obj.FirstOrDefault().invAgentId,
                 invAgentName = obj.FirstOrDefault().invAgentName,
 
                 Description = obj.FirstOrDefault().Description,
@@ -3382,20 +3646,22 @@ namespace Restaurant.Classes
 
                 Description3 = obj.FirstOrDefault().Description3,
 
-               
-
-            }).Where(t=> !(t.side == "bnd" && t.bondIsRecieved == 1)).ToList();
+            }).Where(t => !(t.side == "bnd" && t.bondIsRecieved == 1)).ToList();
             decimal rowtotal = 0;
 
-            //!(t.processType == "doc" && t.bondIsRecieved != 1)&& 
+            //row.Description1 + "+ delivery cost";
             foreach (CashTransferSts row in list2)
             {
                 row.Description2 = row.bondId > 0
-               ? (row.bondIsRecieved == 0 ?
-                   MainWindow.resourcemanager.GetString("trBondNotRecieved") :
-                   MainWindow.resourcemanager.GetString("trBondRecieved") + "-" + getProcessType(row.processType))
-                  :
-                  row.Description1;
+                ?
+               (row.bondIsRecieved == 0 ?
+                   AppSettings.resourcemanager.GetString("trBondNotRecieved") :
+                   AppSettings.resourcemanager.GetString("trBondRecieved") + "-" + getProcessType(row.processType))
+                 :
+                  //row.Description1;
+                  ((row.side == "c") && (row.invShippingCompanyId != null) && (row.processType == "inv") ?
+                                                                  row.Description1 + " + " + AppSettings.resourcemanager.GetString("trDeliveryCost")
+                                                                : row.Description1);
 
                 row.BIsReceived = row.bondId > 0
                ? ((row.bondIsRecieved == 0 && row.transType == "d") || (row.bondIsRecieved == 0 && row.transType == "p") ?
@@ -3414,17 +3680,17 @@ namespace Restaurant.Classes
                 //row.invNumber = invnum;
                 if (row.transType == "d" && !(row.processType == "doc" && row.bondIsRecieved != 1))
                 //    if (row.transType == "d")
-                    {
+                {
                     //if (!((row.processType == "doc")&&(row.Description1 == "Receipt")))
-                  //  if(row.bondIsRecieved == 1)
-                        rowtotal += (decimal)row.cash;
+                    //  if(row.bondIsRecieved == 1)
+                    rowtotal += (decimal)row.cash;
                 }
-            else if (row.transType == "p" && !(row.processType == "doc" && row.bondIsRecieved != 1))
-             //   else if (row.transType == "p" )
+                else if (row.transType == "p" && !(row.processType == "doc" && row.bondIsRecieved != 1))
+                //   else if (row.transType == "p" )
                 {// p
-                    //if (!((row.processType == "doc") && (row.Description1 == "Receipt")))
-                  //  if (row.bondIsRecieved == 1)
-                        rowtotal -= (decimal)row.cash;
+                 //if (!((row.processType == "doc") && (row.Description1 == "Receipt")))
+                 //  if (row.bondIsRecieved == 1)
+                    rowtotal -= (decimal)row.cash;
                 }
                 row.cashTotal = rowtotal;
 
@@ -3443,42 +3709,42 @@ namespace Restaurant.Classes
 
         }
 
-        public async Task<List<CashTransfer>> GetBytypeAndSideForPos(string type, string side)
-        {
-            // string type, string side
-            List<CashTransfer> list = new List<CashTransfer>();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("type", type.ToString());
-            parameters.Add("side", side.ToString());
-
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("Statistics/GetBytypeAndSideForPos", parameters);
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    list.Add(JsonConvert.DeserializeObject<CashTransfer>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return list;
-
-
-        }
-
         private string getProcessType(string value)
         {
             switch (value)
             {
-                case "cash": return MainWindow.resourcemanager.GetString("trCash");
-                case "doc": return MainWindow.resourcemanager.GetString("trDocument");
-                case "cheque": return MainWindow.resourcemanager.GetString("trCheque");
-                case "balance": return MainWindow.resourcemanager.GetString("trCredit");
-                case "card": return MainWindow.resourcemanager.GetString("trAnotherPaymentMethods");
-                case "inv": return MainWindow.resourcemanager.GetString("trInv");
+                case "cash": return AppSettings.resourcemanager.GetString("trCash");
+                case "doc": return AppSettings.resourcemanager.GetString("trDocument");
+                case "cheque": return AppSettings.resourcemanager.GetString("trCheque");
+                case "balance": return AppSettings.resourcemanager.GetString("trCredit");
+                case "card": return AppSettings.resourcemanager.GetString("trAnotherPaymentMethods");
+                case "inv": return AppSettings.resourcemanager.GetString("trInv");
                 default: return value;
             }
         }
+
+        //public async Task<List<CashTransfer>> GetCashTransferForPosAsync(string type, string side)
+        //{
+        //    // string type, string side
+        //    List<CashTransfer> list = new List<CashTransfer>();
+        //    Dictionary<string, string> parameters = new Dictionary<string, string>();
+        //    parameters.Add("type", type.ToString());
+        //    parameters.Add("side", side.ToString());
+
+        //    //#################
+        //    IEnumerable<Claim> claims = await APIResult.getList("Cashtransfer/GetBytypeAndSideForPos", parameters);
+
+        //    foreach (Claim c in claims)
+        //    {
+        //        if (c.Type == "scopes")
+        //        {
+        //            list.Add(JsonConvert.DeserializeObject<CashTransfer>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+        //        }
+        //    }
+        //    return list;
+        //}
+
+
 
     }
 }

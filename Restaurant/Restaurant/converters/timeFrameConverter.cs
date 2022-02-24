@@ -1,4 +1,5 @@
 ﻿using Restaurant;
+using Restaurant.Classes;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -22,7 +23,7 @@ namespace Restaurant.converters
             else return value;
 
            
-            switch (MainWindow.timeFormat)
+            switch (AppSettings.timeFormat)
             {
                 case "ShortTimePattern":
                     return date.ToShortTimeString();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Restaurant.Classes;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -13,8 +14,8 @@ namespace Restaurant.converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string s = value as string;
-            if (s.Equals("p")) return MainWindow.resourcemanager.GetString("trPull");
-            else return MainWindow.resourcemanager.GetString("trDeposit");
+            if (s.Equals("p")) return AppSettings.resourcemanager.GetString("trPull");
+            else return AppSettings.resourcemanager.GetString("trDeposit");
             //return "";
         }
 

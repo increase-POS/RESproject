@@ -229,11 +229,11 @@ namespace Restaurant.View.windows
                 var itemStatusText = new TextBlock();
 
                 if (item.status == "opened" || item.status == "openedReserved")
-                    itemStatusText.Text = MainWindow.resourcemanager.GetString("trOpened");
+                    itemStatusText.Text = AppSettings.resourcemanager.GetString("trOpened");
                 else if (item.status == "reserved")
-                    itemStatusText.Text = MainWindow.resourcemanager.GetString("trReserved");
+                    itemStatusText.Text = AppSettings.resourcemanager.GetString("trReserved");
                 else
-                    itemStatusText.Text = MainWindow.resourcemanager.GetString("trEmpty");
+                    itemStatusText.Text = AppSettings.resourcemanager.GetString("trEmpty");
                 //itemStatusText.Text = item.status;
                 itemStatusText.VerticalAlignment = VerticalAlignment.Center;
                 itemStatusText.HorizontalAlignment = HorizontalAlignment.Center;

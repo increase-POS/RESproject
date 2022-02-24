@@ -76,14 +76,13 @@ namespace Restaurant.View.accounts
             //    HelpClass.StartAwait(grid_main);
 
             #region translate
-            if (MainWindow.lang.Equals("en"))
+            if (AppSettings.lang.Equals("en"))
             {
-                MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
+
                 grid_main.FlowDirection = FlowDirection.LeftToRight;
             }
             else
             {
-                MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                 grid_main.FlowDirection = FlowDirection.RightToLeft;
             }
             translate();
@@ -107,11 +106,11 @@ namespace Restaurant.View.accounts
 
         private void translate()
         {
-            txt_title.Text = MainWindow.resourcemanager.GetString("trReports");
-            rdoMonth.Content = MainWindow.resourcemanager.GetString("trMonth");
-            rdoYear.Content = MainWindow.resourcemanager.GetString("trYear");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dpStrtDate, MainWindow.resourcemanager.GetString("trStartDateHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dpEndDate, MainWindow.resourcemanager.GetString("trEndDateHint"));
+            txt_title.Text = AppSettings.resourcemanager.GetString("trReports");
+            rdoMonth.Content = AppSettings.resourcemanager.GetString("trMonth");
+            rdoYear.Content = AppSettings.resourcemanager.GetString("trYear");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dpStrtDate, AppSettings.resourcemanager.GetString("trStartDateHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dpEndDate, AppSettings.resourcemanager.GetString("trEndDateHint"));
         }
 
         public void fillDates()
@@ -170,13 +169,13 @@ namespace Restaurant.View.accounts
                         {
                             var Draw = cashQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Count();
                             chartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trCashtransfers");
+                            label = AppSettings.resourcemanager.GetString("trCashtransfers");
                         }
                         else if (account == 2)
                         {
                             var Draw = invoiceQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Count();
                             chartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trOrdersCount");
+                            label = AppSettings.resourcemanager.GetString("trOrdersCount");
                         }
                         MyAxis.Separator.Step = 2;
                         MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
@@ -202,13 +201,13 @@ namespace Restaurant.View.accounts
                     {
                         var Draw = cashQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trCashtransfers");
+                        label = AppSettings.resourcemanager.GetString("trCashtransfers");
                     }
                     if (account == 2)
                     {
                         var Draw = invoiceQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trOrdersCount");
+                        label = AppSettings.resourcemanager.GetString("trOrdersCount");
                     }
 
                     MyAxis.Separator.Step = 1;
@@ -266,13 +265,13 @@ namespace Restaurant.View.accounts
                         {
                             var Draw = cashQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Count();
                             PiechartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trCashtransfers");
+                            label = AppSettings.resourcemanager.GetString("trCashtransfers");
                         }
                         if (account == 2)
                         {
                             var Draw = invoiceQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Count();
                             PiechartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trOrdersCount");
+                            label = AppSettings.resourcemanager.GetString("trOrdersCount");
                         }
                         titles.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
                         if (year == dpEndDate.SelectedDate.Value.Year && month == dpEndDate.SelectedDate.Value.Month)
@@ -297,13 +296,13 @@ namespace Restaurant.View.accounts
                     {
                         var Draw = cashQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trCashtransfers");
+                        label = AppSettings.resourcemanager.GetString("trCashtransfers");
                     }
                     else if (account == 2)
                     {
                         var Draw = invoiceQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trOrdersCount");
+                        label = AppSettings.resourcemanager.GetString("trOrdersCount");
                     }
                     titles.Add(year.ToString());
                 }
@@ -362,13 +361,13 @@ namespace Restaurant.View.accounts
                         {
                             var Draw = cashQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Count();
                             ColumnchartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trCashtransfers");
+                            label = AppSettings.resourcemanager.GetString("trCashtransfers");
                         }
                         else if (account == 2)
                         {
                             var Draw = invoiceQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Count();
                             ColumnchartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trOrdersCount");
+                            label = AppSettings.resourcemanager.GetString("trOrdersCount");
                         }
                         columnAxis.Separator.Step = 2;
                         columnAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
@@ -394,13 +393,13 @@ namespace Restaurant.View.accounts
                     {
                         var Draw = cashQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trCashtransfers");
+                        label = AppSettings.resourcemanager.GetString("trCashtransfers");
                     }
                     else if (account == 2)
                     {
                         var Draw = invoiceQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trOrdersCount");
+                        label = AppSettings.resourcemanager.GetString("trOrdersCount");
                     }
                     columnAxis.Separator.Step = 1;
                     columnAxis.Labels.Add(year.ToString());

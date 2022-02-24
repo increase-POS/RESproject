@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Restaurant.Classes;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Restaurant.converters
         {
             return MainWindow.GetUntilOrEmpty(value.ToString(), ":")
                           + " : " +
-                         MainWindow.resourcemanager.GetString(value.ToString().Substring(value.ToString().LastIndexOf(':') + 1)); ;
+                         AppSettings.resourcemanager.GetString(value.ToString().Substring(value.ToString().LastIndexOf(':') + 1)); ;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {

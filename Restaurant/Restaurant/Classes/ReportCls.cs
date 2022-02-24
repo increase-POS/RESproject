@@ -131,7 +131,7 @@ namespace Restaurant.Classes
                 //sdate = ts.ToString(@"d/M/yyyy");
                 DateTimeFormatInfo dtfi = DateTimeFormatInfo.CurrentInfo;
 
-                switch (MainWindow.dateFormat)
+                switch (AppSettings.dateFormat)
                 {
                     case "ShortDatePattern":
                         sdate = date.Value.ToString(dtfi.ShortDatePattern);
@@ -163,7 +163,7 @@ namespace Restaurant.Classes
                 //sdate = ts.ToString(@"d/M/yyyy");
                 DateTimeFormatInfo dtfi = DateTimeFormatInfo.CurrentInfo;
 
-                switch (MainWindow.dateFormat)
+                switch (AppSettings.dateFormat)
                 {
                     case "ShortDatePattern":
                         sdate = date.Value.ToString(@"dd/MM/yyyy");
@@ -199,7 +199,7 @@ namespace Restaurant.Classes
                 decimal dc = decimal.Parse(dec.ToString());
 
                 //sdc = dc.ToString("0.00");
-                switch (MainWindow.accuracy)
+                switch (AppSettings.accuracy)
                 {
                     case "0":
                         sdc = string.Format("{0:F0}", dc);
@@ -305,15 +305,15 @@ namespace Restaurant.Classes
         public static bool checkLang()
         {
             bool isArabic;
-            if (MainWindow.Reportlang.Equals("en"))
+            if (AppSettings.Reportlang.Equals("en"))
             {
                 
-                MainWindow.resourcemanagerreport = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
+                AppSettings.resourcemanagerreport = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                 isArabic = false;
             }
             else
             {
-                MainWindow.resourcemanagerreport = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
+                AppSettings.resourcemanagerreport = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                 isArabic = true;
             }
             return isArabic;
@@ -325,9 +325,9 @@ namespace Restaurant.Classes
             Fillcurrency();
             string title;
             if (cashtrans.transType == "p")
-                title = MainWindow.resourcemanagerreport.GetString("trPayVocher");
+                title = AppSettings.resourcemanagerreport.GetString("trPayVocher");
             else
-                title = MainWindow.resourcemanagerreport.GetString("trReceiptVoucher");
+                title = AppSettings.resourcemanagerreport.GetString("trReceiptVoucher");
 
 
             string company_name = FillCombo.companyName;
@@ -375,7 +375,7 @@ namespace Restaurant.Classes
             if (cashtrans.processType == "cheque")
             {
 
-                type = MainWindow.resourcemanagerreport.GetString("trCheque");
+                type = AppSettings.resourcemanagerreport.GetString("trCheque");
                 if (isArabic)
                 {
                     trans_num_txt = "رقم الشيك:";
@@ -385,7 +385,7 @@ namespace Restaurant.Classes
                     trans_num_txt = "Cheque Num:";
                 }
 
-                //    MainWindow.resourcemanagerreport.GetString("trCheque");
+                //    AppSettings.resourcemanagerreport.GetString("trCheque");
             }
             else if (cashtrans.processType == "card")
             {
@@ -430,7 +430,7 @@ namespace Restaurant.Classes
             try
             {
 
-                int id = MainWindow.CurrencyId;
+                int id = AppSettings.CurrencyId;
                 ToWord toWord = new ToWord(Convert.ToDecimal(amount), currencies[id]);
 
                 if (isArabic)
@@ -453,7 +453,7 @@ namespace Restaurant.Classes
             //  rep.DataSources.Add(new ReportDataSource("DataSetBank", banksQuery));
 
             List<ReportParameter> paramarr = new List<ReportParameter>();
-            paramarr.Add(new ReportParameter("lang", MainWindow.Reportlang));
+            paramarr.Add(new ReportParameter("lang", AppSettings.Reportlang));
             paramarr.Add(new ReportParameter("title", title));
             paramarr.Add(new ReportParameter("company_name", company_name));
             paramarr.Add(new ReportParameter("comapny_address", comapny_address));
@@ -488,7 +488,7 @@ namespace Restaurant.Classes
             {
 
                 bool isArabic;
-                int id = MainWindow.CurrencyId;
+                int id = AppSettings.CurrencyId;
                 ToWord toWord = new ToWord(Convert.ToDecimal(amount), currencies[id]);
                 isArabic = checkLang();
                 if (isArabic)
@@ -640,7 +640,7 @@ namespace Restaurant.Classes
 
         public string GetPath(string localpath)
         {
-            //string imageName = MainWindow.logoImage;
+            //string imageName = AppSettings.logoImage;
             //string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             string dir = Directory.GetCurrentDirectory();
             string tmpPath = Path.Combine(dir, localpath);
@@ -723,14 +723,14 @@ namespace Restaurant.Classes
         //        else
         //        {
 
-        //            if (MainWindow.salePaperSize == "10cm")
+        //            if (AppSettings.salePaperSize == "10cm")
         //            {
         //                addpath = @"\Reports\Sale\Ar\LargeSaleReport.rdlc";
         //                View.uc_receiptInvoice.width = 400;//400 =10cm
         //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
 
         //            }
-        //            else if (MainWindow.salePaperSize == "8cm")
+        //            else if (AppSettings.salePaperSize == "8cm")
         //            {
         //                addpath = @"\Reports\Sale\Ar\MediumSaleReport.rdlc";
         //                View.uc_receiptInvoice.width = 315;//315 =8cm
@@ -738,14 +738,14 @@ namespace Restaurant.Classes
 
 
         //            }
-        //            else if (MainWindow.salePaperSize == "5.7cm")
+        //            else if (AppSettings.salePaperSize == "5.7cm")
         //            {
         //                addpath = @"\Reports\Sale\Ar\SmallSaleReport.rdlc";
         //                View.uc_receiptInvoice.width = 224;//224 =5.7cm
         //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 460);
 
         //            }
-        //            else //MainWindow.salePaperSize == "A4"
+        //            else //AppSettings.salePaperSize == "A4"
         //            {
 
         //                addpath = @"\Reports\Sale\Ar\ArInvPurReport.rdlc";
@@ -769,28 +769,28 @@ namespace Restaurant.Classes
         //        }
         //        else
         //        {
-        //            if (MainWindow.salePaperSize == "10cm")
+        //            if (AppSettings.salePaperSize == "10cm")
         //            {
         //                addpath = @"\Reports\Sale\En\LargeSaleReport.rdlc";
         //                View.uc_receiptInvoice.width = 400;//400 =10cm
         //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
 
         //            }
-        //            else if (MainWindow.salePaperSize == "8cm")
+        //            else if (AppSettings.salePaperSize == "8cm")
         //            {
         //                addpath = @"\Reports\Sale\En\MediumSaleReport.rdlc";
         //                View.uc_receiptInvoice.width = 315;//315 =8cm
         //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
 
         //            }
-        //            else if (MainWindow.salePaperSize == "5.7cm")
+        //            else if (AppSettings.salePaperSize == "5.7cm")
         //            {
         //                addpath = @"\Reports\Sale\En\SmallSaleReport.rdlc";
         //                View.uc_receiptInvoice.width = 224;//224 =5.7cm
         //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 460);
 
         //            }
-        //            else //MainWindow.salePaperSize == "A4"
+        //            else //AppSettings.salePaperSize == "A4"
         //            {
 
         //                addpath = @"\Reports\Sale\En\InvPurReport.rdlc";
@@ -828,14 +828,14 @@ namespace Restaurant.Classes
         //        else
         //        {
 
-        //            if (MainWindow.salePaperSize == "10cm" && isPreview == 1)
+        //            if (AppSettings.salePaperSize == "10cm" && isPreview == 1)
         //            {
         //                addpath = @"\Reports\Sale\Ar\LargeSaleReport.rdlc";
         //                View.uc_receiptInvoice.width = 400;//400 =10cm
         //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
 
         //            }
-        //            else if (MainWindow.salePaperSize == "8cm" && isPreview == 1)
+        //            else if (AppSettings.salePaperSize == "8cm" && isPreview == 1)
         //            {
         //                addpath = @"\Reports\Sale\Ar\MediumSaleReport.rdlc";
         //                View.uc_receiptInvoice.width = 315;//315 =8cm
@@ -843,14 +843,14 @@ namespace Restaurant.Classes
 
 
         //            }
-        //            else if (MainWindow.salePaperSize == "5.7cm" && isPreview == 1)
+        //            else if (AppSettings.salePaperSize == "5.7cm" && isPreview == 1)
         //            {
         //                addpath = @"\Reports\Sale\Ar\SmallSaleReport.rdlc";
         //                View.uc_receiptInvoice.width = 224;//224 =5.7cm
         //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 460);
 
         //            }
-        //            else //MainWindow.salePaperSize == "A4"
+        //            else //AppSettings.salePaperSize == "A4"
         //            {
 
         //                addpath = @"\Reports\Sale\Ar\ArInvPurReport.rdlc";
@@ -874,28 +874,28 @@ namespace Restaurant.Classes
         //        }
         //        else
         //        {
-        //            if (MainWindow.salePaperSize == "10cm" && isPreview == 1)
+        //            if (AppSettings.salePaperSize == "10cm" && isPreview == 1)
         //            {
         //                addpath = @"\Reports\Sale\En\LargeSaleReport.rdlc";
         //                View.uc_receiptInvoice.width = 400;//400 =10cm
         //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
 
         //            }
-        //            else if (MainWindow.salePaperSize == "8cm" && isPreview == 1)
+        //            else if (AppSettings.salePaperSize == "8cm" && isPreview == 1)
         //            {
         //                addpath = @"\Reports\Sale\En\MediumSaleReport.rdlc";
         //                View.uc_receiptInvoice.width = 315;//315 =8cm
         //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 500);
 
         //            }
-        //            else if (MainWindow.salePaperSize == "5.7cm" && isPreview == 1)
+        //            else if (AppSettings.salePaperSize == "5.7cm" && isPreview == 1)
         //            {
         //                addpath = @"\Reports\Sale\En\SmallSaleReport.rdlc";
         //                View.uc_receiptInvoice.width = 224;//224 =5.7cm
         //                View.uc_receiptInvoice.height = GetpageHeight(View.uc_receiptInvoice.itemscount, 460);
 
         //            }
-        //            else //MainWindow.salePaperSize == "A4"
+        //            else //AppSettings.salePaperSize == "A4"
         //            {
 
         //                addpath = @"\Reports\Sale\En\InvPurReport.rdlc";
@@ -968,7 +968,7 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("tax", DecTostring(invoice.tax) == null ? "0" : DecTostring(invoice.tax)));
             string invNum = invoice.invNumber == null ? "-" : invoice.invNumber.ToString();
             paramarr.Add(new ReportParameter("barcodeimage", "file:\\" + BarcodeToImage(invNum, "invnum")));
-            paramarr.Add(new ReportParameter("Currency", MainWindow.Currency));
+            paramarr.Add(new ReportParameter("Currency", AppSettings.Currency));
             paramarr.Add(new ReportParameter("logoImage", "file:\\" + GetLogoImagePath()));
             paramarr.Add(new ReportParameter("branchName", invoice.branchName == null ? "-" : invoice.branchName));
             paramarr.Add(new ReportParameter("userName", userName.Trim()));
@@ -1082,7 +1082,7 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("tax", DecTostring(invoice.tax) == null ? "0" : DecTostring(invoice.tax)));
             string invNum = invoice.invNumber == null ? "-" : invoice.invNumber.ToString();
             paramarr.Add(new ReportParameter("barcodeimage", "file:\\" + BarcodeToImage(invNum, "invnum")));
-            paramarr.Add(new ReportParameter("Currency", MainWindow.Currency));
+            paramarr.Add(new ReportParameter("Currency", AppSettings.Currency));
             paramarr.Add(new ReportParameter("branchName", invoice.branchName == null ? "-" : invoice.branchName));
             paramarr.Add(new ReportParameter("userName", userName.Trim()));
             paramarr.Add(new ReportParameter("logoImage", "file:\\" + GetLogoImagePath()));
@@ -1108,23 +1108,23 @@ namespace Restaurant.Classes
             {
                 if (item.invType == "p")
                 {
-                    item.invType = MainWindow.resourcemanagerreport.GetString("trPurchaseInvoice");
+                    item.invType = AppSettings.resourcemanagerreport.GetString("trPurchaseInvoice");
                 }
                 else if (item.invType == "pw")
                 {
-                    item.invType = MainWindow.resourcemanagerreport.GetString("trPurchaseInvoice");
+                    item.invType = AppSettings.resourcemanagerreport.GetString("trPurchaseInvoice");
                 }
                 else if (item.invType == "pb")
                 {
-                    item.invType = MainWindow.resourcemanagerreport.GetString("trPurchaseReturnInvoice");
+                    item.invType = AppSettings.resourcemanagerreport.GetString("trPurchaseReturnInvoice");
                 }
                 else if (item.invType == "pd")
                 {
-                    item.invType = MainWindow.resourcemanagerreport.GetString("trDraftPurchaseBill");
+                    item.invType = AppSettings.resourcemanagerreport.GetString("trDraftPurchaseBill");
                 }
                 else if (item.invType == "pbd")
                 {
-                    item.invType = MainWindow.resourcemanagerreport.GetString("trPurchaseReturnDraft");
+                    item.invType = AppSettings.resourcemanagerreport.GetString("trPurchaseReturnDraft");
                 }
             }
             return query;

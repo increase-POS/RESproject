@@ -153,14 +153,12 @@ namespace Restaurant.View.windows
             try
             {
                 #region translate
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_subscriptionFees.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_subscriptionFees.FlowDirection = FlowDirection.RightToLeft;
                 }
 
@@ -175,17 +173,17 @@ namespace Restaurant.View.windows
 
         private void translat()
         {
-            txt_Title.Text = MainWindow.resourcemanager.GetString("trSubscriptionFees");
+            txt_Title.Text = AppSettings.resourcemanager.GetString("trSubscriptionFees");
 
-            dg_subscriptionFees.Columns[0].Header = MainWindow.resourcemanager.GetString("trMonthCount");
-            dg_subscriptionFees.Columns[1].Header = MainWindow.resourcemanager.GetString("trAmount");
+            dg_subscriptionFees.Columns[0].Header = AppSettings.resourcemanager.GetString("trMonthCount");
+            dg_subscriptionFees.Columns[1].Header = AppSettings.resourcemanager.GetString("trAmount");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_monthsCount, MainWindow.resourcemanager.GetString("trMonthCountHint"));//
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_amount, MainWindow.resourcemanager.GetString("trAmountHint"));//
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_monthsCount, AppSettings.resourcemanager.GetString("trMonthCountHint"));//
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_amount, AppSettings.resourcemanager.GetString("trAmountHint"));//
 
-            tt_add_Button.Content = MainWindow.resourcemanager.GetString("trAdd");
-            tt_update_Button.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            tt_delete_Button.Content = MainWindow.resourcemanager.GetString("trDelete");
+            tt_add_Button.Content = AppSettings.resourcemanager.GetString("trAdd");
+            tt_update_Button.Content = AppSettings.resourcemanager.GetString("trUpdate");
+            tt_delete_Button.Content = AppSettings.resourcemanager.GetString("trDelete");
 
         }
 

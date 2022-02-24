@@ -106,14 +106,12 @@ namespace Restaurant.View.windows
                     HelpClass.StartAwait(grid_ucInvoice);
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_ucInvoice.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_ucInvoice.FlowDirection = FlowDirection.RightToLeft;
                 }
                 txt_Invoices.Text = title;
@@ -144,7 +142,7 @@ namespace Restaurant.View.windows
                 inCommen = invTypeL.Any(s => invTypes.Contains(s));
                 if (inCommen)
                 {
-                    col_agent.Header = MainWindow.resourcemanager.GetString("trCustomer");                                      
+                    col_agent.Header = AppSettings.resourcemanager.GetString("trCustomer");                                      
                     col_agent.Visibility = Visibility.Visible;
                     if (fromOrder == false)
                     {
@@ -157,7 +155,7 @@ namespace Restaurant.View.windows
                 #region display branch, vendor & user columns in grid if invoice is  purchase orders
                 if (invoiceType == "po" && fromOrder == false)
                 {
-                    col_agent.Header = MainWindow.resourcemanager.GetString("trVendor");
+                    col_agent.Header = AppSettings.resourcemanager.GetString("trVendor");
                     col_branch.Visibility = Visibility.Visible; //make branch column visible
                     col_user.Visibility = Visibility.Visible; //make user column visible
                     col_agent.Visibility = Visibility.Visible;
@@ -178,20 +176,20 @@ namespace Restaurant.View.windows
         }
         private void translat()
         {
-            //txt_Invoices.Text = MainWindow.resourcemanager.GetString("trInvoices");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+            //txt_Invoices.Text = AppSettings.resourcemanager.GetString("trInvoices");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
 
-            col_num.Header = MainWindow.resourcemanager.GetString("trInvoiceNumber");
-            col_branch.Header = MainWindow.resourcemanager.GetString("trBranch");
-            col_user.Header = MainWindow.resourcemanager.GetString("trUser");
-            col_count.Header = MainWindow.resourcemanager.GetString("trQTR");
-            col_total.Header = MainWindow.resourcemanager.GetString("trTotal");
-            col_type.Header = MainWindow.resourcemanager.GetString("trType");
-            col_agent.Header = MainWindow.resourcemanager.GetString("trVendor");
+            col_num.Header = AppSettings.resourcemanager.GetString("trInvoiceNumber");
+            col_branch.Header = AppSettings.resourcemanager.GetString("trBranch");
+            col_user.Header = AppSettings.resourcemanager.GetString("trUser");
+            col_count.Header = AppSettings.resourcemanager.GetString("trQTR");
+            col_total.Header = AppSettings.resourcemanager.GetString("trTotal");
+            col_type.Header = AppSettings.resourcemanager.GetString("trType");
+            col_agent.Header = AppSettings.resourcemanager.GetString("trVendor");
 
-            txt_countTitle.Text = MainWindow.resourcemanager.GetString("trCount") + ":";
+            txt_countTitle.Text = AppSettings.resourcemanager.GetString("trCount") + ":";
 
-            btn_select.Content = MainWindow.resourcemanager.GetString("trSelect");
+            btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
         }
         private async Task refreshInvoices()
         {
@@ -335,7 +333,7 @@ namespace Restaurant.View.windows
             //            #region
             //            Window.GetWindow(this).Opacity = 0.2;
             //            wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-            //            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+            //            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
             //            w.ShowDialog();
             //            Window.GetWindow(this).Opacity = 1;
             //            #endregion
@@ -349,12 +347,12 @@ namespace Restaurant.View.windows
             //                    res = await invoice.deleteInvoice(row.invoiceId);
             //                if (res > 0)
             //                {
-            //                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+            //                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
             //                    await refreshInvoices();
             //                    Txb_search_TextChanged(null,null);
             //                }
             //                else
-            //                    Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+            //                    Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             //            }
             //        }
 

@@ -57,37 +57,37 @@ namespace Restaurant
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static ResourceManager resourcemanager;
-        public static ResourceManager resourcemanagerreport;
+        //public static AppSettings.resourcemanager AppSettings.resourcemanager;
+        //public static AppSettings.resourcemanager AppSettings.resourcemanagerreport;
         bool menuState = false;
         //ToolTip="{Binding Properties.Settings.Default.Lang}"
-        public static string firstPath = "";
-        public static string secondPath = "";
-        public static string first = "";
-        public static string second = "";
-        public static string lang = "ar";
-        public static string Reportlang = "ar";
+        //public static string firstPath = "";
+        //public static string secondPath = "";
+        //public static string first = "";
+        //public static string second = "";
+        //public static string lang = "ar";
+        //public static string Reportlang = "ar";
         //public static string companyName;
         //public static string Email;
         //public static string Fax;
         //public static string Mobile;
         //public static string Address;
 
-        public static string Currency;
-        public static int CurrencyId;
-        public static string Phone;
+        //public static string Currency;
+        //public static int CurrencyId;
+        //public static string Phone;
         internal static User userLogin; 
         internal static Pos posLogin; 
         internal static Branch branchLogin; 
         //internal static Pos posLogIn;
         bool isHome = false;
-        internal static int? isInvTax;
-        internal static decimal? tax;
-        internal static int? itemCost;
-        internal static string dateFormat;
-        internal static string timeFormat;
-        internal static string accuracy;
-        internal static decimal? StorageCost;
+        //internal static int? isInvTax;
+        //internal static decimal? tax;
+        //internal static int? itemCost;
+        //internal static string dateFormat;
+        //internal static string timeFormat;
+        //internal static string accuracy;
+        //internal static decimal? StorageCost;
         public static int Idletime = 5;
         public static int threadtime = 5;
         public static string menuIsOpen = "close";
@@ -166,14 +166,12 @@ namespace Restaurant
         void windowFlowDirection()
         {
             #region translate
-            if (lang.Equals("en"))
+            if (AppSettings.lang.Equals("en"))
             {
-                resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                 grid_mainWindow.FlowDirection = FlowDirection.LeftToRight;
             }
             else
             {
-                resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                 grid_mainWindow.FlowDirection = FlowDirection.RightToLeft;
             }
             #endregion
@@ -1296,33 +1294,33 @@ namespace Restaurant
         }
         public void translate()
         {
-            tt_menu.Content = resourcemanager.GetString("trMenu");
-            tt_home.Content = resourcemanager.GetString("trHome");
-            txt_home.Text = resourcemanager.GetString("trHome");
-            tt_catalog.Content = resourcemanager.GetString("trCatalog");
-            txt_catalog.Text = resourcemanager.GetString("trCatalog");
-            tt_storage.Content = resourcemanager.GetString("trStore");
-            txt_storage.Text = resourcemanager.GetString("trStore");
-            tt_purchase.Content = resourcemanager.GetString("trPurchases");
-            txt_purchases.Text = resourcemanager.GetString("trPurchases");
-            tt_sales.Content = resourcemanager.GetString("trSales");
-            txt_sales.Text = resourcemanager.GetString("trSales");
-            tt_accounts.Content = resourcemanager.GetString("trAccounting");
-            txt_accounts.Text = resourcemanager.GetString("trAccounting");
-            tt_reports.Content = resourcemanager.GetString("trReports");
-            txt_reports.Text = resourcemanager.GetString("trReports");
-            tt_sectionData.Content = resourcemanager.GetString("trSectionData");
-            txt_sectiondata.Text = resourcemanager.GetString("trSectionData");
-            tt_settings.Content = resourcemanager.GetString("trSettings");
-            txt_settings.Text = resourcemanager.GetString("trSettings");
-            txt_cashTitle.Text = resourcemanager.GetString("trBalance");
+            tt_menu.Content = AppSettings.resourcemanager.GetString("trMenu");
+            tt_home.Content = AppSettings.resourcemanager.GetString("trHome");
+            txt_home.Text = AppSettings.resourcemanager.GetString("trHome");
+            tt_catalog.Content = AppSettings.resourcemanager.GetString("trCatalog");
+            txt_catalog.Text = AppSettings.resourcemanager.GetString("trCatalog");
+            tt_storage.Content = AppSettings.resourcemanager.GetString("trStore");
+            txt_storage.Text = AppSettings.resourcemanager.GetString("trStore");
+            tt_purchase.Content = AppSettings.resourcemanager.GetString("trPurchases");
+            txt_purchases.Text = AppSettings.resourcemanager.GetString("trPurchases");
+            tt_sales.Content = AppSettings.resourcemanager.GetString("trSales");
+            txt_sales.Text = AppSettings.resourcemanager.GetString("trSales");
+            tt_accounts.Content = AppSettings.resourcemanager.GetString("trAccounting");
+            txt_accounts.Text = AppSettings.resourcemanager.GetString("trAccounting");
+            tt_reports.Content = AppSettings.resourcemanager.GetString("trReports");
+            txt_reports.Text = AppSettings.resourcemanager.GetString("trReports");
+            tt_sectionData.Content = AppSettings.resourcemanager.GetString("trSectionData");
+            txt_sectiondata.Text = AppSettings.resourcemanager.GetString("trSectionData");
+            tt_settings.Content = AppSettings.resourcemanager.GetString("trSettings");
+            txt_settings.Text = AppSettings.resourcemanager.GetString("trSettings");
+            txt_cashTitle.Text = AppSettings.resourcemanager.GetString("trBalance");
 
-            mi_changePassword.Header = resourcemanager.GetString("trChangePassword");
-            BTN_logOut.Header = resourcemanager.GetString("trLogOut");
+            mi_changePassword.Header = AppSettings.resourcemanager.GetString("trChangePassword");
+            BTN_logOut.Header = AppSettings.resourcemanager.GetString("trLogOut");
 
-            txt_notifications.Text = resourcemanager.GetString("trNotifications");
-            txt_noNoti.Text = resourcemanager.GetString("trNoNotifications");
-            btn_showAll.Content = resourcemanager.GetString("trShowAll");
+            txt_notifications.Text = AppSettings.resourcemanager.GetString("trNotifications");
+            txt_noNoti.Text = AppSettings.resourcemanager.GetString("trNoNotifications");
+            btn_showAll.Content = AppSettings.resourcemanager.GetString("trShowAll");
         }
 
         //فتح
@@ -1931,46 +1929,46 @@ namespace Restaurant
                         grd_notifications.Visibility = Visibility.Visible;
                         txt_noNoti.Visibility = Visibility.Collapsed;
 
-                        txt_firstNotiTitle.Text = resourcemanager.GetString(orderdNotifications.Select(obj => obj.title).FirstOrDefault());
+                        txt_firstNotiTitle.Text = AppSettings.resourcemanager.GetString(orderdNotifications.Select(obj => obj.title).FirstOrDefault());
 
                         txt_firstNotiContent.Text = GetUntilOrEmpty(orderdNotifications.Select(obj => obj.ncontent).FirstOrDefault(), ":")
                           + " : " +
-                          resourcemanager.GetString(orderdNotifications.Select(obj => obj.ncontent).FirstOrDefault().Substring(orderdNotifications.Select(obj => obj.ncontent).FirstOrDefault().LastIndexOf(':') + 1));
+                          AppSettings.resourcemanager.GetString(orderdNotifications.Select(obj => obj.ncontent).FirstOrDefault().Substring(orderdNotifications.Select(obj => obj.ncontent).FirstOrDefault().LastIndexOf(':') + 1));
 
                         txt_firstNotiDate.Text = orderdNotifications.Select(obj => obj.createDate).FirstOrDefault().ToString();
 
                         if (notifications.Count > 1)
                         {
-                            txt_2NotiTitle.Text = resourcemanager.GetString(orderdNotifications.Select(obj => obj.title).Skip(1).FirstOrDefault());
+                            txt_2NotiTitle.Text = AppSettings.resourcemanager.GetString(orderdNotifications.Select(obj => obj.title).Skip(1).FirstOrDefault());
                             txt_2NotiContent.Text = GetUntilOrEmpty(orderdNotifications.Select(obj => obj.ncontent).Skip(1).FirstOrDefault(), ":")
-                          + " : " + resourcemanager.GetString(orderdNotifications.Select(obj => obj.ncontent).Skip(1).FirstOrDefault().Substring(orderdNotifications.Select(obj => obj.ncontent).Skip(1).FirstOrDefault().LastIndexOf(':') + 1));
+                          + " : " + AppSettings.resourcemanager.GetString(orderdNotifications.Select(obj => obj.ncontent).Skip(1).FirstOrDefault().Substring(orderdNotifications.Select(obj => obj.ncontent).Skip(1).FirstOrDefault().LastIndexOf(':') + 1));
 
                             txt_2NotiDate.Text = orderdNotifications.Select(obj => obj.createDate).Skip(1).FirstOrDefault().ToString();
 
                         }
                         if (notifications.Count > 2)
                         {
-                            txt_3NotiTitle.Text = resourcemanager.GetString(orderdNotifications.Select(obj => obj.title).Skip(2).FirstOrDefault());
+                            txt_3NotiTitle.Text = AppSettings.resourcemanager.GetString(orderdNotifications.Select(obj => obj.title).Skip(2).FirstOrDefault());
                             txt_3NotiContent.Text = GetUntilOrEmpty(orderdNotifications.Select(obj => obj.ncontent).Skip(2).FirstOrDefault(), ":")
-                          + " : " + resourcemanager.GetString(orderdNotifications.Select(obj => obj.ncontent).Skip(2).FirstOrDefault().Substring(orderdNotifications.Select(obj => obj.ncontent).Skip(2).FirstOrDefault().LastIndexOf(':') + 1));
+                          + " : " + AppSettings.resourcemanager.GetString(orderdNotifications.Select(obj => obj.ncontent).Skip(2).FirstOrDefault().Substring(orderdNotifications.Select(obj => obj.ncontent).Skip(2).FirstOrDefault().LastIndexOf(':') + 1));
 
                             txt_3NotiDate.Text = orderdNotifications.Select(obj => obj.createDate).Skip(2).FirstOrDefault().ToString();
 
                         }
                         if (notifications.Count > 3)
                         {
-                            txt_4NotiTitle.Text = resourcemanager.GetString(orderdNotifications.Select(obj => obj.title).Skip(3).FirstOrDefault());
+                            txt_4NotiTitle.Text = AppSettings.resourcemanager.GetString(orderdNotifications.Select(obj => obj.title).Skip(3).FirstOrDefault());
                             txt_4NotiContent.Text = GetUntilOrEmpty(orderdNotifications.Select(obj => obj.ncontent).Skip(3).FirstOrDefault(), ":")
-                          + " : " + resourcemanager.GetString(orderdNotifications.Select(obj => obj.ncontent).Skip(3).FirstOrDefault().Substring(orderdNotifications.Select(obj => obj.ncontent).Skip(3).FirstOrDefault().LastIndexOf(':') + 1));
+                          + " : " + AppSettings.resourcemanager.GetString(orderdNotifications.Select(obj => obj.ncontent).Skip(3).FirstOrDefault().Substring(orderdNotifications.Select(obj => obj.ncontent).Skip(3).FirstOrDefault().LastIndexOf(':') + 1));
 
                             txt_4NotiDate.Text = orderdNotifications.Select(obj => obj.createDate).Skip(3).FirstOrDefault().ToString();
 
                         }
                         if (notifications.Count > 4)
                         {
-                            txt_5NotiTitle.Text = resourcemanager.GetString(orderdNotifications.Select(obj => obj.title).Skip(4).FirstOrDefault());
+                            txt_5NotiTitle.Text = AppSettings.resourcemanager.GetString(orderdNotifications.Select(obj => obj.title).Skip(4).FirstOrDefault());
                             txt_5NotiContent.Text = GetUntilOrEmpty(orderdNotifications.Select(obj => obj.ncontent).Skip(4).FirstOrDefault(), ":")
-                          + " : " + resourcemanager.GetString(orderdNotifications.Select(obj => obj.ncontent).Skip(4).FirstOrDefault().Substring(orderdNotifications.Select(obj => obj.ncontent).Skip(4).FirstOrDefault().LastIndexOf(':') + 1));
+                          + " : " + AppSettings.resourcemanager.GetString(orderdNotifications.Select(obj => obj.ncontent).Skip(4).FirstOrDefault().Substring(orderdNotifications.Select(obj => obj.ncontent).Skip(4).FirstOrDefault().LastIndexOf(':') + 1));
 
                             txt_5NotiDate.Text = orderdNotifications.Select(obj => obj.createDate).Skip(4).FirstOrDefault().ToString();
 
@@ -2106,7 +2104,7 @@ namespace Restaurant
             {
                 posLogIn = await posLogIn.getById(posID.Value);
                 mainWindow.txt_cashValue.Text = HelpClass.DecTostring(posLogIn.balance);
-                mainWindow.txt_cashSympol.Text = MainWindow.Currency;
+                mainWindow.txt_cashSympol.Text = AppSettings.Currency;
             }
             catch (Exception ex)
             {
@@ -2147,7 +2145,7 @@ namespace Restaurant
         Button initializationMainButton(Object _object, bool isLast)
         {
             Button button = new Button();
-            button.Content = ">" + MainWindow.resourcemanager.GetString(_object.translate);
+            button.Content = ">" + AppSettings.resourcemanager.GetString(_object.translate);
             button.Tag = _object.name;
             button.Click += MainButton_Click;
             button.Background = null;

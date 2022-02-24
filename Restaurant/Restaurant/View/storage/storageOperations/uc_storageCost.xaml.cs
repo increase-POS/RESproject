@@ -107,14 +107,12 @@ namespace Restaurant.View.storage.storageOperations
                 requiredControlList = new List<string> { "name", "cost" };
                 btn_items.IsEnabled = false;
 
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
@@ -135,31 +133,31 @@ namespace Restaurant.View.storage.storageOperations
 
         private void translate()
         {
-            txt_active.Text = MainWindow.resourcemanager.GetString("trActive");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            txt_title.Text = MainWindow.resourcemanager.GetString("trStorageCostPerDay");
-            txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cost, MainWindow.resourcemanager.GetString("trStorageCostHent"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+            txt_active.Text = AppSettings.resourcemanager.GetString("trActive");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+            txt_title.Text = AppSettings.resourcemanager.GetString("trStorageCostPerDay");
+            txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, AppSettings.resourcemanager.GetString("trNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cost, AppSettings.resourcemanager.GetString("trStorageCostHent"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
 
-            dg_storageCost.Columns[0].Header = MainWindow.resourcemanager.GetString("trName");
-            dg_storageCost.Columns[1].Header = MainWindow.resourcemanager.GetString("trStorageCost");
+            dg_storageCost.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
+            dg_storageCost.Columns[1].Header = AppSettings.resourcemanager.GetString("trStorageCost");
 
-            txt_addButton.Text = MainWindow.resourcemanager.GetString("trAdd");
-            tt_add_Button.Content = MainWindow.resourcemanager.GetString("trAdd");
-            txt_updateButton.Text = MainWindow.resourcemanager.GetString("trUpdate");
-            tt_update_Button.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            tt_delete_Button.Content = MainWindow.resourcemanager.GetString("trDelete");
+            txt_addButton.Text = AppSettings.resourcemanager.GetString("trAdd");
+            tt_add_Button.Content = AppSettings.resourcemanager.GetString("trAdd");
+            txt_updateButton.Text = AppSettings.resourcemanager.GetString("trUpdate");
+            tt_update_Button.Content = AppSettings.resourcemanager.GetString("trUpdate");
+            tt_delete_Button.Content = AppSettings.resourcemanager.GetString("trDelete");
 
-            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
-            tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            tt_pieChart.Content = MainWindow.resourcemanager.GetString("trPieChart");
-            tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
-            btn_items.Content = MainWindow.resourcemanager.GetString("trItems");
+            tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
+            tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
+            tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
+            tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
+            tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
+            tt_pieChart.Content = AppSettings.resourcemanager.GetString("trPieChart");
+            tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
+            btn_items.Content = AppSettings.resourcemanager.GetString("trItems");
 
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
@@ -184,10 +182,10 @@ namespace Restaurant.View.storage.storageOperations
 
                         int s = await storageCost.save(storageCost);
                         if (s <= 0)
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
                         {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                             Clear();
                             await RefreshStorageCostsList();
                             await Search();
@@ -196,7 +194,7 @@ namespace Restaurant.View.storage.storageOperations
                     HelpClass.EndAwait(grid_main);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)
@@ -223,10 +221,10 @@ namespace Restaurant.View.storage.storageOperations
 
                         int s = await storageCost.save(storageCost);
                         if (s <= 0)
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
                         {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                             await RefreshStorageCostsList();
                             await Search();
                             
@@ -234,12 +232,12 @@ namespace Restaurant.View.storage.storageOperations
                     }
                     }
                     else
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
 
                     HelpClass.EndAwait(grid_main);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)
@@ -262,7 +260,7 @@ namespace Restaurant.View.storage.storageOperations
                             #region
                             Window.GetWindow(this).Opacity = 0.2;
                             wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxActivate");
+                            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
@@ -275,25 +273,25 @@ namespace Restaurant.View.storage.storageOperations
                             Window.GetWindow(this).Opacity = 0.2;
                             wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                             if (storageCost.canDelete)
-                                w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                                w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
                             if (!storageCost.canDelete)
-                                w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
+                                w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
                             if (w.isOk)
                             {
                                 string popupContent = "";
-                                if (storageCost.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
-                                if ((!storageCost.canDelete) && (storageCost.isActive == 1)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+                                if (storageCost.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
+                                if ((!storageCost.canDelete) && (storageCost.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
                                 int s = await storageCost.delete(storageCost.storageCostId, MainWindow.userLogin.userId, storageCost.canDelete);
                                 if (s < 0)
-                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
                                     storageCost.storageCostId = 0;
-                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshStorageCostsList();
                                     await Search();
@@ -305,7 +303,7 @@ namespace Restaurant.View.storage.storageOperations
                     HelpClass.EndAwait(grid_main);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)
@@ -319,10 +317,10 @@ namespace Restaurant.View.storage.storageOperations
             storageCost.isActive = 1;
             int s = await storageCost.save(storageCost);
             if (s <= 0)
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
             {
-                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
                 await RefreshStorageCostsList();
                 await Search();
             }
@@ -408,13 +406,13 @@ namespace Restaurant.View.storage.storageOperations
                         btn_items.IsEnabled = true;
                         #region delete
                         if (storageCost.canDelete)
-                            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+                            btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
                         else
                         {
                             if (storageCost.isActive == 0)
-                                btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+                                btn_delete.Content = AppSettings.resourcemanager.GetString("trActive");
                             else
-                                btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+                                btn_delete.Content = AppSettings.resourcemanager.GetString("trInActive");
                         }
                         #endregion
                     }
@@ -636,7 +634,7 @@ namespace Restaurant.View.storage.storageOperations
                     }
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -669,7 +667,7 @@ namespace Restaurant.View.storage.storageOperations
 
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -712,7 +710,7 @@ namespace Restaurant.View.storage.storageOperations
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
 
                 HelpClass.EndAwait(grid_main);
@@ -759,7 +757,7 @@ namespace Restaurant.View.storage.storageOperations
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -798,7 +796,7 @@ namespace Restaurant.View.storage.storageOperations
                     Window.GetWindow(this).Opacity = 1;
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
              

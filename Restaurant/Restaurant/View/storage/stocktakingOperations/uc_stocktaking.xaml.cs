@@ -87,7 +87,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                     #region Accept
                     MainWindow.mainWindow.Opacity = 0.2;
                     wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                    w.contentText = MainWindow.resourcemanager.GetString("trSaveStockTakingNotification");
+                    w.contentText = AppSettings.resourcemanager.GetString("trSaveStockTakingNotification");
                     w.ShowDialog();
                     MainWindow.mainWindow.Opacity = 1;
                     #endregion
@@ -118,14 +118,12 @@ namespace Restaurant.View.storage.stocktakingOperations
                     HelpClass.StartAwait(grid_main);
                 MainWindow.mainWindow.Closing += ParentWin_Closing;
 
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", assembly: Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 setTimer();
@@ -147,26 +145,26 @@ namespace Restaurant.View.storage.stocktakingOperations
         private void translate()
         {
             ////////////////////////////////----Inventory----/////////////////////////////////
-            dg_items.Columns[0].Header = MainWindow.resourcemanager.GetString("trNum");
-            dg_items.Columns[1].Header = MainWindow.resourcemanager.GetString("trSectionLocation");
-            dg_items.Columns[2].Header = MainWindow.resourcemanager.GetString("trItemUnit");
-            dg_items.Columns[3].Header = MainWindow.resourcemanager.GetString("trRealAmount");
-            dg_items.Columns[4].Header = MainWindow.resourcemanager.GetString("trInventoryAmount");
-            dg_items.Columns[5].Header = MainWindow.resourcemanager.GetString("trDestoryCount");
+            dg_items.Columns[0].Header = AppSettings.resourcemanager.GetString("trNum");
+            dg_items.Columns[1].Header = AppSettings.resourcemanager.GetString("trSectionLocation");
+            dg_items.Columns[2].Header = AppSettings.resourcemanager.GetString("trItemUnit");
+            dg_items.Columns[3].Header = AppSettings.resourcemanager.GetString("trRealAmount");
+            dg_items.Columns[4].Header = AppSettings.resourcemanager.GetString("trInventoryAmount");
+            dg_items.Columns[5].Header = AppSettings.resourcemanager.GetString("trDestoryCount");
 
-            txt_inventoryDetails.Text = MainWindow.resourcemanager.GetString("trStocktakingDetails");
-            txt_titleDataGrid.Text = MainWindow.resourcemanager.GetString("trStocktakingItems");
-            btn_archive.Content = MainWindow.resourcemanager.GetString("trSave");
+            txt_inventoryDetails.Text = AppSettings.resourcemanager.GetString("trStocktakingDetails");
+            txt_titleDataGrid.Text = AppSettings.resourcemanager.GetString("trStocktakingItems");
+            btn_archive.Content = AppSettings.resourcemanager.GetString("trSave");
 
             //bdr_archive.Background = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
-            txt_newDraft.Text = MainWindow.resourcemanager.GetString("trNew");
-            txt_drafts.Text = MainWindow.resourcemanager.GetString("trDraft");
-            txt_inventory.Text = MainWindow.resourcemanager.GetString("trInventory");
-            txt_printInvoice.Text = MainWindow.resourcemanager.GetString("trPrint");
-            txt_preview.Text = MainWindow.resourcemanager.GetString("trPreview");
-            txt_invoiceImages.Text = MainWindow.resourcemanager.GetString("trImages");
-            txt_shortageTitle.Text = MainWindow.resourcemanager.GetString("trShortages");
-            txt_destroyTitle.Text = MainWindow.resourcemanager.GetString("trDestructives");
+            txt_newDraft.Text = AppSettings.resourcemanager.GetString("trNew");
+            txt_drafts.Text = AppSettings.resourcemanager.GetString("trDraft");
+            txt_inventory.Text = AppSettings.resourcemanager.GetString("trInventory");
+            txt_printInvoice.Text = AppSettings.resourcemanager.GetString("trPrint");
+            txt_preview.Text = AppSettings.resourcemanager.GetString("trPreview");
+            txt_invoiceImages.Text = AppSettings.resourcemanager.GetString("trImages");
+            txt_shortageTitle.Text = AppSettings.resourcemanager.GetString("trShortages");
+            txt_destroyTitle.Text = AppSettings.resourcemanager.GetString("trDestructives");
         }
         #region refresh notifications
         private void setTimer()
@@ -250,7 +248,7 @@ namespace Restaurant.View.storage.stocktakingOperations
             }
             else
             {
-                Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trDraftExist"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trDraftExist"), animation: ToasterAnimation.FadeIn);
 
             }
         }
@@ -320,14 +318,14 @@ namespace Restaurant.View.storage.stocktakingOperations
                 dg_items.Columns[5].IsReadOnly = false;
                 btn_archive.IsEnabled = true;
                 btn_deleteInventory.Visibility = Visibility.Collapsed;
-                btn_archive.Content = MainWindow.resourcemanager.GetString("trSave");
+                btn_archive.Content = AppSettings.resourcemanager.GetString("trSave");
                //bdr_archive.Background = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
             }
             else if (_InventoryType == "n") // normal saved
             {
                 dg_items.Columns[4].IsReadOnly = true;
                 dg_items.Columns[5].IsReadOnly = true;
-                btn_archive.Content = MainWindow.resourcemanager.GetString("trArchive");
+                btn_archive.Content = AppSettings.resourcemanager.GetString("trArchive");
                // bdr_archive.Background = Application.Current.Resources["mediumRed"] as SolidColorBrush;
                 if (HelpClass.isAdminPermision())
                     btn_deleteInventory.Visibility = Visibility.Visible;
@@ -355,7 +353,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                     t = e.EditingElement as TextBox;
                     int oldCount;
                     int newCount;
-                    if (t != null && columnName == MainWindow.resourcemanager.GetString("trDestoryCount"))
+                    if (t != null && columnName == AppSettings.resourcemanager.GetString("trDestoryCount"))
                     {
                         oldCount = (int)row.amountDestroyed;
                         newCount = int.Parse(t.Text);
@@ -364,13 +362,13 @@ namespace Restaurant.View.storage.stocktakingOperations
 
                             t.Text = "0";
                             newCount = 0;
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorDistroyMoreQuanToolTip"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorDistroyMoreQuanToolTip"), animation: ToasterAnimation.FadeIn);
                         }
                         _DestroyAmount -= oldCount;
                         _DestroyAmount += newCount;
                         tb_destroy.Text = _DestroyAmount.ToString();
                     }
-                    if (t != null && columnName == MainWindow.resourcemanager.GetString("trInventoryAmount"))
+                    if (t != null && columnName == AppSettings.resourcemanager.GetString("trInventoryAmount"))
                     {
                         oldCount = (int)row.amount;
                         newCount = int.Parse(t.Text);
@@ -378,7 +376,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                         {
                             t.Text = "0";
                             newCount = 0;
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorShortMoreQuanToolTip"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorShortMoreQuanToolTip"), animation: ToasterAnimation.FadeIn);
                         }
 
                         _ShortageAmount -= (int)(invItemsLocations[index].quantity - oldCount);
@@ -406,7 +404,7 @@ namespace Restaurant.View.storage.stocktakingOperations
             _DestroyAmount = 0;
             _ShortageAmount = 0;
             invItemsLocations.Clear();
-            txt_titleDataGrid.Text = MainWindow.resourcemanager.GetString("trInventoryDraft");
+            txt_titleDataGrid.Text = AppSettings.resourcemanager.GetString("trInventoryDraft");
             dg_items.ItemsSource = null;
             btn_deleteInventory.Visibility = Visibility.Collapsed;
             await inputEditable();
@@ -433,11 +431,11 @@ namespace Restaurant.View.storage.stocktakingOperations
             {
                 // add inventory details
                 int res = await invItemModel.save(invItemsLocations, inventoryId);
-                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                 clearInventory();
             }
             else
-                Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
         }
         private async void Btn_newInventory_Click(object sender, RoutedEventArgs e)
         {
@@ -470,7 +468,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                 inventory = await inventory.getByBranch("d", MainWindow.branchLogin.branchId);
                 if (inventory.inventoryId == 0)
                 {
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trNoDraft"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoDraft"), animation: ToasterAnimation.FadeIn);
                 }
                 else
                 {
@@ -478,7 +476,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                     { }
                     else
                     {
-                        txt_titleDataGrid.Text = MainWindow.resourcemanager.GetString("trInventoryDraft");
+                        txt_titleDataGrid.Text = AppSettings.resourcemanager.GetString("trInventoryDraft");
                         _InventoryType = "d";
                         await refreshDocCount(inventory.inventoryId);
                         await fillInventoryDetails();
@@ -504,7 +502,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                     #region Accept
                     MainWindow.mainWindow.Opacity = 0.2;
                     wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                    w.contentText = MainWindow.resourcemanager.GetString("trSaveStockTakingNotification");
+                    w.contentText = AppSettings.resourcemanager.GetString("trSaveStockTakingNotification");
                     w.ShowDialog();
                     MainWindow.mainWindow.Opacity = 1;
                     #endregion
@@ -518,7 +516,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                 inventory = await inventory.getByBranch("n", MainWindow.branchLogin.branchId);
                 if (inventory.inventoryId == 0)
                 {
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trNoInventory"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoInventory"), animation: ToasterAnimation.FadeIn);
 
                 }
                 else
@@ -527,7 +525,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                     { }
                     else
                     {
-                        txt_titleDataGrid.Text = MainWindow.resourcemanager.GetString("trStocktaking");
+                        txt_titleDataGrid.Text = AppSettings.resourcemanager.GetString("trStocktaking");
                         _InventoryType = "n";
                         await refreshDocCount(inventory.inventoryId);
                         await fillInventoryDetails();
@@ -553,10 +551,10 @@ namespace Restaurant.View.storage.stocktakingOperations
                     if (inv.inventoryId == 0)
                         await addInventory("n"); // n:normal
                     else
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trWarningOneInventory"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trWarningOneInventory"), animation: ToasterAnimation.FadeIn);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
                     HelpClass.EndAwait(grid_main);
             }
@@ -584,12 +582,12 @@ namespace Restaurant.View.storage.stocktakingOperations
                             if (inv.inventoryId == 0)
                                 await addInventory("n"); // n:normal
                             else
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trWarningOneInventory"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trWarningOneInventory"), animation: ToasterAnimation.FadeIn);
                         }
                     }
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
                 HelpClass.EndAwait(grid_main);
             }
@@ -683,7 +681,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                 
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -714,7 +712,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                     }
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -760,7 +758,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -817,7 +815,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                     Window.GetWindow(this).Opacity = 1;
                 }
                 else
-                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trChooseInvoiceToolTip"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trChooseInvoiceToolTip"), animation: ToasterAnimation.FadeIn);
                 
                     HelpClass.EndAwait(grid_main);
             }
@@ -841,7 +839,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                    w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                    w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
                     w.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
                     #endregion
@@ -850,12 +848,12 @@ namespace Restaurant.View.storage.stocktakingOperations
                         int res = await inventory.delete(inventory.inventoryId, MainWindow.userLogin.userId, false);
                         if (res > 0)
                         {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                             clearInventory();
                         }
                         else
-                            Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     }
                 }
                 

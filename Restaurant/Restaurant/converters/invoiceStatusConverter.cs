@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Restaurant.Classes;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -15,9 +16,9 @@ namespace Restaurant.converters
             string s = value as string;
             switch (value)
             {
-                case "tr": return MainWindow.resourcemanager.GetString("trInDelivery");
+                case "tr": return AppSettings.resourcemanager.GetString("trInDelivery");
                 //break;
-                case "rc": return MainWindow.resourcemanager.GetString("trDelivered");
+                case "rc": return AppSettings.resourcemanager.GetString("trDelivered");
                 //break;
                 default: return "";
                     //break;

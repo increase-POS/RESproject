@@ -54,7 +54,7 @@ namespace Restaurant.View.windows
             //{
                 #region translate
 
-            if (MainWindow.lang.Equals("en"))
+            if (AppSettings.lang.Equals("en"))
             {
                 grid_acceptUser.FlowDirection = FlowDirection.LeftToRight;
             }
@@ -75,13 +75,13 @@ namespace Restaurant.View.windows
 
         private void translate()
         {
-            txt_user.Text = MainWindow.resourcemanager.GetString("trUserConfirmation");
+            txt_user.Text = AppSettings.resourcemanager.GetString("trUserConfirmation");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_userName, MainWindow.resourcemanager.GetString("trUserNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_password, MainWindow.resourcemanager.GetString("trPasswordHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(pb_password, MainWindow.resourcemanager.GetString("trPasswordHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_userName, AppSettings.resourcemanager.GetString("trUserNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_password, AppSettings.resourcemanager.GetString("trPasswordHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(pb_password, AppSettings.resourcemanager.GetString("trPasswordHint"));
 
-            btn_confirmation.Content = MainWindow.resourcemanager.GetString("trConfirm");
+            btn_confirmation.Content = AppSettings.resourcemanager.GetString("trConfirm");
 
         }
 
@@ -147,7 +147,7 @@ namespace Restaurant.View.windows
             try
             {
                 tb_password.Text = pb_password.Password;
-                MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_password, MainWindow.resourcemanager.GetString("trPasswordHint"));
+                MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_password, AppSettings.resourcemanager.GetString("trPasswordHint"));
                 tb_password.Visibility = Visibility.Visible;
                 pb_password.Visibility = Visibility.Collapsed;
             }

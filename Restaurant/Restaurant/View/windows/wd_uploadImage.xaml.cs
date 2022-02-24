@@ -70,14 +70,12 @@ namespace Restaurant.View.windows
 
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = System.Windows.FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = System.Windows.FlowDirection.RightToLeft;
                 }
                 translate();
@@ -98,18 +96,18 @@ namespace Restaurant.View.windows
 
         private void translate()
         {
-            txt_image.Text = MainWindow.resourcemanager.GetString("trImage");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+            txt_image.Text = AppSettings.resourcemanager.GetString("trImage");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, AppSettings.resourcemanager.GetString("trNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
 
-            tt_file.Content = MainWindow.resourcemanager.GetString("trSelectImage");
-            tt_scanner.Content = MainWindow.resourcemanager.GetString("trScan");
-            tt_preview.Content = MainWindow.resourcemanager.GetString("trPreview");
-            tt_pdf.Content = MainWindow.resourcemanager.GetString("trPdf");
-            tt_printInvoice.Content = MainWindow.resourcemanager.GetString("trPrint");
-            tt_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
-            tt_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            tt_save.Content = MainWindow.resourcemanager.GetString("trAdd");
+            tt_file.Content = AppSettings.resourcemanager.GetString("trSelectImage");
+            tt_scanner.Content = AppSettings.resourcemanager.GetString("trScan");
+            tt_preview.Content = AppSettings.resourcemanager.GetString("trPreview");
+            tt_pdf.Content = AppSettings.resourcemanager.GetString("trPdf");
+            tt_printInvoice.Content = AppSettings.resourcemanager.GetString("trPrint");
+            tt_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
+            tt_update.Content = AppSettings.resourcemanager.GetString("trUpdate");
+            tt_save.Content = AppSettings.resourcemanager.GetString("trAdd");
         }
 
         private void Tb_name_TextChanged(object sender, TextChangedEventArgs e)
@@ -193,9 +191,9 @@ namespace Restaurant.View.windows
 
                    int res = await docImgModel.saveDocImage(docImgModel);
                     if (!res.Equals(0))
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                     else
-                        Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                     int docImageId = res;
 
@@ -228,7 +226,7 @@ namespace Restaurant.View.windows
                     #region Accept
                     MainWindow.mainWindow.Opacity = 0.2;
                     wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                    w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                    w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
                     w.ShowDialog();
                     MainWindow.mainWindow.Opacity = 1;
                     #endregion
@@ -237,9 +235,9 @@ namespace Restaurant.View.windows
                         int res = await docImgModel.delete(docId);
 
                         if (res > 0)
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
                         else
-                            Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                         docId = 0;
                         //clear img
@@ -523,9 +521,9 @@ namespace Restaurant.View.windows
 
                    int res = await docImgModel.saveDocImage(docImgModel);
                     if (!res.Equals(0))
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                     else
-                        Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                     int docImageId = res;
 

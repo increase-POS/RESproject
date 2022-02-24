@@ -178,7 +178,7 @@ namespace Restaurant.View.windows
                 this.Close();
             }
             else
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trNoInvoice"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoInvoice"), animation: ToasterAnimation.FadeIn);
             tb_invoiceNum.Clear();
             tb_invoiceNum.Focus();
         }
@@ -191,13 +191,14 @@ namespace Restaurant.View.windows
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);            
                 #region translate
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.LeftToRight;
+
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
+                    grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
 
                 translate();
@@ -240,9 +241,9 @@ namespace Restaurant.View.windows
         }
         private void translate()
         {
-            txt_title.Text = MainWindow.resourcemanager.GetString("trReturn");
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSelect");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_invoiceNum, MainWindow.resourcemanager.GetString("trInvoiceNumber"));
+            txt_title.Text = AppSettings.resourcemanager.GetString("trReturn");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSelect");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_invoiceNum, AppSettings.resourcemanager.GetString("trInvoiceNumber"));
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {

@@ -50,14 +50,12 @@ namespace Restaurant.View.kitchen
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
@@ -106,32 +104,32 @@ namespace Restaurant.View.kitchen
         }
         private void translate()
         {
-            txt_title.Text = MainWindow.resourcemanager.GetString("trItemsCosting");
-            btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
-            btn_refresh.ToolTip = MainWindow.resourcemanager.GetString("trRefresh");
-            btn_pdf.ToolTip = MainWindow.resourcemanager.GetString("trPdf");
-            btn_print.ToolTip = MainWindow.resourcemanager.GetString("trPrint");
-            btn_pieChart.ToolTip = MainWindow.resourcemanager.GetString("trPieChart");
-            btn_exportToExcel.ToolTip = MainWindow.resourcemanager.GetString("trExcel");
-            btn_preview.ToolTip = MainWindow.resourcemanager.GetString("trPreview");
-            txt_count.ToolTip = MainWindow.resourcemanager.GetString("trCount");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trItemsCosting");
+            btn_update.Content = AppSettings.resourcemanager.GetString("trUpdate");
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
+            btn_refresh.ToolTip = AppSettings.resourcemanager.GetString("trRefresh");
+            btn_pdf.ToolTip = AppSettings.resourcemanager.GetString("trPdf");
+            btn_print.ToolTip = AppSettings.resourcemanager.GetString("trPrint");
+            btn_pieChart.ToolTip = AppSettings.resourcemanager.GetString("trPieChart");
+            btn_exportToExcel.ToolTip = AppSettings.resourcemanager.GetString("trExcel");
+            btn_preview.ToolTip = AppSettings.resourcemanager.GetString("trPreview");
+            txt_count.ToolTip = AppSettings.resourcemanager.GetString("trCount");
 
-            dg_items.Columns[0].Header = MainWindow.resourcemanager.GetString("trItem");
-            dg_items.Columns[1].Header = MainWindow.resourcemanager.GetString("trPrimeCost");
-            dg_items.Columns[2].Header = MainWindow.resourcemanager.GetString("trPrice");
-            dg_items.Columns[3].Header = MainWindow.resourcemanager.GetString("trPriceWithService");
+            dg_items.Columns[0].Header = AppSettings.resourcemanager.GetString("trItem");
+            dg_items.Columns[1].Header = AppSettings.resourcemanager.GetString("trPrimeCost");
+            dg_items.Columns[2].Header = AppSettings.resourcemanager.GetString("trPrice");
+            dg_items.Columns[3].Header = AppSettings.resourcemanager.GetString("trPriceWithService");
 
-            txt_details.Text = MainWindow.resourcemanager.GetString("trDetails");
-            txt_code.Text = MainWindow.resourcemanager.GetString("trCode");
-            txt_name.Text = MainWindow.resourcemanager.GetString("trName");
-            txt_purchasePrice.Text = MainWindow.resourcemanager.GetString("trPrimeCost");
-            txt_price.Text = MainWindow.resourcemanager.GetString("trPrice");
-            txt_priceWithService.Text = MainWindow.resourcemanager.GetString("trPriceWithService");
-            txt_allMenu.Text = MainWindow.resourcemanager.GetString("trAll");
+            txt_details.Text = AppSettings.resourcemanager.GetString("trDetails");
+            txt_code.Text = AppSettings.resourcemanager.GetString("trCode");
+            txt_name.Text = AppSettings.resourcemanager.GetString("trName");
+            txt_purchasePrice.Text = AppSettings.resourcemanager.GetString("trPrimeCost");
+            txt_price.Text = AppSettings.resourcemanager.GetString("trPrice");
+            txt_priceWithService.Text = AppSettings.resourcemanager.GetString("trPriceWithService");
+            txt_allMenu.Text = AppSettings.resourcemanager.GetString("trAll");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchTags, MainWindow.resourcemanager.GetString("trTagsHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchTags, AppSettings.resourcemanager.GetString("trTagsHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
         }
         #region loading
         List<keyValueBool> loadingList;
@@ -329,15 +327,15 @@ namespace Restaurant.View.kitchen
                     int res = await FillCombo.item.saveItemsCosting(itemsQuery);
                     if (res > 0)
                     {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                         await FillCombo.RefreshSalesItems();
                     }
                     else
-                        Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }

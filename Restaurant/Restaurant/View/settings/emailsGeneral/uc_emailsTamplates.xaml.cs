@@ -79,14 +79,12 @@ namespace Restaurant.View.settings.emailsGeneral
             {
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "name", };
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                     MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                     MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
@@ -111,34 +109,34 @@ namespace Restaurant.View.settings.emailsGeneral
 
         private void translate()
         {
-            txt_title.Text = MainWindow.resourcemanager.GetString("trEmailTemplates");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trEmailTemplates");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_title, MainWindow.resourcemanager.GetString("trTitle") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_text1, MainWindow.resourcemanager.GetString("trText1") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_text2, MainWindow.resourcemanager.GetString("trText2") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_link1text, MainWindow.resourcemanager.GetString("trLinkText1") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_link1url, MainWindow.resourcemanager.GetString("trUrlLink1") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_link2text, MainWindow.resourcemanager.GetString("trLinkText2") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_link2url, MainWindow.resourcemanager.GetString("trUrlLink2") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_link3text, MainWindow.resourcemanager.GetString("trLinkText3") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_link3url, MainWindow.resourcemanager.GetString("trUrlLink3") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_title, AppSettings.resourcemanager.GetString("trTitle") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_text1, AppSettings.resourcemanager.GetString("trText1") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_text2, AppSettings.resourcemanager.GetString("trText2") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_link1text, AppSettings.resourcemanager.GetString("trLinkText1") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_link1url, AppSettings.resourcemanager.GetString("trUrlLink1") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_link2text, AppSettings.resourcemanager.GetString("trLinkText2") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_link2url, AppSettings.resourcemanager.GetString("trUrlLink2") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_link3text, AppSettings.resourcemanager.GetString("trLinkText3") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_link3url, AppSettings.resourcemanager.GetString("trUrlLink3") + "...");
 
-            btn_refresh.ToolTip = MainWindow.resourcemanager.GetString("trRefresh");
-            btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
+            btn_refresh.ToolTip = AppSettings.resourcemanager.GetString("trRefresh");
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
 
 
-            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
+            tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
+            tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
 
-            txt_infoTitle.Text = MainWindow.resourcemanager.GetString("trTitle");
-            txt_infoBody.Text = MainWindow.resourcemanager.GetString("trBody");
-            txt_infoEmailSupport.Text = MainWindow.resourcemanager.GetString("trEmailSupport");
+            txt_infoTitle.Text = AppSettings.resourcemanager.GetString("trTitle");
+            txt_infoBody.Text = AppSettings.resourcemanager.GetString("trBody");
+            txt_infoEmailSupport.Text = AppSettings.resourcemanager.GetString("trEmailSupport");
 
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
-            dg_setValues.Columns[0].Header = MainWindow.resourcemanager.GetString("trName");
+            dg_setValues.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
@@ -189,7 +187,7 @@ namespace Restaurant.View.settings.emailsGeneral
                     HelpClass.EndAwait(grid_main);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)
@@ -330,22 +328,22 @@ namespace Restaurant.View.settings.emailsGeneral
                 switch (row.name)
                 {
                     case "pur_email_temp":
-                        row.trName = MainWindow.resourcemanager.GetString("trPurchasesEmailTemplate");
+                        row.trName = AppSettings.resourcemanager.GetString("trPurchasesEmailTemplate");
                         break;
                     case "pur_order_email_temp":
-                        row.trName = MainWindow.resourcemanager.GetString("trPurchaseOrdersEmailTemplate");
+                        row.trName = AppSettings.resourcemanager.GetString("trPurchaseOrdersEmailTemplate");
                         break;
                     case "sale_email_temp":
-                        row.trName = MainWindow.resourcemanager.GetString("trSalesEmailTemplate");
+                        row.trName = AppSettings.resourcemanager.GetString("trSalesEmailTemplate");
                         break;
                     case "sale_order_email_temp":
-                        row.trName = MainWindow.resourcemanager.GetString("trSalesOrdersEmailTemplate");
+                        row.trName = AppSettings.resourcemanager.GetString("trSalesOrdersEmailTemplate");
                         break;
                     case "quotation_email_temp":
-                        row.trName = MainWindow.resourcemanager.GetString("trQuotationsEmailTemplate");
+                        row.trName = AppSettings.resourcemanager.GetString("trQuotationsEmailTemplate");
                         break;
                     case "required_email_temp":
-                        row.trName = MainWindow.resourcemanager.GetString("trRequirementsEmailTemplate");
+                        row.trName = AppSettings.resourcemanager.GetString("trRequirementsEmailTemplate");
                         break;
 
                 }
@@ -356,12 +354,12 @@ namespace Restaurant.View.settings.emailsGeneral
         }
         //void RefreshSetttingsView()
         //{
-        //    setQuery.ToList()[0].name = MainWindow.resourcemanager.GetString("trPurchaseOrdersEmailTemplate");
-        //    setQuery.ToList()[1].name = MainWindow.resourcemanager.GetString("trSalesEmailTemplate");
-        //    setQuery.ToList()[2].name = MainWindow.resourcemanager.GetString("trSalesOrdersEmailTemplate");
-        //    setQuery.ToList()[3].name = MainWindow.resourcemanager.GetString("trQuotationsEmailTemplate");
-        //    setQuery.ToList()[4].name = MainWindow.resourcemanager.GetString("trRequirementsEmailTemplate");
-        //    setQuery.ToList()[5].name = MainWindow.resourcemanager.GetString("trPurchasesEmailTemplate");
+        //    setQuery.ToList()[0].name = AppSettings.resourcemanager.GetString("trPurchaseOrdersEmailTemplate");
+        //    setQuery.ToList()[1].name = AppSettings.resourcemanager.GetString("trSalesEmailTemplate");
+        //    setQuery.ToList()[2].name = AppSettings.resourcemanager.GetString("trSalesOrdersEmailTemplate");
+        //    setQuery.ToList()[3].name = AppSettings.resourcemanager.GetString("trQuotationsEmailTemplate");
+        //    setQuery.ToList()[4].name = AppSettings.resourcemanager.GetString("trRequirementsEmailTemplate");
+        //    setQuery.ToList()[5].name = AppSettings.resourcemanager.GetString("trPurchasesEmailTemplate");
         //    dg_setValues.ItemsSource = setQuery;
         //}
 
@@ -538,7 +536,7 @@ namespace Restaurant.View.settings.emailsGeneral
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -566,7 +564,7 @@ namespace Restaurant.View.settings.emailsGeneral
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
 
                 HelpClass.EndAwait(grid_main);
@@ -610,7 +608,7 @@ namespace Restaurant.View.settings.emailsGeneral
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
 
                 HelpClass.EndAwait(grid_main);
@@ -655,7 +653,7 @@ namespace Restaurant.View.settings.emailsGeneral
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
 
                 HelpClass.EndAwait(grid_main);

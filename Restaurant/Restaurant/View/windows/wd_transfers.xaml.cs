@@ -57,7 +57,7 @@ namespace Restaurant.View.windows
                 HelpClass.StartAwait(grid_main);
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
@@ -80,11 +80,11 @@ namespace Restaurant.View.windows
         }
         private void translat()
         {
-            txt_title.Text = MainWindow.resourcemanager.GetString("trCashtransfers");
-            dg_transfers.Columns[0].Header = MainWindow.resourcemanager.GetString("trTransferNumberTooltip");
-            dg_transfers.Columns[1].Header = MainWindow.resourcemanager.GetString("trDepositor");
-            dg_transfers.Columns[2].Header = MainWindow.resourcemanager.GetString("trRecepient");
-            dg_transfers.Columns[4].Header = MainWindow.resourcemanager.GetString("trCashTooltip");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trCashtransfers");
+            dg_transfers.Columns[0].Header = AppSettings.resourcemanager.GetString("trTransferNumberTooltip");
+            dg_transfers.Columns[1].Header = AppSettings.resourcemanager.GetString("trDepositor");
+            dg_transfers.Columns[2].Header = AppSettings.resourcemanager.GetString("trRecepient");
+            dg_transfers.Columns[4].Header = AppSettings.resourcemanager.GetString("trCashTooltip");
 
         }
 
@@ -180,12 +180,12 @@ namespace Restaurant.View.windows
                         //        if (s.Equals(1))//tras done so confirm
                         //            await confirmOpr(row);
                         //        else//error then do not confirm
-                        //            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        //            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                         //    }
                         //    //there is not enough balance
                         //    else
-                        //        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn);
+                        //        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn);
                         //}
                         //await MainWindow.refreshBalance();
                         //#endregion
@@ -211,12 +211,12 @@ namespace Restaurant.View.windows
                                     if (!s1.Equals(0))//tras done so confirm
                                         await confirmOpr(row);
                                     else//error then do not confirm
-                                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                                 }
                                 //there is not enough balance
                                 else
-                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn);
                             }
                             else
                             {
@@ -231,13 +231,13 @@ namespace Restaurant.View.windows
                                     if (!s1.Equals(0))//tras done so confirm
                                         await confirmOpr(row);
                                     else//error then do not confirm
-                                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                                 }
 
                                 //there is not enough balance
                                 else
-                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn);
                             }
                             //await MainWindow.refreshBalance();////////////////??????????????????????????
                         }
@@ -259,7 +259,7 @@ namespace Restaurant.View.windows
             if (!s.Equals(0))
             {
                 await fillDataGrid();
-                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopConfirm"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopConfirm"), animation: ToasterAnimation.FadeIn);
             }
         }
         
@@ -299,11 +299,11 @@ namespace Restaurant.View.windows
 
                         if ((!s2.Equals(0)) && (!s3.Equals(0)))
                         {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopCanceled"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopCanceled"), animation: ToasterAnimation.FadeIn);
                             await fillDataGrid();
                         }
                         else
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         #endregion
                     }
 

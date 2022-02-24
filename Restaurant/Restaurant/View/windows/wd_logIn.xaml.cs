@@ -48,13 +48,13 @@ namespace Restaurant.View.windows
                 HelpClass.StartAwait(grid_main);
 
                 bdrLogIn.RenderTransform = Animations.borderAnimation(-100, bdrLogIn, true);
-                MainWindow.lang = "en";
+                AppSettings.lang = "en";
                 #region properties
                 if (Properties.Settings.Default.userName != string.Empty)
                 {
                     txtUserName.Text = Properties.Settings.Default.userName;
                     txtPassword.Password = Properties.Settings.Default.password;
-                    MainWindow.lang = Properties.Settings.Default.Lang;
+                    AppSettings.lang = Properties.Settings.Default.Lang;
                     //menuIsOpen = Properties.Settings.Default.menuIsOpen;
                     cbxRemmemberMe.IsChecked = true;
 
@@ -63,23 +63,23 @@ namespace Restaurant.View.windows
                 {
                     txtUserName.Clear();
                     txtPassword.Clear();
-                    MainWindow.lang = "en";
+                    AppSettings.lang = "en";
                     //menuIsOpen = "close";
                     cbxRemmemberMe.IsChecked = false;
                 }
                 #endregion
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
+                    AppSettings.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                     bdr_imageAr.Visibility = Visibility.Hidden;
                     bdr_image.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
+                    AppSettings.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                     bdr_imageAr.Visibility = Visibility.Visible;
                     bdr_image.Visibility = Visibility.Hidden;
@@ -111,11 +111,11 @@ namespace Restaurant.View.windows
 
         private void translate()
         {
-            cbxRemmemberMe.Content = MainWindow.resourcemanager.GetString("trRememberMe");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(txtUserName, MainWindow.resourcemanager.GetString("trUserName"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(txtPassword, MainWindow.resourcemanager.GetString("trPassword"));
-            txt_logIn.Text = MainWindow.resourcemanager.GetString("trLogIn");
-            txt_close.Text = MainWindow.resourcemanager.GetString("trClose");
+            cbxRemmemberMe.Content = AppSettings.resourcemanager.GetString("trRememberMe");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(txtUserName, AppSettings.resourcemanager.GetString("trUserName"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(txtPassword, AppSettings.resourcemanager.GetString("trPassword"));
+            txt_logIn.Text = AppSettings.resourcemanager.GetString("trLogIn");
+            txt_close.Text = AppSettings.resourcemanager.GetString("trClose");
         }
 
         private void HandleKeyPress(object sender, KeyEventArgs e)
@@ -290,7 +290,7 @@ namespace Restaurant.View.windows
                             {
                                 Properties.Settings.Default.userName = txtUserName.Text;
                                 Properties.Settings.Default.password = txtPassword.Password;
-                                Properties.Settings.Default.Lang = MainWindow.lang;
+                                Properties.Settings.Default.Lang = AppSettings.lang;
                                 //Properties.Settings.Default.menuIsOpen = menuIsOpen;
                             }
                             else

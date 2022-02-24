@@ -9,20 +9,13 @@ using System.Windows.Data;
 
 namespace Restaurant.converters
 {
-    class enabledCouponConverter : IValueConverter
+    class agentNameConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Coupon c = value as Coupon;
-            string state = "";
-
-            if ((c.isActive == 1) && ((c.endDate > DateTime.Now)||(c.endDate == null)) && ((c.quantity == 0) || (c.quantity > 0 && c.remainQ != 0)))
-                state = AppSettings.resourcemanager.GetString("trValid");
-            else
-                state = AppSettings.resourcemanager.GetString("trExpired");
-
-            return state;
-
+            CashTransferSts s = value as CashTransferSts;
+            if (s.agentId == null) return AppSettings.resourcemanager.GetString("trCashCustomer");
+            else return s.agentName;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

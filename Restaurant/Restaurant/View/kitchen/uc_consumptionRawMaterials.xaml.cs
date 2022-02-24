@@ -86,26 +86,26 @@ namespace Restaurant.View.kitchen
         private void translate()
         {
             ////////////////////////////////----Order----/////////////////////////////////
-            dg_billDetails.Columns[1].Header = MainWindow.resourcemanager.GetString("trNum");
-            dg_billDetails.Columns[2].Header = MainWindow.resourcemanager.GetString("trItem");
-            dg_billDetails.Columns[3].Header = MainWindow.resourcemanager.GetString("trUnit");
-            dg_billDetails.Columns[4].Header = MainWindow.resourcemanager.GetString("trQuantity");
+            dg_billDetails.Columns[1].Header = AppSettings.resourcemanager.GetString("trNum");
+            dg_billDetails.Columns[2].Header = AppSettings.resourcemanager.GetString("trItem");
+            dg_billDetails.Columns[3].Header = AppSettings.resourcemanager.GetString("trUnit");
+            dg_billDetails.Columns[4].Header = AppSettings.resourcemanager.GetString("trQuantity");
 
-            txt_orders.Text = MainWindow.resourcemanager.GetString("trOrders");
-            txt_newDraft.Text = MainWindow.resourcemanager.GetString("trNew");
-            txt_items.Text = MainWindow.resourcemanager.GetString("trItems");
-            txt_printInvoice.Text = MainWindow.resourcemanager.GetString("trPrint");
-            txt_pdf.Text = MainWindow.resourcemanager.GetString("trPdf");
-            txt_preview.Text = MainWindow.resourcemanager.GetString("trPreview");
-            txt_count.Text = MainWindow.resourcemanager.GetString("trCount:");
-            txt_titleDataGridInvoice.Text = MainWindow.resourcemanager.GetString("trConsumptionRawMaterials");
+            txt_orders.Text = AppSettings.resourcemanager.GetString("trOrders");
+            txt_newDraft.Text = AppSettings.resourcemanager.GetString("trNew");
+            txt_items.Text = AppSettings.resourcemanager.GetString("trItems");
+            txt_printInvoice.Text = AppSettings.resourcemanager.GetString("trPrint");
+            txt_pdf.Text = AppSettings.resourcemanager.GetString("trPdf");
+            txt_preview.Text = AppSettings.resourcemanager.GetString("trPreview");
+            txt_count.Text = AppSettings.resourcemanager.GetString("trCount:");
+            txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trConsumptionRawMaterials");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_barcode, MainWindow.resourcemanager.GetString("trBarcodeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_barcode, AppSettings.resourcemanager.GetString("trBarcodeHint"));
 
-            tt_error_previous.Content = MainWindow.resourcemanager.GetString("trPrevious");
-            tt_error_next.Content = MainWindow.resourcemanager.GetString("trNext");
+            tt_error_previous.Content = AppSettings.resourcemanager.GetString("trPrevious");
+            tt_error_next.Content = AppSettings.resourcemanager.GetString("trNext");
 
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -138,14 +138,12 @@ namespace Restaurant.View.kitchen
 
                 MainWindow.mainWindow.KeyDown += HandleKeyPress;
 
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", assembly: Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
 
@@ -444,7 +442,7 @@ namespace Restaurant.View.kitchen
                 }
                 else
                 {
-                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorItemNotFoundToolTip"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorItemNotFoundToolTip"), animation: ToasterAnimation.FadeIn);
                 }
             }
             tb_barcode.Clear();
@@ -482,7 +480,7 @@ namespace Restaurant.View.kitchen
             bool valid = true;
             if (billDetails.Count == 0)
             {
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trAddInvoiceWithoutItems"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trAddInvoiceWithoutItems"), animation: ToasterAnimation.FadeIn);
                 return false;
             }
             for (int i = 0; i < billDetails.Count; i++)
@@ -490,7 +488,7 @@ namespace Restaurant.View.kitchen
                 if (billDetails[i].itemUnitId == 0)
                 {
                     valid = false;
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trItemWithNoUnit"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trItemWithNoUnit"), animation: ToasterAnimation.FadeIn);
 
                     return valid;
                 }
@@ -515,7 +513,7 @@ namespace Restaurant.View.kitchen
                     }
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
                     HelpClass.EndAwait(grid_main);
             }
@@ -556,12 +554,12 @@ namespace Restaurant.View.kitchen
             int invoiceId = await FillCombo.invoice.saveInvoiceWithItems(invoice,invoiceItems);
             if (invoiceId > 0)
             {
-                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                 // decrease amount from kitchen
                 await FillCombo.itemLocation.decreaseAmountsInKitchen(invoiceItems, MainWindow.branchLogin.branchId, MainWindow.userLogin.userId); // update item quantity in DB
             }
             else
-                Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
         }
         #endregion
         #region events
@@ -660,7 +658,7 @@ namespace Restaurant.View.kitchen
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -717,7 +715,7 @@ namespace Restaurant.View.kitchen
                     //////////////////////////////////////
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -756,7 +754,7 @@ namespace Restaurant.View.kitchen
                     }
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -808,7 +806,7 @@ namespace Restaurant.View.kitchen
                 w.duration = 1;
                 w.page = "consumption";
                 w.icon = "invoices";
-                w.title = MainWindow.resourcemanager.GetString("trInvoices");
+                w.title = AppSettings.resourcemanager.GetString("trInvoices");
                 w.branchId = MainWindow.branchLogin.branchId;
 
                 if (w.ShowDialog() == true)
@@ -979,7 +977,7 @@ namespace Restaurant.View.kitchen
 
                     int oldCount = row.Count;
                     int newCount = 0;
-                    if (columnName == MainWindow.resourcemanager.GetString("trQuantity"))
+                    if (columnName == AppSettings.resourcemanager.GetString("trQuantity"))
                     {
                         newCount = int.Parse(t.Text);
                         if (newCount < 0)
@@ -992,13 +990,13 @@ namespace Restaurant.View.kitchen
                     else
                         newCount = row.Count;
                     //"tb_amont"
-                    if (columnName == MainWindow.resourcemanager.GetString("trQuantity"))
+                    if (columnName == AppSettings.resourcemanager.GetString("trQuantity"))
                     {
                         availableAmount = await getAvailableAmount(row.itemId, row.itemUnitId, MainWindow.branchLogin.branchId, row.ID);
                         if (availableAmount < newCount)
                         {
 
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorAmountNotAvailableToolTip"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountNotAvailableToolTip"), animation: ToasterAnimation.FadeIn);
                             newCount =  availableAmount;
                             t.Text = newCount.ToString();
                             row.Count = (int)newCount;

@@ -291,11 +291,11 @@ namespace Restaurant.View.windows
 
                     if (!s.Equals("-1"))
                     {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                         Btn_clear_Click(null, null);
                     }
                     else
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                 }
 
@@ -434,10 +434,12 @@ namespace Restaurant.View.windows
                     HelpClass.StartAwait(grid_locationRange);
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
-                { MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly()); grid_locationRange.FlowDirection = FlowDirection.LeftToRight; }
+                if (AppSettings.lang.Equals("en"))
+                {
+                    grid_locationRange.FlowDirection = FlowDirection.LeftToRight; }
                 else
-                { MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly()); grid_locationRange.FlowDirection = FlowDirection.RightToLeft; }
+                {
+                    grid_locationRange.FlowDirection = FlowDirection.RightToLeft; }
 
                 translate();
                 #endregion
@@ -457,15 +459,15 @@ namespace Restaurant.View.windows
 
         private void translate()
         {
-            txt_title.Text = MainWindow.resourcemanager.GetString("trLocation");
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trLocation");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fromX, MainWindow.resourcemanager.GetString("trFromXHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fromY, MainWindow.resourcemanager.GetString("trFromYHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fromZ, MainWindow.resourcemanager.GetString("trFromZHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_toX, MainWindow.resourcemanager.GetString("trToXHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_toY, MainWindow.resourcemanager.GetString("trToYHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_toZ, MainWindow.resourcemanager.GetString("trToZHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fromX, AppSettings.resourcemanager.GetString("trFromXHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fromY, AppSettings.resourcemanager.GetString("trFromYHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fromZ, AppSettings.resourcemanager.GetString("trFromZHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_toX, AppSettings.resourcemanager.GetString("trToXHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_toY, AppSettings.resourcemanager.GetString("trToYHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_toZ, AppSettings.resourcemanager.GetString("trToZHint"));
 
             
         }
@@ -490,7 +492,7 @@ namespace Restaurant.View.windows
             p_error.Visibility = Visibility.Visible;
             #region Tooltip
             ToolTip toolTip = new ToolTip();
-            toolTip.Content = MainWindow.resourcemanager.GetString(tr);
+            toolTip.Content = AppSettings.resourcemanager.GetString(tr);
             toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
             p_error.ToolTip = toolTip;
             #endregion
@@ -503,7 +505,7 @@ namespace Restaurant.View.windows
                 p_error.Visibility = Visibility.Visible;
                 #region Tooltip
                 ToolTip toolTip = new ToolTip();
-                toolTip.Content = MainWindow.resourcemanager.GetString("trIsRequired");
+                toolTip.Content = AppSettings.resourcemanager.GetString("trIsRequired");
                 toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
                 p_error.ToolTip = toolTip;
                 #endregion

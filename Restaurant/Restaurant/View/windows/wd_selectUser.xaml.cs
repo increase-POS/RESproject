@@ -69,14 +69,12 @@ namespace Restaurant.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
@@ -95,7 +93,7 @@ namespace Restaurant.View.windows
         {
 
             if (userJob == "waiter")
-                txt_title.Text = MainWindow.resourcemanager.GetString("trWaiter");
+                txt_title.Text = AppSettings.resourcemanager.GetString("trWaiter");
 
         }
         private void Btn_select_Click(object sender, RoutedEventArgs e)

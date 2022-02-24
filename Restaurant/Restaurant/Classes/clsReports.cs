@@ -16,7 +16,7 @@ namespace Restaurant.Classes
         public static void setReportLanguage(List<ReportParameter> paramarr)
         {
 
-            paramarr.Add(new ReportParameter("lang", MainWindow.Reportlang));
+            paramarr.Add(new ReportParameter("lang", AppSettings.Reportlang));
 
         }
 
@@ -48,7 +48,7 @@ namespace Restaurant.Classes
         {
 
             ReportCls rep = new ReportCls();
-            paramarr.Add(new ReportParameter("trTransferNumber", MainWindow.resourcemanagerreport.GetString("trTransferNumberTooltip")));
+            paramarr.Add(new ReportParameter("trTransferNumber", AppSettings.resourcemanagerreport.GetString("trTransferNumberTooltip")));
 
 
         }
@@ -58,15 +58,15 @@ namespace Restaurant.Classes
         //    rep.EnableExternalImages = true;
         //    rep.DataSources.Clear();
 
-        //    paramarr.Add(new ReportParameter("trDocNumTooltip", MainWindow.resourcemanagerreport.GetString("trDocNumTooltip")));
-        //    paramarr.Add(new ReportParameter("trRecipientTooltip", MainWindow.resourcemanagerreport.GetString("trRecipientTooltip")));
+        //    paramarr.Add(new ReportParameter("trDocNumTooltip", AppSettings.resourcemanagerreport.GetString("trDocNumTooltip")));
+        //    paramarr.Add(new ReportParameter("trRecipientTooltip", AppSettings.resourcemanagerreport.GetString("trRecipientTooltip")));
 
-        //    paramarr.Add(new ReportParameter("trPaymentTypeTooltip", MainWindow.resourcemanagerreport.GetString("trPaymentTypeTooltip")));
+        //    paramarr.Add(new ReportParameter("trPaymentTypeTooltip", AppSettings.resourcemanagerreport.GetString("trPaymentTypeTooltip")));
 
-        //    paramarr.Add(new ReportParameter("trDocDateTooltip", MainWindow.resourcemanagerreport.GetString("trDocDateTooltip")));
+        //    paramarr.Add(new ReportParameter("trDocDateTooltip", AppSettings.resourcemanagerreport.GetString("trDocDateTooltip")));
 
-        //    paramarr.Add(new ReportParameter("trPayDate", MainWindow.resourcemanagerreport.GetString("trPayDate")));
-        //    paramarr.Add(new ReportParameter("trCashTooltip", MainWindow.resourcemanagerreport.GetString("trCashTooltip")));
+        //    paramarr.Add(new ReportParameter("trPayDate", AppSettings.resourcemanagerreport.GetString("trPayDate")));
+        //    paramarr.Add(new ReportParameter("trCashTooltip", AppSettings.resourcemanagerreport.GetString("trCashTooltip")));
 
         //    foreach (var c in bondsQuery)
         //    {
@@ -104,10 +104,10 @@ namespace Restaurant.Classes
         //        switch (o.status)
         //        {
         //            case "tr":
-        //                status = MainWindow.resourcemanager.GetString("trDelivered");
+        //                status = AppSettings.resourcemanager.GetString("trDelivered");
         //                break;
         //            case "rc":
-        //                status = MainWindow.resourcemanager.GetString("trInDelivery");
+        //                status = AppSettings.resourcemanager.GetString("trInDelivery");
         //                break;
         //            default:
         //                status = "";
@@ -130,12 +130,12 @@ namespace Restaurant.Classes
             }
             DeliverStateConv(paramarr);
 
-            paramarr.Add(new ReportParameter("trInvoiceNumber", MainWindow.resourcemanagerreport.GetString("trInvoiceNumber")));
-            paramarr.Add(new ReportParameter("trSalesMan", MainWindow.resourcemanagerreport.GetString("trSalesMan")));
-            paramarr.Add(new ReportParameter("trCustomer", MainWindow.resourcemanagerreport.GetString("trCustomer")));
-            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
-            paramarr.Add(new ReportParameter("trCashTooltip", MainWindow.resourcemanagerreport.GetString("trCashTooltip")));
-            paramarr.Add(new ReportParameter("trState", MainWindow.resourcemanagerreport.GetString("trState")));
+            paramarr.Add(new ReportParameter("trInvoiceNumber", AppSettings.resourcemanagerreport.GetString("trInvoiceNumber")));
+            paramarr.Add(new ReportParameter("trSalesMan", AppSettings.resourcemanagerreport.GetString("trSalesMan")));
+            paramarr.Add(new ReportParameter("trCustomer", AppSettings.resourcemanagerreport.GetString("trCustomer")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trCashTooltip", AppSettings.resourcemanagerreport.GetString("trCashTooltip")));
+            paramarr.Add(new ReportParameter("trState", AppSettings.resourcemanagerreport.GetString("trState")));
 
             DateFormConv(paramarr);
 
@@ -144,8 +144,8 @@ namespace Restaurant.Classes
         }
         public static void DeliverStateConv(List<ReportParameter> paramarr)
         {
-            paramarr.Add(new ReportParameter("trDelivered", MainWindow.resourcemanagerreport.GetString("trDelivered")));
-            paramarr.Add(new ReportParameter("trInDelivery", MainWindow.resourcemanagerreport.GetString("trInDelivery")));
+            paramarr.Add(new ReportParameter("trDelivered", AppSettings.resourcemanagerreport.GetString("trDelivered")));
+            paramarr.Add(new ReportParameter("trInDelivery", AppSettings.resourcemanagerreport.GetString("trInDelivery")));
 
         }
 
@@ -155,11 +155,11 @@ namespace Restaurant.Classes
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
-            paramarr.Add(new ReportParameter("trTransferNumberTooltip", MainWindow.resourcemanagerreport.GetString("trTransferNumberTooltip")));
-            paramarr.Add(new ReportParameter("trBank", MainWindow.resourcemanagerreport.GetString("trBank")));
-            paramarr.Add(new ReportParameter("trDepositeNumTooltip", MainWindow.resourcemanagerreport.GetString("trDepositeNumTooltip")));
-            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
-            paramarr.Add(new ReportParameter("trCashTooltip", MainWindow.resourcemanagerreport.GetString("trCashTooltip")));
+            paramarr.Add(new ReportParameter("trTransferNumberTooltip", AppSettings.resourcemanagerreport.GetString("trTransferNumberTooltip")));
+            paramarr.Add(new ReportParameter("trBank", AppSettings.resourcemanagerreport.GetString("trBank")));
+            paramarr.Add(new ReportParameter("trDepositeNumTooltip", AppSettings.resourcemanagerreport.GetString("trDepositeNumTooltip")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trCashTooltip", AppSettings.resourcemanagerreport.GetString("trCashTooltip")));
             DateFormConv(paramarr);
             foreach (var c in cash)
             {
@@ -169,19 +169,19 @@ namespace Restaurant.Classes
                 switch (c.processType)
                 {
                     case "cash":
-                        s = MainWindow.resourcemanagerreport.GetString("trCash");
+                        s = AppSettings.resourcemanagerreport.GetString("trCash");
                         break;
                     case "doc":
-                        s = MainWindow.resourcemanagerreport.GetString("trDocument");
+                        s = AppSettings.resourcemanagerreport.GetString("trDocument");
                         break;
                     case "cheque":
-                        s = MainWindow.resourcemanagerreport.GetString("trCheque");
+                        s = AppSettings.resourcemanagerreport.GetString("trCheque");
                         break;
                     case "balance":
-                        s = MainWindow.resourcemanagerreport.GetString("trCredit");
+                        s = AppSettings.resourcemanagerreport.GetString("trCredit");
                         break;
                     case "card":
-                        s = MainWindow.resourcemanagerreport.GetString("trCreditCard");
+                        s = AppSettings.resourcemanagerreport.GetString("trCreditCard");
                         break;
                     default:
                         s = c.processType;
@@ -193,18 +193,18 @@ namespace Restaurant.Classes
                 switch (c.side)
                 {
                     case "bnd": break;
-                    case "v": name = MainWindow.resourcemanagerreport.GetString("trVendor"); break;
-                    case "c": name = MainWindow.resourcemanagerreport.GetString("trCustomer"); break;
-                    case "u": name = MainWindow.resourcemanagerreport.GetString("trUser"); break;
-                    case "s": name = MainWindow.resourcemanagerreport.GetString("trSalary"); break;
-                    case "e": name = MainWindow.resourcemanagerreport.GetString("trGeneralExpenses"); break;
+                    case "v": name = AppSettings.resourcemanagerreport.GetString("trVendor"); break;
+                    case "c": name = AppSettings.resourcemanagerreport.GetString("trCustomer"); break;
+                    case "u": name = AppSettings.resourcemanagerreport.GetString("trUser"); break;
+                    case "s": name = AppSettings.resourcemanagerreport.GetString("trSalary"); break;
+                    case "e": name = AppSettings.resourcemanagerreport.GetString("trGeneralExpenses"); break;
                     case "m":
                         if (c.transType == "d")
-                            name = MainWindow.resourcemanagerreport.GetString("trAdministrativeDeposit");
+                            name = AppSettings.resourcemanagerreport.GetString("trAdministrativeDeposit");
                         if (c.transType == "p")
-                            name = MainWindow.resourcemanagerreport.GetString("trAdministrativePull");
+                            name = AppSettings.resourcemanagerreport.GetString("trAdministrativePull");
                         break;
-                    case "sh": name = MainWindow.resourcemanagerreport.GetString("trShippingCompany"); break;
+                    case "sh": name = AppSettings.resourcemanagerreport.GetString("trShippingCompany"); break;
                     default: break;
                 }
                 string fullName = "";
@@ -220,8 +220,8 @@ namespace Restaurant.Classes
                 c.side = fullName;
 
                 string type;
-                if (c.transType.Equals("p")) type = MainWindow.resourcemanagerreport.GetString("trPull");
-                else type = MainWindow.resourcemanagerreport.GetString("trDeposit");
+                if (c.transType.Equals("p")) type = AppSettings.resourcemanagerreport.GetString("trPull");
+                else type = AppSettings.resourcemanagerreport.GetString("trDeposit");
                 ////////////////////
                 c.transType = type;
             }
@@ -242,16 +242,16 @@ namespace Restaurant.Classes
             //    switch (c.processType)
             //    {
             //        case "cash":
-            //            s = MainWindow.resourcemanagerreport.GetString("trCash");
+            //            s = AppSettings.resourcemanagerreport.GetString("trCash");
             //            break;
             //        case "doc":
-            //            s = MainWindow.resourcemanagerreport.GetString("trDocument");
+            //            s = AppSettings.resourcemanagerreport.GetString("trDocument");
             //            break;
             //        case "cheque":
-            //            s = MainWindow.resourcemanagerreport.GetString("trCheque");
+            //            s = AppSettings.resourcemanagerreport.GetString("trCheque");
             //            break;
             //        case "balance":
-            //            s = MainWindow.resourcemanagerreport.GetString("trCredit");
+            //            s = AppSettings.resourcemanagerreport.GetString("trCredit");
             //            break;
             //        default:
             //            s = c.processType;
@@ -272,11 +272,11 @@ namespace Restaurant.Classes
             cashTransferProcessTypeConv(paramarr);
 
 
-            paramarr.Add(new ReportParameter("trTransferNumberTooltip", MainWindow.resourcemanagerreport.GetString("trTransferNumberTooltip")));
-            paramarr.Add(new ReportParameter("trRecepient", MainWindow.resourcemanagerreport.GetString("trRecepient")));
-            paramarr.Add(new ReportParameter("trPaymentTypeTooltip", MainWindow.resourcemanagerreport.GetString("trPaymentTypeTooltip")));
-            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
-            paramarr.Add(new ReportParameter("trCashTooltip", MainWindow.resourcemanagerreport.GetString("trCashTooltip")));
+            paramarr.Add(new ReportParameter("trTransferNumberTooltip", AppSettings.resourcemanagerreport.GetString("trTransferNumberTooltip")));
+            paramarr.Add(new ReportParameter("trRecepient", AppSettings.resourcemanagerreport.GetString("trRecepient")));
+            paramarr.Add(new ReportParameter("trPaymentTypeTooltip", AppSettings.resourcemanagerreport.GetString("trPaymentTypeTooltip")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trCashTooltip", AppSettings.resourcemanagerreport.GetString("trCashTooltip")));
 
             DateFormConv(paramarr);
 
@@ -303,11 +303,11 @@ namespace Restaurant.Classes
             cashTransTypeConv(paramarr);
             cashTransferProcessTypeConv(paramarr);
 
-            paramarr.Add(new ReportParameter("trTransferNumberTooltip", MainWindow.resourcemanagerreport.GetString("trTransferNumberTooltip")));
-            paramarr.Add(new ReportParameter("trDepositor", MainWindow.resourcemanagerreport.GetString("trDepositor")));
-            paramarr.Add(new ReportParameter("trPaymentTypeTooltip", MainWindow.resourcemanagerreport.GetString("trPaymentTypeTooltip")));
-            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
-            paramarr.Add(new ReportParameter("trCashTooltip", MainWindow.resourcemanagerreport.GetString("trCashTooltip")));
+            paramarr.Add(new ReportParameter("trTransferNumberTooltip", AppSettings.resourcemanagerreport.GetString("trTransferNumberTooltip")));
+            paramarr.Add(new ReportParameter("trDepositor", AppSettings.resourcemanagerreport.GetString("trDepositor")));
+            paramarr.Add(new ReportParameter("trPaymentTypeTooltip", AppSettings.resourcemanagerreport.GetString("trPaymentTypeTooltip")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trCashTooltip", AppSettings.resourcemanagerreport.GetString("trCashTooltip")));
 
 
 
@@ -324,21 +324,45 @@ namespace Restaurant.Classes
 
                 c.cash = decimal.Parse(HelpClass.DecTostring(c.cash));
             }
-            paramarr.Add(new ReportParameter("trPull", MainWindow.resourcemanagerreport.GetString("trPull")));
-            paramarr.Add(new ReportParameter("trDeposit", MainWindow.resourcemanagerreport.GetString("trDeposit")));
+            paramarr.Add(new ReportParameter("trPull", AppSettings.resourcemanagerreport.GetString("trPull")));
+            paramarr.Add(new ReportParameter("trDeposit", AppSettings.resourcemanagerreport.GetString("trDeposit")));
 
-            paramarr.Add(new ReportParameter("trDeposit", MainWindow.resourcemanagerreport.GetString("trDeposit")));
+            paramarr.Add(new ReportParameter("trDeposit", AppSettings.resourcemanagerreport.GetString("trDeposit")));
 
-            paramarr.Add(new ReportParameter("trTransferNumberTooltip", MainWindow.resourcemanagerreport.GetString("trTransferNumberTooltip")));
-            paramarr.Add(new ReportParameter("trFromPos", MainWindow.resourcemanagerreport.GetString("trFromPos")));
-            paramarr.Add(new ReportParameter("trToPos", MainWindow.resourcemanagerreport.GetString("trToPos")));
-            paramarr.Add(new ReportParameter("trOpperationTypeToolTip", MainWindow.resourcemanagerreport.GetString("trOpperationTypeToolTip")));
-            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
-            paramarr.Add(new ReportParameter("trCashTooltip", MainWindow.resourcemanagerreport.GetString("trCashTooltip")));
+            paramarr.Add(new ReportParameter("trTransferNumberTooltip", AppSettings.resourcemanagerreport.GetString("trTransferNumberTooltip")));
+            paramarr.Add(new ReportParameter("trFromPos", AppSettings.resourcemanagerreport.GetString("trFromPos")));
+            paramarr.Add(new ReportParameter("trToPos", AppSettings.resourcemanagerreport.GetString("trToPos")));
+            paramarr.Add(new ReportParameter("trOpperationTypeToolTip", AppSettings.resourcemanagerreport.GetString("trOpperationTypeToolTip")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trCashTooltip", AppSettings.resourcemanagerreport.GetString("trCashTooltip")));
             DateFormConv(paramarr);
 
             rep.DataSources.Add(new ReportDataSource("DataSetBankAcc", cash));
         }
+        public static void posAccReportSTS(IEnumerable<CashTransfer> cash, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            posAccReport(cash, rep, reppath, paramarr);
+            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNum")));
+
+            paramarr.Add(new ReportParameter("trAccoutant", AppSettings.resourcemanagerreport.GetString("trAccoutant")));
+            paramarr.Add(new ReportParameter("trAmount", AppSettings.resourcemanagerreport.GetString("trAmount")));
+
+
+
+        }
+        public string posTransfersStatusConverter(byte isConfirm1, byte isConfirm2)
+        {
+
+            if ((isConfirm1 == 1) && (isConfirm2 == 1))
+                return AppSettings.resourcemanager.GetString("trConfirmed");
+            else if ((isConfirm1 == 2) || (isConfirm2 == 2))
+                return AppSettings.resourcemanager.GetString("trCanceled");
+            else
+                return AppSettings.resourcemanager.GetString("trWaiting");
+        }
+
+
+
         public static void invItem(IEnumerable<InventoryItemLocation> itemLocations, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             rep.ReportPath = reppath;
@@ -346,7 +370,7 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
 
             rep.DataSources.Add(new ReportDataSource("DataSetInvItemLocation", itemLocations));
-            paramarr.Add(new ReportParameter("dateForm", MainWindow.dateFormat));
+            paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
         }
         public static void section(IEnumerable<Section> sections, LocalReport rep, string reppath)
         {
@@ -368,7 +392,7 @@ namespace Restaurant.Classes
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetItemLocation", itemLocations));
-            paramarr.Add(new ReportParameter("dateForm", MainWindow.dateFormat));
+            paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
         }
         public static void bankReport(IEnumerable<Bank> banksQuery, LocalReport rep, string reppath)
         {
@@ -384,12 +408,12 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetTables", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trTheTables")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trTheTables")));
             //table columns
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
-            paramarr.Add(new ReportParameter("trPersonsCount", MainWindow.resourcemanagerreport.GetString("trPersonsCount")));
-            paramarr.Add(new ReportParameter("trSection", MainWindow.resourcemanagerreport.GetString("trSection")));
-            paramarr.Add(new ReportParameter("trNote", MainWindow.resourcemanagerreport.GetString("trNote")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trPersonsCount", AppSettings.resourcemanagerreport.GetString("trPersonsCount")));
+            paramarr.Add(new ReportParameter("trSection", AppSettings.resourcemanagerreport.GetString("trSection")));
+            paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
            
         }
 
@@ -400,12 +424,12 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetHallSections", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trSections")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trSections")));
             //table columns
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
-            paramarr.Add(new ReportParameter("trDetails", MainWindow.resourcemanagerreport.GetString("trDetails")));
-            paramarr.Add(new ReportParameter("trBranchStore", MainWindow.resourcemanagerreport.GetString("trBranch/Store")));
-            paramarr.Add(new ReportParameter("trNote", MainWindow.resourcemanagerreport.GetString("trNote")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trDetails", AppSettings.resourcemanagerreport.GetString("trDetails")));
+            paramarr.Add(new ReportParameter("trBranchStore", AppSettings.resourcemanagerreport.GetString("trBranch/Store")));
+            paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
 
         }
 
@@ -416,12 +440,12 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetAgent", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trCustomers")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trCustomers")));
             //table columns
-            paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
-            paramarr.Add(new ReportParameter("trCompany", MainWindow.resourcemanagerreport.GetString("trCompany")));
-            paramarr.Add(new ReportParameter("trMobile", MainWindow.resourcemanagerreport.GetString("trMobile")));
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trCompany", AppSettings.resourcemanagerreport.GetString("trCompany")));
+            paramarr.Add(new ReportParameter("trMobile", AppSettings.resourcemanagerreport.GetString("trMobile")));
 
         }
 
@@ -432,12 +456,12 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetAgent", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trVendors")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trVendors")));
             //table columns
-            paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
-            paramarr.Add(new ReportParameter("trCompany", MainWindow.resourcemanagerreport.GetString("trCompany")));
-            paramarr.Add(new ReportParameter("trMobile", MainWindow.resourcemanagerreport.GetString("trMobile")));
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trCompany", AppSettings.resourcemanagerreport.GetString("trCompany")));
+            paramarr.Add(new ReportParameter("trMobile", AppSettings.resourcemanagerreport.GetString("trMobile")));
 
         }
 
@@ -448,12 +472,12 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetUser", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trUsers")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trUsers")));
             //table columns
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
-            paramarr.Add(new ReportParameter("trJob", MainWindow.resourcemanagerreport.GetString("trJob")));
-            paramarr.Add(new ReportParameter("trWorkHours", MainWindow.resourcemanagerreport.GetString("trWorkHours")));
-            paramarr.Add(new ReportParameter("trNote", MainWindow.resourcemanagerreport.GetString("trNote")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trJob", AppSettings.resourcemanagerreport.GetString("trJob")));
+            paramarr.Add(new ReportParameter("trWorkHours", AppSettings.resourcemanagerreport.GetString("trWorkHours")));
+            paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
 
         }
 
@@ -464,14 +488,14 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetBranch", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trBranches")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trBranches")));
             //table columns
 
-            paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
-            paramarr.Add(new ReportParameter("trMobile", MainWindow.resourcemanagerreport.GetString("trMobile")));
-            paramarr.Add(new ReportParameter("trBranchAddress", MainWindow.resourcemanagerreport.GetString("trAddress")));
-            paramarr.Add(new ReportParameter("trNote", MainWindow.resourcemanagerreport.GetString("trNote")));
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trMobile", AppSettings.resourcemanagerreport.GetString("trMobile")));
+            paramarr.Add(new ReportParameter("trBranchAddress", AppSettings.resourcemanagerreport.GetString("trAddress")));
+            paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
 
         }
         public static void PosReport(IEnumerable<Pos> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
@@ -481,12 +505,12 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetPos", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trPOSs")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trPOSs")));
             //table columns
-            paramarr.Add(new ReportParameter("trPosCode", MainWindow.resourcemanagerreport.GetString("trPosCode")));
-            paramarr.Add(new ReportParameter("trPosName", MainWindow.resourcemanagerreport.GetString("trPosName")));
-            paramarr.Add(new ReportParameter("trBranchName", MainWindow.resourcemanagerreport.GetString("trBranchName")));
-            paramarr.Add(new ReportParameter("trNote", MainWindow.resourcemanagerreport.GetString("trNote")));
+            paramarr.Add(new ReportParameter("trPosCode", AppSettings.resourcemanagerreport.GetString("trPosCode")));
+            paramarr.Add(new ReportParameter("trPosName", AppSettings.resourcemanagerreport.GetString("trPosName")));
+            paramarr.Add(new ReportParameter("trBranchName", AppSettings.resourcemanagerreport.GetString("trBranchName")));
+            paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
 
         }
         public static void StoresReport(IEnumerable<Branch> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
@@ -496,13 +520,13 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetBranch", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trStores")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trStores")));
             //table columns
-            paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
-            paramarr.Add(new ReportParameter("trMobile", MainWindow.resourcemanagerreport.GetString("trMobile")));
-            paramarr.Add(new ReportParameter("trBranchAddress", MainWindow.resourcemanagerreport.GetString("trAddress")));
-            paramarr.Add(new ReportParameter("trNote", MainWindow.resourcemanagerreport.GetString("trNote")));
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trMobile", AppSettings.resourcemanagerreport.GetString("trMobile")));
+            paramarr.Add(new ReportParameter("trBranchAddress", AppSettings.resourcemanagerreport.GetString("trAddress")));
+            paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
 
         }
 
@@ -515,12 +539,12 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetBank", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trBanks")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trBanks")));
             //table columns
-            paramarr.Add(new ReportParameter("trBankName", MainWindow.resourcemanagerreport.GetString("trBankName")));
-            paramarr.Add(new ReportParameter("trAccNumber", MainWindow.resourcemanagerreport.GetString("trAccNumber")));
-            paramarr.Add(new ReportParameter("trBankAddress", MainWindow.resourcemanagerreport.GetString("trAddress")));
-            paramarr.Add(new ReportParameter("trMobile", MainWindow.resourcemanagerreport.GetString("trMobile")));
+            paramarr.Add(new ReportParameter("trBankName", AppSettings.resourcemanagerreport.GetString("trBankName")));
+            paramarr.Add(new ReportParameter("trAccNumber", AppSettings.resourcemanagerreport.GetString("trAccNumber")));
+            paramarr.Add(new ReportParameter("trBankAddress", AppSettings.resourcemanagerreport.GetString("trAddress")));
+            paramarr.Add(new ReportParameter("trMobile", AppSettings.resourcemanagerreport.GetString("trMobile")));
 
         }
 
@@ -531,10 +555,10 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetCard", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trCards")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trCards")));
             //table columns
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
-            paramarr.Add(new ReportParameter("trNote", MainWindow.resourcemanagerreport.GetString("trNote")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
   
         }
 
@@ -546,11 +570,11 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetLocation", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trLocations")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trLocations")));
             //table columns
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
-            paramarr.Add(new ReportParameter("trSection", MainWindow.resourcemanagerreport.GetString("trSection")));
-            paramarr.Add(new ReportParameter("trNote", MainWindow.resourcemanagerreport.GetString("trNote")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trSection", AppSettings.resourcemanagerreport.GetString("trSection")));
+            paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
 
         }
 
@@ -561,11 +585,11 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetSection", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trSections")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trSections")));
             //table columns
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
-            paramarr.Add(new ReportParameter("trBranchStore", MainWindow.resourcemanagerreport.GetString("trBranch/Store")));
-            paramarr.Add(new ReportParameter("trNote", MainWindow.resourcemanagerreport.GetString("trNote")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trBranchStore", AppSettings.resourcemanagerreport.GetString("trBranch/Store")));
+            paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
 
         }
 
@@ -576,13 +600,13 @@ namespace Restaurant.Classes
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetItemsDestructive", invoiceItems)); 
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trDestructives")));// tt
-            paramarr.Add(new ReportParameter("trNum", MainWindow.resourcemanagerreport.GetString("trNo.")));
-            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
-            paramarr.Add(new ReportParameter("trSection", MainWindow.resourcemanagerreport.GetString("trSection") + "-" + MainWindow.resourcemanagerreport.GetString("trLocation")));
-            paramarr.Add(new ReportParameter("trItem", MainWindow.resourcemanagerreport.GetString("trItem") + "-" + MainWindow.resourcemanagerreport.GetString("trUnit")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trDestructives")));// tt
+            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trSection", AppSettings.resourcemanagerreport.GetString("trSection") + "-" + AppSettings.resourcemanagerreport.GetString("trLocation")));
+            paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem") + "-" + AppSettings.resourcemanagerreport.GetString("trUnit")));
            
-            paramarr.Add(new ReportParameter("trQuantity", MainWindow.resourcemanagerreport.GetString("trAmount")));
+            paramarr.Add(new ReportParameter("trQuantity", AppSettings.resourcemanagerreport.GetString("trAmount")));
             DateFormConv(paramarr);
                 
         }
@@ -593,13 +617,13 @@ namespace Restaurant.Classes
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetItemsShortage", invoiceItems));
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trShortages")));// tt
-            paramarr.Add(new ReportParameter("trNum", MainWindow.resourcemanagerreport.GetString("trInventoryNum")));
-            paramarr.Add(new ReportParameter("trDate", MainWindow.resourcemanagerreport.GetString("trDate")));
-            paramarr.Add(new ReportParameter("trSection", MainWindow.resourcemanagerreport.GetString("trSectionLocation")));
-            paramarr.Add(new ReportParameter("trItem", MainWindow.resourcemanagerreport.GetString("trItemUnit") ));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trShortages")));// tt
+            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trInventoryNum")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trSection", AppSettings.resourcemanagerreport.GetString("trSectionLocation")));
+            paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItemUnit") ));
 
-            paramarr.Add(new ReportParameter("trQuantity", MainWindow.resourcemanagerreport.GetString("trAmount")));
+            paramarr.Add(new ReportParameter("trQuantity", AppSettings.resourcemanagerreport.GetString("trAmount")));
             DateFormConv(paramarr);
 
         }
@@ -610,13 +634,13 @@ namespace Restaurant.Classes
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetStocktaking", invoiceItems));
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trStocktakingItems")));// tt
-            paramarr.Add(new ReportParameter("trNum", MainWindow.resourcemanagerreport.GetString("trNum")));
-            paramarr.Add(new ReportParameter("trSectionLocation", MainWindow.resourcemanagerreport.GetString("trSectionLocation")));
-            paramarr.Add(new ReportParameter("trItemUnit", MainWindow.resourcemanagerreport.GetString("trItemUnit") ));
-            paramarr.Add(new ReportParameter("trRealAmount", MainWindow.resourcemanagerreport.GetString("trRealAmount")));
-            paramarr.Add(new ReportParameter("trInventoryAmount", MainWindow.resourcemanagerreport.GetString("trInventoryAmount")));
-            paramarr.Add(new ReportParameter("trDestoryCount", MainWindow.resourcemanagerreport.GetString("trDestoryCount")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trStocktakingItems")));// tt
+            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNum")));
+            paramarr.Add(new ReportParameter("trSectionLocation", AppSettings.resourcemanagerreport.GetString("trSectionLocation")));
+            paramarr.Add(new ReportParameter("trItemUnit", AppSettings.resourcemanagerreport.GetString("trItemUnit") ));
+            paramarr.Add(new ReportParameter("trRealAmount", AppSettings.resourcemanagerreport.GetString("trRealAmount")));
+            paramarr.Add(new ReportParameter("trInventoryAmount", AppSettings.resourcemanagerreport.GetString("trInventoryAmount")));
+            paramarr.Add(new ReportParameter("trDestoryCount", AppSettings.resourcemanagerreport.GetString("trDestoryCount")));
           
             DateFormConv(paramarr);
 
@@ -628,15 +652,15 @@ namespace Restaurant.Classes
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetItemsStorage", invoiceItems));
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trLocations")));// tt
-            paramarr.Add(new ReportParameter("trNum", MainWindow.resourcemanagerreport.GetString("trNum")));
-            paramarr.Add(new ReportParameter("trItemUnit", MainWindow.resourcemanagerreport.GetString("trItemUnit")));
-            paramarr.Add(new ReportParameter("trSectionLocation", MainWindow.resourcemanagerreport.GetString("trSectionLocation")));
-            paramarr.Add(new ReportParameter("trQuantity", MainWindow.resourcemanagerreport.GetString("trQuantity")));
-            paramarr.Add(new ReportParameter("trStartDate", MainWindow.resourcemanagerreport.GetString("trStartDate")));
-            paramarr.Add(new ReportParameter("trEndDate", MainWindow.resourcemanagerreport.GetString("trEndDate")));
-            paramarr.Add(new ReportParameter("trNote", MainWindow.resourcemanagerreport.GetString("trNote")));
-            paramarr.Add(new ReportParameter("trOrderNum", MainWindow.resourcemanagerreport.GetString("trOrderNum")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trLocations")));// tt
+            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNum")));
+            paramarr.Add(new ReportParameter("trItemUnit", AppSettings.resourcemanagerreport.GetString("trItemUnit")));
+            paramarr.Add(new ReportParameter("trSectionLocation", AppSettings.resourcemanagerreport.GetString("trSectionLocation")));
+            paramarr.Add(new ReportParameter("trQuantity", AppSettings.resourcemanagerreport.GetString("trQuantity")));
+            paramarr.Add(new ReportParameter("trStartDate", AppSettings.resourcemanagerreport.GetString("trStartDate")));
+            paramarr.Add(new ReportParameter("trEndDate", AppSettings.resourcemanagerreport.GetString("trEndDate")));
+            paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
+            paramarr.Add(new ReportParameter("trOrderNum", AppSettings.resourcemanagerreport.GetString("trOrderNum")));
             DateFormConv(paramarr);
 
         }
@@ -647,13 +671,13 @@ namespace Restaurant.Classes
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetStorageInvoice", invoiceItems));
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trInvoice")));// tt
-            paramarr.Add(new ReportParameter("trNum", MainWindow.resourcemanagerreport.GetString("trNum")));
-            paramarr.Add(new ReportParameter("trItem", MainWindow.resourcemanagerreport.GetString("trItem")));
-            paramarr.Add(new ReportParameter("trUnit", MainWindow.resourcemanagerreport.GetString("trUnit")));
-            paramarr.Add(new ReportParameter("trQTR", MainWindow.resourcemanagerreport.GetString("trQTR")));
-            paramarr.Add(new ReportParameter("trPrice", MainWindow.resourcemanagerreport.GetString("trPrice")));
-            paramarr.Add(new ReportParameter("trTotal", MainWindow.resourcemanagerreport.GetString("trTotal")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trInvoice")));// tt
+            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNum")));
+            paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem")));
+            paramarr.Add(new ReportParameter("trUnit", AppSettings.resourcemanagerreport.GetString("trUnit")));
+            paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
+            paramarr.Add(new ReportParameter("trPrice", AppSettings.resourcemanagerreport.GetString("trPrice")));
+            paramarr.Add(new ReportParameter("trTotal", AppSettings.resourcemanagerreport.GetString("trTotal")));
            
             DateFormConv(paramarr);
 
@@ -665,10 +689,10 @@ namespace Restaurant.Classes
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetStorageCost", invoiceItems));
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trStorageCostPerDay")));// tt
-            paramarr.Add(new ReportParameter("trNum", MainWindow.resourcemanagerreport.GetString("trNum")));
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
-            paramarr.Add(new ReportParameter("trStorageCost", MainWindow.resourcemanagerreport.GetString("trStorageCost")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trStorageCostPerDay")));// tt
+            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNum")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trStorageCost", AppSettings.resourcemanagerreport.GetString("trStorageCost")));
         
 
             DateFormConv(paramarr);
@@ -682,11 +706,11 @@ namespace Restaurant.Classes
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetSpendingOrder", invoiceItems));
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trInvoice"))); 
-            paramarr.Add(new ReportParameter("trNum", MainWindow.resourcemanagerreport.GetString("trNum")));
-            paramarr.Add(new ReportParameter("trItem", MainWindow.resourcemanagerreport.GetString("trItem")));
-            paramarr.Add(new ReportParameter("trUnit", MainWindow.resourcemanagerreport.GetString("trUnit")));
-            paramarr.Add(new ReportParameter("trQuantity", MainWindow.resourcemanagerreport.GetString("trQuantity")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trInvoice"))); 
+            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNum")));
+            paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem")));
+            paramarr.Add(new ReportParameter("trUnit", AppSettings.resourcemanagerreport.GetString("trUnit")));
+            paramarr.Add(new ReportParameter("trQuantity", AppSettings.resourcemanagerreport.GetString("trQuantity")));
 
             DateFormConv(paramarr);
 
@@ -700,12 +724,12 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataResidentialSectors", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trResidentialSectors")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trResidentialSectors")));
             //table columns
            
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
 
-            paramarr.Add(new ReportParameter("trNote", MainWindow.resourcemanagerreport.GetString("trNote")));
+            paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
 
         } 
         public static void ErrorsReport(IEnumerable<ErrorClass> Query, LocalReport rep, string reppath)
@@ -731,23 +755,23 @@ namespace Restaurant.Classes
                 string state = "";
 
                 if ((c.isActive == 1) && (c.endDate > DateTime.Now) && (c.quantity > 0))
-                    state = MainWindow.resourcemanager.GetString("trValid");
+                    state = AppSettings.resourcemanager.GetString("trValid");
                 else
-                    state = MainWindow.resourcemanager.GetString("trExpired");
+                    state = AppSettings.resourcemanager.GetString("trExpired");
 
                 c.state = state;
 
             }
 
             rep.DataSources.Add(new ReportDataSource("DataSetCoupon", CouponQuery2));
-            paramarr.Add(new ReportParameter("dateForm", MainWindow.dateFormat));
-            paramarr.Add(new ReportParameter("Title", MainWindow.resourcemanagerreport.GetString("trCoupons")));
-            paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
-            paramarr.Add(new ReportParameter("trDiscount", MainWindow.resourcemanagerreport.GetString("trValue")));
-            paramarr.Add(new ReportParameter("trQuantity", MainWindow.resourcemanagerreport.GetString("trQuantity")));
-            paramarr.Add(new ReportParameter("trRemainQ", MainWindow.resourcemanagerreport.GetString("trRemainQuantity")));
-            paramarr.Add(new ReportParameter("trEndDate", MainWindow.resourcemanagerreport.GetString("trvalidity")));
+            paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
+            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trCoupons")));
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trDiscount", AppSettings.resourcemanagerreport.GetString("trValue")));
+            paramarr.Add(new ReportParameter("trQuantity", AppSettings.resourcemanagerreport.GetString("trQuantity")));
+            paramarr.Add(new ReportParameter("trRemainQ", AppSettings.resourcemanagerreport.GetString("trRemainQuantity")));
+            paramarr.Add(new ReportParameter("trEndDate", AppSettings.resourcemanagerreport.GetString("trvalidity")));
 
         }
         public static void couponExportReport(LocalReport rep, string reppath, List<ReportParameter> paramarr, string barcode)
@@ -773,12 +797,12 @@ namespace Restaurant.Classes
 
 
             rep.DataSources.Add(new ReportDataSource("DataSetItem", packageQuery));
-            //    paramarr.Add(new ReportParameter("dateForm", MainWindow.dateFormat));
-            paramarr.Add(new ReportParameter("Title", MainWindow.resourcemanagerreport.GetString("trPackageItems")));
-            paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trPackage")));
-            paramarr.Add(new ReportParameter("trDetails", MainWindow.resourcemanagerreport.GetString("trDetails")));
-            paramarr.Add(new ReportParameter("trCategory", MainWindow.resourcemanagerreport.GetString("trCategorie")));
+            //    paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
+            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trPackageItems")));
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trPackage")));
+            paramarr.Add(new ReportParameter("trDetails", AppSettings.resourcemanagerreport.GetString("trDetails")));
+            paramarr.Add(new ReportParameter("trCategory", AppSettings.resourcemanagerreport.GetString("trCategorie")));
 
         }
         public static void serviceReport(IEnumerable<Item> serviceQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
@@ -789,12 +813,12 @@ namespace Restaurant.Classes
 
 
             rep.DataSources.Add(new ReportDataSource("DataSetItem", serviceQuery));
-            //    paramarr.Add(new ReportParameter("dateForm", MainWindow.dateFormat));trTheService trTheServices
-            paramarr.Add(new ReportParameter("Title", MainWindow.resourcemanagerreport.GetString("trTheServices")));
-            paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trTheService")));
-            paramarr.Add(new ReportParameter("trDetails", MainWindow.resourcemanagerreport.GetString("trDetails")));
-            paramarr.Add(new ReportParameter("trCategory", MainWindow.resourcemanagerreport.GetString("trCategorie")));
+            //    paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));trTheService trTheServices
+            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trTheServices")));
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trTheService")));
+            paramarr.Add(new ReportParameter("trDetails", AppSettings.resourcemanagerreport.GetString("trDetails")));
+            paramarr.Add(new ReportParameter("trCategory", AppSettings.resourcemanagerreport.GetString("trCategorie")));
 
         }
         public static void offerReport(IEnumerable<Offer> OfferQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
@@ -809,12 +833,12 @@ namespace Restaurant.Classes
             }
 
             rep.DataSources.Add(new ReportDataSource("DataSetOffer", OfferQuery));
-            paramarr.Add(new ReportParameter("dateForm", MainWindow.dateFormat));
-            paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
-            paramarr.Add(new ReportParameter("trDiscount", MainWindow.resourcemanagerreport.GetString("trValue")));
-            paramarr.Add(new ReportParameter("trStartDate", MainWindow.resourcemanagerreport.GetString("trStartDate")));
-            paramarr.Add(new ReportParameter("trEndDate", MainWindow.resourcemanagerreport.GetString("trEndDate")));
+            paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trDiscount", AppSettings.resourcemanagerreport.GetString("trValue")));
+            paramarr.Add(new ReportParameter("trStartDate", AppSettings.resourcemanagerreport.GetString("trStartDate")));
+            paramarr.Add(new ReportParameter("trEndDate", AppSettings.resourcemanagerreport.GetString("trEndDate")));
 
 
 
@@ -838,11 +862,11 @@ namespace Restaurant.Classes
             string s = "";
             switch (value)
             {
-                case "n": s = MainWindow.resourcemanagerreport.GetString("trNormals"); break;
-                case "d": s = MainWindow.resourcemanagerreport.GetString("trHaveExpirationDates"); break;
-                case "sn": s = MainWindow.resourcemanagerreport.GetString("trHaveSerialNumbers"); break;
-                case "sr": s = MainWindow.resourcemanagerreport.GetString("trServices"); break;
-                case "p": s = MainWindow.resourcemanagerreport.GetString("trPackages"); break;
+                case "n": s = AppSettings.resourcemanagerreport.GetString("trNormals"); break;
+                case "d": s = AppSettings.resourcemanagerreport.GetString("trHaveExpirationDates"); break;
+                case "sn": s = AppSettings.resourcemanagerreport.GetString("trHaveSerialNumbers"); break;
+                case "sr": s = AppSettings.resourcemanagerreport.GetString("trServices"); break;
+                case "p": s = AppSettings.resourcemanagerreport.GetString("trPackages"); break;
             }
 
             return s;
@@ -876,7 +900,7 @@ namespace Restaurant.Classes
         {
 
             itemTypeConv(paramarr);
-            paramarr.Add(new ReportParameter("dateForm", MainWindow.dateFormat));
+            paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
             PurStsReport(tempquery, rep, reppath);
 
         }
@@ -886,7 +910,7 @@ namespace Restaurant.Classes
             PurStsReport(tempquery, rep, reppath);
 
             itemTransferDiscountTypeConv(paramarr);
-            paramarr.Add(new ReportParameter("dateForm", MainWindow.dateFormat));
+            paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
             /*
              =IIF(Fields!CopdiscountType.Value="2",
 Parameters!trPercentageDiscount.Value,
@@ -896,8 +920,8 @@ Parameters!trValueDiscount.Value)
         public static void itemTransferDiscountTypeConv(List<ReportParameter> paramarr)
         {
 
-            paramarr.Add(new ReportParameter("trValueDiscount", MainWindow.resourcemanagerreport.GetString("trValueDiscount")));
-            paramarr.Add(new ReportParameter("trPercentageDiscount", MainWindow.resourcemanagerreport.GetString("trPercentageDiscount")));
+            paramarr.Add(new ReportParameter("trValueDiscount", AppSettings.resourcemanagerreport.GetString("trValueDiscount")));
+            paramarr.Add(new ReportParameter("trPercentageDiscount", AppSettings.resourcemanagerreport.GetString("trPercentageDiscount")));
 
 
 
@@ -906,18 +930,18 @@ Parameters!trValueDiscount.Value)
 
         public static void itemTypeConv(List<ReportParameter> paramarr)
         {
-            paramarr.Add(new ReportParameter("trNormal", MainWindow.resourcemanagerreport.GetString("trNormal")));
-            paramarr.Add(new ReportParameter("trHaveExpirationDate", MainWindow.resourcemanagerreport.GetString("trHaveExpirationDate")));
-            paramarr.Add(new ReportParameter("trHaveSerialNumber", MainWindow.resourcemanagerreport.GetString("trHaveSerialNumber")));
-            paramarr.Add(new ReportParameter("trService", MainWindow.resourcemanagerreport.GetString("trService")));
-            paramarr.Add(new ReportParameter("trPackage", MainWindow.resourcemanagerreport.GetString("trPackage")));
+            paramarr.Add(new ReportParameter("trNormal", AppSettings.resourcemanagerreport.GetString("trNormal")));
+            paramarr.Add(new ReportParameter("trHaveExpirationDate", AppSettings.resourcemanagerreport.GetString("trHaveExpirationDate")));
+            paramarr.Add(new ReportParameter("trHaveSerialNumber", AppSettings.resourcemanagerreport.GetString("trHaveSerialNumber")));
+            paramarr.Add(new ReportParameter("trService", AppSettings.resourcemanagerreport.GetString("trService")));
+            paramarr.Add(new ReportParameter("trPackage", AppSettings.resourcemanagerreport.GetString("trPackage")));
         }
         //clsReports.SaleInvoiceStsReport(itemTransfers, rep, reppath, paramarr);
 
         //public static void SaleInvoiceStsReport(IEnumerable<ItemTransferInvoice> tempquery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         //{
         //    PurStsReport(tempquery, rep, reppath);
-        //    paramarr.Add(new ReportParameter("isTax", MainWindow.invoiceTax_bool.ToString()));
+        //    paramarr.Add(new ReportParameter("isTax", AppSettings.invoiceTax_bool.ToString()));
         //    itemTransferInvTypeConv(paramarr);
 
         //}
@@ -934,7 +958,7 @@ Parameters!trValueDiscount.Value)
         //    {
         //        date = HelpClass.DateToString(tempquery.FirstOrDefault().updateDate);
         //    }
-        //    paramarr.Add(new ReportParameter("isTax", MainWindow.invoiceTax_bool.ToString()));
+        //    paramarr.Add(new ReportParameter("isTax", AppSettings.invoiceTax_bool.ToString()));
         //    paramarr.Add(new ReportParameter("invDate", date));
         //    itemTransferInvTypeConv(paramarr);
 
@@ -953,8 +977,8 @@ Parameters!trValueDiscount.Value)
 
             }
             rep.DataSources.Add(new ReportDataSource("DataSetProfit", tempquery));
-            paramarr.Add(new ReportParameter("title", MainWindow.resourcemanagerreport.GetString("trProfits")));
-            paramarr.Add(new ReportParameter("Currency", MainWindow.Currency));
+            paramarr.Add(new ReportParameter("title", AppSettings.resourcemanagerreport.GetString("trProfits")));
+            paramarr.Add(new ReportParameter("Currency", AppSettings.Currency));
             itemTransferInvTypeConv(paramarr);
 
         }
@@ -964,122 +988,122 @@ Parameters!trValueDiscount.Value)
             string trtext = "";
             //////////////////////////////////////////////////////////////////////////////
             if (firstTitle == "invoice")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trInvoices");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trInvoices");
             else if (firstTitle == "quotation")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trQuotations");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trQuotations");
             else if (firstTitle == "promotion")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trThePromotion");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trThePromotion");
             else if (firstTitle == "internal")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trInternal");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trInternal");
             else if (firstTitle == "external")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trExternal");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trExternal");
             else if (firstTitle == "banksReport")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trBanks");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trBanks");
             else if (firstTitle == "destroied")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trDestructives");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trDestructives");
             else if (firstTitle == "usersReport")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trUsers");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trUsers");
             else if (firstTitle == "storageReports")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trStorage");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trStorage");
             else if (firstTitle == "stocktaking")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trStocktaking");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trStocktaking");
             else if (firstTitle == "stock")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trStock");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trStock");
             else if (firstTitle == "purchaseOrders")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trPurchaseOrders");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trPurchaseOrders");
             else if (firstTitle == "saleOrders")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trSalesOrders");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trSalesOrders");
 
             else if (firstTitle == "saleItems" || firstTitle == "purchaseItem")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trItems");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trItems");
             else if (firstTitle == "recipientReport")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trReceived");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trReceived");
             else if (firstTitle == "accountStatement")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trAccountStatement");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trAccountStatement");
             else if (firstTitle == "paymentsReport")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trPayments");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trPayments");
             else if (firstTitle == "posReports")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trPOS");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trPOS");
             else if (firstTitle == "dailySalesStatistic")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trDailySales");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trDailySales");
             else if (firstTitle == "accountProfits")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trProfits");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trProfits");
             else if (firstTitle == "accountFund")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trCashBalance");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trCashBalance");
             else if (firstTitle == "quotations")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trQTReport");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trQTReport");
             else if (firstTitle == "transfers")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trTransfers");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trTransfers");
             else if (firstTitle == "fund")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trCashBalance");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trCashBalance");
             else if (firstTitle == "DirectEntry")
-                firstTitle = MainWindow.resourcemanagerreport.GetString("trDirectEntry");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trDirectEntry");
             //trCashBalance trDirectEntry
             //trTransfers administrativePull
             //////////////////////////////////////////////////////////////////////////////
 
             if (secondTitle == "branch")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trBranches");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trBranches");
             else if (secondTitle == "pos")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trPOS");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trPOS");
             else if (secondTitle == "vendors" || secondTitle == "vendor")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trVendors");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trVendors");
             else if (secondTitle == "customers" || secondTitle == "customer")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trCustomers");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trCustomers");
             else if (secondTitle == "users" || secondTitle == "user")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trUsers");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trUsers");
             else if (secondTitle == "items" || secondTitle == "item")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trItems");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trItems");
             else if (secondTitle == "coupon")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trCoupons");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trCoupons");
             else if (secondTitle == "offers")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trOffer");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trOffer");
             else if (secondTitle == "invoice")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trInvoices");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trInvoices");
             else if (secondTitle == "order")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trOrders");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trOrders");
             else if (secondTitle == "quotation")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trQTReport");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trQTReport");
             else if (secondTitle == "operator")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trOperator");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trOperator");
             else if (secondTitle == "payments")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trPayments");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trPayments");
             else if (secondTitle == "recipient")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trReceived");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trReceived");
             else if (secondTitle == "destroied")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trDestructives");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trDestructives");
             else if (secondTitle == "agent")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trCustomers");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trCustomers");
             else if (secondTitle == "stock")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trStock");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trStock");
             else if (secondTitle == "external")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trExternal");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trExternal");
             else if (secondTitle == "internal")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trInternal");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trInternal");
             else if (secondTitle == "stocktaking")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trStocktaking");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trStocktaking");
             else if (secondTitle == "archives")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trArchive");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trArchive");
             else if (secondTitle == "shortfalls")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trShortages");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trShortages");
             else if (secondTitle == "location")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trLocation");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trLocation");
             else if (secondTitle == "collect")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trCollect");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trCollect");
             else if (secondTitle == "shipping")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trShipping");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trShipping");
             else if (secondTitle == "salary")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trSalary");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trSalary");
             else if (secondTitle == "generalExpenses")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trGeneralExpenses");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trGeneralExpenses");
             else if (secondTitle == "administrativePull")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trAdministrativePull");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trAdministrativePull");
             else if (secondTitle == "AdministrativeDeposit")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trAdministrativeDeposit");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trAdministrativeDeposit");
             else if (secondTitle == "BestSeller")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trBestSeller");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trBestSeller");
             else if (secondTitle == "MostPurchased")
-                secondTitle = MainWindow.resourcemanagerreport.GetString("trMostPurchased");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trMostPurchased");
             //////////////////////////////////////////////////////////////////////////////
 
             trtext = firstTitle + " / " + secondTitle;
@@ -1091,7 +1115,7 @@ Parameters!trValueDiscount.Value)
 
         //    PurStsReport(tempquery, rep, reppath);
         //    itemTransferInvTypeConv(paramarr);
-        //    paramarr.Add(new ReportParameter("isTax", MainWindow.invoiceTax_bool.ToString()));
+        //    paramarr.Add(new ReportParameter("isTax", AppSettings.invoiceTax_bool.ToString()));
 
 
         //}
@@ -1256,9 +1280,9 @@ Parameters!trValueDiscount.Value)
         public static void cashTransferStsBank(IEnumerable<CashTransferSts> cashTransfers, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             cashTransferSts(cashTransfers, rep, reppath);
-            paramarr.Add(new ReportParameter("dateForm", MainWindow.dateFormat));
-            paramarr.Add(new ReportParameter("trPull", MainWindow.resourcemanagerreport.GetString("trPull")));
-            paramarr.Add(new ReportParameter("trDeposit", MainWindow.resourcemanagerreport.GetString("trDeposit")));
+            paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
+            paramarr.Add(new ReportParameter("trPull", AppSettings.resourcemanagerreport.GetString("trPull")));
+            paramarr.Add(new ReportParameter("trDeposit", AppSettings.resourcemanagerreport.GetString("trDeposit")));
 
 
         }
@@ -1269,22 +1293,22 @@ Parameters!trValueDiscount.Value)
             switch (value)
             {
                 case "cash":
-                    s = MainWindow.resourcemanagerreport.GetString("trCash");
+                    s = AppSettings.resourcemanagerreport.GetString("trCash");
                     break;
                 case "doc":
-                    s = MainWindow.resourcemanagerreport.GetString("trDocument");
+                    s = AppSettings.resourcemanagerreport.GetString("trDocument");
                     break;
                 case "cheque":
-                    s = MainWindow.resourcemanagerreport.GetString("trCheque");
+                    s = AppSettings.resourcemanagerreport.GetString("trCheque");
                     break;
                 case "balance":
-                    s = MainWindow.resourcemanagerreport.GetString("trCredit");
+                    s = AppSettings.resourcemanagerreport.GetString("trCredit");
                     break;
                 case "card":
-                    s = MainWindow.resourcemanagerreport.GetString("trAnotherPaymentMethods");
+                    s = AppSettings.resourcemanagerreport.GetString("trAnotherPaymentMethods");
                     break;
                 case "inv":
-                    s = MainWindow.resourcemanagerreport.GetString("trInv");
+                    s = AppSettings.resourcemanagerreport.GetString("trInv");
                     break;
                 default:
                     s = value;
@@ -1298,7 +1322,7 @@ Parameters!trValueDiscount.Value)
         {
             cashTransferStatSts(cashTransfers, rep, reppath);
 
-            paramarr.Add(new ReportParameter("dateForm", MainWindow.dateFormat));
+            paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
 
 
         }
@@ -1360,8 +1384,8 @@ Parameters!trValueDiscount.Value)
                 r.balance = decimal.Parse(HelpClass.DecTostring(r.balance));
             }
             rep.DataSources.Add(new ReportDataSource("DataSetBalanceSTS", query));
-            paramarr.Add(new ReportParameter("title", MainWindow.resourcemanagerreport.GetString("trBalance")));
-            paramarr.Add(new ReportParameter("Currency", MainWindow.Currency));
+            paramarr.Add(new ReportParameter("title", AppSettings.resourcemanagerreport.GetString("trBalance")));
+            paramarr.Add(new ReportParameter("Currency", AppSettings.Currency));
 
 
         }
@@ -1386,88 +1410,88 @@ Parameters!trValueDiscount.Value)
         public static void DateFormConv(List<ReportParameter> paramarr)
         {
 
-            paramarr.Add(new ReportParameter("dateForm", MainWindow.dateFormat));
+            paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
         }
 
         public static void InventoryTypeConv(List<ReportParameter> paramarr)
         {
 
-            paramarr.Add(new ReportParameter("trArchived", MainWindow.resourcemanagerreport.GetString("trArchived")));
-            paramarr.Add(new ReportParameter("trSaved", MainWindow.resourcemanagerreport.GetString("trSaved")));
-            paramarr.Add(new ReportParameter("trDraft", MainWindow.resourcemanagerreport.GetString("trDraft")));
+            paramarr.Add(new ReportParameter("trArchived", AppSettings.resourcemanagerreport.GetString("trArchived")));
+            paramarr.Add(new ReportParameter("trSaved", AppSettings.resourcemanagerreport.GetString("trSaved")));
+            paramarr.Add(new ReportParameter("trDraft", AppSettings.resourcemanagerreport.GetString("trDraft")));
         }
         public static void cashTransTypeConv(List<ReportParameter> paramarr)
         {
 
-            paramarr.Add(new ReportParameter("trPull", MainWindow.resourcemanagerreport.GetString("trPull")));
-            paramarr.Add(new ReportParameter("trDeposit", MainWindow.resourcemanagerreport.GetString("trDeposit")));
+            paramarr.Add(new ReportParameter("trPull", AppSettings.resourcemanagerreport.GetString("trPull")));
+            paramarr.Add(new ReportParameter("trDeposit", AppSettings.resourcemanagerreport.GetString("trDeposit")));
 
         }
 
         public static void cashTransferProcessTypeConv(List<ReportParameter> paramarr)
         {
-            paramarr.Add(new ReportParameter("trCash", MainWindow.resourcemanagerreport.GetString("trCash")));
-            paramarr.Add(new ReportParameter("trDocument", MainWindow.resourcemanagerreport.GetString("trDocument")));
-            paramarr.Add(new ReportParameter("trCheque", MainWindow.resourcemanagerreport.GetString("trCheque")));
-            paramarr.Add(new ReportParameter("trCredit", MainWindow.resourcemanagerreport.GetString("trCredit")));
-            paramarr.Add(new ReportParameter("trInv", MainWindow.resourcemanagerreport.GetString("trInv")));
-            paramarr.Add(new ReportParameter("trCard", MainWindow.resourcemanagerreport.GetString("trCreditCard")));
+            paramarr.Add(new ReportParameter("trCash", AppSettings.resourcemanagerreport.GetString("trCash")));
+            paramarr.Add(new ReportParameter("trDocument", AppSettings.resourcemanagerreport.GetString("trDocument")));
+            paramarr.Add(new ReportParameter("trCheque", AppSettings.resourcemanagerreport.GetString("trCheque")));
+            paramarr.Add(new ReportParameter("trCredit", AppSettings.resourcemanagerreport.GetString("trCredit")));
+            paramarr.Add(new ReportParameter("trInv", AppSettings.resourcemanagerreport.GetString("trInv")));
+            paramarr.Add(new ReportParameter("trCard", AppSettings.resourcemanagerreport.GetString("trCreditCard")));
         }
         public static void itemTransferInvTypeConv(List<ReportParameter> paramarr)
         {
-            paramarr.Add(new ReportParameter("dateForm", MainWindow.dateFormat));
-            paramarr.Add(new ReportParameter("trPurchaseInvoice", MainWindow.resourcemanagerreport.GetString("trPurchaseInvoice")));
-            paramarr.Add(new ReportParameter("trPurchaseInvoiceWaiting", MainWindow.resourcemanagerreport.GetString("trPurchaseInvoiceWaiting")));
-            paramarr.Add(new ReportParameter("trSalesInvoice", MainWindow.resourcemanagerreport.GetString("trSalesInvoice")));
-            paramarr.Add(new ReportParameter("trSalesReturnInvoice", MainWindow.resourcemanagerreport.GetString("trSalesReturnInvoice")));
-            paramarr.Add(new ReportParameter("trPurchaseReturnInvoice", MainWindow.resourcemanagerreport.GetString("trPurchaseReturnInvoice")));
-            paramarr.Add(new ReportParameter("trPurchaseReturnInvoiceWaiting", MainWindow.resourcemanagerreport.GetString("trPurchaseReturnInvoiceWaiting")));
-            paramarr.Add(new ReportParameter("trDraftPurchaseBill", MainWindow.resourcemanagerreport.GetString("trDraftPurchaseBill")));
-            paramarr.Add(new ReportParameter("trSalesDraft", MainWindow.resourcemanagerreport.GetString("trSalesDraft")));
-            paramarr.Add(new ReportParameter("trSalesReturnDraft", MainWindow.resourcemanagerreport.GetString("trSalesReturnDraft")));
+            paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
+            paramarr.Add(new ReportParameter("trPurchaseInvoice", AppSettings.resourcemanagerreport.GetString("trPurchaseInvoice")));
+            paramarr.Add(new ReportParameter("trPurchaseInvoiceWaiting", AppSettings.resourcemanagerreport.GetString("trPurchaseInvoiceWaiting")));
+            paramarr.Add(new ReportParameter("trSalesInvoice", AppSettings.resourcemanagerreport.GetString("trSalesInvoice")));
+            paramarr.Add(new ReportParameter("trSalesReturnInvoice", AppSettings.resourcemanagerreport.GetString("trSalesReturnInvoice")));
+            paramarr.Add(new ReportParameter("trPurchaseReturnInvoice", AppSettings.resourcemanagerreport.GetString("trPurchaseReturnInvoice")));
+            paramarr.Add(new ReportParameter("trPurchaseReturnInvoiceWaiting", AppSettings.resourcemanagerreport.GetString("trPurchaseReturnInvoiceWaiting")));
+            paramarr.Add(new ReportParameter("trDraftPurchaseBill", AppSettings.resourcemanagerreport.GetString("trDraftPurchaseBill")));
+            paramarr.Add(new ReportParameter("trSalesDraft", AppSettings.resourcemanagerreport.GetString("trSalesDraft")));
+            paramarr.Add(new ReportParameter("trSalesReturnDraft", AppSettings.resourcemanagerreport.GetString("trSalesReturnDraft")));
 
-            paramarr.Add(new ReportParameter("trSaleOrderDraft", MainWindow.resourcemanagerreport.GetString("trSaleOrderDraft")));
-            paramarr.Add(new ReportParameter("trSaleOrder", MainWindow.resourcemanagerreport.GetString("trSaleOrder")));
-            paramarr.Add(new ReportParameter("trPurchaceOrderDraft", MainWindow.resourcemanagerreport.GetString("trPurchaceOrderDraft")));
-            paramarr.Add(new ReportParameter("trPurchaceOrder", MainWindow.resourcemanagerreport.GetString("trPurchaceOrder")));
-            paramarr.Add(new ReportParameter("trQuotationsDraft", MainWindow.resourcemanagerreport.GetString("trQuotationsDraft")));
-            paramarr.Add(new ReportParameter("trQuotations", MainWindow.resourcemanagerreport.GetString("trQuotations")));
-            paramarr.Add(new ReportParameter("trDestructive", MainWindow.resourcemanagerreport.GetString("trDestructive")));
-            paramarr.Add(new ReportParameter("trShortage", MainWindow.resourcemanagerreport.GetString("trShortage")));
-            paramarr.Add(new ReportParameter("trImportDraft", MainWindow.resourcemanagerreport.GetString("trImportDraft")));
-            paramarr.Add(new ReportParameter("trImport", MainWindow.resourcemanagerreport.GetString("trImport")));
-            paramarr.Add(new ReportParameter("trImportOrder", MainWindow.resourcemanagerreport.GetString("trImportOrder")));
-            paramarr.Add(new ReportParameter("trExportDraft", MainWindow.resourcemanagerreport.GetString("trExportDraft")));
+            paramarr.Add(new ReportParameter("trSaleOrderDraft", AppSettings.resourcemanagerreport.GetString("trSaleOrderDraft")));
+            paramarr.Add(new ReportParameter("trSaleOrder", AppSettings.resourcemanagerreport.GetString("trSaleOrder")));
+            paramarr.Add(new ReportParameter("trPurchaceOrderDraft", AppSettings.resourcemanagerreport.GetString("trPurchaceOrderDraft")));
+            paramarr.Add(new ReportParameter("trPurchaceOrder", AppSettings.resourcemanagerreport.GetString("trPurchaceOrder")));
+            paramarr.Add(new ReportParameter("trQuotationsDraft", AppSettings.resourcemanagerreport.GetString("trQuotationsDraft")));
+            paramarr.Add(new ReportParameter("trQuotations", AppSettings.resourcemanagerreport.GetString("trQuotations")));
+            paramarr.Add(new ReportParameter("trDestructive", AppSettings.resourcemanagerreport.GetString("trDestructive")));
+            paramarr.Add(new ReportParameter("trShortage", AppSettings.resourcemanagerreport.GetString("trShortage")));
+            paramarr.Add(new ReportParameter("trImportDraft", AppSettings.resourcemanagerreport.GetString("trImportDraft")));
+            paramarr.Add(new ReportParameter("trImport", AppSettings.resourcemanagerreport.GetString("trImport")));
+            paramarr.Add(new ReportParameter("trImportOrder", AppSettings.resourcemanagerreport.GetString("trImportOrder")));
+            paramarr.Add(new ReportParameter("trExportDraft", AppSettings.resourcemanagerreport.GetString("trExportDraft")));
 
-            paramarr.Add(new ReportParameter("trExport", MainWindow.resourcemanagerreport.GetString("trExport")));
+            paramarr.Add(new ReportParameter("trExport", AppSettings.resourcemanagerreport.GetString("trExport")));
 
-            paramarr.Add(new ReportParameter("trExportOrder", MainWindow.resourcemanagerreport.GetString("trExportOrder")));
+            paramarr.Add(new ReportParameter("trExportOrder", AppSettings.resourcemanagerreport.GetString("trExportOrder")));
 
         }
         public static void invoiceSideConv(List<ReportParameter> paramarr)
         {
 
 
-            paramarr.Add(new ReportParameter("trVendor", MainWindow.resourcemanagerreport.GetString("trVendor")));
-            paramarr.Add(new ReportParameter("trCustomer", MainWindow.resourcemanagerreport.GetString("trCustomer")));
+            paramarr.Add(new ReportParameter("trVendor", AppSettings.resourcemanagerreport.GetString("trVendor")));
+            paramarr.Add(new ReportParameter("trCustomer", AppSettings.resourcemanagerreport.GetString("trCustomer")));
 
 
         }
         public static void AccountSideConv(List<ReportParameter> paramarr)
         {
 
-            paramarr.Add(new ReportParameter("dateForm", MainWindow.dateFormat));
+            paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
 
-            paramarr.Add(new ReportParameter("trVendor", MainWindow.resourcemanagerreport.GetString("trVendor")));
-            paramarr.Add(new ReportParameter("trCustomer", MainWindow.resourcemanagerreport.GetString("trCustomer")));
-            paramarr.Add(new ReportParameter("trUser", MainWindow.resourcemanagerreport.GetString("trUser")));
-            paramarr.Add(new ReportParameter("trSalary", MainWindow.resourcemanagerreport.GetString("trSalary")));
-            paramarr.Add(new ReportParameter("trGeneralExpenses", MainWindow.resourcemanagerreport.GetString("trGeneralExpenses")));
+            paramarr.Add(new ReportParameter("trVendor", AppSettings.resourcemanagerreport.GetString("trVendor")));
+            paramarr.Add(new ReportParameter("trCustomer", AppSettings.resourcemanagerreport.GetString("trCustomer")));
+            paramarr.Add(new ReportParameter("trUser", AppSettings.resourcemanagerreport.GetString("trUser")));
+            paramarr.Add(new ReportParameter("trSalary", AppSettings.resourcemanagerreport.GetString("trSalary")));
+            paramarr.Add(new ReportParameter("trGeneralExpenses", AppSettings.resourcemanagerreport.GetString("trGeneralExpenses")));
 
-            paramarr.Add(new ReportParameter("trAdministrativeDeposit", MainWindow.resourcemanagerreport.GetString("trAdministrativeDeposit")));
+            paramarr.Add(new ReportParameter("trAdministrativeDeposit", AppSettings.resourcemanagerreport.GetString("trAdministrativeDeposit")));
 
-            paramarr.Add(new ReportParameter("trAdministrativePull", MainWindow.resourcemanagerreport.GetString("trAdministrativePull")));
-            paramarr.Add(new ReportParameter("trShippingCompany", MainWindow.resourcemanagerreport.GetString("trShippingCompany")));
+            paramarr.Add(new ReportParameter("trAdministrativePull", AppSettings.resourcemanagerreport.GetString("trAdministrativePull")));
+            paramarr.Add(new ReportParameter("trShippingCompany", AppSettings.resourcemanagerreport.GetString("trShippingCompany")));
 
 
         }
@@ -1492,7 +1516,7 @@ Parameters!trValueDiscount.Value)
         public static void itemTransferInvoiceDestroied(IEnumerable<ItemTransferInvoice> itemTransferInvoices, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             itemTransferInvoice(itemTransferInvoices, rep, reppath);
-            paramarr.Add(new ReportParameter("dateForm", MainWindow.dateFormat));
+            paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
 
         }
         public static void categoryReport(IEnumerable<Category> categoryQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
@@ -1505,10 +1529,10 @@ Parameters!trValueDiscount.Value)
                 r.taxes = decimal.Parse(HelpClass.DecTostring(r.taxes));
             }
             rep.DataSources.Add(new ReportDataSource("DataSetCategory", categoryQuery));
-            paramarr.Add(new ReportParameter("Title", MainWindow.resourcemanagerreport.GetString("trCategories")));
-            paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
-            paramarr.Add(new ReportParameter("trDetails", MainWindow.resourcemanagerreport.GetString("trDetails")));
+            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trCategories")));
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trDetails", AppSettings.resourcemanagerreport.GetString("trDetails")));
         }
         //public static void itemReport(IEnumerable<Item> itemQuery, LocalReport rep, string reppath)
         //{
@@ -1528,11 +1552,11 @@ Parameters!trValueDiscount.Value)
                 r.taxes = decimal.Parse(HelpClass.DecTostring(r.taxes));
             }
             rep.DataSources.Add(new ReportDataSource("DataSetItem", itemQuery));
-            paramarr.Add(new ReportParameter("Title", MainWindow.resourcemanagerreport.GetString("trItems")));
-            paramarr.Add(new ReportParameter("trCode", MainWindow.resourcemanagerreport.GetString("trCode")));
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
-            paramarr.Add(new ReportParameter("trDetails", MainWindow.resourcemanagerreport.GetString("trDetails")));
-            paramarr.Add(new ReportParameter("trCategory", MainWindow.resourcemanagerreport.GetString("trCategorie")));
+            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trItems")));
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trDetails", AppSettings.resourcemanagerreport.GetString("trDetails")));
+            paramarr.Add(new ReportParameter("trCategory", AppSettings.resourcemanagerreport.GetString("trCategorie")));
         }
         //public static void properyReport(IEnumerable<Property> propertyQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         //{
@@ -1540,9 +1564,9 @@ Parameters!trValueDiscount.Value)
         //    rep.EnableExternalImages = true;
         //    rep.DataSources.Clear();
         //    rep.DataSources.Add(new ReportDataSource("DataSetProperty", propertyQuery));
-        //    paramarr.Add(new ReportParameter("Title", MainWindow.resourcemanagerreport.GetString("trProperties")));
-        //    paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trProperty")));
-        //    paramarr.Add(new ReportParameter("trValues", MainWindow.resourcemanagerreport.GetString("trValues")));
+        //    paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trProperties")));
+        //    paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trProperty")));
+        //    paramarr.Add(new ReportParameter("trValues", AppSettings.resourcemanagerreport.GetString("trValues")));
         //}
 
         public static void storageCostReport(IEnumerable<StorageCost> storageCostQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
@@ -1555,9 +1579,9 @@ Parameters!trValueDiscount.Value)
                 s.cost = decimal.Parse(HelpClass.DecTostring(s.cost));
             }
             rep.DataSources.Add(new ReportDataSource("DataSetStorageCost", storageCostQuery));
-            paramarr.Add(new ReportParameter("Title", MainWindow.resourcemanagerreport.GetString("trStorageCost")));
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trName")));
-            paramarr.Add(new ReportParameter("trCost", MainWindow.resourcemanagerreport.GetString("trStorageCost")));
+            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trStorageCost")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trCost", AppSettings.resourcemanagerreport.GetString("trStorageCost")));
 
         }
         public static void unitReport(IEnumerable<Unit> unitQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
@@ -1566,9 +1590,9 @@ Parameters!trValueDiscount.Value)
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetUnit", unitQuery));
-            paramarr.Add(new ReportParameter("Title", MainWindow.resourcemanagerreport.GetString("trUnit")));
-            paramarr.Add(new ReportParameter("trName", MainWindow.resourcemanagerreport.GetString("trUnitName")));
-            paramarr.Add(new ReportParameter("trNotes", MainWindow.resourcemanagerreport.GetString("trNote")));
+            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trUnit")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trUnitName")));
+            paramarr.Add(new ReportParameter("trNotes", AppSettings.resourcemanagerreport.GetString("trNote")));
 
         }
         public static void inventoryReport(IEnumerable<InventoryItemLocation> invItemsLocations, LocalReport rep, string reppath, List<ReportParameter> paramarr)
@@ -1577,14 +1601,14 @@ Parameters!trValueDiscount.Value)
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetInventory", invItemsLocations));
-            paramarr.Add(new ReportParameter("Title", MainWindow.resourcemanagerreport.GetString("trStocktakingItems")));// tt
-            paramarr.Add(new ReportParameter("trNum", MainWindow.resourcemanagerreport.GetString("trNum")));
-            paramarr.Add(new ReportParameter("trSec_Loc", MainWindow.resourcemanagerreport.GetString("trSectionLocation")));//
-            //paramarr.Add(new ReportParameter("trItem_UnitName", MainWindow.resourcemanagerreport.GetString("trUnitName")+"-" + MainWindow.resourcemanagerreport.GetString("")));
-            paramarr.Add(new ReportParameter("trItem_UnitName", MainWindow.resourcemanagerreport.GetString("trItemUnit")));
-            paramarr.Add(new ReportParameter("trRealAmount", MainWindow.resourcemanagerreport.GetString("trRealAmount")));
-            paramarr.Add(new ReportParameter("trInventoryAmount", MainWindow.resourcemanagerreport.GetString("trInventoryAmount")));
-            paramarr.Add(new ReportParameter("trDestroyCount", MainWindow.resourcemanagerreport.GetString("trDestoryCount")));
+            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trStocktakingItems")));// tt
+            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNum")));
+            paramarr.Add(new ReportParameter("trSec_Loc", AppSettings.resourcemanagerreport.GetString("trSectionLocation")));//
+            //paramarr.Add(new ReportParameter("trItem_UnitName", AppSettings.resourcemanagerreport.GetString("trUnitName")+"-" + AppSettings.resourcemanagerreport.GetString("")));
+            paramarr.Add(new ReportParameter("trItem_UnitName", AppSettings.resourcemanagerreport.GetString("trItemUnit")));
+            paramarr.Add(new ReportParameter("trRealAmount", AppSettings.resourcemanagerreport.GetString("trRealAmount")));
+            paramarr.Add(new ReportParameter("trInventoryAmount", AppSettings.resourcemanagerreport.GetString("trInventoryAmount")));
+            paramarr.Add(new ReportParameter("trDestroyCount", AppSettings.resourcemanagerreport.GetString("trDestoryCount")));
         }
 
 
@@ -1594,11 +1618,11 @@ Parameters!trValueDiscount.Value)
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetItemsExport", invoiceItems));
-            paramarr.Add(new ReportParameter("trTitle", MainWindow.resourcemanagerreport.GetString("trItemsImport/Export")));// tt
-            paramarr.Add(new ReportParameter("trNum", MainWindow.resourcemanagerreport.GetString("trNum")));
-            paramarr.Add(new ReportParameter("trItem", MainWindow.resourcemanagerreport.GetString("trItem")));
-            paramarr.Add(new ReportParameter("trUnit", MainWindow.resourcemanagerreport.GetString("trUnit")));
-            paramarr.Add(new ReportParameter("trQuantity", MainWindow.resourcemanagerreport.GetString("trQuantity")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trItemsImport/Export")));// tt
+            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNum")));
+            paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem")));
+            paramarr.Add(new ReportParameter("trUnit", AppSettings.resourcemanagerreport.GetString("trUnit")));
+            paramarr.Add(new ReportParameter("trQuantity", AppSettings.resourcemanagerreport.GetString("trQuantity")));
         }
         public static void ReceiptPurchaseReport(IEnumerable<ItemTransfer> invoiceItems, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
@@ -1606,11 +1630,11 @@ Parameters!trValueDiscount.Value)
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetItemsExport", invoiceItems));
-            paramarr.Add(new ReportParameter("Title", MainWindow.resourcemanagerreport.GetString("trReceiptOfPurchasesBill")));// tt
-            paramarr.Add(new ReportParameter("trNum", MainWindow.resourcemanagerreport.GetString("trNum")));
-            paramarr.Add(new ReportParameter("trItem", MainWindow.resourcemanagerreport.GetString("trItem")));
-            paramarr.Add(new ReportParameter("trUnit", MainWindow.resourcemanagerreport.GetString("trUnit")));
-            paramarr.Add(new ReportParameter("trAmount", MainWindow.resourcemanagerreport.GetString("trQuantity")));
+            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trReceiptOfPurchasesBill")));// tt
+            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNum")));
+            paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem")));
+            paramarr.Add(new ReportParameter("trUnit", AppSettings.resourcemanagerreport.GetString("trUnit")));
+            paramarr.Add(new ReportParameter("trAmount", AppSettings.resourcemanagerreport.GetString("trQuantity")));
         }
         public static void itemLocation(IEnumerable<ItemLocation> itemLocations, LocalReport rep, string reppath)
         {

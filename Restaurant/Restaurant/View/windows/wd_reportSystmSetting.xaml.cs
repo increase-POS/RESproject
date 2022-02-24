@@ -143,14 +143,12 @@ namespace Restaurant.View.windows
 
                 #region translate
 
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
 
@@ -205,14 +203,14 @@ namespace Restaurant.View.windows
         private void translate()
         {
          
-            txt_title.Text = MainWindow.resourcemanager.GetString("trSystemSetting");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trSystemSetting");
 
-            txt_printOnSavePur.Text = MainWindow.resourcemanager.GetString("trPrintOnSavePurchase");
-            txt_emailOnSavePur.Text = MainWindow.resourcemanager.GetString("trEmailOnSavePurchase");
-            txt_printOnSaveSale.Text = MainWindow.resourcemanager.GetString("trPrintOnSaveSale");
-            txt_emailOnSaveSale.Text = MainWindow.resourcemanager.GetString("trEmailOnSaveSale");
+            txt_printOnSavePur.Text = AppSettings.resourcemanager.GetString("trPrintOnSavePurchase");
+            txt_emailOnSavePur.Text = AppSettings.resourcemanager.GetString("trEmailOnSavePurchase");
+            txt_printOnSaveSale.Text = AppSettings.resourcemanager.GetString("trPrintOnSaveSale");
+            txt_emailOnSaveSale.Text = AppSettings.resourcemanager.GetString("trEmailOnSaveSale");
 
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
  
         }
 
@@ -317,13 +315,13 @@ namespace Restaurant.View.windows
             await FillCombo.Getprintparameter();
             if (msg > 0)
             {
-                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
                 await Task.Delay(1500);
                 this.Close();
             }
             
             else
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
         
         }
     }

@@ -101,7 +101,7 @@ namespace Restaurant.View.accounts
                 requiredControlList = new List<string> { "cash", "depositTo", "paymentProcessType"};
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
@@ -117,13 +117,13 @@ namespace Restaurant.View.accounts
 
                 #region fill deposit to combo
                 var depositlist = new[] {
-                new { Text = MainWindow.resourcemanager.GetString("trVendor")     , Value = "v" },
-                new { Text = MainWindow.resourcemanager.GetString("trCustomer")   , Value = "c" },
-                new { Text = MainWindow.resourcemanager.GetString("trUser")       , Value = "u" },
-                new { Text = MainWindow.resourcemanager.GetString("trSalary")     , Value = "s" },
-                new { Text = MainWindow.resourcemanager.GetString("trGeneralExpenses")     , Value = "e" },
-                new { Text = MainWindow.resourcemanager.GetString("trAdministrativePull")  , Value = "m" },
-                new { Text = MainWindow.resourcemanager.GetString("trShippingCompanies")  , Value = "sh" }
+                new { Text = AppSettings.resourcemanager.GetString("trVendor")     , Value = "v" },
+                new { Text = AppSettings.resourcemanager.GetString("trCustomer")   , Value = "c" },
+                new { Text = AppSettings.resourcemanager.GetString("trUser")       , Value = "u" },
+                new { Text = AppSettings.resourcemanager.GetString("trSalary")     , Value = "s" },
+                new { Text = AppSettings.resourcemanager.GetString("trGeneralExpenses")     , Value = "e" },
+                new { Text = AppSettings.resourcemanager.GetString("trAdministrativePull")  , Value = "m" },
+                new { Text = AppSettings.resourcemanager.GetString("trShippingCompanies")  , Value = "sh" }
                  };
                 cb_depositTo.DisplayMemberPath = "Text";
                 cb_depositTo.SelectedValuePath = "Value";
@@ -140,10 +140,10 @@ namespace Restaurant.View.accounts
 
                 #region fill process type
                 var typelist = new[] {
-                new { Text = MainWindow.resourcemanager.GetString("trCash")       , Value = "cash" },
-                //new { Text = MainWindow.resourcemanager.GetString("trDocument")   , Value = "doc" },
-                new { Text = MainWindow.resourcemanager.GetString("trCheque")     , Value = "cheque" },
-                new { Text = MainWindow.resourcemanager.GetString("trAnotherPaymentMethods") , Value = "card" },
+                new { Text = AppSettings.resourcemanager.GetString("trCash")       , Value = "cash" },
+                //new { Text = AppSettings.resourcemanager.GetString("trDocument")   , Value = "doc" },
+                new { Text = AppSettings.resourcemanager.GetString("trCheque")     , Value = "cheque" },
+                new { Text = AppSettings.resourcemanager.GetString("trAnotherPaymentMethods") , Value = "card" },
                  };
                 cb_paymentProcessType.DisplayMemberPath = "Text";
                 cb_paymentProcessType.SelectedValuePath = "Value";
@@ -177,43 +177,43 @@ namespace Restaurant.View.accounts
 
         private void translate()
         {
-            txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trTransaferDetails");
-            txt_title.Text = MainWindow.resourcemanager.GetString("trPayments");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            chb_all.Content = MainWindow.resourcemanager.GetString("trAll");
+            txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trTransaferDetails");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trPayments");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+            chb_all.Content = AppSettings.resourcemanager.GetString("trAll");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_depositTo, MainWindow.resourcemanager.GetString("trDepositToHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_recipientV, MainWindow.resourcemanager.GetString("trRecipientHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_recipientC, MainWindow.resourcemanager.GetString("trRecipientHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_recipientU, MainWindow.resourcemanager.GetString("trRecipientHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_recipientSh, MainWindow.resourcemanager.GetString("trRecipientHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_depositTo, AppSettings.resourcemanager.GetString("trDepositToHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_recipientV, AppSettings.resourcemanager.GetString("trRecipientHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_recipientC, AppSettings.resourcemanager.GetString("trRecipientHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_recipientU, AppSettings.resourcemanager.GetString("trRecipientHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_recipientSh, AppSettings.resourcemanager.GetString("trRecipientHint"));
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_paymentProcessType, MainWindow.resourcemanager.GetString("trPaymentTypeHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_docNum, MainWindow.resourcemanager.GetString("trDocNumHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_docNumCheque, MainWindow.resourcemanager.GetString("trDocNumHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_docNumCard, MainWindow.resourcemanager.GetString("trProcessNumHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_docDate, MainWindow.resourcemanager.GetString("trDocDateHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, MainWindow.resourcemanager.GetString("trCashHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_paymentProcessType, AppSettings.resourcemanager.GetString("trPaymentTypeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_docNum, AppSettings.resourcemanager.GetString("trDocNumHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_docNumCheque, AppSettings.resourcemanager.GetString("trDocNumHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_docNumCard, AppSettings.resourcemanager.GetString("trProcessNumHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_docDate, AppSettings.resourcemanager.GetString("trDocDateHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, AppSettings.resourcemanager.GetString("trCashHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
 
-            dg_paymentsAccounts.Columns[0].Header = MainWindow.resourcemanager.GetString("trTransferNumberTooltip");
-            dg_paymentsAccounts.Columns[1].Header = MainWindow.resourcemanager.GetString("trRecepient");
-            dg_paymentsAccounts.Columns[2].Header = MainWindow.resourcemanager.GetString("trPaymentTypeTooltip");
-            dg_paymentsAccounts.Columns[3].Header = MainWindow.resourcemanager.GetString("trDate");
-            dg_paymentsAccounts.Columns[4].Header = MainWindow.resourcemanager.GetString("trCashTooltip");
+            dg_paymentsAccounts.Columns[0].Header = AppSettings.resourcemanager.GetString("trTransferNumberTooltip");
+            dg_paymentsAccounts.Columns[1].Header = AppSettings.resourcemanager.GetString("trRecepient");
+            dg_paymentsAccounts.Columns[2].Header = AppSettings.resourcemanager.GetString("trPaymentTypeTooltip");
+            dg_paymentsAccounts.Columns[3].Header = AppSettings.resourcemanager.GetString("trDate");
+            dg_paymentsAccounts.Columns[4].Header = AppSettings.resourcemanager.GetString("trCashTooltip");
 
-            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
-            tt_refresh.Content = MainWindow.resourcemanager.GetString("trRefresh");
-            tt_report.Content = MainWindow.resourcemanager.GetString("trPdf");
-            tt_print.Content = MainWindow.resourcemanager.GetString("trPrint");
-            tt_excel.Content = MainWindow.resourcemanager.GetString("trExcel");
-            tt_count.Content = MainWindow.resourcemanager.GetString("trCount");
+            tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
+            tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
+            tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
+            tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
+            tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
+            tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
 
-            btn_add.Content = MainWindow.resourcemanager.GetString("trSave");
-            txt_image.Text = MainWindow.resourcemanager.GetString("trImage");
-            txt_preview.Text = MainWindow.resourcemanager.GetString("trPreview");
-            txt_print_pay.Text = MainWindow.resourcemanager.GetString("trPrint");
-            txt_pdf.Text = MainWindow.resourcemanager.GetString("trPdfBtn");
+            btn_add.Content = AppSettings.resourcemanager.GetString("trSave");
+            txt_image.Text = AppSettings.resourcemanager.GetString("trImage");
+            txt_preview.Text = AppSettings.resourcemanager.GetString("trPreview");
+            txt_print_pay.Text = AppSettings.resourcemanager.GetString("trPrint");
+            txt_pdf.Text = AppSettings.resourcemanager.GetString("trPdfBtn");
 
         }
 
@@ -573,19 +573,19 @@ namespace Restaurant.View.accounts
                             if (bdr_recipientSh.IsVisible)
                                 await calcShippingComBalance(cash.cash, cash.shippingCompanyId.Value);
 
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
                             Clear();
                             await RefreshCashesList();
                             await Search();
                         }
                         else
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     }
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 
                 HelpClass.EndAwait(grid_main);
@@ -822,7 +822,7 @@ namespace Restaurant.View.accounts
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
                 HelpClass.EndAwait(grid_main);
             }
@@ -852,11 +852,11 @@ namespace Restaurant.View.accounts
                 Cash = x.cash
             });
             var DTForExcel = QueryExcel.ToDataTable();
-            DTForExcel.Columns[0].Caption = MainWindow.resourcemanager.GetString("trTransferNumberTooltip");
-            DTForExcel.Columns[1].Caption = MainWindow.resourcemanager.GetString("trDepositTo");
-            DTForExcel.Columns[2].Caption = MainWindow.resourcemanager.GetString("trRecepient");
-            DTForExcel.Columns[3].Caption = MainWindow.resourcemanager.GetString("trPaymentTypeTooltip");
-            DTForExcel.Columns[4].Caption = MainWindow.resourcemanager.GetString("trCashTooltip");
+            DTForExcel.Columns[0].Caption = AppSettings.resourcemanager.GetString("trTransferNumberTooltip");
+            DTForExcel.Columns[1].Caption = AppSettings.resourcemanager.GetString("trDepositTo");
+            DTForExcel.Columns[2].Caption = AppSettings.resourcemanager.GetString("trRecepient");
+            DTForExcel.Columns[3].Caption = AppSettings.resourcemanager.GetString("trPaymentTypeTooltip");
+            DTForExcel.Columns[4].Caption = AppSettings.resourcemanager.GetString("trCashTooltip");
 
             ExportToExcel.Export(DTForExcel);
 
@@ -879,7 +879,7 @@ namespace Restaurant.View.accounts
                     }
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
             }
             catch (Exception ex)
             {
@@ -1235,7 +1235,7 @@ namespace Restaurant.View.accounts
                     }
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 
                 HelpClass.EndAwait(grid_main);
@@ -1263,7 +1263,7 @@ namespace Restaurant.View.accounts
                     }
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
                 HelpClass.EndAwait(grid_main);
             }
@@ -1341,13 +1341,13 @@ namespace Restaurant.View.accounts
                             w.wb_pdfWebViewer.Dispose();
                         }
                         else
-                            Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         Window.GetWindow(this).Opacity = 1;
                     }
 
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -1468,7 +1468,7 @@ namespace Restaurant.View.accounts
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
                 HelpClass.EndAwait(grid_main);
             }
@@ -1509,7 +1509,7 @@ namespace Restaurant.View.accounts
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 /////////////////////
                 
                 HelpClass.EndAwait(grid_main);
@@ -1544,7 +1544,7 @@ namespace Restaurant.View.accounts
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
                 HelpClass.EndAwait(grid_main);
             }
@@ -1742,7 +1742,7 @@ namespace Restaurant.View.accounts
                     Window.GetWindow(this).Opacity = 1;
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 /////////////////////
 
                 HelpClass.EndAwait(grid_main);

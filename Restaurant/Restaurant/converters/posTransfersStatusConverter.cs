@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Restaurant.Classes;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -16,11 +17,11 @@ namespace Restaurant.converters
             byte isConfirm2 = (byte)values[1];
 
             if ((isConfirm1 == 1) && (isConfirm2 == 1))
-                return MainWindow.resourcemanager.GetString("trConfirmed");
+                return AppSettings.resourcemanager.GetString("trConfirmed");
             else if ((isConfirm1 == 2) || (isConfirm2 == 2))
-                return MainWindow.resourcemanager.GetString("trCanceled");
+                return AppSettings.resourcemanager.GetString("trCanceled");
             else
-                return MainWindow.resourcemanager.GetString("trWaiting");
+                return AppSettings.resourcemanager.GetString("trWaiting");
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

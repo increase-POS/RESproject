@@ -88,14 +88,12 @@ namespace Restaurant.View.sales
                 HelpClass.StartAwait(grid_main);
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
@@ -117,11 +115,11 @@ namespace Restaurant.View.sales
         }
         private void translate()
         {
-            txt_title.Text = MainWindow.resourcemanager.GetString("trReports");
-            rdoMonth.Content = MainWindow.resourcemanager.GetString("trMonth");
-            rdoYear.Content = MainWindow.resourcemanager.GetString("trYear");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dpStrtDate, MainWindow.resourcemanager.GetString("trStartDateHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dpEndDate, MainWindow.resourcemanager.GetString("trEndDateHint"));
+            txt_title.Text = AppSettings.resourcemanager.GetString("trReports");
+            rdoMonth.Content = AppSettings.resourcemanager.GetString("trMonth");
+            rdoYear.Content = AppSettings.resourcemanager.GetString("trYear");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dpStrtDate, AppSettings.resourcemanager.GetString("trStartDateHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dpEndDate, AppSettings.resourcemanager.GetString("trEndDateHint"));
         }
             public void fillDates()
         {
@@ -180,19 +178,19 @@ namespace Restaurant.View.sales
                         {
                             var Draw = couponsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             chartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trCoupons");
+                            label = AppSettings.resourcemanager.GetString("trCoupons");
                         }
                         else if (sales == 2)
                         {
                             var Draw = offersQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             chartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trOffer");
+                            label = AppSettings.resourcemanager.GetString("trOffer");
                         }
                         else if (sales == 3)
                         {
                             var Draw = itemsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             chartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trItems");
+                            label = AppSettings.resourcemanager.GetString("trItems");
                         }
                         MyAxis.Separator.Step = 2;
                         MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
@@ -218,19 +216,19 @@ namespace Restaurant.View.sales
                     {
                         var Draw = couponsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trCoupons");
+                        label = AppSettings.resourcemanager.GetString("trCoupons");
                     }
                     else if (sales == 2)
                     {
                         var Draw = offersQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trOffer");
+                        label = AppSettings.resourcemanager.GetString("trOffer");
                     }
                     else if (sales == 3)
                     {
                         var Draw = itemsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trItems");
+                        label = AppSettings.resourcemanager.GetString("trItems");
                     }
                     MyAxis.Separator.Step = 1;
                     MyAxis.Labels.Add(year.ToString());
@@ -288,19 +286,19 @@ namespace Restaurant.View.sales
                         {
                             var Draw = couponsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             PiechartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trCoupons");
+                            label = AppSettings.resourcemanager.GetString("trCoupons");
                         }
                         else if (sales == 2)
                         {
                             var Draw = offersQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             PiechartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trOffer");
+                            label = AppSettings.resourcemanager.GetString("trOffer");
                         }
                         else if (sales == 3)
                         {
                             var Draw = itemsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             PiechartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trItems");
+                            label = AppSettings.resourcemanager.GetString("trItems");
                         }
                         titles.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
                         if (year == dpEndDate.SelectedDate.Value.Year && month == dpEndDate.SelectedDate.Value.Month)
@@ -325,19 +323,19 @@ namespace Restaurant.View.sales
                     {
                         var Draw = couponsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trCoupons");
+                        label = AppSettings.resourcemanager.GetString("trCoupons");
                     }
                     else if (sales == 2)
                     {
                         var Draw = offersQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trOffer");
+                        label = AppSettings.resourcemanager.GetString("trOffer");
                     }
                     else if (sales == 3)
                     {
                         var Draw = itemsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trItems");
+                        label = AppSettings.resourcemanager.GetString("trItems");
                     }
                     titles.Add(year.ToString());
                 }
@@ -397,19 +395,19 @@ namespace Restaurant.View.sales
                         {
                             var Draw = couponsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             ColumnchartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trCoupons");
+                            label = AppSettings.resourcemanager.GetString("trCoupons");
                         }
                         else if (sales == 2)
                         {
                             var Draw = offersQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             ColumnchartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trOffer");
+                            label = AppSettings.resourcemanager.GetString("trOffer");
                         }
                         else if (sales == 3)
                         {
                             var Draw = itemsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             ColumnchartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trItems");
+                            label = AppSettings.resourcemanager.GetString("trItems");
                         }
                         columnAxis.Separator.Step = 2;
                         columnAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
@@ -435,19 +433,19 @@ namespace Restaurant.View.sales
                     {
                         var Draw = couponsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trCoupons");
+                        label = AppSettings.resourcemanager.GetString("trCoupons");
                     }
                     else if (sales == 2)
                     {
                         var Draw = offersQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trOffer");
+                        label = AppSettings.resourcemanager.GetString("trOffer");
                     }
                     else if (sales == 3)
                     {
                         var Draw = itemsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trItems");
+                        label = AppSettings.resourcemanager.GetString("trItems");
                     }
                     columnAxis.Separator.Step = 1;
                     columnAxis.Labels.Add(year.ToString());

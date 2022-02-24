@@ -57,14 +57,12 @@ namespace Restaurant.View.windows
                     HelpClass.StartAwait(grid_main);
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    //MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    //MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translat();
@@ -84,9 +82,9 @@ namespace Restaurant.View.windows
         private void translat()
         {
 
-            //dg_Invoice.Columns[0].Header = MainWindow.resourcemanager.GetString("trInvoiceNumber");
-            //dg_Invoice.Columns[1].Header = MainWindow.resourcemanager.GetString("trItemsCount");
-            //dg_Invoice.Columns[2].Header = MainWindow.resourcemanager.GetString("trTotal");
+            //dg_Invoice.Columns[0].Header = AppSettings.resourcemanager.GetString("trInvoiceNumber");
+            //dg_Invoice.Columns[1].Header = AppSettings.resourcemanager.GetString("trItemsCount");
+            //dg_Invoice.Columns[2].Header = AppSettings.resourcemanager.GetString("trTotal");
 
         }
         private void Btn_colse_Click(object sender, RoutedEventArgs e)

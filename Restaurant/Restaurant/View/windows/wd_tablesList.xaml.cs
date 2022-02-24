@@ -74,10 +74,12 @@ namespace Restaurant.View.windows
                 HelpClass.StartAwait(grid_tableList);
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
-                { MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly()); grid_tableList.FlowDirection = FlowDirection.LeftToRight; }
+                if (AppSettings.lang.Equals("en"))
+                { 
+                       grid_tableList.FlowDirection = FlowDirection.LeftToRight; }
                 else
-                { MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly()); grid_tableList.FlowDirection = FlowDirection.RightToLeft; }
+                { 
+                  grid_tableList.FlowDirection = FlowDirection.RightToLeft; }
 
                 translat();
                 #endregion
@@ -131,22 +133,22 @@ namespace Restaurant.View.windows
 
         private void translat()
         {
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_searchitems, MainWindow.resourcemanager.GetString("trSearchHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_searchitems, AppSettings.resourcemanager.GetString("trSearchHint"));
 
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
-            dg_allItems.Columns[0].Header = MainWindow.resourcemanager.GetString("trItem");
-            dg_selectedItems.Columns[0].Header = MainWindow.resourcemanager.GetString("trItem");
+            dg_allItems.Columns[0].Header = AppSettings.resourcemanager.GetString("trItem");
+            dg_selectedItems.Columns[0].Header = AppSettings.resourcemanager.GetString("trItem");
 
-            txt_title.Text = MainWindow.resourcemanager.GetString("trTables_");
-            txt_items.Text = MainWindow.resourcemanager.GetString("trTables_");
-            txt_selectedItems.Text = MainWindow.resourcemanager.GetString("trSelectedTables");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trTables_");
+            txt_items.Text = AppSettings.resourcemanager.GetString("trTables_");
+            txt_selectedItems.Text = AppSettings.resourcemanager.GetString("trSelectedTables");
 
-            tt_search.Content = MainWindow.resourcemanager.GetString("trSearch");
-            tt_selectAllItem.Content = MainWindow.resourcemanager.GetString("trSelectAllItems");
-            tt_unselectAllItem.Content = MainWindow.resourcemanager.GetString("trUnSelectAllItems");
-            tt_selectItem.Content = MainWindow.resourcemanager.GetString("trSelectOneItem");
-            tt_unselectItem.Content = MainWindow.resourcemanager.GetString("trUnSelectOneItem");
+            tt_search.Content = AppSettings.resourcemanager.GetString("trSearch");
+            tt_selectAllItem.Content = AppSettings.resourcemanager.GetString("trSelectAllItems");
+            tt_unselectAllItem.Content = AppSettings.resourcemanager.GetString("trUnSelectAllItems");
+            tt_selectItem.Content = AppSettings.resourcemanager.GetString("trSelectOneItem");
+            tt_unselectItem.Content = AppSettings.resourcemanager.GetString("trUnSelectOneItem");
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

@@ -80,14 +80,12 @@ namespace Restaurant.View.windows
 
                 #region translate
 
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
 
@@ -114,12 +112,12 @@ namespace Restaurant.View.windows
         private void translate()
         {
            
-            txt_title.Text = MainWindow.resourcemanager.GetString("trCopyCount");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_purCopyCount, MainWindow.resourcemanager.GetString("trPurchasesCopyCount"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_saleCopyCount, MainWindow.resourcemanager.GetString("trSalesCopyCount"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_repPrintCount, MainWindow.resourcemanager.GetString("trReportsCopyCount"));
+            txt_title.Text = AppSettings.resourcemanager.GetString("trCopyCount");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_purCopyCount, AppSettings.resourcemanager.GetString("trPurchasesCopyCount"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_saleCopyCount, AppSettings.resourcemanager.GetString("trSalesCopyCount"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_repPrintCount, AppSettings.resourcemanager.GetString("trReportsCopyCount"));
 
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
              
         }
 
@@ -173,7 +171,7 @@ namespace Restaurant.View.windows
             rep_copy_countrow.value = (string)tb_repPrintCount.Text;
             if (int.Parse(sale_copy_countrow.value) <=0 || int.Parse(pur_copy_countrow.value) <= 0|| int.Parse(rep_copy_countrow.value)<=0)
             {
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trMustBeMoreThanZero"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trMustBeMoreThanZero"), animation: ToasterAnimation.FadeIn);
             }
             else
             {
@@ -186,13 +184,13 @@ namespace Restaurant.View.windows
                 await FillCombo.Getprintparameter();
                 if (msg > 0)
                 {
-                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
                     await Task.Delay(1500);
                     this.Close();
                 }
                 else
                 {
-                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                 }
             }
           

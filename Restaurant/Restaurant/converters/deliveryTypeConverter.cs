@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Restaurant.Classes;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -15,11 +16,11 @@ namespace Restaurant.converters
             string s = value as string;
             switch (value)
             {
-                case "local": return MainWindow.resourcemanager.GetString("trLocaly");
+                case "local": return AppSettings.resourcemanager.GetString("trLocaly");
                     //break;
-                case "com":   return MainWindow.resourcemanager.GetString("trShippingCompany");
+                case "com":   return AppSettings.resourcemanager.GetString("trShippingCompany");
                     //break;
-                default: return MainWindow.resourcemanager.GetString("");
+                default: return AppSettings.resourcemanager.GetString("");
                     //break;
             }
         }

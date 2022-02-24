@@ -77,14 +77,12 @@ namespace Restaurant.View.sales.reservations
             {
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "reservationDate", "reservationStartTime" , "reservationEndTime" , "personsCount" };
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
@@ -133,33 +131,33 @@ namespace Restaurant.View.sales.reservations
         private void translate()
         {
 
-            txt_title.Text = MainWindow.resourcemanager.GetString("trReservations");
-            txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
-            txt_tables.Text = MainWindow.resourcemanager.GetString("trTables");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trReservations");
+            txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
+            txt_tables.Text = AppSettings.resourcemanager.GetString("trTables");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customerId, MainWindow.resourcemanager.GetString("trCustomerHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_reservationDate, MainWindow.resourcemanager.GetString("trReservationDaterHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tp_reservationStartTime, MainWindow.resourcemanager.GetString("trStartTimeHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tp_reservationEndTime, MainWindow.resourcemanager.GetString("trEndTimeHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_personsCount, MainWindow.resourcemanager.GetString("trPersonsCountHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_searchPersonsCount, MainWindow.resourcemanager.GetString("trPersonsCountHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchSection, MainWindow.resourcemanager.GetString("trSectionHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchDate, MainWindow.resourcemanager.GetString("trDateHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tp_searchStartTime, MainWindow.resourcemanager.GetString("trStartTimeHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tp_searchEndTime, MainWindow.resourcemanager.GetString("trEndTimeHint"));
-
-
-            txt_statusEmpty.Text = MainWindow.resourcemanager.GetString("trEmpty");
-            txt_statusOpen.Text = MainWindow.resourcemanager.GetString("trOpened");
-            txt_statusReservated.Text = MainWindow.resourcemanager.GetString("trReserved");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customerId, AppSettings.resourcemanager.GetString("trCustomerHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_reservationDate, AppSettings.resourcemanager.GetString("trReservationDaterHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tp_reservationStartTime, AppSettings.resourcemanager.GetString("trStartTimeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tp_reservationEndTime, AppSettings.resourcemanager.GetString("trEndTimeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_personsCount, AppSettings.resourcemanager.GetString("trPersonsCountHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_searchPersonsCount, AppSettings.resourcemanager.GetString("trPersonsCountHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchSection, AppSettings.resourcemanager.GetString("trSectionHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchDate, AppSettings.resourcemanager.GetString("trDateHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tp_searchStartTime, AppSettings.resourcemanager.GetString("trStartTimeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tp_searchEndTime, AppSettings.resourcemanager.GetString("trEndTimeHint"));
 
 
-            btn_refresh.ToolTip = MainWindow.resourcemanager.GetString("trRefresh");
-            btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
-            btn_addCustomer.ToolTip = MainWindow.resourcemanager.GetString("trAddCustomer");
+            txt_statusEmpty.Text = AppSettings.resourcemanager.GetString("trEmpty");
+            txt_statusOpen.Text = AppSettings.resourcemanager.GetString("trOpened");
+            txt_statusReservated.Text = AppSettings.resourcemanager.GetString("trReserved");
 
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+
+            btn_refresh.ToolTip = AppSettings.resourcemanager.GetString("trRefresh");
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
+            btn_addCustomer.ToolTip = AppSettings.resourcemanager.GetString("trAddCustomer");
+
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
         }
         #region loading
@@ -261,20 +259,20 @@ namespace Restaurant.View.sales.reservations
                             int res = await reserve.addReservation(reserve, selectedTables);
                             if(res > 0)
                             {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                                 Clear();
                                 await refreshTablesList();
                                     await Search();
                             }
                             else
-                                Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                        }
                     }
 
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -314,7 +312,7 @@ namespace Restaurant.View.sales.reservations
                 }
                 message += " ";
                 if(!valid)
-                    Toaster.ShowWarning(Window.GetWindow(this), message:message + MainWindow.resourcemanager.GetString("trReserved"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowWarning(Window.GetWindow(this), message:message + AppSettings.resourcemanager.GetString("trReserved"), animation: ToasterAnimation.FadeIn);
             }
             return valid;
         }
@@ -430,7 +428,7 @@ namespace Restaurant.View.sales.reservations
                 Window.GetWindow(this).Opacity = 1;
                 if (w.isOk == true)
                 {
-                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
                     await FillCombo.RefreshVendors();
                     await FillCombo.FillComboVendors(cb_vendor);
                 }
@@ -652,7 +650,7 @@ namespace Restaurant.View.sales.reservations
                     //////////////////////////////////////
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                
                     HelpClass.EndAwait(grid_main);
             }
@@ -691,7 +689,7 @@ namespace Restaurant.View.sales.reservations
 
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                
                     HelpClass.EndAwait(grid_main);
@@ -720,7 +718,7 @@ namespace Restaurant.View.sales.reservations
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                
                     HelpClass.EndAwait(grid_main);
             }
@@ -760,7 +758,7 @@ namespace Restaurant.View.sales.reservations
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                
                     HelpClass.EndAwait(grid_main);
             }
@@ -803,7 +801,7 @@ namespace Restaurant.View.sales.reservations
                     t1.Start();
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                
                     HelpClass.EndAwait(grid_main);
             }
@@ -1044,11 +1042,11 @@ namespace Restaurant.View.sales.reservations
                 var itemStatusText = new TextBlock();
                 
                 if (item.status == "opened" || item.status == "openedReserved")
-                    itemStatusText.Text = MainWindow.resourcemanager.GetString("trOpened"); 
+                    itemStatusText.Text = AppSettings.resourcemanager.GetString("trOpened"); 
                 else if (item.status == "reserved")
-                    itemStatusText.Text = MainWindow.resourcemanager.GetString("trReserved");
+                    itemStatusText.Text = AppSettings.resourcemanager.GetString("trReserved");
                 else
-                    itemStatusText.Text = MainWindow.resourcemanager.GetString("trEmpty");
+                    itemStatusText.Text = AppSettings.resourcemanager.GetString("trEmpty");
 
                 //itemStatusText.Text = item.status;
                 itemStatusText.VerticalAlignment = VerticalAlignment.Center;

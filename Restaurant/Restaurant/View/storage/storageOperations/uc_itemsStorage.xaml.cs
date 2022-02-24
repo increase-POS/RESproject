@@ -77,14 +77,12 @@ namespace Restaurant.View.storage.storageOperations
             {
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "itemName", "quantity", "sectionId", "locationId" };
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
@@ -111,28 +109,28 @@ namespace Restaurant.View.storage.storageOperations
         private void translate()
         {
             ////////////////////////////////----invoice----/////////////////////////////////
-            dg_itemsStorage.Columns[0].Header = MainWindow.resourcemanager.GetString("trItemUnit");
-            dg_itemsStorage.Columns[1].Header = MainWindow.resourcemanager.GetString("trSectionLocation");
-            dg_itemsStorage.Columns[2].Header = MainWindow.resourcemanager.GetString("trQuantity");
-            dg_itemsStorage.Columns[3].Header = MainWindow.resourcemanager.GetString("trStartDate");
-            dg_itemsStorage.Columns[4].Header = MainWindow.resourcemanager.GetString("trEndDate");
-            dg_itemsStorage.Columns[5].Header = MainWindow.resourcemanager.GetString("trNote");
-            dg_itemsStorage.Columns[6].Header = MainWindow.resourcemanager.GetString("trOrderNum");
+            dg_itemsStorage.Columns[0].Header = AppSettings.resourcemanager.GetString("trItemUnit");
+            dg_itemsStorage.Columns[1].Header = AppSettings.resourcemanager.GetString("trSectionLocation");
+            dg_itemsStorage.Columns[2].Header = AppSettings.resourcemanager.GetString("trQuantity");
+            dg_itemsStorage.Columns[3].Header = AppSettings.resourcemanager.GetString("trStartDate");
+            dg_itemsStorage.Columns[4].Header = AppSettings.resourcemanager.GetString("trEndDate");
+            dg_itemsStorage.Columns[5].Header = AppSettings.resourcemanager.GetString("trNote");
+            dg_itemsStorage.Columns[6].Header = AppSettings.resourcemanager.GetString("trOrderNum");
 
-            txt_Location.Text = MainWindow.resourcemanager.GetString("trLocationt");
+            txt_Location.Text = AppSettings.resourcemanager.GetString("trLocationt");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_itemName, MainWindow.resourcemanager.GetString("trItemNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_quantity, MainWindow.resourcemanager.GetString("trQuantityHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sectionId, MainWindow.resourcemanager.GetString("trSectionHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_locationId, MainWindow.resourcemanager.GetString("trLocationHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_itemName, AppSettings.resourcemanager.GetString("trItemNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_quantity, AppSettings.resourcemanager.GetString("trQuantityHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sectionId, AppSettings.resourcemanager.GetString("trSectionHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_locationId, AppSettings.resourcemanager.GetString("trLocationHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
 
 
-            chk_stored.Content = MainWindow.resourcemanager.GetString("trStored");
-            chk_freezone.Content = MainWindow.resourcemanager.GetString("trFreeZone");
-            chk_locked.Content = MainWindow.resourcemanager.GetString("trReserved");
-            btn_transfer.Content = MainWindow.resourcemanager.GetString("trTransfer");
-            btn_locked.Content = MainWindow.resourcemanager.GetString("trUnlock");
+            chk_stored.Content = AppSettings.resourcemanager.GetString("trStored");
+            chk_freezone.Content = AppSettings.resourcemanager.GetString("trFreeZone");
+            chk_locked.Content = AppSettings.resourcemanager.GetString("trReserved");
+            btn_transfer.Content = AppSettings.resourcemanager.GetString("trTransfer");
+            btn_locked.Content = AppSettings.resourcemanager.GetString("trUnlock");
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_locked_Click(object sender, RoutedEventArgs e)
@@ -146,7 +144,7 @@ namespace Restaurant.View.storage.storageOperations
                     if (dg_itemsStorage.SelectedIndex != -1)
                     {
                         if (tb_quantity.Text != "" && int.Parse(tb_quantity.Text) == 0)
-                            HelpClass.SetValidate(p_error_quantity, MainWindow.resourcemanager.GetString("trErrorQuantIsZeroToolTip"));
+                            HelpClass.SetValidate(p_error_quantity, AppSettings.resourcemanager.GetString("trErrorQuantIsZeroToolTip"));
                         else if (HelpClass.validate(requiredControlList, this))
                         {
                             int quantity = int.Parse(tb_quantity.Text);
@@ -163,11 +161,11 @@ namespace Restaurant.View.storage.storageOperations
                             int res = await itemLocation.unlockItem(newLocation, MainWindow.branchLogin.branchId);
                             if (res > 0)
                             {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
                             }
                             else 
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                             await RefreshItemLocationsList();
                             await Search();
@@ -176,7 +174,7 @@ namespace Restaurant.View.storage.storageOperations
                     }
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
                     HelpClass.EndAwait(grid_main);
             }
@@ -220,24 +218,24 @@ namespace Restaurant.View.storage.storageOperations
                                 int res = await itemLocation.trasnferItem(itemLocation.itemsLocId, newLocation);
                                 if (res > 0)
                                 {
-                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
                                 }
                                 else 
-                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                                 await RefreshItemLocationsList();
                                 await Search();
                                 Clear();
                             }
                             else
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trTranseToSameLocation"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trTranseToSameLocation"), animation: ToasterAnimation.FadeIn);
                            
                         }
                     }
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -631,7 +629,7 @@ namespace Restaurant.View.storage.storageOperations
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
                     HelpClass.EndAwait(grid_main);
             }
@@ -663,7 +661,7 @@ namespace Restaurant.View.storage.storageOperations
                     }
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -696,7 +694,7 @@ namespace Restaurant.View.storage.storageOperations
 
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -739,7 +737,7 @@ namespace Restaurant.View.storage.storageOperations
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
 
                 HelpClass.EndAwait(grid_main);
@@ -786,7 +784,7 @@ namespace Restaurant.View.storage.storageOperations
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }

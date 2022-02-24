@@ -53,7 +53,7 @@ namespace Restaurant.View.windows
             //    HelpClass.StartAwait(grid_invoices);
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
                     grid_invoices.FlowDirection = FlowDirection.LeftToRight;
                 }
@@ -61,7 +61,7 @@ namespace Restaurant.View.windows
                 {
                     grid_invoices.FlowDirection = FlowDirection.RightToLeft;
                 }
-                tb_moneyIcon.Text = MainWindow.Currency;
+                tb_moneyIcon.Text = AppSettings.Currency;
                 translat();
                 #endregion
 
@@ -94,25 +94,25 @@ namespace Restaurant.View.windows
 
         private void translat()
         {
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            txt_invoice.Text = MainWindow.resourcemanager.GetString("trInvoices");
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
-            txt_invoices.Text = MainWindow.resourcemanager.GetString("trInvoices");
-            txt_selectedInvoices.Text = MainWindow.resourcemanager.GetString("trSelectedInvoices");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+            txt_invoice.Text = AppSettings.resourcemanager.GetString("trInvoices");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
+            txt_invoices.Text = AppSettings.resourcemanager.GetString("trInvoices");
+            txt_selectedInvoices.Text = AppSettings.resourcemanager.GetString("trSelectedInvoices");
 
-            lst_allInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trInvoiceNumber");
-            lst_allInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("trTotal");
+            lst_allInvoices.Columns[0].Header = AppSettings.resourcemanager.GetString("trInvoiceNumber");
+            lst_allInvoices.Columns[1].Header = AppSettings.resourcemanager.GetString("trTotal");
 
-            lst_selectedInvoices.Columns[0].Header = MainWindow.resourcemanager.GetString("trInvoiceNumber");
-            lst_selectedInvoices.Columns[1].Header = MainWindow.resourcemanager.GetString("trTotal");
+            lst_selectedInvoices.Columns[0].Header = AppSettings.resourcemanager.GetString("trInvoiceNumber");
+            lst_selectedInvoices.Columns[1].Header = AppSettings.resourcemanager.GetString("trTotal");
 
-            txt_sum.Text = MainWindow.resourcemanager.GetString("trSum");
-            tb_moneyIcon.Text = MainWindow.Currency;
+            txt_sum.Text = AppSettings.resourcemanager.GetString("trSum");
+            tb_moneyIcon.Text = AppSettings.Currency;
 
-            tt_selectAllItem.Content = MainWindow.resourcemanager.GetString("trSelectAllItems");
-            tt_unselectAllItem.Content = MainWindow.resourcemanager.GetString("trUnSelectAllItems");
-            tt_selectItem.Content = MainWindow.resourcemanager.GetString("trSelectOneItem");
-            tt_unselectItem.Content = MainWindow.resourcemanager.GetString("trUnSelectOneItem");
+            tt_selectAllItem.Content = AppSettings.resourcemanager.GetString("trSelectAllItems");
+            tt_unselectAllItem.Content = AppSettings.resourcemanager.GetString("trUnSelectAllItems");
+            tt_selectItem.Content = AppSettings.resourcemanager.GetString("trSelectOneItem");
+            tt_unselectItem.Content = AppSettings.resourcemanager.GetString("trUnSelectOneItem");
 
         }
 

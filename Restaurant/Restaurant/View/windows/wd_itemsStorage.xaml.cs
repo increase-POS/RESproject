@@ -59,14 +59,12 @@ namespace Restaurant.View.windows
                 HelpClass.StartAwait(grid_main);
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translat();
@@ -85,14 +83,14 @@ namespace Restaurant.View.windows
         }
         private void translat()
         {
-            txt_title.Text = MainWindow.resourcemanager.GetString("trItemsStorage");
-            txt_countTitle.Text = MainWindow.resourcemanager.GetString("trCount:");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trItemsStorage");
+            txt_countTitle.Text = AppSettings.resourcemanager.GetString("trCount:");
 
-            dg_items.Columns[0].Header = MainWindow.resourcemanager.GetString("trItemUnit");
-            dg_items.Columns[1].Header = MainWindow.resourcemanager.GetString("trQuantity");
-            dg_items.Columns[2].Header = MainWindow.resourcemanager.GetString("trExpireDate");
+            dg_items.Columns[0].Header = AppSettings.resourcemanager.GetString("trItemUnit");
+            dg_items.Columns[1].Header = AppSettings.resourcemanager.GetString("trQuantity");
+            dg_items.Columns[2].Header = AppSettings.resourcemanager.GetString("trExpireDate");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
 
         }
         private void Btn_colse_Click(object sender, RoutedEventArgs e)

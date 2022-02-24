@@ -176,14 +176,12 @@ namespace Restaurant.View.sectionData
             //    HelpClass.StartAwait(grid_main);
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
@@ -207,11 +205,11 @@ namespace Restaurant.View.sectionData
 
         private void translate()
         {
-            txt_title.Text = MainWindow.resourcemanager.GetString("trReports");
-            rdoMonth.Content = MainWindow.resourcemanager.GetString("trMonth");
-            rdoYear.Content = MainWindow.resourcemanager.GetString("trYear");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dpStrtDate, MainWindow.resourcemanager.GetString("trStartDateHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dpEndDate, MainWindow.resourcemanager.GetString("trEndDateHint"));
+            txt_title.Text = AppSettings.resourcemanager.GetString("trReports");
+            rdoMonth.Content = AppSettings.resourcemanager.GetString("trMonth");
+            rdoYear.Content = AppSettings.resourcemanager.GetString("trYear");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dpStrtDate, AppSettings.resourcemanager.GetString("trStartDateHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dpEndDate, AppSettings.resourcemanager.GetString("trEndDateHint"));
         }
 
         public void fillDates()
@@ -271,60 +269,60 @@ namespace Restaurant.View.sectionData
                             var Draw = agentsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             chartList.Add(Draw);
                             if (isSameList)
-                                label = MainWindow.resourcemanager.GetString("trCustomers");
+                                label = AppSettings.resourcemanager.GetString("trCustomers");
                             else 
-                                label = MainWindow.resourcemanager.GetString("trVendors");
+                                label = AppSettings.resourcemanager.GetString("trVendors");
                         }
                         else if (data == 2)
                         {
                             var Draw = branchesQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             chartList.Add(Draw);
                             if (isSameList)
-                                label = MainWindow.resourcemanager.GetString("trBranches");
+                                label = AppSettings.resourcemanager.GetString("trBranches");
                             else
-                                label = MainWindow.resourcemanager.GetString("trStores");
+                                label = AppSettings.resourcemanager.GetString("trStores");
                         }
                         else if (data == 3)
                         {
                             var Draw = usersQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             chartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trUsers");
+                            label = AppSettings.resourcemanager.GetString("trUsers");
                         }
                         else if (data == 4)
                         {
                             var Draw = posQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             chartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trPOSs");
+                            label = AppSettings.resourcemanager.GetString("trPOSs");
                         }
                         else if (data == 5)
                         {
                             var Draw = banksQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             chartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trBanks");
+                            label = AppSettings.resourcemanager.GetString("trBanks");
                         }
                         else if (data == 6)
                         {
                             var Draw = tablesQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             chartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trTables");
+                            label = AppSettings.resourcemanager.GetString("trTables");
                         }
                         else if (data == 7)
                         {
                             var Draw = sectionsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             chartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trSections");
+                            label = AppSettings.resourcemanager.GetString("trSections");
                         }
                         else if (data == 8)
                         {
                             var Draw = cardsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             chartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trCards");
+                            label = AppSettings.resourcemanager.GetString("trCards");
                         }
                         else if (data == 9)
                         {
                             var Draw = sectoresQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             chartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trResidentialSectors");
+                            label = AppSettings.resourcemanager.GetString("trResidentialSectors");
                         }
                         MyAxis.Separator.Step = 2;
                         MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
@@ -351,60 +349,60 @@ namespace Restaurant.View.sectionData
                         var Draw = agentsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
                         if (isSameList)
-                            label = MainWindow.resourcemanager.GetString("trCustomers");
+                            label = AppSettings.resourcemanager.GetString("trCustomers");
                         else
-                            label = MainWindow.resourcemanager.GetString("trVendors");
+                            label = AppSettings.resourcemanager.GetString("trVendors");
                     }
                     else if (data == 2)
                     {
                         var Draw = branchesQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
                         if (isSameList)
-                            label = MainWindow.resourcemanager.GetString("trBranches");
+                            label = AppSettings.resourcemanager.GetString("trBranches");
                         else
-                            label = MainWindow.resourcemanager.GetString("trStores");
+                            label = AppSettings.resourcemanager.GetString("trStores");
                     }
                     else if (data == 3)
                     {
                         var Draw = usersQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trUsers");
+                        label = AppSettings.resourcemanager.GetString("trUsers");
                     }
                     else if (data == 4)
                     {
                         var Draw = posQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trPOSs");
+                        label = AppSettings.resourcemanager.GetString("trPOSs");
                     }
                     else if (data == 5)
                     {
                         var Draw = banksQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trBanks");
+                        label = AppSettings.resourcemanager.GetString("trBanks");
                     }
                     else if (data == 6)
                     {
                         var Draw = tablesQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trTables");
+                        label = AppSettings.resourcemanager.GetString("trTables");
                     }
                     else if (data == 7)
                     {
                         var Draw = sectionsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trSections");
+                        label = AppSettings.resourcemanager.GetString("trSections");
                     }
                     else if (data == 8)
                     {
                         var Draw = cardsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trCards");
+                        label = AppSettings.resourcemanager.GetString("trCards");
                     }
                     else if (data == 9)
                     {
                         var Draw = sectoresQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trResidentialSectors");
+                        label = AppSettings.resourcemanager.GetString("trResidentialSectors");
                     }
                     MyAxis.Separator.Step = 1;
                     MyAxis.Labels.Add(year.ToString());
@@ -462,60 +460,60 @@ namespace Restaurant.View.sectionData
                             var Draw = agentsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             PiechartList.Add(Draw);
                             if (isSameList)
-                                label = MainWindow.resourcemanager.GetString("trCustomers");
+                                label = AppSettings.resourcemanager.GetString("trCustomers");
                             else
-                                label = MainWindow.resourcemanager.GetString("trVendors");
+                                label = AppSettings.resourcemanager.GetString("trVendors");
                         }
                         else if (data == 2)
                         {
                             var Draw = branchesQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             PiechartList.Add(Draw);
                             if (isSameList)
-                                label = MainWindow.resourcemanager.GetString("trBranches");
+                                label = AppSettings.resourcemanager.GetString("trBranches");
                             else
-                                label = MainWindow.resourcemanager.GetString("trStores");
+                                label = AppSettings.resourcemanager.GetString("trStores");
                         }
                         else if (data == 3)
                         {
                             var Draw = usersQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             PiechartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trUsers");
+                            label = AppSettings.resourcemanager.GetString("trUsers");
                         }
                         else if (data == 4)
                         {
                             var Draw = posQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             PiechartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trPOSs");
+                            label = AppSettings.resourcemanager.GetString("trPOSs");
                         }
                         else if (data == 5)
                         {
                             var Draw = banksQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             PiechartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trBanks");
+                            label = AppSettings.resourcemanager.GetString("trBanks");
                         }
                         else if (data == 6)
                         {
                             var Draw = tablesQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             PiechartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trTables");
+                            label = AppSettings.resourcemanager.GetString("trTables");
                         }
                         else if (data == 7)
                         {
                             var Draw = sectionsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             PiechartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trSections");
+                            label = AppSettings.resourcemanager.GetString("trSections");
                         }
                         else if (data == 8)
                         {
                             var Draw = cardsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             PiechartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trCards");
+                            label = AppSettings.resourcemanager.GetString("trCards");
                         }
                         else if (data == 9)
                         {
                             var Draw = sectoresQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             PiechartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trResidentialSectors");
+                            label = AppSettings.resourcemanager.GetString("trResidentialSectors");
                         }
                         titles.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
                         if (year == dpEndDate.SelectedDate.Value.Year && month == dpEndDate.SelectedDate.Value.Month)
@@ -541,60 +539,60 @@ namespace Restaurant.View.sectionData
                         var Draw = agentsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
                         if (isSameList)
-                            label = MainWindow.resourcemanager.GetString("trCustomers");
+                            label = AppSettings.resourcemanager.GetString("trCustomers");
                         else
-                            label = MainWindow.resourcemanager.GetString("trVendors");
+                            label = AppSettings.resourcemanager.GetString("trVendors");
                     }
                     else if (data == 2)
                     {
                         var Draw = branchesQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
                         if (isSameList)
-                            label = MainWindow.resourcemanager.GetString("trBranches");
+                            label = AppSettings.resourcemanager.GetString("trBranches");
                         else
-                            label = MainWindow.resourcemanager.GetString("trStores");
+                            label = AppSettings.resourcemanager.GetString("trStores");
                     }
                     else if (data == 3)
                     {
                         var Draw = usersQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trUsers");
+                        label = AppSettings.resourcemanager.GetString("trUsers");
                     }
                     else if (data == 4)
                     {
                         var Draw = posQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trPOSs");
+                        label = AppSettings.resourcemanager.GetString("trPOSs");
                     }
                     else if (data == 5)
                     {
                         var Draw = banksQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trBanks");
+                        label = AppSettings.resourcemanager.GetString("trBanks");
                     }
                     else if (data == 6)
                     {
                         var Draw = tablesQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trTables");
+                        label = AppSettings.resourcemanager.GetString("trTables");
                     }
                     else if (data == 7)
                     {
                         var Draw = sectionsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trSections");
+                        label = AppSettings.resourcemanager.GetString("trSections");
                     }
                     else if (data == 8)
                     {
                         var Draw = cardsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trCards");
+                        label = AppSettings.resourcemanager.GetString("trCards");
                     }
                     else if (data == 9)
                     {
                         var Draw = sectoresQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trResidentialSectors");
+                        label = AppSettings.resourcemanager.GetString("trResidentialSectors");
                     }
                     titles.Add(year.ToString());
                 }
@@ -654,60 +652,60 @@ namespace Restaurant.View.sectionData
                             var Draw = agentsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             ColumnchartList.Add(Draw);
                             if (isSameList)
-                                label = MainWindow.resourcemanager.GetString("trCustomers");
+                                label = AppSettings.resourcemanager.GetString("trCustomers");
                             else
-                                label = MainWindow.resourcemanager.GetString("trVendors");
+                                label = AppSettings.resourcemanager.GetString("trVendors");
                         }
                         else if (data == 2)
                         {
                             var Draw = branchesQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             ColumnchartList.Add(Draw);
                             if (isSameList)
-                                label = MainWindow.resourcemanager.GetString("trBranches");
+                                label = AppSettings.resourcemanager.GetString("trBranches");
                             else
-                                label = MainWindow.resourcemanager.GetString("trStores");
+                                label = AppSettings.resourcemanager.GetString("trStores");
                         }
                         else if (data == 3)
                         {
                             var Draw = usersQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             ColumnchartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trUsers");
+                            label = AppSettings.resourcemanager.GetString("trUsers");
                         }
                         else if (data == 4)
                         {
                             var Draw = posQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             ColumnchartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trPOSs");
+                            label = AppSettings.resourcemanager.GetString("trPOSs");
                         }
                         else if (data == 5)
                         {
                             var Draw = banksQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             ColumnchartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trBanks");
+                            label = AppSettings.resourcemanager.GetString("trBanks");
                         }
                         else if (data == 6)
                         {
                             var Draw = tablesQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             ColumnchartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trTables");
+                            label = AppSettings.resourcemanager.GetString("trTables");
                         }
                         else if (data == 7)
                         {
                             var Draw = sectionsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             ColumnchartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trSections");
+                            label = AppSettings.resourcemanager.GetString("trSections");
                         }
                         else if (data == 8)
                         {
                             var Draw = cardsQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             ColumnchartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trCards");
+                            label = AppSettings.resourcemanager.GetString("trCards");
                         }
                         else if (data == 9)
                         {
                             var Draw = sectoresQuery.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Count();
                             ColumnchartList.Add(Draw);
-                            label = MainWindow.resourcemanager.GetString("trResidentialSectors");
+                            label = AppSettings.resourcemanager.GetString("trResidentialSectors");
                         }
                         columnAxis.Separator.Step = 2;
                         columnAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
@@ -734,60 +732,60 @@ namespace Restaurant.View.sectionData
                         var Draw = agentsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
                         if (isSameList)
-                            label = MainWindow.resourcemanager.GetString("trCustomers");
+                            label = AppSettings.resourcemanager.GetString("trCustomers");
                         else
-                            label = MainWindow.resourcemanager.GetString("trVendors");
+                            label = AppSettings.resourcemanager.GetString("trVendors");
                     }
                     else if (data == 2)
                     {
                         var Draw = branchesQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
                         if (isSameList)
-                            label = MainWindow.resourcemanager.GetString("trBranches");
+                            label = AppSettings.resourcemanager.GetString("trBranches");
                         else
-                            label = MainWindow.resourcemanager.GetString("trStores");
+                            label = AppSettings.resourcemanager.GetString("trStores");
                     }
                     else if (data == 3)
                     {
                         var Draw = usersQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trUsers");
+                        label = AppSettings.resourcemanager.GetString("trUsers");
                     }
                     else if (data == 4)
                     {
                         var Draw = posQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trPOSs");
+                        label = AppSettings.resourcemanager.GetString("trPOSs");
                     }
                     else if (data == 5)
                     {
                         var Draw = banksQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trBanks");
+                        label = AppSettings.resourcemanager.GetString("trBanks");
                     }
                     else if (data == 6)
                     {
                         var Draw = tablesQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trTables");
+                        label = AppSettings.resourcemanager.GetString("trTables");
                     }
                     else if (data == 7)
                     {
                         var Draw = sectionsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trSections");
+                        label = AppSettings.resourcemanager.GetString("trSections");
                     }
                     else if (data == 8)
                     {
                         var Draw = cardsQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trCards");
+                        label = AppSettings.resourcemanager.GetString("trCards");
                     }
                     else if (data == 9)
                     {
                         var Draw = sectoresQuery.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
-                        label = MainWindow.resourcemanager.GetString("trResidentialSectors");
+                        label = AppSettings.resourcemanager.GetString("trResidentialSectors");
                     }
                     columnAxis.Separator.Step = 1;
                     columnAxis.Labels.Add(year.ToString());

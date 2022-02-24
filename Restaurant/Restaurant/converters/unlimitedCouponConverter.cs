@@ -1,4 +1,5 @@
 ﻿using Restaurant;
+using Restaurant.Classes;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -15,7 +16,7 @@ namespace Restaurant.converters
         {
             int quantity = int.Parse(value.ToString());
             if (quantity == 0)
-                return MainWindow.resourcemanager.GetString("trUnlimited");
+                return AppSettings.resourcemanager.GetString("trUnlimited");
             else
                 return value;
         }

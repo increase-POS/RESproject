@@ -91,14 +91,12 @@ namespace Restaurant.View.windows
                 catigoriesAndItemsView.wdPurchaseItems = this;
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
@@ -143,9 +141,9 @@ namespace Restaurant.View.windows
         }
         private void translate()
         {
-            txt_items.Text = MainWindow.resourcemanager.GetString("trItems");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_searchitems, MainWindow.resourcemanager.GetString("trSearchHint"));
-            btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
+            txt_items.Text = AppSettings.resourcemanager.GetString("trItems");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_searchitems, AppSettings.resourcemanager.GetString("trSearchHint"));
+            btn_add.Content = AppSettings.resourcemanager.GetString("trAdd");
         }
         
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
@@ -521,7 +519,7 @@ namespace Restaurant.View.windows
                     this.Close();
                 }
                 else
-                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
             }
             catch (Exception ex)
             {

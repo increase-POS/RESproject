@@ -105,7 +105,7 @@ namespace Restaurant.View.settings
             {
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "name" };
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
@@ -131,93 +131,93 @@ namespace Restaurant.View.settings
         private void translate()
         {
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            btn_refresh.ToolTip = MainWindow.resourcemanager.GetString("trRefresh");
-            btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+            btn_refresh.ToolTip = AppSettings.resourcemanager.GetString("trRefresh");
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
 
-            txt_addButton.Text = MainWindow.resourcemanager.GetString("trAdd");
-            txt_updateButton.Text = MainWindow.resourcemanager.GetString("trUpdate");
-            txt_deleteButton.Text = MainWindow.resourcemanager.GetString("trDelete");
+            txt_addButton.Text = AppSettings.resourcemanager.GetString("trAdd");
+            txt_updateButton.Text = AppSettings.resourcemanager.GetString("trUpdate");
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
 
-            dg_group.Columns[0].Header = MainWindow.resourcemanager.GetString("trName");
-            dg_group.Columns[1].Header = MainWindow.resourcemanager.GetString("trNote");
+            dg_group.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
+            dg_group.Columns[1].Header = AppSettings.resourcemanager.GetString("trNote");
             /*
-            txt_dashboard.Text = MainWindow.resourcemanager.GetString("trDashBoard");
+            txt_dashboard.Text = AppSettings.resourcemanager.GetString("trDashBoard");
 
 
-            txt_categories.Text = MainWindow.resourcemanager.GetString("trCategories");
-            txt_properties.Text = MainWindow.resourcemanager.GetString("trProperties");
-            txt_item.Text = MainWindow.resourcemanager.GetString("trItems");
-            txt_package.Text = MainWindow.resourcemanager.GetString("trPackage");
-            txt_service.Text = MainWindow.resourcemanager.GetString("trService");
-            txt_units.Text = MainWindow.resourcemanager.GetString("trUnits");
-            txt_storageCost.Text = MainWindow.resourcemanager.GetString("trStorageCost");
+            txt_categories.Text = AppSettings.resourcemanager.GetString("trCategories");
+            txt_properties.Text = AppSettings.resourcemanager.GetString("trProperties");
+            txt_item.Text = AppSettings.resourcemanager.GetString("trItems");
+            txt_package.Text = AppSettings.resourcemanager.GetString("trPackage");
+            txt_service.Text = AppSettings.resourcemanager.GetString("trService");
+            txt_units.Text = AppSettings.resourcemanager.GetString("trUnits");
+            txt_storageCost.Text = AppSettings.resourcemanager.GetString("trStorageCost");
 
-            txt_locations.Text = MainWindow.resourcemanager.GetString("trLocation");
-            txt_section.Text = MainWindow.resourcemanager.GetString("trSection");
-            txt_reciptOfInvoice.Text = MainWindow.resourcemanager.GetString("trInvoice");
-            txt_itemsStorage.Text = MainWindow.resourcemanager.GetString("trStorage");
-            txt_importExport.Text = MainWindow.resourcemanager.GetString("trMovements");
-            txt_itemsDestroy.Text = MainWindow.resourcemanager.GetString("trDestructive");
-            txt_shortage.Text = MainWindow.resourcemanager.GetString("trShortage");
-            txt_inventory.Text = MainWindow.resourcemanager.GetString("trStocktaking");
+            txt_locations.Text = AppSettings.resourcemanager.GetString("trLocation");
+            txt_section.Text = AppSettings.resourcemanager.GetString("trSection");
+            txt_reciptOfInvoice.Text = AppSettings.resourcemanager.GetString("trInvoice");
+            txt_itemsStorage.Text = AppSettings.resourcemanager.GetString("trStorage");
+            txt_importExport.Text = AppSettings.resourcemanager.GetString("trMovements");
+            txt_itemsDestroy.Text = AppSettings.resourcemanager.GetString("trDestructive");
+            txt_shortage.Text = AppSettings.resourcemanager.GetString("trShortage");
+            txt_inventory.Text = AppSettings.resourcemanager.GetString("trStocktaking");
 
 
-            txt_posAccounting.Text = MainWindow.resourcemanager.GetString("trPOS");
-            txt_banksAccounting.Text = MainWindow.resourcemanager.GetString("trGroups");
-            txt_payments.Text = MainWindow.resourcemanager.GetString("trPayments");
-            txt_received.Text = MainWindow.resourcemanager.GetString("trReceived");
-            txt_bonds.Text = MainWindow.resourcemanager.GetString("trBonds");
-            txt_ordersAccounting.Text = MainWindow.resourcemanager.GetString("trOrders");
+            txt_posAccounting.Text = AppSettings.resourcemanager.GetString("trPOS");
+            txt_banksAccounting.Text = AppSettings.resourcemanager.GetString("trGroups");
+            txt_payments.Text = AppSettings.resourcemanager.GetString("trPayments");
+            txt_received.Text = AppSettings.resourcemanager.GetString("trReceived");
+            txt_bonds.Text = AppSettings.resourcemanager.GetString("trBonds");
+            txt_ordersAccounting.Text = AppSettings.resourcemanager.GetString("trOrders");
 
-            txt_payInvoice.Text = MainWindow.resourcemanager.GetString("trInvoice");
-            txt_purchaseOrder.Text = MainWindow.resourcemanager.GetString("trOrders");
-            txt_salesStatistic.Text = MainWindow.resourcemanager.GetString("trStatistic");
+            txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trInvoice");
+            txt_purchaseOrder.Text = AppSettings.resourcemanager.GetString("trOrders");
+            txt_salesStatistic.Text = AppSettings.resourcemanager.GetString("trStatistic");
 
-            txt_reciptInvoice.Text = MainWindow.resourcemanager.GetString("trInvoice");
-            txt_coupon.Text = MainWindow.resourcemanager.GetString("trCoupon");
-            txt_offer.Text = MainWindow.resourcemanager.GetString("trOffer");
+            txt_reciptInvoice.Text = AppSettings.resourcemanager.GetString("trInvoice");
+            txt_coupon.Text = AppSettings.resourcemanager.GetString("trCoupon");
+            txt_offer.Text = AppSettings.resourcemanager.GetString("trOffer");
 
-            txt_quotation.Text = MainWindow.resourcemanager.GetString("trQuotations");
-            txt_salesOrders.Text = MainWindow.resourcemanager.GetString("trOrders");
+            txt_quotation.Text = AppSettings.resourcemanager.GetString("trQuotations");
+            txt_salesOrders.Text = AppSettings.resourcemanager.GetString("trOrders");
 
-            txt_customers.Text = MainWindow.resourcemanager.GetString("trCustomers");
-            txt_suppliers.Text = MainWindow.resourcemanager.GetString("trSuppliers");
-            txt_users.Text = MainWindow.resourcemanager.GetString("trUsers");
-            txt_branches.Text = MainWindow.resourcemanager.GetString("trBranches");
-            txt_stores.Text = MainWindow.resourcemanager.GetString("trStores");
-            txt_pos.Text = MainWindow.resourcemanager.GetString("trPOS");
-            txt_groups.Text = MainWindow.resourcemanager.GetString("trGroups");
-            txt_shippingCompany.Text = MainWindow.resourcemanager.GetString("trShipping");
+            txt_customers.Text = AppSettings.resourcemanager.GetString("trCustomers");
+            txt_suppliers.Text = AppSettings.resourcemanager.GetString("trSuppliers");
+            txt_users.Text = AppSettings.resourcemanager.GetString("trUsers");
+            txt_branches.Text = AppSettings.resourcemanager.GetString("trBranches");
+            txt_stores.Text = AppSettings.resourcemanager.GetString("trStores");
+            txt_pos.Text = AppSettings.resourcemanager.GetString("trPOS");
+            txt_groups.Text = AppSettings.resourcemanager.GetString("trGroups");
+            txt_shippingCompany.Text = AppSettings.resourcemanager.GetString("trShipping");
 
-            txt_storageReports.Text = MainWindow.resourcemanager.GetString("trStore");
-            txt_purchaseReports.Text = MainWindow.resourcemanager.GetString("trPurchases");
-            txt_salesReports.Text = MainWindow.resourcemanager.GetString("trSales");
-            txt_accountsReports.Text = MainWindow.resourcemanager.GetString("trAccounting");
+            txt_storageReports.Text = AppSettings.resourcemanager.GetString("trStore");
+            txt_purchaseReports.Text = AppSettings.resourcemanager.GetString("trPurchases");
+            txt_salesReports.Text = AppSettings.resourcemanager.GetString("trSales");
+            txt_accountsReports.Text = AppSettings.resourcemanager.GetString("trAccounting");
 
-            txt_storageAlerts.Text = MainWindow.resourcemanager.GetString("trStore");
-            txt_saleAlerts.Text = MainWindow.resourcemanager.GetString("trSales");
+            txt_storageAlerts.Text = AppSettings.resourcemanager.GetString("trStore");
+            txt_saleAlerts.Text = AppSettings.resourcemanager.GetString("trSales");
 
-            txt_general.Text = MainWindow.resourcemanager.GetString("trGeneral");
-            txt_reportsSettings.Text = MainWindow.resourcemanager.GetString("trReports");
-            txt_permissions.Text = MainWindow.resourcemanager.GetString("trPermission");
-            txt_emailsSetting.Text = MainWindow.resourcemanager.GetString("trEmail");
-            txt_emailTemplates.Text = MainWindow.resourcemanager.GetString("trEmailTemplates");
+            txt_general.Text = AppSettings.resourcemanager.GetString("trGeneral");
+            txt_reportsSettings.Text = AppSettings.resourcemanager.GetString("trReports");
+            txt_permissions.Text = AppSettings.resourcemanager.GetString("trPermission");
+            txt_emailsSetting.Text = AppSettings.resourcemanager.GetString("trEmail");
+            txt_emailTemplates.Text = AppSettings.resourcemanager.GetString("trEmailTemplates");
             */
 
-            dg_permissions.Columns[0].Header = MainWindow.resourcemanager.GetString("trPermission");
-            dg_permissions.Columns[1].Header = MainWindow.resourcemanager.GetString("trShow");
-            dg_permissions.Columns[2].Header = MainWindow.resourcemanager.GetString("trAdd");
-            dg_permissions.Columns[3].Header = MainWindow.resourcemanager.GetString("trUpdate");
-            dg_permissions.Columns[4].Header = MainWindow.resourcemanager.GetString("trDelete");
-            dg_permissions.Columns[5].Header = MainWindow.resourcemanager.GetString("trReports");
+            dg_permissions.Columns[0].Header = AppSettings.resourcemanager.GetString("trPermission");
+            dg_permissions.Columns[1].Header = AppSettings.resourcemanager.GetString("trShow");
+            dg_permissions.Columns[2].Header = AppSettings.resourcemanager.GetString("trAdd");
+            dg_permissions.Columns[3].Header = AppSettings.resourcemanager.GetString("trUpdate");
+            dg_permissions.Columns[4].Header = AppSettings.resourcemanager.GetString("trDelete");
+            dg_permissions.Columns[5].Header = AppSettings.resourcemanager.GetString("trReports");
 
 
-            txt_title.Text = MainWindow.resourcemanager.GetString("trPermission");
-            txt_groupDetails.Text = MainWindow.resourcemanager.GetString("trDetails");
-            txt_groups.Text = MainWindow.resourcemanager.GetString("trGroups");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trPermission");
+            txt_groupDetails.Text = AppSettings.resourcemanager.GetString("trDetails");
+            txt_groups.Text = AppSettings.resourcemanager.GetString("trGroups");
 
 
         }
@@ -237,11 +237,11 @@ namespace Restaurant.View.settings
                         bool isGroupExist = await chkDuplicateGroup();
                         if (isGroupExist)
                         {
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopGroupExist"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopGroupExist"), animation: ToasterAnimation.FadeIn);
                             #region Tooltip_name
                             p_error_name.Visibility = Visibility.Visible;
                             ToolTip toolTip_name = new ToolTip();
-                            toolTip_name.Content = MainWindow.resourcemanager.GetString("trDuplicateCodeToolTip");
+                            toolTip_name.Content = AppSettings.resourcemanager.GetString("trDuplicateCodeToolTip");
                             toolTip_name.Style = Application.Current.Resources["ToolTipError"] as Style;
                             p_error_name.ToolTip = toolTip_name;
                             #endregion
@@ -256,10 +256,10 @@ namespace Restaurant.View.settings
 
                             int s = await group.Save(group);
                             if (s <= 0)
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
 
 
@@ -274,7 +274,7 @@ namespace Restaurant.View.settings
                     HelpClass.EndAwait(grid_main);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)
@@ -298,11 +298,11 @@ namespace Restaurant.View.settings
                         bool isGroupExist = await chkDuplicateGroup();
                         if (isGroupExist)
                         {
-                            Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopGroupExist"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopGroupExist"), animation: ToasterAnimation.FadeIn);
                             #region Tooltip_name
                             p_error_name.Visibility = Visibility.Visible;
                             ToolTip toolTip_name = new ToolTip();
-                            toolTip_name.Content = MainWindow.resourcemanager.GetString("trDuplicateCodeToolTip");
+                            toolTip_name.Content = AppSettings.resourcemanager.GetString("trDuplicateCodeToolTip");
                             toolTip_name.Style = Application.Current.Resources["ToolTipError"] as Style;
                             p_error_name.ToolTip = toolTip_name;
                             #endregion
@@ -315,11 +315,11 @@ namespace Restaurant.View.settings
 
                             int s = await group.Save(group);
                             if (s <= 0)
-                                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
                                 group.groupId = s;
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                                 await RefreshGroupsList();
                                 await Search();
                                 await RefreshGroupObjectList();
@@ -328,12 +328,12 @@ namespace Restaurant.View.settings
                     }
                     }
                     else
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
 
                     HelpClass.EndAwait(grid_main);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)
@@ -356,7 +356,7 @@ namespace Restaurant.View.settings
                             #region
                             Window.GetWindow(this).Opacity = 0.2;
                             wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxActivate");
+                            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
@@ -369,25 +369,25 @@ namespace Restaurant.View.settings
                             Window.GetWindow(this).Opacity = 0.2;
                             wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                             if (group.canDelete)
-                                w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                                w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
                             if (!group.canDelete)
-                                w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
+                                w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
                             if (w.isOk)
                             {
                                 string popupContent = "";
-                                if (group.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
-                                if ((!group.canDelete) && (group.isActive == 1)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+                                if (group.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
+                                if ((!group.canDelete) && (group.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
                                 int s = await group.Delete(group.groupId, MainWindow.userLogin.userId, group.canDelete);
                                 if (s < 0)
-                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
                                     group.groupId = 0;
-                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
                                     await RefreshGroupsList();
                                     await Search();
                                     await RefreshGroupObjectList();
@@ -399,7 +399,7 @@ namespace Restaurant.View.settings
                     HelpClass.EndAwait(grid_main);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
             }
             catch (Exception ex)
             {
@@ -412,10 +412,10 @@ namespace Restaurant.View.settings
             group.isActive = 1;
             int s = await group.Save(group);
             if (s <= 0)
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
             {
-                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
                 await RefreshGroupsList();
                 await Search();
             }
@@ -500,13 +500,13 @@ namespace Restaurant.View.settings
                     {
                         #region delete
                         if (group.canDelete)
-                            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+                            btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
                         else
                         {
                             if (group.isActive == 0)
-                                btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+                                btn_delete.Content = AppSettings.resourcemanager.GetString("trActive");
                             else
-                                btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+                                btn_delete.Content = AppSettings.resourcemanager.GetString("trInActive");
                         }
                         #endregion
                     }
@@ -831,7 +831,7 @@ namespace Restaurant.View.settings
                 itemText.Tag = item.name ; 
                 // translate
                 if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == item.name).FirstOrDefault().translate))
-                    itemText.Text = MainWindow.resourcemanager.GetString(
+                    itemText.Text = AppSettings.resourcemanager.GetString(
                    FillCombo.objectsList.Where(x => x.name == item.name).FirstOrDefault().translate
                    );
                 itemText.Margin = new Thickness(5, 5, 5, 2.5);
@@ -996,7 +996,7 @@ namespace Restaurant.View.settings
                     }
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
                     HelpClass.EndAwait(grid_main);
             }
@@ -1024,15 +1024,15 @@ namespace Restaurant.View.settings
                     if (!s.Equals(0))
                     {
                         //addObjects(int.Parse(s));
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                         Btn_clear_Click(null, null);
                     }
                     else
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
                     HelpClass.EndAwait(grid_main);
             }
@@ -1066,7 +1066,7 @@ namespace Restaurant.View.settings
         Button initializationMainButton(Object _object, bool isLast)
         {
             Button button = new Button();
-            button.Content = ">" + MainWindow.resourcemanager.GetString(_object.translate);
+            button.Content = ">" + AppSettings.resourcemanager.GetString(_object.translate);
             button.Tag = _object.name;
             button.Click += MainButton_Click;
             button.Background = null;

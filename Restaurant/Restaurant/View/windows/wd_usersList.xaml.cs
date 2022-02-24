@@ -63,7 +63,7 @@ namespace Restaurant.View.windows
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
                 #region translate
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
@@ -115,20 +115,20 @@ namespace Restaurant.View.windows
 
         private void translat()
         {
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            txt_user.Text = MainWindow.resourcemanager.GetString("trUsers");
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+            txt_user.Text = AppSettings.resourcemanager.GetString("trUsers");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
-            lst_allUsers.Columns[0].Header = MainWindow.resourcemanager.GetString("trUser");
-            lst_selectedUsers.Columns[0].Header = MainWindow.resourcemanager.GetString("trUser");
+            lst_allUsers.Columns[0].Header = AppSettings.resourcemanager.GetString("trUser");
+            lst_selectedUsers.Columns[0].Header = AppSettings.resourcemanager.GetString("trUser");
 
-            txt_users.Text = MainWindow.resourcemanager.GetString("trUsers");
-            txt_selectedUsers.Text = MainWindow.resourcemanager.GetString("trSelectedUsers");
+            txt_users.Text = AppSettings.resourcemanager.GetString("trUsers");
+            txt_selectedUsers.Text = AppSettings.resourcemanager.GetString("trSelectedUsers");
 
-            tt_selectAllItem.Content = MainWindow.resourcemanager.GetString("trSelectAllItems");
-            tt_unselectAllItem.Content = MainWindow.resourcemanager.GetString("trUnSelectAllItems");
-            tt_selectItem.Content = MainWindow.resourcemanager.GetString("trSelectOneItem");
-            tt_unselectItem.Content = MainWindow.resourcemanager.GetString("trUnSelectOneItem");
+            tt_selectAllItem.Content = AppSettings.resourcemanager.GetString("trSelectAllItems");
+            tt_unselectAllItem.Content = AppSettings.resourcemanager.GetString("trUnSelectAllItems");
+            tt_selectItem.Content = AppSettings.resourcemanager.GetString("trSelectOneItem");
+            tt_unselectItem.Content = AppSettings.resourcemanager.GetString("trUnSelectOneItem");
 
         }
 

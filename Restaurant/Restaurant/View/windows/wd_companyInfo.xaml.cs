@@ -122,14 +122,12 @@ namespace Restaurant.View.windows
                 if (!isFirstTime)
                 {
                     #region translate
-                    if (MainWindow.lang.Equals("en"))
+                    if (AppSettings.lang.Equals("en"))
                     {
-                        //MainWindow.resourcemanager = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly());
                         grid_main.FlowDirection = FlowDirection.LeftToRight;
                     }
                     else
                     {
-                        //MainWindow.resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
                         grid_main.FlowDirection = FlowDirection.RightToLeft;
                     }
 
@@ -168,20 +166,20 @@ namespace Restaurant.View.windows
         }
         private void translate()
         {
-            txt_companyInfo.Text = MainWindow.resourcemanager.GetString("trComInfo");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mobile, MainWindow.resourcemanager.GetString("trMobileHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_phone, MainWindow.resourcemanager.GetString("trPhoneHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_email, MainWindow.resourcemanager.GetString("trEmailHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fax, MainWindow.resourcemanager.GetString("trFaxHint"));
-            //tt_name.Content = MainWindow.resourcemanager.GetString("trName");
-            //tt_mobile.Content = MainWindow.resourcemanager.GetString("trMobile");
-            //tt_phone.Content = MainWindow.resourcemanager.GetString("trPhone");
-            //tt_fax.Content = MainWindow.resourcemanager.GetString("trFax");
-            //tt_email.Content = MainWindow.resourcemanager.GetString("trEmail");
-            //tt_address.Content = MainWindow.resourcemanager.GetString("trAddress");
-            btn_save.Content = MainWindow.resourcemanager.GetString("trSave");
+            txt_companyInfo.Text = AppSettings.resourcemanager.GetString("trComInfo");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, AppSettings.resourcemanager.GetString("trNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, AppSettings.resourcemanager.GetString("trAdressHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mobile, AppSettings.resourcemanager.GetString("trMobileHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_phone, AppSettings.resourcemanager.GetString("trPhoneHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_email, AppSettings.resourcemanager.GetString("trEmailHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fax, AppSettings.resourcemanager.GetString("trFaxHint"));
+            //tt_name.Content = AppSettings.resourcemanager.GetString("trName");
+            //tt_mobile.Content = AppSettings.resourcemanager.GetString("trMobile");
+            //tt_phone.Content = AppSettings.resourcemanager.GetString("trPhone");
+            //tt_fax.Content = AppSettings.resourcemanager.GetString("trFax");
+            //tt_email.Content = AppSettings.resourcemanager.GetString("trEmail");
+            //tt_address.Content = AppSettings.resourcemanager.GetString("trAddress");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
         }
 
 
@@ -427,7 +425,7 @@ namespace Restaurant.View.windows
                     #endregion
                     if (!isFirstTime)
                     {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
                         await Task.Delay(1500);
 
                     }

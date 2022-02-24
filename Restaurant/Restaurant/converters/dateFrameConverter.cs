@@ -1,4 +1,5 @@
 ﻿using Restaurant;
+using Restaurant.Classes;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -21,7 +22,7 @@ namespace Restaurant.converters
                 date = (DateTime)value;
             else return value;
 
-            switch (MainWindow.dateFormat)
+            switch (AppSettings.dateFormat)
             {
                 case "ShortDatePattern":
                     return date.ToString(@"dd/MM/yyyy");

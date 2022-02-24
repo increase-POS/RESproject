@@ -46,14 +46,12 @@ namespace Restaurant.View.windows
                     HelpClass.StartAwait(grid_main);
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
             {
-                MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
             }
             else
             {
-                MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
             }
             translate();
@@ -72,8 +70,8 @@ namespace Restaurant.View.windows
 
         private void translate()
         {
-            btn_ok.Content = MainWindow.resourcemanager.GetString("trOK");
-            btn_cancel.Content = MainWindow.resourcemanager.GetString("trCancel");
+            btn_ok.Content = AppSettings.resourcemanager.GetString("trOK");
+            btn_cancel.Content = AppSettings.resourcemanager.GetString("trCancel");
         }
 
         private void Btn_cancel_Click(object sender, RoutedEventArgs e)

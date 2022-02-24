@@ -1,4 +1,5 @@
 ﻿using Restaurant;
+using Restaurant.Classes;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -17,7 +18,7 @@ namespace Restaurant.converters
             {
                 decimal num = decimal.Parse(value.ToString());
                 string s = num.ToString();
-                switch (MainWindow.accuracy)
+                switch (AppSettings.accuracy)
                 {
                     case "0":
                         s = string.Format("{0:F0}", num);

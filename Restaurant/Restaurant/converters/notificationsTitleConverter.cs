@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Restaurant.Classes;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Restaurant.converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return MainWindow.resourcemanager.GetString(value.ToString());
+            return AppSettings.resourcemanager.GetString(value.ToString());
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {

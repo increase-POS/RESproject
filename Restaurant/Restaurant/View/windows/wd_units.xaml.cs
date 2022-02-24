@@ -180,14 +180,12 @@ namespace Restaurant.View.windows
             {
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "unitId", "unitValue", "subUnitId", "barcode" };
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
@@ -208,24 +206,24 @@ namespace Restaurant.View.windows
         }
         private void translate()
         {
-            txt_title.Text = MainWindow.resourcemanager.GetString("trUnits");
-            txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
-            btn_add.Content = MainWindow.resourcemanager.GetString("trAdd");
-            btn_update.Content = MainWindow.resourcemanager.GetString("trUpdate");
-            btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
-            btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trUnits");
+            txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
+            btn_add.Content = AppSettings.resourcemanager.GetString("trAdd");
+            btn_update.Content = AppSettings.resourcemanager.GetString("trUpdate");
+            btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             ///////////////////////////Barcode
-            dg_itemUnit.Columns[0].Header = MainWindow.resourcemanager.GetString("trUnit");
-            dg_itemUnit.Columns[1].Header = MainWindow.resourcemanager.GetString("trCountUnit");
-            dg_itemUnit.Columns[2].Header = MainWindow.resourcemanager.GetString("trSmallUnit");
-            dg_itemUnit.Columns[2].Header = MainWindow.resourcemanager.GetString("trPrice");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_unitId, MainWindow.resourcemanager.GetString("trSelectUnitHint"));
-            txt_isDefaultPurchases.Text = MainWindow.resourcemanager.GetString("trIsDefaultPurchases");
-            //tb_isDefaultSales.Text = MainWindow.resourcemanager.GetString("trIsDefaultSales");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_unitValue, MainWindow.resourcemanager.GetString("trCountHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_subUnitId, MainWindow.resourcemanager.GetString("trUnitHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_price, MainWindow.resourcemanager.GetString("trPriceHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_barcode, MainWindow.resourcemanager.GetString("trBarcodeHint"));
+            dg_itemUnit.Columns[0].Header = AppSettings.resourcemanager.GetString("trUnit");
+            dg_itemUnit.Columns[1].Header = AppSettings.resourcemanager.GetString("trCountUnit");
+            dg_itemUnit.Columns[2].Header = AppSettings.resourcemanager.GetString("trSmallUnit");
+            dg_itemUnit.Columns[2].Header = AppSettings.resourcemanager.GetString("trPrice");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_unitId, AppSettings.resourcemanager.GetString("trSelectUnitHint"));
+            txt_isDefaultPurchases.Text = AppSettings.resourcemanager.GetString("trIsDefaultPurchases");
+            //tb_isDefaultSales.Text = AppSettings.resourcemanager.GetString("trIsDefaultSales");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_unitValue, AppSettings.resourcemanager.GetString("trCountHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_subUnitId, AppSettings.resourcemanager.GetString("trUnitHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_price, AppSettings.resourcemanager.GetString("trPriceHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_barcode, AppSettings.resourcemanager.GetString("trBarcodeHint"));
  
              
         }
@@ -251,7 +249,7 @@ namespace Restaurant.View.windows
                                 #region Tooltip_code
                                 p_error_barcode.Visibility = Visibility.Visible;
                                 ToolTip toolTip_barcode = new ToolTip();
-                                toolTip_barcode.Content = MainWindow.resourcemanager.GetString("trErrorDuplicateBarcodeToolTip");
+                                toolTip_barcode.Content = AppSettings.resourcemanager.GetString("trErrorDuplicateBarcodeToolTip");
                                 toolTip_barcode.Style = Application.Current.Resources["ToolTipError"] as Style;
                                 p_error_barcode.ToolTip = toolTip_barcode;
                                 #endregion
@@ -295,10 +293,10 @@ namespace Restaurant.View.windows
                                 itemUnit.updateUserId = MainWindow.userLogin.userId;
                                 int res = await itemUnit.saveItemUnit(itemUnit);
                                 if (res <= 0)
-                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
-                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                                     await FillCombo.RefreshItemUnit();
                                     Clear();
                                     await RefreshItemUnitsList();
@@ -308,7 +306,7 @@ namespace Restaurant.View.windows
                         }
                     }
                     else
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopErrorBarcodeLength"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopErrorBarcodeLength"), animation: ToasterAnimation.FadeIn);
                 }
                 HelpClass.EndAwait(grid_main);
             }
@@ -337,7 +335,7 @@ namespace Restaurant.View.windows
                                 #region Tooltip_code
                                 p_error_barcode.Visibility = Visibility.Visible;
                                 ToolTip toolTip_barcode = new ToolTip();
-                                toolTip_barcode.Content = MainWindow.resourcemanager.GetString("trErrorDuplicateBarcodeToolTip");
+                                toolTip_barcode.Content = AppSettings.resourcemanager.GetString("trErrorDuplicateBarcodeToolTip");
                                 toolTip_barcode.Style = Application.Current.Resources["ToolTipError"] as Style;
                                 p_error_barcode.ToolTip = toolTip_barcode;
                                 #endregion
@@ -383,10 +381,10 @@ namespace Restaurant.View.windows
                                 itemUnit.updateUserId = MainWindow.userLogin.userId;
                                 int res = await itemUnit.saveItemUnit(itemUnit);
                                 if (res <= 0)
-                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
-                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                                     await FillCombo.RefreshItemUnit();
                                     Clear();
                                     await RefreshItemUnitsList();
@@ -396,7 +394,7 @@ namespace Restaurant.View.windows
                         }
                     }
                     else
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopErrorBarcodeLength"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopErrorBarcodeLength"), animation: ToasterAnimation.FadeIn);
                 }
                 HelpClass.EndAwait(grid_main);
             }
@@ -418,7 +416,7 @@ namespace Restaurant.View.windows
                             #region
                             Window.GetWindow(this).Opacity = 0.2;
                             wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                            w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxActivate");
+                            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
@@ -431,24 +429,24 @@ namespace Restaurant.View.windows
                             Window.GetWindow(this).Opacity = 0.2;
                             wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                             if (itemUnit.canDelete)
-                                w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDelete");
+                                w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
                             if (!itemUnit.canDelete)
-                                w.contentText = MainWindow.resourcemanager.GetString("trMessageBoxDeactivate");
+                                w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
                             if (w.isOk)
                             {
                                 string popupContent = "";
-                                if (itemUnit.canDelete) popupContent = MainWindow.resourcemanager.GetString("trPopDelete");
-                                if ((!itemUnit.canDelete) && (itemUnit.isActive == 1)) popupContent = MainWindow.resourcemanager.GetString("trPopInActive");
+                                if (itemUnit.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
+                                if ((!itemUnit.canDelete) && (itemUnit.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
                                 int s = await itemUnit.Delete(itemUnit.itemUnitId, MainWindow.userLogin.userId, itemUnit.canDelete);
                                 if (s < 0)
-                                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 else
                                 {
-                                    Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                     await RefreshItemUnitsList();
                                     await Search();
@@ -470,10 +468,10 @@ namespace Restaurant.View.windows
             itemUnit.isActive = 1;
             int s = await itemUnit.saveItemUnit(itemUnit);
             if (s <= 0)
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
             {
-                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
                 await RefreshItemUnitsList();
                 await Search();
             }
@@ -797,7 +795,7 @@ namespace Restaurant.View.windows
 
             if (checkDigit != cd)
             {
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorBarcodeToolTip"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorBarcodeToolTip"), animation: ToasterAnimation.FadeIn);
                 return false;
             }
             else
@@ -889,13 +887,13 @@ namespace Restaurant.View.windows
             {
                 #region delete
                 if (itemUnit.canDelete)
-                    btn_delete.Content = MainWindow.resourcemanager.GetString("trDelete");
+                    btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
                 else
                 {
                     if (itemUnit.isActive == 0)
-                        btn_delete.Content = MainWindow.resourcemanager.GetString("trActive");
+                        btn_delete.Content = AppSettings.resourcemanager.GetString("trActive");
                     else
-                        btn_delete.Content = MainWindow.resourcemanager.GetString("trInActive");
+                        btn_delete.Content = AppSettings.resourcemanager.GetString("trInActive");
                 }
                 #endregion
                 drawBarcode(itemUnit.barcode);
@@ -926,13 +924,13 @@ namespace Restaurant.View.windows
                 //if (checkDigit != cd)
                 //{
                 //    valid = false;
-                //    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorBarcodeToolTip"), animation: ToasterAnimation.FadeIn);
+                //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorBarcodeToolTip"), animation: ToasterAnimation.FadeIn);
                 //}
             }
             if(tb_unitValue.Text.Equals("0"))
             {
                 valid = false;
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trMustBeMoreThanZero"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trMustBeMoreThanZero"), animation: ToasterAnimation.FadeIn);
             }
             return valid;
         }

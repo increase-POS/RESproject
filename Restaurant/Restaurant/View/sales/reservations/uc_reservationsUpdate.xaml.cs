@@ -139,14 +139,12 @@ namespace Restaurant.View.sales.reservations
             {
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "reservationDate", "reservationStartTime", "reservationEndTime", "personsCount" };
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
@@ -193,32 +191,32 @@ namespace Restaurant.View.sales.reservations
         private void translate()
         {
             #region datagrid
-            dg_reservation.Columns[0].Header = MainWindow.resourcemanager.GetString("trCode");
-            dg_reservation.Columns[1].Header = MainWindow.resourcemanager.GetString("trDate");
-            dg_reservation.Columns[2].Header = MainWindow.resourcemanager.GetString("trTime");
-            dg_reservation.Columns[3].Header = MainWindow.resourcemanager.GetString("trCount");
-            dg_reservation.Columns[4].Header = MainWindow.resourcemanager.GetString("trCustomer");
-            dg_reservation.Columns[5].Header = MainWindow.resourcemanager.GetString("trStatus");
+            dg_reservation.Columns[0].Header = AppSettings.resourcemanager.GetString("trCode");
+            dg_reservation.Columns[1].Header = AppSettings.resourcemanager.GetString("trDate");
+            dg_reservation.Columns[2].Header = AppSettings.resourcemanager.GetString("trTime");
+            dg_reservation.Columns[3].Header = AppSettings.resourcemanager.GetString("trCount");
+            dg_reservation.Columns[4].Header = AppSettings.resourcemanager.GetString("trCustomer");
+            dg_reservation.Columns[5].Header = AppSettings.resourcemanager.GetString("trStatus");
             #endregion
-            txt_title.Text = MainWindow.resourcemanager.GetString("trReservations");
-            txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
-            txt_tables.Text = MainWindow.resourcemanager.GetString("trTables");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trReservations");
+            txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
+            txt_tables.Text = AppSettings.resourcemanager.GetString("trTables");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customerId, MainWindow.resourcemanager.GetString("trCustomerHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_reservationDate, MainWindow.resourcemanager.GetString("trReservationDaterHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tp_reservationTime, MainWindow.resourcemanager.GetString("trStartTimeHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tp_reservationEndTime, MainWindow.resourcemanager.GetString("trEndTimeHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_personsCount, MainWindow.resourcemanager.GetString("trPersonsCountHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customerId, AppSettings.resourcemanager.GetString("trCustomerHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_reservationDate, AppSettings.resourcemanager.GetString("trReservationDaterHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tp_reservationTime, AppSettings.resourcemanager.GetString("trStartTimeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tp_reservationEndTime, AppSettings.resourcemanager.GetString("trEndTimeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_personsCount, AppSettings.resourcemanager.GetString("trPersonsCountHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
 
-            btn_refresh.ToolTip = MainWindow.resourcemanager.GetString("trRefresh");
-            btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
-            btn_pdf.ToolTip = MainWindow.resourcemanager.GetString("trPdf");
-            btn_print.ToolTip = MainWindow.resourcemanager.GetString("trPrint");
-            btn_pieChart.ToolTip = MainWindow.resourcemanager.GetString("trPieChart");
-            btn_exportToExcel.ToolTip = MainWindow.resourcemanager.GetString("trExcel");
-            btn_preview.ToolTip = MainWindow.resourcemanager.GetString("trPreview");
-            txt_count.ToolTip = MainWindow.resourcemanager.GetString("trCount");
+            btn_refresh.ToolTip = AppSettings.resourcemanager.GetString("trRefresh");
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
+            btn_pdf.ToolTip = AppSettings.resourcemanager.GetString("trPdf");
+            btn_print.ToolTip = AppSettings.resourcemanager.GetString("trPrint");
+            btn_pieChart.ToolTip = AppSettings.resourcemanager.GetString("trPieChart");
+            btn_exportToExcel.ToolTip = AppSettings.resourcemanager.GetString("trExcel");
+            btn_preview.ToolTip = AppSettings.resourcemanager.GetString("trPreview");
+            txt_count.ToolTip = AppSettings.resourcemanager.GetString("trCount");
         }
         #region Update - confirm - Search - Tgl - Clear - DG_SelectionChanged - refresh
        
@@ -268,23 +266,23 @@ namespace Restaurant.View.sales.reservations
                             int res = await reservation.updateReservation(reservation, selectedTables);
                             if (res > 0)
                             {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                                 Clear();
                                 await refreshReservaitionsList();
                                 await Search();
 
                             }
                             else
-                                Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                         }
                     }
                     }
                     else
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -322,7 +320,7 @@ namespace Restaurant.View.sales.reservations
                 }
                 message += " ";
                 if (!valid)
-                    Toaster.ShowWarning(Window.GetWindow(this), message: message + MainWindow.resourcemanager.GetString("trReserved"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowWarning(Window.GetWindow(this), message: message + AppSettings.resourcemanager.GetString("trReserved"), animation: ToasterAnimation.FadeIn);
             }
             return valid;
         }
@@ -336,17 +334,17 @@ namespace Restaurant.View.sales.reservations
                     int res = await reservation.updateReservationStatus(reservation.reservationId,"confirm",MainWindow.userLogin.userId);
                     if (res > 0)
                     {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                         Clear();
                         await refreshReservaitionsList();
                         await Search();
                     }
                     else
-                        Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     HelpClass.EndAwait(grid_main);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)
@@ -366,17 +364,17 @@ namespace Restaurant.View.sales.reservations
                     if (res > 0)
                     {
                         reservation.reservationId = 0;
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                         Clear();
                         await refreshReservaitionsList();
                         await Search();
                     }
                     else
-                        Toaster.ShowError(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     HelpClass.EndAwait(grid_main);
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)
@@ -391,10 +389,10 @@ namespace Restaurant.View.sales.reservations
             user.isActive = 1;
             int s = await user.save(user);
             if (s <= 0)
-                Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
             {
-                Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
                 await RefreshUsersList();
                 await Search();
             }
@@ -721,7 +719,7 @@ namespace Restaurant.View.sales.reservations
                     //////////////////////////////////////
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 if (sender != null)
                     SectionData.EndAwait(grid_main);
             }
@@ -760,7 +758,7 @@ namespace Restaurant.View.sales.reservations
 
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 if (sender != null)
                     SectionData.EndAwait(grid_main);
@@ -789,7 +787,7 @@ namespace Restaurant.View.sales.reservations
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 if (sender != null)
                     SectionData.EndAwait(grid_main);
             }
@@ -829,7 +827,7 @@ namespace Restaurant.View.sales.reservations
                     #endregion
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 if (sender != null)
                     SectionData.EndAwait(grid_main);
             }
@@ -872,7 +870,7 @@ namespace Restaurant.View.sales.reservations
                     t1.Start();
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 if (sender != null)
                     SectionData.EndAwait(grid_main);
             }
