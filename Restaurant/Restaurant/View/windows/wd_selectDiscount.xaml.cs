@@ -1,4 +1,5 @@
-﻿using Restaurant.Classes;
+﻿using netoaster;
+using Restaurant.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,23 +47,194 @@ namespace Restaurant.View.windows
             isOk = false;
             this.Close();
         }
-        private void HandleKeyPress(object sender, KeyEventArgs e)
+        #region barcode
+        public void FindControl(DependencyObject root, List<Control> controls)
+        {
+            controls.Clear();
+            var queue = new Queue<DependencyObject>();
+            queue.Enqueue(root);
+            while (queue.Count > 0)
+            {
+                var current = queue.Dequeue();
+                var control = current as Control;
+                if (control != null && control.IsTabStop)
+                {
+                    controls.Add(control);
+                }
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(current); i++)
+                {
+                    var child = VisualTreeHelper.GetChild(current, i);
+                    if (child != null)
+                    {
+                        queue.Enqueue(child);
+                    }
+                }
+            }
+        }
+        private async void HandleKeyPress(object sender, KeyEventArgs e)
         {
             try
             {
-                if (e.Key == Key.Return)
+                if (!_IsFocused)
                 {
-                    Btn_select_Click(btn_select, null);
+                    Control c = CheckActiveControl();
+                    if (c == null)
+                        cb_coupon.Focus();
+                    _IsFocused = true;
                 }
+
+                HelpClass.StartAwait(grid_main);
+                TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
+                if (elapsed.TotalMilliseconds > 150)
+                {
+                    _BarcodeStr = "";
+                }
+                string digit = "";
+                // record keystroke & timestamp 
+                if (e.Key >= Key.D0 && e.Key <= Key.D9)
+                {
+                    //digit pressed!         
+                    digit = e.Key.ToString().Substring(1);
+                    // = "1" when D1 is pressed
+                }
+                else if (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
+                {
+                    digit = e.Key.ToString().Substring(6); // = "1" when NumPad1 is pressed
+                }
+                else if (e.Key >= Key.A && e.Key <= Key.Z)
+                    digit = e.Key.ToString();
+                else if (e.Key == Key.OemMinus)
+                {
+                    digit = "-";
+                }
+                _BarcodeStr += digit;
+                _lastKeystroke = DateTime.Now;
+                // process barcode
+
+                if (e.Key.ToString() == "Return" && _BarcodeStr != "")
+                {
+
+                    if (_Sender != null)
+                    {
+                        TextBox tb = _Sender as TextBox;
+                        if (tb != null)
+                        {
+                            if (tb.Name == "tb_discountValue" )// remove barcode from text box
+                            {
+                                string tbString = tb.Text;
+                                string newStr = "";
+                                int startIndex = tbString.IndexOf(_BarcodeStr);
+                                if (startIndex != -1)
+                                    newStr = tbString.Remove(startIndex, _BarcodeStr.Length);
+
+                                tb.Text = newStr;
+                            }
+                        }
+                    }
+                    await dealWithBarcode(_BarcodeStr);
+                    _BarcodeStr = "";
+                    _IsFocused = false;
+                    e.Handled = true;
+                    cb_discountType.SelectedValue = _SelectedDisType;
+                }
+                _Sender = null;
+                HelpClass.EndAwait(grid_main);
+                //if (e.Key == Key.Return)
+                //{
+                //    Btn_select_Click(btn_select, null);
+                //}
             }
             catch (Exception ex)
             {
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        public Control CheckActiveControl()
+        {
+            for (int i = 0; i < controls.Count; i++)
+            {
+                Control c = controls[i];
+                if (c.IsFocused)
+                {
+                    return c;
+                }
+            }
+            return null;
+        }
+        private async Task dealWithBarcode(string barcode)
+        {
+            int codeindex = barcode.IndexOf("-");
+            string prefix = "";
+            if (codeindex >= 0)
+                prefix = barcode.Substring(0, codeindex);
+            prefix = prefix.ToLower();
+            barcode = barcode.ToLower();
+            switch (prefix)
+            {
+                case "cop":// this barcode for coupon
+                    {
+                        // await fillCouponsList();
+                        couponModel = coupons.ToList().Find(c => c.barcode.ToLower() == barcode);
+                        var exist = selectedCopouns.Find(c => c.couponId == couponModel.cId);
+                        if (couponModel != null && exist == null)
+                        {
+                            if ((couponModel.invMin != 0 && couponModel.invMax != 0 && _Sum >= couponModel.invMin && _Sum <= couponModel.invMax)
+                                || (couponModel.invMax == 0 && _Sum >= couponModel.invMin))
+                            {
+                                CouponInvoice ci = new CouponInvoice();
+                                ci.couponId = couponModel.cId;
+                                ci.discountType = couponModel.discountType;
+                                ci.discountValue = couponModel.discountValue;
+
+                                lst_coupons.Items.Add(couponModel.name);
+                                selectedCopouns.Add(ci);
+                            }
+
+                            else if (couponModel.invMax != 0 && couponModel.invMin != 0)
+                            {
+                                if (_Sum < couponModel.invMin)
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorMinInvToolTip"), animation: ToasterAnimation.FadeIn);
+                                else if (_Sum > couponModel.invMax)
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorMaxInvToolTip"), animation: ToasterAnimation.FadeIn);
+                            }
+                            else if (couponModel.invMax == 0)
+                            {
+                                if (_Sum < couponModel.invMin)
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorMinInvToolTip"), animation: ToasterAnimation.FadeIn);
+                            }
+
+                        }
+                        else if (exist != null)
+                        {
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorCouponExist"), animation: ToasterAnimation.FadeIn);
+                        }
+                        cb_coupon.SelectedIndex = -1;
+                        cb_coupon.SelectedItem = "";
+                    }
+                    break;
+
+            }
+        }
+        #endregion
         public string userJob;
 
         public bool isOk { get; set; }
+        public decimal manualDiscount = 0;
+        public string discountType = "";
+        public decimal _Sum = 0;
+        public List<CouponInvoice> selectedCopouns = new List<CouponInvoice>();
+
+        Coupon couponModel = new Coupon();
+        IEnumerable<Coupon> coupons;
+        #region for barcode
+        static private string _BarcodeStr = "";
+        static private object _Sender;
+        bool _IsFocused = false;
+        static private string _SelectedDisType = "";
+        DateTime _lastKeystroke = new DateTime(0);
+        public List<Control> controls;
+        #endregion
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
@@ -77,7 +249,11 @@ namespace Restaurant.View.windows
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-               
+                controls = new List<Control>();
+                //Walk through the VisualTree
+                FindControl(this.grid_main, controls);
+                FillCombo.fillDiscountType(cb_discountType);
+                await fillCouponsList();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -88,21 +264,38 @@ namespace Restaurant.View.windows
         }
         private void translate()
         {
+            txt_title.Text = AppSettings.resourcemanager.GetString("trDiscount");
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_discountValue, AppSettings.resourcemanager.GetString("trDiscountValueHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_discountType, AppSettings.resourcemanager.GetString("trDiscountTypeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_coupon, AppSettings.resourcemanager.GetString("trCouponHint"));
+
+            btn_clearCoupon.ToolTip = AppSettings.resourcemanager.GetString("trClear");
+
+            btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
+
 
         }
-        private void Btn_select_Click(object sender, RoutedEventArgs e)
+        async Task fillCouponsList()
         {
+            coupons = await couponModel.GetEffictiveCoupons();
 
-
-            // if have id return true
+            cb_coupon.DisplayMemberPath = "name";
+            cb_coupon.SelectedValuePath = "cId";
+            cb_coupon.ItemsSource = coupons;
+        }
+        private void Btn_select_Click(object sender, RoutedEventArgs e) 
+        {
             isOk = true;
-            //this.Close();
-            // else return false
-            //isOk = false;
+            if(tb_discountValue.Text != "")
+                manualDiscount = decimal.Parse(tb_discountValue.Text);
+            if (cb_discountType.SelectedIndex != -1)
+                discountType = cb_discountType.SelectedValue.ToString();
+            this.Close();
         }
         
         string input;
-        decimal _decimal = 0;
+        decimal _decimal;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             try
@@ -141,50 +334,69 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+
       
-
-
-        private void Cb_coupon_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Cb_coupon_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //try
-            //{
-            //        SectionData.StartAwait(grid_main);
-            //    string s = _BarcodeStr;
-            //    if (cb_coupon.SelectedIndex != -1)
-            //    {
-            //        couponModel = coupons.ToList().Find(c => c.cId == (int)cb_coupon.SelectedValue);
-            //        if (couponModel != null)
-            //        {
-            //            s = couponModel.barcode;
-            //            await dealWithBarcode(s);
-            //        }
-            //        cb_coupon.SelectedIndex = -1;
-            //        cb_coupon.SelectedItem = "";
-            //    }
-            //        SectionData.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //        SectionData.EndAwait(grid_main);
-            //    SectionData.ExceptionMessage(ex, this);
-            //}
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                string s = _BarcodeStr;
+                if (cb_coupon.SelectedIndex != -1)
+                {
+                    couponModel = coupons.ToList().Find(c => c.cId == (int)cb_coupon.SelectedValue);
+                    if (couponModel != null)
+                    {
+                        s = couponModel.barcode;
+                        await dealWithBarcode(s);
+                    }
+                    cb_coupon.SelectedIndex = -1;
+                    cb_coupon.SelectedItem = "";
+                }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_clearCoupon_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //    _Discount = 0;
-            //    selectedCoupons.Clear();
-            //    lst_coupons.Items.Clear();
-            //    cb_coupon.SelectedIndex = -1;
-            //    cb_coupon.SelectedItem = "";
-            //    refreshTotalValue();
-            //}
-            //catch (Exception ex)
-            //{
-            //    SectionData.ExceptionMessage(ex, this);
-            //}
+            try
+            {
+                selectedCopouns.Clear();
+                lst_coupons.Items.Clear();
+                cb_coupon.SelectedIndex = -1;
+                cb_coupon.SelectedItem = "";
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Cb_discountType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
+                if (elapsed.TotalMilliseconds > 100 && cb_discountType.SelectedIndex != -1)
+                {
+                    _SelectedDisType = cb_discountType.SelectedValue.ToString();
+                }
+                else
+                {
+                    cb_discountType.SelectedValue = _SelectedDisType;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }

@@ -3295,4 +3295,7 @@ Please add Email in setting</value>
   <data name="trHide" xml:space="preserve">
     <value>Hide</value>
   </data>
+  <data name="trSubTotal" xml:space="preserve">
+    <value>SubTotal</value>
+  </data>
 </root>

@@ -3271,4 +3271,7 @@
   <data name="trHide" xml:space="preserve">
     <value>إخفاء</value>
   </data>
+  <data name="trSubTotal" xml:space="preserve">
+    <value>المجموع</value>
+  </data>
 </root>

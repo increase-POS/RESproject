@@ -31,7 +31,7 @@ namespace Restaurant.View.sales
     {
         private static uc_diningHall _instance;
         string invoicePermission = "saleInvoice_invoice";
-
+        string addRangePermission = "copoun_invoice";
         public static uc_diningHall Instance
         {
             get
@@ -149,10 +149,14 @@ namespace Restaurant.View.sales
             #region invoice tax
             //if(AppSettings.invoiceTax_bool == true)
             #endregion
+            #region notification
+            setTimer();
+            refreshOrdersNotification();
+            #endregion
             HelpClass.activateCategoriesButtons(items, FillCombo.categoriesList, categoryBtns);
            // FillBillDetailsList(0);
             await Search();
-            setTimer();
+            
         }
         private void translate()
         {
@@ -541,6 +545,9 @@ namespace Restaurant.View.sales
         ObservableCollection<BillDetailsSales> billDetailsList = new ObservableCollection<BillDetailsSales>();
         int _SequenceNum = 0;
         decimal _Sum = 0;
+        decimal _ManualDiscount = 0;
+        string _DiscountType = "";
+        List<CouponInvoice> selectedCopouns;
         List<ItemTransfer> invoiceItems = new List<ItemTransfer>();
         private void addRowToBill(Item item)
         {
@@ -965,6 +972,7 @@ namespace Restaurant.View.sales
         }
         void refreshTotal()
         {
+            decimal total = 0;
             #region subtotal
             _Sum = 0;
             foreach(var item in billDetailsList)
@@ -972,12 +980,57 @@ namespace Restaurant.View.sales
                 _Sum += item.Total;
             }
             tb_subtotal.Text = _Sum.ToString();
+            total = _Sum;
             #endregion
 
-            #region total
-            decimal total = _Sum;
-            tb_total.Text = _Sum.ToString();
+            #region discount
+            decimal couponsDiscount = 0;
+            decimal totalDiscount = 0;
+            if (_Sum > 0)
+            {
+                #region calculate coupons discount
+                if(selectedCopouns != null)
+                { 
+                    foreach (CouponInvoice coupon in selectedCopouns)
+                    {
+                        string discountType = coupon.discountType.ToString();
+                        decimal discountValue = (decimal)coupon.discountValue;
+                        if (discountType == "2")
+                            discountValue = HelpClass.calcPercentage(_Sum, discountValue);
+                        couponsDiscount += discountValue;
+                    }
+                }
+                #endregion
+                #region manaula discount           
+                if (_ManualDiscount !=0)
+                {
+                    if (_DiscountType == "2")
+                        _ManualDiscount = HelpClass.calcPercentage(_Sum, _ManualDiscount);
+                }
+                #endregion
+                totalDiscount = couponsDiscount + _ManualDiscount;
+                tb_totalDiscount.Text = totalDiscount.ToString();
+            }
+
+            total = _Sum - totalDiscount;
+            tb_totalDiscount.Text = totalDiscount.ToString();
             #endregion
+            #region invoice tax value 
+            decimal taxValue = 0;
+            if (AppSettings.invoiceTax_bool == true)
+            {
+                try
+                {
+                    taxValue = HelpClass.calcPercentage(total, decimal.Parse(tb_tax.Text));
+                }
+                catch { }
+            }
+            total += taxValue;
+            #endregion
+    
+
+            tb_total.Text = total.ToString();
+
         }
         #endregion
         #region timer to refresh notifications
@@ -1102,6 +1155,10 @@ namespace Restaurant.View.sales
         {
             _InvoiceType = "sd";
             billDetailsList.Clear();
+            _Sum = 0;
+            _ManualDiscount = 0;
+            _DiscountType = "";
+           selectedCopouns.Clear();
             FillCombo.invoice = new Invoice();
 
             //last
@@ -1277,19 +1334,24 @@ namespace Restaurant.View.sales
             {
                 HelpClass.StartAwait(grid_main);
 
-                //if (MainWindow.groupObject.HasPermissionAction(addRangePermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
-                //{
+                if (MainWindow.groupObject.HasPermissionAction(addRangePermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                {
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_selectDiscount w = new wd_selectDiscount();
+                    w._Sum = _Sum;
                 w.ShowDialog();
                 if (w.isOk)
                 {
-                     
+                        _ManualDiscount = w.manualDiscount;
+                        _DiscountType = w.discountType;
+                        selectedCopouns = w.selectedCopouns;
+
+                        refreshTotal();
                 }
                 Window.GetWindow(this).Opacity = 1;
-                // }
-                //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
