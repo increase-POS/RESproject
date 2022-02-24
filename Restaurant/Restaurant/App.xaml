@@ -26,6 +26,8 @@
             <converters:permissionsNameConverter x:Key="permissionsNameConverter"/>
             <converters:timeFrameConverter x:Key="timeFrameConverter"/>
             <converters:posTransfersStatusConverter x:Key="posTransfersStatusConverter"/>
+            <converters:agentCompanyConverter x:Key="agentCompanyConverter"/>
+            <converters:agentNameConverter x:Key="agentNameConverter"/>
 
             <!--#region Fonts-->
             <FontFamily x:Key="BarcodeFont" >IDAHC39M Code 39 Barcode, /Restaurant;component/fonts/#IDAHC39M Code 39 Barcode, Arial</FontFamily>
