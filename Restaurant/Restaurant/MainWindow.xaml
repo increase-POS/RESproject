@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaurant"
-        mc:Ignorable="d" Icon="pic/increaseLogo.ico"
+        mc:Ignorable="d" 
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         Title="Increase" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         d:DesignHeight="768" d:DesignWidth="1024"

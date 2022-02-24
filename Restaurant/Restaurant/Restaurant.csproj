@@ -1140,6 +1140,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Content Include="Reports\SectionData\banksData\Ar\ArBank.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1317,7 +1318,6 @@
     <Resource Include="pic\increase-login-bg-rtl.png" />
     <Resource Include="pic\increase-login-bg.png" />
     <Resource Include="pic\increase-logo.png" />
-    <Resource Include="pic\increaseLogo.ico" />
     <Resource Include="pic\no-image-icon-125x125.png" />
     <Resource Include="pic\no-image-icon-40x40.png" />
     <Resource Include="pic\no-image-icon-512x512.png" />
