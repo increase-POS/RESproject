@@ -57,7 +57,7 @@ namespace Restaurant.View.sales.reservations
         string basicsPermission = "reservationTable_basics";
         List<Tables> selectedTables = new List<Tables>();
         TablesReservation TablesReservation = new TablesReservation();
-        //IEnumerable<User> users;
+        int _PersonsCount = 0;
         //byte tgl_userState;
         #region for search
         int personCount = 0;
@@ -498,6 +498,8 @@ namespace Restaurant.View.sales.reservations
         void Clear()
         {
             selectedTables.Clear();
+            _PersonsCount = 0;
+            tb_personsCount.Text = "";
             dg_tables.ItemsSource = null;
             dg_tables.ItemsSource = selectedTables;
             this.DataContext = TablesReservation ;
@@ -826,6 +828,8 @@ namespace Restaurant.View.sales.reservations
                     {
                         Tables row = (Tables)dg_tables.SelectedItems[0];
                         selectedTables.Remove(row);
+                        _PersonsCount -= row.personsCount;
+                        tb_personsCount.Text = _PersonsCount.ToString();
                         dg_tables.ItemsSource = null;
                         dg_tables.ItemsSource = selectedTables;
                     }
@@ -1068,6 +1072,8 @@ namespace Restaurant.View.sales.reservations
             if (!selectedTables.Contains(table))
             {
                 selectedTables.Add(table);
+                _PersonsCount += table.personsCount;
+                tb_personsCount.Text = _PersonsCount.ToString();
                 dg_tables.ItemsSource = null;
                 dg_tables.ItemsSource = selectedTables;
             }

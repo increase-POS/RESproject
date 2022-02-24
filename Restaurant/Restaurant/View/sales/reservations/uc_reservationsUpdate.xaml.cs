@@ -87,7 +87,7 @@ namespace Restaurant.View.sales.reservations
         IEnumerable<TablesReservation> reservationsQuery;
         TablesReservation reservation = new TablesReservation();
         List<Tables> selectedTables = new List<Tables>();
-        //byte tgl_userState;
+        int _PersonsCount = 0;
         string searchText = "";
         public static List<string> requiredControlList;
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -213,7 +213,12 @@ namespace Restaurant.View.sales.reservations
 
             btn_refresh.ToolTip = MainWindow.resourcemanager.GetString("trRefresh");
             btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
-
+            btn_pdf.ToolTip = MainWindow.resourcemanager.GetString("trPdf");
+            btn_print.ToolTip = MainWindow.resourcemanager.GetString("trPrint");
+            btn_pieChart.ToolTip = MainWindow.resourcemanager.GetString("trPieChart");
+            btn_exportToExcel.ToolTip = MainWindow.resourcemanager.GetString("trExcel");
+            btn_preview.ToolTip = MainWindow.resourcemanager.GetString("trPreview");
+            txt_count.ToolTip = MainWindow.resourcemanager.GetString("trCount");
         }
         #region Update - confirm - Search - Tgl - Clear - DG_SelectionChanged - refresh
        
@@ -412,7 +417,11 @@ namespace Restaurant.View.sales.reservations
 
                 if (w.DialogResult == true)
                 {
+                    _PersonsCount = 0;
+                    foreach (var table in w.selectedTables)
+                        _PersonsCount += table.personsCount;
                     selectedTables = w.selectedTables;
+                    tb_personsCount.Text = _PersonsCount.ToString();
                     dg_tables.ItemsSource = null;
                     dg_tables.ItemsSource = selectedTables;
                 }
@@ -464,15 +473,17 @@ namespace Restaurant.View.sales.reservations
 
                 if (dg_reservation.SelectedIndex != -1)
                 {
+                    reservation = new TablesReservation();
                     reservation = dg_reservation.SelectedItem as TablesReservation;
                     this.DataContext = reservation;
-                    dg_tables.ItemsSource = null;
-                    selectedTables.Clear();
+                    _PersonsCount = (int)reservation.personsCount;
+                    tb_personsCount.Text = _PersonsCount.ToString();
                     if (reservation.tables.Count != 0)
                     {
-                        selectedTables = reservation.tables;
-                        dg_tables.ItemsSource = selectedTables;
+                        selectedTables = reservation.tables;                      
                     }
+                    dg_tables.ItemsSource = selectedTables;
+
                     btn_tables.IsEnabled = true;
                     btn_confirm.IsEnabled = true;
                     btn_cancel.IsEnabled = true;
@@ -532,6 +543,8 @@ namespace Restaurant.View.sales.reservations
         {
             this.DataContext = new TablesReservation() ;
             dg_tables.ItemsSource = null;
+            _PersonsCount = 0;
+            tb_personsCount.Text = "";
             // last 
             HelpClass.clearValidate(requiredControlList, this);
             btn_tables.IsEnabled = false;
@@ -628,6 +641,9 @@ namespace Restaurant.View.sales.reservations
                     {
                         Tables row = (Tables)dg_tables.SelectedItems[0];
                         selectedTables.Remove(row);
+                        _PersonsCount -= row.personsCount;
+                        tb_personsCount.Text = _PersonsCount.ToString();
+
                         dg_tables.ItemsSource = null;
                         dg_tables.ItemsSource = selectedTables;
                     }
