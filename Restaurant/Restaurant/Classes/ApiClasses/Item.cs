@@ -65,6 +65,7 @@ namespace Restaurant.Classes
         public Nullable<int> unitId { get; set; }
         public string unitName { get; set; }
         public Nullable<decimal> price { get; set; }
+        public Nullable<decimal> basicPrice { get; set; }
         public decimal priceWithService { get; set; }
         // offer
         public Nullable<decimal> desPrice { get; set; }
