@@ -1181,6 +1181,7 @@
     </EmbeddedResource>
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
+    <Resource Include="pic\programs-Rest-login-bg.png" />
     <Content Include="Reports\SectionData\banksData\Ar\ArBank.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
