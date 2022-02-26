@@ -462,5 +462,59 @@ namespace Restaurant.View.settings.reportsSettings
         {
 
         }
+
+        private void Btn_itemsTaxNote_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+
+                wd_notes w = new wd_notes();
+                w.note = "Test note...";
+                w.ShowDialog();
+                if(w.isOk)
+                {
+                    MessageBox.Show(w.note); 
+                }
+
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_salesInvoiceNote_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+
+                wd_notes w = new wd_notes();
+                w.note = "Test note...";
+                w.ShowDialog();
+                if (w.isOk)
+                {
+                    MessageBox.Show(w.note);
+                }
+
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

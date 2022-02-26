@@ -561,6 +561,9 @@
     <Compile Include="View\windows\wd_logIn.xaml.cs">
       <DependentUpon>wd_logIn.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_notes.xaml.cs">
+      <DependentUpon>wd_notes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_notifications.xaml.cs">
       <DependentUpon>wd_notifications.xaml</DependentUpon>
     </Compile>
@@ -1081,6 +1084,10 @@
     <Page Include="View\windows\wd_logIn.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_notes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_notifications.xaml">
       <Generator>MSBuild:Compile</Generator>
