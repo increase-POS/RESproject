@@ -241,6 +241,7 @@
     <Compile Include="converters\depositorNameConverter.cs" />
     <Compile Include="converters\enabledCouponConverter.cs" />
     <Compile Include="converters\invoiceStatusConverter.cs" />
+    <Compile Include="converters\invoiceTypeConverter.cs" />
     <Compile Include="converters\notificationsContentConverter.cs" />
     <Compile Include="converters\notificationsTitleConverter.cs" />
     <Compile Include="converters\posTransfersStatusConverter.cs" />
@@ -345,17 +346,26 @@
     <Compile Include="View\reports\accountsReports\uc_bankAccountsReports.xaml.cs">
       <DependentUpon>uc_bankAccountsReports.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\reports\accountsReports\uc_fundAccountsReports.xaml.cs">
+      <DependentUpon>uc_fundAccountsReports.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\reports\accountsReports\uc_paymentsAccountsReports.xaml.cs">
       <DependentUpon>uc_paymentsAccountsReports.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\reports\accountsReports\uc_posAccountsReports.xaml.cs">
       <DependentUpon>uc_posAccountsReports.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\reports\accountsReports\uc_profitsAccountsReports.xaml.cs">
+      <DependentUpon>uc_profitsAccountsReports.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\reports\accountsReports\uc_recipientAccountsReports.xaml.cs">
       <DependentUpon>uc_recipientAccountsReports.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\reports\accountsReports\uc_statementAccountsReports.xaml.cs">
       <DependentUpon>uc_statementAccountsReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\accountsReports\uc_taxAccountsReports.xaml.cs">
+      <DependentUpon>uc_taxAccountsReports.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\reports\purchaseReports\uc_purchaseReports.xaml.cs">
       <DependentUpon>uc_purchaseReports.xaml</DependentUpon>
@@ -797,6 +807,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\reports\accountsReports\uc_fundAccountsReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\reports\accountsReports\uc_paymentsAccountsReports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -805,11 +819,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\reports\accountsReports\uc_profitsAccountsReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\reports\accountsReports\uc_recipientAccountsReports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\reports\accountsReports\uc_statementAccountsReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\accountsReports\uc_taxAccountsReports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
