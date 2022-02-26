@@ -20,9 +20,12 @@ namespace Restaurant.View.windows
     /// <summary>
     /// Interaction logic for wd_diningHallTables.xaml
     /// </summary>
+    /// 
     public partial class wd_diningHallTables : Window
     {
         Invoice tableInvoice = new Invoice();
+        public bool isOk { get; set; }
+        public List<Tables> selectedTables = new List<Tables>();
         public wd_diningHallTables()
         {
             try
@@ -222,6 +225,7 @@ namespace Restaurant.View.windows
         #endregion      
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
+            isOk = false;
             this.Close();
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -414,10 +418,12 @@ namespace Restaurant.View.windows
             {
                 case "empty":
                     grid_emptyTableDetails.Visibility = Visibility.Visible;
+                    grid_openTableDetails.Visibility = Visibility.Collapsed;
                     break;
                 case "opened":
                 case "openedReserved":
                     grid_emptyTableDetails.Visibility = Visibility.Collapsed;
+                    grid_openTableDetails.Visibility = Visibility.Visible;
                     tableInvoice = await FillCombo.table.GetTableInvoice(table.tableId);
 
                     tb_InvoiceCode.Text = tableInvoice.invNumber;
@@ -433,7 +439,7 @@ namespace Restaurant.View.windows
             TablesReservation nextReservation = null;
             foreach (var res in reservationsList)
             {
-                var found = res.tables.Where(x => x.tableId == table.tableId);
+                var found = res.tables.Where(x => x.tableId == table.tableId && res.reservationDate >= DateTime.Now);
                 if (found != null)
                 {
                     nextReservation = res;

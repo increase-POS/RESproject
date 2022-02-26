@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Restaurant.ApiClasses;
+using Restaurant.Classes.ApiClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -784,6 +785,18 @@ namespace Restaurant.Classes
             parameters.Add("invoiceObject", myContent);
             myContent = JsonConvert.SerializeObject(invoiceItems);
             parameters.Add("itemsObject", myContent);
+           return await APIResult.post(method, parameters);
+        }
+        public async Task<int> saveInvoiceWithItemsAndTables(Invoice invoice, List<ItemTransfer> invoiceItems, List<Tables> tables)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "Invoices/saveInvoiceWithItemsAndTables";
+            var myContent = JsonConvert.SerializeObject(invoice);
+            parameters.Add("invoiceObject", myContent);
+            myContent = JsonConvert.SerializeObject(invoiceItems);
+            parameters.Add("itemsObject", myContent);
+            myContent = JsonConvert.SerializeObject(tables);
+            parameters.Add("tablesObject", myContent);
            return await APIResult.post(method, parameters);
         }
         public async Task<int> saveOrderStatus(invoiceStatus item)

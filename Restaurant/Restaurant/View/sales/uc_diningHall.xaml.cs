@@ -1,6 +1,7 @@
 ﻿using MaterialDesignThemes.Wpf;
 using netoaster;
 using Restaurant.Classes;
+using Restaurant.Classes.ApiClasses;
 using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
@@ -148,8 +149,16 @@ namespace Restaurant.View.sales
             while (!isDone);
             #endregion
             #region invoice tax
-            //if(AppSettings.invoiceTax_bool == true)
+            if (AppSettings.invoiceTax_bool == false)
+            {
+                txt_tax.Visibility = Visibility.Collapsed;
+                tb_tax.Visibility = Visibility.Collapsed;
+            }
+            else
+                tb_tax.Text = AppSettings.invoiceTax_decimal.ToString();
             #endregion
+
+            tb_moneyIcon.Text = AppSettings.Currency;
             #region notification
             setTimer();
             refreshOrdersNotification();
@@ -550,6 +559,7 @@ namespace Restaurant.View.sales
         string _DiscountType = "";
         List<CouponInvoice> selectedCopouns = new List<CouponInvoice>();
         List<ItemTransfer> invoiceItems = new List<ItemTransfer>();
+        List<Tables> selectedTables = new List<Tables>();
         private void addRowToBill(Item item)
         {
             decimal total = 0;
@@ -1014,7 +1024,19 @@ namespace Restaurant.View.sales
             }
 
             total = _Sum - totalDiscount;
-            tb_totalDiscount.Text = totalDiscount.ToString();
+            if (totalDiscount > 0)
+            {
+                txt_totalDiscount.Visibility = Visibility.Visible;
+                tb_totalDiscount.Visibility = Visibility.Visible;
+                tb_moneyIconDis.Visibility = Visibility.Visible;
+                tb_totalDiscount.Text = totalDiscount.ToString();
+            }
+            else
+            {
+                txt_totalDiscount.Visibility = Visibility.Collapsed;
+                tb_totalDiscount.Visibility = Visibility.Collapsed;
+                tb_moneyIconDis.Visibility = Visibility.Collapsed;
+            }
             #endregion
             #region invoice tax value 
             decimal taxValue = 0;
@@ -1141,7 +1163,7 @@ namespace Restaurant.View.sales
                     invoiceItems.Add(itemT);
                 }
                 #endregion
-                int res = await FillCombo.invoice.saveInvoiceWithItems(FillCombo.invoice, invoiceItems);
+                int res = await FillCombo.invoice.saveInvoiceWithItemsAndTables(FillCombo.invoice, invoiceItems,selectedTables);
                 if(res > 0)
                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                 else
@@ -1194,7 +1216,7 @@ namespace Restaurant.View.sales
                 HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(invoicePermission, MainWindow.groupObjects, "one"))
                 {
-                    await addInvoice("sw");
+                    await addInvoice("s");
                 }
                 HelpClass.EndAwait(grid_main);
             }
@@ -1216,6 +1238,8 @@ namespace Restaurant.View.sales
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_diningHallTables w = new wd_diningHallTables();
                     w.ShowDialog();
+                    if (w.isOk == true)
+                        selectedTables = w.selectedTables;
                     Window.GetWindow(this).Opacity = 1;
                 }
                 else

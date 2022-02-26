@@ -8,7 +8,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
          WindowStyle="None" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" Margin="0"  
-        Title="wd_itemsList" Height="1200" Width="800"  Background="Transparent" AllowsTransparency="True" 
+        Title="wd_itemsList" Height="800" Width="800"  Background="Transparent" AllowsTransparency="True" 
         Loaded="Window_Loaded"  
         MouseDown="Window_MouseDown" >
     <Grid Grid.Column="1" Grid.Row="1"   x:Name="grid_ucInvoice" >
@@ -479,7 +479,7 @@
                                 </Grid>
                                 <!--#endregion-->
                                 <!--#region  open-->
-                                <Grid  x:Name="grid_openTableDetails" Visibility="Visible">
+                                <Grid  x:Name="grid_openTableDetails" Visibility="Collapsed">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="auto"/>

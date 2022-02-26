@@ -43,9 +43,9 @@ namespace Restaurant.Classes
         internal static int? isInvTax;
         internal static decimal? tax;
         //tax
-        internal static bool? invoiceTax_bool;
-        internal static decimal? invoiceTax_decimal;
-        internal static bool? itemsTax_bool;
+        internal static bool? invoiceTax_bool = true;
+        internal static decimal? invoiceTax_decimal = 5;
+        internal static bool? itemsTax_bool = true;
         internal static decimal? itemsTax_decimal;
 
         internal static string dateFormat;

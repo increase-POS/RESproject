@@ -3292,4 +3292,7 @@
   <data name="trTaxInvoice" xml:space="preserve">
     <value>الضريبة, الفاتورة</value>
   </data>
+  <data name="trTableName" xml:space="preserve">
+    <value>اسم الطاولة</value>
+  </data>
 </root>

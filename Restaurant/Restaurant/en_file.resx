@@ -3316,4 +3316,7 @@ Please add Email in setting</value>
   <data name="trTaxInvoice" xml:space="preserve">
     <value>Tax, Invoice</value>
   </data>
+  <data name="trTableName" xml:space="preserve">
+    <value>Table Name</value>
+  </data>
 </root>
