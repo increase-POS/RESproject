@@ -837,6 +837,25 @@ namespace Restaurant.Classes
         }
         #endregion
 
+        #region tables
+        static public List<string> tablesStatus = new List<string>() { "empty","opened", "reserved","openedReserved" };
+        static public Tables table = new Tables();
+        static public void FillTablesStatus(ComboBox cmb)
+        {
+            #region fill status
+            var statusList = new[] {
+                 new { Text = AppSettings.resourcemanager.GetString("trEmpty"), Value = "empty" },
+                 new { Text = AppSettings.resourcemanager.GetString("trOpened"), Value = "opened" },
+            new { Text = AppSettings.resourcemanager.GetString("trReserved"), Value = "reserved"},
+            new { Text = AppSettings.resourcemanager.GetString("trOpenedReserved"), Value = "openedReserved"},
+            };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = statusList;
+            cmb.SelectedIndex = 0;
+            #endregion
+        }
+        #endregion
         #region Email
         static public void FillSideCombo(ComboBox COMBO)
         {
@@ -858,7 +877,7 @@ namespace Restaurant.Classes
         static public Invoice invoice = new Invoice();
         static public List<Invoice> invoices;
         static public ShippingCompanies ShipCompany = new ShippingCompanies();
-        static public Tables table = new Tables();
+       
 
 
     }

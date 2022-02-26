@@ -32,6 +32,7 @@ namespace Restaurant.View.sales
         private static uc_diningHall _instance;
         string invoicePermission = "saleInvoice_invoice";
         string addRangePermission = "copoun_invoice";
+        string addTablePermission = "addTable_invoice";
         public static uc_diningHall Instance
         {
             get
@@ -547,7 +548,7 @@ namespace Restaurant.View.sales
         decimal _Sum = 0;
         decimal _ManualDiscount = 0;
         string _DiscountType = "";
-        List<CouponInvoice> selectedCopouns;
+        List<CouponInvoice> selectedCopouns = new List<CouponInvoice>();
         List<ItemTransfer> invoiceItems = new List<ItemTransfer>();
         private void addRowToBill(Item item)
         {
@@ -1158,7 +1159,7 @@ namespace Restaurant.View.sales
             _Sum = 0;
             _ManualDiscount = 0;
             _DiscountType = "";
-           selectedCopouns.Clear();
+            selectedCopouns.Clear() ;
             FillCombo.invoice = new Invoice();
 
             //last
@@ -1210,15 +1211,15 @@ namespace Restaurant.View.sales
             {
                 HelpClass.StartAwait(grid_main);
 
-                //if (MainWindow.groupObject.HasPermissionAction(addRangePermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
-                //{
+                if (MainWindow.groupObject.HasPermissionAction(addTablePermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                {
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_diningHallTables w = new wd_diningHallTables();
                     w.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
-                // }
-                //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -1336,19 +1337,22 @@ namespace Restaurant.View.sales
 
                 if (MainWindow.groupObject.HasPermissionAction(addRangePermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
-                Window.GetWindow(this).Opacity = 0.2;
-                wd_selectDiscount w = new wd_selectDiscount();
+                    Window.GetWindow(this).Opacity = 0.2;
+                    wd_selectDiscount w = new wd_selectDiscount();
                     w._Sum = _Sum;
-                w.ShowDialog();
-                if (w.isOk)
-                {
-                        _ManualDiscount = w.manualDiscount;
-                        _DiscountType = w.discountType;
-                        selectedCopouns = w.selectedCopouns;
+                    w.selectedCopouns = selectedCopouns;
+                    w.manualDiscount = _ManualDiscount;
+                    w.discountType = _DiscountType;
+                    w.ShowDialog();
+                    if (w.isOk)
+                    {
+                            _ManualDiscount = w.manualDiscount;
+                            _DiscountType = w.discountType;
+                            selectedCopouns = w.selectedCopouns;
 
-                        refreshTotal();
-                }
-                Window.GetWindow(this).Opacity = 1;
+                            refreshTotal();
+                    }
+                    Window.GetWindow(this).Opacity = 1;
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);

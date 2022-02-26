@@ -8,7 +8,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
          WindowStyle="None" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" Margin="0"  
-        Title="wd_itemsList" Height="600" Width="800"  Background="Transparent" AllowsTransparency="True" 
+        Title="wd_itemsList" Height="1200" Width="800"  Background="Transparent" AllowsTransparency="True" 
         Loaded="Window_Loaded"  
         MouseDown="Window_MouseDown" >
     <Grid Grid.Column="1" Grid.Row="1"   x:Name="grid_ucInvoice" >
@@ -138,6 +138,7 @@
                             materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
                           Background="{x:Null}" BorderBrush="{x:Null}"   Style="{StaticResource SmallButtonCircleRotate}"
                                RenderTransformOrigin="0.5,0.5"
+                                  Click="Btn_refresh_Click"
                             DataContext="M896,0L896,0C401.2,0,0,401.2,0,896v0c0,494.8,401.2,896,896,896h0c494.8,0,896-401.2,896-896v0C1792,401.2,1390.8,0,896,0z
 	 M1451.3,1021c-31.9,133.7-98.8,242.1-200.6,325.2c-101.8,83.1-221,124.6-357.7,124.6c-72.8,0-143.3-13.7-211.4-41.2
 	s-128.8-66.6-182.2-117.5l-96.5,96.5c-9.5,9.5-20.7,14.2-33.7,14.2s-24.2-4.7-33.7-14.2c-9.5-9.5-14.2-20.7-14.2-33.7v-335.3
@@ -363,7 +364,7 @@
                                                      HorizontalAlignment="Center" />
                                         </Grid>
                                     </Button>
-                    </WrapPanel>
+                                </WrapPanel>
                             </ScrollViewer>
                             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 5">
                                 <TextBlock  Text="Empty"   Margin="5 0" x:Name="txt_statusEmpty"
@@ -389,433 +390,442 @@
                          BlurRadius="10"/>
                     </Border.Effect>
                     <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="auto"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Border  Background="{StaticResource MainColor}"   CornerRadius="7 7 0 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Border  Background="{StaticResource MainColor}"   CornerRadius="7 7 0 0">
 
-                        <Grid  Height="40" Margin="10 0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Path Fill="White" Stretch="Fill"
+                            <Grid  Height="40" Margin="10 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Path Fill="White" Stretch="Fill"
                            VerticalAlignment="Center" 
                         Width="20" Height="20"
                         Data="M186,127.12c10,8.47,22.06,11.47,34.3,13.75a220.75,220.75,0,0,0,59.31,2.51c12.85-1.1,25.58-3,37.77-7.54,5.48-2,10.67-4.57,15.26-8.88.59,2.56,1.12,4.86,1.64,7.17q8,35.75,15.92,71.5c1.75,7.94-1.82,15.87-8.44,18.88-5.35,2.42-13.34,2.2-16.77-3.57a22.43,22.43,0,0,1-2-4.81c-1-3.18-1.59-6.46-2.65-9.61a10.07,10.07,0,0,0-9.41-7.06c-4.5,0-7.63,2.42-9.48,6.44a20.23,20.23,0,0,0-1.07,3.63,52.51,52.51,0,0,1-1.45,5.78c-2.63,6.84-8.57,10.82-15.39,10.5-6.31-.29-12-4.95-13.91-11.73a58.06,58.06,0,0,1-.92-6.25,24.22,24.22,0,0,0-1.25-5.41c-1.51-3.48-4.22-5.65-8.16-5.6a8.54,8.54,0,0,0-8.27,6c-1,2.66-1.05,5.65-1.47,8.5-1.08,7.21-6.41,13-13.15,14.25a14.46,14.46,0,0,1-15.1-7.14c-1.4-2.4-2-5.24-2.93-7.91-.35-1-.41-2.14-.73-3.17-1.45-4.72-5.36-7.88-9.74-7.93s-8.51,3.18-10,7.9c-.68,2.19-1,4.53-1.83,6.63a25.13,25.13,0,0,1-3.81,7.1c-6.66,7.54-17.63,5.84-22.29-3.23a19.17,19.17,0,0,1-1.33-13.42q8.5-37.86,16.95-75.73C185.71,128.23,185.84,127.77,186,127.12Zm89.08-32c-9.06-.13-18.14-.49-27.2-.3a149.48,149.48,0,0,0-37.76,5.53c-6.12,1.73-12.13,3.82-17.22,7.84-5.9,4.65-5.9,9.84,0,14.55a18.77,18.77,0,0,0,3.31,2.22,70.83,70.83,0,0,0,7.55,3.52c13.52,5,27.64,6.85,41.93,7.72A221.92,221.92,0,0,0,286.23,135a131.43,131.43,0,0,0,27.57-6c.56-.2,1.11-.42,1.66-.63l-.13-.5h-45.7c.59-.78.93-1.26,1.29-1.72,2.76-3.45,5.5-6.92,8.3-10.33a1.81,1.81,0,0,0,.2-2.21,45.66,45.66,0,0,1-3-9c-.51-3-.11-6.11-.11-9.26A8.58,8.58,0,0,0,275.09,95.11ZM218.78,120.9a21.41,21.41,0,0,1-5.55-2.57c-3.34-2.25-3.44-5.73.05-7.73a31.37,31.37,0,0,1,9.59-3.57,86.75,86.75,0,0,1,37.77.79A22.16,22.16,0,0,1,266,110c4.34,2.46,4.51,6.54.07,8.74a41.1,41.1,0,0,1-11,3.52c-4.92.87-10,1-12.59,1.28C232.91,123.4,225.72,123.06,218.78,120.9Zm88.24-.7-4.53-5.82a42.81,42.81,0,0,0,3.66-4.66,17.81,17.81,0,0,0,1-16.72c-1.89-4.39-2.58-8.79-1.08-13.41.31-.94.63-1.88,1-3h-6.6V65.27c4.35.91,6.54-2,5.48-5.81,3.93-2.37,3.52-5.89-.05-8.07,1.13-4.22-1.48-6.71-5.71-5.63-2.28-3.88-5.77-3.85-8.2-.07-4.38-.91-6.42,1.15-5.54,5.6-3.8,2.71-3.8,5.41,0,8.05-1,4,1.18,6.86,6,5.6,1,3.72.29,7.46.52,11.31h-7.17c.45,3.17,1.39,6.28,1.17,9.3s-1.58,6.15-2.5,9.2a19.56,19.56,0,0,0-.16,11.09,15.64,15.64,0,0,0,5.58,8.32l-4.69,6Zm5.7-6.3a1.39,1.39,0,0,0,.06,1.26c2.76,3.51,5.58,7,8.35,10.42a18.87,18.87,0,0,0,7.58-5.88,6.88,6.88,0,0,0,0-8.59c-3.13-4.09-7.58-6.19-12.46-8.15A26.2,26.2,0,0,1,312.72,113.9Z"/>
 
 
-                            <TextBlock Grid.Column="1" Text="Tables" x:Name="txt_title" Margin="10,0,0,0"  Foreground="White" 
+                                <TextBlock Grid.Column="1" Text="Tables" x:Name="txt_title" Margin="10,0,0,0"  Foreground="White" 
                      FontSize="14"     VerticalAlignment="Center" 
                            FontWeight="Bold" />
-                            <Button   x:Name="btn_clear"  Grid.Column="3" Padding="0" 
+                                <Button   x:Name="btn_clear"  Grid.Column="3" Padding="0" 
                                VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}"   >
-                                <materialDesign:PackIcon Foreground="White" Kind="RefreshCircle"   Width="30" Height="30">
-                                    <materialDesign:PackIcon.ToolTip>
-                                        <ToolTip x:Name="tt_clear" Placement="left" HorizontalOffset="5" 
+                                    <materialDesign:PackIcon Foreground="White" Kind="RefreshCircle"   Width="30" Height="30">
+                                        <materialDesign:PackIcon.ToolTip>
+                                            <ToolTip x:Name="tt_clear" Placement="left" HorizontalOffset="5" 
                                              PlacementRectangle="50,0,0,0" VerticalOffset="20"/>
-                                    </materialDesign:PackIcon.ToolTip>
-                                </materialDesign:PackIcon>
-                            </Button>
+                                        </materialDesign:PackIcon.ToolTip>
+                                    </materialDesign:PackIcon>
+                                </Button>
 
-                        </Grid>
-                    </Border>
+                            </Grid>
+                        </Border>
 
-                    <ScrollViewer Background="White"  Grid.Row="1"  VerticalScrollBarVisibility="Auto" >
-                        <StackPanel>
-                            <DockPanel Margin="10 0"
+                        <ScrollViewer Background="White"  Grid.Row="1"  VerticalScrollBarVisibility="Auto" >
+                            <StackPanel>
+                                <DockPanel Margin="10 0"
                                  LastChildFill="True">
-                                <TextBlock  Text="empty table/invoice details/next reservation"  Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
-                                <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
-                            </DockPanel>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
+                                    <TextBlock  Text="details" Name="txt_details" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
+                                    <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
+                                </DockPanel>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <TextBlock  Grid.Row="0" Grid.Column="0" 
-                                    Text="table name"
+                                    <TextBlock  Grid.Row="0" Grid.Column="0" 
+                                    Text="table name" Name="txt_tableName"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="0" Grid.Column="1" 
-                                    Text="Table-156"
+                                    <TextBlock  Grid.Row="0" Grid.Column="1" 
+                                   Name="tb_tableName" Text="Table-156"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"  VerticalAlignment="Center"  />
 
-                                <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="table status"
+                                    <TextBlock  Grid.Row="1" Grid.Column="0" 
+                                    Text="table status" Name="txt_tableStatus"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                                <TextBlock  Grid.Row="1" Grid.Column="1" 
-                                    Text="empty"
+                                    <TextBlock  Grid.Row="1" Grid.Column="1" 
+                                    Text="empty" Name="tb_tableStatus"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
 
 
-                            </Grid>
-                            <!--#region empty -->
-                            <Grid Visibility="Visible"
+                                </Grid>
+                                <!--#region empty -->
+                                <Grid Visibility="Visible"
                                 x:Name="grid_emptyTableDetails">
-                                <TextBlock    Text="this table is available"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="187*"/>
+                                        <ColumnDefinition Width="28*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock    Text="this table is available"
+                                              Name="tb_tableAvailable"
+                                   Margin="10,5,0,5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" TextWrapping="Wrap" />
-                            </Grid>
-                         <!--#endregion-->
-                            <!--#region  open-->
-                            <Grid  x:Name="grid_openTableDetails" Visibility="Visible">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock  Grid.Row="0" Grid.Column="0" 
-                                    Text="invoice code"
+                                </Grid>
+                                <!--#endregion-->
+                                <!--#region  open-->
+                                <Grid  x:Name="grid_openTableDetails" Visibility="Visible">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock  Grid.Row="0" Grid.Column="0" 
+                                    Text="invoice code" Name="txt_invoiceCode"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                                <TextBlock  Grid.Row="0" Grid.Column="1" 
-                                    Text="inv-000035"
+                                    <TextBlock  Grid.Row="0" Grid.Column="1" 
+                                    Text="inv-000035" Name="tb_InvoiceCode"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
-                                <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="start time"
+                                    <TextBlock  Grid.Row="1" Grid.Column="0" 
+                                    Text="start time" Name="txt_startTime"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                                <TextBlock  Grid.Row="1" Grid.Column="1" 
-                                    Text="12:15 AM"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
-                              
-                                <TextBlock  Grid.Row="2" Grid.Column="0" 
-                                    Text="Expected end time "
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                                <TextBlock  Grid.Row="2" Grid.Column="1" 
-                                    Text="3:00 AM"
+                                    <TextBlock  Grid.Row="1" Grid.Column="1" 
+                                    Text="12:15 AM" Name="tb_startTime"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
 
-                                <TextBlock  Grid.Row="3" Grid.Column="0" 
-                                    Text="customer"
+                                    <TextBlock  Grid.Row="2" Grid.Column="0" 
+                                    Text="Expected end time " Name="txt_endTime"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                                <TextBlock  Grid.Row="3" Grid.Column="1" 
-                                    Text="cus-005"
+                                    <TextBlock  Grid.Row="2" Grid.Column="1" 
+                                    Text="3:00 AM" Name="tb_endTime"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
 
-                                <TextBlock  Grid.Row="4" Grid.Column="0" 
-                                    Text="membership"
+                                    <TextBlock  Grid.Row="3" Grid.Column="0" 
+                                    Text="customer" Name="txt_invCustomer"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                                    <TextBlock  Grid.Row="3" Grid.Column="1" 
+                                    Name="tb_customerName"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+
+                                    <TextBlock  Grid.Row="4" Grid.Column="0" 
+                                    Text="membership" Name="txt_memberShip"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="4" Grid.Column="1" 
+                                    <TextBlock  Grid.Row="4" Grid.Column="1" 
                                     Text="VIP"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"  VerticalAlignment="Center"  />
 
-                                <TextBlock  Grid.Row="5" Grid.Column="0" 
-                                    Text="water"
+                                    <TextBlock  Grid.Row="5" Grid.Column="0" 
+                                    Text="water" Name="txt_waiter"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="5" Grid.Column="1" 
+                                    <TextBlock  Grid.Row="5" Grid.Column="1" 
                                     Text="user-000005"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"  VerticalAlignment="Center"  />
 
-                                <TextBlock  Grid.Row="6" Grid.Column="0" 
-                                    Text="Totoal"
+                                    <TextBlock  Grid.Row="6" Grid.Column="0" 
+                                    Text="Total" Name="txt_total"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="6" Grid.Column="1" 
-                                    Text="15.25 KD"
+                                    <TextBlock  Grid.Row="6" Grid.Column="1" 
+                                    Text="15.25" Name="tb_total"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Right" VerticalAlignment="Center"   />
-
-                                <TextBlock  Grid.Row="7" Grid.Column="0" 
-                                    Text="preparing orders"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                                    <TextBlock  Grid.Row="6" Grid.Column="3" 
+                                    Text="KD" Name="txt_totalCurrency"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Right"  VerticalAlignment="Center"  />
+                                    
+                                    <TextBlock  Grid.Row="7" Grid.Column="0" 
+                                    Text="preparing orders" Name="txt_preparingOrders"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center" />
-                                <Button  Grid.Row="7" Grid.Column="1" 
+                                    <Button  Grid.Row="7" Grid.Column="1" 
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"  VerticalAlignment="Center" 
                                   Padding="0" Background="{x:Null}" BorderBrush="{x:Null}"  >
-                                    <materialDesign:PackIcon Foreground="{StaticResource MainColor}" Kind="InfoCircle" 
+                                        <materialDesign:PackIcon Foreground="{StaticResource MainColor}" Kind="InfoCircle" 
                                       Width="30" Height="30"/>
 
 
-                                </Button>
+                                    </Button>
 
 
 
-                            </Grid>
-                            <!--#endregion-->
-                            <!--#region  reservated-->
-                            <DockPanel Visibility="Visible" x:Name="dp_reservatedTableTitle"  Margin="10 0"
+                                </Grid>
+                                <!--#endregion-->
+                                <!--#region  reservated-->
+                                <DockPanel Visibility="Visible" x:Name="dp_reservatedTableTitle"  Margin="10 0"
                                  LastChildFill="True">
-                                <TextBlock  Text="next reservation"  Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
-                                <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
-                            </DockPanel>
-                            <Grid x:Name="grid_reservatedTableDetails" Visibility="Visible">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                                    Text="reserve-000012"
+                                    <TextBlock  Text="next reservation" Name="txt_nextReservation"  Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
+                                    <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
+                                </DockPanel>
+                                <Grid x:Name="grid_reservatedTableDetails" Visibility="Visible">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                                    Text="reserve-000012" Name="tb_reservCode"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                
-                                <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="Date"
+
+                                    <TextBlock  Grid.Row="1" Grid.Column="0" 
+                                    Text="Date" x:Name="txt_date"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="1" Grid.Column="1" 
-                                    Text="2022/12/12"
+                                    <TextBlock  Grid.Row="1" Grid.Column="1" 
+                                    Text="2022/12/12" Name="tb_date"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"  VerticalAlignment="Center"  />
 
-                                <TextBlock  Grid.Row="2" Grid.Column="0" 
-                                    Text="start time"
+                                    <TextBlock  Grid.Row="2" Grid.Column="0" 
+                                    Text="start time" Name="txt_reservStartTime"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                                <TextBlock  Grid.Row="2" Grid.Column="1" 
-                                    Text="12:15 AM"
+                                    <TextBlock  Grid.Row="2" Grid.Column="1" 
+                                    Text="12:15 AM" Name="tb_reservStartTime"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
 
-                                <TextBlock  Grid.Row="3" Grid.Column="0" 
-                                    Text="end time"
+                                    <TextBlock  Grid.Row="3" Grid.Column="0" 
+                                    Text="end time" Name="txt_reservEndTime"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                                <TextBlock  Grid.Row="3" Grid.Column="1" 
-                                    Text="03:00 AM"
+                                    <TextBlock  Grid.Row="3" Grid.Column="1" 
+                                    Text="03:00 AM" Name="tb_reservEndTime"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
 
-                                <TextBlock  Grid.Row="4" Grid.Column="0" 
-                                    Text="Person count"
+                                    <TextBlock  Grid.Row="4" Grid.Column="0" 
+                                    Text="Person count" Name="txt_personsCount"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="4" Grid.Column="1" 
-                                    Text="8"
+                                    <TextBlock  Grid.Row="4" Grid.Column="1" 
+                                    Text="8" Name="tb_personsCount"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right" VerticalAlignment="Center"   />
 
-                                <TextBlock  Grid.Row="5" Grid.Column="0" 
-                                    Text="customer"
+                                    <TextBlock  Grid.Row="5" Grid.Column="0" 
+                                    Text="customer" Name="txt_customer"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="5" Grid.Column="1" 
-                                    Text="cus-002"
+                                    <TextBlock  Grid.Row="5" Grid.Column="1" 
+                                    Text="cus-002" Name="tb_reservCustomerName"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"  VerticalAlignment="Center"  />
-                            </Grid>
-                            <!--#endregion-->
+                                </Grid>
+                                <!--#endregion-->
 
-                        </StackPanel>
-                    </ScrollViewer>
+                            </StackPanel>
+                        </ScrollViewer>
 
-                    <Border Visibility="Collapsed" Grid.Row="3" Background="White" CornerRadius="0 0 7 7">
-                        <StackPanel  Grid.Row="3" Margin="5,5,5,10" >
-                            <Border Background="White" Grid.ColumnSpan="3"  Height="1"  BorderBrush="{StaticResource MainColor}" 
+                        <Border Visibility="Collapsed" Grid.Row="3" Background="White" CornerRadius="0 0 7 7">
+                            <StackPanel  Grid.Row="3" Margin="5,5,5,10" >
+                                <Border Background="White" Grid.ColumnSpan="3"  Height="1"  BorderBrush="{StaticResource MainColor}" 
                     BorderThickness="1" Opacity="1" Margin="5,5,5,5"  />
-                            <Grid x:Name="grid_emptyTableButtons" Visibility="Visible" >
-                                <Border Grid.Row="0" Grid.ColumnSpan="3">
-                                    <Button    Content="Open"
+                                <Grid x:Name="grid_emptyTableButtons" Visibility="Visible" >
+                                    <Border Grid.Row="0" Grid.ColumnSpan="3">
+                                        <Button    Content="Open"
                                     materialDesign:ButtonAssist.CornerRadius="7"
                               Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                         Margin="1,1"   Foreground="White" />
-                                </Border>
-                            </Grid>
+                                    </Border>
+                                </Grid>
 
-                            <Grid x:Name="grid_openTableButtons"  Visibility="Visible" >
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                
-                                <Button Grid.Column="0" BorderBrush="{x:Null}" Padding="0" 
+                                <Grid x:Name="grid_openTableButtons"  Visibility="Visible" >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button Grid.Column="0" BorderBrush="{x:Null}" Padding="0" 
                                   Margin="5 5 2.5 5 " Height="auto"
                                 Background="{x:Null}" VerticalAlignment="Top"  >
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                            Width="35" Height="35" FlowDirection="LeftToRight"
                            Data="{StaticResource mergeInvoice}"/>
-                                        <TextBlock  Text="merge invoice"  Grid.Row="1" 
+                                            <TextBlock  Text="merge invoice"  Grid.Row="1" 
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
                                                     Foreground="{StaticResource MainColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
-                                    </Grid>
-                                </Button>
-                                <Button Grid.Column="1" BorderBrush="{x:Null}" Padding="0" 
+                                        </Grid>
+                                    </Button>
+                                    <Button Grid.Column="1" BorderBrush="{x:Null}" Padding="0" 
                                   Margin="5 5 2.5 5 " Height="auto"
                                 Background="{x:Null}" VerticalAlignment="Top"  >
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                            Width="35" Height="35" FlowDirection="LeftToRight"
                            Data="{StaticResource mergeTables}"/>
-                                        <TextBlock  Text="merge table"  Grid.Row="1" 
+                                            <TextBlock  Text="merge table"  Grid.Row="1" 
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
                                                     Foreground="{StaticResource MainColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
-                                    </Grid>
-                                </Button>
-                                <Button Grid.Column="2" BorderBrush="{x:Null}" Padding="0" 
+                                        </Grid>
+                                    </Button>
+                                    <Button Grid.Column="2" BorderBrush="{x:Null}" Padding="0" 
                                   Margin="5 5 2.5 5 " Height="auto"
                                 Background="{x:Null}" VerticalAlignment="Top"  >
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                            Width="35" Height="35" FlowDirection="LeftToRight"
                            Data="{StaticResource changeTables}"/>
-                                        <TextBlock  Text="change table"  Grid.Row="1" 
+                                            <TextBlock  Text="change table"  Grid.Row="1" 
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
                                                     Foreground="{StaticResource MainColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
-                                    </Grid>
-                                </Button>
-                                <Button Grid.Column="3" BorderBrush="{x:Null}" Padding="0" 
+                                        </Grid>
+                                    </Button>
+                                    <Button Grid.Column="3" BorderBrush="{x:Null}" Padding="0" 
                                   Margin="5 5 2.5 5 " Height="auto"
                                 Background="{x:Null}" VerticalAlignment="Top"  >
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                            Width="35" Height="35" FlowDirection="LeftToRight"
                            Data="{StaticResource splitTables}"/>
-                                        <TextBlock  Text="split table"  Grid.Row="1" 
+                                            <TextBlock  Text="split table"  Grid.Row="1" 
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
                                                     Foreground="{StaticResource MainColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
-                                    </Grid>
-                                </Button>
-                               
-                                
-                             <Border Grid.Row="2" Grid.ColumnSpan="4">
-                                    <Button    Content="select"
+                                        </Grid>
+                                    </Button>
+
+
+                                    <Border Grid.Row="2" Grid.ColumnSpan="4">
+                                        <Button    Content="select"
                                     materialDesign:ButtonAssist.CornerRadius="7"
                               Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                         Margin="1,1"   Foreground="White" />
-                                </Border>
-                            </Grid>
-                        
-                            <Grid x:Name="grid_reservatedTableButtons" Visibility="Visible">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0" BorderBrush="{x:Null}" Padding="0" 
+                                    </Border>
+                                </Grid>
+
+                                <Grid x:Name="grid_reservatedTableButtons" Visibility="Visible">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Column="0" BorderBrush="{x:Null}" Padding="0" 
                                   Margin="5 5 2.5 5 " Height="auto"
                                 Background="{x:Null}" VerticalAlignment="Top"  >
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                            Width="35" Height="35" FlowDirection="LeftToRight"
                            Data="{StaticResource splitTables}"/>
-                                        <TextBlock  Text="split table"  Grid.Row="1" 
+                                            <TextBlock  Text="split table"  Grid.Row="1" 
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
                                                     Foreground="{StaticResource MainColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
-                                    </Grid>
-                                </Button>
-                                <Button Grid.Column="1" BorderBrush="{x:Null}" Padding="0" 
+                                        </Grid>
+                                    </Button>
+                                    <Button Grid.Column="1" BorderBrush="{x:Null}" Padding="0" 
                                   Margin="5 5 2.5 5 " Height="auto" 
                                 Background="{x:Null}" VerticalAlignment="Top"  >
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                            Width="35" Height="35" FlowDirection="LeftToRight"
                            Data="{StaticResource confirmReservation}"/>
-                                        <TextBlock  Text="confirm and open"  Grid.Row="1" 
+                                            <TextBlock  Text="confirm and open"  Grid.Row="1" 
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
                                                     Foreground="{StaticResource MainColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
-                                    </Grid>
-                                </Button>
-                                <Button Grid.Column="3" BorderBrush="{x:Null}" Padding="0" 
+                                        </Grid>
+                                    </Button>
+                                    <Button Grid.Column="3" BorderBrush="{x:Null}" Padding="0" 
                                   Margin="5 5 2.5 5 " Height="auto" 
                                 Background="{x:Null}" VerticalAlignment="Top"  >
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                            Width="35" Height="35" FlowDirection="LeftToRight"
                            Data="{StaticResource cancleReservation}"/>
-                                        <TextBlock  Text="cancel and open"  Grid.Row="1" 
+                                            <TextBlock  Text="cancel and open"  Grid.Row="1" 
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
                                                     Foreground="{StaticResource MainColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
-                                    </Grid>
-                                </Button>
-                              
-                               
-                            </Grid>
-                        </StackPanel>
-                    </Border>
-                </Grid>
+                                        </Grid>
+                                    </Button>
+
+
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
                 </Border>
 
             </Grid>

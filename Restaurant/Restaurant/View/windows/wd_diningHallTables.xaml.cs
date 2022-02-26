@@ -22,6 +22,7 @@ namespace Restaurant.View.windows
     /// </summary>
     public partial class wd_diningHallTables : Window
     {
+        Invoice tableInvoice = new Invoice();
         public wd_diningHallTables()
         {
             try
@@ -49,28 +50,176 @@ namespace Restaurant.View.windows
         }
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            tablesList = new List<Tables>()
+            try
             {
-                new Tables{ name = "Table-001", personsCount=2, status="closed"},
-                new Tables{ name = "Table-002", personsCount=3, status="opened"},
-                new Tables{ name = "Table-003", personsCount=4, status="reserved"},
-                new Tables{ name = "Table-004", personsCount=5, status="closed"},
-                new Tables{ name = "Table-005", personsCount=6, status="closed"},
-                new Tables{ name = "Table-006", personsCount=7, status="reserved"},
-                new Tables{ name = "Table-007", personsCount=8, status="opened"},
-                new Tables{ name = "Table-008", personsCount=9, status="opened"},
-                new Tables{ name = "Table-009", personsCount=10, status="reserved"},
-                new Tables{ name = "Table-010", personsCount=11, status="closed"},
-                new Tables{ name = "Table-011", personsCount=6, status="closed"},
-                new Tables{ name = "Table-012", personsCount=12, status="opened"},
-                new Tables{ name = "Table-013", personsCount=2, status="reserved"},
-                new Tables{ name = "Table-014", personsCount=8, status="closed"},
-                new Tables{ name = "Table-015", personsCount=3, status="closed"},
-                new Tables{ name = "Table-016", personsCount=9, status="reserved"},
-                new Tables{ name = "Table-017", personsCount=5, status="opened"},
-            };
+                HelpClass.StartAwait(grid_main);
+                if (AppSettings.lang.Equals("en"))
+                {
+                    grid_main.FlowDirection = FlowDirection.LeftToRight;
+                }
+                else
+                {
+                    grid_main.FlowDirection = FlowDirection.RightToLeft;
+                }
+                translate();
+
+                txt_totalCurrency.Text = AppSettings.Currency;
+                FillCombo.FillTablesStatus(cb_searchStatus);
+
+                #region loading
+                loadingList = new List<keyValueBool>();
+                bool isDone = true;
+                loadingList.Add(new keyValueBool { key = "loading_tables", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_reservations", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_fillSectionCombo", value = false });
+
+                loading_tables();
+                loading_reservations();
+                loading_fillSectionCombo();
+                do
+                {
+                    isDone = true;
+                    foreach (var item in loadingList)
+                    {
+                        if (item.value == false)
+                        {
+                            isDone = false;
+                            break;
+                        }
+                    }
+                    if (!isDone)
+                    {
+                        await Task.Delay(0500);
+                    }
+                }
+                while (!isDone);
+                #endregion
+        
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void translate()
+        {
+
+            txt_title.Text = AppSettings.resourcemanager.GetString("trTables");
+            txt_details.Text = AppSettings.resourcemanager.GetString("trDetails");
+            txt_nextReservation.Text = AppSettings.resourcemanager.GetString("trNextReservation");
+            txt_tableName.Text = AppSettings.resourcemanager.GetString("trTableName");
+            txt_tableStatus.Text = AppSettings.resourcemanager.GetString("trTableStatus");
+            tb_tableAvailable.Text = AppSettings.resourcemanager.GetString("trTableIsAvailable");
+            txt_invoiceCode.Text = AppSettings.resourcemanager.GetString("trInvoiceCode");
+            txt_startTime.Text = AppSettings.resourcemanager.GetString("trStartTime");
+            txt_endTime.Text = AppSettings.resourcemanager.GetString("trExpectedEndTime");
+            txt_invCustomer.Text = AppSettings.resourcemanager.GetString("trCustomer");
+            txt_memberShip.Text = AppSettings.resourcemanager.GetString("trMembership");
+            txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
+            txt_total.Text = AppSettings.resourcemanager.GetString("trTotal");
+            txt_preparingOrders.Text = AppSettings.resourcemanager.GetString("trPreparingOrders");
+            txt_date.Text = AppSettings.resourcemanager.GetString("trDate");
+            txt_reservStartTime.Text = AppSettings.resourcemanager.GetString("trStartTime");
+            txt_reservEndTime.Text = AppSettings.resourcemanager.GetString("trEndTime");
+            txt_personsCount.Text = AppSettings.resourcemanager.GetString("trPersonsCount");
+   
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchSection, AppSettings.resourcemanager.GetString("trSectionHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchStatus, AppSettings.resourcemanager.GetString("trStatusHint"));
+
+            txt_statusEmpty.Text = AppSettings.resourcemanager.GetString("trEmpty");
+            txt_statusOpen.Text = AppSettings.resourcemanager.GetString("trOpened");
+            txt_statusReservated.Text = AppSettings.resourcemanager.GetString("trReserved");
+
+
+            btn_refresh.ToolTip = AppSettings.resourcemanager.GetString("trRefresh");
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
+
+           // btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
+
+        }
+        #region loading
+        List<keyValueBool> loadingList;
+        async Task loading_tables()
+        {
+            try
+            {
+                await refreshTablesList();
+            }
+            catch { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_tables"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+
+        async Task loading_reservations()
+        {
+            //try
+            {
+                await refreshReservationsList();
+            }
+            //catch { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_reservations"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+
+        async Task loading_fillSectionCombo()
+        {
+
+            //await refreshReservationsList();
+
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_fillSectionCombo"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        
+        #endregion
+        #region Refresh & Search
+        int sectionId = 0;
+        async Task Search()
+        {
+            tablesQuery = tablesList;   
+            if (cb_searchSection.SelectedIndex > 0)
+            {
+                sectionId = (int)cb_searchSection.SelectedValue;
+                tablesQuery = tablesQuery.Where(s => s.sectionId == sectionId).ToList();
+            }
+            else
+                sectionId = 0;
+
+            if(cb_searchStatus.SelectedIndex != -1)
+                tablesQuery = tablesQuery.Where(s => s.status == cb_searchStatus.SelectedValue.ToString()).ToList();
             BuildTablesDesign();
         }
+        async Task refreshTablesList()
+        {
+            tablesList = await FillCombo.table.GetTablesStatusInfo(MainWindow.branchLogin.branchId,"", "", "");
+        }
+        async Task refreshReservationsList()
+        {
+            reservationsList = await reservation.Get(MainWindow.branchLogin.branchId);
+        }
+        #endregion      
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -89,15 +238,14 @@ namespace Restaurant.View.windows
 
         #region table
         List<Tables> tablesList = new List<Tables>();
-         
+        List<Tables> tablesQuery = new List<Tables>();
+        IEnumerable<TablesReservation> reservationsList;
+        TablesReservation reservation = new TablesReservation();
         void BuildTablesDesign()
         {
             wp_tablesContainer.Children.Clear();
 
-
-
-
-            foreach (var item in tablesList)
+            foreach (var item in tablesQuery)
             {
                 #region button
                 Button tableButton = new Button();
@@ -248,14 +396,83 @@ namespace Restaurant.View.windows
                 #endregion
             }
          }
-        void tableButton_Click(object sender, RoutedEventArgs e)
+        async void tableButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             string tableName =button.Tag.ToString();
             var table = tablesList.Where(x => x.name == tableName).FirstOrDefault();
+            await  showDetails(table);
             MessageBox.Show("Hey you Click me! I'm  " + table.name + " & person Count is " + table.personsCount);
         }
-        
+
+        private async Task showDetails(Tables table)
+        {
+            
+            tb_tableName.Text = table.name;
+            tb_tableStatus.Text = table.status;
+            switch (table.status)
+            {
+                case "empty":
+                    grid_emptyTableDetails.Visibility = Visibility.Visible;
+                    break;
+                case "opened":
+                case "openedReserved":
+                    grid_emptyTableDetails.Visibility = Visibility.Collapsed;
+                    tableInvoice = await FillCombo.table.GetTableInvoice(table.tableId);
+
+                    tb_InvoiceCode.Text = tableInvoice.invNumber;
+                    tb_startTime.Text = tableInvoice.invDate.ToString().Split(' ')[1];
+                    TimeSpan startTime = TimeSpan.Parse(tableInvoice.invDate.ToString().Split(' ')[1]);
+                    TimeSpan timeStaying = TimeSpan.FromHours(AppSettings.time_staying);
+                    tb_endTime.Text = timeStaying.ToString();
+                    tb_customerName.Text = tableInvoice.agentName;
+                    tb_total.Text = tableInvoice.totalNet.ToString();
+                    break;
+            }
+            #region next reservation
+            TablesReservation nextReservation = null;
+            foreach (var res in reservationsList)
+            {
+                var found = res.tables.Where(x => x.tableId == table.tableId);
+                if (found != null)
+                {
+                    nextReservation = res;
+                    break;
+                }
+            }
+            if(nextReservation != null)
+            {
+                dp_reservatedTableTitle.Visibility = Visibility.Visible;
+                tb_reservCode.Text = nextReservation.code;
+                tb_date.Text = nextReservation.reservationDate.ToString().Split(' ')[0];
+                tb_reservStartTime.Text = nextReservation.reservationTime.ToString().Split(' ')[1];
+                tb_reservEndTime.Text = nextReservation.endTime.ToString().Split(' ')[1];
+                tb_personsCount.Text = nextReservation.personsCount.ToString();
+                tb_reservCustomerName.Text = nextReservation.customerName;
+            }
+            else
+                dp_reservatedTableTitle.Visibility = Visibility.Collapsed;
+
+            #endregion
+        }
         #endregion
+
+        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {//refresh
+
+                HelpClass.StartAwait(grid_main);
+                await refreshTablesList();
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

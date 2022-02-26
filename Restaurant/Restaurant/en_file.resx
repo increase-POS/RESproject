@@ -916,7 +916,7 @@
     <value>Start date</value>
   </data>
   <data name="trEndTime" xml:space="preserve">
-    <value>End date</value>
+    <value>End time</value>
   </data>
   <data name="trStartTime" xml:space="preserve">
     <value>Start time</value>
@@ -3297,5 +3297,20 @@ Please add Email in setting</value>
   </data>
   <data name="trSubTotal" xml:space="preserve">
     <value>SubTotal</value>
+  </data>
+  <data name="trExpectedEndTime" xml:space="preserve">
+    <value>الوقت المتوقع للانتهاء</value>
+  </data>
+  <data name="trInvoiceCode" xml:space="preserve">
+    <value>Invoice Code</value>
+  </data>
+  <data name="trNextReservation" xml:space="preserve">
+    <value>Next Reservation</value>
+  </data>
+  <data name="trTableIsAvailable" xml:space="preserve">
+    <value>this table is available</value>
+  </data>
+  <data name="trTableStatus" xml:space="preserve">
+    <value>Table Status</value>
   </data>
 </root>

@@ -57,7 +57,6 @@ namespace Restaurant.View.sales.reservations
         string basicsPermission = "reservationTable_basics";
         List<Tables> selectedTables = new List<Tables>();
         TablesReservation TablesReservation = new TablesReservation();
-        int _PersonsCount = 0;
         //byte tgl_userState;
         #region for search
         int personCount = 0;
@@ -450,7 +449,7 @@ namespace Restaurant.View.sales.reservations
                 if (tp_reservationStartTime.SelectedTime != null)
                 {
                     TimeSpan startTime =TimeSpan.Parse(tp_reservationStartTime.SelectedTime.ToString().Split(' ')[1]);
-                    TimeSpan timeStaying = TimeSpan.FromHours(MainWindow.time_staying);
+                    TimeSpan timeStaying = TimeSpan.FromHours(AppSettings.time_staying);
 
                     tp_reservationEndTime.SelectedTime = tp_reservationStartTime.SelectedTime.Value.Add(timeStaying);
                 }
@@ -496,8 +495,6 @@ namespace Restaurant.View.sales.reservations
         void Clear()
         {
             selectedTables.Clear();
-            _PersonsCount = 0;
-            tb_personsCount.Text = "";
             dg_tables.ItemsSource = null;
             dg_tables.ItemsSource = selectedTables;
             this.DataContext = TablesReservation ;
@@ -826,8 +823,6 @@ namespace Restaurant.View.sales.reservations
                     {
                         Tables row = (Tables)dg_tables.SelectedItems[0];
                         selectedTables.Remove(row);
-                        _PersonsCount -= row.personsCount;
-                        tb_personsCount.Text = _PersonsCount.ToString();
                         dg_tables.ItemsSource = null;
                         dg_tables.ItemsSource = selectedTables;
                     }
@@ -1070,8 +1065,6 @@ namespace Restaurant.View.sales.reservations
             if (!selectedTables.Contains(table))
             {
                 selectedTables.Add(table);
-                _PersonsCount += table.personsCount;
-                tb_personsCount.Text = _PersonsCount.ToString();
                 dg_tables.ItemsSource = null;
                 dg_tables.ItemsSource = selectedTables;
             }

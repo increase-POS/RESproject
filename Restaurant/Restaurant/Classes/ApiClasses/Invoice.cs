@@ -88,6 +88,7 @@ namespace Restaurant.Classes
         public Nullable<decimal> discountValue { get; set; }
         public Nullable<byte> discountType { get; set; }
         public string couponCode { get; set; }
+        public string name { get; set; }
 
     }
     public  class invoiceStatus

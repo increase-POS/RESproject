@@ -141,7 +141,7 @@ namespace Restaurant
         //public List<ItemUnit> globalItemUnitsList = new List<ItemUnit>();
         //static public Unit saleUnit = new Unit();
 
-        static public double time_staying = 3;
+        
 
         static public MainWindow mainWindow;
         public MainWindow()

@@ -3274,4 +3274,19 @@
   <data name="trSubTotal" xml:space="preserve">
     <value>المجموع</value>
   </data>
+  <data name="trExpectedEndTime" xml:space="preserve">
+    <value>الوقت المتوقع للانتهاء</value>
+  </data>
+  <data name="trInvoiceCode" xml:space="preserve">
+    <value>رمز الفاتورة</value>
+  </data>
+  <data name="trNextReservation" xml:space="preserve">
+    <value>الحجز التالي</value>
+  </data>
+  <data name="trTableIsAvailable" xml:space="preserve">
+    <value>هذه الطاولة متاحة</value>
+  </data>
+  <data name="trTableStatus" xml:space="preserve">
+    <value>حالة الطاولة</value>
+  </data>
 </root>

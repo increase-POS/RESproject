@@ -186,8 +186,10 @@ namespace Restaurant.View.windows
                                 ci.couponId = couponModel.cId;
                                 ci.discountType = couponModel.discountType;
                                 ci.discountValue = couponModel.discountValue;
+                                ci.name = couponModel.name;
 
                                 lst_coupons.Items.Add(couponModel.name);
+                                
                                 selectedCopouns.Add(ci);
                             }
 
@@ -211,9 +213,9 @@ namespace Restaurant.View.windows
                         }
                         cb_coupon.SelectedIndex = -1;
                         cb_coupon.SelectedItem = "";
+                        cb_coupon.Text = "";
                     }
                     break;
-
             }
         }
         #endregion
@@ -254,6 +256,7 @@ namespace Restaurant.View.windows
                 FindControl(this.grid_main, controls);
                 FillCombo.fillDiscountType(cb_discountType);
                 await fillCouponsList();
+                fillInputs();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -283,6 +286,18 @@ namespace Restaurant.View.windows
             cb_coupon.DisplayMemberPath = "name";
             cb_coupon.SelectedValuePath = "cId";
             cb_coupon.ItemsSource = coupons;
+        }
+        private void fillInputs()
+        {
+            if (manualDiscount != 0)
+            {
+                tb_discountValue.Text = manualDiscount.ToString();
+                cb_discountType.SelectedValue = discountType;
+            }
+            foreach (var coupon in selectedCopouns)
+            {
+                lst_coupons.Items.Add(coupon.name);
+            }
         }
         private void Btn_select_Click(object sender, RoutedEventArgs e) 
         {
