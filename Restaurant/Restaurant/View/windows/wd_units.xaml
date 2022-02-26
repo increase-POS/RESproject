@@ -404,7 +404,7 @@
                         </Border>
                         <Border Grid.Row="1" Grid.Column="1">
                             <Button x:Name="btn_update"   materialDesign:ButtonAssist.CornerRadius="7"
-                        Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                        Background="{StaticResource SecondColor}" Foreground="White" BorderBrush="{x:Null}"
                    Margin="1,1"  Click="Btn_update_Click" >
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <materialDesign:PackIcon Name="txt_update_Icon" Foreground="White" Kind="Edit" VerticalAlignment="Center" Width="15" Height="15" Margin="0,1,2,0">

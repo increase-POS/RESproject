@@ -1053,21 +1053,44 @@
                             Grid.Row="1"   x:Name="tb_moneyIconTotal" />
                 </Grid>
             </Border>
-            <Border  Grid.Row="3" Grid.Column="0" Height="40" Tag="ssssssss" Background="{StaticResource MainColor}" CornerRadius="7.5"  
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Border  Grid.Row="3" Grid.Column="0" Height="40" Tag="ssssssss" Background="{StaticResource MainColor}" CornerRadius="7.5"  
                      Margin="0 15 5 0"  Padding="0">
-                <Border.Effect>
-                    <DropShadowEffect
+                    <Border.Effect>
+                        <DropShadowEffect
                           ShadowDepth="1"
                           Direction="360"
                           Color="Gray"
                           Opacity="0.3"
                          BlurRadius="10"/>
-                </Border.Effect>
-                <Button  Content="Pay" Name="btn_pay"   FontSize="20" FontWeight="Bold"
+                    </Border.Effect>
+                    <Button  Content="Pay" Name="btn_pay"   FontSize="20" FontWeight="Bold"
                     materialDesign:ButtonAssist.CornerRadius="7" Height="40"
                           Background="{x:Null}" BorderBrush="{x:Null}"
                        Foreground="White" Click="Btn_pay_Click"  />
-            </Border>
+                </Border>
+                <Border  Grid.Row="3" Grid.Column="1" Height="40" Tag="ssssssss" Background="{StaticResource Red}" CornerRadius="7.5"  
+                     Margin="0 15 5 0"  Padding="0">
+                    <Border.Effect>
+                        <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                    </Border.Effect>
+                    <Button  Content="X" Name="btn_cancel"   FontSize="22" FontWeight="Bold"
+                    materialDesign:ButtonAssist.CornerRadius="7" Height="40"
+                          Background="{x:Null}" BorderBrush="{x:Null}"
+                       Foreground="White"   />
+                </Border>
+
+            </Grid>
+            
         </Grid>
         <!--#endregion-->
     </Grid>
