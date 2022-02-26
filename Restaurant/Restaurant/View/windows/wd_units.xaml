@@ -90,7 +90,7 @@
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Width="*"  Header="Count Unit" Binding="{Binding Path=unitValue}">
+                                    <DataGridTextColumn Width="*"  Header="Count Unit" Binding="{Binding Path=countSmallUnit}">
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Style.Triggers>
@@ -101,7 +101,7 @@
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Width="*"  Header="Small Unit" Binding="{Binding Path=smallUnit}">
+                                    <!--<DataGridTextColumn Width="*"  Header="Small Unit" Binding="{Binding Path=smallUnit}">
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Style.Triggers>
@@ -111,7 +111,7 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
+                                    </DataGridTextColumn>-->
                                     <DataGridTextColumn Width="*"  Header="Price"  Binding="{Binding Path =price,Converter={StaticResource accuracyConverter }}">
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="{x:Type TextBlock}">

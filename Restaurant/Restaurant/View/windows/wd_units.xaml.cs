@@ -215,7 +215,7 @@ namespace Restaurant.View.windows
             ///////////////////////////Barcode
             dg_itemUnit.Columns[0].Header = AppSettings.resourcemanager.GetString("trUnit");
             dg_itemUnit.Columns[1].Header = AppSettings.resourcemanager.GetString("trCountUnit");
-            dg_itemUnit.Columns[2].Header = AppSettings.resourcemanager.GetString("trSmallUnit");
+           // dg_itemUnit.Columns[2].Header = AppSettings.resourcemanager.GetString("trSmallUnit");
             dg_itemUnit.Columns[2].Header = AppSettings.resourcemanager.GetString("trPrice");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_unitId, AppSettings.resourcemanager.GetString("trSelectUnitHint"));
             txt_isDefaultPurchases.Text = AppSettings.resourcemanager.GetString("trIsDefaultPurchases");
