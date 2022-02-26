@@ -3289,4 +3289,7 @@
   <data name="trTableStatus" xml:space="preserve">
     <value>حالة الطاولة</value>
   </data>
+  <data name="trTaxInvoice" xml:space="preserve">
+    <value>الضريبة, الفاتورة</value>
+  </data>
 </root>
