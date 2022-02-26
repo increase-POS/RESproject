@@ -245,7 +245,7 @@ namespace Restaurant.Classes
         #endregion
         #region tags
         public static Tag tag = new Tag();
-        public static async Task fillTags(ComboBox cmb, int categoryId)
+        public static async Task<List<Tag>> fillTags(ComboBox cmb, int categoryId)
         {
             List<Tag> tags;
             if (categoryId == -1)
@@ -255,6 +255,7 @@ namespace Restaurant.Classes
             cmb.ItemsSource = tags;
             cmb.SelectedValuePath = "tagId";
             cmb.DisplayMemberPath = "tagName";
+            return tags;
         }
         public static async Task fillTagsWithDefault(ComboBox cmb, int categoryId)
         {

@@ -1104,11 +1104,13 @@ namespace Restaurant.View.kitchen
         {
             //tagsList = new List<string> { "Orient", "Western", "Eastern" };
             tagsList = await FillCombo.tag.Get(categoryId);
-            Tag allTag = new Tag();
-            allTag.tagName = AppSettings.resourcemanager.GetString("trAll");
-            allTag.tagId = 0;
-            tagsList.Add(allTag);
-
+            if (tagsList.Count > 0)
+            {
+                Tag allTag = new Tag();
+                allTag.tagName = AppSettings.resourcemanager.GetString("trAll");
+                allTag.tagId = 0;
+                tagsList.Add(allTag);
+            }
             sp_menuTags.Children.Clear();
             foreach (var item in tagsList)
             {
@@ -1121,8 +1123,16 @@ namespace Restaurant.View.kitchen
                 button.Padding = new Thickness(5);
                 MaterialDesignThemes.Wpf.ButtonAssist.SetCornerRadius(button, (new CornerRadius(7)));
                 button.Margin = new Thickness(5, 0, 5, 0);
-                button.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
-                button.Background = Application.Current.Resources["White"] as SolidColorBrush;
+                if (item.tagName == AppSettings.resourcemanager.GetString("trAll"))
+                {
+                    button.Foreground = Application.Current.Resources["White"] as SolidColorBrush;
+                    button.Background = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                }
+                else
+                {
+                    button.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                    button.Background = Application.Current.Resources["White"] as SolidColorBrush;                  
+                }
                 button.BorderBrush = Application.Current.Resources["MainColor"] as SolidColorBrush;
                 button.Click += buttonCatalogTags_Click;
 

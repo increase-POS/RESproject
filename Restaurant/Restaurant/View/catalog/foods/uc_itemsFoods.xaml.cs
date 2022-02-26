@@ -90,6 +90,8 @@ namespace Restaurant.View.catalog.foods
         byte tgl_itemState;
         string searchText = "";
         public static List<string> requiredControlList;
+        public static List<Tag> tagsList;
+
         List<Unit> units;
         Unit unit = new Unit();
         #region for barcode
@@ -124,9 +126,10 @@ namespace Restaurant.View.catalog.foods
                 translate();
                 //categoryName = "appetizers";
                 categoryId = FillCombo.GetCategoryId(categoryName);
-                FillCombo.fillTags(cb_tagId, categoryId);
+                tagsList = await FillCombo.fillTags(cb_tagId, categoryId);
                 Keyboard.Focus(tb_code);
                 await RefreshItemsList();
+                refreshCatalogTags();
                 await Search();
                 Clear();
                 HelpClass.EndAwait(grid_main);
@@ -1097,6 +1100,11 @@ namespace Restaurant.View.catalog.foods
                     x.details.ToLower().Contains(searchText)
                     // || x.categoryName.ToLower().Contains(searchText)
                     ) && x.isActive == tgl_itemState);
+
+                #region search for tag
+                if (tagId > 0)
+                    itemsQuery = itemsQuery.Where(x => x.tagId == tagId).ToList();
+                #endregion
                 pageIndex = 1;
                 #region
 
@@ -1278,6 +1286,77 @@ namespace Restaurant.View.catalog.foods
         }
         #endregion
 
+        #endregion
+        #region tags
+        void refreshCatalogTags()
+        {
+            if (tagsList.Count > 0)
+            {
+                Tag allTag = new Tag();
+                allTag.tagName = AppSettings.resourcemanager.GetString("trAll");
+                allTag.tagId = 0;
+                tagsList.Add(allTag);
+            }
+            sp_menuTags.Children.Clear();
+            foreach (var item in tagsList)
+            {
+                #region  
+                Button button = new Button();
+                button.Content = item.tagName;
+                button.Tag = "catalogTags-" + item.tagName;
+                button.FontSize = 10;
+                button.Height = 25;
+                button.Padding = new Thickness(5);
+                MaterialDesignThemes.Wpf.ButtonAssist.SetCornerRadius(button, (new CornerRadius(7)));
+                button.Margin = new Thickness(5, 0, 5, 0);
+                if (item.tagName == AppSettings.resourcemanager.GetString("trAll"))
+                {
+                    button.Foreground = Application.Current.Resources["White"] as SolidColorBrush;
+                    button.Background = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                }
+                else
+                {
+                    button.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                    button.Background = Application.Current.Resources["White"] as SolidColorBrush;
+                }
+                button.BorderBrush = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                button.Click += buttonCatalogTags_Click;
+
+
+                sp_menuTags.Children.Add(button);
+                /////////////////////////////////
+
+                #endregion
+            }
+        }
+        int tagId = 0;
+        async void buttonCatalogTags_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string senderTag = (sender as Button).Tag.ToString();
+                #region refresh colors
+                foreach (var control in tagsList)
+                {
+                    Button button = FindControls.FindVisualChildren<Button>(this).Where(x => x.Tag != null && x.Tag.ToString() == "catalogTags-" + control.tagName)
+                        .FirstOrDefault();
+                    if (button.Tag.ToString() == senderTag)
+                    {
+                        button.Foreground = Application.Current.Resources["White"] as SolidColorBrush;
+                        button.Background = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                        tagId = control.tagId;
+                    }
+                    else
+                    {
+                        button.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                        button.Background = Application.Current.Resources["White"] as SolidColorBrush;
+                    }
+                }
+                #endregion
+                await Search();
+            }
+            catch { }
+        }
         #endregion
         private Boolean checkCodeAvailabiltiy(string oldCode = "")
         {
