@@ -102,7 +102,7 @@ namespace Restaurant.View.reports.purchaseReports
             //try
             //{
             //    grid_main.Children.Clear();
-            //    grid_main.Children.Add(uc_storageReports.Instance);
+            //    grid_main.Children.Add(uc_invoicePurchaseReports.Instance);
 
             //    Button button = sender as Button;
             //    MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
