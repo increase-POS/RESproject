@@ -1468,7 +1468,7 @@ namespace Restaurant
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_purchase_Click(object sender, RoutedEventArgs e)
+        public void Btn_purchase_Click(object sender, RoutedEventArgs e)
         {
             try
             {
