@@ -367,6 +367,9 @@
     <Compile Include="View\reports\accountsReports\uc_taxAccountsReports.xaml.cs">
       <DependentUpon>uc_taxAccountsReports.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\reports\purchaseReports\uc_invoicePurchaseReports.xaml.cs">
+      <DependentUpon>uc_invoicePurchaseReports.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\reports\purchaseReports\uc_purchaseReports.xaml.cs">
       <DependentUpon>uc_purchaseReports.xaml</DependentUpon>
     </Compile>
@@ -631,6 +634,9 @@
     <Compile Include="View\windows\wd_usersList.xaml.cs">
       <DependentUpon>wd_usersList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\winControlPanel.xaml.cs">
+      <DependentUpon>winControlPanel.xaml</DependentUpon>
+    </Compile>
     <Page Include="controlTemplate\uc_squareCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -834,6 +840,10 @@
     <Page Include="View\reports\accountsReports\uc_taxAccountsReports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\purchaseReports\uc_invoicePurchaseReports.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\reports\purchaseReports\uc_purchaseReports.xaml">
       <SubType>Designer</SubType>
@@ -1184,6 +1194,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_usersList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\winControlPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
