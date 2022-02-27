@@ -938,31 +938,40 @@ Parameters!trValueDiscount.Value)
         }
         //clsReports.SaleInvoiceStsReport(itemTransfers, rep, reppath, paramarr);
 
-        //public static void SaleInvoiceStsReport(IEnumerable<ItemTransferInvoice> tempquery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
-        //{
-        //    PurStsReport(tempquery, rep, reppath);
-        //    paramarr.Add(new ReportParameter("isTax", AppSettings.invoiceTax_bool.ToString()));
-        //    itemTransferInvTypeConv(paramarr);
+        public static void SaleInvoiceStsReport(IEnumerable<ItemTransferInvoice> tempquery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            PurStsReport(tempquery, rep, reppath);
+            paramarr.Add(new ReportParameter("isTax", AppSettings.invoiceTax_bool.ToString()));
+            itemTransferInvTypeConv(paramarr);
 
-        //}
+        }
 
-        //public static void SaledailyReport(IEnumerable<ItemTransferInvoice> tempquery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
-        //{
-        //    string date = "";
-        //    PurStsReport(tempquery, rep, reppath);
-        //    if (tempquery == null || tempquery.Count() == 0)
-        //    {
-        //        date = "";
-        //    }
-        //    else
-        //    {
-        //        date = HelpClass.DateToString(tempquery.FirstOrDefault().updateDate);
-        //    }
-        //    paramarr.Add(new ReportParameter("isTax", AppSettings.invoiceTax_bool.ToString()));
-        //    paramarr.Add(new ReportParameter("invDate", date));
-        //    itemTransferInvTypeConv(paramarr);
+        public static void SaledailyReport(IEnumerable<ItemTransferInvoice> tempquery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            string date = "";
+            PurStsReport(tempquery, rep, reppath);
+            if (tempquery == null || tempquery.Count() == 0)
+            {
+                date = "";
+            }
+            else
+            {
+                date = HelpClass.DateToString(tempquery.FirstOrDefault().updateDate);
+            }
+            paramarr.Add(new ReportParameter("isTax", AppSettings.invoiceTax_bool.ToString()));
+            paramarr.Add(new ReportParameter("invDate", date));
 
-        //}
+            paramarr.Add(new ReportParameter("trPaymentMethodsheader", AppSettings.resourcemanagerreport.GetString("trPaymentMethods")));
+
+            paramarr.Add(new ReportParameter("trCash", AppSettings.resourcemanagerreport.GetString("trCash")));
+            paramarr.Add(new ReportParameter("trDocument", AppSettings.resourcemanagerreport.GetString("trDocument")));
+            paramarr.Add(new ReportParameter("trCheque", AppSettings.resourcemanagerreport.GetString("trCheque")));
+            paramarr.Add(new ReportParameter("trCredit", AppSettings.resourcemanagerreport.GetString("trCredit")));
+            paramarr.Add(new ReportParameter("trMultiplePayment", AppSettings.resourcemanagerreport.GetString("trMultiplePayment")));
+
+            itemTransferInvTypeConv(paramarr);
+
+        }
         public static void ProfitReport(IEnumerable<ItemUnitInvoiceProfit> tempquery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             rep.ReportPath = reppath;

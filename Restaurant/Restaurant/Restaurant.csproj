@@ -242,6 +242,7 @@
     <Compile Include="converters\enabledCouponConverter.cs" />
     <Compile Include="converters\invoiceStatusConverter.cs" />
     <Compile Include="converters\invoiceTypeConverter.cs" />
+    <Compile Include="converters\itemTypeConverter.cs" />
     <Compile Include="converters\notificationsContentConverter.cs" />
     <Compile Include="converters\notificationsTitleConverter.cs" />
     <Compile Include="converters\posTransfersStatusConverter.cs" />
@@ -370,8 +371,20 @@
     <Compile Include="View\reports\purchaseReports\uc_invoicePurchaseReports.xaml.cs">
       <DependentUpon>uc_invoicePurchaseReports.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\reports\purchaseReports\uc_itemPurchaseReports.xaml.cs">
+      <DependentUpon>uc_itemPurchaseReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\purchaseReports\uc_orderPurchaseReports.xaml.cs">
+      <DependentUpon>uc_orderPurchaseReports.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\reports\purchaseReports\uc_purchaseReports.xaml.cs">
       <DependentUpon>uc_purchaseReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\salesReports\uc_invoiceSalesReports.xaml.cs">
+      <DependentUpon>uc_invoiceSalesReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\salesReports\uc_itemSalesReports.xaml.cs">
+      <DependentUpon>uc_itemSalesReports.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\reports\salesReports\uc_salesReports.xaml.cs">
       <DependentUpon>uc_salesReports.xaml</DependentUpon>
@@ -845,7 +858,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\reports\purchaseReports\uc_itemPurchaseReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\purchaseReports\uc_orderPurchaseReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\reports\purchaseReports\uc_purchaseReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\salesReports\uc_invoiceSalesReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\salesReports\uc_itemSalesReports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -100,18 +100,18 @@ namespace Restaurant.View.reports.salesReports
 
         private void Btn_invoiceSalesReports_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //    MainWindow.mainWindow.grid_main.Children.Clear();
-            //    MainWindow.mainWindow.grid_main.Children.Add(uc_storageReports.Instance);
+            try
+            {
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_invoiceSalesReports.Instance);
 
-            //    Button button = sender as Button;
-            //    MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_itemSalesReports_Click(object sender, RoutedEventArgs e)

@@ -29,6 +29,7 @@
             <converters:agentCompanyConverter x:Key="agentCompanyConverter"/>
             <converters:agentNameConverter x:Key="agentNameConverter"/>
             <converters:invoiceTypeConverter x:Key="invoiceTypeConverter"/>
+            <converters:itemTypeConverter x:Key="itemTypeConverter"/>
 
             <!--#region Fonts-->
             <FontFamily x:Key="BarcodeFont" >IDAHC39M Code 39 Barcode, /Restaurant;component/fonts/#IDAHC39M Code 39 Barcode, Arial</FontFamily>
