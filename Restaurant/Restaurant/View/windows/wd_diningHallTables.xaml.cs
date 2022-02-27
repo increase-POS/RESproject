@@ -142,7 +142,10 @@ namespace Restaurant.View.windows
             btn_refresh.ToolTip = AppSettings.resourcemanager.GetString("trRefresh");
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
 
-           // btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
+            txt_tablesContainer.Text = AppSettings.resourcemanager.GetString("trTables");
+            txt_reservationsContainer.Text = AppSettings.resourcemanager.GetString("trReservations");
+
+            // btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
         }
         #region loading
@@ -480,5 +483,130 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        #region container
+
+        private void Btn_tablesContainer_Click(object sender, RoutedEventArgs e)
+        {
+            wp_tablesContainer.Visibility = Visibility.Visible;
+            path_tablesContainer.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            txt_tablesContainer.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+
+            grid_reservationsContainer.Visibility = Visibility.Collapsed;
+            path_reservationsContainer.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            txt_reservationsContainer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+        }
+
+        private void Btn_reservationsContainer_Click(object sender, RoutedEventArgs e)
+        {
+            wp_tablesContainer.Visibility = Visibility.Collapsed;
+            path_tablesContainer.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            txt_tablesContainer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+
+            grid_reservationsContainer.Visibility = Visibility.Visible;
+            path_reservationsContainer.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            txt_reservationsContainer.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+        }
+
+        #endregion
+
+        private async void Dg_reservation_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            /*
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //selection
+
+                if (dg_reservation.SelectedIndex != -1)
+                {
+                    reservation = new TablesReservation();
+                    reservation = dg_reservation.SelectedItem as TablesReservation;
+                    this.DataContext = reservation;
+                    _PersonsCount = (int)reservation.personsCount;
+                    tb_personsCount.Text = _PersonsCount.ToString();
+                    if (reservation.tables.Count != 0)
+                    {
+                        selectedTables = reservation.tables;
+                    }
+                    dg_tables.ItemsSource = selectedTables;
+
+                    btn_tables.IsEnabled = true;
+                    btn_confirm.IsEnabled = true;
+                    btn_cancel.IsEnabled = true;
+
+                }
+                HelpClass.clearValidate(requiredControlList, this);
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+            */
+        }
+        #region Button In DataGrid
+
+        void cancelRowinDatagridTable(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        Tables row = (Tables)dg_tables.SelectedItems[0];
+                        selectedTables.Remove(row);
+                        dg_tables.ItemsSource = null;
+                        dg_tables.ItemsSource = selectedTables;
+                    }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        async void confirmRowinDatagridReservation(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+
+
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        async void cancelRowinDatagridReservation(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+
+
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        #endregion
     }
 }
