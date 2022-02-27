@@ -1109,16 +1109,13 @@ Parameters!trValueDiscount.Value)
             trtext = firstTitle + " / " + secondTitle;
             return trtext;
         }
-        //public static void PurInvStsReport(IEnumerable<ItemTransferInvoice> tempquery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
-        //{
+        public static void PurInvStsReport(IEnumerable<ItemTransferInvoice> tempquery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            PurStsReport(tempquery, rep, reppath);
+            itemTransferInvTypeConv(paramarr);
+            paramarr.Add(new ReportParameter("isTax", AppSettings.invoiceTax_bool.ToString()));
+        }
 
-
-        //    PurStsReport(tempquery, rep, reppath);
-        //    itemTransferInvTypeConv(paramarr);
-        //    paramarr.Add(new ReportParameter("isTax", AppSettings.invoiceTax_bool.ToString()));
-
-
-        //}
 
         public static void PurOrderStsReport(IEnumerable<ItemTransferInvoice> tempquery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
