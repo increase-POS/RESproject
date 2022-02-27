@@ -5,6 +5,7 @@ using MaterialDesignThemes.Wpf;
 using Microsoft.Reporting.WinForms;
 using Microsoft.Win32;
 using Restaurant.Classes;
+using Restaurant.View.purchase;
 using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace Restaurant.View.reports.purchaseReports
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_invoicePurchaseReports();
                 return _instance;
             }
@@ -112,15 +114,9 @@ namespace Restaurant.View.reports.purchaseReports
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
-                {
-                    AppSettings.resourcemanager = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
-                }
                 else
-                {
-                    AppSettings.resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
-                }
                 translate();
                 #endregion
 
@@ -1346,10 +1342,16 @@ namespace Restaurant.View.reports.purchaseReports
                     if (item.invoiceId > 0)
                     {
                         invoice = await invoice.GetByInvoiceId(item.invoiceId);
-                        MainWindow.mainWindow.BTN_purchases_Click(MainWindow.mainWindow.btn_purchase, null);
-                        uc_purchases.Instance.UserControl_Loaded(null, null);
-                        uc_purchases.Instance.btn_payInvoice_Click(uc_purchases.Instance.btn_payInvoice, null);
-                        uc_payInvoice.Instance.UserControl_Loaded(null, null);
+                        MainWindow.mainWindow.Btn_purchase_Click(MainWindow.mainWindow.btn_purchase, null);
+                        //uc_purchases.Instance.UserControl_Loaded(null, null);
+                        //uc_purchases.Instance.btn_payInvoice_Click(uc_purchases.Instance.btn_payInvoice, null);
+
+                        MainWindow.mainWindow.initializationMainTrack("payInvoice");
+
+                        MainWindow.mainWindow.grid_main.Children.Clear();
+                        MainWindow.mainWindow.grid_main.Children.Add(uc_payInvoice.Instance);
+
+                        uc_payInvoice.Instance.UserControl_Loaded(uc_payInvoice.Instance, null);
                         uc_payInvoice._InvoiceType = invoice.invType;
                         uc_payInvoice.Instance.invoice = invoice;
                         uc_payInvoice.isFromReport = true;
@@ -1508,7 +1510,7 @@ namespace Restaurant.View.reports.purchaseReports
                 #region
                 BuildReport();
 
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(MainWindow.rep_print_count));
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
 
                 #endregion
 
@@ -1522,7 +1524,7 @@ namespace Restaurant.View.reports.purchaseReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void txt_search_TextChanged(object sender, TextChangedEventArgs e)
+        private void Txt_search_TextChanged(object sender, TextChangedEventArgs e)
         {//search
             try
             {

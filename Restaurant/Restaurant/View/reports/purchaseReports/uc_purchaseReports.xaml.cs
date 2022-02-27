@@ -26,6 +26,7 @@ namespace Restaurant.View.reports.purchaseReports
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_purchaseReports();
                 return _instance;
             }
@@ -99,26 +100,26 @@ namespace Restaurant.View.reports.purchaseReports
 
         private void Btn_invoicePurchaseReports_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //    grid_main.Children.Clear();
-            //    grid_main.Children.Add(uc_invoicePurchaseReports.Instance);
+            try
+            {
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_invoicePurchaseReports.Instance);
 
-            //    Button button = sender as Button;
-            //    MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_itemPurchaseReports_Click(object sender, RoutedEventArgs e)
         {
             //try
             //{
-            //    grid_main.Children.Clear();
-            //    grid_main.Children.Add(uc_storageReports.Instance);
+            //    MainWindow.mainWindow.grid_main.Children.Clear();
+            //    MainWindow.mainWindow.grid_main.Children.Add(uc_storageReports.Instance);
 
             //    Button button = sender as Button;
             //    MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -133,8 +134,8 @@ namespace Restaurant.View.reports.purchaseReports
         {
             //try
             //{
-            //    grid_main.Children.Clear();
-            //    grid_main.Children.Add(uc_storageReports.Instance);
+            //    MainWindow.mainWindow.grid_main.Children.Clear();
+            //    MainWindow.mainWindow.grid_main.Children.Add(uc_storageReports.Instance);
 
             //    Button button = sender as Button;
             //    MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
