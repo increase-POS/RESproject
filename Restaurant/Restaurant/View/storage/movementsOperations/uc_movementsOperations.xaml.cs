@@ -26,6 +26,7 @@ namespace Restaurant.View.storage.movementsOperations
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_movementsOperations();
                 return _instance;
             }
@@ -101,8 +102,8 @@ namespace Restaurant.View.storage.movementsOperations
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_storageMovements.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_storageMovements.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -117,8 +118,8 @@ namespace Restaurant.View.storage.movementsOperations
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_spendingOrder.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_spendingOrder.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

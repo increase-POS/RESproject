@@ -26,6 +26,7 @@ namespace Restaurant.View.reports.storageReports
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_storageReports();
                 return _instance;
             }
@@ -100,8 +101,8 @@ namespace Restaurant.View.reports.storageReports
         {
             //    try
             //    {
-            //        grid_main.Children.Clear();
-            //        grid_main.Children.Add(uc_storageReports.Instance);
+            //        MainWindow.mainWindow.grid_main.Children.Clear();
+            //        MainWindow.mainWindow.grid_main.Children.Add(uc_storageReports.Instance);
             //        Button button = sender as Button;
             //        MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             //    }
@@ -115,8 +116,8 @@ namespace Restaurant.View.reports.storageReports
         {
             //    try
             //    {
-            //        grid_main.Children.Clear();
-            //        grid_main.Children.Add(uc_storageReports.Instance);
+            //        MainWindow.mainWindow.grid_main.Children.Clear();
+            //        MainWindow.mainWindow.grid_main.Children.Add(uc_storageReports.Instance);
             //        Button button = sender as Button;
             //        MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             //    }
@@ -130,8 +131,8 @@ namespace Restaurant.View.reports.storageReports
         {
             //    try
             //    {
-            //        grid_main.Children.Clear();
-            //        grid_main.Children.Add(uc_storageReports.Instance);
+            //        MainWindow.mainWindow.grid_main.Children.Clear();
+            //        MainWindow.mainWindow.grid_main.Children.Add(uc_storageReports.Instance);
             //        Button button = sender as Button;
             //        MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             //    }
@@ -145,8 +146,8 @@ namespace Restaurant.View.reports.storageReports
         {
             //    try
             //    {
-            //        grid_main.Children.Clear();
-            //        grid_main.Children.Add(uc_storageReports.Instance);
+            //        MainWindow.mainWindow.grid_main.Children.Clear();
+            //        MainWindow.mainWindow.grid_main.Children.Add(uc_storageReports.Instance);
             //        Button button = sender as Button;
             //        MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             //    }
@@ -160,8 +161,8 @@ namespace Restaurant.View.reports.storageReports
         {
             //    try
             //    {
-            //        grid_main.Children.Clear();
-            //        grid_main.Children.Add(uc_storageReports.Instance);
+            //        MainWindow.mainWindow.grid_main.Children.Clear();
+            //        MainWindow.mainWindow.grid_main.Children.Add(uc_storageReports.Instance);
             //        Button button = sender as Button;
             //        MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             //    }
@@ -175,8 +176,8 @@ namespace Restaurant.View.reports.storageReports
         {
             //    try
             //    {
-            //        grid_main.Children.Clear();
-            //        grid_main.Children.Add(uc_storageReports.Instance);
+            //        MainWindow.mainWindow.grid_main.Children.Clear();
+            //        MainWindow.mainWindow.grid_main.Children.Add(uc_storageReports.Instance);
             //        Button button = sender as Button;
             //        MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             //    }

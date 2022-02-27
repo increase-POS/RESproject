@@ -71,6 +71,7 @@ namespace Restaurant.View.sales.promotion
             get
             {
                 //if (_instance == null)
+                if(_instance is null)
                 _instance = new uc_membership();
                 return _instance;
             }

@@ -46,6 +46,7 @@ namespace Restaurant.View.storage.stocktakingOperations
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_itemsShortage();
                 return _instance;
             }

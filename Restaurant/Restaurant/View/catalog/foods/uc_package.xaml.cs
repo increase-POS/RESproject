@@ -75,7 +75,8 @@ namespace Restaurant.View.catalog.foods
             get
             {
                 //if (_instance == null)
-                _instance = new uc_package();
+                if(_instance is null)
+                    _instance = new uc_package();
                 return _instance;
             }
             set

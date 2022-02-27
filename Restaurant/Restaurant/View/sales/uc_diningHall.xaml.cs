@@ -38,6 +38,7 @@ namespace Restaurant.View.sales
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_diningHall();
                 return _instance;
             }

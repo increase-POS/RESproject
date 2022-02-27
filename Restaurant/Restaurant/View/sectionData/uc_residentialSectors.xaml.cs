@@ -75,6 +75,7 @@ namespace Restaurant.View.sectionData
             get
             {
                 //if (_instance == null)
+                if(_instance is null)
                 _instance = new uc_residentialSectors();
                 return _instance;
             }

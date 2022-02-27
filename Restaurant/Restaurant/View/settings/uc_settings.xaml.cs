@@ -28,6 +28,7 @@ namespace Restaurant.View.settings
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_settings();
                 return _instance;
             }
@@ -103,8 +104,8 @@ namespace Restaurant.View.settings
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_general.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_general.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -119,8 +120,8 @@ namespace Restaurant.View.settings
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_reportsSettings.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_reportsSettings.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -135,8 +136,8 @@ namespace Restaurant.View.settings
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_emailsGeneral.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_emailsGeneral.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -151,8 +152,8 @@ namespace Restaurant.View.settings
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_permissions.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_permissions.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

@@ -74,7 +74,8 @@ namespace Restaurant.View.storage.storageDivide
             get
             {
                 //if (_instance == null)
-                _instance = new uc_locations();
+                if(_instance is null)
+                    _instance = new uc_locations();
                 return _instance;
             }
             set

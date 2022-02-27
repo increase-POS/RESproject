@@ -36,7 +36,8 @@ namespace Restaurant.View.settings
         {
             get
             {
-                _instance = new uc_general();
+                if(_instance is null)
+                    _instance = new uc_general();
                 return _instance;
             }
             set

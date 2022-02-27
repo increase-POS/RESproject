@@ -28,6 +28,7 @@ namespace Restaurant.View.sales
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_sales();
                 return _instance;
             }
@@ -102,8 +103,8 @@ namespace Restaurant.View.sales
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_promotion.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_promotion.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -117,8 +118,8 @@ namespace Restaurant.View.sales
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_reservations.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_reservations.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -132,8 +133,8 @@ namespace Restaurant.View.sales
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_diningHall.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_diningHall.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

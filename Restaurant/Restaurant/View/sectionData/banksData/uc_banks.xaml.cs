@@ -75,6 +75,7 @@ namespace Restaurant.View.sectionData.banksData
             get
             {
                 //if (_instance == null)
+                if(_instance is null)
                 _instance = new uc_banks();
                 return _instance;
             }

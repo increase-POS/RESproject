@@ -45,6 +45,7 @@ namespace Restaurant.View.sales.reservations
             get
             {
                 //if (_instance == null)
+                if(_instance is null)
                 _instance = new uc_reservationTable();
                 return _instance;
             }

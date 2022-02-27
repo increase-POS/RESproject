@@ -584,9 +584,11 @@
                             <StackPanel>
                                 <DockPanel Margin="10 0"
                                  LastChildFill="True">
-                                    <TextBlock  Text="details" Name="txt_details" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
+                                    <TextBlock  Text="table" Name="txt_table" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
                                     <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
                                 </DockPanel>
+                                <!--#region tables-->
+
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
@@ -618,8 +620,7 @@
 
 
                                 </Grid>
-                                <!--#region tables-->
-                                    <Grid x:Name="grid_tables" Visibility="Collapsed"  Grid.Row="9"  Margin="10 0" >
+                                <Grid x:Name="grid_tables" Visibility="Collapsed"  Grid.Row="9"  Margin="10 0" >
                                     <Grid.RowDefinitions >
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="*"/>
@@ -666,7 +667,15 @@
                                     </DataGrid>
 
                                 </Grid>
-                               <!--#endregion-->
+                                <!--#endregion-->
+
+                                <DockPanel Margin="10 0"
+                                 LastChildFill="True">
+                                    <TextBlock  Text="details" Name="txt_details" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
+                                    <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
+                                </DockPanel>
+                               
+                                
                                 <!--#region empty -->
                                 <Grid Visibility="Visible"
                                 x:Name="grid_emptyTableDetails">

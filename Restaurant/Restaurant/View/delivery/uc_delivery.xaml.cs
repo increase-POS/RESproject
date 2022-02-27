@@ -26,7 +26,8 @@ namespace Restaurant.View.delivery
         {
             get
             {
-                _instance = new uc_delivery();
+                if(_instance is null)
+                    _instance = new uc_delivery();
                 return _instance;
             }
             set
@@ -101,8 +102,8 @@ namespace Restaurant.View.delivery
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_deliveryManagement.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_deliveryManagement.Instance);
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
@@ -115,8 +116,8 @@ namespace Restaurant.View.delivery
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_driversManagement.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_driversManagement.Instance);
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
@@ -129,8 +130,8 @@ namespace Restaurant.View.delivery
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_shippingCompanies.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_shippingCompanies.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

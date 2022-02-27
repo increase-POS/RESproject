@@ -26,6 +26,7 @@ namespace Restaurant.View.kitchen
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_kitchen();
                 return _instance;
             }
@@ -101,8 +102,8 @@ namespace Restaurant.View.kitchen
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_preparingOrders.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_preparingOrders.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -117,8 +118,8 @@ namespace Restaurant.View.kitchen
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_spendingRequest.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_spendingRequest.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -132,8 +133,8 @@ namespace Restaurant.View.kitchen
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_consumptionRawMaterials.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_consumptionRawMaterials.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -147,8 +148,8 @@ namespace Restaurant.View.kitchen
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_menuSettings.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_menuSettings.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -163,8 +164,8 @@ namespace Restaurant.View.kitchen
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_itemsCosting.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_itemsCosting.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

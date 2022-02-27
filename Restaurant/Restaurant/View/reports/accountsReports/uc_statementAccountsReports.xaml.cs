@@ -40,6 +40,7 @@ namespace Restaurant.View.reports.accountsReports
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_statementAccountsReports();
                 return _instance;
             }

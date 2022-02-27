@@ -26,6 +26,7 @@ namespace Restaurant.View.purchase
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_purchase();
                 return _instance;
             }
@@ -101,8 +102,9 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_payInvoice.Instance);
+
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_payInvoice.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -117,8 +119,8 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_purchaseOrder.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_purchaseOrder.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

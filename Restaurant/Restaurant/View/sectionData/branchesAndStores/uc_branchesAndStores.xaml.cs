@@ -26,6 +26,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_branchesAndStores();
                 return _instance;
             }
@@ -96,8 +97,8 @@ namespace Restaurant.View.sectionData.branchesAndStores
 
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_branches.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_branches.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -112,8 +113,8 @@ namespace Restaurant.View.sectionData.branchesAndStores
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_stores.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_stores.Instance);
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
@@ -127,8 +128,8 @@ namespace Restaurant.View.sectionData.branchesAndStores
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_pos.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_pos.Instance);
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }

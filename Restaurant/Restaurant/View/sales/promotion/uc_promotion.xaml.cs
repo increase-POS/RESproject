@@ -26,6 +26,7 @@ namespace Restaurant.View.sales.promotion
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_promotion();
                 return _instance;
             }
@@ -96,8 +97,8 @@ namespace Restaurant.View.sales.promotion
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_membership.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_membership.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -112,8 +113,8 @@ namespace Restaurant.View.sales.promotion
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_coupon.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_coupon.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -128,8 +129,8 @@ namespace Restaurant.View.sales.promotion
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_offer.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_offer.Instance);
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }

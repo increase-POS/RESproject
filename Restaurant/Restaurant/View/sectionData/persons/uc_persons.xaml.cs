@@ -26,6 +26,7 @@ namespace Restaurant.View.sectionData.persons
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_persons();
                 return _instance;
             }
@@ -96,8 +97,8 @@ namespace Restaurant.View.sectionData.persons
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_vendors.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_vendors.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -112,8 +113,8 @@ namespace Restaurant.View.sectionData.persons
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_customers.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_customers.Instance);
 
                 Button button = sender as Button;
                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -128,8 +129,8 @@ namespace Restaurant.View.sectionData.persons
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_users.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_users.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

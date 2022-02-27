@@ -42,6 +42,7 @@ namespace Restaurant.View.purchase
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_purchaseOrder();
                 return _instance;
             }

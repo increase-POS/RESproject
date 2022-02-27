@@ -37,6 +37,7 @@ namespace Restaurant.View.reports.accountsReports
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_fundAccountsReports();
                 return _instance;
             }

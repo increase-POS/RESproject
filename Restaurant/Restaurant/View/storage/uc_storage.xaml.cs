@@ -30,6 +30,7 @@ namespace Restaurant.View.storage
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_storage();
                 return _instance;
             }
@@ -104,8 +105,8 @@ namespace Restaurant.View.storage
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_storageDivide.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_storageDivide.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -121,8 +122,8 @@ namespace Restaurant.View.storage
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_storageOperations.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_storageOperations.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -137,8 +138,8 @@ namespace Restaurant.View.storage
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_movementsOperations.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_movementsOperations.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -155,8 +156,8 @@ namespace Restaurant.View.storage
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_stocktakingOperations.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_stocktakingOperations.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

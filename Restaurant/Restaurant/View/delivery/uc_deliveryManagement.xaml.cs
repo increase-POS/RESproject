@@ -40,6 +40,7 @@ namespace Restaurant.View.delivery
             get
             {
                 //if (_instance == null)
+                if(_instance is null)
                 _instance = new uc_deliveryManagement();
                 return _instance;
             }

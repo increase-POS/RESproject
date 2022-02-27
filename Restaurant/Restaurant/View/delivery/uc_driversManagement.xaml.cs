@@ -25,6 +25,7 @@ namespace Restaurant.View.delivery
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_driversManagement();
                 return _instance;
             }

@@ -46,6 +46,7 @@ namespace Restaurant.View.kitchen
             get
             {
                 //if (_instance == null)
+                if(_instance is null)
                 _instance = new uc_menuSettings();
                 return _instance;
             }

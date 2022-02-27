@@ -42,6 +42,7 @@ namespace Restaurant.View.settings.emailsGeneral
             get
             {
                 //if (_instance == null)
+                if(_instance is null)
                 _instance = new uc_emailsTamplates();
                 return _instance;
             }

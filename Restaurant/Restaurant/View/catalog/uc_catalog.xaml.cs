@@ -28,7 +28,8 @@ namespace Restaurant.View.catalog
         {
             get
             {
-                _instance = new uc_catalog();
+                if(_instance is null)
+                    _instance = new uc_catalog();
                 return _instance;
             }
             set
@@ -103,8 +104,8 @@ namespace Restaurant.View.catalog
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_rawMaterials.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_rawMaterials.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -119,8 +120,8 @@ namespace Restaurant.View.catalog
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_foods.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_foods.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

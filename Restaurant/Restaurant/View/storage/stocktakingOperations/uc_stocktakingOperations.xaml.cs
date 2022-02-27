@@ -26,7 +26,8 @@ namespace Restaurant.View.storage.stocktakingOperations
         {
             get
             {
-                _instance = new uc_stocktakingOperations();
+                if(_instance is null)
+                    _instance = new uc_stocktakingOperations();
                 return _instance;
             }
             set
@@ -101,8 +102,8 @@ namespace Restaurant.View.storage.stocktakingOperations
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_itemsShortage.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_itemsShortage.Instance);
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
@@ -116,8 +117,8 @@ namespace Restaurant.View.storage.stocktakingOperations
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_itemsDestructive.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_itemsDestructive.Instance);
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
@@ -131,8 +132,8 @@ namespace Restaurant.View.storage.stocktakingOperations
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_stocktaking.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_stocktaking.Instance);
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }

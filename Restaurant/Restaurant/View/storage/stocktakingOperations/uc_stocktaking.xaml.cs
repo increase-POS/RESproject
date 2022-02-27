@@ -55,6 +55,7 @@ namespace Restaurant.View.storage.stocktakingOperations
             get
             {
                 //if (_instance == null)
+                if(_instance is null)
                 _instance = new uc_stocktaking();
                 return _instance;
             }

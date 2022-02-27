@@ -137,6 +137,8 @@ namespace Restaurant.View.windows
 
             txt_tablesContainer.Text = AppSettings.resourcemanager.GetString("trTables");
             txt_reservationsContainer.Text = AppSettings.resourcemanager.GetString("trReservations");
+
+            txt_table.Text = AppSettings.resourcemanager.GetString("trTable");
             #endregion
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchSection, AppSettings.resourcemanager.GetString("trSectionHint"));

@@ -73,6 +73,7 @@ namespace Restaurant.View.settings
             get
             {
                 //if (_instance == null)
+                if(_instance is null)
                 _instance = new uc_permissions();
                 return _instance;
             }

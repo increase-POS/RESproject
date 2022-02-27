@@ -29,6 +29,7 @@ namespace Restaurant.View.reports
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_reports();
                 return _instance;
             }
@@ -102,8 +103,8 @@ namespace Restaurant.View.reports
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_storageReports.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_storageReports.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -118,8 +119,8 @@ namespace Restaurant.View.reports
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_purchaseReports.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_purchaseReports.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -134,8 +135,8 @@ namespace Restaurant.View.reports
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_salesReports.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_salesReports.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -150,8 +151,8 @@ namespace Restaurant.View.reports
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_accountsReports.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_accountsReports.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

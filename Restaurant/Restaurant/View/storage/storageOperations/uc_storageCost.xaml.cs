@@ -76,7 +76,8 @@ namespace Restaurant.View.storage.storageOperations
             get
             {
                 //if (_instance == null)
-                _instance = new uc_storageCost();
+                if(_instance is null)
+                    _instance = new uc_storageCost();
                 return _instance;
             }
             set

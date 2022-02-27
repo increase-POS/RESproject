@@ -73,7 +73,8 @@ namespace Restaurant.View.settings.emailsGeneral
             get
             {
                 //if (_instance == null)
-                _instance = new uc_emailsSetting();
+                if(_instance is null)
+                    _instance = new uc_emailsSetting();
                 return _instance;
             }
             set

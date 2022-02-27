@@ -75,6 +75,7 @@ namespace Restaurant.View.sectionData.persons
             get
             {
                 //if (_instance == null)
+                if(_instance is null)
                 _instance = new uc_users();
                 return _instance;
             }

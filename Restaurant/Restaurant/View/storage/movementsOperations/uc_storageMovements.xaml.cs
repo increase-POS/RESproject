@@ -45,6 +45,7 @@ namespace Restaurant.View.storage.movementsOperations
             get
             {
                 //if (_instance == null)
+                if(_instance is null)
                 _instance = new uc_storageMovements();
                 return _instance;
             }

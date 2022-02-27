@@ -42,7 +42,8 @@ namespace Restaurant.View.storage.storageOperations
         {
             get
             {
-                _instance = new uc_storageInvoice();
+                if(_instance is null)
+                    _instance = new uc_storageInvoice();
                 return _instance;
             }
             set

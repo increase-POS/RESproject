@@ -32,6 +32,7 @@ namespace Restaurant.View.settings.reportsSettings
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_reportsSettings();
                 return _instance;
             }

@@ -26,7 +26,8 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             get
             {
-                _instance = new uc_rawMaterials();
+                if(_instance is null)
+                    _instance = new uc_rawMaterials();
                 return _instance;
             }
             set
@@ -100,8 +101,8 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_categorie.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_categorie.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -115,8 +116,8 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_itemsRawMaterials.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_itemsRawMaterials.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -131,8 +132,8 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_units.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_units.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

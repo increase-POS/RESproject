@@ -50,6 +50,7 @@ namespace Restaurant.View.purchase
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_payInvoice();
                 return _instance;
             }

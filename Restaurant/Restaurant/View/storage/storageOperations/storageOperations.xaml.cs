@@ -26,6 +26,7 @@ namespace Restaurant.View.storage.storageOperations
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_storageOperations();
                 return _instance;
             }
@@ -101,8 +102,8 @@ namespace Restaurant.View.storage.storageOperations
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_storageCost.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_storageCost.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -117,8 +118,8 @@ namespace Restaurant.View.storage.storageOperations
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_storageInvoice.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_storageInvoice.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -133,8 +134,8 @@ namespace Restaurant.View.storage.storageOperations
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_itemsStorage.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_itemsStorage.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

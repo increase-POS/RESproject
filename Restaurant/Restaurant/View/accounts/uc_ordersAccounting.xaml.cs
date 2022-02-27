@@ -48,7 +48,8 @@ namespace Restaurant.View.accounts
             get
             {
                 //if (_instance == null)
-                _instance = new uc_ordersAccounting();
+                if(_instance is null)
+                    _instance = new uc_ordersAccounting();
                 return _instance;
             }
             set

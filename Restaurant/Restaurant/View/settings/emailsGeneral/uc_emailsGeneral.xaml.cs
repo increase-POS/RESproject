@@ -27,6 +27,7 @@ namespace Restaurant.View.settings.emailsGeneral
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_emailsGeneral();
                 return _instance;
             }
@@ -104,8 +105,8 @@ namespace Restaurant.View.settings.emailsGeneral
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_emailsSetting.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_emailsSetting.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -120,8 +121,8 @@ namespace Restaurant.View.settings.emailsGeneral
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_emailsTamplates.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_emailsTamplates.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

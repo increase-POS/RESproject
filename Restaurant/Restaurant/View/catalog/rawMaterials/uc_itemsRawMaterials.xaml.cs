@@ -74,7 +74,8 @@ namespace Restaurant.View.catalog.rawMaterials
             get
             {
                 //if (_instance == null)
-                _instance = new uc_itemsRawMaterials();
+                if(_instance is null)
+                    _instance = new uc_itemsRawMaterials();
                 return _instance;
             }
             set

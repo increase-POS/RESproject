@@ -26,6 +26,7 @@ namespace Restaurant.View.accounts
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_accounts();
                 return _instance;
             }
@@ -99,8 +100,8 @@ namespace Restaurant.View.accounts
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_posTransfers.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_posTransfers.Instance);
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
@@ -113,8 +114,8 @@ namespace Restaurant.View.accounts
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_payments.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_payments.Instance);
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
@@ -127,8 +128,8 @@ namespace Restaurant.View.accounts
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_received.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_received.Instance);
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
@@ -141,8 +142,8 @@ namespace Restaurant.View.accounts
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_banksAccounting.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_banksAccounting.Instance);
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
@@ -155,8 +156,8 @@ namespace Restaurant.View.accounts
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_subscriptions.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_subscriptions.Instance);
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
@@ -170,8 +171,8 @@ namespace Restaurant.View.accounts
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_ordersAccounting.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_ordersAccounting.Instance);
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }

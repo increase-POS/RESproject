@@ -78,6 +78,7 @@ namespace Restaurant.View.sectionData.hallDivide
             get
             {
                 //if (_instance == null)
+                if(_instance is null)
                 _instance = new uc_tables();
                 return _instance;
             }

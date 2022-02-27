@@ -30,6 +30,7 @@ namespace Restaurant.View.sectionData
         {
             get
             {
+                if(_instance is null)
                     _instance = new uc_sectionData();
                 return _instance;
             }
@@ -104,8 +105,8 @@ namespace Restaurant.View.sectionData
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_hallDivide.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_hallDivide.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -119,8 +120,8 @@ namespace Restaurant.View.sectionData
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_residentialSectors.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_residentialSectors.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -134,8 +135,8 @@ namespace Restaurant.View.sectionData
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_persons.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_persons.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -150,8 +151,8 @@ namespace Restaurant.View.sectionData
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_branchesAndStores.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_branchesAndStores.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -166,8 +167,8 @@ namespace Restaurant.View.sectionData
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_banksData.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_banksData.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

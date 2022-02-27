@@ -31,6 +31,7 @@ namespace Restaurant.View.sales.reservations
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_reservations();
                 return _instance;
             }
@@ -100,8 +101,8 @@ namespace Restaurant.View.sales.reservations
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_reservationTable.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_reservationTable.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -116,8 +117,8 @@ namespace Restaurant.View.sales.reservations
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_reservationsUpdate.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_reservationsUpdate.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

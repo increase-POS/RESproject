@@ -29,6 +29,7 @@ namespace Restaurant.View.kitchen
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_itemsCosting();
                 return _instance;
             }

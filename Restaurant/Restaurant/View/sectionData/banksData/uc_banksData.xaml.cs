@@ -26,6 +26,7 @@ namespace Restaurant.View.sectionData.banksData
         {
             get
             {
+                if(_instance is null)
                 _instance = new uc_banksData();
                 return _instance;
             }
@@ -97,8 +98,8 @@ namespace Restaurant.View.sectionData.banksData
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_banks.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_banks.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
@@ -113,8 +114,8 @@ namespace Restaurant.View.sectionData.banksData
         {
             try
             {
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_cards.Instance);
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_cards.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());

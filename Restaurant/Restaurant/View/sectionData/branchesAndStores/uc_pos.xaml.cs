@@ -76,6 +76,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
             get
             {
                 //if (_instance == null)
+                if(_instance is null)
                 _instance = new uc_pos();
                 return _instance;
             }

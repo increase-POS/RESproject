@@ -74,6 +74,7 @@ namespace Restaurant.View.delivery
             get
             {
                 //if (_instance == null)
+                if(_instance is null)
                 _instance = new uc_shippingCompanies();
                 return _instance;
             }
