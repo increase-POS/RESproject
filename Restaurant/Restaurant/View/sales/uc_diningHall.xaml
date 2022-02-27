@@ -1006,12 +1006,12 @@
                                    x:Name="txt_totalDiscount" Foreground="{StaticResource SecondColor}" FontWeight="Bold" FontSize="18"  
                          VerticalAlignment="Center"     HorizontalAlignment="Left" Margin="0 5"/>
                         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right"   >
-                            <TextBlock    x:Name="tb_totalDiscount"  Margin="0 5" 
+                            <TextBlock    x:Name="tb_totalDiscount"  Margin="5" 
                        Foreground="{StaticResource Grey}" Text="0"
                         HorizontalAlignment="Left" VerticalAlignment="Center"
                                   FontWeight="Bold"  FontSize="12"/>
                             <TextBlock Grid.Row="1"   x:Name="tb_moneyIconDis" Grid.Column="1" Margin="0" 
-                       Foreground="{StaticResource Grey}"
+                       Foreground="{StaticResource Grey}" Text="KWD"
                         HorizontalAlignment="Left" VerticalAlignment="Center"
                                   FontWeight="Bold"  FontSize="12"/>
                         </StackPanel>
@@ -1086,7 +1086,7 @@
                     <Button  Content="X" Name="btn_cancel"   FontSize="22" FontWeight="Bold"
                     materialDesign:ButtonAssist.CornerRadius="7" Height="40"
                           Background="{x:Null}" BorderBrush="{x:Null}"
-                       Foreground="White"   />
+                       Foreground="White" IsEnabled="False"  Click="Btn_cancel_Click" />
                 </Border>
 
             </Grid>

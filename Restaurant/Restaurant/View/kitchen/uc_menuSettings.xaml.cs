@@ -876,6 +876,8 @@ namespace Restaurant.View.kitchen
                         }
                     }
                 }
+                else
+                    checkAllCheckBox();
 
                 #endregion
                 HelpClass.clearValidate(requiredControlList, this);

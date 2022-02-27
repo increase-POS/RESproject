@@ -3295,4 +3295,16 @@
   <data name="trTableName" xml:space="preserve">
     <value>اسم الطاولة</value>
   </data>
+  <data name="trChooseTableFirst" xml:space="preserve">
+    <value>اختر طاولة أولاً</value>
+  </data>
+  <data name="trCountMoreTableCapacity" xml:space="preserve">
+    <value>الطاولات لا يمكنها استيعاب العدد المحدد</value>
+  </data>
+  <data name="trMessage" xml:space="preserve">
+    <value>رسالة</value>
+  </data>
+  <data name="trWarning" xml:space="preserve">
+    <value>تحذير</value>
+  </data>
 </root>

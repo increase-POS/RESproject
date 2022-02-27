@@ -57,6 +57,7 @@ namespace Restaurant.View.sales.reservations
         string basicsPermission = "reservationTable_basics";
         List<Tables> selectedTables = new List<Tables>();
         TablesReservation TablesReservation = new TablesReservation();
+        int _PersonsCount = 0;
         //byte tgl_userState;
         #region for search
         int personCount = 0;
@@ -220,8 +221,9 @@ namespace Restaurant.View.sales.reservations
                 {
                     if (HelpClass.validate(requiredControlList, this))
                     {
-                        bool valid = await validateReservationTime();
-                        if (valid)
+                        bool valid1 = await validateReservationTime();
+                        bool valid2 = validatePersonsCount();
+                        if (valid1 && valid2)
                         {
                             TablesReservation reserve = new TablesReservation();
                             reserve.branchId = MainWindow.branchLogin.branchId;
@@ -261,7 +263,7 @@ namespace Restaurant.View.sales.reservations
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                                 Clear();
                                 await refreshTablesList();
-                                    await Search();
+                                await Search();
                             }
                             else
                                 Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -283,6 +285,16 @@ namespace Restaurant.View.sales.reservations
             }
         }
 
+        bool validatePersonsCount()
+        {
+            bool valid = true;
+            if(int.Parse(tb_personsCount.Text) > _PersonsCount)
+            {
+                Toaster.ShowWarning(Window.GetWindow(this), message:AppSettings.resourcemanager.GetString("trCountMoreTableCapacity"), animation: ToasterAnimation.FadeIn);
+                valid = false;
+            }
+            return valid;
+        }
         async Task<Boolean> validateReservationTime()
         {
             bool valid = true;
@@ -495,6 +507,7 @@ namespace Restaurant.View.sales.reservations
         void Clear()
         {
             selectedTables.Clear();
+            _PersonsCount = 0;
             dg_tables.ItemsSource = null;
             dg_tables.ItemsSource = selectedTables;
             this.DataContext = TablesReservation ;
@@ -823,6 +836,8 @@ namespace Restaurant.View.sales.reservations
                     {
                         Tables row = (Tables)dg_tables.SelectedItems[0];
                         selectedTables.Remove(row);
+                        _PersonsCount -= row.personsCount;
+
                         dg_tables.ItemsSource = null;
                         dg_tables.ItemsSource = selectedTables;
                     }
@@ -848,34 +863,7 @@ namespace Restaurant.View.sales.reservations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
-        private async void Cb_table_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                /*
-                string s = _BarcodeStr;
-                if (cb_coupon.SelectedIndex != -1)
-                {
-                    couponModel = coupons.ToList().Find(c => c.cId == (int)cb_coupon.SelectedValue);
-                    if (couponModel != null)
-                    {
-                        s = couponModel.barcode;
-                        await dealWithBarcode(s);
-                    }
-                    cb_coupon.SelectedIndex = -1;
-                    cb_coupon.SelectedItem = "";
-                }
-                */
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+       
 
         private void Btn_clearTable_Click(object sender, RoutedEventArgs e)
         {
@@ -1065,6 +1053,7 @@ namespace Restaurant.View.sales.reservations
             if (!selectedTables.Contains(table))
             {
                 selectedTables.Add(table);
+                _PersonsCount += table.personsCount;
                 dg_tables.ItemsSource = null;
                 dg_tables.ItemsSource = selectedTables;
             }

@@ -130,7 +130,8 @@
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                   TextBlock.FontSize="12"  
                                   Grid.Column="0" Height="40"  Margin="4,0"
-                                  BorderBrush="#737373" BorderThickness="0"  />
+                                  BorderBrush="#737373" BorderThickness="0" 
+                                          SelectionChanged="Cb_searchStatus_SelectionChanged"/>
 
                             </Grid>
                         </Border>
@@ -780,12 +781,12 @@
                                 </Grid>
                                 <!--#endregion-->
                                 <!--#region  reservated-->
-                                <DockPanel Visibility="Visible" x:Name="dp_reservatedTableTitle"  Margin="10 0"
+                                <DockPanel Visibility="Collapsed" x:Name="dp_reservatedTableTitle"  Margin="10 0"
                                  LastChildFill="True">
                                     <TextBlock  Text="next reservation" Name="txt_nextReservation"  Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
                                     <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
                                 </DockPanel>
-                                <Grid x:Name="grid_reservatedTableDetails" Visibility="Visible">
+                                <Grid x:Name="grid_reservatedTableDetails" Visibility="Collapsed">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="auto"/>

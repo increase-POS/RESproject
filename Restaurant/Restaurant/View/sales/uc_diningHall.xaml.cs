@@ -218,11 +218,14 @@ namespace Restaurant.View.sales
         {
             try
             {
-                if (item != null)
+                if (item != null && selectedTables.Count>0)
                 {
                     item = items.Where(x => x.itemId == itemId).FirstOrDefault();
                     addRowToBill(item);
                 }
+                else if(selectedTables.Count == 0)
+                    Toaster.ShowWarning(Window.GetWindow(this), message:  AppSettings.resourcemanager.GetString("trChooseTableFirst"), animation: ToasterAnimation.FadeIn);
+
             }
             catch { }
         }
@@ -560,6 +563,7 @@ namespace Restaurant.View.sales
         List<CouponInvoice> selectedCopouns = new List<CouponInvoice>();
         List<ItemTransfer> invoiceItems = new List<ItemTransfer>();
         List<Tables> selectedTables = new List<Tables>();
+        Invoice invoice = new Invoice();
         private void addRowToBill(Item item)
         {
             decimal total = 0;
@@ -584,7 +588,7 @@ namespace Restaurant.View.sales
                     offerValue = (decimal)item.discountValue;
                 }
                 // increase sequence for each read
-                _SequenceNum++;
+               
                 total = (decimal)item.price;
                 billDetailsList.Add(new BillDetailsSales()
                 {
@@ -601,6 +605,7 @@ namespace Restaurant.View.sales
                     OfferType = offerType,
                     OfferValue = offerValue,
                 });
+                _SequenceNum++;
             }
             #endregion
             #region item already exist in invoice
@@ -613,56 +618,6 @@ namespace Restaurant.View.sales
             #endregion
             BuildBillDesign();
             refreshTotal();
-        }
-        private async Task FillBillDetailsList(int invoiceId)
-        {
-            ////get invoice items
-            //invoiceItems = await invoiceModel.GetInvoicesItems(invoiceId);
-            //// build invoice details grid
-            billDetailsList.Clear();
-            //test
-            Random r = new Random();
-            //int rInt = r.Next(0, 100);
-                for (int i = 0; i < 7; i++)
-                {
-
-                 int   _Count = r.Next(1, 10);
-                Decimal _Price = r.Next(0, 10000);
-                billDetailsList.Add(new BillDetailsSales()
-                {
-                    index = i,
-                    image = "/pic/hamburger.jfif",
-                    itemId = (i + 1),
-                    itemName = "name - " + (i + 1),
-                    Count = _Count,
-                    Price = _Price,
-                    Total = _Count * _Price,
-                    offerId =0,
-                });
-            }
-            //
-            //int indexer = 0;
-            //foreach (ItemTransfer itemT in invoiceItems)
-            //{
-            //    decimal total = (decimal)(itemT.price * itemT.quantity);
-            //    billDetailsList.Add(new BillDetails()
-            //    {
-            //        ID = indexer,
-            //        Product = itemT.itemName,
-            //        itemId = (int)itemT.itemId,
-            //        Unit = itemT.itemUnitId.ToString(),
-            //        itemUnitId = (int)itemT.itemUnitId,
-            //        Count = (int)itemT.quantity,
-            //        Price = (decimal)itemT.price,
-            //        Total = total,
-            //        serialList = serialNumLst,
-            //        type = itemT.itemType,
-            //        valid = isValid,
-            //        offerId = itemT.offerId,
-            //    });
-            //    indexer++;
-            //}
-            BuildBillDesign();
         }
         void BuildBillDesign()
         {
@@ -705,9 +660,11 @@ namespace Restaurant.View.sales
 
 
             #endregion
+            _SequenceNum = 0;
             foreach (var item in billDetailsList)
             {
                 var it = items.Where(x => x.itemId == item.itemId).FirstOrDefault();
+                item.index = _SequenceNum;
                 #region   index
                 var indexText = new TextBlock();
                 indexText.Text = (item.index + 1)+".";
@@ -876,6 +833,7 @@ namespace Restaurant.View.sales
                 gridContainer.Children.Add(buttonPlus);
                 /////////////////////////////////
                 #endregion
+                _SequenceNum++;
             }
             sv_billDetail.Content = gridContainer;
         }
@@ -883,7 +841,7 @@ namespace Restaurant.View.sales
         {
             var button = sender as Button;
             int index = int.Parse(button.Tag.ToString().Replace("plus-", ""));
-            index--;
+            //index--;
             billDetailsList[index].Count++;
             billDetailsList[index].Total = billDetailsList[index].Count * billDetailsList[index].Price;
             editBillRow(index);
@@ -896,7 +854,7 @@ namespace Restaurant.View.sales
         {
             var button = sender as Button;
             int index = int.Parse(button.Tag.ToString().Replace("minus-", ""));
-            index--;
+           // index--;
             if (billDetailsList[index].Count < 2)
             {
                 billDetailsList.Remove(billDetailsList[index]);
@@ -1093,10 +1051,10 @@ namespace Restaurant.View.sales
             catch { }
         }
         #endregion
-        #region adddraft - addInvoice - clear
+        #region adddraft - addInvoice - cancleInvoice - clear
         private async Task addDraft()
         {
-            if (billDetailsList.Count > 0 && _InvoiceType == "sd")
+            if (billDetailsList.Count > 0 && _InvoiceType == "sd" && selectedTables.Count > 0)
             {
                 #region Accept
                 MainWindow.mainWindow.Opacity = 0.2;
@@ -1125,23 +1083,24 @@ namespace Restaurant.View.sales
             try
             {
                 #region invoice object
-                FillCombo.invoice.invNumber = await FillCombo.invoice.generateInvNumber("sd", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
-                FillCombo.invoice.branchCreatorId = MainWindow.branchLogin.branchId;
-                FillCombo.invoice.branchId = MainWindow.branchLogin.branchId;
-                FillCombo.invoice.posId = MainWindow.posLogin.posId;
-                FillCombo.invoice.invType = invType;
+                if(invoice.invNumber == "")
+                    invoice.invNumber = await FillCombo.invoice.generateInvNumber("s", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+               invoice.branchCreatorId = MainWindow.branchLogin.branchId;
+                invoice.branchId = MainWindow.branchLogin.branchId;
+                invoice.posId = MainWindow.posLogin.posId;
+                invoice.invType = invType;
                 if (!tb_totalDiscount.Text.Equals(""))
-                    FillCombo.invoice.discountValue = decimal.Parse(tb_totalDiscount.Text);
-                FillCombo.invoice.discountType = "1";
+                    invoice.discountValue = decimal.Parse(tb_totalDiscount.Text);
+                invoice.discountType = "1";
 
-                FillCombo.invoice.total = _Sum;
-                FillCombo.invoice.totalNet = decimal.Parse(tb_total.Text);
-                FillCombo.invoice.paid = 0;
-                FillCombo.invoice.deserved = FillCombo.invoice.totalNet;
+                invoice.total = _Sum;
+                invoice.totalNet = decimal.Parse(tb_total.Text);
+                invoice.paid = 0;
+               invoice.deserved = invoice.totalNet;
                 if (tb_tax.Text != "")
-                    FillCombo.invoice.tax = decimal.Parse(tb_tax.Text);
+                    invoice.tax = decimal.Parse(tb_tax.Text);
                 else
-                    FillCombo.invoice.tax = 0;
+                    invoice.tax = 0;
                 #endregion
                 #region items transfer
                 invoiceItems = new List<ItemTransfer>();
@@ -1163,9 +1122,26 @@ namespace Restaurant.View.sales
                     invoiceItems.Add(itemT);
                 }
                 #endregion
-                int res = await FillCombo.invoice.saveInvoiceWithItemsAndTables(FillCombo.invoice, invoiceItems,selectedTables);
+                int res = await FillCombo.invoice.saveInvoiceWithItemsAndTables(invoice, invoiceItems,selectedTables);
                 if(res > 0)
                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                else
+                    Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+            }
+            catch
+            {
+
+            }
+        }
+        async Task cancleInvoice(string invType)
+        {
+            try
+            {
+                invoice.invType = invType;
+               
+                int res = await FillCombo.invoice.saveInvoice(invoice);
+                if(res > 0)
+                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopCanceled"), animation: ToasterAnimation.FadeIn);
                 else
                     Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             }
@@ -1182,7 +1158,7 @@ namespace Restaurant.View.sales
             _ManualDiscount = 0;
             _DiscountType = "";
             selectedCopouns.Clear() ;
-            FillCombo.invoice = new Invoice();
+            invoice = new Invoice();
 
             //last
             BuildBillDesign();
@@ -1216,7 +1192,28 @@ namespace Restaurant.View.sales
                 HelpClass.StartAwait(grid_main);
                 if (MainWindow.groupObject.HasPermissionAction(invoicePermission, MainWindow.groupObjects, "one"))
                 {
-                    await addInvoice("s");
+                    if(selectedTables.Count ==0)
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trChooseTableFirst"), animation: ToasterAnimation.FadeIn);
+                    else
+                        await addInvoice("s");
+                }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Btn_cancel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (MainWindow.groupObject.HasPermissionAction(invoicePermission, MainWindow.groupObjects, "one"))
+                {
+                    await cancleInvoice("sc");
                 }
                 HelpClass.EndAwait(grid_main);
             }
@@ -1389,8 +1386,9 @@ namespace Restaurant.View.sales
             }
         }
 
+
         #endregion
 
-        
+
     }
 }

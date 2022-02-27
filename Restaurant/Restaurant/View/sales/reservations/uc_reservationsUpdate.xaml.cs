@@ -231,8 +231,9 @@ namespace Restaurant.View.sales.reservations
                     {
                         if (HelpClass.validate(requiredControlList, this))
                     {
-                        bool valid = await validateReservationTime();
-                        if (valid)
+                            bool valid1 = await validateReservationTime();
+                            bool valid2 = validatePersonsCount();
+                            if (valid1 && valid2)
                         {
                             reservation.branchId = MainWindow.branchLogin.branchId;
                             //reserve.code = await reserve.generateReserveCode("tr", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
@@ -321,6 +322,16 @@ namespace Restaurant.View.sales.reservations
                 message += " ";
                 if (!valid)
                     Toaster.ShowWarning(Window.GetWindow(this), message: message + AppSettings.resourcemanager.GetString("trReserved"), animation: ToasterAnimation.FadeIn);
+            }
+            return valid;
+        }
+        bool validatePersonsCount()
+        {
+            bool valid = true;
+            if (int.Parse(tb_personsCount.Text) > _PersonsCount)
+            {
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trCountMoreTableCapacity"), animation: ToasterAnimation.FadeIn);
+                valid = false;
             }
             return valid;
         }
@@ -419,7 +430,7 @@ namespace Restaurant.View.sales.reservations
                     foreach (var table in w.selectedTables)
                         _PersonsCount += table.personsCount;
                     selectedTables = w.selectedTables;
-                    tb_personsCount.Text = _PersonsCount.ToString();
+
                     dg_tables.ItemsSource = null;
                     dg_tables.ItemsSource = selectedTables;
                 }
@@ -475,7 +486,7 @@ namespace Restaurant.View.sales.reservations
                     reservation = dg_reservation.SelectedItem as TablesReservation;
                     this.DataContext = reservation;
                     _PersonsCount = (int)reservation.personsCount;
-                    tb_personsCount.Text = _PersonsCount.ToString();
+                   // tb_personsCount.Text = _PersonsCount.ToString();
                     if (reservation.tables.Count != 0)
                     {
                         selectedTables = reservation.tables;                      
@@ -542,7 +553,7 @@ namespace Restaurant.View.sales.reservations
             this.DataContext = new TablesReservation() ;
             dg_tables.ItemsSource = null;
             _PersonsCount = 0;
-            tb_personsCount.Text = "";
+           // tb_personsCount.Text = "";
             // last 
             HelpClass.clearValidate(requiredControlList, this);
             btn_tables.IsEnabled = false;
@@ -640,7 +651,7 @@ namespace Restaurant.View.sales.reservations
                         Tables row = (Tables)dg_tables.SelectedItems[0];
                         selectedTables.Remove(row);
                         _PersonsCount -= row.personsCount;
-                        tb_personsCount.Text = _PersonsCount.ToString();
+                        //tb_personsCount.Text = _PersonsCount.ToString();
 
                         dg_tables.ItemsSource = null;
                         dg_tables.ItemsSource = selectedTables;

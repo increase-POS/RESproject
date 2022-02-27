@@ -845,6 +845,7 @@ namespace Restaurant.Classes
         {
             #region fill status
             var statusList = new[] {
+                 new { Text = "", Value = "" },
                  new { Text = AppSettings.resourcemanager.GetString("trEmpty"), Value = "empty" },
                  new { Text = AppSettings.resourcemanager.GetString("trOpened"), Value = "opened" },
             new { Text = AppSettings.resourcemanager.GetString("trReserved"), Value = "reserved"},
@@ -853,7 +854,7 @@ namespace Restaurant.Classes
             cmb.DisplayMemberPath = "Text";
             cmb.SelectedValuePath = "Value";
             cmb.ItemsSource = statusList;
-            cmb.SelectedIndex = 0;
+            cmb.SelectedIndex = -1;
             #endregion
         }
         #endregion

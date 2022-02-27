@@ -23,9 +23,10 @@ namespace Restaurant.View.windows
     /// 
     public partial class wd_diningHallTables : Window
     {
-        Invoice tableInvoice = new Invoice();
+       public Invoice invoice { get; set; }
         public bool isOk { get; set; }
         public List<Tables> selectedTables = new List<Tables>();
+        public List<Tables> reservationTables = new List<Tables>();
         public wd_diningHallTables()
         {
             try
@@ -110,7 +111,7 @@ namespace Restaurant.View.windows
         }
         private void translate()
         {
-
+            #region set text
             txt_title.Text = AppSettings.resourcemanager.GetString("trTables");
             txt_details.Text = AppSettings.resourcemanager.GetString("trDetails");
             txt_nextReservation.Text = AppSettings.resourcemanager.GetString("trNextReservation");
@@ -129,21 +130,24 @@ namespace Restaurant.View.windows
             txt_reservStartTime.Text = AppSettings.resourcemanager.GetString("trStartTime");
             txt_reservEndTime.Text = AppSettings.resourcemanager.GetString("trEndTime");
             txt_personsCount.Text = AppSettings.resourcemanager.GetString("trPersonsCount");
-   
-
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchSection, AppSettings.resourcemanager.GetString("trSectionHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchStatus, AppSettings.resourcemanager.GetString("trStatusHint"));
 
             txt_statusEmpty.Text = AppSettings.resourcemanager.GetString("trEmpty");
             txt_statusOpen.Text = AppSettings.resourcemanager.GetString("trOpened");
             txt_statusReservated.Text = AppSettings.resourcemanager.GetString("trReserved");
 
+            txt_tablesContainer.Text = AppSettings.resourcemanager.GetString("trTables");
+            txt_reservationsContainer.Text = AppSettings.resourcemanager.GetString("trReservations");
+            #endregion
 
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchSection, AppSettings.resourcemanager.GetString("trSectionHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchStatus, AppSettings.resourcemanager.GetString("trStatusHint"));
+
+
+            #region tooltip
             btn_refresh.ToolTip = AppSettings.resourcemanager.GetString("trRefresh");
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
 
-            txt_tablesContainer.Text = AppSettings.resourcemanager.GetString("trTables");
-            txt_reservationsContainer.Text = AppSettings.resourcemanager.GetString("trReservations");
+            #endregion
 
             // btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
@@ -198,7 +202,23 @@ namespace Restaurant.View.windows
                 }
             }
         }
-        
+
+        #endregion
+        #region events
+        private async void Cb_searchStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         #endregion
         #region Refresh & Search
         int sectionId = 0;
@@ -213,7 +233,7 @@ namespace Restaurant.View.windows
             else
                 sectionId = 0;
 
-            if(cb_searchStatus.SelectedIndex != -1)
+            if(cb_searchStatus.SelectedIndex > 0)
                 tablesQuery = tablesQuery.Where(s => s.status == cb_searchStatus.SelectedValue.ToString()).ToList();
             BuildTablesDesign();
         }
@@ -224,6 +244,7 @@ namespace Restaurant.View.windows
         async Task refreshReservationsList()
         {
             reservationsList = await reservation.Get(MainWindow.branchLogin.branchId);
+            reservationsList = reservationsList.Where(x => DateTime.Parse( x.reservationDate.ToString().Split(' ')[0]) >= DateTime.Parse(DateTime.Now.ToString().Split(' ')[0]));
         }
         #endregion      
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
@@ -409,58 +430,96 @@ namespace Restaurant.View.windows
             string tableName =button.Tag.ToString();
             var table = tablesList.Where(x => x.name == tableName).FirstOrDefault();
             await  showDetails(table);
-            MessageBox.Show("Hey you Click me! I'm  " + table.name + " & person Count is " + table.personsCount);
         }
 
         private async Task showDetails(Tables table)
-        {
-            
+        {          
             tb_tableName.Text = table.name;
             tb_tableStatus.Text = table.status;
             switch (table.status)
             {
                 case "empty":
                     grid_emptyTableDetails.Visibility = Visibility.Visible;
+                    grid_emptyTableButtons.Visibility = Visibility.Visible;
+
                     grid_openTableDetails.Visibility = Visibility.Collapsed;
+                    grid_tables.Visibility = Visibility.Collapsed;
+                    grid_openTableButtons.Visibility = Visibility.Collapsed;
+
                     break;
                 case "opened":
                 case "openedReserved":
-                    grid_emptyTableDetails.Visibility = Visibility.Collapsed;
-                    grid_openTableDetails.Visibility = Visibility.Visible;
-                    tableInvoice = await FillCombo.table.GetTableInvoice(table.tableId);
+                    invoice = await FillCombo.table.GetTableInvoice(table.tableId);
+                    selectedTables = await FillCombo.table.getInvoiceTables(invoice.invoiceId);
 
-                    tb_InvoiceCode.Text = tableInvoice.invNumber;
-                    tb_startTime.Text = tableInvoice.invDate.ToString().Split(' ')[1];
-                    TimeSpan startTime = TimeSpan.Parse(tableInvoice.invDate.ToString().Split(' ')[1]);
+                    #region view - display
+                    grid_openTableDetails.Visibility = Visibility.Visible;
+                    grid_openTableButtons.Visibility = Visibility.Visible;
+                    grid_emptyTableButtons.Visibility = Visibility.Collapsed;
+                    grid_emptyTableDetails.Visibility = Visibility.Collapsed;
+
+                    if (selectedTables.Count > 0)
+                    {
+                        grid_tables.Visibility = Visibility.Visible;
+                        dg_tables.ItemsSource = selectedTables;
+                    }
+                    #endregion
+
+                    tb_InvoiceCode.Text = invoice.invNumber;
+                    tb_startTime.Text = invoice.invDate.ToString().Split(' ')[1];
+                    TimeSpan startTime = TimeSpan.Parse(invoice.invDate.ToString().Split(' ')[1]);
                     TimeSpan timeStaying = TimeSpan.FromHours(AppSettings.time_staying);
                     tb_endTime.Text = timeStaying.ToString();
-                    tb_customerName.Text = tableInvoice.agentName;
-                    tb_total.Text = tableInvoice.totalNet.ToString();
+                    tb_customerName.Text = invoice.agentName;
+                    tb_total.Text = invoice.totalNet.ToString();
+                    break;
+                case "reserved":
+                    grid_emptyTableDetails.Visibility = Visibility.Collapsed;
+
                     break;
             }
             #region next reservation
             TablesReservation nextReservation = null;
+            
             foreach (var res in reservationsList)
             {
-                var found = res.tables.Where(x => x.tableId == table.tableId && res.reservationDate >= DateTime.Now);
+                var found = res.tables.Where(x => x.tableId == table.tableId);
                 if (found != null)
                 {
                     nextReservation = res;
                     break;
                 }
             }
-            if(nextReservation != null)
+            if (nextReservation != null)
             {
                 dp_reservatedTableTitle.Visibility = Visibility.Visible;
+                grid_reservatedTableDetails.Visibility = Visibility.Visible;
+
                 tb_reservCode.Text = nextReservation.code;
                 tb_date.Text = nextReservation.reservationDate.ToString().Split(' ')[0];
                 tb_reservStartTime.Text = nextReservation.reservationTime.ToString().Split(' ')[1];
                 tb_reservEndTime.Text = nextReservation.endTime.ToString().Split(' ')[1];
                 tb_personsCount.Text = nextReservation.personsCount.ToString();
                 tb_reservCustomerName.Text = nextReservation.customerName;
+
+                if (table.status != "open" && table.status != "openReserved")
+                {
+                    grid_reservatedTableButtons.Visibility = Visibility.Visible;
+
+                    if (nextReservation.tables.Count > 0)
+                    {
+                        grid_tables.Visibility = Visibility.Visible;
+                        dg_tables.ItemsSource = nextReservation.tables;
+                    }
+
+                }
             }
             else
+            {
                 dp_reservatedTableTitle.Visibility = Visibility.Collapsed;
+                grid_reservatedTableDetails.Visibility = Visibility.Collapsed;
+                grid_reservatedTableButtons.Visibility = Visibility.Collapsed;
+            }
 
             #endregion
         }
@@ -608,5 +667,7 @@ namespace Restaurant.View.windows
             }
         }
         #endregion
+
+       
     }
 }

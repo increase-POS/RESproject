@@ -3319,4 +3319,16 @@ Please add Email in setting</value>
   <data name="trTableName" xml:space="preserve">
     <value>Table Name</value>
   </data>
+  <data name="trChooseTableFirst" xml:space="preserve">
+    <value>Choose Table</value>
+  </data>
+  <data name="trCountMoreTableCapacity" xml:space="preserve">
+    <value>Tables cannot accommodate the specified number</value>
+  </data>
+  <data name="trMessage" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="trWarning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
 </root>
