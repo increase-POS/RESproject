@@ -3307,4 +3307,7 @@
   <data name="trWarning" xml:space="preserve">
     <value>تحذير</value>
   </data>
+  <data name="trTable" xml:space="preserve">
+    <value>الطاولة</value>
+  </data>
 </root>

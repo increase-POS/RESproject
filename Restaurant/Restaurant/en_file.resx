@@ -3331,4 +3331,7 @@ Please add Email in setting</value>
   <data name="trWarning" xml:space="preserve">
     <value>Warning</value>
   </data>
+  <data name="trTable" xml:space="preserve">
+    <value>Table</value>
+  </data>
 </root>
