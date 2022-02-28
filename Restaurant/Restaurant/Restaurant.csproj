@@ -237,16 +237,20 @@
     </Compile>
     <Compile Include="converters\agentCompanyConverter.cs" />
     <Compile Include="converters\agentNameConverter.cs" />
+    <Compile Include="converters\agentTypeConverter.cs" />
     <Compile Include="converters\deliveryTypeConverter.cs" />
     <Compile Include="converters\depositorNameConverter.cs" />
+    <Compile Include="converters\discountTypeConverter.cs" />
     <Compile Include="converters\enabledCouponConverter.cs" />
     <Compile Include="converters\invoiceStatusConverter.cs" />
     <Compile Include="converters\invoiceTypeConverter.cs" />
     <Compile Include="converters\itemTypeConverter.cs" />
+    <Compile Include="converters\locationFreeZoneStorageReportConverter.cs" />
     <Compile Include="converters\notificationsContentConverter.cs" />
     <Compile Include="converters\notificationsTitleConverter.cs" />
     <Compile Include="converters\posTransfersStatusConverter.cs" />
     <Compile Include="converters\processTypeConverter.cs" />
+    <Compile Include="converters\sectionFreeZoneStorageReportConverter.cs" />
     <Compile Include="converters\SectionLocationFreeZoneConverter.cs" />
     <Compile Include="converters\timeFrameConverter.cs" />
     <Compile Include="converters\translateCategoryNameConverter.cs" />
@@ -380,14 +384,32 @@
     <Compile Include="View\reports\purchaseReports\uc_purchaseReports.xaml.cs">
       <DependentUpon>uc_purchaseReports.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\reports\salesReports\uc_dailySalesReports.xaml.cs">
+      <DependentUpon>uc_dailySalesReports.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\reports\salesReports\uc_invoiceSalesReports.xaml.cs">
       <DependentUpon>uc_invoiceSalesReports.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\reports\salesReports\uc_itemSalesReports.xaml.cs">
       <DependentUpon>uc_itemSalesReports.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\reports\salesReports\uc_orderSalesReports.xaml.cs">
+      <DependentUpon>uc_orderSalesReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\salesReports\uc_promotionSalesReports.xaml.cs">
+      <DependentUpon>uc_promotionSalesReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\salesReports\uc_quotationSalesReports.xaml.cs">
+      <DependentUpon>uc_quotationSalesReports.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\reports\salesReports\uc_salesReports.xaml.cs">
       <DependentUpon>uc_salesReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\storageReports\uc_externalStorageReports.xaml.cs">
+      <DependentUpon>uc_externalStorageReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\storageReports\uc_stockStorageReports.xaml.cs">
+      <DependentUpon>uc_stockStorageReports.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\reports\storageReports\uc_storageReports.xaml.cs">
       <DependentUpon>uc_storageReports.xaml</DependentUpon>
@@ -870,6 +892,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\reports\salesReports\uc_dailySalesReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\reports\salesReports\uc_invoiceSalesReports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -878,7 +904,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\reports\salesReports\uc_orderSalesReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\salesReports\uc_promotionSalesReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\salesReports\uc_quotationSalesReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\reports\salesReports\uc_salesReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\storageReports\uc_externalStorageReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\storageReports\uc_stockStorageReports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
