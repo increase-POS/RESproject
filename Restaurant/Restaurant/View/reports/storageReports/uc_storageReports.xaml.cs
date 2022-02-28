@@ -99,32 +99,32 @@ namespace Restaurant.View.reports.storageReports
 
         private void Btn_stockStorageReports_Click(object sender, RoutedEventArgs e)
         {
-            //    try
-            //    {
-            //        MainWindow.mainWindow.grid_main.Children.Clear();
-            //        MainWindow.mainWindow.grid_main.Children.Add(uc_storageReports.Instance);
-            //        Button button = sender as Button;
-            //        MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        HelpClass.ExceptionMessage(ex, this);
-            //    }
+            try
+            {
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_stockStorageReports.Instance);
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_externalStorageReports_Click(object sender, RoutedEventArgs e)
         {
-            //    try
-            //    {
-            //        MainWindow.mainWindow.grid_main.Children.Clear();
-            //        MainWindow.mainWindow.grid_main.Children.Add(uc_storageReports.Instance);
-            //        Button button = sender as Button;
-            //        MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        HelpClass.ExceptionMessage(ex, this);
-            //    }
+            try
+            {
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_externalStorageReports.Instance);
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_internalStorageReports_Click(object sender, RoutedEventArgs e)

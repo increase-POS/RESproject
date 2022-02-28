@@ -116,82 +116,82 @@ namespace Restaurant.View.reports.salesReports
 
         private void Btn_itemSalesReports_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //    MainWindow.mainWindow.grid_main.Children.Clear();
-            //    MainWindow.mainWindow.grid_main.Children.Add(uc_storageReports.Instance);
+            try
+            {
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_itemSalesReports.Instance);
 
-            //    Button button = sender as Button;
-            //    MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_promotionSalesReports_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //    MainWindow.mainWindow.grid_main.Children.Clear();
-            //    MainWindow.mainWindow.grid_main.Children.Add(uc_storageReports.Instance);
+            try
+            {
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_promotionSalesReports.Instance);
 
-            //    Button button = sender as Button;
-            //    MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_orderSalesReports_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //    MainWindow.mainWindow.grid_main.Children.Clear();
-            //    MainWindow.mainWindow.grid_main.Children.Add(uc_storageReports.Instance);
+            try
+            {
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_orderSalesReports.Instance);
 
-            //    Button button = sender as Button;
-            //    MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_quotationSalesReports_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //    MainWindow.mainWindow.grid_main.Children.Clear();
-            //    MainWindow.mainWindow.grid_main.Children.Add(uc_storageReports.Instance);
+            try
+            {
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_quotationSalesReports.Instance);
 
-            //    Button button = sender as Button;
-            //    MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_dailySalesReports_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //    MainWindow.mainWindow.grid_main.Children.Clear();
-            //    MainWindow.mainWindow.grid_main.Children.Add(uc_storageReports.Instance);
+            try
+            {
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_dailySalesReports.Instance);
 
-            //    Button button = sender as Button;
-            //    MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }
