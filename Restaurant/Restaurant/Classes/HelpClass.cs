@@ -673,7 +673,20 @@ namespace Restaurant.Classes
                 }
             };
         }
-         
+        public static string DateTodbString(DateTime? date)
+        {
+            string sdate = "";
+            if (date != null)
+            {
+
+                //"yyyy'-'MM'-'dd'T'HH':'mm':'ss"
+                sdate = date.Value.ToString("yyyy'-'MM'-'dd");
+
+
+            }
+
+            return sdate;
+        }
         static public void searchInComboBox(ComboBox cbm)
         {
             CollectionView itemsViewOriginal = (CollectionView)CollectionViewSource.GetDefaultView(cbm.Items);
