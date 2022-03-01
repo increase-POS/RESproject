@@ -3319,4 +3319,13 @@
   <data name="trToBranch" xml:space="preserve">
     <value>إلى الفرع</value>
   </data>
+  <data name="trCreateMembership" xml:space="preserve">
+    <value>إنشاء عضوية</value>
+  </data>
+  <data name="trUpdateMemberships" xml:space="preserve">
+    <value>تعديل العضويات</value>
+  </data>
+  <data name="trMembershipsManagement" xml:space="preserve">
+    <value>إدارة العضويات</value>
+  </data>
 </root>

@@ -3343,4 +3343,13 @@ Please add Email in setting</value>
   <data name="trToBranch" xml:space="preserve">
     <value>To Branch</value>
   </data>
+  <data name="trCreateMembership" xml:space="preserve">
+    <value>Create membership</value>
+  </data>
+  <data name="trUpdateMemberships" xml:space="preserve">
+    <value>Update memberships</value>
+  </data>
+  <data name="trMembershipsManagement" xml:space="preserve">
+    <value>Memberships management</value>
+  </data>
 </root>
