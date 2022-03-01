@@ -3334,4 +3334,13 @@ Please add Email in setting</value>
   <data name="trTable" xml:space="preserve">
     <value>Table</value>
   </data>
+  <data name="trAccoutant" xml:space="preserve">
+    <value>Accoutant</value>
+  </data>
+  <data name="trFromBranch" xml:space="preserve">
+    <value>From Branch</value>
+  </data>
+  <data name="trToBranch" xml:space="preserve">
+    <value>To Branch</value>
+  </data>
 </root>

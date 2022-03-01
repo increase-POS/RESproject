@@ -74,13 +74,13 @@ namespace Restaurant.View.reports.accountsReports
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-         //try
-         //{
-         //    
-         //        HelpClass.StartAwait(grid_main);
+            try
+            {
 
-            #region translate
-            if (AppSettings.lang.Equals("en"))
+                HelpClass.StartAwait(grid_main);
+
+                #region translate
+                if (AppSettings.lang.Equals("en"))
             {
                 grid_main.FlowDirection = FlowDirection.LeftToRight;
             }
@@ -91,39 +91,22 @@ namespace Restaurant.View.reports.accountsReports
             translate();
             #endregion
 
-            //list = await statisticModel.GetPosTrans();
-            listCash = await statisticModel.GetBytypeAndSideForPos("all", "p");
+                listCash = await statisticModel.GetBytypeAndSideForPos("all", "p");
 
-            //fromBranches = statisticModel.getFromCombo(listCash);
-            //toBranches = statisticModel.getToCombo(listCash);
+                accCombo = listCash.GroupBy(g => g.updateUserAcc).Select(g => new AccountantCombo { Accountant = g.FirstOrDefault().updateUserAcc }).ToList();
 
-            //fromPos = statisticModel.getFromPosCombo(listCash);
-            //toPos = statisticModel.getToPosCombo(listCash);
+                fillAccCombo();
 
-            accCombo = listCash.GroupBy(g => g.updateUserAcc).Select(g => new AccountantCombo { Accountant = g.FirstOrDefault().updateUserAcc }).ToList();
+                Btn_payments_Click(btn_payments, null);
 
-            //fillComboBranches();
-            //fillComboFromPos();
-            //fillComboToPos();
-            fillAccCombo();
 
-            //chk_allFromBranch.IsChecked = true;
-            //chk_allToBranch.IsChecked = true;
-            //chk_allFromPos.IsChecked = true;
-            //chk_allToPos.IsChecked = true;
-            //chk_allAccountant.IsChecked = true;
-
-            Btn_payments_Click(btn_payments, null);
-
-            //    
-            //        HelpClass.EndAwait(grid_main);
-            //}
-            //    catch (Exception ex)
-            //    {
-            //        
-            //            HelpClass.EndAwait(grid_main);
-            //        HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void translate()

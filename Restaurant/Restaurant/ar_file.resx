@@ -3310,4 +3310,13 @@
   <data name="trTable" xml:space="preserve">
     <value>الطاولة</value>
   </data>
+  <data name="trAccoutant" xml:space="preserve">
+    <value>المحاسب</value>
+  </data>
+  <data name="trFromBranch" xml:space="preserve">
+    <value>من الفرع</value>
+  </data>
+  <data name="trToBranch" xml:space="preserve">
+    <value>إلى الفرع</value>
+  </data>
 </root>
