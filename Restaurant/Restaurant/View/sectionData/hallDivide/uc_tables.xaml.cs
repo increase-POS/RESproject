@@ -89,7 +89,6 @@ namespace Restaurant.View.sectionData.hallDivide
         }
 
         string basicsPermission = "tables_basics";
-        string addRangePermission = "tables_addRange";
         Tables table = new Tables();
         IEnumerable<Tables> tablesQuery;
         IEnumerable<Tables> tables;

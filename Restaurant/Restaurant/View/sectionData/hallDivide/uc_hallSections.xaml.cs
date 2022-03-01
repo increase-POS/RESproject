@@ -88,7 +88,7 @@ namespace Restaurant.View.sectionData.hallDivide
         }
 
         string basicsPermission = "hallSections_basics";
-        string selectLocationPermission = "hallSections_selectLocation";
+        string selectLocationPermission = "hallSections_selectTables";
 
         Location location = new Location();
         Section section = new Section();

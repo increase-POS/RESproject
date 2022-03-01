@@ -1,5 +1,4 @@
 ﻿using Restaurant.Classes;
-using Restaurant.View.sales.promotion.membership;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,20 +14,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Restaurant.View.sales.promotion
+namespace Restaurant.View.sales.promotion.membership
 {
     /// <summary>
-    /// Interaction logic for uc_promotion.xaml
+    /// Interaction logic for uc_membership.xaml
     /// </summary>
-    public partial class uc_promotion : UserControl
+    public partial class uc_membership : UserControl
     {
-        private static uc_promotion _instance;
-        public static uc_promotion Instance
+
+        private static uc_membership _instance;
+        public static uc_membership Instance
         {
             get
             {
-                if(_instance is null)
-                _instance = new uc_promotion();
+                if (_instance is null)
+                    _instance = new uc_membership();
                 return _instance;
             }
             set
@@ -36,7 +36,7 @@ namespace Restaurant.View.sales.promotion
                 _instance = value;
             }
         }
-        public uc_promotion()
+        public uc_membership()
         {
             InitializeComponent();
         }
@@ -94,13 +94,14 @@ namespace Restaurant.View.sales.promotion
             }
         }
 
-        private void Btn_membership_Click(object sender, RoutedEventArgs e)
+        
+
+        private void Btn_membershipCreate_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 MainWindow.mainWindow.grid_main.Children.Clear();
-                MainWindow.mainWindow.grid_main.Children.Add(uc_membership.Instance);
-
+                MainWindow.mainWindow.grid_main.Children.Add(uc_membershipCreate.Instance);
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
@@ -110,28 +111,12 @@ namespace Restaurant.View.sales.promotion
             }
         }
 
-        private void Btn_coupon_Click(object sender, RoutedEventArgs e)
+        private void Btn_membershipUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 MainWindow.mainWindow.grid_main.Children.Clear();
-                MainWindow.mainWindow.grid_main.Children.Add(uc_coupon.Instance);
-
-                Button button = sender as Button;
-                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void Btn_offer_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                MainWindow.mainWindow.grid_main.Children.Clear();
-                MainWindow.mainWindow.grid_main.Children.Add(uc_offer.Instance);
+                MainWindow.mainWindow.grid_main.Children.Add(uc_membershipUpdate.Instance);
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }

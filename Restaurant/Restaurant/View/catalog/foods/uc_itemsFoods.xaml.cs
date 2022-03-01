@@ -86,8 +86,8 @@ namespace Restaurant.View.catalog.foods
         }
         public static string categoryName;
         int categoryId;
-        string basicsPermission = "itemsRawMaterials_basics";
-        string unitsPermission = "itemsRawMaterials_units";
+        string basicsPermission = "basics";
+        string dishIngredientsPermission = "dishIngredients";
         byte tgl_itemState;
         string searchText = "";
         public static List<string> requiredControlList;
@@ -126,6 +126,34 @@ namespace Restaurant.View.catalog.foods
                 }
                 translate();
                 //categoryName = "appetizers";
+                if(categoryName == "appetizers")
+                {
+                    basicsPermission = "appetizers_basics";
+                    dishIngredientsPermission = "appetizers_dishIngredients";
+                }
+                else if(categoryName == "beverages")
+                {
+                    basicsPermission = "beverages_basics";
+                    dishIngredientsPermission = "beverages_dishIngredients";
+                }
+                else if(categoryName == "fastFood")
+                {
+                    basicsPermission = "fastFood_basics";
+                    dishIngredientsPermission = "fastFood_dishIngredients";
+                }
+                else if(categoryName == "mainCourses")
+                {
+                    basicsPermission = "mainCourses_basics";
+                    dishIngredientsPermission = "mainCourses_dishIngredients";
+                }
+                else if(categoryName == "desserts")
+                {
+                    basicsPermission = "desserts_basics";
+                    dishIngredientsPermission = "desserts_dishIngredients";
+                }
+
+
+
                 categoryId = FillCombo.GetCategoryId(categoryName);
                 tagsList = await FillCombo.fillTags(cb_tagId, categoryId);
                 Keyboard.Focus(tb_code);
@@ -1532,6 +1560,34 @@ namespace Restaurant.View.catalog.foods
 
         }
 
-        #endregion        
+        #endregion
+
+        private void Btn_dishIngredients_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //items
+                if (item.itemId > 0)
+                {
+
+                    if (MainWindow.groupObject.HasPermissionAction(dishIngredientsPermission, MainWindow.groupObjects, "one"))
+                    {
+                       
+
+                    }
+                    else
+                        Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                }
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
     }
 }

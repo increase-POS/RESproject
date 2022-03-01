@@ -88,7 +88,7 @@ namespace Restaurant.View.storage.storageOperations
 
         string basicsPermission = "storageCost_basics";
         string itemsPermission = "storageCost_items";
-        string reportsPermission = "storageCost_reports";
+
         StorageCost storageCost = new StorageCost();
         IEnumerable<StorageCost> storageCostsQuery;
         IEnumerable<StorageCost> storageCosts;
@@ -623,7 +623,8 @@ namespace Restaurant.View.storage.storageOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") )
+
                 {
                     if (storageCostsQuery != null)
                     {
@@ -654,7 +655,7 @@ namespace Restaurant.View.storage.storageOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
                 {
 
                     if (storageCostsQuery != null)
@@ -687,7 +688,7 @@ namespace Restaurant.View.storage.storageOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
                 {
                     #region
                     //Thread t1 = new Thread(() =>
@@ -731,7 +732,7 @@ namespace Restaurant.View.storage.storageOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
                 {
                     #region
                     if (storageCostsQuery != null)

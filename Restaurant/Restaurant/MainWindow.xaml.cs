@@ -49,6 +49,7 @@ using Restaurant.View.reports.storageReports;
 using Restaurant.View.reports.purchaseReports;
 using Restaurant.View.reports.salesReports;
 using Restaurant.View.reports.accountsReports;
+using Restaurant.View.sales.promotion.membership;
 
 namespace Restaurant
 {
@@ -2499,93 +2500,93 @@ namespace Restaurant
                     grid_main.Children.Add(uc_accountsReports.Instance);
                     break;
                 //107 stockStorageReports
-                //case "stockStorageReports":
-                //    grid_main.Children.Add(uc_stockStorageReports.Instance);
-                //    break;
+                case "stockStorageReports":
+                    grid_main.Children.Add(uc_stockStorageReports.Instance);
+                    break;
                 //108 externalStorageReports
-                //case "externalStorageReports":
-                //    grid_main.Children.Add(uc_externalStorageReports.Instance);
-                //    break;
+                case "externalStorageReports":
+                    grid_main.Children.Add(uc_externalStorageReports.Instance);
+                    break;
                 //109 internalStorageReports
-                //case "internalStorageReports":
-                //    grid_main.Children.Add(uc_internalStorageReports.Instance);
-                //    break;
+                case "internalStorageReports":
+                    grid_main.Children.Add(uc_internalStorageReports.Instance);
+                    break;
                 //110 directStorageReports
-                //case "directStorageReports":
-                //    grid_main.Children.Add(uc_directStorageReports.Instance);
-                //    break;
+                case "directStorageReports":
+                    grid_main.Children.Add(uc_directStorageReports.Instance);
+                    break;
                 //111 stocktakingStorageReports
-                //case "stocktakingStorageReports":
-                //    grid_main.Children.Add(uc_stocktakingStorageReports.Instance);
-                //    break;
+                case "stocktakingStorageReports":
+                    grid_main.Children.Add(uc_stocktakingStorageReports.Instance);
+                    break;
                 //112 destroiedStorageReports
-                //case "destroiedStorageReports":
-                //    grid_main.Children.Add(uc_destroiedStorageReports.Instance);
-                //    break;
+                case "destroiedStorageReports":
+                    grid_main.Children.Add(uc_destroiedStorageReports.Instance);
+                    break;
                 //113 invoicePurchaseReports
-                //case "invoicePurchaseReports":
-                //    grid_main.Children.Add(uc_invoicePurchaseReports.Instance);
-                //    break;
+                case "invoicePurchaseReports":
+                    grid_main.Children.Add(uc_invoicePurchaseReports.Instance);
+                    break;
                 //114 itemPurchaseReports
-                //case "itemPurchaseReports":
-                //    grid_main.Children.Add(uc_itemPurchaseReports.Instance);
-                //    break;
+                case "itemPurchaseReports":
+                    grid_main.Children.Add(uc_itemPurchaseReports.Instance);
+                    break;
                 //115 orderPurchaseReports
-                //case "orderPurchaseReports":
-                //    grid_main.Children.Add(uc_orderPurchaseReports.Instance);
-                //    break;
+                case "orderPurchaseReports":
+                    grid_main.Children.Add(uc_orderPurchaseReports.Instance);
+                    break;
                 //116 invoiceSalesReports
-                //case "invoiceSalesReports":
-                //    grid_main.Children.Add(uc_invoiceSalesReports.Instance);
-                //    break;
+                case "invoiceSalesReports":
+                    grid_main.Children.Add(uc_invoiceSalesReports.Instance);
+                    break;
                 //117 itemSalesReports
-                //case "itemSalesReports":
-                //    grid_main.Children.Add(uc_itemSalesReports.Instance);
-                //    break;
+                case "itemSalesReports":
+                    grid_main.Children.Add(uc_itemSalesReports.Instance);
+                    break;
                 //118 promotionSalesReports
-                //case "promotionSalesReports":
-                //    grid_main.Children.Add(uc_promotionSalesReports.Instance);
-                //    break;
+                case "promotionSalesReports":
+                    grid_main.Children.Add(uc_promotionSalesReports.Instance);
+                    break;
                 //119 orderSalesReports
-                //case "orderSalesReports":
-                //    grid_main.Children.Add(uc_orderSalesReports.Instance);
-                //    break;
+                case "orderSalesReports":
+                    grid_main.Children.Add(uc_orderSalesReports.Instance);
+                    break;
                 //120 quotationSalesReports
-                //case "quotationSalesReports":
-                //    grid_main.Children.Add(uc_quotationSalesReports.Instance);
-                //    break;
+                case "quotationSalesReports":
+                    grid_main.Children.Add(uc_quotationSalesReports.Instance);
+                    break;
                 //121 dailySalesReports
-                //case "dailySalesReports":
-                //    grid_main.Children.Add(uc_dailySalesReports.Instance);
-                //    break;
+                case "dailySalesReports":
+                    grid_main.Children.Add(uc_dailySalesReports.Instance);
+                    break;
                 //122 paymentsAccountsReports
-                //case "paymentsAccountsReports":
-                //    grid_main.Children.Add(uc_paymentsAccountsReports.Instance);
-                //    break;
+                case "paymentsAccountsReports":
+                    grid_main.Children.Add(uc_paymentsAccountsReports.Instance);
+                    break;
                 //123 recipientAccountsReports
-                //case "recipientAccountsReports":
-                //    grid_main.Children.Add(uc_recipientAccountsReports.Instance);
-                //    break;
+                case "recipientAccountsReports":
+                    grid_main.Children.Add(uc_recipientAccountsReports.Instance);
+                    break;
                 //124 bankAccountsReports
-                //case "bankAccountsReports":
-                //    grid_main.Children.Add(uc_bankAccountsReports.Instance);
-                //    break;
+                case "bankAccountsReports":
+                    grid_main.Children.Add(uc_bankAccountsReports.Instance);
+                    break;
                 //125 posAccountsReports
-                //case "posAccountsReports":
-                //    grid_main.Children.Add(uc_posAccountsReports.Instance);
-                //    break;
+                case "posAccountsReports":
+                    grid_main.Children.Add(uc_posAccountsReports.Instance);
+                    break;
                 //126 statementAccountsReports
-                //case "statementAccountsReports":
-                //    grid_main.Children.Add(uc_statementAccountsReports.Instance);
-                //    break;
+                case "statementAccountsReports":
+                    grid_main.Children.Add(uc_statementAccountsReports.Instance);
+                    break;
                 //127 fundAccountsReports
-                //case "fundAccountsReports":
-                //    grid_main.Children.Add(uc_fundAccountsReports.Instance);
-                //    break;
+                case "fundAccountsReports":
+                    grid_main.Children.Add(uc_fundAccountsReports.Instance);
+                    break;
                 //128 profitsAccountsReports
-                //case "profitsAccountsReports":
-                //    grid_main.Children.Add(uc_profitsAccountsReports.Instance);
-                //    break;
+                case "profitsAccountsReports":
+                    grid_main.Children.Add(uc_profitsAccountsReports.Instance);
+                    break;
 
                 default:
                     return;

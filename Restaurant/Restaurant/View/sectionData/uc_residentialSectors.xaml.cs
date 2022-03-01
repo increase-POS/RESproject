@@ -85,7 +85,7 @@ namespace Restaurant.View.sectionData
             }
         }
 
-        string basicsPermission = "residentialSectors";
+        string basicsPermission = "residentialSectors_basics";
         ResidentialSectors residential = new ResidentialSectors();
         IEnumerable<ResidentialSectors> residentialsQuery;
         IEnumerable<ResidentialSectors> residentials;

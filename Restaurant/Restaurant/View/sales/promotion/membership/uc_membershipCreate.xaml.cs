@@ -1,10 +1,7 @@
-﻿using netoaster;
-using Restaurant.Classes;
+﻿using Restaurant.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -18,14 +15,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Restaurant.View.sales.promotion
+namespace Restaurant.View.sales.promotion.membership
 {
     /// <summary>
-    /// Interaction logic for uc_membership.xaml
+    /// Interaction logic for uc_membershipCreate.xaml
     /// </summary>
-    public partial class uc_membership : UserControl
+    public partial class uc_membershipCreate : UserControl
     {
-        public uc_membership()
+        public uc_membershipCreate()
         {
             try
             {
@@ -65,14 +62,14 @@ namespace Restaurant.View.sales.promotion
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private static uc_membership _instance;
-        public static uc_membership Instance
+        private static uc_membershipCreate _instance;
+        public static uc_membershipCreate Instance
         {
             get
             {
                 //if (_instance == null)
-                if(_instance is null)
-                _instance = new uc_membership();
+                if (_instance is null)
+                    _instance = new uc_membershipCreate();
                 return _instance;
             }
             set
@@ -81,7 +78,8 @@ namespace Restaurant.View.sales.promotion
             }
         }
 
-        string basicsPermission = "membership_basics";
+        string basicsPermission = "membershipCreate_basics";
+        string subscriptionFeesPermission = "membershipCreate_subscriptionFees";
         //Agent agent = new Agent();
         //IEnumerable<Agent> agentsQuery;
         //IEnumerable<Agent> agents;
@@ -320,85 +318,85 @@ namespace Restaurant.View.sales.promotion
         }
         private async void Btn_delete_Click(object sender, RoutedEventArgs e)
         {
-/*
-            try
-            {//delete
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") || HelpClass.isAdminPermision())
-                {
-                    HelpClass.StartAwait(grid_main);
-                    if (agent.agentId != 0)
-                    {
-                        if ((!agent.canDelete) && (agent.isActive == 0))
-                        {
-                            #region
-                            Window.GetWindow(this).Opacity = 0.2;
-                            wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
-                            w.ShowDialog();
-                            Window.GetWindow(this).Opacity = 1;
-                            #endregion
-                            if (w.isOk)
-                                await activate();
-                        }
-                        else
-                        {
-                            #region
-                            Window.GetWindow(this).Opacity = 0.2;
-                            wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                            if (agent.canDelete)
-                                w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
-                            if (!agent.canDelete)
-                                w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
-                            w.ShowDialog();
-                            Window.GetWindow(this).Opacity = 1;
-                            #endregion
-                            if (w.isOk)
+            /*
+                        try
+                        {//delete
+                            if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") || HelpClass.isAdminPermision())
                             {
-                                string popupContent = "";
-                                if (agent.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
-                                if ((!agent.canDelete) && (agent.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
-
-                                int s = await agent.delete(agent.agentId, MainWindow.userLogin.userId, agent.canDelete);
-                                if (s < 0)
-                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                                else
+                                HelpClass.StartAwait(grid_main);
+                                if (agent.agentId != 0)
                                 {
-                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+                                    if ((!agent.canDelete) && (agent.isActive == 0))
+                                    {
+                                        #region
+                                        Window.GetWindow(this).Opacity = 0.2;
+                                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                                        w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
+                                        w.ShowDialog();
+                                        Window.GetWindow(this).Opacity = 1;
+                                        #endregion
+                                        if (w.isOk)
+                                            await activate();
+                                    }
+                                    else
+                                    {
+                                        #region
+                                        Window.GetWindow(this).Opacity = 0.2;
+                                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                                        if (agent.canDelete)
+                                            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
+                                        if (!agent.canDelete)
+                                            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
+                                        w.ShowDialog();
+                                        Window.GetWindow(this).Opacity = 1;
+                                        #endregion
+                                        if (w.isOk)
+                                        {
+                                            string popupContent = "";
+                                            if (agent.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
+                                            if ((!agent.canDelete) && (agent.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                                    await RefreshCustomersList();
-                                    await Search();
-                                    Clear();
+                                            int s = await agent.delete(agent.agentId, MainWindow.userLogin.userId, agent.canDelete);
+                                            if (s < 0)
+                                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                            else
+                                            {
+                                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+
+                                                await RefreshCustomersList();
+                                                await Search();
+                                                Clear();
+                                            }
+                                        }
+                                    }
                                 }
+                                HelpClass.EndAwait(grid_main);
                             }
-                        }
-                    }
-                    HelpClass.EndAwait(grid_main);
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                            else
+                                Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-            */
+                        }
+                        catch (Exception ex)
+                        {
+                            HelpClass.EndAwait(grid_main);
+                            HelpClass.ExceptionMessage(ex, this);
+                        }
+                        */
         }
         private async Task activate()
         {//activate
-/*
-            agent.isActive = 1;
-            int s = await agent.save(agent);
-            if (s <= 0)
-                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-            else
-            {
-                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
-                await RefreshCustomersList();
-                await Search();
-            }
-            */
+         /*
+                     agent.isActive = 1;
+                     int s = await agent.save(agent);
+                     if (s <= 0)
+                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                     else
+                     {
+                         Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
+                         await RefreshCustomersList();
+                         await Search();
+                     }
+                     */
         }
         #endregion
         #region events
@@ -916,6 +914,8 @@ namespace Restaurant.View.sales.promotion
             }
             */
         }
+
+
         /*
         private bool isBarcodeCorrect(string barCode)
         {
@@ -1013,6 +1013,11 @@ namespace Restaurant.View.sales.promotion
 
         }
         */
-        #endregion        
+        #endregion
+
+        private void Btn_subscriptionFees_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -34,7 +34,7 @@ namespace Restaurant.View.storage.movementsOperations
     public partial class uc_spendingOrder : UserControl
     {
         string approvePermission = "spendingOrder_approve";
-        string reportsPermission = "spendingRequest_reports";
+        string reportsPermission = "spendingOrder_reports";
         private static uc_spendingOrder _instance;
         public static uc_spendingOrder Instance
         {

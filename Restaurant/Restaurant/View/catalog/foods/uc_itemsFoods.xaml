@@ -484,7 +484,7 @@
                         <Button x:Name="btn_dishIngredients" 
                                 Content="Ingredients" materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
-                    Margin="1,1"   Foreground="White" />
+                    Margin="1,1"   Foreground="White" Click="Btn_dishIngredients_Click" />
                     </Border>
                     <Border Grid.Row="2">
 

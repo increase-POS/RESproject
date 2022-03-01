@@ -175,7 +175,7 @@ namespace Restaurant.View.catalog.rawMaterials
         {//add
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") || HelpClass.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") )
                 {
                     HelpClass.StartAwait(grid_main);
 
