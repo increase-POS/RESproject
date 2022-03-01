@@ -104,10 +104,10 @@
                     <!--<ListView x:Name="lst_allItems" 
                     MouseDoubleClick="Lst_allItems_MouseDoubleClick" />-->
                     <DataGrid x:Name="dg_allStores" Background="White"
-                    Visibility="Visible"
-                         IsReadOnly="False" CanUserAddRows="False"
-                        AutoGenerateColumns="False"   BeginningEdit="Grid_BeginningEdit" 
-                        ColumnWidth="SizeToHeader" MouseDoubleClick="Dg_allStores_MouseDoubleClick" >
+                              Visibility="Visible" HeadersVisibility="None"
+                              IsReadOnly="False" CanUserAddRows="False"
+                              AutoGenerateColumns="False"   BeginningEdit="Grid_BeginningEdit" 
+                              ColumnWidth="SizeToHeader" MouseDoubleClick="Dg_allStores_MouseDoubleClick" >
                         <DataGrid.Columns>
                             <DataGridTextColumn  Width="*" IsReadOnly="True"  Header="Branches/Stores" Binding="{Binding Path=name}"/>
                         </DataGrid.Columns>
@@ -193,10 +193,10 @@
                            Foreground="#999999" FontWeight="SemiBold"  FontSize="16"/>
                 <Border  Margin="10" Grid.Row="3"  Grid.Column="4"  BorderBrush="#999999" BorderThickness="1"  >
                     <DataGrid x:Name="dg_selectedStores"  Background="White"
-                    Visibility="Visible"
-                         IsReadOnly="False" CanUserAddRows="False"  BeginningEdit="Grid_BeginningEdit" 
-                        AutoGenerateColumns="False" 
-                        ColumnWidth="SizeToHeader" MouseDoubleClick="Dg_selectedStores_MouseDoubleClick" >
+                              Visibility="Visible" HeadersVisibility="None"
+                              IsReadOnly="False" CanUserAddRows="False"  BeginningEdit="Grid_BeginningEdit" 
+                              AutoGenerateColumns="False" 
+                              ColumnWidth="SizeToHeader" MouseDoubleClick="Dg_selectedStores_MouseDoubleClick" >
                         <DataGrid.Columns >
                             <DataGridTextColumn Width="*" IsReadOnly="True"  Header="Branches/Stores" />
                             <!--Binding="{Binding Path=bname}"-->
