@@ -1351,7 +1351,7 @@ namespace Restaurant.View.reports.purchaseReports
                         MainWindow.mainWindow.grid_main.Children.Clear();
                         MainWindow.mainWindow.grid_main.Children.Add(uc_payInvoice.Instance);
 
-                        uc_payInvoice.Instance.UserControl_Loaded(uc_payInvoice.Instance, null);
+                        //uc_payInvoice.Instance.UserControl_Loaded(uc_payInvoice.Instance, null);
                         uc_payInvoice._InvoiceType = invoice.invType;
                         uc_payInvoice.Instance.invoice = invoice;
                         uc_payInvoice.isFromReport = true;
