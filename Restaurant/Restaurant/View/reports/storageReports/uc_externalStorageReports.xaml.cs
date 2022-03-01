@@ -30,6 +30,7 @@ using System.Threading;
 using Restaurant.View.storage;
 using System.Resources;
 using System.Reflection;
+using Restaurant.View.storage.movementsOperations;
 
 namespace Restaurant.View.reports.storageReports
 {
@@ -1957,17 +1958,21 @@ namespace Restaurant.View.reports.storageReports
                     ItemTransferInvoice item = dgStock.SelectedItem as ItemTransferInvoice;
                     if (item.invoiceId > 0)
                     {
-                        /*
                         invoice = await invoice.GetByInvoiceId(item.invoiceId);
-                        MainWindow.mainWindow.BTN_storage_Click(MainWindow.mainWindow.btn_storage, null);
-                        View.uc_storage.Instance.UserControl_Loaded(null, null);
-                        View.uc_storage.Instance.Btn_itemsExport_Click(View.uc_storage.Instance.btn_importExport, null);
-                        uc_itemsExport.Instance.UserControl_Loaded(null, null);
-                        uc_itemsExport._ProcessType = invoice.invType;
-                        uc_itemsExport.Instance.invoice = invoice;
-                        uc_itemsExport.isFromReport = true;
-                        await uc_itemsExport.Instance.fillOrderInputs(invoice);
-                        */
+                        MainWindow.mainWindow.Btn_storage_Click(MainWindow.mainWindow.btn_storage, null);
+
+                        //View.uc_storage.Instance.UserControl_Loaded(null, null);
+                        //View.uc_storage.Instance.Btn_itemsExport_Click(View.uc_storage.Instance.btn_importExport, null);
+
+                        MainWindow.mainWindow.grid_main.Children.Clear();
+                        MainWindow.mainWindow.grid_main.Children.Add(uc_storageMovements.Instance);
+
+                        MainWindow.mainWindow.initializationMainTrack("storageMovements");
+                        //uc_storageMovements.Instance.UserControl_Loaded(uc_storageMovements.Instance, null);
+                        uc_storageMovements._ProcessType = invoice.invType;
+                        uc_storageMovements.Instance.invoice = invoice;
+                        uc_storageMovements.isFromReport = true;
+                        await uc_storageMovements.Instance.fillOrderInputs(invoice);
                     }
                 }
                

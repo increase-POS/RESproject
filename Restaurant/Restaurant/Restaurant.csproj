@@ -242,6 +242,7 @@
     <Compile Include="converters\depositorNameConverter.cs" />
     <Compile Include="converters\discountTypeConverter.cs" />
     <Compile Include="converters\enabledCouponConverter.cs" />
+    <Compile Include="converters\inventoryTypeConverter.cs" />
     <Compile Include="converters\invoiceStatusConverter.cs" />
     <Compile Include="converters\invoiceTypeConverter.cs" />
     <Compile Include="converters\itemTypeConverter.cs" />
@@ -405,11 +406,23 @@
     <Compile Include="View\reports\salesReports\uc_salesReports.xaml.cs">
       <DependentUpon>uc_salesReports.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\reports\storageReports\uc_destroiedStorageReports.xaml.cs">
+      <DependentUpon>uc_destroiedStorageReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\storageReports\uc_directStorageReports.xaml.cs">
+      <DependentUpon>uc_directStorageReports.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\reports\storageReports\uc_externalStorageReports.xaml.cs">
       <DependentUpon>uc_externalStorageReports.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\reports\storageReports\uc_internalStorageReports.xaml.cs">
+      <DependentUpon>uc_internalStorageReports.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\reports\storageReports\uc_stockStorageReports.xaml.cs">
       <DependentUpon>uc_stockStorageReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\storageReports\uc_stocktakingStorageReports.xaml.cs">
+      <DependentUpon>uc_stocktakingStorageReports.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\reports\storageReports\uc_storageReports.xaml.cs">
       <DependentUpon>uc_storageReports.xaml</DependentUpon>
@@ -920,11 +933,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\reports\storageReports\uc_destroiedStorageReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\storageReports\uc_directStorageReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\reports\storageReports\uc_externalStorageReports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\reports\storageReports\uc_internalStorageReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\reports\storageReports\uc_stockStorageReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\storageReports\uc_stocktakingStorageReports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

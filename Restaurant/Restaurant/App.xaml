@@ -34,6 +34,7 @@
             <converters:sectionFreeZoneStorageReportConverter x:Key="sectionFreeZoneStorageReportConverter"/>
             <converters:locationFreeZoneStorageReportConverter x:Key="locationFreeZoneStorageReportConverter"/>
             <converters:agentTypeConverter x:Key="agentTypeConverter"/>
+            <converters:inventoryTypeConverter x:Key="inventoryTypeConverter"/>
 
             <!--#region Fonts-->
             <FontFamily x:Key="BarcodeFont" >IDAHC39M Code 39 Barcode, /Restaurant;component/fonts/#IDAHC39M Code 39 Barcode, Arial</FontFamily>
