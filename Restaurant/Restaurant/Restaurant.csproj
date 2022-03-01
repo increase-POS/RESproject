@@ -430,11 +430,17 @@
     <Compile Include="View\reports\uc_reports.xaml.cs">
       <DependentUpon>uc_reports.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\sales\promotion\membership\uc_membership.xaml.cs">
+      <DependentUpon>uc_membership.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sales\promotion\membership\uc_membershipCreate.xaml.cs">
+      <DependentUpon>uc_membershipCreate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sales\promotion\membership\uc_membershipUpdate.xaml.cs">
+      <DependentUpon>uc_membershipUpdate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\sales\promotion\uc_coupon.xaml.cs">
       <DependentUpon>uc_coupon.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\sales\promotion\uc_membership.xaml.cs">
-      <DependentUpon>uc_membership.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\sales\promotion\uc_offer.xaml.cs">
       <DependentUpon>uc_offer.xaml</DependentUpon>
@@ -965,11 +971,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\sales\promotion\uc_coupon.xaml">
+    <Page Include="View\sales\promotion\membership\uc_membership.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\sales\promotion\uc_membership.xaml">
+    <Page Include="View\sales\promotion\membership\uc_membershipCreate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sales\promotion\membership\uc_membershipUpdate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sales\promotion\uc_coupon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
