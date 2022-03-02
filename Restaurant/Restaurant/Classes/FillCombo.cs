@@ -28,6 +28,7 @@ namespace Restaurant.Classes
         static public List<Branch> branchsList ;
         static public List<Branch> branchesAllWithoutMain;
         static public List<Branch> BranchesByBranchandUser;
+        static public List<Branch> branchesWithAll;
         static public async Task<IEnumerable<Branch>> RefreshBranches()
         {
             branchsList = await branch.GetAll();
@@ -57,11 +58,40 @@ namespace Restaurant.Classes
             cmb.SelectedIndex = -1;
 
         }
+
+
         static public async Task<IEnumerable<Branch>> RefreshByBranchandUser()
         {
             BranchesByBranchandUser = await branch.BranchesByBranchandUser(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
             return BranchesByBranchandUser;
         }
+        static public async Task fillBranchesWithAll(ComboBox combo, string type = "")
+        {
+
+            if (HelpClass.isAdminPermision())
+            {
+                if (branchsList is null)
+                    await RefreshBranches();
+                branchesWithAll = branchsList;
+            }
+            else
+            {
+                if (BranchesByBranchandUser is null)
+                    await RefreshByBranchandUser();
+                branchesWithAll = BranchesByBranchandUser;
+            }
+            //branchesWithAll = branches.ToList();
+            Branch branch = new Branch();
+            branch.name = "All";
+            branch.branchId = 0;
+            branchesWithAll.Insert(0, branch);
+
+            combo.ItemsSource = branchesWithAll.Where(b => b.type != type && b.branchId != 1);
+            combo.SelectedValuePath = "branchId";
+            combo.DisplayMemberPath = "name";
+            combo.SelectedIndex = -1;
+        }
+
         static public async Task fillBranchesWithoutCurrent(ComboBox cmb, string type = "")
         {
             List<Branch> branches = new List<Branch>();
@@ -129,42 +159,51 @@ namespace Restaurant.Classes
         }
         #endregion
         #region job
+        static public List<keyValueString> UserJobList;
+
+        static public  List<keyValueString> RefreshUserJobs()
+        {
+            UserJobList = new List<keyValueString> {
+                //manager
+                new keyValueString { key = "admin" ,  value = AppSettings.resourcemanager.GetString("trAdmin") },
+                new keyValueString { key = "generalManager" , value = AppSettings.resourcemanager.GetString("trGeneralManager") },
+                new keyValueString { key = "assistantManager" , value = AppSettings.resourcemanager.GetString("trAssistantManager") },
+                new keyValueString { key = "purchasingManager",   value = AppSettings.resourcemanager.GetString("trPurchasingManager") },
+                new keyValueString { key = "salesManager",    value = AppSettings.resourcemanager.GetString("trSalesManager") },
+                new keyValueString { key = "accountant" , value = AppSettings.resourcemanager.GetString("trAccountant")},
+                //Kitchen
+                new keyValueString { key = "kitchenManager",  value = AppSettings.resourcemanager.GetString("trKitchenManager") },
+                new keyValueString { key = "executiveChef",   value = AppSettings.resourcemanager.GetString("trExecutiveChef")  },
+                new keyValueString { key = "sousChef" ,   value = AppSettings.resourcemanager.GetString("trSousChef") },
+                new keyValueString { key = "chef" ,   value = AppSettings.resourcemanager.GetString("trChef") },
+                new keyValueString { key = "dishwasher" , value = AppSettings.resourcemanager.GetString("trDishwasher")},
+                new keyValueString { key = "kitchenEmployee" , value = AppSettings.resourcemanager.GetString("trKitchenEmployee")},
+                //hall
+                new keyValueString { key = "Headwaiter" , value = AppSettings.resourcemanager.GetString("trHeadWaiter")},
+                new keyValueString { key = "waiter",  value = AppSettings.resourcemanager.GetString("trWaiter")  },
+                new keyValueString { key = "cashier" ,    value = AppSettings.resourcemanager.GetString("trCashier") },
+                new keyValueString { key = "receptionist" , value = AppSettings.resourcemanager.GetString("trReceptionist")},
+                //warehouse manager
+                new keyValueString { key = "warehouseManager", value = AppSettings.resourcemanager.GetString("trWarehouseManager")  },
+                new keyValueString { key = "warehouseEmployee" ,  value = AppSettings.resourcemanager.GetString("trWarehouseEmployee")},
+                //Delivery
+                new keyValueString { key = "deliveryManager", value = AppSettings.resourcemanager.GetString("trDeliveryManager") },
+                new keyValueString { key = "deliveryEmployee" ,   value = AppSettings.resourcemanager.GetString("trDeliveryEmployee")},
+                //other
+                new keyValueString { key = "cleaningEmployee" ,   value = AppSettings.resourcemanager.GetString("trCleaningEmployee") },
+                new keyValueString { key = "employee",    value = AppSettings.resourcemanager.GetString("trEmployee") },
+                 };
+            return UserJobList;
+        }
+
         static public void FillUserJob(ComboBox cmb)
         {
             #region fill job
-            var typelist = new[] {
-                //manager
-                new { Text = AppSettings.resourcemanager.GetString("trAdmin")       , Value = "admin" },
-                new { Text = AppSettings.resourcemanager.GetString("trGeneralManager")       , Value = "generalManager" },
-                new { Text = AppSettings.resourcemanager.GetString("trAssistantManager")       , Value = "assistantManager" },
-                new { Text = AppSettings.resourcemanager.GetString("trPurchasingManager")       , Value = "purchasingManager" },
-                new { Text = AppSettings.resourcemanager.GetString("trSalesManager")       , Value = "salesManager" },
-                new { Text = AppSettings.resourcemanager.GetString("trAccountant")       , Value = "accountant" },
-                //Kitchen
-                new { Text = AppSettings.resourcemanager.GetString("trKitchenManager")       , Value = "kitchenManager" },
-                new { Text = AppSettings.resourcemanager.GetString("trExecutiveChef")       , Value = "executiveChef" },
-                new { Text = AppSettings.resourcemanager.GetString("trSousChef")       , Value = "sousChef" },
-                new { Text = AppSettings.resourcemanager.GetString("trChef")       , Value = "chef" },
-                new { Text = AppSettings.resourcemanager.GetString("trDishwasher")       , Value = "dishwasher" },
-                new { Text = AppSettings.resourcemanager.GetString("trKitchenEmployee")       , Value = "kitchenEmployee" },
-                //hall
-                new { Text = AppSettings.resourcemanager.GetString("trHeadWaiter")       , Value = "Headwaiter" },
-                new { Text = AppSettings.resourcemanager.GetString("trWaiter")       , Value = "waiter" },
-                new { Text = AppSettings.resourcemanager.GetString("trCashier")       , Value = "cashier" },
-                new { Text = AppSettings.resourcemanager.GetString("trReceptionist")       , Value = "receptionist" },
-                //warehouse manager
-                new { Text = AppSettings.resourcemanager.GetString("trWarehouseManager")       , Value = "warehouseManager" },
-                new { Text = AppSettings.resourcemanager.GetString("trWarehouseEmployee")       , Value = "warehouseEmployee" },
-                //Delivery
-                new { Text = AppSettings.resourcemanager.GetString("trDeliveryManager")       , Value = "deliveryManager" },
-                new { Text = AppSettings.resourcemanager.GetString("trDeliveryEmployee")       , Value = "deliveryEmployee" },
-                //other
-                new { Text = AppSettings.resourcemanager.GetString("trCleaningEmployee")       , Value = "cleaningEmployee" },
-                new { Text = AppSettings.resourcemanager.GetString("trEmployee")       , Value = "employee" },
-                 };
-            cmb.DisplayMemberPath = "Text";
-            cmb.SelectedValuePath = "Value";
-            cmb.ItemsSource = typelist;
+            if (UserJobList is null)
+                RefreshUserJobs();
+            cmb.SelectedValuePath = "key";
+            cmb.DisplayMemberPath = "value";
+            cmb.ItemsSource = UserJobList;
             //cmb.SelectedIndex = 0;
             #endregion
         }
@@ -875,6 +914,19 @@ namespace Restaurant.Classes
 
         }
         #endregion
+
+        #region
+        static public List<ItemUnitUser> itemUnitsUsersList = new List<ItemUnitUser>();
+        static public ItemUnitUser itemUnitsUser = new ItemUnitUser();
+        static public async Task<IEnumerable<ItemUnitUser>> RefreshItemUnitUser()
+        {
+            itemUnitsUsersList = await itemUnitsUser.GetByUserId(MainWindow.userLogin.userId);
+            return itemUnitsUsersList;
+        }
+       
+        
+        #endregion
+
         static public ItemLocation itemLocation = new ItemLocation();
         static public Invoice invoice = new Invoice();
         static public List<Invoice> invoices;
