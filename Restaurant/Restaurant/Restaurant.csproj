@@ -181,6 +181,7 @@
     <Compile Include="Classes\ApiClasses\Agent.cs" />
     <Compile Include="Classes\ApiClasses\AvtivateServer.cs" />
     <Compile Include="Classes\ApiClasses\ItemUnitOffer.cs" />
+    <Compile Include="Classes\ApiClasses\ItemUnitUser.cs" />
     <Compile Include="Classes\ApiClasses\MenuSetting.cs" />
     <Compile Include="Classes\ApiClasses\ProgramDetails.cs" />
     <Compile Include="Classes\ApiClasses\ResidentialSectors.cs" />
@@ -222,8 +223,10 @@
     <Compile Include="Classes\ApiClasses\userSetValues.cs" />
     <Compile Include="Classes\AppSettings.cs" />
     <Compile Include="Classes\BillDetails.cs" />
+    <Compile Include="Classes\CalculateNumberDaysInMonth.cs" />
     <Compile Include="Classes\CatigoriesAndItemsView.cs" />
     <Compile Include="Classes\clsReports.cs" />
+    <Compile Include="Classes\Dash.cs" />
     <Compile Include="Classes\EmailClass.cs" />
     <Compile Include="Classes\LocalReportExtensions.cs" />
     <Compile Include="Classes\numberToWord\CurrencyInfo.cs" />
@@ -259,6 +262,7 @@
     <Compile Include="converters\transTypeConverter.cs" />
     <Compile Include="converters\unitItemsListConverter.cs" />
     <Compile Include="converters\unlimitedCouponConverter.cs" />
+    <Compile Include="converters\userJobConverter.cs" />
     <Compile Include="en_file.Designer.cs" />
     <Compile Include="View\accounts\uc_accounts.xaml.cs">
       <DependentUpon>uc_accounts.xaml</DependentUpon>
@@ -319,6 +323,9 @@
     </Compile>
     <Compile Include="View\delivery\uc_shippingCompanies.xaml.cs">
       <DependentUpon>uc_shippingCompanies.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\home\uc_home.xaml.cs">
+      <DependentUpon>uc_home.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\kitchen\uc_consumptionRawMaterials.xaml.cs">
       <DependentUpon>uc_consumptionRawMaterials.xaml</DependentUpon>
@@ -689,6 +696,9 @@
     <Compile Include="View\windows\wd_usersList.xaml.cs">
       <DependentUpon>wd_usersList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_usersOnline.xaml.cs">
+      <DependentUpon>wd_usersOnline.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\winControlPanel.xaml.cs">
       <DependentUpon>winControlPanel.xaml</DependentUpon>
     </Compile>
@@ -823,6 +833,10 @@
     <Page Include="View\delivery\uc_shippingCompanies.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\home\uc_home.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\kitchen\uc_consumptionRawMaterials.xaml">
       <SubType>Designer</SubType>
@@ -1316,6 +1330,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\windows\wd_usersOnline.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\windows\winControlPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1513,9 +1531,7 @@
       <Name>netoaster</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="View\home\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="pic\increase-login-bg-rtl.png" />
     <Resource Include="pic\increase-login-bg.png" />
