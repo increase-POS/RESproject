@@ -304,6 +304,12 @@
                     <TextBlock Text="Increase POS - " Foreground="{StaticResource Grey}"   />
                     <TextBlock Text="Restaurant" Foreground="{StaticResource MainColor}"   />
                 </StackPanel>
+                <TextBlock Grid.Row="7" Grid.Column="0"  FontSize="12" Grid.ColumnSpan="6" 
+                   FontWeight="Normal" Foreground="#9B9B9B"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                           Margin="5,5,25,5"
+                x:Name="txt_rightReserved"
+                           Text="2021 © All Right Reserved for Increase"/>
             </Grid>
            
 
@@ -378,7 +384,7 @@
                     </Button>
                     <StackPanel   x:Name="sp_userName" VerticalAlignment="Center" Orientation="Vertical" Grid.Column="9" Margin="5,5,5,5">
                         <TextBlock x:Name="txt_userName"  Text="yasin idlbi" FontWeight="Bold" FontSize="8" Foreground="White" HorizontalAlignment="Center" />
-                            <TextBlock x:Name="txt_userJob"  Text="System admin"   FontSize="{Binding ElementName=txt_userName ,Path=FontSize}" FontWeight="Light" Foreground="#E8E8E8" HorizontalAlignment="Center" />
+                        <TextBlock x:Name="txt_userJob"  Text="{Binding Path=job,Converter={StaticResource userJobConverter}}"   FontSize="{Binding ElementName=txt_userName ,Path=FontSize}" FontWeight="Medium" Foreground="#E8E8E8" HorizontalAlignment="Center" />
                     </StackPanel>
                         
                     <Grid>

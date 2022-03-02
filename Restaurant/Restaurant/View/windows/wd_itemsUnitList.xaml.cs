@@ -23,7 +23,7 @@ namespace Restaurant.View.windows
     public partial class wd_itemsUnitList : Window
     {
         public int itemId = 0 , itemUnitId = 0, storageCostId = 0;
-
+        public bool isActive;
         public string CallerName;//"IUList"
 
         ItemUnit itemUnit = new ItemUnit();
@@ -32,12 +32,16 @@ namespace Restaurant.View.windows
 
         Package package = new Package();
         StorageCost storageCost = new StorageCost();
+
         List<Package> allIPackagesSource = new List<Package>();
        public List<Package> allPackages = new List<Package>();
 
         List<ItemUnit> allItemsUnitsSource = new List<ItemUnit>();
-
         public List<ItemUnit> selectedItemUnits = new List<ItemUnit>();
+
+        List<ItemUnitUser> allItemsUnitsUserSource = new List<ItemUnitUser>();
+        public List<ItemUnitUser> selectedItemUnitsUser = new List<ItemUnitUser>();
+
 
         string searchText = "";
 
@@ -166,7 +170,13 @@ namespace Restaurant.View.windows
                     dg_allItems.DisplayMemberPath = "itemName";
                 }
                 #endregion
-                    if (sender != null)
+                #region dashboard
+               else if (CallerName.Equals("IUList"))
+                {
+                    
+                }
+                #endregion
+                if (sender != null)
                     HelpClass.EndAwait(grid_offerList);
             }
             catch (Exception ex)
@@ -201,6 +211,7 @@ namespace Restaurant.View.windows
 
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
+            isActive = false;
             DialogResult = false;
             this.Close();
         }
@@ -376,8 +387,8 @@ namespace Restaurant.View.windows
                 if (sender != null)
                     HelpClass.StartAwait(grid_offerList);
 
-               
 
+                isActive = true;
                 DialogResult = true;
                 this.Close();
 

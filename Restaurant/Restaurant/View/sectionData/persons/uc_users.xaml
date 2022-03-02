@@ -160,7 +160,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Width="*"  Header="Job"   Binding="{Binding Path=job}">
+                                <DataGridTextColumn Width="*"  Header="Job"   Binding="{Binding Path=job,Converter={StaticResource userJobConverter}}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>

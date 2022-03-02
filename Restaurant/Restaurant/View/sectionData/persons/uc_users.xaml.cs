@@ -268,7 +268,7 @@ namespace Restaurant.View.sectionData.persons
                 if (HelpClass.validate(requiredControlList, this) && duplicateUserName && HelpClass.IsValidEmail(this))
                 {
                         user.username = tb_username.Text;
-                        user.password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password);
+                        //user.password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password);
                         user.name = tb_name.Text;
                         user.lastname = tb_lastname.Text;
                         user.job = cb_job.SelectedValue.ToString();
