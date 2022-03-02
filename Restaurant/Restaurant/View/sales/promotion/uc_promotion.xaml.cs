@@ -140,5 +140,10 @@ namespace Restaurant.View.sales.promotion
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        private void Btn_invoicesClasses_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

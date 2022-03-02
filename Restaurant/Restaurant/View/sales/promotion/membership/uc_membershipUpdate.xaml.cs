@@ -75,7 +75,7 @@ namespace Restaurant.View.sales.promotion.membership
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-
+                dg_membership.ItemsSource = FillCombo.branchsList;
                 /*
                 await RefreshCustomersList();
                 await Search();
@@ -270,7 +270,104 @@ namespace Restaurant.View.sales.promotion.membership
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-      
+
+        #endregion
+
+        #region button in datagrid
+       
+
+        async void customersRowinDatagrid(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        //membership row = (membership)dg_membership.SelectedItems[0];
+
+                      
+
+                    }
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        async void couponsRowinDatagrid(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        //membership row = (membership)dg_membership.SelectedItems[0];
+
+
+
+                    }
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        async void offersRowinDatagrid(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        //membership row = (membership)dg_membership.SelectedItems[0];
+
+
+
+                    }
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        async void invoicesClassesRowinDatagrid(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        //membership row = (membership)dg_membership.SelectedItems[0];
+
+
+
+                    }
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         #endregion
     }
 }
