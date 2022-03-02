@@ -3328,4 +3328,7 @@
   <data name="trMembershipsManagement" xml:space="preserve">
     <value>إدارة العضويات</value>
   </data>
+  <data name="trMembershipsData" xml:space="preserve">
+    <value>بيانات العضويات</value>
+  </data>
 </root>

@@ -3352,4 +3352,7 @@ Please add Email in setting</value>
   <data name="trMembershipsManagement" xml:space="preserve">
     <value>Memberships management</value>
   </data>
+  <data name="trMembershipsData" xml:space="preserve">
+    <value>Memberships data</value>
+  </data>
 </root>
