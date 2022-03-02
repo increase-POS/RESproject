@@ -2833,8 +2833,8 @@ Please add Email in setting</value>
   <data name="trPersonsCount" xml:space="preserve">
     <value>Persons count</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
+  <data name="trIn" xml:space="preserve">
+    <value>In</value>
   </data>
   <data name="trAccountant" xml:space="preserve">
     <value>Accountant</value>
@@ -3354,5 +3354,29 @@ Please add Email in setting</value>
   </data>
   <data name="trMembershipsData" xml:space="preserve">
     <value>Memberships data</value>
+  </data>
+  <data name="trAgents" xml:space="preserve">
+    <value>Agents</value>
+  </data>
+  <data name="trAgentType" xml:space="preserve">
+    <value>Agent Type</value>
+  </data>
+  <data name="trArchives" xml:space="preserve">
+    <value>Archives</value>
+  </data>
+  <data name="trDestroyedCount" xml:space="preserve">
+    <value>Destroyed Count</value>
+  </data>
+  <data name="trDiffrencePercentage" xml:space="preserve">
+    <value>Diffrence Percentage</value>
+  </data>
+  <data name="trMaxCollect" xml:space="preserve">
+    <value>Max Collect</value>
+  </data>
+  <data name="trMinCollect" xml:space="preserve">
+    <value>Min Collect</value>
+  </data>
+  <data name="trOut" xml:space="preserve">
+    <value>Out</value>
   </data>
 </root>

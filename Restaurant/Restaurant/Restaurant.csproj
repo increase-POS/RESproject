@@ -253,6 +253,7 @@
     <Compile Include="converters\processTypeConverter.cs" />
     <Compile Include="converters\sectionFreeZoneStorageReportConverter.cs" />
     <Compile Include="converters\SectionLocationFreeZoneConverter.cs" />
+    <Compile Include="converters\stockSectionLocationFreeZoneConverter.cs" />
     <Compile Include="converters\timeFrameConverter.cs" />
     <Compile Include="converters\translateCategoryNameConverter.cs" />
     <Compile Include="converters\transTypeConverter.cs" />

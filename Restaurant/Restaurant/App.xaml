@@ -8,6 +8,7 @@
     <!--StartupUri="MainWindow.xaml"-->
     <Application.Resources>
         <ResourceDictionary>
+            <converters:stockSectionLocationFreeZoneConverter x:Key="stockSectionLocationFreeZoneConverter"/>
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <converters:accuracyConverter x:Key="accuracyConverter"/>
             <converters:deliveryTypeConverter x:Key="deliveryTypeConverter"/>

@@ -570,6 +570,10 @@ namespace Restaurant.View.sales.promotion
                     if (coupon != null)
                     {
                         tb_barcode.Text = coupon.barcode;
+
+                        tb_discountValue.IsEnabled = false;
+                        cb_discountType.IsEnabled = false;
+
                         HelpClass.drawBarcode(coupon.barcode , img_barcode);
 
                         #region delete
@@ -654,6 +658,9 @@ namespace Restaurant.View.sales.promotion
         void Clear()
         {
             this.DataContext = new Coupon();
+
+            tb_discountValue.IsEnabled = true;
+            cb_discountType.IsEnabled = true;
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);

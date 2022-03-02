@@ -150,7 +150,7 @@ namespace Restaurant.View.reports.storageReports
 
             col_branch.Header = AppSettings.resourcemanager.GetString("trBranch");
             col_itemUnits.Header = AppSettings.resourcemanager.GetString("trItemUnit");
-            col_stockTakeNum.Header = AppSettings.resourcemanager.GetString("trNO");
+            col_stockTakeNum.Header = AppSettings.resourcemanager.GetString("trNo.");
             col_stockTakingCoastType.Header = AppSettings.resourcemanager.GetString("trType");
             col_stockTakingDate.Header = AppSettings.resourcemanager.GetString("trDate");
             col_diffPercentage.Header = AppSettings.resourcemanager.GetString("trDiffrencePercentage");

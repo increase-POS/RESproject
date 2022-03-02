@@ -92,7 +92,7 @@ namespace Restaurant.View.reports.storageReports
             try
             {
                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -153,7 +153,7 @@ namespace Restaurant.View.reports.storageReports
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txt_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
 
-            col_invNumber.Header = AppSettings.resourcemanager.GetString("trNo");
+            col_invNumber.Header = AppSettings.resourcemanager.GetString("trNo.");
             col_invTypeNumber.Header = AppSettings.resourcemanager.GetString("trType");
             col_invDate.Header = AppSettings.resourcemanager.GetString("trDate");
             col_branch.Header = AppSettings.resourcemanager.GetString("trBranch");
@@ -162,7 +162,7 @@ namespace Restaurant.View.reports.storageReports
             col_agentType.Header = AppSettings.resourcemanager.GetString("trAgentType");
             col_agent.Header = AppSettings.resourcemanager.GetString("trName");
             col_itemUnits.Header = AppSettings.resourcemanager.GetString("trItemUnit");
-            col_agentTypeAgent.Header = AppSettings.resourcemanager.GetString("trType-Name");
+            col_agentTypeAgent.Header = AppSettings.resourcemanager.GetString("trType")+"-"+ AppSettings.resourcemanager.GetString("trName");
             col_quantity.Header = AppSettings.resourcemanager.GetString("trQTR");
 
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
@@ -214,12 +214,12 @@ namespace Restaurant.View.reports.storageReports
                 fillEvents();
 
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -229,7 +229,7 @@ namespace Restaurant.View.reports.storageReports
             try
             {
                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 
@@ -248,12 +248,12 @@ namespace Restaurant.View.reports.storageReports
                 fillEvents();
 
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -263,7 +263,7 @@ namespace Restaurant.View.reports.storageReports
             try
             {
                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 

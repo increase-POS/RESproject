@@ -3331,4 +3331,31 @@
   <data name="trMembershipsData" xml:space="preserve">
     <value>بيانات العضويات</value>
   </data>
+  <data name="trAgents" xml:space="preserve">
+    <value>الوكلاء</value>
+  </data>
+  <data name="trAgentType" xml:space="preserve">
+    <value>نوع الوكيل</value>
+  </data>
+  <data name="trArchives" xml:space="preserve">
+    <value>أرشيف</value>
+  </data>
+  <data name="trDestroyedCount" xml:space="preserve">
+    <value>عدد المتلفات</value>
+  </data>
+  <data name="trDiffrencePercentage" xml:space="preserve">
+    <value>نسبة الاختلاف</value>
+  </data>
+  <data name="trIn" xml:space="preserve">
+    <value>In</value>
+  </data>
+  <data name="trMaxCollect" xml:space="preserve">
+    <value>قيمة التجميع العظمى</value>
+  </data>
+  <data name="trMinCollect" xml:space="preserve">
+    <value>قيمة التجميع الدنيا</value>
+  </data>
+  <data name="trOut" xml:space="preserve">
+    <value>Out</value>
+  </data>
 </root>

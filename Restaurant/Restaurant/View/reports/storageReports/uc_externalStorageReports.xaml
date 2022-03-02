@@ -50,7 +50,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Border x:Name="bdr_item" Grid.Column="0" Background="White" BorderThickness="0"  Height="40" Width="60" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="20,5,0,-1">
-                            <Button x:Name="btn_item"  Background="Transparent"  Tag="item"
+                            <Button x:Name="btn_item"  Background="Transparent"  Tag="items"
                                     materialDesign:RippleAssist.Feedback="Transparent"
                                     BorderBrush="Transparent" Height="auto" Click="btn_externalItems_Click">
                                 <Button.Triggers>
@@ -81,7 +81,7 @@
                         </Border>
 
                         <Border x:Name="bdr_agent" Grid.Column="1" Background="{StaticResource SecondColor}" BorderThickness="0"  Height="40" Width="60" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="10,5,0,-1">
-                            <Button x:Name="btn_agent"  Background="Transparent"  Tag="agent"
+                            <Button x:Name="btn_agent"  Background="Transparent"  Tag="agents"
                                     materialDesign:RippleAssist.Feedback="Transparent"
                                     BorderBrush="Transparent" Height="auto" Click="btn_externalAgents_Click">
                                 <Button.Triggers>
@@ -112,7 +112,7 @@
                         </Border>
 
                         <Border x:Name="bdr_invoice" Grid.Column="2" Background="{StaticResource SecondColor}" BorderThickness="0"  Height="40" Width="60" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="10,5,0,-1">
-                            <Button x:Name="btn_invoice"  Background="Transparent"  Tag="invoice"
+                            <Button x:Name="btn_invoice"  Background="Transparent"  Tag="invoices"
                                     materialDesign:RippleAssist.Feedback="Transparent"
                                     BorderBrush="Transparent" Height="auto" Click="btn_externalInvoices_Click">
                                 <Button.Triggers>
@@ -706,7 +706,7 @@
                             <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                             <DataGrid  Margin="5"  IsReadOnly="True"  Background="White"
-                             Name="dgStock" MouseDoubleClick="DgStock_MouseDoubleClick"
+                             Name="dgStock" 
                                 AutoGenerateColumns="False" 
                                 ColumnWidth="SizeToHeader"
                                     AlternatingRowBackground="#f3f3f3" AlternationCount="2">

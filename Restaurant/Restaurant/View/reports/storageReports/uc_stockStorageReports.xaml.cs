@@ -140,7 +140,7 @@ namespace Restaurant.View.reports.storageReports
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_startDateItem, AppSettings.resourcemanager.GetString("trStartDateHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_endDateItem, AppSettings.resourcemanager.GetString("trEndDateHint"));
 
-            chk_expireDateItem.Content = AppSettings.resourcemanager.GetString("trAll");
+            chk_expireDateItem.Content = AppSettings.resourcemanager.GetString("trExpiredDate");
             chk_allBranchesItem.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_allItemsItem.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_allUnitsItem.Content = AppSettings.resourcemanager.GetString("trAll");
@@ -157,11 +157,8 @@ namespace Restaurant.View.reports.storageReports
             col_locationSection.Header = AppSettings.resourcemanager.GetString("trSectionLocation");
             col_startDate.Header = AppSettings.resourcemanager.GetString("trStartDate");
             col_endDate.Header = AppSettings.resourcemanager.GetString("trEndDate");
-            col_Min.Header = AppSettings.resourcemanager.GetString("trMin");//??
-            col_Max.Header = AppSettings.resourcemanager.GetString("trMax");//??
-            col_MinCollect.Header = AppSettings.resourcemanager.GetString("trMinCollect");//??
-            col_MaxCollect.Header = AppSettings.resourcemanager.GetString("trMaxCollect");//??
-            col_stockCost.Header = AppSettings.resourcemanager.GetString("trCost");
+            col_MinCollect.Header = AppSettings.resourcemanager.GetString("trMinCollect");
+            col_MaxCollect.Header = AppSettings.resourcemanager.GetString("trMaxCollect");
             col_quantity.Header = AppSettings.resourcemanager.GetString("trQTR");
 
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
@@ -1199,9 +1196,6 @@ namespace Restaurant.View.reports.storageReports
             col_quantity.Visibility = Visibility.Hidden;
             col_startDate.Visibility = Visibility.Hidden;
             col_endDate.Visibility = Visibility.Hidden;
-            col_Min.Visibility = Visibility.Hidden;
-            col_Max.Visibility = Visibility.Hidden;
-            col_stockCost.Visibility = Visibility.Hidden;
             col_location.Visibility = Visibility.Hidden;
             col_section.Visibility = Visibility.Hidden;
             col_itemUnits.Visibility = Visibility.Hidden;
@@ -1222,9 +1216,6 @@ namespace Restaurant.View.reports.storageReports
                 col_locationSection.Visibility = Visibility.Visible;
                 col_startDate.Visibility = Visibility.Visible;
                 col_endDate.Visibility = Visibility.Visible;
-                col_Min.Visibility = Visibility.Visible;
-                col_Max.Visibility = Visibility.Visible;
-                col_stockCost.Visibility = Visibility.Visible;
             }
             else if (selectedStockTab == 1)
             {
@@ -1235,9 +1226,6 @@ namespace Restaurant.View.reports.storageReports
                 col_itemUnits.Visibility = Visibility.Visible;
                 col_startDate.Visibility = Visibility.Visible;
                 col_endDate.Visibility = Visibility.Visible;
-                col_Min.Visibility = Visibility.Visible;
-                col_Max.Visibility = Visibility.Visible;
-                col_stockCost.Visibility = Visibility.Visible;
             }
             else if (selectedStockTab == 2)
             {

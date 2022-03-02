@@ -125,7 +125,7 @@ namespace Restaurant.View.reports.storageReports
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
 
             col_use.Header = AppSettings.resourcemanager.GetString("trUser");
-            col_destroiedNumber.Header = AppSettings.resourcemanager.GetString("trNom");
+            col_destroiedNumber.Header = AppSettings.resourcemanager.GetString("trNo.");
             col_destroiedDate.Header = AppSettings.resourcemanager.GetString("trDate");
             col_branch.Header = AppSettings.resourcemanager.GetString("trBranch");
             col_destroiedItemsUnits.Header = AppSettings.resourcemanager.GetString("trItemUnit");
