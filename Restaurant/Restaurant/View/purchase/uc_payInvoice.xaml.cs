@@ -1535,7 +1535,7 @@ namespace Restaurant.View.purchase
                     newCount = oldCount;
                     tb = dg_billDetails.Columns[4].GetCellContent(dg_billDetails.Items[_datagridSelectedIndex]) as TextBlock;
 
-                    newPrice = unit.cost;
+                    //newPrice = unit.price;
 
                     tb = dg_billDetails.Columns[5].GetCellContent(dg_billDetails.Items[_datagridSelectedIndex]) as TextBlock;
                     tb.Text = newPrice.ToString();
@@ -1549,16 +1549,11 @@ namespace Restaurant.View.purchase
                     total = newCount * newPrice;
                     _Sum += total;
 
-                    #region items tax
-                    if (item.taxes != null)
-                        itemTax = (decimal)item.taxes;
-                    #endregion
-
                     refreshTotalValue();
 
                     // update item in billdetails           
                     billDetails[_datagridSelectedIndex].Count = (int)newCount;
-                    billDetails[_datagridSelectedIndex].Price = newPrice;
+                    //billDetails[_datagridSelectedIndex].Price = newPrice;
                     billDetails[_datagridSelectedIndex].Total = total;
                     refrishBillDetails();
                     #endregion
