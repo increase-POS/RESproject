@@ -161,11 +161,6 @@
                         <ImageBrush x:Name="img_En"  Stretch="Fill"  ImageSource="/pic/programs-Rest-login-bg.png"/>
                     </Border.Background>
                 </Border>
-                <Border Visibility="Hidden" x:Name="bdr_imageAr" FlowDirection="LeftToRight"  CornerRadius="10,0,0,10">
-                    <Border.Background>
-                        <ImageBrush x:Name="img_Ar"  Stretch="Fill"  ImageSource="/pic/increase-login-bg-rtl.png"/>
-                    </Border.Background>
-                </Border>
             </Grid>
             <!--<mah:ProgressRing x:Name="prg_awaitRing" Foreground="White" 
                               IsActive="False" Grid.RowSpan="2" Grid.ColumnSpan="2"  />-->

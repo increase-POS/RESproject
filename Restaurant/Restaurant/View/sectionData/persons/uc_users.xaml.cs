@@ -127,6 +127,8 @@ namespace Restaurant.View.sectionData.persons
                 Keyboard.Focus(tb_name);
                 await RefreshUsersList();
                 await Search();
+
+
                 Clear();
                 HelpClass.EndAwait(grid_main);
             }
@@ -298,7 +300,7 @@ namespace Restaurant.View.sectionData.persons
                             isImgPressed = false;
                             if (!b.Equals(""))
                             {
-                                await getImg();
+                                 getImg();
                             }
                             else
                             {
@@ -480,7 +482,10 @@ namespace Restaurant.View.sectionData.persons
                     if (user != null)
                     {
                     btn_stores.IsEnabled = true;
-                        await getImg();
+                        grid_userNameLabel.Visibility = Visibility.Visible;
+                        grid_userNameInput.Visibility = Visibility.Collapsed;
+
+                        getImg();
                         #region delete
                         if (user.canDelete)
                             btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
@@ -556,6 +561,10 @@ namespace Restaurant.View.sectionData.persons
             user = new User();
             user.workHours = "0";
             this.DataContext = user;
+
+
+            grid_userNameLabel.Visibility = Visibility.Collapsed;
+            grid_userNameInput.Visibility = Visibility.Visible;
 
             #region mobile-Phone-fax-email
             brd_areaPhoneLocal.Visibility =  Visibility.Collapsed;
@@ -721,34 +730,44 @@ namespace Restaurant.View.sectionData.persons
         }
         private async Task getImg()
         {
-            if (string.IsNullOrEmpty(user.image))
+            try
             {
-                HelpClass.clearImg(btn_image);
-            }
-            else
-            {
-                byte[] imageBuffer = await user.downloadImage(user.image); // read this as BLOB from your DB
-
-                var bitmapImage = new BitmapImage();
-                if (imageBuffer != null)
+                HelpClass.StartAwait(grid_image, "forImage");
+                await  Task.Delay(2000);
+                if (string.IsNullOrEmpty(user.image))
                 {
-                    using (var memoryStream = new MemoryStream(imageBuffer))
-                    {
-                        bitmapImage.BeginInit();
-                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                        bitmapImage.StreamSource = memoryStream;
-                        bitmapImage.EndInit();
-                    }
-
-                    btn_image.Background = new ImageBrush(bitmapImage);
-                    // configure trmporary path
-                    string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                    string tmpPath = System.IO.Path.Combine(dir, Global.TMPUsersFolder);
-                    tmpPath = System.IO.Path.Combine(tmpPath, user.image);
-                    openFileDialog.FileName = tmpPath;
+                    HelpClass.clearImg(btn_image);
                 }
                 else
-                    HelpClass.clearImg(btn_image);
+                {
+                    byte[] imageBuffer = await user.downloadImage(user.image); // read this as BLOB from your DB
+
+                    var bitmapImage = new BitmapImage();
+                    if (imageBuffer != null)
+                    {
+                        using (var memoryStream = new MemoryStream(imageBuffer))
+                        {
+                            bitmapImage.BeginInit();
+                            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                            bitmapImage.StreamSource = memoryStream;
+                            bitmapImage.EndInit();
+                        }
+
+                        btn_image.Background = new ImageBrush(bitmapImage);
+                        // configure trmporary path
+                        string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                        string tmpPath = System.IO.Path.Combine(dir, Global.TMPUsersFolder);
+                        tmpPath = System.IO.Path.Combine(tmpPath, user.image);
+                        openFileDialog.FileName = tmpPath;
+                    }
+                    else
+                        HelpClass.clearImg(btn_image);
+                }
+                HelpClass.EndAwait(grid_image, "forImage");
+            }
+            catch
+            {
+                HelpClass.EndAwait(grid_image, "forImage");
             }
         }
         #endregion
