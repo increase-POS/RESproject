@@ -25,6 +25,7 @@ namespace Restaurant.View.windows
     {
        public Invoice invoice { get; set; }
         public bool isOk { get; set; }
+        TablesReservation nextReservation = new TablesReservation();
         public List<Tables> selectedTables = new List<Tables>();
         public List<Tables> reservationTables = new List<Tables>();
         public wd_diningHallTables()
@@ -476,12 +477,11 @@ namespace Restaurant.View.windows
                     tb_total.Text = invoice.totalNet.ToString();
                     break;
                 case "reserved":
-                    grid_emptyTableDetails.Visibility = Visibility.Collapsed;
+                    grid_emptyTableDetails.Visibility = Visibility.Collapsed; 
 
                     break;
             }
             #region next reservation
-            TablesReservation nextReservation = null;
             
             foreach (var res in reservationsList)
             {
@@ -492,7 +492,7 @@ namespace Restaurant.View.windows
                     break;
                 }
             }
-            if (nextReservation != null)
+            if (nextReservation.reservationId != 0)
             {
                 dp_reservatedTableTitle.Visibility = Visibility.Visible;
                 grid_reservatedTableDetails.Visibility = Visibility.Visible;
@@ -668,8 +668,39 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        #endregion
 
-       
+
+        #endregion
+        #region reservation Buttons
+        private void Btn_mergeTable_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                MainWindow.mainWindow.Opacity = 0.2;
+
+                wd_tablesList w = new wd_tablesList();
+                w.page = "dinningHall";
+                w.selectedTables = selectedTables;
+                w.ShowDialog();
+
+                if (w.DialogResult == true)
+                {
+                    selectedTables = w.selectedTables;
+                    w.reservationId = nextReservation.reservationId;
+                    dg_tables.ItemsSource = null;
+                    dg_tables.ItemsSource = selectedTables;
+                }
+                MainWindow.mainWindow.Opacity = 1;
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        #endregion
     }
 }

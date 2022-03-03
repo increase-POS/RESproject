@@ -979,7 +979,7 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Button Grid.Column="0" BorderBrush="{x:Null}" Padding="0" 
-                                  Margin="5 5 2.5 5 " Height="auto"
+                                  Margin="5 5 2.5 5 " Height="auto" Name="btn_mergeTable" Click="Btn_mergeTable_Click"
                                 Background="{x:Null}" VerticalAlignment="Top"  >
                                         <Grid>
                                             <Grid.RowDefinitions>

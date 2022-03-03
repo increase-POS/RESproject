@@ -84,9 +84,14 @@ namespace Restaurant.View.windows
                 translat();
                 #endregion
 
-               
+                #region invoice tbale
+                if(page == "dinningHall")
+                {
+
+                }
+                #endregion
                 #region reservation Tables
-                if (page == "reservationUpdate")
+                else if (page == "reservationUpdate")
                 {
 
                 }
