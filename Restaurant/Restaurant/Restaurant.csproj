@@ -597,6 +597,9 @@
     <Compile Include="View\windows\wd_acceptUser.xaml.cs">
       <DependentUpon>wd_acceptUser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_applicationStop.xaml.cs">
+      <DependentUpon>wd_applicationStop.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_branchesList.xaml.cs">
       <DependentUpon>wd_branchesList.xaml</DependentUpon>
     </Compile>
@@ -1198,6 +1201,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\windows\wd_applicationStop.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\windows\wd_branchesList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1533,16 +1540,11 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="pic\increase-login-bg-rtl.png" />
-    <Resource Include="pic\increase-login-bg.png" />
     <Resource Include="pic\increase-logo.png" />
     <Resource Include="pic\no-image-icon-125x125.png" />
     <Resource Include="pic\no-image-icon-40x40.png" />
     <Resource Include="pic\no-image-icon-512x512.png" />
     <Resource Include="pic\no-image-icon-90x90.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="pic\90408.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Thumb\agents\tmp.txt" />
@@ -1562,9 +1564,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="pic\increase-logo100.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="pic\hana.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
