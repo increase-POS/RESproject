@@ -407,8 +407,8 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <!--<Grid x:Name="grid_image" Grid.RowSpan="3"  Grid.Column="1">-->
-                        <Button  Grid.Row="1"   FlowDirection="LeftToRight" 
+                            <Grid x:Name="grid_image" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" VerticalAlignment="Center">
+                                <Button  Grid.Row="1"   FlowDirection="LeftToRight" 
                         Grid.RowSpan="2" x:Name="btn_image" Click="Btn_image_Click" VerticalAlignment="Center"
                      Margin="0"  BorderBrush="{x:Null}" materialDesign:ButtonAssist.CornerRadius="5"
                          HorizontalAlignment="Center" Height="90" Width="90" Grid.Column="1">
@@ -417,7 +417,7 @@
                                             ImageSource="/pic/no-image-icon-125x125.png"   />
                             </Button.Background>
                         </Button>
-                        <!--</Grid>-->
+                        </Grid>
 
                         <Border Grid.ColumnSpan="2"   CornerRadius="10" Margin="0,5,0,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <TextBox x:Name="tb_code"  Text="{Binding code, Mode=OneWay}" Padding="10,5,0,0" 

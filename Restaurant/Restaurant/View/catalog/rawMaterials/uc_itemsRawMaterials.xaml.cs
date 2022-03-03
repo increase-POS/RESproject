@@ -1033,7 +1033,7 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             grid_itemContainerCard.Children.Clear();
             catigoriesAndItemsView.gridCatigorieItems = grid_itemContainerCard;
-            catigoriesAndItemsView.FN_refrishCatalogItem(_items.ToList(), "purchase");
+            catigoriesAndItemsView.FN_refrishCatalogItem(_items.ToList(),5, "purchase");
         }
         #endregion
         #region Get Id By Click  Y
@@ -1094,7 +1094,7 @@ namespace Restaurant.View.catalog.rawMaterials
 
                 if (btns is null)
                     btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 15));
                 #endregion
 
                 HelpClass.EndAwait(grid_main);
@@ -1135,7 +1135,7 @@ namespace Restaurant.View.catalog.rawMaterials
 
                 #region
 
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 15));
                 #endregion
 
                
@@ -1160,7 +1160,7 @@ namespace Restaurant.View.catalog.rawMaterials
                 pageIndex = 1;
                 #region
                 itemsQuery = items.ToList();
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 15));
                 #endregion
 
                
@@ -1184,7 +1184,7 @@ namespace Restaurant.View.catalog.rawMaterials
                 #region
                 itemsQuery = items.ToList();
 
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 15));
                 #endregion
 
                
@@ -1207,7 +1207,7 @@ namespace Restaurant.View.catalog.rawMaterials
                 pageIndex = int.Parse(btn_activePage.Content.ToString());
                 #region
                 itemsQuery = items.ToList();
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 15));
                 #endregion
 
                
@@ -1230,7 +1230,7 @@ namespace Restaurant.View.catalog.rawMaterials
                 pageIndex = int.Parse(btn_nextPage.Content.ToString());
                 #region
                 itemsQuery = items.ToList();
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 15));
                 #endregion
 
                
@@ -1254,7 +1254,7 @@ namespace Restaurant.View.catalog.rawMaterials
                 pageIndex = ((itemsQuery.Count() - 1) / 9) + 1;
                 #region
                 itemsQuery = items.ToList();
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 15));
                 #endregion
 
                

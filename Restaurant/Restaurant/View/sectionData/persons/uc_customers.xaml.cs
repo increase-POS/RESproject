@@ -320,7 +320,7 @@ namespace Restaurant.View.sectionData.persons
                                 isImgPressed = false;
                                 if (!b.Equals(""))
                                 {
-                                    await getImg();
+                                     getImg();
                                 }
                                 else
                                 {
@@ -502,7 +502,7 @@ namespace Restaurant.View.sectionData.persons
                     this.DataContext = agent;
                     if (agent != null)
                     {
-                        await getImg();
+                         getImg();
                         #region delete
                         if (agent.canDelete)
                             btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
@@ -757,7 +757,10 @@ namespace Restaurant.View.sectionData.persons
         }
         private async Task getImg()
         {
-            if (string.IsNullOrEmpty(agent.image))
+            try
+            {
+                HelpClass.StartAwait(grid_image, "forImage");
+                if (string.IsNullOrEmpty(agent.image))
             {
                 HelpClass.clearImg(btn_image);
             }
@@ -785,6 +788,12 @@ namespace Restaurant.View.sectionData.persons
                 }
                 else
                     HelpClass.clearImg(btn_image);
+            }
+                HelpClass.EndAwait(grid_image, "forImage");
+            }
+            catch
+            {
+                HelpClass.EndAwait(grid_image, "forImage");
             }
         }
         #endregion

@@ -507,7 +507,7 @@
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="password..."  
                                      Foreground="#4E4E4E"   Visibility="Collapsed"
-                                      MaxLength="50" BorderThickness="0"
+                                      MaxLength="50" BorderThickness="0"  
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                      Height="40"   Margin="4,0" />
                                     <PasswordBox   x:Name="pb_password" Padding="10,5,5,5"   

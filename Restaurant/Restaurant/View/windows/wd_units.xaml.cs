@@ -640,6 +640,7 @@ namespace Restaurant.View.windows
         {
             await FillCombo.RefreshItemUnit();
             itemUnits = FillCombo.itemUnitList;
+            itemUnits = itemUnits.Where(x => x.itemId == item.itemId);
             return itemUnits;
         }
         void RefreshItemUnitsView()

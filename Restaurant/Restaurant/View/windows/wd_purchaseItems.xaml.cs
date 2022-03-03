@@ -215,7 +215,7 @@ namespace Restaurant.View.windows
         {
             grid_itemContainerCard.Children.Clear();
             catigoriesAndItemsView.gridCatigorieItems = grid_itemContainerCard;
-            catigoriesAndItemsView.FN_refrishCatalogItem(_items.ToList(), "purchase");
+            catigoriesAndItemsView.FN_refrishCatalogItem(_items.ToList(),3, "purchase");
         }
         #endregion
         #region Get Id By Click  Y
@@ -277,7 +277,7 @@ namespace Restaurant.View.windows
 
                 if (btns is null)
                     btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns,9));
                 #endregion
                 //RefrishItemsDatagrid(itemsQuery);
 
@@ -325,7 +325,7 @@ namespace Restaurant.View.windows
                 x.name.ToLower().Contains(txtItemSearch) ||
                 x.details.ToLower().Contains(txtItemSearch)
                 ) && x.isActive == tglItemState).ToList();
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns,9));
                 #endregion
 
                 if (sender != null)
@@ -353,7 +353,7 @@ namespace Restaurant.View.windows
                 x.name.ToLower().Contains(txtItemSearch) ||
                 x.details.ToLower().Contains(txtItemSearch)
                 ) && x.isActive == tglItemState).ToList();
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 9));
                 #endregion
 
                 if (sender != null)
@@ -379,7 +379,7 @@ namespace Restaurant.View.windows
                 x.name.ToLower().Contains(txtItemSearch) ||
                 x.details.ToLower().Contains(txtItemSearch)
                 ) && x.isActive == tglItemState).ToList();
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 9));
                 #endregion
 
                 if (sender != null)
@@ -405,7 +405,7 @@ namespace Restaurant.View.windows
                 x.name.ToLower().Contains(txtItemSearch) ||
                 x.details.ToLower().Contains(txtItemSearch)
                 ) && x.isActive == tglItemState).ToList();
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 9));
                 #endregion
 
                 if (sender != null)
@@ -431,7 +431,7 @@ namespace Restaurant.View.windows
                 x.name.ToLower().Contains(txtItemSearch) ||
                 x.details.ToLower().Contains(txtItemSearch)
                 ) && x.isActive == tglItemState).ToList();
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 9));
                 #endregion
 
                 if (sender != null)
@@ -458,7 +458,7 @@ namespace Restaurant.View.windows
                 x.name.ToLower().Contains(txtItemSearch) ||
                 x.details.ToLower().Contains(txtItemSearch)
                 ) && x.isActive == tglItemState).ToList();
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 9));
                 #endregion
 
                 if (sender != null)

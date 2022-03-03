@@ -210,7 +210,7 @@ namespace Restaurant.View.sales
         {
             grid_itemContainerCard.Children.Clear();
             catigoriesAndItemsView.gridCatigorieItems = grid_itemContainerCard;
-            catigoriesAndItemsView.FN_refrishCatalogItem(_items.ToList(), "sales");
+            catigoriesAndItemsView.FN_refrishCatalogItem(_items.ToList(),5, "sales");
         }
         #endregion
         #region Get Id By Click  Y
@@ -267,7 +267,7 @@ namespace Restaurant.View.sales
 
                 if (btns is null)
                     btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 15));
                 #endregion
 
                 HelpClass.EndAwait(grid_main);
@@ -314,7 +314,7 @@ namespace Restaurant.View.sales
 
                 #region
                 
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 15));
                 #endregion
 
                 if (sender != null)
@@ -339,7 +339,7 @@ namespace Restaurant.View.sales
                 pageIndex = 1;
                 #region
                 itemsQuery = items.ToList();
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 15));
                 #endregion
 
                 if (sender != null)
@@ -363,7 +363,7 @@ namespace Restaurant.View.sales
                 #region
                 itemsQuery = items.ToList();
 
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 15));
                 #endregion
 
                 if (sender != null)
@@ -386,7 +386,7 @@ namespace Restaurant.View.sales
                 pageIndex = int.Parse(btn_activePage.Content.ToString());
                 #region
                 itemsQuery = items.ToList();
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 15));
                 #endregion
 
                 if (sender != null)
@@ -409,7 +409,7 @@ namespace Restaurant.View.sales
                 pageIndex = int.Parse(btn_nextPage.Content.ToString());
                 #region
                 itemsQuery = items.ToList();
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 15));
                 #endregion
 
                 if (sender != null)
@@ -433,7 +433,7 @@ namespace Restaurant.View.sales
                 pageIndex = ((itemsQuery.Count() - 1) / 9) + 1;
                 #region
                 itemsQuery = items.ToList();
-                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns));
+                RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 15));
                 #endregion
 
                 if (sender != null)

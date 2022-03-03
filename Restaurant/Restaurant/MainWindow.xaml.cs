@@ -135,7 +135,7 @@ namespace Restaurant
 
         //internal static int? posID=1;
         //static public List<Item> InvoiceglobalItemsList = new List<Item>();
-        static public List<ItemUnit> InvoiceGlobalItemUnitsList = new List<ItemUnit>();
+        //static public List<ItemUnit> InvoiceGlobalItemUnitsList = new List<ItemUnit>();
         //static public List<Item> InvoiceglobalSaleUnitsList = new List<Item>();
 
 

@@ -102,9 +102,9 @@ namespace Restaurant.Classes
                 await RefreshByBranchandUser();
 
             if (HelpClass.isAdminPermision())
-                branches = branchesAllWithoutMain;
+                branches = branchesAllWithoutMain.ToList();
             else
-                branches = BranchesByBranchandUser;
+                branches = BranchesByBranchandUser.ToList();
 
             branch = branches.Where(s => s.branchId == MainWindow.branchLogin.branchId).FirstOrDefault<Branch>();
             branches.Remove(branch);

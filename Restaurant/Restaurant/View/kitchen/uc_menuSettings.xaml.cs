@@ -832,7 +832,7 @@ namespace Restaurant.View.kitchen
             catigoriesAndItemsView.gridCatigorieItems = grid_itemContainerCard;
             string jsonItem = JsonConvert.SerializeObject(_items);
             List<Item> it = JsonConvert.DeserializeObject<List<Item>>(jsonItem, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-            catigoriesAndItemsView.FN_refrishCatalogItem(it.ToList(), "purchase");
+            catigoriesAndItemsView.FN_refrishCatalogItem(it.ToList(),5, "purchase");
         }
         #endregion
         #region Get Id By Click  Y

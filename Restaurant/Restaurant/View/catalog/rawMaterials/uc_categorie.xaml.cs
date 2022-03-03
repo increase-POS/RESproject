@@ -967,7 +967,7 @@ namespace Restaurant.View.catalog.rawMaterials
 
                 if (btns is null)
                     btns = new Button[] { btn_firstPage, btn_prevPage, btn_activePage, btn_nextPage, btn_lastPage };
-                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns));
+                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns, 15));
                 #endregion
 
                 HelpClass.EndAwait(grid_main);
@@ -1008,7 +1008,7 @@ namespace Restaurant.View.catalog.rawMaterials
 
                 #region
 
-                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns));
+                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns, 15));
                 #endregion
 
                 if (sender != null)
@@ -1033,7 +1033,7 @@ namespace Restaurant.View.catalog.rawMaterials
                 pageIndex = 1;
                 #region
                 categoriesQuery = categories.ToList();
-                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns));
+                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns, 15));
                 #endregion
 
                 if (sender != null)
@@ -1057,7 +1057,7 @@ namespace Restaurant.View.catalog.rawMaterials
                 #region
                 categoriesQuery = categories.ToList();
 
-                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns));
+                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns, 15));
                 #endregion
 
                 if (sender != null)
@@ -1080,7 +1080,7 @@ namespace Restaurant.View.catalog.rawMaterials
                 pageIndex = int.Parse(btn_activePage.Content.ToString());
                 #region
                 categoriesQuery = categories.ToList();
-                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns));
+                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns, 15));
                 #endregion
 
                 if (sender != null)
@@ -1103,7 +1103,7 @@ namespace Restaurant.View.catalog.rawMaterials
                 pageIndex = int.Parse(btn_nextPage.Content.ToString());
                 #region
                 categoriesQuery = categories.ToList();
-                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns));
+                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns, 15));
                 #endregion
 
                 if (sender != null)
@@ -1127,7 +1127,7 @@ namespace Restaurant.View.catalog.rawMaterials
                 pageIndex = ((categoriesQuery.Count() - 1) / 9) + 1;
                 #region
                 categoriesQuery = categories.ToList();
-                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns));
+                RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns, 15));
                 #endregion
 
                 if (sender != null)

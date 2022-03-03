@@ -547,6 +547,7 @@ namespace Restaurant.View.sectionData.persons
         async Task<IEnumerable<User>> RefreshUsersList()
         {
             users = await user.Get();
+            users = users.Where(x => x.isAdmin != true);
             return users;
         }
         void RefreshCustomersView()
@@ -561,7 +562,8 @@ namespace Restaurant.View.sectionData.persons
             user = new User();
             user.workHours = "0";
             this.DataContext = user;
-
+            numValue_workHours = 1;
+            pb_password.Password = "";
 
             grid_userNameLabel.Visibility = Visibility.Collapsed;
             grid_userNameInput.Visibility = Visibility.Visible;
@@ -733,7 +735,6 @@ namespace Restaurant.View.sectionData.persons
             try
             {
                 HelpClass.StartAwait(grid_image, "forImage");
-                await  Task.Delay(2000);
                 if (string.IsNullOrEmpty(user.image))
                 {
                     HelpClass.clearImg(btn_image);
@@ -840,6 +841,7 @@ namespace Restaurant.View.sectionData.persons
             return isValid;
         }
         #endregion
+        /*
         private async Task fillJobCombo()
         {
             if (users == null)
@@ -859,6 +861,7 @@ namespace Restaurant.View.sectionData.persons
             }
 
         }
+        */
         private async Task<bool> chkIfUserNameIsExists(string username, int uId)
         {
             bool isValid = true;
