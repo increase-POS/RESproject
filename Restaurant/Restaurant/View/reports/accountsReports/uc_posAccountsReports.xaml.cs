@@ -71,12 +71,10 @@ namespace Restaurant.View.reports.accountsReports
         List<posToCombo> toPos;
         IEnumerable<AccountantCombo> accCombo;
 
-
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
             {
-
                 HelpClass.StartAwait(grid_main);
 
                 #region translate
@@ -99,7 +97,6 @@ namespace Restaurant.View.reports.accountsReports
 
                 Btn_payments_Click(btn_payments, null);
 
-
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -111,8 +108,8 @@ namespace Restaurant.View.reports.accountsReports
 
         private void translate()
         {
-            tt_payments.Content = AppSettings.resourcemanager.GetString("trDeposit");
-            tt_pulls.Content = AppSettings.resourcemanager.GetString("trReceive");
+            tt_payments.Content = AppSettings.resourcemanager.GetString("trDeposits");
+            tt_pulls.Content = AppSettings.resourcemanager.GetString("trReceipts");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_formBranch, AppSettings.resourcemanager.GetString("trFromBranch") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_toBranch, AppSettings.resourcemanager.GetString("trToBranch") + "...");
@@ -1062,8 +1059,7 @@ namespace Restaurant.View.reports.accountsReports
         {//deposit
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 
@@ -1101,15 +1097,12 @@ namespace Restaurant.View.reports.accountsReports
                 fillComboBranches();
                 fillComboFromPos();
                 fillComboToPos();
-
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1120,8 +1113,7 @@ namespace Restaurant.View.reports.accountsReports
         {//pull
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 

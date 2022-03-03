@@ -3379,4 +3379,19 @@ Please add Email in setting</value>
   <data name="trOut" xml:space="preserve">
     <value>Out</value>
   </data>
+  <data name="trDeposits" xml:space="preserve">
+    <value>Deposits</value>
+  </data>
+  <data name="trExpiredDate" xml:space="preserve">
+    <value>Expired Date</value>
+  </data>
+  <data name="trMostPurchased" xml:space="preserve">
+    <value>Most purchased</value>
+  </data>
+  <data name="trOperations" xml:space="preserve">
+    <value>Operations</value>
+  </data>
+  <data name="trReceipts" xml:space="preserve">
+    <value>Receipts</value>
+  </data>
 </root>

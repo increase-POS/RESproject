@@ -133,17 +133,37 @@ namespace Restaurant.View.reports.storageReports
             tt_item.Content = AppSettings.resourcemanager.GetString("trItems");
             tt_location.Content = AppSettings.resourcemanager.GetString("trLocations");
             tt_collect.Content = AppSettings.resourcemanager.GetString("trBestSeller");
-
+            //items
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branchesItem, AppSettings.resourcemanager.GetString("trBranch/StoreHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_itemsItem, AppSettings.resourcemanager.GetString("trItemHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_unitsItem, AppSettings.resourcemanager.GetString("trUnitHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_startDateItem, AppSettings.resourcemanager.GetString("trStartDateHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_endDateItem, AppSettings.resourcemanager.GetString("trEndDateHint"));
-
-            chk_expireDateItem.Content = AppSettings.resourcemanager.GetString("trExpiredDate");
+            chk_expireDateItem.Content = AppSettings.resourcemanager.GetString("trExpired");
             chk_allBranchesItem.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_allItemsItem.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_allUnitsItem.Content = AppSettings.resourcemanager.GetString("trAll");
+            //sections
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branchesLocation, AppSettings.resourcemanager.GetString("trBranch/StoreHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sectionsLocation, AppSettings.resourcemanager.GetString("trSection"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_locationsLocation, AppSettings.resourcemanager.GetString("trLocation"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_startDateLocation, AppSettings.resourcemanager.GetString("trStartDateHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_endDateLocation, AppSettings.resourcemanager.GetString("trEndDateHint"));
+            chk_expireDateLocation.Content = AppSettings.resourcemanager.GetString("trExpired");
+            chk_allBranchesLocation.Content = AppSettings.resourcemanager.GetString("trAll");
+            chk_allSectionsLocation.Content = AppSettings.resourcemanager.GetString("trAll");
+            chk_allLocationsLocation.Content = AppSettings.resourcemanager.GetString("trAll");
+            //collect
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branchesCollect, AppSettings.resourcemanager.GetString("trBranch/StoreHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_itemsCollect, AppSettings.resourcemanager.GetString("trItemHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_unitsCollect, AppSettings.resourcemanager.GetString("trUnitHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_startDateCollect, AppSettings.resourcemanager.GetString("trStartDateHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_endDateCollect, AppSettings.resourcemanager.GetString("trEndDateHint"));
+            chk_expireDateCollect.Content = AppSettings.resourcemanager.GetString("trExpired");
+            chk_allBranchesCollect.Content = AppSettings.resourcemanager.GetString("trAll");
+            chk_allItemsCollect.Content = AppSettings.resourcemanager.GetString("trAll");
+            chk_allUnitsCollect.Content = AppSettings.resourcemanager.GetString("trAll");
+
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txt_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");

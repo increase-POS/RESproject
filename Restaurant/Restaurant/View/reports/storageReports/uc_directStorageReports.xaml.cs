@@ -75,10 +75,9 @@ namespace Restaurant.View.reports.storageReports
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            try
-            {
-                
-                    HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -102,14 +101,14 @@ namespace Restaurant.View.reports.storageReports
                 fillEvents();
 
                 
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
                 
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
 
         }
 

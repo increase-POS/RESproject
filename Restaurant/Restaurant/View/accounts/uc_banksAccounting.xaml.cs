@@ -372,10 +372,11 @@ namespace Restaurant.View.accounts
 
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//save
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+         //try
+         //{
+         //    HelpClass.StartAwait(grid_main);
 
+                HelpClass.clearValidate(p_error_user);
                 if (MainWindow.groupObject.HasPermissionAction(createPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     //new
@@ -419,7 +420,7 @@ namespace Restaurant.View.accounts
                         else
                         {
                         if (!isuserConfirmed)
-                            HelpClass.showComboBoxValidate(cb_user , p_error_user , tt_error_user , "trUserConfirm");
+                            HelpClass.SetValidate(p_error_user , "trUserConfirm");
                         }
                     }
                     //exist 

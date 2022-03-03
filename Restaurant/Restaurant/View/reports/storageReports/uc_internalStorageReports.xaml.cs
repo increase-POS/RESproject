@@ -86,7 +86,7 @@ namespace Restaurant.View.reports.storageReports
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -104,14 +104,12 @@ namespace Restaurant.View.reports.storageReports
                 fillComboInternalOperatorType();
 
                 btn_internalItems_Click(btn_item, null);
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -119,7 +117,7 @@ namespace Restaurant.View.reports.storageReports
         private void translate()
         {
             tt_item.Content = AppSettings.resourcemanager.GetString("trItems");
-            tt_operator.Content = AppSettings.resourcemanager.GetString("trOperators");
+            tt_operator.Content = AppSettings.resourcemanager.GetString("trOperations");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_internalItemsFromBranches, AppSettings.resourcemanager.GetString("trFromBranch/StoreHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_internalItemsItems, AppSettings.resourcemanager.GetString("trItemHint"));
@@ -144,7 +142,7 @@ namespace Restaurant.View.reports.storageReports
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txt_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
 
-            col_invNumber.Header = AppSettings.resourcemanager.GetString("trNo");
+            col_invNumber.Header = AppSettings.resourcemanager.GetString("trNo.");
             col_invTypeNumber.Header = AppSettings.resourcemanager.GetString("trType");
             col_invDate.Header = AppSettings.resourcemanager.GetString("trDate");
             col_branch.Header = AppSettings.resourcemanager.GetString("trBranch");
@@ -235,7 +233,7 @@ namespace Restaurant.View.reports.storageReports
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 

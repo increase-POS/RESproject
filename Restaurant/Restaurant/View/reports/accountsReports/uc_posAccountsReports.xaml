@@ -66,7 +66,7 @@
                                 BorderBrush="Transparent" 
                                 Margin="10,5,0,-1">
 
-                            <Button x:Name="btn_payments" Tag="deposit"
+                            <Button x:Name="btn_payments" Tag="deposits"
                                     Background="Transparent"  
                                     materialDesign:RippleAssist.Feedback="Transparent"
                                     BorderBrush="Transparent"
@@ -116,7 +116,7 @@
                                 BorderBrush="Transparent" 
                                 Margin="10,5,0,-1">
 
-                            <Button x:Name="btn_pulls" Tag="receive"
+                                <Button x:Name="btn_pulls" Tag="receipts"
                                     Background="Transparent"  
                                     materialDesign:RippleAssist.Feedback="Transparent"
                                     BorderBrush="Transparent"

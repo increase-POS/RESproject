@@ -102,8 +102,7 @@ namespace Restaurant.View.reports.purchaseReports
         {//load
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 Items = await statisticModel.GetPuritem((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
 
@@ -131,12 +130,12 @@ namespace Restaurant.View.reports.purchaseReports
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_items.Tag.ToString());
 
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -144,7 +143,7 @@ namespace Restaurant.View.reports.purchaseReports
         private void translate()
         {
             tt_items.Content = AppSettings.resourcemanager.GetString("trItems");
-            tt_collect.Content = AppSettings.resourcemanager.GetString("trBestSeller");
+            tt_collect.Content = AppSettings.resourcemanager.GetString("trMostPurchased");
 
             chk_itemInvoice.Content = AppSettings.resourcemanager.GetString("tr_Invoice");
             chk_itemReturn.Content = AppSettings.resourcemanager.GetString("trReturned");
@@ -210,12 +209,12 @@ namespace Restaurant.View.reports.purchaseReports
             RepQuery = fillList(Items, cb_ItemsBranches, cb_Items, chk_itemInvoice, chk_itemReturn, dp_ItemStartDate, dp_ItemEndDate)
                 .Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemUnitId) : true));
 
-            txt_count.Text = dgInvoice.Items.Count.ToString();
             fillPieChart(cb_Items, selectedItemId);
             fillColumnChart(cb_Items, selectedItemId);
             fillRowChart(cb_Items, selectedItemId);
 
             dgInvoice.ItemsSource = RepQuery;
+            txt_count.Text = dgInvoice.Items.Count.ToString();
 
         }
 
@@ -296,7 +295,7 @@ namespace Restaurant.View.reports.purchaseReports
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 selectedTab = 1;
                 txt_search.Text = "";
@@ -519,18 +518,15 @@ namespace Restaurant.View.reports.purchaseReports
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 fillItemsEvent();
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

@@ -3358,4 +3358,16 @@
   <data name="trOut" xml:space="preserve">
     <value>Out</value>
   </data>
+  <data name="trDeposits" xml:space="preserve">
+    <value>الايداعات</value>
+  </data>
+  <data name="trMostPurchased" xml:space="preserve">
+    <value>الأكثر شراء</value>
+  </data>
+  <data name="trOperations" xml:space="preserve">
+    <value>العمليات</value>
+  </data>
+  <data name="trReceipts" xml:space="preserve">
+    <value>المستلمات</value>
+  </data>
 </root>
