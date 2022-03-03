@@ -773,12 +773,13 @@ namespace Restaurant.View.purchase
                                         #endregion
                                         clearInvoice();
                                         _InvoiceType = "pd";
-                                        refreshDraftNotification();
-                                        refreshInvNotification();
                                     }
                                 }
 
                             }
+                            refreshDraftNotification();
+                            refreshInvNotification();
+
                             prInvoice = await FillCombo.invoice.GetByInvoiceId(prInvoiceId);
                             ///////////////////////////////////////
 
@@ -1310,25 +1311,91 @@ namespace Restaurant.View.purchase
             else
                 btn_previous.IsEnabled = true;
         }
+        private void clearNavigation()
+        {
+            _Sum = 0;
+
+            txt_invNumber.Text = "";
+            _SequenceNum = 0;
+            _SelectedBranch = -1;
+            _SelectedVendor = -1;
+            invoice = new Invoice();
+            tb_barcode.Clear();
+            cb_branch.SelectedIndex = -1;
+            cb_vendor.SelectedIndex = -1;
+            cb_vendor.SelectedItem = "";
+            cb_typeDiscount.SelectedIndex = 0;
+            dp_desrvedDate.Text = "";
+            txt_vendorIvoiceDetails.Text = "";
+            tb_invoiceNumber.Clear();
+            dp_invoiceDate.Text = "";
+            tb_notes.Clear();
+            tb_discount.Clear();
+            tb_taxValue.Clear();
+            billDetails.Clear();
+            tb_processNum.Clear();
+            cb_paymentProcessType.SelectedIndex = 0;
+            cb_paymentProcessType.IsEnabled = true;
+            gd_card.Visibility = Visibility.Collapsed;
+            tb_total.Text = "0";
+            tb_sum.Text = "0";
+            if (AppSettings.tax != 0)
+                tb_taxValue.Text = HelpClass.DecTostring(AppSettings.invoiceTax_decimal);
+            else
+                tb_taxValue.Text = "0";
+
+            isFromReport = false;
+            archived = false;
+            md_docImage.Badge = "";
+            md_payments.Badge = "";
+
+            TextBox tbStartDate = (TextBox)dp_desrvedDate.Template.FindName("PART_TextBox", dp_desrvedDate);
+            refrishBillDetails();
+        }
+        private async Task navigateInvoice(int index)
+        {
+            try
+            {
+                clearNavigation();
+                invoice = FillCombo.invoices[index];
+                _InvoiceType = invoice.invType;
+                _invoiceId = invoice.invoiceId;
+                navigateBtnActivate();
+                await fillInvoiceInputs(invoice);
+
+                #region title text
+                if (_InvoiceType == "pw" || _InvoiceType == "p")
+                    txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaseInvoice");
+                else if (_InvoiceType == "pb" || _InvoiceType == "pbw")
+                    txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trReturnedInvoice");
+                else if (_InvoiceType == "pd")
+                    txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trDraftPurchaseBill");
+                else if (_InvoiceType == "pbd")
+                    txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trDraftBounceBill");
+
+                #endregion
+                if (_InvoiceType == "pw" || _InvoiceType == "p" || _InvoiceType == "pb" || _InvoiceType == "pbw")
+                    refreshPaymentsNotification(invoice.invoiceId);
+            }
+            catch (Exception ex)
+            {
+            }
+        }
         private async void Btn_next_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                
+                if (sender != null)
                     HelpClass.StartAwait(grid_main);
                 int index = FillCombo.invoices.IndexOf(FillCombo.invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
                 index++;
-                clearInvoice();
-                invoice = FillCombo.invoices[index];
-                _invoiceId = invoice.invoiceId;
-                navigateBtnActivate();
-                await fillInvoiceInputs(invoice);
-                
+                await navigateInvoice(index);
+                if (sender != null)
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
+                if (sender != null)
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1337,19 +1404,18 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
                 int index = FillCombo.invoices.IndexOf(FillCombo.invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
                 index--;
-                clearInvoice();
-                invoice = FillCombo.invoices[index];
-                _invoiceId = invoice.invoiceId;
-                navigateBtnActivate();
-                await fillInvoiceInputs(invoice);
-               HelpClass.EndAwait(grid_main);
+                await navigateInvoice(index);
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_main);
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1428,7 +1494,7 @@ namespace Restaurant.View.purchase
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Cbm_unitItemDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Cbm_unitItemDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
@@ -1437,11 +1503,65 @@ namespace Restaurant.View.purchase
                 if (dg_billDetails.SelectedIndex != -1 && cmb.SelectedValue != null)
                 {
                     billDetails[dg_billDetails.SelectedIndex].itemUnitId = (int)cmb.SelectedValue;
-                    //if (_InvoiceType == "p" || _InvoiceType == "pw"
-                    //   || _InvoiceType == "pb" || _InvoiceType == "pbw")
-                    //    cmb.IsEnabled = false;
-                    //else
-                    //    cmb.IsEnabled = true;
+                    //if (billDetails[dg_billDetails.SelectedIndex].OrderId != 0)
+                    if (_InvoiceType == "p" || _InvoiceType == "pw"
+                        ||_InvoiceType == "pb" || _InvoiceType == "pbw")
+                        cmb.IsEnabled = false;
+                    else
+                        cmb.IsEnabled = true;
+
+                    TextBlock tb;
+
+                    int _datagridSelectedIndex = dg_billDetails.SelectedIndex;
+                    int itemUnitId = (int)cmb.SelectedValue;
+                    billDetails[_datagridSelectedIndex].itemUnitId = (int)cmb.SelectedValue;
+                    #region Dina
+
+                    dynamic unit;
+                    if (FillCombo.itemUnitList == null)
+                        await FillCombo.RefreshItemUnit();
+
+                    unit = new ItemUnit();
+                    unit = FillCombo.itemUnitList.Find(x => x.itemUnitId == (int)cmb.SelectedValue && x.itemId == billDetails[_datagridSelectedIndex].itemId);
+
+                    int oldCount = 0;
+                    long newCount = 0;
+                    decimal oldPrice = 0;
+                    decimal itemTax = 0;
+
+                    decimal newPrice = 0;
+                    oldCount = billDetails[_datagridSelectedIndex].Count;
+                    oldPrice = billDetails[_datagridSelectedIndex].Price;
+                    newCount = oldCount;
+                    tb = dg_billDetails.Columns[4].GetCellContent(dg_billDetails.Items[_datagridSelectedIndex]) as TextBlock;
+
+                    newPrice = unit.cost;
+
+                    tb = dg_billDetails.Columns[5].GetCellContent(dg_billDetails.Items[_datagridSelectedIndex]) as TextBlock;
+                    tb.Text = newPrice.ToString();
+
+                    // old total for changed item
+                    decimal total = oldPrice * oldCount;
+                    _Sum -= total;
+
+
+                    // new total for changed item
+                    total = newCount * newPrice;
+                    _Sum += total;
+
+                    #region items tax
+                    if (item.taxes != null)
+                        itemTax = (decimal)item.taxes;
+                    #endregion
+
+                    refreshTotalValue();
+
+                    // update item in billdetails           
+                    billDetails[_datagridSelectedIndex].Count = (int)newCount;
+                    billDetails[_datagridSelectedIndex].Price = newPrice;
+                    billDetails[_datagridSelectedIndex].Total = total;
+                    refrishBillDetails();
+                    #endregion
                 }
 
             }
@@ -2296,7 +2416,6 @@ namespace Restaurant.View.purchase
             md_payments.Badge = "";
 
             TextBox tbStartDate = (TextBox)dp_desrvedDate.Template.FindName("PART_TextBox", dp_desrvedDate);
-            txt_payInvoice.Foreground = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
             txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaseBill");
             btn_save.Content = AppSettings.resourcemanager.GetString("trBuy");
 
@@ -2544,7 +2663,6 @@ namespace Restaurant.View.purchase
                             txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaseInvoice");
                         else
                             txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trReturnedInvoice");
-                        txt_payInvoice.Foreground = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
 
                         await fillInvoiceInputs(invoice);
                         navigateBtnActivate();
