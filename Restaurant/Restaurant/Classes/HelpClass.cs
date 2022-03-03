@@ -1006,26 +1006,26 @@ namespace Restaurant.Classes
             }
         }
 
-        static public void StartAwait(Grid grid)
+        static public void StartAwait(Grid grid, string progressRingName = "")
         {
             grid.IsEnabled = false;
             grid.Opacity = 0.6;
             MahApps.Metro.Controls.ProgressRing progressRing = new MahApps.Metro.Controls.ProgressRing();
-            progressRing.Name = "prg_awaitRing";
+            progressRing.Name = "prg_awaitRing" + progressRingName;
             progressRing.Foreground = App.Current.Resources["MainColor"] as Brush;
             progressRing.IsActive = true;
             Grid.SetRowSpan(progressRing, 10);
             Grid.SetColumnSpan(progressRing, 10);
             grid.Children.Add(progressRing);
         }
-        static public void EndAwait(Grid grid)
+        static public void EndAwait(Grid grid, string progressRingName = "")
         {
             MahApps.Metro.Controls.ProgressRing progressRing = FindControls.FindVisualChildren<MahApps.Metro.Controls.ProgressRing>(grid)
-                .Where(x => x.Name == "prg_awaitRing").FirstOrDefault();
+                .Where(x => x.Name == "prg_awaitRing" + progressRingName).FirstOrDefault();
             grid.Children.Remove(progressRing);
 
             var progressRingList = FindControls.FindVisualChildren<MahApps.Metro.Controls.ProgressRing>(grid)
-                 .Where(x => x.Name == "prg_awaitRing");
+                 .Where(x => x.Name == "prg_awaitRing" + progressRingName);
             if (progressRingList.Count() == 0)
             {
                 grid.IsEnabled = true;

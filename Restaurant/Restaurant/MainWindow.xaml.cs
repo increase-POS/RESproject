@@ -1694,17 +1694,22 @@ namespace Restaurant
         {
 
             HelpClass.StartAwait(grid_mainWindow);
-            /*
+
             Window.GetWindow(this).Opacity = 0.2;
             wd_applicationStop w = new wd_applicationStop();
             w.ShowDialog();
             if (w.status == "o")
+            {
                 txt_cashValue.Foreground = Application.Current.Resources["Green"] as SolidColorBrush;
+                txt_cashSympol.Foreground = Application.Current.Resources["Green"] as SolidColorBrush;
+            }
             else
+            {
                 txt_cashValue.Foreground = Application.Current.Resources["Red"] as SolidColorBrush;
-
+                txt_cashSympol.Foreground = Application.Current.Resources["Red"] as SolidColorBrush;
+            }
             Window.GetWindow(this).Opacity = 1;
-            */
+
 
             HelpClass.EndAwait(grid_mainWindow);
         }
@@ -1722,12 +1727,12 @@ namespace Restaurant
             HelpClass.EndAwait(grid_mainWindow);
         }
         internal static Pos posLogIn = new Pos();
-        internal static int? posID;
+        //internal static int? posID;
         public static async Task refreshBalance()
         {
             try
             {
-                posLogIn = await posLogIn.getById(posID.Value);
+                posLogIn = await posLogIn.getById(posLogIn.posId);
                 mainWindow.txt_cashValue.Text = HelpClass.DecTostring(posLogIn.balance);
                 mainWindow.txt_cashSympol.Text = AppSettings.Currency;
             }

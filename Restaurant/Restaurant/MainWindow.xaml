@@ -161,12 +161,12 @@
                      Background="{x:Null}" BorderBrush="{x:Null}" 
                     Padding="0"    >
                     <StackPanel>
-                    <TextBlock Name="txt_cashTitle"    HorizontalAlignment="Right"   Foreground="{StaticResource SecondColor}"  FontSize="12" ></TextBlock>
-                    <DockPanel>
-                        <TextBlock Name="txt_cashSympol" Text="KWD"  Foreground="{StaticResource SecondColor}" HorizontalAlignment="Center"  FontSize="14" Margin="5,0,5,0"></TextBlock>
-                            <TextBlock Name="txt_cashValue"  Text="0.00" Foreground="{StaticResource Green}"   HorizontalAlignment="Center"  FontSize="14" ></TextBlock>
-                    </DockPanel>
-                </StackPanel>
+                    <TextBlock Name="txt_cashTitle"    HorizontalAlignment="Left"   Foreground="{StaticResource SecondColor}"  FontSize="12" ></TextBlock>
+                        <DockPanel HorizontalAlignment="Left" >
+                            <TextBlock Name="txt_cashValue"  Text="0.00" Foreground="{StaticResource Green}"   HorizontalAlignment="Center"  FontSize="14" />
+                            <TextBlock Name="txt_cashSympol" Text="KWD"  Foreground="{StaticResource Green}" HorizontalAlignment="Center"  FontSize="14" Margin="5,0,5,0"/>
+                        </DockPanel>
+                    </StackPanel>
                 </Button>
 
                 <Border Grid.Column="4" Height="30" BorderBrush="{StaticResource Grey}" BorderThickness="1,0,0,0" Margin="5" VerticalAlignment="Center" ></Border>
@@ -378,7 +378,7 @@
                 HorizontalAlignment="Center" VerticalAlignment="Center"   
                      Height="{Binding ElementName=btn_userImage ,Path=ActualHeight}" Width="{Binding ElementName=btn_userImage ,Path=ActualHeight}">
                             <Ellipse.Fill >
-                                <ImageBrush Stretch="UniformToFill"  x:Name="IMG_userPic" ImageSource="pic/90408.jpg"   />
+                                <ImageBrush Stretch="UniformToFill"  x:Name="IMG_userPic" ImageSource="pic/no-image-icon-125x125.png"   />
                             </Ellipse.Fill>
                         </Ellipse>
                     </Button>
