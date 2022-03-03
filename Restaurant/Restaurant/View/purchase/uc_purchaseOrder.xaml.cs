@@ -494,15 +494,11 @@ namespace Restaurant.View.purchase
         {
             bool valid = true;
 
-            requiredControlList = new List<string> { "vendor" };
-            HelpClass.validate(requiredControlList, this);
             if (billDetails.Count == 0)
-                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trAddInvoiceWithoutItems"), animation: ToasterAnimation.FadeIn);
-
-            if (cb_vendor.SelectedIndex != -1 && billDetails.Count > 0)
-                valid = true;
-            else
+            {
                 valid = false;
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trAddInvoiceWithoutItems"), animation: ToasterAnimation.FadeIn);
+            }
             if (valid)
                 valid = validateItemUnits();
             return valid;
@@ -583,17 +579,20 @@ namespace Restaurant.View.purchase
                     bool valid = validateInvoiceValues();
                     if (valid)
                     {
-                        if (tgl_ActiveOffer.IsChecked == true)
-                            _InvoiceType = "po";
-                        else
-                            _InvoiceType = "pos";
-                        await addInvoice(_InvoiceType); // po: purchase order
-                        refreshNotification();
+                        if (HelpClass.validate(requiredControlList, this))
+                        {
+                            if (tgl_ActiveOffer.IsChecked == true)
+                                _InvoiceType = "po";
+                            else
+                                _InvoiceType = "pos";
+                            await addInvoice(_InvoiceType); // po: purchase order
+                            refreshNotification();
 
-                        if (_InvoiceType == "po")
-                            clearInvoice();
-                        else
-                            inputEditable();
+                            if (_InvoiceType == "po")
+                                clearInvoice();
+                            else
+                                inputEditable();
+                        }
                     }
                 }
                 else
