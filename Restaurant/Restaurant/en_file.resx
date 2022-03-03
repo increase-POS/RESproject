@@ -3394,4 +3394,10 @@ Please add Email in setting</value>
   <data name="trReceipts" xml:space="preserve">
     <value>Receipts</value>
   </data>
+  <data name="trMessageBoxContinue" xml:space="preserve">
+    <value>Are you sure you want to complete process?</value>
+  </data>
+  <data name="trPurchaceOrderSaved" xml:space="preserve">
+    <value>Purchase Order - Saved</value>
+  </data>
 </root>

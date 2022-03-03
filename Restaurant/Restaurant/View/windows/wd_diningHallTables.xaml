@@ -670,7 +670,7 @@
                                 <!--#endregion-->
 
                                 <DockPanel Margin="10 0"
-                                 LastChildFill="True">
+                                 LastChildFill="True" Name="dp_details">
                                     <TextBlock  Text="details" Name="txt_details" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
                                     <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
                                 </DockPanel>
@@ -1013,7 +1013,7 @@
                                         </Grid>
                                     </Button>-->
                                     <Button Grid.Column="1" BorderBrush="{x:Null}" Padding="0" 
-                                  Margin="5 5 2.5 5 " Height="auto" 
+                                  Margin="5 5 2.5 5 " Height="auto" Name="btn_confirm" Click="Btn_confirm_Click"
                                 Background="{x:Null}" VerticalAlignment="Top"  >
                                         <Grid>
                                             <Grid.RowDefinitions>
@@ -1030,7 +1030,7 @@
                                         </Grid>
                                     </Button>
                                     <Button Grid.Column="3" BorderBrush="{x:Null}" Padding="0" 
-                                  Margin="5 5 2.5 5 " Height="auto" 
+                                  Margin="5 5 2.5 5 " Height="auto" Name="btn_cancle" Click="Btn_cancle_Click"
                                 Background="{x:Null}" VerticalAlignment="Top"  >
                                         <Grid>
                                             <Grid.RowDefinitions>

@@ -3370,4 +3370,10 @@
   <data name="trReceipts" xml:space="preserve">
     <value>المستلمات</value>
   </data>
+  <data name="trMessageBoxContinue" xml:space="preserve">
+    <value>هل أنت متأكد من إتمام العملية؟</value>
+  </data>
+  <data name="trPurchaceOrderSaved" xml:space="preserve">
+    <value>طلبية شراء محفوظة</value>
+  </data>
 </root>
