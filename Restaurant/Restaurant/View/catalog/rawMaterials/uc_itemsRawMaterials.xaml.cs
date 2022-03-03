@@ -633,6 +633,7 @@ namespace Restaurant.View.catalog.rawMaterials
             this.DataContext = item;       
             #region image
             HelpClass.clearImg(btn_image);
+            openFileDialog.FileName = "";
             #endregion
             btn_units.IsEnabled = false;
             btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");

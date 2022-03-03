@@ -652,6 +652,7 @@ namespace Restaurant.View.catalog.foods
             btn_items.IsEnabled = false;
             #region image
             HelpClass.clearImg(btn_image);
+            openFileDialog.FileName = "";
             #endregion
 
             btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
