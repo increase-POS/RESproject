@@ -639,7 +639,7 @@ namespace Restaurant.View.windows
         async Task<IEnumerable<ItemUnit>> RefreshItemUnitsList()
         {
             await FillCombo.RefreshItemUnit();
-            itemUnits = await itemUnit.GetAllItemUnits(item.itemId); 
+            itemUnits = FillCombo.itemUnitList;
             return itemUnits;
         }
         void RefreshItemUnitsView()

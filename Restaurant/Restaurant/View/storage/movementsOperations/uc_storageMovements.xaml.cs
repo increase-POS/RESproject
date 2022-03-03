@@ -149,7 +149,7 @@ namespace Restaurant.View.storage.movementsOperations
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "cb_branch" };
+                requiredControlList = new List<string> { "branch" };
 
                 MainWindow.mainWindow.KeyDown += HandleKeyPress;
 
@@ -799,10 +799,6 @@ namespace Restaurant.View.storage.movementsOperations
                 {
                     if (HelpClass.validate(requiredControlList, this))
                     {
-
-                        {
-                            if (HelpClass.validate(requiredControlList, this))
-                            {
                                 wd_transItemsLocation w;
                                 switch (_ProcessType)
                                 {
@@ -871,17 +867,11 @@ namespace Restaurant.View.storage.movementsOperations
                                         }
                                         Window.GetWindow(this).Opacity = 1;
                                         break;
-                                    case "emw":
-                                        //process transfer items
-                                        await save();
-                                        break;
                                     default:
                                         await save();
                                         break;
                                 }
                                 setNotifications();
-                            }
-                        }
                     }
                 }
                 else
@@ -1007,7 +997,9 @@ namespace Restaurant.View.storage.movementsOperations
         private async Task<int> getAvailableAmount(int itemId, int itemUnitId, int branchId, int ID)
         {
             // var itemUnits = await itemUnitModel.GetItemUnits(itemId);
-            var itemUnits = MainWindow.InvoiceGlobalItemUnitsList.Where(a => a.itemId == item.itemId).ToList();
+            if (FillCombo.itemUnitList == null)
+                await FillCombo.RefreshItemUnit();
+            var itemUnits = FillCombo.itemUnitList.Where(a => a.itemId == item.itemId).ToList();
             int availableAmount = await FillCombo.itemLocation.getAmountInBranch(itemUnitId, branchId);
             var smallUnits = await FillCombo.itemUnit.getSmallItemUnits(itemId, itemUnitId);
             foreach (ItemUnit u in itemUnits)
