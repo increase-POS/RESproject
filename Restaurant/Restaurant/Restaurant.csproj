@@ -615,6 +615,9 @@
     <Compile Include="View\windows\wd_dishIngredients.xaml.cs">
       <DependentUpon>wd_dishIngredients.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_info.xaml.cs">
+      <DependentUpon>wd_info.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_invoice.xaml.cs">
       <DependentUpon>wd_invoice.xaml</DependentUpon>
     </Compile>
@@ -695,6 +698,9 @@
     </Compile>
     <Compile Include="View\windows\wd_uploadImage.xaml.cs">
       <DependentUpon>wd_uploadImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_userInfo.xaml.cs">
+      <DependentUpon>wd_userInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_usersList.xaml.cs">
       <DependentUpon>wd_usersList.xaml</DependentUpon>
@@ -1225,6 +1231,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\windows\wd_info.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\windows\wd_invoice.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
@@ -1333,6 +1343,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\windows\wd_userInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\windows\wd_usersList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1369,6 +1383,7 @@
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Resource Include="pic\programs-Rest-login-bg.png" />
+    <Resource Include="pic\subIncrease-logo.png" />
     <Content Include="Reports\SectionData\banksData\Ar\ArBank.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
