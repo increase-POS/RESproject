@@ -676,7 +676,7 @@ namespace Restaurant.View.accounts
         {//image
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(createPermission, MainWindow.groupObjects, "one"))
+                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
                 {
                     if (cashtrans != null || cashtrans.cashTransId != 0)
                     {
@@ -962,7 +962,7 @@ namespace Restaurant.View.accounts
         }
         private void Btn_printInvoice_Click(object sender, RoutedEventArgs e)
         {
-            if (MainWindow.groupObject.HasPermissionAction(createPermission, MainWindow.groupObjects, "one"))
+            if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
             {
 
             }
@@ -1032,9 +1032,9 @@ namespace Restaurant.View.accounts
         }
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {//save
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 if (MainWindow.groupObject.HasPermissionAction(createPermission, MainWindow.groupObjects, "one"))
                 {
@@ -1165,14 +1165,14 @@ namespace Restaurant.View.accounts
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         public void BuildReport()
         {

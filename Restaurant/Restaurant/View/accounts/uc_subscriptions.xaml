@@ -531,7 +531,7 @@
                         <Button x:Name="btn_save"     Content="save"
                                 materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
-                    Margin="1,1"   Foreground="White" />
+                    Margin="1,1"   Foreground="White" Click="Btn_save_Click" />
                     </Border>
                 </Grid>
 
