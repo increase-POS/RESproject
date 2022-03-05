@@ -55,7 +55,8 @@ namespace Restaurant.View.accounts
             }
         }
 
-        string basicsPermission = "subscriptions_basics";
+        string createPermission = "subscriptions_create";
+        string reportsPermission = "subscriptions_reports";
         //Agent agent = new Agent();
         //IEnumerable<Agent> agentsQuery;
         //IEnumerable<Agent> agents;
@@ -694,7 +695,7 @@ namespace Restaurant.View.accounts
                 if (sender != null)
                     SectionData.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") )
                 {
                     /////////////////////////////////////
                     Thread t1 = new Thread(() =>
@@ -725,7 +726,7 @@ namespace Restaurant.View.accounts
                 if (sender != null)
                     SectionData.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
@@ -753,7 +754,7 @@ namespace Restaurant.View.accounts
                 if (sender != null)
                     SectionData.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
@@ -808,7 +809,7 @@ namespace Restaurant.View.accounts
                 if (sender != null)
                     SectionData.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
                 {
                     Thread t1 = new Thread(() =>
                     {
@@ -1051,6 +1052,33 @@ namespace Restaurant.View.accounts
                 HelpClass.ExceptionMessage(ex, this);
             }
             */
+        }
+
+        private void Btn_save_Click(object sender, RoutedEventArgs e)
+        {
+            //save
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (MainWindow.groupObject.HasPermissionAction(createPermission, MainWindow.groupObjects, "one"))
+            {
+
+
+
+
+
+            }
+            else
+                Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }
