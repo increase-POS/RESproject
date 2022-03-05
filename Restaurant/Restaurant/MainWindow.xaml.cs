@@ -766,16 +766,17 @@ namespace Restaurant
             }
 
 
-            //try
-            //{
-            //    posLogIn = await posLogIn.getById(posID.Value);
-            //    txt_cashValue.Text = HelpClass.DecTostring(posLogIn.balance);
-            //    txt_cashSympol.Text = MainWindow.Currency;
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            try
+            {
+
+                posLogin = await posLogin.getById(posLogin.posId);
+                txt_cashValue.Text = HelpClass.DecTostring(posLogin.balance);
+                txt_cashSympol.Text = AppSettings.Currency;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
 
 
         }
@@ -941,6 +942,7 @@ namespace Restaurant
             txt_cashTitle.Text = AppSettings.resourcemanager.GetString("trBalance");
 
             mi_changePassword.Header = AppSettings.resourcemanager.GetString("trChangePassword");
+            mi_aboutUs.Header = AppSettings.resourcemanager.GetString("trAboutUs");
             BTN_logOut.Header = AppSettings.resourcemanager.GetString("trLogOut");
 
             txt_notifications.Text = AppSettings.resourcemanager.GetString("trNotifications");
@@ -1440,6 +1442,20 @@ namespace Restaurant
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private void Mi_aboutUs_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_info w = new wd_info();
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         /*
         SetValues v = new SetValues();
         async Task<string> getDefaultStorageCost()
@@ -1680,10 +1696,10 @@ namespace Restaurant
         {
             try
             {
-                //Window.GetWindow(this).Opacity = 0.2;
-                //wd_userInfo w = new wd_userInfo();
-                //w.ShowDialog();
-                //Window.GetWindow(this).Opacity = 1;
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_userInfo w = new wd_userInfo();
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
             }
             catch (Exception ex)
             {
@@ -1726,14 +1742,14 @@ namespace Restaurant
 
             HelpClass.EndAwait(grid_mainWindow);
         }
-        internal static Pos posLogIn = new Pos();
+        
         //internal static int? posID;
         public static async Task refreshBalance()
         {
             try
             {
-                posLogIn = await posLogIn.getById(posLogIn.posId);
-                mainWindow.txt_cashValue.Text = HelpClass.DecTostring(posLogIn.balance);
+                posLogin = await posLogin.getById(posLogin.posId);
+                mainWindow.txt_cashValue.Text = HelpClass.DecTostring(posLogin.balance);
                 mainWindow.txt_cashSympol.Text = AppSettings.Currency;
             }
             catch (Exception ex)
@@ -2223,5 +2239,7 @@ namespace Restaurant
             }
         }
         #endregion
+
+        
     }
 }

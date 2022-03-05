@@ -114,7 +114,6 @@
             </Grid.ColumnDefinitions>
             <Grid  Grid.Row="0" Grid.Column="1" Background="#F1F5F8"  >
                 <Grid.ColumnDefinitions>
-
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
@@ -139,7 +138,13 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel x:Name="sp_mainPath" Orientation="Horizontal" Margin="10 5"
                           VerticalAlignment="Center"/>
-
+                    
+                    <!--<Button Grid.Column="1" x:Name="btn_info" Click="Btn_info_Click"
+                    Background="{x:Null}" BorderBrush="{x:Null}"  
+                    Padding="0" Margin="15 5 5 5" >
+                        <materialDesign:PackIcon   Foreground="Silver" Kind="InfoCircle"  FlowDirection="LeftToRight"
+                                         Width="35" Height="35"    />
+                    </Button>-->
 
 
                 </Grid>
@@ -227,6 +232,10 @@
                             <MenuItem x:Name="mi_changePassword"  Foreground="{StaticResource SecondColor}"  BorderThickness="0,1,0,0" BorderBrush="#DEDEDE"
                               Header="Change Password" Click="Mi_changePassword_Click"
                               Icon="{materialDesign:PackIcon Kind=Password}"></MenuItem>
+                            <Separator Background="{StaticResource SecondColor}" />
+                            <MenuItem x:Name="mi_aboutUs"  Foreground="{StaticResource SecondColor}"  BorderThickness="0,1,0,0" BorderBrush="#DEDEDE"
+                              Header="about us" Click="Mi_aboutUs_Click"
+                              Icon="{materialDesign:PackIcon Kind=InfoCircle}"></MenuItem>
                             <Separator Background="{StaticResource SecondColor}" />
                             <MenuItem Header="Logout"  Foreground="{StaticResource SecondColor}"  x:Name="BTN_logOut" Click="BTN_logOut_Click" 
                          Icon="{materialDesign:PackIcon Kind=ExitToApp}" />

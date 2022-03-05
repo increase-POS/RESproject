@@ -84,7 +84,7 @@ namespace Restaurant.View.windows
         {
 
             poss = await posModel.Get();
-            var pos = poss.Where(p => p.branchId == MainWindow.branchLogin.branchId && p.posId != MainWindow.posLogIn.posId);
+            var pos = poss.Where(p => p.branchId == MainWindow.branchLogin.branchId && p.posId != MainWindow.posLogin.posId);
             cb_pos.ItemsSource = pos;
             cb_pos.DisplayMemberPath = "name";
             cb_pos.SelectedValuePath = "posId";
@@ -94,9 +94,9 @@ namespace Restaurant.View.windows
         {
             await MainWindow.refreshBalance();
             //cashes = await cashModel.GetCashTransfer("d", "p");
-            cashes = await cashModel.GetCashTransferForPosById("all", "p",(int)MainWindow.posLogIn.posId);
+            cashes = await cashModel.GetCashTransferForPosById("all", "p",(int)MainWindow.posLogin.posId);
             cashesQuery = cashes.Where(s => s.isConfirm == 1 
-                                                && s.posId == MainWindow.posLogIn.posId
+                                                && s.posId == MainWindow.posLogin.posId
                                                 && s.isConfirm2 == 0).ToList();
 
 
@@ -111,13 +111,13 @@ namespace Restaurant.View.windows
                 btn_save.IsEnabled = false;
             }
 
-            if (MainWindow.posLogIn.balance != 0)
-                txt_cashValue.Text = HelpClass.DecTostring(MainWindow.posLogIn.balance);
+            if (MainWindow.posLogin.balance != 0)
+                txt_cashValue.Text = HelpClass.DecTostring(MainWindow.posLogin.balance);
             else
                 txt_cashValue.Text = "0";
 
-            status = MainWindow.posLogIn.boxState;
-            if (MainWindow.posLogIn.boxState == "c")
+            status = MainWindow.posLogin.boxState;
+            if (MainWindow.posLogin.boxState == "c")
             {
                 txt_balanceState.Text = AppSettings.resourcemanager.GetString("trUnavailable");
                 txt_stateValue.Text = AppSettings.resourcemanager.GetString("trClosed");
@@ -351,12 +351,12 @@ namespace Restaurant.View.windows
 
             cash1.transType = "p";//pull
             cash1.transNum = await cash1.generateCashNumber(cash1.transType + "p");
-            cash1.cash = MainWindow.posLogIn.balance;
+            cash1.cash = MainWindow.posLogin.balance;
             cash1.createUserId = MainWindow.userLogin.userId;
-            cash1.posIdCreator = MainWindow.posLogIn.posId;
+            cash1.posIdCreator = MainWindow.posLogin.posId;
             cash1.isConfirm = 1;
             cash1.side = "p";//pos
-            cash1.posId = Convert.ToInt32(MainWindow.posLogIn.posId);
+            cash1.posId = Convert.ToInt32(MainWindow.posLogin.posId);
 
             int s1 = await cash1.Save(cash1);
 
@@ -367,9 +367,9 @@ namespace Restaurant.View.windows
 
                 cash2.transType = "d";//deposite
                 cash2.transNum = await cash2.generateCashNumber(cash2.transType + "p");
-                cash2.cash = MainWindow.posLogIn.balance;
+                cash2.cash = MainWindow.posLogin.balance;
                 cash2.createUserId = MainWindow.userLogin.userId;
-                cash2.posIdCreator = MainWindow.posLogIn.posId;
+                cash2.posIdCreator = MainWindow.posLogin.posId;
                 cash2.isConfirm = 0;
                 cash2.side = "p";//pos
                 cash2.posId = Convert.ToInt32(cb_pos.SelectedValue);

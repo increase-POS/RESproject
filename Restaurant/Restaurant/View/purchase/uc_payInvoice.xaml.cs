@@ -620,7 +620,7 @@ namespace Restaurant.View.purchase
                         FillCombo.invoice.saveAvgPurchasePrice(invoiceItems);
                 }
                 else
-                    Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
             }
 
@@ -3340,7 +3340,7 @@ namespace Restaurant.View.purchase
 
                         }
                         else
-                            Toaster.ShowError(Window.GetWindow(this), message: "", animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: "", animation: ToasterAnimation.FadeIn);
 
                         Window.GetWindow(this).Opacity = 1;
 
@@ -3349,7 +3349,7 @@ namespace Restaurant.View.purchase
                 }
                 else
                 {
-                    Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSaveInvoiceToPreview"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSaveInvoiceToPreview"), animation: ToasterAnimation.FadeIn);
 
                 }
             }

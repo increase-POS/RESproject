@@ -440,7 +440,7 @@
 
                     <Border Grid.Row="1" Margin="10,5,10,5" CornerRadius="10" BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid>
-                            <TextBox x:Name="tb_amount"  Text="{Binding amount, Mode=OneWay}" Padding="10,5,0,0" 
+                                <TextBox x:Name="tb_amount"  Text="{Binding amountDestroyed, Mode=OneWay}" Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="amount..."  
                                      Foreground="#4E4E4E"  
