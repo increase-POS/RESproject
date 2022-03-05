@@ -3388,4 +3388,7 @@
   <data name="invoicesClasses" xml:space="preserve">
     <value>فئات الفواتير</value>
   </data>
+  <data name="trAboutUs" xml:space="preserve">
+    <value>من نحن</value>
+  </data>
 </root>
