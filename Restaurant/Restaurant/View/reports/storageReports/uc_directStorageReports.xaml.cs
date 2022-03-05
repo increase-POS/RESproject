@@ -73,6 +73,8 @@ namespace Restaurant.View.reports.storageReports
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
 
+        string searchText = "";
+
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
             //try
@@ -282,7 +284,7 @@ namespace Restaurant.View.reports.storageReports
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txt_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
 
-            col_Num.Header = AppSettings.resourcemanager.GetString("trNo");
+            col_Num.Header = AppSettings.resourcemanager.GetString("trNo.");
             col_date.Header = AppSettings.resourcemanager.GetString("trDate");
             col_branch.Header = AppSettings.resourcemanager.GetString("trBranch");
             col_item.Header = AppSettings.resourcemanager.GetString("trItem");
@@ -300,7 +302,7 @@ namespace Restaurant.View.reports.storageReports
             var result = itemsTransfer.Where(x =>
                              (cb_directItemsBranches.SelectedItem != null ? (x.branchId == Convert.ToInt32(cb_directItemsBranches.SelectedValue)) : true)
                           && (cb_directItems.SelectedItem != null ? (x.itemId == Convert.ToInt32(cb_directItems.SelectedValue)) : true)
-                          && (cb_directUnits.SelectedItem != null ? (x.unitId == Convert.ToInt32(cb_directUnits.SelectedValue)) : true)
+                          && (cb_directUnits.SelectedItem != null ? (x.unitId == Convert.ToInt32(cb_directUnits.SelectedValue)) : true)//cb_directUnits
                           && (dp_directStartDate.SelectedDate != null ? (x.updateDate >= dp_directStartDate.SelectedDate) : true)
                           && (dp_directEndDate.SelectedDate != null ? (x.updateDate <= dp_directEndDate.SelectedDate) : true)
                           );
@@ -409,12 +411,64 @@ namespace Restaurant.View.reports.storageReports
 
         #region events
 
+        private void Btn_refresh_Click(object sender, RoutedEventArgs e)
+        {//refresh
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+
+                txt_search.Text = "";
+                searchText = "";
+                
+                fillEvents();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Txt_search_TextChanged(object sender, TextChangedEventArgs e)
+        {//search
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+
+                temp = temp
+                              .Where(s => (s.invNumber.ToString().Contains(txt_search.Text) ||
+                                           s.branchName.Contains(txt_search.Text) ||
+                                           s.itemName.Contains(txt_search.Text) ||
+                                           s.unitName.Contains(txt_search.Text) ||
+                                           s.quantity.ToString().Contains(txt_search.Text)
+                                     ));
+
+                dgDirect.ItemsSource = temp;
+                txt_count.Text = temp.Count().ToString();
+
+                fillDirectColumnChart();
+                fillDirectPieChart();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private void Cb_directItemsBranches_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_directItems.IsEnabled = true;
                 chk_directAllItems.IsEnabled = true;
@@ -439,7 +493,7 @@ namespace Restaurant.View.reports.storageReports
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_directUnits.IsEnabled = true;
                 chk_directAllUnits.IsEnabled = true;
@@ -449,16 +503,34 @@ namespace Restaurant.View.reports.storageReports
                 fillEvents();
 
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
+        private void Cb_directUnits_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+
+                fillEvents();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private void Chk_directAllBranches_Checked(object sender, RoutedEventArgs e)
         {
             try
@@ -806,7 +878,7 @@ namespace Restaurant.View.reports.storageReports
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 invoice = new Invoice();
                 if (dgDirect.SelectedIndex != -1)
                 {
@@ -841,9 +913,6 @@ namespace Restaurant.View.reports.storageReports
             }
         }
 
-        private void Txt_search_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
+        
     }
 }

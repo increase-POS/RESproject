@@ -1259,8 +1259,7 @@ namespace Restaurant.View.reports.purchaseReports
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (!isClickedAllBranches)
                 {
@@ -1316,12 +1315,12 @@ namespace Restaurant.View.reports.purchaseReports
                 fillEvent();
 
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

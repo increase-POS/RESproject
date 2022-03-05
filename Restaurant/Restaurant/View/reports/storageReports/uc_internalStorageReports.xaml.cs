@@ -259,7 +259,7 @@ namespace Restaurant.View.reports.storageReports
                 fillEvents();
 
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -677,21 +677,24 @@ namespace Restaurant.View.reports.storageReports
                         && (unit.SelectedItem != null ? (x.unitId == selectedUnit.UnitId) : true)
                         && (dp_internalItemsStartDate.SelectedDate != null ? (x.updateDate >= startDate.SelectedDate) : true)
                         && (dp_InternalItemsEndDate.SelectedDate != null ? (x.updateDate <= endDate.SelectedDate) : true)
-                        //two ways
-                        &&
-                          towWays.IsChecked == true ?
-                              //fromBranch
-                              (selectedFromBranch != null ? x.exportBranchId == Convert.ToInt32(cb_internalItemsFromBranches.SelectedValue) || x.importBranchId == Convert.ToInt32(cb_internalItemsFromBranches.SelectedValue) : true)
-                              &&
-                              //toBranch
-                              (selectedToBranch != null ? x.exportBranchId == Convert.ToInt32(cb_internalItemsToBranches.SelectedValue) || x.importBranchId == Convert.ToInt32(cb_internalItemsToBranches.SelectedValue) : true)
-                         :
-                              //fromBranch
-                              (selectedFromBranch != null ? x.exportBranchId == Convert.ToInt32(cb_internalItemsFromBranches.SelectedValue) : true)
-                              &&
-                              //toBranch
-                              (selectedToBranch != null ? x.importBranchId == Convert.ToInt32(cb_internalItemsToBranches.SelectedValue) : true)
-                        ));
+                        )
+                        ) ;
+                result = result.Where(x => (
+                    //two ways
+                      towWays.IsChecked == true ?
+                          //fromBranch
+                          (selectedFromBranch != null ? x.exportBranchId == Convert.ToInt32(cb_internalItemsFromBranches.SelectedValue) || x.importBranchId == Convert.ToInt32(cb_internalItemsFromBranches.SelectedValue) : true)
+                          &&
+                          //toBranch
+                          (selectedToBranch != null ? x.exportBranchId == Convert.ToInt32(cb_internalItemsToBranches.SelectedValue) || x.importBranchId == Convert.ToInt32(cb_internalItemsToBranches.SelectedValue) : true)
+                     :
+                          //fromBranch
+                          (selectedFromBranch != null ? x.exportBranchId == Convert.ToInt32(cb_internalItemsFromBranches.SelectedValue) : true)
+                          &&
+                          //toBranch
+                          (selectedToBranch != null ? x.importBranchId == Convert.ToInt32(cb_internalItemsToBranches.SelectedValue) : true)
+                          )
+                    );
                 lst = result;
                 return result;
             }
@@ -1255,17 +1258,16 @@ namespace Restaurant.View.reports.storageReports
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 fillEvents();
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

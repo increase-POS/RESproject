@@ -86,7 +86,7 @@ namespace Restaurant.View.reports.storageReports
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -118,12 +118,12 @@ namespace Restaurant.View.reports.storageReports
                 Btn_item_Click(btn_item, null);
 
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -973,7 +973,7 @@ namespace Restaurant.View.reports.storageReports
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 
@@ -990,14 +990,12 @@ namespace Restaurant.View.reports.storageReports
                 path_item.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
                 fillEvents();
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1007,7 +1005,7 @@ namespace Restaurant.View.reports.storageReports
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 selectedStockTab = 1;
@@ -1025,12 +1023,12 @@ namespace Restaurant.View.reports.storageReports
                 fillEvents();
 
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1040,7 +1038,7 @@ namespace Restaurant.View.reports.storageReports
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 
@@ -1058,15 +1056,13 @@ namespace Restaurant.View.reports.storageReports
                 showSelectedTabColumn();
 
                 fillEvents();
-
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1493,7 +1489,7 @@ namespace Restaurant.View.reports.storageReports
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 txt_search.Text = "";
 

@@ -1213,7 +1213,7 @@ namespace Restaurant.Classes
             else if (secondTitle == "shortfalls")
                 secondTitle = AppSettings.resourcemanager.GetString("trShortages");
             else if (secondTitle == "location")
-                secondTitle = AppSettings.resourcemanager.GetString("trLocation");
+                secondTitle = AppSettings.resourcemanager.GetString("trLocations");
             else if (secondTitle == "collect")
                 secondTitle = AppSettings.resourcemanager.GetString("trCollect");
             else if (secondTitle == "bestselling")

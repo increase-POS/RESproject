@@ -3400,4 +3400,16 @@ Please add Email in setting</value>
   <data name="trPurchaceOrderSaved" xml:space="preserve">
     <value>Purchase Order - Saved</value>
   </data>
+  <data name="trFromBranch/StoreHint" xml:space="preserve">
+    <value>From Branch/Store...</value>
+  </data>
+  <data name="trToBranch/StoreHint" xml:space="preserve">
+    <value>To Branch/Store...</value>
+  </data>
+  <data name="trTwoWays" xml:space="preserve">
+    <value>Two ways</value>
+  </data>
+  <data name="invoicesClasses" xml:space="preserve">
+    <value>Invoices classes</value>
+  </data>
 </root>

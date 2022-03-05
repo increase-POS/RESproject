@@ -330,7 +330,7 @@ namespace Restaurant.View.reports.purchaseReports
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -787,8 +787,8 @@ namespace Restaurant.View.reports.purchaseReports
            ((chkReturn.IsChecked == true ? (x.invType == "pb") : false) || (chkInvoice.IsChecked == true ? (x.invType == "p") : false))
                       && (cbBranch.SelectedItem != null ? x.branchCreatorId == selectedBranch.branchId : true)
                       && (cb_Items.SelectedItem != null ? x.itemUnitId == selectedItemUnit.itemUnitId : true)
-                      && (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
-                      && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true)));
+                      && (startDate.SelectedDate != null ? x.updateDate >= startDate.SelectedDate : true)
+                      && (endDate.SelectedDate != null ? x.updateDate <= endDate.SelectedDate : true)));
 
             invLst = result.ToList();
             return result.ToList();
@@ -808,8 +808,8 @@ namespace Restaurant.View.reports.purchaseReports
 
             var temp = Invoices
                 .Where(x =>
-                 (startDate.SelectedDate != null ? x.IupdateDate >= startDate.SelectedDate : true)
-                && (endDate.SelectedDate != null ? x.IupdateDate <= endDate.SelectedDate : true))
+                 (startDate.SelectedDate != null ? x.updateDate >= startDate.SelectedDate : true)
+                && (endDate.SelectedDate != null ? x.updateDate <= endDate.SelectedDate : true))
                 .GroupBy(obj => new
                 {
                     obj.branchCreatorId,
@@ -839,8 +839,8 @@ namespace Restaurant.View.reports.purchaseReports
         {
             var temp = Invoices
                 .Where(x =>
-                 (startDate.SelectedDate != null ? x.IupdateDate >= startDate.SelectedDate : true)
-                && (endDate.SelectedDate != null ? x.IupdateDate <= endDate.SelectedDate : true))
+                 (startDate.SelectedDate != null ? x.updateDate >= startDate.SelectedDate : true)
+                && (endDate.SelectedDate != null ? x.updateDate <= endDate.SelectedDate : true))
                 .GroupBy(obj => new
                 {
                     obj.ITitemUnitId

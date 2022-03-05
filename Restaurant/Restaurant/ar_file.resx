@@ -3376,4 +3376,16 @@
   <data name="trPurchaceOrderSaved" xml:space="preserve">
     <value>طلبية شراء محفوظة</value>
   </data>
+  <data name="trFromBranch/StoreHint" xml:space="preserve">
+    <value>من فرع/مخزن...</value>
+  </data>
+  <data name="trToBranch/StoreHint" xml:space="preserve">
+    <value>إلى فرع/مخزن...</value>
+  </data>
+  <data name="trTwoWays" xml:space="preserve">
+    <value>باتجاهين</value>
+  </data>
+  <data name="invoicesClasses" xml:space="preserve">
+    <value>فئات الفواتير</value>
+  </data>
 </root>
