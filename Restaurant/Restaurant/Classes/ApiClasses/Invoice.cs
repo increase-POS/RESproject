@@ -149,7 +149,8 @@ namespace Restaurant.Classes
         public int printedcount { get; set; }
         public bool isOrginal { get; set; }
 
-
+        public decimal shippingCost { get; set; }
+        public decimal realShippingCost { get; set; }
         public string branchName { get; set; }
         public string branchCreatorName { get; set; }
 
@@ -795,6 +796,16 @@ namespace Restaurant.Classes
             parameters.Add("invoiceObject", myContent);
             myContent = JsonConvert.SerializeObject(invoiceItems);
             parameters.Add("itemsObject", myContent);
+            myContent = JsonConvert.SerializeObject(tables);
+            parameters.Add("tablesObject", myContent);
+           return await APIResult.post(method, parameters);
+        }
+        public async Task<int> saveInvoiceWithTables(Invoice invoice, List<Tables> tables)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "Invoices/saveInvoiceWithTables";
+            var myContent = JsonConvert.SerializeObject(invoice);
+            parameters.Add("invoiceObject", myContent);
             myContent = JsonConvert.SerializeObject(tables);
             parameters.Add("tablesObject", myContent);
            return await APIResult.post(method, parameters);

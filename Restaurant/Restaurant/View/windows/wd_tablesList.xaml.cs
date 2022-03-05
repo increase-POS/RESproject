@@ -26,7 +26,6 @@ namespace Restaurant.View.windows
         public int sectionId = 0 ;
         public bool isActive;
         public string page;
-        public long reservationId;
 
         Classes.Section section = new Classes.Section();
         Classes.Section sectionModel = new Classes.Section();
@@ -85,7 +84,7 @@ namespace Restaurant.View.windows
                 #endregion
 
                 #region invoice tbale
-                if(page == "dinningHall")
+                if(page == "dinningHall-reserve" || page == "dinningHall-invoice")
                 {
 
                 }
@@ -127,7 +126,7 @@ namespace Restaurant.View.windows
                 dg_selectedItems.DisplayMemberPath = "name";
                 #endregion
 
-                HelpClass.EndAwait(grid_tableList);
+                HelpClass.EndAwait(grid_tableList); 
             }
             catch (Exception ex)
             {

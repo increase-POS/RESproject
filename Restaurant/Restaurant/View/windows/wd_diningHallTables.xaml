@@ -187,184 +187,6 @@
                             <ScrollViewer Grid.Row="0" Margin="5,10,-5,5">
                                 <WrapPanel x:Name="wp_tablesContainer" Visibility="Visible" Margin="0,15,0,15" HorizontalAlignment="Left" >
 
-                                    <Button  Height="90" Width="80" Margin="5"
-                                    Padding="0"   Background="{x:Null}" BorderBrush="{x:Null}"  >
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="20"/>
-                                                <RowDefinition Height="20"/>
-                                            </Grid.RowDefinitions>
-                                            <Path Fill="{StaticResource GreenTables}" Stretch="Fill"  Margin="5"
-                              Data="{StaticResource tablePersons2}"/>
-                                            <TextBlock  Text="Table-12"  Grid.Row="1" 
-                                                    Foreground="{StaticResource SecondColor}"
-                                                     HorizontalAlignment="Center" />
-                                            <TextBlock  Text="Empty"  Grid.Row="2" 
-                                                    Foreground="{StaticResource SecondColor}"
-                                                     HorizontalAlignment="Center" />
-                                        </Grid>
-                                    </Button>
-                                    <Button  Height="130" Width="90" Margin="5"
-                                    Padding="0"   Background="{x:Null}" BorderBrush="{x:Null}"  >
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="20"/>
-                                                <RowDefinition Height="20"/>
-                                            </Grid.RowDefinitions>
-                                            <Path Fill="{StaticResource BlueTables}" Stretch="Fill"  Margin="5"
-                              Data="{StaticResource tablePersons3}"/>
-
-
-                                            <TextBlock  Text="Table-14"  Grid.Row="1" 
-                                                    Foreground="{StaticResource SecondColor}"
-                                                     HorizontalAlignment="Center" />
-                                            <TextBlock  Text="Reservated"  Grid.Row="2" 
-                                                    Foreground="{StaticResource SecondColor}"
-                                                     HorizontalAlignment="Center" />
-                                        </Grid>
-                                    </Button>
-                                    <Button  Height="140" Width="100" Margin="5"
-                                    Padding="0"   Background="{x:Null}" BorderBrush="{x:Null}"  >
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="20"/>
-                                                <RowDefinition Height="20"/>
-                                            </Grid.RowDefinitions>
-                                            <Path Fill="{StaticResource MainColor}" Stretch="Fill"  Margin="5"
-                              Data="{StaticResource tablePersons4}"/>
-
-
-                                            <TextBlock  Text="Table-22"  Grid.Row="1" 
-                                                    Foreground="{StaticResource SecondColor}"
-                                                     HorizontalAlignment="Center" />
-                                            <TextBlock  Text="Open"  Grid.Row="2" 
-                                                    Foreground="{StaticResource SecondColor}"
-                                                     HorizontalAlignment="Center" />
-                                        </Grid>
-                                    </Button>
-                                    <Button  Height="150" Width="110" Margin="5"
-                                    Padding="0"   Background="{x:Null}" BorderBrush="{x:Null}"  >
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="20"/>
-                                                <RowDefinition Height="20"/>
-                                            </Grid.RowDefinitions>
-                                            <Path Fill="{StaticResource GreenTables}" Stretch="Fill"  Margin="5"
-                              Data="{StaticResource tablePersons5}"/>
-                                            <TextBlock  Text="Table-44"  Grid.Row="1" 
-                                                    Foreground="{StaticResource SecondColor}"
-                                                     HorizontalAlignment="Center" />
-                                            <TextBlock  Text="Empty"  Grid.Row="2" 
-                                                    Foreground="{StaticResource SecondColor}"
-                                                     HorizontalAlignment="Center" />
-                                        </Grid>
-                                    </Button>
-                                    <Button  Height="160" Width="120" Margin="5"
-                                    Padding="0"   Background="{x:Null}" BorderBrush="{x:Null}"  >
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="20"/>
-                                                <RowDefinition Height="20"/>
-                                            </Grid.RowDefinitions>
-                                            <Path Fill="{StaticResource BlueTables}" Stretch="Fill"  Margin="5"
-                              Data="{StaticResource tablePersons6}"/>
-
-
-                                            <TextBlock  Text="Table-58"  Grid.Row="1" 
-                                                    Foreground="{StaticResource SecondColor}"
-                                                     HorizontalAlignment="Center" />
-                                            <TextBlock  Text="Reservated"  Grid.Row="2" 
-                                                    Foreground="{StaticResource SecondColor}"
-                                                     HorizontalAlignment="Center" />
-                                        </Grid>
-                                    </Button>
-                                    <Button  Height="170" Width="130" Margin="5"
-                                    Padding="0"   Background="{x:Null}" BorderBrush="{x:Null}"  >
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="20"/>
-                                                <RowDefinition Height="20"/>
-                                            </Grid.RowDefinitions>
-                                            <Path Fill="{StaticResource GreenTables}" Stretch="Fill"  Margin="5"
-                              Data="{StaticResource tablePersons7}"/>
-
-
-                                            <TextBlock  Text="Table-105"  Grid.Row="1" 
-                                                    Foreground="{StaticResource SecondColor}"
-                                                     HorizontalAlignment="Center" />
-                                            <TextBlock  Text="Empty"  Grid.Row="2" 
-                                                    Foreground="{StaticResource SecondColor}"
-                                                     HorizontalAlignment="Center" />
-                                        </Grid>
-                                    </Button>
-                                    <Button  Height="180" Width="140" Margin="5"
-                                    Padding="0"   Background="{x:Null}" BorderBrush="{x:Null}"  >
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="20"/>
-                                                <RowDefinition Height="20"/>
-                                            </Grid.RowDefinitions>
-                                            <Path Fill="{StaticResource MainColor}" Stretch="Fill"  Margin="5"
-                              Data="{StaticResource tablePersons8}"/>
-
-
-                                            <TextBlock  Text="Table-145"  Grid.Row="1" 
-                                                    Foreground="{StaticResource SecondColor}"
-                                                     HorizontalAlignment="Center" />
-                                            <TextBlock  Text="Open"  Grid.Row="2" 
-                                                    Foreground="{StaticResource SecondColor}"
-                                                     HorizontalAlignment="Center" />
-                                        </Grid>
-                                    </Button>
-                                    <Button  Height="190" Width="150" Margin="5"
-                                    Padding="0"   Background="{x:Null}" BorderBrush="{x:Null}"  >
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="20"/>
-                                                <RowDefinition Height="20"/>
-                                            </Grid.RowDefinitions>
-                                            <Path Fill="{StaticResource GreenTables}" Stretch="Fill"  Margin="5"
-                              Data="{StaticResource tablePersons9}"/>
-
-
-                                            <TextBlock  Text="Table-92"  Grid.Row="1" 
-                                                    Foreground="{StaticResource SecondColor}"
-                                                     HorizontalAlignment="Center" />
-                                            <TextBlock  Text="Empty"  Grid.Row="2" 
-                                                    Foreground="{StaticResource SecondColor}"
-                                                     HorizontalAlignment="Center" />
-                                        </Grid>
-                                    </Button>
-                                    <Button  Height="200" Width="160" Margin="5"
-                                    Padding="0"   Background="{x:Null}" BorderBrush="{x:Null}"  >
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="20"/>
-                                                <RowDefinition Height="20"/>
-                                            </Grid.RowDefinitions>
-                                            <Path Fill="{StaticResource BlueTables}" Stretch="Fill"  Margin="5"
-                              Data="{StaticResource tablePersons9Plus}"/>
-                                            <TextBlock  Text="25"  
-                                                    Foreground="White" FontSize="32"
-                                                    HorizontalAlignment="Center" VerticalAlignment="Center"  />
-
-                                            <TextBlock  Text="Table-109"  Grid.Row="1" 
-                                                    Foreground="{StaticResource SecondColor}"
-                                                     HorizontalAlignment="Center" />
-                                            <TextBlock  Text="Reservated"  Grid.Row="2" 
-                                                    Foreground="{StaticResource SecondColor}"
-                                                     HorizontalAlignment="Center" />
-                                        </Grid>
-                                    </Button>
                                 </WrapPanel>
                             </ScrollViewer>
                             <Grid x:Name="grid_reservationsContainer" Visibility="Collapsed">
@@ -869,14 +691,15 @@
                     BorderThickness="1" Opacity="1" Margin="5,5,5,5"  />
                                 <Grid x:Name="grid_emptyTableButtons" Visibility="Collapsed" >
                                     <Border Grid.Row="0" Grid.ColumnSpan="3">
-                                        <Button    Content="Open"
+                                        <Button    Content="Open" Name="btn_open1"
+                                           Click="Btn_open_Click"
                                     materialDesign:ButtonAssist.CornerRadius="7"
                               Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                         Margin="1,1"   Foreground="White" />
                                     </Border>
                                 </Grid>
 
-                                <Grid x:Name="grid_openTableButtons"  Visibility="Collapsed" >
+                                <Grid x:Name="grid_openTableButtons"  Visibility="Visible">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
@@ -906,6 +729,7 @@
                                     </Button>-->
                                     <Button Grid.Column="0" BorderBrush="{x:Null}" Padding="0" 
                                   Margin="5 5 2.5 5 " Height="auto"
+                                             Name="btn_mergeInvTable" Click="Btn_mergeInvTable_Click"
                                 Background="{x:Null}" VerticalAlignment="Top"  >
                                         <Grid>
                                             <Grid.RowDefinitions>
@@ -965,7 +789,7 @@
                                     </Border>
                                 </Grid>
 
-                                <Grid x:Name="grid_reservatedTableButtons" Visibility="Visible">
+                                <Grid x:Name="grid_reservatedTableButtons" Visibility="Collapsed">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
@@ -990,6 +814,7 @@
                            Width="35" Height="35" FlowDirection="LeftToRight"
                            Data="{StaticResource mergeTables}"/>
                                             <TextBlock  Text="merge table"  Grid.Row="1" 
+                                         
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
                                                     Foreground="{StaticResource MainColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
@@ -1048,8 +873,9 @@
                                     </Button>
 
                                     <Border Grid.Row="1" Grid.ColumnSpan="3">
-                                        <Button    Content="Open"
+                                        <Button    Content="Open" Name="btn_open2"
                                     materialDesign:ButtonAssist.CornerRadius="7"
+                                                   Click="Btn_open_Click"
                               Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                         Margin="1,1"   Foreground="White" />
                                     </Border>
