@@ -14,61 +14,62 @@ using System.Web;
 
 namespace Restaurant.Classes
 {
-    public class Offer
+    public class InvoicesClass
     {
-        public int offerId { get; set; }
-        public string name { get; set; }
-        public string code { get; set; }
-        public byte isActive { get; set; }
-        public string discountType { get; set; }
+        public int invClassId { get; set; }
+        public decimal minInvoiceValue { get; set; }
+        public decimal MaxInvoiceValue { get; set; }
         public decimal discountValue { get; set; }
-        public Nullable<System.DateTime> startDate { get; set; }
-        public Nullable<System.DateTime> endDate { get; set; }
+        public byte discountType { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
-        public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
+        public Nullable<int> createUserId { get; set; }
         public string notes { get; set; }
-        public Boolean canDelete { get; set; }
+        public byte isActive { get; set; }
 
-        public int membershipOfferId { get; set; }
+        public bool canDelete { get; set; }
+
+        public int invClassMemberId { get; set; }
         public Nullable<int> membershipId { get; set; }
 
-        public async Task<List<Offer>> Get()
+
+        public async Task<List<InvoicesClass>> GetAll()
         {
-            List<Offer> items = new List<Offer>();
-            IEnumerable<Claim> claims = await APIResult.getList("Offers/Get");
+            List<InvoicesClass> items = new List<InvoicesClass>();
+            IEnumerable<Claim> claims = await APIResult.getList("invoicesClass/GetAll");
             foreach (Claim c in claims)
             {
                 if (c.Type == "scopes")
                 {
-                    items.Add(JsonConvert.DeserializeObject<Offer>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                    items.Add(JsonConvert.DeserializeObject<InvoicesClass>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
                 }
             }
             return items;
         }
-        public async Task<Offer> getOfferById(int itemId)
+
+        public async Task<InvoicesClass> GetById(int itemId)
         {
-            Offer item = new Offer();
+            InvoicesClass item = new InvoicesClass();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", itemId.ToString());
             //#################
-            IEnumerable<Claim> claims = await APIResult.getList("Offers/GetOfferByID", parameters);
+            IEnumerable<Claim> claims = await APIResult.getList("invoicesClass/GetById", parameters);
 
             foreach (Claim c in claims)
             {
                 if (c.Type == "scopes")
                 {
-                    item = JsonConvert.DeserializeObject<Offer>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                    item = JsonConvert.DeserializeObject<InvoicesClass>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
                     break;
                 }
             }
             return item;
         }
-        public async Task<int> save(Offer item)
+        public async Task<int> save(InvoicesClass item)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            string method = "Offers/Save";
+            string method = "invoicesClass/Save";
             var myContent = JsonConvert.SerializeObject(item);
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
@@ -79,23 +80,23 @@ namespace Restaurant.Classes
             parameters.Add("itemId", itemId.ToString());
             parameters.Add("userId", userId.ToString());
             parameters.Add("final", final.ToString());
-            string method = "Offers/Delete";
+            string method = "invoicesClass/Delete";
            return await APIResult.post(method, parameters);
         }
 
-        public async Task<List<Offer>> GetOffersByMembershipId(int membershipId)
+        public async Task<List<InvoicesClass>> GetInvclassByMembershipId(int invClassId)
         {
-            List<Offer> items = new List<Offer>();
+            List<InvoicesClass> items = new List<InvoicesClass>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("itemId", membershipId.ToString());
+            parameters.Add("itemId", invClassId.ToString());
             //#################
-            IEnumerable<Claim> claims = await APIResult.getList("Offers/GetOffersByMembershipId", parameters);
+            IEnumerable<Claim> claims = await APIResult.getList("invoicesClass/GetInvclassByMembershipId", parameters);
 
             foreach (Claim c in claims)
             {
                 if (c.Type == "scopes")
                 {
-                    items.Add(JsonConvert.DeserializeObject<Offer>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                    items.Add(JsonConvert.DeserializeObject<InvoicesClass>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
 
                 }
             }

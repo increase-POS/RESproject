@@ -52,8 +52,18 @@ namespace Restaurant.Classes
 
         public Boolean canDelete { get; set; }
 
+        //
 
-      
+        public int agentMembershipsId { get; set; }
+        public Nullable<int> subscriptionFeesId { get; set; }
+        public Nullable<int> cashTransId { get; set; }
+        public Nullable<int> membershipId { get; set; }
+
+        public Nullable<System.DateTime> startDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
+
+
+
 
         public async Task<List<Agent>> Get(string type)
         {
@@ -368,7 +378,25 @@ namespace Restaurant.Classes
             }
             return value;
         }
-         
+
+        public async Task<List<Agent>> GetAgentsByMembershipId(int membershipId)
+        {
+            List<Agent> items = new List<Agent>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("itemId", membershipId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Agent/GetAgentsByMembershipId", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<Agent>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+
+                }
+            }
+            return items;
+        }
 
     }
 

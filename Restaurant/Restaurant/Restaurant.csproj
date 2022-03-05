@@ -179,7 +179,14 @@
     </ApplicationDefinition>
     <Compile Include="ar_file.Designer.cs" />
     <Compile Include="Classes\ApiClasses\Agent.cs" />
+    <Compile Include="Classes\ApiClasses\CouponsMemberships.cs" />
+    <Compile Include="Classes\ApiClasses\MembershipsOffers.cs" />
+    <Compile Include="Classes\ApiClasses\InvoicesClassMemberships.cs" />
     <Compile Include="Classes\ApiClasses\AvtivateServer.cs" />
+    <Compile Include="Classes\ApiClasses\InvoicesClass.cs" />
+    <Compile Include="Classes\ApiClasses\AgentMemberships.cs" />
+    <Compile Include="Classes\ApiClasses\SubscriptionFees.cs" />
+    <Compile Include="Classes\ApiClasses\Memberships.cs" />
     <Compile Include="Classes\ApiClasses\ItemUnitOffer.cs" />
     <Compile Include="Classes\ApiClasses\ItemUnitUser.cs" />
     <Compile Include="Classes\ApiClasses\MenuSetting.cs" />

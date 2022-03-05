@@ -38,6 +38,10 @@ namespace Restaurant.Classes
         public Nullable<int> membershipId { get; set; }
         public Boolean canDelete { get; set; }
         public string state { get; set; }
+
+        public int couponMembershipId { get; set; }
+     
+
         public async Task<List<Coupon>> Get()
         {
             List<Coupon> items = new List<Coupon>();
@@ -175,6 +179,26 @@ namespace Restaurant.Classes
         //        return false;
         //    }
         //}
+
+        public async Task<List<Coupon>> GetCouponsByMembershipId(int membershipId)
+        {
+            List<Coupon> items = new List<Coupon>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("itemId", membershipId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("coupons/GetCouponsByMembershipId", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<Coupon>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+
+                }
+            }
+            return items;
+        }
+
     }
 }
 
