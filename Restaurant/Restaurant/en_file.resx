@@ -3418,4 +3418,16 @@ Please add Email in setting</value>
   <data name="trSubscriptionType" xml:space="preserve">
     <value>Subscription Type</value>
   </data>
+  <data name="trErrorDuplicateCode" xml:space="preserve">
+    <value>Code is already exist</value>
+  </data>
+  <data name="trFree" xml:space="preserve">
+    <value>Free</value>
+  </data>
+  <data name="trMonthly" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="trOnce" xml:space="preserve">
+    <value>Once</value>
+  </data>
 </root>

@@ -3394,4 +3394,16 @@
   <data name="trSubscriptionType" xml:space="preserve">
     <value>نوع الاشتراك</value>
   </data>
+  <data name="trErrorDuplicateCode" xml:space="preserve">
+    <value>الكود موجود مسبقاً</value>
+  </data>
+  <data name="trFree" xml:space="preserve">
+    <value>مجاني</value>
+  </data>
+  <data name="trMonthly" xml:space="preserve">
+    <value>شهري</value>
+  </data>
+  <data name="trOnce" xml:space="preserve">
+    <value>مرة واحدة</value>
+  </data>
 </root>

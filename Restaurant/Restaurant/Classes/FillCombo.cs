@@ -877,6 +877,22 @@ namespace Restaurant.Classes
         }
         #endregion
 
+        #region membership
+        static public Memberships membership = new Memberships();
+        static public void fillSubscriptionType(ComboBox cmb)
+        {
+            var dislist = new[] {
+            new { Text = AppSettings.resourcemanager.GetString("trFree")   , Value = "f" },
+            new { Text = AppSettings.resourcemanager.GetString("trMonthly"), Value = "m" },
+            new { Text = AppSettings.resourcemanager.GetString("trOnce")   , Value = "o" },
+             };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = dislist;
+
+        }
+        #endregion
+
         #region tables
         static public List<string> tablesStatus = new List<string>() { "empty","opened", "reserved","openedReserved" };
         static public Tables table = new Tables();

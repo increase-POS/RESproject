@@ -387,7 +387,7 @@
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid>
                                 <TextBox x:Name="tb_code"  Text="{Binding code, Mode=OneWay}" Padding="10,5,0,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="code..."  
                                      Foreground="#4E4E4E"  
                                       MaxLength="50" BorderThickness="0"
@@ -418,124 +418,46 @@
                                 </Path>
                             </Grid>
                         </Border>
-                        <!--<Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                         <Border Grid.Row="1"   CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                            <Grid   >
-                                <TextBox Margin="4,0" x:Name="tb_invoiceDiscount"  
-                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
-                                         Text="{Binding invoiceDiscount, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
-                                         materialDesign:HintAssist.Hint="invoice discount count..."   Foreground="#4E4E4E"
-                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" 
-                                        Tag="int" PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
-                                          LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
-                                <Path Fill="#E81123" Stretch="Fill"    x:Name="p_error_invoiceDiscount" 
-                                      HorizontalAlignment="Right" Visibility="Collapsed"   VerticalAlignment="Center" 
-                                      Width="15"  Height="15" Margin="5,5,15,5" 
-                                      Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17L11,17 L11,15 L13,15 L13,17 Z">
-                                </Path>
-                            </Grid>
-                        </Border>
-                        <Border Grid.Row="8" Grid.Column="1" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                            <Grid   >
-                                <ComboBox x:Name="cb_invoiceDiscountType"    SelectedValue="{Binding invoiceDiscountType, Mode=OneWay}"
-                                  Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
-                                  materialDesign:HintAssist.Hint="type..."  
-                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                  TextBlock.FontSize="12"  
-                                  Grid.Column="0" Height="40"  Margin="4,0"
-                                  BorderBrush="#737373" BorderThickness="0"  />
-                                <Path Fill="#E81123" x:Name="p_error_invoiceDiscountType" Stretch="Fill" Margin="5,5,15,5"
-                              HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15" 
-                             Data="{StaticResource infoCircle}"/>
-
-                            </Grid>
-                        </Border>
-                    </Grid>-->
-                        <!--<Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Border Grid.Row="1"   CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                            <Grid   >
-                                <TextBox Margin="4,0" x:Name="tb_deliveryDiscount"  
-                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
-                                         Text="{Binding deliveryDiscount, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
-                                         materialDesign:HintAssist.Hint="delivery discount..."   Foreground="#4E4E4E"
-                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" 
-                                        Tag="int" PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
-                                          LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
-                                <Path Fill="#E81123" Stretch="Fill"    x:Name="p_error_deliveryDiscount" 
-                                      HorizontalAlignment="Right" Visibility="Collapsed"   VerticalAlignment="Center" 
-                                      Width="15"  Height="15" Margin="5,5,15,5" 
-                                      Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17L11,17 L11,15 L13,15 L13,17 Z">
-                                </Path>
-                            </Grid>
-                        </Border>
-
-                         <Border Grid.Row="8" Grid.Column="1" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                            <Grid   >
-                                <ComboBox x:Name="cb_deliveryDiscountType"    SelectedValue="{Binding deliveryDiscountType, Mode=OneWay}"
-                                  Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
-                                  materialDesign:HintAssist.Hint="type..."  
-                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                  TextBlock.FontSize="12"  
-                                  Grid.Column="0" Height="40"  Margin="4,0"
-                                  BorderBrush="#737373" BorderThickness="0"  />
-                                <Path Fill="#E81123" x:Name="p_error_deliveryDiscountType" Stretch="Fill" Margin="5,5,15,5"
-                              HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15" 
-                             Data="{StaticResource infoCircle}"/>
-
-                            </Grid>
-                        </Border>
-                    </Grid>-->
+                        <DockPanel Margin="10 0" LastChildFill="True" Grid.Row="2">
+                            <TextBlock  Text="details"   x:Name="txt_contentInformatin" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
+                            <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
+                        </DockPanel>
                         <Border Grid.Row="8" Grid.Column="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid   >
                                 <ComboBox x:Name="cb_subscriptionType"    SelectedValue="{Binding subscriptionType, Mode=OneWay}"
-                                  Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
-                                  materialDesign:HintAssist.Hint="subscription type..."  
-                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                  TextBlock.FontSize="12"  
-                                  Grid.Column="0" Height="40"  Margin="4,0"
-                                  BorderBrush="#737373" BorderThickness="0"  />
+                                          Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
+                                          materialDesign:HintAssist.Hint="subscription type..."  
+                                          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                          TextBlock.FontSize="12"  
+                                          Grid.Column="0" Height="40"  Margin="4,0"
+                                          BorderBrush="#737373" BorderThickness="0" SelectionChanged="Cb_subscriptionType_SelectionChanged"  />
                                 <Path Fill="#E81123" x:Name="p_error_subscriptionType" Stretch="Fill" Margin="5,5,15,5"
-                              HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15" 
-                             Data="{StaticResource infoCircle}"/>
+                                      HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
+                                      VerticalAlignment="Center" Width="15"  Height="15" 
+                                      Data="{StaticResource infoCircle}"/>
 
                             </Grid>
                         </Border>
-
-
-                        <!--<Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                        <Grid>
-                            <TextBox x:Name="tb_barcode" Grid.Row="8"  Padding="10,0,5,0"  
-                                         Text="{Binding barcode, Mode=OneWay}"
+                        <Border x:Name="bdr_price" Grid.Row="2" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}" Visibility="Collapsed">
+                            <Grid>
+                                <TextBox x:Name="tb_price" Grid.Row="8"  Padding="10,0,5,0"  
+                                         Text="{Binding price, Mode=OneWay}"
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                         materialDesign:HintAssist.Hint="barcode..."    
-                           Foreground="#4E4E4E"  TextBlock.FontSize="12"  
-                                     BorderThickness="0"  Tag="int"
-                                 BorderBrush="AliceBlue" MaxLength="100" PreviewTextInput="Number_PreviewTextInput"
-                    materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                  Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown"
-                                         KeyDown="Tb_barcode_KeyDown"/>
-
-                            <Path Fill="#E81123" x:Name="p_error_barcode" Stretch="Fill" Margin="5,5,15,5"
-                              HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15" 
-                             Data="{StaticResource infoCircle}"/>
-
-                        </Grid>
-                    </Border>-->
-
-
-
+                                         materialDesign:HintAssist.Hint="price..."    
+                                         Foreground="#4E4E4E"  TextBlock.FontSize="12"  
+                                         BorderThickness="0" Tag="decimal"
+                                         BorderBrush="AliceBlue" MaxLength="100" 
+                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                         Height="40"   Margin="4,0" 
+                                         PreviewTextInput="Number_PreviewTextInput"
+                                         PreviewKeyDown="Spaces_PreviewKeyDown" />
+                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_price"
+                                      HorizontalAlignment="Right" Visibility="Collapsed"   
+                                      VerticalAlignment="Center" Width="15"  Height="15"
+                                      Data="{StaticResource infoCircle}">
+                                </Path>
+                            </Grid>
+                        </Border>
                         <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid   >
                                 <TextBox  x:Name="tb_notes" Text="{Binding notes, Mode=OneWay}"
@@ -549,12 +471,6 @@
                             </Grid>
                         </Border>
 
-                        <!--<Image x:Name="img_barcode" Margin="10,5,10,5" Height="50" MaxWidth="250" Grid.Row="5"
-                               Stretch="Fill"  />-->
-
-
-
-                        <!--</Grid>-->
                     </StackPanel>
                 </ScrollViewer>
 
@@ -576,8 +492,8 @@
                       
                         <Border Grid.Row="1" Grid.ColumnSpan="3">
                             <Button x:Name="btn_subscriptionFees" Click="Btn_subscriptionFees_Click"   Content="subscriptionFees" materialDesign:ButtonAssist.CornerRadius="7"
-                         Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
-                    Margin="1,1"   Foreground="White" />
+                                    Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                                    Margin="1,1"   Foreground="White" IsEnabled="False"/>
                         </Border>
                         <Border Grid.Row="3">
 

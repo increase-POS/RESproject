@@ -1,4 +1,6 @@
-﻿using Restaurant.Classes;
+﻿using netoaster;
+using Restaurant.Classes;
+using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,7 +69,6 @@ namespace Restaurant.View.sales.promotion.membership
         {
             get
             {
-                //if (_instance == null)
                 if (_instance is null)
                     _instance = new uc_membershipCreate();
                 return _instance;
@@ -80,12 +81,15 @@ namespace Restaurant.View.sales.promotion.membership
 
         string basicsPermission = "membershipCreate_basics";
         string subscriptionFeesPermission = "membershipCreate_subscriptionFees";
-        //Agent agent = new Agent();
-        //IEnumerable<Agent> agentsQuery;
-        //IEnumerable<Agent> agents;
+        Memberships membership = new Memberships();
+        IEnumerable<Memberships> membershipsQuery;
+        IEnumerable<Memberships> memberships;
         //byte tgl_agentState;
-        //string searchText = "";
+        string _subscriptionType = "";
+        string searchText = "";
+        byte tgl_membershipState = 1;
         public static List<string> requiredControlList;
+
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             Instance = null;
@@ -96,7 +100,10 @@ namespace Restaurant.View.sales.promotion.membership
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "name", "mobile" };
+                
+                requiredControlList = new List<string> { "code" , "name" , "subscriptionType" };
+
+                #region translate
                 if (AppSettings.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -106,18 +113,20 @@ namespace Restaurant.View.sales.promotion.membership
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
+                #endregion
+
+                FillCombo.fillSubscriptionType(cb_subscriptionType);
 
                 Keyboard.Focus(tb_code);
-                /*
-                await RefreshCustomersList();
+                
                 await Search();
-                */
+                
                 Clear();
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -125,13 +134,18 @@ namespace Restaurant.View.sales.promotion.membership
 
         private void translate()
         {
-            //txt_title.Text = AppSettings.resourcemanager.GetString("trCustomer");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trMembership");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
+            txt_contentInformatin.Text = AppSettings.resourcemanager.GetString("trDetails");
+
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, AppSettings.resourcemanager.GetString("trCodeHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, AppSettings.resourcemanager.GetString("trNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_price, AppSettings.resourcemanager.GetString("trPriceHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_subscriptionType, AppSettings.resourcemanager.GetString("trSubscriptionType")+"...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
+
             txt_addButton.Text = AppSettings.resourcemanager.GetString("trAdd");
             txt_updateButton.Text = AppSettings.resourcemanager.GetString("trUpdate");
             tt_add_Button.Content = AppSettings.resourcemanager.GetString("trAdd");
@@ -139,82 +153,58 @@ namespace Restaurant.View.sales.promotion.membership
             tt_delete_Button.Content = AppSettings.resourcemanager.GetString("trDelete");
             txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
 
-            //dg_membership.Columns[0].Header = AppSettings.resourcemanager.GetString("trCode");
-            //dg_membership.Columns[1].Header = AppSettings.resourcemanager.GetString("trName");
-            //dg_membership.Columns[2].Header = AppSettings.resourcemanager.GetString("trCompany");
-            //dg_membership.Columns[3].Header = AppSettings.resourcemanager.GetString("trMobile");
+            dg_membership.Columns[0].Header = AppSettings.resourcemanager.GetString("trCode");
+            dg_membership.Columns[1].Header = AppSettings.resourcemanager.GetString("trName");
+            dg_membership.Columns[3].Header = AppSettings.resourcemanager.GetString("trSubscriptionType");
+
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
+            btn_subscriptionFees.Content = AppSettings.resourcemanager.GetString("trSubscriptionFees");
 
             tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
         }
+
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//add
-            /*
             try
             {
                 if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
 
+                    //chk code 
+                    bool isCodeExist = false;
+                    if(memberships.Any(m => m.code == tb_code.Text))
+                        isCodeExist = true;
+                    if (isCodeExist)
+                        HelpClass.SetValidate(p_error_code , "trErrorDuplicateCode");
 
-
-                    agent = new Agent();
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+                    membership = new Memberships();
+                    if (HelpClass.validate(requiredControlList, this) && !isCodeExist)
                     {
-                        //deserve
-                        decimal maxDeserveValue = 0;
-                        if (!tb_upperLimit.Text.Equals(""))
-                            maxDeserveValue = decimal.Parse(tb_upperLimit.Text);
+                        membership.code = tb_code.Text;
+                        membership.name = tb_name.Text;
+                        membership.subscriptionType = _subscriptionType;
+                        membership.createUserId = MainWindow.userLogin.userId;
+                        membership.updateUserId = MainWindow.userLogin.userId;
+                        membership.notes = tb_notes.Text;
+                        membership.isActive = 1;
+                        try
+                        { membership.subscriptionFee = decimal.Parse(tb_price.Text);}
+                        catch { membership.subscriptionFee = 0; }
 
-                        //payType
-                        string payType = "";
-                        if (cb_payType.SelectedIndex != -1)
-                            payType = cb_payType.SelectedValue.ToString();
-
-                        //tb_code.Text = await agent.generateCodeNumber("c");
-                        agent.code = await agent.generateCodeNumber("c");
-                        agent.name = tb_name.Text;
-                        agent.company = tb_company.Text;
-                        agent.address = tb_address.Text;
-                        agent.email = tb_email.Text;
-                        agent.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text;
-                        if (!tb_phone.Text.Equals(""))
-                            agent.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
-                        if (!tb_fax.Text.Equals(""))
-                            agent.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
-                        agent.type = "c";
-                        agent.accType = "";
-                        agent.balance = 0;
-                        agent.payType = payType;
-                        agent.isLimited = (bool)tgl_hasCredit.IsChecked;
-                        agent.createUserId = MainWindow.userLogin.userId;
-                        agent.updateUserId = MainWindow.userLogin.userId;
-                        agent.notes = tb_notes.Text;
-                        agent.isActive = 1;
-                        agent.maxDeserve = maxDeserveValue;
-
-                        int s = await agent.save(agent);
+                        int s = await membership.save(membership);
                         if (s <= 0)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         else
                         {
                             Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
-                            if (isImgPressed)
-                            {
-                                int agentId = s;
-                                string b = await agent.uploadImage(imgFileName,
-                                    Md5Encription.MD5Hash("Inc-m" + agentId.ToString()), agentId);
-                                agent.image = b;
-                                isImgPressed = false;
-                            }
-
                             Clear();
-                            await RefreshCustomersList();
+                            await RefreshMembershipsList();
                             await Search();
                         }
                     }
@@ -226,163 +216,128 @@ namespace Restaurant.View.sales.promotion.membership
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
+
         private async void Btn_update_Click(object sender, RoutedEventArgs e)
         {//update
-         /*
-                     try
-                     {
-                         if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
-                         {
-                             HelpClass.StartAwait(grid_main);
-                             if (agent.id > 0)
-                                             {
+            try
+            {
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
+                {
+                    HelpClass.StartAwait(grid_main);
 
-                             if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
-                             {
-                                 //deserve
-                                 decimal maxDeserveValue = 0;
-                                 if (!tb_upperLimit.Text.Equals(""))
-                                     maxDeserveValue = decimal.Parse(tb_upperLimit.Text);
+                    //chk code 
+                    bool isCodeExist = false;
+                    if (memberships.Any(m => m.code == tb_code.Text))
+                        isCodeExist = true;
+                    if (isCodeExist)
+                        HelpClass.SetValidate(p_error_code, "trErrorDuplicateCode");
 
-                                 //payType
-                                 string payType = "";
-                                 if (cb_payType.SelectedIndex != -1)
-                                     payType = cb_payType.SelectedValue.ToString();
+                    if (HelpClass.validate(requiredControlList, this) && !isCodeExist)
+                    {
+                        membership.code = tb_code.Text;
+                        membership.name = tb_name.Text;
+                        membership.subscriptionType = _subscriptionType;
+                        membership.createUserId = MainWindow.userLogin.userId;
+                        membership.updateUserId = MainWindow.userLogin.userId;
+                        membership.notes = tb_notes.Text;
+                        membership.isActive = 1;
+                        try
+                        { membership.subscriptionFee = decimal.Parse(tb_price.Text); }
+                        catch { membership.subscriptionFee = 0; }
 
-                                 //agent.code = "Us-000001";
-                                 //agent.custname = tb_custname.Text;
-                                 //tb_code.Text = await agent.generateCodeNumber("c");
-                                 //agent.code = await agent.generateCodeNumber("c");
-                                 agent.name = tb_name.Text;
-                                 agent.company = tb_company.Text;
-                                 agent.email = tb_email.Text;
-                                 agent.address = tb_address.Text;
-                                 agent.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text;
-                                 if (!tb_phone.Text.Equals(""))
-                                     agent.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
-                                 if (!tb_fax.Text.Equals(""))
-                                     agent.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
-                                 agent.payType = payType;
-                                 agent.isLimited = (bool)tgl_hasCredit.IsChecked;
-                                 agent.updateUserId = MainWindow.userLogin.userId;
-                                 agent.notes = tb_notes.Text;
-                                 agent.maxDeserve = maxDeserveValue;
+                        int s = await membership.save(membership);
+                        if (s <= 0)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        else
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
 
-                                 int s = await agent.save(agent);
-                                 if (s <= 0)
-                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                                 else
-                                 {
-                                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                                     await RefreshCustomersList();
-                                     await Search();
-                                     if (isImgPressed)
-                                     {
-                                         int agentId = s;
-                                         string b = await agent.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + agentId.ToString()), agentId);
-                                         agent.image = b;
-                                         isImgPressed = false;
-                                         if (!b.Equals(""))
-                                         {
-                                             await getImg();
-                                         }
-                                         else
-                                         {
-                                             HelpClass.clearImg(btn_image);
-                                         }
-                                     }
-                                 }
-                             }
-                             }
-									else
-                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
-									
-                             HelpClass.EndAwait(grid_main);
-                         }
-                         else
-                             Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                            await RefreshMembershipsList();
+                            await Search();
+                        }
+                    }
+                    HelpClass.EndAwait(grid_main);
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-                     }
-                     catch (Exception ex)
-                     {
-                         HelpClass.EndAwait(grid_main);
-                         HelpClass.ExceptionMessage(ex, this);
-                     }
-                     */
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private async void Btn_delete_Click(object sender, RoutedEventArgs e)
-        {
-            /*
-                        try
-                        {//delete
-                            if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") || HelpClass.isAdminPermision())
-                            {
-                                HelpClass.StartAwait(grid_main);
-                                if (agent.agentId != 0)
-                                {
-                                    if ((!agent.canDelete) && (agent.isActive == 0))
-                                    {
-                                        #region
-                                        Window.GetWindow(this).Opacity = 0.2;
-                                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                                        w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
-                                        w.ShowDialog();
-                                        Window.GetWindow(this).Opacity = 1;
-                                        #endregion
-                                        if (w.isOk)
-                                            await activate();
-                                    }
-                                    else
-                                    {
-                                        #region
-                                        Window.GetWindow(this).Opacity = 0.2;
-                                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                                        if (agent.canDelete)
-                                            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
-                                        if (!agent.canDelete)
-                                            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
-                                        w.ShowDialog();
-                                        Window.GetWindow(this).Opacity = 1;
-                                        #endregion
-                                        if (w.isOk)
-                                        {
-                                            string popupContent = "";
-                                            if (agent.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
-                                            if ((!agent.canDelete) && (agent.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
-
-                                            int s = await agent.delete(agent.agentId, MainWindow.userLogin.userId, agent.canDelete);
-                                            if (s < 0)
-                                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                                            else
-                                            {
-                                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
-
-                                                await RefreshCustomersList();
-                                                await Search();
-                                                Clear();
-                                            }
-                                        }
-                                    }
-                                }
-                                HelpClass.EndAwait(grid_main);
-                            }
-                            else
-                                Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                        }
-                        catch (Exception ex)
+        {//delete
+            try
+            {
+                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") || HelpClass.isAdminPermision())
+                {
+                    HelpClass.StartAwait(grid_main);
+                    if (membership.membershipId != 0)
+                    {
+                        if ((!membership.canDelete) && (membership.isActive == 0))
                         {
-                            HelpClass.EndAwait(grid_main);
-                            HelpClass.ExceptionMessage(ex, this);
+                            #region
+                            Window.GetWindow(this).Opacity = 0.2;
+                            wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
+                            w.ShowDialog();
+                            Window.GetWindow(this).Opacity = 1;
+                            #endregion
+                            if (w.isOk)
+                                await activate();
                         }
-                        */
+                        else
+                        {
+                            #region
+                            Window.GetWindow(this).Opacity = 0.2;
+                            wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                            if (membership.canDelete)
+                                w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
+                            if (!membership.canDelete)
+                                w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
+                            w.ShowDialog();
+                            Window.GetWindow(this).Opacity = 1;
+                            #endregion
+                            if (w.isOk)
+                            {
+                                string popupContent = "";
+                                if (membership.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
+                                if ((!membership.canDelete) && (membership.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
+
+                                int s = await membership.delete(membership.membershipId, MainWindow.userLogin.userId, membership.canDelete);
+                                if (s < 0)
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                else
+                                {
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+
+                                    await RefreshMembershipsList();
+                                    await Search();
+                                    Clear();
+                                }
+                            }
+                        }
+                    }
+                    HelpClass.EndAwait(grid_main);
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
+
         private async Task activate()
         {//activate
          /*
@@ -399,16 +354,17 @@ namespace Restaurant.View.sales.promotion.membership
                      */
         }
         #endregion
+
         #region events
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
-                /*
                 HelpClass.StartAwait(grid_main);
+
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
@@ -416,18 +372,21 @@ namespace Restaurant.View.sales.promotion.membership
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        
         private async void Tgl_isActive_Checked(object sender, RoutedEventArgs e)
         {
             try
             {
-                /*
                 HelpClass.StartAwait(grid_main);
-                if (agents is null)
-                    await RefreshCustomersList();
-                tgl_agentState = 1;
+
+                if (memberships is null)
+                    await RefreshMembershipsList();
+
+                tgl_membershipState = 1;
+
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
@@ -439,18 +398,19 @@ namespace Restaurant.View.sales.promotion.membership
         {
             try
             {
-                /*
                 HelpClass.StartAwait(grid_main);
-                if (agents is null)
-                    await RefreshCustomersList();
-                tgl_agentState = 0;
+
+                if (memberships is null)
+                    await RefreshMembershipsList();
+
+                tgl_membershipState = 0;
+
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -529,48 +489,52 @@ namespace Restaurant.View.sales.promotion.membership
             }
         }
         #endregion
+
         #region Refresh & Search
-        /*
         async Task Search()
         {
             //search
-            if (agents is null)
-                await RefreshCustomersList();
+            if (memberships is null)
+                await RefreshMembershipsList();
+
             searchText = tb_search.Text.ToLower();
-            agentsQuery = agents.Where(s => (s.code.ToLower().Contains(searchText) ||
+            membershipsQuery = memberships
+                .Where(s => (
+            s.code.ToLower().Contains(searchText) ||
             s.name.ToLower().Contains(searchText) ||
-            s.mobile.ToLower().Contains(searchText)
-            ) && s.isActive == tgl_agentState);
-            RefreshCustomersView();
+            s.subscriptionType.ToLower().Contains(searchText)
+            )
+            && s.isActive == tgl_membershipState
+            )
+            ;
+
+            RefreshMembershipsView();
         }
-        async Task<IEnumerable<Agent>> RefreshCustomersList()
+        async Task<IEnumerable<Memberships>> RefreshMembershipsList()
         {
-            agents = await agent.Get("c");
-            return agents;
+            memberships = await membership.GetAll();
+            return memberships;
         }
-        void RefreshCustomersView()
+        void RefreshMembershipsView()
         {
-            dg_agent.ItemsSource = agentsQuery;
-            txt_count.Text = agentsQuery.Count().ToString();
+            dg_membership.ItemsSource = membershipsQuery;
+            txt_count.Text = membershipsQuery.Count().ToString();
         }
-        */
         #endregion
+
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            this.DataContext = new Agent();
+            this.DataContext = new Memberships();
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
         string input;
         decimal _decimal = 0;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
+        {//only  digits
             try
             {
-
-
-                //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
                 if (textBox.Tag.ToString() == "int")
@@ -582,7 +546,6 @@ namespace Restaurant.View.sales.promotion.membership
                 {
                     input = e.Text;
                     e.Handled = !decimal.TryParse(textBox.Text + input, out _decimal);
-
                 }
             }
             catch (Exception ex)
@@ -591,10 +554,9 @@ namespace Restaurant.View.sales.promotion.membership
             }
         }
         private void Code_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
+        {//only english and digits
             try
             {
-                //only english and digits
                 Regex regex = new Regex("^[a-zA-Z0-9. -_?]*$");
                 if (!regex.IsMatch(e.Text))
                     e.Handled = true;
@@ -640,6 +602,7 @@ namespace Restaurant.View.sales.promotion.membership
         }
 
         #endregion
+
         #region report
         /*
         // report
@@ -868,6 +831,7 @@ namespace Restaurant.View.sales.promotion.membership
         }
         */
         #endregion
+
         #region barcode
         /*List<ItemUnit> barcodesList;
         static private int _InternalCounter = 0;
@@ -1017,7 +981,64 @@ namespace Restaurant.View.sales.promotion.membership
 
         private void Btn_subscriptionFees_Click(object sender, RoutedEventArgs e)
         {
+            // stores
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (MainWindow.groupObject.HasPermissionAction("membershipCreate_subscriptionFees" , MainWindow.groupObjects, "one"))
+                {
+                    Window.GetWindow(this).Opacity = 0.2;
 
+                    wd_subscriptionFees w = new wd_subscriptionFees();
+
+                    w.ShowDialog();
+                    //if (w.isActive)
+                    //{
+                    //}
+
+                    Window.GetWindow(this).Opacity = 1;
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Cb_subscriptionType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {//select subscription
+            try
+            {
+                switch(cb_subscriptionType.SelectedValue)
+                {
+                    case "f":
+                        _subscriptionType = "f";
+                        bdr_price.Visibility = Visibility.Visible;
+                        btn_subscriptionFees.IsEnabled = false;
+                        requiredControlList = new List<string> { "code", "name", "subscriptionType" , "price" };
+                        break;
+                    case "m":
+                        _subscriptionType = "m";
+                        bdr_price.Visibility = Visibility.Collapsed;
+                        btn_subscriptionFees.IsEnabled = true;
+                        requiredControlList = new List<string> { "code", "name", "subscriptionType" };
+                        break;
+                    case "o":
+                        _subscriptionType = "o";
+                        bdr_price.Visibility = Visibility.Visible;
+                        btn_subscriptionFees.IsEnabled = false;
+                        requiredControlList = new List<string> { "code", "name", "subscriptionType", "price" };
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }
