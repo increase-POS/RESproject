@@ -104,7 +104,7 @@ namespace Restaurant.View.windows
                 while (!isDone);
                 #endregion
         
-                await Search();
+                Search();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -212,12 +212,12 @@ namespace Restaurant.View.windows
 
         #endregion
         #region events
-        private async void Cb_searchStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Cb_searchStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
-                await Search();
+                Search();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -229,7 +229,7 @@ namespace Restaurant.View.windows
         #endregion
         #region Refresh & Search
         int sectionId = 0;
-        async Task Search()
+         void Search()
         {
             tablesQuery = tablesList;   
             if (cb_searchSection.SelectedIndex > 0)
@@ -246,7 +246,8 @@ namespace Restaurant.View.windows
         }
         async Task refreshTablesList()
         {
-            tablesList = await FillCombo.table.GetTablesStatusInfo(MainWindow.branchLogin.branchId,"", "", "");
+            //tablesList = await FillCombo.table.GetTablesStatusInfo(MainWindow.branchLogin.branchId,"", "", ""); 
+            tablesList = await FillCombo.table.GetTablesForDinning(MainWindow.branchLogin.branchId,DateTime.Now.ToString().Split(' ')[0], DateTime.Now.ToString().Split(' ')[1]); 
         }
         async Task refreshReservationsList()
         {
@@ -461,7 +462,8 @@ namespace Restaurant.View.windows
                 case "opened":
                 case "openedReserved":
                     invoice = await FillCombo.table.GetTableInvoice(table.tableId);
-                    selectedTables = await FillCombo.table.getInvoiceTables(invoice.invoiceId);
+                    //selectedTables = await FillCombo.table.getInvoiceTables(invoice.invoiceId);
+                    selectedTables = invoice.tables;
 
                     #region view - display
                     grid_openTableDetails.Visibility = Visibility.Visible;
@@ -486,7 +488,7 @@ namespace Restaurant.View.windows
                     tb_startTime.Text = invoice.invDate.ToString().Split(' ')[1];
                     TimeSpan startTime = TimeSpan.Parse(invoice.invDate.ToString().Split(' ')[1]);
                     TimeSpan timeStaying = TimeSpan.FromHours(AppSettings.time_staying);
-                    tb_endTime.Text = timeStaying.ToString();
+                    tb_endTime.Text = startTime.Add(timeStaying).ToString();
                     tb_customerName.Text = invoice.agentName;
                     tb_total.Text = invoice.totalNet.ToString();
                     break;
@@ -544,14 +546,14 @@ namespace Restaurant.View.windows
        
         #endregion
 
-        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
+        private async  void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {
             try
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
                 await refreshTablesList();
-                await Search();
+                Search();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -702,6 +704,8 @@ namespace Restaurant.View.windows
                     wd_tablesList w = new wd_tablesList();
                     w.page = "dinningHall-invoice";
                     w.selectedTables = selectedTables;
+                    w.invDate = (DateTime)invoice.invDate;
+
                     w.ShowDialog();
 
                     if (w.DialogResult == true)
@@ -709,23 +713,28 @@ namespace Restaurant.View.windows
                         selectedTables = w.selectedTables;
 
                         #region validate table availability 
-                        bool valid = await validateReservationTime();
+                        DateTime invDate = DateTime.Parse(invoice.invDate.ToString().Split(' ')[0]);
+                        DateTime startTime = DateTime.Parse(invoice.invDate.ToString().Split(' ')[1]);
+                        TimeSpan timeStaying = TimeSpan.FromHours(AppSettings.time_staying);
+                        DateTime endTime = startTime.Add(timeStaying);
+                        bool valid = await validateReservationTime(invDate,startTime,endTime,invoice.invoiceId);
                         #endregion
                         if (valid)
                         {
                             //save
-                            int res = await reservation.updateReservation(nextReservation, selectedTables);
+                            int res = await FillCombo.invoice.updateInvoiceTables(invoice.invoiceId, selectedTables);
                             if (res > 0)
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                                await refreshReservationsList();
-                                await Search();
-
+                                await refreshTablesList();
+                                Search();
+                                await showDetails();
                             }
                             else
                                 Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         }
                     }
+
                     MainWindow.mainWindow.Opacity = 1;
                     HelpClass.EndAwait(grid_main);
                 }
@@ -762,7 +771,10 @@ namespace Restaurant.View.windows
                         selectedTables = w.selectedTables;
 
                         #region validate table availability 
-                        bool valid = await validateReservationTime();
+                        DateTime reservationDate = (DateTime)nextReservation.reservationDate;
+                        DateTime startTime = (DateTime)nextReservation.reservationTime;
+                        DateTime endTime = (DateTime)nextReservation.endTime;
+                        bool valid = await validateReservationTime(reservationDate,startTime,endTime);
                         #endregion
                         if (valid)
                         {
@@ -771,9 +783,10 @@ namespace Restaurant.View.windows
                             if (res > 0)
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                               
                                 await refreshReservationsList();
-                                await Search();
-
+                                Search();
+                               await showDetails();
                             }
                             else
                                 Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -790,19 +803,17 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        async Task<Boolean> validateReservationTime()
+        async Task<Boolean> validateReservationTime(DateTime date, DateTime startTime, DateTime endTime,int invoiceId =0)
         {
             bool valid = true;
             string message = "";
-            DateTime reservationDate = (DateTime)nextReservation.reservationDate;
-            DateTime startTime = (DateTime)nextReservation.reservationTime;
-            DateTime endTime = (DateTime)nextReservation.endTime;
+            
             foreach (Tables tb in selectedTables)
             {
                 int notReserved = await FillCombo.table.checkTableAvailabiltiy(tb.tableId, MainWindow.branchLogin.branchId,
-                                                         reservationDate.ToString(),
+                                                         date.ToString(),
                                                          startTime.ToString(),
-                                                         endTime.ToString(), nextReservation.reservationId);
+                                                         endTime.ToString(), nextReservation.reservationId,invoiceId);
 
                 if (notReserved == 0)
                 {
@@ -842,7 +853,7 @@ namespace Restaurant.View.windows
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                                 await refreshReservationsList();
-                                await Search();
+                                Search();
                             }
                             else
                                 Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -886,8 +897,8 @@ namespace Restaurant.View.windows
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                                 await refreshReservationsList();
                                 await refreshTablesList();
-                                await Search();
-                                showDetails();
+                                Search();
+                                await showDetails();
                             }
                             else
                                 Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -942,8 +953,8 @@ namespace Restaurant.View.windows
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                         await refreshTablesList();
-                        await Search();
-                        showDetails();
+                        Search();
+                        await showDetails();
                     }
                     else
                         Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);

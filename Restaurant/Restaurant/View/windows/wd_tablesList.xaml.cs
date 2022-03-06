@@ -37,6 +37,10 @@ namespace Restaurant.View.windows
         Tables tableModel = new Tables();
         Tables table = new Tables();
 
+        #region date parameters to get table satatus
+        public DateTime invDate;
+        #endregion
+        
         string searchText = "";
 
         public wd_tablesList()
@@ -86,13 +90,17 @@ namespace Restaurant.View.windows
                 #region invoice tbale
                 if(page == "dinningHall-reserve" || page == "dinningHall-invoice")
                 {
-
+                    TimeSpan startTime = TimeSpan.Parse(invDate.ToString().Split(' ')[1]);
+                    TimeSpan timeStaying = TimeSpan.FromHours(AppSettings.time_staying);
+                    TimeSpan endTime = startTime.Add(timeStaying);
+                    allTableSource = await FillCombo.table.GetTablesForDinning(MainWindow.branchLogin.branchId, DateTime.Now.ToString().Split(' ')[0], DateTime.Now.ToString().Split(' ')[1]);
+                    allTableSource = allTableSource.Where(x => x.status != "opened" && x.status != "openedReserved");
                 }
                 #endregion
                 #region reservation Tables
                 else if (page == "reservationUpdate")
                 {
-
+                    allTableSource = await tableModel.Get(MainWindow.branchLogin.branchId, 0);
                 }
                 #endregion
 
@@ -100,14 +108,14 @@ namespace Restaurant.View.windows
                 else
                 {
                     section = await sectionModel.getById(sectionId);
-                  
+                    allTableSource = await tableModel.Get(MainWindow.branchLogin.branchId, 0);
                     selectedTablesSource = await tableModel.Get(MainWindow.branchLogin.branchId, sectionId);
                     selectedTables.AddRange(selectedTablesSource.ToList());
                 }
                 #endregion
 
                 #region
-                allTableSource = await tableModel.Get(MainWindow.branchLogin.branchId, 0);
+               
                 allTables.AddRange(allTableSource.ToList());
                
                 //remove selected items from all items

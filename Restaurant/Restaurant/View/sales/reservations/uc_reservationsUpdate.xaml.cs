@@ -441,7 +441,7 @@ namespace Restaurant.View.sales.reservations
 
                 wd_tablesList w = new wd_tablesList();
                 w.page = "reservationUpdate";
-                w.reservationId = reservation.reservationId;
+                //w.reservationId = reservation.reservationId;
                 w.selectedTables = selectedTables;
                 w.ShowDialog();
 

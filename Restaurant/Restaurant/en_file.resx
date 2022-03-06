@@ -3299,7 +3299,7 @@ Please add Email in setting</value>
     <value>SubTotal</value>
   </data>
   <data name="trExpectedEndTime" xml:space="preserve">
-    <value>الوقت المتوقع للانتهاء</value>
+    <value>Expected end time</value>
   </data>
   <data name="trInvoiceCode" xml:space="preserve">
     <value>Invoice Code</value>
@@ -3414,5 +3414,8 @@ Please add Email in setting</value>
   </data>
   <data name="trAboutUs" xml:space="preserve">
     <value>about us</value>
+  </data>
+  <data name="trSubscriptionType" xml:space="preserve">
+    <value>Subscription Type</value>
   </data>
 </root>

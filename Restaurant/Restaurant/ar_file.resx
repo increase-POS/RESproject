@@ -3391,4 +3391,7 @@
   <data name="trAboutUs" xml:space="preserve">
     <value>من نحن</value>
   </data>
+  <data name="trSubscriptionType" xml:space="preserve">
+    <value>نوع الاشتراك</value>
+  </data>
 </root>

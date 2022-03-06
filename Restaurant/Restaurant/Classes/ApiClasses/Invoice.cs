@@ -164,6 +164,7 @@ namespace Restaurant.Classes
         public string createrUserName { get; set; }
         public Nullable<int> waiterId { get; set; }
 
+        public List<Tables> tables { get; set; }
         // for report
         public int countP { get; set; }
         public int countS { get; set; }
@@ -807,6 +808,15 @@ namespace Restaurant.Classes
             var myContent = JsonConvert.SerializeObject(invoice);
             parameters.Add("invoiceObject", myContent);
             myContent = JsonConvert.SerializeObject(tables);
+            parameters.Add("tablesObject", myContent);
+           return await APIResult.post(method, parameters);
+        }
+        public async Task<int> updateInvoiceTables(int invoiceId, List<Tables> tables)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "Invoices/updateInvoiceTables";
+            parameters.Add("invoiceId", invoiceId.ToString());
+            string myContent = JsonConvert.SerializeObject(tables);
             parameters.Add("tablesObject", myContent);
            return await APIResult.post(method, parameters);
         }

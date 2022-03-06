@@ -112,6 +112,24 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
+         internal async Task<List<Tables>> GetTablesForDinning(int branchId, string dateSearch,string startTimeSearch)
+        {
+            List<Tables> items = new List<Tables>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("branchId", branchId.ToString());
+            parameters.Add("dateSearch", dateSearch);
+            parameters.Add("startTimeSearch", startTimeSearch);
+
+            IEnumerable<Claim> claims = await APIResult.getList("Tables/GetTablesForDinning", parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<Tables>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
 
         public async Task<int> AddTablesToSection(List<Tables> tablesList, int sectionId, int userId)
         {
@@ -124,13 +142,14 @@ namespace Restaurant.Classes.ApiClasses
             return await APIResult.post(method, parameters);
         }
 
-        public async Task<int> checkTableAvailabiltiy(int tableId,int branchId, string reservationDate, string startTime, string endTime,long reservationId=0)
+        public async Task<int> checkTableAvailabiltiy(int tableId,int branchId, string reservationDate, string startTime, string endTime,long reservationId=0,int invoiceId = 0)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Tables/checkTableAvailabiltiy";
             parameters.Add("tableId", tableId.ToString());
             parameters.Add("branchId", branchId.ToString());
             parameters.Add("reservationId", reservationId.ToString());
+            parameters.Add("invoiceId", invoiceId.ToString());
             parameters.Add("reservationDate", reservationDate);
             parameters.Add("startTime", startTime);
             parameters.Add("endTime", endTime);
