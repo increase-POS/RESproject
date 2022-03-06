@@ -8,7 +8,7 @@
           xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
          Title="Increase-SCM" WindowStyle="None" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" Margin="0" 
-        Height="400" Width="400" Background="Transparent" AllowsTransparency="True"
+        Height="420" Width="400" Background="Transparent" AllowsTransparency="True"
         Loaded="Window_Loaded" MouseDown="Window_MouseDown">
     <Grid  x:Name="grid_main" >
         <Grid.RowDefinitions>
@@ -265,7 +265,7 @@
  
 
                 <Button Content="Save" Grid.Row="10" Grid.ColumnSpan="5" TabIndex="12"
-                       Margin="10,2.5" x:Name="btn_save" Click="Btn_save_Click"
+                       Margin="10,2.5" x:Name="btn_save" Click="Btn_save_Click" materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource SecondColor}" Foreground="White" BorderBrush="{x:Null}"  />
             </Grid>
 

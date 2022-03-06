@@ -161,7 +161,7 @@
                     </Grid>
                 </Border>
                 
-                <Button   Grid.Row="6"   Content="transfer"
+                <Button   Grid.Row="6"   Content="transfer" materialDesign:ButtonAssist.CornerRadius="7"
                        Margin="10,2.5" x:Name="btn_save" Click="Btn_save_Click"
                           Background="{StaticResource SecondColor}" Foreground="White" BorderBrush="{x:Null}" />
 

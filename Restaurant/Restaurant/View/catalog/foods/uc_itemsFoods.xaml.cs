@@ -306,7 +306,6 @@ namespace Restaurant.View.catalog.foods
                             if(cb_tagId.SelectedIndex != -1)
                                 item.tagId = (int)cb_tagId.SelectedValue;
                             item.categoryId = categoryId;
-                            item.createUserId = MainWindow.userLogin.userId;
                             item.updateUserId = MainWindow.userLogin.userId;
                             item.type = "SalesNormal";
                             item.taxes = 0;

@@ -289,7 +289,7 @@ namespace Restaurant.View.sectionData.banksData
                                 card.isActive = active;
 
                                 card.notes = tb_notes.Text;
-                                card.createUserId = MainWindow.userLogin.userId;
+                                //card.createUserId = MainWindow.userLogin.userId;
                                 card.updateUserId = MainWindow.userLogin.userId;
 
                                 int s = await card.save(card);

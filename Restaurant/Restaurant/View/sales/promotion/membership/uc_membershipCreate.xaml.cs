@@ -241,7 +241,7 @@ namespace Restaurant.View.sales.promotion.membership
                         membership.code = tb_code.Text;
                         membership.name = tb_name.Text;
                         membership.subscriptionType = _subscriptionType;
-                        membership.createUserId = MainWindow.userLogin.userId;
+                        //membership.createUserId = MainWindow.userLogin.userId;
                         membership.updateUserId = MainWindow.userLogin.userId;
                         membership.notes = tb_notes.Text;
                         membership.isActive = 1;

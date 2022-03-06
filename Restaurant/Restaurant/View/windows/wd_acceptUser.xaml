@@ -8,7 +8,7 @@
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
          WindowStyle="None" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" Margin="0"
-         Title="Increase Restaurant" Height="175" Width="300" Background="#333333" 
+         Title="Increase Restaurant" Height="185" Width="300" Background="#333333" 
         Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid Grid.Column="1" Grid.Row="1"  Background="#333333"  x:Name="grid_acceptUser">
         <Grid.RowDefinitions>
@@ -62,7 +62,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <Border Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                <Border Grid.Row="0" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                     <Grid>
                         <TextBox x:Name="tb_userName" Grid.Row="0" Text="{Binding username, Mode=OneWay}" Padding="10,0,5,0"   
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -118,7 +118,7 @@
                         </Path>
                     </Grid>
                 </Border>
-                <Button   Grid.Row="3"  Margin="10,2.5" 
+                <Button   Grid.Row="3"  Margin="10,10" materialDesign:ButtonAssist.CornerRadius="7"
                           x:Name="btn_confirmation" Click="Btn_confirmation_Click"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  >
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">

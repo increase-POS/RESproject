@@ -276,7 +276,7 @@ namespace Restaurant.View.catalog.foods
                                 item.tagId = (int)cb_tagId.SelectedValue;
                             if (cb_categoryId.SelectedIndex != -1)
                                 item.categoryId = (int)cb_categoryId.SelectedValue;
-                            item.createUserId = MainWindow.userLogin.userId;
+                            //item.createUserId = MainWindow.userLogin.userId;
                             item.updateUserId = MainWindow.userLogin.userId;
                             item.type = "packageItems";
                             item.taxes = 0;
@@ -301,7 +301,7 @@ namespace Restaurant.View.catalog.foods
                             saleItemUnit.barcode = tb_barcode.Text;
                             saleItemUnit.unitValue = 1;
                             saleItemUnit.taxes = 0;
-                            saleItemUnit.createUserId = MainWindow.userLogin.userId;
+                            saleItemUnit.updateUserId = MainWindow.userLogin.userId;
 
                             int res = await item.saveSaleItem(item, saleItemUnit);
                             if (res == -1)// إظهار رسالة الترقية

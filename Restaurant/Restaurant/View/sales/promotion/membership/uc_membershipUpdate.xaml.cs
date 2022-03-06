@@ -75,7 +75,7 @@ namespace Restaurant.View.sales.promotion.membership
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-                dg_membership.ItemsSource = FillCombo.branchsList;
+                //dg_membership.ItemsSource = FillCombo.branchsList;
                 /*
                 await RefreshCustomersList();
                 await Search();
@@ -285,9 +285,9 @@ namespace Restaurant.View.sales.promotion.membership
                 for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                     if (vis is DataGridRow)
                     {
-                        //membership row = (membership)dg_membership.SelectedItems[0];
+                        Memberships row = (Memberships)dg_membership.SelectedItems[0];
 
-                      
+
 
                     }
 
@@ -308,7 +308,7 @@ namespace Restaurant.View.sales.promotion.membership
                 for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                     if (vis is DataGridRow)
                     {
-                        //membership row = (membership)dg_membership.SelectedItems[0];
+                        Memberships row = (Memberships)dg_membership.SelectedItems[0];
 
 
 
@@ -331,7 +331,7 @@ namespace Restaurant.View.sales.promotion.membership
                 for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                     if (vis is DataGridRow)
                     {
-                        //membership row = (membership)dg_membership.SelectedItems[0];
+                        Memberships row = (Memberships)dg_membership.SelectedItems[0];
 
 
 
@@ -354,7 +354,7 @@ namespace Restaurant.View.sales.promotion.membership
                 for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                     if (vis is DataGridRow)
                     {
-                        //membership row = (membership)dg_membership.SelectedItems[0];
+                        Memberships row = (Memberships)dg_membership.SelectedItems[0];
 
 
 

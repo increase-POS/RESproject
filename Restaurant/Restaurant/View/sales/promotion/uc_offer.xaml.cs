@@ -332,7 +332,7 @@ namespace Restaurant.View.sales.promotion
                                     offer.startDate = startDateTime;
                                 if (dp_endDate.SelectedDate != null)
                                     offer.endDate = endDateTime;
-                                offer.createUserId = MainWindow.userLogin.userId;
+                                offer.updateUserId = MainWindow.userLogin.userId;
                                 offer.notes = tb_notes.Text;
 
                                 int s = await offer.save(offer);

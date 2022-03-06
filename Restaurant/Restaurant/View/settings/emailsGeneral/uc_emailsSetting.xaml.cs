@@ -242,7 +242,6 @@ namespace Restaurant.View.settings.emailsGeneral
                         sysEmail.side = cb_side.SelectedValue.ToString();
                         sysEmail.branchId = (int)cb_branchId.SelectedValue;
                         sysEmail.notes = tb_notes.Text;
-                        sysEmail.createUserId = MainWindow.userLogin.userId;
                         sysEmail.updateUserId = MainWindow.userLogin.userId;
                         //sysEmail.isActive = 1;
                         //  string s = await sysEmail.Save(sysEmail);

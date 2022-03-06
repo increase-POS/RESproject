@@ -370,7 +370,7 @@ namespace Restaurant.View.sales.promotion
                             coupon.quantity = Int32.Parse(tb_quantity.Text);
                         coupon.remainQ = coupon.quantity;
                         //coupon.membershipId = 0;///????????????
-                        coupon.createUserId = MainWindow.userLogin.userId;
+                        coupon.updateUserId = MainWindow.userLogin.userId;
 
                         int s = await coupon.save(coupon);
 
