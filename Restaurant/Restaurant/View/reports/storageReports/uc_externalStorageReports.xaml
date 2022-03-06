@@ -334,7 +334,7 @@
                                             <Grid x:Name="grid_externalAgents"
                                                   Margin="10,0,10,10"
                                                   Grid.Row="1"
-                                                  Visibility="Hidden">
+                                                  Visibility="Collapsed">
 
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="auto"></RowDefinition>
@@ -349,20 +349,21 @@
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                                 </Grid.ColumnDefinitions>
-
-                                                <ComboBox  Name="cb_externalAgentsBranches"
+                                                    <Border Grid.Row="1" Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                        <Grid>
+                                                            <ComboBox  Name="cb_externalAgentsBranches"
                                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                                            materialDesign:HintAssist.Hint="Branch/Store ...."
                                                            Foreground="#4E4E4E"
-                                                           TextBlock.FontSize="12"
-                                                           Background="#f8f8f8"
-                                                           BorderBrush="AliceBlue"
-                                                           BorderThickness="0,0,0,2" 
+                                                           BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                                                            Height="40"
-                                                           Margin="10,5,10,5"
                                                            Padding="10,0,5,0"
                                                            Grid.Row="1"
                                                            SelectionChanged="cb_externalAgentsBranches_SelectionChanged" />
+                                                        </Grid>
+                                                    </Border>
+
+                                                    
 
                                                 <CheckBox x:Name="chk_externalAgentsAllBranches"
                                                           Background="{StaticResource MainColor}"
@@ -394,49 +395,57 @@
                                                            Grid.Column="4"
                                                            LastChildFill="False">
 
-                                                    <DatePicker Name="dp_externalAgentsEndDate"
+                                                        <Border Grid.Row="0" DockPanel.Dock="Right" Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                            <Grid>
+                                                                <DatePicker Name="dp_externalAgentsEndDate"
                                                                 SelectedDateFormat="Short"
                                                                 Width="100"
-                                                                Margin="10,5,10,5"
                                                                 Padding="10,0,5,0"
                                                                 Height="40"
                                                                 DockPanel.Dock="Right"
-                                                                BorderBrush="#737373"
-                                                                BorderThickness="0" 
+                                                                 BorderBrush="#737373"   BorderThickness="0" Margin="4,0"           
                                                                 Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                                                                 materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                                                 materialDesign:HintAssist.Hint="End Date..."
                                                                 SelectedDateChanged="selectionChanged"/>
+                                                            </Grid>
+                                                        </Border>
 
-                                                    <DatePicker Name="dp_externalAgentsStartDate"
+
+                                                        <Border Grid.Row="0" DockPanel.Dock="Right" Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                            <Grid>
+
+                                                                <DatePicker Name="dp_externalAgentsStartDate"
                                                                 SelectedDateFormat="Short"
                                                                 Width="100"
-                                                                Margin="10,5,10,5"
                                                                 Padding="10,0,5,0"
                                                                 Height="40"
-                                                                DockPanel.Dock="Right"
-                                                                BorderBrush="#737373"
-                                                                BorderThickness="0" 
+                                                                BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                                                                 Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                                                                 materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                                                 materialDesign:HintAssist.Hint="Start date..." 
                                                                 SelectedDateChanged="selectionChanged" />
+
+                                                            </Grid>
+                                                        </Border>
+                                                       
                                                 </DockPanel>
 
-                                                <ComboBox Name="cb_externalAgentsAgentsType"
+                                                    <Border Grid.Row="2" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                        <Grid>
+                                                            <ComboBox Name="cb_externalAgentsAgentsType"
                                                           Grid.Row="2"
                                                           IsEnabled="False"
                                                           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                                           materialDesign:HintAssist.Hint="Agent Type ...."
                                                           Foreground="#4E4E4E" 
-                                                          TextBlock.FontSize="12"
-                                                          Background="#f8f8f8"
-                                                          BorderBrush="AliceBlue"
-                                                          BorderThickness="0,0,0,2" 
+                                                          BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                                                           Height="40"
-                                                          Margin="10,5,10,5"
                                                           Padding="10,0,5,0"
                                                           SelectionChanged="cb_externalAgentsAgentsType_SelectionChanged"/>
+                                                        </Grid>
+                                                    </Border>
+                                                    
 
                                                 <CheckBox x:Name="chk_externalAgentsAllAgentsType"
                                                           Background="{StaticResource MainColor}"
@@ -448,21 +457,24 @@
                                                           Checked="chk_externalAgentsAllAgentsType_Checked"
                                                           Unchecked="chk_externalAgentsAllAgentsType_Unchecked"/>
 
-                                                <ComboBox Name="cb_externalAgentsCustomer"
+                                                    <Border Grid.Row="2" Grid.Column="2" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                        <Grid>
+
+                                                            <ComboBox Name="cb_externalAgentsCustomer"
                                                           Grid.Row="2"
                                                           IsEnabled="False"
                                                           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                                           materialDesign:HintAssist.Hint="Customer/Vendor ...."
                                                           Grid.Column="2"
                                                           Foreground="#4E4E4E" 
-                                                          TextBlock.FontSize="12"
-                                                          Background="#f8f8f8"
-                                                          BorderBrush="AliceBlue"
-                                                          BorderThickness="0,0,0,2" 
+                                                          BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                                                           Height="40"
-                                                          Margin="10,5,10,5"
                                                           Padding="10,0,5,0"
                                                           SelectionChanged="selectionChanged" />
+
+                                                        </Grid>
+                                                    </Border>
+                                                   
 
 
                                                 <CheckBox x:Name="chk_externalAgentsAllCustomers"
@@ -479,7 +491,7 @@
                                             <Grid x:Name="grid_externalInvoices"
                                                   Grid.Row="1"
                                                   Margin="10,0,10,10"
-                                                  Visibility="Hidden">
+                                                  Visibility="Collapsed">
 
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="auto"></RowDefinition>
@@ -495,20 +507,21 @@
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                                 </Grid.ColumnDefinitions>
 
-                                                <ComboBox  Name="cb_externalInvoicesBranches"
+                                                    <Border Grid.Row="1" Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                        <Grid>
+                                                            <ComboBox  Name="cb_externalInvoicesBranches"
                                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                                            materialDesign:HintAssist.Hint="Branch/Store ...."
                                                            Foreground="#4E4E4E"
-                                                           TextBlock.FontSize="12"
-                                                           Background="#f8f8f8"
-                                                           BorderBrush="AliceBlue"
-                                                           BorderThickness="0,0,0,2" 
+                                                           BorderBrush="#737373"   BorderThickness="0" Margin="4,0"            
                                                            Height="40"
-                                                           Margin="10,5,10,5" 
                                                            Padding="10,0,5,0"
                                                            Grid.Row="1"
                                                            SelectionChanged="cb_externalInvoicesBranches_SelectionChanged">
-                                                </ComboBox>
+                                                            </ComboBox>
+                                                        </Grid>
+                                                    </Border>
+                                                    
 
                                                 <CheckBox  x:Name="chk_externalInvoicesAllBranches"
                                                            Background="{StaticResource MainColor}"
@@ -524,47 +537,60 @@
                                                            Grid.Column="4"
                                                            LastChildFill="False">
 
-                                                    <DatePicker Name="dp_externalInvoicesEndDate"
+                                                        <Border Grid.Row="0" DockPanel.Dock="Right" Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                            <Grid>
+
+                                                                <DatePicker Name="dp_externalInvoicesEndDate"
                                                                 SelectedDateFormat="Short"
                                                                 Width="100"
-                                                                Margin="10,5,10,5" 
                                                                 Height="40"
+                                                                BorderBrush="#737373"   BorderThickness="0" Margin="4,0"            
                                                                 DockPanel.Dock="Right"
-                                                                BorderBrush="#737373"
-                                                                BorderThickness="0"
                                                                 Padding="10,0,5,0"
                                                                 Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
                                                                 materialDesign:HintAssist.Hint="End Date..."
                                                                 SelectedDateChanged="selectionChanged"/>
 
-                                                    <DatePicker Name="dp_externalInvoicesStartDate"
+                                                            </Grid>
+                                                        </Border>
+
+
+                                                        <Border Grid.Row="0" DockPanel.Dock="Right" Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                            <Grid>
+
+                                                                <DatePicker Name="dp_externalInvoicesStartDate"
                                                                 SelectedDateFormat="Short"
                                                                 Width="100"
-                                                                Margin="10,5,10,5"
                                                                 Padding="10,0,5,0"
                                                                 Height="40"
+                                                                BorderBrush="#737373"   BorderThickness="0" Margin="4,0"            
                                                                 DockPanel.Dock="Right"
-                                                                BorderBrush="#737373"
-                                                                BorderThickness="0" 
                                                                 Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                                                                 materialDesign:HintAssist.Hint="Start date..." 
                                                                 SelectedDateChanged="selectionChanged" />
+
+                                                            </Grid>
+                                                        </Border>
+                                                        
                                                 </DockPanel>
 
-                                                <ComboBox Name="cb_externalInvoicesInvoiceType"
+                                                    <Border  Grid.Row="2" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                        <Grid>
+
+                                                            <ComboBox Name="cb_externalInvoicesInvoiceType"
                                                           Grid.Row="2"
                                                           IsEnabled="False"
                                                           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                                           materialDesign:HintAssist.Hint="Invoice Type ...."
                                                           Foreground="#4E4E4E" 
-                                                          TextBlock.FontSize="12"
-                                                          Background="#f8f8f8"
-                                                          BorderBrush="AliceBlue"
-                                                          BorderThickness="0,0,0,2" 
                                                           Height="40"
-                                                          Margin="10,5,10,5"
+                                                          BorderBrush="#737373"   BorderThickness="0" Margin="4,0"            
                                                           Padding="10,0,5,0"
                                                           SelectionChanged="cb_externalInvoicesInvoiceType_SelectionChanged" />
+
+                                                        </Grid>
+                                                    </Border>
+                                                   
 
                                                 <CheckBox x:Name="chk_externalInvoicesAllInvoicesType"
                                                           Background="{StaticResource MainColor}"
@@ -576,21 +602,24 @@
                                                           Checked="chk_externalInvoicesAllInvoicesType_Checked" 
                                                           Unchecked="chk_externalInvoicesAllInvoicesType_Unchecked"/>
 
-                                                <ComboBox Name="cb_externalInvoicesInvoice"
+                                                    <Border Grid.Row="2" Grid.Column="2" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                        <Grid>
+
+                                                          <ComboBox Name="cb_externalInvoicesInvoice"
                                                           Grid.Row="2"
                                                           IsEnabled="False"
                                                           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                                           materialDesign:HintAssist.Hint="Invoice ...." 
                                                           Grid.Column="2"
+                                                          BorderBrush="#737373"   BorderThickness="0" Margin="4,0"          
                                                           Foreground="#4E4E4E"
-                                                          TextBlock.FontSize="12"
-                                                          Background="#f8f8f8"
-                                                          BorderBrush="AliceBlue"
-                                                          BorderThickness="0,0,0,2" 
                                                           Height="40"
-                                                          Margin="10,5,10,5"
                                                           Padding="10,0,5,0" 
                                                           SelectionChanged="selectionChanged"/>
+
+                                                        </Grid>
+                                                    </Border>
+                                                    
 
                                                 <CheckBox x:Name="chk_externalInvoicesALlInvoice"
                                                           Background="{StaticResource MainColor}"

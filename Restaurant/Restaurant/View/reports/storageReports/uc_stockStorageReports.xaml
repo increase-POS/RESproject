@@ -157,7 +157,7 @@
                                         <RowDefinition Height="auto"></RowDefinition>
                                     </Grid.RowDefinitions>
                                     <Border Grid.Row="1" BorderThickness="15,10,15,0" x:Name="bdrMainStock" Height="auto" Background="Transparent">
-                                        <Grid >
+                                            <Grid >
                                             <Grid  x:Name="grid_byItem" Margin="10,0,10,10"  Visibility="Visible">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="auto"></RowDefinition>
@@ -257,9 +257,7 @@
                                               Grid.Row="2" Grid.Column="3"
                                                Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"></CheckBox>
                                             </Grid>
-
-
-                                            <Grid x:Name="grid_byLocation" Margin="10,0,10,10"  Grid.Row="1" Visibility="Hidden">
+                                            <Grid x:Name="grid_byLocation" Margin="10,0,10,10"  Grid.Row="1" Visibility="Collapsed">
 
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="auto"></RowDefinition>
@@ -274,11 +272,21 @@
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                                 </Grid.ColumnDefinitions>
-                                                <ComboBox  Name="cb_branchesLocation" SelectionChanged="cb_branchesLocation_SelectionChanged"
-                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                      materialDesign:HintAssist.Hint="Branch/Store ...."
-                                    Foreground="#4E4E4E"  TextBlock.FontSize="12" Background="#f8f8f8"  BorderBrush="#737373" BorderThickness="0"  
-                                    Height="40" Margin="10,5,10,5" Padding="10,0,5,0" Grid.Row="1"></ComboBox>
+                                                    <Border Grid.Row="1" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                        <Grid>
+
+                                                            <ComboBox  Name="cb_branchesLocation" 
+                                                          SelectionChanged="cb_branchesLocation_SelectionChanged"
+                                                          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                                           materialDesign:HintAssist.Hint="Branch/Store ...."
+                                                         Foreground="#4E4E4E"  
+                                                         BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
+                                                         Height="40"
+                                                        Padding="10,0,5,0" Grid.Row="1"/>
+
+                                                        </Grid>
+                                                    </Border>
+                                                   
                                                 <CheckBox  Background="{StaticResource MainColor}" x:Name="chk_allBranchesLocation"
                                                Grid.Row="1" Grid.Column="1" Checked="chk_allBranchesLocation_Checked" Unchecked="chk_allBranchesLocation_Unchecked"
                                                Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"></CheckBox>
@@ -286,32 +294,66 @@
                                               Grid.Row="1" Grid.Column="2" 
                                               Content="Expire Date" Foreground="{StaticResource ThickGrey}"></CheckBox>
                                                 <DockPanel Grid.ColumnSpan="3" Grid.Row="1" Grid.Column="4" LastChildFill="False">
-                                                    <DatePicker  SelectedDateChanged="cb_SelectionChanged" SelectedDateFormat="Short"  Name="dp_endDateLocation" Width="100" Margin="10,5,10,5" Padding="10,0,5,0" Height="40" DockPanel.Dock="Right" BorderBrush="#737373"  BorderThickness="0" 
-                                       Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                materialDesign:HintAssist.Hint="End Date..."></DatePicker>
-                                                    <DatePicker SelectedDateChanged="cb_SelectionChanged" SelectedDateFormat="Short"  Name="dp_startDateLocation" Width="100" Margin="10,5,10,5" Padding="10,0,5,0" Height="40" DockPanel.Dock="Right"    BorderBrush="#737373"  BorderThickness="0" 
-                                       Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                materialDesign:HintAssist.Hint="Start date..."  ></DatePicker>
+                                                        <Border Grid.Row="0" DockPanel.Dock="Right"  Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                            <Grid>
+                                                                <DatePicker  SelectedDateChanged="cb_SelectionChanged" 
+                                                                             SelectedDateFormat="Short"  Name="dp_endDateLocation" 
+                                                                             Width="100" Padding="10,0,5,0" 
+                                                                             Height="40" DockPanel.Dock="Right" 
+                                                                                BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
+                                                                             Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  
+                                                                             materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                                                             materialDesign:HintAssist.Hint="End Date..."/>
+                                                            </Grid>
+                                                        </Border>
+
+                                                        <Border Grid.Row="0" DockPanel.Dock="Right" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                            <Grid>
+                                                                <DatePicker SelectedDateChanged="cb_SelectionChanged"
+                                                                            SelectedDateFormat="Short"  Name="dp_startDateLocation" 
+                                                                            Width="100" Padding="10,0,5,0"
+                                                                            Height="40" DockPanel.Dock="Right"   
+                                                                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                                                            BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
+                                                                            materialDesign:HintAssist.Hint="Start date..."/>
+                                                            </Grid>
+                                                        </Border>
+                                                       
                                                 </DockPanel>
-                                                <ComboBox Name="cb_sectionsLocation" IsEnabled="False" Grid.Row="2" SelectionChanged="cb_sectionsLocation_SelectionChanged"
-                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                      materialDesign:HintAssist.Hint="Sections ...."
-                                    Foreground="#4E4E4E"  TextBlock.FontSize="12" Background="#f8f8f8"  BorderBrush="#737373" BorderThickness="0"  
-                                    Height="40" Margin="10,5,10,5" Padding="10,0,5,0" ></ComboBox>
-                                                <CheckBox IsEnabled="False" Background="{StaticResource MainColor}" x:Name="chk_allSectionsLocation"
+                                                    
+                                                    <Border Grid.Row="2" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                        <Grid>
+                                                            <ComboBox Name="cb_sectionsLocation" IsEnabled="False"
+                                                                      Grid.Row="2" SelectionChanged="cb_sectionsLocation_SelectionChanged"
+                                                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                                                      materialDesign:HintAssist.Hint="Sections ...."
+                                                                    Foreground="#4E4E4E"  
+                                                                        BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
+                                                                      Height="40"
+                                                                      Padding="10,0,5,0" />
+                                                        </Grid>
+                                                    </Border>
+
+                                                    <CheckBox IsEnabled="False" Background="{StaticResource MainColor}" x:Name="chk_allSectionsLocation"
                                                Grid.Row="2" Grid.Column="1" Checked="chk_allSectionsLocation_Checked" Unchecked="chk_allSectionsLocation_Unchecked"
-                                               Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"></CheckBox>
-                                                <ComboBox Name="cb_locationsLocation" IsEnabled="False" Grid.Row="2" SelectionChanged="cb_SelectionChanged"
-                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                      materialDesign:HintAssist.Hint="Location ...." Grid.Column="2"
-                                    Foreground="#4E4E4E"  TextBlock.FontSize="12" Background="#f8f8f8"  BorderBrush="#737373" BorderThickness="0"  
-                                    Height="40" Margin="10,5,10,5" Padding="10,0,5,0" ></ComboBox>
+                                               Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"/>
+                                                    <Border Grid.Row="2" Grid.Column="2" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                        <Grid>
+                                                            <ComboBox Name="cb_locationsLocation" IsEnabled="False" 
+                                                                      Grid.Row="2" SelectionChanged="cb_SelectionChanged"
+                                                                         Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                                                          materialDesign:HintAssist.Hint="Location ...." Grid.Column="2"
+                                                                        Foreground="#4E4E4E"  
+                                                                      BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
+                                                                    Height="40" Padding="10,0,5,0" />
+                                                        </Grid>
+                                                    </Border>
+                                                    
                                                 <CheckBox IsEnabled="False" Background="{StaticResource MainColor}" x:Name="chk_allLocationsLocation"
                                               Grid.Row="2" Grid.Column="3" Checked="chk_allLocationsLocation_Checked" Unchecked="chk_allLocationsLocation_Unchecked"
                                                Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"></CheckBox>
                                             </Grid>
-
-                                            <Grid Grid.Row="1" x:Name="grid_collect" Margin="10,0,10,10"  Visibility="Hidden">
+                                            <Grid Grid.Row="1" x:Name="grid_collect" Margin="10,0,10,10"  Visibility="Collapsed">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="auto"></RowDefinition>
                                                     <RowDefinition Height="auto"></RowDefinition>
@@ -325,39 +367,89 @@
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                                 </Grid.ColumnDefinitions>
-                                                <ComboBox  Name="cb_branchesCollect" SelectionChanged="cb_branchesCollect_SelectionChanged"
+                                                    <Border Grid.Row="1" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                        <Grid>
+
+                                                            <ComboBox  Name="cb_branchesCollect" 
+                                                               SelectionChanged="cb_branchesCollect_SelectionChanged"
                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                       materialDesign:HintAssist.Hint="Branch/Store ...."
-                                    Foreground="#4E4E4E"  TextBlock.FontSize="12" Background="#f8f8f8"  BorderBrush="#737373" BorderThickness="0"  
-                                    Height="40" Margin="10,5,10,5" Padding="10,0,5,0" Grid.Row="1"></ComboBox>
-                                                <CheckBox Checked="chk_allBranchesCollect_Checked" Unchecked="chk_allBranchesCollect_Unchecked" Background="{StaticResource MainColor}" x:Name="chk_allBranchesCollect"
+                                    Foreground="#4E4E4E"  
+                                                               BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
+                                    Height="40" Padding="10,0,5,0" Grid.Row="1"/>
+
+                                                        </Grid>
+                                                    </Border>
+
+                                                  
+                                                    <CheckBox Checked="chk_allBranchesCollect_Checked" Unchecked="chk_allBranchesCollect_Unchecked" Background="{StaticResource MainColor}" x:Name="chk_allBranchesCollect"
                                                Grid.Row="1" Grid.Column="1"
                                                Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"></CheckBox>
                                                 <CheckBox x:Name="chk_expireDateCollect" IsEnabled="False" Margin="10,5,10,5" 
                                               Grid.Row="1" Grid.Column="2" 
                                               Content="Expire Date" Foreground="{StaticResource ThickGrey}"></CheckBox>
                                                 <DockPanel Grid.ColumnSpan="3" Grid.Row="1" Grid.Column="4" LastChildFill="False">
-                                                    <DatePicker SelectedDateFormat="Short" IsEnabled="False" Name="dp_endDateCollect" Width="100" Margin="10,5,10,5" Padding="10,0,5,0" Height="40" DockPanel.Dock="Right" BorderBrush="#737373"  BorderThickness="0" 
-                                       Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                materialDesign:HintAssist.Hint="End Date..."></DatePicker>
-                                                    <DatePicker SelectedDateFormat="Short" Name="dp_startDateCollect" Width="100" Margin="10,5,10,5" Padding="10,0,5,0" Height="40" DockPanel.Dock="Right"    BorderBrush="#737373"  BorderThickness="0" 
-                                       Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                materialDesign:HintAssist.Hint="Start date..."  ></DatePicker>
-                                                </DockPanel>
-                                                <ComboBox Name="cb_itemsCollect" SelectionChanged="cb_itemsCollect_SelectionChanged" Grid.Row="2"
-                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                      materialDesign:HintAssist.Hint="Items ...."
-                                    Foreground="#4E4E4E"  TextBlock.FontSize="12" Background="#f8f8f8"  BorderBrush="#737373" BorderThickness="0"  
-                                    Height="40" Margin="10,5,10,5" Padding="10,0,5,0" ></ComboBox>
-                                                <CheckBox Checked="chk_allItemsCollect_Checked" IsEnabled="False" Unchecked="chk_allItemsCollect_Unchecked" Background="{StaticResource MainColor}" x:Name="chk_allItemsCollect"
+                                                        <Border Grid.Row="0" DockPanel.Dock="Right"  Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                            <Grid>
+
+                                                                <DatePicker SelectedDateFormat="Short" IsEnabled="False" 
+                                                                    Name="dp_endDateCollect" Width="100" 
+                                                                    Padding="10,0,5,0" 
+                                                                    Height="40" DockPanel.Dock="Right" 
+                                                                    BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
+                                                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  
+                                                                    materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                                                   materialDesign:HintAssist.Hint="End Date..."/>
+
+                                                            </Grid>
+                                                        </Border>
+
+                                                        <Border Grid.Row="0" DockPanel.Dock="Right" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                            <Grid>
+
+                                                                <DatePicker SelectedDateFormat="Short" 
+                                                                    Name="dp_startDateCollect" Width="100"
+                                                                    Padding="10,0,5,0" 
+                                                                    Height="40" DockPanel.Dock="Right"    
+                                                                    BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
+                                                                       Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  
+                                                                    materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                                                    materialDesign:HintAssist.Hint="Start date..."/>
+
+                                                            </Grid>
+                                                        </Border>
+                                                        
+                                                    </DockPanel>
+                                                    <Border  Grid.Row="2" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                        <Grid>
+
+                                                            <ComboBox Name="cb_itemsCollect" SelectionChanged="cb_itemsCollect_SelectionChanged" 
+                                                              Grid.Row="2"
+                                                             BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
+                                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                                              materialDesign:HintAssist.Hint="Items ...."
+                                                            Foreground="#4E4E4E"  
+                                                            Height="40"  Padding="10,0,5,0" />      
+
+                                                        </Grid>
+                                                    </Border>
+                                                   
+                                                    <CheckBox Checked="chk_allItemsCollect_Checked" IsEnabled="False" Unchecked="chk_allItemsCollect_Unchecked" Background="{StaticResource MainColor}" x:Name="chk_allItemsCollect"
                                                Grid.Row="2" Grid.Column="1"
                                                Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"></CheckBox>
-                                                <ComboBox IsEnabled="False" SelectionChanged="cb_SelectionChanged" Name="cb_unitsCollect"  Grid.Row="2"
+                                                    <Border Grid.Row="2" Grid.Column="2" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                        <Grid>
+                                                            <ComboBox IsEnabled="False" SelectionChanged="cb_SelectionChanged" 
+                                                              Name="cb_unitsCollect"  Grid.Row="2"
                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                      BorderBrush="#737373"   BorderThickness="0" Margin="4,0"                                
                                       materialDesign:HintAssist.Hint="Units ...." Grid.Column="2"
-                                    Foreground="#4E4E4E"  TextBlock.FontSize="12" Background="#f8f8f8"  BorderBrush="#737373" BorderThickness="0"  
-                                    Height="40" Margin="10,5,10,5" Padding="10,0,5,0" ></ComboBox>
-                                                <CheckBox IsEnabled="False" Checked="chk_allUnitsCollect_Checked" Unchecked="chk_allUnitsCollect_Unchecked" Background="{StaticResource MainColor}" x:Name="chk_allUnitsCollect"
+                                    Foreground="#4E4E4E"  
+                                    Height="40"  Padding="10,0,5,0"/>
+                                                        </Grid>
+                                                    </Border>
+                                                   
+                                                    <CheckBox IsEnabled="False" Checked="chk_allUnitsCollect_Checked" Unchecked="chk_allUnitsCollect_Unchecked" Background="{StaticResource MainColor}" x:Name="chk_allUnitsCollect"
                                               Grid.Row="2" Grid.Column="3"
                                                Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"></CheckBox>
                                             </Grid>
