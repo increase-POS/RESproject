@@ -79,7 +79,14 @@ namespace Restaurant.Classes
             string method = "memberships/Delete";
            return await APIResult.post(method, parameters);
         }
+        public async Task<int> SaveMemberAndSub(Memberships item)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "memberships/SaveMemberAndSub";
+            var myContent = JsonConvert.SerializeObject(item);
+            parameters.Add("itemObject", myContent);
+            return await APIResult.post(method, parameters);
+        }
 
-       
     }
 }
