@@ -457,6 +457,9 @@
     <Compile Include="View\sales\promotion\uc_coupon.xaml.cs">
       <DependentUpon>uc_coupon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\sales\promotion\uc_invoicesClasses.xaml.cs">
+      <DependentUpon>uc_invoicesClasses.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\sales\promotion\uc_offer.xaml.cs">
       <DependentUpon>uc_offer.xaml</DependentUpon>
     </Compile>
@@ -1015,6 +1018,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\sales\promotion\uc_coupon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sales\promotion\uc_invoicesClasses.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
