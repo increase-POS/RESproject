@@ -217,13 +217,12 @@ namespace Restaurant.View.sectionData.persons
                         {
                             Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
-                            if (isImgPressed)
+                            if (openFileDialog.FileName != "")
                             {
                                 int agentId = s;
                                 string b = await agent.uploadImage(imgFileName,
                                     Md5Encription.MD5Hash("Inc-m" + agentId.ToString()), agentId);
                                 agent.image = b;
-                                isImgPressed = false;
                             }
 
                             Clear();
@@ -281,12 +280,12 @@ namespace Restaurant.View.sectionData.persons
                             Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                             await RefreshCustomersList();
                             await Search();
-                            if (isImgPressed)
-                            {
+                                if (openFileDialog.FileName != "")
+                                {
                                 int agentId = s;
                                 string b = await agent.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + agentId.ToString()), agentId);
                                 agent.image = b;
-                                isImgPressed = false;
+                                //isImgPressed = false;
                                 if (!b.Equals(""))
                                 {
                                       getImg();
@@ -563,6 +562,7 @@ namespace Restaurant.View.sectionData.persons
             #endregion
             #region image
             HelpClass.clearImg(btn_image);
+            openFileDialog.FileName = "";
             #endregion
 
 
@@ -749,10 +749,9 @@ namespace Restaurant.View.sectionData.persons
                     }
 
                     btn_image.Background = new ImageBrush(bitmapImage);
-                    // configure trmporary path
-                    string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                    string tmpPath = System.IO.Path.Combine(dir, Global.TMPAgentsFolder);
-                    tmpPath = System.IO.Path.Combine(tmpPath, agent.image);
+                        // configure trmporary path
+                        string dir = Directory.GetCurrentDirectory();
+                        string tmpPath = System.IO.Path.Combine(dir, Global.TMPAgentsFolder,agent.image);
                     openFileDialog.FileName = tmpPath;
                 }
                 else
