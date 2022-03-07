@@ -17,8 +17,9 @@ namespace Restaurant.Classes
     public class InvoicesClass
     {
         public int invClassId { get; set; }
+        public string name { get; set; }
         public decimal minInvoiceValue { get; set; }
-        public decimal MaxInvoiceValue { get; set; }
+        public decimal maxInvoiceValue { get; set; }
         public decimal discountValue { get; set; }
         public byte discountType { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
