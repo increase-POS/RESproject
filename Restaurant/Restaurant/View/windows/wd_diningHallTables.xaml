@@ -390,6 +390,7 @@
                      FontSize="14"     VerticalAlignment="Center" 
                            FontWeight="Bold" />
                                 <Button   x:Name="btn_clear"  Grid.Column="3" Padding="0" 
+                                          Click="Btn_clear_Click"
                                VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}"   >
                                     <materialDesign:PackIcon Foreground="White" Kind="RefreshCircle"   Width="30" Height="30">
                                         <materialDesign:PackIcon.ToolTip>
@@ -402,7 +403,9 @@
                             </Grid>
                         </Border>
 
-                        <ScrollViewer Background="White"  Grid.Row="1"  VerticalScrollBarVisibility="Auto" >
+                        <ScrollViewer Background="White"  Grid.Row="1"  
+                                      Name="vw_detail"
+                                      VerticalScrollBarVisibility="Auto" Visibility="Collapsed" >
                             <StackPanel>
                                 <DockPanel Margin="10 0"
                                  LastChildFill="True">
@@ -699,7 +702,7 @@
                                     </Border>
                                 </Grid>
 
-                                <Grid x:Name="grid_openTableButtons"  Visibility="Visible">
+                                <Grid x:Name="grid_openTableButtons"  Visibility="Collapsed">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
@@ -746,7 +749,7 @@
                                         </Grid>
                                     </Button>
                                     <Button Grid.Column="1" BorderBrush="{x:Null}" Padding="0" 
-                                  Margin="5 5 2.5 5 " Height="auto"
+                                  Margin="5 5 2.5 5 " Height="auto" Name="btn_changeTable"
                                 Background="{x:Null}" VerticalAlignment="Top"  >
                                         <Grid>
                                             <Grid.RowDefinitions>
@@ -782,7 +785,8 @@
 
 
                                     <Border Grid.Row="2" Grid.ColumnSpan="4">
-                                        <Button    Content="select"
+                                        <Button    Content="select" Name="btn_select"
+                                                   Click="Btn_select_Click"
                                     materialDesign:ButtonAssist.CornerRadius="7"
                               Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                         Margin="1,1"   Foreground="White" />

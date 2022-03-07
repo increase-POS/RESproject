@@ -112,13 +112,13 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
-         internal async Task<List<Tables>> GetTablesForDinning(int branchId, string dateSearch,string startTimeSearch)
+         internal async Task<List<Tables>> GetTablesForDinning(int branchId, string dateSearch)
         {
             List<Tables> items = new List<Tables>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("branchId", branchId.ToString());
             parameters.Add("dateSearch", dateSearch);
-            parameters.Add("startTimeSearch", startTimeSearch);
+            //parameters.Add("startTimeSearch", startTimeSearch);
 
             IEnumerable<Claim> claims = await APIResult.getList("Tables/GetTablesForDinning", parameters);
             foreach (Claim c in claims)

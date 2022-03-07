@@ -3430,4 +3430,28 @@ Please add Email in setting</value>
   <data name="trOnce" xml:space="preserve">
     <value>Once</value>
   </data>
+  <data name="empty" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="opened" xml:space="preserve">
+    <value>Opened</value>
+  </data>
+  <data name="openedReserved" xml:space="preserve">
+    <value>Opened</value>
+  </data>
+  <data name="reserved" xml:space="preserve">
+    <value>Reserved</value>
+  </data>
+  <data name="trCancleAndOpen" xml:space="preserve">
+    <value>cancel and open</value>
+  </data>
+  <data name="trChangeTable" xml:space="preserve">
+    <value>change table</value>
+  </data>
+  <data name="trConfirmAndOpen" xml:space="preserve">
+    <value>confirm and open</value>
+  </data>
+  <data name="trMergeTable" xml:space="preserve">
+    <value>merge table</value>
+  </data>
 </root>

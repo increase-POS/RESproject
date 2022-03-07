@@ -1052,7 +1052,7 @@ namespace Restaurant.View.sales
             catch { }
         }
         #endregion
-        #region adddraft - addInvoice - cancleInvoice - clear
+        #region adddraft - addInvoice - cancleInvoice - clear - table names
         private async Task addDraft()
         {
             if (billDetailsList.Count > 0 && _InvoiceType == "sd" && selectedTables.Count > 0)
@@ -1165,6 +1165,19 @@ namespace Restaurant.View.sales
             BuildBillDesign();
             refreshTotal();
         }
+
+        private void setTablesName()
+        {
+            string str = "";
+            foreach(Tables tbl in selectedTables)
+            {
+                if (str == "")
+                    str += tbl.name;
+                else
+                    str += " - " + tbl.name;
+            }
+            txt_tableName.Text = AppSettings.resourcemanager.GetString("trTables") + ": " + str;
+        }
         #endregion
         #region buttons new - orders - tables - customers - waiter - kitchen
 
@@ -1237,7 +1250,13 @@ namespace Restaurant.View.sales
                     wd_diningHallTables w = new wd_diningHallTables();
                     w.ShowDialog();
                     if (w.isOk == true)
+                    {
                         selectedTables = w.selectedTables;
+                        invoice = w.invoice;
+
+
+                        setTablesName();
+                    }
                     Window.GetWindow(this).Opacity = 1;
                 }
                 else

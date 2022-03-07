@@ -3263,7 +3263,7 @@
     <value>الحالة</value>
   </data>
   <data name="trEmpty" xml:space="preserve">
-    <value>محجوزة</value>
+    <value>فارغة</value>
   </data>
   <data name="trOpened" xml:space="preserve">
     <value>مفتوحة</value>
@@ -3405,5 +3405,29 @@
   </data>
   <data name="trOnce" xml:space="preserve">
     <value>مرة واحدة</value>
+  </data>
+  <data name="empty" xml:space="preserve">
+    <value>فارغة</value>
+  </data>
+  <data name="opened" xml:space="preserve">
+    <value>مفتوحة</value>
+  </data>
+  <data name="openedReserved" xml:space="preserve">
+    <value>مفتوحة</value>
+  </data>
+  <data name="reserved" xml:space="preserve">
+    <value>محجوزة</value>
+  </data>
+  <data name="trCancleAndOpen" xml:space="preserve">
+    <value>إلغاء وفتح</value>
+  </data>
+  <data name="trChangeTable" xml:space="preserve">
+    <value>تغيير الطاولة</value>
+  </data>
+  <data name="trConfirmAndOpen" xml:space="preserve">
+    <value>تأكيد وفتح</value>
+  </data>
+  <data name="trMergeTable" xml:space="preserve">
+    <value>دمج طاولة</value>
   </data>
 </root>

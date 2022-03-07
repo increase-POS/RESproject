@@ -93,7 +93,7 @@ namespace Restaurant.View.windows
                     TimeSpan startTime = TimeSpan.Parse(invDate.ToString().Split(' ')[1]);
                     TimeSpan timeStaying = TimeSpan.FromHours(AppSettings.time_staying);
                     TimeSpan endTime = startTime.Add(timeStaying);
-                    allTableSource = await FillCombo.table.GetTablesForDinning(MainWindow.branchLogin.branchId, DateTime.Now.ToString().Split(' ')[0], DateTime.Now.ToString().Split(' ')[1]);
+                    allTableSource = await FillCombo.table.GetTablesForDinning(MainWindow.branchLogin.branchId, DateTime.Now.ToString());
                     allTableSource = allTableSource.Where(x => x.status != "opened" && x.status != "openedReserved");
                 }
                 #endregion
