@@ -60,12 +60,45 @@ namespace Restaurant.View.reports.storageReports
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 await translate();
                 #endregion
+                permission();
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        void permission()
+        {
+            bool loadWindow = false;
+            int counter = 0;
+            if (!loadWindow)
+                if (!HelpClass.isAdminPermision())
+                {
+                    foreach (Border border in FindControls.FindVisualChildren<Border>(this))
+                    {
+                        if (border.Tag != null)
+                            if (FillCombo.groupObject.HasPermission(border.Tag.ToString(), FillCombo.groupObjects))
+                            {
+                                border.Visibility = Visibility.Visible;
+                                counter++;
+                            }
+                            else border.Visibility = Visibility.Collapsed;
+                    }
+                    if (counter == 1)
+                    {
+                        foreach (Button button in FindControls.FindVisualChildren<Button>(this))
+                        {
+                            if (button.Tag != null)
+                                if (FillCombo.groupObject.HasPermission(button.Tag.ToString(), FillCombo.groupObjects))
+                                {
+                                    button.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                                    loadWindow = true;
+                                }
+                        }
+                    }
+                }
+        }
+
         private async Task translate()
         {
             if (FillCombo.objectsList is null)

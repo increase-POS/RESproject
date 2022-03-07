@@ -508,7 +508,7 @@ namespace Restaurant.View.storage.movementsOperations
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(approvePermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(approvePermission, FillCombo.groupObjects, "one"))
                     {
                     bool valid = validateItemUnits();
                     if (valid)
@@ -768,7 +768,7 @@ namespace Restaurant.View.storage.movementsOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     if (invoiceItems != null)
                     {
@@ -798,7 +798,7 @@ namespace Restaurant.View.storage.movementsOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
 
                     if (invoiceItems != null)
@@ -833,7 +833,7 @@ namespace Restaurant.View.storage.movementsOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     #region
                     if (invoiceItems != null)

@@ -171,7 +171,7 @@ namespace Restaurant.View.sales.promotion.membership
         {//add
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
 
@@ -225,7 +225,7 @@ namespace Restaurant.View.sales.promotion.membership
         {//update
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
 
@@ -276,7 +276,7 @@ namespace Restaurant.View.sales.promotion.membership
         {//delete
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "delete") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
                     if (membership.membershipId != 0)
@@ -656,7 +656,7 @@ namespace Restaurant.View.sales.promotion.membership
 
                 if (sender != null)
                     SectionData.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
                 {
                     /////////////////////////////////////
                     Thread t1 = new Thread(() =>
@@ -694,7 +694,7 @@ namespace Restaurant.View.sales.promotion.membership
                 if (sender != null)
                     SectionData.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
                 {
                     /////////////////////////////////////
                     Thread t1 = new Thread(() =>
@@ -725,7 +725,7 @@ namespace Restaurant.View.sales.promotion.membership
                 if (sender != null)
                     SectionData.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
@@ -753,7 +753,7 @@ namespace Restaurant.View.sales.promotion.membership
                 if (sender != null)
                     SectionData.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
@@ -808,7 +808,7 @@ namespace Restaurant.View.sales.promotion.membership
                 if (sender != null)
                     SectionData.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
                 {
                     Thread t1 = new Thread(() =>
                     {
@@ -985,7 +985,7 @@ namespace Restaurant.View.sales.promotion.membership
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction("membershipCreate_subscriptionFees" , MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction("membershipCreate_subscriptionFees" , FillCombo.groupObjects, "one"))
                 {
                     Window.GetWindow(this).Opacity = 0.2;
 

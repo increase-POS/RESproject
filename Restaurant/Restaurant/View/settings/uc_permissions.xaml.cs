@@ -84,7 +84,7 @@ namespace Restaurant.View.settings
         }
 
         string basicsPermission = "permissions_basics";
-        string usersPermission = "Permissions_users";
+        string usersPermission = "permissions_users";
         string _parentObjectName = "";
         Object objectModel = new Object();
         List<Object> listObjects = new List<Object>();
@@ -227,7 +227,7 @@ namespace Restaurant.View.settings
         {//add
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") )
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add") )
                 {
                     HelpClass.StartAwait(grid_main);
 
@@ -289,7 +289,7 @@ namespace Restaurant.View.settings
         {//update
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") )
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update") )
                 {
                     HelpClass.StartAwait(grid_main);
                     if (group.groupId > 0)
@@ -347,7 +347,7 @@ namespace Restaurant.View.settings
         {
             try
             {//delete
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") )
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "delete") )
                 {
                     HelpClass.StartAwait(grid_main);
                     if (group.groupId != 0)
@@ -853,8 +853,6 @@ namespace Restaurant.View.settings
                 count+=2;
             }
         }
-       
-
         private void btn_secondLevelClick(object sender, RoutedEventArgs e)
         {
             try
@@ -922,7 +920,6 @@ namespace Restaurant.View.settings
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         #endregion
         #region groupObjects
         GroupObject groupObject = new GroupObject();
@@ -983,7 +980,7 @@ namespace Restaurant.View.settings
             {
                 
                     HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(usersPermission, MainWindow.groupObjects, "one") )
+                if (FillCombo.groupObject.HasPermissionAction(usersPermission, FillCombo.groupObjects, "one") )
                 {
                     if (group.groupId > 0)
                     {
@@ -1015,7 +1012,7 @@ namespace Restaurant.View.settings
             {
                 
                     HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") )
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update") )
                 {
                     int s = 0;
                     foreach (var item in groupObjectsQuery)

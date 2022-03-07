@@ -512,7 +512,7 @@ namespace Restaurant.View.accounts
                 //  string s = "0", s1 = "";
                 int s = 0;
                 int s1 = 0;
-                if (MainWindow.groupObject.HasPermissionAction(createPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     #region validate
 
@@ -784,7 +784,7 @@ namespace Restaurant.View.accounts
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(createPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     #region
                     //Thread t1 = new Thread(() =>
@@ -843,7 +843,7 @@ namespace Restaurant.View.accounts
         {//image
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(createPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     if (cashtrans != null || cashtrans.cashTransId != 0)
                     {
@@ -1255,7 +1255,7 @@ namespace Restaurant.View.accounts
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(createPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
 
                     if (cashtrans.cashTransId > 0)
@@ -1359,7 +1359,7 @@ namespace Restaurant.View.accounts
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(createPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     Window.GetWindow(this).Opacity = 0.2;
 
@@ -1406,7 +1406,7 @@ namespace Restaurant.View.accounts
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(createPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     if (cashtrans.cashTransId > 0)
                     {
@@ -1524,7 +1524,7 @@ namespace Restaurant.View.accounts
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     #region
                     BuildReport();
@@ -1555,7 +1555,7 @@ namespace Restaurant.View.accounts
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     #region
                     BuildReport();
@@ -1579,7 +1579,7 @@ namespace Restaurant.View.accounts
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
@@ -1621,7 +1621,7 @@ namespace Restaurant.View.accounts
             {
                 HelpClass.StartAwait(grid_main);
                 /////////////////////
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     Window.GetWindow(this).Opacity = 0.2;
                     //cashesQueryExcel = cashesQuery.ToList();

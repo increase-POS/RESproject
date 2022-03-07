@@ -144,7 +144,7 @@ namespace Restaurant.View.storage.stocktakingOperations
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(destroyPermission, MainWindow.groupObjects, "one") )
+                if (FillCombo.groupObject.HasPermissionAction(destroyPermission, FillCombo.groupObjects, "one") )
                 {
                     if(HelpClass.validate(requiredControlList, this))
                     {
@@ -554,7 +554,7 @@ namespace Restaurant.View.storage.stocktakingOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     if (invItemLocsQuery != null)
                     {
@@ -585,7 +585,7 @@ namespace Restaurant.View.storage.stocktakingOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     #region
                     if (invItemLocsQuery != null)
@@ -631,7 +631,7 @@ namespace Restaurant.View.storage.stocktakingOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     /////////////////////////////////////
                     ///  
@@ -665,7 +665,7 @@ namespace Restaurant.View.storage.stocktakingOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "report") || HelpClass.isAdminPermision())
                 {
                     #region
                     //Thread t1 = new Thread(() =>
@@ -708,7 +708,7 @@ namespace Restaurant.View.storage.stocktakingOperations
         //        if (sender != null)
         //            SectionData.StartAwait(grid_main);
 
-        //        if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+        //        if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
         //        {
         //            #region
         //            Window.GetWindow(this).Opacity = 0.2;

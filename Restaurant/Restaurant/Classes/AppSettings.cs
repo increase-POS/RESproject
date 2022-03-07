@@ -15,6 +15,8 @@ namespace Restaurant.Classes
         public static string lang = "ar";
         public static string Reportlang = "ar";
 
+        public static string defaultPath = "";
+
         public static string Currency = "KD";
         public static int CurrencyId;
 

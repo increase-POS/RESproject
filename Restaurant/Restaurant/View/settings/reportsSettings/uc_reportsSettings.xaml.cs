@@ -53,7 +53,7 @@ namespace Restaurant.View.settings.reportsSettings
             catch
             { }
         }
-
+        
         public class Replang
         {
             public int langId { get; set; }
@@ -62,6 +62,9 @@ namespace Restaurant.View.settings.reportsSettings
             public Nullable<int> isDefault { get; set; }
 
         }
+        //string usersSettingsPermission = "reportsSettings_usersSettings";
+        string companySettingsPermission = "reportsSettings_companySettings";
+
 
         SetValues setvalueModel = new SetValues();
         List<SetValues> replangList = new List<SetValues>();
@@ -284,7 +287,7 @@ namespace Restaurant.View.settings.reportsSettings
             {
                 
                     HelpClass.StartAwait(grid_main);
-                //if (MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one") )
+                //if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one") )
                 //{
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_reportSystmSetting w = new wd_reportSystmSetting();
@@ -315,7 +318,7 @@ namespace Restaurant.View.settings.reportsSettings
                     HelpClass.StartAwait(grid_main);
 
 
-                //if (MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one") )
+                //if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one") )
                 //{
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_reportPrinterSetting w = new wd_reportPrinterSetting();
@@ -343,7 +346,7 @@ namespace Restaurant.View.settings.reportsSettings
                         {
 
                 HelpClass.StartAwait(grid_main);
-                            //if (MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one") )
+                            //if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one") )
                             //{
                             Window.GetWindow(this).Opacity = 0.2;
                             wd_reportCopyCountSetting w = new wd_reportCopyCountSetting();

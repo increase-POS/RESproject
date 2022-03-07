@@ -167,7 +167,7 @@ namespace Restaurant.View.storage.storageDivide
         {//add
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
 
@@ -225,7 +225,7 @@ namespace Restaurant.View.storage.storageDivide
         {//update
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
                     if (location.locationId > 0)
@@ -280,7 +280,7 @@ namespace Restaurant.View.storage.storageDivide
         {
             try
             {//delete
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "delete") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
                     if (location.locationId != 0)
@@ -628,7 +628,7 @@ namespace Restaurant.View.storage.storageDivide
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || HelpClass.isAdminPermision())
                 {
                     #region
                     BuildReport();
@@ -661,7 +661,7 @@ namespace Restaurant.View.storage.storageDivide
             {
 
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || HelpClass.isAdminPermision())
                 {
 
                     #region
@@ -691,7 +691,7 @@ namespace Restaurant.View.storage.storageDivide
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || HelpClass.isAdminPermision())
                 {
                     #region
                     //Thread t1 = new Thread(() =>
@@ -732,7 +732,7 @@ namespace Restaurant.View.storage.storageDivide
             {
 
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || HelpClass.isAdminPermision())
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
@@ -781,7 +781,7 @@ namespace Restaurant.View.storage.storageDivide
             {
                     HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(addRangePermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(addRangePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_locationAddRange w = new wd_locationAddRange();

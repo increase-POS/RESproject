@@ -117,7 +117,7 @@ namespace Restaurant.View
                     firstLoading = false;
                     cb_branch.SelectedValue = MainWindow.branchLogin.branchId;
                 }
-                if (MainWindow.groupObject.HasPermissionAction(branchesPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(branchesPermission, FillCombo.groupObjects, "one"))
                     cb_branch.IsEnabled = true;
                 else cb_branch.IsEnabled = false;
 

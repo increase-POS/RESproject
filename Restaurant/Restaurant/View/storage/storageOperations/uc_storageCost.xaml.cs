@@ -166,7 +166,7 @@ namespace Restaurant.View.storage.storageOperations
         {//add
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
 
@@ -208,7 +208,7 @@ namespace Restaurant.View.storage.storageOperations
         {//update
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
                     if (storageCost.storageCostId > 0)
@@ -251,7 +251,7 @@ namespace Restaurant.View.storage.storageOperations
         {
             try
             {//delete
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "delete") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
                     if (storageCost.storageCostId != 0)
@@ -623,7 +623,7 @@ namespace Restaurant.View.storage.storageOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") )
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") )
 
                 {
                     if (storageCostsQuery != null)
@@ -655,7 +655,7 @@ namespace Restaurant.View.storage.storageOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
 
                     if (storageCostsQuery != null)
@@ -688,7 +688,7 @@ namespace Restaurant.View.storage.storageOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
                     #region
                     //Thread t1 = new Thread(() =>
@@ -732,7 +732,7 @@ namespace Restaurant.View.storage.storageOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
                     #region
                     if (storageCostsQuery != null)
@@ -779,7 +779,7 @@ namespace Restaurant.View.storage.storageOperations
             {
                 HelpClass.StartAwait(grid_main);
                 //tables
-                if (MainWindow.groupObject.HasPermissionAction(itemsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(itemsPermission, FillCombo.groupObjects, "one"))
                 {
 
                     Window.GetWindow(this).Opacity = 0.2;

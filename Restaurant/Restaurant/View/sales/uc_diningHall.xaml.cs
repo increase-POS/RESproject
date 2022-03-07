@@ -1173,7 +1173,7 @@ namespace Restaurant.View.sales
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(invoicePermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(invoicePermission, FillCombo.groupObjects, "one"))
                 {
                     await addDraft();
                 }
@@ -1191,7 +1191,7 @@ namespace Restaurant.View.sales
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(invoicePermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(invoicePermission, FillCombo.groupObjects, "one"))
                 {
                     if(selectedTables.Count ==0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trChooseTableFirst"), animation: ToasterAnimation.FadeIn);
@@ -1212,7 +1212,7 @@ namespace Restaurant.View.sales
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(invoicePermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(invoicePermission, FillCombo.groupObjects, "one"))
                 {
                     await cancleInvoice("sc");
                 }
@@ -1231,7 +1231,7 @@ namespace Restaurant.View.sales
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(addTablePermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(addTablePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_diningHallTables w = new wd_diningHallTables();
@@ -1256,7 +1256,7 @@ namespace Restaurant.View.sales
             {
                 HelpClass.StartAwait(grid_main);
 
-                //if (MainWindow.groupObject.HasPermissionAction(addRangePermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                //if (FillCombo.groupObject.HasPermissionAction(addRangePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 //{
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_diningHallKitchen w = new wd_diningHallKitchen();
@@ -1279,7 +1279,7 @@ namespace Restaurant.View.sales
             {
                 HelpClass.StartAwait(grid_main);
 
-                //if (MainWindow.groupObject.HasPermissionAction(addRangePermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                //if (FillCombo.groupObject.HasPermissionAction(addRangePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 //{
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_selectUser w = new wd_selectUser();
@@ -1318,7 +1318,7 @@ namespace Restaurant.View.sales
             {
                 HelpClass.StartAwait(grid_main);
 
-                //if (MainWindow.groupObject.HasPermissionAction(addRangePermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                //if (FillCombo.groupObject.HasPermissionAction(addRangePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 //{
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_selectCustomer w = new wd_selectCustomer();
@@ -1357,7 +1357,7 @@ namespace Restaurant.View.sales
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(addRangePermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(addRangePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_selectDiscount w = new wd_selectDiscount();

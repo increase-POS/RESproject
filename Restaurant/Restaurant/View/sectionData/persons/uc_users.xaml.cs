@@ -187,7 +187,7 @@ namespace Restaurant.View.sectionData.persons
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") )
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add") )
                 {
                     //chk duplicate userName
                     bool duplicateUserName = false;
@@ -261,7 +261,7 @@ namespace Restaurant.View.sectionData.persons
                 HelpClass.StartAwait(grid_main);
                 if (user.userId > 0)
                 {
-                    if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") )
+                    if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update") )
                 {
                     //chk duplicate userName
                     bool duplicateUserName = false;
@@ -328,7 +328,7 @@ namespace Restaurant.View.sectionData.persons
         {
             try
             {//delete
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") )
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "delete") )
                 {
                     HelpClass.StartAwait(grid_main);
                     if (user.userId != 0)
@@ -879,7 +879,7 @@ namespace Restaurant.View.sectionData.persons
             try
             {
                     HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(storesPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(storesPermission, FillCombo.groupObjects, "one"))
                 {
                     Window.GetWindow(this).Opacity = 0.2;
 
@@ -942,7 +942,7 @@ namespace Restaurant.View.sectionData.persons
                 
                     HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") )
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") )
                 {
                     #region
                     BuildReport();
@@ -975,7 +975,7 @@ namespace Restaurant.View.sectionData.persons
             {
                 
                     HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") )
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") )
                 {
 
                     #region
@@ -1005,7 +1005,7 @@ namespace Restaurant.View.sectionData.persons
                 
                     HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") )
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") )
                 {
                     #region
                     //Thread t1 = new Thread(() =>
@@ -1047,7 +1047,7 @@ namespace Restaurant.View.sectionData.persons
             {
                 
                     HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") )
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") )
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
@@ -1092,7 +1092,7 @@ namespace Restaurant.View.sectionData.persons
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;

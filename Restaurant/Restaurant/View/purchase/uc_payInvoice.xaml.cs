@@ -256,12 +256,12 @@ namespace Restaurant.View.purchase
 
                 #region Permision
 
-                if (MainWindow.groupObject.HasPermissionAction(openOrderPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(openOrderPermission, FillCombo.groupObjects, "one"))
                     md_orders.Visibility = Visibility.Visible;
                 else
                     md_orders.Visibility = Visibility.Collapsed;
 
-                if (MainWindow.groupObject.HasPermissionAction(returnPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(returnPermission, FillCombo.groupObjects, "one"))
                 {
                     brd_returnInvoice.Visibility = Visibility.Visible;
                 }
@@ -270,7 +270,7 @@ namespace Restaurant.View.purchase
                     brd_returnInvoice.Visibility = Visibility.Collapsed;
                 }
 
-                //if (MainWindow.groupObject.HasPermissionAction(paymentsPermission, MainWindow.groupObjects, "one"))
+                //if (FillCombo.groupObject.HasPermissionAction(paymentsPermission, FillCombo.groupObjects, "one"))
                 //{
                 //    md_payments.Visibility = Visibility.Visible;
                 //    bdr_payments.Visibility = Visibility.Visible;
@@ -281,7 +281,7 @@ namespace Restaurant.View.purchase
                 //    bdr_payments.Visibility = Visibility.Collapsed;
                 //}
 
-                //if (MainWindow.groupObject.HasPermissionAction(sendEmailPermission, MainWindow.groupObjects, "one"))
+                //if (FillCombo.groupObject.HasPermissionAction(sendEmailPermission, FillCombo.groupObjects, "one"))
                 //{
                 //    btn_emailMessage.Visibility = Visibility.Visible;
                 //    bdr_emailMessage.Visibility = Visibility.Visible;
@@ -293,7 +293,7 @@ namespace Restaurant.View.purchase
                 //}
 
 
-                if (MainWindow.groupObject.HasPermissionAction(initializeShortagePermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(initializeShortagePermission, FillCombo.groupObjects, "one"))
                 {
                     btn_shortageInvoice.Visibility = Visibility.Visible;
                     bdr_shortageInvoice.Visibility = Visibility.Visible;
@@ -306,7 +306,7 @@ namespace Restaurant.View.purchase
                     md_shortage.Visibility = Visibility.Collapsed;
                 }
 
-                //if (MainWindow.groupObject.HasPermissionAction(printCountPermission, MainWindow.groupObjects, "one"))
+                //if (FillCombo.groupObject.HasPermissionAction(printCountPermission, FillCombo.groupObjects, "one"))
                 //{
                 //    btn_printCount.Visibility = Visibility.Visible;
                 //    bdr_printCount.Visibility = Visibility.Visible;
@@ -517,7 +517,7 @@ namespace Restaurant.View.purchase
                     bdr_payments.Visibility = Visibility.Collapsed;
                     md_payments.Visibility = Visibility.Collapsed;
                 }
-                else if (MainWindow.groupObject.HasPermissionAction(paymentsPermission, MainWindow.groupObjects, "one"))
+                else if (FillCombo.groupObject.HasPermissionAction(paymentsPermission, FillCombo.groupObjects, "one"))
                 {
                     bdr_payments.Visibility = Visibility.Visible;
                     md_payments.Visibility = Visibility.Visible;
@@ -646,7 +646,7 @@ namespace Restaurant.View.purchase
             {
                 HelpClass.StartAwait(grid_main);
                
-                if (MainWindow.groupObject.HasPermissionAction(invoicePermission, MainWindow.groupObjects, "one") )
+                if (FillCombo.groupObject.HasPermissionAction(invoicePermission, FillCombo.groupObjects, "one") )
                 {
                     //check mandatory inputs
                     if (HelpClass.validate(requiredControlList, this))
@@ -2335,7 +2335,7 @@ namespace Restaurant.View.purchase
                 #region print - pdf - send email
                 btn_printInvoice.Visibility = Visibility.Visible;
                 btn_pdf.Visibility = Visibility.Visible;
-                if (MainWindow.groupObject.HasPermissionAction(printCountPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(printCountPermission, FillCombo.groupObjects, "one"))
                 {
                     btn_printCount.Visibility = Visibility.Visible;
                     bdr_printCount.Visibility = Visibility.Visible;
@@ -2345,7 +2345,7 @@ namespace Restaurant.View.purchase
                     btn_printCount.Visibility = Visibility.Collapsed;
                     bdr_printCount.Visibility = Visibility.Collapsed;
                 }
-                if (MainWindow.groupObject.HasPermissionAction(sendEmailPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(sendEmailPermission, FillCombo.groupObjects, "one"))
                 {
                     btn_emailMessage.Visibility = Visibility.Visible;
                     bdr_emailMessage.Visibility = Visibility.Visible;
@@ -2536,7 +2536,7 @@ namespace Restaurant.View.purchase
 
                 if (invoice != null && invoice.invoiceId != 0)
                 {
-                    if (MainWindow.groupObject.HasPermissionAction(paymentsPermission, MainWindow.groupObjects, "one"))
+                    if (FillCombo.groupObject.HasPermissionAction(paymentsPermission, FillCombo.groupObjects, "one"))
                     {
                         Window.GetWindow(this).Opacity = 0.2;
                         wd_cashTransfer w = new wd_cashTransfer();
@@ -2798,7 +2798,7 @@ namespace Restaurant.View.purchase
             {
                 
                     HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(returnPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(returnPermission, FillCombo.groupObjects, "one"))
                 {
                     if (_InvoiceType == "p")
                     {
@@ -2933,7 +2933,7 @@ namespace Restaurant.View.purchase
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(paymentsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(paymentsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     ////////////////////////////
                    // Thread t1 = new Thread(() =>
@@ -3852,7 +3852,7 @@ namespace Restaurant.View.purchase
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(paymentsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(paymentsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     prInvoiceId = invoice.invoiceId;
 
@@ -3886,7 +3886,7 @@ namespace Restaurant.View.purchase
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(paymentsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(paymentsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     /////////////////////
                     previewPurInvoice();
@@ -3911,7 +3911,7 @@ namespace Restaurant.View.purchase
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(paymentsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(paymentsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     prInvoiceId = invoice.invoiceId;
                     ///////////////////////////////////

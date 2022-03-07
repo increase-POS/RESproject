@@ -63,8 +63,6 @@ namespace Restaurant
         //public static AppSettings.resourcemanager AppSettings.resourcemanagerreport;
         bool menuState = false;
         //ToolTip="{Binding Properties.Settings.Default.Lang}"
-        //public static string firstPath = "";
-        //public static string secondPath = "";
         //public static string first = "";
         //public static string second = "";
         //public static string lang = "ar";
@@ -111,10 +109,7 @@ namespace Restaurant
         //public static string Allow_print_inv_count;
         /////////////////////////////////////////////
        
-        Object objectModel = new Object();
-        List<Object> listObjects = new List<Object>();
-        static public GroupObject groupObject = new GroupObject();
-        static public List<GroupObject> groupObjects = new List<GroupObject>();
+        
         //static SettingCls setModel = new SettingCls();
         //static SetValues valueModel = new SetValues();
         //static int nameId, addressId, emailId, mobileId, phoneId, faxId, logoId, taxId;
@@ -186,7 +181,7 @@ namespace Restaurant
             //get tax
             try
             {
-                listObjects = await objectModel.GetAll();
+                FillCombo.listObjects = await FillCombo.objectModel.GetAll();
             }
             catch
             {
@@ -205,7 +200,7 @@ namespace Restaurant
         {
             try
             {
-                groupObjects = await groupObject.GetUserpermission(userLogin.userId);
+                FillCombo.groupObjects = await FillCombo.groupObject.GetUserpermission(userLogin.userId);
             }
             catch (Exception)
             { }
@@ -551,49 +546,6 @@ namespace Restaurant
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        //public void SetNotificationsLocation()
-        //{
-        //    #region notifications location
-        //    //Point position = BTN_notifications.PointToScreen(new Point(0d, 0d)),
-        //    //controlPosition = this.PointToScreen(new Point(0d, 0d));
-        //    //position.X -= controlPosition.X;
-        //    //position.Y -= controlPosition.Y;
-        //    //position.X -= 100;
-        //    //bdrMain.Margin = new Thickness(0, 70, position.X, 0);
-        //    #endregion
-        //    #region notifications location
-        //    /*
-        //   Point positionBtnMinimize = BTN_Minimize.PointToScreen(new Point(0d, 0d)),
-        //   positionBtnUserImage = btn_userImage.PointToScreen(new Point(0d, 0d)),
-        //   controlPositionBtnMinimize = this.PointToScreen(new Point(0d, 0d)),
-        //   controlPositionBtnUserImage = this.PointToScreen(new Point(0d, 0d));
-        //   positionBtnMinimize.X -= controlPositionBtnMinimize.X;
-        //   positionBtnUserImage.X -= controlPositionBtnUserImage.X;
-        //   Double position;
-        //   if (positionBtnMinimize.X > positionBtnUserImage.X)
-        //   position = positionBtnMinimize.X - positionBtnUserImage.X;
-        //   else 
-        //   position =   positionBtnUserImage.X - positionBtnMinimize.X;
-        //   var thickness = bdrMain.Margin;
-        //   bdrMain.Margin = new Thickness(0, 70, thickness.Right + position - 25, 0);
-        //   //if(lang.Equals("en"))
-        //   //bdrMain.Margin = new Thickness(0, 70, thickness.Right + position - 5 , 0);
-        //   //else
-        //   //  bdrMain.Margin = new Thickness(0, 70, thickness.Right + position - 10, 0);
-        //   */
-        //    #endregion
-        //    #region notifications location
-        //    //Point position = BTN_notifications.PointToScreen(new Point(0d, 0d)),
-        //    //controlPosition = this.PointToScreen(new Point(0d, 0d));
-        //    //position.X -= controlPosition.X;
-        //    //Canvas.SetTop(bdrMain, position.X);
-        //    ////bdrMain.Margin = new Thickness(0, 70, position.X, 0);
-        //    #endregion
-        //    #region notifications location
-        //    var thickness = bdrMain.Margin;
-        //    bdrMain.Margin = new Thickness(0, 70, thickness.Right + sp_userName.ActualWidth, 0);
-        //    #endregion
-        //}
         void SelectAllText(object sender, RoutedEventArgs e)
         {
             var textBox = sender as System.Windows.Controls.TextBox;
@@ -601,62 +553,45 @@ namespace Restaurant
                 if (!textBox.IsReadOnly)
                     textBox.SelectAll();
         }
-        /*
-        public static bool loadingDefaultPath(string first, string second)
+        public static bool loadingDefaultPath(string defaultPath)
         {
+            string first, last;
             bool load = false;
-            if (!string.IsNullOrEmpty(first) && !string.IsNullOrEmpty(second))
+            if (!string.IsNullOrEmpty(defaultPath))
             {
-                foreach (Button button in FindControls.FindVisualChildren<Button>(MainWindow.mainWindow))
+                if (FillCombo.groupObject.HasPermission(defaultPath, FillCombo.groupObjects))
                 {
-                    if (button.Tag != null)
-                        if (button.Tag.ToString() == first && MainWindow.groupObject.HasPermission(first, MainWindow.groupObjects))
-                        {
-                            button.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-                            load = true;
-                            break;
-                        }
+                    first = FillCombo.objectModel.GetParents(FillCombo.listObjects, defaultPath).FirstOrDefault().name;
+                    last = defaultPath;
+
+                    MainWindow.mainWindow.Btn_purchase_Click(MainWindow.mainWindow.btn_purchase, null);
+                    foreach (Button button in FindControls.FindVisualChildren<Button>(MainWindow.mainWindow))
+                    {
+                        if (button.Tag != null)
+                            if (button.Tag.ToString() == first )
+                            {
+                                button.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                                break;
+                            }
+                    }
+
+                    MainWindow.mainWindow.initializationMainTrack(last);
+                    MainWindow.mainWindow.loadPath(last);
+                    load = true;
                 }
-
-                if (first == "home")
-                    loadingSecondLevel(second, uc_home.Instance);
-                if (first == "catalog")
-                    loadingSecondLevel(second, UC_catalog.Instance);
-                if (first == "storage")
-                    loadingSecondLevel(second, Restaurant.View.uc_storage.Instance);
-                if (first == "purchase")
-                    loadingSecondLevel(second, uc_purchases.Instance);
-                if (first == "sales")
-                    loadingSecondLevel(second, uc_sales.Instance);
-                if (first == "accounts")
-                    loadingSecondLevel(second, uc_accounts.Instance);
-                if (first == "reports")
-                    loadingSecondLevel(second, uc_reports.Instance);
-                if (first == "sectionData")
-                    loadingSecondLevel(second, UC_SectionData.Instance);
-                if (first == "settings")
-                    loadingSecondLevel(second, uc_settings.Instance);
-
             }
             return load;
         }
-        */
-        static void loadingSecondLevel(string second, UserControl userControl)
-        {
-            userControl.RaiseEvent(new RoutedEventArgs(FrameworkElement.LoadedEvent));
-            var button = userControl.FindName("btn_" + second) as Button;
-            button.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-        }
+
         void permission()
         {
-            /*
             bool loadWindow = false;
-            loadWindow = loadingDefaultPath(firstPath, secondPath);
+            loadWindow = loadingDefaultPath(AppSettings.defaultPath);
             if (!HelpClass.isAdminPermision())
                 foreach (Button button in FindControls.FindVisualChildren<Button>(this))
                 {
                     if (button.Tag != null)
-                        if (MainWindow.groupObject.HasPermission(button.Tag.ToString(), MainWindow.groupObjects))
+                        if (FillCombo.groupObject.HasPermission(button.Tag.ToString(), FillCombo.groupObjects))
                         {
                             button.Visibility = Visibility.Visible;
                             if (!loadWindow)
@@ -668,9 +603,8 @@ namespace Restaurant
                         else button.Visibility = Visibility.Collapsed;
                 }
             else
-                if (!loadWindow)
-                BTN_Home_Click(BTN_home, null);
-            */
+            if (!loadWindow)
+                Btn_home_Click(btn_home, null);
         }
         #region notifications
         private void setTimer()
@@ -1775,7 +1709,7 @@ namespace Restaurant
             //sp_mainPath
             sp_mainPath.Children.Clear();
             List<Object> _listObjects = new List<Object>();
-            _listObjects = objectModel.GetParents(listObjects, tag);
+            _listObjects = FillCombo.objectModel.GetParents(FillCombo.listObjects, tag);
             int counter = 1;
             bool isLast = false;
             foreach (var item in _listObjects)
@@ -2232,6 +2166,27 @@ namespace Restaurant
                 case "profitsAccountsReports":
                     grid_main.Children.Add(uc_profitsAccountsReports.Instance);
                     break;
+                //183 closingAccountsReports
+                //case "closingAccountsReports":
+                //    grid_main.Children.Add(uc_closingAccountsReports.Instance);
+                //    break;
+                //184 taxAccountsReports
+                case "taxAccountsReports":
+                    grid_main.Children.Add(uc_taxAccountsReports.Instance);
+                    break;
+                //200 membershipCreate
+                case "membershipCreate":
+                    grid_main.Children.Add(uc_membershipCreate.Instance);
+                    break;
+                //201 membershipUpdate
+                case "membershipUpdate":
+                    grid_main.Children.Add(uc_membershipUpdate.Instance);
+                    break;
+                //202 invoicesClasses
+                case "invoicesClasses":
+                    grid_main.Children.Add(uc_invoicesClasses.Instance);
+                    break;
+
 
                 default:
                     return;

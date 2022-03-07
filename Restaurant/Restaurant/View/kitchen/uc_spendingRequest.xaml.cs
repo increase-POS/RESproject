@@ -513,7 +513,7 @@ namespace Restaurant.View.kitchen
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(spendRequestPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(spendRequestPermission, FillCombo.groupObjects, "one"))
                 {                  
                     if (HelpClass.validate(requiredControlList, this))
                     {
@@ -723,7 +723,7 @@ namespace Restaurant.View.kitchen
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     #region
                     if (invoiceItems != null)
@@ -792,7 +792,7 @@ namespace Restaurant.View.kitchen
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     /////////////////////////////////////
                     ///  
@@ -834,7 +834,7 @@ namespace Restaurant.View.kitchen
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     if (invoiceItems != null)
                     {
@@ -881,7 +881,7 @@ namespace Restaurant.View.kitchen
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(returnPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(returnPermission, FillCombo.groupObjects, "one"))
                 {
                     if (_InvoiceType == "sr")
                     {
@@ -975,7 +975,7 @@ namespace Restaurant.View.kitchen
                 
                     HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one") )
+                if (FillCombo.groupObject.HasPermissionAction(exportPermission, FillCombo.groupObjects, "one") )
                 {
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_invoice w = new wd_invoice();

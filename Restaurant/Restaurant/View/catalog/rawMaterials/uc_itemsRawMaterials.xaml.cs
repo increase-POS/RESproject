@@ -175,7 +175,7 @@ namespace Restaurant.View.catalog.rawMaterials
         {//add
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") )
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add") )
                 {
                     HelpClass.StartAwait(grid_main);
 
@@ -259,7 +259,7 @@ namespace Restaurant.View.catalog.rawMaterials
         {//update
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") )
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update") )
                 {
                     HelpClass.StartAwait(grid_main);
                     if (item.itemId > 0)
@@ -342,7 +342,7 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             try
             {//delete
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "delete") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
                     if (item.itemId != 0)
@@ -843,7 +843,7 @@ namespace Restaurant.View.catalog.rawMaterials
 
                
                     HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || HelpClass.isAdminPermision())
                 {
                     /////////////////////////////////////
                     Thread t1 = new Thread(() =>
@@ -881,7 +881,7 @@ namespace Restaurant.View.catalog.rawMaterials
                
                     HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || HelpClass.isAdminPermision())
                 {
                     /////////////////////////////////////
                     Thread t1 = new Thread(() =>
@@ -912,7 +912,7 @@ namespace Restaurant.View.catalog.rawMaterials
                
                     HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || HelpClass.isAdminPermision())
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
@@ -940,7 +940,7 @@ namespace Restaurant.View.catalog.rawMaterials
                
                     HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || HelpClass.isAdminPermision())
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
@@ -995,7 +995,7 @@ namespace Restaurant.View.catalog.rawMaterials
                
                     HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || HelpClass.isAdminPermision())
                 {
                     Thread t1 = new Thread(() =>
                     {
@@ -1308,7 +1308,7 @@ namespace Restaurant.View.catalog.rawMaterials
             {
                 HelpClass.StartAwait(grid_main);
                 //units
-                if (MainWindow.groupObject.HasPermissionAction(unitsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(unitsPermission, FillCombo.groupObjects, "one"))
                 {
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_units w = new wd_units();

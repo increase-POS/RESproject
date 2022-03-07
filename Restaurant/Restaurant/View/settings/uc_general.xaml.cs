@@ -312,16 +312,7 @@ namespace Restaurant.View.settings
 
 
 
-                if (HelpClass.isSupportPermision())
-                {
-                    brd_activationSite.Visibility = Visibility.Visible;
-                    brd_serverStatus.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    brd_activationSite.Visibility = Visibility.Collapsed;
-                    brd_serverStatus.Visibility = Visibility.Collapsed;
-                }
+              
 
                 settingsCls = await setModel.GetAll();
                 settingsValues = await valueModel.GetAll();
@@ -393,9 +384,9 @@ namespace Restaurant.View.settings
 
                 #endregion
 
+                permission();
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -403,6 +394,37 @@ namespace Restaurant.View.settings
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+        void permission()
+        {
+                if (!HelpClass.isAdminPermision() && !FillCombo.groupObject.HasPermission(companySettingsPermission, FillCombo.groupObjects))
+                {
+                brd_companyInfo.Visibility = Visibility.Collapsed;
+                brd_region.Visibility = Visibility.Collapsed;
+                brd_currency.Visibility = Visibility.Collapsed;
+                brd_tax.Visibility = Visibility.Collapsed;
+                brd_dateForm.Visibility = Visibility.Collapsed;
+                brd_changePassword.Visibility = Visibility.Collapsed;
+                brd_accuracy.Visibility = Visibility.Collapsed;
+                brd_backup.Visibility = Visibility.Collapsed;
+                brd_itemsCost.Visibility = Visibility.Collapsed;
+                brd_maxDiscount.Visibility = Visibility.Collapsed;
+                brd_timeStaying.Visibility = Visibility.Collapsed;
+                brd_activationSite.Visibility = Visibility.Collapsed;
+                brd_serverStatus.Visibility = Visibility.Collapsed;
+                }
+
+            if (HelpClass.isSupportPermision())
+            {
+                brd_activationSite.Visibility = Visibility.Visible;
+                brd_serverStatus.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                brd_activationSite.Visibility = Visibility.Collapsed;
+                brd_serverStatus.Visibility = Visibility.Collapsed;
+            }
+
         }
         private void Btn_companyInfo_Click(object sender, RoutedEventArgs e)
         {
@@ -412,7 +434,7 @@ namespace Restaurant.View.settings
                     HelpClass.StartAwait(grid_main);
 
 
-                if (MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
                 {
                     Window.GetWindow(this).Opacity = 0.2;
 
@@ -620,7 +642,7 @@ namespace Restaurant.View.settings
                 
                     HelpClass.StartAwait(grid_main);
                 /*
-                if (MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
                 {
                      int s = 0;
                     HelpClass.validateEmptyComboBox(cb_region, p_errorRegion, tt_errorRegion, "trEmptyRegion");
@@ -661,8 +683,8 @@ namespace Restaurant.View.settings
             try
             {
                 /*
-                if (MainWindow.groupObject.HasPermissionAction(usersSettingsPermission, MainWindow.groupObjects, "one") ||
-                    MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(usersSettingsPermission, FillCombo.groupObjects, "one") ||
+                    FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
                 {
                     HelpClass.validateEmptyComboBox(cb_language, p_errorLanguage, tt_errorLanguage, "trEmptyLanguage");
                     if (!cb_language.Text.Equals(""))
@@ -736,7 +758,7 @@ namespace Restaurant.View.settings
                 
                     HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
                 {
                     
                      /*
@@ -766,7 +788,7 @@ namespace Restaurant.View.settings
                 
                     HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
                 {
                 }
                 else
@@ -879,7 +901,7 @@ namespace Restaurant.View.settings
                 
                     HelpClass.StartAwait(grid_main);
                 /*
-                if (MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
                 {
                     HelpClass.validateEmptyComboBox(cb_dateForm, p_errorDateForm, tt_errorDateForm, "trEmptyDateFormat");
                     if (!cb_dateForm.Text.Equals(""))
@@ -919,18 +941,16 @@ namespace Restaurant.View.settings
         {
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(usersSettingsPermission, MainWindow.groupObjects, "one") ||
-                    MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one"))
-                {
-                   /*
+                //if (FillCombo.groupObject.HasPermissionAction(usersSettingsPermission, FillCombo.groupObjects, "one") ||
+                //    FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
+                //{
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_userPath w = new wd_userPath();
                     w.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
-                    */
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
             }
             catch (Exception ex)
             {
@@ -946,7 +966,7 @@ namespace Restaurant.View.settings
             try
             {
                         HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
                 {
                     
                     /*
@@ -1028,7 +1048,7 @@ namespace Restaurant.View.settings
                 
                     HelpClass.StartAwait(grid_main);
                 /*
-                if (MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
                 {
                     HelpClass.validateEmptyTextBox(tb_activationSite, p_errorActivationSite, tt_errorActivationSite, "trEmptyActivationSite");
                     if (!tb_activationSite.Text.Equals(""))
@@ -1113,7 +1133,7 @@ namespace Restaurant.View.settings
                 
                     HelpClass.StartAwait(grid_main);
                 /*
-                if (MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
                 {
                     HelpClass.validateEmptyTextBox(tb_itemsCost, p_errorItemsCost, tt_errorItemsCost, "trEmptyItemCost");
                     if (!tb_itemsCost.Text.Equals(""))
@@ -1166,7 +1186,7 @@ namespace Restaurant.View.settings
                 
                     HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
                 {
                     saveFileDialog.Filter = "File|*.er;";
                     if (saveFileDialog.ShowDialog() == true)
@@ -1235,7 +1255,7 @@ namespace Restaurant.View.settings
                 
                     HelpClass.StartAwait(grid_main);
                 /*
-                if (MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
                 {
                     HelpClass.validateEmptyComboBox(cb_accuracy, p_errorAccuracy, tt_errorAccuracy, "trEmptyAccuracy");
                     if (!cb_accuracy.Text.Equals(""))
@@ -1296,7 +1316,7 @@ namespace Restaurant.View.settings
                 
                     HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
                 {
                     /*
                     Window.GetWindow(this).Opacity = 0.2;

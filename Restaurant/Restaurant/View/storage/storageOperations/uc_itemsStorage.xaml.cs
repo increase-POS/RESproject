@@ -140,7 +140,7 @@ namespace Restaurant.View.storage.storageOperations
             {                
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(transferPermission, MainWindow.groupObjects, "one") )
+                if (FillCombo.groupObject.HasPermissionAction(transferPermission, FillCombo.groupObjects, "one") )
                 {
                     if (dg_itemsStorage.SelectedIndex != -1)
                     {
@@ -192,7 +192,7 @@ namespace Restaurant.View.storage.storageOperations
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(transferPermission, MainWindow.groupObjects, "one") )
+                if (FillCombo.groupObject.HasPermissionAction(transferPermission, FillCombo.groupObjects, "one") )
                 {
                     if (dg_itemsStorage.SelectedIndex != -1)
                     {
@@ -620,7 +620,7 @@ namespace Restaurant.View.storage.storageOperations
                 
                     HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") )
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") )
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
@@ -650,7 +650,7 @@ namespace Restaurant.View.storage.storageOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     if (itemLocationsQuery != null)
                     {
@@ -681,7 +681,7 @@ namespace Restaurant.View.storage.storageOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
 
                     if (itemLocationsQuery != null)
@@ -714,7 +714,7 @@ namespace Restaurant.View.storage.storageOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     #region
                     //Thread t1 = new Thread(() =>
@@ -758,7 +758,7 @@ namespace Restaurant.View.storage.storageOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     #region
                     if (itemLocationsQuery != null)

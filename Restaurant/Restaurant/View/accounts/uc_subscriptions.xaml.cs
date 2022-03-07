@@ -127,7 +127,7 @@ namespace Restaurant.View.accounts
             /*
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
 
@@ -208,7 +208,7 @@ namespace Restaurant.View.accounts
          /*
                      try
                      {
-                         if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update") || HelpClass.isAdminPermision())
+                         if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update") || HelpClass.isAdminPermision())
                          {
                              HelpClass.StartAwait(grid_main);
                              if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
@@ -285,7 +285,7 @@ namespace Restaurant.View.accounts
             /*
                         try
                         {//delete
-                            if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete") || HelpClass.isAdminPermision())
+                            if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "delete") || HelpClass.isAdminPermision())
                             {
                                 HelpClass.StartAwait(grid_main);
                                 if (agent.agentId != 0)
@@ -657,7 +657,7 @@ namespace Restaurant.View.accounts
 
                 if (sender != null)
                     SectionData.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || SectionData.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
                 {
                     /////////////////////////////////////
                     Thread t1 = new Thread(() =>
@@ -695,7 +695,7 @@ namespace Restaurant.View.accounts
                 if (sender != null)
                     SectionData.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one") )
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one") )
                 {
                     /////////////////////////////////////
                     Thread t1 = new Thread(() =>
@@ -726,7 +726,7 @@ namespace Restaurant.View.accounts
                 if (sender != null)
                     SectionData.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
@@ -754,7 +754,7 @@ namespace Restaurant.View.accounts
                 if (sender != null)
                     SectionData.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
@@ -809,7 +809,7 @@ namespace Restaurant.View.accounts
                 if (sender != null)
                     SectionData.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     Thread t1 = new Thread(() =>
                     {
@@ -1061,7 +1061,7 @@ namespace Restaurant.View.accounts
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(createPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one"))
             {
 
 

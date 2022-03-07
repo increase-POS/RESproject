@@ -182,17 +182,17 @@ namespace Restaurant.View.storage.storageOperations
                 FindControl(this.grid_main, controls);
               
                 #region Permision
-                if (MainWindow.groupObject.HasPermissionAction(reciptPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reciptPermission, FillCombo.groupObjects, "one"))
                     md_invoiceCount.Visibility = Visibility.Visible;
                 else
                     md_invoiceCount.Visibility = Visibility.Collapsed;
 
-                if (MainWindow.groupObject.HasPermissionAction(returnPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(returnPermission, FillCombo.groupObjects, "one"))
                     md_returnsCount.Visibility = Visibility.Visible;
                 else
                     md_returnsCount.Visibility = Visibility.Collapsed;
 
-                if (MainWindow.groupObject.HasPermissionAction(inputsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(inputsPermission, FillCombo.groupObjects, "one"))
                 {
                     md_draft.Visibility = Visibility.Visible;
                     btn_newDraft.Visibility = Visibility.Visible;
@@ -1165,7 +1165,7 @@ namespace Restaurant.View.storage.storageOperations
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(returnPermission, MainWindow.groupObjects, "one") )
+                if (FillCombo.groupObject.HasPermissionAction(returnPermission, FillCombo.groupObjects, "one") )
                 {
                     Window.GetWindow(this).Opacity = 0.2;
 
@@ -1326,7 +1326,7 @@ namespace Restaurant.View.storage.storageOperations
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(reciptPermission, MainWindow.groupObjects, "one") )
+                if (FillCombo.groupObject.HasPermissionAction(reciptPermission, FillCombo.groupObjects, "one") )
                 {
                     Window.GetWindow(this).Opacity = 0.2;
 
@@ -1477,7 +1477,7 @@ namespace Restaurant.View.storage.storageOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     #region
                     if (invoiceItems != null)
@@ -1522,7 +1522,7 @@ namespace Restaurant.View.storage.storageOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     if (invoiceItems != null)
                     {
@@ -1552,7 +1552,7 @@ namespace Restaurant.View.storage.storageOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
 
                     if (invoiceItems != null)

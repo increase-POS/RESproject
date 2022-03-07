@@ -22,6 +22,9 @@ namespace Restaurant.Classes
             return objectsList;
         }
 
+        static public List<Object> listObjects = new List<Object>();
+        static public GroupObject groupObject = new GroupObject();
+        static public List<GroupObject> groupObjects = new List<GroupObject>();
         #endregion
         #region branch
         static public Branch branch = new Branch();
@@ -939,9 +942,13 @@ namespace Restaurant.Classes
             itemUnitsUsersList = await itemUnitsUser.GetByUserId(MainWindow.userLogin.userId);
             return itemUnitsUsersList;
         }
-       
-        
+
+
         #endregion
+
+      
+
+
 
         static public ItemLocation itemLocation = new ItemLocation();
         static public Invoice invoice = new Invoice();

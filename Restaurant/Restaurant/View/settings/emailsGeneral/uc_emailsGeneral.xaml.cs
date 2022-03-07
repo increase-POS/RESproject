@@ -51,6 +51,10 @@ namespace Restaurant.View.settings.emailsGeneral
             Instance = null;
             GC.Collect();
         }
+
+        //string usersSettingsPermission = "emailsGeneral_usersSettings";
+        string companySettingsPermission = "emailsGeneral_companySettings";
+
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -62,10 +66,51 @@ namespace Restaurant.View.settings.emailsGeneral
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 await translate();
                 #endregion
+                permission();
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        void permission()
+        {
+            bool loadWindow = false;
+            int counter = 0;
+            if (!loadWindow)
+                if (!HelpClass.isAdminPermision())
+                {
+                    foreach (Border border in FindControls.FindVisualChildren<Border>(this))
+                    {
+                        if (border.Tag != null)
+                            if (FillCombo.groupObject.HasPermission(border.Tag.ToString(), FillCombo.groupObjects))
+                            {
+                                border.Visibility = Visibility.Visible;
+                                counter++;
+                            }
+                            else border.Visibility = Visibility.Collapsed;
+                    }
+                    if (counter == 1)
+                    {
+                        foreach (Button button in FindControls.FindVisualChildren<Button>(this))
+                        {
+                            if (button.Tag != null)
+                                if (FillCombo.groupObject.HasPermission(button.Tag.ToString(), FillCombo.groupObjects))
+                                {
+                                    button.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                                    loadWindow = true;
+                                }
+                        }
+                    }
+                }
+
+            if (!HelpClass.isAdminPermision() && !FillCombo.groupObject.HasPermission(companySettingsPermission, FillCombo.groupObjects))
+            {
+                brd_systmSetting.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                brd_systmSetting.Visibility = Visibility.Visible;
             }
         }
         private async Task translate()
@@ -140,7 +185,7 @@ namespace Restaurant.View.settings.emailsGeneral
             {
 
                 HelpClass.StartAwait(grid_main);
-                //if (MainWindow.groupObject.HasPermissionAction(companySettingsPermission, MainWindow.groupObjects, "one") )
+                //if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one") )
                 //{
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_reportSystmSetting w = new wd_reportSystmSetting();

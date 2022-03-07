@@ -166,7 +166,7 @@ namespace Restaurant.View.settings.emailsGeneral
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "add"))
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add"))
                 {
                    
                     if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
@@ -223,7 +223,7 @@ namespace Restaurant.View.settings.emailsGeneral
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update"))
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update"))
                 {
                     if (sysEmail.emailId > 0)
                     {
@@ -277,7 +277,7 @@ namespace Restaurant.View.settings.emailsGeneral
         {
             try
             {//delete
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete"))
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "delete"))
                 {
                     HelpClass.StartAwait(grid_main);
                     if (sysEmail.emailId != 0)
@@ -686,7 +686,7 @@ namespace Restaurant.View.settings.emailsGeneral
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
                     #region
                     BuildReport();
@@ -718,7 +718,7 @@ namespace Restaurant.View.settings.emailsGeneral
             {
 
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
 
                     #region
@@ -747,7 +747,7 @@ namespace Restaurant.View.settings.emailsGeneral
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
                     #region
                     //Thread t1 = new Thread(() =>
@@ -788,7 +788,7 @@ namespace Restaurant.View.settings.emailsGeneral
             {
 
                 HelpClass.StartAwait(grid_main);
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report"))
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;

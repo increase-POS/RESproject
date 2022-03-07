@@ -200,12 +200,12 @@ namespace Restaurant.View.storage.movementsOperations
                 #region Permision
 
 
-                if (MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(exportPermission, FillCombo.groupObjects, "one"))
                     md_orderWaitCount.Visibility = Visibility.Visible;
                 else
                     md_orderWaitCount.Visibility = Visibility.Collapsed;
 
-                if (MainWindow.groupObject.HasPermissionAction(initializeShortagePermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(initializeShortagePermission, FillCombo.groupObjects, "one"))
                 {
                     btn_shortageInvoice.Visibility = Visibility.Visible;
                     bdr_shortageInvoice.Visibility = Visibility.Visible;
@@ -218,18 +218,18 @@ namespace Restaurant.View.storage.movementsOperations
                     md_shortage.Visibility = Visibility.Collapsed;
                 }
 
-                //if (MainWindow.groupObject.HasPermissionAction(packagePermission, MainWindow.groupObjects, "one"))
+                //if (FillCombo.groupObject.HasPermissionAction(packagePermission, FillCombo.groupObjects, "one"))
                 //    btn_package.Visibility = Visibility.Visible;
                 //else
                 //    btn_package.Visibility = Visibility.Collapsed;
 
-                if (MainWindow.groupObject.HasPermissionAction(unitConversionPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(unitConversionPermission, FillCombo.groupObjects, "one"))
                     btn_unitConversion.Visibility = Visibility.Visible;
                 else
                     btn_unitConversion.Visibility = Visibility.Collapsed;
 
-                //if (!MainWindow.groupObject.HasPermissionAction(packagePermission, MainWindow.groupObjects, "one")
-                //    && !MainWindow.groupObject.HasPermissionAction(unitConversionPermission, MainWindow.groupObjects, "one"))
+                //if (!FillCombo.groupObject.HasPermissionAction(packagePermission, FillCombo.groupObjects, "one")
+                //    && !FillCombo.groupObject.HasPermissionAction(unitConversionPermission, FillCombo.groupObjects, "one"))
                 //    bdr_package_converter.Visibility = Visibility.Collapsed;
 
 
@@ -787,13 +787,13 @@ namespace Restaurant.View.storage.movementsOperations
                     (
                         (_ProcessType == "im" || _ProcessType == "imd")
                     &&
-                            (MainWindow.groupObject.HasPermissionAction(importPermission, MainWindow.groupObjects, "one"))
+                            (FillCombo.groupObject.HasPermissionAction(importPermission, FillCombo.groupObjects, "one"))
                     )
                 ||
                     (
                         (_ProcessType == "ex" || _ProcessType == "exd" || _ProcessType == "exw")
                     &&
-                        (MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one"))
+                        (FillCombo.groupObject.HasPermissionAction(exportPermission, FillCombo.groupObjects, "one"))
                     )
                    )
                 {
@@ -1238,7 +1238,7 @@ namespace Restaurant.View.storage.movementsOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     #region
                     if (invoiceItems != null)
@@ -1284,7 +1284,7 @@ namespace Restaurant.View.storage.movementsOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     /////////////////////////////////////
                     ///  
@@ -1318,7 +1318,7 @@ namespace Restaurant.View.storage.movementsOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     if (invoiceItems != null)
                     {
@@ -1406,17 +1406,17 @@ namespace Restaurant.View.storage.movementsOperations
                 wd_invoice w = new wd_invoice();
 
                 if ((
-                        MainWindow.groupObject.HasPermissionAction(importPermission, MainWindow.groupObjects, "one")
+                        FillCombo.groupObject.HasPermissionAction(importPermission, FillCombo.groupObjects, "one")
 
                         ) &&
                         (
-                        MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one")
+                        FillCombo.groupObject.HasPermissionAction(exportPermission, FillCombo.groupObjects, "one")
 
                         ))
                     w.invoiceType = "im ,ex";
-                else if (MainWindow.groupObject.HasPermissionAction(importPermission, MainWindow.groupObjects, "one"))
+                else if (FillCombo.groupObject.HasPermissionAction(importPermission, FillCombo.groupObjects, "one"))
                     w.invoiceType = "im";
-                else if (MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one"))
+                else if (FillCombo.groupObject.HasPermissionAction(exportPermission, FillCombo.groupObjects, "one"))
                     w.invoiceType = "ex";
 
 
@@ -1463,7 +1463,7 @@ namespace Restaurant.View.storage.movementsOperations
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(exportPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(exportPermission, FillCombo.groupObjects, "one"))
                 {
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_invoice w = new wd_invoice();
@@ -1507,7 +1507,7 @@ namespace Restaurant.View.storage.movementsOperations
                 
                     HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(packagePermission, MainWindow.groupObjects, "one") )
+                if (FillCombo.groupObject.HasPermissionAction(packagePermission, FillCombo.groupObjects, "one") )
                 {
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_generatePackage w = new wd_generatePackage();
@@ -1537,7 +1537,7 @@ namespace Restaurant.View.storage.movementsOperations
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(unitConversionPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(unitConversionPermission, FillCombo.groupObjects, "one"))
                 {
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_unitConversion w = new wd_unitConversion();

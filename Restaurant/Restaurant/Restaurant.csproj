@@ -712,6 +712,9 @@
     <Compile Include="View\windows\wd_userInfo.xaml.cs">
       <DependentUpon>wd_userInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_userPath.xaml.cs">
+      <DependentUpon>wd_userPath.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_usersList.xaml.cs">
       <DependentUpon>wd_usersList.xaml</DependentUpon>
     </Compile>
@@ -1358,6 +1361,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_userInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_userPath.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

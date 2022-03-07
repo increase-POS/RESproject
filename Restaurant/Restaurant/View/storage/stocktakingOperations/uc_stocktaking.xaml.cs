@@ -546,7 +546,7 @@ namespace Restaurant.View.storage.stocktakingOperations
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(createInventoryPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(createInventoryPermission, FillCombo.groupObjects, "one"))
                 {
                     var inv = await inventory.getByBranch("n", MainWindow.branchLogin.branchId);
                     if (inv.inventoryId == 0)
@@ -571,7 +571,7 @@ namespace Restaurant.View.storage.stocktakingOperations
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(archivingPermission, MainWindow.groupObjects, "one") || MainWindow.groupObject.HasPermissionAction(createInventoryPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(archivingPermission, FillCombo.groupObjects, "one") || FillCombo.groupObject.HasPermissionAction(createInventoryPermission, FillCombo.groupObjects, "one"))
                 {
                     if (invItemsLocations.Count > 0)
                     {
@@ -668,7 +668,7 @@ namespace Restaurant.View.storage.stocktakingOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                    
                     if (invItemsLocations != null)
@@ -701,7 +701,7 @@ namespace Restaurant.View.storage.stocktakingOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     if (invItemsLocations != null)
                     {
@@ -732,7 +732,7 @@ namespace Restaurant.View.storage.stocktakingOperations
 
                 HelpClass.StartAwait(grid_main);
 
-                if (MainWindow.groupObject.HasPermissionAction(reportsPermission, MainWindow.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 {
                     #region
                     if (invItemsLocations != null)

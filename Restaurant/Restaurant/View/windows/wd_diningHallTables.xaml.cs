@@ -696,7 +696,7 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "merge"))
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "merge"))
                 {
                     HelpClass.StartAwait(grid_main);
                     MainWindow.mainWindow.Opacity = 0.2;
@@ -752,7 +752,7 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update"))
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update"))
                 {
                     HelpClass.StartAwait(grid_main);
                     MainWindow.mainWindow.Opacity = 0.2;
@@ -833,7 +833,7 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "update"))
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update"))
                 {
                     HelpClass.StartAwait(grid_main);
                     #region Accept
@@ -876,7 +876,7 @@ namespace Restaurant.View.windows
         {
             try
             {//delete
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "delete"))
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "delete"))
                 {
                     HelpClass.StartAwait(grid_main);
                     #region Accept
@@ -945,7 +945,7 @@ namespace Restaurant.View.windows
         {
             try
             {//delete
-                if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "open"))
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "open"))
                 {
                     HelpClass.StartAwait(grid_main);
                     int res = await openEmptyInvoice();
