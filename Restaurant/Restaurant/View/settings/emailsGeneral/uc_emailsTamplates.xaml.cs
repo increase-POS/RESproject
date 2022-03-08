@@ -138,6 +138,7 @@ namespace Restaurant.View.settings.emailsGeneral
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
             dg_setValues.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
+        
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_save_Click(object sender, RoutedEventArgs e)

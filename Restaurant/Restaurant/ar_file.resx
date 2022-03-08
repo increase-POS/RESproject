@@ -3475,4 +3475,37 @@
   <data name="trShowOption" xml:space="preserve">
     <value>اظهار</value>
   </data>
+  <data name="trBody" xml:space="preserve">
+    <value>النص الاساسي</value>
+  </data>
+  <data name="trEmailSupport" xml:space="preserve">
+    <value>الدعم التقني</value>
+  </data>
+  <data name="trLinkText1" xml:space="preserve">
+    <value>نص الارتباط1</value>
+  </data>
+  <data name="trLinkText2" xml:space="preserve">
+    <value>نص الارتباط2</value>
+  </data>
+  <data name="trLinkText3" xml:space="preserve">
+    <value>نص الارتباط3</value>
+  </data>
+  <data name="trText1" xml:space="preserve">
+    <value>النص1</value>
+  </data>
+  <data name="trText2" xml:space="preserve">
+    <value>النص2</value>
+  </data>
+  <data name="trTitle" xml:space="preserve">
+    <value>العنوان</value>
+  </data>
+  <data name="trUrlLink1" xml:space="preserve">
+    <value>رابط url1</value>
+  </data>
+  <data name="trUrlLink2" xml:space="preserve">
+    <value>رابط url2</value>
+  </data>
+  <data name="trUrlLink3" xml:space="preserve">
+    <value>رابط url3</value>
+  </data>
 </root>

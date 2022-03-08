@@ -3499,4 +3499,37 @@ Please add Email in setting</value>
   <data name="trShowOption" xml:space="preserve">
     <value>Show</value>
   </data>
+  <data name="trBody" xml:space="preserve">
+    <value>Body</value>
+  </data>
+  <data name="trEmailSupport" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="trLinkText1" xml:space="preserve">
+    <value>Link text1</value>
+  </data>
+  <data name="trLinkText2" xml:space="preserve">
+    <value>Link text2</value>
+  </data>
+  <data name="trLinkText3" xml:space="preserve">
+    <value>Link text3</value>
+  </data>
+  <data name="trText1" xml:space="preserve">
+    <value>Text1</value>
+  </data>
+  <data name="trText2" xml:space="preserve">
+    <value>Text2</value>
+  </data>
+  <data name="trTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="trUrlLink1" xml:space="preserve">
+    <value>Url link1</value>
+  </data>
+  <data name="trUrlLink2" xml:space="preserve">
+    <value>Url link2</value>
+  </data>
+  <data name="trUrlLink3" xml:space="preserve">
+    <value>Url link3</value>
+  </data>
 </root>
