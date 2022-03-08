@@ -3436,4 +3436,16 @@
   <data name="trChangeWaiter" xml:space="preserve">
     <value>تغيير النادل</value>
   </data>
+  <data name="trBranchPos" xml:space="preserve">
+    <value>الفرع, نقطة البيع</value>
+  </data>
+  <data name="trDailyClosing" xml:space="preserve">
+    <value>اغلاق اليومية</value>
+  </data>
+  <data name="trDirectEmail" xml:space="preserve">
+    <value>ايميل مباشر</value>
+  </data>
+  <data name="trDirectEmailHint" xml:space="preserve">
+    <value>فاتورة مشتريات,مبيعات</value>
+  </data>
 </root>

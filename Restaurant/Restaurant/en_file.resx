@@ -3460,4 +3460,16 @@ Please add Email in setting</value>
   <data name="trChangeWaiter" xml:space="preserve">
     <value>Change waiter</value>
   </data>
+  <data name="trBranchPos" xml:space="preserve">
+    <value>Branch, POS</value>
+  </data>
+  <data name="trDailyClosing" xml:space="preserve">
+    <value>Dialy Closing</value>
+  </data>
+  <data name="trDirectEmail" xml:space="preserve">
+    <value>Direct Email</value>
+  </data>
+  <data name="trDirectEmailHint" xml:space="preserve">
+    <value>Purchases,Sales invoice</value>
+  </data>
 </root>
