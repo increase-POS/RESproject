@@ -1517,45 +1517,45 @@ namespace Restaurant.View.purchase
                     billDetails[_datagridSelectedIndex].itemUnitId = (int)cmb.SelectedValue;
                     #region Dina
 
-                    dynamic unit;
-                    if (FillCombo.itemUnitList == null)
-                        await FillCombo.RefreshItemUnit();
+                    //dynamic unit;
+                    //if (FillCombo.itemUnitList == null)
+                    //    await FillCombo.RefreshItemUnit();
 
-                    unit = new ItemUnit();
-                    unit = FillCombo.itemUnitList.Find(x => x.itemUnitId == (int)cmb.SelectedValue && x.itemId == billDetails[_datagridSelectedIndex].itemId);
+                    //unit = new ItemUnit();
+                    //unit = FillCombo.itemUnitList.Find(x => x.itemUnitId == (int)cmb.SelectedValue && x.itemId == billDetails[_datagridSelectedIndex].itemId);
 
-                    int oldCount = 0;
-                    long newCount = 0;
-                    decimal oldPrice = 0;
-                    decimal itemTax = 0;
+                    //int oldCount = 0;
+                    //long newCount = 0;
+                    //decimal oldPrice = 0;
+                    //decimal itemTax = 0;
 
-                    decimal newPrice = 0;
-                    oldCount = billDetails[_datagridSelectedIndex].Count;
-                    oldPrice = billDetails[_datagridSelectedIndex].Price;
-                    newCount = oldCount;
-                    tb = dg_billDetails.Columns[4].GetCellContent(dg_billDetails.Items[_datagridSelectedIndex]) as TextBlock;
+                    //decimal newPrice = 0;
+                    //oldCount = billDetails[_datagridSelectedIndex].Count;
+                    //oldPrice = billDetails[_datagridSelectedIndex].Price;
+                    //newCount = oldCount;
+                    //tb = dg_billDetails.Columns[4].GetCellContent(dg_billDetails.Items[_datagridSelectedIndex]) as TextBlock;
 
-                    //newPrice = unit.price;
+                    //newPrice = oldPrice;
 
-                    tb = dg_billDetails.Columns[5].GetCellContent(dg_billDetails.Items[_datagridSelectedIndex]) as TextBlock;
-                    tb.Text = newPrice.ToString();
+                    //tb = dg_billDetails.Columns[5].GetCellContent(dg_billDetails.Items[_datagridSelectedIndex]) as TextBlock;
+                    //tb.Text = newPrice.ToString();
 
-                    // old total for changed item
-                    decimal total = oldPrice * oldCount;
-                    _Sum -= total;
+                    //// old total for changed item
+                    //decimal total = oldPrice * oldCount;
+                    //_Sum -= total;
 
 
-                    // new total for changed item
-                    total = newCount * newPrice;
-                    _Sum += total;
+                    //// new total for changed item
+                    //total = newCount * newPrice;
+                    //_Sum += total;
 
-                    refreshTotalValue();
+                    //refreshTotalValue();
 
-                    // update item in billdetails           
-                    billDetails[_datagridSelectedIndex].Count = (int)newCount;
-                    //billDetails[_datagridSelectedIndex].Price = newPrice;
-                    billDetails[_datagridSelectedIndex].Total = total;
-                    refrishBillDetails();
+                    //// update item in billdetails           
+                    //billDetails[_datagridSelectedIndex].Count = (int)newCount;
+                    ////billDetails[_datagridSelectedIndex].Price = newPrice;
+                    //billDetails[_datagridSelectedIndex].Total = total;
+                    //refrishBillDetails();
                     #endregion
                 }
 
