@@ -29,6 +29,7 @@ namespace Restaurant.Classes
         public string notes { get; set; }
         public Nullable<int> branchId { get; set; }
         public byte isFreeZone { get; set; }
+        public byte isKitchen { get; set; }
 
 
 
