@@ -498,6 +498,17 @@ namespace Restaurant.Classes
             cmb.SelectedValuePath = "userId";
             cmb.SelectedIndex = -1;
         }
+        static public async Task FillComboUsersWithJob(ComboBox cmb, string job)
+        {
+            if (usersList is null)
+                await RefreshUsers();
+            var users = usersList.Where(x => x.isActive == 1 && x.job == job).ToList();
+
+            cmb.ItemsSource = users;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "userId";
+            cmb.SelectedIndex = -1;
+        }
         #endregion
         #region ResidentialSectors
         static public ResidentialSectors residentialSec = new ResidentialSectors();

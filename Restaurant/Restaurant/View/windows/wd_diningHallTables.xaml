@@ -404,8 +404,7 @@
                         </Border>
 
                         <ScrollViewer Background="White"  Grid.Row="1"  
-                                      Name="vw_detail"
-                                      VerticalScrollBarVisibility="Auto" Visibility="Collapsed" >
+                                      VerticalScrollBarVisibility="Auto" >
                             <StackPanel>
                                 <DockPanel Margin="10 0"
                                  LastChildFill="True">
@@ -742,7 +741,7 @@
                                             <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                            Width="35" Height="35" FlowDirection="LeftToRight"
                            Data="{StaticResource mergeTables}"/>
-                                            <TextBlock  Text="merge table"  Grid.Row="1" 
+                                            <TextBlock  Text="merge table" Name="txt_mergeInvTable"  Grid.Row="1" 
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
                                                     Foreground="{StaticResource MainColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
@@ -759,7 +758,8 @@
                                             <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                            Width="35" Height="35" FlowDirection="LeftToRight"
                            Data="{StaticResource changeTables}"/>
-                                            <TextBlock  Text="change table"  Grid.Row="1" 
+                                            <TextBlock  Text="change table"  Grid.Row="1"
+                                                        Name="txt_changeTable"
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
                                                     Foreground="{StaticResource MainColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
@@ -817,7 +817,7 @@
                                             <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                            Width="35" Height="35" FlowDirection="LeftToRight"
                            Data="{StaticResource mergeTables}"/>
-                                            <TextBlock  Text="merge table"  Grid.Row="1" 
+                                            <TextBlock  Text="merge table" Name="txt_mergeTable"  Grid.Row="1" 
                                          
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
                                                     Foreground="{StaticResource MainColor}"
@@ -852,7 +852,7 @@
                                             <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                            Width="35" Height="35" FlowDirection="LeftToRight"
                            Data="{StaticResource confirmReservation}"/>
-                                            <TextBlock  Text="confirm and open"  Grid.Row="1" 
+                                            <TextBlock  Text="confirm and open" Name="txt_confirmOpen"  Grid.Row="1" 
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
                                                     Foreground="{StaticResource MainColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
@@ -869,7 +869,7 @@
                                             <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                            Width="35" Height="35" FlowDirection="LeftToRight"
                            Data="{StaticResource cancleReservation}"/>
-                                            <TextBlock  Text="cancel and open"  Grid.Row="1" 
+                                            <TextBlock  Text="cancel and open" Name="txt_cancleOpen"  Grid.Row="1" 
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
                                                     Foreground="{StaticResource MainColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>

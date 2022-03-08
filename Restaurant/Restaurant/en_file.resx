@@ -3454,4 +3454,10 @@ Please add Email in setting</value>
   <data name="trMergeTable" xml:space="preserve">
     <value>merge table</value>
   </data>
+  <data name="trOpen" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="trChangeWaiter" xml:space="preserve">
+    <value>Change waiter</value>
+  </data>
 </root>

@@ -3430,4 +3430,10 @@
   <data name="trMergeTable" xml:space="preserve">
     <value>دمج طاولة</value>
   </data>
+  <data name="trOpen" xml:space="preserve">
+    <value>فتح</value>
+  </data>
+  <data name="trChangeWaiter" xml:space="preserve">
+    <value>تغيير النادل</value>
+  </data>
 </root>

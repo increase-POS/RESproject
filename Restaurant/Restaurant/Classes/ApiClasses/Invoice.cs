@@ -148,6 +148,7 @@ namespace Restaurant.Classes
         public decimal cashReturn { get; set; }
         public int printedcount { get; set; }
         public bool isOrginal { get; set; }
+        public Nullable<long> reservationId { get; set; }
 
         public decimal shippingCost { get; set; }
         public decimal realShippingCost { get; set; }
@@ -816,6 +817,7 @@ namespace Restaurant.Classes
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Invoices/updateInvoiceTables";
             parameters.Add("invoiceId", invoiceId.ToString());
+            parameters.Add("userId", MainWindow.userLogin.userId.ToString());
             string myContent = JsonConvert.SerializeObject(tables);
             parameters.Add("tablesObject", myContent);
            return await APIResult.post(method, parameters);

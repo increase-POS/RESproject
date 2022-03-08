@@ -64,11 +64,14 @@ namespace Restaurant.View.windows
         public string userJob;
         public int userId;
         public bool isOk { get; set; }
+        public static List<string> requiredControlList = new List<string>();
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
             {
                 HelpClass.StartAwait(grid_main);
+                requiredControlList = new List<string> { "userId" };
+
                 if (AppSettings.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -80,6 +83,8 @@ namespace Restaurant.View.windows
                 translate();
                 if(userJob == "waiter")
                     path_title.Data = App.Current.Resources["waiter"] as Geometry;
+
+                await FillCombo.FillComboUsersWithJob(cb_userId, userJob);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -96,13 +101,17 @@ namespace Restaurant.View.windows
                 txt_title.Text = AppSettings.resourcemanager.GetString("trWaiter");
 
         }
+       
         private void Btn_select_Click(object sender, RoutedEventArgs e)
         {
-
-
             // if have id return true
-            isOk = true;
-            //this.Close();
+            
+            if (HelpClass.validate(requiredControlList, this))
+            {
+                isOk = true;
+                userId = (int) cb_userId.SelectedValue;
+                this.Close();
+            }
             // else return false
             //isOk = false;
         }

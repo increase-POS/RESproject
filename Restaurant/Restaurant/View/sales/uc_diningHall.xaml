@@ -544,7 +544,7 @@
                         <TextBlock x:Name="txt_orders" Text="Orders"  Foreground="{StaticResource MainColor}" 
                                                 FontWeight="Bold" FontSize="16"  Margin="15,10,5,5"
                                        HorizontalAlignment="Left" />
-                        <TextBlock x:Name="txt_tableName" Text="table name"  Foreground="{StaticResource SecondColor}" 
+                        <TextBlock x:Name="txt_tableName"  Foreground="{StaticResource SecondColor}" 
                                                 FontWeight="Bold" FontSize="16"  Margin="15,10,15,5"
                                        HorizontalAlignment="Right" />
                     </Grid>
@@ -1002,15 +1002,16 @@
                         </StackPanel>
 
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Discount"
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Discount" Visibility="Collapsed"
                                    x:Name="txt_totalDiscount" Foreground="{StaticResource SecondColor}" FontWeight="Bold" FontSize="18"  
                          VerticalAlignment="Center"     HorizontalAlignment="Left" Margin="0 5"/>
                         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right"   >
-                            <TextBlock    x:Name="tb_totalDiscount"  Margin="5" 
+                            <TextBlock    x:Name="tb_totalDiscount"  Margin="5" Visibility="Collapsed"
                        Foreground="{StaticResource Grey}" Text="0"
                         HorizontalAlignment="Left" VerticalAlignment="Center"
                                   FontWeight="Bold"  FontSize="12"/>
-                            <TextBlock Grid.Row="1"   x:Name="tb_moneyIconDis" Grid.Column="1" Margin="0" 
+                            <TextBlock Grid.Row="1"   x:Name="tb_moneyIconDis" Visibility="Collapsed"
+                                       Grid.Column="1" Margin="0" 
                        Foreground="{StaticResource Grey}" Text="KWD"
                         HorizontalAlignment="Left" VerticalAlignment="Center"
                                   FontWeight="Bold"  FontSize="12"/>

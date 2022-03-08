@@ -565,6 +565,7 @@ namespace Restaurant.View.sales
         List<ItemTransfer> invoiceItems = new List<ItemTransfer>();
         List<Tables> selectedTables = new List<Tables>();
         Invoice invoice = new Invoice();
+        TablesReservation reservation = new TablesReservation();
         private void addRowToBill(Item item)
         {
             decimal total = 0;
@@ -1052,7 +1053,7 @@ namespace Restaurant.View.sales
             catch { }
         }
         #endregion
-        #region adddraft - addInvoice - cancleInvoice - clear - table names
+        #region adddraft - addInvoice - cancleInvoice - clear - table names - fillInvoiceInputs
         private async Task addDraft()
         {
             if (billDetailsList.Count > 0 && _InvoiceType == "sd" && selectedTables.Count > 0)
@@ -1084,15 +1085,9 @@ namespace Restaurant.View.sales
             try
             {
                 #region invoice object
-                if(invoice.invNumber == "")
-                    invoice.invNumber = await FillCombo.invoice.generateInvNumber("s", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
-               invoice.branchCreatorId = MainWindow.branchLogin.branchId;
-                invoice.branchId = MainWindow.branchLogin.branchId;
-                invoice.posId = MainWindow.posLogin.posId;
                 invoice.invType = invType;
-                if (!tb_totalDiscount.Text.Equals(""))
-                    invoice.discountValue = decimal.Parse(tb_totalDiscount.Text);
-                invoice.discountType = "1";
+                invoice.discountValue = _ManualDiscount;
+                invoice.discountType = _DiscountType ;
 
                 invoice.total = _Sum;
                 invoice.totalNet = decimal.Parse(tb_total.Text);
@@ -1154,11 +1149,13 @@ namespace Restaurant.View.sales
         void clear()
         {
             _InvoiceType = "sd";
+            txt_tableName.Text = "";
             billDetailsList.Clear();
             _Sum = 0;
             _ManualDiscount = 0;
             _DiscountType = "";
             selectedCopouns.Clear() ;
+            selectedTables.Clear();
             invoice = new Invoice();
 
             //last
@@ -1177,6 +1174,40 @@ namespace Restaurant.View.sales
                     str += " - " + tbl.name;
             }
             txt_tableName.Text = AppSettings.resourcemanager.GetString("trTables") + ": " + str;
+        }
+        public async Task fillInvoiceInputs(Invoice invoice)
+        {
+            #region set parameters
+            _Sum = (decimal)invoice.total;
+            _ManualDiscount = invoice.discountValue;
+            _DiscountType = invoice.discountType;
+            selectedCopouns = await FillCombo.invoice.GetInvoiceCoupons(invoice.invoiceId);
+            #endregion
+
+            #region text values
+            if (invoice.total != 0)
+                tb_subtotal.Text = HelpClass.DecTostring(invoice.total);
+            else
+                tb_subtotal.Text = "0";
+
+            if (invoice.totalNet != 0)
+                tb_total.Text = HelpClass.DecTostring(invoice.totalNet);
+            else tb_total.Text = "0";
+
+            if (invoice.tax != 0) 
+                tb_tax.Text = HelpClass.DecTostring(invoice.tax);
+            else
+                tb_tax.Text = "0";
+            #endregion
+
+            #region invoice items
+            invoiceItems = await FillCombo.invoice.GetInvoicesItems(invoice.invoiceId);
+            foreach(ItemTransfer it in invoiceItems)
+            {
+                item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
+                addRowToBill(item);
+            }
+            #endregion
         }
         #endregion
         #region buttons new - orders - tables - customers - waiter - kitchen
@@ -1206,10 +1237,15 @@ namespace Restaurant.View.sales
                 HelpClass.StartAwait(grid_main);
                 if (FillCombo.groupObject.HasPermissionAction(invoicePermission, FillCombo.groupObjects, "one"))
                 {
-                    if(selectedTables.Count ==0)
+                    if (selectedTables.Count == 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trChooseTableFirst"), animation: ToasterAnimation.FadeIn);
-                    else
+                    else if (invoice.invoiceId != 0)
+                    {
                         await addInvoice("s");
+                        await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns, invoice.invoiceId, "s");
+                        if (invoice.reservationId != null)
+                            await reservation.updateReservationStatus((long)invoice.reservationId,"close",MainWindow.userLogin.userId);
+                    }
                 }
                 HelpClass.EndAwait(grid_main);
             }
@@ -1292,36 +1328,44 @@ namespace Restaurant.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_waiter_Click(object sender, RoutedEventArgs e)
+        private async void Btn_waiter_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
 
-                //if (FillCombo.groupObject.HasPermissionAction(addRangePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
-                //{
-                Window.GetWindow(this).Opacity = 0.2;
-                wd_selectUser w = new wd_selectUser();
-                w.userJob = "waiter";
-                w.ShowDialog();
-                if (w.isOk)
-                {
-                    if(w.userId > 0)
+               if (FillCombo.groupObject.HasPermissionAction(addRangePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
+               {
+                    Window.GetWindow(this).Opacity = 0.2;
+                    wd_selectUser w = new wd_selectUser();
+                    w.userJob = "waiter";
+                    w.ShowDialog();
+                    if (w.isOk)
                     {
-                        // change button content
-                        // change foreground color
+                        if(w.userId > 0)
+                        {
+                                invoice.waiterId = w.userId;
+                                txt_waiter.Text = AppSettings.resourcemanager.GetString("trChangeWaiter");
+                            // change button content
+                            // change foreground color
 
-                    }
-                    else
-                    {
+                        }
+                        else
+                        {                           
                         // return button content to default
                         // return foreground color to default
-                    }
+                        }
+                        int res = await FillCombo.invoice.saveInvoice(invoice);
+                        if(res >0)
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                        else
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+
+                        }
+                        Window.GetWindow(this).Opacity = 1;
                 }
-                Window.GetWindow(this).Opacity = 1;
-                // }
-                //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -1370,7 +1414,7 @@ namespace Restaurant.View.sales
             }
         }
 
-        private void Btn_discount_Click(object sender, RoutedEventArgs e)
+        private async void Btn_discount_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -1387,11 +1431,30 @@ namespace Restaurant.View.sales
                     w.ShowDialog();
                     if (w.isOk)
                     {
-                            _ManualDiscount = w.manualDiscount;
-                            _DiscountType = w.discountType;
-                            selectedCopouns = w.selectedCopouns;
+                        _ManualDiscount = w.manualDiscount;
+                        _DiscountType = w.discountType;
+                        selectedCopouns = w.selectedCopouns;
 
-                            refreshTotal();
+                        refreshTotal();
+                        #region update invoice
+                        invoice.discountValue = _ManualDiscount;
+                        invoice.discountType = _DiscountType;
+
+                        invoice.total = _Sum;
+                        invoice.totalNet = decimal.Parse(tb_total.Text);
+                        invoice.paid = 0;
+                        invoice.deserved = invoice.totalNet;
+                        invoice.updateUserId = MainWindow.userLogin.userId;
+
+                        int res = await FillCombo.invoice.saveInvoice(invoice);
+                        if (res > 0)
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                            await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns,invoice.invoiceId,"sd");
+                        }
+                        else
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        #endregion
                     }
                     Window.GetWindow(this).Opacity = 1;
                 }
