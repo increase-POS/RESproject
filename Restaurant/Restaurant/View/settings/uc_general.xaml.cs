@@ -309,10 +309,11 @@ namespace Restaurant.View.settings
             {
                 
                     HelpClass.StartAwait(grid_main);
+                permission();
 
 
 
-              
+
 
                 settingsCls = await setModel.GetAll();
                 settingsValues = await valueModel.GetAll();
@@ -384,7 +385,6 @@ namespace Restaurant.View.settings
 
                 #endregion
 
-                permission();
 
                 HelpClass.EndAwait(grid_main);
             }

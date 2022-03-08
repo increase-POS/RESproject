@@ -1041,7 +1041,20 @@ namespace Restaurant.View.settings
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private void UserControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) || e.KeyboardDevice.IsKeyDown(Key.RightCtrl))
+            {
+                switch (e.Key)
+                {
+                    case Key.S:
+                        //handle S key
+                        Btn_save_Click(btn_save, null);
+                        break;
 
+                }
+            }
+        }
         #region Main Path
         public void initializationMainTrack(string tag)
         {
