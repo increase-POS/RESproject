@@ -81,8 +81,8 @@ namespace Restaurant.View.settings.reportsSettings
             cb_printHeader.DisplayMemberPath = "Text";
             cb_printHeader.SelectedValuePath = "Value";
             var typelist = new[] {
-                 new { Text = AppSettings.resourcemanager.GetString("trShow")       , Value = "show" },
-                 new { Text = AppSettings.resourcemanager.GetString("trHide")       , Value = "hide" },
+                 new { Text = AppSettings.resourcemanager.GetString("trShowOption")       , Value = "1" },
+                 new { Text = AppSettings.resourcemanager.GetString("trHide")       , Value = "0" },
                 };
             cb_printHeader.ItemsSource = typelist;
             cb_printHeader.SelectedIndex = 0;
@@ -233,16 +233,23 @@ namespace Restaurant.View.settings.reportsSettings
 
             txt_reportlang.Text = AppSettings.resourcemanager.GetString("trLanguage");
 
-            txt_systmSetting.Text = AppSettings.resourcemanager.GetString("trSystemSetting");
-            txt_systmSettingHint.Text = AppSettings.resourcemanager.GetString("trSystemSetting") + "...";
+            txt_systmSetting.Text = AppSettings.resourcemanager.GetString("trDirectPrinting");
+            txt_systmSettingHint.Text = AppSettings.resourcemanager.GetString("trDirectPrintingHint") + "...";
 
             txt_printerSetting.Text = AppSettings.resourcemanager.GetString("trPrinterSettings");
-            txt_printerSettingHint.Text = AppSettings.resourcemanager.GetString("trPrinterSettings") + "...";
+            txt_printerSettingHint.Text = AppSettings.resourcemanager.GetString("trPrinterSettingsHint") + "...";
 
             txt_copyCount.Text = AppSettings.resourcemanager.GetString("trCopyCount");
-            txt_copyCountHint.Text = AppSettings.resourcemanager.GetString("trCopyCount") + "...";
+            txt_copyCountHint.Text = AppSettings.resourcemanager.GetString("trCopyCountHint") + "...";
 
             txt_printCount.Text = AppSettings.resourcemanager.GetString("trPrintCount");
+            txt_printHeader.Text = AppSettings.resourcemanager.GetString("trPrintHeader");
+            txt_itemsTaxNote.Text = AppSettings.resourcemanager.GetString("trItemsTax");
+            txt_itemsTaxNoteHint.Text = AppSettings.resourcemanager.GetString("trItemsTaxNote");
+            txt_salesInvoiceNote.Text = AppSettings.resourcemanager.GetString("trSalesInvoice");
+            txt_salesInvoiceNoteHint.Text = AppSettings.resourcemanager.GetString("trSalesInvoiceNote");
+
+
         }
 
     

@@ -2762,7 +2762,7 @@
     <value>عدد النسخ لا يمكن أن يكون فارغ</value>
   </data>
   <data name="trPrintCount" xml:space="preserve">
-    <value>عدد الطباعات</value>
+    <value>النسخ المتاحة</value>
   </data>
   <data name="trBondRecieved" xml:space="preserve">
     <value>السند مستلم</value>
@@ -2984,7 +2984,7 @@
     <value>عدد النسخ</value>
   </data>
   <data name="trDocPaperSize" xml:space="preserve">
-    <value>قياس ورق المستندات</value>
+    <value>قياس ورق المستند</value>
   </data>
   <data name="trEmailOnSavePurchase" xml:space="preserve">
     <value>إرسال إيميل عند حفظ فاتورة مشتريات</value>
@@ -2996,13 +2996,13 @@
     <value>إعدادات الطابعة</value>
   </data>
   <data name="trPrintOnSavePurchase" xml:space="preserve">
-    <value>طباعة عند حفظ فاتورة مشتريات</value>
+    <value>فاتورة المشتريات</value>
   </data>
   <data name="trPrintOnSaveSale" xml:space="preserve">
-    <value>طباعة عند حفظ فاتورة مبيعات</value>
+    <value>فاتورة المبيعات</value>
   </data>
   <data name="trPurchasesCopyCount" xml:space="preserve">
-    <value>عدد نسخ فاتورة المشتريات</value>
+    <value>فاتورة المشتريات</value>
   </data>
   <data name="trReportPrinterName" xml:space="preserve">
     <value>طابعة التقارير</value>
@@ -3011,10 +3011,10 @@
     <value>طابعة فاتورة المبيعات</value>
   </data>
   <data name="trReportsCopyCount" xml:space="preserve">
-    <value>عدد نسخ التقارير</value>
+    <value>التقارير</value>
   </data>
   <data name="trSalesCopyCount" xml:space="preserve">
-    <value>عدد نسخ فاتورة المبيعات</value>
+    <value>فاتورة المبيعات</value>
   </data>
   <data name="trSalesPaperSize" xml:space="preserve">
     <value>قياس ورق فاتورة المبيعات</value>
@@ -3439,6 +3439,9 @@
   <data name="trBranchPos" xml:space="preserve">
     <value>الفرع, نقطة البيع</value>
   </data>
+  <data name="trCopyCountHint" xml:space="preserve">
+    <value>مبيعات,مشتريات,تقارير</value>
+  </data>
   <data name="trDailyClosing" xml:space="preserve">
     <value>اغلاق اليومية</value>
   </data>
@@ -3447,5 +3450,29 @@
   </data>
   <data name="trDirectEmailHint" xml:space="preserve">
     <value>فاتورة مشتريات,مبيعات</value>
+  </data>
+  <data name="trDirectPrinting" xml:space="preserve">
+    <value>طباعة مباشرة</value>
+  </data>
+  <data name="trDirectPrintingHint" xml:space="preserve">
+    <value>فاتورة مشتريات,مبيعات</value>
+  </data>
+  <data name="trItemsTax" xml:space="preserve">
+    <value>ضريبة المواد</value>
+  </data>
+  <data name="trItemsTaxNote" xml:space="preserve">
+    <value>ملاحظة ضريبة المواد</value>
+  </data>
+  <data name="trPrinterSettingsHint" xml:space="preserve">
+    <value>التقارير و فاتورة المبيعات, حجم الورق</value>
+  </data>
+  <data name="trPrintHeader" xml:space="preserve">
+    <value>طباعة الترويسة</value>
+  </data>
+  <data name="trSalesInvoiceNote" xml:space="preserve">
+    <value>ملاحظة فاتورة المبيعات</value>
+  </data>
+  <data name="trShowOption" xml:space="preserve">
+    <value>اظهار</value>
   </data>
 </root>
