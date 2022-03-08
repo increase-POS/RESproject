@@ -95,8 +95,27 @@ namespace Restaurant.View.settings.reportsSettings
                 };
             cb_printHeader.ItemsSource = typelist;
             cb_printHeader.SelectedIndex = 0;
-        }
 
+            getshowHeader();
+            if (show_header_row.value == "1")
+            {
+                cb_printHeader.SelectedIndex = 0;
+            }
+            else
+            {
+                cb_printHeader.SelectedIndex = 1;
+            }
+            
+        }
+        public string getshowHeader()
+        {
+
+            show_header_row = printList.Where(X => X.name == "show_header").FirstOrDefault();
+
+            show_header = show_header_row.value;
+            return show_header;
+
+        }
         async Task fillRepLang()
         {
             langcomboList = new List<Replang>();
