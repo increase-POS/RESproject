@@ -488,7 +488,7 @@ namespace Restaurant.View.storage.storageDivide
         async Task<IEnumerable<Location>> RefreshLocationsList()
         {
             locations = await location.Get();
-            locations = locations.Where(x => x.branchId == MainWindow.branchLogin.branchId && x.isFreeZone != 1);
+            locations = locations.Where(x => x.branchId == MainWindow.branchLogin.branchId && x.isFreeZone != 1 && x.isKitchen != 1);
             return locations;
         }
         void RefreshLocationsView()

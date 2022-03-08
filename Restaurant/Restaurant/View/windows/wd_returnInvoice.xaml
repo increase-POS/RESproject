@@ -5,17 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaurant.View.windows"
         mc:Ignorable="d" KeyDown="Window_KeyDown"
+        Background="Transparent" AllowsTransparency="True"
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
          WindowStyle="None" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" Margin="0"
-         Height="140" Width="300" Background="#333333" 
+         Height="140" Width="300"  
         Loaded="Window_Loaded" Unloaded="Window_Unloaded" Closing="Window_Closing">
-    <Grid Grid.Column="1" Grid.Row="1"  Background="#333333"  x:Name="grid_main">
+    <Grid Grid.Column="1" Grid.Row="1"    x:Name="grid_main">
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid   Background="#333333" >
+        <Grid  >
             <Border  BorderThickness="0" Grid.Row="0" 
                     CornerRadius="7,7,0,0"  Background="{StaticResource SecondColor}">
                 <Grid>

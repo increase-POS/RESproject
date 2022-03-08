@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaurant.View.windows"
         mc:Ignorable="d" KeyDown="HandleKeyPress"
+        Background="Transparent" AllowsTransparency="True"
             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
          WindowStyle="None" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" Margin="0"
-        Title="wd_itemsList" Height="600" Width="800" Background="Transparent" AllowsTransparency="False" 
+        Title="wd_itemsList" Height="600" Width="800" 
         Loaded="Window_Loaded" MouseDown="Window_MouseDown">
     <Grid Grid.Column="1" Grid.Row="1"  x:Name="grid_branchList">
         <Grid.RowDefinitions>

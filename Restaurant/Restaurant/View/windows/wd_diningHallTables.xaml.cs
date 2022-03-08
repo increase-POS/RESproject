@@ -272,6 +272,10 @@ namespace Restaurant.View.windows
         }
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {
+            // yasin
+            sv_detailsContainer.Visibility = Visibility.Collapsed;
+            brd_detailsContainer.Visibility = Visibility.Collapsed;
+            ////
             grid_emptyTableButtons.Visibility = Visibility.Collapsed;
             grid_openTableButtons.Visibility = Visibility.Collapsed;
             grid_reservatedTableButtons.Visibility = Visibility.Collapsed;
@@ -459,6 +463,12 @@ namespace Restaurant.View.windows
 
         private async Task showDetails()
         {
+
+            // yasin
+            sv_detailsContainer.Visibility = Visibility.Visible;
+            brd_detailsContainer.Visibility = Visibility.Visible;
+            ////
+            ///
             selectedTables = new List<Tables>();           
 
             table = tablesList.Where(x => x.tableId == tableId).FirstOrDefault();

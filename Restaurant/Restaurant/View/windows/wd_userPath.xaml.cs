@@ -34,18 +34,18 @@ namespace Restaurant.View.windows
             catch (Exception ex)
             { HelpClass.ExceptionMessage(ex, this); }
         }
-        Classes.Object _object = new Classes.Object();
+        //Classes.Object _object = new Classes.Object();
         IEnumerable<Classes.Object> objects = new List<Classes.Object>();
-        IEnumerable<Classes.Object> firstLevel;
-        IEnumerable<Classes.Object> secondLevel;
-        List<Classes.Object> newlist = new List<Classes.Object>();
-        List<Classes.Object> newlist2 = new List<Classes.Object>();
-        BrushConverter bc = new BrushConverter();
-        UserSetValues userSetValuesModel = new UserSetValues();
-        UserSetValues firstUserSetValue , secondUserSetValue;
-        SetValues setValuesModel = new SetValues();
-        List<SetValues> pathLst = new List<SetValues>();
-        int firstId = 0, secondId = 0;
+        //IEnumerable<Classes.Object> firstLevel;
+        //IEnumerable<Classes.Object> secondLevel;
+        //List<Classes.Object> newlist = new List<Classes.Object>();
+        //List<Classes.Object> newlist2 = new List<Classes.Object>();
+        //BrushConverter bc = new BrushConverter();
+        //UserSetValues userSetValuesModel = new UserSetValues();
+        //UserSetValues firstUserSetValue , secondUserSetValue;
+        //SetValues setValuesModel = new SetValues();
+        //List<SetValues> pathLst = new List<SetValues>();
+        //int firstId = 0, secondId = 0;
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -58,7 +58,7 @@ namespace Restaurant.View.windows
             }
         }
         string _parentObjectName = "";
-
+        Object rootObject = new Object();
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
@@ -84,10 +84,13 @@ namespace Restaurant.View.windows
 
                 try
                 {
-                    
+                    rootObject = FillCombo.objectsList.Where(x => x.name == "root").FirstOrDefault();
+                    rootObject.translate = "trAll";
+
+
                     List<Object> list = Object.findChildrenList("root", FillCombo.objectsList);
                     list = list.Where(x => x.objectType == "basic" || x.objectType == "basicAlert").ToList();
-                    list = list.Where(x => FillCombo.groupObject.HasPermission(x.name, FillCombo.groupObjects)).ToList();
+                     list = list.Where(x => FillCombo.groupObject.HasPermission(x.name, FillCombo.groupObjects) || HelpClass.isAdminPermision()).ToList();
                    
 
                     BuildObjectsDesign(list);
@@ -114,6 +117,7 @@ namespace Restaurant.View.windows
         #region   secondLevel
         void BuildObjectsDesign(List<Object> objectsChildren)
         {
+            
             grid_secondLevel.Children.Clear();
 
             Border border;
@@ -207,11 +211,14 @@ namespace Restaurant.View.windows
                 ////////////////////////
                 List<Object> list = Object.findChildrenList(button.Tag.ToString(), FillCombo.objectsList);
                 list = list.Where(x => x.objectType == "basic" || x.objectType == "basicAlert").ToList();
-                string s = "";
-                foreach (var item in list)
-                {
-                    s += item.name + " \n";
-                }
+                // filter: have permission;
+                    list = list.Where(x => FillCombo.groupObject.HasPermission(x.name, FillCombo.groupObjects) || HelpClass.isAdminPermision()).ToList();
+
+                //string s = "";
+                //foreach (var item in list)
+                //{
+                //    s += item.name + " \n";
+                //}
 
 
                 //////////////
@@ -220,6 +227,7 @@ namespace Restaurant.View.windows
                     //change colors
                     List<Path> tabsPathsList = FindControls.FindVisualChildren<Path>(this)
                     .Where(x => x.Name.Contains("object") && x.Tag != null).ToList();
+
                     foreach (Path path in tabsPathsList)
                     {
                         // do something with tb here
@@ -267,10 +275,18 @@ namespace Restaurant.View.windows
         #region Main Path
         public void initializationMainTrack(string tag)
         {
+           
+
             //sp_mainPath
             sp_mainPath.Children.Clear();
+
+            // add Root
+            if(tag != "root")
+            sp_mainPath.Children.Add(initializationMainButton(rootObject, false));
+
             List<Object> _listObjects = new List<Object>();
             _listObjects = FillCombo.objectModel.GetParents(FillCombo.objectsList, tag);
+           
             int counter = 1;
             bool isLast = false;
             foreach (var item in _listObjects)
@@ -307,6 +323,9 @@ namespace Restaurant.View.windows
           
             List<Object> list = Object.findChildrenList(button.Tag.ToString(), FillCombo.objectsList);
             list = list.Where(x => x.objectType == "basic" || x.objectType == "basicAlert").ToList();
+            // filter: have permission;
+            list = list.Where(x => FillCombo.groupObject.HasPermission(x.name, FillCombo.groupObjects) || HelpClass.isAdminPermision()).ToList();
+
             if (list.Count > 0)
                 BuildObjectsDesign(list);
             _parentObjectName = button.Tag.ToString();
@@ -317,10 +336,12 @@ namespace Restaurant.View.windows
 
         async Task RefreshObjects()
         {
-            var objectsLst = await _object.GetAll();
-            objectsLst = objectsLst.Where(x => x.name != "storageStatistic" && x.name != "usersReports" 
-            && x.name != "purchaseStatistic" && x.name != "accountsStatistic"
-            && x.name != "medals" && x.name != "membership"&& x.name != "subscriptions").ToList();
+            var objectsLst = await FillCombo.objectModel.GetAll();
+            objectsLst = objectsLst.Where(x => x.objectType == "basic" || x.objectType == "basicAlert").ToList();
+
+            //objectsLst = objectsLst.Where(x => x.name != "storageStatistic" && x.name != "usersReports" 
+            //&& x.name != "purchaseStatistic" && x.name != "accountsStatistic"
+            //&& x.name != "medals" && x.name != "membership"&& x.name != "subscriptions").ToList();
             if (!HelpClass.isAdminPermision())
             {
                 var list = new List<Classes.Object>();
@@ -516,6 +537,10 @@ namespace Restaurant.View.windows
 
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {//save
+
+            //save this in AppSettings.defaultPath
+            MessageBox.Show(_parentObjectName);
+
                 /*
             try
             {
