@@ -156,14 +156,16 @@ namespace Restaurant.View.windows
                 #endregion
                 if (windowType == "r")
                 {
-                    txt_showHeader.Visibility =
-                  tgl_showHeader.Visibility =
+                  //  txt_showHeader.Visibility =
+                  //tgl_showHeader.Visibility =
                    txt_printOnSavePur.Visibility =
                     tgl_printOnSavePur.Visibility =
                     txt_printOnSaveSale.Visibility =
                     tgl_printOnSaveSale.Visibility = Visibility.Visible;
 
-                    txt_emailOnSavePur.Visibility =
+                    txt_showHeader.Visibility =
+                 tgl_showHeader.Visibility =
+                 txt_emailOnSavePur.Visibility =
                     tgl_emailOnSavePur.Visibility =
                     txt_emailOnSaveSale.Visibility =
                     tgl_emailOnSaveSale.Visibility = Visibility.Collapsed;

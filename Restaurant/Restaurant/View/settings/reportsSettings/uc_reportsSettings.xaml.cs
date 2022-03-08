@@ -74,8 +74,17 @@ namespace Restaurant.View.settings.reportsSettings
         static SetValues valueModel = new SetValues();
         static SetValues printCount = new SetValues();
         static int printCountId = 0;
-        List<Replang> langcomboList = new List<Replang>();
+       
+        List<SetValues> printList = new List<SetValues>();
 
+
+        List<Replang> langcomboList = new List<Replang>();
+        SetValues show_header_row = new SetValues();
+        string show_header;
+        SetValues itemtax_note_row = new SetValues();
+        string itemtax_note;
+        SetValues sales_invoice_note_row = new SetValues();
+        string sales_invoice_note;
         private void fillPrintHeader()
         {
             cb_printHeader.DisplayMemberPath = "Text";
@@ -131,6 +140,10 @@ namespace Restaurant.View.settings.reportsSettings
             printCount = settingsValues.Where(i => i.settingId == printCountId).FirstOrDefault();
             return printCount;
         }
+        public async Task FillprintList()
+        {
+            printList = await setvalueModel.GetBySetvalNote("print");
+        }
 
         private async void   UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -155,6 +168,7 @@ namespace Restaurant.View.settings.reportsSettings
 
                 ///naji code
                 ///
+                await FillprintList();
                 fillPrintHeader();
                 await fillRepLang();
                 #region get default print count
@@ -162,6 +176,7 @@ namespace Restaurant.View.settings.reportsSettings
                 if (printCount != null)
                     tb_printCount.Text = printCount.value;
                 #endregion
+ 
 
                 if (sender != null)
                     HelpClass.EndAwait(grid_main);
@@ -469,12 +484,48 @@ namespace Restaurant.View.settings.reportsSettings
 
         #endregion
 
-        private void Btn_printHeader_Click(object sender, RoutedEventArgs e)
+        private async void Btn_printHeader_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
 
+                //  SectionData.validateEmptyComboBox(cb_serverStatus, p_errorServerStatus, tt_errorServerStatus, "trEmptyServerStatus");
+                if (!cb_printHeader.Text.Equals(""))
+                {
+
+                    int res = 0;
+                    show_header_row.value = cb_printHeader.SelectedValue.ToString();
+                    res = await setvalueModel.Save(show_header_row);
+
+              
+
+
+                    if (res > 0)
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    await FillprintList();
+                    fillPrintHeader();
+                    await FillCombo.Getprintparameter();
+                }
+
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
-        private void Btn_itemsTaxNote_Click(object sender, RoutedEventArgs e)
+        private async void Btn_itemsTaxNote_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -483,11 +534,33 @@ namespace Restaurant.View.settings.reportsSettings
                 Window.GetWindow(this).Opacity = 0.2;
 
                 wd_notes w = new wd_notes();
-                w.note = "Test note...";
+                w.maxLength = 100;
+                //   w.note = "Test note...";
+                itemtax_note_row = printList.Where(X => X.name == "itemtax_note").FirstOrDefault();
+                itemtax_note = itemtax_note_row.value;
+
+                w.note = itemtax_note;
                 w.ShowDialog();
+                
                 if(w.isOk)
                 {
-                    MessageBox.Show(w.note); 
+                    
+                    int res = 0;
+                    itemtax_note_row.value = w.note.Trim();
+                    res = await setvalueModel.Save(itemtax_note_row);
+
+
+
+                    if (res > 0)
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    await FillprintList();
+
+                    await FillCombo.Getprintparameter();
                 }
 
                 Window.GetWindow(this).Opacity = 1;
@@ -499,9 +572,11 @@ namespace Restaurant.View.settings.reportsSettings
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+ 
+        
         }
 
-        private void Btn_salesInvoiceNote_Click(object sender, RoutedEventArgs e)
+        private async void Btn_salesInvoiceNote_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -510,11 +585,31 @@ namespace Restaurant.View.settings.reportsSettings
                 Window.GetWindow(this).Opacity = 0.2;
 
                 wd_notes w = new wd_notes();
-                w.note = "Test note...";
+                w.maxLength = 100;
+                sales_invoice_note_row = printList.Where(X => X.name == "sales_invoice_note").FirstOrDefault();
+                sales_invoice_note = sales_invoice_note_row.value;
+                w.note = sales_invoice_note;
                 w.ShowDialog();
                 if (w.isOk)
                 {
-                    MessageBox.Show(w.note);
+                    // MessageBox.Show(w.note);
+                    //save
+                    int res = 0;
+                    sales_invoice_note_row.value = w.note.Trim();
+                    res = await setvalueModel.Save(sales_invoice_note_row);
+
+
+                    if (res > 0)
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    await FillprintList();
+
+                    await FillCombo.Getprintparameter();
+
                 }
 
                 Window.GetWindow(this).Opacity = 1;
@@ -526,6 +621,9 @@ namespace Restaurant.View.settings.reportsSettings
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+
+            
+
         }
     }
 }

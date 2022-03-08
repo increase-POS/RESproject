@@ -22,6 +22,7 @@ namespace Restaurant.View.windows
     {
         public bool isOk;
         public string note;
+        public int maxLength = 500;
         public wd_notes()
         {
             try

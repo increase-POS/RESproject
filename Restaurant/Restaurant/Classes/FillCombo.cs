@@ -806,6 +806,8 @@ namespace Restaurant.Classes
         public static string docPapersize;
         public static string Allow_print_inv_count;
         public static string show_header;
+        internal static string itemtax_note;
+        internal static string sales_invoice_note;
         public static async Task Getprintparameter()
         {
             List<SetValues> printList = new List<SetValues>();
@@ -830,6 +832,12 @@ namespace Restaurant.Classes
 
             Allow_print_inv_count = printList.Where(X => X.name == "Allow_print_inv_count").FirstOrDefault().value;
             show_header = printList.Where(X => X.name == "show_header").FirstOrDefault().value;
+            if (show_header == null || show_header == "")
+            {
+                show_header = "1";
+            }
+            itemtax_note = printList.Where(X => X.name == "itemtax_note").FirstOrDefault().value;
+            sales_invoice_note = printList.Where(X => X.name == "sales_invoice_note").FirstOrDefault().value;
         }
         public static async Task GetReportlang()
         {
