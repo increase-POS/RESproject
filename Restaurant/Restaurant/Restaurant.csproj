@@ -682,6 +682,9 @@
     <Compile Include="View\windows\wd_selectDiscount.xaml.cs">
       <DependentUpon>wd_selectDiscount.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_selectTable.xaml.cs">
+      <DependentUpon>wd_selectTable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_selectUser.xaml.cs">
       <DependentUpon>wd_selectUser.xaml</DependentUpon>
     </Compile>
@@ -1321,6 +1324,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_selectDiscount.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_selectTable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
