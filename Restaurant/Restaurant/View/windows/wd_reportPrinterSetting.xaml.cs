@@ -428,7 +428,8 @@ namespace Restaurant.View.windows
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_docpapersize, AppSettings.resourcemanager.GetString("trDocPaperSize") + "...");
 
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
-        
+ 
+
         }
 
         private void HandleKeyPress(object sender, KeyEventArgs e)

@@ -142,6 +142,10 @@ namespace Restaurant.View.settings.emailsGeneral
                    FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translateHint
                    );
             }
+
+
+            txt_systmSetting.Text = AppSettings.resourcemanager.GetString("trDirectEmail");
+            txt_systmSettingHint.Text = AppSettings.resourcemanager.GetString("trDirectEmailHint") + "...";
         }
 
 

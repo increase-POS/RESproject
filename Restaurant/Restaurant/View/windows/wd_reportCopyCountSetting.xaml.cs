@@ -119,6 +119,7 @@ namespace Restaurant.View.windows
 
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
              
+
         }
 
         private void HandleKeyPress(object sender, KeyEventArgs e)

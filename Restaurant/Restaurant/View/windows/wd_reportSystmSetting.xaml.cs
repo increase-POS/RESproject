@@ -202,16 +202,22 @@ namespace Restaurant.View.windows
 
         private void translate()
         {
-         
-            txt_title.Text = AppSettings.resourcemanager.GetString("trSystemSetting");
-
+            //
+            if (windowType == "r")
+            {
+                txt_title.Text = AppSettings.resourcemanager.GetString("trDirectPrinting");
+            }
+            else if (windowType == "e")
+            {
+                txt_title.Text = AppSettings.resourcemanager.GetString("trDirectEmail");
+            }
             txt_printOnSavePur.Text = AppSettings.resourcemanager.GetString("trPrintOnSavePurchase");
             txt_emailOnSavePur.Text = AppSettings.resourcemanager.GetString("trEmailOnSavePurchase");
             txt_printOnSaveSale.Text = AppSettings.resourcemanager.GetString("trPrintOnSaveSale");
             txt_emailOnSaveSale.Text = AppSettings.resourcemanager.GetString("trEmailOnSaveSale");
 
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
- 
+
         }
 
         private void HandleKeyPress(object sender, KeyEventArgs e)

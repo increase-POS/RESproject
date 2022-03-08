@@ -2780,7 +2780,7 @@ Please add Email in setting</value>
     <value>Number of copies can not be empty</value>
   </data>
   <data name="trPrintCount" xml:space="preserve">
-    <value>Prints count</value>
+    <value>Print limits</value>
   </data>
   <data name="trBondRecieved" xml:space="preserve">
     <value>Bond is received</value>
@@ -3008,25 +3008,25 @@ Please add Email in setting</value>
     <value>Copies Count</value>
   </data>
   <data name="trDocPaperSize" xml:space="preserve">
-    <value>Documents paper size</value>
+    <value>Document paper size</value>
   </data>
   <data name="trEmailOnSavePurchase" xml:space="preserve">
-    <value>Send an email when saving a purchases invoice</value>
+    <value>Purchases invoice</value>
   </data>
   <data name="trEmailOnSaveSale" xml:space="preserve">
-    <value>Send an email when saving a sales invoice</value>
+    <value>Sales invoice</value>
   </data>
   <data name="trPrinterSettings" xml:space="preserve">
     <value>Printer Settings</value>
   </data>
   <data name="trPrintOnSavePurchase" xml:space="preserve">
-    <value>Print when saving a purchases invoice</value>
+    <value>Purchases invoice</value>
   </data>
   <data name="trPrintOnSaveSale" xml:space="preserve">
-    <value>Print when saving a sales invoice</value>
+    <value>Sales invoice</value>
   </data>
   <data name="trPurchasesCopyCount" xml:space="preserve">
-    <value>Purchases invoice copies count</value>
+    <value>Purchases invoice</value>
   </data>
   <data name="trReportPrinterName" xml:space="preserve">
     <value>Reports printer</value>
@@ -3035,10 +3035,10 @@ Please add Email in setting</value>
     <value>Sales invoice printer</value>
   </data>
   <data name="trReportsCopyCount" xml:space="preserve">
-    <value>Reports copies count</value>
+    <value>Reports</value>
   </data>
   <data name="trSalesCopyCount" xml:space="preserve">
-    <value>Sales invoice copies count</value>
+    <value>Sales invoice</value>
   </data>
   <data name="trSalesPaperSize" xml:space="preserve">
     <value>Sales invoice paper size</value>
@@ -3459,5 +3459,77 @@ Please add Email in setting</value>
   </data>
   <data name="trChangeWaiter" xml:space="preserve">
     <value>Change waiter</value>
+  </data>
+  <data name="trBranchPos" xml:space="preserve">
+    <value>Branch, POS</value>
+  </data>
+  <data name="trCopyCountHint" xml:space="preserve">
+    <value>Purchases,Sales,Reports</value>
+  </data>
+  <data name="trDailyClosing" xml:space="preserve">
+    <value>Dialy Closing</value>
+  </data>
+  <data name="trDirectEmail" xml:space="preserve">
+    <value>Direct Email</value>
+  </data>
+  <data name="trDirectEmailHint" xml:space="preserve">
+    <value>Purchases,Sales invoice</value>
+  </data>
+  <data name="trDirectPrinting" xml:space="preserve">
+    <value>Direct Printing</value>
+  </data>
+  <data name="trDirectPrintingHint" xml:space="preserve">
+    <value>Purchases,Sales invoice</value>
+  </data>
+  <data name="trItemsTax" xml:space="preserve">
+    <value>Items Tax</value>
+  </data>
+  <data name="trItemsTaxNote" xml:space="preserve">
+    <value>Items Tax Note</value>
+  </data>
+  <data name="trPrinterSettingsHint" xml:space="preserve">
+    <value>Reports and Sales ,Paper Size</value>
+  </data>
+  <data name="trPrintHeader" xml:space="preserve">
+    <value>Print Header</value>
+  </data>
+  <data name="trSalesInvoiceNote" xml:space="preserve">
+    <value>Sales Invoice Note</value>
+  </data>
+  <data name="trShowOption" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="trBody" xml:space="preserve">
+    <value>Body</value>
+  </data>
+  <data name="trEmailSupport" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="trLinkText1" xml:space="preserve">
+    <value>Link text1</value>
+  </data>
+  <data name="trLinkText2" xml:space="preserve">
+    <value>Link text2</value>
+  </data>
+  <data name="trLinkText3" xml:space="preserve">
+    <value>Link text3</value>
+  </data>
+  <data name="trText1" xml:space="preserve">
+    <value>Text1</value>
+  </data>
+  <data name="trText2" xml:space="preserve">
+    <value>Text2</value>
+  </data>
+  <data name="trTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="trUrlLink1" xml:space="preserve">
+    <value>Url link1</value>
+  </data>
+  <data name="trUrlLink2" xml:space="preserve">
+    <value>Url link2</value>
+  </data>
+  <data name="trUrlLink3" xml:space="preserve">
+    <value>Url link3</value>
   </data>
 </root>
