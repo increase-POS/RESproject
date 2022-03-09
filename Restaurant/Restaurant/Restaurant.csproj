@@ -264,6 +264,7 @@
     <Compile Include="converters\sectionFreeZoneStorageReportConverter.cs" />
     <Compile Include="converters\SectionLocationFreeZoneConverter.cs" />
     <Compile Include="converters\stockSectionLocationFreeZoneConverter.cs" />
+    <Compile Include="converters\subscriptionTypeConverter.cs" />
     <Compile Include="converters\timeFrameConverter.cs" />
     <Compile Include="converters\translateCategoryNameConverter.cs" />
     <Compile Include="converters\transTypeConverter.cs" />
@@ -606,6 +607,9 @@
     </Compile>
     <Compile Include="View\windows\wd_acceptUser.xaml.cs">
       <DependentUpon>wd_acceptUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_agentMembership.xaml.cs">
+      <DependentUpon>wd_agentMembership.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_applicationStop.xaml.cs">
       <DependentUpon>wd_applicationStop.xaml</DependentUpon>
@@ -1226,6 +1230,10 @@
     <Page Include="View\windows\wd_acceptUser.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_agentMembership.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_applicationStop.xaml">
       <Generator>MSBuild:Compile</Generator>

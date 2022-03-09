@@ -904,9 +904,10 @@ namespace Restaurant.Classes
         static public void fillSubscriptionType(ComboBox cmb)
         {
             var dislist = new[] {
-            new { Text = AppSettings.resourcemanager.GetString("trFree")   , Value = "f" },
-            new { Text = AppSettings.resourcemanager.GetString("trMonthly"), Value = "m" },
-            new { Text = AppSettings.resourcemanager.GetString("trOnce")   , Value = "o" },
+            new { Text = AppSettings.resourcemanager.GetString("trFree")    , Value = "f" },
+            new { Text = AppSettings.resourcemanager.GetString("trMonthly") , Value = "m" },
+            new { Text = AppSettings.resourcemanager.GetString("trYearly")  , Value = "y" },
+            new { Text = AppSettings.resourcemanager.GetString("trOnce")    , Value = "o" },
              };
             cmb.DisplayMemberPath = "Text";
             cmb.SelectedValuePath = "Value";
