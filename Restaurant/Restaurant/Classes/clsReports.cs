@@ -1219,7 +1219,132 @@ Parameters!trValueDiscount.Value)
          =iif((Fields!section.Value="FreeZone")And(Fields!location.Value="0-0-0"),
 "-",Fields!section.Value+"-"+Fields!location.Value)
          * */
+        public static void ClosingStsReport(IEnumerable<POSOpenCloseModel> query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            foreach (var r in query)
+            {
+                r.cash = decimal.Parse(HelpClass.DecTostring(r.cash));
+                r.openCash = decimal.Parse(HelpClass.DecTostring(r.openCash));
 
+            }
+            rep.DataSources.Add(new ReportDataSource("DataSetBalanceSTS", query));
+            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNum")));
+            paramarr.Add(new ReportParameter("trPOS", AppSettings.resourcemanagerreport.GetString("trPOS")));
+            paramarr.Add(new ReportParameter("trOpenDate", AppSettings.resourcemanagerreport.GetString("trOpenDate")));
+            paramarr.Add(new ReportParameter("trOpenCash", AppSettings.resourcemanagerreport.GetString("trOpenCash")));
+            paramarr.Add(new ReportParameter("trCloseDate", AppSettings.resourcemanagerreport.GetString("trCloseDate")));
+            paramarr.Add(new ReportParameter("trCloseCash", AppSettings.resourcemanagerreport.GetString("trCloseCash")));
+
+            paramarr.Add(new ReportParameter("Currency", AppSettings.Currency));
+
+
+        }
+        public static void ClosingOpStsReport(IEnumerable<OpenClosOperatinModel> query, LocalReport rep, string reppath, List<ReportParameter> paramarr, POSOpenCloseModel openclosrow)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            foreach (var r in query)
+            {
+                r.cash = decimal.Parse(HelpClass.DecTostring(r.cash));
+                //  r.openCash = decimal.Parse(SectionData.DecTostring(r.openCash));
+                r.notes = closingDescriptonConverter(r);
+
+
+            }
+            rep.DataSources.Add(new ReportDataSource("DataSetBalanceSTS", query));
+            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNum")));
+            paramarr.Add(new ReportParameter("trPOS", AppSettings.resourcemanagerreport.GetString("trPOS")));
+            paramarr.Add(new ReportParameter("trOpenDate", AppSettings.resourcemanagerreport.GetString("trOpenDate")));
+            paramarr.Add(new ReportParameter("trOpenCash", AppSettings.resourcemanagerreport.GetString("trOpenCash")));
+            paramarr.Add(new ReportParameter("trCloseDate", AppSettings.resourcemanagerreport.GetString("trCloseDate")));
+            paramarr.Add(new ReportParameter("trCloseCash", AppSettings.resourcemanagerreport.GetString("trCloseCash")));
+
+            paramarr.Add(new ReportParameter("Currency", AppSettings.Currency));
+
+            paramarr.Add(new ReportParameter("OpenDate", openclosrow.openDate.ToString()));
+            paramarr.Add(new ReportParameter("OpenCash", HelpClass.DecTostring(openclosrow.openCash)));
+            paramarr.Add(new ReportParameter("CloseDate", openclosrow.updateDate.ToString()));
+            paramarr.Add(new ReportParameter("CloseCash", HelpClass.DecTostring(openclosrow.cash)));
+            paramarr.Add(new ReportParameter("pos", openclosrow.branchName + " / " + openclosrow.posName));
+
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trDescription", AppSettings.resourcemanagerreport.GetString("trDescription")));
+            paramarr.Add(new ReportParameter("trCashTooltip", AppSettings.resourcemanagerreport.GetString("trCashTooltip")));
+
+
+
+        }
+        public static string closingDescriptonConverter(OpenClosOperatinModel s)
+        {
+
+            string name = "";
+            switch (s.side)
+            {
+                case "bnd": break;
+                case "v": name = AppSettings.resourcemanager.GetString("trVendor"); break;
+                case "c": name = AppSettings.resourcemanager.GetString("trCustomer"); break;
+                case "u": name = AppSettings.resourcemanager.GetString("trUser"); break;
+                case "s": name = AppSettings.resourcemanager.GetString("trSalary"); break;
+                case "e": name = AppSettings.resourcemanager.GetString("trGeneralExpenses"); break;
+                case "m":
+                    if (s.transType == "d")
+                        name = AppSettings.resourcemanager.GetString("trAdministrativeDeposit");
+                    if (s.transType == "p")
+                        name = AppSettings.resourcemanager.GetString("trAdministrativePull");
+                    break;
+                case "sh": name = AppSettings.resourcemanager.GetString("trShippingCompany"); break;
+                default: break;
+            }
+
+            if (!string.IsNullOrEmpty(s.agentName))
+                name = name + " " + s.agentName;
+            else if (!string.IsNullOrEmpty(s.usersName) && !string.IsNullOrEmpty(s.usersLName))
+                name = name + " " + s.usersName + " " + s.usersLName;
+            else if (!string.IsNullOrEmpty(s.shippingCompanyName))
+                name = name + " " + s.shippingCompanyName;
+            else if ((s.side != "e") && (s.side != "m"))
+                name = name + " " + AppSettings.resourcemanager.GetString("trUnKnown");
+
+            if (s.transType.Equals("p"))
+            {
+                if ((s.side.Equals("bn")) || (s.side.Equals("p")))
+                {
+                    return AppSettings.resourcemanager.GetString("trPull") + " " +
+                           AppSettings.resourcemanager.GetString("trFrom") + " " +
+                           name;//receive
+                }
+                else if ((!s.side.Equals("bn")) || (!s.side.Equals("p")))
+                {
+                    return AppSettings.resourcemanager.GetString("trPayment") + " " +
+                           AppSettings.resourcemanager.GetString("trTo") + " " +
+                           name;//دفع
+                }
+                else return "";
+            }
+            else if (s.transType.Equals("d"))
+            {
+                if ((s.side.Equals("bn")) || (s.side.Equals("p")))
+                {
+                    return AppSettings.resourcemanager.GetString("trDeposit") + " " +
+                           AppSettings.resourcemanager.GetString("trTo") + " " +
+                           name;
+                }
+                else if ((!s.side.Equals("bn")) || (!s.side.Equals("p")))
+                {
+                    return AppSettings.resourcemanager.GetString("trReceiptOperation") + " " +
+                           AppSettings.resourcemanager.GetString("trFrom") + " " +
+                           name;//قبض
+                }
+                else return "";
+            }
+            else return "";
+
+        }
         public static void storageStock(IEnumerable<Storage> storageQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             storage(storageQuery, rep, reppath);

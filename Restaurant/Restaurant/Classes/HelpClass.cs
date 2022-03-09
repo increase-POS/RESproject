@@ -1114,55 +1114,57 @@ namespace Restaurant.Classes
                     categoryBtn.IsEnabled = true;
             }
         }
-        public static void ReportTabTitle(TextBlock textBlock, string firstTitle, string secondTitle)
+        public async static void ReportTabTitle(TextBlock textBlock, string firstTitle, string secondTitle)
         {
 
             //////////////////////////////////////////////////////////////////////////////
-            if (firstTitle == "invoice")
-                firstTitle = AppSettings.resourcemanager.GetString("trInvoices");
-            else if (firstTitle == "quotation")
-                firstTitle = AppSettings.resourcemanager.GetString("trQuotations");
-            else if (firstTitle == "promotion")
-                firstTitle = AppSettings.resourcemanager.GetString("trPromotion");
-            else if (firstTitle == "internal")
-                firstTitle = AppSettings.resourcemanager.GetString("trInternal");
-            else if (firstTitle == "external")
-                firstTitle = AppSettings.resourcemanager.GetString("trExternal");
-            else if (firstTitle == "direct")
-                firstTitle = AppSettings.resourcemanager.GetString("trDirectEntry");
-            else if (firstTitle == "banksReport")
-                firstTitle = AppSettings.resourcemanager.GetString("trBanks");
-            else if (firstTitle == "destroied")
-                firstTitle = AppSettings.resourcemanager.GetString("trDestructives");
-            else if (firstTitle == "usersReport")
-                firstTitle = AppSettings.resourcemanager.GetString("trUsers");
-            else if (firstTitle == "storageReports")
-                firstTitle = AppSettings.resourcemanager.GetString("trStorage");
-            else if (firstTitle == "stocktaking")
-                firstTitle = AppSettings.resourcemanager.GetString("trStocktaking");
-            else if (firstTitle == "stock")
-                firstTitle = AppSettings.resourcemanager.GetString("trStock");
-            else if (firstTitle == "saleOrders" || firstTitle == "purchaseOrders")
-                firstTitle = AppSettings.resourcemanager.GetString("trOrders");
-            else if (firstTitle == "saleItems" || firstTitle == "purchaseItem")
-                firstTitle = AppSettings.resourcemanager.GetString("trItems");
-            else if (firstTitle == "recipientReport")
-                //firstTitle = AppSettings.resourcemanager.GetString("trRecepient");
-                firstTitle = AppSettings.resourcemanager.GetString("trReceived");
-            else if (firstTitle == "accountStatement")
-                firstTitle = AppSettings.resourcemanager.GetString("trAccountStatement");
-            else if (firstTitle == "paymentsReport")
-                firstTitle = AppSettings.resourcemanager.GetString("trPayments");
-            else if (firstTitle == "posReports")
-                firstTitle = AppSettings.resourcemanager.GetString("trPOS");
-            else if (firstTitle == "dailySalesStatistic")
-                firstTitle = AppSettings.resourcemanager.GetString("trDailySales");
-            else if (firstTitle == "accountProfits")
-                firstTitle = AppSettings.resourcemanager.GetString("trProfits");
-            else if (firstTitle == "accountFund")
-                firstTitle = AppSettings.resourcemanager.GetString("trCashBalance");
-            else if (firstTitle == "saleTax")
-                firstTitle = AppSettings.resourcemanager.GetString("trTax");
+            if (FillCombo.objectsList is null)
+                await FillCombo.RefreshObjects();
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == firstTitle).FirstOrDefault().translate))
+                firstTitle = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == firstTitle).FirstOrDefault().translate
+               );
+            //if (firstTitle == "invoiceSalesReports" || firstTitle == "invoicePurchaseReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trInvoices");
+            //else if (firstTitle == "itemSalesReports" || firstTitle == "itemPurchaseReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trItems");
+            //else if (firstTitle == "orderSalesReports" || firstTitle == "orderPurchaseReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trOrders");
+            //else if (firstTitle == "promotionSalesReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trPromotion");
+            //else if (firstTitle == "quotationSalesReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trQuotations");
+            //else if (firstTitle == "stockStorageReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trStock");
+            //else if (firstTitle == "stocktakingStorageReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trStocktaking");
+            //else if (firstTitle == "dailySalesReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trDailySales");
+            //else if (firstTitle == "taxAccountsReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trTax");
+            //else if (firstTitle == "internalStorageReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trInternal");
+            //else if (firstTitle == "externalStorageReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trExternal");
+            //else if (firstTitle == "directStorageReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trDirectEntry");
+            //else if (firstTitle == "destroiedStorageReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trDestructives");
+            //else if (firstTitle == "recipientAccountsReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trReceived");
+            //else if (firstTitle == "statementAccountsReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trAccountStatement");
+            //else if (firstTitle == "paymentsAccountsReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trPayments");
+            //else if (firstTitle == "posAccountsReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trPOS");
+            //else if (firstTitle == "profitsAccountsReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trProfits");
+            //else if (firstTitle == "fundAccountsReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trCashBalance");
+            //else if (firstTitle == "bankAccountsReports")
+            //    firstTitle = AppSettings.resourcemanager.GetString("trBanks");
 
             //////////////////////////////////////////////////////////////////////////////
 
