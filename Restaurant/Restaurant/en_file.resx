@@ -3550,4 +3550,7 @@ Please add Email in setting</value>
   <data name="trYearly" xml:space="preserve">
     <value>Yearly</value>
   </data>
+  <data name="trStorageReport" xml:space="preserve">
+    <value>Storage Report</value>
+  </data>
 </root>

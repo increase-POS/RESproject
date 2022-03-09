@@ -3526,4 +3526,7 @@
   <data name="trYearly" xml:space="preserve">
     <value>سنوي</value>
   </data>
+  <data name="trStorageReport" xml:space="preserve">
+    <value>تقرير التخزين</value>
+  </data>
 </root>
