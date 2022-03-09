@@ -3508,4 +3508,22 @@
   <data name="trUrlLink3" xml:space="preserve">
     <value>رابط url3</value>
   </data>
+  <data name="trAlreadyExists" xml:space="preserve">
+    <value>موجود مسبقاً</value>
+  </data>
+  <data name="trEqualZero" xml:space="preserve">
+    <value>لا يمكن أن تكون القيمة 0</value>
+  </data>
+  <data name="trInvoicesClasses" xml:space="preserve">
+    <value>فئات الفواتير</value>
+  </data>
+  <data name="trOffers" xml:space="preserve">
+    <value>العروض</value>
+  </data>
+  <data name="trYearCount" xml:space="preserve">
+    <value>عدد السنوات</value>
+  </data>
+  <data name="trYearly" xml:space="preserve">
+    <value>سنوي</value>
+  </data>
 </root>

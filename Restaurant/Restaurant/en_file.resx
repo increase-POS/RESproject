@@ -3532,4 +3532,22 @@ Please add Email in setting</value>
   <data name="trUrlLink3" xml:space="preserve">
     <value>Url link3</value>
   </data>
+  <data name="trAlreadyExists" xml:space="preserve">
+    <value>Already Exists</value>
+  </data>
+  <data name="trEqualZero" xml:space="preserve">
+    <value>Value can not be 0</value>
+  </data>
+  <data name="trInvoicesClasses" xml:space="preserve">
+    <value>Invoices Classes</value>
+  </data>
+  <data name="trOffers" xml:space="preserve">
+    <value>Offers</value>
+  </data>
+  <data name="trYearCount" xml:space="preserve">
+    <value>Year Count</value>
+  </data>
+  <data name="trYearly" xml:space="preserve">
+    <value>Yearly</value>
+  </data>
 </root>
