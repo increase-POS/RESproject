@@ -1096,7 +1096,9 @@ Parameters!trValueDiscount.Value)
             else if (secondTitle == "shortfalls")
                 secondTitle = AppSettings.resourcemanagerreport.GetString("trShortages");
             else if (secondTitle == "location")
-                secondTitle = AppSettings.resourcemanagerreport.GetString("trLocation");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trLocation"); 
+            else if (secondTitle == "locations")
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trLocations"); 
             else if (secondTitle == "collect")
                 secondTitle = AppSettings.resourcemanagerreport.GetString("trCollect");
             else if (secondTitle == "shipping")
@@ -1222,8 +1224,18 @@ Parameters!trValueDiscount.Value)
         {
             storage(storageQuery, rep, reppath);
             DateFormConv(paramarr);
-
-
+            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
+            paramarr.Add(new ReportParameter("trSection", AppSettings.resourcemanagerreport.GetString("trSection")));
+            paramarr.Add(new ReportParameter("trLocation", AppSettings.resourcemanagerreport.GetString("trLocation")));
+            paramarr.Add(new ReportParameter("trItemUnit", AppSettings.resourcemanagerreport.GetString("trItemUnit")));
+            paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem")));
+            paramarr.Add(new ReportParameter("trUnit", AppSettings.resourcemanagerreport.GetString("trUnit")));
+            paramarr.Add(new ReportParameter("trSectionLocation", AppSettings.resourcemanagerreport.GetString("trSectionLocation")));
+            paramarr.Add(new ReportParameter("trStartDate", AppSettings.resourcemanagerreport.GetString("trStartDate")));
+            paramarr.Add(new ReportParameter("trEndDate", AppSettings.resourcemanagerreport.GetString("trEndDate")));
+            paramarr.Add(new ReportParameter("trMinCollect", AppSettings.resourcemanagerreport.GetString("trMinCollect")));
+            paramarr.Add(new ReportParameter("trMaxCollect", AppSettings.resourcemanagerreport.GetString("trMaxCollect")));
+            paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
         }
         // stocktaking
         public static void StocktakingArchivesReport(IEnumerable<InventoryClass> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)

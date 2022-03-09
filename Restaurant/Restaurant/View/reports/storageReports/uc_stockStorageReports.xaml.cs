@@ -1549,17 +1549,17 @@ namespace Restaurant.View.reports.storageReports
             {
                 if (selectedStockTab == 0)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\Stock\Ar\ArItem.rdlc";
+                    addpath = @"\Reports\StatisticReport\Storage\Ar\ArStockStorageItem.rdlc";
                     secondTitle = "items";
                 }
                 else if (selectedStockTab == 1)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\Stock\Ar\ArLocation.rdlc";
-                    secondTitle = "location";
+                    addpath = @"\Reports\StatisticReport\Storage\Ar\ArStockStorageLocation.rdlc";
+                    secondTitle = "locations";
                 }
                 else if (selectedStockTab == 2)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\Stock\Ar\ArCollect.rdlc";
+                    addpath = @"\Reports\StatisticReport\Storage\Ar\ArStockStorageCollect.rdlc";
                     secondTitle = "collect";
                 }
             }
@@ -1567,17 +1567,17 @@ namespace Restaurant.View.reports.storageReports
             {
                 if (selectedStockTab == 0)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\Stock\En\Item.rdlc";
+                    addpath = @"\Reports\StatisticReport\Storage\En\EnStockStorageItem.rdlc";
                     secondTitle = "items";
                 }
                 else if (selectedStockTab == 1)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\Stock\En\Location.rdlc";
-                    secondTitle = "location";
+                    addpath = @"\Reports\StatisticReport\Storage\En\EnStockStorageLocation.rdlc";
+                    secondTitle = "locations";
                 }
                 else if (selectedStockTab == 2)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\Stock\En\Collect.rdlc";
+                    addpath = @"\Reports\StatisticReport\Storage\En\EnStockStorageCollect.rdlc";
                     secondTitle = "collect";
                 }
             }
@@ -1585,7 +1585,7 @@ namespace Restaurant.View.reports.storageReports
 
             ReportCls.checkLang();
             subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-            Title = AppSettings.resourcemanagerreport.GetString("trStorageReport") + " / " + subTitle;
+            Title = AppSettings.resourcemanagerreport.GetString("trStorageReport") + " / " + subTitle;//trStorage
             paramarr.Add(new ReportParameter("trTitle", Title));
 
             clsReports.storageStock(temp, rep, reppath, paramarr);
