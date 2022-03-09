@@ -1,4 +1,6 @@
-﻿using Restaurant.Classes;
+﻿using netoaster;
+using Restaurant.Classes;
+using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,11 +53,23 @@ namespace Restaurant.View.sales.promotion.membership
         }
 
         string basicsPermission = "membershipUpdate_basics";
-        //Agent agent = new Agent();
-        //IEnumerable<Agent> agentsQuery;
-        //IEnumerable<Agent> agents;
-        //byte tgl_agentState;
-        //string searchText = "";
+        Memberships membership = new Memberships();
+        IEnumerable<Memberships> membershipsQuery;
+        IEnumerable<Memberships> memberships;
+
+        AgentMemberships agMembership = new AgentMemberships();
+        IEnumerable<AgentMemberships> agMemberships;
+
+        CouponsMemberships coMembership = new CouponsMemberships();
+        IEnumerable<CouponsMemberships> coMemberships;
+
+        MembershipsOffers ofMembership = new MembershipsOffers();
+        IEnumerable<MembershipsOffers> ofMemberships;
+
+        InvoicesClassMemberships inMembership = new InvoicesClassMemberships();
+        IEnumerable<InvoicesClassMemberships> inMemberships;
+
+        string searchText = "";
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             Instance = null;
@@ -66,6 +80,8 @@ namespace Restaurant.View.sales.promotion.membership
             try
             {
                 HelpClass.StartAwait(grid_main);
+
+                #region translate
                 if (AppSettings.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -75,11 +91,11 @@ namespace Restaurant.View.sales.promotion.membership
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-                //dg_membership.ItemsSource = FillCombo.branchsList;
-                /*
-                await RefreshCustomersList();
+                #endregion
+
+                await RefreshMembershipsList();
                 await Search();
-                */
+                
                 Clear();
                 HelpClass.EndAwait(grid_main);
             }
@@ -90,20 +106,76 @@ namespace Restaurant.View.sales.promotion.membership
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        #region Refresh & Search
+        private string getSubscriptionType(string s)
+        {
+            string value = "";
+
+            if (s.Equals("f")) value = AppSettings.resourcemanager.GetString("trFree");
+            else if (s.Equals("m")) value = AppSettings.resourcemanager.GetString("trMonthly");
+            else if (s.Equals("y")) value = AppSettings.resourcemanager.GetString("trYearly");
+            else if (s.Equals("o")) value = AppSettings.resourcemanager.GetString("trOnce");
+
+            return value;
+        }
+        async Task Search()
+        {
+            if (memberships is null)
+                await RefreshMembershipsList();
+
+            searchText = tb_search.Text.ToLower();
+            membershipsQuery = memberships
+                .Where(s => (
+            s.code.ToLower().Contains(searchText) ||
+            s.name.ToLower().Contains(searchText)
+            )
+            )
+            ;
+
+            RefreshMembershipsView();
+        }
+        async Task<IEnumerable<Memberships>> RefreshMembershipsList()
+        {
+            memberships = await membership.GetAll();
+            memberships = memberships.Where(m => m.isActive == 1);
+            return memberships;
+        }
+        void RefreshMembershipsView()
+        {
+            dg_membership.ItemsSource = membershipsQuery;
+        }
+        #endregion
+
         void translate()
         {
+            txt_title.Text = AppSettings.resourcemanager.GetString("trMembership");
+            txt_details.Text = AppSettings.resourcemanager.GetString("trDetails");
+            txt_code.Text = AppSettings.resourcemanager.GetString("trCode");
+            txt_name.Text = AppSettings.resourcemanager.GetString("trName");
+            txt_customersCount.Text = AppSettings.resourcemanager.GetString("trCustomers");
+            txt_couponsCount.Text = AppSettings.resourcemanager.GetString("trCoupons");
+            txt_offersCount.Text = AppSettings.resourcemanager.GetString("trOffers");
+            txt_invoicesClassesCount.Text = AppSettings.resourcemanager.GetString("trInvoicesClasses");//???
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
 
+            dg_membership.Columns[0].Header = AppSettings.resourcemanager.GetString("trCode");
+            dg_membership.Columns[1].Header = AppSettings.resourcemanager.GetString("trName");
+
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
+
+            tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
         }
         #region events
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
-        {
+        {//search
             try
             {
-                /*
                 HelpClass.StartAwait(grid_main);
+
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
@@ -127,36 +199,36 @@ namespace Restaurant.View.sales.promotion.membership
             }
         }
         private async void Dg_membership_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            /*
+        {//selection
             try
             {
                 HelpClass.StartAwait(grid_main);
-                //selection
-                if (dg_agent.SelectedIndex != -1)
+                
+                if (dg_membership.SelectedIndex != -1)
                 {
-                    agent = dg_agent.SelectedItem as Agent;
-                    this.DataContext = agent;
-                    if (agent != null)
+                    membership = dg_membership.SelectedItem as Memberships;
+                    this.DataContext = membership;
+                    if (membership != null)
                     {
-                        await getImg();
-                        #region delete
-                        if (agent.canDelete)
-                            btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
-                        else
-                        {
-                            if (agent.isActive == 0)
-                                btn_delete.Content = AppSettings.resourcemanager.GetString("trActive");
-                            else
-                                btn_delete.Content = AppSettings.resourcemanager.GetString("trInActive");
-                        }
-                        #endregion
-                        HelpClass.getMobile(agent.mobile, cb_areaMobile, tb_mobile);
-                        HelpClass.getPhone(agent.phone, cb_areaPhone, cb_areaPhoneLocal, tb_phone);
-                        HelpClass.getPhone(agent.fax, cb_areaFax, cb_areaFaxLocal, tb_fax);
+                        //customers
+                        agMemberships = await agMembership.GetAll();
+                        agMemberships = agMemberships.Where(a => a.membershipId == membership.membershipId);
+                        tb_customersCount.Text = agMemberships.Count().ToString();
+                        //coupons
+                        coMemberships = await coMembership.GetAll();
+                        coMemberships = coMemberships.Where(c => c.membershipId == membership.membershipId);
+                        tb_couponsCount.Text = coMemberships.Count().ToString();
+                        //offers
+                        //ofMemberships = await ofMembership.GetAll();
+                        //ofMemberships = ofMemberships.Where(o => o.membershipId == membership.membershipId);
+                        //tb_offersCount.Text = ofMemberships.Count().ToString();
+                        //invoices
+                        //inMemberships = await inMembership.GetAll();
+                        //inMemberships = inMemberships.Where(i => i.membershipId == membership.membershipId);
+                        //tb_invoicesClassesCount.Text = inMemberships.Count().ToString();
                     }
                 }
-                HelpClass.clearValidate(requiredControlList, this);
+                //HelpClass.clearValidate(requiredControlList, this);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -164,18 +236,19 @@ namespace Restaurant.View.sales.promotion.membership
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
+        {//refresh
             try
-            {//refresh
-                /*
+            {
                 HelpClass.StartAwait(grid_main);
-                await RefreshCustomersList();
+
+                tb_search.Text = "";
+                searchText = "";
+                await RefreshMembershipsList();
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
@@ -185,32 +258,7 @@ namespace Restaurant.View.sales.promotion.membership
             }
         }
         #endregion
-        #region Refresh & Search
-        /*
-        async Task Search()
-        {
-            //search
-            if (agents is null)
-                await RefreshCustomersList();
-            searchText = tb_search.Text.ToLower();
-            agentsQuery = agents.Where(s => (s.code.ToLower().Contains(searchText) ||
-            s.name.ToLower().Contains(searchText) ||
-            s.mobile.ToLower().Contains(searchText)
-            ) && s.isActive == tgl_agentState);
-            RefreshCustomersView();
-        }
-        async Task<IEnumerable<Agent>> RefreshCustomersList()
-        {
-            agents = await agent.Get("c");
-            return agents;
-        }
-        void RefreshCustomersView()
-        {
-            dg_agent.ItemsSource = agentsQuery;
-            txt_count.Text = agentsQuery.Count().ToString();
-        }
-        */
-        #endregion
+       
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
@@ -287,6 +335,32 @@ namespace Restaurant.View.sales.promotion.membership
                     {
                         Memberships row = (Memberships)dg_membership.SelectedItems[0];
 
+                        try
+                        {
+                            HelpClass.StartAwait(grid_main);
+                            //if (FillCombo.groupObject.HasPermissionAction("membershipCreate_subscriptionFees", FillCombo.groupObjects, "one"))
+                            //{
+                                Window.GetWindow(this).Opacity = 0.2;
+
+                                wd_agentMembership w = new wd_agentMembership();
+
+                                w.membershipID = membership.membershipId;
+                                w.ShowDialog();
+                                //if (w.isActive)
+                                //{
+                                //}
+
+                                Window.GetWindow(this).Opacity = 1;
+                            //}
+                            //else
+                            //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                            HelpClass.EndAwait(grid_main);
+                        }
+                        catch (Exception ex)
+                        {
+                            HelpClass.EndAwait(grid_main);
+                            HelpClass.ExceptionMessage(ex, this);
+                        }
 
 
                     }

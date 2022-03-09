@@ -119,8 +119,9 @@
                         <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                         <DataGrid  Margin="5,5,5,45" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
-                       x:Name="dg_membership" SelectionChanged="Dg_membership_SelectionChanged"  AutoGenerateColumns="False"   Background="White"
-                        ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
+                                   x:Name="dg_membership"  AutoGenerateColumns="False"   Background="White"
+                                   ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2"
+                                   SelectionChanged="Dg_membership_SelectionChanged" >
                             <DataGrid.OpacityMask>
                                 <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
                             </DataGrid.OpacityMask>
@@ -283,13 +284,13 @@
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock  Grid.Row="0" Grid.Column="0" x:Name="txt_code"
-                                    Text="code" FontWeight="SemiBold"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
+                                        Text="code" FontWeight="SemiBold"
+                                        Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                        HorizontalAlignment="Left"  VerticalAlignment="Center"/>
                             <TextBlock  Grid.Row="0" Grid.Column="1" 
-                                    Text="{Binding Path=code}"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Right"  VerticalAlignment="Center"  />
+                                        Text="{Binding Path=code}"
+                                        Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                        HorizontalAlignment="Right"  VerticalAlignment="Center"  />
                         </Grid>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -310,13 +311,13 @@
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock  Grid.Row="1" Grid.Column="0" x:Name="txt_customersCount"
-                                    Text="customers" FontWeight="SemiBold"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                            <TextBlock  Grid.Row="1" Grid.Column="1" 
-                                    Text="{Binding Path=customersCount}"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                                        Text="customers" FontWeight="SemiBold"
+                                        Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                        HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                            <TextBlock  Grid.Row="1" Grid.Column="1" x:Name="tb_customersCount"
+                                        Text="{Binding Path=customersCount}"
+                                        Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                        HorizontalAlignment="Right"   VerticalAlignment="Center" />
                         </Grid>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -327,7 +328,7 @@
                                     Text="coupons" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                            <TextBlock  Grid.Row="1" Grid.Column="1" 
+                            <TextBlock  Grid.Row="1" Grid.Column="1" x:Name="tb_couponsCount"
                                     Text="{Binding Path=couponsCount}"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
@@ -341,7 +342,7 @@
                                     Text="offers" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                            <TextBlock  Grid.Row="1" Grid.Column="1" 
+                            <TextBlock  Grid.Row="1" Grid.Column="1" x:Name="tb_offersCount"
                                     Text="{Binding Path=offersCount}"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
@@ -355,23 +356,24 @@
                                     Text="invoices classes" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                            <TextBlock  Grid.Row="1" Grid.Column="1" 
+                            <TextBlock  Grid.Row="1" Grid.Column="1" x:Name="tb_invoicesClassesCount" 
                                     Text="{Binding Path=invoicesClassesCount}"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
                         </Grid>
+
                         <DockPanel Margin="10 0"
                                  LastChildFill="True">
                             <TextBlock  Text="delivery" Name="txt_delivery" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
                             <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
                         </DockPanel>
-                            <Grid Margin="10,5,10,5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
+                        <Grid Margin="10,5,10,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0"  x:Name="txt_isFree"
                                    Margin="0,0,5,0" Text="free" Foreground="#6e6e6e"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"
@@ -389,7 +391,7 @@
                                          materialDesign:HintAssist.Hint="discount value..."   Foreground="#4E4E4E"
                                          materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" 
                                         Tag="decimal" PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"/>
-                                  
+
 
 
                                     <Path Fill="#E81123" Stretch="Fill"    x:Name="p_error_discountValue" 
@@ -402,9 +404,7 @@
                             <materialDesign:PackIcon Grid.Column="3" Foreground="{StaticResource Grey}" Kind="PercentOutline"   
                                                              Width="25" Height="25" Margin="0 5 10 5"
                                                              HorizontalAlignment="Right" VerticalAlignment="Center" />
-                            </Grid>
-                        
-
+                        </Grid>
                     </StackPanel>
                 </ScrollViewer>
 

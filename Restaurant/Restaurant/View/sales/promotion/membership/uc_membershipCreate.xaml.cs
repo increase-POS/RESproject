@@ -1,4 +1,5 @@
 ﻿using netoaster;
+using netoaster;
 using Restaurant.Classes;
 using Restaurant.View.windows;
 using System;
@@ -155,7 +156,7 @@ namespace Restaurant.View.sales.promotion.membership
 
             dg_membership.Columns[0].Header = AppSettings.resourcemanager.GetString("trCode");
             dg_membership.Columns[1].Header = AppSettings.resourcemanager.GetString("trName");
-            dg_membership.Columns[3].Header = AppSettings.resourcemanager.GetString("trSubscriptionType");
+            dg_membership.Columns[2].Header = AppSettings.resourcemanager.GetString("trSubscriptionType");
 
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             btn_subscriptionFees.Content = AppSettings.resourcemanager.GetString("trSubscriptionFees");
@@ -180,32 +181,35 @@ namespace Restaurant.View.sales.promotion.membership
                     if(memberships.Any(m => m.code == tb_code.Text))
                         isCodeExist = true;
                     if (isCodeExist)
-                        HelpClass.SetValidate(p_error_code , "trErrorDuplicateCode");
-
-                    membership = new Memberships();
-                    if (HelpClass.validate(requiredControlList, this) && !isCodeExist)
+                        HelpClass.SetValidate(p_error_code, "trErrorDuplicateCode");
+                    
+                    else
                     {
-                        membership.code = tb_code.Text;
-                        membership.name = tb_name.Text;
-                        membership.subscriptionType = _subscriptionType;
-                        membership.createUserId = MainWindow.userLogin.userId;
-                        membership.updateUserId = MainWindow.userLogin.userId;
-                        membership.notes = tb_notes.Text;
-                        membership.isActive = 1;
-                        try
-                        { membership.subscriptionFee = decimal.Parse(tb_price.Text);}
-                        catch { membership.subscriptionFee = 0; }
-
-                        int s = await membership.save(membership);
-                        if (s <= 0)
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                        else
+                        membership = new Memberships();
+                        if (HelpClass.validate(requiredControlList, this) )
                         {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                            membership.code = tb_code.Text;
+                            membership.name = tb_name.Text;
+                            membership.subscriptionType = _subscriptionType;
+                            membership.createUserId = MainWindow.userLogin.userId;
+                            membership.updateUserId = MainWindow.userLogin.userId;
+                            membership.notes = tb_notes.Text;
+                            membership.isActive = 1;
+                            try
+                            { membership.subscriptionFee = decimal.Parse(tb_price.Text); }
+                            catch { membership.subscriptionFee = 0; }
 
-                            Clear();
-                            await RefreshMembershipsList();
-                            await Search();
+                            int s = await membership.SaveMemberAndSub(membership);
+                            if (s <= 0)
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            else
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+                                Clear();
+                                await RefreshMembershipsList();
+                                await Search();
+                            }
                         }
                     }
                     HelpClass.EndAwait(grid_main);
@@ -228,36 +232,41 @@ namespace Restaurant.View.sales.promotion.membership
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
-
-                    //chk code 
-                    bool isCodeExist = false;
-                    if (memberships.Any(m => m.code == tb_code.Text))
-                        isCodeExist = true;
-                    if (isCodeExist)
-                        HelpClass.SetValidate(p_error_code, "trErrorDuplicateCode");
-
-                    if (HelpClass.validate(requiredControlList, this) && !isCodeExist)
+                    if (membership.membershipId > 0)
                     {
-                        membership.code = tb_code.Text;
-                        membership.name = tb_name.Text;
-                        membership.subscriptionType = _subscriptionType;
-                        //membership.createUserId = MainWindow.userLogin.userId;
-                        membership.updateUserId = MainWindow.userLogin.userId;
-                        membership.notes = tb_notes.Text;
-                        membership.isActive = 1;
-                        try
-                        { membership.subscriptionFee = decimal.Parse(tb_price.Text); }
-                        catch { membership.subscriptionFee = 0; }
-
-                        int s = await membership.save(membership);
-                        if (s <= 0)
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        //chk code 
+                        bool isCodeExist = false;
+                        if (memberships.Any(m => m.code == tb_code.Text && m.membershipId != membership.membershipId))
+                            isCodeExist = true;
+                        if (isCodeExist)
+                            HelpClass.SetValidate(p_error_code, "trErrorDuplicateCode");
                         else
                         {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                            if (HelpClass.validate(requiredControlList, this))
+                            {
+                                membership.code = tb_code.Text;
+                                membership.name = tb_name.Text;
+                                membership.subscriptionType = _subscriptionType;
+                                membership.updateUserId = MainWindow.userLogin.userId;
+                                membership.notes = tb_notes.Text;
+                                membership.isActive = 1;
+                                try
+                                { membership.subscriptionFee = decimal.Parse(tb_price.Text); }
+                                catch { membership.subscriptionFee = 0; }
 
-                            await RefreshMembershipsList();
-                            await Search();
+                                int s = await membership.SaveMemberAndSub(membership);
+                                if (s <= 0)
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                else
+                                {
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+
+                                    await RefreshMembershipsList();
+                                    await Search();
+                                }
+                            }
+                            else
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
                         }
                     }
                     HelpClass.EndAwait(grid_main);
@@ -340,18 +349,18 @@ namespace Restaurant.View.sales.promotion.membership
 
         private async Task activate()
         {//activate
-         /*
-                     agent.isActive = 1;
-                     int s = await agent.save(agent);
-                     if (s <= 0)
-                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                     else
-                     {
-                         Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
-                         await RefreshCustomersList();
-                         await Search();
-                     }
-                     */
+
+            membership.isActive = 1;
+            int s = await membership.save(membership);
+            if (s <= 0)
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+            else
+            {
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
+                await RefreshMembershipsList();
+                await Search();
+            }
+
         }
         #endregion
 
@@ -431,33 +440,28 @@ namespace Restaurant.View.sales.promotion.membership
             }
         }
         private async void Dg_membership_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            /*
+        {//selection
             try
             {
                 HelpClass.StartAwait(grid_main);
-                //selection
-                if (dg_agent.SelectedIndex != -1)
+                
+                if (dg_membership.SelectedIndex != -1)
                 {
-                    agent = dg_agent.SelectedItem as Agent;
-                    this.DataContext = agent;
-                    if (agent != null)
+                    membership = dg_membership.SelectedItem as Memberships;
+                    this.DataContext = membership;
+                    if (membership != null)
                     {
-                        await getImg();
                         #region delete
-                        if (agent.canDelete)
+                        if (membership.canDelete)
                             btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
                         else
                         {
-                            if (agent.isActive == 0)
+                            if (membership.isActive == 0)
                                 btn_delete.Content = AppSettings.resourcemanager.GetString("trActive");
                             else
                                 btn_delete.Content = AppSettings.resourcemanager.GetString("trInActive");
                         }
                         #endregion
-                        HelpClass.getMobile(agent.mobile, cb_areaMobile, tb_mobile);
-                        HelpClass.getPhone(agent.phone, cb_areaPhone, cb_areaPhoneLocal, tb_phone);
-                        HelpClass.getPhone(agent.fax, cb_areaFax, cb_areaFaxLocal, tb_fax);
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
@@ -468,18 +472,20 @@ namespace Restaurant.View.sales.promotion.membership
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
+
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
+        {//refresh
             try
-            {//refresh
-                /*
+            {
                 HelpClass.StartAwait(grid_main);
-                await RefreshCustomersList();
+
+                tb_search.Text = "";
+                searchText = "";
+                await RefreshMembershipsList();
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
@@ -491,9 +497,20 @@ namespace Restaurant.View.sales.promotion.membership
         #endregion
 
         #region Refresh & Search
+
+        private string getSubscriptionType(string s)
+        {
+            string value = "";
+           
+            if(s.Equals("f"))          value = AppSettings.resourcemanager.GetString("trFree");
+            else if (s.Equals("m"))    value = AppSettings.resourcemanager.GetString("trMonthly");
+            else if (s.Equals("y"))    value = AppSettings.resourcemanager.GetString("trYearly");
+            else if (s.Equals("o"))    value = AppSettings.resourcemanager.GetString("trOnce");
+
+            return value;
+        }
         async Task Search()
         {
-            //search
             if (memberships is null)
                 await RefreshMembershipsList();
 
@@ -501,8 +518,9 @@ namespace Restaurant.View.sales.promotion.membership
             membershipsQuery = memberships
                 .Where(s => (
             s.code.ToLower().Contains(searchText) ||
-            s.name.ToLower().Contains(searchText) ||
-            s.subscriptionType.ToLower().Contains(searchText)
+            s.name.ToLower().Contains(searchText) 
+            ||
+            getSubscriptionType(s.subscriptionType).Contains(searchText)
             )
             && s.isActive == tgl_membershipState
             )
@@ -980,8 +998,7 @@ namespace Restaurant.View.sales.promotion.membership
         #endregion
 
         private void Btn_subscriptionFees_Click(object sender, RoutedEventArgs e)
-        {
-            // stores
+        {// subscriptionFee
             try
             {
                 HelpClass.StartAwait(grid_main);
@@ -991,6 +1008,8 @@ namespace Restaurant.View.sales.promotion.membership
 
                     wd_subscriptionFees w = new wd_subscriptionFees();
 
+                    w.memberShipID = membership.membershipId;
+                    w.memberShipType = membership.subscriptionType;
                     w.ShowDialog();
                     //if (w.isActive)
                     //{
@@ -1017,12 +1036,18 @@ namespace Restaurant.View.sales.promotion.membership
                 {
                     case "f":
                         _subscriptionType = "f";
-                        bdr_price.Visibility = Visibility.Visible;
+                        bdr_price.Visibility = Visibility.Collapsed;
                         btn_subscriptionFees.IsEnabled = false;
-                        requiredControlList = new List<string> { "code", "name", "subscriptionType" , "price" };
+                        requiredControlList = new List<string> { "code", "name", "subscriptionType" };
                         break;
                     case "m":
                         _subscriptionType = "m";
+                        bdr_price.Visibility = Visibility.Collapsed;
+                        btn_subscriptionFees.IsEnabled = true;
+                        requiredControlList = new List<string> { "code", "name", "subscriptionType" };
+                        break;
+                    case "y":
+                        _subscriptionType = "y";
                         bdr_price.Visibility = Visibility.Collapsed;
                         btn_subscriptionFees.IsEnabled = true;
                         requiredControlList = new List<string> { "code", "name", "subscriptionType" };
