@@ -2339,7 +2339,7 @@ Please add Email in setting</value>
     <value>Storage</value>
   </data>
   <data name="trLocations" xml:space="preserve">
-    <value>locations</value>
+    <value>Locations</value>
   </data>
   <data name="trPermissions" xml:space="preserve">
     <value>Permissions</value>
