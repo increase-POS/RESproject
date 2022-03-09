@@ -1,4 +1,5 @@
 ﻿using Restaurant.Classes;
+using Restaurant.Classes.ApiClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +60,8 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        public int tableId;
+        public Tables table;
+        List<Tables> tables = new List<Tables>();
         public bool isOk { get; set; }
         public static List<string> requiredControlList = new List<string>();
         private async void Window_Loaded(object sender, RoutedEventArgs e)
@@ -78,7 +80,7 @@ namespace Restaurant.View.windows
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-                
+                fillTableCombo();
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -90,13 +92,21 @@ namespace Restaurant.View.windows
             }
         }
         private void translate()
-        {
-
-           
-                txt_title.Text = AppSettings.resourcemanager.GetString("trTable");
-
+        {          
+             txt_title.Text = AppSettings.resourcemanager.GetString("trTable");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_tableId, AppSettings.resourcemanager.GetString("trTableHint"));
+            btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
         }
 
+        async Task fillTableCombo()
+        {
+            tables = await FillCombo.table.GetTablesForDinning(MainWindow.branchLogin.branchId, DateTime.Now.ToString());
+            tables = tables.Where(x => x.status != "opened" && x.status != "openedReserved").ToList();
+
+            cb_tableId.SelectedValuePath = "tableId";
+            cb_tableId.DisplayMemberPath = "name";
+            cb_tableId.ItemsSource = tables;
+        }
         private void Btn_select_Click(object sender, RoutedEventArgs e)
         {
             // if have id return true
@@ -104,11 +114,11 @@ namespace Restaurant.View.windows
             if (HelpClass.validate(requiredControlList, this))
             {
                 isOk = true;
-                tableId = (int)cb_tableId.SelectedValue;
+
+                int tableId = (int)cb_tableId.SelectedValue;
+                table = tables.Where(x => x.tableId == tableId).FirstOrDefault();
                 this.Close();
             }
-            // else return false
-            //isOk = false;
         }
     }
 }
