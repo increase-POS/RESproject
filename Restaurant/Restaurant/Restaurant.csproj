@@ -1655,8 +1655,6 @@
     <Folder Include="Reports\StatisticReport\Accounts\" />
     <Folder Include="Reports\StatisticReport\Purchase\" />
     <Folder Include="Reports\StatisticReport\Sale\" />
-    <Folder Include="Reports\StatisticReport\Storage\External\Ar\" />
-    <Folder Include="Reports\StatisticReport\Storage\External\En\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="pic\increase-logo.png" />

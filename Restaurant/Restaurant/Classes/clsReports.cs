@@ -1647,8 +1647,17 @@ Parameters!trValueDiscount.Value)
             invoiceSideConv(paramarr);
 
             itemTransferInvoice(itemTransferInvoices, rep, reppath);
-
-
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("trType", AppSettings.resourcemanagerreport.GetString("trType")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
+            paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem")));
+            paramarr.Add(new ReportParameter("trUnit", AppSettings.resourcemanagerreport.GetString("trUnit")));
+            paramarr.Add(new ReportParameter("trAgentType", AppSettings.resourcemanagerreport.GetString("trAgentType")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trItemUnit", AppSettings.resourcemanagerreport.GetString("trItemUnit")));
+            paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
+ 
         }
         public static void itemTransferInvoiceInternal(IEnumerable<ItemTransferInvoice> itemTransferInvoices, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {

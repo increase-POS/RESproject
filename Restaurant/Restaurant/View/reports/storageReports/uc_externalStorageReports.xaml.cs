@@ -1727,18 +1727,18 @@ namespace Restaurant.View.reports.storageReports
             {
                 if (selectedExternalTab == 0)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\External\Ar\ArItem.rdlc";
+                    addpath = @"\Reports\StatisticReport\Storage\Ar\ArExternalItem.rdlc";
                     secondTitle = "items";
 
                 }
                 else if (selectedExternalTab == 1)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\External\Ar\ArAgent.rdlc";
+                    addpath = @"\Reports\StatisticReport\Storage\Ar\ArExternalAgent.rdlc";
                     secondTitle = "customers";
                 }
                 else if (selectedExternalTab == 2)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\External\Ar\ArInvoice.rdlc";
+                    addpath = @"\Reports\StatisticReport\Storage\Ar\ArExternalInvoice.rdlc";
                     secondTitle = "invoice";
                 }
             }
@@ -1746,17 +1746,17 @@ namespace Restaurant.View.reports.storageReports
             {
                 if (selectedExternalTab == 0)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\External\En\Item.rdlc";
+                    addpath = @"\Reports\StatisticReport\Storage\En\EnExternalItem.rdlc";
                     secondTitle = "items";
                 }
                 else if (selectedExternalTab == 1)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\External\En\Agent.rdlc";
+                    addpath = @"\Reports\StatisticReport\Storage\En\EnExternalAgent.rdlc";
                     secondTitle = "customers";
                 }
                 else if (selectedExternalTab == 2)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\External\En\Invoice.rdlc";
+                    addpath = @"\Reports\StatisticReport\Storage\En\EnExternalInvoice.rdlc";
                     secondTitle = "invoice";
                 }
             }
