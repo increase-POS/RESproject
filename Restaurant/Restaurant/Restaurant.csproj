@@ -248,6 +248,7 @@
     <Compile Include="converters\agentCompanyConverter.cs" />
     <Compile Include="converters\agentNameConverter.cs" />
     <Compile Include="converters\agentTypeConverter.cs" />
+    <Compile Include="converters\closingDescriptonConverter.cs" />
     <Compile Include="converters\deliveryTypeConverter.cs" />
     <Compile Include="converters\depositorNameConverter.cs" />
     <Compile Include="converters\discountTypeConverter.cs" />
@@ -368,6 +369,9 @@
     <Compile Include="View\reports\accountsReports\uc_bankAccountsReports.xaml.cs">
       <DependentUpon>uc_bankAccountsReports.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\reports\accountsReports\uc_closingAccountsReports.xaml.cs">
+      <DependentUpon>uc_closingAccountsReports.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\reports\accountsReports\uc_fundAccountsReports.xaml.cs">
       <DependentUpon>uc_fundAccountsReports.xaml</DependentUpon>
     </Compile>
@@ -415,9 +419,6 @@
     </Compile>
     <Compile Include="View\reports\salesReports\uc_promotionSalesReports.xaml.cs">
       <DependentUpon>uc_promotionSalesReports.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\reports\salesReports\uc_quotationSalesReports.xaml.cs">
-      <DependentUpon>uc_quotationSalesReports.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\reports\salesReports\uc_salesReports.xaml.cs">
       <DependentUpon>uc_salesReports.xaml</DependentUpon>
@@ -701,6 +702,9 @@
     <Compile Include="View\windows\wd_tags.xaml.cs">
       <DependentUpon>wd_tags.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_transBetweenOpenClose.xaml.cs">
+      <DependentUpon>wd_transBetweenOpenClose.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_transfers.xaml.cs">
       <DependentUpon>wd_transfers.xaml</DependentUpon>
     </Compile>
@@ -911,6 +915,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\reports\accountsReports\uc_closingAccountsReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\reports\accountsReports\uc_fundAccountsReports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -972,10 +980,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\reports\salesReports\uc_promotionSalesReports.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\reports\salesReports\uc_quotationSalesReports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1232,8 +1236,8 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_agentMembership.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_applicationStop.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -1355,6 +1359,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\windows\wd_transBetweenOpenClose.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\windows\wd_transfers.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1416,48 +1424,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="Reports\StatisticReport\Storage\Ar\ArStockStorageCollect.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\StatisticReport\Storage\Ar\ArStockStorageItem.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\StatisticReport\Storage\Ar\ArStockStorageLocation.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\Destructive\Ar\ArDes.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\Destructive\En\Des.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\Direct\Ar\ArItem.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\Direct\En\Item.rdlc" />
-    <Content Include="Reports\StatisticReport\Storage\En\EnStockStorageCollect.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\StatisticReport\Storage\En\EnStockStorageItem.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\StatisticReport\Storage\En\EnStockStorageLocation.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\External\Ar\ArAgent.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\External\Ar\ArInvoice.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\External\Ar\ArItem.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\External\En\Agent.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\External\En\Invoice.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\External\En\Item.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\Internal\Ar\ArItem.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\Internal\Ar\ArOperator.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\Internal\En\Item.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\Internal\En\Operator.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\StockStorage\Ar\ArCollect.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\StockStorage\Ar\ArItem.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\StockStorage\Ar\ArLocation.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\StockStorage\En\Collect.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\StockStorage\En\Item.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\StockStorage\En\Location.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\Stocktaking\Ar\ArArchives.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\Stocktaking\Ar\ArShortfalls.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\Stocktaking\En\Archives.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\Stocktaking\En\Shortfalls.rdlc" />
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Resource Include="pic\programs-Rest-login-bg.png" />
@@ -1631,11 +1597,7 @@
       <Name>netoaster</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Reports\StatisticReport\Accounts\" />
-    <Folder Include="Reports\StatisticReport\Purchase\" />
-    <Folder Include="Reports\StatisticReport\Sale\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="pic\increase-logo.png" />
     <Resource Include="pic\no-image-icon-125x125.png" />
