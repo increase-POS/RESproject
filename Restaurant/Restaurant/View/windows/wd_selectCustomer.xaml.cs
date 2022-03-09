@@ -78,7 +78,9 @@ namespace Restaurant.View.windows
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-                 
+                await FillCombo.FillComboCustomers(cb_customerId);
+
+                fillInputs();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -90,11 +92,20 @@ namespace Restaurant.View.windows
         }
         private void translate()
         {
+            txt_title.Text = AppSettings.resourcemanager.GetString("trCustomers");
+            txt_membership.Text = AppSettings.resourcemanager.GetString("trMembership");
 
-          
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customerId, AppSettings.resourcemanager.GetString("trCustomerHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_coupon, AppSettings.resourcemanager.GetString("trCouponHint"));
 
+            btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
         }
 
+        private void fillInputs()
+        {
+            if (customerId != 0)
+                cb_customerId.SelectedValue = customerId;
+        }
         private void Btn_select_Click(object sender, RoutedEventArgs e)
         {
 

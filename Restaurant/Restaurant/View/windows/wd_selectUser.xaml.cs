@@ -85,6 +85,8 @@ namespace Restaurant.View.windows
                     path_title.Data = App.Current.Resources["waiter"] as Geometry;
 
                 await FillCombo.FillComboUsersWithJob(cb_userId, userJob);
+                if (userId != 0)
+                    cb_userId.SelectedValue = userId;
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)

@@ -222,7 +222,7 @@ namespace Restaurant.View.sales
                 if (item != null && selectedTables.Count>0)
                 {
                     item = items.Where(x => x.itemId == itemId).FirstOrDefault();
-                    addRowToBill(item);
+                    addRowToBill(item,1);
                 }
                 else if(selectedTables.Count == 0)
                     Toaster.ShowWarning(Window.GetWindow(this), message:  AppSettings.resourcemanager.GetString("trChooseTableFirst"), animation: ToasterAnimation.FadeIn);
@@ -566,7 +566,7 @@ namespace Restaurant.View.sales
         List<Tables> selectedTables = new List<Tables>();
         Invoice invoice = new Invoice();
         TablesReservation reservation = new TablesReservation();
-        private void addRowToBill(Item item)
+        private void addRowToBill(Item item, long count)
         {
             decimal total = 0;
             var invoiceItem = billDetailsList.Where(x => x.itemId == item.itemId).FirstOrDefault();
@@ -599,7 +599,7 @@ namespace Restaurant.View.sales
                     itemId = item.itemId,
                     itemUnitId = (int)item.itemUnitId,
                     itemName = item.name,
-                    Count = 1,
+                    Count = (int)count,
                     Price = (decimal)item.price,
                     basicPrice = basicPrice,
                     Total = (decimal)item.price,
@@ -1118,7 +1118,7 @@ namespace Restaurant.View.sales
                     invoiceItems.Add(itemT);
                 }
                 #endregion
-                int res = await FillCombo.invoice.saveInvoiceWithItemsAndTables(invoice, invoiceItems,selectedTables);
+                int res = await FillCombo.invoice.saveInvoiceWithItems(invoice, invoiceItems);
                 if(res > 0)
                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                 else
@@ -1157,6 +1157,7 @@ namespace Restaurant.View.sales
             selectedCopouns.Clear() ;
             selectedTables.Clear();
             invoice = new Invoice();
+            txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
 
             //last
             BuildBillDesign();
@@ -1182,6 +1183,8 @@ namespace Restaurant.View.sales
             _ManualDiscount = invoice.discountValue;
             _DiscountType = invoice.discountType;
             selectedCopouns = await FillCombo.invoice.GetInvoiceCoupons(invoice.invoiceId);
+            if(invoice.waiterId != null)
+                txt_waiter.Text = AppSettings.resourcemanager.GetString("trChangeWaiter");
             #endregion
 
             #region text values
@@ -1205,7 +1208,7 @@ namespace Restaurant.View.sales
             foreach(ItemTransfer it in invoiceItems)
             {
                 item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
-                addRowToBill(item);
+                addRowToBill(item, it.quantity);
             }
             #endregion
         }
@@ -1239,6 +1242,10 @@ namespace Restaurant.View.sales
                 {
                     if (selectedTables.Count == 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trChooseTableFirst"), animation: ToasterAnimation.FadeIn);
+                    else if(billDetailsList.Count > 0)
+                    {
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trAddInvoiceWithoutItems"), animation: ToasterAnimation.FadeIn);
+                    }
                     else if (invoice.invoiceId != 0)
                     {
                         await addInvoice("s");
@@ -1274,7 +1281,7 @@ namespace Restaurant.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_tables_Click(object sender, RoutedEventArgs e)
+        private async void Btn_tables_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -1292,6 +1299,7 @@ namespace Restaurant.View.sales
 
 
                         setTablesName();
+                        await fillInvoiceInputs(invoice);
                     }
                     Window.GetWindow(this).Opacity = 1;
                 }
@@ -1339,6 +1347,8 @@ namespace Restaurant.View.sales
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_selectUser w = new wd_selectUser();
                     w.userJob = "waiter";
+                    if(invoice.waiterId != null)
+                        w.userId = (int)invoice.waiterId;
                     w.ShowDialog();
                     if (w.isOk)
                     {
@@ -1375,36 +1385,49 @@ namespace Restaurant.View.sales
             }
         }
 
-        private void Btn_customer_Click(object sender, RoutedEventArgs e)
+        private async void Btn_customer_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
 
-                //if (FillCombo.groupObject.HasPermissionAction(addRangePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
-                //{
-                Window.GetWindow(this).Opacity = 0.2;
-                wd_selectCustomer w = new wd_selectCustomer();
-                w.ShowDialog();
-                if (w.isOk)
+                if (FillCombo.groupObject.HasPermissionAction(addRangePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
-                    if (w.customerId > 0)
+                    Window.GetWindow(this).Opacity = 0.2;
+                    wd_selectCustomer w = new wd_selectCustomer();
+                    if(invoice.agentId != null)
+                    w.customerId =(int) invoice.agentId;
+                    w.ShowDialog();
+                    if (w.isOk)
                     {
-                        // test if id chnage
-                        // change button content
-                        // change foreground color
+                        if (w.customerId > 0)
+                        {
+                            invoice.agentId = w.customerId;
+                            invoice.updateUserId = MainWindow.userLogin.userId;
 
+                            int res = await FillCombo.invoice.saveInvoice(invoice);
+                            if (res > 0)
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+
+                            }
+                            else
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            // test if id chnage
+                            // change button content
+                            // change foreground color
+
+                        }
+                        else
+                        {
+                            // return button content to default
+                            // return foreground color to default
+                        }
                     }
-                    else
-                    {
-                        // return button content to default
-                        // return foreground color to default
-                    }
+                    Window.GetWindow(this).Opacity = 1;
                 }
-                Window.GetWindow(this).Opacity = 1;
-                // }
-                //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)

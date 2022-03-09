@@ -753,6 +753,7 @@
                                         </Button>
                                         <Button Grid.Column="1" BorderBrush="{x:Null}" Padding="0" 
                                   Margin="5 5 2.5 5 " Height="auto" Name="btn_changeTable"
+                                                Click="Btn_changeTable_Click"
                                 Background="{x:Null}" VerticalAlignment="Top"  >
                                             <Grid>
                                                 <Grid.RowDefinitions>

@@ -81,6 +81,7 @@
                     </Border>
                     <TextBlock  Grid.Row="1" Grid.Column="0" 
                                     Text="membership"
+                                Name="txt_membership"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center"  />
                     <TextBlock  Grid.Row="1" Grid.Column="2" 
@@ -88,7 +89,8 @@
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"  VerticalAlignment="Center"  />
 
-                    <TextBlock  Grid.Row="2" Grid.Column="0" 
+                    <TextBlock  Grid.Row="2" Grid.Column="0"
+                                x:Name="txt_invoiceDiscount"
                                     Text="invoice discount"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center"  />
@@ -99,6 +101,7 @@
 
                     <TextBlock  Grid.Row="3" Grid.Column="0" 
                                     Text="delivery discount"
+                                Name="txt_deliveryDiscount"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center"  />
                     <TextBlock  Grid.Row="3" Grid.Column="2" 
