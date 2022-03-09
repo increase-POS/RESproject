@@ -197,6 +197,7 @@ namespace Restaurant.View.reports.salesReports
 
         private void Btn_quotationSalesReports_Click(object sender, RoutedEventArgs e)
         {
+            /*
             try
             {
                 MainWindow.mainWindow.grid_main.Children.Clear();
@@ -209,6 +210,7 @@ namespace Restaurant.View.reports.salesReports
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
+            */
         }
 
         private void Btn_dailySalesReports_Click(object sender, RoutedEventArgs e)

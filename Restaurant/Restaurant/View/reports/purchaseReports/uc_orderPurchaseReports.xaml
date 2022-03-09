@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Restaurant.View.reports.purchaseReports"
-             mc:Ignorable="d"  Tag="purchaseReports"
+             mc:Ignorable="d"  Tag="orderPurchaseReports"
               xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"

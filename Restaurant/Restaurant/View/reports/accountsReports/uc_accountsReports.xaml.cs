@@ -245,7 +245,18 @@ namespace Restaurant.View.reports.accountsReports
 
         private void Btn_closingAccountsReports_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_closingAccountsReports.Instance);
 
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_taxAccountsReports_Click(object sender, RoutedEventArgs e)

@@ -207,7 +207,7 @@
                     </Border>
                     <!--#endregion-->
                     <!--#region quotationSalesReports-->
-                    <Border Tag="quotationSalesReports" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
+                    <!--<Border Tag="quotationSalesReports" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
                         <Border.Effect>
                             <DropShadowEffect
                           ShadowDepth="1"
@@ -222,7 +222,7 @@
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
+                            --><!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>--><!--
                             <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
@@ -239,7 +239,7 @@
                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  >
                                 <StackPanel    Orientation="Horizontal">
                                     <TextBlock Text="Enter"    Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
-                                    <!--<TextBlock   Text=">>"    Foreground="White"></TextBlock>-->
+                                    --><!--<TextBlock   Text=">>"    Foreground="White"></TextBlock>--><!--
                                     <Path  Fill="{StaticResource White}" Stretch="Fill" 
                               Margin="0 0 -3 02"
                          VerticalAlignment="Bottom" Height="12.5" Width="10"
@@ -251,7 +251,7 @@
                                 </StackPanel>
                             </Button>
                         </Grid>
-                    </Border>
+                    </Border>-->
                     <!--#endregion-->
                     <!--#region dailySalesReports-->
                     <Border Tag="dailySalesReports" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
