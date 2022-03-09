@@ -2130,10 +2130,10 @@ namespace Restaurant
                 case "orderSalesReports":
                     grid_main.Children.Add(uc_orderSalesReports.Instance);
                     break;
-                //120 quotationSalesReports
-                case "quotationSalesReports":
-                    grid_main.Children.Add(uc_quotationSalesReports.Instance);
-                    break;
+                ////120 quotationSalesReports
+                //case "quotationSalesReports":
+                //    grid_main.Children.Add(uc_quotationSalesReports.Instance);
+                //    break;
                 //121 dailySalesReports
                 case "dailySalesReports":
                     grid_main.Children.Add(uc_dailySalesReports.Instance);
