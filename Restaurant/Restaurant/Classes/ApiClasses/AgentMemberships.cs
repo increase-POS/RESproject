@@ -17,12 +17,8 @@ namespace Restaurant.Classes
     public class AgentMemberships
     {
         public int agentMembershipsId { get; set; }
-        public Nullable<int> subscriptionFeesId { get; set; }
-        public Nullable<int> cashTransId { get; set; }
         public Nullable<int> membershipId { get; set; }
         public Nullable<int> agentId { get; set; }
-        public Nullable<System.DateTime> startDate { get; set; }
-        public Nullable<System.DateTime> EndDate { get; set; }
         public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
@@ -31,6 +27,7 @@ namespace Restaurant.Classes
         public byte isActive { get; set; }
 
         public decimal Amount { get; set; }
+
 
         public bool canDelete { get; set; }
 
