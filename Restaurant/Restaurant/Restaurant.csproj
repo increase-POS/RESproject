@@ -609,9 +609,6 @@
     <Compile Include="View\windows\wd_acceptUser.xaml.cs">
       <DependentUpon>wd_acceptUser.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\windows\wd_agentMembership.xaml.cs">
-      <DependentUpon>wd_agentMembership.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\windows\wd_applicationStop.xaml.cs">
       <DependentUpon>wd_applicationStop.xaml</DependentUpon>
     </Compile>
@@ -626,9 +623,6 @@
     </Compile>
     <Compile Include="View\windows\wd_diningHallTables.xaml.cs">
       <DependentUpon>wd_diningHallTables.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\windows\wd_dishIngredients.xaml.cs">
-      <DependentUpon>wd_dishIngredients.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_info.xaml.cs">
       <DependentUpon>wd_info.xaml</DependentUpon>
@@ -1238,10 +1232,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\windows\wd_agentMembership.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="View\windows\wd_applicationStop.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1259,10 +1249,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_diningHallTables.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\windows\wd_dishIngredients.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1460,8 +1446,6 @@
     </Content>
     <EmbeddedResource Include="Reports\StatisticReport\Storage\Destructive\Ar\ArDes.rdlc" />
     <EmbeddedResource Include="Reports\StatisticReport\Storage\Destructive\En\Des.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\Direct\Ar\ArItem.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\Direct\En\Item.rdlc" />
     <Content Include="Reports\StatisticReport\Storage\En\EnExternalAgent.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1489,10 +1473,6 @@
     <Content Include="Reports\StatisticReport\Storage\En\EnInternalOperator.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\Internal\Ar\ArItem.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\Internal\Ar\ArOperator.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\Internal\En\Item.rdlc" />
-    <EmbeddedResource Include="Reports\StatisticReport\Storage\Internal\En\Operator.rdlc" />
     <EmbeddedResource Include="Reports\StatisticReport\Storage\StockStorage\Ar\ArCollect.rdlc" />
     <EmbeddedResource Include="Reports\StatisticReport\Storage\StockStorage\Ar\ArItem.rdlc" />
     <EmbeddedResource Include="Reports\StatisticReport\Storage\StockStorage\Ar\ArLocation.rdlc" />
