@@ -3529,4 +3529,7 @@
   <data name="trStorageReport" xml:space="preserve">
     <value>تقرير التخزين</value>
   </data>
+  <data name="personsCountMustGreaterOne" xml:space="preserve">
+    <value>يجب أن يكون عدد الأشخاص أكبر من 1</value>
+  </data>
 </root>

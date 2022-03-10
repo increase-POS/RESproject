@@ -3553,4 +3553,7 @@ Please add Email in setting</value>
   <data name="trStorageReport" xml:space="preserve">
     <value>Storage Report</value>
   </data>
+  <data name="personsCountMustGreaterOne" xml:space="preserve">
+    <value>persons count must be greater than 1</value>
+  </data>
 </root>
