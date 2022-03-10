@@ -469,6 +469,7 @@ namespace Restaurant.View.windows
                     tb_fromQuantity.Text = locationQuantity.ToString();
 
                 }
+                setToquantityMessage();
             }
         }
         #endregion
