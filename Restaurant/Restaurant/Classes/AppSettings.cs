@@ -55,5 +55,8 @@ namespace Restaurant.Classes
         internal static string timeFormat;
 
         static public double time_staying = 3;
+        static public double maximumTimeToKeepReservation = 3;
+        static public double warningTimeForLateReservation = 0.5;
+
     }
 }
