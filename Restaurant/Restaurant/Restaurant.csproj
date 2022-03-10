@@ -1449,6 +1449,15 @@
     <Content Include="Reports\StatisticReport\Storage\Ar\ArStockStorageLocation.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\StatisticReport\Storage\Ar\ArDirectItem.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Storage\Ar\ArInternalItem.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Storage\Ar\ArInternalOperator.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="Reports\StatisticReport\Storage\Destructive\Ar\ArDes.rdlc" />
     <EmbeddedResource Include="Reports\StatisticReport\Storage\Destructive\En\Des.rdlc" />
     <EmbeddedResource Include="Reports\StatisticReport\Storage\Direct\Ar\ArItem.rdlc" />
@@ -1469,6 +1478,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\StatisticReport\Storage\En\EnStockStorageLocation.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Storage\En\EnDirectItem.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Storage\En\EnInternalItem.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Storage\En\EnInternalOperator.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Reports\StatisticReport\Storage\Internal\Ar\ArItem.rdlc" />

@@ -1075,6 +1075,8 @@ Parameters!trValueDiscount.Value)
                 secondTitle = AppSettings.resourcemanagerreport.GetString("trQTReport");
             else if (secondTitle == "operator")
                 secondTitle = AppSettings.resourcemanagerreport.GetString("trOperator");
+            else if (secondTitle == "operations")
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trOperations");//trOperations
             else if (secondTitle == "payments")
                 secondTitle = AppSettings.resourcemanagerreport.GetString("trPayments");
             else if (secondTitle == "recipient")
@@ -1663,7 +1665,18 @@ Parameters!trValueDiscount.Value)
         {
             itemTransferInvTypeConv(paramarr);
             itemTransferInvoice(itemTransferInvoices, rep, reppath);
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("trType", AppSettings.resourcemanagerreport.GetString("trType")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
+            paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem")));
+            paramarr.Add(new ReportParameter("trUnit", AppSettings.resourcemanagerreport.GetString("trUnit")));
+ 
+            paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
 
+            paramarr.Add(new ReportParameter("trFromBranch", AppSettings.resourcemanagerreport.GetString("trFromBranch")));
+            paramarr.Add(new ReportParameter("trToBranch", AppSettings.resourcemanagerreport.GetString("trToBranch")));
+            
         }
         public static void itemTransferInvoiceDestroied(IEnumerable<ItemTransferInvoice> itemTransferInvoices, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {

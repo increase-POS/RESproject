@@ -1050,13 +1050,13 @@ namespace Restaurant.View.reports.storageReports
             {
                 if (selectedTab == 0)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\Internal\Ar\ArItem.rdlc";
+                    addpath = @"\Reports\StatisticReport\Storage\Ar\ArInternalItem.rdlc";
                     secondTitle = "items";
                 }
                 else if (selectedTab == 1)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\Internal\Ar\ArOperator.rdlc";
-                    secondTitle = "operator";
+                    addpath = @"\Reports\StatisticReport\Storage\Ar\ArInternalOperator.rdlc";
+                    secondTitle = "operations";
                 }
 
             }
@@ -1064,13 +1064,13 @@ namespace Restaurant.View.reports.storageReports
             {
                 if (selectedTab == 0)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\Internal\En\Item.rdlc";
+                    addpath = @"\Reports\StatisticReport\Storage\En\EnInternalItem.rdlc";
                     secondTitle = "items";
                 }
                 else if (selectedTab == 1)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\Internal\En\Operator.rdlc";
-                    secondTitle = "operator";
+                    addpath = @"\Reports\StatisticReport\Storage\En\EnInternalOperator.rdlc";
+                    secondTitle = "operations";
                 }
 
             }
