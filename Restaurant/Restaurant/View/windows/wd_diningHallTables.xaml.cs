@@ -261,7 +261,7 @@ namespace Restaurant.View.windows
         async Task refreshReservationsList()
         {
             reservationsList = await reservation.Get(MainWindow.branchLogin.branchId);
-            reservationsList = reservationsList.Where(x => DateTime.Parse( x.reservationDate.ToString().Split(' ')[0]) >= DateTime.Parse(DateTime.Now.ToString().Split(' ')[0]));
+            reservationsList = reservationsList.Where(x => DateTime.Parse( x.reservationDate.ToString().Split(' ')[0]) >= DateTime.Parse(DateTime.Now.ToString().Split(' ')[0])).ToList();
             dg_reservation.ItemsSource = reservationsList;
         }
         #endregion      
@@ -548,6 +548,9 @@ namespace Restaurant.View.windows
             {             
                 grid_emptyTableButtons.Visibility = Visibility.Collapsed;
 
+                grid_reservatedTableDetails.Visibility = Visibility.Visible;
+                dp_reservatedTableTitle.Visibility = Visibility.Visible;
+
                 tb_reservCode.Text = nextReservation.code;
                 tb_date.Text = nextReservation.reservationDate.ToString().Split(' ')[0];
                 tb_reservStartTime.Text = nextReservation.reservationTime.ToString().Split(' ')[1];
@@ -558,8 +561,6 @@ namespace Restaurant.View.windows
                 if (table.status != "open" && table.status != "openedReserved")
                 {
                     grid_reservatedTableButtons.Visibility = Visibility.Visible;
-                    dp_reservatedTableTitle.Visibility = Visibility.Visible;
-                    grid_reservatedTableDetails.Visibility = Visibility.Visible;
 
                     grid_openTableDetails.Visibility = Visibility.Collapsed;
                     grid_openTableButtons.Visibility = Visibility.Collapsed;
@@ -627,43 +628,7 @@ namespace Restaurant.View.windows
         }
 
         #endregion
-
-        private async void Dg_reservation_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            /*
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                //selection
-
-                if (dg_reservation.SelectedIndex != -1)
-                {
-                    reservation = new TablesReservation();
-                    reservation = dg_reservation.SelectedItem as TablesReservation;
-                    this.DataContext = reservation;
-                    _PersonsCount = (int)reservation.personsCount;
-                    tb_personsCount.Text = _PersonsCount.ToString();
-                    if (reservation.tables.Count != 0)
-                    {
-                        selectedTables = reservation.tables;
-                    }
-                    dg_tables.ItemsSource = selectedTables;
-
-                    btn_tables.IsEnabled = true;
-                    btn_confirm.IsEnabled = true;
-                    btn_cancel.IsEnabled = true;
-
-                }
-                HelpClass.clearValidate(requiredControlList, this);
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-            */
-        }
+      
         #region Button In DataGrid
 
        async void cancelRowinDatagridTable(object sender, RoutedEventArgs e)

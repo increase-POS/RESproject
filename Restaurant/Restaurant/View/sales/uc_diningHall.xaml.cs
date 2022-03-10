@@ -838,6 +838,11 @@ namespace Restaurant.View.sales
                 _SequenceNum++;
             }
             sv_billDetail.Content = gridContainer;
+
+            if (billDetailsList.Count == 0)
+                btn_cancel.IsEnabled = true;
+            else
+                btn_cancel.IsEnabled = false;
         }
         void buttonPlus_Click(object sender, RoutedEventArgs e)
         {
@@ -1136,8 +1141,16 @@ namespace Restaurant.View.sales
                 invoice.invType = invType;
                
                 int res = await FillCombo.invoice.saveInvoice(invoice);
-                if(res > 0)
+                if (res > 0)
+                {
                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopCanceled"), animation: ToasterAnimation.FadeIn);
+                    #region update reservation status to cancle
+                    if(invoice.reservationId != null)
+                    {
+                       await reservation.updateReservationStatus((long)invoice.reservationId, "cancle", MainWindow.userLogin.userId);
+                    }
+                    #endregion
+                }
                 else
                     Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             }
@@ -1156,6 +1169,13 @@ namespace Restaurant.View.sales
             _DiscountType = "";
             selectedCopouns.Clear() ;
             selectedTables.Clear();
+            #region btns
+            btn_cancel.IsEnabled = false;
+            btn_waiter.IsEnabled = false;
+            btn_discount.IsEnabled = false;
+            btn_customer.IsEnabled = false;
+            btn_kitchen.IsEnabled = false;
+            #endregion
             invoice = new Invoice();
             txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
 
@@ -1210,6 +1230,9 @@ namespace Restaurant.View.sales
                 item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
                 addRowToBill(item, it.quantity);
             }
+
+            if (invoiceItems.Count == 0)
+                btn_cancel.IsEnabled = true;
             #endregion
         }
         #endregion
@@ -1271,6 +1294,7 @@ namespace Restaurant.View.sales
                 if (FillCombo.groupObject.HasPermissionAction(invoicePermission, FillCombo.groupObjects, "one"))
                 {
                     await cancleInvoice("sc");
+                    clear();
                 }
                 HelpClass.EndAwait(grid_main);
             }
@@ -1297,6 +1321,12 @@ namespace Restaurant.View.sales
                         selectedTables = w.selectedTables;
                         invoice = w.invoice;
 
+                        #region enable btns
+                        btn_waiter.IsEnabled = true;
+                        btn_discount.IsEnabled = true;
+                        btn_customer.IsEnabled = true;
+                        btn_kitchen.IsEnabled = true;
+                        #endregion
 
                         setTablesName();
                         await fillInvoiceInputs(invoice);
@@ -1352,16 +1382,18 @@ namespace Restaurant.View.sales
                     w.ShowDialog();
                     if (w.isOk)
                     {
-                        if(w.userId > 0)
-                        {
-                                invoice.waiterId = w.userId;
-                                txt_waiter.Text = AppSettings.resourcemanager.GetString("trChangeWaiter");
+                        invoice.waiterId = w.userId;
+                        if (w.userId > 0)
+                        {                           
+                            string userName = FillCombo.usersList.Where(x => x.createUserId == w.userId).Select(x => x.name).Single();
+                            txt_waiter.Text = userName;
                             // change button content
                             // change foreground color
 
                         }
                         else
-                        {                           
+                        {
+                            txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
                         // return button content to default
                         // return foreground color to default
                         }

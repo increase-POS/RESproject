@@ -155,5 +155,13 @@ namespace Restaurant.Classes.ApiClasses
             parameters.Add("endTime", endTime);
             return await APIResult.post(method, parameters);
         }
+        public async Task<int> checkOpenedTable(int tableId,int branchId)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "Tables/checkOpenedTable";
+            parameters.Add("tableId", tableId.ToString());
+            parameters.Add("branchId", branchId.ToString());
+            return await APIResult.post(method, parameters);
+        }
     }
 }

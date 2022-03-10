@@ -322,7 +322,29 @@ namespace Restaurant.View.sales.reservations
                 }
                 message += " ";
                 if (!valid)
-                    Toaster.ShowWarning(Window.GetWindow(this), message: message + AppSettings.resourcemanager.GetString("trReserved"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowWarning(Window.GetWindow(this), message: message + AppSettings.resourcemanager.GetString("trNotAvailable"), animation: ToasterAnimation.FadeIn);
+            }
+            return valid;
+        }
+        async Task<Boolean> validateTablesBeforeConfirm()
+        {
+            bool valid = true;
+            string message = "";
+            foreach (Tables tb in selectedTables)
+            {
+                int notOpened = await FillCombo.table.checkOpenedTable(tb.tableId, MainWindow.branchLogin.branchId);
+
+                if (notOpened == 0)
+                {
+                    valid = false;
+                    if (message == "")
+                        message += tb.name;
+                    else
+                        message += ", " + tb.name;
+                }
+                message += " ";
+                if (!valid)
+                    Toaster.ShowWarning(Window.GetWindow(this), message: message + AppSettings.resourcemanager.GetString("trOpened"), animation: ToasterAnimation.FadeIn);
             }
             return valid;
         }
@@ -352,16 +374,21 @@ namespace Restaurant.View.sales.reservations
                     #endregion
                     if (w.isOk)
                     {
-                        int res = await reservation.updateReservationStatus(reservation.reservationId, "confirm", MainWindow.userLogin.userId);
-                        if (res > 0)
+                        bool valid = await validateTablesBeforeConfirm();
+                        if (valid)
                         {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                            Clear();
-                            await refreshReservaitionsList();
-                            await Search();
+                            int res = await reservation.updateReservationStatus(reservation.reservationId, "confirm", MainWindow.userLogin.userId);
+                            if (res > 0)
+                            {
+                                await openInvoiceForReserve();
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                                Clear();
+                                await refreshReservaitionsList();
+                                await Search();
+                            }
+                            else
+                                Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         }
-                        else
-                            Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     }
                     HelpClass.EndAwait(grid_main);
                 }
@@ -374,6 +401,24 @@ namespace Restaurant.View.sales.reservations
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+        private async Task<int> openInvoiceForReserve()
+        {
+            #region invoice object
+            FillCombo.invoice = new Invoice();
+
+            FillCombo.invoice.invNumber = await FillCombo.invoice.generateInvNumber("si", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+            FillCombo.invoice.invType = "sd";
+            FillCombo.invoice.agentId = reservation.customerId;
+            FillCombo.invoice.reservationId = reservation.reservationId;
+            FillCombo.invoice.branchCreatorId = MainWindow.branchLogin.branchId;
+            FillCombo.invoice.posId = MainWindow.posLogin.posId;
+            FillCombo.invoice.branchId = MainWindow.branchLogin.branchId;
+            FillCombo.invoice.createUserId = MainWindow.userLogin.userId;
+            #endregion
+
+            int res = await FillCombo.invoice.saveInvoiceWithTables(FillCombo.invoice, reservation.tables);
+            return res;
         }
         private async void Btn_delete_Click(object sender, RoutedEventArgs e)
         {
@@ -514,10 +559,13 @@ namespace Restaurant.View.sales.reservations
                     }
                     dg_tables.ItemsSource = selectedTables;
 
+                    #region enable button
                     btn_tables.IsEnabled = true;
                     btn_confirm.IsEnabled = true;
                     btn_cancel.IsEnabled = true;
-
+                    btn_update.IsEnabled = true;
+                    btn_delete.IsEnabled = true;
+                    #endregion
                 }
                 HelpClass.clearValidate(requiredControlList, this);
                 HelpClass.EndAwait(grid_main);
@@ -561,6 +609,7 @@ namespace Restaurant.View.sales.reservations
         async Task refreshReservaitionsList()
         {
             reservationsList = await reservation.Get(MainWindow.branchLogin.branchId);
+            reservationsList = reservationsList.Where(x => x.status != "confirm").ToList();
         }
         void RefreshReservationsView()
         {
@@ -577,9 +626,14 @@ namespace Restaurant.View.sales.reservations
            // tb_personsCount.Text = "";
             // last 
             HelpClass.clearValidate(requiredControlList, this);
+
+            #region buttons
             btn_tables.IsEnabled = false;
             btn_confirm.IsEnabled = false;
             btn_cancel.IsEnabled = false;
+            btn_update.IsEnabled = false;
+            btn_delete.IsEnabled = false;
+            #endregion
         }
         string input;
         decimal _decimal = 0;

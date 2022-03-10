@@ -193,7 +193,7 @@
                                 <Border Margin="5,10,5,5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                                 <DataGrid  Margin="5,10,5,5" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
-                       x:Name="dg_reservation" SelectionChanged="Dg_reservation_SelectionChanged"  AutoGenerateColumns="False"   Background="White"
+                       x:Name="dg_reservation"  AutoGenerateColumns="False"   Background="White"
                         ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
                                     <DataGrid.OpacityMask>
                                         <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
