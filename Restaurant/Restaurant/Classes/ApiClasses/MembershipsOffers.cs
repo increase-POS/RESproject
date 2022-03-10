@@ -16,9 +16,9 @@ namespace Restaurant.Classes
 {
     public class MembershipsOffers
     {
-        public int invClassMemberId { get; set; }
+        public int membershipOfferId { get; set; }
         public Nullable<int> membershipId { get; set; }
-        public Nullable<int> invClassId { get; set; }
+        public Nullable<int> offerId { get; set; }
         public string notes { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
@@ -76,10 +76,10 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
 
-        public async Task<int> UpdateInvclassByMembershipId(List<MembershipsOffers> newList, int membershipId, int updateUserId)
+        public async Task<int> UpdateOffersByMembershipId(List<MembershipsOffers> newList, int membershipId, int updateUserId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            string method = "membershipsOffers/UpdateInvclassByMembershipId";
+            string method = "membershipsOffers/UpdateOffersByMembershipId";
             var newListParameter = JsonConvert.SerializeObject(newList);
             parameters.Add("newList", newListParameter);
             parameters.Add("membershipId", membershipId.ToString());

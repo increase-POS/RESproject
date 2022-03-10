@@ -2210,7 +2210,7 @@ Please add Email in setting</value>
     <value>Sales Order</value>
   </data>
   <data name="trSelectedCustomers" xml:space="preserve">
-    <value>Selected customers</value>
+    <value>Selected Customers</value>
   </data>
   <data name="trSelectLocations" xml:space="preserve">
     <value>Select Locations</value>
@@ -3555,5 +3555,17 @@ Please add Email in setting</value>
   </data>
   <data name="personsCountMustGreaterOne" xml:space="preserve">
     <value>persons count must be greater than 1</value>
+  </data>
+  <data name="trNotAvailable" xml:space="preserve">
+    <value>Not available</value>
+  </data>
+  <data name="trSelectedCoupons" xml:space="preserve">
+    <value>Selected Coupons</value>
+  </data>
+  <data name="trSelectedInvoicesClasses" xml:space="preserve">
+    <value>Selected Invoices Classes</value>
+  </data>
+  <data name="trSelectedOffers" xml:space="preserve">
+    <value>Selected Offers</value>
   </data>
 </root>

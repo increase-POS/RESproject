@@ -76,10 +76,10 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
 
-        public async Task<int> UpdateInvclassByMembershipId(List<CouponsMemberships> newList, int membershipId, int updateUserId)
+        public async Task<int> UpdateCouponsByMembershipId(List<CouponsMemberships> newList, int membershipId, int updateUserId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            string method = "couponsMemberships/UpdateInvclassByMembershipId";
+            string method = "couponsMemberships/UpdateCouponsByMembershipId";
             var newListParameter = JsonConvert.SerializeObject(newList);
             parameters.Add("newList", newListParameter);
             parameters.Add("membershipId", membershipId.ToString());

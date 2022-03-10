@@ -3532,4 +3532,16 @@
   <data name="personsCountMustGreaterOne" xml:space="preserve">
     <value>يجب أن يكون عدد الأشخاص أكبر من 1</value>
   </data>
+  <data name="trNotAvailable" xml:space="preserve">
+    <value>غير متاح</value>
+  </data>
+  <data name="trSelectedCoupons" xml:space="preserve">
+    <value>الكوبونات المختارة</value>
+  </data>
+  <data name="trSelectedInvoicesClasses" xml:space="preserve">
+    <value>فئات الفواتير المختارة</value>
+  </data>
+  <data name="trSelectedOffers" xml:space="preserve">
+    <value>العروض المختارة</value>
+  </data>
 </root>

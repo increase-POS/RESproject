@@ -108,17 +108,6 @@ namespace Restaurant.View.sales.promotion.membership
         }
 
         #region Refresh & Search
-        private string getSubscriptionType(string s)
-        {
-            string value = "";
-
-            if (s.Equals("f")) value = AppSettings.resourcemanager.GetString("trFree");
-            else if (s.Equals("m")) value = AppSettings.resourcemanager.GetString("trMonthly");
-            else if (s.Equals("y")) value = AppSettings.resourcemanager.GetString("trYearly");
-            else if (s.Equals("o")) value = AppSettings.resourcemanager.GetString("trOnce");
-
-            return value;
-        }
         async Task Search()
         {
             if (memberships is null)
@@ -202,8 +191,6 @@ namespace Restaurant.View.sales.promotion.membership
         {//selection
             try
             {
-                HelpClass.StartAwait(grid_main);
-                
                 if (dg_membership.SelectedIndex != -1)
                 {
                     membership = dg_membership.SelectedItem as Memberships;
@@ -219,21 +206,18 @@ namespace Restaurant.View.sales.promotion.membership
                         coMemberships = coMemberships.Where(c => c.membershipId == membership.membershipId);
                         tb_couponsCount.Text = coMemberships.Count().ToString();
                         //offers
-                        //ofMemberships = await ofMembership.GetAll();
-                        //ofMemberships = ofMemberships.Where(o => o.membershipId == membership.membershipId);
-                        //tb_offersCount.Text = ofMemberships.Count().ToString();
+                        ofMemberships = await ofMembership.GetAll();
+                        ofMemberships = ofMemberships.Where(o => o.membershipId == membership.membershipId);
+                        tb_offersCount.Text = ofMemberships.Count().ToString();
                         //invoices
-                        //inMemberships = await inMembership.GetAll();
-                        //inMemberships = inMemberships.Where(i => i.membershipId == membership.membershipId);
-                        //tb_invoicesClassesCount.Text = inMemberships.Count().ToString();
+                        inMemberships = await inMembership.GetAll();
+                        inMemberships = inMemberships.Where(i => i.membershipId == membership.membershipId);
+                        tb_invoicesClassesCount.Text = inMemberships.Count().ToString();
                     }
                 }
-                //HelpClass.clearValidate(requiredControlList, this);
-                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -335,33 +319,19 @@ namespace Restaurant.View.sales.promotion.membership
                     {
                         Memberships row = (Memberships)dg_membership.SelectedItems[0];
 
-                        try
-                        {
-                            HelpClass.StartAwait(grid_main);
-                            //if (FillCombo.groupObject.HasPermissionAction("membershipCreate_subscriptionFees", FillCombo.groupObjects, "one"))
-                            //{
-                                Window.GetWindow(this).Opacity = 0.2;
+                        Window.GetWindow(this).Opacity = 0.2;
 
-                                wd_agentMembership w = new wd_agentMembership();
+                        wd_membershipList w = new wd_membershipList();
 
-                                w.membershipID = membership.membershipId;
-                                w.ShowDialog();
-                                //if (w.isActive)
-                                //{
-                                //}
-
-                                Window.GetWindow(this).Opacity = 1;
-                            //}
-                            //else
-                            //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                            HelpClass.EndAwait(grid_main);
-                        }
-                        catch (Exception ex)
-                        {
-                            HelpClass.EndAwait(grid_main);
-                            HelpClass.ExceptionMessage(ex, this);
-                        }
-
+                        w.membershipID = membership.membershipId;
+                        w.membershipType = "a";
+                        w.ShowDialog();
+                               
+                        Window.GetWindow(this).Opacity = 1;
+                        //refresh customers
+                        agMemberships = await agMembership.GetAll();
+                        agMemberships = agMemberships.Where(a => a.membershipId == membership.membershipId);
+                        tb_customersCount.Text = agMemberships.Count().ToString();
 
                     }
 
@@ -384,8 +354,19 @@ namespace Restaurant.View.sales.promotion.membership
                     {
                         Memberships row = (Memberships)dg_membership.SelectedItems[0];
 
+                        Window.GetWindow(this).Opacity = 0.2;
 
+                        wd_membershipList w = new wd_membershipList();
 
+                        w.membershipID = membership.membershipId;
+                        w.membershipType = "c";
+                        w.ShowDialog();
+
+                        Window.GetWindow(this).Opacity = 1;
+                        //refresh coupons
+                        coMemberships = await coMembership.GetAll();
+                        coMemberships = coMemberships.Where(c => c.membershipId == membership.membershipId);
+                        tb_couponsCount.Text = coMemberships.Count().ToString();
                     }
 
                 HelpClass.EndAwait(grid_main);
@@ -407,8 +388,19 @@ namespace Restaurant.View.sales.promotion.membership
                     {
                         Memberships row = (Memberships)dg_membership.SelectedItems[0];
 
+                        Window.GetWindow(this).Opacity = 0.2;
 
+                        wd_membershipList w = new wd_membershipList();
 
+                        w.membershipID = membership.membershipId;
+                        w.membershipType = "o";
+                        w.ShowDialog();
+
+                        Window.GetWindow(this).Opacity = 1;
+                        //refresh offers
+                        ofMemberships = await ofMembership.GetAll();
+                        ofMemberships = ofMemberships.Where(o => o.membershipId == membership.membershipId);
+                        tb_offersCount.Text = ofMemberships.Count().ToString();
                     }
 
                 HelpClass.EndAwait(grid_main);
@@ -430,7 +422,19 @@ namespace Restaurant.View.sales.promotion.membership
                     {
                         Memberships row = (Memberships)dg_membership.SelectedItems[0];
 
+                        Window.GetWindow(this).Opacity = 0.2;
 
+                        wd_membershipList w = new wd_membershipList();
+
+                        w.membershipID = membership.membershipId;
+                        w.membershipType = "i";
+                        w.ShowDialog();
+
+                        Window.GetWindow(this).Opacity = 1;
+                        //invoices
+                        inMemberships = await inMembership.GetAll();
+                        inMemberships = inMemberships.Where(i => i.membershipId == membership.membershipId);
+                        tb_invoicesClassesCount.Text = inMemberships.Count().ToString();
 
                     }
 
