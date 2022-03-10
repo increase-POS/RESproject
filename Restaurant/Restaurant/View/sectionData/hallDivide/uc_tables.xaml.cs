@@ -186,39 +186,46 @@ namespace Restaurant.View.sectionData.hallDivide
                     //isValidName = await chkNameValidate(tb_name.Text, MainWindow.branchLogin.branchId, 0);
 
                     //if (HelpClass.validate(requiredControlList, this) && isValidName)
+
                     if (HelpClass.validate(requiredControlList, this))
                     {
-                        table = new Tables();
-
-                        table.name = tb_name.Text;
-
-                        if (tables.Where(x => x.name == table.name && x.branchId == MainWindow.branchLogin.branchId).Count() == 0)
+                        if (int.Parse(tb_personsCount.Text)<2)
+                            HelpClass.SetValidate(p_error_personsCount, "personsCountMustGreaterOne");
+                       else
                         {
-                            int count = 1;
-                            if (int.Parse(tb_personsCount.Text) != 0) count = int.Parse(tb_personsCount.Text);
-                            table.personsCount =count;
-                            table.notes = tb_notes.Text;
-                            table.createUserId = MainWindow.userLogin.userId;
-                            table.updateUserId = MainWindow.userLogin.userId;
-                            table.isActive = 1;
-                            table.branchId = MainWindow.branchLogin.branchId;
 
-                            int s = await table.save(table);
-                            if (s <= 0)
-                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                            else
+                            table = new Tables();
+
+                            table.name = tb_name.Text;
+
+                            if (tables.Where(x => x.name == table.name && x.branchId == MainWindow.branchLogin.branchId).Count() == 0)
                             {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                int count = 1;
+                                if (int.Parse(tb_personsCount.Text) != 0) count = int.Parse(tb_personsCount.Text);
+                                table.personsCount = count;
+                                table.notes = tb_notes.Text;
+                                table.createUserId = MainWindow.userLogin.userId;
+                                table.updateUserId = MainWindow.userLogin.userId;
+                                table.isActive = 1;
+                                table.branchId = MainWindow.branchLogin.branchId;
 
-                                Clear();
-                                await RefreshTablesList();
-                                await Search();
+                                int s = await table.save(table);
+                                if (s <= 0)
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                else
+                                {
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+                                    Clear();
+                                    await RefreshTablesList();
+                                    await Search();
+                                }
                             }
+                            else
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trDuplicateCodeToolTip"), animation: ToasterAnimation.FadeIn);
                         }
-                        else
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trDublicateTables"), animation: ToasterAnimation.FadeIn);
-
                     }
+
                     HelpClass.EndAwait(grid_main);
                 }
                 else
@@ -236,7 +243,7 @@ namespace Restaurant.View.sectionData.hallDivide
         {//update
             try
             {
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update"))
                 {
                     HelpClass.StartAwait(grid_main);
 
@@ -248,30 +255,34 @@ namespace Restaurant.View.sectionData.hallDivide
                     if (table.tableId > 0)
                     {
                         if (HelpClass.validate(requiredControlList, this))
-                    {
-                        table.name = tb_name.Text;
-                        if (tables.Where(x => x.name == table.name && x.branchId == MainWindow.branchLogin.branchId && x.tableId != table.tableId).Count() == 0)
                         {
-                            int count = 1;
-                            if (int.Parse(tb_personsCount.Text) != 0) count = int.Parse(tb_personsCount.Text);
-                            table.personsCount = count;
-                            table.notes = tb_notes.Text;
-                            table.updateUserId = MainWindow.userLogin.userId;
-                            table.sectionId = null;
-                            int s = await table.save(table);
-                            if (s <= 0)
-                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            if (int.Parse(tb_personsCount.Text) < 2)
+                                HelpClass.SetValidate(p_error_personsCount, "personsCountMustGreaterOne");
                             else
                             {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                                await RefreshTablesList();
-                                await Search();
+                                table.name = tb_name.Text;
+                                if (tables.Where(x => x.name == table.name && x.branchId == MainWindow.branchLogin.branchId && x.tableId != table.tableId).Count() == 0)
+                                {
+                                    int count = 1;
+                                    if (int.Parse(tb_personsCount.Text) != 0) count = int.Parse(tb_personsCount.Text);
+                                    table.personsCount = count;
+                                    table.notes = tb_notes.Text;
+                                    table.updateUserId = MainWindow.userLogin.userId;
+                                    table.sectionId = null;
+                                    int s = await table.save(table);
+                                    if (s <= 0)
+                                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                    else
+                                    {
+                                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                                        await RefreshTablesList();
+                                        await Search();
+                                    }
+                                }
+                                else
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trDublicateTables"), animation: ToasterAnimation.FadeIn);
                             }
                         }
-                        else
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trDublicateTables"), animation: ToasterAnimation.FadeIn);
-
-                    }
                     }
                     else
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
