@@ -2,6 +2,7 @@
 using LiveCharts.Helpers;
 using LiveCharts.Wpf;
 using Restaurant.Classes;
+using Restaurant.ApiClasses;
 using Restaurant.Classes.ApiClasses;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,7 @@ namespace Restaurant.View.sectionData
         IEnumerable<Card> cardsQuery;
         IEnumerable<Pos> posQuery;
         IEnumerable<Classes.Section> sectionsQuery;
+        IEnumerable<HallSection> hallSectionsQuery;
         IEnumerable<Tables> tablesQuery;
         IEnumerable<ResidentialSectors> sectoresQuery;
 
@@ -161,6 +163,19 @@ namespace Restaurant.View.sectionData
             {
                 InitializeComponent();
                 sectionsQuery = _sectionsQuery;
+                data = _data;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        public win_lvc(IEnumerable<HallSection> _sectionsQuery, int _data)
+        {
+            try
+            {
+                InitializeComponent();
+                hallSectionsQuery = _sectionsQuery;
                 data = _data;
             }
             catch (Exception ex)

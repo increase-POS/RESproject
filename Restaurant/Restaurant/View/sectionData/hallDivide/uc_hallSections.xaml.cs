@@ -22,7 +22,7 @@ using Microsoft.Reporting.WinForms;
 using Microsoft.Win32;
 using System.IO;
 using Restaurant.View.windows;
-
+using Restaurant.Classes.ApiClasses;
 
 namespace Restaurant.View.sectionData.hallDivide
 {
@@ -91,9 +91,9 @@ namespace Restaurant.View.sectionData.hallDivide
         string selectLocationPermission = "hallSections_selectTables";
 
         Location location = new Location();
-        Section section = new Section();
-        IEnumerable<Section> sectionsQuery;
-        IEnumerable<Section> sections;
+        HallSection section = new HallSection();
+        IEnumerable<HallSection> sectionsQuery;
+        IEnumerable<HallSection> sections;
         byte tgl_sectionState;
         string searchText = "";
         public static List<string> requiredControlList;
@@ -121,7 +121,7 @@ namespace Restaurant.View.sectionData.hallDivide
                 translate();
 
                 await FillCombo.fillComboBranchesAllWithoutMain(cb_branchId);
-                section = new Section();
+                section = new HallSection();
                 section.branchId = MainWindow.branchLogin.branchId;
                 if (HelpClass.isAdminPermision())
                     cb_branchId.IsEnabled = true;
@@ -189,11 +189,11 @@ namespace Restaurant.View.sectionData.hallDivide
                     bool isValidName = true;
                     isValidName = await chkNameValidate(tb_name.Text , Convert.ToInt32(cb_branchId.SelectedValue) , 0);
 
-                    section = new Section();
+                    section = new HallSection();
 
                     if (HelpClass.validate(requiredControlList, this) && isValidName)
                     {
-                        section = new Section();
+                        section = new HallSection();
                         section.name = tb_name.Text;
                         section.details = tb_details.Text;
                         section.branchId = Convert.ToInt32(cb_branchId.SelectedValue);
@@ -201,7 +201,6 @@ namespace Restaurant.View.sectionData.hallDivide
                         section.createUserId = MainWindow.userLogin.userId;
                         section.updateUserId = MainWindow.userLogin.userId;
                         section.isActive = 1;
-                        section.type = "t";
 
                         int s = await section.save(section);
                         if (s <= 0)
@@ -443,7 +442,7 @@ namespace Restaurant.View.sectionData.hallDivide
                 //selection
                 if (dg_section.SelectedIndex != -1)
                 {
-                    section = dg_section.SelectedItem as Section;
+                    section = dg_section.SelectedItem as HallSection;
                     this.DataContext = section;
                     if (section != null)
                     {
@@ -510,13 +509,11 @@ namespace Restaurant.View.sectionData.hallDivide
             ) && s.isActive == tgl_sectionState);
             RefreshSectionsView();
         }
-        async Task<IEnumerable<Section>> RefreshSectionsList()
+        async Task<IEnumerable<HallSection>> RefreshSectionsList()
         {
             sections = await section.Get();
-            if (HelpClass.isAdminPermision())
-                sections = sections.Where(x => x.type == "t" && x.isFreeZone != 1);
-            else
-                sections = sections.Where(x => x.branchId == MainWindow.branchLogin.branchId && x.isFreeZone != 1);
+            if (!HelpClass.isAdminPermision())
+                sections = sections.Where(x => x.branchId == MainWindow.branchLogin.branchId);
             return sections;
         }
         void RefreshSectionsView()
@@ -528,7 +525,7 @@ namespace Restaurant.View.sectionData.hallDivide
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            section = new Section();
+            section = new HallSection();
             section.branchId = MainWindow.branchLogin.branchId;
             this.DataContext = section;
             btn_tables.IsEnabled = false;

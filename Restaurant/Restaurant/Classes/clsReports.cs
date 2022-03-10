@@ -417,7 +417,7 @@ namespace Restaurant.Classes
            
         }
 
-        public static void hallSectionsReport(IEnumerable<Section> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        public static void hallSectionsReport(IEnumerable<HallSection> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
