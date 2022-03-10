@@ -64,6 +64,8 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        public int itemId;
         public bool isOpend = false;
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -153,7 +155,6 @@ namespace Restaurant.View.windows
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//add
-/*
             try
             {
 
@@ -188,11 +189,9 @@ namespace Restaurant.View.windows
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private async void Btn_update_Click(object sender, RoutedEventArgs e)
         {//update
-/*
             try
             {
                 HelpClass.StartAwait(grid_main);
@@ -222,7 +221,6 @@ namespace Restaurant.View.windows
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private async void Btn_delete_Click(object sender, RoutedEventArgs e)
         {

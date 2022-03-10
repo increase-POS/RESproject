@@ -1573,12 +1573,18 @@ namespace Restaurant.View.catalog.foods
 
                     if (FillCombo.groupObject.HasPermissionAction(dishIngredientsPermission, FillCombo.groupObjects, "one"))
                     {
-                       
+                        Window.GetWindow(this).Opacity = 0.2;
+                        //wd_dishIngredients w = new wd_dishIngredients();
+                        //w.itemId = item.itemId;
+                        //w.ShowDialog();
+                        Window.GetWindow(this).Opacity = 1;
 
                     }
                     else
                         Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 }
+                else
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }

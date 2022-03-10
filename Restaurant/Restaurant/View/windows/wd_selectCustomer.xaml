@@ -8,7 +8,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
          WindowStyle="None" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" Margin="0"  
-         Height="350" Width="300"  Background="Transparent" AllowsTransparency="True" 
+         Height="300" Width="300"  Background="Transparent" AllowsTransparency="True" 
         Loaded="Window_Loaded"  
         MouseDown="Window_MouseDown" >
     <Border BorderThickness="1,0,1,1"  Grid.Row="1"
@@ -51,20 +51,10 @@
                 <Grid x:Name="grid_mainGrid" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
                     <Border Grid.Row="0" Grid.ColumnSpan="3" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                             <ComboBox x:Name="cb_customerId"     
@@ -79,205 +69,88 @@
                               Data="{StaticResource infoCircle}"/>
                         </Grid>
                     </Border>
-                    <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="membership"
-                                Name="txt_membership"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                    <TextBlock  Grid.Row="1" Grid.Column="2" 
-                                    Text="VIP"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Right"  VerticalAlignment="Center"  />
 
-                    <TextBlock  Grid.Row="2" Grid.Column="0"
-                                x:Name="txt_invoiceDiscount"
-                                    Text="invoice discount"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                    <TextBlock  Grid.Row="2" Grid.Column="2" 
-                                    Text="15%"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Right"  VerticalAlignment="Center"  />
+                    <StackPanel x:Name="sp_membership" Opacity="0.4" Grid.Row="1">
 
-                    <TextBlock  Grid.Row="3" Grid.Column="0" 
-                                    Text="delivery discount"
-                                Name="txt_deliveryDiscount"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                    <TextBlock  Grid.Row="3" Grid.Column="2" 
-                                    Text="100%"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Right"  VerticalAlignment="Center"  />
-
-                    <Grid Grid.Row="4"   Grid.ColumnSpan="3" >
-                        <Grid.RowDefinitions >
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="1"  >
+                        <DockPanel Margin="10 0"
+                                 LastChildFill="True">
+                            <TextBlock  Text="membership" Name="txt_membership" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
+                            <Separator Background="{StaticResource MainColor}"   Margin="5"  VerticalAlignment="Center" />
+                        </DockPanel>
+                        <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*" MinWidth="100"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                                <Border Grid.Row="0" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                                    <Grid>
-                                        <ComboBox x:Name="cb_coupon" Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"  
-                                 materialDesign:HintAssist.Hint="Coupon..." 
-                                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                              IsEditable="True"  Height="40"  
-                                BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
-                                 SelectionChanged="Cb_coupon_SelectionChanged"   />
-                                        <Path Fill="#E81123" Stretch="Fill" Margin="5,5,20,5"
-                              HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="{StaticResource infoCircle}"/>
-                                    </Grid>
-                                </Border>
-                            <Button Grid.Column="2" x:Name="btn_clearCoupon"  Padding="0" HorizontalAlignment="Right"
-                                        Background="{x:Null}" BorderBrush="{x:Null}" 
-                                        Margin="5 5 10 5" ToolTip="clear" Click="Btn_clearCoupon_Click">
-                                <materialDesign:PackIcon Foreground="#178DD2" Kind="RefreshCircle"  
-                              HorizontalAlignment="Center"  
-                         VerticalAlignment="Center" Width="30" Height="30"/>
-                            </Button>
+                            <TextBlock  Grid.Row="0" Grid.Column="0" x:Name="txt_code"
+                                        Text="code" FontWeight="SemiBold"
+                                        Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                        HorizontalAlignment="Left"  VerticalAlignment="Center"/>
+                            <TextBlock  Grid.Row="0" Grid.Column="1" 
+                                        Text="{Binding Path=code}"
+                                        Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                        HorizontalAlignment="Right"  VerticalAlignment="Center"  />
                         </Grid>
-                        <ListView Grid.Row="2" x:Name="lst_coupons"/>
-                        <Separator Margin="5,1" Grid.Row="3"  Background="#DFDFDF" VerticalAlignment="Center" Width="auto" />
-                    </Grid>
-                    <!--<StackPanel Grid.Row="5">-->
-                        <!--<TextBlock  Grid.Row="5" Grid.Column="0" 
-                                    Text="the most order"
-                                    FontSize="14" FontWeight="SemiBold"
-                                   Margin="10 5" Foreground="{StaticResource SecondColor}"
-                                   HorizontalAlignment="Center"  VerticalAlignment="Center"  />
-                        <ScrollViewer Grid.Row="6" VerticalScrollBarVisibility="Auto" >
-                            <StackPanel >
-                            <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="1. hamburger"
-                                        TextWrapping="Wrap"
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MinWidth="100"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock  Grid.Row="1" Grid.Column="0" x:Name="txt_name"
+                                    Text="name" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                            <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="2. Fried chicken"
-                                        TextWrapping="Wrap"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                            <TextBlock  Grid.Row="1" Grid.Column="1" Text="{Binding Path=name}"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                            <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="3. Chicken soup"
-                                        TextWrapping="Wrap"
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MinWidth="100"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock  Grid.Row="1" Grid.Column="0" x:Name="txt_couponsCount"
+                                    Text="coupons" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                            <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="4. Lasagna"
-                                        TextWrapping="Wrap"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                            <TextBlock  Grid.Row="1" Grid.Column="1" x:Name="tb_couponsCount"
+                                    Text="{Binding Path=couponsCount}"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                            <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="5. Spaghetti with meatballs"
-                                        TextWrapping="Wrap"
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MinWidth="100"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock  Grid.Row="1" Grid.Column="0" x:Name="txt_offersCount"
+                                    Text="offers" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                            <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="6. Chicken pot pie"
-                                        TextWrapping="Wrap"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                            <TextBlock  Grid.Row="1" Grid.Column="1" x:Name="tb_offersCount"
+                                    Text="{Binding Path=offersCount}"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                            <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="7. Mashed potatoes"
-                                        TextWrapping="Wrap"
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MinWidth="100"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock  Grid.Row="1" Grid.Column="0" x:Name="txt_invoicesClassesCount"
+                                    Text="invoices classes" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                            <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="8. Burgers "
-                                        TextWrapping="Wrap"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                            <TextBlock  Grid.Row="1" Grid.Column="1" x:Name="tb_invoicesClassesCount" 
+                                    Text="{Binding Path=invoicesClassesCount}"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                            <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="9. Chicken soup"
-                                        TextWrapping="Wrap"
-                                        
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                            <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="10. Meatloaf"
-                                        TextWrapping="Wrap"
-                                        
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                        </StackPanel>
-                        </ScrollViewer>-->
-                    <!--</StackPanel>-->
-                 
-                    <!--<Border     Margin="5,10"     Grid.Row="5" Grid.RowSpan="2" Grid.Column="1"
-                                    Height="auto" Width="1" 
-                                BorderThickness="0" Background="{StaticResource veryLightGrey}" />-->
-                    <!--<StackPanel Grid.Row="5" Grid.Column="2">-->
-                        <!--<TextBlock Grid.Row="5" Grid.Column="2" 
-                                    Text="the most order"
-                                    FontSize="14" FontWeight="SemiBold"
-                                   Margin="10 5" Foreground="{StaticResource SecondColor}"
-                                   HorizontalAlignment="Center"  VerticalAlignment="Center"  />
-                    <ScrollViewer Grid.Row="6" Grid.Column="2"  VerticalScrollBarVisibility="Auto" >
-                            <StackPanel >
-                                <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="1. hamburger"
-                                        TextWrapping="Wrap"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="2. Fried chicken"
-                                        TextWrapping="Wrap"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="3. Chicken soup"
-                                        TextWrapping="Wrap"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="4. Lasagna"
-                                        TextWrapping="Wrap"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="5. Spaghetti with meatballs"
-                                        TextWrapping="Wrap"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="6. Chicken pot pie"
-                                        TextWrapping="Wrap"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="7. Mashed potatoes"
-                                        TextWrapping="Wrap"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="8. Burgers "
-                                        TextWrapping="Wrap"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="9. Chicken soup"
-                                        TextWrapping="Wrap"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="10. Meatloaf"
-                                        TextWrapping="Wrap"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                            </StackPanel>
-                        </ScrollViewer>-->
-                    <!--</StackPanel>-->
-                    <Separator Margin="5" Grid.Row="7" Grid.ColumnSpan="3"  Background="#DFDFDF" VerticalAlignment="Center" Width="auto" />
-                    <Button   Grid.Row="8" Grid.ColumnSpan="3"   Content="Select"
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                        </Grid>
+                    </StackPanel>
+                   
+                    
+                    <Separator Margin="10 2.5" Grid.Row="2" Grid.ColumnSpan="3"  Background="#DFDFDF" VerticalAlignment="Center" Width="auto" />
+                    <Button   Grid.Row="8" Grid.ColumnSpan="3"   Content="Select" materialDesign:ButtonAssist.CornerRadius="7"
                        Margin="10,5" x:Name="btn_select"  Click="Btn_select_Click"
                          Foreground="White"  Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" />
                 </Grid>

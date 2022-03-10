@@ -159,10 +159,10 @@ namespace Restaurant.View.sales.promotion
 
             dg_invoicesClass.Columns[0].Header = AppSettings.resourcemanager.GetString("trCode");
             dg_invoicesClass.Columns[1].Header = AppSettings.resourcemanager.GetString("trName");
-            dg_invoicesClass.Columns[2].Header = AppSettings.resourcemanager.GetString("trValue");
-            dg_invoicesClass.Columns[3].Header = AppSettings.resourcemanager.GetString("trQuantity");
-            dg_invoicesClass.Columns[4].Header = AppSettings.resourcemanager.GetString("trRemainQuantity");
-            dg_invoicesClass.Columns[5].Header = AppSettings.resourcemanager.GetString("trvalidity");
+            //dg_invoicesClass.Columns[2].Header = AppSettings.resourcemanager.GetString("trValue");
+            //dg_invoicesClass.Columns[3].Header = AppSettings.resourcemanager.GetString("trQuantity");
+            //dg_invoicesClass.Columns[4].Header = AppSettings.resourcemanager.GetString("trRemainQuantity");
+            //dg_invoicesClass.Columns[5].Header = AppSettings.resourcemanager.GetString("trvalidity");
 
             tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
@@ -221,6 +221,7 @@ namespace Restaurant.View.sales.promotion
                                 invoicesClass.maxInvoiceValue = decimal.Parse(tb_maxInvoiceValue.Text);
                             else
                                 invoicesClass.maxInvoiceValue = 0;
+                            invoicesClass.isActive = 1;
                             invoicesClass.createUserId = MainWindow.userLogin.userId;
                             invoicesClass.updateUserId= MainWindow.userLogin.userId;
 

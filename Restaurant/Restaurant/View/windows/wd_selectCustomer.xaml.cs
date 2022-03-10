@@ -96,7 +96,7 @@ namespace Restaurant.View.windows
             txt_membership.Text = AppSettings.resourcemanager.GetString("trMembership");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customerId, AppSettings.resourcemanager.GetString("trCustomerHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_coupon, AppSettings.resourcemanager.GetString("trCouponHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_coupon, AppSettings.resourcemanager.GetString("trCouponHint"));
 
             btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
         }
