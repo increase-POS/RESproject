@@ -117,6 +117,7 @@ namespace Restaurant.View.sales.promotion
                 translate();
                 #endregion
 
+                await RefreshInvoicesClassesList();
                 await Search();
 
                 Keyboard.Focus(tb_name);
@@ -157,9 +158,9 @@ namespace Restaurant.View.sales.promotion
             tt_update_Button.Content = AppSettings.resourcemanager.GetString("trUpdate");
             tt_delete_Button.Content = AppSettings.resourcemanager.GetString("trDelete");
 
-            dg_invoicesClass.Columns[0].Header = AppSettings.resourcemanager.GetString("trCode");
-            dg_invoicesClass.Columns[1].Header = AppSettings.resourcemanager.GetString("trName");
-            //dg_invoicesClass.Columns[2].Header = AppSettings.resourcemanager.GetString("trValue");
+            dg_invoicesClass.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
+            dg_invoicesClass.Columns[1].Header = AppSettings.resourcemanager.GetString("trMinimumInvoiceValueHint");
+            dg_invoicesClass.Columns[2].Header = AppSettings.resourcemanager.GetString("trMaximumInvoiceValueHint");
             //dg_invoicesClass.Columns[3].Header = AppSettings.resourcemanager.GetString("trQuantity");
             //dg_invoicesClass.Columns[4].Header = AppSettings.resourcemanager.GetString("trRemainQuantity");
             //dg_invoicesClass.Columns[5].Header = AppSettings.resourcemanager.GetString("trvalidity");
@@ -232,7 +233,7 @@ namespace Restaurant.View.sales.promotion
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                                 Clear();
 
-                                await RefreshCustomersList();
+                                await RefreshInvoicesClassesList();
                                 await Search();
                             }
                             else
@@ -381,7 +382,7 @@ namespace Restaurant.View.sales.promotion
                                     invoicesClass.invClassId = 0;
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
-                                    await RefreshCustomersList();
+                                    await RefreshInvoicesClassesList();
                                     await Search();
                                     Clear();
                                 }
@@ -410,7 +411,7 @@ namespace Restaurant.View.sales.promotion
             else
             {
                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
-                await RefreshCustomersList();
+                await RefreshInvoicesClassesList();
                 await Search();
             }
         }
@@ -436,7 +437,7 @@ namespace Restaurant.View.sales.promotion
             {
                 HelpClass.StartAwait(grid_main);
                 if (invoicesClasses is null)
-                    await RefreshCustomersList();
+                    await RefreshInvoicesClassesList();
 
                 tgl_invoicesClassState = 1;
 
@@ -457,7 +458,7 @@ namespace Restaurant.View.sales.promotion
                 HelpClass.StartAwait(grid_main);
 
                 if (invoicesClasses is null)
-                    await RefreshCustomersList();
+                    await RefreshInvoicesClassesList();
 
                 tgl_invoicesClassState = 0;
 
@@ -530,7 +531,7 @@ namespace Restaurant.View.sales.promotion
             {
                 HelpClass.StartAwait(grid_main);
                 tb_search.Text = "";
-                await RefreshCustomersList();
+                await RefreshInvoicesClassesList();
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -549,7 +550,7 @@ namespace Restaurant.View.sales.promotion
         {
             //search
             if (invoicesClasses is null)
-                await RefreshCustomersList();
+                await RefreshInvoicesClassesList();
 
             searchText = tb_search.Text.ToLower();
             invoicesClassesQuery = invoicesClasses;
@@ -566,7 +567,7 @@ namespace Restaurant.View.sales.promotion
             );
             RefreshCustomersView();
         }
-        async Task<IEnumerable<InvoicesClass>> RefreshCustomersList()
+        async Task<IEnumerable<InvoicesClass>> RefreshInvoicesClassesList()
         {
             invoicesClasses = await invoicesClass.GetAll();
             return invoicesClasses;

@@ -124,6 +124,7 @@ namespace Restaurant.View.sales.promotion
                 translate();
                 #endregion
 
+                await RefreshCouponsList();
                 await Search();
                 
                 Keyboard.Focus(tb_code);
@@ -275,7 +276,7 @@ namespace Restaurant.View.sales.promotion
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                                 Clear();
 
-                                await RefreshCustomersList();
+                                await RefreshCouponsList();
                                 await Search();
                             }
                             else
@@ -451,7 +452,7 @@ namespace Restaurant.View.sales.promotion
                                     coupon.cId = 0;
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
-                                    await RefreshCustomersList();
+                                    await RefreshCouponsList();
                                     await Search();
                                     Clear();
                                 }
@@ -480,7 +481,7 @@ namespace Restaurant.View.sales.promotion
             else
             {
                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
-                await RefreshCustomersList();
+                await RefreshCouponsList();
                 await Search();
             }
         }
@@ -506,7 +507,7 @@ namespace Restaurant.View.sales.promotion
             {
                 HelpClass.StartAwait(grid_main);
                 if (coupons is null)
-                    await RefreshCustomersList();
+                    await RefreshCouponsList();
 
                 tgl_couponState = 1;
 
@@ -527,7 +528,7 @@ namespace Restaurant.View.sales.promotion
                 HelpClass.StartAwait(grid_main);
 
                 if (coupons is null)
-                    await RefreshCustomersList();
+                    await RefreshCouponsList();
 
                 tgl_couponState = 0;
 
@@ -604,7 +605,7 @@ namespace Restaurant.View.sales.promotion
             {
                 HelpClass.StartAwait(grid_main);
                 tb_search.Text = "";
-                await RefreshCustomersList();
+                await RefreshCouponsList();
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -623,7 +624,7 @@ namespace Restaurant.View.sales.promotion
         {
             //search
             if (coupons is null)
-                await RefreshCustomersList();
+                await RefreshCouponsList();
 
             searchText = tb_search.Text.ToLower();
             couponsQuery = coupons;
@@ -641,7 +642,7 @@ namespace Restaurant.View.sales.promotion
             );
             RefreshCustomersView();
         }
-        async Task<IEnumerable<Coupon>> RefreshCustomersList()
+        async Task<IEnumerable<Coupon>> RefreshCouponsList()
         {
             coupons = await coupon.Get();
             return coupons;

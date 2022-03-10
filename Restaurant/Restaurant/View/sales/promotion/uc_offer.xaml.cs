@@ -126,6 +126,7 @@ namespace Restaurant.View.sales.promotion
                 translate();
                 #endregion
 
+                await RefreshOffersList();
                 await Search();
 
                 //Keyboard.Focus(tb_code);
@@ -649,9 +650,12 @@ namespace Restaurant.View.sales.promotion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            HelpClass.clearValidate(requiredControlList, this);
+           
 
             this.DataContext = new Offer();
+
+            // last 
+            HelpClass.clearValidate(requiredControlList, this);
         }
 
         string input;

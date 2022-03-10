@@ -1386,16 +1386,20 @@ namespace Restaurant.View.sales
                         if (w.userId > 0)
                         {                           
                             string userName = FillCombo.usersList.Where(x => x.createUserId == w.userId).Select(x => x.name).Single();
-                            txt_waiter.Text = userName;
                             // change button content
+                            txt_waiter.Text = userName;
                             // change foreground color
+                            txt_waiter.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                            path_waiter.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
 
                         }
                         else
                         {
+                            // return button content to default
                             txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
-                        // return button content to default
-                        // return foreground color to default
+                            // return foreground color to default
+                            txt_waiter.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                            path_waiter.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                         }
                         int res = await FillCombo.invoice.saveInvoice(invoice);
                         if(res >0)
@@ -1448,12 +1452,16 @@ namespace Restaurant.View.sales
                             // test if id chnage
                             // change button content
                             // change foreground color
+                            txt_customer.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                            path_customer.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
 
                         }
                         else
                         {
                             // return button content to default
                             // return foreground color to default
+                            txt_customer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                            path_customer.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                         }
                     }
                     Window.GetWindow(this).Opacity = 1;

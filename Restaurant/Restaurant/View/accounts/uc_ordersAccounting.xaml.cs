@@ -374,10 +374,11 @@ namespace Restaurant.View.accounts
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
-            btn_image.Content = AppSettings.resourcemanager.GetString("trImage");
-            btn_preview.Content = AppSettings.resourcemanager.GetString("trPreview");
-            btn_printInvoice.Content = AppSettings.resourcemanager.GetString("trPrint");
-            btn_pdf.Content = AppSettings.resourcemanager.GetString("trPdfBtn");
+
+            txt_image.Text = AppSettings.resourcemanager.GetString("trImage");
+            txt_preview.Text = AppSettings.resourcemanager.GetString("trPreview");
+            txt_print_pay.Text = AppSettings.resourcemanager.GetString("trPrint");
+            txt_pdf.Text = AppSettings.resourcemanager.GetString("trPdfBtn");
         }
         private void Dg_orderAccounts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
