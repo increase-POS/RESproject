@@ -703,7 +703,7 @@
                       <FontFamily>Montserrat</FontFamily>
                       <FontSize>20pt</FontSize>
                       <FontWeight>Bold</FontWeight>
-                      <Color>#178dd2</Color>
+                      <Color>#D35400</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -1424,7 +1424,7 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                 <Border>
                   <Style>None</Style>
                 </Border>
-                <BackgroundColor>#178dd2</BackgroundColor>
+                <BackgroundColor>#D35400</BackgroundColor>
               </Style>
             </Rectangle>
             <Textbox Name="Textbox14">
