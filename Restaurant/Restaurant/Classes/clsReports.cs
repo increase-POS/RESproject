@@ -1365,6 +1365,19 @@ Parameters!trValueDiscount.Value)
             paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
         }
         // stocktaking
+        public static void Stocktakingparam(List<ReportParameter> paramarr)
+        {
+            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
+            paramarr.Add(new ReportParameter("trItemUnit", AppSettings.resourcemanagerreport.GetString("trItemUnit")));
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("trType", AppSettings.resourcemanagerreport.GetString("trType")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trDiffrencePercentage", AppSettings.resourcemanagerreport.GetString("trDiffrencePercentage")));
+            paramarr.Add(new ReportParameter("trItemsCount", AppSettings.resourcemanagerreport.GetString("trItemsCount")));
+            paramarr.Add(new ReportParameter("trDestroyedCount", AppSettings.resourcemanagerreport.GetString("trDestroyedCount")));
+            paramarr.Add(new ReportParameter("trReason", AppSettings.resourcemanagerreport.GetString("trReason")));
+        }
+
         public static void StocktakingArchivesReport(IEnumerable<InventoryClass> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             rep.ReportPath = reppath;
@@ -1385,6 +1398,7 @@ Parameters!trValueDiscount.Value)
             rep.DataSources.Add(new ReportDataSource("DataSetInventoryClass", Query));
             DateFormConv(paramarr);
             InventoryTypeConv(paramarr);
+            Stocktakingparam(paramarr);
         }
 
         public static void StocktakingShortfallsReport(IEnumerable<ItemTransferInvoice> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
@@ -1411,6 +1425,7 @@ Parameters!trValueDiscount.Value)
             rep.DataSources.Add(new ReportDataSource("DataSetItemTransferInvoice", Query));
             DateFormConv(paramarr);
             InventoryTypeConv(paramarr);
+            Stocktakingparam(paramarr);
 
         }
         /*
@@ -1643,8 +1658,6 @@ Parameters!trValueDiscount.Value)
         public static void itemTransferInvoiceExternal(IEnumerable<ItemTransferInvoice> itemTransferInvoices, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
 
-
-
             itemTransferInvTypeConv(paramarr);
             invoiceSideConv(paramarr);
 
@@ -1660,6 +1673,22 @@ Parameters!trValueDiscount.Value)
             paramarr.Add(new ReportParameter("trItemUnit", AppSettings.resourcemanagerreport.GetString("trItemUnit")));
             paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
  
+        }
+        public static void itemTransferInvoiceDirect(IEnumerable<ItemTransferInvoice> itemTransferInvoices, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+
+            itemTransferInvTypeConv(paramarr);
+            invoiceSideConv(paramarr);
+
+            itemTransferInvoice(itemTransferInvoices, rep, reppath);
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
+          
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
+            paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem")));
+            paramarr.Add(new ReportParameter("trUnit", AppSettings.resourcemanagerreport.GetString("trUnit")));
+            paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
+
         }
         public static void itemTransferInvoiceInternal(IEnumerable<ItemTransferInvoice> itemTransferInvoices, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
@@ -1682,6 +1711,14 @@ Parameters!trValueDiscount.Value)
         {
             itemTransferInvoice(itemTransferInvoices, rep, reppath);
             paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
+            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("trUser", AppSettings.resourcemanagerreport.GetString("trUser")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trItemUnit", AppSettings.resourcemanagerreport.GetString("trItemUnit")));
+            paramarr.Add(new ReportParameter("trReason", AppSettings.resourcemanagerreport.GetString("trReason")));
+            paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
+
 
         }
         public static void categoryReport(IEnumerable<Category> categoryQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)

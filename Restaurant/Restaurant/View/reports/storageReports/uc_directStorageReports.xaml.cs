@@ -844,12 +844,12 @@ namespace Restaurant.View.reports.storageReports
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
             {
-                addpath = @"\Reports\StatisticReport\Storage\Direct\Ar\ArItem.rdlc";
+                addpath = @"\Reports\StatisticReport\Storage\Ar\ArDirectItem.rdlc";
 
             }
             else
             {
-                addpath = @"\Reports\StatisticReport\Storage\Direct\En\Item.rdlc";
+                addpath = @"\Reports\StatisticReport\Storage\En\EnDirectItem.rdlc";
 
             }
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
@@ -861,7 +861,7 @@ namespace Restaurant.View.reports.storageReports
             Title = AppSettings.resourcemanagerreport.GetString("trStorageReport") + " / " + subTitle;
             paramarr.Add(new ReportParameter("trTitle", Title));
 
-            clsReports.itemTransferInvoiceExternal(temp, rep, reppath, paramarr);
+            clsReports.itemTransferInvoiceDirect(temp, rep, reppath, paramarr);
 
             clsReports.Header(paramarr);
 

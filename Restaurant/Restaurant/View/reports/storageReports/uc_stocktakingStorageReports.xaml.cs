@@ -1003,12 +1003,12 @@ namespace Restaurant.View.reports.storageReports
                 // //StatisticReport\Storage\Stocktaking
                 if (selectedStocktakingTab == 0)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\Stocktaking\Ar\ArArchives.rdlc";
+                    addpath = @"\Reports\StatisticReport\Storage\Ar\ArStocktakingArchives.rdlc";
                     secondTitle = "archives";
                 }
                 else if (selectedStocktakingTab == 1)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\Stocktaking\Ar\ArShortfalls.rdlc";
+                    addpath = @"\Reports\StatisticReport\Storage\Ar\ArStocktakingShortfalls.rdlc";
                     secondTitle = "shortfalls";
                 }
             }
@@ -1016,12 +1016,12 @@ namespace Restaurant.View.reports.storageReports
             {
                 if (selectedStocktakingTab == 0)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\Stocktaking\En\Archives.rdlc";
+                    addpath = @"\Reports\StatisticReport\Storage\En\EnStocktakingArchives.rdlc";
                     secondTitle = "archives";
                 }
                 else if (selectedStocktakingTab == 1)
                 {
-                    addpath = @"\Reports\StatisticReport\Storage\Stocktaking\En\Shortfalls.rdlc";
+                    addpath = @"\Reports\StatisticReport\Storage\En\EnStocktakingShortfalls.rdlc";
                     secondTitle = "shortfalls";
                 }
             }

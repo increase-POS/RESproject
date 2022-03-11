@@ -544,12 +544,12 @@ namespace Restaurant.View.reports.storageReports
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
             {
-                addpath = @"\Reports\StatisticReport\Storage\Destructive\Ar\ArDes.rdlc";
+                addpath = @"\Reports\StatisticReport\Storage\Ar\ArDestructive.rdlc";
 
             }
             else
             {
-                addpath = @"\Reports\StatisticReport\Storage\Destructive\En\Des.rdlc";
+                addpath = @"\Reports\StatisticReport\Storage\En\EnDestructive.rdlc";
             }
 
             // secondTitle = "destroied";
