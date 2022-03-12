@@ -77,7 +77,7 @@ namespace Restaurant.View.windows
                 section = await sectionModel.getById(sectionId);
 
                 allLocationsSource = await locationModel.Get();
-                allLocationsSource = allLocationsSource.Where(x => x.branchId == MainWindow.branchLogin.branchId && x.isFreeZone != 1 && x.isKitchen != 1 ).ToList();
+                allLocationsSource = allLocationsSource.Where(x => x.branchId == section.branchId && x.isFreeZone != 1 && x.isKitchen != 1 ).ToList();
 
                 var query = allLocationsSource.Where(i => i.sectionId == sectionId && i.isFreeZone != 1 && i.isKitchen != 1 && i.isActive == 1);
                 selectedLocationsSource = query.ToList();

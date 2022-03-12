@@ -224,7 +224,7 @@
 
 
                 <Button Content="Save" Grid.Row="5" Grid.ColumnSpan="5" Foreground="White"
-                        Margin="10,2.5" x:Name="btn_save" 
+                        Margin="10,2.5" x:Name="btn_save"  materialDesign:ButtonAssist.CornerRadius="7"
                         Click="Btn_save_Click"
                         Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  />
             </Grid>

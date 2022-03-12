@@ -70,7 +70,7 @@
                         </Grid>
                     </Border>
 
-                    <Button   Grid.Row="3"   Content="Select"
+                    <Button   Grid.Row="3"   Content="Select" materialDesign:ButtonAssist.CornerRadius="7"
                        Margin="10,5" x:Name="btn_select"  Click="Btn_select_Click"
                          Foreground="White"  Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" />
                 </Grid>

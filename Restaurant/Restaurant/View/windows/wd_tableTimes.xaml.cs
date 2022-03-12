@@ -297,7 +297,7 @@ namespace Restaurant.View.windows
 
 
 
-        private int _numValue_time_staying = 1;
+        private int _numValue_time_staying = 0;
         public int numValue_time_staying
         {
             get
@@ -314,7 +314,7 @@ namespace Restaurant.View.windows
         }
 
 
-        private int _numValue_maximumTimeToKeepReservation = 1;
+        private int _numValue_maximumTimeToKeepReservation = 0;
         public int numValue_maximumTimeToKeepReservation
         {
             get
@@ -331,7 +331,7 @@ namespace Restaurant.View.windows
         }
 
 
-        private int _numValue_warningTimeForLateReservation = 1;
+        private int _numValue_warningTimeForLateReservation = 0;
         public int numValue_warningTimeForLateReservation
         {
             get

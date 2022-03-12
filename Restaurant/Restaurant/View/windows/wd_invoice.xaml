@@ -196,7 +196,7 @@
                           VerticalAlignment="Bottom"/>
 
 
-                <Button Content="Select" Grid.Row="5" Grid.ColumnSpan="5"
+                <Button Content="Select" Grid.Row="5" Grid.ColumnSpan="5" materialDesign:ButtonAssist.CornerRadius="7"
                        Margin="10,2.5" x:Name="btn_select" Click="Btn_select_Click"
                       Foreground="White"   Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  />
             </Grid>

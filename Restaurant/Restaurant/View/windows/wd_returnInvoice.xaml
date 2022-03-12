@@ -75,8 +75,8 @@
 
                     </Grid>
                 </Border>
-               
-                <Button   Grid.Row="3"   Content="Select"
+
+                <Button   Grid.Row="3"   Content="Select" materialDesign:ButtonAssist.CornerRadius="7"
                        Margin="10,5" x:Name="btn_save" Click="Btn_save_Click"
                          Foreground="White"  Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" />
             </Grid>
