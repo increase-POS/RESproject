@@ -203,7 +203,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Width="*"  Header="status" Binding="{Binding Path=status}">
+                                <DataGridTextColumn Width="*"  Header="exceed" Binding="{Binding Path=isExceed,Converter={StaticResource translateConverter }}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>

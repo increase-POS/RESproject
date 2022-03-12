@@ -3544,4 +3544,7 @@
   <data name="trSelectedOffers" xml:space="preserve">
     <value>العروض المختارة</value>
   </data>
+  <data name="trExceed" xml:space="preserve">
+    <value>متجاوز</value>
+  </data>
 </root>

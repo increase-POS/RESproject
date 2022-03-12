@@ -183,7 +183,7 @@ namespace Restaurant.View.sales.reservations
         {
             try
             {
-                await FillCombo.FillComboSectionsWithDefault(cb_searchSection);
+                await FillCombo.FillComboHallSectionsWithDefault(cb_searchSection);
             }
             catch { }
             foreach (var item in loadingList)

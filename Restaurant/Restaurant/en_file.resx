@@ -3568,4 +3568,7 @@ Please add Email in setting</value>
   <data name="trSelectedOffers" xml:space="preserve">
     <value>Selected Offers</value>
   </data>
+  <data name="trExceed" xml:space="preserve">
+    <value>Exceed</value>
+  </data>
 </root>

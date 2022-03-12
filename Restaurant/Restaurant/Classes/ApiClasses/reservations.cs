@@ -31,6 +31,8 @@ namespace Restaurant.Classes.ApiClasses
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
 
+
+        public string isExceed { get; set; }
         public List<Tables> tables { get; set; }
 
         /////////////////////////////////
