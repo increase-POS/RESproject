@@ -73,7 +73,7 @@ namespace Restaurant.Classes
                     items.Add(JsonConvert.DeserializeObject<DishIngredients>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
                 }
             }
-            return item;
+            return items;
         }
         public async Task<int> save(DishIngredients item)
         {
