@@ -1562,7 +1562,7 @@ namespace Restaurant.View.catalog.foods
 
         #endregion
 
-        private void Btn_dishIngredients_Click(object sender, RoutedEventArgs e)
+        private async void Btn_dishIngredients_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -1574,9 +1574,10 @@ namespace Restaurant.View.catalog.foods
                     if (FillCombo.groupObject.HasPermissionAction(dishIngredientsPermission, FillCombo.groupObjects, "one"))
                     {
                         Window.GetWindow(this).Opacity = 0.2;
-                        //wd_dishIngredients w = new wd_dishIngredients();
-                        //w.itemId = item.itemId;
-                        //w.ShowDialog();
+                        await FillCombo.RefreshItemUnit();
+                        wd_dishIngredients w = new wd_dishIngredients();
+                        w.itemUnitId = FillCombo.itemUnitList.Where(x => x.itemId == item.itemId).FirstOrDefault().itemUnitId;
+                        w.ShowDialog();
                         Window.GetWindow(this).Opacity = 1;
 
                     }

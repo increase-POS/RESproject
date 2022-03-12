@@ -408,7 +408,7 @@
                             </Path>
                         </Grid>
                     </Border>
-                <TextBlock  Text="minutes" Grid.Column="1"
+                <TextBlock  Text="by minutes" Grid.Column="1"
                             Foreground="{StaticResource ThickGrey}" FontSize="14"
                                     VerticalAlignment="Center" HorizontalAlignment="Right"
                             Margin="5,5,15,5"/>

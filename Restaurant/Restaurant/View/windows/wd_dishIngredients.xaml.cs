@@ -73,7 +73,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch (Exception ex)
+            catch
             {
                 //HelpClass.ExceptionMessage(ex, this);
             }
@@ -96,14 +96,13 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        public string categoryName;
-        int categoryId;
+        public int itemUnitId;
 
-        Tag tag = new Tag();
-        IEnumerable<Tag> tagsQuery;
-        IEnumerable<Tag> tags;
+       DishIngredients dishIngredient = new DishIngredients();
+        IEnumerable<DishIngredients> dishIngredientsQuery;
+        IEnumerable<DishIngredients> dishIngredients;
         public List<Unit> units;
-        byte tgl_tagState;
+        byte tgl_dishIngredientState;
         string searchText = "";
         public static List<string> requiredControlList;
 
@@ -114,19 +113,14 @@ namespace Restaurant.View.windows
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "name" };
                 if (AppSettings.lang.Equals("en"))
-                {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
-                }
                 else
-                {
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
-                }
                 translate();
 
                 Keyboard.Focus(tb_name);
-                categoryId = FillCombo.GetCategoryId(categoryName);
 
-                await RefreshTagsList();
+                await RefreshDishIngredientsList();
                 await Search();
                 Clear();
                 HelpClass.EndAwait(grid_main);
@@ -147,8 +141,8 @@ namespace Restaurant.View.windows
             btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             ///////////////////////////Barcode
-            //dg_tag.Columns[0].Header = AppSettings.resourcemanager.GetString("trUnit");
-            //dg_tag.Columns[1].Header = AppSettings.resourcemanager.GetString("trCountUnit");
+            dg_dishIngredient.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
+            dg_dishIngredient.Columns[1].Header = AppSettings.resourcemanager.GetString("trNote");
 
 
         }
@@ -159,17 +153,17 @@ namespace Restaurant.View.windows
             {
 
                 HelpClass.StartAwait(grid_main);
-                tag = new Tag();
+                dishIngredient = new DishIngredients();
                 if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                 {
-                    tag.tagName = tb_tagName.Text;
-                    tag.categoryId = categoryId;
-                    tag.createUserId = MainWindow.userLogin.userId;
-                    tag.updateUserId = MainWindow.userLogin.userId;
-                    tag.notes = tb_notes.Text;
-                    tag.isActive = 1;
+                    dishIngredient.name = tb_name.Text;
+                    dishIngredient.itemUnitId = itemUnitId;
+                    dishIngredient.createUserId = MainWindow.userLogin.userId;
+                    dishIngredient.updateUserId = MainWindow.userLogin.userId;
+                    dishIngredient.notes = tb_notes.Text;
+                    dishIngredient.isActive = 1;
 
-                    int s = await tag.Save(tag);
+                    int s = await dishIngredient.save(dishIngredient);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else
@@ -177,7 +171,7 @@ namespace Restaurant.View.windows
                         Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
                         Clear();
-                        await RefreshTagsList();
+                        await RefreshDishIngredientsList();
                         await Search();
                     }
                 }
@@ -198,17 +192,17 @@ namespace Restaurant.View.windows
                 if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                 {
 
-                    tag.tagName = tb_tagName.Text;
-                    //tag.categoryId = categoryId;
-                    tag.updateUserId = MainWindow.userLogin.userId;
-                    tag.notes = tb_notes.Text;
-                    int s = await tag.Save(tag);
+                    dishIngredient.name = tb_name.Text;
+                    //dishIngredient.categoryId = categoryId;
+                    dishIngredient.updateUserId = MainWindow.userLogin.userId;
+                    dishIngredient.notes = tb_notes.Text;
+                    int s = await dishIngredient.save(dishIngredient);
                     if (s <= 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     else
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                        await RefreshTagsList();
+                        await RefreshDishIngredientsList();
                         await Search();
 
                     }
@@ -227,46 +221,48 @@ namespace Restaurant.View.windows
             try
             {//delete
                 HelpClass.StartAwait(grid_main);
-                if (tag.tagId != 0)
+                if (dishIngredient.dishIngredId != 0)
                 {
-                    if ((!tag.canDelete) && (tag.isActive == 0))
+                    //if ((!dishIngredient.canDelete) && (dishIngredient.isActive == 0))
+                    //{
+                    //    #region
+                    //    Window.GetWindow(this).Opacity = 0.2;
+                    //    wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                    //    w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
+                    //    w.ShowDialog();
+                    //    Window.GetWindow(this).Opacity = 1;
+                    //    #endregion
+                    //    if (w.isOk)
+                    //        await activate();
+                    //}
+                    //else
                     {
                         #region
                         Window.GetWindow(this).Opacity = 0.2;
                         wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                        w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
-                        w.ShowDialog();
-                        Window.GetWindow(this).Opacity = 1;
-                        #endregion
-                        if (w.isOk)
-                            await activate();
-                    }
-                    else
-                    {
-                        #region
-                        Window.GetWindow(this).Opacity = 0.2;
-                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                        if (tag.canDelete)
+                        //if (dishIngredient.canDelete)
                             w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
-                        if (!tag.canDelete)
-                            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
+                        //if (!dishIngredient.canDelete)
+                        //    w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
                         w.ShowDialog();
                         Window.GetWindow(this).Opacity = 1;
                         #endregion
                         if (w.isOk)
                         {
                             string popupContent = "";
-                            if (tag.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
-                            if ((!tag.canDelete) && (tag.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
+                            //if (dishIngredient.canDelete)
+                                popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
+                            //if ((!dishIngredient.canDelete) && (dishIngredient.isActive == 1))
+                            //popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
 
-                            int s = await tag.Delete(tag.tagId, MainWindow.userLogin.userId, tag.canDelete);
+                            int s = await dishIngredient.delete(dishIngredient.dishIngredId, MainWindow.userLogin.userId, true);
                             if (s < 0)
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
-                                await RefreshTagsList();
+                                await RefreshDishIngredientsList();
                                 await Search();
                                 Clear();
                             }
@@ -283,14 +279,14 @@ namespace Restaurant.View.windows
         }
         private async Task activate()
         {//activate
-            tag.isActive = 1;
-            int s = await tag.Save(tag);
+            dishIngredient.isActive = 1;
+            int s = await dishIngredient.save(dishIngredient);
             if (s <= 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             else
             {
                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
-                await RefreshTagsList();
+                await RefreshDishIngredientsList();
                 await Search();
             }
         }
@@ -315,9 +311,9 @@ namespace Restaurant.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (tags is null)
-                    await RefreshTagsList();
-                tgl_tagState = 1;
+                if (dishIngredients is null)
+                    await RefreshDishIngredientsList();
+                tgl_dishIngredientState = 1;
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -332,9 +328,9 @@ namespace Restaurant.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (tags is null)
-                    await RefreshTagsList();
-                tgl_tagState = 0;
+                if (dishIngredients is null)
+                    await RefreshDishIngredientsList();
+                tgl_dishIngredientState = 0;
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -360,29 +356,31 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Dg_tag_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Dg_dishIngredient_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
                 //selection
-                if (dg_tag.SelectedIndex != -1)
+                if (dg_dishIngredient.SelectedIndex != -1)
                 {
-                    tag = dg_tag.SelectedItem as Tag;
-                    this.DataContext = tag;
-                    if (tag != null)
+                    dishIngredient = dg_dishIngredient.SelectedItem as DishIngredients;
+                    this.DataContext = dishIngredient;
+                    if (dishIngredient != null)
                     {
+                        /*
                         #region delete
-                        if (tag.canDelete)
+                        if (dishIngredient.canDelete)
                             btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
                         else
                         {
-                            if (tag.isActive == 0)
+                            if (dishIngredient.isActive == 0)
                                 btn_delete.Content = AppSettings.resourcemanager.GetString("trActive");
                             else
                                 btn_delete.Content = AppSettings.resourcemanager.GetString("trInActive");
                         }
                         #endregion
+                        */
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
@@ -400,7 +398,7 @@ namespace Restaurant.View.windows
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
-                await RefreshTagsList();
+                await RefreshDishIngredientsList();
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -416,60 +414,31 @@ namespace Restaurant.View.windows
         async Task Search()
         {
             //search
-            if (tags is null)
-                await RefreshTagsList();
-            tagsQuery = tags;
-            RefreshTagsView();
+            if (dishIngredients is null)
+                await RefreshDishIngredientsList();
+            dishIngredientsQuery = dishIngredients;
+            RefreshDishIngredientssView();
         }
-        async Task<IEnumerable<Tag>> RefreshTagsList()
+        async Task<IEnumerable<DishIngredients>> RefreshDishIngredientsList()
         {
-            tags = await tag.Get(categoryId);
-            // tags = tags.Where(x => x.categoryId == categoryId);
-            return tags;
+            dishIngredients = await dishIngredient.GetAll();
+            return dishIngredients;
         }
-        void RefreshTagsView()
+        void RefreshDishIngredientssView()
         {
-            dg_tag.ItemsSource = tagsQuery;
+            dg_dishIngredient.ItemsSource = dishIngredientsQuery;
         }
         #endregion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            tag = new Tag();
-            this.DataContext = tag;
+            dishIngredient = new DishIngredients();
+            this.DataContext = dishIngredient;
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
-        string input;
-        decimal _decimal = 0;
-        private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            try
-            {
-
-
-                //only  digits
-                TextBox textBox = sender as TextBox;
-                HelpClass.InputJustNumber(ref textBox);
-                if (textBox.Tag.ToString() == "int")
-                {
-                    Regex regex = new Regex("[^0-9]");
-                    e.Handled = regex.IsMatch(e.Text);
-                }
-                else if (textBox.Tag.ToString() == "decimal")
-                {
-                    input = e.Text;
-                    e.Handled = !decimal.TryParse(textBox.Text + input, out _decimal);
-
-                }
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
+      
         private void Code_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             try
