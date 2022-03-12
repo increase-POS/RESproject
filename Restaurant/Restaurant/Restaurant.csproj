@@ -286,6 +286,7 @@
     <Compile Include="converters\subscriptionTypeConverter.cs" />
     <Compile Include="converters\timeFrameConverter.cs" />
     <Compile Include="converters\translateCategoryNameConverter.cs" />
+    <Compile Include="converters\translateConverter.cs" />
     <Compile Include="converters\transTypeConverter.cs" />
     <Compile Include="converters\unitItemsListConverter.cs" />
     <Compile Include="converters\unlimitedCouponConverter.cs" />
@@ -642,6 +643,9 @@
     <Compile Include="View\windows\wd_diningHallTables.xaml.cs">
       <DependentUpon>wd_diningHallTables.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_dishIngredients.xaml.cs">
+      <DependentUpon>wd_dishIngredients.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_info.xaml.cs">
       <DependentUpon>wd_info.xaml</DependentUpon>
     </Compile>
@@ -713,6 +717,9 @@
     </Compile>
     <Compile Include="View\windows\wd_tablesList.xaml.cs">
       <DependentUpon>wd_tablesList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_tableTimes.xaml.cs">
+      <DependentUpon>wd_tableTimes.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_tags.xaml.cs">
       <DependentUpon>wd_tags.xaml</DependentUpon>
@@ -1270,6 +1277,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\windows\wd_dishIngredients.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\windows\wd_info.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1363,6 +1374,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_tablesList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_tableTimes.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
