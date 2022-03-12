@@ -41,6 +41,22 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
+        public async Task<List<HallSection>> getBranchSections(int branchId)
+        {
+            List<HallSection> items = new List<HallSection>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("itemId", branchId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("HallSection/getBranchSections", parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<HallSection>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
 
         public async Task<int> save(HallSection item)
         {

@@ -583,6 +583,34 @@ namespace Restaurant.Classes
             cmb.SelectedIndex = -1;
         }
         #endregion
+        #region hall section
+        static public HallSection hallSection = new HallSection();
+        static public List<HallSection> hallSectionsList;
+
+        static public async Task<IEnumerable<HallSection>> RefreshHallSectionsByBranch()
+        {
+            hallSectionsList = await hallSection.getBranchSections(MainWindow.branchLogin.branchId);
+            return hallSectionsList;
+        }
+
+        static public async Task FillComboHallSectionsWithDefault(ComboBox cmb)
+        {
+            if (hallSectionsList is null)
+                await RefreshHallSectionsByBranch();
+
+            List<HallSection> sections = new List<HallSection>();
+            sections = hallSectionsList.ToList();
+            var sec = new HallSection();
+            sec.sectionId = 0;
+            sec.name = "-";
+            sections.Insert(0, sec);
+
+            cmb.ItemsSource = sections;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "sectionId";
+            cmb.SelectedIndex = -1;
+        }
+        #endregion
         #region location
 
         static public Location location = new Location();
