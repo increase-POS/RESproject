@@ -105,7 +105,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="25"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="3"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -307,7 +307,7 @@
           
             <Grid  Background="#F1F5F8" x:Name="grid_main" Grid.Row="1" Grid.Column="1"/>
             <Grid Background="#F1F5F8"  Grid.Row="2" Grid.Column="1">
-                <Separator Margin="5 0" Background="{StaticResource veryLightGrey}" VerticalAlignment="Top" Width="auto" />
+                <Separator Margin="5 5 5 0" Background="{StaticResource veryLightGrey}" VerticalAlignment="Top" Width="auto" />
                 <StackPanel Orientation="Horizontal" Margin="10 5"
                            HorizontalAlignment="Left" VerticalAlignment="Bottom">
                     <TextBlock Text="Increase POS - " Foreground="{StaticResource Grey}"   />
