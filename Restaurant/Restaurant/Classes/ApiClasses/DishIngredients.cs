@@ -58,20 +58,19 @@ namespace Restaurant.Classes
             return item;
         }
 
-        public async Task<DishIngredients> GetGetByItemUnitId(int itemUnitId)
+        public async Task<List<DishIngredients>> GetByItemUnitId(int itemUnitId)
         {
-            DishIngredients item = new DishIngredients();
+            List<DishIngredients> items = new List<DishIngredients>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("itemId", itemUnitId.ToString());
             //#################
-            IEnumerable<Claim> claims = await APIResult.getList("dishIngredients/GetGetByItemUnitId", parameters);
+            IEnumerable<Claim> claims = await APIResult.getList("dishIngredients/GetByItemUnitId", parameters);
 
             foreach (Claim c in claims)
             {
                 if (c.Type == "scopes")
                 {
-                    item = JsonConvert.DeserializeObject<DishIngredients>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-                    break;
+                    items.Add(JsonConvert.DeserializeObject<DishIngredients>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
                 }
             }
             return item;
