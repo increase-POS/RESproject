@@ -421,7 +421,7 @@ namespace Restaurant.View.windows
         }
         async Task<IEnumerable<DishIngredients>> RefreshDishIngredientsList()
         {
-            dishIngredients = await dishIngredient.GetAll();
+            dishIngredients = await dishIngredient.GetByItemUnitId(itemUnitId);
             return dishIngredients;
         }
         void RefreshDishIngredientssView()
