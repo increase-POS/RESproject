@@ -883,14 +883,14 @@ namespace Restaurant.View.reports.purchaseReports
             {
                 if (selectedTab == 0)
                 {
-                    addpath = @"\Reports\StatisticReport\Purchase\Item\Ar\ArItem.rdlc";
+                    addpath = @"\Reports\StatisticReport\Purchase\Ar\ArItem.rdlc";
                     secondTitle = "items";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
 
                 }
                 else if (selectedTab == 1)
                 {
-                    addpath = @"\Reports\StatisticReport\Purchase\Item\Ar\ArMostPur.rdlc";
+                    addpath = @"\Reports\StatisticReport\Purchase\Ar\ArItemMostPur.rdlc";
                     secondTitle = "MostPurchased";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
                 }
@@ -902,13 +902,13 @@ namespace Restaurant.View.reports.purchaseReports
                 //english
                 if (selectedTab == 0)
                 {
-                    addpath = @"\Reports\StatisticReport\Purchase\Item\En\EnItem.rdlc";
+                    addpath = @"\Reports\StatisticReport\Purchase\En\EnItem.rdlc";
                     secondTitle = "items";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
                 }
                 else if (selectedTab == 1)
                 {
-                    addpath = @"\Reports\StatisticReport\Purchase\Item\En\EnMostPur.rdlc";
+                    addpath = @"\Reports\StatisticReport\Purchase\En\EnItemMostPur.rdlc";
                     secondTitle = "MostPurchased";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
                 }
@@ -922,7 +922,10 @@ namespace Restaurant.View.reports.purchaseReports
             Title = AppSettings.resourcemanagerreport.GetString("trPurchasesReport") + " / " + subTitle;
             paramarr.Add(new ReportParameter("trTitle", Title));
             paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
-            clsReports.PurStsReport(RepQuery, rep, reppath);
+
+         
+            clsReports.PurItemStsReport(RepQuery, rep, reppath,paramarr);
+
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 

@@ -3550,4 +3550,7 @@
   <data name="trValidRange" xml:space="preserve">
     <value>المجال المسموح به : 0 إلى 100</value>
   </data>
+  <data name="trPurchasesReport" xml:space="preserve">
+    <value>تقرير مشتريات</value>
+  </data>
 </root>

@@ -3574,4 +3574,7 @@ Please add Email in setting</value>
   <data name="trValidRange" xml:space="preserve">
     <value>Valid range : 0 to 100</value>
   </data>
+  <data name="trPurchasesReport" xml:space="preserve">
+    <value>Purchases Report</value>
+  </data>
 </root>
