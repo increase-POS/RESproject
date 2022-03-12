@@ -914,7 +914,7 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trPrice", AppSettings.resourcemanagerreport.GetString("trPrice")));
     
             paramarr.Add(new ReportParameter("trTotal", AppSettings.resourcemanagerreport.GetString("trTotal")));
-            paramarr.Add(new ReportParameter("trI_nvoice", AppSettings.resourcemanager.GetString("trItem") + "/" + AppSettings.resourcemanager.GetString("trI_nvoice")));
+            paramarr.Add(new ReportParameter("trI_nvoice", AppSettings.resourcemanager.GetString("trItem") + "/" + AppSettings.resourcemanager.GetString("trInvoices")));
 
         }
 
