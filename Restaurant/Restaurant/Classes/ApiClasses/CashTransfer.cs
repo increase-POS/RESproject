@@ -46,7 +46,7 @@ namespace Restaurant.Classes
         public Nullable<int> createUserId { get; set; }
         public string notes { get; set; }
         public Nullable<int> posIdCreator { get; set; }
-        public Nullable<byte> isConfirm { get; set; }
+        public byte isConfirm { get; set; }
         public Nullable<int> cashTransIdSource { get; set; }
         public string side { get; set; }
         public string docName { get; set; }
