@@ -3571,4 +3571,7 @@ Please add Email in setting</value>
   <data name="trExceed" xml:space="preserve">
     <value>Exceed</value>
   </data>
+  <data name="trValidRange" xml:space="preserve">
+    <value>Valid range : 0 to 100</value>
+  </data>
 </root>
