@@ -197,6 +197,7 @@
     <Compile Include="Classes\ApiClasses\AgentMembershipCash.cs" />
     <Compile Include="Classes\ApiClasses\CouponsMemberships.cs" />
     <Compile Include="Classes\ApiClasses\HallSection.cs" />
+    <Compile Include="Classes\ApiClasses\DishIngredients.cs" />
     <Compile Include="Classes\ApiClasses\MembershipsOffers.cs" />
     <Compile Include="Classes\ApiClasses\InvoicesClassMemberships.cs" />
     <Compile Include="Classes\ApiClasses\AvtivateServer.cs" />
@@ -1506,6 +1507,54 @@
     <Content Include="Reports\StatisticReport\Storage\En\EnDestructive.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\StatisticReport\Purchase\Ar\ArPurPosSts.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Purchase\Ar\ArPurSts.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Purchase\Ar\ArPurUserSts.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Purchase\Ar\ArPurVendorSts.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Purchase\En\EnPurPosSts.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Purchase\En\EnPurSts.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Purchase\En\EnPurUserSts.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Purchase\En\EnPurVendorSts.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Purchase\Ar\ArInvoiceBranch.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Purchase\Ar\ArInvoicePos.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Purchase\Ar\ArInvoiceUser.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Purchase\Ar\ArInvoiceVendor.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Purchase\En\EnInvoiceBranch.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Purchase\En\EnInvoicePos.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Purchase\En\EnInvoiceUser.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Purchase\En\EnInvoiceVendor.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Resource Include="pic\programs-Rest-login-bg.png" />
@@ -1681,7 +1730,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reports\StatisticReport\Accounts\" />
-    <Folder Include="Reports\StatisticReport\Purchase\" />
     <Folder Include="Reports\StatisticReport\Sale\" />
   </ItemGroup>
   <ItemGroup>
