@@ -409,7 +409,8 @@ namespace Restaurant.View.settings
                 brd_backup.Visibility = Visibility.Collapsed;
                 brd_itemsCost.Visibility = Visibility.Collapsed;
                 brd_maxDiscount.Visibility = Visibility.Collapsed;
-                brd_timeStaying.Visibility = Visibility.Collapsed;
+                //brd_timeStaying.Visibility = Visibility.Collapsed;
+                brd_tableTimes.Visibility = Visibility.Collapsed;
                 brd_activationSite.Visibility = Visibility.Collapsed;
                 brd_serverStatus.Visibility = Visibility.Collapsed;
                 }
@@ -957,10 +958,6 @@ namespace Restaurant.View.settings
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
         private async void Btn_backup_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -1178,6 +1175,26 @@ namespace Restaurant.View.settings
         private void Btn_timeStaying_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+        private void Btn_tableTimes_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //if (FillCombo.groupObject.HasPermissionAction(usersSettingsPermission, FillCombo.groupObjects, "one") ||
+                //    FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
+                //{
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_tableTimes w = new wd_tableTimes();
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private async void Btn_errorsExport_Click(object sender, RoutedEventArgs e)
         {
