@@ -479,6 +479,27 @@
                                          Width="35" Height="35" Kind="PlusCircle" />
                             </Button>
                         </Grid>
+                        <Border Grid.Row="3" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Grid   >
+                                <ComboBox x:Name="cb_branchId" SelectedValue="{Binding branchId, Mode=OneWay}"
+                                      TextBlock.Foreground="#4E4E4E"
+                                         Margin="4,0"
+                                      materialDesign:HintAssist.Hint="Store/Branch..."    
+                                      TextBlock.FontSize="12" 
+                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                                    Padding="10,0,5,0" 
+                                      Height="40" 
+                                      BorderThickness="0" 
+                                      FontFamily="{StaticResource Font-cairo-light}"   
+                                      Grid.Row="3"  LostFocus="validateEmpty_LostFocus" />
+
+                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,20,5" x:Name="p_error_branchId"
+                              HorizontalAlignment="Right" Visibility="Collapsed"   
+                         VerticalAlignment="Center" Width="15"  Height="15"
+                             Data="{StaticResource infoCircle}">
+                                </Path>
+                            </Grid>
+                        </Border>
 
                         <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >

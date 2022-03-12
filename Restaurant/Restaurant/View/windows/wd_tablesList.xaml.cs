@@ -26,9 +26,9 @@ namespace Restaurant.View.windows
         public int sectionId = 0 ;
         public bool isActive;
         public string page;
-
-        Classes.Section section = new Classes.Section();
-        Classes.Section sectionModel = new Classes.Section();
+        
+        HallSection hallSection = new  HallSection();
+        HallSection hallSectionModel = new HallSection();
         IEnumerable<Tables> allTableSource;
          IEnumerable<Tables> selectedTablesSource;
         List<Tables> allTables = new List<Tables>();
@@ -107,9 +107,9 @@ namespace Restaurant.View.windows
                 #region section Tables
                 else
                 {
-                    section = await sectionModel.getById(sectionId);
-                    allTableSource = await tableModel.Get(MainWindow.branchLogin.branchId, 0);
-                    selectedTablesSource = await tableModel.Get(MainWindow.branchLogin.branchId, sectionId);
+                    hallSection = await hallSectionModel.getById(sectionId);
+                    allTableSource = await tableModel.Get(hallSection.branchId.Value, 0);
+                    selectedTablesSource = await tableModel.Get(hallSection.branchId.Value, sectionId);
                     selectedTables.AddRange(selectedTablesSource.ToList());
                 }
                 #endregion

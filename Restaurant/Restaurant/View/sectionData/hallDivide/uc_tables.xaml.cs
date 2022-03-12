@@ -123,11 +123,27 @@ namespace Restaurant.View.sectionData.hallDivide
                 translate();
                 #endregion
 
+
+
+
+                await FillCombo.fillComboBranchesAllWithoutMain(cb_branchId);
+                table = new Tables();
+                table.branchId = MainWindow.branchLogin.branchId;
+                if (HelpClass.isAdminPermision())
+                    cb_branchId.IsEnabled = true;
+                else
+                    cb_branchId.IsEnabled = false;
+
+
                 Keyboard.Focus(tb_name);
+
+
+
 
                 await Search();
 
-                Clear();
+                //Clear();
+                this.DataContext = table;
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -158,6 +174,7 @@ namespace Restaurant.View.sectionData.hallDivide
             tt_add_Button.Content = AppSettings.resourcemanager.GetString("trAdd");
             tt_update_Button.Content = AppSettings.resourcemanager.GetString("trUpdate");
             tt_delete_Button.Content = AppSettings.resourcemanager.GetString("trDelete");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branchId, AppSettings.resourcemanager.GetString("trBranch/StoreHint"));
 
 
             tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
@@ -178,7 +195,7 @@ namespace Restaurant.View.sectionData.hallDivide
         {//add
             try
             {
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add"))
                 {
                     HelpClass.StartAwait(grid_main);
 
@@ -198,16 +215,17 @@ namespace Restaurant.View.sectionData.hallDivide
 
                             table.name = tb_name.Text;
 
-                            if (tables.Where(x => x.name == table.name && x.branchId == MainWindow.branchLogin.branchId).Count() == 0)
+                            if (tables.Where(x => x.name == table.name && x.branchId == Convert.ToInt32(cb_branchId.SelectedValue)).Count() == 0)
                             {
                                 int count = 1;
                                 if (int.Parse(tb_personsCount.Text) != 0) count = int.Parse(tb_personsCount.Text);
                                 table.personsCount = count;
+                                table.branchId = Convert.ToInt32(cb_branchId.SelectedValue);
                                 table.notes = tb_notes.Text;
                                 table.createUserId = MainWindow.userLogin.userId;
                                 table.updateUserId = MainWindow.userLogin.userId;
                                 table.isActive = 1;
-                                table.branchId = MainWindow.branchLogin.branchId;
+                                //table.branchId = MainWindow.branchLogin.branchId;
 
                                 int s = await table.save(table);
                                 if (s <= 0)
@@ -261,11 +279,12 @@ namespace Restaurant.View.sectionData.hallDivide
                             else
                             {
                                 table.name = tb_name.Text;
-                                if (tables.Where(x => x.name == table.name && x.branchId == MainWindow.branchLogin.branchId && x.tableId != table.tableId).Count() == 0)
+                                if (tables.Where(x => x.name == table.name && x.branchId == Convert.ToInt32(cb_branchId.SelectedValue) && x.tableId != table.tableId).Count() == 0)
                                 {
                                     int count = 1;
                                     if (int.Parse(tb_personsCount.Text) != 0) count = int.Parse(tb_personsCount.Text);
                                     table.personsCount = count;
+                                    table.branchId = Convert.ToInt32(cb_branchId.SelectedValue);
                                     table.notes = tb_notes.Text;
                                     table.updateUserId = MainWindow.userLogin.userId;
                                     table.sectionId = null;
@@ -537,8 +556,9 @@ namespace Restaurant.View.sectionData.hallDivide
         }
         async Task<IEnumerable<Tables>> RefreshTablesList()
         {
-            tables = await table.Get(MainWindow.branchLogin.branchId);
-           // tables = tables.Where(x => x.branchId == MainWindow.branchLogin.branchId );
+            tables = await table.Get();
+            if(!HelpClass.isAdminPermision())
+                tables = tables.Where(x => x.branchId == MainWindow.branchLogin.branchId);
             return tables;
         }
         void RefreshTablessView()
@@ -552,8 +572,8 @@ namespace Restaurant.View.sectionData.hallDivide
         void Clear()
         {
             table = new Tables();
-            tb_personsCount.Text = "1";
-            numValue_personsCount = 1;
+            tb_personsCount.Text = "2";
+            numValue_personsCount = 2;
             this.DataContext = table;
 
             dg_table.SelectedIndex = -1;
@@ -851,7 +871,7 @@ namespace Restaurant.View.sectionData.hallDivide
 
 
 
-        private int _numValue_personsCount = 1;
+        private int _numValue_personsCount = 2;
         public int numValue_personsCount
         {
             get
@@ -874,8 +894,13 @@ namespace Restaurant.View.sectionData.hallDivide
             try
             {
                 Button button = sender as Button;
-                if (button.Tag.ToString() == "personsCount" && numValue_personsCount > 0)
-                    numValue_personsCount--;
+                if (button.Tag.ToString() == "personsCount" )
+                {
+                    if (numValue_personsCount > 2)
+                        numValue_personsCount--;
+                    else
+                        numValue_personsCount = 2;
+                }
             }
             catch (Exception ex)
             {
