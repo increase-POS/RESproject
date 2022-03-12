@@ -76,5 +76,10 @@ namespace Restaurant.Classes.ApiClasses
             string method = "HallSection/Delete";
             return await APIResult.post(method, parameters);
         }
+
+        internal Task<HallSection> getById(int sectionId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

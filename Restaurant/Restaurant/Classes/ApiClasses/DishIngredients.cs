@@ -16,20 +16,15 @@ namespace Restaurant.Classes
 {
     public class DishIngredients
     {
-        public int membershipId { get; set; }
-        public string code { get; set; }
+        public int dishIngredId { get; set; }
         public string name { get; set; }
-        public string subscriptionType { get; set; }
+        public Nullable<int> itemUnitId { get; set; }
         public string notes { get; set; }
+        public byte isActive { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-        public byte isActive { get; set; }
-        public Nullable<decimal> subscriptionFee { get; set; }
-        public bool canDelete { get; set; }
-        public bool isFreeDelivery { get; set; }
-        public decimal deliveryDiscountPercent { get; set; }
 
         public async Task<List<DishIngredients>> GetAll()
         {
@@ -44,8 +39,6 @@ namespace Restaurant.Classes
             }
             return items;
         }
-  
-
         public async Task<DishIngredients> GetById(int itemId)
         {
             DishIngredients item = new DishIngredients();
