@@ -29,7 +29,6 @@ namespace Restaurant.View.sales.promotion.membership
             try
             {
                 InitializeComponent();
-
             }
             catch (Exception ex)
             {
@@ -145,13 +144,14 @@ namespace Restaurant.View.sales.promotion.membership
             txt_customersCount.Text = AppSettings.resourcemanager.GetString("trCustomers");
             txt_couponsCount.Text = AppSettings.resourcemanager.GetString("trCoupons");
             txt_offersCount.Text = AppSettings.resourcemanager.GetString("trOffers");
-            txt_invoicesClassesCount.Text = AppSettings.resourcemanager.GetString("trInvoicesClasses");//???
+            txt_invoicesClassesCount.Text = AppSettings.resourcemanager.GetString("trInvoicesClasses");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
 
             dg_membership.Columns[0].Header = AppSettings.resourcemanager.GetString("trCode");
             dg_membership.Columns[1].Header = AppSettings.resourcemanager.GetString("trName");
 
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
             tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
         }
@@ -194,9 +194,11 @@ namespace Restaurant.View.sales.promotion.membership
                 if (dg_membership.SelectedIndex != -1)
                 {
                     membership = dg_membership.SelectedItem as Memberships;
+                    HelpClass.clearValidate(p_error_discountValue);
                     this.DataContext = membership;
                     if (membership != null)
                     {
+                        btn_save.IsEnabled = true;
                         //customers
                         agMemberships = await agMembership.GetAll();
                         agMemberships = agMemberships.Where(a => a.membershipId == membership.membershipId);
@@ -246,6 +248,7 @@ namespace Restaurant.View.sales.promotion.membership
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
+            btn_save.IsEnabled = false;
             this.DataContext = new Agent();
         }
         string input;
@@ -254,9 +257,7 @@ namespace Restaurant.View.sales.promotion.membership
         {
             try
             {
-
-
-                //only  digits
+                //only digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
                 if (textBox.Tag.ToString() == "int")
@@ -270,12 +271,14 @@ namespace Restaurant.View.sales.promotion.membership
                     e.Handled = !decimal.TryParse(textBox.Text + input, out _decimal);
 
                 }
+
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+       
         private void Code_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             try
@@ -447,5 +450,96 @@ namespace Restaurant.View.sales.promotion.membership
             }
         }
         #endregion
+
+        private async void Btn_save_Click(object sender, RoutedEventArgs e)
+        {//save
+            try
+            {
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update") || HelpClass.isAdminPermision())
+                {
+                    HelpClass.StartAwait(grid_main);
+                    if (membership.membershipId > 0)
+                    {
+                        if (isValidDiscount)
+                        {
+                            membership.isFreeDelivery = tgl_hasCredit.IsChecked.Value;
+                            try
+                            { membership.deliveryDiscountPercent = decimal.Parse(tb_discountValue.Text); }
+                            catch
+                            { membership.deliveryDiscountPercent = 0; }
+
+                            int s = await membership.SaveMemberAndSub(membership);
+                            if (s <= 0)
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            else
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+
+                                isValidDiscount = true;
+                                await RefreshMembershipsList();
+                                await Search();
+                            }
+                        }
+                        else
+                            HelpClass.SetValidate(p_error_discountValue , "trValidRange");
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
+                    HelpClass.EndAwait(grid_main);
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
+        private void Tgl_hasCredit_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                tb_discountValue.IsEnabled = false;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Tgl_hasCredit_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                tb_discountValue.IsEnabled = true ;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        bool isValidDiscount = true;
+        private void Tb_discountValue_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (decimal.Parse(tb_discountValue.Text) > 100)
+                    isValidDiscount = false;
+                else
+                {
+                    isValidDiscount = true;
+                    HelpClass.clearValidate(p_error_discountValue);
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

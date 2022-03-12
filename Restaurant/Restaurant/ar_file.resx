@@ -3544,4 +3544,10 @@
   <data name="trSelectedOffers" xml:space="preserve">
     <value>العروض المختارة</value>
   </data>
+  <data name="trExceed" xml:space="preserve">
+    <value>متجاوز</value>
+  </data>
+  <data name="trValidRange" xml:space="preserve">
+    <value>المجال المسموح به : 0 إلى 100</value>
+  </data>
 </root>

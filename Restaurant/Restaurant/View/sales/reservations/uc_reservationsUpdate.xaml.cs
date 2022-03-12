@@ -194,10 +194,10 @@ namespace Restaurant.View.sales.reservations
             #region datagrid
             dg_reservation.Columns[0].Header = AppSettings.resourcemanager.GetString("trCode");
             dg_reservation.Columns[1].Header = AppSettings.resourcemanager.GetString("trDate");
-            dg_reservation.Columns[2].Header = AppSettings.resourcemanager.GetString("trTime");
+            dg_reservation.Columns[2].Header = AppSettings.resourcemanager.GetString("trStartTime");
             dg_reservation.Columns[3].Header = AppSettings.resourcemanager.GetString("trCount");
             dg_reservation.Columns[4].Header = AppSettings.resourcemanager.GetString("trCustomer");
-            dg_reservation.Columns[5].Header = AppSettings.resourcemanager.GetString("trStatus");
+            dg_reservation.Columns[5].Header = AppSettings.resourcemanager.GetString("trExceed");
             #endregion
             txt_title.Text = AppSettings.resourcemanager.GetString("trReservations");
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");

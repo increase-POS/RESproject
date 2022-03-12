@@ -39,6 +39,7 @@
             <converters:inventoryTypeConverter x:Key="inventoryTypeConverter"/>
             <converters:userJobConverter x:Key="userJobConverter"/>
             <converters:closingDescriptonConverter x:Key="closingDescriptonConverter"/>
+            <converters:translateConverter x:Key="translateConverter"/>
 
             <!--#region Fonts-->
             <FontFamily x:Key="BarcodeFont" >IDAHC39M Code 39 Barcode, /Restaurant;component/fonts/#IDAHC39M Code 39 Barcode, Arial</FontFamily>

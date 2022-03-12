@@ -378,26 +378,22 @@
                                    Margin="0,0,5,0" Text="free" Foreground="#6e6e6e"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"
                                    FontSize="12"/>
-                            <ToggleButton Grid.Column="1"  x:Name="tgl_hasCredit"  IsChecked="{Binding isLimited, Mode=OneWay}"
-                                     
-                                          
-                                      HorizontalAlignment="Left"  VerticalAlignment="Center" Padding="10,15,5,5"  
-                                      Margin="0" Height="13" Width="28" />
+                            <ToggleButton Grid.Column="1"  x:Name="tgl_hasCredit"  IsChecked="{Binding isFreeDelivery, Mode=OneWay}"
+                                          HorizontalAlignment="Left"  VerticalAlignment="Center" Padding="10,15,5,5"  
+                                          Margin="0" Height="13" Width="28" Checked="Tgl_hasCredit_Checked" Unchecked="Tgl_hasCredit_Unchecked" />
                             <Border Grid.Column="2"   CornerRadius="10" Margin="5,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                 <Grid   >
                                     <TextBox Margin="4,0" x:Name="tb_discountValue"  
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
-                                         Text="{Binding discountValue, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
+                                         Text="{Binding deliveryDiscountPercent, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
                                          materialDesign:HintAssist.Hint="discount value..."   Foreground="#4E4E4E"
                                          materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" 
-                                        Tag="decimal" PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"/>
-
-
+                                        Tag="decimal" PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown" LostFocus="Tb_discountValue_LostFocus"/>
 
                                     <Path Fill="#E81123" Stretch="Fill"    x:Name="p_error_discountValue" 
-                                      HorizontalAlignment="Right" Visibility="Collapsed"   VerticalAlignment="Center" 
-                                      Width="15"  Height="15" Margin="5,5,5,5" 
-                                      Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17L11,17 L11,15 L13,15 L13,17 Z">
+                                          HorizontalAlignment="Right" Visibility="Collapsed"   VerticalAlignment="Center" 
+                                          Width="15"  Height="15" Margin="5,5,5,5" 
+                                          Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17L11,17 L11,15 L13,15 L13,17 Z">
                                     </Path>
                                 </Grid>
                             </Border>
@@ -410,6 +406,31 @@
 
                 <Border Grid.Row="3" Background="White" CornerRadius="0 0 7 7">
                     <Grid  Grid.Row="3" Margin="5,5,5,10" />
+                </Border>
+
+                <Border Grid.Row="3" Background="White" CornerRadius="0 0 7 7">
+                    <Grid  Grid.Row="3" Margin="5,5,5,10" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                     
+                        <Border Background="White" Grid.ColumnSpan="3"  Height="1"  BorderBrush="{StaticResource MainColor}" 
+                                BorderThickness="1" Opacity="1" Margin="5,5,5,5"  />
+
+                        <Border Grid.Row="1" Grid.ColumnSpan="3">
+                            <Button x:Name="btn_save"  Content="save" materialDesign:ButtonAssist.CornerRadius="7"
+                                    Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                                    Margin="1,1"   Foreground="White" IsEnabled="False"
+                                    Click="Btn_save_Click"  />
+                        </Border>
+                       
+                      
+                      
+                    </Grid>
+
                 </Border>
 
             </Grid>

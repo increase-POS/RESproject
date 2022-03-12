@@ -198,6 +198,8 @@ namespace Restaurant.View.sales.promotion.membership
                             try
                             { membership.subscriptionFee = decimal.Parse(tb_price.Text); }
                             catch { membership.subscriptionFee = 0; }
+                            membership.isFreeDelivery = false;
+                            membership.deliveryDiscountPercent = 0;
 
                             int s = await membership.SaveMemberAndSub(membership);
                             if (s <= 0)
@@ -253,6 +255,8 @@ namespace Restaurant.View.sales.promotion.membership
                                 try
                                 { membership.subscriptionFee = decimal.Parse(tb_price.Text); }
                                 catch { membership.subscriptionFee = 0; }
+                                membership.isFreeDelivery = false;
+                                membership.deliveryDiscountPercent = 0;
 
                                 int s = await membership.SaveMemberAndSub(membership);
                                 if (s <= 0)
@@ -265,10 +269,12 @@ namespace Restaurant.View.sales.promotion.membership
                                     await Search();
                                 }
                             }
-                            else
-                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                         }
                     }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
                     HelpClass.EndAwait(grid_main);
                 }
                 else
