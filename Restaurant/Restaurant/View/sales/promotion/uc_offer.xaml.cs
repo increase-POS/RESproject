@@ -113,6 +113,7 @@ namespace Restaurant.View.sales.promotion
                 requiredControlList = new List<string> { "code" , "name", "discountType" , "discountValue" , "startDate" , "endDate"};
 
                 FillCombo.fillDiscountType(cb_discountType);
+                FillCombo.fillAvailabilityType(cb_forAgents);
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -241,6 +242,7 @@ namespace Restaurant.View.sales.promotion
 
                             offer.name = tb_name.Text;
                             offer.code = tb_code.Text;
+                            offer.forAgents = cb_forAgents.SelectedValue.ToString();
                             offer.isActive = Convert.ToByte(tgl_isActiveOffer.IsChecked);
                             offer.discountType = Convert.ToString(cb_discountType.SelectedValue);
                             offer.discountValue = decimal.Parse(tb_discountValue.Text);
@@ -326,6 +328,7 @@ namespace Restaurant.View.sales.promotion
 
                                 offer.name = tb_name.Text;
                                 offer.code = tb_code.Text;
+                                offer.forAgents = cb_forAgents.SelectedValue.ToString();
                                 offer.isActive = Convert.ToByte(tgl_isActiveOffer.IsChecked);
                                 offer.discountType = Convert.ToString(cb_discountType.SelectedValue);
                                 offer.discountValue = decimal.Parse(tb_discountValue.Text);
@@ -650,9 +653,10 @@ namespace Restaurant.View.sales.promotion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-           
 
-            this.DataContext = new Offer();
+            offer = new Offer();
+            offer.forAgents = "pb";
+            this.DataContext = offer;
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);

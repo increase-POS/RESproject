@@ -107,6 +107,7 @@ namespace Restaurant.View.sales.promotion
                 requiredControlList = new List<string> { "name", "code", "discountType", "discountValue" };
 
                 FillCombo.fillDiscountType(cb_discountType);
+                FillCombo.fillAvailabilityType(cb_forAgents);
 
                 //fill membership combo
 
@@ -243,6 +244,7 @@ namespace Restaurant.View.sales.promotion
 
                             coupon.code = tb_code.Text;
                             coupon.name = tb_name.Text;
+                            coupon.forAgents = cb_forAgents.SelectedValue.ToString();
                             coupon.notes = tb_notes.Text;
                             coupon.barcode = tb_barcode.Text;
                             coupon.isActive = Convert.ToByte(tgl_isActiveCoupon.IsChecked);
@@ -347,6 +349,7 @@ namespace Restaurant.View.sales.promotion
                         #region update
                         coupon.code = tb_code.Text;
                         coupon.name = tb_name.Text;
+                        coupon.forAgents = cb_forAgents.SelectedValue.ToString();
                         coupon.notes = tb_notes.Text;
                         coupon.barcode = tb_barcode.Text;
                         coupon.isActive = Convert.ToByte(tgl_isActiveCoupon.IsChecked);
@@ -658,7 +661,9 @@ namespace Restaurant.View.sales.promotion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            this.DataContext = new Coupon();
+            coupon = new Coupon();
+            coupon.forAgents = "pb";
+            this.DataContext = coupon;
 
             tb_discountValue.IsEnabled = true;
             cb_discountType.IsEnabled = true;

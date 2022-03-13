@@ -473,9 +473,23 @@
                             </Path>
                         </Grid>
                     </Border>
-                     
+                        <Border Grid.Row="8" Grid.Column="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Grid   >
+                                <ComboBox x:Name="cb_forAgents"    SelectedValue="{Binding forAgents, Mode=OneWay}"
+                                  Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
+                                  materialDesign:HintAssist.Hint="type..."  
+                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                   Grid.Column="0" Height="40"  Margin="4,0"
+                                  BorderBrush="#737373" BorderThickness="0"  />
+                                <Path Fill="#E81123" x:Name="p_error_forAgents" Stretch="Fill" Margin="5,5,15,5"
+                              HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
+                         VerticalAlignment="Center" Width="15"  Height="15" 
+                             Data="{StaticResource infoCircle}"/>
 
-                    <StackPanel Grid.Row="9" Orientation="Horizontal"  Margin="15,5,10,5">
+                            </Grid>
+                        </Border>
+
+                        <StackPanel Grid.Row="9" Orientation="Horizontal"  Margin="15,5,10,5">
                         <TextBlock   x:Name="txt_isActiveOffer" Text="Active"
                                    Margin="0,0,5,0"  Foreground="#6e6e6e" />
                         <ToggleButton   x:Name="tgl_isActiveOffer"  IsChecked="{Binding isActive, Mode=OneWay}"
