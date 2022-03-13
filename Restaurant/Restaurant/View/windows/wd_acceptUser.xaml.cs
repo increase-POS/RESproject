@@ -49,12 +49,16 @@ namespace Restaurant.View.windows
     }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            //try
-            //{
+        {//load
+            try
+            {
+
+                HelpClass.clearValidate(p_error_userName);
+                HelpClass.clearValidate(p_error_password);
+
                 #region translate
 
-            if (AppSettings.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
             {
                 grid_acceptUser.FlowDirection = FlowDirection.LeftToRight;
             }
@@ -65,12 +69,12 @@ namespace Restaurant.View.windows
 
             translate();
                 #endregion
-              
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void translate()
@@ -92,18 +96,15 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_acceptUser);
+                HelpClass.StartAwait(grid_acceptUser);
 
                 await chkUser();
 
-                if (sender != null)
-                    HelpClass.EndAwait(grid_acceptUser);
+                HelpClass.EndAwait(grid_acceptUser);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_acceptUser);
+                HelpClass.EndAwait(grid_acceptUser);
                 HelpClass.ExceptionMessage(ex, this);
             }
 
@@ -185,7 +186,9 @@ namespace Restaurant.View.windows
             try
             {
                 if (tb_userName.Text.Equals(""))
-                    HelpClass.SetValidate(p_error_userName,  "trEmptyUserNameToolTip");
+                    HelpClass.SetValidate(p_error_userName, "trEmptyUserNameToolTip");
+                else
+                    HelpClass.clearValidate(p_error_userName);
             }
             catch (Exception ex)
             {

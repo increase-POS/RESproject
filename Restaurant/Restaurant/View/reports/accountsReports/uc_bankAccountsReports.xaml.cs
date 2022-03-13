@@ -159,10 +159,6 @@ namespace Restaurant.View.reports.accountsReports
         private List<CashTransferSts> fillList(List<CashTransferSts> payments, ComboBox vendor, ComboBox payType, ComboBox accountant
            , DatePicker startDate, DatePicker endDate)
         {
-            //var selectedItem1 = vendor.SelectedItem as Bank;
-            //var selectedItem2 = payType.SelectedItem as VendorCombo;
-            // var selectedItem3 = accountant.SelectedItem as AccountantCombo;
-
             var result = payments.Where(x => (
                            (cb_paymentsBank.SelectedItem != null ? x.bankId == (int)cb_paymentsBank.SelectedValue : true)
                         && (payType.SelectedItem != null ? x.userId == (int)cb_paymentsUser.SelectedValue : true)
@@ -459,6 +455,13 @@ namespace Restaurant.View.reports.accountsReports
             int startYear = endYear - 1;
             int startMonth = DateTime.Now.Month;
             int endMonth = startMonth;
+
+            IEnumerable<CashTransferSts> payLst = null;
+            IEnumerable<CashTransferSts> recLst = null;
+
+            payLst = fillList(payments, cb_paymentsBank, cb_paymentsUser, cb_paymentsAccountant, dp_paymentsStartDate, dp_paymentsEndDate).Where(s => s.side == "bn" && s.isConfirm == 1);
+            recLst = fillList(recipient, cb_paymentsBank, cb_paymentsUser, cb_paymentsAccountant, dp_paymentsStartDate, dp_paymentsEndDate).Where(s => s.side == "bn" && s.isConfirm == 1);
+
             if (dp_paymentsStartDate.SelectedDate != null && dp_paymentsEndDate.SelectedDate != null)
             {
                 startYear = dp_paymentsStartDate.SelectedDate.Value.Year;
@@ -491,8 +494,8 @@ namespace Restaurant.View.reports.accountsReports
                     {
                         var firstOfThisMonth = new DateTime(year, month, 1);
                         var firstOfNextMonth = firstOfThisMonth.AddMonths(1);
-                        var drawCash = payments.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth && c.transType == "p").Sum(c => c.cash);
-                        var drawCard = recipient.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth && c.transType == "d").Sum(c => c.cash);
+                        var drawCash = payLst.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth && c.transType == "p").Sum(c => c.cash);
+                        var drawCard = recLst.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth && c.transType == "d").Sum(c => c.cash);
                         cash.Add((decimal)drawCash);
                         card.Add((decimal)drawCard);
 
@@ -516,8 +519,8 @@ namespace Restaurant.View.reports.accountsReports
                 {
                     var firstOfThisYear = new DateTime(year, 1, 1);
                     var firstOfNextMYear = firstOfThisYear.AddYears(1);
-                    var drawCash = payments.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear && c.processType == "cash").Count();
-                    var drawCard = recipient.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear && c.processType == "cash").Count();
+                    var drawCash = payLst.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear && c.processType == "cash").Count();
+                    var drawCard = recLst.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear && c.processType == "cash").Count();
                     cash.Add(drawCash);
                     card.Add(drawCard);
                     MyAxis.Labels.Add(year.ToString());
@@ -544,19 +547,16 @@ namespace Restaurant.View.reports.accountsReports
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_paymentsBank.IsEnabled = false;
                 cb_paymentsBank.SelectedItem = null;
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -565,18 +565,15 @@ namespace Restaurant.View.reports.accountsReports
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_paymentsBank.IsEnabled = true;
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -585,18 +582,15 @@ namespace Restaurant.View.reports.accountsReports
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 fillEvents(payments);
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -651,7 +645,6 @@ namespace Restaurant.View.reports.accountsReports
 
                 cb_paymentsAccountant.IsEnabled = false;
                 cb_paymentsAccountant.SelectedItem = null;
-
                 
                 HelpClass.EndAwait(grid_main);
             }

@@ -135,9 +135,9 @@ namespace Restaurant.View.accounts
         }
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "cash", "opperationType", "user", "bank"};
 
                 btn_add.IsEnabled = true;
@@ -213,14 +213,14 @@ namespace Restaurant.View.accounts
 
                 await RefreshCashesList();
                 await Search();
-               
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void dp_SelectedStartDateChanged(object sender, SelectionChangedEventArgs e)
@@ -355,26 +355,26 @@ namespace Restaurant.View.accounts
 
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
         {//search
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 await Search();
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//save
-         //try
-         //{
-         //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.clearValidate(p_error_user);
                 if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
@@ -385,42 +385,45 @@ namespace Restaurant.View.accounts
                         //chk user confirmation
                         bool isuserConfirmed = w.isOk;
 
-                        if (HelpClass.validate(requiredControlList, this) && isuserConfirmed)
+                        if (isuserConfirmed)
                         {
-                            CashTransfer cash = new CashTransfer();
-
-                            cash.transType = cb_opperationType.SelectedValue.ToString();
-                            cash.userId = Convert.ToInt32(cb_user.SelectedValue);
-                            try
+                            if (HelpClass.validate(requiredControlList, this))
                             {
-                                cash.transNum = await cashModel.generateCashNumber(cb_opperationType.SelectedValue.ToString() + "bn");
+                                cashtrans = new CashTransfer();
+
+                                cashtrans.transType = cb_opperationType.SelectedValue.ToString();
+                                cashtrans.userId = Convert.ToInt32(cb_user.SelectedValue);
+                                try
+                                {
+                                cashtrans.transNum = await cashModel.generateCashNumber(cb_opperationType.SelectedValue.ToString() + "bn");
+                                }
+                                catch { }
+                                cashtrans.cash = decimal.Parse(tb_cash.Text);
+                                cashtrans.createUserId = MainWindow.userLogin.userId;
+                                cashtrans.notes = tb_notes.Text;
+                                cashtrans.posId = MainWindow.posLogin.posId;
+                                cashtrans.side = "bn";
+                                cashtrans.isConfirm = 0;
+                                cashtrans.bankId = Convert.ToInt32(cb_bank.SelectedValue);
+
+                                int s = await cashModel.Save(cashtrans);
+
+                                if (!s.Equals(0))
+                                {
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+                                    Clear();
+                                    await RefreshCashesList();
+                                    await Search();
+                                }
+                                else
+                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             }
-                            catch { }
-                            cash.cash = decimal.Parse(tb_cash.Text);
-                            cash.createUserId = MainWindow.userLogin.userId;
-                            cash.notes = tb_notes.Text;
-                            cash.posId = MainWindow.posLogin.posId;
-                            cash.side = "bn";
-                            cash.isConfirm = 0;
-                            cash.bankId = Convert.ToInt32(cb_bank.SelectedValue);
-
-                            int s = await cashModel.Save(cash);
-
-                            if (!s.Equals(0))
-                            {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-
-                                Clear();
-                                await RefreshCashesList();
-                                await Search();
-                            }
-                            else
-                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        
                         }
                         else
                         {
-                        if (!isuserConfirmed)
-                            HelpClass.SetValidate(p_error_user , "trUserConfirm");
+                            HelpClass.SetValidate(p_error_user, "trUserConfirm");
                         }
                     }
                     //exist 
@@ -460,110 +463,110 @@ namespace Restaurant.View.accounts
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-                    #region
-                    /*
-                    if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
+                #region
+                /*
+                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
+                {
+                    if (cashtrans.cashTransId == 0)
                     {
-                        if (cashtrans.cashTransId == 0)
+                        #region validate
+                        //chk empty cash
+                        HelpClass.validateEmptyTextBox(tb_cash, p_error_cash, tt_errorCash, "trEmptyCashToolTip");
+                        //chk empty dicount type
+                        HelpClass.validateEmptyComboBox(cb_opperationType, p_error_opperationType, tt_errorOpperationType, "trErrorEmptyOpperationTypeToolTip");
+                        //chk empty user
+                        HelpClass.validateEmptyComboBox(cb_user, p_error_user, tt_errorUser, "trErrorEmptyUserToolTip");
+                        //chk empty bank
+                        HelpClass.validateEmptyComboBox(cb_bank, p_error_bank, tt_errorBank, "trErrorEmptyBankToolTip");
+                        //chk user confirmation
+                        bool isuserConfirmed = w.isOk;
+                        #endregion
+
+                        #region add
+                        if ((!tb_cash.Text.Equals("")) &&
+                            (!cb_opperationType.Text.Equals("")) && (!cb_user.Text.Equals("")) &&
+                            (!cb_bank.Text.Equals("")) &&
+                            (isuserConfirmed)
+                            )
+
                         {
-                            #region validate
-                            //chk empty cash
-                            HelpClass.validateEmptyTextBox(tb_cash, p_error_cash, tt_errorCash, "trEmptyCashToolTip");
-                            //chk empty dicount type
-                            HelpClass.validateEmptyComboBox(cb_opperationType, p_error_opperationType, tt_errorOpperationType, "trErrorEmptyOpperationTypeToolTip");
-                            //chk empty user
-                            HelpClass.validateEmptyComboBox(cb_user, p_error_user, tt_errorUser, "trErrorEmptyUserToolTip");
-                            //chk empty bank
-                            HelpClass.validateEmptyComboBox(cb_bank, p_error_bank, tt_errorBank, "trErrorEmptyBankToolTip");
-                            //chk user confirmation
-                            bool isuserConfirmed = w.isOk;
-                            #endregion
+                            CashTransfer cash = new CashTransfer();
 
-                            #region add
-                            if ((!tb_cash.Text.Equals("")) &&
-                                (!cb_opperationType.Text.Equals("")) && (!cb_user.Text.Equals("")) &&
-                                (!cb_bank.Text.Equals("")) &&
-                                (isuserConfirmed)
-                                )
-
+                            cash.transType = cb_opperationType.SelectedValue.ToString();
+                            cash.userId = Convert.ToInt32(cb_user.SelectedValue);
+                            try
                             {
-                                CashTransfer cash = new CashTransfer();
+                                cash.transNum = await cashModel.generateCashNumber(cb_opperationType.SelectedValue.ToString() + "bn");
+                            }
+                            catch { }
+                            cash.cash = decimal.Parse(tb_cash.Text);
+                            cash.createUserId = MainWindow.userLogin.userId;
+                            cash.notes = tb_notes.Text;
+                            cash.posId = MainWindow.posLogin.posId;
+                            cash.side = "bn";
+                            cash.isConfirm = 0;
+                            cash.bankId = Convert.ToInt32(cb_bank.SelectedValue);
 
-                                cash.transType = cb_opperationType.SelectedValue.ToString();
-                                cash.userId = Convert.ToInt32(cb_user.SelectedValue);
-                                try
-                                {
-                                    cash.transNum = await cashModel.generateCashNumber(cb_opperationType.SelectedValue.ToString() + "bn");
-                                }
-                                catch { }
-                                cash.cash = decimal.Parse(tb_cash.Text);
-                                cash.createUserId = MainWindow.userLogin.userId;
-                                cash.notes = tb_notes.Text;
-                                cash.posId = MainWindow.posLogin.posId;
-                                cash.side = "bn";
-                                cash.isConfirm = 0;
-                                cash.bankId = Convert.ToInt32(cb_bank.SelectedValue);
+                            int s = await cashModel.Save(cash);
 
-                                int s = await cashModel.Save(cash);
+                            if (!s.Equals(0))
+                            {
+
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                Btn_clear_Click(null, null);
+
+                                dg_bankAccounts.ItemsSource = await RefreshCashesList();
+                                Tb_search_TextChanged(null, null);
+                            }
+                            else
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        }
+                    }
+                    else
+                    {
+                        if (cashtrans.isConfirm == 0)
+                        {
+                            //chk empty deposite number
+                            HelpClass.validateEmptyTextBox(tb_depositNumber, p_error_depositNumber, tt_errorDepositNumber, "trEmptyDepositNumberToolTip");
+                            if (!tb_depositNumber.Text.Equals(""))
+                            {
+                                cashtrans.isConfirm = 1;
+                                cashtrans.docNum = tb_depositNumber.Text;
+
+                                int s = await cashModel.Save(cashtrans);
 
                                 if (!s.Equals(0))
                                 {
-
-                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                                    Btn_clear_Click(null, null);
+                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trCompleted"), animation: ToasterAnimation.FadeIn);
+                                    btn_add.IsEnabled = false;
+                                    btn_add.Content = AppSettings.resourcemanager.GetString("trCompleted");
 
                                     dg_bankAccounts.ItemsSource = await RefreshCashesList();
                                     Tb_search_TextChanged(null, null);
+
+                                    decimal ammount = cashtrans.cash;
+                                    if (cashtrans.transType.Equals("d")) ammount *= -1;
+                                    await calcBalance(ammount);
                                 }
                                 else
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             }
                         }
-                        else
-                        {
-                            if (cashtrans.isConfirm == 0)
-                            {
-                                //chk empty deposite number
-                                HelpClass.validateEmptyTextBox(tb_depositNumber, p_error_depositNumber, tt_errorDepositNumber, "trEmptyDepositNumberToolTip");
-                                if (!tb_depositNumber.Text.Equals(""))
-                                {
-                                    cashtrans.isConfirm = 1;
-                                    cashtrans.docNum = tb_depositNumber.Text;
-
-                                    int s = await cashModel.Save(cashtrans);
-
-                                    if (!s.Equals(0))
-                                    {
-                                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trCompleted"), animation: ToasterAnimation.FadeIn);
-                                        btn_add.IsEnabled = false;
-                                        btn_add.Content = AppSettings.resourcemanager.GetString("trCompleted");
-
-                                        dg_bankAccounts.ItemsSource = await RefreshCashesList();
-                                        Tb_search_TextChanged(null, null);
-
-                                        decimal ammount = cashtrans.cash;
-                                        if (cashtrans.transType.Equals("d")) ammount *= -1;
-                                        await calcBalance(ammount);
-                                    }
-                                    else
-                                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                                }
-                            }
-                            #endregion
-                        }
+                        #endregion
                     }
-                    else
-                        Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                    */
-                    #endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                */
+                #endregion
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async Task calcBalance(decimal ammount)
@@ -696,22 +699,22 @@ namespace Restaurant.View.accounts
 
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 searchText = "";
                 tb_search.Text = "";
                 await RefreshCashesList();
                 await Search();
-               
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void PreventSpaces(object sender, KeyEventArgs e)
@@ -875,7 +878,10 @@ namespace Restaurant.View.accounts
                 Window.GetWindow(this).Opacity = 1;
 
                 if (w.isOk == true)
+                {
                     p_confirmUser.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#2BB673"));
+                    HelpClass.clearValidate(p_error_user);
+                }
                 else p_confirmUser.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#E65B65"));
             }
             catch (Exception ex)
@@ -1309,10 +1315,7 @@ namespace Restaurant.View.accounts
         void Clear()
         {//clear
             this.DataContext = new CashTransfer();
-
-            //try
-            //{ tb_transNum.Text = await HelpClass.generateNumber(Convert.ToChar(cb_opperationType.SelectedValue), "bn"); }
-            //catch { }
+            cashtrans.cashTransId = 0;
             btn_add.IsEnabled = true;
             cb_opperationType.IsEnabled = true;
             cb_user.IsEnabled = true;
