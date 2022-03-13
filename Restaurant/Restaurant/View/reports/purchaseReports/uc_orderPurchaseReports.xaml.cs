@@ -1310,70 +1310,70 @@ namespace Restaurant.View.reports.purchaseReports
             {
                 if (selectedTab == 0)
                 {
-                    addpath = @"\Reports\StatisticReport\Purchase\Ar\ArPurSts.rdlc";
+                    addpath = @"\Reports\StatisticReport\Purchase\Ar\ArOrderBranch.rdlc";
                     secondTitle = "branch";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
 
                 }
                 else if (selectedTab == 1)
                 {
-                    addpath = @"\Reports\StatisticReport\Purchase\Ar\ArPurPosSts.rdlc";
+                    addpath = @"\Reports\StatisticReport\Purchase\Ar\ArOrderPos.rdlc";
                     secondTitle = "pos";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
                 }
                 else if (selectedTab == 2)
                 {
-                    addpath = @"\Reports\StatisticReport\Purchase\Ar\ArPurVendorSts.rdlc";
+                    addpath = @"\Reports\StatisticReport\Purchase\Ar\ArOrderVendor.rdlc";
                     secondTitle = "vendors";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
                 }
                 else if (selectedTab == 3)
                 {
-                    addpath = @"\Reports\StatisticReport\Purchase\Ar\ArPurUserSts.rdlc";
+                    addpath = @"\Reports\StatisticReport\Purchase\Ar\ArOrderUser.rdlc";
                     secondTitle = "users";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
                 }
-                else
-                {
-                    addpath = @"\Reports\StatisticReport\Purchase\Ar\ArPurItemSts.rdlc";
-                    secondTitle = "items";
-                    subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-                }
+                //else
+                //{
+                //    addpath = @"\Reports\StatisticReport\Purchase\Ar\ArPurItemSts.rdlc";
+                //    secondTitle = "items";
+                //    subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+                //}
             }
             else
             {
                 //english
                 if (selectedTab == 0)
                 {
-                    addpath = @"\Reports\StatisticReport\Purchase\En\EnPurSts.rdlc";
+                    addpath = @"\Reports\StatisticReport\Purchase\En\EnOrderBranch.rdlc";
                     secondTitle = "branch";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
 
                 }
                 else if (selectedTab == 1)
                 {
-                    addpath = @"\Reports\StatisticReport\Purchase\En\EnPurPosSts.rdlc";
+                    addpath = @"\Reports\StatisticReport\Purchase\En\EnOrderPos.rdlc";
                     secondTitle = "pos";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
                 }
                 else if (selectedTab == 2)
                 {
-                    addpath = @"\Reports\StatisticReport\Purchase\En\EnPurVendorSts.rdlc";
+                    addpath = @"\Reports\StatisticReport\Purchase\En\EnOrderVendor.rdlc";
                     secondTitle = "vendors";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
                 }
                 else if (selectedTab == 3)
                 {
-                    addpath = @"\Reports\StatisticReport\Purchase\En\EnPurUserSts.rdlc";
+                    addpath = @"\Reports\StatisticReport\Purchase\En\EnOrderUser.rdlc";
                     secondTitle = "users";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
                 }
-                else
-                {
-                    addpath = @"\Reports\StatisticReport\Purchase\En\EnPurItemSts.rdlc";
-                    secondTitle = "items";
-                    subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-                }
+                //else
+                //{
+                //    addpath = @"\Reports\StatisticReport\Purchase\En\EnPurItemSts.rdlc";
+                //    secondTitle = "items";
+                //    subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+                //}
             }
 
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);

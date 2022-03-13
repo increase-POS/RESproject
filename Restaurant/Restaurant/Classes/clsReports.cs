@@ -1172,7 +1172,22 @@ Parameters!trValueDiscount.Value)
             PurStsReport(tempquery, rep, reppath);
             itemTransferInvTypeConv(paramarr);
 
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
+         
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
+            paramarr.Add(new ReportParameter("trPOS", AppSettings.resourcemanagerreport.GetString("trPOS")));
+            paramarr.Add(new ReportParameter("trCompany", AppSettings.resourcemanagerreport.GetString("trCompany")));
+            paramarr.Add(new ReportParameter("trUser", AppSettings.resourcemanagerreport.GetString("trUser")));
+            paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem")));
+            paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
+    
+            paramarr.Add(new ReportParameter("trPrice", AppSettings.resourcemanagerreport.GetString("trPrice")));
+             
+            paramarr.Add(new ReportParameter("trVendor", AppSettings.resourcemanagerreport.GetString("trVendor")));
+
         }
+
 
         public static void posReport(IEnumerable<Pos> possQuery, LocalReport rep, string reppath)
         {

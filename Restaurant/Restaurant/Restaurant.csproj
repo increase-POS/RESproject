@@ -1522,28 +1522,28 @@
     <Content Include="Reports\StatisticReport\Storage\En\EnDestructive.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\StatisticReport\Purchase\Ar\ArPurPosSts.rdlc">
+    <Content Include="Reports\StatisticReport\Purchase\Ar\ArOrderPos.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\StatisticReport\Purchase\Ar\ArPurSts.rdlc">
+    <Content Include="Reports\StatisticReport\Purchase\Ar\ArOrderBranch.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\StatisticReport\Purchase\Ar\ArPurUserSts.rdlc">
+    <Content Include="Reports\StatisticReport\Purchase\Ar\ArOrderUser.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\StatisticReport\Purchase\Ar\ArPurVendorSts.rdlc">
+    <Content Include="Reports\StatisticReport\Purchase\Ar\ArOrderVendor.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\StatisticReport\Purchase\En\EnPurPosSts.rdlc">
+    <Content Include="Reports\StatisticReport\Purchase\En\EnOrderPos.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\StatisticReport\Purchase\En\EnPurSts.rdlc">
+    <Content Include="Reports\StatisticReport\Purchase\En\EnOrderBranch.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\StatisticReport\Purchase\En\EnPurUserSts.rdlc">
+    <Content Include="Reports\StatisticReport\Purchase\En\EnOrderUser.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\StatisticReport\Purchase\En\EnPurVendorSts.rdlc">
+    <Content Include="Reports\StatisticReport\Purchase\En\EnOrderVendor.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\StatisticReport\Purchase\Ar\ArInvoiceBranch.rdlc">

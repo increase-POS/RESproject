@@ -689,7 +689,7 @@
                       <FontFamily>Montserrat</FontFamily>
                       <FontSize>20pt</FontSize>
                       <FontWeight>Bold</FontWeight>
-                      <Color>#178dd2</Color>
+                      <Color>#d35400</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -717,16 +717,16 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>6.77334cm</Width>
+                  <Width>7cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>7.09725cm</Width>
+                  <Width>6.08542cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>7.163cm</Width>
+                  <Width>8.23496cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>6.06538cm</Width>
+                  <Width>5.7786cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -735,16 +735,15 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox25">
+                        <Textbox Name="Textbox2">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>الرقم</Value>
+                                  <Value>=Parameters!trNo.Value</Value>
                                   <Style>
-                                    <FontFamily />
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -754,37 +753,32 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox25</rd:DefaultName>
+                          <rd:DefaultName>Textbox2</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <LeftBorder>
-                              <Style>Solid</Style>
-                            </LeftBorder>
                             <BackgroundColor>WhiteSmoke</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
-                            <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox1">
+                        <Textbox Name="Textbox3">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>التاريخ</Value>
+                                  <Value>=Parameters!trDate.Value</Value>
                                   <Style>
-                                    <FontFamily />
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -794,37 +788,32 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox1</rd:DefaultName>
+                          <rd:DefaultName>Textbox3</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <LeftBorder>
-                              <Style>Solid</Style>
-                            </LeftBorder>
                             <BackgroundColor>WhiteSmoke</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
-                            <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox7">
+                        <Textbox Name="Textbox4">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>الفرع</Value>
+                                  <Value>=Parameters!trBranch.Value</Value>
                                   <Style>
-                                    <FontFamily />
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -834,37 +823,32 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox7</rd:DefaultName>
+                          <rd:DefaultName>Textbox4</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <LeftBorder>
-                              <Style>Solid</Style>
-                            </LeftBorder>
                             <BackgroundColor>WhiteSmoke</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
-                            <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox10">
+                        <Textbox Name="Textbox5">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>عدد العناصر</Value>
+                                  <Value>=Parameters!trQTR.Value</Value>
                                   <Style>
-                                    <FontFamily />
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -874,21 +858,17 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox10</rd:DefaultName>
+                          <rd:DefaultName>Textbox5</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <LeftBorder>
-                              <Style>Solid</Style>
-                            </LeftBorder>
                             <BackgroundColor>WhiteSmoke</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
-                            <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
                       </CellContents>
@@ -928,7 +908,6 @@
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
-                            <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
                       </CellContents>
@@ -1002,7 +981,6 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
-                            <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
                       </CellContents>
@@ -1037,7 +1015,6 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
-                            <Direction>RTL</Direction>
                           </Style>
                         </Textbox>
                       </CellContents>
@@ -1064,12 +1041,11 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <LayoutDirection>RTL</LayoutDirection>
             <DataSetName>DataSetITinvoice</DataSetName>
             <Top>2.07142cm</Top>
             <Left>1.18768cm</Left>
             <Height>1.2cm</Height>
-            <Width>27.09897cm</Width>
+            <Width>27.09898cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -1097,7 +1073,7 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
               <Value>=Parameters!logoImage.Value</Value>
               <Sizing>FitProportional</Sizing>
               <Top>0.62742cm</Top>
-              <Left>25.28667cm</Left>
+              <Left>1.18768cm</Left>
               <Height>3cm</Height>
               <Width>3cm</Width>
               <Visibility>
@@ -1122,7 +1098,7 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                 <Border>
                   <Style>None</Style>
                 </Border>
-                <BackgroundColor>#178dd2</BackgroundColor>
+                <BackgroundColor>#d35400</BackgroundColor>
               </Style>
             </Rectangle>
             <Textbox Name="Textbox14">
@@ -1141,16 +1117,14 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
+                  <Style />
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>0.24702in</Top>
-              <Left>0.46759in</Left>
+              <Top>0.24701in</Top>
+              <Left>8.25168in</Left>
               <Height>0.3587in</Height>
-              <Width>3.20147in</Width>
+              <Width>2.8848in</Width>
               <ZIndex>2</ZIndex>
               <Visibility>
                 <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
@@ -1172,7 +1146,15 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>:العنوان</Value>
+                      <Value>Address: </Value>
+                      <Style>
+                        <FontFamily>Montserrat</FontFamily>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>DimGray</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Parameters!Address.Value</Value>
                       <Style>
                         <FontFamily>Montserrat</FontFamily>
                         <FontWeight>Bold</FontWeight>
@@ -1181,15 +1163,15 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Right</TextAlign>
+                    <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.6196in</Top>
-              <Left>3.13426in</Left>
+              <Top>0.61959in</Top>
+              <Left>8.25168in</Left>
               <Height>0.25in</Height>
-              <Width>0.5348in</Width>
+              <Width>2.8848in</Width>
               <ZIndex>3</ZIndex>
               <Visibility>
                 <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
@@ -1211,7 +1193,15 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>:هاتف</Value>
+                      <Value>Tel: </Value>
+                      <Style>
+                        <FontFamily>Montserrat</FontFamily>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>DimGray</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Parameters!Tel.Value</Value>
                       <Style>
                         <FontFamily>Montserrat</FontFamily>
                         <FontWeight>Bold</FontWeight>
@@ -1220,15 +1210,15 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Right</TextAlign>
+                    <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.88349in</Top>
-              <Left>3.13426in</Left>
+              <Top>0.88348in</Top>
+              <Left>8.25168in</Left>
               <Height>0.25in</Height>
-              <Width>0.5348in</Width>
+              <Width>2.8848in</Width>
               <ZIndex>4</ZIndex>
               <Visibility>
                 <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
@@ -1250,7 +1240,7 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value xml:space="preserve"> </Value>
+                      <Value>Fax: </Value>
                       <Style>
                         <FontFamily>Montserrat</FontFamily>
                         <FontWeight>Bold</FontWeight>
@@ -1267,15 +1257,15 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Right</TextAlign>
+                    <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>1.13349in</Top>
-              <Left>0.46759in</Left>
+              <Top>1.13348in</Top>
+              <Left>8.25168in</Left>
               <Height>0.25in</Height>
-              <Width>2.66667in</Width>
+              <Width>2.8848in</Width>
               <ZIndex>5</ZIndex>
               <Visibility>
                 <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
@@ -1297,7 +1287,7 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value xml:space="preserve"> </Value>
+                      <Value>Email: </Value>
                       <Style>
                         <FontFamily>Montserrat</FontFamily>
                         <FontWeight>Bold</FontWeight>
@@ -1314,188 +1304,16 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Right</TextAlign>
+                    <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>1.38349in</Top>
-              <Left>0.46759in</Left>
+              <Top>1.38348in</Top>
+              <Left>8.25168in</Left>
               <Height>0.25in</Height>
-              <Width>2.66667in</Width>
+              <Width>2.8848in</Width>
               <ZIndex>6</ZIndex>
-              <Visibility>
-                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
-              </Visibility>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox29">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value xml:space="preserve"> </Value>
-                      <Style>
-                        <FontFamily>Montserrat</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DimGray</Color>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>=Parameters!Address.Value</Value>
-                      <Style>
-                        <FontFamily>Montserrat</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DimGray</Color>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.6196in</Top>
-              <Left>0.46759in</Left>
-              <Height>0.25in</Height>
-              <Width>2.66667in</Width>
-              <ZIndex>7</ZIndex>
-              <Visibility>
-                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
-              </Visibility>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox30">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>:فاكس</Value>
-                      <Style>
-                        <FontFamily>Montserrat</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DimGray</Color>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>1.13349in</Top>
-              <Left>3.13426in</Left>
-              <Height>0.25in</Height>
-              <Width>0.5348in</Width>
-              <ZIndex>8</ZIndex>
-              <Visibility>
-                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
-              </Visibility>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox31">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value xml:space="preserve"> </Value>
-                      <Style>
-                        <FontFamily>Montserrat</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DimGray</Color>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value>=Parameters!Tel.Value</Value>
-                      <Style>
-                        <FontFamily>Montserrat</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DimGray</Color>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.88349in</Top>
-              <Left>0.46759in</Left>
-              <Height>0.25in</Height>
-              <Width>2.66667in</Width>
-              <ZIndex>9</ZIndex>
-              <Visibility>
-                <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
-              </Visibility>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox32">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>:بريد الكتروني</Value>
-                      <Style>
-                        <FontFamily>Montserrat</FontFamily>
-                        <FontWeight>Bold</FontWeight>
-                        <Color>DimGray</Color>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>1.38349in</Top>
-              <Left>3.13426in</Left>
-              <Height>0.25in</Height>
-              <Width>0.53479in</Width>
-              <ZIndex>10</ZIndex>
               <Visibility>
                 <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
               </Visibility>
@@ -1871,11 +1689,65 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="trNo">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="trDate">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="trBranch">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="trPOS">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="trCompany">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="trUser">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="trItem">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="trQTR">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="trPrice">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
       <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>11</NumberOfRows>
+      <NumberOfRows>14</NumberOfRows>
       <CellDefinitions>
         <CellDefinition>
           <ColumnIndex>3</ColumnIndex>
@@ -2061,6 +1933,51 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
           <ColumnIndex>3</ColumnIndex>
           <RowIndex>10</RowIndex>
           <ParameterName>show_header</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>11</RowIndex>
+          <ParameterName>trNo</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>11</RowIndex>
+          <ParameterName>trDate</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>11</RowIndex>
+          <ParameterName>trBranch</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>11</RowIndex>
+          <ParameterName>trPOS</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>12</RowIndex>
+          <ParameterName>trCompany</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>12</RowIndex>
+          <ParameterName>trUser</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>12</RowIndex>
+          <ParameterName>trItem</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>12</RowIndex>
+          <ParameterName>trQTR</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>13</RowIndex>
+          <ParameterName>trPrice</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>
