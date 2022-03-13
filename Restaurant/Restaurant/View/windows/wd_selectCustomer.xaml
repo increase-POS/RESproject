@@ -63,7 +63,8 @@
                                   materialDesign:HintAssist.Hint="customer..."  
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                    Grid.Column="0" Height="40"  Margin="4,0"
-                                  BorderBrush="#737373" BorderThickness="0"  />
+                                  BorderBrush="#737373" BorderThickness="0" 
+                                      SelectionChanged="Cb_customerId_SelectionChanged"/>
                             <Path Fill="#E81123" x:Name="p_error_customerId" Stretch="Fill" Margin="5,5,20,5"
                               HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15" 

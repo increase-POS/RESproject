@@ -22,7 +22,8 @@ namespace Restaurant.View.windows
     /// </summary>
     public partial class wd_selectCustomer : Window
     {
-        public wd_selectCustomer()
+        AgentMemberships agentMemberships = new AgentMemberships();
+        public wd_selectCustomer() 
         {
             try
             {
@@ -63,12 +64,13 @@ namespace Restaurant.View.windows
         }
         public int customerId;
         public bool isOk { get; set; }
-
+        public static List<string> requiredControlList = new List<string>();
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
             {
                 HelpClass.StartAwait(grid_main);
+                requiredControlList = new List<string> { "customerId" };
                 if (AppSettings.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -109,55 +111,22 @@ namespace Restaurant.View.windows
         private void Btn_select_Click(object sender, RoutedEventArgs e)
         {
 
-
-            // if have id return true
-            isOk = true;
-            //this.Close();
-            // else return false
-            //isOk = false;
+            if (HelpClass.validate(requiredControlList, this))
+            {
+                // if have id return true
+                isOk = true;
+                customerId =(int) cb_customerId.SelectedValue;
+                this.Close();
+            }
         }
 
-        private void Cb_coupon_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Cb_customerId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //try
-            //{
-            //        SectionData.StartAwait(grid_main);
-            //    string s = _BarcodeStr;
-            //    if (cb_coupon.SelectedIndex != -1)
-            //    {
-            //        couponModel = coupons.ToList().Find(c => c.cId == (int)cb_coupon.SelectedValue);
-            //        if (couponModel != null)
-            //        {
-            //            s = couponModel.barcode;
-            //            await dealWithBarcode(s);
-            //        }
-            //        cb_coupon.SelectedIndex = -1;
-            //        cb_coupon.SelectedItem = "";
-            //    }
-            //        SectionData.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //        SectionData.EndAwait(grid_main);
-            //    SectionData.ExceptionMessage(ex, this);
-            //}
-        }
-
-        private void Btn_clearCoupon_Click(object sender, RoutedEventArgs e)
-        {
-            //try
-            //{
-            //    _Discount = 0;
-            //    selectedCoupons.Clear();
-            //    lst_coupons.Items.Clear();
-            //    cb_coupon.SelectedIndex = -1;
-            //    cb_coupon.SelectedItem = "";
-            //    refreshTotalValue();
-            //}
-            //catch (Exception ex)
-            //{
-            //    SectionData.ExceptionMessage(ex, this);
-            //}
+            if(cb_customerId.SelectedIndex != -1)
+            {
+                customerId = (int)cb_customerId.SelectedValue;
+                agentMemberships = await agentMemberships.GetAgentMemberShip(customerId);
+            }
         }
     }
 }

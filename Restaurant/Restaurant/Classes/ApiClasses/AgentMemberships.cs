@@ -30,7 +30,7 @@ namespace Restaurant.Classes
 
 
         public bool canDelete { get; set; }
-
+        public Memberships memberShip { get; set; }
 
         public async Task<List<AgentMemberships>> GetAll()
         {
@@ -91,6 +91,25 @@ namespace Restaurant.Classes
             parameters.Add("membershipId", membershipId.ToString());
             parameters.Add("updateUserId", updateUserId.ToString());
             return await APIResult.post(method, parameters);
+        }
+
+        public async Task<AgentMemberships> GetAgentMemberShip(int agentId)
+        {
+            AgentMemberships item = new AgentMemberships();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("agentId", agentId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("AgentMemberships/GetAgentMemberShip", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    item = JsonConvert.DeserializeObject<AgentMemberships>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                    break;
+                }
+            }
+            return item;
         }
     }
 }
