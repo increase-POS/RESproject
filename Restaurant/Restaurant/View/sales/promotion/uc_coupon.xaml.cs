@@ -792,7 +792,7 @@ namespace Restaurant.View.sales.promotion
             string addpath;
             bool isArabic = ReportCls.checkLang();
 
-            addpath = @"\Reports\Sale\coupon\coupExport.rdlc";
+            addpath = @"\Reports\Sale\En\coupExport.rdlc";
 
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
@@ -810,7 +810,7 @@ namespace Restaurant.View.sales.promotion
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") )
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
                     /////////////////////////////////////
                     Thread t1 = new Thread(() =>
@@ -838,7 +838,7 @@ namespace Restaurant.View.sales.promotion
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") )
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
                     /////////////////////////////////////
                     Thread t1 = new Thread(() =>
@@ -851,7 +851,7 @@ namespace Restaurant.View.sales.promotion
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                    
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -867,7 +867,7 @@ namespace Restaurant.View.sales.promotion
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") )
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
@@ -894,31 +894,10 @@ namespace Restaurant.View.sales.promotion
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") )
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
                     #region
-                    //Thread t1 = new Thread(() =>
-                    //{
-                    List<ReportParameter> paramarr = new List<ReportParameter>();
-
-                    string addpath;
-                    bool isArabic = ReportCls.checkLang();
-                    if (isArabic)
-                    {
-                        addpath = @"\Reports\Sale\Ar\CouponReport.rdlc";
-                    }
-                    else addpath = @"\Reports\Sale\En\CouponReport.rdlc";
-                    string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-                    ReportCls.checkLang();
-
-                    clsReports.couponReport(couponsQuery, rep, reppath, paramarr);
-                    clsReports.setReportLanguage(paramarr);
-                    clsReports.Header(paramarr);
-
-                    rep.SetParameters(paramarr);
-
-                    rep.Refresh();
+                    BuildReport();
                     this.Dispatcher.Invoke(() =>
                     {
                         saveFileDialog.Filter = "EXCEL|*.xls;";
@@ -929,8 +908,7 @@ namespace Restaurant.View.sales.promotion
                         }
                     });
 
-                    //});
-                    //t1.Start();
+
                     #endregion
                 }
                 else
@@ -951,35 +929,18 @@ namespace Restaurant.View.sales.promotion
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") )
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
                     string pdfpath = "";
 
-                    List<ReportParameter> paramarr = new List<ReportParameter>();
+
 
                     pdfpath = @"\Thumb\report\temp.pdf";
                     pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
 
-                    string addpath;
-                    bool isArabic = ReportCls.checkLang();
-                    if (isArabic)
-                    {
-                        addpath = @"\Reports\Sale\Ar\CouponReport.rdlc";
-                    }
-                    else addpath = @"\Reports\Sale\En\CouponReport.rdlc";
-                    string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-                    ReportCls.checkLang();
-
-                    clsReports.couponReport(couponsQuery, rep, reppath, paramarr);
-                    clsReports.setReportLanguage(paramarr);
-                    clsReports.Header(paramarr);
-
-                    rep.SetParameters(paramarr);
-
-                    rep.Refresh();
+                    BuildReport();
 
                     LocalReportExtensions.ExportToPDF(rep, pdfpath);
                     wd_previewPdf w = new wd_previewPdf();
@@ -994,7 +955,7 @@ namespace Restaurant.View.sales.promotion
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -1005,26 +966,7 @@ namespace Restaurant.View.sales.promotion
         }
         public async void pdfPurCoupon()
         {
-            List<ReportParameter> paramarr = new List<ReportParameter>();
-
-            string addpath;
-            bool isArabic = ReportCls.checkLang();
-            if (isArabic)
-            {
-                addpath = @"\Reports\Sale\Ar\CouponReport.rdlc";
-            }
-            else addpath = @"\Reports\Sale\En\CouponReport.rdlc";
-            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-            ReportCls.checkLang();
-
-            clsReports.couponReport(couponsQuery, rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
-            clsReports.Header(paramarr);
-
-            rep.SetParameters(paramarr);
-
-            rep.Refresh();
+            BuildReport();
             this.Dispatcher.Invoke(() =>
             {
                 saveFileDialog.Filter = "PDF|*.pdf;";
@@ -1039,29 +981,60 @@ namespace Restaurant.View.sales.promotion
 
         public async void printPurCoupon()
         {
-            List<ReportParameter> paramarr = new List<ReportParameter>();
-
-            string addpath;
-            bool isArabic = ReportCls.checkLang();
-            if (isArabic)
-            {
-                addpath = @"\Reports\Sale\Ar\CouponReport.rdlc";
-            }
-            else addpath = @"\Reports\Sale\En\CouponReport.rdlc";
-            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-            ReportCls.checkLang();
-
-            clsReports.couponReport(couponsQuery, rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
-            clsReports.Header(paramarr);
-
-            rep.SetParameters(paramarr);
-            rep.Refresh();
+            BuildReport();
             this.Dispatcher.Invoke(() =>
             {
                 LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, short.Parse(FillCombo.rep_print_count));
             });
+        }
+
+        public void BuildReport()
+        {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+            string firstTitle = "promotion";
+            string secondTitle = "coupon";
+            string subTitle = "";
+            string Title = "";
+
+            string addpath = "";
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
+
+                addpath = @"\Reports\Sale\Ar\ArCoupon.rdlc";
+                //   secondTitle = "items";
+                subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+
+            }
+            else
+            {
+                //english
+
+                addpath = @"\Reports\Sale\En\EnCoupon.rdlc";
+                //  secondTitle = "items";
+                subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+
+
+            }
+
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+            ReportCls.checkLang();
+            //  getpuritemcount
+            Title = AppSettings.resourcemanagerreport.GetString("trSales") + " / " + subTitle;
+            paramarr.Add(new ReportParameter("trTitle", Title));
+            paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
+
+
+            clsReports.couponReport(couponsQuery, rep, reppath, paramarr);
+
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+
         }
         #endregion
 

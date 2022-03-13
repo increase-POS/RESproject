@@ -3559,4 +3559,7 @@
   <data name="public" xml:space="preserve">
     <value>عام</value>
   </data>
+  <data name="trThePromotion" xml:space="preserve">
+    <value>الترويج</value>
+  </data>
 </root>

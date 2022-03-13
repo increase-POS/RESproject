@@ -751,13 +751,13 @@ namespace Restaurant.Classes
                 c.discountValue = decimal.Parse(HelpClass.DecTostring(c.discountValue));
                 c.invMin = decimal.Parse(HelpClass.DecTostring(c.invMin));
                 c.invMax = decimal.Parse(HelpClass.DecTostring(c.invMax));
-
+               
                 string state = "";
-
-                if ((c.isActive == 1) && (c.endDate > DateTime.Now) && (c.quantity > 0))
-                    state = AppSettings.resourcemanager.GetString("trValid");
+                //(c.isActive == 1) && ((c.endDate > DateTime.Now)||(c.endDate == null)) && ((c.quantity == 0) || (c.quantity > 0 && c.remainQ != 0))
+                if ((c.isActive == 1) && ((c.endDate > DateTime.Now) || (c.endDate == null)) && ((c.quantity == 0) || (c.quantity > 0 && c.remainQ != 0)))
+                    state = AppSettings.resourcemanagerreport.GetString("trValid");
                 else
-                    state = AppSettings.resourcemanager.GetString("trExpired");
+                    state = AppSettings.resourcemanagerreport.GetString("trExpired");
 
                 c.state = state;
 
@@ -765,14 +765,23 @@ namespace Restaurant.Classes
 
             rep.DataSources.Add(new ReportDataSource("DataSetCoupon", CouponQuery2));
             paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
-            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trCoupons")));
+           // paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trCoupons")));
             paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
             paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
-            paramarr.Add(new ReportParameter("trDiscount", AppSettings.resourcemanagerreport.GetString("trValue")));
+            paramarr.Add(new ReportParameter("trValue", AppSettings.resourcemanagerreport.GetString("trValue")));
             paramarr.Add(new ReportParameter("trQuantity", AppSettings.resourcemanagerreport.GetString("trQuantity")));
-            paramarr.Add(new ReportParameter("trRemainQ", AppSettings.resourcemanagerreport.GetString("trRemainQuantity")));
-            paramarr.Add(new ReportParameter("trEndDate", AppSettings.resourcemanagerreport.GetString("trvalidity")));
+            paramarr.Add(new ReportParameter("trRemainQuantity", AppSettings.resourcemanagerreport.GetString("trRemainQuantity")));
+            paramarr.Add(new ReportParameter("trvalidity", AppSettings.resourcemanagerreport.GetString("trvalidity")));
+            paramarr.Add(new ReportParameter("trUnlimited", AppSettings.resourcemanagerreport.GetString("trUnlimited")));
 
+        }
+        public string unlimitedCouponConv(decimal quantity)
+        {
+           
+            if (quantity == 0)
+                return AppSettings.resourcemanagerreport.GetString("trUnlimited");
+            else
+                return quantity.ToString();
         }
         public static void couponExportReport(LocalReport rep, string reppath, List<ReportParameter> paramarr, string barcode)
         {
@@ -1140,8 +1149,17 @@ Parameters!trValueDiscount.Value)
             else if (secondTitle == "MostPurchased")
                 secondTitle = AppSettings.resourcemanagerreport.GetString("trMostPurchased");
             //////////////////////////////////////////////////////////////////////////////
-
-            trtext = firstTitle + " / " + secondTitle;
+            if (firstTitle == "" && secondTitle!="") {
+                trtext = secondTitle;
+            } else if(secondTitle=="" && firstTitle != "")
+            {
+                trtext = firstTitle;
+            }
+            else
+            {
+                trtext = firstTitle + " / " + secondTitle;
+            }
+           
             return trtext;
         }
         public static void PurInvStsReport(IEnumerable<ItemTransferInvoice> tempquery, LocalReport rep, string reppath, List<ReportParameter> paramarr)

@@ -3583,4 +3583,7 @@ Please add Email in setting</value>
   <data name="public" xml:space="preserve">
     <value>public</value>
   </data>
+  <data name="trThePromotion" xml:space="preserve">
+    <value>Promotion</value>
+  </data>
 </root>
