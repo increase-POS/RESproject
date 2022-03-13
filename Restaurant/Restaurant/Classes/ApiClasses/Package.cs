@@ -31,6 +31,7 @@ namespace Restaurant.Classes
         public bool canDelete { get; set; }
 
 
+        public string itemName { get; set; }
         // item parent
         public Nullable<int> pitemId { get; set; }
         public string pcode { get; set; }
@@ -51,7 +52,7 @@ namespace Restaurant.Classes
         public string citemName { get; set; }
 
         public string ctype { get; set; }
-        public string cimage { get; set; }
+        public string cimage { get; set; } 
 
 
         //units

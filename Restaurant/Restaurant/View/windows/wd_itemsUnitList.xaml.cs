@@ -111,6 +111,7 @@ namespace Restaurant.View.windows
                     //remove selected itemunits from source itemunits
                     foreach (var p in allIPackagesSource)
                     {
+                        p.itemName = p.notes;
                         for (int i = 0; i < allItemUnits.Count; i++)
                         {
                             //remove saved itemunits
@@ -125,7 +126,7 @@ namespace Restaurant.View.windows
                     {
                         foreach (var iu in allItemUnits)
                             if (p.parentIUId == iu.itemUnitId)
-                                p.notes = iu.itemName + "-" + iu.unitName;
+                                p.itemName = iu.itemName + "-" + iu.unitName;
                     }
 
                     dg_selectedItems.ItemsSource = allPackages;
@@ -276,7 +277,7 @@ namespace Restaurant.View.windows
                         p.childIUId = itemUnit.itemUnitId;
                         p.quantity = 1;
                         p.isActive = 1;
-                        p.notes = itemUnit.itemName;
+                        p.itemName = itemUnit.itemName;
                         p.createUserId = MainWindow.userLogin.userId;
 
                         allItemUnits.Remove(itemUnit);
