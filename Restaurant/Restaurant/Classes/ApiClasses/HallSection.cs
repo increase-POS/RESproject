@@ -77,9 +77,23 @@ namespace Restaurant.Classes.ApiClasses
             return await APIResult.post(method, parameters);
         }
 
-        internal Task<HallSection> getById(int sectionId)
+        public async Task<HallSection> GetById(int itemId)
         {
-            throw new NotImplementedException();
+            HallSection item = new HallSection();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("itemId", itemId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("HallSection/GetById", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    item = JsonConvert.DeserializeObject<HallSection>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                    break;
+                }
+            }
+            return item;
         }
     }
 }
