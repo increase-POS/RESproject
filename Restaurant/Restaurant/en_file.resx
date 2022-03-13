@@ -3577,4 +3577,10 @@ Please add Email in setting</value>
   <data name="trPurchasesReport" xml:space="preserve">
     <value>Purchases Report</value>
   </data>
+  <data name="private" xml:space="preserve">
+    <value>private</value>
+  </data>
+  <data name="public" xml:space="preserve">
+    <value>public</value>
+  </data>
 </root>

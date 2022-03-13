@@ -3553,4 +3553,10 @@
   <data name="trPurchasesReport" xml:space="preserve">
     <value>تقرير مشتريات</value>
   </data>
+  <data name="private" xml:space="preserve">
+    <value>خاص</value>
+  </data>
+  <data name="public" xml:space="preserve">
+    <value>عام</value>
+  </data>
 </root>
