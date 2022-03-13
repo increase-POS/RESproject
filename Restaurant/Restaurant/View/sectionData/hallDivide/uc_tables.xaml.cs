@@ -188,7 +188,8 @@ namespace Restaurant.View.sectionData.hallDivide
             dg_table.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
             dg_table.Columns[1].Header = AppSettings.resourcemanager.GetString("trPersonsCount");
             dg_table.Columns[2].Header = AppSettings.resourcemanager.GetString("trSection");
-            dg_table.Columns[3].Header = AppSettings.resourcemanager.GetString("trNote");
+            dg_table.Columns[3].Header = AppSettings.resourcemanager.GetString("trBranch/Store");
+            dg_table.Columns[4].Header = AppSettings.resourcemanager.GetString("trNote");
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
@@ -494,6 +495,8 @@ namespace Restaurant.View.sectionData.hallDivide
                     this.DataContext = table;
                     if (table != null)
                     {
+                        cb_branchId.IsEnabled = false;
+
                         #region delete
                         if (table.canDelete)
                             btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
@@ -574,9 +577,12 @@ namespace Restaurant.View.sectionData.hallDivide
             table = new Tables();
             tb_personsCount.Text = "2";
             numValue_personsCount = 2;
+            table.branchId = MainWindow.branchLogin.branchId;
             this.DataContext = table;
 
             dg_table.SelectedIndex = -1;
+            if (HelpClass.isAdminPermision())
+                cb_branchId.IsEnabled = true;
             // last 
             HelpClass.clearValidate(requiredControlList, this);
 

@@ -113,10 +113,18 @@ namespace Restaurant.View.storage.storageDivide
                 }
                 translate();
 
+                await FillCombo.fillComboBranchesAllWithoutMain(cb_branchId);
+                location = new Location();
+                location.branchId = MainWindow.branchLogin.branchId;
+                if (HelpClass.isAdminPermision())
+                    cb_branchId.IsEnabled = true;
+                else
+                    cb_branchId.IsEnabled = false;
 
                 Keyboard.Focus(tb_x);
                 await Search();
                 Clear();
+                this.DataContext = location;
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -135,6 +143,7 @@ namespace Restaurant.View.storage.storageDivide
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_x, AppSettings.resourcemanager.GetString("trXHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_y, AppSettings.resourcemanager.GetString("trYHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_z, AppSettings.resourcemanager.GetString("trZHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branchId, AppSettings.resourcemanager.GetString("trBranch/StoreHint"));
 
             btn_refresh.ToolTip = AppSettings.resourcemanager.GetString("trRefresh");
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
@@ -160,7 +169,8 @@ namespace Restaurant.View.storage.storageDivide
 
             dg_location.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
             dg_location.Columns[1].Header = AppSettings.resourcemanager.GetString("trSection");
-            dg_location.Columns[2].Header = AppSettings.resourcemanager.GetString("trNote");
+            dg_location.Columns[2].Header = AppSettings.resourcemanager.GetString("trBranch/Store");
+            dg_location.Columns[3].Header = AppSettings.resourcemanager.GetString("trNote");
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
@@ -181,14 +191,15 @@ namespace Restaurant.View.storage.storageDivide
                         location.x = tb_x.Text;
                         location.y = tb_y.Text;
                         location.z = tb_z.Text;
-                        if (locations.Where(x => x.name == location.name && x.branchId == MainWindow.branchLogin.branchId).Count() == 0)
+                        if (locations.Where(x => x.name == location.name && x.branchId == Convert.ToInt32(cb_branchId.SelectedValue)).Count() == 0)
                         {
                             location.notes = tb_notes.Text;
                             location.createUserId =MainWindow.userLogin.userId;
                             location.updateUserId = MainWindow.userLogin.userId;
                             location.isActive = 1;
                             location.sectionId = null;
-                            location.branchId = MainWindow.branchLogin.branchId;
+                            //location.branchId = MainWindow.branchLogin.branchId;
+                            location.branchId = Convert.ToInt32(cb_branchId.SelectedValue);
 
 
                             int s = await location.save(location);
@@ -238,9 +249,10 @@ namespace Restaurant.View.storage.storageDivide
                         location.x = tb_x.Text;
                         location.y = tb_y.Text;
                         location.z = tb_z.Text;
-                        if (locations.Where(x => x.name == location.name && x.branchId == MainWindow.branchLogin.branchId && x.locationId != location.locationId).Count() == 0)
+                        if (locations.Where(x => x.name == location.name && x.branchId == Convert.ToInt32(cb_branchId.SelectedValue) && x.locationId != location.locationId).Count() == 0)
                         {
                             location.notes = tb_notes.Text;
+                                //location.branchId = Convert.ToInt32(cb_branchId.SelectedValue);
                             location.updateUserId = MainWindow.userLogin.userId;
 
 
@@ -433,7 +445,8 @@ namespace Restaurant.View.storage.storageDivide
                     this.DataContext = location;
                     if (location != null)
                     {
-                         #region delete
+                        cb_branchId.IsEnabled = false;
+                        #region delete
                         if (location.canDelete)
                             btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
                         else
@@ -488,7 +501,9 @@ namespace Restaurant.View.storage.storageDivide
         async Task<IEnumerable<Location>> RefreshLocationsList()
         {
             locations = await location.Get();
-            locations = locations.Where(x => x.branchId == MainWindow.branchLogin.branchId && x.isFreeZone != 1 && x.isKitchen != 1);
+            if(!HelpClass.isAdminPermision())
+            locations = locations.Where(x => x.branchId == MainWindow.branchLogin.branchId);
+            locations = locations.Where(x =>  x.isFreeZone != 1 && x.isKitchen != 1);
             return locations;
         }
         void RefreshLocationsView()
@@ -500,9 +515,12 @@ namespace Restaurant.View.storage.storageDivide
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            this.DataContext = new Location();
-
-            // last 
+            location = new Location();
+            location.branchId = MainWindow.branchLogin.branchId;
+            this.DataContext = location;
+            if (HelpClass.isAdminPermision())
+                cb_branchId.IsEnabled = true;
+             // last 
             HelpClass.clearValidate(requiredControlList, this);
  
         }
@@ -781,7 +799,7 @@ namespace Restaurant.View.storage.storageDivide
             {
                     HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(addRangePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(addRangePermission, FillCombo.groupObjects, "one"))
                 {
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_locationAddRange w = new wd_locationAddRange();

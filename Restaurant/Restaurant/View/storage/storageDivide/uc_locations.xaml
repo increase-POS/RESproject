@@ -166,7 +166,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Width="*"  Header="mobile" Binding="{Binding Path=mobile}">
+                                <DataGridTextColumn Width="*"  Header="Store/Branch" Binding="{Binding Path=branchName}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>
@@ -461,8 +461,29 @@
 
 
 
+                        <Border Grid.Row="3" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Grid   >
+                                <ComboBox x:Name="cb_branchId" SelectedValue="{Binding branchId, Mode=OneWay}"
+                                      TextBlock.Foreground="#4E4E4E"
+                                         Margin="4,0"
+                                      materialDesign:HintAssist.Hint="Store/Branch..."    
+                                      TextBlock.FontSize="12" 
+                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                                    Padding="10,0,5,0" 
+                                      Height="40" 
+                                      BorderThickness="0" 
+                                      FontFamily="{StaticResource Font-cairo-light}"   
+                                      Grid.Row="3"  LostFocus="validateEmpty_LostFocus" />
 
-                    <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,20,5" x:Name="p_error_branchId"
+                              HorizontalAlignment="Right" Visibility="Collapsed"   
+                         VerticalAlignment="Center" Width="15"  Height="15"
+                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
+                                </Path>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                             <TextBox  x:Name="tb_notes" Text="{Binding notes, Mode=OneWay}"
                                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"

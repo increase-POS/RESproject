@@ -433,6 +433,8 @@ namespace Restaurant.View.storage.storageDivide
                     if (section != null)
                     {
                         btn_locations.IsEnabled = true;
+                        cb_branchId.IsEnabled = false;
+
                         //if (section.branchId != 0)
                         //{
                         //    //display branch by id
@@ -514,6 +516,8 @@ namespace Restaurant.View.storage.storageDivide
             section.branchId = MainWindow.branchLogin.branchId;
             this.DataContext = section;
             btn_locations.IsEnabled = false;
+            if (HelpClass.isAdminPermision())
+                cb_branchId.IsEnabled = true;
             // last 
             HelpClass.clearValidate(requiredControlList, this);
 

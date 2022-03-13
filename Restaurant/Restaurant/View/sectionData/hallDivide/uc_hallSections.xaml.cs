@@ -447,6 +447,8 @@ namespace Restaurant.View.sectionData.hallDivide
                     if (section != null)
                     {
                         btn_tables.IsEnabled = true;
+                        cb_branchId.IsEnabled = false;
+
                         //if (section.branchId != 0)
                         //{
                         //    //display branch by id
@@ -529,6 +531,8 @@ namespace Restaurant.View.sectionData.hallDivide
             section.branchId = MainWindow.branchLogin.branchId;
             this.DataContext = section;
             btn_tables.IsEnabled = false;
+            if (HelpClass.isAdminPermision())
+                cb_branchId.IsEnabled = true;
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);

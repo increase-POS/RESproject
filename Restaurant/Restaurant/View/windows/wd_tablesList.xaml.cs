@@ -107,7 +107,7 @@ namespace Restaurant.View.windows
                 #region section Tables
                 else
                 {
-                    hallSection = await hallSectionModel.getById(sectionId);
+                    hallSection = await hallSectionModel.GetById(sectionId);
                     allTableSource = await tableModel.Get(hallSection.branchId.Value, 0);
                     selectedTablesSource = await tableModel.Get(hallSection.branchId.Value, sectionId);
                     selectedTables.AddRange(selectedTablesSource.ToList());
