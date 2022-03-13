@@ -27,6 +27,7 @@ namespace Restaurant.Classes.ApiClasses
 
         public Boolean canDelete { get; set; }
         public string sectionName { get; set; }
+        public string branchName { get; set; }
 
         internal async Task<int> save(Tables table)
         {

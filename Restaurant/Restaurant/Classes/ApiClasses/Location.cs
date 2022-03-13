@@ -36,6 +36,7 @@ namespace Restaurant.Classes
         public Boolean canDelete { get; set; }
 
         public string sectionName { get; set; }
+        public string branchName { get; set; }
 
 
 

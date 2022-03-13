@@ -38,7 +38,7 @@ namespace Restaurant.Classes
         public Nullable<int> membershipId { get; set; }
         public Boolean canDelete { get; set; }
         public string state { get; set; }
-
+        public string forAgents { get; set; }
         public int couponMembershipId { get; set; }
      
 

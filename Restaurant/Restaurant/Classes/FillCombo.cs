@@ -923,7 +923,6 @@ namespace Restaurant.Classes
             cmb.DisplayMemberPath = "Text";
             cmb.SelectedValuePath = "Value";
             cmb.ItemsSource = dislist;
-
         }
         #endregion
 
@@ -982,7 +981,7 @@ namespace Restaurant.Classes
         }
         #endregion
 
-        #region
+        #region ItemUnitUser
         static public List<ItemUnitUser> itemUnitsUsersList = new List<ItemUnitUser>();
         static public ItemUnitUser itemUnitsUser = new ItemUnitUser();
         static public async Task<IEnumerable<ItemUnitUser>> RefreshItemUnitUser()
@@ -994,8 +993,18 @@ namespace Restaurant.Classes
 
         #endregion
 
-      
-
+        #region availability type
+        static public void fillAvailabilityType(ComboBox cmb)
+        {
+            var dislist = new[] {
+            new { Text = AppSettings.resourcemanager.GetString("private"), Value = "pr" },
+            new { Text = AppSettings.resourcemanager.GetString("public"), Value = "pb" },
+             };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = dislist;
+        }
+        #endregion
 
 
         static public ItemLocation itemLocation = new ItemLocation();

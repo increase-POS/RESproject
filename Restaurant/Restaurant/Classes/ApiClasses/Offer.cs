@@ -30,7 +30,7 @@ namespace Restaurant.Classes
         public Nullable<int> updateUserId { get; set; }
         public string notes { get; set; }
         public Boolean canDelete { get; set; }
-
+        public string forAgents { get; set; }
         public int membershipOfferId { get; set; }
         public Nullable<int> membershipId { get; set; }
 
