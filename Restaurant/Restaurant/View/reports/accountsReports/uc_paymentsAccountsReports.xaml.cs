@@ -135,7 +135,7 @@ namespace Restaurant.View.reports.accountsReports
             col_updateUserAcc.Header = AppSettings.resourcemanager.GetString("trAccoutant");
             col_agentName.Header = AppSettings.resourcemanager.GetString("trRecipientTooltip");
             col_customer.Header = AppSettings.resourcemanager.GetString("trRecipientTooltip");
-            col_user.Header = AppSettings.resourcemanager.GetString("trUser");
+            col_user.Header = AppSettings.resourcemanager.GetString("trRecipientTooltip");
             col_company.Header = AppSettings.resourcemanager.GetString("trCompany");
             col_shipping.Header = AppSettings.resourcemanager.GetString("trCompany");
             col_updateDate.Header = AppSettings.resourcemanager.GetString("trDate");
