@@ -59,7 +59,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
-                     </Grid.ColumnDefinitions>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
@@ -118,13 +118,13 @@
                         </Grid>
 
                     </Border>
-                   
+
                 </Grid>
 
-               
-             
-                
-                
+
+
+
+
                 <CheckBox Grid.Row="3" Margin="5 10" x:Name="cbxRemmemberMe" Content="Remmember Me" 
                         VerticalAlignment="Center"  ></CheckBox>
                 <Grid Grid.Row="4"  Margin="10,5,10,5">
@@ -132,15 +132,15 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" x:Name="btnLogIn" Background="{StaticResource MainColor}" Foreground="White" Margin="0,0,10,0" Click="btnLogIn_Click" 
-                                IsDefault="True"  materialDesign:ButtonAssist.CornerRadius="7"  BorderThickness="0">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0">
+                    <Button Grid.Column="0" x:Name="btnLogIn" Background="{StaticResource MainColor}" Foreground="White" Margin="0,9,10,9" Click="btnLogIn_Click" 
+                                IsDefault="True"  materialDesign:ButtonAssist.CornerRadius="7"  BorderThickness="0" HorizontalAlignment="Right" Width="100">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0">
                                         <materialDesign:PackIcon FlowDirection="LeftToRight" Kind="Login"></materialDesign:PackIcon>
-                                </TextBlock>
-                                <TextBlock x:Name="txt_logIn" Text="Log In"></TextBlock>
-                            </StackPanel>
-                        </Button>
+                            </TextBlock>
+                            <TextBlock x:Name="txt_logIn" Text="Log In"></TextBlock>
+                        </StackPanel>
+                    </Button>
                     <Button Grid.Column="1"  x:Name="btnClose" Background="{StaticResource MainColor}" Foreground="White" Click="btnClose_Click"  
                      IsCancel="true" materialDesign:ButtonAssist.CornerRadius="7" BorderThickness="0" >
                         <StackPanel Orientation="Horizontal">

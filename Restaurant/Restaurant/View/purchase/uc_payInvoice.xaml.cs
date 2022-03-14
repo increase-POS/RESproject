@@ -1756,6 +1756,8 @@ namespace Restaurant.View.purchase
                 this.DataContext = item;
 
                 // get item units
+                if (FillCombo.itemUnitList is null)
+                    await FillCombo.RefreshItemUnit();
                 itemUnits = FillCombo.itemUnitList.Where(a => a.itemId == item.itemId).ToList();
                 // search for default unit for purchase
                 var defaultPurUnit = itemUnits.ToList().Find(c => c.defaultPurchase == 1);
@@ -1794,6 +1796,7 @@ namespace Restaurant.View.purchase
                 dg_billDetails.IsEnabled = false;
                 await Task.Delay(1000);
                 dg_billDetails.Items.Refresh();
+                if(dg_billDetails.Items.Count>0)
                 firstTimeForDatagrid = false;
                 dg_billDetails.IsEnabled = true;
                 HelpClass.EndAwait(grid_main);
