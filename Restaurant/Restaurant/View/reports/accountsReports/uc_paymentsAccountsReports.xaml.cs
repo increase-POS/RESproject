@@ -78,8 +78,7 @@ namespace Restaurant.View.reports.accountsReports
         {//load
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -96,14 +95,12 @@ namespace Restaurant.View.reports.accountsReports
                 payments = await statisticModel.GetPayments();
 
                 Btn_vendor_Click(btn_vendor, null);
-
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -119,9 +116,9 @@ namespace Restaurant.View.reports.accountsReports
             tt_shipping.Content = AppSettings.resourcemanager.GetString("trShippingCompanies");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendors, AppSettings.resourcemanager.GetString("trVendor") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendorPayType, AppSettings.resourcemanager.GetString("trPaymentType") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendorPayType, AppSettings.resourcemanager.GetString("trPaymentTypeHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendorAccountant, AppSettings.resourcemanager.GetString("trPaymentType") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendorAccountant, AppSettings.resourcemanager.GetString("trAccoutant") + "...");//
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendorAccountant, AppSettings.resourcemanager.GetString("trAccoutant") + "...");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_vendorStartDate, AppSettings.resourcemanager.GetString("trStartDateHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_vendorEndDate, AppSettings.resourcemanager.GetString("trEndDateHint"));
@@ -133,14 +130,14 @@ namespace Restaurant.View.reports.accountsReports
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txt_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
 
-            col_tansNum.Header = AppSettings.resourcemanager.GetString("trNum");
-            col_processType.Header = AppSettings.resourcemanager.GetString("trPaymentType");
+            col_tansNum.Header = AppSettings.resourcemanager.GetString("trNo.");
+            col_processType.Header = AppSettings.resourcemanager.GetString("trPaymentTypeTooltip");
             col_updateUserAcc.Header = AppSettings.resourcemanager.GetString("trAccoutant");
             col_agentName.Header = AppSettings.resourcemanager.GetString("trRecipientTooltip");
             col_customer.Header = AppSettings.resourcemanager.GetString("trRecipientTooltip");
-            col_user.Header = AppSettings.resourcemanager.GetString("trCompany");
+            col_user.Header = AppSettings.resourcemanager.GetString("trUser");
             col_company.Header = AppSettings.resourcemanager.GetString("trCompany");
-            col_shipping.Header = AppSettings.resourcemanager.GetString("trTotal");
+            col_shipping.Header = AppSettings.resourcemanager.GetString("trCompany");
             col_updateDate.Header = AppSettings.resourcemanager.GetString("trDate");
             col_cash.Header = AppSettings.resourcemanager.GetString("trAmount");
 
@@ -375,17 +372,6 @@ namespace Restaurant.View.reports.accountsReports
             path_shipping.Fill = Brushes.White;
         }
 
-        private void isEnabledButtons()
-        {
-            btn_customer.IsEnabled = true;
-            btn_vendor.IsEnabled = true;
-            btn_user.IsEnabled = true;
-            btn_salary.IsEnabled = true;
-            btn_generalExpenses.IsEnabled = true;
-            btn_administrativePull.IsEnabled = true;
-            btn_shipping.IsEnabled = true;
-        }
-
         private void hideAllColumn()
         {
             col_tansNum.Visibility = Visibility.Hidden;
@@ -406,8 +392,7 @@ namespace Restaurant.View.reports.accountsReports
         {//vendors
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendors, AppSettings.resourcemanager.GetString("trVendorHint"));
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
@@ -427,9 +412,9 @@ namespace Restaurant.View.reports.accountsReports
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_vendor);
                 path_vendor.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
-                cb_vendors.Visibility = Visibility.Visible;
-                cb_vendors.SelectedItem = null;
                 chk_allVendors.Visibility = Visibility.Visible;
+                bdr_vendorCombo.Visibility = Visibility.Visible;
+                cb_vendors.SelectedItem = null;
 
                 vendorCombo = statisticModel.getVendorCombo(payments, "v");
                 fillVendorCombo(vendorCombo, cb_vendors);
@@ -447,12 +432,11 @@ namespace Restaurant.View.reports.accountsReports
                 chk_allVendorsAccountant.IsChecked = true;
 
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -461,8 +445,7 @@ namespace Restaurant.View.reports.accountsReports
         {//customers
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendors, AppSettings.resourcemanager.GetString("trCustomerHint"));
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
@@ -483,9 +466,9 @@ namespace Restaurant.View.reports.accountsReports
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_customer);
                 path_customer.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
-                cb_vendors.Visibility = Visibility.Visible;
-                cb_vendors.SelectedItem = null;
                 chk_allVendors.Visibility = Visibility.Visible;
+                bdr_vendorCombo.Visibility = Visibility.Visible;
+                cb_vendors.SelectedItem = null;
 
                 vendorCombo = statisticModel.getVendorCombo(payments, "c");
                 fillVendorCombo(vendorCombo, cb_vendors);
@@ -502,13 +485,11 @@ namespace Restaurant.View.reports.accountsReports
                 chk_allVendors.IsChecked = true;
                 chk_allVendorsAccountant.IsChecked = true;
 
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
-            {
-               
-                    HelpClass.EndAwait(grid_main);
+            {               
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -517,8 +498,7 @@ namespace Restaurant.View.reports.accountsReports
         {//users
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendors, AppSettings.resourcemanager.GetString("trUserHint"));
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
@@ -538,9 +518,9 @@ namespace Restaurant.View.reports.accountsReports
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_user);
                 path_user.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
-                cb_vendors.Visibility = Visibility.Visible;
-                cb_vendors.SelectedItem = null;
                 chk_allVendors.Visibility = Visibility.Visible;
+                bdr_vendorCombo.Visibility = Visibility.Visible;
+                cb_vendors.SelectedItem = null;
 
                 vendorCombo = statisticModel.getUserAcc(payments, "u");
                 fillSalaryCombo(vendorCombo, cb_vendors);
@@ -557,13 +537,11 @@ namespace Restaurant.View.reports.accountsReports
                 chk_allVendors.IsChecked = true;
                 chk_allVendorsAccountant.IsChecked = true;
 
-               
-                    HelpClass.EndAwait(grid_main);
+               HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -572,8 +550,7 @@ namespace Restaurant.View.reports.accountsReports
         {//salaries
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendors, AppSettings.resourcemanager.GetString("trRecipientHint"));
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
@@ -593,9 +570,9 @@ namespace Restaurant.View.reports.accountsReports
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_salary);
                 path_salary.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
-                cb_vendors.Visibility = Visibility.Visible;
-                cb_vendors.SelectedItem = null;
                 chk_allVendors.Visibility = Visibility.Visible;
+                bdr_vendorCombo.Visibility = Visibility.Visible;
+                cb_vendors.SelectedItem = null;
 
                 vendorCombo = statisticModel.getUserAcc(payments, "s");
                 fillSalaryCombo(vendorCombo, cb_vendors);
@@ -612,13 +589,11 @@ namespace Restaurant.View.reports.accountsReports
                 chk_allVendors.IsChecked = true;
                 chk_allVendorsAccountant.IsChecked = true;
 
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -627,8 +602,7 @@ namespace Restaurant.View.reports.accountsReports
         {//general expenses
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendors, AppSettings.resourcemanager.GetString("trGeneralExpensesHint"));
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
@@ -647,9 +621,9 @@ namespace Restaurant.View.reports.accountsReports
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_generalExpenses);
                 path_generalExpenses.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
-                cb_vendors.Visibility = Visibility.Collapsed;
-                cb_vendors.SelectedItem = null;
                 chk_allVendors.Visibility = Visibility.Collapsed;
+                bdr_vendorCombo.Visibility = Visibility.Collapsed;
+                cb_vendors.SelectedItem = null;
 
                 payCombo = statisticModel.getPaymentsTypeComboBySide(payments, "e");
                 fillPaymentsTypeCombo(cb_vendorPayType);
@@ -664,12 +638,12 @@ namespace Restaurant.View.reports.accountsReports
                 chk_allVendorsAccountant.IsChecked = true;
 
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -678,8 +652,7 @@ namespace Restaurant.View.reports.accountsReports
         {//administrative pull
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendors, AppSettings.resourcemanager.GetString("trAdministrativePullHint"));
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
@@ -698,9 +671,9 @@ namespace Restaurant.View.reports.accountsReports
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_administrativePull);
                 path_administrativePull.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
-                cb_vendors.Visibility = Visibility.Collapsed;
-                cb_vendors.SelectedItem = null;
                 chk_allVendors.Visibility = Visibility.Collapsed;
+                bdr_vendorCombo.Visibility = Visibility.Collapsed;
+                cb_vendors.SelectedItem = null;
 
                 payCombo = statisticModel.getPaymentsTypeComboBySide(payments, "m");
                 fillPaymentsTypeCombo(cb_vendorPayType);
@@ -715,12 +688,11 @@ namespace Restaurant.View.reports.accountsReports
                 chk_allVendorsAccountant.IsChecked = true;
 
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -729,8 +701,7 @@ namespace Restaurant.View.reports.accountsReports
         {//shipping
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendors, AppSettings.resourcemanager.GetString("trShippingCompanyHint"));
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
@@ -750,9 +721,9 @@ namespace Restaurant.View.reports.accountsReports
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_shipping);
                 path_shipping.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
-                cb_vendors.Visibility = Visibility.Visible;
-                cb_vendors.SelectedItem = null;
                 chk_allVendors.Visibility = Visibility.Visible;
+                bdr_vendorCombo.Visibility = Visibility.Visible;
+                cb_vendors.SelectedItem = null;
 
                 var iulist = payments.Where(g => g.shippingCompanyId != null).GroupBy(g => g.shippingCompanyId).Select(g => new ShippingCombo { ShippingId = g.FirstOrDefault().shippingCompanyId, ShippingName = g.FirstOrDefault().shippingCompanyName }).ToList();
                 cb_vendors.SelectedValuePath = "ShippingId";
@@ -771,13 +742,11 @@ namespace Restaurant.View.reports.accountsReports
                 chk_allVendors.IsChecked = true;
                 chk_allVendorsAccountant.IsChecked = true;
 
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -795,7 +764,7 @@ namespace Restaurant.View.reports.accountsReports
                 temp = temp.Where(t => (t.shippingCompanyId == null && t.userId == null && t.agentId != null) ||
                                        (t.shippingCompanyId != null && t.userId != null && t.agentId != null));
             }
-            else if (selectedTab == 3)
+            else if (selectedTab == 6)
             {
                 temp = temp.Where(t => (t.shippingCompanyId != null && t.userId != null && t.agentId == null) ||
                                        (t.shippingCompanyId != null && t.userId == null && t.agentId == null));
@@ -1217,8 +1186,7 @@ namespace Restaurant.View.reports.accountsReports
         {//refresh
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 txt_search.Text = "";
 
@@ -1232,14 +1200,12 @@ namespace Restaurant.View.reports.accountsReports
                 dp_vendorStartDate.SelectedDate = null;
 
                 fillBySide();
-
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1248,8 +1214,7 @@ namespace Restaurant.View.reports.accountsReports
         {//search
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (selectedTab == 0)
                 {
@@ -1279,6 +1244,7 @@ namespace Restaurant.View.reports.accountsReports
                 {
                     payLst = payLst.Where(p => p.side == "sh").ToList();
                 }
+
                 dgPayments.ItemsSource = payLst.Where(obj => (
                     obj.transNum.Contains(txt_search.Text)
                     ||

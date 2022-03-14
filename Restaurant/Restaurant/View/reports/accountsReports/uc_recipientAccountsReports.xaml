@@ -328,7 +328,7 @@
                                         <ColumnDefinition Width="auto"></ColumnDefinition>
                                         <ColumnDefinition Width="60"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                        <Border Grid.Row="0" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                        <Border x:Name="bdr_vendorCombo" Grid.Row="0" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                             <Grid>
 
                                                 <ComboBox Name="cb_vendors" 

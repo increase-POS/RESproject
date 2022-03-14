@@ -77,8 +77,7 @@ namespace Restaurant.View.reports.accountsReports
         {//load
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -92,13 +91,11 @@ namespace Restaurant.View.reports.accountsReports
 
                 Btn_vendor_Click(btn_vendor, null);
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -112,7 +109,7 @@ namespace Restaurant.View.reports.accountsReports
             tt_shipping.Content = AppSettings.resourcemanager.GetString("trShippingCompanies");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendors, AppSettings.resourcemanager.GetString("trVendor") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendorPayType, AppSettings.resourcemanager.GetString("trPaymentType") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendorPayType, AppSettings.resourcemanager.GetString("trPaymentTypeHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendorAccountant, AppSettings.resourcemanager.GetString("trPaymentType") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendorAccountant, AppSettings.resourcemanager.GetString("trAccoutant") + "...");//
 
@@ -126,14 +123,14 @@ namespace Restaurant.View.reports.accountsReports
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txt_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
 
-            col_tansNum.Header = AppSettings.resourcemanager.GetString("trNum");
-            col_processType.Header = AppSettings.resourcemanager.GetString("trPaymentType");
+            col_tansNum.Header = AppSettings.resourcemanager.GetString("trNo.");
+            col_processType.Header = AppSettings.resourcemanager.GetString("trPaymentTypeTooltip");
             col_updateUserAcc.Header = AppSettings.resourcemanager.GetString("trAccoutant");
             col_agentName.Header = AppSettings.resourcemanager.GetString("trRecipientTooltip");
             col_customer.Header = AppSettings.resourcemanager.GetString("trRecipientTooltip");
-            col_user.Header = AppSettings.resourcemanager.GetString("trCompany");
+            col_user.Header = AppSettings.resourcemanager.GetString("trUser");
             col_company.Header = AppSettings.resourcemanager.GetString("trCompany");
-            col_shipping.Header = AppSettings.resourcemanager.GetString("trTotal");
+            col_shipping.Header = AppSettings.resourcemanager.GetString("trCompany");
             col_updateDate.Header = AppSettings.resourcemanager.GetString("trDate");
             col_cash.Header = AppSettings.resourcemanager.GetString("trAmount");
 
@@ -218,19 +215,16 @@ namespace Restaurant.View.reports.accountsReports
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_vendors.SelectedItem = null;
                 cb_vendors.IsEnabled = false;
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -239,18 +233,15 @@ namespace Restaurant.View.reports.accountsReports
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_vendors.IsEnabled = true;
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -259,19 +250,16 @@ namespace Restaurant.View.reports.accountsReports
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_vendorPayType.SelectedItem = null;
                 cb_vendorPayType.IsEnabled = false;
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -280,18 +268,15 @@ namespace Restaurant.View.reports.accountsReports
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_vendorPayType.IsEnabled = true;
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -300,19 +285,16 @@ namespace Restaurant.View.reports.accountsReports
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_vendorAccountant.SelectedItem = null;
                 cb_vendorAccountant.IsEnabled = false;
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -321,18 +303,16 @@ namespace Restaurant.View.reports.accountsReports
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_vendorAccountant.IsEnabled = true;
 
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -390,8 +370,7 @@ namespace Restaurant.View.reports.accountsReports
         {//vendors
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendors, AppSettings.resourcemanager.GetString("trVendorHint"));
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
@@ -415,7 +394,7 @@ namespace Restaurant.View.reports.accountsReports
                 btn_vendor.IsEnabled = false;
                 btn_vendor.Opacity = 1;
 
-                cb_vendors.Visibility = Visibility.Visible;
+                bdr_vendorCombo.Visibility = Visibility.Visible;
                 cb_vendors.SelectedItem = null;
                 chk_allVendors.Visibility = Visibility.Visible;
 
@@ -434,13 +413,11 @@ namespace Restaurant.View.reports.accountsReports
                 chk_allVendors.IsChecked = true;
                 chk_allVendorsAccountant.IsChecked = true;
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -449,8 +426,7 @@ namespace Restaurant.View.reports.accountsReports
         {//customers
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendors, AppSettings.resourcemanager.GetString("trCustomerHint"));
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
@@ -474,7 +450,7 @@ namespace Restaurant.View.reports.accountsReports
                 btn_customer.IsEnabled = false;
                 btn_customer.Opacity = 1;
 
-                cb_vendors.Visibility = Visibility.Visible;
+                bdr_vendorCombo.Visibility = Visibility.Visible;
                 cb_vendors.SelectedItem = null;
                 chk_allVendors.Visibility = Visibility.Visible;
 
@@ -492,14 +468,12 @@ namespace Restaurant.View.reports.accountsReports
                 chk_allVendorsPaymentType.IsChecked = true;
                 chk_allVendors.IsChecked = true;
                 chk_allVendorsAccountant.IsChecked = true;
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -508,8 +482,7 @@ namespace Restaurant.View.reports.accountsReports
         {//users
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendors, AppSettings.resourcemanager.GetString("trUserHint"));
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
@@ -532,7 +505,7 @@ namespace Restaurant.View.reports.accountsReports
                 btn_vendor.IsEnabled = false;
                 btn_vendor.Opacity = 1;
 
-                cb_vendors.Visibility = Visibility.Visible;
+                bdr_vendorCombo.Visibility = Visibility.Visible;
                 cb_vendors.SelectedItem = null;
                 chk_allVendors.Visibility = Visibility.Visible;
 
@@ -550,15 +523,12 @@ namespace Restaurant.View.reports.accountsReports
                 chk_allVendorsPaymentType.IsChecked = true;
                 chk_allVendors.IsChecked = true;
                 chk_allVendorsAccountant.IsChecked = true;
-
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -566,10 +536,8 @@ namespace Restaurant.View.reports.accountsReports
         {//administrative deposite
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
-                //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendors, AppSettings.resourcemanager.GetString("trAdministrativeDeposit")+"...");
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 hideAllColumn();
                 selectedTab = 3;
@@ -577,7 +545,7 @@ namespace Restaurant.View.reports.accountsReports
                 col_tansNum.Visibility = Visibility.Visible;
                 col_processType.Visibility = Visibility.Visible;
                 col_updateUserAcc.Visibility = Visibility.Visible;
-                col_shipping.Visibility = Visibility.Visible;
+                //col_shipping.Visibility = Visibility.Visible;
                 col_updateDate.Visibility = Visibility.Visible;
                 col_cash.Visibility = Visibility.Visible;
 
@@ -590,15 +558,10 @@ namespace Restaurant.View.reports.accountsReports
                 btn_administrativeDeposit.IsEnabled = false;
                 btn_administrativeDeposit.Opacity = 1;
 
-                cb_vendors.Visibility = Visibility.Collapsed;
+                bdr_vendorCombo.Visibility = Visibility.Collapsed;
                 cb_vendors.SelectedItem = null;
                 chk_allVendors.Visibility = Visibility.Collapsed;
-                /*
-                var iulist = payments.Where(g => g.shippingCompanyId != null).GroupBy(g => g.shippingCompanyId).Select(g => new ShippingCombo { ShippingId = g.FirstOrDefault().shippingCompanyId, ShippingName = g.FirstOrDefault().shippingCompanyName }).ToList();
-                cb_vendors.SelectedValuePath = "ShippingId";
-                cb_vendors.DisplayMemberPath = "ShippingName";
-                cb_vendors.ItemsSource = iulist;
-                */
+               
                 payCombo = statisticModel.getPaymentsTypeComboBySide(payments, "m");
                 fillPaymentsTypeCombo(cb_vendorPayType);
 
@@ -610,15 +573,12 @@ namespace Restaurant.View.reports.accountsReports
                 chk_allVendorsPaymentType.IsChecked = true;
                 chk_allVendors.IsChecked = true;
                 chk_allVendorsAccountant.IsChecked = true;
-
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -626,8 +586,7 @@ namespace Restaurant.View.reports.accountsReports
         {//shipping
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendors, AppSettings.resourcemanager.GetString("trShippingCompanyHint"));
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
@@ -650,7 +609,7 @@ namespace Restaurant.View.reports.accountsReports
                 btn_shipping.IsEnabled = false;
                 btn_shipping.Opacity = 1;
 
-                cb_vendors.Visibility = Visibility.Visible;
+                bdr_vendorCombo.Visibility = Visibility.Visible;
                 cb_vendors.SelectedItem = null;
                 chk_allVendors.Visibility = Visibility.Visible;
 
@@ -671,14 +630,11 @@ namespace Restaurant.View.reports.accountsReports
                 chk_allVendors.IsChecked = true;
                 chk_allVendorsAccountant.IsChecked = true;
 
-
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

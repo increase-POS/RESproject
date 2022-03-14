@@ -415,6 +415,7 @@ namespace Restaurant.View.accounts
                                     Clear();
                                     await RefreshCashesList();
                                     await Search();
+                                    await MainWindow.refreshBalance();
                                 }
                                 else
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -453,6 +454,8 @@ namespace Restaurant.View.accounts
                                     decimal ammount = cashtrans.cash;
                                     if (cashtrans.transType.Equals("d")) ammount *= -1;
                                     await calcBalance(ammount);
+
+                                    await MainWindow.refreshBalance();
                                 }
                                 else
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);

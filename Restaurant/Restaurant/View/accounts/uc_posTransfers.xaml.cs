@@ -249,6 +249,7 @@ namespace Restaurant.View.accounts
 
                             if (!s1.Equals(0))
                             {
+                                await MainWindow.refreshBalance();
                                 //second operation
                                 CashTransfer cash2 = new CashTransfer();
 
@@ -295,6 +296,7 @@ namespace Restaurant.View.accounts
 
                                     await RefreshCashesList();
                                     await Search();
+                                    await MainWindow.refreshBalance();
                                 }
                                 else
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);

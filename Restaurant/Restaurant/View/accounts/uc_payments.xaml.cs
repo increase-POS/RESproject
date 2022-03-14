@@ -579,6 +579,7 @@ namespace Restaurant.View.accounts
                             Clear();
                             await RefreshCashesList();
                             await Search();
+                            await MainWindow.refreshBalance();
                         }
                         else
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);

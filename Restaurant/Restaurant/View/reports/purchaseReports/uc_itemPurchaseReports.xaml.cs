@@ -175,7 +175,7 @@ namespace Restaurant.View.reports.purchaseReports
             col_invCount.Header = AppSettings.resourcemanager.GetString("trInvoices");
             col_price.Header = AppSettings.resourcemanager.GetString("trPrice");
             col_total.Header = AppSettings.resourcemanager.GetString("trTotal");
-            col_avg.Header = AppSettings.resourcemanager.GetString("trItem") + "/" + AppSettings.resourcemanager.GetString("trI_nvoice");
+            col_avg.Header = AppSettings.resourcemanager.GetString("trItem") + "/" + AppSettings.resourcemanager.GetString("tr_Invoice");
 
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");

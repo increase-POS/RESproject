@@ -580,15 +580,7 @@ namespace Restaurant.View.accounts
                     #endregion
 
                     #region save
-                    //if ((!tb_cash.Text.Equals("")) && (!cb_depositFrom.Text.Equals("")) && (!cb_paymentProcessType.Text.Equals("")) &&
-                    //(((cb_depositorV.IsVisible) && (!cb_depositorV.Text.Equals(""))) || (!cb_depositorV.IsVisible)) &&
-                    //(((cb_depositorC.IsVisible) && (!cb_depositorC.Text.Equals(""))) || (!cb_depositorC.IsVisible)) &&
-                    //(((cb_depositorU.IsVisible) && (!cb_depositorU.Text.Equals(""))) || (!cb_depositorU.IsVisible)) &&
-                    //(((cb_depositorSh.IsVisible) && (!cb_depositorSh.Text.Equals(""))) || (!cb_depositorSh.IsVisible)) &&
-                    //(((grid_cheque.IsVisible) && (!tb_docNumCheque.Text.Equals(""))) || (!grid_cheque.IsVisible)) &&
-                    //(((grid_doc.IsVisible) && (!dp_docDate.Text.Equals("")) && (!tb_docNum.Text.Equals(""))) || (!dp_docDate.IsVisible)) &&
-                    //(((gd_card.IsVisible) && (!txt_card.Text.Equals(""))) || (!gd_card.IsVisible))
-                    //)
+                   
                     if (HelpClass.validate(requiredControlList, this) )
                     {
                         string depositor = cb_depositFrom.SelectedValue.ToString();
@@ -671,6 +663,7 @@ namespace Restaurant.View.accounts
                             Clear();
                             await RefreshCashesList();
                             await Search();
+                            await MainWindow.refreshBalance();
                         }
                         else
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -691,22 +684,7 @@ namespace Restaurant.View.accounts
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        /*
-        private async Task<int> saveBond(string num, decimal ammount, Nullable<DateTime> date, string type)
-        {
-            Bonds bond = new Bonds();
-            bond.number = num;
-            bond.amount = ammount;
-            bond.deserveDate = date;
-            bond.type = type;
-            bond.isRecieved = 0;
-            bond.createUserId = MainWindow.userID.Value;
-
-            int s = await bondModel.Save(bond);
-
-            return s;
-        }
-        */
+      
         private async Task calcBalance(decimal ammount, string depositor, int agentid)
         {
             int s = 0;

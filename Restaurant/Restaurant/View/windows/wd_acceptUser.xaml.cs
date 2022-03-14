@@ -35,6 +35,9 @@ namespace Restaurant.View.windows
         }
         BrushConverter bc = new BrushConverter();
         public bool isOk { get; set; }
+        public int userID = 0;
+        User userModel = new User();
+
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -52,22 +55,18 @@ namespace Restaurant.View.windows
         {//load
             try
             {
-
-                HelpClass.clearValidate(p_error_userName);
-                HelpClass.clearValidate(p_error_password);
-
                 #region translate
 
                 if (AppSettings.lang.Equals("en"))
-            {
-                grid_acceptUser.FlowDirection = FlowDirection.LeftToRight;
-            }
-            else
-            {
-                grid_acceptUser.FlowDirection = FlowDirection.RightToLeft;
-            }
+                {
+                    grid_acceptUser.FlowDirection = FlowDirection.LeftToRight;
+                }
+                else
+                {
+                    grid_acceptUser.FlowDirection = FlowDirection.RightToLeft;
+                }
 
-            translate();
+                translate();
                 #endregion
 
             }
@@ -89,11 +88,9 @@ namespace Restaurant.View.windows
 
         }
 
-        public int userID = 0;
-        User userModel = new User();
-
+      
         private async void Btn_confirmation_Click(object sender, RoutedEventArgs e)
-        {
+        {//confirm
             try
             {
                 HelpClass.StartAwait(grid_acceptUser);
@@ -128,17 +125,16 @@ namespace Restaurant.View.windows
             string password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password);
 
             User user = await userModel.getUserById(userID);
-          
-            if ((tb_userName.Text.Trim().Equals(user.username)) && (password.Trim().Equals(user.password)))
-             isOk = true; 
-            else
-                isOk = false;
 
-            if (isOk) 
+            if ((tb_userName.Text.Trim().Equals(user.username)) && (password.Trim().Equals(user.password)))
+            {
+                isOk = true;
                 this.Close();
+            }
             else
             {
-                HelpClass.SetValidate(p_error_password,  "trErrorPasswordToolTip");
+                isOk = false;
+                HelpClass.SetValidate(p_error_password, "trErrorPasswordToolTip");
                 //p_showPassword.Visibility = Visibility.Collapsed;
             }
         }
