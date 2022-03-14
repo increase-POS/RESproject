@@ -14,6 +14,57 @@ using System.Web;
 
 namespace Restaurant.Classes
 {
+    public class AgenttoPayCash
+    {
+
+        public Nullable<int> agentMembershipCashId { get; set; }
+        public Nullable<int> subscriptionFeesId { get; set; }
+        public Nullable<int> cashTransId { get; set; }
+        public Nullable<int> membershipId { get; set; }
+        public Nullable<int> agentId { get; set; }
+        public Nullable<System.DateTime> startDate { get; set; }
+        public Nullable<System.DateTime> endDate { get; set; }
+        //public Nullable<int> updateUserId { get; set; }
+        //public Nullable<System.DateTime> createDate { get; set; }
+        public Nullable<System.DateTime> updateDate { get; set; }
+        //public Nullable<int> createUserId { get; set; }
+        public decimal Amount { get; set; }
+        public Nullable<int> pointId { get; set; }
+        public string agentName { get; set; }
+        public string agentcode { get; set; }
+        public string agentcompany { get; set; }
+        public string agentaddress { get; set; }
+        public string agentemail { get; set; }
+        public string agentphone { get; set; }
+        public string agentmobile { get; set; }
+
+        public string agenttype { get; set; }
+        public string agentaccType { get; set; }
+        public decimal agentbalance { get; set; }
+        public byte agentbalanceType { get; set; }
+
+        public string agentfax { get; set; }
+        public decimal agentmaxDeserve { get; set; }
+        public bool agentisLimited { get; set; }
+        public string agentpayType { get; set; }
+        public bool agentcanReserve { get; set; }
+        public string agentdisallowReason { get; set; }
+        public Nullable<int> agentresidentSecId { get; set; }
+        public string agentGPSAddress { get; set; }
+
+        public string membershipName { get; set; }
+
+        public byte membershipisActive { get; set; }
+        public string subscriptionType { get; set; }
+        public string cashsubscriptionType { get; set; }
+        public string membershipcode { get; set; }
+        public bool isFreeDelivery { get; set; }
+        public decimal deliveryDiscountPercent { get; set; }
+        public Nullable<decimal> subscriptionFee { get; set; }
+        public Nullable<int> monthsCount { get; set; }
+        public string transType { get; set; }
+        public string transNum { get; set; }
+    }
     public class AgentMembershipCash
     {
         public int agentMembershipsId { get; set; }
@@ -85,6 +136,18 @@ namespace Restaurant.Classes
            return await APIResult.post(method, parameters);
         }
 
-   
+        public async Task<List<AgenttoPayCash>> GetAgentToPay()
+        {
+            List<AgenttoPayCash> items = new List<AgenttoPayCash>();
+            IEnumerable<Claim> claims = await APIResult.getList("AgentMembershipCash/GetAgentToPay");
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<AgenttoPayCash>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
     }
 }
