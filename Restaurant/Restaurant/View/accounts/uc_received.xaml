@@ -578,7 +578,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Border Grid.Column="0" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Border x:Name="brd_docNum" Grid.Column="0" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                 <Grid>
                                     <TextBox x:Name="tb_docNum"  Text="{Binding docNum, Mode=OneWay}" Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -622,7 +622,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Border Grid.Column="0"   Grid.ColumnSpan="2" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Border x:Name="brd_docNumCheque" Grid.Column="0"   Grid.ColumnSpan="2" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                 <Grid>
 
                                     <TextBox x:Name="tb_docNumCheque" MaxLength="20" Grid.Column="0"
@@ -672,7 +672,7 @@
                          </Grid>
 
 
-                        <Border Visibility="Collapsed" Grid.ColumnSpan="2" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        <Border x:Name="brd_docNumCard" Visibility="Collapsed" Grid.ColumnSpan="2" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid>
 
                                 <TextBox x:Name="tb_docNumCard"  MaxLength="20"  Grid.Row="8"  

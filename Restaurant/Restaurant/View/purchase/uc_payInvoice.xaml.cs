@@ -4027,11 +4027,13 @@ namespace Restaurant.View.purchase
             txt_card.Text = card.name;
             if (card.hasProcessNum)
             {
+                brd_processNum.Visibility = Visibility.Visible;
                 tb_processNum.Visibility = Visibility.Visible;
                 requiredControlList = new List<string> { "card", "processNum" };
             }
             else
             {
+                brd_processNum.Visibility = Visibility.Collapsed;
                 tb_processNum.Visibility = Visibility.Collapsed;
                 requiredControlList = new List<string> { "card" };
             }

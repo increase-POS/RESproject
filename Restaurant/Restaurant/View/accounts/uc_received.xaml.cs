@@ -1020,7 +1020,9 @@ namespace Restaurant.View.accounts
                         grid_doc.Visibility = Visibility.Collapsed;
                         grid_cheque.Visibility = Visibility.Collapsed;
                         gd_card.Visibility = Visibility.Collapsed;
+                        brd_docNumCard.Visibility = Visibility.Collapsed;
                         tb_docNumCard.Visibility = Visibility.Collapsed;
+                        brd_docNumCheque.Visibility = Visibility.Collapsed;
                         tb_docNumCheque.Visibility = Visibility.Collapsed;
                         HelpClass.clearValidate(p_error_docCard);
                         HelpClass.clearValidate(p_error_docNum);
@@ -1059,6 +1061,7 @@ namespace Restaurant.View.accounts
                         grid_doc.Visibility = Visibility.Collapsed;
                         grid_cheque.Visibility = Visibility.Visible;
                         gd_card.Visibility = Visibility.Collapsed;
+                        brd_docNumCard.Visibility = Visibility.Collapsed;
                         tb_docNumCard.Visibility = Visibility.Collapsed;
                         HelpClass.clearValidate(p_error_docCard);
                         HelpClass.clearValidate(p_error_docNum);
@@ -1075,6 +1078,7 @@ namespace Restaurant.View.accounts
                         grid_doc.Visibility = Visibility.Collapsed;
                         grid_cheque.Visibility = Visibility.Collapsed;
                         gd_card.Visibility = Visibility.Visible;
+                        brd_docNumCard.Visibility = Visibility.Visible;
                         tb_docNumCard.Visibility = Visibility.Visible;
                         HelpClass.clearValidate(p_error_docNum);
                         HelpClass.clearValidate(p_error_docNum);
@@ -1708,6 +1712,7 @@ namespace Restaurant.View.accounts
             //tb_transNum.Text = "";
             tb_cash.IsReadOnly = false;
             grid_doc.Visibility = Visibility.Collapsed;
+            brd_docNumCard.Visibility = Visibility.Collapsed;
             tb_docNumCard.Visibility = Visibility.Collapsed;
             grid_cheque.Visibility = Visibility.Collapsed;
             //HelpClass.clearValidate(tb_cash, p_error_cash);

@@ -468,7 +468,9 @@
                                     </Path.ToolTip>
                                 </Path>
                             </Grid>
-                            <TextBox Grid.Row="1" x:Name="tb_processNum"
+                                <Border  x:Name="brd_processNum" Grid.Row="1" Grid.Column="2" Visibility="Collapsed" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                    <Grid>
+                                        <TextBox Grid.Row="1"  x:Name="tb_processNum"
                                    MaxLength="20"  Visibility="Collapsed"
                                  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                  Text="{Binding test, Mode=OneWay}" Margin="5"
@@ -480,15 +482,17 @@
                                  materialDesign:HintAssist.Hint="Process Number..."  
                                  Foreground="#4E4E4E"  TextBlock.FontSize="12"
                                  Background="#f8f8f8" BorderBrush="#f8f8f8" />
-                            <Path Grid.Row="1" x:Name="p_error_ProcessNum" Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
+                                        <Path Grid.Row="1" x:Name="p_error_ProcessNum" Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
-                             Data="{StaticResource infoCircle}">
-                                <Path.ToolTip>
-                                    <ToolTip x:Name="tt_errorProcessNum" Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
-                                </Path.ToolTip>
-                            </Path>
-                        </Grid>
+                             Data="{StaticResource infoCircle}"/>
+
+                                    </Grid>
+                                </Border>
+
+                               
+
+                            </Grid>
                     </StackPanel>
                     
 

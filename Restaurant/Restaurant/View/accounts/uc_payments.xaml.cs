@@ -931,6 +931,7 @@ namespace Restaurant.View.accounts
                         dp_docDateCheque.SelectedDate = null;
                         gd_card.Visibility = Visibility.Collapsed;
                         _SelectedCard = -1;
+                        brd_docNum.Visibility = Visibility.Collapsed;
                         tb_docNumCard.Visibility = Visibility.Collapsed;
                         HelpClass.clearValidate(p_error_docNum);
                         HelpClass.clearValidate(p_error_docCard);
@@ -959,6 +960,7 @@ namespace Restaurant.View.accounts
                         dp_docDate.SelectedDate = null;
                         gd_card.Visibility = Visibility.Collapsed;
                         _SelectedCard = -1;
+                        brd_docNum.Visibility = Visibility.Collapsed;
                         tb_docNumCard.Visibility = Visibility.Collapsed;
                         HelpClass.clearValidate(p_error_docNum);
                         HelpClass.clearValidate(p_error_docCard);
@@ -974,12 +976,14 @@ namespace Restaurant.View.accounts
                         tb_docNum.Clear();
                         dp_docDate.SelectedDate = null;
                         gd_card.Visibility = Visibility.Visible;
+                        brd_docNum.Visibility = Visibility.Visible;
                         tb_docNumCard.Visibility = Visibility.Visible;
                         HelpClass.clearValidate(p_error_docNum);
                         HelpClass.clearValidate(p_error_docNumCheque);
                         break;
                 }
-                
+
+
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
