@@ -83,5 +83,34 @@ namespace Restaurant.Classes.ApiClasses
             parameters.Add("statusObject", myContent);
             return await APIResult.post(method, parameters);
         }
+        public async Task<string> generateOrderNumber(string orderCode, string branchCode, int branchId)
+        {
+            int sequence = await GetLastNumOfInv(orderCode, branchId);
+            sequence++;
+            string strSeq = sequence.ToString();
+            if (sequence <= 999999)
+                strSeq = sequence.ToString().PadLeft(6, '0');
+            string invoiceNum = orderCode + "-" + branchCode + "-" + strSeq;
+            return invoiceNum;
+        }
+        public async Task<int> GetLastNumOfInv(string orderCode, int branchId)
+        {
+            int count = 0;
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("orderCode", orderCode);
+            parameters.Add("branchId", branchId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("OrderPreparing/GetLastNumOfOrder", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    count = int.Parse(c.Value);
+                    break;
+                }
+            }
+            return count;
+        }
     }
 }

@@ -93,8 +93,8 @@ namespace Restaurant.View.windows
             #region dg_orders
             dg_orders.Columns[1].Header = AppSettings.resourcemanager.GetString("trItem");
             dg_orders.Columns[2].Header = AppSettings.resourcemanager.GetString("trRemainingTime");
-            dg_orders.Columns[3].Header = AppSettings.resourcemanager.GetString("trStatus");
-            dg_orders.Columns[4].Header = AppSettings.resourcemanager.GetString("trNote");
+            dg_orders.Columns[3].Header = AppSettings.resourcemanager.GetString("trCount");
+            dg_orders.Columns[4].Header = AppSettings.resourcemanager.GetString("trStatus");
             #endregion
 
             txt_title.Text = AppSettings.resourcemanager.GetString("trKitchen");
@@ -111,6 +111,12 @@ namespace Restaurant.View.windows
         #region loading
         void fillInvoiceItems()
         {
+            int index = 1;
+            foreach (BillDetailsSales b in invoiceItemsList)
+            {
+                b.index = index;
+                index++;
+            }
             dg_invoiceItems.ItemsSource = invoiceItemsList;
         }
         async Task refreshPreparingOrders()
@@ -339,7 +345,7 @@ namespace Restaurant.View.windows
             preparingOrder = new OrderPreparing();
             preparingOrder.invoiceId = invoiceId;
             preparingOrder.notes = tb_notes.Text;
-            preparingOrder.orderNum = "";///???
+            preparingOrder.orderNum = await preparingOrder.generateOrderNumber("ko",MainWindow.branchLogin.code,MainWindow.branchLogin.branchId);///???
             #endregion
             #region order status object
             orderPreparingStatus statusObject = new orderPreparingStatus();

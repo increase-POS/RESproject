@@ -42,7 +42,7 @@ namespace Restaurant.View.windows
             }
             catch (Exception ex)
             {
-                HelpClass.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this); 
             }
         }
         private void HandleKeyPress(object sender, KeyEventArgs e)
@@ -208,7 +208,7 @@ namespace Restaurant.View.windows
         async Task loading_fillSectionCombo()
         {
 
-            //await refreshReservationsList();
+            await FillCombo.FillComboHallSectionsWithDefault(cb_searchSection);
 
             foreach (var item in loadingList)
             {
@@ -222,7 +222,21 @@ namespace Restaurant.View.windows
 
         #endregion
         #region events
-        private void Cb_searchStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Cb_search_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
@@ -241,7 +255,12 @@ namespace Restaurant.View.windows
         int sectionId = 0;
          void Search()
         {
-            tablesQuery = tablesList;   
+            tablesQuery = tablesList;
+            string textSearch = tb_search.Text;
+
+            if(textSearch != "")
+                tablesQuery = tablesQuery.Where(x => x.name == textSearch).ToList();
+            #region section search
             if (cb_searchSection.SelectedIndex > 0)
             {
                 sectionId = (int)cb_searchSection.SelectedValue;
@@ -249,9 +268,12 @@ namespace Restaurant.View.windows
             }
             else
                 sectionId = 0;
+            #endregion
 
-            if(cb_searchStatus.SelectedIndex > 0)
+            #region status search
+            if (cb_searchStatus.SelectedIndex > 0)
                 tablesQuery = tablesQuery.Where(s => s.status == cb_searchStatus.SelectedValue.ToString()).ToList();
+            #endregion
             BuildTablesDesign();
         }
         async Task refreshTablesList()
@@ -1138,6 +1160,7 @@ namespace Restaurant.View.windows
             isOk = true;
             this.Close();
         }
+
 
 
         #endregion

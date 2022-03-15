@@ -91,7 +91,8 @@
                                      Foreground="#4E4E4E" 
                                       MaxLength="50" 
                                       materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                   BorderBrush="#737373"   BorderThickness="0" Margin="4,0"  />
+                                   BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
+                                         TextChanged="Tb_search_TextChanged"/>
                             </Grid>
                         </Border>
                         <Border Grid.Column="2" CornerRadius="10" Background="White"   Margin="5,10"    BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
@@ -110,7 +111,8 @@
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                   TextBlock.FontSize="12"  
                                   Grid.Column="0" Height="40"  Margin="4,0"
-                                  BorderBrush="#737373" BorderThickness="0"  />
+                                  BorderBrush="#737373" BorderThickness="0" 
+                                   SelectionChanged="Cb_search_SelectionChanged"/>
 
                             </Grid>
                         </Border>
@@ -131,7 +133,7 @@
                                   TextBlock.FontSize="12"  
                                   Grid.Column="0" Height="40"  Margin="4,0"
                                   BorderBrush="#737373" BorderThickness="0" 
-                                          SelectionChanged="Cb_searchStatus_SelectionChanged"/>
+                                          SelectionChanged="Cb_search_SelectionChanged"/>
 
                             </Grid>
                         </Border>
