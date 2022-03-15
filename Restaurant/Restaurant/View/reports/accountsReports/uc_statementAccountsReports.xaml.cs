@@ -86,8 +86,7 @@ namespace Restaurant.View.reports.accountsReports
         {//load
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -101,13 +100,11 @@ namespace Restaurant.View.reports.accountsReports
 
                 Btn_vendor_Click(btn_vendor, null);
 
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -206,22 +203,21 @@ namespace Restaurant.View.reports.accountsReports
         string selectedItem = "";
         private void Cb_vendors_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
-                selectedItem = cb_vendors.SelectedItem.ToString();
+                if (cb_vendors.SelectedItem != null)
+                    selectedItem = cb_vendors.SelectedItem.ToString();
+                else
+                    selectedItem = "";
                 fillEvents();
 
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -230,19 +226,16 @@ namespace Restaurant.View.reports.accountsReports
         {
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_vendorsDate.SelectedItem = null;
                 cb_vendorsDate.IsEnabled = false;
 
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -251,18 +244,15 @@ namespace Restaurant.View.reports.accountsReports
         {
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_vendorsDate.IsEnabled = true;
 
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -294,8 +284,7 @@ namespace Restaurant.View.reports.accountsReports
         {//vendors
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendors, AppSettings.resourcemanager.GetString("trVendorHint"));
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
@@ -322,12 +311,12 @@ namespace Restaurant.View.reports.accountsReports
                 fillVendorCombo(vendorCombo, cb_vendors);
 
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -336,8 +325,7 @@ namespace Restaurant.View.reports.accountsReports
         {//customers
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendors, AppSettings.resourcemanager.GetString("trCustomerHint"));
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
@@ -363,13 +351,11 @@ namespace Restaurant.View.reports.accountsReports
                 customerCombo = statisticModel.getVendorCombo(statement, "c").Where(x => x.VendorId != null); ;
                 fillVendorCombo(customerCombo, cb_vendors);
 
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -378,8 +364,7 @@ namespace Restaurant.View.reports.accountsReports
         {//users
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendors, AppSettings.resourcemanager.GetString("trUserHint"));
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
@@ -404,13 +389,11 @@ namespace Restaurant.View.reports.accountsReports
                 userCombo = statisticModel.getUserAcc(statement, "u");
                 fillSalaryCombo(userCombo, cb_vendors);
 
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -419,8 +402,7 @@ namespace Restaurant.View.reports.accountsReports
         {//shippings
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendors, AppSettings.resourcemanager.GetString("trShippingCompanyHint"));
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
@@ -446,13 +428,11 @@ namespace Restaurant.View.reports.accountsReports
                 ShippingCombo = statisticModel.getShippingCombo(statement);
                 fillShippingCombo(ShippingCombo, cb_vendors);
 
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -654,8 +634,7 @@ namespace Restaurant.View.reports.accountsReports
         {//refresh
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 txt_search.Text = "";
 
@@ -663,14 +642,13 @@ namespace Restaurant.View.reports.accountsReports
                 cb_vendorsDate.SelectedItem = null;
                 chk_allVendors.IsChecked = false;
                 fillEvents();
-
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -680,8 +658,7 @@ namespace Restaurant.View.reports.accountsReports
             IEnumerable<CashTransferSts> t = null;
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 temp = statisticModel.getstate(fillList(statement, cb_vendors, cb_vendorsDate), selectedTab, statement);
 
@@ -692,14 +669,12 @@ namespace Restaurant.View.reports.accountsReports
                 dgPayments.ItemsSource = t;
 
                 txt_count.Text = t.Count().ToString();
-
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -708,8 +683,7 @@ namespace Restaurant.View.reports.accountsReports
         {//email
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 //Thread t1 = new Thread(() =>
                 //{
@@ -717,18 +691,13 @@ namespace Restaurant.View.reports.accountsReports
                 //});
                 //t1.Start();
 
-
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-
-
         }
 
         private async void sendEmail()
@@ -900,8 +869,7 @@ namespace Restaurant.View.reports.accountsReports
         {//preview
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 #region
                 Window.GetWindow(this).Opacity = 0.2;
@@ -921,14 +889,12 @@ namespace Restaurant.View.reports.accountsReports
                 }
                 Window.GetWindow(this).Opacity = 1;
                 #endregion
-
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1006,8 +972,7 @@ namespace Restaurant.View.reports.accountsReports
         {//pdf
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 /////////////////////////////////////
                 Thread t1 = new Thread(() =>
@@ -1016,14 +981,12 @@ namespace Restaurant.View.reports.accountsReports
                 });
                 t1.Start();
                 //////////////////////////////////////
-
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1048,8 +1011,7 @@ namespace Restaurant.View.reports.accountsReports
         {//print
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 /////////////////////////////////////
                 Thread t1 = new Thread(() =>
@@ -1058,15 +1020,13 @@ namespace Restaurant.View.reports.accountsReports
                 });
                 t1.Start();
                 //////////////////////////////////////
-
-
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1085,8 +1045,7 @@ namespace Restaurant.View.reports.accountsReports
         {//excel
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 //Thread t1 = new Thread(() =>
                 //{
@@ -1095,13 +1054,11 @@ namespace Restaurant.View.reports.accountsReports
                 //});
                 //t1.Start();
 
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

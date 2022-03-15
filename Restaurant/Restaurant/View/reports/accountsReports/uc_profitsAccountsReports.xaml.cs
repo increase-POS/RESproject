@@ -78,11 +78,8 @@ namespace Restaurant.View.reports.accountsReports
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            try
-            {
-                //if (sender != null)
-                //    HelpClass.StartAwait(grid_main);
-
+            //try
+            //{
                 #region translate
                 if (AppSettings.lang.Equals("en"))
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -93,16 +90,11 @@ namespace Restaurant.View.reports.accountsReports
 
                 Btn_invoice_Click(btn_invoice, null);
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_invoice.Tag.ToString());
-
-                //if (sender != null)
-                //    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                //if (sender != null)
-                //    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void translate()
@@ -159,92 +151,6 @@ namespace Restaurant.View.reports.accountsReports
             //end date
             (dp_endDate.SelectedDate != null ? p.updateDate <= dp_endDate.SelectedDate : true)
             );
-
-            #region old
-            //if (selectedTab == 0)
-            //    profitsTemp = profitsTemp.GroupBy(s => s.invoiceId).SelectMany(inv => inv.Take(1)).ToList();
-
-            //else
-            //{
-            //    var quantities = profitsTemp.GroupBy(s => s.ITitemUnitId).Select(inv => new { ITquantity = inv.Sum(p => p.ITquantity.Value) }).ToList();
-            //    profitsTemp = profitsTemp.GroupBy(s => s.ITitemUnitId).SelectMany(inv => inv.Take(1)).ToList();
-            //    int index = 0;
-            //    foreach (var x in profitsTemp)
-            //    {
-            //        x.ITquantity = quantities[index].ITquantity;
-
-            //        index++;
-            //    }
-            //}
-            //profitsQuery = profitsTemp
-            //.Where(s =>
-            //(
-            //s.invNumber.ToLower().Contains(searchText)
-            //||
-            //s.totalNet.ToString().ToLower().Contains(searchText)
-            //||
-            //s.invType.ToLower().Contains(searchText)
-            //||
-            //s.ITitemName.ToLower().Contains(searchText)
-            //||
-            //s.ITunitName.ToLower().Contains(searchText)
-            //||
-            //s.ITquantity.ToString().ToLower().Contains(searchText)
-            //||
-            //s.ITprice.ToString().ToLower().Contains(searchText)
-            //)
-            //&&
-            ////branchID/itemID
-            //(
-            //    (selectedTab == 0 ? cb_branches.SelectedIndex != -1 ? s.branchCreatorId == Convert.ToInt32(cb_branches.SelectedValue) : true
-            //    :
-            //    cb_branches.SelectedIndex != -1 ? s.ITitemId == Convert.ToInt32(cb_branches.SelectedValue) : true)
-            //)
-            //&&
-            ////posID/unitID
-            //(
-            //    (selectedTab == 0 ? cb_pos.SelectedIndex != -1 ? s.posId == Convert.ToInt32(cb_pos.SelectedValue) : true
-            //    :
-            //    cb_pos.SelectedIndex != -1 ? s.ITunitId == Convert.ToInt32(cb_pos.SelectedValue) : true)
-            //    )
-            //);
-            //if (selectedTab == 0)
-            //{
-            //    var profitsSum = profitsQuery.GroupBy(s => s.invoiceId).Select(g => new
-            //    {
-            //        invoiceProfit = g.Sum(p => p.itemunitProfit)
-            //    }).ToList();
-
-            //    //foreach (var i in profitsSum)
-            //    //{
-            //    //    profitsQuery.Select(x => { x.invoiceProfit = (i.invoiceId == x.invoiceId) ? i.invoiceProfit : x.invoiceProfit; return x; });
-            //    //}
-            //    //customers.Where(c => c.IsValid).Select(c => { c.CreditLimit = 1000; return c; }).ToList();
-            //    //foreach (var (item,index) in profitsQuery)
-            //    int i = 0;
-            //    foreach (var x in profitsQuery)
-            //    {
-            //        x.invoiceProfit = profitsSum[i].invoiceProfit;
-            //        i++;
-            //    }
-            //}
-            //else if (selectedTab == 1)
-            //{
-            //    var profitsSum = profitsQuery.GroupBy(s => s.ITitemUnitId).Select(g => new
-            //    {
-            //        itemProfit = g.Sum(p => p.itemunitProfit),
-            //    }).ToList();
-
-            //    int i = 0;
-            //    foreach (var x in profitsQuery)
-            //    {
-            //        x.itemProfit = profitsSum[i].itemProfit * (decimal)x.ITquantity;
-            //        // x.itemProfit = profitsSum[i].itemProfit ;
-            //        i++;
-            //    }
-            //}
-            //profitsQueryExcel = profitsQuery.ToList();
-            #endregion
 
             if (selectedTab == 0) await SearchInvoice();
             else if (selectedTab == 1) await SearchItem();
@@ -421,10 +327,9 @@ namespace Restaurant.View.reports.accountsReports
         }
         private async void Btn_invoice_Click(object sender, RoutedEventArgs e)
         {//invoices
-            try
-            {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trBranchHint"));
@@ -453,23 +358,20 @@ namespace Restaurant.View.reports.accountsReports
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private async void Btn_item_Click(object sender, RoutedEventArgs e)
         {//items
             try
             {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 hideAllColumns();
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
@@ -495,13 +397,11 @@ namespace Restaurant.View.reports.accountsReports
                 await Search();
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -524,8 +424,7 @@ namespace Restaurant.View.reports.accountsReports
         {//select all branches
             try
             {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_branches.SelectedIndex = -1;
                 cb_branches.IsEnabled = false;
@@ -533,13 +432,11 @@ namespace Restaurant.View.reports.accountsReports
 
                 //await Search();
 
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -548,20 +445,17 @@ namespace Restaurant.View.reports.accountsReports
         {//unselect all branches
             try
             {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_branches.IsEnabled = true;
 
                 await Search();
 
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -570,21 +464,18 @@ namespace Restaurant.View.reports.accountsReports
         {//select all pos
             try
             {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_pos.SelectedIndex = -1;
                 cb_pos.IsEnabled = false;
 
                 await Search();
 
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -593,20 +484,17 @@ namespace Restaurant.View.reports.accountsReports
         {//unselect all pos
             try
             {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_pos.IsEnabled = true;
 
                 await Search();
 
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -618,6 +506,8 @@ namespace Restaurant.View.reports.accountsReports
 
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh
+            searchText = "";
+            txt_search.Text = "";
             callSearch(sender);
         }
         private async void RefreshView_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -629,18 +519,15 @@ namespace Restaurant.View.reports.accountsReports
         {
             try
             {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 await Search();
 
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -648,19 +535,16 @@ namespace Restaurant.View.reports.accountsReports
         {//select branch
             try
             {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 await Search();
                 fillCombo2(Convert.ToInt32(cb_branches.SelectedValue));
 
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

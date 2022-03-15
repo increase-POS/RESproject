@@ -66,7 +66,6 @@ namespace Restaurant.View.reports.accountsReports
         IEnumerable<BalanceSTS> balancesQuery;
         IEnumerable<BalanceSTS> balancesQueryExcel;
         string searchText = "";
-        //int selectedTab = 0;
         //prin & pdf
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
@@ -76,9 +75,6 @@ namespace Restaurant.View.reports.accountsReports
         {//load
             try
             {
-                //
-                //    HelpClass.StartAwait(grid_main);
-
                 #region translate
                 if (AppSettings.lang.Equals("en"))
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -90,17 +86,11 @@ namespace Restaurant.View.reports.accountsReports
                 chk_allBranches.IsChecked = true;
                 chk_allPos.IsChecked = true;
 
-                //await Search();
-
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_branch.Tag.ToString());
 
-                //
-                //    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                //
-                //    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -146,7 +136,6 @@ namespace Restaurant.View.reports.accountsReports
         {
             balances = await statisticsModel.GetBalance(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
             return balances;
-
         }
 
         private void translate()
@@ -329,17 +318,15 @@ namespace Restaurant.View.reports.accountsReports
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_branches.SelectedIndex = -1;
                 cb_branches.IsEnabled = false;
 
                 //await Search();
                 chk_allPos.IsChecked = true;
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -395,21 +382,18 @@ namespace Restaurant.View.reports.accountsReports
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_pos.SelectedIndex = -1;
                 cb_pos.IsEnabled = false;
 
                 await Search();
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
 
@@ -610,19 +594,18 @@ namespace Restaurant.View.reports.accountsReports
         {//refresh
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
+                searchText = "";
+                txt_search.Text = "";
                 await RefreshBalanceSTSList();
                 await Search();
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
