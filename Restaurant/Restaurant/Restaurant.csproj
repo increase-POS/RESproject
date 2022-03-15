@@ -677,6 +677,9 @@
     <Compile Include="View\windows\wd_membershipList.xaml.cs">
       <DependentUpon>wd_membershipList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_multiplePayment.xaml.cs">
+      <DependentUpon>wd_multiplePayment.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_notes.xaml.cs">
       <DependentUpon>wd_notes.xaml</DependentUpon>
     </Compile>
@@ -1319,6 +1322,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_membershipList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_multiplePayment.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
