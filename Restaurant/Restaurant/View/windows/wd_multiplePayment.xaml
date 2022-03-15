@@ -1,11 +1,11 @@
-﻿<Window x:Class="POS.View.windows.wd_multiplePayment"
+﻿<Window x:Class="Restaurant.View.windows.wd_multiplePayment"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:POS.View.windows"
+        xmlns:local="clr-namespace:Restaurant.View.windows"
         mc:Ignorable="d" KeyDown="HandleKeyPress"
-        xmlns:converters="clr-namespace:POS.converters"
+        xmlns:converters="clr-namespace:Restaurant.converters"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         WindowStyle="None" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" Margin="0" 
@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
         <Grid>
             <Border  BorderThickness="0" Grid.Row="0" 
-                    CornerRadius="7,7,0,0"  Background="#178DD2">
+                    CornerRadius="7,7,0,0"  Background="{StaticResource SecondColor}">
                 <Grid>
                     <Button   IsCancel="true"  HorizontalAlignment="Right" VerticalAlignment="Center" Background="{x:Null}" 
                              BorderBrush="{x:Null}"  Foreground="White" Margin="7.5,0"  x:Name="btn_colse" Click="Btn_colse_Click"
@@ -117,24 +117,30 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <Grid  Margin="5" Grid.Row="0"  >
-                        <ComboBox x:Name="cb_paymentProcessType"  Grid.Row="2"
+                    <Border Grid.Row="0" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Grid >
+                                <ComboBox x:Name="cb_paymentProcessType"  Grid.Row="2"
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
+                                 BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                              materialDesign:HintAssist.Hint="Payment Process Type..."  
-                           TextBlock.FontSize="12"   Background="#f8f8f8" LostFocus="input_LostFocus"
+                           LostFocus="input_LostFocus"
                 Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                 Grid.Column="0" Height="40"   
-                           BorderBrush="#737373" BorderThickness="0" SelectionChanged="Cb_paymentProcessType_SelectionChanged" >
-                        </ComboBox>
-                        <Path Fill="#E81123" x:Name="p_errorpaymentProcessType" Stretch="Fill" Margin="5,5,15,5"
+                           SelectionChanged="Cb_paymentProcessType_SelectionChanged" >
+                                </ComboBox>
+                                <Path Fill="#E81123" x:Name="p_errorpaymentProcessType" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
-                            <Path.ToolTip>
-                                <ToolTip x:Name="tt_errorpaymentProcessType" Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
-                            </Path.ToolTip>
-                        </Path>
-                    </Grid>
+                                    <Path.ToolTip>
+                                        <ToolTip x:Name="tt_errorpaymentProcessType" Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
+                                    </Path.ToolTip>
+                                </Path>
+
+                            </Grid>
+                    </Border>
+
+                
                     <Grid Grid.Row="1" x:Name="gd_card" Visibility="Collapsed">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
@@ -165,26 +171,28 @@
                                 </Path.ToolTip>
                             </Path>
                         </Grid>
-                        <TextBox Grid.Row="1" x:Name="tb_processNum"
+                        <Border x:Name="brd_processNum" Grid.Row="1" Grid.Column="2"  Visibility="Collapsed" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Grid>
+                                <TextBox Grid.Row="1" x:Name="tb_processNum"
                                    MaxLength="20"  Visibility="Collapsed"
                                  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                 Text="{Binding test, Mode=OneWay}" Margin="5"
+                                 Text="{Binding test, Mode=OneWay}"  
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                  Grid.Column="2" Padding="10,0,5,0" Height="40"
                                  PreviewKeyDown="PreventSpaces" 
+                                 BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                                  PreviewTextInput="Tb_EnglishDigit_PreviewTextInput" 
-                                 BorderThickness="1" TextChanged="Tb_textBox_TextChanged"
+                                 TextChanged="Tb_textBox_TextChanged"
                                  materialDesign:HintAssist.Hint="Process Number..."  
-                                 Foreground="#4E4E4E"  TextBlock.FontSize="12"
-                                 Background="#f8f8f8" BorderBrush="#f8f8f8" />
-                        <Path Grid.Row="1" x:Name="p_errorProcessNum" Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
+                                 Foreground="#4E4E4E"    />
+                                <Path Grid.Row="1" x:Name="p_errorProcessNum" Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
-                            <Path.ToolTip>
-                                <ToolTip x:Name="tt_errorProcessNum" Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
-                            </Path.ToolTip>
-                        </Path>
+                              Data="{StaticResource infoCircle}"/>
+                            </Grid>
+                        </Border>
+
+                       
                     </Grid>
                     <Line Grid.Row="3" Grid.Column="0"  Grid.ColumnSpan="3" Stretch="Fill" Stroke="#DFDFDF"  X2="1"  Margin="1,1,1,1"
                           VerticalAlignment="Bottom"/>
@@ -194,32 +202,33 @@
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="tb_cash" MaxLength="20"  
+                        <Border Grid.Row="0" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Grid>
+                                <TextBox x:Name="tb_cash" MaxLength="20"  
                                  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                  Text="{Binding cash, Mode=OneWay}" 
                                  Padding="10,0,5,0"
-                                 BorderThickness="1" 
+                                 BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                                  materialDesign:HintAssist.Hint="Cash..."  
-                                 Foreground="#4E4E4E"  TextBlock.FontSize="12"
-                                 Background="#f8f8f8" BorderBrush="#f8f8f8"
-                                 Grid.Column="0"   Height="40"  Margin="10,5,10,5"
+                                 Foreground="#4E4E4E" 
+                                 Grid.Column="0"   Height="40"  
                                  TextChanged="Tb_textBox_TextChanged" 
                                  LostFocus="Tb_validateEmptyLostFocus"
                                  PreviewKeyDown="PreventSpaces" 
                                  PreviewTextInput="Tb_cash_PreviewTextInput"/>
-                        <Path x:Name="p_errorCash" Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
+                                <Path x:Name="p_error_cash" Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right" Grid.Row="9"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
-                            <Path.ToolTip>
-                                <ToolTip x:Name="tt_errorCash" Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
-                            </Path.ToolTip>
-                        </Path>
-                        <Button Grid.Column="1" x:Name="btn_enter"  Padding="0"  
+                              Data="{StaticResource infoCircle}"/>
+                            </Grid>
+                        </Border>
+
+
+                         <Button Grid.Column="1" x:Name="btn_enter"  Padding="0"  
                                         Background="{x:Null}" BorderBrush="{x:Null}" 
                                         Margin="2.5,1" Click="Btn_enter_Click">
-                            <Path Fill="#4E4E4E"  Stretch="Fill" 
+                            <Path Fill="{StaticResource SecondColor}"  Stretch="Fill" 
                               Width="35" Height="30"
                          VerticalAlignment="Center" 
                               Data="M250,144.07c-4,0-8,0-12,0-3.61,0-5.66-1.45-5.63-5.32,0-8.34,0-16.68,0-25,0-3.3,1.74-5,4.93-5,8.49-.06,17-.27,25.47.18,1.69.09,4.56,2.77,4.64,4.37.47,8.65.29,17.34.2,26,0,3.23-1.89,4.79-5.14,4.76C258.32,144.05,254.16,144.07,250,144.07Zm.17-7.49,9.17-9.63-9.22-10.49-1,5.26-7.14.62v8.15l7.22.64Z"/>
@@ -228,7 +237,7 @@
                         <Button Grid.Column="2" x:Name="btn_clearCoupon"  Padding="0"  
                                         Background="{x:Null}" BorderBrush="{x:Null}" 
                                         Margin="2.5,1" Click="Btn_clearSerial_Click">
-                            <materialDesign:PackIcon Foreground="#178DD2" Kind="RefreshCircle"  
+                            <materialDesign:PackIcon Foreground="{StaticResource MainColor}" Kind="RefreshCircle"  
                               HorizontalAlignment="Center" Grid.Column="0"  
                          VerticalAlignment="Center" Width="35" Height="35"/>
                             <Button.ToolTip>
@@ -292,7 +301,7 @@
                           VerticalAlignment="Bottom"/>
                 <Button Content="Save" Grid.Row="5" Grid.ColumnSpan="5"
                        Margin="10,2.5" x:Name="btn_save" Click="Btn_save_Click"
-                          Background="#178DD2" BorderBrush="{x:Null}"  />
+                          Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" Foreground="White" />
             </Grid>
 
         </Border>

@@ -1263,6 +1263,11 @@ namespace Restaurant.View.sales
                 HelpClass.StartAwait(grid_main);
                 if (FillCombo.groupObject.HasPermissionAction(invoicePermission, FillCombo.groupObjects, "one"))
                 {
+                    // هي واجهة الدفعات
+                    wd_multiplePayment w = new wd_multiplePayment();
+                    w.ShowInTaskbar = false;
+                    w.ShowDialog();
+
                     if (selectedTables.Count == 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trChooseTableFirst"), animation: ToasterAnimation.FadeIn);
                     else if(billDetailsList.Count > 0)
@@ -1271,6 +1276,8 @@ namespace Restaurant.View.sales
                     }
                     else if (invoice.invoiceId != 0)
                     {
+                       
+
                         await addInvoice("s");
                         await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns, invoice.invoiceId, "s");
                         if (invoice.reservationId != null)

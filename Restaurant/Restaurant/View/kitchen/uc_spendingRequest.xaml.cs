@@ -1360,6 +1360,8 @@ namespace Restaurant.View.kitchen
                 this.DataContext = item;
 
                 // get item units
+                if (FillCombo.itemUnitList is null)
+                   await FillCombo.RefreshItemUnit();
                 itemUnits = FillCombo.itemUnitList.Where(a => a.itemId == item.itemId).ToList();
                 // search for default unit for purchase
                 var defaultPurUnit = itemUnits.ToList().Find(c => c.defaultPurchase == 1);
