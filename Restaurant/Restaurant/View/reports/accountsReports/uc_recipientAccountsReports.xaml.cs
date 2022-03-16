@@ -1394,6 +1394,7 @@ namespace Restaurant.View.reports.accountsReports
                 w.pdfPath = pdfpath;
                 if (!string.IsNullOrEmpty(w.pdfPath))
                 {
+                    // w.ShowInTaskbar = false;
                     w.ShowDialog();
                     w.wb_pdfWebViewer.Dispose();
                 }

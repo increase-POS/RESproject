@@ -684,6 +684,7 @@ namespace Restaurant.View.accounts
                         w.tableName = "cashTransfer";
                         w.tableId = cashtrans.cashTransId;
                         w.docNum = cashtrans.docNum;
+                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
                     }
                 }
@@ -876,6 +877,7 @@ namespace Restaurant.View.accounts
 
                 w.tb_userName.Text = cb_user.Text;
                 w.userID = Convert.ToInt32(cb_user.SelectedValue);
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
 
                 Window.GetWindow(this).Opacity = 1;
@@ -1025,6 +1027,7 @@ namespace Restaurant.View.accounts
                     w.pdfPath = pdfpath;
                     if (!string.IsNullOrEmpty(w.pdfPath))
                     {
+                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
                         w.wb_pdfWebViewer.Dispose();
 
@@ -1258,6 +1261,7 @@ namespace Restaurant.View.accounts
                         w.pdfPath = pdfpath;
                         if (!string.IsNullOrEmpty(w.pdfPath))
                         {
+                    // w.ShowInTaskbar = false;
                             w.ShowDialog();
                             w.wb_pdfWebViewer.Dispose();
                         }
@@ -1468,6 +1472,7 @@ namespace Restaurant.View.accounts
                     w.pdfPath = pdfpath;
                     if (!string.IsNullOrEmpty(w.pdfPath))
                     {
+                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
                         w.wb_pdfWebViewer.Dispose();
                     }
@@ -1561,6 +1566,7 @@ namespace Restaurant.View.accounts
                 {
                     Window.GetWindow(this).Opacity = 0.2;
                     win_IvcAccount win = new win_IvcAccount(cashesQuery, 1);
+                    // w.ShowInTaskbar = false;
                     win.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
                 }

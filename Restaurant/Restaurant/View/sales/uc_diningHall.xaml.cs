@@ -1265,7 +1265,7 @@ namespace Restaurant.View.sales
                 {
                     // هي واجهة الدفعات
                     wd_multiplePayment w = new wd_multiplePayment();
-                    w.ShowInTaskbar = false;
+                    // w.ShowInTaskbar = false;
                     w.ShowDialog();
 
                     if (selectedTables.Count == 0)

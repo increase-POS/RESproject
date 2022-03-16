@@ -830,6 +830,7 @@ namespace Restaurant.View.accounts
                         w.tableName = "cashTransfer";
                         w.tableId = cashtrans.cashTransId;
                         w.docNum = cashtrans.docNum;
+                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
                     }
                 }
@@ -1283,6 +1284,7 @@ namespace Restaurant.View.accounts
 
                 w.invType = "feed";
 
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 if (w.isActive)
                 {
@@ -1359,6 +1361,7 @@ namespace Restaurant.View.accounts
                         w.pdfPath = pdfpath;
                         if (!string.IsNullOrEmpty(w.pdfPath))
                         {
+                    // w.ShowInTaskbar = false;
                             w.ShowDialog();
 
                             w.wb_pdfWebViewer.Dispose();
@@ -1578,6 +1581,7 @@ namespace Restaurant.View.accounts
                     w.pdfPath = pdfpath;
                     if (!string.IsNullOrEmpty(w.pdfPath))
                     {
+                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
                         w.wb_pdfWebViewer.Dispose();
                     }
@@ -1608,6 +1612,7 @@ namespace Restaurant.View.accounts
                     Window.GetWindow(this).Opacity = 0.2;
                     //cashesQueryExcel = cashesQuery.ToList();
                     win_IvcAccount win = new win_IvcAccount(cashesQuery, 1);
+                    // // w.ShowInTaskbar = false;
                     win.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
                 }

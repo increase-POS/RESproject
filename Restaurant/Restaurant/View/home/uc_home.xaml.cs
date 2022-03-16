@@ -717,6 +717,7 @@ namespace Restaurant.View
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_usersOnline w = new wd_usersOnline();
                 w.usersOnline = dash.listUserOnline;
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
             }
@@ -884,6 +885,7 @@ namespace Restaurant.View
                 w.itemId = 0;
                 w.itemUnitId = 0;
                 w.CallerName = "IUList";
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 if (w.isActive)
                 {

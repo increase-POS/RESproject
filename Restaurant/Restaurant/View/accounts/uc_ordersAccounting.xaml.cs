@@ -686,6 +686,7 @@ namespace Restaurant.View.accounts
                         w.tableName = "invoices";
                         w.tableId = invoice.invoiceId;
                         w.docNum = invoice.invNumber;
+                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
                     }
                 }
@@ -1252,6 +1253,7 @@ namespace Restaurant.View.accounts
                     w.pdfPath = pdfpath;
                     if (!string.IsNullOrEmpty(w.pdfPath))
                     {
+                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
                         w.wb_pdfWebViewer.Dispose();
                     }
@@ -1282,6 +1284,7 @@ namespace Restaurant.View.accounts
                 {
                     Window.GetWindow(this).Opacity = 0.2;
                     win_IvcAccount win = new win_IvcAccount(invoiceQuery ,2 );
+                    // // w.ShowInTaskbar = false;
                     win.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
                 }

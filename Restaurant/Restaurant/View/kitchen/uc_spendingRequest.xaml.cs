@@ -121,6 +121,7 @@ namespace Restaurant.View.kitchen
                     MainWindow.mainWindow.Opacity = 0.2;
                     wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                     w.contentText = AppSettings.resourcemanager.GetString("trSaveOrderNotification");
+                    // w.ShowInTaskbar = false;
                     w.ShowDialog(); 
                     MainWindow.mainWindow.Opacity = 1;
                     #endregion
@@ -741,6 +742,7 @@ namespace Restaurant.View.kitchen
                         w.pdfPath = pdfpath;
                         if (!string.IsNullOrEmpty(w.pdfPath))
                         {
+                    // w.ShowInTaskbar = false;
                             w.ShowDialog();
                             w.wb_pdfWebViewer.Dispose();
                         }
@@ -1021,6 +1023,7 @@ namespace Restaurant.View.kitchen
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_purchaseItems w = new wd_purchaseItems();
 
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 if (w.isActive)
                 {

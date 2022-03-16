@@ -650,6 +650,7 @@ namespace Restaurant.View.kitchen
                         w.pdfPath = pdfpath;
                         if (!string.IsNullOrEmpty(w.pdfPath))
                         {
+                    // w.ShowInTaskbar = false;
                             w.ShowDialog();
                             w.wb_pdfWebViewer.Dispose();
                         }
@@ -841,6 +842,7 @@ namespace Restaurant.View.kitchen
 
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_itemsStorage w = new wd_itemsStorage();
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
 
                 Window.GetWindow(this).Opacity = 1;
@@ -861,6 +863,7 @@ namespace Restaurant.View.kitchen
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_purchaseItems w = new wd_purchaseItems();
                 w.CardType = "consumption";
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 if (w.isActive)
                 {
