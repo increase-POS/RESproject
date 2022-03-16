@@ -203,6 +203,7 @@
     <Compile Include="Classes\ApiClasses\AvtivateServer.cs" />
     <Compile Include="Classes\ApiClasses\InvoicesClass.cs" />
     <Compile Include="Classes\ApiClasses\AgentMemberships.cs" />
+    <Compile Include="Classes\ApiClasses\OrderPreparing.cs" />
     <Compile Include="Classes\ApiClasses\SubscriptionFees.cs" />
     <Compile Include="Classes\ApiClasses\Memberships.cs" />
     <Compile Include="Classes\ApiClasses\ItemUnitOffer.cs" />
@@ -675,6 +676,9 @@
     </Compile>
     <Compile Include="View\windows\wd_membershipList.xaml.cs">
       <DependentUpon>wd_membershipList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_multiplePayment.xaml.cs">
+      <DependentUpon>wd_multiplePayment.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_notes.xaml.cs">
       <DependentUpon>wd_notes.xaml</DependentUpon>
@@ -1318,6 +1322,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_membershipList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_multiplePayment.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

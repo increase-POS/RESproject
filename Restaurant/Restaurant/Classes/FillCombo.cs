@@ -323,13 +323,15 @@ namespace Restaurant.Classes
         static public Unit saleUnit = new Unit();
  
         static public List<Unit> unitsList;
-        static public async Task<IEnumerable<Unit>> RefreshUnit()
+        static public async Task<List<Unit>> RefreshUnit()
         {
 
             unitsList = await unit.GetActive();
             saleUnit = unitsList.Where(x => x.name == "saleUnit").FirstOrDefault();
             unitsList = unitsList.Where(u => u.name != "saleUnit").ToList();
-            return unitsList;
+           
+
+                return unitsList;
         }
         static public async void FillUnits(ComboBox cmb)
         {
@@ -358,7 +360,7 @@ namespace Restaurant.Classes
         #region item units
         static public ItemUnit itemUnit = new ItemUnit();
         static public List<ItemUnit> itemUnitList;
-        static public async Task<IEnumerable<ItemUnit>> RefreshItemUnit()
+        static public async Task<List<ItemUnit>> RefreshItemUnit()
         {
             itemUnitList = await itemUnit.GetIU();
             itemUnitList = itemUnitList.Where(u => u.isActive == 1).ToList();

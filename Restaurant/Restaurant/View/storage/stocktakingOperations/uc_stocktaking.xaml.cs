@@ -244,7 +244,8 @@ namespace Restaurant.View.storage.stocktakingOperations
                 {
                     await Task.Delay(1000);
                     dg_items.Items.Refresh();
-                    firstTimeForDatagrid = false;
+                if(dg_items.Items.Count>0)
+                        firstTimeForDatagrid = false;
                 }
             }
             else
@@ -308,7 +309,8 @@ namespace Restaurant.View.storage.stocktakingOperations
             {
                 await Task.Delay(1000);
                 dg_items.Items.Refresh();
-                firstTimeForDatagrid = false;
+                if(dg_items.Items.Count>0)
+                    firstTimeForDatagrid = false;
             }
         }
         private async Task inputEditable()

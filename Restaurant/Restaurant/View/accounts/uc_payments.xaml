@@ -543,7 +543,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Border Visibility="Collapsed" Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Border x:Name="brd_docNum" Visibility="Collapsed" Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                 <Grid>
                                     <TextBox x:Name="tb_docNum"  Text="{Binding docNum, Mode=OneWay}" Padding="10,5,0,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"

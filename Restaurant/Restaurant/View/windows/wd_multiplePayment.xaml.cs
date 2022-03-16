@@ -1,5 +1,5 @@
 ﻿using netoaster;
-using POS.Classes;
+using Restaurant.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Resources;
 using System.Windows.Shapes;
 
-namespace POS.View.windows
+namespace Restaurant.View.windows
 {
     /// <summary>
     /// Interaction logic for wd_multiplePayment.xaml
@@ -33,7 +33,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         static private object _Sender;
@@ -56,15 +56,13 @@ namespace POS.View.windows
             {
                 #region translate
 
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
 
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
 
                 }
@@ -81,7 +79,7 @@ namespace POS.View.windows
                 //////////////////////////
                 //invoice.agentId
                 //////////////////////////
-                tb_moneySympol1.Text = tb_moneySympol2.Text = MainWindow.Currency;
+                tb_moneySympol1.Text = tb_moneySympol2.Text = AppSettings.Currency;
                 invoice.paid = 0;
                 tb_cash.Text = tb_total.Text = invoice.totalNet.ToString();
 
@@ -89,16 +87,16 @@ namespace POS.View.windows
             catch (Exception ex)
             {
 
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void translate()
         {
 
-            txt_title.Text = MainWindow.resourcemanager.GetString("trMultiplePayment");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trMultiplePayment");
 
-            //    MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            //    btn_select.Content = MainWindow.resourcemanager.GetString("trSelect");
+            //    MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+            //    btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
         }
         private void configurProcessType()
         {
@@ -107,15 +105,15 @@ namespace POS.View.windows
             if (invoice.invType.Equals("sbd"))
             {
                 var typelist = new[] {
-                 new { Text = MainWindow.resourcemanager.GetString("trCash")       , Value = "cash" },
+                 new { Text = AppSettings.resourcemanager.GetString("trCash")       , Value = "cash" },
                 };
                 cb_paymentProcessType.ItemsSource = typelist;
             }
             else
             {
                 var typelist = new[] {
-                new { Text = MainWindow.resourcemanager.GetString("trCash")       , Value = "cash" },
-                new { Text = MainWindow.resourcemanager.GetString("trAnotherPaymentMethods") , Value = "card" },
+                new { Text = AppSettings.resourcemanager.GetString("trCash")       , Value = "cash" },
+                new { Text = AppSettings.resourcemanager.GetString("trAnotherPaymentMethods") , Value = "card" },
                  };
 
                 cb_paymentProcessType.ItemsSource = typelist;
@@ -135,7 +133,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                //SectionData.ExceptionMessage(ex, this);
+                //HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void HandleKeyPress(object sender, KeyEventArgs e)
@@ -149,7 +147,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void Btn_save_Click(object sender, RoutedEventArgs e)
@@ -194,13 +192,13 @@ namespace POS.View.windows
                 else // if (invoice.paid < invoice.totalNet && hasCredit == false &&)
                 {
                     isOk = false;
-                    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trAmountPaidEqualInvoiceValue"), animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trAmountPaidEqualInvoiceValue"), animation: ToasterAnimation.FadeIn);
                 }
 
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -208,30 +206,32 @@ namespace POS.View.windows
         {
             try
             {
+                /*
                 string name = sender.GetType().Name;
                 if (name == "TextBox")
                 {
                     if ((sender as TextBox).Name == "tb_processNum")
-                        SectionData.validateEmptyTextBox((TextBox)sender, p_errorProcessNum, tt_errorProcessNum, "trEmptyProcessNumToolTip");
+                        HelpClass.validateEmptyTextBox((TextBox)sender, p_errorProcessNum, tt_errorProcessNum, "trEmptyProcessNumToolTip");
                 }
                 if (name == "ComboBox")
                 {
 
                     if ((sender as ComboBox).Name == "cb_paymentProcessType")
-                        SectionData.validateEmptyComboBox((ComboBox)sender, p_errorpaymentProcessType, tt_errorpaymentProcessType, "trErrorEmptyPaymentTypeToolTip");
+                        HelpClass.validateEmptyComboBox((ComboBox)sender, p_errorpaymentProcessType, tt_errorpaymentProcessType, "trErrorEmptyPaymentTypeToolTip");
 
                 }
                 if (name == "TextBlock")
                 {
 
                     if ((sender as TextBlock).Name == "txt_card")
-                        SectionData.validateEmptyTextBlock((TextBlock)sender, p_errorCard, tt_errorCard, "trSelectCreditCard");
+                        HelpClass.validateEmptyTextBlock((TextBlock)sender, p_errorCard, tt_errorCard, "trSelectCreditCard");
                 }
+                */
 
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void Cb_paymentProcessType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -246,8 +246,10 @@ namespace POS.View.windows
                         tb_processNum.Clear();
                         _SelectedCard = -1;
                         txt_card.Text = "";
-                        SectionData.clearTextBlockValidate(txt_card, p_errorCard);
-                        SectionData.clearValidate(tb_processNum, p_errorCard);
+                        /*
+                        HelpClass.clearTextBlockValidate(txt_card, p_errorCard);
+                        HelpClass.clearValidate(tb_processNum, p_errorCard);
+                        */
                         break;
                     case 1://card
                         gd_card.Visibility = Visibility.Visible;
@@ -258,7 +260,7 @@ namespace POS.View.windows
             catch (Exception ex)
             {
 
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         void InitializeCardsPic(IEnumerable<Card> cards)
@@ -313,14 +315,20 @@ namespace POS.View.windows
                 //txt_card.Text = button.DataContext.ToString();
                 Card card = button.DataContext as Card;
                 txt_card.Text = card.name;
-                if (card.hasProcessNum.Value)
+                if (card.hasProcessNum)
+                {
+                    brd_processNum.Visibility = Visibility.Visible;
                     tb_processNum.Visibility = Visibility.Visible;
+                }
                 else
+                {
+                    brd_processNum.Visibility = Visibility.Collapsed;
                     tb_processNum.Visibility = Visibility.Collapsed;
+                }
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         void loading_fillCardCombo()
@@ -377,7 +385,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void DecimalValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -393,7 +401,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void Tb_EnglishDigit_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -412,12 +420,12 @@ namespace POS.View.windows
                 var txb = sender as TextBox;
                 if ((sender as TextBox).Name == "tb_cash")
                 {
-                    SectionData.InputJustNumber(ref txb);
+                    HelpClass.InputJustNumber(ref txb);
                 }
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void Tb_validateEmptyLostFocus(object sender, RoutedEventArgs e)
@@ -429,18 +437,19 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void validateEmpty(string name, object sender)
         {
             amountIsValid = true;
+            /*
             if (name == "TextBox")
             {
                 if ((sender as TextBox).Name == "tb_cash")
-                    amountIsValid = SectionData.validateEmptyTextBox((TextBox)sender, p_errorCash, tt_errorCash, "trEmptyCashToolTip");
+                    amountIsValid = HelpClass.validateEmptyTextBox((TextBox)sender, p_errorCash, tt_errorCash, "trEmptyCashToolTip");
             }
-
+            */
         }
         private void Tb_cash_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {//only decimal
@@ -455,7 +464,7 @@ namespace POS.View.windows
             try
             {
                 tb_cash.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#f8f8f8"));
-                p_errorCash.Visibility = Visibility.Collapsed;
+                p_error_cash.Visibility = Visibility.Collapsed;
                 //listPayments
                 string s = "";
                 cashTrasnfer = new CashTransfer();
@@ -477,7 +486,7 @@ namespace POS.View.windows
                         if (cb_paymentProcessType.SelectedValue.ToString().Equals("cash"))
                         {
                             //s = cb_paymentProcessType.Text + " : " + cashTrasnfer.cash;
-                            s = validateDuplicate(cashTrasnfer.cash.Value);
+                            s = validateDuplicate(cashTrasnfer.cash);
                         }
                         else if (cb_paymentProcessType.SelectedValue.ToString().Equals("card"))
                         {
@@ -503,21 +512,23 @@ namespace POS.View.windows
                     }
                     else
                     {
-                        p_errorCash.Visibility = Visibility.Visible;
-                        tt_errorCash.Content = MainWindow.resourcemanager.GetString("trAmountGreaterInvoiceValue");
+                        HelpClass.SetValidate(p_error_cash, "trAmountGreaterInvoiceValue");
+                        //p_error_cash.Visibility = Visibility.Visible;
+                        //tt_errorCash.Content = AppSettings.resourcemanager.GetString("trAmountGreaterInvoiceValue");
                         tb_cash.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#15FF0000"));
                     }
                 }
                 else
                 {
-                    p_errorCash.Visibility = Visibility.Visible;
-                    tt_errorCash.Content = MainWindow.resourcemanager.GetString("trZeroAmmount");
+                    HelpClass.SetValidate(p_error_cash, "trZeroAmmount");
+                    //p_errorCash.Visibility = Visibility.Visible;
+                    //tt_errorCash.Content = AppSettings.resourcemanager.GetString("trZeroAmmount");
                     tb_cash.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#15FF0000"));
                 }
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         string validateDuplicate(decimal dec)
@@ -556,7 +567,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
                 return "";
             }
         }
@@ -573,7 +584,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -603,7 +614,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
     }

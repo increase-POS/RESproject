@@ -217,7 +217,7 @@ namespace Restaurant
         {
             try
             {
-                await FillCombo.RefreshItemUnit();
+                FillCombo.itemUnitList =   await FillCombo.RefreshItemUnit();
             }
             catch (Exception)
             { }
@@ -346,7 +346,7 @@ namespace Restaurant
         {
             try
             {
-                await FillCombo.RefreshUnit();
+                FillCombo.unitsList =  await FillCombo.RefreshUnit();
             }
             catch (Exception)
             { }
@@ -440,7 +440,13 @@ namespace Restaurant
 
                 #endregion
                 translate();
-                #region loading
+
+
+                await FillCombo.getprintSitting();
+                await FillCombo.loading_getDefaultSystemInfo();
+
+
+                #region loading 
                 loadingList = new List<keyValueBool>();
                 bool isDone = true;
                 loadingList.Add(new keyValueBool { key = "loading_listObjects", value = false });
@@ -455,18 +461,7 @@ namespace Restaurant
                 loadingList.Add(new keyValueBool { key = "loading_RefreshCards", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_getUserPersonalInfo", value = false });
 
-                //loadingList.Add(new keyValueBool { key = "loading_getUserPath", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getTax", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getItemCost", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getDateForm", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getRegionAndCurrency", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getStorageCost", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getAccurac", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getDefaultSystemInfo", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getItemUnitsUsers", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getprintSitting", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_POSList", value = false });
-                //loadingList.Add(new keyValueBool { key = "loading_getPrintCount", value = false });
+              
 
                 loading_listObjects();
                 loading_getGroupObjects();
@@ -478,22 +473,9 @@ namespace Restaurant
                 loading_RefreshUnit();
                 loading_RefreshVendors();
                 loading_RefreshCards();
-              await  FillCombo.getprintSitting();
-                await FillCombo.loading_getDefaultSystemInfo();
                 loading_getUserPersonalInfo();
 
-                //loading_getUserPath();
-                //loading_getTax();
-                //loading_getItemCost();
-                //loading_getDateForm();
-                //loading_getRegionAndCurrency();
-                //loading_getStorageCost();
-                //loading_getAccurac();
-                //loading_getItemUnitsUsers();
-                //loading_getDefaultSystemInfo();
-                //loading_getprintSitting();
-                //loading_POSList();
-                //loading_getPrintCount();
+               
                 do
                 {
                     isDone = true;

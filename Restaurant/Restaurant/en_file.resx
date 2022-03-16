@@ -3586,4 +3586,19 @@ Please add Email in setting</value>
   <data name="trThePromotion" xml:space="preserve">
     <value>Promotion</value>
   </data>
+  <data name="trExceedCount" xml:space="preserve">
+    <value>Quantity exceeded</value>
+  </data>
+  <data name="trRemainingTime" xml:space="preserve">
+    <value>Remaining Time</value>
+  </data>
+  <data name="trSend" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="trSendAll" xml:space="preserve">
+    <value>Send All</value>
+  </data>
+  <data name="trAllItemsListed" xml:space="preserve">
+    <value>All orders sent to kitchen</value>
+  </data>
 </root>

@@ -67,11 +67,11 @@
                                     </Style>
                                 </DataGrid.Resources>
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Width="1*"  Header="No." Binding="{Binding Path=ssssssss}"/>
-                                    <DataGridTextColumn Width="2*"  Header="item name" Binding="{Binding Path=ssssssss}"/>
-                                    <DataGridTextColumn Width="2*"  Header="remaining time" Binding="{Binding Path=ssssssss}"/>
-                                    <DataGridTextColumn Width="2*"  Header="status" Binding="{Binding Path=ssssssss}"/>
-                                    <DataGridTextColumn Width="2*"  Header="notes" Binding="{Binding Path=notes}"/>
+                                <DataGridTextColumn Width="1*"  Header="#" Binding="{Binding Path=orderNum}"/>
+                                    <DataGridTextColumn Width="2*"  Header="item name" Binding="{Binding Path=itemName}"/>
+                                <DataGridTextColumn Width="2*"  Header="remaining time" Binding="{Binding Path=remainingTime}"/>
+                                <DataGridTextColumn Width="2*"  Header="count" Binding="{Binding Path=quantity}"/>
+                                <DataGridTextColumn Width="2*"  Header="status" Binding="{Binding Path=status}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
@@ -111,7 +111,8 @@
                      FontSize="14"     VerticalAlignment="Center" 
                            FontWeight="Bold" />
                             <Button   x:Name="btn_clear"  Grid.Column="3" Padding="0" 
-                               VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}"   >
+                               VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" 
+                                      Click="Btn_clear_Click">
                                 <materialDesign:PackIcon Foreground="White" Kind="RefreshCircle"   Width="30" Height="30">
                                     <materialDesign:PackIcon.ToolTip>
                                         <ToolTip x:Name="tt_clear" Placement="left" HorizontalOffset="5" 
@@ -140,8 +141,9 @@
                                 <Border Margin="5,5,5,5.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGridInvoiceItems" BorderThickness="0" 
                             Background="White"/>
                                 <DataGrid  Margin="10 5" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
-                       x:Name="dg_invoiceItems"    AutoGenerateColumns="False"   Background="White"
-                        ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
+                                   x:Name="dg_invoiceItems"    AutoGenerateColumns="False"   Background="White"
+                                    ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2"
+                                           SelectionChanged="Dg_invoiceItems_SelectionChanged">
                                     <DataGrid.OpacityMask>
                                         <VisualBrush Visual="{Binding ElementName=brd_roundDataGridInvoiceItems}"/>
                                     </DataGrid.OpacityMask>
@@ -155,9 +157,9 @@
                                         </Style>
                                     </DataGrid.Resources>
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Width="*"  Header="No." Binding="{Binding Path=ssssssss}"/>
-                                        <DataGridTextColumn Width="2*"  Header="name" Binding="{Binding Path=ssssssss}"/>
-                                        <DataGridTextColumn Width="*"  Header="count" Binding="{Binding Path=ssssssss}"/>
+                                        <DataGridTextColumn Width="*"  Header="No." Binding="{Binding Path=index}"/>
+                                        <DataGridTextColumn Width="2*"  Header="name" Binding="{Binding Path=itemName}"/>
+                                        <DataGridTextColumn Width="*"  Header="count" Binding="{Binding Path=Count}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
 
@@ -172,7 +174,8 @@
                                      BorderThickness="0" Tag="int"
                                  BorderBrush="AliceBlue" MaxLength="100" PreviewTextInput="Number_PreviewTextInput"
                                 materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                  Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
+                  Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" 
+                                             TextChanged="Tb_count_TextChanged"/>
 
                                     <Path Fill="#E81123" x:Name="p_error_count" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
@@ -206,13 +209,15 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Border Grid.Column="0">
-                                    <Button    Content="send"
+                                    <Button    Content="send" Name="btn_send"
+                                     IsEnabled="False" Click="Btn_send_Click"
                                     materialDesign:ButtonAssist.CornerRadius="7"
                               Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                         Margin="1,1"   Foreground="White" />
                                 </Border>
                                 <Border Grid.Column="1">
-                                    <Button    Content="send all"
+                                    <Button    Content="send all" x:Name="btn_sendAll"
+                                      Click="Btn_sendAll_Click"
                                     materialDesign:ButtonAssist.CornerRadius="7"
                               Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                         Margin="1,1"   Foreground="White" />

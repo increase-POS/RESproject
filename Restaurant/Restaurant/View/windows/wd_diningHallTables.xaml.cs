@@ -42,7 +42,7 @@ namespace Restaurant.View.windows
             }
             catch (Exception ex)
             {
-                HelpClass.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this); 
             }
         }
         private void HandleKeyPress(object sender, KeyEventArgs e)
@@ -208,7 +208,7 @@ namespace Restaurant.View.windows
         async Task loading_fillSectionCombo()
         {
 
-            //await refreshReservationsList();
+            await FillCombo.FillComboHallSectionsWithDefault(cb_searchSection);
 
             foreach (var item in loadingList)
             {
@@ -222,7 +222,21 @@ namespace Restaurant.View.windows
 
         #endregion
         #region events
-        private void Cb_searchStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Cb_search_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
@@ -241,7 +255,12 @@ namespace Restaurant.View.windows
         int sectionId = 0;
          void Search()
         {
-            tablesQuery = tablesList;   
+            tablesQuery = tablesList;
+            string textSearch = tb_search.Text;
+
+            if(textSearch != "")
+                tablesQuery = tablesQuery.Where(x => x.name == textSearch).ToList();
+            #region section search
             if (cb_searchSection.SelectedIndex > 0)
             {
                 sectionId = (int)cb_searchSection.SelectedValue;
@@ -249,9 +268,12 @@ namespace Restaurant.View.windows
             }
             else
                 sectionId = 0;
+            #endregion
 
-            if(cb_searchStatus.SelectedIndex > 0)
+            #region status search
+            if (cb_searchStatus.SelectedIndex > 0)
                 tablesQuery = tablesQuery.Where(s => s.status == cb_searchStatus.SelectedValue.ToString()).ToList();
+            #endregion
             BuildTablesDesign();
         }
         async Task refreshTablesList()
@@ -637,11 +659,11 @@ namespace Restaurant.View.windows
             {
                 HelpClass.StartAwait(grid_main);
                 #region Accept
-                MainWindow.mainWindow.Opacity = 0.2;
+                grid_ucInvoice.Opacity = 0.2;
                 wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                 w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxContinue");
                 w.ShowDialog();
-                MainWindow.mainWindow.Opacity = 1;
+                grid_ucInvoice.Opacity = 1;
                 #endregion
                 if (w.isOk)
                 {
@@ -693,11 +715,11 @@ namespace Restaurant.View.windows
                     {
                         HelpClass.StartAwait(grid_main);
                         #region Accept
-                        MainWindow.mainWindow.Opacity = 0.2;
+                        grid_ucInvoice.Opacity = 0.2;
                         wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                         w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxContinue");
                         w.ShowDialog();
-                        MainWindow.mainWindow.Opacity = 1;
+                        grid_ucInvoice.Opacity = 1;
                         #endregion
                         if (w.isOk)
                         {
@@ -738,11 +760,11 @@ namespace Restaurant.View.windows
                     {
                         HelpClass.StartAwait(grid_main);
                         #region Accept
-                        MainWindow.mainWindow.Opacity = 0.2;
+                        grid_ucInvoice.Opacity = 0.2;
                         wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                         w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxContinue");
                         w.ShowDialog();
-                        MainWindow.mainWindow.Opacity = 1;
+                        grid_ucInvoice.Opacity = 1;
                         #endregion
                         if (w.isOk)
                         {
@@ -784,7 +806,7 @@ namespace Restaurant.View.windows
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "merge"))
                 {
                     HelpClass.StartAwait(grid_main);
-                    MainWindow.mainWindow.Opacity = 0.2;
+                    grid_ucInvoice.Opacity = 0.2;
 
                     wd_tablesList w = new wd_tablesList();
                     w.page = "dinningHall-invoice";
@@ -820,7 +842,7 @@ namespace Restaurant.View.windows
                         }
                     }
 
-                    MainWindow.mainWindow.Opacity = 1;
+                    grid_ucInvoice.Opacity = 1;
                     HelpClass.EndAwait(grid_main);
                 }
             }
@@ -838,7 +860,7 @@ namespace Restaurant.View.windows
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "change"))
                 {
                     HelpClass.StartAwait(grid_main);
-                    MainWindow.mainWindow.Opacity = 0.2;
+                    grid_ucInvoice.Opacity = 0.2;
 
                     wd_selectTable w = new wd_selectTable();
 
@@ -873,7 +895,7 @@ namespace Restaurant.View.windows
                         }
                     }
 
-                    MainWindow.mainWindow.Opacity = 1;
+                    grid_ucInvoice.Opacity = 1;
                     HelpClass.EndAwait(grid_main);
                 }
             }
@@ -893,7 +915,7 @@ namespace Restaurant.View.windows
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update"))
                 {
                     HelpClass.StartAwait(grid_main);
-                    MainWindow.mainWindow.Opacity = 0.2;
+                    grid_ucInvoice.Opacity = 0.2;
 
                     wd_tablesList w = new wd_tablesList();
                     w.page = "dinningHall-reserve";
@@ -930,7 +952,7 @@ namespace Restaurant.View.windows
                                 Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         }
                     }
-                    MainWindow.mainWindow.Opacity = 1;
+                    grid_ucInvoice.Opacity = 1;
                     HelpClass.EndAwait(grid_main);
                 }
             }
@@ -975,11 +997,11 @@ namespace Restaurant.View.windows
                 {
                     HelpClass.StartAwait(grid_main);
                     #region Accept
-                    MainWindow.mainWindow.Opacity = 0.2;
+                    grid_ucInvoice.Opacity = 0.2;
                     wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                     w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxContinue");
                     w.ShowDialog();
-                    MainWindow.mainWindow.Opacity = 1;
+                    grid_ucInvoice.Opacity = 1;
                     #endregion
                     if (w.isOk)
                     {
@@ -1020,11 +1042,11 @@ namespace Restaurant.View.windows
                 {
                     HelpClass.StartAwait(grid_main);
                     #region Accept
-                    MainWindow.mainWindow.Opacity = 0.2;
+                    grid_ucInvoice.Opacity = 0.2;
                     wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                     w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxContinue");
                     w.ShowDialog();
-                    MainWindow.mainWindow.Opacity = 1;
+                    grid_ucInvoice.Opacity = 1;
                     #endregion
                     if (w.isOk)
                     {
@@ -1138,6 +1160,7 @@ namespace Restaurant.View.windows
             isOk = true;
             this.Close();
         }
+
 
 
         #endregion

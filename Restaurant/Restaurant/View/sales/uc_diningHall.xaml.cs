@@ -1263,6 +1263,11 @@ namespace Restaurant.View.sales
                 HelpClass.StartAwait(grid_main);
                 if (FillCombo.groupObject.HasPermissionAction(invoicePermission, FillCombo.groupObjects, "one"))
                 {
+                    // هي واجهة الدفعات
+                    wd_multiplePayment w = new wd_multiplePayment();
+                    w.ShowInTaskbar = false;
+                    w.ShowDialog();
+
                     if (selectedTables.Count == 0)
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trChooseTableFirst"), animation: ToasterAnimation.FadeIn);
                     else if(billDetailsList.Count > 0)
@@ -1271,6 +1276,8 @@ namespace Restaurant.View.sales
                     }
                     else if (invoice.invoiceId != 0)
                     {
+                       
+
                         await addInvoice("s");
                         await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns, invoice.invoiceId, "s");
                         if (invoice.reservationId != null)
@@ -1349,15 +1356,18 @@ namespace Restaurant.View.sales
             {
                 HelpClass.StartAwait(grid_main);
 
-                //if (FillCombo.groupObject.HasPermissionAction(addRangePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
-                //{
-                Window.GetWindow(this).Opacity = 0.2;
-                wd_diningHallKitchen w = new wd_diningHallKitchen();
-                w.ShowDialog();
-                Window.GetWindow(this).Opacity = 1;
-                // }
-                //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                if (FillCombo.groupObject.HasPermissionAction(addRangePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
+                {
+                    Window.GetWindow(this).Opacity = 0.2;
+                    wd_diningHallKitchen w = new wd_diningHallKitchen();
+
+                    w.invoiceItemsList = billDetailsList;
+                    w.invoiceId = invoice.invoiceId;
+                    w.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)

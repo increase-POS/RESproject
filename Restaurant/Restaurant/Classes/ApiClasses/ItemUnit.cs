@@ -190,6 +190,14 @@ namespace Restaurant.Classes
         public List<ItemUnit> GetIUbyItem(int itemId, List<ItemUnit>AllIU,List<Unit>AllUnits)
         {
 
+            if (AllIU is null)
+                FillCombo.RefreshItemUnit();
+            if (AllUnits is null)
+                FillCombo.RefreshUnit();
+
+            //AllIU = FillCombo.itemUnitList;
+            //AllUnits = FillCombo.unitsList;
+
             List<ItemUnit> itemUnitsList = new List<ItemUnit>();
             try
             {

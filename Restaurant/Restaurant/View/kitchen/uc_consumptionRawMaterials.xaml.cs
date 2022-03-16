@@ -1188,6 +1188,7 @@ namespace Restaurant.View.kitchen
                 HelpClass.StartAwait(grid_main);
                 await Task.Delay(1000);
                 dg_billDetails.Items.Refresh();
+                if(dg_billDetails.Items.Count>0)
                 firstTimeForDatagrid = false;
                 HelpClass.EndAwait(grid_main);
             }
