@@ -83,7 +83,8 @@ namespace Restaurant.View.sales.reservations
             }
         }
 
-        string basicsPermission = "reservationsUpdate_basics";
+        string updatePermission = "reservationsUpdate_update";
+        string deletePermission = "reservationsUpdate_delete";
         IEnumerable<TablesReservation> reservationsList;
         IEnumerable<TablesReservation> reservationsQuery;
         TablesReservation reservation = new TablesReservation();
@@ -226,7 +227,7 @@ namespace Restaurant.View.sales.reservations
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update"))
+                if (FillCombo.groupObject.HasPermissionAction(updatePermission, FillCombo.groupObjects, "one"))
                 {
                     if (reservation.reservationId > 0)
                     {
@@ -362,7 +363,7 @@ namespace Restaurant.View.sales.reservations
         {
             try
             {//delete
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update"))
+                if (FillCombo.groupObject.HasPermissionAction(updatePermission, FillCombo.groupObjects, "one"))
                 {
                     HelpClass.StartAwait(grid_main);
                     #region Accept
@@ -424,7 +425,7 @@ namespace Restaurant.View.sales.reservations
         {
             try
             {//delete
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "delete"))
+                if (FillCombo.groupObject.HasPermissionAction(deletePermission, FillCombo.groupObjects, "one"))
                 {
                     HelpClass.StartAwait(grid_main);
                     #region Accept
@@ -481,15 +482,15 @@ namespace Restaurant.View.sales.reservations
         {
             try
             {
+                if (FillCombo.groupObject.HasPermissionAction(updatePermission, FillCombo.groupObjects, "one"))
+                {
                 HelpClass.StartAwait(grid_main);
                 MainWindow.mainWindow.Opacity = 0.2;
-
                 wd_tablesList w = new wd_tablesList();
                 w.page = "reservationUpdate";
                 //w.reservationId = reservation.reservationId;
                 w.selectedTables = selectedTables;
                 w.ShowDialog();
-
                 if (w.DialogResult == true)
                 {
                     _PersonsCount = 0;
@@ -502,6 +503,10 @@ namespace Restaurant.View.sales.reservations
                 }
                 MainWindow.mainWindow.Opacity = 1;
                 HelpClass.EndAwait(grid_main);
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
             }
             catch (Exception ex)
             {
@@ -1032,6 +1037,28 @@ namespace Restaurant.View.sales.reservations
             }
         }
 
-   
+        private void Btn_cancel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {//delete
+                if (FillCombo.groupObject.HasPermissionAction(updatePermission, FillCombo.groupObjects, "one"))
+                {
+                    HelpClass.StartAwait(grid_main);
+                  
+
+
+
+                    HelpClass.EndAwait(grid_main);
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

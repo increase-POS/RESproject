@@ -647,7 +647,7 @@
                         </Button>
                         <Button x:Name="btn_cancel" Grid.Column="2" BorderBrush="{x:Null}" Padding="0" 
                                   Margin="5 5 2.5 5 " Height="auto" IsEnabled="False"
-                                Background="{x:Null}" VerticalAlignment="Top"  >
+                                Background="{x:Null}" VerticalAlignment="Top" Click="Btn_cancel_Click"  >
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
