@@ -1347,6 +1347,7 @@ namespace Restaurant
 
                 //Window.GetWindow(this).Opacity = 0.2;
                 //wd_changePassword w = new wd_changePassword();
+                    //// w.ShowInTaskbar = false;
                 //w.ShowDialog();
                 //Window.GetWindow(this).Opacity = 1;
 
@@ -1364,6 +1365,7 @@ namespace Restaurant
             {
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_info w = new wd_info();
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
             }
@@ -1548,6 +1550,7 @@ namespace Restaurant
             Window.GetWindow(this).Opacity = 0.2;
             wd_notifications w = new wd_notifications();
             w.notifications = notifications;
+                    // w.ShowInTaskbar = false;
             w.ShowDialog();
             Window.GetWindow(this).Opacity = 1;
         }
@@ -1599,6 +1602,7 @@ namespace Restaurant
             {
                 //Window.GetWindow(this).Opacity = 0.2;
                 //wd_info w = new wd_info();
+                    //// w.ShowInTaskbar = false;
                 //w.ShowDialog();
                 //Window.GetWindow(this).Opacity = 1;
             }
@@ -1614,6 +1618,7 @@ namespace Restaurant
             {
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_userInfo w = new wd_userInfo();
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
             }
@@ -1629,6 +1634,7 @@ namespace Restaurant
 
             Window.GetWindow(this).Opacity = 0.2;
             wd_applicationStop w = new wd_applicationStop();
+                    // w.ShowInTaskbar = false;
             w.ShowDialog();
             if (w.status == "o")
             {
@@ -1652,6 +1658,7 @@ namespace Restaurant
 
             Window.GetWindow(this).Opacity = 0.2;
             wd_transfers w = new wd_transfers();
+                    // w.ShowInTaskbar = false;
             w.ShowDialog();
             Window.GetWindow(this).Opacity = 1;
 
