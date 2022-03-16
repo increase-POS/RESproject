@@ -1,5 +1,6 @@
 ﻿using netoaster;
 using Restaurant.Classes;
+using Restaurant.Classes.ApiClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,8 +54,8 @@ namespace Restaurant.View.kitchen
         }
 
         string basicsPermission = "preparingOrders_basics";
-        //User user = new User();
-        //IEnumerable<User> usersQuery;
+        OrderPreparing preparingOrder = new OrderPreparing();
+        List<OrderPreparing> orders = new List<OrderPreparing>();
         //IEnumerable<User> users;
         //byte tgl_userState;
         string searchText = "";
@@ -124,28 +125,7 @@ namespace Restaurant.View.kitchen
                 }
                 while (!isDone);
                 #endregion
-
-
-                itemsList = new List<itemsOrder>()
-            {
-                new itemsOrder{  sequence=1, name = "Cheese", count=2},
-                new itemsOrder{  sequence=2, name = "Egg", count=45},
-                new itemsOrder{  sequence=3, name = "Butter", count=5},
-                new itemsOrder{  sequence=4, name = "Margarine", count=2},
-                new itemsOrder{  sequence=5, name = "Yogurt", count=5},
-                new itemsOrder{  sequence=6, name = "Cottage cheese", count=7},
-                new itemsOrder{  sequence=7, name = "Ice cream", count=5},
-                new itemsOrder{  sequence=8, name = "Cream", count=33},
-                new itemsOrder{  sequence=9, name = "Sandwich", count=4},
-                new itemsOrder{  sequence=10, name = "Sausage", count=45},
-                new itemsOrder{  sequence=11, name = "Hamburger", count=78},
-                new itemsOrder{  sequence=12, name = "Hot dog", count=3},
-                new itemsOrder{  sequence=13, name = "Bread", count=2},
-                new itemsOrder{  sequence=14, name = "Cheese", count=2},
-                new itemsOrder{  sequence=15, name = "Egg", count=45},
-                new itemsOrder{  sequence=16, name = "Butter", count=5},
-            };
-                BuildOrderItemsDesign();
+                await refreshPreparingOrders();
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -159,10 +139,33 @@ namespace Restaurant.View.kitchen
         private void translate()
         {
 
+            #region dg_orders
+            dg_orders.Columns[1].Header = "";
+            dg_orders.Columns[2].Header = AppSettings.resourcemanager.GetString("trRemainingTime");
+            dg_orders.Columns[3].Header = AppSettings.resourcemanager.GetString("trStatus");
+            dg_orders.Columns[4].Header = AppSettings.resourcemanager.GetString("trNote");
+            #endregion
 
+            txt_title.Text = AppSettings.resourcemanager.GetString("trOrder");
+            txt_details.Text = AppSettings.resourcemanager.GetString("trDetails");
+            txt_items.Text = AppSettings.resourcemanager.GetString("trItems");
+            //txt_byMinute.Text = AppSettings.resourcemanager.GetString("trDetails");
 
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchStatus, AppSettings.resourcemanager.GetString("trStatusHint"));
+           // MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchCatalog, AppSettings.resourcemanager.GetString("trSearchHint"));
 
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
         }
+        #region loading
+        async Task refreshPreparingOrders()
+        {
+            string status = "Listed, Cooking, Cooked";
+            orders = await preparingOrder.GetPreparingOrdersWithStatus(MainWindow.branchLogin.branchId,status);
+            dg_orders.ItemsSource = orders;
+        }
+        #endregion
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         { //add
@@ -221,14 +224,23 @@ namespace Restaurant.View.kitchen
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Dg_reservation_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Dg_orders_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
                 //selection
 
+                if (dg_orders.SelectedIndex != -1)
+                {
+                    preparingOrder = new OrderPreparing();
+                    preparingOrder = dg_orders.SelectedItem as OrderPreparing;
 
+                    this.DataContext = preparingOrder;
+
+                    itemsList = preparingOrder.items;
+                    BuildOrderItemsDesign();
+                }
                 HelpClass.clearValidate(requiredControlList, this);
                 HelpClass.EndAwait(grid_main);
             }
@@ -503,7 +515,6 @@ namespace Restaurant.View.kitchen
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
                     win_lvcCatalog win = new win_lvcCatalog(itemsQuery, 3);
-                    // // w.ShowInTaskbar = false;
                     win.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
                     #endregion
@@ -542,7 +553,6 @@ namespace Restaurant.View.kitchen
                     w.pdfPath = pdfpath;
                     if (!string.IsNullOrEmpty(w.pdfPath))
                     {
-                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
                         w.wb_pdfWebViewer.Dispose();
                     }
@@ -613,7 +623,7 @@ namespace Restaurant.View.kitchen
             public string name { get; set; }
             public int count { get; set; }
         }
-        List<itemsOrder> itemsList = new List<itemsOrder>();
+        List<ItemOrderPreparing> itemsList = new List<ItemOrderPreparing>();
         void BuildOrderItemsDesign()
         {
             sp_items.Children.Clear();
@@ -649,7 +659,7 @@ namespace Restaurant.View.kitchen
                 #endregion
                 #region   name
                 var itemNameText = new TextBlock();
-                itemNameText.Text = item.name;
+                itemNameText.Text = item.itemName;
                 itemNameText.Margin = new Thickness(5);
                 itemNameText.Foreground = Application.Current.Resources["ThickGrey"] as SolidColorBrush;
                 //itemNameText.FontWeight = FontWeights.SemiBold;
@@ -661,7 +671,7 @@ namespace Restaurant.View.kitchen
                 #endregion
                 #region   count
                 var itemCountText = new TextBlock();
-                itemCountText.Text = item.count.ToString();
+                itemCountText.Text = item.quantity.ToString();
                 itemCountText.Margin = new Thickness(5, 5 ,10 , 5);
                 itemCountText.Foreground = Application.Current.Resources["ThickGrey"] as SolidColorBrush;
                 //itemCountText.FontWeight = FontWeights.SemiBold;
@@ -675,10 +685,11 @@ namespace Restaurant.View.kitchen
                 sp_items.Children.Add(gridContainer);
             }
         }
-        
+
+
+
         #endregion
 
-
-
+       
     }
 }

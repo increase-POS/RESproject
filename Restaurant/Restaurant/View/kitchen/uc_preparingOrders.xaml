@@ -167,7 +167,7 @@
                         <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                         <DataGrid  Margin="5,5,5,45" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
-                       x:Name="dg_reservation" SelectionChanged="Dg_reservation_SelectionChanged"  AutoGenerateColumns="False"   Background="White"
+                       x:Name="dg_orders" SelectionChanged="Dg_orders_SelectionChanged"  AutoGenerateColumns="False"   Background="White"
                         ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
                             <DataGrid.OpacityMask>
                                 <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
@@ -182,10 +182,10 @@
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Width="*"  Header="code" Binding="{Binding Path=ssssssss}"/>
-                                <DataGridTextColumn Width="*"  Header="inv Num/ table" Binding="{Binding Path=ssssssss}"/>
-                                <DataGridTextColumn Width="*"  Header="remaining time" Binding="{Binding Path=ssssssss}"/>
-                                <DataGridTextColumn Width="*"  Header="status" Binding="{Binding Path=ssssssss}"/>
+                                <DataGridTextColumn Width="*"  Header="#" Binding="{Binding Path=orderNum}"/>
+                                <DataGridTextColumn Width="*"  Header="inv Num/ table" Binding="{Binding Path=invNum_Tables}"/>
+                                <DataGridTextColumn Width="*"  Header="remaining time" Binding="{Binding Path=remainingTime}"/>
+                                <DataGridTextColumn Width="*"  Header="status" Binding="{Binding Path=status}"/>
                                 <DataGridTextColumn Width="*"  Header="notes" Binding="{Binding Path=notes}"/>
                             </DataGrid.Columns>
                         </DataGrid>
@@ -396,7 +396,7 @@
                         <Grid   >
                             <TextBox Margin="4,0" x:Name="tb_preparingTime"  
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
-                                         Text="{Binding personsCount, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
+                                         Text="{Binding remainingTime, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
                                          materialDesign:HintAssist.Hint="preparing time..."   Foreground="#4E4E4E"
                                          materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" 
                                         Tag="int" PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
@@ -408,7 +408,7 @@
                             </Path>
                         </Grid>
                     </Border>
-                <TextBlock  Text="by minutes" Grid.Column="1"
+                <TextBlock  Text="by minutes" Grid.Column="1" Name="txt_byMinute"
                             Foreground="{StaticResource ThickGrey}" FontSize="14"
                                     VerticalAlignment="Center" HorizontalAlignment="Right"
                             Margin="5,5,15,5"/>
@@ -435,6 +435,7 @@
                         </Grid.RowDefinitions>
                        
                         <TextBlock  Text="items" Grid.ColumnSpan="2"
+                                    Name="txt_items"
                                     Foreground="{StaticResource SecondColor}" FontSize="14"
                                     VerticalAlignment="Center" FontWeight="SemiBold"
                                     Margin="5,5,5,5"/>
