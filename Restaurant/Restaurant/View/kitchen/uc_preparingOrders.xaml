@@ -185,7 +185,7 @@
                                 <DataGridTextColumn Width="*"  Header="#" Binding="{Binding Path=orderNum}"/>
                                 <DataGridTextColumn Width="*"  Header="inv Num/ table" Binding="{Binding Path=invNum_Tables}"/>
                                 <DataGridTextColumn Width="*"  Header="remaining time" Binding="{Binding Path=remainingTime}"/>
-                                <DataGridTextColumn Width="*"  Header="status" Binding="{Binding Path=status}"/>
+                                <DataGridTextColumn Width="*"  Header="status" Binding="{Binding Path=status,Converter={StaticResource preparingOrderStatusConverter }}"/>
                                 <DataGridTextColumn Width="*"  Header="notes" Binding="{Binding Path=notes}"/>
                             </DataGrid.Columns>
                         </DataGrid>
@@ -556,9 +556,10 @@
                     BorderThickness="1" Opacity="1" Margin="5,5,5,5"  />
                     <Border Grid.Row="1" Grid.ColumnSpan="3">
 
-                        <Button x:Name="btn_save" Click="Btn_save_Click"   Content="Save" materialDesign:ButtonAssist.CornerRadius="7"
+                        <Button x:Name="btn_save" Click="Btn_save_Click"   Content="Save" 
+                         materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
-                    Margin="1,1"   Foreground="White" />
+                    Margin="1,1"   Foreground="White" IsEnabled="False" />
                     </Border>
  
 

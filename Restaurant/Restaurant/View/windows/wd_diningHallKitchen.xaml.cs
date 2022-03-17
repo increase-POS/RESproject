@@ -35,6 +35,8 @@ namespace Restaurant.View.windows
         OrderPreparing preparingOrder = new OrderPreparing();
         List<OrderPreparing> orders= new List<OrderPreparing>();
         BillDetailsSales invoiceRow = new BillDetailsSales();
+        List<BillDetailsSales> unSentInvoiceItems = new List<BillDetailsSales>();
+
         List<ItemOrderPreparing> preparingItemsList = new List<ItemOrderPreparing>();
         public wd_diningHallKitchen()
         { 
@@ -78,9 +80,9 @@ namespace Restaurant.View.windows
             }
             translate();
             #endregion
-
-            fillInvoiceItems();
+        
             await refreshPreparingOrders();
+            fillInvoiceItems();
         }
         private void translate()
         {
@@ -111,13 +113,31 @@ namespace Restaurant.View.windows
         #region loading
         void fillInvoiceItems()
         {
+            unSentInvoiceItems = new List<BillDetailsSales>();
             int index = 1;
             foreach (BillDetailsSales b in invoiceItemsList)
             {
-                b.index = index;
-                index++;
+
+                int itemCountInOrder = 0;
+                try { itemCountInOrder = orders.Where(x => x.itemUnitId == b.itemUnitId).Sum(x => x.quantity); }
+                catch { }
+
+                int remainingCount = b.Count - itemCountInOrder;
+                if (remainingCount > 0)
+                {
+                    b.index = index;
+                    index++;
+
+                    b.Count = remainingCount;
+                    unSentInvoiceItems.Add(b);
+                }              
             }
-            dg_invoiceItems.ItemsSource = invoiceItemsList;
+            dg_invoiceItems.ItemsSource = unSentInvoiceItems;
+
+            if (unSentInvoiceItems.Count == 0)
+                btn_sendAll.IsEnabled = false;
+            else
+                btn_sendAll.IsEnabled = true;
         }
         async Task refreshPreparingOrders()
         {
@@ -291,30 +311,41 @@ namespace Restaurant.View.windows
                 if (FillCombo.groupObject.HasPermissionAction(kitchenPermission, FillCombo.groupObjects, "send"))
                 {
                     preparingItemsList = new List<ItemOrderPreparing>();
-                    foreach (BillDetailsSales b in invoiceItemsList)
-                    {
-                        int itemCountInOrder = 0;
-                        try { itemCountInOrder = orders.Where(x => x.itemUnitId == b.itemUnitId).Sum(x => x.quantity); }
-                        catch { }
+                    //foreach (BillDetailsSales b in invoiceItemsList)
+                    //{
+                    //    int itemCountInOrder = 0;
+                    //    try { itemCountInOrder = orders.Where(x => x.itemUnitId == b.itemUnitId).Sum(x => x.quantity); }
+                    //    catch { }
 
-                        int remainingCount = b.Count - itemCountInOrder;
-                        if(remainingCount > 0)
+                    //    int remainingCount = b.Count - itemCountInOrder;
+                    //    if(remainingCount > 0)
+                    //    {
+                    //        ItemOrderPreparing it = new ItemOrderPreparing()
+                    //        {
+                    //            itemUnitId = b.itemUnitId,
+                    //            quantity = remainingCount,
+                    //            notes = tb_notes.Text,
+                    //            createUserId = MainWindow.userLogin.userId,
+                    //        };
+                    //        preparingItemsList.Add(it);
+                    //    }                      
+                    //}
+                    foreach (BillDetailsSales b in unSentInvoiceItems)
+                    {                    
+                        ItemOrderPreparing it = new ItemOrderPreparing()
                         {
-                            ItemOrderPreparing it = new ItemOrderPreparing()
-                            {
-                                itemUnitId = b.itemUnitId,
-                                quantity = remainingCount,
-                                notes = tb_notes.Text,
-                                createUserId = MainWindow.userLogin.userId,
-                            };
-                            preparingItemsList.Add(it);
-                        }
-                        if(preparingItemsList.Count == 0)
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trAllItemsListed"), animation: ToasterAnimation.FadeIn);
+                            itemUnitId = b.itemUnitId,
+                            quantity = b.Count,
+                            notes = tb_notes.Text,
+                            createUserId = MainWindow.userLogin.userId,
+                        };
+                        preparingItemsList.Add(it);
+                    }
+                    if (preparingItemsList.Count == 0)
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trAllItemsListed"), animation: ToasterAnimation.FadeIn);
 
-                        else
-                            await saveOrderPreparing(preparingItemsList);
-                    }                   
+                    else
+                        await saveOrderPreparing(preparingItemsList);
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -335,6 +366,7 @@ namespace Restaurant.View.windows
             invoiceRow = new BillDetailsSales();
             this.DataContext = invoiceRow;
             tb_count.Text = "";
+            dg_invoiceItems.SelectedIndex = -1;
 
             btn_send.IsEnabled = false;
         }
@@ -349,7 +381,7 @@ namespace Restaurant.View.windows
             #endregion
             #region order status object
             orderPreparingStatus statusObject = new orderPreparingStatus();
-            statusObject.status = "listed";
+            statusObject.status = "Listed";
             statusObject.notes = tb_notes.Text;
             statusObject.createUserId = MainWindow.userLogin.userId;
             #endregion
@@ -361,6 +393,7 @@ namespace Restaurant.View.windows
 
                 clear();
                 await refreshPreparingOrders();
+               fillInvoiceItems();
                 
             }
             else

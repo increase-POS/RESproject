@@ -175,7 +175,7 @@ namespace Restaurant.View.kitchen
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add"))
                 {
 
-
+                    await saveOrderPreparing();
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -189,7 +189,41 @@ namespace Restaurant.View.kitchen
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        
+        async Task saveOrderPreparing()
+        {
+            #region preparing order object
+            preparingOrder.preparingTime = decimal.Parse(tb_preparingTime.Text);
+            preparingOrder.notes = tb_notes.Text;
+            #endregion
+            #region order status object
+            orderPreparingStatus statusObject = new orderPreparingStatus();
+            statusObject.status = "Preparing";
+            statusObject.notes = tb_notes.Text;
+            statusObject.createUserId = MainWindow.userLogin.userId;
+            #endregion
+
+            //int res = await preparingOrder.savePreparingOrder(preparingOrder, orderItems, statusObject);
+            //if (res > 0)
+            //{
+            //    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+            //    clear();
+            //    await refreshPreparingOrders();
+
+            //}
+            //else
+            //    Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+        }
+
+        private void clear()
+        {
+            preparingOrder = new OrderPreparing();
+            this.DataContext = preparingOrder;
+            dg_orders.SelectedIndex = -1;
+
+            btn_save.IsEnabled = false;
+        }
+
 
 
         #endregion
@@ -240,6 +274,9 @@ namespace Restaurant.View.kitchen
 
                     itemsList = preparingOrder.items;
                     BuildOrderItemsDesign();
+
+                    btn_save.IsEnabled = true;
+
                 }
                 HelpClass.clearValidate(requiredControlList, this);
                 HelpClass.EndAwait(grid_main);
@@ -617,12 +654,7 @@ namespace Restaurant.View.kitchen
         */
         #endregion
         #region items
-        class itemsOrder
-        {
-            public int sequence { get; set; }
-            public string name { get; set; }
-            public int count { get; set; }
-        }
+   
         List<ItemOrderPreparing> itemsList = new List<ItemOrderPreparing>();
         void BuildOrderItemsDesign()
         {

@@ -3577,4 +3577,13 @@
   <data name="trSendAll" xml:space="preserve">
     <value>إرسال الكل</value>
   </data>
+  <data name="trCollected" xml:space="preserve">
+    <value>مستلم</value>
+  </data>
+  <data name="trListed" xml:space="preserve">
+    <value>مدرج</value>
+  </data>
+  <data name="trPreparing" xml:space="preserve">
+    <value>قيد التحضير</value>
+  </data>
 </root>
