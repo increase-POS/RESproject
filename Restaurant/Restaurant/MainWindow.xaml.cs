@@ -153,10 +153,8 @@ namespace Restaurant
                 windowFlowDirection();
                 
             }
-            catch (Exception ex)
-            {
-                //HelpClass.ExceptionMessage(ex, this);
-            }
+            catch
+            { }
 
         }
 
@@ -164,13 +162,9 @@ namespace Restaurant
         {
             #region translate
             if (AppSettings.lang.Equals("en"))
-            {
                 grid_mainWindow.FlowDirection = FlowDirection.LeftToRight;
-            }
             else
-            {
                 grid_mainWindow.FlowDirection = FlowDirection.RightToLeft;
-            }
             #endregion
         }
 
@@ -405,7 +399,7 @@ namespace Restaurant
         {//load
             try
             {
-                    HelpClass.StartAwait(grid_mainWindow);
+                    HelpClass.StartAwait(grid_mainWindow , "mainWindow_loaded");
                 #region bonni
 #pragma warning disable CS0436 // Type conflicts with imported type
                 TabTipAutomation.IgnoreHardwareKeyboard = HardwareKeyboardIgnoreOptions.IgnoreAll;
@@ -519,7 +513,7 @@ namespace Restaurant
                 //SetNotificationsLocation();
 
 
-                HelpClass.EndAwait(grid_mainWindow);
+                HelpClass.EndAwait(grid_mainWindow, "mainWindow_loaded");
             }
             catch (Exception ex)
             {
