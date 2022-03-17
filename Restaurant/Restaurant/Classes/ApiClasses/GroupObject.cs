@@ -375,7 +375,8 @@ namespace Restaurant.Classes
 
         public bool HasPermission(string objectname, List<GroupObject> GOList)
         {
-
+            if (HelpClass.isAdminPermision())
+                return true;
             List<GroupObject> currlist = new List<GroupObject>();
             currlist = GetObjSons(objectname, GOList);
             currlist = currlist.Where(X => (X.addOb == 1 || X.updateOb == 1 || X.deleteOb == 1 || X.showOb == 1 || X.reportOb == 1)).ToList();
