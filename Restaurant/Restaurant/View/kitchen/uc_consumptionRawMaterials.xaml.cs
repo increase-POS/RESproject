@@ -33,8 +33,8 @@ namespace Restaurant.View.kitchen
     /// </summary>
     public partial class uc_consumptionRawMaterials : UserControl
     {
-        string createPermission = "consumptionRawMaterials_create";
-        string reportsPermission = "consumptionRawMaterials_reports";
+        string consumptionPermission = "consumptionRawMaterials_consumption";
+        string reportPermission = "consumptionRawMaterials_report";
         private static uc_consumptionRawMaterials _instance;
         public static uc_consumptionRawMaterials Instance
         {

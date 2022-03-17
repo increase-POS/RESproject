@@ -38,7 +38,7 @@ namespace Restaurant.View.kitchen
                 _instance = value;
             }
         }
-        string basicsPermission = "itemsCosting_save";
+        string updatePermission = "itemsCosting_update";
         List<Item> itemsQuery = new List<Item>();
         string searchText = "";
         int categoryId = 0;

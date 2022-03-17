@@ -53,7 +53,7 @@ namespace Restaurant.View.kitchen
             }
         }
 
-        string basicsPermission = "preparingOrders_basics";
+        string updatePermission = "preparingOrders_update";
         OrderPreparing preparingOrder = new OrderPreparing();
         List<OrderPreparing> orders = new List<OrderPreparing>();
         //IEnumerable<User> users;
@@ -172,7 +172,7 @@ namespace Restaurant.View.kitchen
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add"))
+                if (FillCombo.groupObject.HasPermissionAction(updatePermission, FillCombo.groupObjects, "add"))
                 {
 
                     await saveOrderPreparing();
