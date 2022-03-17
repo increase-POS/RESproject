@@ -502,7 +502,7 @@ namespace Restaurant.View.kitchen
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(consumptionPermission, FillCombo.groupObjects, "one"))
                 {
                     bool valid = validateItemUnits();
                     if (valid)
@@ -632,7 +632,7 @@ namespace Restaurant.View.kitchen
 
                 HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportPermission, FillCombo.groupObjects, "one"))
                 {
                     #region
                     if (invoiceItems != null)
@@ -702,7 +702,7 @@ namespace Restaurant.View.kitchen
 
                 HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportPermission, FillCombo.groupObjects, "one"))
                 {
                     /////////////////////////////////////
                     ///  
@@ -744,7 +744,7 @@ namespace Restaurant.View.kitchen
 
                 HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportPermission, FillCombo.groupObjects, "one"))
                 {
                     if (invoiceItems != null)
                     {
