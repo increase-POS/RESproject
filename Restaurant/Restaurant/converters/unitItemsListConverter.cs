@@ -21,7 +21,11 @@ namespace Restaurant.converters
         //}
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            //var result = Task.Run(() => itemUnit.GetItemUnits(int.Parse(value.ToString()))).Result;
+            if (FillCombo.itemUnitList is null)
+                FillCombo.itemUnitList = Task.Run(() => FillCombo.RefreshItemUnit()).Result;
+
+            if (FillCombo.unitsList is null)
+                FillCombo.unitsList = Task.Run(() => FillCombo.RefreshUnit()).Result;
 
             var result = itemUnit.GetIUbyItem(int.Parse(value.ToString()),
                 FillCombo.itemUnitList,
