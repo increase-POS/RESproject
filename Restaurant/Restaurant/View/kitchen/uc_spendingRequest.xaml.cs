@@ -34,7 +34,7 @@ namespace Restaurant.View.kitchen
     public partial class uc_spendingRequest : UserControl
     {
         string createPermission = "spendingRequest_create";
-        string reportsPermission = "spendingRequest_reports";
+        string reportsPermission = "spendingRequest_report";
         string returnPermission = "spendingRequest_return";
         private static uc_spendingRequest _instance;
         public static uc_spendingRequest Instance
@@ -63,7 +63,6 @@ namespace Restaurant.View.kitchen
             }
         }
         
-        string spendRequestPermission = "spendRequest_invoice";
         ObservableCollection<BillDetailsPurchase> billDetails = new ObservableCollection<BillDetailsPurchase>();
         public static bool archived = false;
         public static bool isFromReport = false;
@@ -514,7 +513,7 @@ namespace Restaurant.View.kitchen
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(spendRequestPermission, FillCombo.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one"))
                 {                  
                     if (HelpClass.validate(requiredControlList, this))
                     {

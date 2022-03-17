@@ -122,7 +122,7 @@ namespace Restaurant.View.sales
         {
             tt_invoice.Content = AppSettings.resourcemanager.GetString("trInvoices");
             tt_order.Content = AppSettings.resourcemanager.GetString("trOrders");
-            tt_quotation.Content = AppSettings.resourcemanager.GetString("trQuotations");
+            //tt_quotation.Content = AppSettings.resourcemanager.GetString("trQuotations");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_invoiceDate, AppSettings.resourcemanager.GetString("trDate"));
 
@@ -209,7 +209,7 @@ namespace Restaurant.View.sales
                 txt_search.Text = "";
 
                 path_order.Fill = Brushes.White;
-                path_quotation.Fill = Brushes.White;
+                //path_quotation.Fill = Brushes.White;
                 bdrMain.RenderTransform = Animations.borderAnimation(50, bdrMain, true);
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_invoice);
                 path_invoice.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
@@ -241,7 +241,7 @@ namespace Restaurant.View.sales
                 txt_search.Text = "";
 
                 path_invoice.Fill = Brushes.White;
-                path_quotation.Fill = Brushes.White;
+                //path_quotation.Fill = Brushes.White;
                 bdrMain.RenderTransform = Animations.borderAnimation(50, bdrMain, true);
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_order);
                 path_order.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
@@ -264,6 +264,7 @@ namespace Restaurant.View.sales
 
         private void Btn_quotation_Click(object sender, RoutedEventArgs e)
         {//quotation
+            /*
             try
             {
                 
@@ -292,6 +293,7 @@ namespace Restaurant.View.sales
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+            */
         }
 
         private void fillEventsCall(object sender)
@@ -818,5 +820,9 @@ namespace Restaurant.View.sales
             }
         }
 
+        private void Txt_search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

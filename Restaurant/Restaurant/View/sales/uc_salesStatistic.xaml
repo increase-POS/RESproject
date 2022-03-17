@@ -36,7 +36,7 @@
                 <Grid  >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="90"/>
+                    <RowDefinition Height="80"/>
                 </Grid.RowDefinitions>
                 <Border CornerRadius="7,7,0,0"  Height="52"
                         Grid.Row="0" 
@@ -130,7 +130,7 @@
                                 </Path>
                             </Button>
                         </Border>
-                        <Border x:Name="bdr_quotation" Grid.Column="2" Background="{StaticResource SecondColor}" BorderThickness="0"  Height="40" Width="60" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="0,5,0,-1">
+                        <!--<Border x:Name="bdr_quotation" Grid.Column="2" Background="{StaticResource SecondColor}" BorderThickness="0"  Height="40" Width="60" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="0,5,0,-1">
                             <Button x:Name="btn_quotation"  Background="Transparent" 
                                     materialDesign:RippleAssist.Feedback="Transparent"
                                     BorderBrush="Transparent" Height="auto" Width="60" Click="Btn_quotation_Click">
@@ -182,7 +182,7 @@
                                     </Path.ToolTip>
                                 </Path>
                             </Button>
-                        </Border>
+                        </Border>-->
 
 
 
@@ -213,11 +213,18 @@
                                         <CheckBox x:Name="chk_invoice" Content="Invoice" Margin="5" Foreground="{StaticResource ThickGrey}" Checked="chk_Checked" Unchecked="chk_Checked"></CheckBox>
                                         <CheckBox x:Name="chk_return" Content="Return invoice" Margin="5" Foreground="{StaticResource ThickGrey}" Checked="chk_Checked" Unchecked="chk_Checked"></CheckBox>
                                         <CheckBox x:Name="chk_drafs"  Content="Drafts" Foreground="{StaticResource ThickGrey}" Margin="5" Checked="chk_Checked" Unchecked="chk_Checked"></CheckBox>
-                                        <DatePicker SelectedDateFormat="Short"  Name="dp_invoiceDate" Width="100" Margin="10,5,10,5" Padding="10,0,5,0" Height="40" DockPanel.Dock="Right"  BorderBrush="#737373"  BorderThickness="0" 
-                                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                            <Border Grid.Row="0" DockPanel.Dock="Right" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                <Grid>
+                                                    <DatePicker SelectedDateFormat="Short"  Name="dp_invoiceDate"
+                                                                Width="100"  
+                                                                BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
+                                                                Padding="10,0,5,0" Height="40" DockPanel.Dock="Right"  
+                                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                                                                materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                                     materialDesign:HintAssist.Hint="Date..."
                                                     SelectedDateChanged="Dp_SelectedDateChanged"></DatePicker>
-
+                                                </Grid>
+                                            </Border>
                                     </DockPanel>
                                 </Grid>
                                 <Grid Grid.Row="1" x:Name="grid_order" Margin="10,0,10,10" Visibility="Collapsed">
@@ -302,13 +309,18 @@
 
 
 
-                        <TextBox x:Name="txt_search"  
-                                 Padding="10,0,5,0" BorderBrush="{x:Null}"
-                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
-                                 materialDesign:HintAssist.Hint="Enter Here To Start Search ...."  
-                                 Foreground="#4e4e4e" TextBlock.FontSize="14" Height="40" 
-                                 SelectionChanged="Txt_search_SelectionChanged"/>
-                        <Border Margin="0,5,0,0"  Background="White" Width="30" Height="30">
+                                <Border Grid.Row="0" Width="200"  CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                    <Grid>
+                                        <TextBox x:Name="txt_search"   TextChanged="Txt_search_TextChanged"
+                                                 Padding="10,0,5,0"  
+                                                 BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
+                                           Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                          materialDesign:HintAssist.Hint="Enter Here To Start Search ...."  
+                 Foreground="#4e4e4e" />
+
+                                    </Grid>
+                                </Border>
+                                <Border Margin="0,5,0,0"  Background="White" Width="30" Height="30">
                             <Path Fill="#4e4e4e" Stretch="Fill"  
                              Grid.Column="0"  
                         Width="17.5" Height="17.5"
@@ -361,20 +373,27 @@
                 </Border>
             </Border>
             <Border Grid.Row="2" Background="White">
-                <DataGrid  Margin="5,5,5,17.5"  IsReadOnly="True"  Background="White"
+                        <Grid  Grid.Row="1" >
+                            <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
+                            Background="White"/>
+                            <DataGrid  Margin="5,5,5,17.5"  IsReadOnly="True"  Background="White"
                      Name="dgInvoice" MouseDoubleClick="DgInvoice_MouseDoubleClick"
                         AutoGenerateColumns="False" 
                         ColumnWidth="SizeToHeader"
                             AlternatingRowBackground="#f3f3f3" AlternationCount="2">
-                    <DataGrid.Resources>
-                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"></SolidColorBrush>
-                        <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
-                            <Setter Property="Background" Value="#e7f3fa" />
-                            <Setter Property="BorderBrush" Value="White"/>
-                            <Setter Property="BorderThickness" Value="0 0 1 0"/>
-                        </Style>
-                    </DataGrid.Resources>
-                    <DataGrid.Columns>
+                            <DataGrid.OpacityMask>
+                                <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
+                            </DataGrid.OpacityMask>
+                            <DataGrid.Resources>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"></SolidColorBrush>
+                                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="Background" Value="#F5D7C4" />
+                                    <Setter Property="BorderBrush" Value="White"/>
+                                    <Setter Property="BorderThickness" Value="0 0 1 0"/>
+                                    <Setter Property="Foreground" Value="{StaticResource SecondColor}"/>
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
                         <DataGridTextColumn x:Name="col_No" Width="*" Header="No." Binding="{Binding invNumber}"/>
                         <DataGridTextColumn x:Name="col_type" Width="*" Header="Type" Binding="{Binding Path=invType,Converter={StaticResource invoiceTypeConverter }}"/>
                         <DataGridTextColumn x:Name="col_branch" Width="*" Header="Branch" Binding="{Binding branchCreatorName}" />
@@ -387,7 +406,8 @@
 
                     </DataGrid.Columns>
                 </DataGrid>
-            </Border>
+                        </Grid>
+                    </Border>
             <Border Grid.Row="3" Background="White" CornerRadius="0,0,7,7" >
                 <DockPanel LastChildFill="False">
                     <Border BorderThickness="0,0,0,1" BorderBrush="{StaticResource MainColor}" Margin="10,0,10,10" Width="auto" HorizontalAlignment="Left">
