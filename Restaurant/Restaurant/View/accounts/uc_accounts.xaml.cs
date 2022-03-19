@@ -117,6 +117,7 @@ namespace Restaurant.View.accounts
                    FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translate
                    );
             }
+
             // Hint
             List<TextBlock> HintTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
                 .Where(x => x.Name.Contains("Hint") && x.Tag != null).ToList();
@@ -126,6 +127,15 @@ namespace Restaurant.View.accounts
                     item.Text = AppSettings.resourcemanager.GetString(
                    FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translateHint
                    );
+            }
+
+            // enterButton
+            List<TextBlock> enterTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
+                .Where(x => x.Tag != null).ToList();
+            enterTextBlocksList = enterTextBlocksList.Where(x => x.Tag.ToString().Contains("enterButton")).ToList();
+            foreach (var item in enterTextBlocksList)
+            {
+                    item.Text = AppSettings.resourcemanager.GetString("enter");
             }
         }
         private void Btn_posTransfers_Click(object sender, RoutedEventArgs e)

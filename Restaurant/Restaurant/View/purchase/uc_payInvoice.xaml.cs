@@ -242,7 +242,7 @@ namespace Restaurant.View.purchase
                     sp_tax.Visibility = Visibility.Collapsed;
                 setTimer();
                 FillCombo.FillDiscountType(cb_typeDiscount);
-                FillCombo.FillDefaultPayType(cb_paymentProcessType);
+                FillCombo.FillDefaultPayType_cashBalanceCardMultiple(cb_paymentProcessType);
                 await FillCombo.FillComboVendors(cb_vendor);
                 setNotifications();
                 #region Style Date

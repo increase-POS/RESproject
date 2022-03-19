@@ -130,6 +130,15 @@ namespace Restaurant.View.catalog.foods
                    FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translateHint
                    );
             }
+
+            // enterButton
+            List<TextBlock> enterTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
+                .Where(x => x.Tag != null).ToList();
+            enterTextBlocksList = enterTextBlocksList.Where(x => x.Tag.ToString().Contains("enterButton")).ToList();
+            foreach (var item in enterTextBlocksList)
+            {
+                item.Text = AppSettings.resourcemanager.GetString("enter");
+            }
         }
         private void Btn_itemsFoods_Click(object sender, RoutedEventArgs e)
         {

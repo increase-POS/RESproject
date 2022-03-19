@@ -115,10 +115,11 @@ namespace Restaurant.View.settings
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-
+                //btn_tabs_Click(btn_home,null);
                 Keyboard.Focus(tb_name);
                 await Search();
                 Clear();
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)

@@ -122,7 +122,7 @@ namespace Restaurant.View.sectionData.persons
                 await FillCombo.fillCountries(cb_areaMobile);
                 await FillCombo.fillCountries(cb_areaPhone);
                 await FillCombo.fillCountries(cb_areaFax);
-                FillCombo.FillDefaultPayType(cb_payType);
+                FillCombo.FillDefaultPayType_cashBalanceCardMultiple(cb_payType);
                 Keyboard.Focus(tb_code);
                 await RefreshCustomersList();
                 await Search();

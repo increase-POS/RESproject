@@ -53,12 +53,12 @@
                                     <TextBlock Text="Enter"    Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
                                     <!--<TextBlock   Text=">>"    Foreground="White"></TextBlock>-->
                                     <Path  Fill="{StaticResource White}" Stretch="Fill" 
-                              Margin="0 0 -3 02"
-                         VerticalAlignment="Bottom" Height="12.5" Width="10"
+                              Margin="0 0 -3 00"
+                         VerticalAlignment="Center" Height="12.5" Width="10"
                               Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" RenderTransformOrigin="0.5,0.5"/>
                                     <Path  Fill="{StaticResource White}" Stretch="Fill" 
-                              Margin="0 0 0 02"
-                         VerticalAlignment="Bottom" Height="12.5" Width="10"
+                              Margin="0 0 0 00"
+                         VerticalAlignment="Center" Height="12.5" Width="10"
                               Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" RenderTransformOrigin="0.5,0.5"/>
                                 </StackPanel>
                             </Button>
@@ -97,15 +97,15 @@
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  >
                                 <StackPanel    Orientation="Horizontal">
-                                    <TextBlock Text="Enter"    Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
+                                    <TextBlock Text="Enter" Tag="enterButton"   Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
                                     <!--<TextBlock   Text=">>"    Foreground="White"></TextBlock>-->
                                     <Path  Fill="{StaticResource White}" Stretch="Fill" 
-                              Margin="0 0 -3 02"
-                         VerticalAlignment="Bottom" Height="12.5" Width="10"
+                              Margin="0 0 -3 00"
+                         VerticalAlignment="Center" Height="12.5" Width="10"
                               Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" RenderTransformOrigin="0.5,0.5"/>
                                     <Path  Fill="{StaticResource White}" Stretch="Fill" 
-                              Margin="0 0 0 02"
-                         VerticalAlignment="Bottom" Height="12.5" Width="10"
+                              Margin="0 0 0 00"
+                         VerticalAlignment="Center" Height="12.5" Width="10"
                               Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" RenderTransformOrigin="0.5,0.5"/>
                                 </StackPanel>
                             </Button>
@@ -144,15 +144,15 @@
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  >
                                 <StackPanel    Orientation="Horizontal">
-                                    <TextBlock Text="Enter"    Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
+                                    <TextBlock Text="Enter"  Tag="enterButton"  Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
                                     <!--<TextBlock   Text=">>"    Foreground="White"></TextBlock>-->
                                     <Path  Fill="{StaticResource White}" Stretch="Fill" 
-                              Margin="0 0 -3 02"
-                         VerticalAlignment="Bottom" Height="12.5" Width="10"
+                              Margin="0 0 -3 00"
+                         VerticalAlignment="Center" Height="12.5" Width="10"
                               Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" RenderTransformOrigin="0.5,0.5"/>
                                     <Path  Fill="{StaticResource White}" Stretch="Fill" 
-                              Margin="0 0 0 02"
-                         VerticalAlignment="Bottom" Height="12.5" Width="10"
+                              Margin="0 0 0 00"
+                         VerticalAlignment="Center" Height="12.5" Width="10"
                               Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" RenderTransformOrigin="0.5,0.5"/>
                                 </StackPanel>
                             </Button>
@@ -191,17 +191,17 @@
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  >
                                 <StackPanel    Orientation="Horizontal">
-                                    <TextBlock Text="Enter"    Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
+                                    <TextBlock Text="Enter"   Tag="enterButton" Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
                                     <!--<TextBlock   Text=">>"    Foreground="White"></TextBlock>-->
                                     <Path  Fill="{StaticResource White}" Stretch="Fill" 
-                              Margin="0 0 -3 02"
-                         VerticalAlignment="Bottom" Height="12.5" Width="10"
+                              Margin="0 0 -3 00"
+                         VerticalAlignment="Center" Height="12.5" Width="10"
                               Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" RenderTransformOrigin="0.5,0.5"/>
                                     <Path  Fill="{StaticResource White}" Stretch="Fill" 
-                              Margin="0 0 0 02"
-                         VerticalAlignment="Bottom" Height="12.5" Width="10"
+                              Margin="0 0 0 00"
+                         VerticalAlignment="Center" Height="12.5" Width="10"
                               Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" RenderTransformOrigin="0.5,0.5"/>
-                                </StackPanel>
+                                  </StackPanel>
                             </Button>
                         </Grid>
                     </Border>
@@ -238,7 +238,7 @@
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  >
                                 <StackPanel    Orientation="Horizontal">
-                                    <TextBlock Text="Enter"    Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
+                                    <TextBlock Text="Enter"  Tag="enterButton"  Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
                                     --><!--<TextBlock   Text=">>"    Foreground="White"></TextBlock>--><!--
                                     <Path  Fill="{StaticResource White}" Stretch="Fill" 
                               Margin="0 0 -3 02"
@@ -285,17 +285,17 @@
                              Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  >
                                 <StackPanel    Orientation="Horizontal">
-                                    <TextBlock Text="Enter"    Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
+                                    <TextBlock Text="Enter"  Tag="enterButton"  Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
                                     <!--<TextBlock   Text=">>"    Foreground="White"></TextBlock>-->
                                     <Path  Fill="{StaticResource White}" Stretch="Fill" 
-                              Margin="0 0 -3 02"
-                         VerticalAlignment="Bottom" Height="12.5" Width="10"
+                              Margin="0 0 -3 00"
+                         VerticalAlignment="Center" Height="12.5" Width="10"
                               Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" RenderTransformOrigin="0.5,0.5"/>
                                     <Path  Fill="{StaticResource White}" Stretch="Fill" 
-                              Margin="0 0 0 02"
-                         VerticalAlignment="Bottom" Height="12.5" Width="10"
+                              Margin="0 0 0 00"
+                         VerticalAlignment="Center" Height="12.5" Width="10"
                               Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" RenderTransformOrigin="0.5,0.5"/>
-                                </StackPanel>
+                                 </StackPanel>
                             </Button>
                         </Grid>
                     </Border>
