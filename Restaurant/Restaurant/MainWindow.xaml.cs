@@ -175,7 +175,7 @@ namespace Restaurant
             //get tax
             try
             {
-                FillCombo.listObjects = await FillCombo.objectModel.GetAll();
+                FillCombo.objectsList = await FillCombo.RefreshObjects();
             }
             catch
             {
@@ -537,7 +537,7 @@ namespace Restaurant
             {
                 if (FillCombo.groupObject.HasPermission(defaultPath, FillCombo.groupObjects))
                 {
-                    first = FillCombo.objectModel.GetParents(FillCombo.listObjects, defaultPath).FirstOrDefault().name;
+                    first = FillCombo.objectModel.GetParents(FillCombo.objectsList, defaultPath).FirstOrDefault().name;
                     last = defaultPath;
 
                     MainWindow.mainWindow.Btn_purchase_Click(MainWindow.mainWindow.btn_purchase, null);
@@ -1692,7 +1692,7 @@ namespace Restaurant
             //sp_mainPath
             sp_mainPath.Children.Clear();
             List<Object> _listObjects = new List<Object>();
-            _listObjects = FillCombo.objectModel.GetParents(FillCombo.listObjects, tag);
+            _listObjects = FillCombo.objectModel.GetParents(FillCombo.objectsList, tag);
             int counter = 1;
             bool isLast = false;
             foreach (var item in _listObjects)
