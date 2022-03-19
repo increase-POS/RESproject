@@ -95,7 +95,7 @@ namespace Restaurant.View.accounts
                 translate();
                 #endregion
 
-                FillCombo.fillProcessType(cb_paymentProcessType);
+                FillCombo.FillDefaultPayType_cashChequeCard(cb_paymentProcessType);
                 //fillCustomers
                 await subscription.GetAgentToPay();
                 cb_customerId.DisplayMemberPath = "agentName";
@@ -134,7 +134,8 @@ namespace Restaurant.View.accounts
             dg_subscription.Columns[0].Header = AppSettings.resourcemanager.GetString("trTransNumber");
             dg_subscription.Columns[1].Header = AppSettings.resourcemanager.GetString("trCustomer");
             dg_subscription.Columns[2].Header = AppSettings.resourcemanager.GetString("trSubscriptionType");
-            dg_subscription.Columns[3].Header = AppSettings.resourcemanager.GetString("trAmount");
+            dg_subscription.Columns[3].Header = AppSettings.resourcemanager.GetString("trExpireDate");
+            dg_subscription.Columns[4].Header = AppSettings.resourcemanager.GetString("trAmount");
 
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
 
@@ -1098,6 +1099,16 @@ namespace Restaurant.View.accounts
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+
+        private void Chb_all_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Chb_all_Unchecked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
