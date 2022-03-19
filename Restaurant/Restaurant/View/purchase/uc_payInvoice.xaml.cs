@@ -1343,7 +1343,7 @@ namespace Restaurant.View.purchase
             tb_total.Text = "0";
             tb_sum.Text = "0";
             if (AppSettings.tax != 0)
-                tb_taxValue.Text = HelpClass.DecTostring(AppSettings.invoiceTax_decimal);
+                tb_taxValue.Text = HelpClass.PercentageDecTostring(AppSettings.invoiceTax_decimal);
             else
                 tb_taxValue.Text = "0";
 
@@ -1513,53 +1513,9 @@ namespace Restaurant.View.purchase
                     else
                         cmb.IsEnabled = true;
 
-                    TextBlock tb;
-
                     int _datagridSelectedIndex = dg_billDetails.SelectedIndex;
                     int itemUnitId = (int)cmb.SelectedValue;
                     billDetails[_datagridSelectedIndex].itemUnitId = (int)cmb.SelectedValue;
-                    #region Dina
-
-                    //dynamic unit;
-                    //if (FillCombo.itemUnitList == null)
-                    //    await FillCombo.RefreshItemUnit();
-
-                    //unit = new ItemUnit();
-                    //unit = FillCombo.itemUnitList.Find(x => x.itemUnitId == (int)cmb.SelectedValue && x.itemId == billDetails[_datagridSelectedIndex].itemId);
-
-                    //int oldCount = 0;
-                    //long newCount = 0;
-                    //decimal oldPrice = 0;
-                    //decimal itemTax = 0;
-
-                    //decimal newPrice = 0;
-                    //oldCount = billDetails[_datagridSelectedIndex].Count;
-                    //oldPrice = billDetails[_datagridSelectedIndex].Price;
-                    //newCount = oldCount;
-                    //tb = dg_billDetails.Columns[4].GetCellContent(dg_billDetails.Items[_datagridSelectedIndex]) as TextBlock;
-
-                    //newPrice = oldPrice;
-
-                    //tb = dg_billDetails.Columns[5].GetCellContent(dg_billDetails.Items[_datagridSelectedIndex]) as TextBlock;
-                    //tb.Text = newPrice.ToString();
-
-                    //// old total for changed item
-                    //decimal total = oldPrice * oldCount;
-                    //_Sum -= total;
-
-
-                    //// new total for changed item
-                    //total = newCount * newPrice;
-                    //_Sum += total;
-
-                    //refreshTotalValue();
-
-                    //// update item in billdetails           
-                    //billDetails[_datagridSelectedIndex].Count = (int)newCount;
-                    ////billDetails[_datagridSelectedIndex].Price = newPrice;
-                    //billDetails[_datagridSelectedIndex].Total = total;
-                    //refrishBillDetails();
-                    #endregion
                 }
 
             }
@@ -2123,7 +2079,7 @@ namespace Restaurant.View.purchase
                 tb_sum.Text = "0";
 
             if (discountValue != 0)
-                tb_totalDescount.Text = HelpClass.DecTostring(discountValue);
+                tb_totalDescount.Text = HelpClass.PercentageDecTostring(discountValue);
             else
                 tb_totalDescount.Text = "0";
             total = total + taxValue;
@@ -2159,7 +2115,7 @@ namespace Restaurant.View.purchase
             else tb_total.Text = "0";
 
             if ((invoice.tax != 0) && (invoice.tax != null))
-                tb_taxValue.Text = HelpClass.DecTostring(invoice.tax);
+                tb_taxValue.Text = HelpClass.PercentageDecTostring(invoice.tax);
             else
                 tb_taxValue.Text = "0";
             tb_notes.Text = invoice.notes;
@@ -2169,7 +2125,7 @@ namespace Restaurant.View.purchase
             else tb_sum.Text = "0";
 
             if ((invoice.discountValue != 0) && (invoice.discountValue != null))
-                tb_discount.Text = HelpClass.DecTostring(invoice.discountValue);
+                tb_discount.Text = HelpClass.PercentageDecTostring(invoice.discountValue);
             else
                 tb_discount.Text = "0";
             if (invoice.discountType == "1")
@@ -2407,7 +2363,7 @@ namespace Restaurant.View.purchase
             tb_total.Text = "0";
             tb_sum.Text = "0";
             if (AppSettings.tax != 0)
-                tb_taxValue.Text = HelpClass.DecTostring(AppSettings.tax);
+                tb_taxValue.Text = HelpClass.PercentageDecTostring(AppSettings.tax);
             else
                 tb_taxValue.Text = "0";
 

@@ -291,7 +291,7 @@ namespace Restaurant.View.windows
         {
             if (manualDiscount != 0)
             {
-                tb_discountValue.Text = manualDiscount.ToString();
+                tb_discountValue.Text = HelpClass.PercentageDecTostring( manualDiscount);
                 cb_discountType.SelectedValue = discountType;
             }
             foreach (var coupon in selectedCopouns)
