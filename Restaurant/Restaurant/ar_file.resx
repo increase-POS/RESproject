@@ -3586,4 +3586,7 @@
   <data name="trPreparing" xml:space="preserve">
     <value>قيد التحضير</value>
   </data>
+  <data name="enter" xml:space="preserve">
+    <value>دخول</value>
+  </data>
 </root>

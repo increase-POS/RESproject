@@ -3610,4 +3610,7 @@ Please add Email in setting</value>
   <data name="trPreparing" xml:space="preserve">
     <value>Preparing</value>
   </data>
+  <data name="enter" xml:space="preserve">
+    <value>Enter</value>
+  </data>
 </root>
