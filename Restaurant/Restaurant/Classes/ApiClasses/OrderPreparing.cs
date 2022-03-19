@@ -56,7 +56,8 @@ namespace Restaurant.Classes.ApiClasses
         public string status { get; set; }
         public int num { get; set; }
         public decimal remainingTime { get; set; }
-        public string invNum_Tables { get; set; }
+        public string invNum{ get; set; }
+        public string tables { get; set; }
         public List<ItemOrderPreparing> items { get; set; }
 
         //-------------------------------------------
@@ -102,6 +103,24 @@ namespace Restaurant.Classes.ApiClasses
             myContent = JsonConvert.SerializeObject(orderItems);
             parameters.Add("itemsObject", myContent);
             myContent = JsonConvert.SerializeObject(statusObject);
+            parameters.Add("statusObject", myContent);
+            return await APIResult.post(method, parameters);
+        }
+        public async Task<int> editPreparingOrderAndStatus(OrderPreparing order, orderPreparingStatus statusObject)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "OrderPreparing/EditOrderAndStatus";
+            var myContent = JsonConvert.SerializeObject(order);
+            parameters.Add("orderObject", myContent);
+            myContent = JsonConvert.SerializeObject(statusObject);
+            parameters.Add("statusObject", myContent);
+            return await APIResult.post(method, parameters);
+        }
+        public async Task<int> updateOrderStatus(orderPreparingStatus statusObject)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "OrderPreparing/updateOrderStatus";
+            string myContent = JsonConvert.SerializeObject(statusObject);
             parameters.Add("statusObject", myContent);
             return await APIResult.post(method, parameters);
         }

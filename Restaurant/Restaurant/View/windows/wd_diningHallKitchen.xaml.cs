@@ -28,7 +28,7 @@ namespace Restaurant.View.windows
     {
         string kitchenPermission = "saleInvoice_invoice";
         public static List<string> requiredControlList;
-        public ObservableCollection<BillDetailsSales> invoiceItemsList = new ObservableCollection<BillDetailsSales>();
+        public List<BillDetailsSales> invoiceItemsList = new List<BillDetailsSales>();
         public int invoiceId;
 
 
@@ -125,11 +125,15 @@ namespace Restaurant.View.windows
                 int remainingCount = b.Count - itemCountInOrder;
                 if (remainingCount > 0)
                 {
-                    b.index = index;
+                    BillDetailsSales newBillRow = new BillDetailsSales()
+                    {
+                        itemUnitId = b.itemUnitId,
+                        itemName = b.itemName,
+                        index = index,
+                        Count = remainingCount,
+                    };
                     index++;
-
-                    b.Count = remainingCount;
-                    unSentInvoiceItems.Add(b);
+                    unSentInvoiceItems.Add(newBillRow);
                 }              
             }
             dg_invoiceItems.ItemsSource = unSentInvoiceItems;
@@ -161,11 +165,7 @@ namespace Restaurant.View.windows
                     invoiceRow = dg_invoiceItems.SelectedItem as BillDetailsSales;
                     this.DataContext = invoiceRow;
 
-                    int itemCountInOrder = 0;
-                    try { itemCountInOrder = orders.Where(x => x.itemUnitId == invoiceRow.itemUnitId).Sum(x => x.quantity); }
-                    catch { }
-                    int count = invoiceRow.Count - itemCountInOrder;
-                    tb_count.Text = count.ToString();
+                    tb_count.Text = invoiceRow.Count.ToString();
 
                     #region enable button
                     btn_send.IsEnabled = true;
@@ -242,13 +242,9 @@ namespace Restaurant.View.windows
                 if(tb_count.Text != "")
                     count = int.Parse(tb_count.Text);
 
-                int itemCountInOrder = 0;
-                try { itemCountInOrder = orders.Where(x => x.itemUnitId == invoiceRow.itemUnitId).Sum(x => x.quantity); }
-                catch { }
-
-                if(count > invoiceRow.Count - itemCountInOrder)
+                if(count > invoiceRow.Count )
                 {
-                    tb_count.Text = (invoiceRow.Count - itemCountInOrder).ToString();
+                    tb_count.Text = invoiceRow.Count.ToString();
                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trExceedCount"), animation: ToasterAnimation.FadeIn);
                 }
             }

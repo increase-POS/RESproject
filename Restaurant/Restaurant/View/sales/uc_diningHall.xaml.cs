@@ -1226,6 +1226,7 @@ namespace Restaurant.View.sales
 
             #region invoice items
             invoiceItems = await FillCombo.invoice.GetInvoicesItems(invoice.invoiceId);
+            billDetailsList = new ObservableCollection<BillDetailsSales>();
             foreach(ItemTransfer it in invoiceItems)
             {
                 item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
@@ -1362,7 +1363,7 @@ namespace Restaurant.View.sales
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_diningHallKitchen w = new wd_diningHallKitchen();
 
-                    w.invoiceItemsList = billDetailsList;
+                    w.invoiceItemsList = billDetailsList.ToList();
                     w.invoiceId = invoice.invoiceId;
                     w.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;

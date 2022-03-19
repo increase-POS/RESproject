@@ -90,7 +90,7 @@ namespace Restaurant.View.kitchen
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "" };
+                requiredControlList = new List<string> { "preparingTime" };
                 if (AppSettings.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -161,8 +161,7 @@ namespace Restaurant.View.kitchen
         #region loading
         async Task refreshPreparingOrders()
         {
-            string status = "Listed, Cooking, Cooked";
-            orders = await preparingOrder.GetPreparingOrdersWithStatus(MainWindow.branchLogin.branchId,status);
+            orders = await preparingOrder.GetPreparingOrdersWithStatus(MainWindow.branchLogin.branchId,"");
             dg_orders.ItemsSource = orders;
         }
         #endregion
@@ -174,8 +173,10 @@ namespace Restaurant.View.kitchen
                 HelpClass.StartAwait(grid_main);
                 if (FillCombo.groupObject.HasPermissionAction(updatePermission, FillCombo.groupObjects, "add"))
                 {
-
-                    await saveOrderPreparing();
+                    if (HelpClass.validate(requiredControlList, this))
+                    {
+                        await saveOrderPreparing();
+                    }
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -190,29 +191,47 @@ namespace Restaurant.View.kitchen
             }
         }
         async Task saveOrderPreparing()
-        {
-            #region preparing order object
-            preparingOrder.preparingTime = decimal.Parse(tb_preparingTime.Text);
-            preparingOrder.notes = tb_notes.Text;
-            #endregion
+        {          
             #region order status object
-            orderPreparingStatus statusObject = new orderPreparingStatus();
-            statusObject.status = "Preparing";
+            orderPreparingStatus statusObject = new orderPreparingStatus();           
             statusObject.notes = tb_notes.Text;
             statusObject.createUserId = MainWindow.userLogin.userId;
             #endregion
 
-            //int res = await preparingOrder.savePreparingOrder(preparingOrder, orderItems, statusObject);
-            //if (res > 0)
-            //{
-            //    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+            int res = 0;
+            switch (preparingOrder.status)
+            {
+                case "Listed":
+                    #region preparing order object
+                    preparingOrder.preparingTime = decimal.Parse(tb_preparingTime.Text);
+                    preparingOrder.notes = tb_notes.Text;
+                    #endregion
+                    statusObject.status = "Preparing";
 
-            //    clear();
-            //    await refreshPreparingOrders();
+                    res = await preparingOrder.editPreparingOrderAndStatus(preparingOrder,statusObject);
+                    break;
+                case "Preparing":
+                    statusObject.status = "Ready";
 
-            //}
-            //else
-            //    Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    res = await preparingOrder.updateOrderStatus(statusObject);
+                    break;
+                case "Ready":
+                    statusObject.status = "Collected";
+
+                    res = await preparingOrder.updateOrderStatus(statusObject);
+                    break;
+            }
+
+            if (res > 0)
+            {
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+                clear();
+                await refreshPreparingOrders();
+
+            }
+            else
+                Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
         }
 
         private void clear()
@@ -220,6 +239,7 @@ namespace Restaurant.View.kitchen
             preparingOrder = new OrderPreparing();
             this.DataContext = preparingOrder;
             dg_orders.SelectedIndex = -1;
+            itemsList = new List<ItemOrderPreparing>();
 
             btn_save.IsEnabled = false;
         }
@@ -274,6 +294,8 @@ namespace Restaurant.View.kitchen
 
                     itemsList = preparingOrder.items;
                     BuildOrderItemsDesign();
+
+                    inputEditable(preparingOrder.status);
 
                     btn_save.IsEnabled = true;
 
@@ -722,6 +744,29 @@ namespace Restaurant.View.kitchen
 
         #endregion
 
-       
+        #region inputEditable
+        private void inputEditable(string status)
+        {
+            switch(status)
+            {
+                case "Listed":
+                    gd_preparingTime.Visibility = Visibility.Visible;
+                    btn_save.IsEnabled = true;
+                    break;
+                case "Preparing":
+                    gd_preparingTime.Visibility = Visibility.Collapsed;
+                    btn_save.IsEnabled = true;
+                    break;
+                case "Ready":
+                    gd_preparingTime.Visibility = Visibility.Collapsed;
+                    btn_save.IsEnabled = true;
+                    break;
+                case "Collected":
+                    gd_preparingTime.Visibility = Visibility.Collapsed;
+                    btn_save.IsEnabled = false;
+                    break;
+            }
+        }
+        #endregion
     }
 }

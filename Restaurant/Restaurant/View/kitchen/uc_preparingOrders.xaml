@@ -191,7 +191,7 @@
                                         </MultiBinding>
                                     </DataGridTextColumn.Binding>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Width="*"  Header="remaining time" Binding="{Binding Path=remainingTime}"/>
+                                <DataGridTextColumn Width="*"  Header="remaining time" Binding="{Binding Path=remainingTime, Converter={StaticResource accuracyConverter}}"/>
                                 <DataGridTextColumn Width="*"  Header="status" Binding="{Binding Path=status,Converter={StaticResource preparingOrderStatusConverter }}"/>
                                 <DataGridTextColumn Width="*"  Header="notes" Binding="{Binding Path=notes}"/>
                             </DataGrid.Columns>
@@ -395,12 +395,13 @@
                         <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
                     </DockPanel>
 
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1" Name="gd_preparingTime">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-                    <Border Grid.Row="1"  CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                    <Border Grid.Row="1"  CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" 
+                         BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                             <TextBox Margin="4,0" x:Name="tb_preparingTime"  
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  

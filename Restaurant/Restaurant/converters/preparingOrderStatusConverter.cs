@@ -13,7 +13,6 @@ namespace Restaurant.converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string s = value as string;
             switch (value)
             {
                 case "Listed": return AppSettings.resourcemanager.GetString("trListed");
