@@ -70,12 +70,14 @@ namespace Restaurant.View.windows
                 #endregion
 
                 #region translate
+                AppSettings.lang = "ar";
                 if (AppSettings.lang.Equals("en"))
                 {
                     AppSettings.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                     //bdr_imageAr.Visibility = Visibility.Hidden;
                     //bdr_image.Visibility = Visibility.Visible;
+                    bdr_image.CornerRadius = new CornerRadius(0, 10, 10, 0);
                 }
                 else
                 {
@@ -83,6 +85,7 @@ namespace Restaurant.View.windows
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                     //bdr_imageAr.Visibility = Visibility.Visible;
                     //bdr_image.Visibility = Visibility.Hidden;
+                    bdr_image.CornerRadius = new CornerRadius(10, 0, 0, 10);
                 }
                 translate();
                 #endregion

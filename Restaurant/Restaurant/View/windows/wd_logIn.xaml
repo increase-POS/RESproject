@@ -49,7 +49,7 @@
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
 
                 <Image FlowDirection="LeftToRight" Source="/pic/increase-logo100.png"   Margin="0,0,0,0" Width="110" Height="110"/>
@@ -130,15 +130,17 @@
                 <Grid Grid.Row="4"  Margin="10,5,10,5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" x:Name="btnLogIn" Background="{StaticResource MainColor}" Foreground="White" Margin="0,9,10,9" Click="btnLogIn_Click" 
-                                IsDefault="True"  materialDesign:ButtonAssist.CornerRadius="7"  BorderThickness="0" HorizontalAlignment="Right" Width="100">
-                        <StackPanel Orientation="Horizontal">
+                    <Button Grid.Column="0" x:Name="btnLogIn" Background="{StaticResource MainColor}" Foreground="White"
+                            Margin="0,0,5,0" Click="btnLogIn_Click" Width="auto"
+                                IsDefault="True"  materialDesign:ButtonAssist.CornerRadius="7" 
+                            BorderThickness="0" Padding="0" >
+                        <StackPanel Orientation="Horizontal" >
                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0">
                                         <materialDesign:PackIcon FlowDirection="LeftToRight" Kind="Login"></materialDesign:PackIcon>
                             </TextBlock>
-                            <TextBlock x:Name="txt_logIn" Text="Log In"></TextBlock>
+                            <TextBlock x:Name="txt_logIn" Text="Log in"/>
                         </StackPanel>
                     </Button>
                     <Button Grid.Column="1"  x:Name="btnClose" Background="{StaticResource MainColor}" Foreground="White" Click="btnClose_Click"  
