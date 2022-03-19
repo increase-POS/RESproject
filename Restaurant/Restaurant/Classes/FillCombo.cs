@@ -16,13 +16,13 @@ namespace Restaurant.Classes
         #region  Object
         static public Object objectModel = new Object();
         static public List<Object> objectsList;
-        static public async Task<IEnumerable<Object>> RefreshObjects()
+        static public async Task<List<Object>> RefreshObjects()
         {
             objectsList = await objectModel.GetAll();
             return objectsList;
         }
 
-        static public List<Object> listObjects = new List<Object>();
+        //static public List<Object> listObjects = new List<Object>();
         static public GroupObject groupObject = new GroupObject();
         static public List<GroupObject> groupObjects = new List<GroupObject>();
         #endregion
@@ -142,8 +142,9 @@ namespace Restaurant.Classes
             cmb.SelectedIndex = -1;
         }
         #endregion
-        #region PayType
-        static public void FillDefaultPayType(ComboBox cmb)
+        #region fill process type PayType
+      
+        static public void FillDefaultPayType_cashBalanceCardMultiple(ComboBox cmb)
         {
             #region fill process type
             var typelist = new[] {
@@ -159,6 +160,17 @@ namespace Restaurant.Classes
             cmb.ItemsSource = typelist;
             cmb.SelectedIndex = 0;
             #endregion
+        }
+        static public void FillDefaultPayType_cashChequeCard(ComboBox cmb)
+        {
+            var typelist = new[] {
+                new { Text = AppSettings.resourcemanager.GetString("trCash")       , Value = "cash" },
+                new { Text = AppSettings.resourcemanager.GetString("trCheque")     , Value = "cheque" },
+                new { Text = AppSettings.resourcemanager.GetString("trAnotherPaymentMethods") , Value = "card" },
+                 };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = typelist;
         }
         #endregion
         #region job
@@ -379,6 +391,7 @@ namespace Restaurant.Classes
             cmb.ItemsSource = typelist;
         }
         #endregion
+        
         #region Countries
         /// <summary>
         /// area code methods
