@@ -41,14 +41,19 @@
             <converters:closingDescriptonConverter x:Key="closingDescriptonConverter"/>
             <converters:translateConverter x:Key="translateConverter"/>
             <converters:preparingOrderStatusConverter x:Key="preparingOrderStatusConverter"/>
+            
+
 
             <!--#region Fonts-->
             <FontFamily x:Key="BarcodeFont" >IDAHC39M Code 39 Barcode, /Restaurant;component/fonts/#IDAHC39M Code 39 Barcode, Arial</FontFamily>
             <FontFamily x:Key="Font-cairo-light" >cairo light, /Restaurant;component/fonts/cairo-font/#cairo light, Arial</FontFamily>
             <FontFamily x:Key="Font-cairo-bold" >cairo bold , /Restaurant;component/fonts/cairo-font/#cairo bold, Arial</FontFamily>
+            <FontFamily x:Key="Font-cairo-regular" >Cairo, /POS;component/fonts/cairo-font/#Cairo Regular 400, Arial</FontFamily>
             <!--#endregion-->
 
-
+            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                <Setter Property="FontFamily" Value="{StaticResource Font-cairo-regular}"/>
+            </Style>
 
             <!--#region  DataGrid-->
             <!--<Style TargetType="DataGridRow">
