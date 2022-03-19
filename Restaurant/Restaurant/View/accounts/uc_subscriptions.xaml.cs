@@ -1,4 +1,6 @@
-﻿using netoaster;
+﻿using Microsoft.Reporting.WinForms;
+using Microsoft.Win32;
+using netoaster;
 using Restaurant.Classes;
 using System;
 using System.Collections.Generic;
@@ -31,20 +33,18 @@ namespace Restaurant.View.accounts
             try
             {
                 InitializeComponent();
-              
-
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         private static uc_subscriptions _instance;
         public static uc_subscriptions Instance
         {
             get
             {
-                //if (_instance == null)
                 if(_instance is null)
                     _instance = new uc_subscriptions();
                 return _instance;
@@ -55,13 +55,20 @@ namespace Restaurant.View.accounts
             }
         }
 
+        IEnumerable<AgentMembershipCash> subscriptions;
+        IEnumerable<AgentMembershipCash> subscriptionsQuery;
+        //IEnumerable<SubscriptionFees> subscriptionsQueryExcel;
+        //CashTransfer cashModel = new CashTransfer();
+        AgentMembershipCash subscription = new AgentMembershipCash();
+        string searchText = "";
+        byte tgl_subscriptionState;
+        ReportCls reportclass = new ReportCls();
+        LocalReport rep = new LocalReport();
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+
         string createPermission = "subscriptions_create";
         string reportsPermission = "subscriptions_reports";
-        //Agent agent = new Agent();
-        //IEnumerable<Agent> agentsQuery;
-        //IEnumerable<Agent> agents;
-        //byte tgl_agentState;
-        //string searchText = "";
+
         public static List<string> requiredControlList;
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -73,7 +80,10 @@ namespace Restaurant.View.accounts
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "name", "mobile" };
+
+                requiredControlList = new List<string> { "transNum", "customerId" , "monthsCount" , "amount" , "paymentProcessType" };
+                //transNum   customerName   monthsCount   paymentProcessType    subscriptionType
+                #region translate
                 if (AppSettings.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -83,18 +93,26 @@ namespace Restaurant.View.accounts
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
+                #endregion
+
+                FillCombo.fillProcessType(cb_paymentProcessType);
+                //fillCustomers
+                await subscription.GetAgentToPay();
+                cb_customerId.DisplayMemberPath = "agentName";
+                cb_customerId.SelectedValuePath = "agentId";
+                cb_customerId.SelectedIndex = -1;
 
                 Keyboard.Focus(cb_customerId);
-                /*
-                await RefreshCustomersList();
+
+                await RefreshSubscriptionsList();
                 await Search();
-                */
+
                 Clear();
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -102,25 +120,32 @@ namespace Restaurant.View.accounts
 
         private void translate()
         {
-            //txt_title.Text = AppSettings.resourcemanager.GetString("trCustomer");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trSubscription");
+            txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
-            txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_transNum, AppSettings.resourcemanager.GetString("trTransNumberHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customerId, AppSettings.resourcemanager.GetString("trCustomerHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trMonthCount")+"...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_amount, AppSettings.resourcemanager.GetString("trAmountHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_paymentProcessType, AppSettings.resourcemanager.GetString("trPaymentProcessType"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
-          
 
+            dg_subscription.Columns[0].Header = AppSettings.resourcemanager.GetString("trTransNumber");
+            dg_subscription.Columns[1].Header = AppSettings.resourcemanager.GetString("trCustomer");
+            dg_subscription.Columns[2].Header = AppSettings.resourcemanager.GetString("trSubscriptionType");
+            dg_subscription.Columns[3].Header = AppSettings.resourcemanager.GetString("trAmount");
 
-            //dg_subscription.Columns[0].Header = AppSettings.resourcemanager.GetString("trCode");
-            //dg_subscription.Columns[1].Header = AppSettings.resourcemanager.GetString("trName");
-            //dg_subscription.Columns[2].Header = AppSettings.resourcemanager.GetString("trCompany");
-            //dg_subscription.Columns[3].Header = AppSettings.resourcemanager.GetString("trMobile");
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
 
             tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
+
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
         }
+
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//add
@@ -296,7 +321,6 @@ namespace Restaurant.View.accounts
                                         Window.GetWindow(this).Opacity = 0.2;
                                         wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                                         w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
-                    // w.ShowInTaskbar = false;
                                         w.ShowDialog();
                                         Window.GetWindow(this).Opacity = 1;
                                         #endregion
@@ -312,7 +336,6 @@ namespace Restaurant.View.accounts
                                             w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
                                         if (!agent.canDelete)
                                             w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
-                    // w.ShowInTaskbar = false;
                                         w.ShowDialog();
                                         Window.GetWindow(this).Opacity = 1;
                                         #endregion
@@ -365,16 +388,17 @@ namespace Restaurant.View.accounts
                      */
         }
         #endregion
+
         #region events
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
-        {
+        {//search
             try
             {
-                /*
+
                 HelpClass.StartAwait(grid_main);
                 await Search();
                 HelpClass.EndAwait(grid_main);
-                */
+
             }
             catch (Exception ex)
             {
@@ -386,14 +410,14 @@ namespace Restaurant.View.accounts
         {
             try
             {
-                /*
                 HelpClass.StartAwait(grid_main);
-                if (agents is null)
-                    await RefreshCustomersList();
-                tgl_agentState = 1;
+
+                if (subscriptions is null)
+                    await RefreshSubscriptionsList();
+                tgl_subscriptionState = 1;
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
@@ -405,14 +429,14 @@ namespace Restaurant.View.accounts
         {
             try
             {
-                /*
                 HelpClass.StartAwait(grid_main);
-                if (agents is null)
-                    await RefreshCustomersList();
-                tgl_agentState = 0;
+
+                if (subscriptions is null)
+                    await RefreshSubscriptionsList();
+                tgl_subscriptionState = 0;
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
@@ -437,33 +461,19 @@ namespace Restaurant.View.accounts
             }
         }
         private async void Dg_subscription_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            /*
+        {//selection
             try
             {
                 HelpClass.StartAwait(grid_main);
-                //selection
-                if (dg_agent.SelectedIndex != -1)
+         
+                if (dg_subscription.SelectedIndex != -1)
                 {
-                    agent = dg_agent.SelectedItem as Agent;
-                    this.DataContext = agent;
-                    if (agent != null)
+                    subscription = dg_subscription.SelectedItem as AgentMembershipCash;
+                    this.DataContext = subscription;
+                    if (subscription != null)
                     {
-                        await getImg();
-                        #region delete
-                        if (agent.canDelete)
-                            btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
-                        else
-                        {
-                            if (agent.isActive == 0)
-                                btn_delete.Content = AppSettings.resourcemanager.GetString("trActive");
-                            else
-                                btn_delete.Content = AppSettings.resourcemanager.GetString("trInActive");
-                        }
-                        #endregion
-                        HelpClass.getMobile(agent.mobile, cb_areaMobile, tb_mobile);
-                        HelpClass.getPhone(agent.phone, cb_areaPhone, cb_areaPhoneLocal, tb_phone);
-                        HelpClass.getPhone(agent.fax, cb_areaFax, cb_areaFaxLocal, tb_fax);
+                        //subscriptionType
+                        //{ traslate + hide monthCount }
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
@@ -474,18 +484,19 @@ namespace Restaurant.View.accounts
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
+        {//refresh
             try
-            {//refresh
-                /*
+            {
                 HelpClass.StartAwait(grid_main);
-                await RefreshCustomersList();
+
+                tb_search.Text = "";
+                searchText = "";
+                await RefreshSubscriptionsList();
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
-                */
             }
             catch (Exception ex)
             {
@@ -495,32 +506,40 @@ namespace Restaurant.View.accounts
             }
         }
         #endregion
+
         #region Refresh & Search
-        /*
         async Task Search()
         {
-            //search
-            if (agents is null)
-                await RefreshCustomersList();
+            if (subscriptions is null)
+                await RefreshSubscriptionsList();
+
             searchText = tb_search.Text.ToLower();
-            agentsQuery = agents.Where(s => (s.code.ToLower().Contains(searchText) ||
-            s.name.ToLower().Contains(searchText) ||
-            s.mobile.ToLower().Contains(searchText)
-            ) && s.isActive == tgl_agentState);
+
+            subscriptionsQuery = subscriptions;
+            //    .Where(s => 
+            //(
+            //s.code.ToLower().Contains(searchText) ||
+            //s.name.ToLower().Contains(searchText) ||
+            //s.mobile.ToLower().Contains(searchText)
+            //) 
+            //&& 
+            //s.isActive == tgl_isActive);
+
             RefreshCustomersView();
         }
-        async Task<IEnumerable<Agent>> RefreshCustomersList()
+        async Task<IEnumerable<AgentMembershipCash>> RefreshSubscriptionsList()
         {
-            agents = await agent.Get("c");
-            return agents;
+            subscriptions = await subscription.GetAll();
+            //subscriptions = subscriptions.Where(s => s.subscriptionType != "o");
+            return subscriptions;
         }
         void RefreshCustomersView()
         {
-            dg_agent.ItemsSource = agentsQuery;
-            txt_count.Text = agentsQuery.Count().ToString();
+            dg_subscription.ItemsSource = subscriptionsQuery;
+            txt_count.Text = subscriptionsQuery.Count().ToString();
         }
-        */
         #endregion
+
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
@@ -531,12 +550,9 @@ namespace Restaurant.View.accounts
         string input;
         decimal _decimal = 0;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
+        {//only  digits
             try
             {
-
-
-                //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
                 if (textBox.Tag.ToString() == "int")
@@ -548,7 +564,6 @@ namespace Restaurant.View.accounts
                 {
                     input = e.Text;
                     e.Handled = !decimal.TryParse(textBox.Text + input, out _decimal);
-
                 }
             }
             catch (Exception ex)
@@ -606,6 +621,7 @@ namespace Restaurant.View.accounts
         }
 
         #endregion
+
         #region report
         /*
         // report
@@ -733,7 +749,6 @@ namespace Restaurant.View.accounts
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
                     win_lvcCatalog win = new win_lvcCatalog(itemsQuery, 3);
-                    // // w.ShowInTaskbar = false;
                     win.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
                     #endregion
@@ -772,7 +787,6 @@ namespace Restaurant.View.accounts
                     w.pdfPath = pdfpath;
                     if (!string.IsNullOrEmpty(w.pdfPath))
                     {
-                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
                         w.wb_pdfWebViewer.Dispose();
                     }
@@ -836,6 +850,7 @@ namespace Restaurant.View.accounts
         }
         */
         #endregion
+
         #region barcode
         /*List<ItemUnit> barcodesList;
         static private int _InternalCounter = 0;
