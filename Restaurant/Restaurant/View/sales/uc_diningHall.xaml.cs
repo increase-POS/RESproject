@@ -985,7 +985,8 @@ namespace Restaurant.View.sales
                 }
                 #endregion
                 totalDiscount = couponsDiscount + _ManualDiscount;
-                tb_totalDiscount.Text = totalDiscount.ToString();
+                //tb_totalDiscount.Text = totalDiscount.ToString();
+                tb_totalDiscount.Text = HelpClass.PercentageDecTostring(totalDiscount);
             }
 
             total = _Sum - totalDiscount;
@@ -994,7 +995,7 @@ namespace Restaurant.View.sales
                 txt_totalDiscount.Visibility = Visibility.Visible;
                 tb_totalDiscount.Visibility = Visibility.Visible;
                 tb_moneyIconDis.Visibility = Visibility.Visible;
-                tb_totalDiscount.Text = totalDiscount.ToString();
+                //tb_totalDiscount.Text = totalDiscount.ToString();
             }
             else
             {
@@ -1218,7 +1219,7 @@ namespace Restaurant.View.sales
             else tb_total.Text = "0";
 
             if (invoice.tax != 0) 
-                tb_tax.Text = HelpClass.DecTostring(invoice.tax);
+                tb_tax.Text = HelpClass.PercentageDecTostring(invoice.tax);
             else
                 tb_tax.Text = "0";
             #endregion
@@ -1265,7 +1266,7 @@ namespace Restaurant.View.sales
                 {
                     // هي واجهة الدفعات
                     wd_multiplePayment w = new wd_multiplePayment();
-                    w.ShowInTaskbar = false;
+                    // w.ShowInTaskbar = false;
                     w.ShowDialog();
 
                     if (selectedTables.Count == 0)

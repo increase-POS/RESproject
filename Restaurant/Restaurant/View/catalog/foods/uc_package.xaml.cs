@@ -355,6 +355,7 @@ namespace Restaurant.View.catalog.foods
                             Window.GetWindow(this).Opacity = 0.2;
                             wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                             w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
+                    // w.ShowInTaskbar = false;
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
@@ -373,6 +374,7 @@ namespace Restaurant.View.catalog.foods
                                 w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
                             if (!item.canDelete)
                                 w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
+                    // w.ShowInTaskbar = false;
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
@@ -926,6 +928,7 @@ namespace Restaurant.View.catalog.foods
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
                     win_lvcCatalog win = new win_lvcCatalog(itemsQuery, 3);
+                    // // w.ShowInTaskbar = false;
                     win.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
                     #endregion
@@ -964,6 +967,7 @@ namespace Restaurant.View.catalog.foods
                     w.pdfPath = pdfpath;
                     if (!string.IsNullOrEmpty(w.pdfPath))
                     {
+                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
                         w.wb_pdfWebViewer.Dispose();
                     }
@@ -1477,6 +1481,7 @@ namespace Restaurant.View.catalog.foods
                         w.itemId = item.itemId;
                         w.itemUnitId = itemUnitId;
                         w.CallerName = "package";
+                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
                         if(w.DialogResult == true)
                             await package.UpdatePackByParentId(itemUnitId, w.allPackages, MainWindow.userLogin.userId);

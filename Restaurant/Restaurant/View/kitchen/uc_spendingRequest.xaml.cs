@@ -34,7 +34,7 @@ namespace Restaurant.View.kitchen
     public partial class uc_spendingRequest : UserControl
     {
         string createPermission = "spendingRequest_create";
-        string reportsPermission = "spendingRequest_reports";
+        string reportsPermission = "spendingRequest_report";
         string returnPermission = "spendingRequest_return";
         private static uc_spendingRequest _instance;
         public static uc_spendingRequest Instance
@@ -63,7 +63,6 @@ namespace Restaurant.View.kitchen
             }
         }
         
-        string spendRequestPermission = "spendRequest_invoice";
         ObservableCollection<BillDetailsPurchase> billDetails = new ObservableCollection<BillDetailsPurchase>();
         public static bool archived = false;
         public static bool isFromReport = false;
@@ -121,6 +120,7 @@ namespace Restaurant.View.kitchen
                     MainWindow.mainWindow.Opacity = 0.2;
                     wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                     w.contentText = AppSettings.resourcemanager.GetString("trSaveOrderNotification");
+                    // w.ShowInTaskbar = false;
                     w.ShowDialog(); 
                     MainWindow.mainWindow.Opacity = 1;
                     #endregion
@@ -513,7 +513,7 @@ namespace Restaurant.View.kitchen
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(spendRequestPermission, FillCombo.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one"))
                 {                  
                     if (HelpClass.validate(requiredControlList, this))
                     {
@@ -741,6 +741,7 @@ namespace Restaurant.View.kitchen
                         w.pdfPath = pdfpath;
                         if (!string.IsNullOrEmpty(w.pdfPath))
                         {
+                    // w.ShowInTaskbar = false;
                             w.ShowDialog();
                             w.wb_pdfWebViewer.Dispose();
                         }
@@ -1021,6 +1022,7 @@ namespace Restaurant.View.kitchen
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_purchaseItems w = new wd_purchaseItems();
 
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 if (w.isActive)
                 {

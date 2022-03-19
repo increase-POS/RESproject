@@ -353,6 +353,7 @@ namespace Restaurant.View.catalog.rawMaterials
                             Window.GetWindow(this).Opacity = 0.2;
                             wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                             w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
+                    // w.ShowInTaskbar = false;
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
@@ -371,6 +372,7 @@ namespace Restaurant.View.catalog.rawMaterials
                                 w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
                             if (!item.canDelete)
                                 w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
+                    // w.ShowInTaskbar = false;
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
@@ -917,6 +919,7 @@ namespace Restaurant.View.catalog.rawMaterials
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
                     win_lvcCatalog win = new win_lvcCatalog(itemsQuery, 3);
+                    // // w.ShowInTaskbar = false;
                     win.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
                     #endregion
@@ -955,6 +958,7 @@ namespace Restaurant.View.catalog.rawMaterials
                     w.pdfPath = pdfpath;
                     if (!string.IsNullOrEmpty(w.pdfPath))
                     {
+                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
                         w.wb_pdfWebViewer.Dispose();
                     }
@@ -1314,6 +1318,7 @@ namespace Restaurant.View.catalog.rawMaterials
                     wd_units w = new wd_units();
                     w.item = item;
                     //w.units = units;
+                    // w.ShowInTaskbar = false;
                     w.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
                 }

@@ -153,10 +153,8 @@ namespace Restaurant
                 windowFlowDirection();
                 
             }
-            catch (Exception ex)
-            {
-                //HelpClass.ExceptionMessage(ex, this);
-            }
+            catch
+            { }
 
         }
 
@@ -164,13 +162,9 @@ namespace Restaurant
         {
             #region translate
             if (AppSettings.lang.Equals("en"))
-            {
                 grid_mainWindow.FlowDirection = FlowDirection.LeftToRight;
-            }
             else
-            {
                 grid_mainWindow.FlowDirection = FlowDirection.RightToLeft;
-            }
             #endregion
         }
 
@@ -405,7 +399,7 @@ namespace Restaurant
         {//load
             try
             {
-                    HelpClass.StartAwait(grid_mainWindow);
+                    HelpClass.StartAwait(grid_mainWindow , "mainWindow_loaded");
                 #region bonni
 #pragma warning disable CS0436 // Type conflicts with imported type
                 TabTipAutomation.IgnoreHardwareKeyboard = HardwareKeyboardIgnoreOptions.IgnoreAll;
@@ -519,7 +513,7 @@ namespace Restaurant
                 //SetNotificationsLocation();
 
 
-                HelpClass.EndAwait(grid_mainWindow);
+                HelpClass.EndAwait(grid_mainWindow, "mainWindow_loaded");
             }
             catch (Exception ex)
             {
@@ -1347,6 +1341,7 @@ namespace Restaurant
 
                 //Window.GetWindow(this).Opacity = 0.2;
                 //wd_changePassword w = new wd_changePassword();
+                    //// w.ShowInTaskbar = false;
                 //w.ShowDialog();
                 //Window.GetWindow(this).Opacity = 1;
 
@@ -1364,6 +1359,7 @@ namespace Restaurant
             {
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_info w = new wd_info();
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
             }
@@ -1548,6 +1544,7 @@ namespace Restaurant
             Window.GetWindow(this).Opacity = 0.2;
             wd_notifications w = new wd_notifications();
             w.notifications = notifications;
+                    // w.ShowInTaskbar = false;
             w.ShowDialog();
             Window.GetWindow(this).Opacity = 1;
         }
@@ -1599,6 +1596,7 @@ namespace Restaurant
             {
                 //Window.GetWindow(this).Opacity = 0.2;
                 //wd_info w = new wd_info();
+                    //// w.ShowInTaskbar = false;
                 //w.ShowDialog();
                 //Window.GetWindow(this).Opacity = 1;
             }
@@ -1614,6 +1612,7 @@ namespace Restaurant
             {
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_userInfo w = new wd_userInfo();
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
             }
@@ -1629,6 +1628,7 @@ namespace Restaurant
 
             Window.GetWindow(this).Opacity = 0.2;
             wd_applicationStop w = new wd_applicationStop();
+                    // w.ShowInTaskbar = false;
             w.ShowDialog();
             if (w.status == "o")
             {
@@ -1652,6 +1652,7 @@ namespace Restaurant
 
             Window.GetWindow(this).Opacity = 0.2;
             wd_transfers w = new wd_transfers();
+                    // w.ShowInTaskbar = false;
             w.ShowDialog();
             Window.GetWindow(this).Opacity = 1;
 

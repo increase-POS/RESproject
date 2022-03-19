@@ -51,7 +51,12 @@ namespace Restaurant.View.sales.promotion.membership
             }
         }
 
-        string basicsPermission = "membershipUpdate_basics";
+        string customersPermission = "membershipUpdate_customers";
+        string couponsPermission = "membershipUpdate_coupons";
+        string offersPermission = "membershipUpdate_offers";
+        string invoicesClassesPermission = "membershipUpdate_invoicesClasses";
+        string deliveryPermission = "membershipUpdate_delivery";
+
         Memberships membership = new Memberships();
         IEnumerable<Memberships> membershipsQuery;
         IEnumerable<Memberships> memberships;
@@ -315,9 +320,10 @@ namespace Restaurant.View.sales.promotion.membership
         {
             try
             {
-
-                HelpClass.StartAwait(grid_main);
-                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                if (FillCombo.groupObject.HasPermissionAction(customersPermission, FillCombo.groupObjects, "one"))
+                {
+                    HelpClass.StartAwait(grid_main);
+                    for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                     if (vis is DataGridRow)
                     {
                         Memberships row = (Memberships)dg_membership.SelectedItems[0];
@@ -337,8 +343,11 @@ namespace Restaurant.View.sales.promotion.membership
                         tb_customersCount.Text = agMemberships.Count().ToString();
 
                     }
+                    HelpClass.EndAwait(grid_main);
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -350,8 +359,9 @@ namespace Restaurant.View.sales.promotion.membership
         {
             try
             {
-
-                HelpClass.StartAwait(grid_main);
+                if (FillCombo.groupObject.HasPermissionAction(couponsPermission, FillCombo.groupObjects, "one"))
+                {
+                    HelpClass.StartAwait(grid_main);
                 for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                     if (vis is DataGridRow)
                     {
@@ -373,6 +383,9 @@ namespace Restaurant.View.sales.promotion.membership
                     }
 
                 HelpClass.EndAwait(grid_main);
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
             }
             catch (Exception ex)
             {
@@ -384,8 +397,9 @@ namespace Restaurant.View.sales.promotion.membership
         {
             try
             {
-
-                HelpClass.StartAwait(grid_main);
+                if (FillCombo.groupObject.HasPermissionAction(offersPermission, FillCombo.groupObjects, "one"))
+                {
+                    HelpClass.StartAwait(grid_main);
                 for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                     if (vis is DataGridRow)
                     {
@@ -405,8 +419,10 @@ namespace Restaurant.View.sales.promotion.membership
                         ofMemberships = ofMemberships.Where(o => o.membershipId == membership.membershipId);
                         tb_offersCount.Text = ofMemberships.Count().ToString();
                     }
-
                 HelpClass.EndAwait(grid_main);
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
             }
             catch (Exception ex)
             {
@@ -418,8 +434,9 @@ namespace Restaurant.View.sales.promotion.membership
         {
             try
             {
-
-                HelpClass.StartAwait(grid_main);
+                if (FillCombo.groupObject.HasPermissionAction(invoicesClassesPermission, FillCombo.groupObjects, "one"))
+                {
+                    HelpClass.StartAwait(grid_main);
                 for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                     if (vis is DataGridRow)
                     {
@@ -440,8 +457,10 @@ namespace Restaurant.View.sales.promotion.membership
                         tb_invoicesClassesCount.Text = inMemberships.Count().ToString();
 
                     }
-
                 HelpClass.EndAwait(grid_main);
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
             }
             catch (Exception ex)
             {
@@ -455,7 +474,7 @@ namespace Restaurant.View.sales.promotion.membership
         {//save
             try
             {
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(deliveryPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
                     if (membership.membershipId > 0)

@@ -177,7 +177,19 @@ namespace Restaurant.View.sales
             }
         }
 
-        
-
+        private void Btn_salesStatistic_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_salesStatistic.Instance);
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
     }
 }

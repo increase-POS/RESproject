@@ -71,7 +71,7 @@
                                     <DataGridTextColumn Width="2*"  Header="item name" Binding="{Binding Path=itemName}"/>
                                 <DataGridTextColumn Width="2*"  Header="remaining time" Binding="{Binding Path=remainingTime}"/>
                                 <DataGridTextColumn Width="2*"  Header="count" Binding="{Binding Path=quantity}"/>
-                                <DataGridTextColumn Width="2*"  Header="status" Binding="{Binding Path=status}"/>
+                                <DataGridTextColumn Width="2*"  Header="status" Binding="{Binding Path=status,Converter={StaticResource preparingOrderStatusConverter }}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>

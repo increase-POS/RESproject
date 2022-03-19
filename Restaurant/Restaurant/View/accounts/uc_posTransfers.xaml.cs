@@ -396,6 +396,7 @@ namespace Restaurant.View.accounts
                         Window.GetWindow(this).Opacity = 0.2;
                         wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                         w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
+                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
                         Window.GetWindow(this).Opacity = 1;
                         #endregion
@@ -953,6 +954,7 @@ namespace Restaurant.View.accounts
                     w.pdfPath = pdfpath;
                     if (!string.IsNullOrEmpty(w.pdfPath))
                     {
+                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
                         w.wb_pdfWebViewer.Dispose();
                     }
@@ -1272,6 +1274,7 @@ namespace Restaurant.View.accounts
                 {
                     Window.GetWindow(this).Opacity = 0.2;
                     win_IvcAccount win = new win_IvcAccount(cashesQuery, 1);
+                    // // w.ShowInTaskbar = false;
                     win.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
                 }

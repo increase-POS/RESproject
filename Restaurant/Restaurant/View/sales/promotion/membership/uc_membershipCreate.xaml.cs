@@ -1008,7 +1008,7 @@ namespace Restaurant.View.sales.promotion.membership
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (FillCombo.groupObject.HasPermissionAction("membershipCreate_subscriptionFees" , FillCombo.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(subscriptionFeesPermission, FillCombo.groupObjects, "one"))
                 {
                     Window.GetWindow(this).Opacity = 0.2;
 

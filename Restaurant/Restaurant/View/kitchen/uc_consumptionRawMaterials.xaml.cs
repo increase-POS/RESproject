@@ -33,8 +33,8 @@ namespace Restaurant.View.kitchen
     /// </summary>
     public partial class uc_consumptionRawMaterials : UserControl
     {
-        string createPermission = "consumptionRawMaterials_create";
-        string reportsPermission = "consumptionRawMaterials_reports";
+        string consumptionPermission = "consumptionRawMaterials_consumption";
+        string reportPermission = "consumptionRawMaterials_report";
         private static uc_consumptionRawMaterials _instance;
         public static uc_consumptionRawMaterials Instance
         {
@@ -502,7 +502,7 @@ namespace Restaurant.View.kitchen
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(consumptionPermission, FillCombo.groupObjects, "one"))
                 {
                     bool valid = validateItemUnits();
                     if (valid)
@@ -632,7 +632,7 @@ namespace Restaurant.View.kitchen
 
                 HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportPermission, FillCombo.groupObjects, "one"))
                 {
                     #region
                     if (invoiceItems != null)
@@ -650,6 +650,7 @@ namespace Restaurant.View.kitchen
                         w.pdfPath = pdfpath;
                         if (!string.IsNullOrEmpty(w.pdfPath))
                         {
+                    // w.ShowInTaskbar = false;
                             w.ShowDialog();
                             w.wb_pdfWebViewer.Dispose();
                         }
@@ -701,7 +702,7 @@ namespace Restaurant.View.kitchen
 
                 HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportPermission, FillCombo.groupObjects, "one"))
                 {
                     /////////////////////////////////////
                     ///  
@@ -743,7 +744,7 @@ namespace Restaurant.View.kitchen
 
                 HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(reportPermission, FillCombo.groupObjects, "one"))
                 {
                     if (invoiceItems != null)
                     {
@@ -841,6 +842,7 @@ namespace Restaurant.View.kitchen
 
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_itemsStorage w = new wd_itemsStorage();
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
 
                 Window.GetWindow(this).Opacity = 1;
@@ -861,6 +863,7 @@ namespace Restaurant.View.kitchen
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_purchaseItems w = new wd_purchaseItems();
                 w.CardType = "consumption";
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 if (w.isActive)
                 {

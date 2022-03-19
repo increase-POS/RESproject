@@ -38,7 +38,7 @@ namespace Restaurant.View.kitchen
                 _instance = value;
             }
         }
-        string basicsPermission = "itemsCosting_save";
+        string updatePermission = "itemsCosting_update";
         List<Item> itemsQuery = new List<Item>();
         string searchText = "";
         int categoryId = 0;
@@ -322,7 +322,7 @@ namespace Restaurant.View.kitchen
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(updatePermission, FillCombo.groupObjects, "one"))
                 {
                     //save
                     int res = await FillCombo.item.saveItemsCosting(itemsQuery);

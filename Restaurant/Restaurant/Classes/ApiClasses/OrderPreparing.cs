@@ -21,6 +21,9 @@ namespace Restaurant.Classes.ApiClasses
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
+
+        public int sequence { get; set; }
+        public string itemName { get; set; }
     }
     public class orderPreparingStatus
     {
@@ -53,6 +56,8 @@ namespace Restaurant.Classes.ApiClasses
         public string status { get; set; }
         public int num { get; set; }
         public decimal remainingTime { get; set; }
+        public string invNum_Tables { get; set; }
+        public List<ItemOrderPreparing> items { get; set; }
 
         //-------------------------------------------
         public async Task<List<OrderPreparing>> GetInvoicePreparingOrders( int invoiceId)
@@ -61,6 +66,23 @@ namespace Restaurant.Classes.ApiClasses
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("invoiceId", invoiceId.ToString());
             IEnumerable<Claim> claims = await APIResult.getList("OrderPreparing/GetInvoicePreparingOrders", parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<OrderPreparing>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
+        public async Task<List<OrderPreparing>> GetPreparingOrdersWithStatus( int branchId, string status)
+        {
+            List<OrderPreparing> items = new List<OrderPreparing>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("branchId", branchId.ToString());
+            // status like "Listed, Cooking"
+            parameters.Add("status", status);
+            IEnumerable<Claim> claims = await APIResult.getList("OrderPreparing/GetPreparingOrdersWithStatus", parameters);
             foreach (Claim c in claims)
             {
                 if (c.Type == "scopes")

@@ -55,7 +55,7 @@ namespace Restaurant.View.sales.reservations
             }
         }
 
-        string basicsPermission = "reservationTable_basics";
+        string createPermission = "reservationTable_create";
         List<Tables> selectedTables = new List<Tables>();
         TablesReservation TablesReservation = new TablesReservation();
         int _PersonsCount = 0;
@@ -218,7 +218,7 @@ namespace Restaurant.View.sales.reservations
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add"))
+                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one"))
                 {
                     if (HelpClass.validate(requiredControlList, this))
                     {

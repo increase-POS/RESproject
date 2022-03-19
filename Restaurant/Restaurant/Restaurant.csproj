@@ -280,6 +280,7 @@
     <Compile Include="converters\notificationsContentConverter.cs" />
     <Compile Include="converters\notificationsTitleConverter.cs" />
     <Compile Include="converters\posTransfersStatusConverter.cs" />
+    <Compile Include="converters\preparingOrderStatusConverter.cs" />
     <Compile Include="converters\processTypeConverter.cs" />
     <Compile Include="converters\sectionFreeZoneStorageReportConverter.cs" />
     <Compile Include="converters\SectionLocationFreeZoneConverter.cs" />
@@ -502,6 +503,9 @@
     </Compile>
     <Compile Include="View\sales\uc_sales.xaml.cs">
       <DependentUpon>uc_sales.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sales\uc_salesStatistic.xaml.cs">
+      <DependentUpon>uc_salesStatistic.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\sales\win_lvcSales.xaml.cs">
       <DependentUpon>win_lvcSales.xaml</DependentUpon>
@@ -1090,6 +1094,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\sales\uc_sales.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sales\uc_salesStatistic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

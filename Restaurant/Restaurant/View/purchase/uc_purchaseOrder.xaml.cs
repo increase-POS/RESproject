@@ -514,6 +514,7 @@ namespace Restaurant.View.purchase
                     wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                     w.contentText = AppSettings.resourcemanager.GetString("trApproveOrderNotification");
 
+                    // w.ShowInTaskbar = false;
                     w.ShowDialog();
                     if (!w.isOk)
                     {
@@ -638,6 +639,7 @@ namespace Restaurant.View.purchase
                         wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                         w.contentText = AppSettings.resourcemanager.GetString("trSaveOrderNotification");
 
+                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
                         MainWindow.mainWindow.Opacity = 1;
                         #endregion
@@ -703,6 +705,7 @@ namespace Restaurant.View.purchase
                 wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                 w.contentText = AppSettings.resourcemanager.GetString("trSaveOrderNotification");
 
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 MainWindow.mainWindow.Opacity = 1;
                 #endregion
@@ -1940,6 +1943,7 @@ namespace Restaurant.View.purchase
                         w.pdfPath = pdfpath;
                         if (!string.IsNullOrEmpty(w.pdfPath))
                         {
+                    // w.ShowInTaskbar = false;
                             w.ShowDialog();
                             w.wb_pdfWebViewer.Dispose();
                         }
@@ -2057,6 +2061,7 @@ namespace Restaurant.View.purchase
 
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_purchaseItems w = new wd_purchaseItems();
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 if (w.isActive)
                 {
@@ -2154,6 +2159,7 @@ namespace Restaurant.View.purchase
                         w.tableName = "invoices";
                         w.tableId = invoice.invoiceId;
                         w.docNum = invoice.invNumber;
+                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
                         refreshDocCount(invoice.invoiceId);
                         Window.GetWindow(this).Opacity = 1;
@@ -2275,6 +2281,7 @@ namespace Restaurant.View.purchase
                 // pass agent id to update windows
                 w.agent.agentId = 0;
                 w.type = "v";
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
                 if (w.isOk == true)
@@ -2308,6 +2315,7 @@ namespace Restaurant.View.purchase
                     wd_updateVendor w = new wd_updateVendor();
                     // pass agent id to update windows
                     w.agent.agentId = (int)cb_vendor.SelectedValue;
+                    // w.ShowInTaskbar = false;
                     w.ShowDialog();
                     await FillCombo.RefreshVendors();
 

@@ -960,6 +960,13 @@ namespace Restaurant.Classes
 
             return sdc;
         }
+        public static string PercentageDecTostring(decimal? dec)
+        {
+            string sdc = DecTostring(dec);
+
+            sdc = string.Format("{0:G29}", decimal.Parse(sdc));
+            return sdc;
+        }
         //static public bool isAdminPermision()
         //{
         //    //if (MainWindow.userLogin.userId == 1 || MainWindow.userLogin.userId == 2)

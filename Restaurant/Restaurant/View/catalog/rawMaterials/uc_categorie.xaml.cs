@@ -291,6 +291,7 @@ namespace Restaurant.View.catalog.rawMaterials
                             Window.GetWindow(this).Opacity = 0.2;
                             wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                             w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
+                    // w.ShowInTaskbar = false;
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
@@ -309,6 +310,7 @@ namespace Restaurant.View.catalog.rawMaterials
                                 w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
                             if (!categorie.canDelete)
                                 w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
+                    // w.ShowInTaskbar = false;
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
@@ -792,6 +794,7 @@ namespace Restaurant.View.catalog.rawMaterials
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
                     win_lvcCatalog win = new win_lvcCatalog(categoriesQuery, 3);
+                    // // w.ShowInTaskbar = false;
                     win.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
                     #endregion
@@ -830,6 +833,7 @@ namespace Restaurant.View.catalog.rawMaterials
                     w.pdfPath = pdfpath;
                     if (!string.IsNullOrEmpty(w.pdfPath))
                     {
+                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
                         w.wb_pdfWebViewer.Dispose();
                     }

@@ -569,6 +569,7 @@ namespace Restaurant.View.reports.accountsReports
                 w.pdfPath = pdfpath;
                 if (!string.IsNullOrEmpty(w.pdfPath))
                 {
+                    // w.ShowInTaskbar = false;
                     w.ShowDialog();
                     w.wb_pdfWebViewer.Dispose();
                 }
@@ -613,6 +614,7 @@ namespace Restaurant.View.reports.accountsReports
                             wd_transBetweenOpenClose w = new wd_transBetweenOpenClose();
                             w.openCashTransID = row.openCashTransId.Value;
                             w.closeCashTransID = row.cashTransId;
+                    // w.ShowInTaskbar = false;
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
                         }
@@ -795,6 +797,7 @@ namespace Restaurant.View.reports.accountsReports
                             w.pdfPath = pdfpath;
                             if (!string.IsNullOrEmpty(w.pdfPath))
                             {
+                    // w.ShowInTaskbar = false;
                                 w.ShowDialog();
                                 w.wb_pdfWebViewer.Dispose();
                             }

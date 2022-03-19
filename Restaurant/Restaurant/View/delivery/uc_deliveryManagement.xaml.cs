@@ -531,6 +531,7 @@ namespace Restaurant.View.delivery
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
                     win_lvcCatalog win = new win_lvcCatalog(itemsQuery, 3);
+                    // // w.ShowInTaskbar = false;
                     win.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
                     #endregion
@@ -569,6 +570,7 @@ namespace Restaurant.View.delivery
                     w.pdfPath = pdfpath;
                     if (!string.IsNullOrEmpty(w.pdfPath))
                     {
+                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
                         w.wb_pdfWebViewer.Dispose();
                     }

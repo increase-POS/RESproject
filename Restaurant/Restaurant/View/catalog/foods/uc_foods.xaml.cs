@@ -175,6 +175,7 @@ namespace Restaurant.View.catalog.foods
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_tags w = new wd_tags();
                     w.categoryName = button.Tag.ToString();
+                    // w.ShowInTaskbar = false;
                     w.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
                 }

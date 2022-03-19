@@ -3601,4 +3601,13 @@ Please add Email in setting</value>
   <data name="trAllItemsListed" xml:space="preserve">
     <value>All orders sent to kitchen</value>
   </data>
+  <data name="trCollected" xml:space="preserve">
+    <value>Collected</value>
+  </data>
+  <data name="trListed" xml:space="preserve">
+    <value>Listed</value>
+  </data>
+  <data name="trPreparing" xml:space="preserve">
+    <value>Preparing</value>
+  </data>
 </root>

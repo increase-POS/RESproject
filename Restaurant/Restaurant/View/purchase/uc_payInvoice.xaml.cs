@@ -691,6 +691,7 @@ namespace Restaurant.View.purchase
                                     //w.invoice.invType = _InvoiceType;
                                     //w.invoice.totalNet = decimal.Parse(tb_total.Text);
                                     //w.cards = cards;
+                    //// w.ShowInTaskbar = false;
                                     //w.ShowDialog();
                                     //Window.GetWindow(this).Opacity = 1;
                                     //multipleValid = w.isOk;
@@ -921,6 +922,7 @@ namespace Restaurant.View.purchase
                 MainWindow.mainWindow.Opacity = 0.2;
                 wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                 w.contentText = "Do you want save pay invoice in drafts?";
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 MainWindow.mainWindow.Opacity = 1;
                 #endregion
@@ -942,6 +944,7 @@ namespace Restaurant.View.purchase
                 MainWindow.mainWindow.Opacity = 0.2;
                 wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                 w.contentText = "Do you want save pay invoice in drafts?";
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 MainWindow.mainWindow.Opacity = 1;
                 #endregion
@@ -1340,7 +1343,7 @@ namespace Restaurant.View.purchase
             tb_total.Text = "0";
             tb_sum.Text = "0";
             if (AppSettings.tax != 0)
-                tb_taxValue.Text = HelpClass.DecTostring(AppSettings.invoiceTax_decimal);
+                tb_taxValue.Text = HelpClass.PercentageDecTostring(AppSettings.invoiceTax_decimal);
             else
                 tb_taxValue.Text = "0";
 
@@ -1510,53 +1513,9 @@ namespace Restaurant.View.purchase
                     else
                         cmb.IsEnabled = true;
 
-                    TextBlock tb;
-
                     int _datagridSelectedIndex = dg_billDetails.SelectedIndex;
                     int itemUnitId = (int)cmb.SelectedValue;
                     billDetails[_datagridSelectedIndex].itemUnitId = (int)cmb.SelectedValue;
-                    #region Dina
-
-                    //dynamic unit;
-                    //if (FillCombo.itemUnitList == null)
-                    //    await FillCombo.RefreshItemUnit();
-
-                    //unit = new ItemUnit();
-                    //unit = FillCombo.itemUnitList.Find(x => x.itemUnitId == (int)cmb.SelectedValue && x.itemId == billDetails[_datagridSelectedIndex].itemId);
-
-                    //int oldCount = 0;
-                    //long newCount = 0;
-                    //decimal oldPrice = 0;
-                    //decimal itemTax = 0;
-
-                    //decimal newPrice = 0;
-                    //oldCount = billDetails[_datagridSelectedIndex].Count;
-                    //oldPrice = billDetails[_datagridSelectedIndex].Price;
-                    //newCount = oldCount;
-                    //tb = dg_billDetails.Columns[4].GetCellContent(dg_billDetails.Items[_datagridSelectedIndex]) as TextBlock;
-
-                    //newPrice = oldPrice;
-
-                    //tb = dg_billDetails.Columns[5].GetCellContent(dg_billDetails.Items[_datagridSelectedIndex]) as TextBlock;
-                    //tb.Text = newPrice.ToString();
-
-                    //// old total for changed item
-                    //decimal total = oldPrice * oldCount;
-                    //_Sum -= total;
-
-
-                    //// new total for changed item
-                    //total = newCount * newPrice;
-                    //_Sum += total;
-
-                    //refreshTotalValue();
-
-                    //// update item in billdetails           
-                    //billDetails[_datagridSelectedIndex].Count = (int)newCount;
-                    ////billDetails[_datagridSelectedIndex].Price = newPrice;
-                    //billDetails[_datagridSelectedIndex].Total = total;
-                    //refrishBillDetails();
-                    #endregion
                 }
 
             }
@@ -2120,7 +2079,7 @@ namespace Restaurant.View.purchase
                 tb_sum.Text = "0";
 
             if (discountValue != 0)
-                tb_totalDescount.Text = HelpClass.DecTostring(discountValue);
+                tb_totalDescount.Text = HelpClass.PercentageDecTostring(discountValue);
             else
                 tb_totalDescount.Text = "0";
             total = total + taxValue;
@@ -2156,7 +2115,7 @@ namespace Restaurant.View.purchase
             else tb_total.Text = "0";
 
             if ((invoice.tax != 0) && (invoice.tax != null))
-                tb_taxValue.Text = HelpClass.DecTostring(invoice.tax);
+                tb_taxValue.Text = HelpClass.PercentageDecTostring(invoice.tax);
             else
                 tb_taxValue.Text = "0";
             tb_notes.Text = invoice.notes;
@@ -2166,7 +2125,7 @@ namespace Restaurant.View.purchase
             else tb_sum.Text = "0";
 
             if ((invoice.discountValue != 0) && (invoice.discountValue != null))
-                tb_discount.Text = HelpClass.DecTostring(invoice.discountValue);
+                tb_discount.Text = HelpClass.PercentageDecTostring(invoice.discountValue);
             else
                 tb_discount.Text = "0";
             if (invoice.discountType == "1")
@@ -2404,7 +2363,7 @@ namespace Restaurant.View.purchase
             tb_total.Text = "0";
             tb_sum.Text = "0";
             if (AppSettings.tax != 0)
-                tb_taxValue.Text = HelpClass.DecTostring(AppSettings.tax);
+                tb_taxValue.Text = HelpClass.PercentageDecTostring(AppSettings.tax);
             else
                 tb_taxValue.Text = "0";
 
@@ -2455,6 +2414,7 @@ namespace Restaurant.View.purchase
                         MainWindow.mainWindow.Opacity = 0.2;
                         wd_acceptCancelPopup w = new wd_acceptCancelPopup();
                         w.contentText = AppSettings.resourcemanager.GetString("trSaveInvoiceNotification");
+                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
                         MainWindow.mainWindow.Opacity = 1;
                         #endregion
@@ -2494,6 +2454,7 @@ namespace Restaurant.View.purchase
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_purchaseItems w = new wd_purchaseItems();
 
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 if (w.isActive)
                 {
@@ -2549,6 +2510,7 @@ namespace Restaurant.View.purchase
                         w.invTotal = invoice.totalNet;
 
                         w.title = AppSettings.resourcemanager.GetString("trPayments");
+                    // w.ShowInTaskbar = false;
                         w.ShowDialog();
 
                         Window.GetWindow(this).Opacity = 1;
@@ -2742,6 +2704,7 @@ namespace Restaurant.View.purchase
                     w.tableName = "invoices";
                     w.tableId = invoice.invoiceId;
                     w.docNum = invoice.invNumber;
+                    // w.ShowInTaskbar = false;
                     w.ShowDialog();
                     refreshDocCount(invoice.invoiceId);
                     Window.GetWindow(this).Opacity = 1;
@@ -2865,6 +2828,7 @@ namespace Restaurant.View.purchase
                 //// pass agent id to update windows
                 w.agent.agentId = 0;
                 w.type = "v";
+                    // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 Window.GetWindow(this).Opacity = 1;
                 if (w.isOk == true)
@@ -2899,6 +2863,7 @@ namespace Restaurant.View.purchase
                     wd_updateVendor w = new wd_updateVendor();
                     // pass agent id to update windows
                     w.agent.agentId = (int)cb_vendor.SelectedValue;
+                    // w.ShowInTaskbar = false;
                     w.ShowDialog();
                     await FillCombo.RefreshVendors();
                     await FillCombo.FillComboVendors(cb_vendor);
@@ -3337,6 +3302,7 @@ namespace Restaurant.View.purchase
                         if (!string.IsNullOrEmpty(w.pdfPath))
                         {
 
+                    // w.ShowInTaskbar = false;
                             w.ShowDialog();
 
                             w.wb_pdfWebViewer.Dispose();
