@@ -681,21 +681,21 @@ namespace Restaurant.View.purchase
                             {
                                 if (cb_paymentProcessType.SelectedValue.ToString() == "multiple")
                                 {
-                                    //Window.GetWindow(this).Opacity = 0.2;
-                                    //wd_multiplePayment w = new wd_multiplePayment();
-                                    //if (cb_vendor.SelectedIndex > 0)
-                                    //    w.hasCredit = true;
-                                    //else
-                                    //    w.hasCredit = false;
-                                    //w.isPurchase = true;
-                                    //w.invoice.invType = _InvoiceType;
-                                    //w.invoice.totalNet = decimal.Parse(tb_total.Text);
-                                    //w.cards = cards;
-                    //// w.ShowInTaskbar = false;
-                                    //w.ShowDialog();
-                                    //Window.GetWindow(this).Opacity = 1;
-                                    //multipleValid = w.isOk;
-                                    //listPayments = w.listPayments;
+                                    Window.GetWindow(this).Opacity = 0.2;
+                                    wd_multiplePayment w = new wd_multiplePayment();
+                                    if (cb_vendor.SelectedIndex > 0)
+                                        w.hasCredit = true;
+                                    else
+                                        w.hasCredit = false;
+                                    w.isPurchase = true;
+                                    w.invoice.invType = _InvoiceType;
+                                    w.invoice.totalNet = decimal.Parse(tb_total.Text);
+                                    w.cards = FillCombo.cardsList;
+                                    // w.ShowInTaskbar = false;
+                                    w.ShowDialog();
+                                    Window.GetWindow(this).Opacity = 1;
+                                    multipleValid = w.isOk;
+                                    listPayments = w.listPayments;
                                 }
                                 if (multipleValid)
                                 {
