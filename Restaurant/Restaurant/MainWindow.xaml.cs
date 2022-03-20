@@ -540,7 +540,7 @@ namespace Restaurant
                     first = FillCombo.objectModel.GetParents(FillCombo.objectsList, defaultPath).FirstOrDefault().name;
                     last = defaultPath;
 
-                    MainWindow.mainWindow.Btn_purchase_Click(MainWindow.mainWindow.btn_purchase, null);
+                    //MainWindow.mainWindow.Btn_purchase_Click(MainWindow.mainWindow.btn_purchase, null);
                     foreach (Button button in FindControls.FindVisualChildren<Button>(MainWindow.mainWindow))
                     {
                         if (button.Tag != null)
@@ -1737,9 +1737,9 @@ namespace Restaurant
             switch (tag)
             {
                 //2
-                //case "home":
-                //    grid_main.Children.Add(uc_home.Instance);
-                //    break;
+                case "home":
+                    grid_main.Children.Add(uc_home.Instance);
+                    break;
                 case "catalog":
                     grid_main.Children.Add(uc_catalog.Instance);
                     break;
