@@ -12,10 +12,10 @@ namespace Restaurant.Classes
         public static ResourceManager resourcemanager;
         public static ResourceManager resourcemanagerreport;
 
-        public static string lang = "ar";
-        public static string Reportlang = "ar";
+        public static string lang = "en";
+        public static string Reportlang = "en";
 
-        public static string defaultPath = "";
+        public static string defaultPath = "orderPurchaseReports";
 
         public static string Currency = "KD";
         public static int CurrencyId;
