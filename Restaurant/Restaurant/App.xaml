@@ -2691,6 +2691,17 @@
             <SolidColorBrush x:Key="MainColorRed" Color="#D22A17"/>
 
             <SolidColorBrush x:Key="White" Color="#FFFFFF"/>
+            
+            <!--#region dashboard-->
+            <!--
+            2C3E50
+            5B5182
+            C0392B
+            1D75B8
+            27AE60
+            -->
+            <!--#endregion-->
+            
             <!--#endregion-->
 
             <ResourceDictionary.MergedDictionaries>
