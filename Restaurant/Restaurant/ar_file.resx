@@ -3589,4 +3589,7 @@
   <data name="enter" xml:space="preserve">
     <value>دخول</value>
   </data>
+  <data name="open" xml:space="preserve">
+    <value>فتح</value>
+  </data>
 </root>
