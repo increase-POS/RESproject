@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Restaurant.View.settings"
-             mc:Ignorable="d"  Tag="settings"
+             mc:Ignorable="d"  Tag="general"
              Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="1000" d:DesignWidth="1500" >

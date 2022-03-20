@@ -120,7 +120,7 @@
                     </Grid>
                 </Border>
                 <Button   Grid.Row="3"  Margin="10,10" materialDesign:ButtonAssist.CornerRadius="7"
-                          x:Name="btn_confirmation" Click="Btn_confirmation_Click"
+                          x:Name="btn_confirmation" Click="Btn_confirmation_Click" Foreground="White" 
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  >
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock   Foreground="White"  Name="txt_confirmation" Text="Confirmation" VerticalAlignment="Center"/>

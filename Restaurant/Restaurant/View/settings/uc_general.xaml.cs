@@ -703,12 +703,15 @@ namespace Restaurant.View.settings
         {//save language
             try
             {
-                /*
-                if (FillCombo.groupObject.HasPermissionAction(usersSettingsPermission, FillCombo.groupObjects, "one") ||
-                    FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
-                {
-                    HelpClass.validateEmptyComboBox(cb_language, p_errorLanguage, tt_errorLanguage, "trEmptyLanguage");
-                    if (!cb_language.Text.Equals(""))
+                //if (FillCombo.groupObject.HasPermissionAction(usersSettingsPermission, FillCombo.groupObjects, "one") ||
+                //    FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
+                //{
+                    if (cb_language.Text.Equals(""))
+                    {
+                        //HelpClass.validateEmptyComboBox(cb_language, p_errorLanguage, tt_errorLanguage, "trEmptyLanguage");
+                        HelpClass.SetValidate(p_error_language, "trEmptyLanguage");
+                    }
+                    else
                     {
                         if (usLanguage == null)
                             usLanguage = new UserSetValues();
@@ -724,7 +727,7 @@ namespace Restaurant.View.settings
                             {
                                 //update language in main window
                                 SetValues v = await valueModel.GetByID(Convert.ToInt32(cb_language.SelectedValue));
-                                MainWindow.lang = v.value;
+                                AppSettings.lang = v.value;
                                 //save to user settings
                                 Properties.Settings.Default.Lang = v.value;
                                 Properties.Settings.Default.Save();
@@ -755,15 +758,14 @@ namespace Restaurant.View.settings
                                 parentWindow.translate();
 
                                 
-                                MainWindow.loadingDefaultPath("settings", "general");
+                                MainWindow.loadingDefaultPath("general");
                                 translate();
                             }
                         }
                     }
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                */
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
             }
             catch (Exception ex)
             {

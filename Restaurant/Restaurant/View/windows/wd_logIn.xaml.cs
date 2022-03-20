@@ -48,7 +48,7 @@ namespace Restaurant.View.windows
                 HelpClass.StartAwait(grid_main);
 
                 bdrLogIn.RenderTransform = Animations.borderAnimation(-100, bdrLogIn, true);
-                AppSettings.lang = "en";
+                //AppSettings.lang = "en";
                 #region properties
                 if (Properties.Settings.Default.userName != string.Empty)
                 {
@@ -70,7 +70,7 @@ namespace Restaurant.View.windows
                 #endregion
 
                 #region translate
-                //AppSettings.lang = "ar";
+                AppSettings.lang = "en";
                 if (AppSettings.lang.Equals("en"))
                 {
                     AppSettings.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());

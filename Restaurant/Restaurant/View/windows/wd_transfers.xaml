@@ -70,11 +70,16 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="10"/>
                 </Grid.RowDefinitions>
+                <Border Margin="0"   Grid.Row="0" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
+                           Background="White"/>
                 <DataGrid x:Name="dg_transfers" Margin="5" Grid.Row="0" Grid.ColumnSpan="2"  Background="White"
                       materialDesign:DataGridAssist.CornerRadius="5" Visibility="Visible"
                          IsReadOnly="True" CanUserAddRows="False" 
                         AutoGenerateColumns="False" 
                         ColumnWidth="SizeToHeader"  >
+                    <DataGrid.OpacityMask>
+                        <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
+                    </DataGrid.OpacityMask>
                     <DataGrid.Resources>
                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"></SolidColorBrush>
                         <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
