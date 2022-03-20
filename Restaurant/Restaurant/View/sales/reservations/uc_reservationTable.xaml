@@ -225,7 +225,7 @@
                     </Grid.RowDefinitions>
                     <ScrollViewer Margin="5,10,-5,5">
                         <WrapPanel x:Name="wp_tablesContainer" Margin="0,15,0,15" HorizontalAlignment="Left" >
-                            <Button  Height="90" Width="80" Margin="5"
+                            <!--<Button  Height="90" Width="80" Margin="5"
                                     Padding="0"   Background="{x:Null}" BorderBrush="{x:Null}"  >
                                 <Grid>
                                     <Grid.RowDefinitions>
@@ -402,7 +402,7 @@
                                                     Foreground="{StaticResource SecondColor}"
                                                      HorizontalAlignment="Center" />
                                 </Grid>
-                            </Button>
+                            </Button>-->
                         </WrapPanel>
                     </ScrollViewer>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 5">

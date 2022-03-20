@@ -279,7 +279,7 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"></ColumnDefinition>
                                         <ColumnDefinition Width="*"></ColumnDefinition>
-                                        <ColumnDefinition Width="60"></ColumnDefinition>
+                                            <ColumnDefinition Width="70"></ColumnDefinition>
                                         <ColumnDefinition Width="*"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                         <Border Grid.Row="0" Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">

@@ -39,7 +39,8 @@
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
-                              Data="{StaticResource POS}"/>
+                             FlowDirection="LeftToRight"  
+                            Data="{StaticResource POS}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_posTransfersInfo" Tag="posTransfers" Text="Transfers" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_posTransfersHint" Tag="posTransfers" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
@@ -86,7 +87,8 @@
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
-                              Data="{StaticResource payments}"/>
+                            FlowDirection="LeftToRight"  
+                             Data="{StaticResource payments}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_paymentsInfo" Tag="payments" Text="Payments"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_paymentsHint" Tag="payments" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
@@ -133,7 +135,8 @@
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
-                              Data="{StaticResource received}"/>
+                             FlowDirection="LeftToRight"  
+                            Data="{StaticResource received}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_receivedInfo" Tag="received" Text="Received"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_receivedHint" Tag="received" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
@@ -180,7 +183,8 @@
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
-                              Data="{StaticResource bank}"/>
+                             FlowDirection="LeftToRight"  
+                            Data="{StaticResource bank}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_banksAccountingInfo" Tag="banksAccounting" Text="banksAccounting"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_banksAccountingHint" Tag="banksAccounting" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
@@ -227,7 +231,8 @@
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
-                              Data="{StaticResource subscriptions}"/>
+                              FlowDirection="LeftToRight"  
+                           Data="{StaticResource subscriptions}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_subscriptionsInfo" Tag="subscriptions" Text="subscriptions"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_subscriptionsHint" Tag="subscriptions" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
@@ -274,7 +279,8 @@
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
-                              Data="{StaticResource deliveryMan}"/>
+                             FlowDirection="LeftToRight"  
+                            Data="{StaticResource deliveryMan}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_ordersAccountingInfo" Tag="ordersAccounting" Text="orders"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_ordersAccountingHint" Tag="ordersAccounting" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>

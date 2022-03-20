@@ -38,7 +38,8 @@
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                                   HorizontalAlignment="Center" Grid.Column="1"  
                              VerticalAlignment="Center" Height="50" Width="50"
-                                  Data="{StaticResource tableWithChairs}"/>
+                                 FlowDirection="LeftToRight"  
+                            Data="{StaticResource tableWithChairs}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_hallDivideInfo" Tag="hallDivide" Text="Hall Divide" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_hallDivideHint" Tag="hallDivide" Text="Dining Hall Divide" Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
@@ -86,7 +87,8 @@
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                                   HorizontalAlignment="Center" Grid.Column="1"  
                              VerticalAlignment="Center" Height="50" Width="50"
-                                  Data="{StaticResource map}"/>
+                                FlowDirection="LeftToRight"  
+                             Data="{StaticResource map}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_residentialSectorsInfo" Tag="residentialSectors" Text="residential sectors"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_residentialSectorsHint" Tag="residentialSectors" Text="add, update, delete..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
@@ -134,7 +136,8 @@
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                                   HorizontalAlignment="Center" Grid.Column="1"  
                              VerticalAlignment="Center" Height="50" Width="50"
-                                  Data="{StaticResource person}"/>
+                                 FlowDirection="LeftToRight"  
+                            Data="{StaticResource person}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_personsInfo" Tag="persons" Text="Persons"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_personsHint" Tag="persons" Text="Vendors, Customer, Users" Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
@@ -181,7 +184,8 @@
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                                   HorizontalAlignment="Center" Grid.Column="1"  
                              VerticalAlignment="Center" Height="50" Width="50"
-                                  Data="{StaticResource branches}"/>
+                                FlowDirection="LeftToRight"  
+                             Data="{StaticResource branches}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_branchesAndStoresInfo" Tag="branchesAndStores" Text="Branches/Stores"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_branchesAndStoresHint" Tag="branchesAndStores" Text="Branches, Stores, POS" Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
@@ -228,7 +232,8 @@
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                                   HorizontalAlignment="Center" Grid.Column="1"  
                              VerticalAlignment="Center" Height="50" Width="50"
-                                  Data="{StaticResource bankswithCards}"/>
+                                 FlowDirection="LeftToRight"  
+                            Data="{StaticResource bankswithCards}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_banksDataInfo" Tag="banksData" Text="Banks Data"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_banksDataHint" Tag="banksData" Text="Banks, Payment Methods" Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>

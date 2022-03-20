@@ -237,7 +237,7 @@
 
                                     </DockPanel>
                                     <DockPanel Grid.Row="1" Grid.Column="1"  LastChildFill="False" x:Name="pnl_pos">
-                                            <Border Grid.Row="1" Height="40"  CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                            <Border Grid.Row="1" Height="40"  CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                                 <Grid>
                                                     <ComboBox MinWidth="150" Name="cb_pos" 
                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}"

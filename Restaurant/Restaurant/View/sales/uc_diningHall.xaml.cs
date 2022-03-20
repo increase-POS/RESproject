@@ -111,12 +111,10 @@ namespace Restaurant.View.sales
             tb_moneyIconTotal.Text = AppSettings.Currency;
             if (AppSettings.lang.Equals("en"))
             {
-                AppSettings.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                 grid_main.FlowDirection = FlowDirection.LeftToRight;
             }
             else
             {
-                AppSettings.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                 grid_main.FlowDirection = FlowDirection.RightToLeft;
             }
             translate();
@@ -173,6 +171,13 @@ namespace Restaurant.View.sales
         {
             txt_orders.Text = AppSettings.resourcemanager.GetString("trOrders");         
             txt_allMenu.Text = AppSettings.resourcemanager.GetString("trAll");
+
+            txt_appetizers.Text = AppSettings.resourcemanager.GetString("trAppetizers");
+            txt_beverages.Text = AppSettings.resourcemanager.GetString("trBeverages");
+            txt_fastFood.Text = AppSettings.resourcemanager.GetString("trFastFood");
+            txt_mainCourses.Text = AppSettings.resourcemanager.GetString("trMainCourses");
+            txt_desserts.Text = AppSettings.resourcemanager.GetString("trDesserts");
+
             txt_ordersAlerts.Text = AppSettings.resourcemanager.GetString("trOrders");
             txt_newDraft.Text = AppSettings.resourcemanager.GetString("trNew");
             txt_preview.Text = AppSettings.resourcemanager.GetString("trPreview");
@@ -511,7 +516,7 @@ namespace Restaurant.View.sales
                 button.Tag = "catalogTags-" + item.tagName;
                 button.FontSize = 10;
                 button.Height = 25;
-                button.Padding = new Thickness(5);
+                button.Padding = new Thickness(5, 0, 5, 0);
                 MaterialDesignThemes.Wpf.ButtonAssist.SetCornerRadius(button, (new CornerRadius(7)));
                 button.Margin = new Thickness(5,0,5,0);
                 button.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;

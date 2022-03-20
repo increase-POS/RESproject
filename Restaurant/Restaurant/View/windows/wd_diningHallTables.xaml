@@ -589,19 +589,26 @@
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"  VerticalAlignment="Center"  />
 
-                                        <TextBlock  Grid.Row="6" Grid.Column="0" 
+                                            <Grid Grid.Row="6" Grid.ColumnSpan="2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock  Grid.Row="6" Grid.Column="0" 
                                     Text="Total" Name="txt_total"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                                        <TextBlock  Grid.Row="6" Grid.Column="1" 
+                                                <TextBlock  Grid.Row="6" Grid.Column="1" 
                                     Text="15.25" Name="tb_total"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                                        <TextBlock  Grid.Row="6" Grid.Column="3" 
+                                                <TextBlock  Grid.Row="6" Grid.Column="2" 
                                     Text="KD" Name="txt_totalCurrency"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"  VerticalAlignment="Center"  />
 
+                                            </Grid>
                                         <TextBlock  Grid.Row="7" Grid.Column="0" 
                                     Text="preparing orders" Name="txt_preparingOrders"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"

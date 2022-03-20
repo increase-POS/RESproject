@@ -21,7 +21,16 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <Grid  Margin="0 10 10 5">
+            <Border>
+                <Border.Effect>
+                    <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                </Border.Effect>
+                <Grid  Margin="0 10 10 5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
@@ -345,6 +354,7 @@
                     </Border>
                 </Border>
             </Grid>
+            </Border>
 
             <Border Grid.Row="1">
                 <Border.Effect>

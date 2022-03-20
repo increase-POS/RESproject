@@ -89,7 +89,8 @@ namespace Restaurant.View.windows
 
 
                     List<Object> list = Object.findChildrenList("root", FillCombo.objectsList);
-                    list = list.Where(x => x.objectType == "basic" || x.objectType == "basicAlert").ToList();
+                    //list = list.Where(x => x.objectType == "basic" || x.objectType == "basicAlert").ToList();
+                    list = list.Where(x => x.objectType == "basic").ToList();
                      list = list.Where(x => FillCombo.groupObject.HasPermission(x.name, FillCombo.groupObjects) || HelpClass.isAdminPermision()).ToList();
                    
 
@@ -210,7 +211,8 @@ namespace Restaurant.View.windows
 
                 ////////////////////////
                 List<Object> list = Object.findChildrenList(button.Tag.ToString(), FillCombo.objectsList);
-                list = list.Where(x => x.objectType == "basic" || x.objectType == "basicAlert").ToList();
+                //list = list.Where(x => x.objectType == "basic" || x.objectType == "basicAlert").ToList();
+                list = list.Where(x => x.objectType == "basic" ).ToList();
                 // filter: have permission;
                     list = list.Where(x => FillCombo.groupObject.HasPermission(x.name, FillCombo.groupObjects) || HelpClass.isAdminPermision()).ToList();
 
@@ -322,7 +324,8 @@ namespace Restaurant.View.windows
             initializationMainTrack(button.Tag.ToString());
           
             List<Object> list = Object.findChildrenList(button.Tag.ToString(), FillCombo.objectsList);
-            list = list.Where(x => x.objectType == "basic" || x.objectType == "basicAlert").ToList();
+            //list = list.Where(x => x.objectType == "basic" || x.objectType == "basicAlert").ToList();
+            list = list.Where(x => x.objectType == "basic" ).ToList();
             // filter: have permission;
             list = list.Where(x => FillCombo.groupObject.HasPermission(x.name, FillCombo.groupObjects) || HelpClass.isAdminPermision()).ToList();
 
@@ -336,8 +339,11 @@ namespace Restaurant.View.windows
 
         async Task RefreshObjects()
         {
-            var objectsLst = await FillCombo.objectModel.GetAll();
-            objectsLst = objectsLst.Where(x => x.objectType == "basic" || x.objectType == "basicAlert").ToList();
+            if (FillCombo.objectsList is null)
+               await FillCombo.RefreshObjects();
+           var objectsLst =  FillCombo.objectsList.ToList();
+            //objectsLst = objectsLst.Where(x => x.objectType == "basic" || x.objectType == "basicAlert").ToList();
+            objectsLst = objectsLst.Where(x => x.objectType == "basic").ToList();
 
             //objectsLst = objectsLst.Where(x => x.name != "storageStatistic" && x.name != "usersReports" 
             //&& x.name != "purchaseStatistic" && x.name != "accountsStatistic"

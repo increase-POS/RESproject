@@ -116,9 +116,9 @@ Data="M473.2,341.6c-10.5-18.1-21-36.2-31.5-54.2c-1.9-3.3-3.8-6.6-5.8-9.9c2.1-3.7
                                                 </Grid.RowDefinitions>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
-                                                    <ColumnDefinition Width="60"></ColumnDefinition>
+                                                        <ColumnDefinition Width="70"></ColumnDefinition>
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
-                                                    <ColumnDefinition Width="60"></ColumnDefinition>
+                                                        <ColumnDefinition Width="70"></ColumnDefinition>
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                                 </Grid.ColumnDefinitions>

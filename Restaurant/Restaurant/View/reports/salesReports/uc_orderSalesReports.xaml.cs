@@ -127,15 +127,9 @@ namespace Restaurant.View.reports.salesReports
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
-                {
-                    AppSettings.resourcemanager = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
-                }
                 else
-                {
-                    AppSettings.resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
-                }
                 translate();
                 #endregion
 

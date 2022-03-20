@@ -39,7 +39,8 @@
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
-                              Data="{StaticResource appetizers}"/>
+                             FlowDirection="LeftToRight"  
+                            Data="{StaticResource appetizers}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_appetizersInfo" Tag="appetizers" Text="Appetizers" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_appetizersHint" Tag="appetizers" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
@@ -103,7 +104,8 @@
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
-                              Data="{StaticResource beverages}"/>
+                            FlowDirection="LeftToRight"  
+                             Data="{StaticResource beverages}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_beveragesInfo" Tag="beverages" Text="Beverages"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_beveragesHint" Tag="beverages" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
@@ -166,7 +168,8 @@
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
-                              Data="{StaticResource fastFood}"/>
+                            FlowDirection="LeftToRight"  
+                             Data="{StaticResource fastFood}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                             <TextBlock x:Name="txt_fastFoodInfo" Tag="fastFood" Text="Fast Food"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
                             <TextBlock x:Name="txt_fastFoodHint" Tag="fastFood" Text="add, update, delete, ..."  Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
@@ -229,7 +232,8 @@
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
-                              Data="{StaticResource mainCourses}"/>
+                            FlowDirection="LeftToRight"  
+                             Data="{StaticResource mainCourses}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_mainCoursesInfo" Tag="mainCourses" Text="Main Courses"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_mainCoursesHint" Tag="mainCourses" Text="add, update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
@@ -292,6 +296,7 @@
                         <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
+                           FlowDirection="LeftToRight"  
                               Data="{StaticResource desserts}"/>
                         <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_dessertsInfo" Tag="desserts" Text="Desserts"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
@@ -355,6 +360,7 @@
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
+                           FlowDirection="LeftToRight"  
                             Data="{StaticResource package}"/>          
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_packageInfo" Tag="package" Text="package"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>

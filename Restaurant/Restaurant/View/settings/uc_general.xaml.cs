@@ -635,6 +635,26 @@ namespace Restaurant.View.settings
             //tt_dateForm.Content = AppSettings.resourcemanager.GetString("trDateForm");
             //tt_accuracy.Content = AppSettings.resourcemanager.GetString("trAccuracy");
             //tt_activationSite.Content = AppSettings.resourcemanager.GetString("trActivationSite");
+
+            // openButton
+            List<TextBlock> openTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
+               .Where(x => x.Tag != null).ToList();
+            openTextBlocksList = openTextBlocksList.Where(x => x.Tag.ToString().Contains("openButton")).ToList();
+            foreach (var item in openTextBlocksList)
+            {
+                item.Text = AppSettings.resourcemanager.GetString("open");
+            }
+
+            // saveButton
+            List<TextBlock> saveTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
+               .Where(x => x.Tag != null).ToList();
+            saveTextBlocksList = saveTextBlocksList.Where(x => x.Tag.ToString().Contains("saveButton")).ToList();
+            foreach (var item in saveTextBlocksList)
+            {
+                item.Text = AppSettings.resourcemanager.GetString("trSave");
+            }
+
+
         }
         private async void Btn_region_Click(object sender, RoutedEventArgs e)
         {//save region

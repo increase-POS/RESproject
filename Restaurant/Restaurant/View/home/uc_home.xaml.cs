@@ -772,8 +772,9 @@ namespace Restaurant.View
             listBestSeller = listBestSeller.Skip(skip * 3).Take(3).ToList();
             foreach (var item in listBestSeller)
             {
-                InitializeBestSellerRow(order.ToString(), item.itemName + "-" + item.unitName,
-                  item.quantity.ToString(), row);
+                //InitializeBestSellerRow(order.ToString(), item.itemName + "-" + item.unitName,
+                //  item.quantity.ToString(), row);
+                InitializeBestSellerRow(order.ToString(), item.itemName , item.quantity.ToString(), row);
                 order++;
                 row += 2;
             }

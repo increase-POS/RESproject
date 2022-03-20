@@ -152,6 +152,14 @@ namespace Restaurant.View.settings.emailsGeneral
                 item.Text = AppSettings.resourcemanager.GetString("enter");
             }
 
+            // openButton
+            List<TextBlock> openTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
+               .Where(x => x.Tag != null).ToList();
+            openTextBlocksList = openTextBlocksList.Where(x => x.Tag.ToString().Contains("openButton")).ToList();
+            foreach (var item in openTextBlocksList)
+            {
+                item.Text = AppSettings.resourcemanager.GetString("open");
+            }
 
             txt_systmSetting.Text = AppSettings.resourcemanager.GetString("trDirectEmail");
             txt_systmSettingHint.Text = AppSettings.resourcemanager.GetString("trDirectEmailHint") + "...";

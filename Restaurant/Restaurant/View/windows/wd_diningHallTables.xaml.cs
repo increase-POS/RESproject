@@ -401,6 +401,7 @@ namespace Restaurant.View.windows
                 #region Path table
                 Path pathTable = new Path();
                 pathTable.Stretch = Stretch.Fill;
+                pathTable.FlowDirection = FlowDirection.LeftToRight;
                 pathTable.Margin = new Thickness(5);
 
                 if (item.status == "opened" || item.status == "openedReserved")

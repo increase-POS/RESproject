@@ -39,7 +39,8 @@
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
-                              Data="{StaticResource reserveAdd}"/>
+                            FlowDirection="LeftToRight"  
+                             Data="{StaticResource reserveAdd}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_reservationTableInfo" Tag="reservationTable" Text="reservationTable" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_reservationTableHint" Tag="reservationTable" Text="create reservation..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
@@ -85,8 +86,9 @@
                             <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
-                         VerticalAlignment="Center" Height="50" Width="50" FlowDirection="LeftToRight" 
-                              Data="{StaticResource reserveUpdate}"/>
+                         VerticalAlignment="Center" Height="50" Width="50"  
+                             FlowDirection="LeftToRight"  
+                            Data="{StaticResource reserveUpdate}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_reservationsUpdateInfo" Tag="reservationsUpdate" Text="reservationsUpdate"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_reservationsUpdateHint" Tag="reservationsUpdate" Text="update, delete, ..." Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>

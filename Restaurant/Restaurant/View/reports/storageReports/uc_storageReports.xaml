@@ -39,7 +39,8 @@
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
-                              Data="{StaticResource stock}"/>
+                              FlowDirection="LeftToRight"  
+                           Data="{StaticResource stock}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_stockStorageReportsInfo" Tag="stockStorageReports" Text="stockStorageReports" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_stockStorageReportsHint" Tag="stockStorageReports" Text="stockStorageReports" Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
@@ -86,7 +87,8 @@
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
-                              Data="{StaticResource external}"/>
+                             FlowDirection="LeftToRight"  
+                            Data="{StaticResource external}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_externalStorageReportsInfo" Tag="externalStorageReports" Text="externalStorageReports"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_externalStorageReportsHint" Tag="externalStorageReports" Text="externalStorageReports" Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
@@ -133,7 +135,8 @@
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
-                              Data="{StaticResource internal}"/>
+                             FlowDirection="LeftToRight"  
+                            Data="{StaticResource internal}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_internalStorageReportsInfo" Tag="internalStorageReports" Text="internalStorageReports"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_internalStorageReportsHint" Tag="internalStorageReports" Text="internalStorageReports" Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
@@ -180,7 +183,8 @@
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
-                              Data="{StaticResource direct}"/>
+                             FlowDirection="LeftToRight"  
+                            Data="{StaticResource direct}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_directStorageReportsInfo" Tag="directStorageReports" Text="directStorageReports" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_directStorageReportsHint" Tag="directStorageReports" Text="directStorageReports" Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
@@ -227,7 +231,8 @@
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
-                              Data="{StaticResource checkList}"/>
+                              FlowDirection="LeftToRight"  
+                           Data="{StaticResource checkList}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_stocktakingStorageReportsInfo" Tag="stocktakingStorageReports" Text="stocktakingStorageReports"  Width="165" Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_stocktakingStorageReportsHint" Tag="stocktakingStorageReports" Text="stocktakingStorageReports" Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
@@ -274,7 +279,8 @@
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
                               HorizontalAlignment="Center" Grid.Column="1"  
                          VerticalAlignment="Center" Height="50" Width="50"
-                              Data="{StaticResource delete}"/>
+                              FlowDirection="LeftToRight"  
+                           Data="{StaticResource delete}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
                                 <TextBlock x:Name="txt_destroiedStorageReportsInfo" Tag="destroiedStorageReports" Text="destroiedStorageReports" Width="165" Foreground="#6e6e6e" FontWeight="SemiBold"  FontSize="16"></TextBlock>
                                 <TextBlock x:Name="txt_destroiedStorageReportsHint" Tag="destroiedStorageReports" Text="destroiedStorageReports" Width="165" Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
