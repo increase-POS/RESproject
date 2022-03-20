@@ -82,7 +82,7 @@ namespace Restaurant.View.accounts
                 HelpClass.StartAwait(grid_main);
 
                 requiredControlList = new List<string> { "transNum", "customerId" , "monthsCount" , "amount" , "paymentProcessType" };
-                //transNum   customerName   monthsCount   paymentProcessType    subscriptionType
+                //expirDate
                 #region translate
                 if (AppSettings.lang.Equals("en"))
                 {
@@ -96,11 +96,13 @@ namespace Restaurant.View.accounts
                 #endregion
 
                 FillCombo.FillDefaultPayType_cashChequeCard(cb_paymentProcessType);
-                //fillCustomers
+
+                #region fillCustomers
                 await subscription.GetAgentToPay();
                 cb_customerId.DisplayMemberPath = "agentName";
                 cb_customerId.SelectedValuePath = "agentId";
                 cb_customerId.SelectedIndex = -1;
+                #endregion
 
                 Keyboard.Focus(cb_customerId);
 
@@ -473,8 +475,25 @@ namespace Restaurant.View.accounts
                     this.DataContext = subscription;
                     if (subscription != null)
                     {
-                        //subscriptionType
-                        //{ traslate + hide monthCount }
+                        switch(subscription.subscriptionType)
+                        {
+                            case "m":
+                                bdr_monthCount.Visibility = Visibility.Visible;
+                                MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trYearCount") + "...");
+                                fillMonthCount();
+                                break;
+                            case "y":
+                                bdr_monthCount.Visibility = Visibility.Visible;
+                                MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trMonthCount") + "...");
+                                fillMonthCount();
+                                break;
+                            case "o":
+                                bdr_monthCount.Visibility = Visibility.Collapsed;
+                                cb_monthsCount.SelectedIndex = -1;
+                                cb_monthsCount.ItemsSource = null;
+                                break;
+                        }
+                       
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
@@ -486,6 +505,17 @@ namespace Restaurant.View.accounts
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        private async void fillMonthCount()
+        {
+            SubscriptionFees subFee = new SubscriptionFees();
+            List<SubscriptionFees> subFees = await subFee.GetAll();
+            subFees = subFees.Where(s => s.membershipId == subscription.membershipId).ToList();
+            cb_monthsCount.DisplayMemberPath = "monthsCount";
+            cb_monthsCount.SelectedValuePath = "subscriptionFeesId";
+            cb_monthsCount.ItemsSource = subFees;
+        }
+
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh
             try
@@ -516,22 +546,24 @@ namespace Restaurant.View.accounts
 
             searchText = tb_search.Text.ToLower();
 
-            subscriptionsQuery = subscriptions;
-            //    .Where(s => 
-            //(
-            //s.code.ToLower().Contains(searchText) ||
-            //s.name.ToLower().Contains(searchText) ||
-            //s.mobile.ToLower().Contains(searchText)
-            //) 
-            //&& 
-            //s.isActive == tgl_isActive);
+            subscriptionsQuery = subscriptions
+                .Where(s => 
+            (
+            s.transNum.ToLower().Contains(searchText) ||
+            s.agentName.ToLower().Contains(searchText) ||
+            s.subscriptionType.ToLower().Contains(searchText)||
+            //s.subscriptionType.ToLower().Contains(searchText)||expireDate
+            s.Amount.ToString().ToLower().Contains(searchText)
+            ) 
+            && 
+            s.isActive == tgl_subscriptionState);
 
             RefreshCustomersView();
         }
         async Task<IEnumerable<AgentMembershipCash>> RefreshSubscriptionsList()
         {
             subscriptions = await subscription.GetAll();
-            //subscriptions = subscriptions.Where(s => s.subscriptionType != "o");
+            subscriptions = subscriptions.Where(s => s.subscriptionType != "f");
             return subscriptions;
         }
         void RefreshCustomersView()
@@ -1082,15 +1114,11 @@ namespace Restaurant.View.accounts
                 HelpClass.StartAwait(grid_main);
 
                 if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one"))
-            {
+                {
 
-
-
-
-
-            }
-            else
-                Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }

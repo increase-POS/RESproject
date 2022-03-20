@@ -97,7 +97,7 @@ namespace Restaurant.Classes
         public Nullable<System.DateTime> payDate { get; set; }
         public byte membershipisActive { get; set; }
         public int agentMembershipCashId { get; set; }
-
+        public string subscriptionType { get; set; }
 
         public async Task<List<AgentMembershipCash>> GetAll()
         {
