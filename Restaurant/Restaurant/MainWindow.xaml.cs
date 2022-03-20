@@ -839,6 +839,8 @@ namespace Restaurant
             txt_storage.Text = AppSettings.resourcemanager.GetString("trStore");
             tt_purchase.Content = AppSettings.resourcemanager.GetString("trPurchases");
             txt_purchases.Text = AppSettings.resourcemanager.GetString("trPurchases");
+            tt_kitchen.Content = AppSettings.resourcemanager.GetString("trKitchen");
+            txt_kitchen.Text = AppSettings.resourcemanager.GetString("trKitchen");
             tt_sales.Content = AppSettings.resourcemanager.GetString("trSales");
             txt_sales.Text = AppSettings.resourcemanager.GetString("trSales");
             tt_accounts.Content = AppSettings.resourcemanager.GetString("trAccounting");
