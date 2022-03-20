@@ -2684,7 +2684,8 @@
             <SolidColorBrush x:Key="mediumRed" Color="#E53D29"/>
             <SolidColorBrush x:Key="lightRed" Color="#FCE4D6"/>
             <SolidColorBrush x:Key="Green" Color="#008000"/>
-            <SolidColorBrush x:Key="lightGreen" Color="#E2EFDA"/>
+            <!--<SolidColorBrush x:Key="lightGreen" Color="#E2EFDA"/>-->
+            <SolidColorBrush x:Key="lightGreen" Color="#CAF7B8"/>
             <SolidColorBrush x:Key="GreenTables" Color="#27AE60"/>
             <SolidColorBrush x:Key="BlueTables" Color="#3498DB"/>
 
