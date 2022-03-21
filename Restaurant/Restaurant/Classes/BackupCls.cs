@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using POS;
+using Restaurant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +13,9 @@ using System.Web;
 using System.Security.Claims;
 using System.IO;
 using System.Security.Policy;
+using Restaurant.ApiClasses;
 
-namespace POS.Classes
+namespace Restaurant.Classes
 {
 
     class BackupCls
@@ -58,7 +59,7 @@ namespace POS.Classes
             //newlog.userId = MainWindow.userID;
             //newlog.posId = MainWindow.posID;
 
-            int logId = (int)MainWindow.userLogInID;
+            int logId = (int)MainWindow.userLogin.userId;
             BackupCls item = new BackupCls();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("logId", logId.ToString());
@@ -81,7 +82,7 @@ namespace POS.Classes
             }
             if (item.result == "1")
             {
-                MainWindow.userLogInID = item.logId;
+                MainWindow.userLogin.userId = item.logId;
             }
 
 
@@ -113,7 +114,7 @@ namespace POS.Classes
                     client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
                     HttpRequestMessage request = new HttpRequestMessage();
                     request.RequestUri = new Uri(Global.APIUri + "Backup/GetFile");
-                    request.Headers.Add("APIKey", Global.APIKey);
+                    //request.Headers.Add("APIKey", Global.APIKey);
 
                     request.Method = HttpMethod.Get;
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -176,7 +177,7 @@ namespace POS.Classes
                 client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
                 HttpRequestMessage request = new HttpRequestMessage();
                 request.RequestUri = new Uri(Global.APIUri + "Backup/Getpath?fileName=" + fileName);
-                request.Headers.Add("APIKey", Global.APIKey);
+                //request.Headers.Add("APIKey", Global.APIKey);
 
                 request.Method = HttpMethod.Get;
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
