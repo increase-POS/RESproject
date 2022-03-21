@@ -70,7 +70,7 @@ namespace Restaurant.View.windows
                 #endregion
 
                 #region translate
-                AppSettings.lang = "en";
+                //AppSettings.lang = "en";
                 if (AppSettings.lang.Equals("en"))
                 {
                     AppSettings.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());

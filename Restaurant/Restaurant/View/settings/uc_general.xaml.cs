@@ -745,19 +745,24 @@ namespace Restaurant.View.settings
 
                             if (parentWindow != null)
                             {
-                                //access property of the MainWindow class that exposes the access rights...
-                                if (AppSettings.lang.Equals("en"))
+                            
+
+                            //access property of the MainWindow class that exposes the access rights...
+                            if (AppSettings.lang.Equals("en"))
                                 {
+                                    AppSettings.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                                     parentWindow.grid_mainWindow.FlowDirection = FlowDirection.LeftToRight;
+                                    grid_main.FlowDirection = FlowDirection.LeftToRight;
                                 }
                                 else
                                 {
+                                    AppSettings.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                                     parentWindow.grid_mainWindow.FlowDirection = FlowDirection.RightToLeft;
+                                    grid_main.FlowDirection = FlowDirection.RightToLeft;
                                 }
 
                                 parentWindow.translate();
-
-                                
+                                MainWindow.mainWindow.grid_main.Children.Clear();
                                 MainWindow.loadingDefaultPath("general");
                                 translate();
                             }

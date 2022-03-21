@@ -154,7 +154,7 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (!isPurchase && 
+                if (!isPurchase &&
                (invoice.paid >= invoice.totalNet || (hasCredit == true && creditValue > invoice.totalNet - invoice.paid) || (hasCredit == true && creditValue ==0)))
                 {
                     if (invoice.totalNet - invoice.paid > 0)
@@ -463,8 +463,9 @@ namespace Restaurant.View.windows
         {
             try
             {
-                tb_cash.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#f8f8f8"));
-                p_error_cash.Visibility = Visibility.Collapsed;
+                HelpClass.clearValidate(p_error_cash);
+                //tb_cash.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#f8f8f8"));
+                //p_error_cash.Visibility = Visibility.Collapsed;
                 //listPayments
                 string s = "";
                 cashTrasnfer = new CashTransfer();
@@ -504,7 +505,7 @@ namespace Restaurant.View.windows
 
 
                         if (invoice.paid == invoice.totalNet)
-                            txt_sum.Foreground = Application.Current.Resources["mediumGreen"] as SolidColorBrush;
+                            txt_sum.Foreground = Application.Current.Resources["Green"] as SolidColorBrush;
                         else
                             txt_sum.Foreground = Application.Current.Resources["mediumRed"] as SolidColorBrush;
 
@@ -515,7 +516,7 @@ namespace Restaurant.View.windows
                         HelpClass.SetValidate(p_error_cash, "trAmountGreaterInvoiceValue");
                         //p_error_cash.Visibility = Visibility.Visible;
                         //tt_errorCash.Content = AppSettings.resourcemanager.GetString("trAmountGreaterInvoiceValue");
-                        tb_cash.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#15FF0000"));
+                        //tb_cash.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#15FF0000"));
                     }
                 }
                 else
@@ -523,7 +524,7 @@ namespace Restaurant.View.windows
                     HelpClass.SetValidate(p_error_cash, "trZeroAmmount");
                     //p_errorCash.Visibility = Visibility.Visible;
                     //tt_errorCash.Content = AppSettings.resourcemanager.GetString("trZeroAmmount");
-                    tb_cash.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#15FF0000"));
+                    //tb_cash.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#15FF0000"));
                 }
             }
             catch (Exception ex)
