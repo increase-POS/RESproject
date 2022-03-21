@@ -660,42 +660,46 @@ namespace Restaurant.View.settings
         {//save region
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
-                /*
-                if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
+
+                HelpClass.StartAwait(grid_main);
+                //if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
+                //{
+                int s = 0;
+
+                if (cb_region.Text.Equals(""))
                 {
-                     int s = 0;
-                    HelpClass.validateEmptyComboBox(cb_region, p_errorRegion, tt_errorRegion, "trEmptyRegion");
-                    if (!cb_region.Text.Equals(""))
-                    {
-                        int regionId = Convert.ToInt32(cb_region.SelectedValue);
-                        if (regionId != 0)
-                        {
-                            s = await countryModel.UpdateIsdefault(regionId);
-                            if (!s.Equals(0))
-                            {
-                                //update region and currency in main window
-                                List<CountryCode> c = await countryModel.GetAllRegion();
-                                MainWindow.Region = c.Where(r => r.countryId == s).FirstOrDefault<CountryCode>();
-                                MainWindow.Currency = MainWindow.Region.currency;
-                                MainWindow.CurrencyId = MainWindow.Region.currencyId;
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
-                            }
-                            else
-                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                        }
-                    }
+                    //HelpClass.validateEmptyComboBox(cb_region, p_errorRegion, tt_errorRegion, "trEmptyRegion");
+                    HelpClass.SetValidate(p_error_region, "trEmptyRegion");
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                */
-                    HelpClass.EndAwait(grid_main);
+                {
+                    HelpClass.clearValidate(p_error_region);
+                    int regionId = Convert.ToInt32(cb_region.SelectedValue);
+                    if (regionId != 0)
+                    {
+                        s = await countryModel.UpdateIsdefault(regionId);
+                        if (!s.Equals(0))
+                        {
+                            //update region and currency in main window
+                            List<CountryCode> c = await countryModel.GetAllRegion();
+                            AppSettings.Region = c.Where(r => r.countryId == s).FirstOrDefault<CountryCode>();
+                            AppSettings.Currency = AppSettings.Region.currency;
+                            AppSettings.CurrencyId = AppSettings.Region.currencyId;
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                        }
+                        else
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    }
+                }
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -779,7 +783,7 @@ namespace Restaurant.View.settings
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Btn_tax_Click(object sender, RoutedEventArgs e)
+        private  void Btn_tax_Click(object sender, RoutedEventArgs e)
         {//save Tax
             try
             {
@@ -788,13 +792,10 @@ namespace Restaurant.View.settings
 
                 if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
                 {
-                    
-                     /*
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_taxSetting w = new wd_taxSetting();
                     w.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
-                    */
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -928,23 +929,27 @@ namespace Restaurant.View.settings
             {
                 
                     HelpClass.StartAwait(grid_main);
-                /*
                 if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
                 {
-                    HelpClass.validateEmptyComboBox(cb_dateForm, p_errorDateForm, tt_errorDateForm, "trEmptyDateFormat");
-                    if (!cb_dateForm.Text.Equals(""))
+                    //HelpClass.validateEmptyComboBox(cb_dateForm, p_errorDateForm, tt_errorDateForm, "trEmptyDateFormat");
+                    if (cb_dateForm.Text.Equals(""))
                     {
+                        HelpClass.SetValidate(p_error_dateForm, "trEmptyDateFormat");
+                    }
+                    else
+                    {
+                        HelpClass.clearValidate(p_error_dateForm);
                         if (dateForm == null)
                             dateForm = new SetValues();
 
                         dateForm.value = cb_dateForm.SelectedValue.ToString();
                         dateForm.isSystem = 1;
                         dateForm.settingId = dateFormId;
-                         int s = await valueModel.Save(dateForm);
+                        int s = await valueModel.Save(dateForm);
                         if (!s.Equals(0))
                         {
                             //update dateForm in main window
-                            MainWindow.dateFormat = dateForm.value;
+                            AppSettings.dateFormat = dateForm.value;
 
                             Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
                         }
@@ -954,7 +959,6 @@ namespace Restaurant.View.settings
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                */
                 
                     HelpClass.EndAwait(grid_main);
             }
@@ -993,7 +997,6 @@ namespace Restaurant.View.settings
                 if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
                 {
                     
-                    /*
                     if (cb_backup.SelectedValue.ToString() == "backup")
                     {
                         BackupCls back = new BackupCls();
@@ -1043,7 +1046,6 @@ namespace Restaurant.View.settings
                             }
                         }
                     }
-                    */
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -1156,13 +1158,18 @@ namespace Restaurant.View.settings
             {
                 
                     HelpClass.StartAwait(grid_main);
-                /*
-                if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
+                //if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
+                //{
+
+                if (tb_itemsCost.Text.Equals(""))
                 {
-                    HelpClass.validateEmptyTextBox(tb_itemsCost, p_errorItemsCost, tt_errorItemsCost, "trEmptyItemCost");
-                    if (!tb_itemsCost.Text.Equals(""))
-                    {
-                        if (itemCost == null)
+                    //HelpClass.validateEmptyTextBox(tb_itemsCost, p_errorItemsCost, tt_errorItemsCost, "trEmptyItemCost");
+                    HelpClass.SetValidate(p_error_itemsCost, "trEmptyItemCost");
+                }
+                else
+                {
+                    HelpClass.clearValidate(p_error_itemsCost);
+                    if (itemCost == null)
                             itemCost = new SetValues();
                         itemCost.value = tb_itemsCost.Text;
                         itemCost.isSystem = 1;
@@ -1173,17 +1180,16 @@ namespace Restaurant.View.settings
                         if (!s.Equals(0))
                         {
                             //update item cost in main window
-                            MainWindow.itemCost = int.Parse(itemCost.value);
+                            AppSettings.itemCost = int.Parse(itemCost.value);
 
                             Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
                         }
                         else
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     }
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                */
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 
                     HelpClass.EndAwait(grid_main);
             }
@@ -1296,64 +1302,50 @@ namespace Restaurant.View.settings
         {//save accuracy
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
-                /*
-                if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
-                {
-                    HelpClass.validateEmptyComboBox(cb_accuracy, p_errorAccuracy, tt_errorAccuracy, "trEmptyAccuracy");
-                    if (!cb_accuracy.Text.Equals(""))
-                    {
-                        if (accuracy == null)
-                            accuracy = new SetValues();
-                        accuracy.value = cb_accuracy.SelectedValue.ToString();
-                        accuracy.isSystem = 1;
-                        accuracy.settingId = accuracyId;
-                         int s = await valueModel.Save(accuracy);
-                        if (!s.Equals(0))
-                        {
-                            //update accuracy in main window
-                            MainWindow.accuracy = accuracy.value;
 
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
-                        }
-                        else
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    }
+                HelpClass.StartAwait(grid_main);
+                //if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
+                //{
+
+                if (cb_accuracy.Text.Equals(""))
+                {
+                    //HelpClass.validateEmptyComboBox(cb_accuracy, p_errorAccuracy, tt_errorAccuracy, "trEmptyAccuracy");
+                    HelpClass.SetValidate(p_error_accuracy,  "trEmptyAccuracy");
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                */
-                
-                    HelpClass.EndAwait(grid_main);
+                {
+                    HelpClass.clearValidate(p_error_accuracy);
+
+                    if (accuracy == null)
+                        accuracy = new SetValues();
+                    accuracy.value = cb_accuracy.SelectedValue.ToString();
+                    accuracy.isSystem = 1;
+                    accuracy.settingId = accuracyId;
+                    int s = await valueModel.Save(accuracy);
+                    if (!s.Equals(0))
+                    {
+                        //update accuracy in main window
+                        AppSettings.accuracy = accuracy.value;
+
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                }
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                
-                    HelpClass.StartAwait(grid_main);
-                /*
-                wd_setupServer w = new wd_setupServer();
-                w.ShowDialog();
-                */
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Btn_changePassword_Click(object sender, RoutedEventArgs e)
+       
+        private  void Btn_changePassword_Click(object sender, RoutedEventArgs e)
         {//change password
             try
             {
@@ -1362,14 +1354,10 @@ namespace Restaurant.View.settings
 
                 if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
                 {
-                    /*
                     Window.GetWindow(this).Opacity = 0.2;
                     wd_adminChangePassword w = new wd_adminChangePassword();
                     w.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
-                    */
-                    
-
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
