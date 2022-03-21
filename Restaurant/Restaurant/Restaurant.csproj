@@ -282,6 +282,7 @@
     <Compile Include="converters\posTransfersStatusConverter.cs" />
     <Compile Include="converters\preparingOrderStatusConverter.cs" />
     <Compile Include="converters\processTypeConverter.cs" />
+    <Compile Include="converters\profitToColorConverter.cs" />
     <Compile Include="converters\sectionFreeZoneStorageReportConverter.cs" />
     <Compile Include="converters\SectionLocationFreeZoneConverter.cs" />
     <Compile Include="converters\stockSectionLocationFreeZoneConverter.cs" />
