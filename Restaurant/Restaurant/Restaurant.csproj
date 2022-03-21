@@ -248,6 +248,7 @@
     <Compile Include="Classes\ApiClasses\Unit.cs" />
     <Compile Include="Classes\ApiClasses\userSetValues.cs" />
     <Compile Include="Classes\AppSettings.cs" />
+    <Compile Include="Classes\BackupCls.cs" />
     <Compile Include="Classes\BillDetails.cs" />
     <Compile Include="Classes\CalculateNumberDaysInMonth.cs" />
     <Compile Include="Classes\CatigoriesAndItemsView.cs" />
@@ -634,6 +635,9 @@
     <Compile Include="View\windows\wd_acceptUser.xaml.cs">
       <DependentUpon>wd_acceptUser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_adminChangePassword.xaml.cs">
+      <DependentUpon>wd_adminChangePassword.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_applicationStop.xaml.cs">
       <DependentUpon>wd_applicationStop.xaml</DependentUpon>
     </Compile>
@@ -732,6 +736,9 @@
     </Compile>
     <Compile Include="View\windows\wd_tags.xaml.cs">
       <DependentUpon>wd_tags.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_taxSetting.xaml.cs">
+      <DependentUpon>wd_taxSetting.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_transBetweenOpenClose.xaml.cs">
       <DependentUpon>wd_transBetweenOpenClose.xaml</DependentUpon>
@@ -1270,6 +1277,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\windows\wd_adminChangePassword.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\windows\wd_applicationStop.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1401,6 +1412,10 @@
     <Page Include="View\windows\wd_tags.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_taxSetting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_transBetweenOpenClose.xaml">
       <Generator>MSBuild:Compile</Generator>
