@@ -22,8 +22,10 @@ namespace Restaurant.Classes.ApiClasses
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
 
-        public int sequence { get; set; }
+
+        public Nullable<int> itemId { get; set; }
         public string itemName { get; set; }
+        public int sequence { get; set; }
     }
     public class orderPreparingStatus
     {

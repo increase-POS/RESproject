@@ -702,11 +702,28 @@ namespace Restaurant.Classes
             salesItems = await item.GetAllSalesItems();
             return salesItems;
         }
+        static public async Task<IEnumerable<Item>> FillComboSalesItemsWithDefault(ComboBox cmb)
+        {
+            if (salesItems == null)
+                await RefreshSalesItems();
+
+            var it = new Item();
+            it.itemId = 0;
+            it.name = "-";
+            salesItems.Insert(0, it);
+
+            cmb.ItemsSource = salesItems;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "itemId";
+            cmb.SelectedIndex = -1;
+
+            return salesItems;
+        }
         #endregion
 
         #region Company Info
 
-      
+
         static int nameId, addressId, emailId, mobileId, phoneId, faxId, logoId, taxId;
         public static string logoImage;
         public static string companyName;
@@ -1021,7 +1038,24 @@ namespace Restaurant.Classes
         }
         #endregion
 
-
+        #region preparing Order Status
+        static public void FillPreparingOrderStatusWithDefault(ComboBox cmb)
+        {
+            #region fill process type
+            var typelist = new[] {
+                new { Text = "-"       , Value = "" },
+                new { Text = AppSettings.resourcemanager.GetString("trListed")       , Value = "Listed" },
+                new { Text = AppSettings.resourcemanager.GetString("trPreparing") , Value = "Preparing" },
+                new { Text = AppSettings.resourcemanager.GetString("trReady") , Value = "Ready" },
+                new { Text = AppSettings.resourcemanager.GetString("trCollected") , Value = "Collected" }, 
+                 };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = typelist;
+            cmb.SelectedIndex = 0;
+            #endregion
+        }
+        #endregion
         static public ItemLocation itemLocation = new ItemLocation();
         static public Invoice invoice = new Invoice();
         static public List<Invoice> invoices;

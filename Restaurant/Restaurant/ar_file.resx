@@ -3592,4 +3592,7 @@
   <data name="open" xml:space="preserve">
     <value>فتح</value>
   </data>
+  <data name="trStatusHint" xml:space="preserve">
+    <value>الحالة...</value>
+  </data>
 </root>

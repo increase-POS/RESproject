@@ -56,8 +56,8 @@ namespace Restaurant.View.kitchen
         string updatePermission = "preparingOrders_update";
         OrderPreparing preparingOrder = new OrderPreparing();
         List<OrderPreparing> orders = new List<OrderPreparing>();
-        //IEnumerable<User> users;
-        //byte tgl_userState;
+        List<OrderPreparing> ordersQuery = new List<OrderPreparing>();
+
         string searchText = "";
         public static List<string> requiredControlList;
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -65,26 +65,6 @@ namespace Restaurant.View.kitchen
             Instance = null;
             GC.Collect();
         }
-        #region loading
-        List<keyValueBool> loadingList;
-        //async void loading_fillCustomerCombo()
-        //{
-        //    try
-        //    {
-        //        await FillCombo.FillComboCustomers(cb_customerId);
-        //    }
-        //    catch (Exception)
-        //    { }
-        //    foreach (var item in loadingList)
-        //    {
-        //        if (item.key.Equals("loading_fillCustomerCombo"))
-        //        {
-        //            item.value = true;
-        //            break;
-        //        }
-        //    }
-        //}
-        #endregion
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
@@ -103,10 +83,11 @@ namespace Restaurant.View.kitchen
                 #region loading
                 loadingList = new List<keyValueBool>();
                 bool isDone = true;
-                //loadingList.Add(new keyValueBool { key = "loading_fillCustomerCombo", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_orders", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_salesItems", value = false });
 
-
-                //loading_fillCustomerCombo();
+                loading_orders();
+                loading_salesItems();
                 do
                 {
                     isDone = true;
@@ -125,8 +106,8 @@ namespace Restaurant.View.kitchen
                 }
                 while (!isDone);
                 #endregion
-                await refreshPreparingOrders();
-
+                await Search();
+                FillCombo.FillPreparingOrderStatusWithDefault(cb_searchStatus);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -159,13 +140,42 @@ namespace Restaurant.View.kitchen
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
         }
         #region loading
-        async Task refreshPreparingOrders()
+        List<keyValueBool> loadingList;
+        async Task loading_orders()
         {
-            orders = await preparingOrder.GetPreparingOrdersWithStatus(MainWindow.branchLogin.branchId,"");
-            dg_orders.ItemsSource = orders;
+            //try
+            {
+                await refreshPreparingOrders();
+            }
+            //catch { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_orders"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
         }
+       async Task loading_salesItems()
+        {
+            //try
+            {
+                await FillCombo.FillComboSalesItemsWithDefault(cb_searchCatalog);
+            }
+            //catch { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_salesItems"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+       
         #endregion
-        #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
+        #region Add - Update - Delete  - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         { //add
             try
@@ -193,7 +203,8 @@ namespace Restaurant.View.kitchen
         async Task saveOrderPreparing()
         {          
             #region order status object
-            orderPreparingStatus statusObject = new orderPreparingStatus();           
+            orderPreparingStatus statusObject = new orderPreparingStatus();
+            statusObject.orderPreparingId = preparingOrder.orderPreparingId;
             statusObject.notes = tb_notes.Text;
             statusObject.createUserId = MainWindow.userLogin.userId;
             #endregion
@@ -228,7 +239,7 @@ namespace Restaurant.View.kitchen
 
                 clear();
                 await refreshPreparingOrders();
-
+                await Search();
             }
             else
                 Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -236,24 +247,42 @@ namespace Restaurant.View.kitchen
 
         private void clear()
         {
-            preparingOrder = new OrderPreparing();
-            this.DataContext = preparingOrder;
-            dg_orders.SelectedIndex = -1;
-            itemsList = new List<ItemOrderPreparing>();
-
-            btn_save.IsEnabled = false;
+            try
+            {
+                preparingOrder = new OrderPreparing();
+                this.DataContext = preparingOrder;
+                dg_orders.SelectedIndex = -1;
+                itemsList = new List<ItemOrderPreparing>();
+                BuildOrderItemsDesign();
+                btn_save.IsEnabled = false;
+            }
+            catch { }
         }
 
 
 
         #endregion
         #region events
+        private async void Cb_search_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
-                //await Search();
+                await Search();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -268,7 +297,7 @@ namespace Restaurant.View.kitchen
             try
             {
                 HelpClass.StartAwait(grid_main);
-                Clear();
+                clear();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -315,10 +344,10 @@ namespace Restaurant.View.kitchen
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
-                /*
-                await RefreshUsersList();
+               
+                await refreshPreparingOrders();
                 await Search();
-                */
+               
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -330,53 +359,38 @@ namespace Restaurant.View.kitchen
         }
         #endregion
         #region Refresh & Search
-        /*
+        async Task refreshPreparingOrders()
+        {
+            orders = await preparingOrder.GetPreparingOrdersWithStatus(MainWindow.branchLogin.branchId, "");          
+        }
         async Task Search()
         {
             //search
-            if (users is null)
-                await RefreshUsersList();
+            if (orders is null)
+                await refreshPreparingOrders();
+            ordersQuery = orders.ToList();
+
             searchText = tb_search.Text.ToLower();
-            usersQuery = users.Where(s => (s.name.ToLower().Contains(searchText) ||
-            s.job.ToLower().Contains(searchText)
-            ) && s.isActive == tgl_userState);
-            RefreshCustomersView();
-        }
-        async Task<IEnumerable<User>> RefreshUsersList()
-        {
+            ordersQuery = ordersQuery.Where(s => s.orderNum.ToLower().Contains(searchText) ).ToList();
 
-            users = await user.Get();
-            return users;
-
-        }
-        void RefreshCustomersView()
-        {
-            dg_user.ItemsSource = usersQuery;
-            txt_count.Text = usersQuery.Count().ToString();
-        }
-        */
+            #region seacrch in catalog
+            if (cb_searchCatalog.SelectedIndex > 0)
+                ordersQuery = ordersQuery.Where(c => c.items.Where(p => p.itemId == (int)cb_searchCatalog.SelectedValue).Any()).ToList();
+            #endregion 
+            #region seacrch status
+            if (cb_searchStatus.SelectedIndex >0)
+                ordersQuery = ordersQuery.Where(c => c.status == cb_searchStatus.SelectedValue.ToString()).ToList();
+            #endregion
+            dg_orders.ItemsSource = ordersQuery;
+        }      
         #endregion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
-        void Clear()
-        {
-            //user = new User();
-            //user.workHours = "0";
-            //this.DataContext = user;
-
-
-
-
-            // last 
-            HelpClass.clearValidate(requiredControlList, this);
-        }
         string input;
         decimal _decimal = 0;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             try
             {
-
-
                 //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);
@@ -768,5 +782,7 @@ namespace Restaurant.View.kitchen
             }
         }
         #endregion
+
+        
     }
 }
