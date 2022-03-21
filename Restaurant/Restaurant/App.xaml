@@ -41,6 +41,7 @@
             <converters:closingDescriptonConverter x:Key="closingDescriptonConverter"/>
             <converters:translateConverter x:Key="translateConverter"/>
             <converters:preparingOrderStatusConverter x:Key="preparingOrderStatusConverter"/>
+            <converters:profitToColorConverter x:Key="profitToColorConverter"/>
             
 
 
