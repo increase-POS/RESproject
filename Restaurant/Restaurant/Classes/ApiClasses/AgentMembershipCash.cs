@@ -80,9 +80,7 @@ namespace Restaurant.Classes
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
         public byte isActive { get; set; }
-
         public decimal Amount { get; set; }
-
         public bool canDelete { get; set; }
         public Nullable<int> monthsCount { get; set; }
         public string agentName { get; set; }
@@ -90,7 +88,6 @@ namespace Restaurant.Classes
         public string agentcompany { get; set; }
         public string agenttype { get; set; }
         public string membershipName { get; set; }
-
         public string membershipcode { get; set; }
         public string transType { get; set; }
         public string transNum { get; set; }

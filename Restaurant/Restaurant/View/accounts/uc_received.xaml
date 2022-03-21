@@ -199,7 +199,15 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="*"  Header="Transfer number" Binding="{Binding Path=transNum}"/>
                                 <DataGridTextColumn Width="*"  Header="Depositor" Binding="{Binding Path=.,Converter={StaticResource depositorNameConverter }}"     />
-                                <DataGridTextColumn Width="*"  Header="Process Type"   Binding="{Binding processType,Converter={StaticResource processTypeConverter }}"/>
+                                <!--<DataGridTextColumn Width="*"  Header="Process Type"   Binding="{Binding processType,Converter={StaticResource processTypeConverter }}"/>-->
+                                <DataGridTextColumn x:Name="col_processType"   Width="*" Header="Payment Type"   >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource processTypeAndCardConverter}">
+                                            <Binding Path="processType" />
+                                            <Binding Path="cardName" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Width="*"  Header="Date"          Binding="{Binding updateDate, Converter={StaticResource dateFrameConverter }}"/>
                                 <DataGridTextColumn Width="*"  Header="Cash"  Binding="{Binding Path =cash,Converter={StaticResource accuracyConverter }}"/>
                             </DataGrid.Columns>

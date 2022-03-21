@@ -1106,21 +1106,95 @@ namespace Restaurant.View.accounts
             */
         }
 
-        private void Btn_save_Click(object sender, RoutedEventArgs e)
-        {
-            //save
+        private async void Btn_save_Click(object sender, RoutedEventArgs e)
+        {//save
             try
             {
                 HelpClass.StartAwait(grid_main);
 
                 if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one"))
                 {
+                    //subscription = new AgentMembershipCash();
+                    if (HelpClass.validate(requiredControlList, this))
+                    {
+                        CashTransfer cashtrans = new CashTransfer();
 
+                        int s = await cashtrans.Save(cashtrans);
+                        //save cashTransfer
+                        /*
+                         public int cashTransId { get; set; }
+        public string transType { get; set; }
+        public string transNum { get; set; }
+        public decimal cash { get; set; }
+        public Nullable<int> updateUserId { get; set; }
+        public Nullable<int> createUserId { get; set; }
+        public string notes { get; set; }
+        public string side { get; set; }
+        public string docName { get; set; }
+        public string docNum { get; set; }
+        public string agentName { get; set; }
+        public string processType { get; set; }
+        public Nullable<int> cardId { get; set; }
+        public string cardName { get; set; }// processType=card
+                         */
+                        if (!s.Equals(0))
+                        {
+                            //save agentCash
+                            subscription.Amount = decimal.Parse(tb_amount.Text);
+                            subscription.monthsCount = (int)cb_monthsCount.SelectedValue;
+                            subscription.cashTransId = cashtrans.cashTransId;
+                            subscription.transNum = cashtrans.transNum;
+                            subscription.transType = cashtrans.processType;//??????????
+
+                            int res = await subscription.save(subscription);
+
+                            if (res <= 0)
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            else
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+                                Clear();
+                                await RefreshSubscriptionsList();
+                                await Search();
+                            }
+                        }
+                        /*AgentCash
+            public Nullable<int> subscriptionFeesId { get; set; }
+            public Nullable<int> cashTransId { get; set; }
+            public Nullable<int> membershipId { get; set; }
+            public Nullable<int> agentId { get; set; }
+            public Nullable<System.DateTime> startDate { get; set; }
+            public Nullable<System.DateTime> EndDate { get; set; }
+            public string notes { get; set; }
+            public Nullable<System.DateTime> createDate { get; set; }
+            public Nullable<System.DateTime> updateDate { get; set; }
+            public Nullable<int> createUserId { get; set; }
+            public Nullable<int> updateUserId { get; set; }
+            public byte isActive { get; set; }
+            public decimal Amount { get; set; }
+            public bool canDelete { get; set; }
+            public Nullable<int> monthsCount { get; set; }
+            public string agentName { get; set; }
+            public string agentcode { get; set; }
+            public string agentcompany { get; set; }
+            public string agenttype { get; set; }
+            public string membershipName { get; set; }
+            public string membershipcode { get; set; }
+            public string transType { get; set; }
+            public string transNum { get; set; }
+            public Nullable<System.DateTime> payDate { get; set; }
+            public byte membershipisActive { get; set; }
+            public int agentMembershipCashId { get; set; }
+            public string subscriptionType { get; set; }
+
+                         */
+                    }
+                    else
+                        Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                    HelpClass.EndAwait(grid_main);
                 }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {

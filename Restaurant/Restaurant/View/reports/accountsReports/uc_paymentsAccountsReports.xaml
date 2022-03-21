@@ -674,8 +674,16 @@
                             </DataGrid.Resources>
                             <DataGrid.Columns>
                                 <DataGridTextColumn x:Name="col_tansNum"       Width="*" Header="Transfer Number" Binding="{Binding transNum}"/>
-                                <DataGridTextColumn x:Name="col_processType"   Width="*" Header="Payment Type"    Binding="{Binding processType ,Converter={StaticResource processTypeConverter}}"/>
-                                <DataGridTextColumn x:Name="col_updateUserAcc" Width="*" Header="Accountant"      Binding="{Binding updateUserAcc}"/>
+                                <!--<DataGridTextColumn x:Name="col_processType"   Width="*" Header="Payment Type"    Binding="{Binding processType ,Converter={StaticResource processTypeConverter}}"/>-->
+                                    <DataGridTextColumn x:Name="col_processType"   Width="*" Header="Payment Type"   >
+                                        <DataGridTextColumn.Binding>
+                                            <MultiBinding Converter="{StaticResource processTypeAndCardConverter}">
+                                                <Binding Path="processType" />
+                                                <Binding Path="cardName" />
+                                            </MultiBinding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn x:Name="col_updateUserAcc" Width="*" Header="Accountant"      Binding="{Binding updateUserAcc}"/>
                                 <DataGridTextColumn x:Name="col_agentName"     Width="*" Header="Recipient"       Binding="{Binding agentName}"/>
                                 <DataGridTextColumn x:Name="col_customer"      Width="*" Header="Recipient"       Binding="{Binding Path=. ,Converter={StaticResource agentNameConverter}}"/>
                                 <DataGridTextColumn x:Name="col_user"          Width="*" Header="Recipient"       Binding="{Binding userAcc}"/>

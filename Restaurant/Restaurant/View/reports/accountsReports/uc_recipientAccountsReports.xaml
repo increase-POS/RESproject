@@ -900,10 +900,8 @@
                     <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                     <DataGrid  Margin="5,5,5,17.5"  IsReadOnly="True"  Background="White"
-                     Name="dgPayments" 
-                        AutoGenerateColumns="False" 
-                        ColumnWidth="SizeToHeader"
-                            AlternatingRowBackground="#f3f3f3" AlternationCount="2">
+                               Name="dgPayments" AutoGenerateColumns="False" ColumnWidth="SizeToHeader"
+                               AlternatingRowBackground="#f3f3f3" AlternationCount="2">
                         <DataGrid.OpacityMask>
                             <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
                         </DataGrid.OpacityMask>
@@ -918,7 +916,15 @@
                         </DataGrid.Resources>
                         <DataGrid.Columns>
                         <DataGridTextColumn x:Name="col_tansNum"       Width="*" Header="Transfer Number" Binding="{Binding transNum}"/>
-                        <DataGridTextColumn x:Name="col_processType"   Width="*" Header="Payment Type"    Binding="{Binding processType ,Converter={StaticResource processTypeConverter }}"/>
+                        <!--<DataGridTextColumn x:Name="col_processType"   Width="*" Header="Payment Type"    Binding="{Binding processType ,Converter={StaticResource processTypeConverter }}"/>-->
+                        <DataGridTextColumn x:Name="col_processType"   Width="*" Header="Payment Type"   >
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource processTypeAndCardConverter}">
+                                    <Binding Path="processType" />
+                                    <Binding Path="cardName" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
                         <DataGridTextColumn x:Name="col_updateUserAcc" Width="*" Header="Accountant"      Binding="{Binding updateUserAcc}"/>
                         <DataGridTextColumn x:Name="col_agentName"     Width="*" Header="Depositer"       Binding="{Binding agentName}"/>
                         <DataGridTextColumn x:Name="col_customer"      Width="*" Header="Depositer"       Binding="{Binding Path=. ,Converter={StaticResource agentNameConverter}}"/>

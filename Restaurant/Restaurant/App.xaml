@@ -8,6 +8,7 @@
     <!--StartupUri="MainWindow.xaml"-->
     <Application.Resources>
         <ResourceDictionary>
+            <converters:processTypeAndCardConverter x:Key="processTypeAndCardConverter"/>
             <converters:subscriptionTypeConverter x:Key="subscriptionTypeConverter"/>
             <converters:stockSectionLocationFreeZoneConverter x:Key="stockSectionLocationFreeZoneConverter"/>
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
