@@ -1921,9 +1921,9 @@ namespace Restaurant
                 case "ordersAccounting":
                     grid_main.Children.Add(uc_ordersAccounting.Instance);
                     break;
-                //case "general":
-                //    grid_main.Children.Add(uc_general.Instance);
-                //    break;
+                case "general":
+                    grid_main.Children.Add(uc_general.Instance);
+                    break;
                 case "reportsSettings":
                     grid_main.Children.Add(uc_reportsSettings.Instance);
                     break;
@@ -1949,16 +1949,16 @@ namespace Restaurant
                 //case "takeAway":
                 //    grid_main.Children.Add(uc_takeAway.Instance);
                 //    break;
-                //case "salesStatistic":
-                //    grid_main.Children.Add(uc_salesStatistic.Instance);
-                //    break;
+                case "salesStatistic":
+                    grid_main.Children.Add(uc_salesStatistic.Instance);
+                    break;
                 case "membership":
                     grid_main.Children.Add(uc_membership.Instance);
                     break;
                 case "coupon":
                     grid_main.Children.Add(uc_coupon.Instance);
                     break;
-                //72
+                    //72
                 case "offer":
                     grid_main.Children.Add(uc_offer.Instance);
                     break;
@@ -1969,11 +1969,11 @@ namespace Restaurant
                 //    grid_main.Children.Add(uc_medals.Instance);
                 //    break;
 
-                //75  package
+                    //75  package
                 case "package":
                     grid_main.Children.Add(uc_package.Instance);
                     break;
-                //76  deliveryManagement
+                    //76  deliveryManagement
                 case "deliveryManagement":
                     grid_main.Children.Add(uc_deliveryManagement.Instance);
                     break;
@@ -2152,9 +2152,9 @@ namespace Restaurant
                     grid_main.Children.Add(uc_profitsAccountsReports.Instance);
                     break;
                 //183 closingAccountsReports
-                //case "closingAccountsReports":
-                //    grid_main.Children.Add(uc_closingAccountsReports.Instance);
-                //    break;
+                case "closingAccountsReports":
+                    grid_main.Children.Add(uc_closingAccountsReports.Instance);
+                    break;
                 //184 taxAccountsReports
                 case "taxAccountsReports":
                     grid_main.Children.Add(uc_taxAccountsReports.Instance);
