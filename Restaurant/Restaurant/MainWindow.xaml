@@ -129,8 +129,7 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Separator Margin="5 0" Background="{StaticResource veryLightGrey}" VerticalAlignment="Bottom" Width="auto" 
-                           Grid.ColumnSpan="25"/>
+                
 
                 <Grid >
                     <Grid.ColumnDefinitions>
@@ -148,7 +147,6 @@
 
 
                 </Grid>
-
                 <materialDesign:Badged Grid.Column="1" VerticalAlignment="Center" Margin="10 0"
                     BadgeBackground="{StaticResource MainColorRed}"   BadgeForeground="White" Name="md_transfers" >
                     <Button  x:Name="btn_transfers" Click="Btn_transfers_Click"
@@ -160,7 +158,6 @@
                             Data="{StaticResource POS}"/>
                     </Button>
                 </materialDesign:Badged>
-
                 <Button Grid.Column="3" x:Name="btn_applicationStop" Click="Btn_applicationStop_Click"
                     Height="auto"  VerticalAlignment="Center" Margin="5"
                      Background="{x:Null}" BorderBrush="{x:Null}" 
@@ -173,9 +170,7 @@
                         </DockPanel>
                     </StackPanel>
                 </Button>
-
                 <Border Grid.Column="4" Height="30" BorderBrush="{StaticResource Grey}" BorderThickness="1,0,0,0" Margin="5" VerticalAlignment="Center" ></Border>
-
                 <StackPanel Grid.Column="5" VerticalAlignment="Center" Margin="5">
                     <TextBlock Name="txtTime" Text="05:51PM" HorizontalAlignment="Center" Foreground="{StaticResource SecondColor}"  FontSize="12" ></TextBlock>
                     <TextBlock Name="txtDate" Text="2021/5/1" Foreground="{StaticResource SecondColor}" HorizontalAlignment="Center"  FontSize="12" ></TextBlock>
@@ -212,13 +207,9 @@
                         </Button.Triggers>
                     </Button>
                 </materialDesign:Badged>
-
-
-
-
-                <StackPanel  Margin="0,0,0,0"   Grid.Column="9" VerticalAlignment="Center">
+                <StackPanel  Margin="0,25,0,0"   Grid.Column="9" VerticalAlignment="Center">
                     <Menu Background="#F1F5F8"  Padding="0" VerticalAlignment="Center">
-                        <MenuItem Padding="0,0,0,0" >
+                        <MenuItem Padding="0,0,0,25" >
                             <MenuItem.Header>
                                 <materialDesign:PackIcon Foreground="{StaticResource SecondColor}" Kind="MenuDown" 
                                          Width="25" Height="25"/>
@@ -232,16 +223,18 @@
                             <MenuItem x:Name="mi_changePassword"  Foreground="{StaticResource SecondColor}"  BorderThickness="0,1,0,0" BorderBrush="#DEDEDE"
                               Header="Change Password" Click="Mi_changePassword_Click"
                               Icon="{materialDesign:PackIcon Kind=Password}"></MenuItem>
-                            <Separator Background="{StaticResource SecondColor}" />
-                            <MenuItem x:Name="mi_aboutUs"  Foreground="{StaticResource SecondColor}"  BorderThickness="0,1,0,0" BorderBrush="#DEDEDE"
+                            <!--<Separator Background="{StaticResource SecondColor}" />-->
+                            <MenuItem x:Name="mi_aboutUs"  Foreground="{StaticResource SecondColor}"  BorderThickness="0,1,0,0" BorderBrush="{StaticResource LightGrey}"
                               Header="about us" Click="Mi_aboutUs_Click"
                               Icon="{materialDesign:PackIcon Kind=InfoCircle}"></MenuItem>
-                            <Separator Background="{StaticResource SecondColor}" />
-                            <MenuItem Header="Logout"  Foreground="{StaticResource SecondColor}"  x:Name="BTN_logOut" Click="BTN_logOut_Click" 
+                            <!--<Separator Background="{StaticResource SecondColor}" />-->
+                            <MenuItem Header="Logout"  Foreground="{StaticResource SecondColor}" BorderThickness="0,1,0,0" BorderBrush="{StaticResource LightGrey}"
+                                      x:Name="BTN_logOut" Click="BTN_logOut_Click" 
                          Icon="{materialDesign:PackIcon Kind=ExitToApp}" />
                         </MenuItem>
                     </Menu>
                 </StackPanel>
+
                 <!--<Menu VerticalAlignment="Center" Background="{x:Null}"  Grid.Column="6"
                 IsMainMenu="True" Foreground="White" >
                 <MenuItem  Foreground="White" Icon="{materialDesign:PackIcon Kind=MenuDown}">
@@ -302,7 +295,8 @@
                         <materialDesign:PackIcon Foreground="{StaticResource Red}" Kind="CloseCircle" 
                                          Width="25" Height="25"/>
                 </Button>
-
+                <Separator Margin="5 0" Background="{StaticResource veryLightGrey}" VerticalAlignment="Bottom" Width="auto" 
+                           Grid.ColumnSpan="25"/>
             </Grid>
           
             <Grid  Background="#F1F5F8" x:Name="grid_main" Grid.Row="1" Grid.Column="1"/>
@@ -393,7 +387,7 @@
                     </Button>
                     <StackPanel   x:Name="sp_userName" VerticalAlignment="Center" Orientation="Vertical" Grid.Column="9" Margin="5,5,5,5">
                         <TextBlock x:Name="txt_userName"  Text="yasin idlbi" FontWeight="Bold" FontSize="8" Foreground="White" HorizontalAlignment="Center" />
-                        <TextBlock x:Name="txt_userJob"  Text="{Binding Path=job,Converter={StaticResource userJobConverter}}"   FontSize="{Binding ElementName=txt_userName ,Path=FontSize}" FontWeight="Medium" Foreground="#E8E8E8" HorizontalAlignment="Center" />
+                        <TextBlock x:Name="txt_userJob"  Text="{Binding Path=job,Converter={StaticResource userJobConverter}}"   FontSize="{Binding ElementName=txt_userName ,Path=FontSize}" FontWeight="Medium" Foreground="#DFDFDF" HorizontalAlignment="Center" />
                     </StackPanel>
                         
                     <Grid>
