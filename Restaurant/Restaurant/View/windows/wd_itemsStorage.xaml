@@ -31,7 +31,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="1.2*"/>
                         </Grid.ColumnDefinitions>
-                        <Path Fill="#E8E8E8"    Stretch="Fill"
+                        <Path Fill="#DFDFDF"    Stretch="Fill"
                               HorizontalAlignment="Right" Grid.Column="0"  
                          VerticalAlignment="Center" Width="20" Height="20" FlowDirection="LeftToRight"
                                   Data="{StaticResource storagePackage}"/>

@@ -239,7 +239,7 @@
 
                                     </DockPanel>
 
-                                        <Border Grid.Row="0" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                        <Border Grid.Row="0" Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                             <Grid>
                                                 <ComboBox SelectionChanged="cb_branches_SelectionChanged" 
                                                           Name="cb_branches" 

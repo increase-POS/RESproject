@@ -133,7 +133,7 @@
                                         <RowDefinition Height="auto"></RowDefinition>
                                         <RowDefinition Height="auto"></RowDefinition>
                                     </Grid.RowDefinitions>
-                                    <!--<Border BorderThickness="0,0,0,1" Margin="-10,0,-10,0" BorderBrush="#E8E8E8" HorizontalAlignment="Stretch" Grid.ColumnSpan="6"/>-->
+                                    <!--<Border BorderThickness="0,0,0,1" Margin="-10,0,-10,0" BorderBrush="#DFDFDF" HorizontalAlignment="Stretch" Grid.ColumnSpan="6"/>-->
                                     <Border Grid.Row="1" BorderThickness="15,0,15,0" x:Name="bdrMainStocktake" Height="auto" Background="Transparent">
                                         <Grid>
                                             <Grid x:Name="grid_stocktakingArchived"

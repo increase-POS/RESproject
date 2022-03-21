@@ -31,7 +31,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="1.2*"/>
                         </Grid.ColumnDefinitions>
-                        <Path Fill="#E8E8E8"    Stretch="Fill"
+                        <Path Fill="#DFDFDF"    Stretch="Fill"
                               HorizontalAlignment="Right" Grid.Column="0"  
                          VerticalAlignment="Center" Width="20" Height="20" FlowDirection="LeftToRight"
                                   Data="M21.1,11.9c-0.2,0-0.3-0.1-0.4-0.1h-1.8V1.7c0-0.1-0.1-0.3-0.1-0.4c-0.1-0.1-0.2-0.1-0.4-0.1H5.2
@@ -142,7 +142,7 @@
                                         <Button Margin="-10"   Click="deleteRowFromInvoiceItems"
                                                    Padding="0" ToolTip="Delete" 
                           Background="{x:Null}" BorderBrush="{x:Null}">
-                                            <materialDesign:PackIcon Foreground="#178DD2" Kind="MinusThick"  
+                                            <materialDesign:PackIcon Foreground="{StaticResource Blue}" Kind="MinusThick"  
                               HorizontalAlignment="Center" Grid.Column="0"  
                          VerticalAlignment="Center" Width="17" Height="17"/>
                                         </Button>

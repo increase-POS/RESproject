@@ -214,7 +214,7 @@
                         </DataGrid>
 
                     </Grid>
-                    <Border BorderThickness="0,0,0,1" BorderBrush="#178DD2" Margin="10,0,10,10" Width="auto"
+                    <Border BorderThickness="0,0,0,1" BorderBrush="{StaticResource MainColor}" Margin="10,0,10,10" Width="auto"
                      Grid.RowSpan="2"   HorizontalAlignment="Left" VerticalAlignment="Bottom">
                         <StackPanel  Orientation="Horizontal" >
 
@@ -508,7 +508,7 @@
                         <Button x:Name="btn_clearSerial"  Padding="0" HorizontalAlignment="Right"
                                         Background="{x:Null}" BorderBrush="{x:Null}" 
                                         Margin="5,1,15,1" ToolTip="clear" Click="Btn_clearSerial_Click">
-                            <materialDesign:PackIcon Foreground="#178DD2" Kind="RefreshCircle"  
+                                <materialDesign:PackIcon Foreground="{StaticResource MainColor}" Kind="RefreshCircle"  
                               HorizontalAlignment="Center" Grid.Column="0"  
                          VerticalAlignment="Center" Width="30" Height="30"/>
                         </Button>

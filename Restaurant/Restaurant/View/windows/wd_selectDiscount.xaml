@@ -135,7 +135,7 @@
                             <Button Grid.Column="2" x:Name="btn_clearCoupon"  Padding="0" HorizontalAlignment="Right"
                                         Background="{x:Null}" BorderBrush="{x:Null}" 
                                         Margin="5 5 10 5" ToolTip="clear" Click="Btn_clearCoupon_Click">
-                                <materialDesign:PackIcon Foreground="#178DD2" Kind="RefreshCircle"  
+                                <materialDesign:PackIcon Foreground="{StaticResource MainColor}" Kind="RefreshCircle"  
                               HorizontalAlignment="Center"  
                          VerticalAlignment="Center" Width="30" Height="30"/>
                             </Button>

@@ -141,13 +141,17 @@ namespace Restaurant.View.kitchen
         }
         #region loading
         List<keyValueBool> loadingList;
-        async Task loading_orders()
+        async void loading_orders()
         {
+            //get orders
             //try
-            {
+            //{
                 await refreshPreparingOrders();
-            }
-            //catch { }
+            //}
+            //catch
+            //{
+
+            //}
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_orders"))
@@ -157,12 +161,12 @@ namespace Restaurant.View.kitchen
                 }
             }
         }
-       async Task loading_salesItems()
+       async void loading_salesItems()
         {
             //try
-            {
+            //{
                 await FillCombo.FillComboSalesItemsWithDefault(cb_searchCatalog);
-            }
+            //}
             //catch { }
             foreach (var item in loadingList)
             {

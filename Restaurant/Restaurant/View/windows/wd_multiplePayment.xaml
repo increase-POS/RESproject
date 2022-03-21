@@ -32,7 +32,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="1.2*"/>
                         </Grid.ColumnDefinitions>
-                        <Path Fill="#E8E8E8"    Stretch="Fill"
+                        <Path Fill="#DFDFDF"    Stretch="Fill"
                               HorizontalAlignment="Right" Grid.Column="0"  
                          VerticalAlignment="Center" Width="30" Height="20"
                                   Data="M12.1,33.3c-0.8-0.1-1.7-0.1-2.5,0c-0.8,0-1-0.2-1-1c0-2.3,0-4.6,0-6.9c0-0.6,0.2-0.9,0.8-0.9c1.5,0,2.9-0.3,4.2-1

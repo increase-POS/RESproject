@@ -74,7 +74,7 @@
 
         </Grid>
         <Border BorderThickness="1,0,1,1"  Grid.Row="1" 
-                    CornerRadius="0,0,7,7" BorderBrush="#999999"  Background="#E8E8E8">
+                    CornerRadius="0,0,7,7" BorderBrush="#999999"  Background="#DFDFDF">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />

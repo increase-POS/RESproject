@@ -517,7 +517,7 @@ namespace Restaurant.View.sales.promotion
 
                 tgl_offerState = 1;
                 await Search();
-
+                Clear();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -538,6 +538,7 @@ namespace Restaurant.View.sales.promotion
                 tgl_offerState = 0;
                 await Search();
 
+                Clear();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)

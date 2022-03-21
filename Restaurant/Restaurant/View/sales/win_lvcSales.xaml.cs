@@ -584,26 +584,26 @@ namespace Restaurant.View.sales
             grd_pieChart.Visibility = Visibility.Hidden;
             grd_columnChart.Visibility = Visibility.Hidden;
 
-            icon_rowChar.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#E8E8E8"));
-            icon_columnChar.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#E8E8E8"));
-            icon_pieChar.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#E8E8E8"));
+            icon_rowChar.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#DFDFDF"));
+            icon_columnChar.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#DFDFDF"));
+            icon_pieChar.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#DFDFDF"));
 
             if (selectedChart == 1)
             {
                 grid1.Visibility = Visibility.Visible;
-                icon_rowChar.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#178DD2"));
+                icon_rowChar.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                 fillChart();
             }
             else if (selectedChart == 2)
             {
                 grd_pieChart.Visibility = Visibility.Visible;
-                icon_pieChar.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#178DD2"));
+                icon_pieChar.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                 fillPieChart();
             }
             else if (selectedChart == 3)
             {
                 grd_columnChart.Visibility = Visibility.Visible;
-                icon_columnChar.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#178DD2"));
+                icon_columnChar.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                 fillColumnChart();
             }
         }

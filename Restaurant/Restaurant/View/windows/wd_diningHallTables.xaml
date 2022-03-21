@@ -282,7 +282,7 @@
                                                     <Button Margin="-10"   Click="confirmRowinDatagridReservation"
                                             Padding="0"    
                                             Background="{x:Null}" BorderBrush="{x:Null}">
-                                                        <materialDesign:PackIcon Foreground="#178DD2" Kind="CheckCircle"  
+                                                        <materialDesign:PackIcon Foreground="{StaticResource Blue}" Kind="CheckCircle"  
                                                                  HorizontalAlignment="Center" Grid.Column="0"  
                                                                  VerticalAlignment="Center" Width="25" Height="25"/>
                                                     </Button>

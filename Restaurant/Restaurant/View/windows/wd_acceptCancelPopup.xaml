@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Border CornerRadius="2.5,2.5,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Background="#178DD2"/>
+            <Border CornerRadius="2.5,2.5,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Background="{StaticResource MainColor}"/>
             <TextBlock Grid.Row="1" Grid.ColumnSpan="2"  Text="{Binding contentText }" Foreground="#737373" FontWeight="Bold"  FontSize="14"
                      TextWrapping="Wrap" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Center"  
                         Margin="5"/>
@@ -45,7 +45,7 @@
                         </Button.ToolTip>
                     </Button>
             </Border>
-            <Border Grid.Row="2" Grid.Column="1" Background="#178DD2"  CornerRadius="0,0,2.5,0" >
+            <Border Grid.Row="2" Grid.Column="1" Background="{StaticResource Blue}"  CornerRadius="0,0,2.5,0" >
                 <Button x:Name="btn_ok"  Foreground="White"
                            BorderBrush="{x:Null}" Background="{x:Null}"
                      Click="Btn_ok_Click" >

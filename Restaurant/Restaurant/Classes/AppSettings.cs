@@ -15,7 +15,7 @@ namespace Restaurant.Classes
         public static string lang = "en";
         public static string Reportlang = "en";
 
-        public static string defaultPath = "orderPurchaseReports";
+        public static string defaultPath = "";
 
         internal static int? itemCost;
         public static CountryCode Region;

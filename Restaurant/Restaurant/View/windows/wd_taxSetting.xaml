@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
         <Grid   >
             <Border  BorderThickness="0" Grid.Row="0" 
-                    CornerRadius="7,7,0,0"  Background="#178DD2">
+                    CornerRadius="7,7,0,0"  Background="{StaticResource SecondColor}">
                 <Grid>
                     <Button   IsCancel="true"  HorizontalAlignment="Right" VerticalAlignment="Center" Background="{x:Null}" 
                              BorderBrush="{x:Null}"  Foreground="White" Margin="7.5,0"  x:Name="btn_colse" Click="Btn_colse_Click"
@@ -126,7 +126,7 @@
                 <Button   Grid.Row="5" Grid.ColumnSpan="3"  Content="save" materialDesign:ButtonAssist.CornerRadius="7"
                        Margin="10,2.5" x:Name="btn_save" Click="Btn_save_Click"
                           Foreground="White"
-                          Background="#178DD2" BorderBrush="{x:Null}" />
+                          Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" />
 
             </Grid>
 

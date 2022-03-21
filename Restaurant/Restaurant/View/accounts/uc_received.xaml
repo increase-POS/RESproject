@@ -206,7 +206,7 @@
                         </DataGrid>
 
                     </Grid>
-                    <Border BorderThickness="0,0,0,1" BorderBrush="#178DD2" Margin="10,0,10,10" Width="auto"
+                    <Border BorderThickness="0,0,0,1" BorderBrush="{StaticResource MainColor}" Margin="10,0,10,10" Width="auto"
                      Grid.RowSpan="2"   HorizontalAlignment="Left" VerticalAlignment="Bottom">
                         <StackPanel  Orientation="Horizontal" >
 
@@ -515,7 +515,7 @@
                                     Background="{x:Null}" BorderBrush="{x:Null}" Click="Btn_invoices_Click" VerticalAlignment="Center"      
                                     Margin="5,1,10,1"   ToolTip="invoices" TabIndex="13" IsEnabled="False">
 
-                                <Path Fill="#178DD2" Stretch="Fill"  
+                                <Path Fill="{StaticResource MainColor}" Stretch="Fill"  
                                Width="22.5"  Height="22.5"  FlowDirection="LeftToRight"
                            Data="{StaticResource invoice}"  >
                                     <Path.ToolTip>

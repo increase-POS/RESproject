@@ -334,7 +334,7 @@
                         <DataGridTextColumn x:Name="col_invTaxPercent" Width="*" Header="Tax Percent" Binding="{Binding tax          ,Converter={StaticResource accuracyConverter}}" />
                         <DataGridTextColumn x:Name="col_taxOnInvoice"  Width="*" Header="On Invoice"  Binding="{Binding invTaxVal    ,Converter={StaticResource accuracyConverter}}" >
                             <DataGridTextColumn.Foreground>
-                                <SolidColorBrush Color="#178DD2"/>
+                                            <SolidColorBrush Color="#D35400"/>
                             </DataGridTextColumn.Foreground>
                         </DataGridTextColumn>
                         <DataGridTextColumn x:Name="col_totalNet"        Width="*" Header="Total Net"     Binding="{Binding totalNet     ,Converter={StaticResource accuracyConverter}}" />
@@ -353,7 +353,7 @@
                         <DataGridTextColumn x:Name="col_itemTaxPercent" Width="*" Header="Item Percent" Binding="{Binding ItemTaxes          ,Converter={StaticResource accuracyConverter}}" />
                         <DataGridTextColumn x:Name="col_taxOnItems"     Width="*" Header="On Items"     Binding="{Binding itemUnitTaxwithQTY ,Converter={StaticResource accuracyConverter}}" >
                             <DataGridTextColumn.Foreground>
-                                <SolidColorBrush Color="#178DD2"/>
+                                            <SolidColorBrush Color="#D35400"/>
                             </DataGridTextColumn.Foreground>
                         </DataGridTextColumn>
                         <DataGridTextColumn x:Name="col_totalNetItem"   Width="*" Header="Total Net"     Binding="{Binding subTotalTax     ,Converter={StaticResource accuracyConverter}}" />

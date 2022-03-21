@@ -516,6 +516,7 @@ namespace Restaurant.View.sales.promotion
 
                 await Search();
 
+                Clear();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -537,6 +538,7 @@ namespace Restaurant.View.sales.promotion
 
                 await Search();
 
+                Clear();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)

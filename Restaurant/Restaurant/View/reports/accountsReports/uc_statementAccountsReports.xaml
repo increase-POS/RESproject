@@ -607,7 +607,7 @@
                         </Grid>
 
                     </Border>
-            <Border BorderThickness="0,1,0,0" BorderBrush="#E8E8E8" Background="White" Grid.Row="3" >
+            <Border BorderThickness="0,1,0,0" BorderBrush="#DFDFDF" Background="White" Grid.Row="3" >
                 <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                                     Margin="0,0,10,5"  >
                     <TextBlock Grid.Row="0"   x:Name="txt_for" Foreground="{StaticResource MainColor}" FontWeight="Bold" FontSize="18"  

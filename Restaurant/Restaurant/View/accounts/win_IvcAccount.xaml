@@ -14,7 +14,7 @@
         MouseDown="Window_MouseDown"   
         Unloaded="Window_Unloaded">
 
-    <Border CornerRadius="15" Background="#E8E8E8">
+    <Border CornerRadius="15" Background="#DFDFDF">
         <Grid x:Name="grid_main">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
@@ -24,7 +24,7 @@
             <Border CornerRadius="15,15,0,0" Background="{StaticResource MainColor}">
                 <DockPanel>
                     <Button DockPanel.Dock="Right" Background="Transparent" BorderThickness="0" 
-                            Click="Button_Click">
+                            Click="Button_Click" Foreground="White">
                         <materialDesign:PackIcon Kind="Close" Height="20" Width="20"/>
                     </Button>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -37,26 +37,41 @@
 
             <Border Grid.Row="1" Background="White" CornerRadius="7" Margin="10">
                 <DockPanel LastChildFill="False" >
+                    <Border Grid.Row="0" Grid.Column="1" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        <Grid>
 
-                    <DatePicker  x:Name="dpStrtDate" CalendarClosed="dpStrtDate_CalendarClosed"  BorderBrush="#737373"  BorderThickness="0" 
+                            <DatePicker  x:Name="dpStrtDate" CalendarClosed="dpStrtDate_CalendarClosed"  
                                  Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                                  Padding="10,0,5,10" 
+                                         BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                                  TextBlock.Foreground="#4E4E4E" 
                                  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                  materialDesign:HintAssist.Hint="Start date..."  
-                                 Foreground="#4E4E4E"  TextBlock.FontSize="12"  Background="White"
-                                 Grid.Column="1"  Height="40" Width="125"  Margin="20,5,5,5"/>
-                    <DatePicker x:Name="dpEndDate"   BorderBrush="#737373"  BorderThickness="0" 
+                                 Foreground="#4E4E4E"   
+                                 Grid.Column="1"  Height="40" Width="125"  />
+
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="2" Grid.Column="2"  Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        <Grid>
+
+                            <DatePicker x:Name="dpEndDate"  
                                     TextBlock.Foreground="#4E4E4E"
                                  Grid.Row="2"    Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                                          Padding="10,0,5,10" 
+                                        BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                                  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                  materialDesign:HintAssist.Hint="End date..."  
-                               Foreground="#4E4E4E"  TextBlock.FontSize="12"  Background="White"
+                               Foreground="#4E4E4E"  
                                  HorizontalAlignment="Left" VerticalAlignment="Center" 
-                            Grid.Column="2"  Height="40" Width="125"  Margin="5,5"  CalendarClosed="dpEndDate_CalendarClosed" >
+                            Grid.Column="2"  Height="40" Width="125"  CalendarClosed="dpEndDate_CalendarClosed" >
 
-                    </DatePicker>
+                            </DatePicker>
+
+                        </Grid>
+                    </Border>
+                   
                     <RadioButton x:Name="rdoMonth" Content="Month" IsChecked="True" Style="{StaticResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}" Margin="20,0,0,0" Click="rdoMonth_Click"/>
                     <RadioButton x:Name="rdoYear" Content="Year" Style="{StaticResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}"  Click="rdoYear_Click"/>
 
@@ -95,15 +110,15 @@
                     </Button>
                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
                         <Button x:Name="btn_rowChart" Background="Transparent" BorderThickness="0" Click="btn_rowChart_Click">
-                            <materialDesign:PackIcon Name="icon_rowChar" Kind="ChartBellCurve" Foreground="#178DD2"
+                            <materialDesign:PackIcon Name="icon_rowChar" Kind="ChartBellCurve" Foreground="{StaticResource MainColor}"
                                                          Width="20" Height="20"></materialDesign:PackIcon>
                         </Button>
                         <Button x:Name="btn_pieChart" Background="Transparent" BorderThickness="0" Click="btn_pieChart_Click">
-                            <materialDesign:PackIcon Name="icon_pieChar" Kind="ChartPie" Foreground="#E8E8E8"
+                            <materialDesign:PackIcon Name="icon_pieChar" Kind="ChartPie" Foreground="#DFDFDF"
                                                          Width="20" Height="20"></materialDesign:PackIcon>
                         </Button>
                         <Button x:Name="btn_columnChart" Background="Transparent" BorderThickness="0" Click="btn_columnChart_Click">
-                            <materialDesign:PackIcon Name="icon_columnChar" Kind="ChartBar" Foreground="#E8E8E8"
+                            <materialDesign:PackIcon Name="icon_columnChar" Kind="ChartBar" Foreground="#DFDFDF"
                                                          Width="20" Height="20"></materialDesign:PackIcon>
                         </Button>
                     </StackPanel>
