@@ -275,6 +275,27 @@
                                            HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
+                <Border x:Name="bdr_printCount" Visibility="Collapsed" DockPanel.Dock="Right"   Margin="7.5,10"   CornerRadius="0,0,0,0"  Width="2" BorderThickness="0" Background="{StaticResource LightMainColor}" />
+                <Button Grid.Column="1" DockPanel.Dock="Right" BorderBrush="{x:Null}" Padding="0"  Margin="5,10,5,0" Height="auto"
+                    Background="{x:Null}" x:Name="btn_printCount" Click="Btn_printCount_Click" Visibility="Collapsed" >
+                    <StackPanel>
+                        <Path Fill="#4E4E4E" Stretch="Fill"  
+                       Height="30" Width="30"
+                           Data="M45.2,102.1V78.1c0-8.7,7.3-16,16-16h3.1V48h29.4V6.3c-0.1-2.2-1.8-3.9-4-3.9H5.4c-2.2,0-3.9,1.7-3.9,3.9v104.4
+	c0,2.2,1.7,3.9,3.9,3.9c1,0,2-0.5,2.8-1.2l7.7-7.7l7.7,7.7c1.5,1.5,4,1.5,5.6,0l7.7-7.7l7.7,7.7c1.5,1.5,3.9,1.5,5.4,0.1
+	C47.1,110.6,45.2,106.5,45.2,102.1z M24.2,22h38.9c1.7,0,3.1,1.4,3.1,3.1s-1.4,3.1-3.1,3.1H24.2c-1.6,0-3.1-1.5-3.1-3.1
+	C21.1,23.3,22.5,22,24.2,22z M24.2,37.4h38.9c1.7,0,3.1,1.4,3.1,3.1c0,1.7-1.4,3.1-3.1,3.1H24.2c-1.6,0-3.1-1.4-3.1-3.1
+	C21.1,38.7,22.5,37.4,24.2,37.4z M44.1,58.9H24.2c-1.6,0-3.1-1.4-3.1-3.1c0-1.7,1.4-3.1,3.1-3.1h19.9c1.7,0,3.1,1.4,3.1,3.1
+	C47.2,57.5,45.9,58.9,44.1,58.9z M70.7,111.6v13c0,0.8,0.5,1.4,1.4,1.4h35.6c0.8,0,1.4-0.5,1.4-1.4v-13v-8.2c0-0.8-0.5-1.4-1.4-1.4
+	H72c-0.8,0-1.4,0.5-1.4,1.4V111.6z M75.5,106.7h28.5v4.6H75.5V106.7z M75.5,116.2h28.5v4.6H75.5V116.2z M108.7,68.6V54.5H70.7v14.1
+	v9.5h38.1V68.6z M118.2,68.6h-4.9v9.5V83H66v-4.9v-9.5h-4.9c-5.2,0-9.5,4.3-9.5,9.5v23.9c0,5.2,4.3,9.5,9.5,9.5H66v-9.5v-4.9h47.6
+	v4.9v9.5h4.9c5.2,0,9.5-4.3,9.5-9.5V78.4C127.7,73,123.4,68.6,118.2,68.6z M117.1,74.9L117.1,74.9c0-1.4,1.1-2.7,2.7-2.7l0,0
+	c1.4,0,2.7,1.1,2.7,2.7l0,0c0,1.4-1.1,2.7-2.7,2.7l0,0C118.5,77.6,117.1,76.5,117.1,74.9z"/>
+                        <TextBlock Text="print" x:Name="txt_printCount" Foreground="{StaticResource MainColor}" 
+                                           FontWeight="Regular" FontSize="8" TextAlignment="Center" Width="35"
+                                           HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
 
             </DockPanel>
         </Border>
