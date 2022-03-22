@@ -1097,7 +1097,7 @@ Parameters!trValueDiscount.Value)
             else if (secondTitle == "coupon")
                 secondTitle = AppSettings.resourcemanagerreport.GetString("trCoupons");
             else if (secondTitle == "offers")
-                secondTitle = AppSettings.resourcemanagerreport.GetString("trOffer");
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trOffers");
             else if (secondTitle == "invoice")
                 secondTitle = AppSettings.resourcemanagerreport.GetString("trInvoices");
             else if (secondTitle == "order")
