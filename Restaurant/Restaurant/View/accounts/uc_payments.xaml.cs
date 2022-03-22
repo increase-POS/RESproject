@@ -1266,7 +1266,7 @@ namespace Restaurant.View.accounts
                     {
                         BuildVoucherReport();
 
-                        LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, short.Parse(FillCombo.rep_print_count));
+                        LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
                     }
                 }
                 else
@@ -1473,7 +1473,7 @@ namespace Restaurant.View.accounts
                     #region
                     BuildReport();
 
-                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, short.Parse(FillCombo.rep_print_count));
+                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
                     #endregion
                 }
                 else

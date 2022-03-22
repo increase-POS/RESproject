@@ -596,7 +596,7 @@ namespace Restaurant.View.windows
                 //   D:\mailtemp\images\image-122.png
 
                 //  LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
-                LocalReportExtensions.customPrintToPrinterwh(rep, FillCombo.rep_printer_name, short.Parse(FillCombo.rep_print_count), Width, Height);
+                LocalReportExtensions.customPrintToPrinterwh(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count), Width, Height);
 
 
 

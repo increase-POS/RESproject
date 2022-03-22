@@ -34,18 +34,20 @@ namespace Restaurant.View.windows
             catch (Exception ex)
             { HelpClass.ExceptionMessage(ex, this); }
         }
-        //Classes.Object _object = new Classes.Object();
+        Classes.Object _object = new Classes.Object();
         IEnumerable<Classes.Object> objects = new List<Classes.Object>();
-        //IEnumerable<Classes.Object> firstLevel;
-        //IEnumerable<Classes.Object> secondLevel;
-        //List<Classes.Object> newlist = new List<Classes.Object>();
-        //List<Classes.Object> newlist2 = new List<Classes.Object>();
-        //BrushConverter bc = new BrushConverter();
-        //UserSetValues userSetValuesModel = new UserSetValues();
-        //UserSetValues firstUserSetValue , secondUserSetValue;
-        //SetValues setValuesModel = new SetValues();
-        //List<SetValues> pathLst = new List<SetValues>();
+        IEnumerable<Classes.Object> firstLevel;
+        IEnumerable<Classes.Object> secondLevel;
+        List<Classes.Object> newlist = new List<Classes.Object>();
+        List<Classes.Object> newlist2 = new List<Classes.Object>();
+        BrushConverter bc = new BrushConverter();
+        UserSetValues userSetValuesModel = new UserSetValues();
+        //UserSetValues firstUserSetValue, secondUserSetValue;
+        UserSetValues defaulPathUserSetValue;
+        SetValues setValuesModel = new SetValues();
+        List<SetValues> pathLst = new List<SetValues>();
         //int firstId = 0, secondId = 0;
+        int defaulPathId;
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -63,7 +65,7 @@ namespace Restaurant.View.windows
         {//load
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 #region translate
@@ -77,9 +79,9 @@ namespace Restaurant.View.windows
                 #endregion
                 await RefreshObjects();
 
-               // fillFirstLevel();
+                // fillFirstLevel();
 
-               //await  getUserPath();
+                await getUserPath();
 
 
                 try
@@ -104,12 +106,12 @@ namespace Restaurant.View.windows
                     HelpClass.ExceptionMessage(ex, this);
                 }
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -364,7 +366,6 @@ namespace Restaurant.View.windows
                 objects = objectsLst;
 
         }
-        /*
         private async Task getUserPath()
         {
             #region get user path
@@ -374,100 +375,101 @@ namespace Restaurant.View.windows
             SetValues setValueModel = new SetValues();
 
             List<SetValues> setVLst = await setValueModel.GetBySetName("user_path");
-            firstId  = setVLst[0].valId;
-            secondId = setVLst[1].valId;
+            //firstId  = setVLst[0].valId;
+            //secondId = setVLst[1].valId;
+            defaulPathId = setVLst[0].valId;
             //string firstPath = "" , secondPath = "";
             try
             {
-                firstUserSetValue = lst.Where(u => u.valId == firstId && u.userId == MainWindow.userID).FirstOrDefault();
-                secondUserSetValue = lst.Where(u => u.valId == secondId && u.userId == MainWindow.userID).FirstOrDefault();
+                //firstUserSetValue = lst.Where(u => u.valId == firstId && u.userId == MainWindow.userID).FirstOrDefault();
+                defaulPathUserSetValue = lst.Where(u => u.valId == defaulPathId && u.userId == MainWindow.userLogin.userId).FirstOrDefault();
+                //secondUserSetValue = lst.Where(u => u.valId == secondId && u.userId == MainWindow.userID).FirstOrDefault();
                 
-                foreach(var o in newlist)
-                {
-                    if (o.name.Equals(HelpClass.translate(firstUserSetValue.note) ))
-                    {
-                        cb_firstLevel.SelectedValue = o.objectId;
-                        break;
-                    }
-                }
-                foreach (var o in newlist2)
-                {
-                    if (o.name.Equals(HelpClass.translate(secondUserSetValue.note)))
-                    {
-                        cb_secondLevel.SelectedValue = o.objectId;
-                        break;
-                    }
-                }
+                //foreach(var o in newlist)
+                //{
+                //    if (o.name.Equals(HelpClass.translate(firstUserSetValue.note) ))
+                //    {
+                //        cb_firstLevel.SelectedValue = o.objectId;
+                //        break;
+                //    }
+                //}
+                //foreach (var o in newlist2)
+                //{
+                //    if (o.name.Equals(HelpClass.translate(secondUserSetValue.note)))
+                //    {
+                //        cb_secondLevel.SelectedValue = o.objectId;
+                //        break;
+                //    }
+                //}
                 //cb_firstLevel.SelectedValue = cb_firstLevel.Items.IndexOf(firstUserSetValue.note);
             }
-            catch { cb_firstLevel.SelectedIndex = -1; }
+            catch {/* cb_firstLevel.SelectedIndex = -1;*/ }
            
             #endregion
         }
 
-        private  void fillFirstLevel()
-        {
-            #region fill FirstLevel
-            firstLevel = objects.Where(x => string.IsNullOrEmpty(x.parentObjectId.ToString()) && x.objectType == "basic");
-            newlist = new List<Classes.Object>();
+        //private  void fillFirstLevel()
+        //{
+        //    #region fill FirstLevel
+        //    firstLevel = objects.Where(x => string.IsNullOrEmpty(x.parentObjectId.ToString()) && x.objectType == "basic");
+        //    newlist = new List<Classes.Object>();
 
-            foreach (var row in firstLevel)
-            {
-                Classes.Object newrow = new Classes.Object();
-                        newrow.objectId = row.objectId;
-                newrow.name = HelpClass.translate(row.name);
-                newrow.parentObjectId = row.parentObjectId;
-                newlist.Add(newrow);
-            }
-            //  firstLevel = objects.Where(x => string.IsNullOrEmpty( x.parentObjectId.ToString()) && x.objectType == "basic" );
-            cb_firstLevel.DisplayMemberPath = "name";
-            cb_firstLevel.SelectedValuePath = "objectId";
-            // cb_firstLevel.ItemsSource = firstLevel;
-            cb_firstLevel.ItemsSource = newlist.OrderBy(x => x.name);
+        //    foreach (var row in firstLevel)
+        //    {
+        //        Classes.Object newrow = new Classes.Object();
+        //                newrow.objectId = row.objectId;
+        //        newrow.name = HelpClass.translate(row.name);
+        //        newrow.parentObjectId = row.parentObjectId;
+        //        newlist.Add(newrow);
+        //    }
+        //    //  firstLevel = objects.Where(x => string.IsNullOrEmpty( x.parentObjectId.ToString()) && x.objectType == "basic" );
+        //    cb_firstLevel.DisplayMemberPath = "name";
+        //    cb_firstLevel.SelectedValuePath = "objectId";
+        //    // cb_firstLevel.ItemsSource = firstLevel;
+        //    cb_firstLevel.ItemsSource = newlist.OrderBy(x => x.name);
 
-            #endregion
+        //    #endregion
 
 
-        }
-        private  void Cb_firstLevel_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                ComboBox combo = sender as ComboBox;
-                secondLevel = objects.Where(x => x.parentObjectId == (int)cb_firstLevel.SelectedValue);
+        //}
+        //private  void Cb_firstLevel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        ComboBox combo = sender as ComboBox;
+        //        secondLevel = objects.Where(x => x.parentObjectId == (int)cb_firstLevel.SelectedValue);
 
-                if (secondLevel.Count() > 0)
-                {
-                    cb_secondLevel.IsEnabled = true;
+        //        if (secondLevel.Count() > 0)
+        //        {
+        //            cb_secondLevel.IsEnabled = true;
                     
-                    #region fill secondLevel
+        //            #region fill secondLevel
 
-                    newlist2 = new List<Classes.Object>();
-                    foreach (var row in secondLevel)
-                    {
-                        Classes.Object newrow = new Classes.Object();
-                        newrow.objectId = row.objectId;
-                        newrow.name = HelpClass.translate(row.name);
-                        newrow.parentObjectId = row.parentObjectId;
-                        newlist2.Add(newrow);
-                    }
-                    //secondLevel = objects.Where(x => x.parentObjectId == (int)cb_firstLevel.SelectedValue);
-                    cb_secondLevel.DisplayMemberPath = "name";
-                    cb_secondLevel.SelectedValuePath = "objectId";
-                    //cb_secondLevel.ItemsSource = secondLevel;
-                    cb_secondLevel.ItemsSource = newlist2.OrderBy(x => x.name);
+        //            newlist2 = new List<Classes.Object>();
+        //            foreach (var row in secondLevel)
+        //            {
+        //                Classes.Object newrow = new Classes.Object();
+        //                newrow.objectId = row.objectId;
+        //                newrow.name = HelpClass.translate(row.name);
+        //                newrow.parentObjectId = row.parentObjectId;
+        //                newlist2.Add(newrow);
+        //            }
+        //            //secondLevel = objects.Where(x => x.parentObjectId == (int)cb_firstLevel.SelectedValue);
+        //            cb_secondLevel.DisplayMemberPath = "name";
+        //            cb_secondLevel.SelectedValuePath = "objectId";
+        //            //cb_secondLevel.ItemsSource = secondLevel;
+        //            cb_secondLevel.ItemsSource = newlist2.OrderBy(x => x.name);
 
-                    #endregion
-                }
-                else
-                    cb_secondLevel.IsEnabled = false;
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        */
+        //            #endregion
+        //        }
+        //        else
+        //            cb_secondLevel.IsEnabled = false;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
+        //}
         private void translate()
         {
             txt_title.Text = AppSettings.resourcemanager.GetString("trUserPath");
@@ -545,71 +547,80 @@ namespace Restaurant.View.windows
         {//save
 
             //save this in AppSettings.defaultPath
-            MessageBox.Show(_parentObjectName);
+            //MessageBox.Show(_parentObjectName);
 
-                /*
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
-                #region validate
-                HelpClass.validateEmptyComboBox(cb_firstLevel , p_errorFirstLevel , tt_errorFirstLevel , "trFirstPath");
-                HelpClass.validateEmptyComboBox(cb_secondLevel, p_errorSecondLevel, tt_errorSecondLevel, "trSecondPath");
-                #endregion
+                //#region validate
+                //HelpClass.validateEmptyComboBox(cb_firstLevel , p_errorFirstLevel , tt_errorFirstLevel , "trFirstPath");
+                //HelpClass.validateEmptyComboBox(cb_secondLevel, p_errorSecondLevel, tt_errorSecondLevel, "trSecondPath");
+                //#endregion
                 #region save
-                if ((!cb_firstLevel.Text.Equals("")) && (!cb_firstLevel.Text.Equals("")))
-                {
-                    string first = objects.Where(x => x.objectId == (int)cb_firstLevel.SelectedValue).FirstOrDefault().name.ToString();
-                    string second = objects.Where(x => x.objectId == (int)cb_secondLevel.SelectedValue).FirstOrDefault().name.ToString();
+                //if ((!cb_firstLevel.Text.Equals("")) && (!cb_firstLevel.Text.Equals("")))
+                //{
+                    //string first = objects.Where(x => x.objectId == (int)cb_firstLevel.SelectedValue).FirstOrDefault().name.ToString();
+                    //string second = objects.Where(x => x.objectId == (int)cb_secondLevel.SelectedValue).FirstOrDefault().name.ToString();
                
                     //save first path
-                    if(firstUserSetValue == null)
-                        firstUserSetValue = new UserSetValues();
+                    if(defaulPathUserSetValue == null)
+                        defaulPathUserSetValue = new UserSetValues();
 
-                    firstUserSetValue.userId = MainWindow.userID;
-                    firstUserSetValue.valId = firstId;
-                    firstUserSetValue.note = first;
-                    firstUserSetValue.createUserId = MainWindow.userID;
-                    firstUserSetValue.updateUserId = MainWindow.userID;
-                    int res1 = await userSetValuesModel.Save(firstUserSetValue);
+                    defaulPathUserSetValue.userId = MainWindow.userLogin.userId;
+                    defaulPathUserSetValue.valId = defaulPathId;
+                    defaulPathUserSetValue.note = _parentObjectName;
+                    defaulPathUserSetValue.createUserId = MainWindow.userLogin.userId;
+                    defaulPathUserSetValue.updateUserId = MainWindow.userLogin.userId;
+                    int res1 = await userSetValuesModel.Save(defaulPathUserSetValue);
 
-                    //save second path
-                    if(secondUserSetValue == null)
-                        secondUserSetValue = new UserSetValues();
+                    ////save second path
+                    //if(secondUserSetValue == null)
+                    //    secondUserSetValue = new UserSetValues();
 
-                    secondUserSetValue.userId = MainWindow.userID;
-                    secondUserSetValue.valId = secondId;
-                    secondUserSetValue.note = second;
-                    secondUserSetValue.createUserId = MainWindow.userID;
-                    secondUserSetValue.updateUserId = MainWindow.userID;
-                   int res2 = await userSetValuesModel.Save(secondUserSetValue);
-
+                    //secondUserSetValue.userId = MainWindow.userID;
+                    //secondUserSetValue.valId = secondId;
+                    //secondUserSetValue.note = second;
+                    //secondUserSetValue.createUserId = MainWindow.userID;
+                    //secondUserSetValue.updateUserId = MainWindow.userID;
+                   //int res2 = await userSetValuesModel.Save(secondUserSetValue);
+                   /*
                     if ((res1 > 0) && (res2 > 0))
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
                         MainWindow.firstPath = first;
                         MainWindow.secondPath = second;
                        // MainWindow.first = res1;
-//MainWindow.second = res2;
+                       //MainWindow.second = res2;
                         await Task.Delay(1500);
                         this.Close();
                     }
                     else
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    */
+                if (res1 > 0)
+                {
+                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                    AppSettings.defaultPath = _parentObjectName;
+                    await Task.Delay(1500);
+                    this.Close();
                 }
+                else
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+
+                //}
                 #endregion
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
             //+ $"Second: {objects.Where(x => x.objectId == (int)cb_secondLevel.SelectedValue).FirstOrDefault().name}");
-            */
         }
 
     }

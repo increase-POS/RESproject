@@ -182,7 +182,7 @@ namespace Restaurant.View.windows
                 msg = await setvalueModel.Save(rep_copy_countrow);
 
                 await refreshWindow();
-                await FillCombo.Getprintparameter();
+                await MainWindow.Getprintparameter();
                 if (msg > 0)
                 {
                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);

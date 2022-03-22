@@ -480,7 +480,7 @@ namespace Restaurant.View.windows
             msg = await Saveprinters();
 
             await refreshWindow();
-            await FillCombo.getPrintersNames();
+            await MainWindow.getPrintersNames();
             if (int.Parse(msg) > 0)
             {
                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
