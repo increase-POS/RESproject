@@ -136,6 +136,18 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
            return await APIResult.post(method, parameters);
         }
+        public async Task<int> Savepay(AgentMembershipCash item,CashTransfer cashtransferobject)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "AgentMembershipCash/Savepay";
+            var myContent = JsonConvert.SerializeObject(item);
+            parameters.Add("itemObject", myContent);
+            var myContent2 = JsonConvert.SerializeObject(cashtransferobject);
+            parameters.Add("cashtransferobject", myContent2);
+            item.agentMembershipCashId
+            return await APIResult.post(method, parameters);
+            //return  item.agentMembershipCashId
+        }
         public async Task<int> delete(int itemId, int userId, Boolean final)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
