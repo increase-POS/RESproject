@@ -762,7 +762,8 @@ namespace Restaurant.View.reports.accountsReports
             if (selectedTab == 1)
             {
                 temp = temp.Where(t => (t.shippingCompanyId == null && t.userId == null && t.agentId != null) ||
-                                       (t.shippingCompanyId != null && t.userId != null && t.agentId != null));
+                                       (t.shippingCompanyId != null && t.userId != null && t.agentId != null) ||
+                                        t.agentId == null);
             }
             else if (selectedTab == 6)
             {

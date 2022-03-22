@@ -294,6 +294,7 @@
     <Compile Include="converters\translateConverter.cs" />
     <Compile Include="converters\transTypeConverter.cs" />
     <Compile Include="converters\unitItemsListConverter.cs" />
+    <Compile Include="converters\unknownAgentConverter.cs" />
     <Compile Include="converters\unlimitedCouponConverter.cs" />
     <Compile Include="converters\userJobConverter.cs" />
     <Compile Include="en_file.Designer.cs" />

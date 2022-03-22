@@ -2868,8 +2868,9 @@ namespace Restaurant.Classes
             //public string VendorName { get => vendorName; set => vendorName = value; }
             public string VendorName
             {
-                get => vendorName == null ? vendorName = AppSettings.resourcemanager.GetString("trCashCustomer")
-                    : vendorName;
+                get => vendorName == null ? (side == "c" ? vendorName = AppSettings.resourcemanager.GetString("trCashCustomer")
+                                                        : vendorName = AppSettings.resourcemanager.GetString("trUnKnown"))
+                   : vendorName;
                 set => vendorName = value;
             }
             public string Side { get => side; set => side = value; }

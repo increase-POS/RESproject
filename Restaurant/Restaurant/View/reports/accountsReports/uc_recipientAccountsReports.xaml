@@ -926,9 +926,9 @@
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
                         <DataGridTextColumn x:Name="col_updateUserAcc" Width="*" Header="Accountant"      Binding="{Binding updateUserAcc}"/>
-                        <DataGridTextColumn x:Name="col_agentName"     Width="*" Header="Depositer"       Binding="{Binding agentName}"/>
-                        <DataGridTextColumn x:Name="col_customer"      Width="*" Header="Depositer"       Binding="{Binding Path=. ,Converter={StaticResource agentNameConverter}}"/>
-                        <DataGridTextColumn x:Name="col_user"          Width="*" Header="Depositer"       Binding="{Binding userAcc}"/>
+                                    <DataGridTextColumn x:Name="col_agentName"     Width="*" Header="Depositer"       Binding="{Binding Path = agentName ,Converter={StaticResource unknownAgentConverter}}"/>
+                                    <DataGridTextColumn x:Name="col_customer"      Width="*" Header="Depositer"       Binding="{Binding Path=. ,Converter={StaticResource agentNameConverter}}"/>
+                                    <DataGridTextColumn x:Name="col_user"          Width="*" Header="Depositer"       Binding="{Binding userAcc}"/>
                         <DataGridTextColumn x:Name="col_shipping"      Width="*" Header="Shipping"        Binding="{Binding shippingCompanyName}"/>
                         <DataGridTextColumn x:Name="col_company"       Width="*" Header="Company"         Binding="{Binding Path=. ,Converter={StaticResource agentCompanyConverter}}"/>
                         <DataGridTextColumn x:Name="col_updateDate"    Width="*" Header="Date"            Binding="{Binding updateDate,Converter={StaticResource dateFrameConverter }}"/>

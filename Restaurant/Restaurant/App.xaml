@@ -8,6 +8,7 @@
     <!--StartupUri="MainWindow.xaml"-->
     <Application.Resources>
         <ResourceDictionary>
+            <converters:unknownAgentConverter x:Key="unknownAgentConverter"/>
             <converters:processTypeAndCardConverter x:Key="processTypeAndCardConverter"/>
             <converters:subscriptionTypeConverter x:Key="subscriptionTypeConverter"/>
             <converters:stockSectionLocationFreeZoneConverter x:Key="stockSectionLocationFreeZoneConverter"/>

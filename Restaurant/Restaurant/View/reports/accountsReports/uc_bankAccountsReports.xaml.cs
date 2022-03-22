@@ -102,10 +102,10 @@ namespace Restaurant.View.reports.accountsReports
 
         private void translate()
         {
-            tt_payments.Content = AppSettings.resourcemanager.GetString("trPayments");
-            tt_recipient.Content = AppSettings.resourcemanager.GetString("trReceived");
+            tt_payments.Content = AppSettings.resourcemanager.GetString("trPull");
+            tt_recipient.Content = AppSettings.resourcemanager.GetString("trDeposit");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_paymentsBank, AppSettings.resourcemanager.GetString("trPayment") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_paymentsBank, AppSettings.resourcemanager.GetString("trBank") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_paymentsUser, AppSettings.resourcemanager.GetString("trUser") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_paymentsAccountant, AppSettings.resourcemanager.GetString("trAccoutant") + "...");
 
