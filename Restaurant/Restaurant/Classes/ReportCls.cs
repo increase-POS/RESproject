@@ -330,11 +330,11 @@ namespace Restaurant.Classes
                 title = AppSettings.resourcemanagerreport.GetString("trReceiptVoucher");
 
 
-            string company_name = FillCombo.companyName;
-            string comapny_address = FillCombo.Address;
-            string company_phone = FillCombo.Phone;
-            string company_fax = FillCombo.Fax;
-            string company_email = FillCombo.Email;
+            string company_name = AppSettings.companyName;
+            string comapny_address = AppSettings.Address;
+            string company_phone = AppSettings.Phone;
+            string company_fax = AppSettings.Fax;
+            string company_email = AppSettings.Email;
             //   string company_logo_img = GetLogoImagePath();
             //string amount = cashtrans.cash.ToString();
             string amount = DecTostring(cashtrans.cash);
@@ -611,7 +611,7 @@ namespace Restaurant.Classes
         {
             try
             {
-                string imageName = FillCombo.logoImage;
+                string imageName = AppSettings.logoImage;
                 string dir = Directory.GetCurrentDirectory();
                 string tmpPath = Path.Combine(dir, @"Thumb\setting");
                 tmpPath = Path.Combine(tmpPath, imageName);

@@ -720,7 +720,7 @@ namespace Restaurant.Classes
             return salesItems;
         }
         #endregion
-
+        /*
         #region Company Info
 
 
@@ -944,6 +944,7 @@ namespace Restaurant.Classes
 
 
         #endregion
+        */
         #region coupon
         static public Coupon coupon = new Coupon();
         static public void fillDiscountType(ComboBox cmb)
@@ -1060,8 +1061,7 @@ namespace Restaurant.Classes
         static public Invoice invoice = new Invoice();
         static public List<Invoice> invoices;
         static public ShippingCompanies ShipCompany = new ShippingCompanies();
-       
 
-
+        
     }
 }
