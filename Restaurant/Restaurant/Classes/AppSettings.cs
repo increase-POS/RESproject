@@ -22,7 +22,8 @@ namespace Restaurant.Classes
         public static string Currency = "KD";
         public static int CurrencyId;
 
-
+        public static string logoImage;
+        static public int nameId, addressId, emailId, mobileId, phoneId, faxId, logoId, taxId;
         public static string companyName;
         public static string Email;
         public static string Fax;
@@ -43,7 +44,8 @@ namespace Restaurant.Classes
         public static string docPapersize;
         public static string Allow_print_inv_count;
         public static string show_header;
-
+        public static string print_on_save_directentry;
+        public static string directentry_copy_count;
         internal static int? isInvTax;
         internal static decimal? tax;
         //tax
@@ -51,9 +53,14 @@ namespace Restaurant.Classes
         internal static decimal? invoiceTax_decimal = 5;
         internal static bool? itemsTax_bool = true;
         internal static decimal? itemsTax_decimal;
+        internal static string itemtax_note;
+        internal static string sales_invoice_note;
+        
+        
 
         internal static string dateFormat;
         internal static string accuracy;
+        internal static decimal? StorageCost;
         internal static string timeFormat;
         // hour
         static public double time_staying = 3;
@@ -61,6 +68,11 @@ namespace Restaurant.Classes
         static public double maximumTimeToKeepReservation = 3;
         // minutes
         static public int warningTimeForLateReservation = 30;
+
+        static public PosSetting posSetting = new PosSetting();
+        static public List<Pos> posList = new List<Pos>();
+        static public SettingCls setModel = new SettingCls();
+        static public SetValues valueModel = new SetValues();
 
     }
 }

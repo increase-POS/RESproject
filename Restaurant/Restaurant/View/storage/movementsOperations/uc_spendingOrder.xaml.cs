@@ -740,7 +740,7 @@ namespace Restaurant.View.storage.movementsOperations
 
             this.Dispatcher.Invoke(() =>
             {
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, AppSettings.rep_print_count == null ? short.Parse("1") : short.Parse(AppSettings.rep_print_count));
             });
         }
         private void PdfRep()

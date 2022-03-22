@@ -387,14 +387,551 @@ namespace Restaurant
                 }
             }
         }
-
-
         #endregion
 
+        async void loading_getUserPath()
+        {
+            #region get user path
+            try
+            {
+                UserSetValues uSetValueModel = new UserSetValues();
+                List<UserSetValues> lst = await uSetValueModel.GetAll();
 
+                SetValues setValueModel = new SetValues();
 
+                List<SetValues> setVLst = await setValueModel.GetBySetName("user_path");
+                if (setVLst.Count > 0)
+                {
+                    int defaultPathId = setVLst[0].valId;
+                    AppSettings.defaultPath = lst.Where(u => u.valId == defaultPathId && u.userId == userLogin.userId).FirstOrDefault().note;
+                }
+                else
+                {
+                    AppSettings.defaultPath = "";
+                }
+            }
+            catch
+            {
+                AppSettings.defaultPath = "";
+            }
+            #endregion
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getUserPath"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+
+        async void loading_getItemCost()
+        {
+            //get item cost
+            try
+            {
+               AppSettings.itemCost = int.Parse(await getDefaultItemCost());
+            }
+            catch
+            {
+                AppSettings.itemCost = 0;
+            }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getItemCost"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_getPrintCount()
+        {
+            //get print count
+            try
+            {
+                AppSettings.Allow_print_inv_count = await getDefaultPrintCount();
+            }
+            catch
+            {
+                AppSettings.Allow_print_inv_count = "1";
+            }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getPrintCount"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_getTaxDetails()
+        {
+            try
+            {
+
+                // List<SettingCls> settingsCls = await setModel.GetAll();
+                //  List<SetValues> settingsValues = await valueModel.GetAll();
+                List<SetValues> settingsValues = await AppSettings.valueModel.GetBySetvalNote("tax");
+                //    SettingCls set = new SettingCls();
+                SetValues setV = new SetValues();
+
+                #region get invoice tax bool
+                //get invoice tax bool
+                //   set = settingsCls.Where(s => s.name == "invoiceTax_bool").FirstOrDefault<SettingCls>();
+                setV = settingsValues.Where(i => i.name == "invoiceTax_bool").FirstOrDefault();
+                if (setV != null)
+                    AppSettings.invoiceTax_bool = bool.Parse(setV.value);
+                else
+                    AppSettings.invoiceTax_bool = false;
+
+                #endregion
+
+                #region  get invoice tax decimal
+                //get invoice tax decimal
+                //  set = settingsCls.Where(s => s.name == "invoiceTax_decimal").FirstOrDefault<SettingCls>();
+
+                setV = settingsValues.Where(i => i.name == "invoiceTax_decimal").FirstOrDefault();
+                if (setV != null)
+                    AppSettings.invoiceTax_decimal = decimal.Parse(setV.value);
+                else
+                    AppSettings.invoiceTax_decimal = 0;
+                #endregion
+
+                #region  get item tax bool
+                //get item tax bool
+                //  set = settingsCls.Where(s => s.name == "itemsTax_bool").FirstOrDefault<SettingCls>();// itemsTax_bool
+                setV = settingsValues.Where(i => i.name == "itemsTax_bool").FirstOrDefault();
+                if (setV != null)
+                    AppSettings.itemsTax_bool = bool.Parse(setV.value);
+                else
+                    AppSettings.itemsTax_bool = false;
+
+                #endregion
+
+                #region get item tax decimal
+
+                ////get item tax decimal
+                //set = settingsCls.Where(s => s.name == "itemsTax_decimal").FirstOrDefault<SettingCls>();
+                //setV = settingsValues.Where(i => i.settingId == set.settingId).FirstOrDefault();
+                //if (setV != null)
+                //    itemsTax_decimal = decimal.Parse(setV.value);
+                //else
+                //    itemsTax_decimal = 0;
+
+                #endregion
+
+            }
+            catch (Exception)
+            {
+                AppSettings.invoiceTax_bool = false;
+                AppSettings.invoiceTax_decimal = 0;
+                AppSettings.itemsTax_bool = false;
+                AppSettings.itemsTax_decimal = 0;
+            }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getTaxDetails"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+
+        }
+       public async void loading_getDefaultSystemInfo()
+        {
+            try
+            {
+                List<SettingCls> settingsCls = await AppSettings.setModel.GetAll();
+                List<SetValues> settingsValues = await AppSettings.valueModel.GetAll();
+                SettingCls set = new SettingCls();
+                SetValues setV = new SetValues();
+                List<char> charsToRemove = new List<char>() { '@', '_', ',', '.', '-' };
+                #region get company name
+                Thread t1 = new Thread(() =>
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        //get company name
+                        set = settingsCls.Where(s => s.name == "com_name").FirstOrDefault<SettingCls>();
+                        AppSettings.nameId = set.settingId;
+                        setV = settingsValues.Where(i => i.settingId == AppSettings.nameId).FirstOrDefault();
+                        if (setV != null)
+                            AppSettings.companyName = setV.value;
+
+                    });
+                });
+                t1.Start();
+                #endregion
+
+                #region  get company address
+                Thread t2 = new Thread(() =>
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        //get company address
+                        set = settingsCls.Where(s => s.name == "com_address").FirstOrDefault<SettingCls>();
+                        AppSettings.addressId = set.settingId;
+                        setV = settingsValues.Where(i => i.settingId == AppSettings.addressId).FirstOrDefault();
+                        if (setV != null)
+                            AppSettings.Address = setV.value;
+                    });
+                });
+                t2.Start();
+                #endregion
+
+                #region  get company email
+                Thread t3 = new Thread(() =>
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        //get company email
+                        set = settingsCls.Where(s => s.name == "com_email").FirstOrDefault<SettingCls>();
+                        AppSettings.emailId = set.settingId;
+                        setV = settingsValues.Where(i => i.settingId == AppSettings.emailId).FirstOrDefault();
+                        if (setV != null)
+                            AppSettings.Email = setV.value;
+                    });
+                });
+                t3.Start();
+                #endregion
+
+                #region  get company mobile
+                Thread t4 = new Thread(() =>
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        //get company mobile
+                        set = settingsCls.Where(s => s.name == "com_mobile").FirstOrDefault<SettingCls>();
+                        AppSettings.mobileId = set.settingId;
+                        setV = settingsValues.Where(i => i.settingId == AppSettings.mobileId).FirstOrDefault();
+                        if (setV != null)
+                        {
+                            charsToRemove.ForEach(x => setV.value = setV.value.Replace(x.ToString(), String.Empty));
+                            AppSettings.Mobile = setV.value;
+                        }
+                    });
+                });
+                t4.Start();
+                #endregion
+
+                #region  get company phone
+                Thread t5 = new Thread(() =>
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        //get company phone
+                        set = settingsCls.Where(s => s.name == "com_phone").FirstOrDefault<SettingCls>();
+                        AppSettings.phoneId = set.settingId;
+                        setV = settingsValues.Where(i => i.settingId == AppSettings.phoneId).FirstOrDefault();
+                        if (setV != null)
+                        {
+                            charsToRemove.ForEach(x => setV.value = setV.value.Replace(x.ToString(), String.Empty));
+                            AppSettings.Phone = setV.value;
+                        }
+                    });
+                });
+                t5.Start();
+                #endregion
+
+                #region  get company fax
+                Thread t6 = new Thread(() =>
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        //get company fax
+                        set = settingsCls.Where(s => s.name == "com_fax").FirstOrDefault<SettingCls>();
+                        AppSettings.faxId = set.settingId;
+                        setV = settingsValues.Where(i => i.settingId == AppSettings.faxId).FirstOrDefault();
+                        if (setV != null)
+                        {
+                            charsToRemove.ForEach(x => setV.value = setV.value.Replace(x.ToString(), String.Empty));
+                            AppSettings.Fax = setV.value;
+                        }
+                    });
+                });
+                t6.Start();
+                #endregion
+
+                #region   get company logo
+                //get company logo
+                set = settingsCls.Where(s => s.name == "com_logo").FirstOrDefault<SettingCls>();
+                AppSettings.logoId = set.settingId;
+                setV = settingsValues.Where(i => i.settingId == AppSettings.logoId).FirstOrDefault();
+                if (setV != null)
+                {
+                    AppSettings.logoImage = setV.value;
+                    await setV.getImg(AppSettings.logoImage);
+                }
+                #endregion
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getDefaultSystemInfo"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+
+        }
+        async void loading_getDateForm()
+        {
+            //get dateform
+            try
+            {
+                AppSettings.dateFormat = await getDefaultDateForm();
+            }
+            catch
+            {
+                AppSettings.dateFormat = "ShortDatePattern";
+            }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getDateForm"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_getRegionAndCurrency()
+        {
+            //get region and currency
+            try
+            {
+                CountryCode c = await getDefaultRegion();
+                AppSettings.Region = c;
+                AppSettings.Currency = c.currency;
+                AppSettings.CurrencyId = c.currencyId;
+                txt_cashSympol.Text = AppSettings.Currency;
+
+            }
+            catch
+            {
+
+            }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getRegionAndCurrency"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_getStorageCost()
+        {
+            //get storage cost
+            try
+            {
+                AppSettings.StorageCost = decimal.Parse(await getDefaultStorageCost());
+            }
+            catch
+            {
+                AppSettings.StorageCost = 0;
+            }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getStorageCost"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_getAccurac()
+        {
+            //get accuracy
+            try
+            {
+                AppSettings.accuracy = await getDefaultAccuracy();
+            }
+            catch
+            {
+                AppSettings.accuracy = "1";
+            }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getAccurac"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_getprintSitting()
+        {
+            try
+            {
+                await getprintSitting();
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getprintSitting"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_POSList()
+        {
+            try
+            {
+                AppSettings.posList = await posLogin.Get();
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_POSList"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
         #endregion
+        #region get setting
+        SetValues v = new SetValues();
+        async Task<string> getDefaultStorageCost()
+        {
+            v = await uc_general.getDefaultCost();
+            if (v != null)
+                return v.value;
+            else
+                return "";
+        }
+        async Task<List<string>> getDefaultTaxList()
+        {
+            List<string> taxLst = await uc_general.getDefaultTaxList();
+            if (taxLst == null)
+                taxLst = new List<string>() { "false", "0", "false", "0" };
+            return taxLst;
+        }
+        async Task<string> getDefaultItemCost()
+        {
+            v = await uc_general.getDefaultItemCost();
+            if (v != null)
+                return v.value;
+            else
+                return "";
+        }
+        async Task<string> getDefaultPrintCount()
+        {
+            v = await uc_general.getDefaultPrintCount();
+            if (v != null)
+                return v.value;
+            else
+                return "";
+        }
+        async Task<string> getDefaultAccuracy()
+        {
+            v = await uc_general.getDefaultAccuracy();
+            if (v != null)
+                return v.value;
+            else
+                return "";
+        }
+        async Task<string> getDefaultDateForm()
+        {
+            v = await uc_general.getDefaultDateForm();
+            if (v != null)
+                return v.value;
+            else
+                return "";
+        }
+        async Task<CountryCode> getDefaultRegion()
+        {
+            CountryCode c = await uc_general.getDefaultRegion();
+            if (c != null)
+                return c;
+            else
+                return null;
+        }
+        public static async Task getprintSitting()
+        {
+            await Getprintparameter();
+            await GetReportlang();
+            await getPrintersNames();
+        }
+        public static async Task Getprintparameter()
+        {
+            List<SetValues> printList = new List<SetValues>();
+            printList = await AppSettings.valueModel.GetBySetvalNote("print");
+            AppSettings.sale_copy_count = printList.Where(X => X.name == "sale_copy_count").FirstOrDefault().value;
 
+            AppSettings.pur_copy_count = printList.Where(X => X.name == "pur_copy_count").FirstOrDefault().value;
+
+            AppSettings.print_on_save_sale = printList.Where(X => X.name == "print_on_save_sale").FirstOrDefault().value;
+
+            AppSettings.print_on_save_pur = printList.Where(X => X.name == "print_on_save_pur").FirstOrDefault().value;
+
+            AppSettings.email_on_save_sale = printList.Where(X => X.name == "email_on_save_sale").FirstOrDefault().value;
+
+            AppSettings.email_on_save_pur = printList.Where(X => X.name == "email_on_save_pur").FirstOrDefault().value;
+
+            AppSettings.sale_copy_count = printList.Where(X => X.name == "sale_copy_count").FirstOrDefault().value;
+
+            AppSettings.pur_copy_count = printList.Where(X => X.name == "pur_copy_count").FirstOrDefault().value;
+
+            AppSettings.rep_print_count = printList.Where(X => X.name == "rep_copy_count").FirstOrDefault().value;
+
+            AppSettings.Allow_print_inv_count = printList.Where(X => X.name == "Allow_print_inv_count").FirstOrDefault().value;
+            AppSettings.show_header = printList.Where(X => X.name == "show_header").FirstOrDefault().value;
+
+            if (AppSettings.show_header == null || AppSettings.show_header == "")
+            {
+                AppSettings.show_header = "1";
+            }
+           AppSettings.itemtax_note = printList.Where(X => X.name == "itemtax_note").FirstOrDefault().value;
+           AppSettings.sales_invoice_note = printList.Where(X => X.name == "sales_invoice_note").FirstOrDefault().value;
+           AppSettings.print_on_save_directentry = printList.Where(X => X.name == "print_on_save_directentry").FirstOrDefault().value;
+           AppSettings.directentry_copy_count = printList.Where(X => X.name == "directentry_copy_count").FirstOrDefault().value;
+        }
+        public static async Task GetReportlang()
+        {
+            List<SetValues> replangList = new List<SetValues>();
+            replangList = await AppSettings.valueModel.GetBySetName("report_lang");
+            AppSettings.Reportlang = replangList.Where(r => r.isDefault == 1).FirstOrDefault().value;
+
+        }
+        public static async Task getPrintersNames()
+        {
+
+            AppSettings.posSetting = new PosSetting();
+
+            AppSettings.posSetting = await AppSettings.posSetting.GetByposId((int)MainWindow.posLogin.posId);
+            AppSettings.posSetting = AppSettings.posSetting.MaindefaultPrinterSetting(AppSettings.posSetting);
+
+            if (AppSettings.posSetting.repname is null || AppSettings.posSetting.repname == "")
+            {
+                AppSettings.rep_printer_name = "";
+            }
+            else
+            {
+                AppSettings.rep_printer_name = Encoding.UTF8.GetString(Convert.FromBase64String(AppSettings.posSetting.repname));
+            }
+            if (AppSettings.posSetting.salname is null || AppSettings.posSetting.salname == "")
+            {
+                AppSettings.posSetting.salname = "";
+            }
+            else
+            {
+                AppSettings.sale_printer_name = Encoding.UTF8.GetString(Convert.FromBase64String(AppSettings.posSetting.salname));
+            }
+
+            AppSettings.salePaperSize = AppSettings.posSetting.saleSizeValue;
+            AppSettings.docPapersize = AppSettings.posSetting.docPapersize;
+
+        }
+        #endregion
         public async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
@@ -436,8 +973,8 @@ namespace Restaurant
                 translate();
 
 
-                await FillCombo.getprintSitting();
-                await FillCombo.loading_getDefaultSystemInfo();
+                //await FillCombo.getprintSitting();
+                //await FillCombo.loading_getDefaultSystemInfo();
 
 
                 #region loading 
@@ -454,8 +991,20 @@ namespace Restaurant
                 loadingList.Add(new keyValueBool { key = "loading_RefreshVendors", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_RefreshCards", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_getUserPersonalInfo", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_getUserPath", value = false });
 
-              
+                loadingList.Add(new keyValueBool { key = "loading_getItemCost", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_getPrintCount", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_getTaxDetails", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_getDefaultSystemInfo", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_getDateForm", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_getRegionAndCurrency", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_getStorageCost", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_getAccurac", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_getprintSitting", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_POSList", value = false });
+
+
 
                 loading_listObjects();
                 loading_getGroupObjects();
@@ -468,6 +1017,18 @@ namespace Restaurant
                 loading_RefreshVendors();
                 loading_RefreshCards();
                 loading_getUserPersonalInfo();
+                loading_getUserPath();
+
+                loading_getItemCost();
+                loading_getPrintCount();
+                loading_getTaxDetails();
+                loading_getDefaultSystemInfo();
+                loading_getDateForm();
+                loading_getRegionAndCurrency();
+                loading_getStorageCost();
+                loading_getAccurac();
+                loading_getprintSitting();
+                loading_POSList();
 
                
                 do

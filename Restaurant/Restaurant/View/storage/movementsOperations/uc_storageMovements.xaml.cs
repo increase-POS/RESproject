@@ -1211,7 +1211,7 @@ namespace Restaurant.View.storage.movementsOperations
 
             this.Dispatcher.Invoke(() =>
             {
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, short.Parse(FillCombo.rep_print_count));
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
             });
         }
         private void pdfExport()

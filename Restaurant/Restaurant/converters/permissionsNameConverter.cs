@@ -26,7 +26,7 @@ namespace Restaurant.converters
             {
                 value = AppSettings.resourcemanager.GetString("trSave");
             }
-            else if(value.ToString().Contains("_reports"))
+            else if (value.ToString().Contains("_reports"))
             {
                 value = AppSettings.resourcemanager.GetString("trReports");
             }
@@ -62,6 +62,10 @@ namespace Restaurant.converters
             {
                 value = AppSettings.resourcemanager.GetString("trOrders");
             }
+            else if (value.ToString().Contains("_printCount"))
+            {
+                value = AppSettings.resourcemanager.GetString("trPrintCount");
+            }
             else if (value.ToString().Contains("_statistic"))
             {
                 value = AppSettings.resourcemanager.GetString("trStatistic");
@@ -72,16 +76,16 @@ namespace Restaurant.converters
                 value = AppSettings.resourcemanager.GetString("trBranchs/Stores");
             }
 
-            else if (value.Equals("general_usersSettings") || value.Equals("reports_usersSettings") )
+            else if (value.Equals("general_usersSettings") || value.Equals("reports_usersSettings"))
             {
                 value = AppSettings.resourcemanager.GetString("trUsersSettings");
             }
 
-            else if (value.Equals("general_companySettings") || value.Equals("reports_companySettings") )
+            else if (value.Equals("general_companySettings") || value.Equals("reports_companySettings"))
             {
                 value = AppSettings.resourcemanager.GetString("trCompanySettings");
             }
-            
+
             else switch (value)
                 {
                     case "locations_addRange":
@@ -120,7 +124,7 @@ namespace Restaurant.converters
                     case "package_items":
                         value = AppSettings.resourcemanager.GetString("trItems");
                         break;
-                     
+
                     case "medals_customers":
                         value = AppSettings.resourcemanager.GetString("trCustomers");
                         break;
@@ -165,6 +169,9 @@ namespace Restaurant.converters
                         break;
                     case "trUnits":
                         value = AppSettings.resourcemanager.GetString("trWaitingExecuteOrder");
+                        break;
+                    case "reciptOfInvoice_inputs":
+                        value = AppSettings.resourcemanager.GetString("trDirectEntry");
                         break;
 
 

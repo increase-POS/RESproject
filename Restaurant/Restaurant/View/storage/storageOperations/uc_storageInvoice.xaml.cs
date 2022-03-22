@@ -37,6 +37,8 @@ namespace Restaurant.View.storage.storageOperations
         string returnPermission = "storageInvoice_return";
         string reportsPermission = "storageInvoice_reports";
         string inputsPermission = "storageInvoice_inputs";
+        string printCountPermission = "reciptOfInvoice_printCount";
+
         private static uc_storageInvoice _instance;
         public static uc_storageInvoice Instance
         {
@@ -71,7 +73,8 @@ namespace Restaurant.View.storage.storageOperations
         public Invoice invoice = new Invoice();
         List<ItemTransfer> invoiceItems;
         List<ItemTransfer> mainInvoiceItems;
-                
+        Invoice invoiceModel = new Invoice();
+
         int prInvoiceId;
         // for barcode
         DateTime _lastKeystroke = new DateTime(0);
@@ -180,8 +183,20 @@ namespace Restaurant.View.storage.storageOperations
                 //    sp_tax.Visibility = Visibility.Visible;
                 controls = new List<Control>();
                 FindControl(this.grid_main, controls);
-              
+
                 #region Permision
+
+                if (FillCombo.groupObject.HasPermissionAction(printCountPermission, FillCombo.groupObjects, "one"))
+                {
+                    btn_printCount.Visibility = Visibility.Visible;
+                    bdr_printCount.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    btn_printCount.Visibility = Visibility.Collapsed;
+                    bdr_printCount.Visibility = Visibility.Collapsed;
+                }
+
                 if (FillCombo.groupObject.HasPermissionAction(reciptPermission, FillCombo.groupObjects, "one"))
                     md_invoiceCount.Visibility = Visibility.Visible;
                 else
@@ -1411,6 +1426,44 @@ namespace Restaurant.View.storage.storageOperations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private async void Btn_printCount_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+
+                int result = 0;
+
+                if (invoice.invoiceId > 0)
+                {
+                    result = await invoiceModel.updateprintstat(invoice.invoiceId, -1, true, true);
+
+
+                    if (result > 0)
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                    }
+                    else
+                    {
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    }
+
+                }
+                else
+                {
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trChooseInvoiceToolTip"), animation: ToasterAnimation.FadeIn);
+                }
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         #endregion
         #region report
 
@@ -1450,7 +1503,7 @@ namespace Restaurant.View.storage.storageOperations
 
             this.Dispatcher.Invoke(() =>
             {
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, FillCombo.rep_print_count == null ? short.Parse("1") : short.Parse(FillCombo.rep_print_count));
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, AppSettings.rep_print_count == null ? short.Parse("1") : short.Parse(AppSettings.rep_print_count));
             });
         }
         private void PdfRep()

@@ -788,11 +788,11 @@ namespace Restaurant.View.purchase
                             {
                                 Thread t = new Thread(() =>
                                 {
-                                    if (FillCombo.print_on_save_pur == "1")
+                                    if (AppSettings.print_on_save_pur == "1")
                                     {
                                         printPurInvoice();
                                     }
-                                    if (FillCombo.email_on_save_pur == "1")
+                                    if (AppSettings.email_on_save_pur == "1")
                                     {
                                         sendPurEmail();
                                     }
@@ -2952,7 +2952,7 @@ namespace Restaurant.View.purchase
                 {
                     prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
 
-                    if (int.Parse(FillCombo.Allow_print_inv_count) <= prInvoice.printedcount)
+                    if (int.Parse(AppSettings.Allow_print_inv_count) <= prInvoice.printedcount)
                     {
                         this.Dispatcher.Invoke(() =>
                         {
@@ -3051,7 +3051,7 @@ namespace Restaurant.View.purchase
 
                                         rep.Refresh();
 
-                                        if (int.Parse(FillCombo.Allow_print_inv_count) > prInvoice.printedcount)
+                                        if (int.Parse(AppSettings.Allow_print_inv_count) > prInvoice.printedcount)
                                         {
 
                                             this.Dispatcher.Invoke(() =>
@@ -3142,7 +3142,7 @@ namespace Restaurant.View.purchase
 
                     prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
 
-                    if (int.Parse(FillCombo.Allow_print_inv_count) <= prInvoice.printedcount)
+                    if (int.Parse(AppSettings.Allow_print_inv_count) <= prInvoice.printedcount)
                     {
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trYouExceedLimit"), animation: ToasterAnimation.FadeIn);
 
@@ -3258,7 +3258,7 @@ namespace Restaurant.View.purchase
 
                                 rep.Refresh();
 
-                                if (int.Parse(FillCombo.Allow_print_inv_count) > prInvoice.printedcount)
+                                if (int.Parse(AppSettings.Allow_print_inv_count) > prInvoice.printedcount)
                                 {
 
                                     LocalReportExtensions.ExportToPDF(rep, pdfpath);
@@ -3432,7 +3432,7 @@ namespace Restaurant.View.purchase
 
                                 paramarr.Add(new ReportParameter("isOrginal", prInvoice.isOrginal.ToString()));
 
-                                for (int i = 1; i <= short.Parse(FillCombo.pur_copy_count); i++)
+                                for (int i = 1; i <= short.Parse(AppSettings.pur_copy_count); i++)
                                 {
                                     if (i > 1)
                                     {
@@ -3452,14 +3452,14 @@ namespace Restaurant.View.purchase
 
                                     rep.Refresh();
 
-                                    if (int.Parse(FillCombo.Allow_print_inv_count) > prInvoice.printedcount)
+                                    if (int.Parse(AppSettings.Allow_print_inv_count) > prInvoice.printedcount)
                                     {
 
                                         this.Dispatcher.Invoke(() =>
                                         {
 
 
-                                            LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.sale_printer_name, 1);
+                                            LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.sale_printer_name, 1);
 
 
 
@@ -3490,7 +3490,7 @@ namespace Restaurant.View.purchase
 
                                 this.Dispatcher.Invoke(() =>
                                 {
-                                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, short.Parse(FillCombo.rep_print_count));
+                                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
                                 });
 
                             }

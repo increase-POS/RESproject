@@ -300,7 +300,7 @@ namespace Restaurant.View.settings.reportsSettings
                     replangrow.isDefault = 1;
                     msg = await setvalueModel.Save(replangrow);
                     //  replangrow.valId=
-                    await FillCombo.GetReportlang();
+                    await MainWindow.GetReportlang();
                     await fillRepLang();
                     if (msg > 0)
                     {
@@ -440,7 +440,7 @@ namespace Restaurant.View.settings.reportsSettings
                     if (!s.Equals(0))
                     {
                         //update tax in main window
-                        FillCombo.Allow_print_inv_count = printCount.value;
+                        AppSettings.Allow_print_inv_count = printCount.value;
 
                         Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
                     }
@@ -530,7 +530,7 @@ namespace Restaurant.View.settings.reportsSettings
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     await FillprintList();
                     fillPrintHeader();
-                    await FillCombo.Getprintparameter();
+                    await MainWindow.Getprintparameter();
                 }
 
                 if (sender != null)
@@ -579,7 +579,7 @@ namespace Restaurant.View.settings.reportsSettings
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     await FillprintList();
 
-                    await FillCombo.Getprintparameter();
+                    await MainWindow.Getprintparameter();
                 }
 
                 Window.GetWindow(this).Opacity = 1;
@@ -627,7 +627,7 @@ namespace Restaurant.View.settings.reportsSettings
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     await FillprintList();
 
-                    await FillCombo.Getprintparameter();
+                    await MainWindow.Getprintparameter();
 
                 }
 
