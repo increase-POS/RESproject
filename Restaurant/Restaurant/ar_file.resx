@@ -3595,4 +3595,7 @@
   <data name="trStatusHint" xml:space="preserve">
     <value>الحالة...</value>
   </data>
+  <data name="maxDiscount" xml:space="preserve">
+    <value>الحد الأقصى للخصم</value>
+  </data>
 </root>

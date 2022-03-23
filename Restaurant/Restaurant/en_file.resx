@@ -3619,4 +3619,7 @@ Please add Email in setting</value>
   <data name="trStatusHint" xml:space="preserve">
     <value>Status...</value>
   </data>
+  <data name="maxDiscount" xml:space="preserve">
+    <value>Maximum discount</value>
+  </data>
 </root>
