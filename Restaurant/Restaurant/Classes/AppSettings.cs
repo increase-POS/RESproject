@@ -12,14 +12,14 @@ namespace Restaurant.Classes
         public static ResourceManager resourcemanager;
         public static ResourceManager resourcemanagerreport;
 
-        public static string lang = "en";
-        public static string Reportlang = "en";
+        public static string lang;
+        public static string Reportlang;
 
-        public static string defaultPath = "";
+        public static string defaultPath;
 
         internal static int? itemCost;
         public static CountryCode Region;
-        public static string Currency = "KD";
+        public static string Currency;
         public static int CurrencyId;
 
         public static string logoImage;
@@ -50,7 +50,7 @@ namespace Restaurant.Classes
         internal static decimal? tax;
         //tax
         internal static bool? invoiceTax_bool = true;
-        internal static decimal? invoiceTax_decimal = 5;
+        internal static decimal? invoiceTax_decimal;
         internal static bool? itemsTax_bool = true;
         internal static decimal? itemsTax_decimal;
         internal static string itemtax_note;
@@ -64,11 +64,11 @@ namespace Restaurant.Classes
         internal static decimal? StorageCost;
         internal static string timeFormat;
         // hour
-        static public double time_staying = 3;
+        static public double time_staying;
         // hour
-        static public double maximumTimeToKeepReservation = 3;
+        static public double maximumTimeToKeepReservation;
         // minutes
-        static public int warningTimeForLateReservation = 30;
+        static public int warningTimeForLateReservation;
 
         static public PosSetting posSetting = new PosSetting();
         static public List<Pos> posList = new List<Pos>();
