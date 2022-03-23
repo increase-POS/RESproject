@@ -144,7 +144,7 @@ namespace Restaurant.Classes
             parameters.Add("itemObject", myContent);
             var myContent2 = JsonConvert.SerializeObject(cashtransferobject);
             parameters.Add("cashtransferobject", myContent2);
-            item.agentMembershipCashId
+            //item.agentMembershipCashId
             return await APIResult.post(method, parameters);
             //return  item.agentMembershipCashId
         }

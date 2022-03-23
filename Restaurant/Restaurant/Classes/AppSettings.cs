@@ -60,6 +60,7 @@ namespace Restaurant.Classes
 
         internal static string dateFormat;
         internal static string accuracy;
+        internal static decimal maxDiscount;
         internal static decimal? StorageCost;
         internal static string timeFormat;
         // hour
