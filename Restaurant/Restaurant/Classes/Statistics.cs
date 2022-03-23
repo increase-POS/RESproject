@@ -2904,7 +2904,6 @@ namespace Restaurant.Classes
         }
         public class PaymentsTypeCombo
         {
-            ///typeeeeeeeeeeeeeeeee
             private string paymentsTypeName;
             private string paymentsTypeText;
 
@@ -2915,7 +2914,7 @@ namespace Restaurant.Classes
                     : paymentsTypeName == "doc" ? paymentsTypeText = AppSettings.resourcemanager.GetString("trDocument")
                     : paymentsTypeName == "cheque" ? paymentsTypeText = AppSettings.resourcemanager.GetString("trCheque")
                     : paymentsTypeName == "balance" ? paymentsTypeText = AppSettings.resourcemanager.GetString("trCredit")
-                    : paymentsTypeName == "card" ? paymentsTypeText = AppSettings.resourcemanager.GetString("trCreditCard")
+                    : paymentsTypeName == "card" ? paymentsTypeText = AppSettings.resourcemanager.GetString("trAnotherPaymentMethods")
                     : paymentsTypeName == "inv" ? paymentsTypeText = AppSettings.resourcemanager.GetString("trInv")
                     : "";
                 set => paymentsTypeText = value;
