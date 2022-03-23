@@ -71,12 +71,13 @@ namespace Restaurant.View.settings
         static SetValues itemCost = new SetValues();
         static SetValues printCount = new SetValues();
         static SetValues accuracy = new SetValues();
+        static SetValues maxDiscount = new SetValues();
         static SetValues dateForm = new SetValues();
         static SetValues cost = new SetValues();
         static public UserSetValues usLanguage = new UserSetValues();
         static CountryCode region = new CountryCode();
         static List<SetValues> languages = new List<SetValues>();
-        static int taxId = 0, costId = 0, dateFormId, accuracyId, itemCostId = 0, printCountId = 0;
+        static int taxId = 0, costId = 0, dateFormId, accuracyId, maxDiscountId, itemCostId = 0, printCountId = 0;
         string usersSettingsPermission = "general_usersSettings";
         string companySettingsPermission = "general_companySettings";
 
@@ -302,6 +303,29 @@ namespace Restaurant.View.settings
                 }
             }
         }
+         async void loading_fillMaxDiscount()
+        {
+            try
+            {
+                 #region get default accracy
+                await getDefaultMaxDiscount();
+                if (maxDiscount != null)
+                {
+                    tb_maxDiscount.Text = maxDiscount.value;
+                }
+                #endregion
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_fillMaxDiscount"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
         #endregion
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
@@ -343,6 +367,7 @@ namespace Restaurant.View.settings
                     loadingList.Add(new keyValueBool { key = "loading_getDefaultActivationSite", value = false });
                     loadingList.Add(new keyValueBool { key = "loading_getDefaultDateForm", value = false });
                     loadingList.Add(new keyValueBool { key = "loading_fillAccuracy", value = false });
+                    loadingList.Add(new keyValueBool { key = "loading_fillMaxDiscount", value = false });
                     //loadingList.Add(new keyValueBool { key = "loading_getDefaultServerStatus", value = false });
 
                     loading_fillRegions();
@@ -351,6 +376,7 @@ namespace Restaurant.View.settings
                     loading_getDefaultActivationSite();
                     loading_getDefaultDateForm();
                     loading_fillAccuracy();
+                    loading_fillMaxDiscount();
                     //loading_getDefaultServerStatus();
                     do
                     {
@@ -487,6 +513,13 @@ namespace Restaurant.View.settings
             accuracy = settingsValues.Where(i => i.settingId == accuracyId).FirstOrDefault();
             return accuracy;
         }
+         public static async Task<SetValues> getDefaultMaxDiscount()
+        {
+            set = settingsCls.Where(s => s.name == "maxDiscount").FirstOrDefault<SettingCls>();
+            maxDiscountId = set.settingId;
+            maxDiscount = settingsValues.Where(i => i.settingId == maxDiscountId).FirstOrDefault();
+            return maxDiscount;
+        }
          public static async Task<ProgramDetails> getDefaultServerStatus()
         {
             progDetails = await progDetailsModel.getCurrentInfo();
@@ -495,7 +528,6 @@ namespace Restaurant.View.settings
         }
         public static async Task<SetValues> getDefaultCost()
         {
-             
             set = settingsCls.Where(s => s.name == "storage_cost").FirstOrDefault<SettingCls>();
             costId = set.settingId;
             cost = settingsValues.Where(i => i.settingId == costId).FirstOrDefault();
@@ -508,6 +540,7 @@ namespace Restaurant.View.settings
             region = regions.Where(r => r.isDefault == 1).FirstOrDefault<CountryCode>();
             return region;
         }
+        /*
         public static async Task<SetValues> getDefaultTax()
         {
              
@@ -517,6 +550,7 @@ namespace Restaurant.View.settings
 
             return tax;
         }
+        */
         public static async Task<List<string>> getDefaultTaxList()
         {
             List<SetValues> sv = new List<SetValues>();
@@ -618,6 +652,7 @@ namespace Restaurant.View.settings
             txt_itemsCost.Text = AppSettings.resourcemanager.GetString("trItemCost");
             txt_dateForm.Text = AppSettings.resourcemanager.GetString("trDateForm");
             txt_accuracy.Text = AppSettings.resourcemanager.GetString("trAccuracy");
+            txt_maxDiscount.Text = AppSettings.resourcemanager.GetString("maxDiscount");
             txt_changePassword.Text = AppSettings.resourcemanager.GetString("trChangePassword");
             txt_changePasswordHint.Text = AppSettings.resourcemanager.GetString("trChangePasswordHint");
             txt_userPath.Text = AppSettings.resourcemanager.GetString("trUserPath");
@@ -810,6 +845,7 @@ namespace Restaurant.View.settings
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        /*
         private void Btn_currency_Click(object sender, RoutedEventArgs e)
         {//save currency
             try
@@ -832,6 +868,7 @@ namespace Restaurant.View.settings
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        */
         private void Cb_region_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -845,6 +882,7 @@ namespace Restaurant.View.settings
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        /*
         private void Tb_PreventSpaces(object sender, KeyEventArgs e)
         {
             try
@@ -894,9 +932,8 @@ namespace Restaurant.View.settings
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void validateEmpty(string name, object sender)
+         private void validateEmpty(string name, object sender)
         {//validate
-            /*
             try
             {
                 if (name == "TextBox")
@@ -919,10 +956,11 @@ namespace Restaurant.View.settings
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         User userModel = new User();
         User user = new User();
+        */
+       
         private async void Btn_dateForm_Click(object sender, RoutedEventArgs e)
         {//save date form
             try
@@ -1059,14 +1097,14 @@ namespace Restaurant.View.settings
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        /*
         private void Btn_book_Click(object sender, RoutedEventArgs e)
         {//book
-            /*
-            grid_main.Children.Clear();
-            grid_main.Children.Add(uc_packageBookSetting.Instance);
-            Button button = sender as Button;
-            */
+            //grid_main.Children.Clear();
+            //grid_main.Children.Add(uc_packageBookSetting.Instance);
+            //Button button = sender as Button;
         }
+        */
         private async void Btn_activationSite_Click(object sender, RoutedEventArgs e)
         {//activation Site
             try
@@ -1201,13 +1239,56 @@ namespace Restaurant.View.settings
             }
 
         }
-        private void Btn_maxDiscount_Click(object sender, RoutedEventArgs e)
+        private async void Btn_maxDiscount_Click(object sender, RoutedEventArgs e)
         {
+            //save maxDiscount
+            try
+            {
 
-        }
-        private void Btn_timeStaying_Click(object sender, RoutedEventArgs e)
-        {
+                HelpClass.StartAwait(grid_main);
+                //if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
+                //{
 
+                if (tb_maxDiscount.Text.Equals(""))
+                {
+                    //HelpClass.validateEmptyComboBox(cb_accuracy, p_errorAccuracy, tt_errorAccuracy, "trEmptyAccuracy");
+                    HelpClass.SetValidate(p_error_maxDiscount, "trIsRequired");
+                }
+                else if (decimal.Parse(tb_maxDiscount.Text) < 0 || decimal.Parse(tb_maxDiscount.Text) > 100  )
+                {
+                    HelpClass.SetValidate(p_error_maxDiscount, "trValidRange");
+                }
+                else
+                {
+                    HelpClass.clearValidate(p_error_maxDiscount);
+
+                    if (maxDiscount == null)
+                        maxDiscount = new SetValues();
+                    maxDiscount.value = tb_maxDiscount.Text;
+                    maxDiscount.isSystem = 1;
+                    maxDiscount.settingId = maxDiscountId;
+                    int s = await valueModel.Save(maxDiscount);
+                    if (!s.Equals(0))
+                    {
+                        //update maxDiscount in main window
+                        AppSettings.maxDiscount =decimal.Parse( maxDiscount.value);
+
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                }
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private void Btn_tableTimes_Click(object sender, RoutedEventArgs e)
         {
@@ -1344,7 +1425,6 @@ namespace Restaurant.View.settings
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-       
         private  void Btn_changePassword_Click(object sender, RoutedEventArgs e)
         {//change password
             try
@@ -1371,9 +1451,6 @@ namespace Restaurant.View.settings
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
-
-
         #region validate - clearValidate - textChange - lostFocus - . . . . 
 
         string input;

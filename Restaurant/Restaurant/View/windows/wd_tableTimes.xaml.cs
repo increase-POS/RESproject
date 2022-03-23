@@ -39,33 +39,50 @@ namespace Restaurant.View.windows
         BrushConverter bc = new BrushConverter();
 
         //print
-        /*
-        string sale_copy_count;
-        string pur_copy_count;
-        string rep_copy_count;
-        SetValues setvalueModel = new SetValues();
-        List<SetValues> printList = new List<SetValues>();
+        //string time_staying;
+        //string maximumTimeToKeepReservation;
+        //string warningTimeForLateReservation;
+        //SettingCls set = new SettingCls();
+        SetValues setV = new SetValues();
 
-        public SetValues sale_copy_countrow = new SetValues();
-        public SetValues pur_copy_countrow = new SetValues();
-        public SetValues rep_copy_countrow = new SetValues();
-        */
+        public SetValues time_stayingSetValues = new SetValues();
+        public SetValues warningTimeForLateReservationSetValues = new SetValues();
+        public SetValues maximumTimeToKeepReservationSetValues = new SetValues();
         async Task refreshWindow()
         {
-            /*
-            printList = await setvalueModel.GetBySetvalNote("print");
-
-            sale_copy_countrow = printList.Where(X => X.name == "sale_copy_count").FirstOrDefault();
-            sale_copy_count = sale_copy_countrow.value;
-            pur_copy_countrow = printList.Where(X => X.name == "pur_copy_count").FirstOrDefault();
-            pur_copy_count = pur_copy_countrow.value;
-            rep_copy_countrow = printList.Where(X => X.name == "rep_copy_count").FirstOrDefault();
-            rep_copy_count = rep_copy_countrow.value;
-
-            tb_time_staying.Text = pur_copy_count;
-            tb_maximumTimeToKeepReservation.Text = sale_copy_count;
-            tb_warningTimeForLateReservation.Text = rep_copy_count;
-            */
+            await get_time_staying();
+            tb_time_staying.Text = AppSettings.time_staying.ToString();
+            await get_warningTimeForLateReservation();
+            tb_warningTimeForLateReservation.Text = AppSettings.warningTimeForLateReservation.ToString();
+            await get_maximumTimeToKeepReservation();
+            tb_maximumTimeToKeepReservation.Text = AppSettings.maximumTimeToKeepReservation.ToString();
+        }
+        public  async Task get_time_staying()
+        {
+            List<SetValues> settingsValues = await AppSettings.valueModel.GetBySetName("time_staying");
+            time_stayingSetValues = settingsValues.FirstOrDefault();
+            if (time_stayingSetValues != null)
+                AppSettings.time_staying = double.Parse(time_stayingSetValues.value);
+            else
+                AppSettings.time_staying = 0;
+        }
+        public async Task get_warningTimeForLateReservation()
+        {
+            List<SetValues> settingsValues = await AppSettings.valueModel.GetBySetName("warningTimeForLateReservation");
+            warningTimeForLateReservationSetValues = settingsValues.FirstOrDefault();
+            if (warningTimeForLateReservationSetValues != null)
+                AppSettings.warningTimeForLateReservation = int.Parse(warningTimeForLateReservationSetValues.value);
+            else
+                AppSettings.warningTimeForLateReservation = 0;
+        }
+        public async Task get_maximumTimeToKeepReservation()
+        {
+            List<SetValues> settingsValues = await AppSettings.valueModel.GetBySetName("maximumTimeToKeepReservation");
+            maximumTimeToKeepReservationSetValues = settingsValues.FirstOrDefault();
+            if (maximumTimeToKeepReservationSetValues != null)
+                AppSettings.maximumTimeToKeepReservation = double.Parse(maximumTimeToKeepReservationSetValues.value);
+            else
+                AppSettings.maximumTimeToKeepReservation = 0;
         }
 
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
@@ -163,29 +180,32 @@ namespace Restaurant.View.windows
 
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {
-
-            /*
-            int msg;
-            sale_copy_countrow.value = (string)tb_maximumTimeToKeepReservation.Text;
-            pur_copy_countrow.value = (string)tb_time_staying.Text;
-            rep_copy_countrow.value = (string)tb_warningTimeForLateReservation.Text;
-            if (int.Parse(sale_copy_countrow.value) <= 0 || int.Parse(pur_copy_countrow.value) <= 0 || int.Parse(rep_copy_countrow.value) <= 0)
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                int msg;
+            time_stayingSetValues.value = (string)tb_time_staying.Text;
+            maximumTimeToKeepReservationSetValues.value = (string)tb_maximumTimeToKeepReservation.Text;
+            warningTimeForLateReservationSetValues.value = (string)tb_warningTimeForLateReservation.Text;
+            if (double.Parse(time_stayingSetValues.value) <= 0 ||
+                double.Parse(maximumTimeToKeepReservationSetValues.value) <= 0 ||
+                int.Parse(warningTimeForLateReservationSetValues.value) <= 0)
             {
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trMustBeMoreThanZero"), animation: ToasterAnimation.FadeIn);
             }
             else
             {
 
-                msg = await setvalueModel.Save(sale_copy_countrow);
-                msg = await setvalueModel.Save(pur_copy_countrow);
-                msg = await setvalueModel.Save(rep_copy_countrow);
+                msg = await setV.Save(time_stayingSetValues);
+                msg = await setV.Save(maximumTimeToKeepReservationSetValues);
+                msg = await setV.Save(warningTimeForLateReservationSetValues);
 
                 await refreshWindow();
-                await FillCombo.Getprintparameter();
+                //await MainWindow.Getprintparameter();
                 if (msg > 0)
                 {
                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
-                    await Task.Delay(1500);
+                    //await Task.Delay(1500);
                     this.Close();
                 }
                 else
@@ -193,8 +213,14 @@ namespace Restaurant.View.windows
                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                 }
             }
-            */
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
 
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Tb_validateEmptyLostFocus(object sender, RoutedEventArgs e)
