@@ -204,6 +204,7 @@ namespace Restaurant.View.sales.promotion.membership
                     if (membership != null)
                     {
                         btn_save.IsEnabled = true;
+                        /*
                         //customers
                         agMemberships = await agMembership.GetAgentsByMembershipId(membership.membershipId);
                         //agMemberships = agMemberships.Where(a => a.membershipId == membership.membershipId);
@@ -220,6 +221,7 @@ namespace Restaurant.View.sales.promotion.membership
                         inMemberships = await inMembership.GetAll();
                         inMemberships = inMemberships.Where(i => i.membershipId == membership.membershipId);
                         tb_invoicesClassesCount.Text = inMemberships.Count().ToString();
+                        */
                     }
                 }
             }
