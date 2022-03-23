@@ -61,8 +61,8 @@ namespace Restaurant.View.sales.promotion.membership
         IEnumerable<Memberships> membershipsQuery;
         IEnumerable<Memberships> memberships;
 
-        AgentMemberships agMembership = new AgentMemberships();
-        IEnumerable<AgentMemberships> agMemberships;
+        Agent agMembership = new Agent();
+        IEnumerable<Agent> agMemberships;
 
         CouponsMemberships coMembership = new CouponsMemberships();
         IEnumerable<CouponsMemberships> coMemberships;
@@ -205,8 +205,8 @@ namespace Restaurant.View.sales.promotion.membership
                     {
                         btn_save.IsEnabled = true;
                         //customers
-                        agMemberships = await agMembership.GetAll();
-                        agMemberships = agMemberships.Where(a => a.membershipId == membership.membershipId);
+                        agMemberships = await agMembership.GetAgentsByMembershipId(membership.membershipId);
+                        //agMemberships = agMemberships.Where(a => a.membershipId == membership.membershipId);
                         tb_customersCount.Text = agMemberships.Count().ToString();
                         //coupons
                         coMemberships = await coMembership.GetAll();
@@ -317,7 +317,7 @@ namespace Restaurant.View.sales.promotion.membership
        
 
         async void customersRowinDatagrid(object sender, RoutedEventArgs e)
-        {
+        {//customers
             try
             {
                 if (FillCombo.groupObject.HasPermissionAction(customersPermission, FillCombo.groupObjects, "one"))
@@ -338,8 +338,9 @@ namespace Restaurant.View.sales.promotion.membership
                                
                         Window.GetWindow(this).Opacity = 1;
                         //refresh customers
-                        agMemberships = await agMembership.GetAll();
-                        agMemberships = agMemberships.Where(a => a.membershipId == membership.membershipId);
+                        //agMemberships = await agMembership.GetAll();
+                        //agMemberships = agMemberships.Where(a => a.membershipId == membership.membershipId);
+                        agMemberships = await agMembership.GetAgentsByMembershipId(membership.membershipId);
                         tb_customersCount.Text = agMemberships.Count().ToString();
 
                     }
@@ -351,7 +352,7 @@ namespace Restaurant.View.sales.promotion.membership
             }
             catch (Exception ex)
             {
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

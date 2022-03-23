@@ -42,6 +42,7 @@ namespace Restaurant.View.windows
         List<Agent> selectedCustomersSource = new List<Agent>();
         List<AgentMemberships> selectedCustomers = new List<AgentMemberships>();
         AgentMemberships customerMembership = new AgentMemberships();
+        Memberships membership = new Memberships();
         #endregion
 
         #region coupon
@@ -92,7 +93,7 @@ namespace Restaurant.View.windows
                 }
 
                 translat();
-                #endregion
+            #endregion
 
                 #region customer
                 if (membershipType == "a")
@@ -101,11 +102,22 @@ namespace Restaurant.View.windows
                     allCustomers.AddRange(allCustomersSource);
 
                     selectedCustomersSource = await customer.GetAgentsByMembershipId(membershipID);
-                    foreach(var v in selectedCustomersSource)
+
+                    foreach (var v in selectedCustomersSource)
                     {
-                        customerMembership = await customerMembership.GetById(v.agentMembershipsId);
+                        //customerMembership = await customerMembership.GetById(v.agentMembershipsId);
+                        //selectedCustomers.Add(customerMembership);
+
+                        customerMembership = new AgentMemberships();
+                        customerMembership.agentId = v.agentId;
+                        customerMembership.membershipId = membershipID;
+                        customerMembership.createUserId = MainWindow.userLogin.userId;
+                        customerMembership.updateUserId = MainWindow.userLogin.userId;
+                        customerMembership.isActive = 1;
+                       
                         selectedCustomers.Add(customerMembership);
                     }
+
                     //remove selected items from all items
                     foreach (var i in selectedCustomersSource)
                     {
@@ -212,17 +224,17 @@ namespace Restaurant.View.windows
                     dg_all.SelectedValuePath = "invClassId";
                     dg_all.DisplayMemberPath = "name";
                 }
-                #endregion
+            #endregion
 
-                HelpClass.EndAwait(grid_main);
-            }
+            HelpClass.EndAwait(grid_main);
+        }
             catch (Exception ex)
             {
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
-            }
-
         }
+
+    }
 
         private void translat()
         {

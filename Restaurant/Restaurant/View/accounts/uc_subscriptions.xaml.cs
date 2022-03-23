@@ -81,8 +81,10 @@ namespace Restaurant.View.accounts
             {
                 HelpClass.StartAwait(grid_main);
 
-                requiredControlList = new List<string> { "transNum", "customerId" , "monthsCount" , "amount" , "paymentProcessType" };
+                requiredControlList = new List<string> { "customerId" , "monthsCount" , "amount" , "paymentProcessType" };
+                
                 //expirDate
+
                 #region translate
                 if (AppSettings.lang.Equals("en"))
                 {
@@ -98,7 +100,7 @@ namespace Restaurant.View.accounts
                 FillCombo.FillDefaultPayType_cashChequeCard(cb_paymentProcessType);
 
                 #region fillCustomers
-                await subscription.GetAgentToPay();
+                cb_customerId.ItemsSource = await subscription.GetAgentToPay();
                 cb_customerId.DisplayMemberPath = "agentName";
                 cb_customerId.SelectedValuePath = "agentId";
                 cb_customerId.SelectedIndex = -1;
@@ -1211,6 +1213,40 @@ namespace Restaurant.View.accounts
         private void Chb_all_Unchecked(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private async void Cb_customerId_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                AgenttoPayCash a = cb_customerId.SelectedItem as AgenttoPayCash;
+                if (a != null)
+                {
+                    if ((a.subscriptionType == "o") || (a.subscriptionType == "f"))
+                    {
+                        cb_monthsCount.SelectedIndex = -1;
+                        bdr_monthCount.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        SubscriptionFees subFee = new SubscriptionFees();
+                        List<SubscriptionFees> subFees = await subFee.GetAll();
+                        subFees = subFees.Where(s => s.membershipId == a.membershipId).ToList();
+                        cb_monthsCount.DisplayMemberPath = "monthsCount";
+                        cb_monthsCount.SelectedValuePath = "subscriptionFeesId";
+                        cb_monthsCount.ItemsSource = subFees;
+
+                        if (a.subscriptionType == "m")
+                            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trMonthCount") + "...");
+                        else if(a.subscriptionType == "y")
+                            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trYearCount") + "...");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }
