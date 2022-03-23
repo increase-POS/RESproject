@@ -62,8 +62,8 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        public int customerId;
         public bool isOk { get; set; }
+        public int customerId { get; set; }
         public static List<string> requiredControlList = new List<string>();
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
@@ -116,6 +116,7 @@ namespace Restaurant.View.windows
                 // if have id return true
                 isOk = true;
                 customerId =(int) cb_customerId.SelectedValue;
+               
                 this.Close();
             }
         }
@@ -125,7 +126,7 @@ namespace Restaurant.View.windows
             if(cb_customerId.SelectedIndex != -1)
             {
                 customerId = (int)cb_customerId.SelectedValue;
-                agentMemberships = await agentMemberships.GetAgentMemberShip(customerId);
+                //agentMemberships = await agentMemberships.GetAgentMemberShip(customerId);
             }
         }
     }

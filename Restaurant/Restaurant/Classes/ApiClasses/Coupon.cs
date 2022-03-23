@@ -72,6 +72,24 @@ namespace Restaurant.Classes
         }
 
 
+        public async Task<List<Coupon>> GetEffictiveByMemberShipID(int memberShipId)
+        {
+            List<Coupon> items = new List<Coupon>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("memberShipId", memberShipId.ToString());
+
+            IEnumerable<Claim> claims = await APIResult.getList("coupons/GetEffictiveByMemberShipID",parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<Coupon>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
+
+
         public async Task<Coupon> getById(int itemId)
         {
             Coupon item = new Coupon();

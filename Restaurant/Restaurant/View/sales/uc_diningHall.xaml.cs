@@ -76,6 +76,23 @@ namespace Restaurant.View.sales
                 }
             }
         }
+        async Task loading_customers()
+        {
+            //try
+            {
+                if(FillCombo.customersList == null)
+                    await FillCombo.RefreshCustomers();
+            }
+            //catch { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_customers"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
         async Task loading_categories()
         {
             //try
@@ -126,9 +143,11 @@ namespace Restaurant.View.sales
             bool isDone = true;
             loadingList.Add(new keyValueBool { key = "loading_items", value = false });
             loadingList.Add(new keyValueBool { key = "loading_categories", value = false });
+            loadingList.Add(new keyValueBool { key = "loading_customers", value = false });
 
             loading_items();
             loading_categories();
+            loading_customers();
             do
             {
                 isDone = true;
@@ -519,8 +538,18 @@ namespace Restaurant.View.sales
                 button.Padding = new Thickness(5, 0, 5, 0);
                 MaterialDesignThemes.Wpf.ButtonAssist.SetCornerRadius(button, (new CornerRadius(7)));
                 button.Margin = new Thickness(5,0,5,0);
-                button.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
-                button.Background = Application.Current.Resources["White"] as SolidColorBrush;
+
+                if (item.tagName == AppSettings.resourcemanager.GetString("trAll"))
+                {
+                    button.Foreground = Application.Current.Resources["White"] as SolidColorBrush;
+                    button.Background = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                }
+                else
+                {
+                    button.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                    button.Background = Application.Current.Resources["White"] as SolidColorBrush;
+                }
+
                 button.BorderBrush = Application.Current.Resources["MainColor"] as SolidColorBrush;
                 button.Click += buttonCatalogTags_Click;
 
@@ -566,6 +595,7 @@ namespace Restaurant.View.sales
         decimal _Sum = 0;
         decimal _ManualDiscount = 0;
         string _DiscountType = "";
+        int _MemberShipId = 0;
         List<CouponInvoice> selectedCopouns = new List<CouponInvoice>();
         List<ItemTransfer> invoiceItems = new List<ItemTransfer>();
         List<Tables> selectedTables = new List<Tables>();
@@ -1209,11 +1239,28 @@ namespace Restaurant.View.sales
             _ManualDiscount = invoice.discountValue;
             _DiscountType = invoice.discountType;
             selectedCopouns = await FillCombo.invoice.GetInvoiceCoupons(invoice.invoiceId);
-            if(invoice.waiterId != null)
-                txt_waiter.Text = AppSettings.resourcemanager.GetString("trChangeWaiter");
+
             #endregion
 
             #region text values
+            if (invoice.waiterId != null)
+            {
+                var user = FillCombo.usersList.Where(x => x.userId == invoice.waiterId).FirstOrDefault();
+                txt_waiter.Text = user.fullName;
+
+                txt_waiter.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                path_waiter.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            }
+            if (invoice.agentId != null)
+            {
+                var customer = FillCombo.customersList.Where(x => x.agentId == invoice.agentId).FirstOrDefault();
+                _MemberShipId = (int)customer.membershipId;
+                txt_customer.Text = customer.name;
+
+                txt_customer.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                path_customer.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            }
+
             if (invoice.total != 0)
                 tb_subtotal.Text = HelpClass.DecTostring(invoice.total);
             else
@@ -1455,6 +1502,10 @@ namespace Restaurant.View.sales
                     {
                         if (w.customerId > 0)
                         {
+                            var customer = FillCombo.customersList.Where(x => x.agentId == w.customerId).FirstOrDefault();
+                            if (customer.membershipId != null)
+                                _MemberShipId = (int)customer.membershipId;
+
                             invoice.agentId = w.customerId;
                             invoice.updateUserId = MainWindow.userLogin.userId;
 
@@ -1468,6 +1519,7 @@ namespace Restaurant.View.sales
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             // test if id chnage
                             // change button content
+                            txt_customer.Text = customer.name.ToString();
                             // change foreground color
                             txt_customer.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                             path_customer.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
@@ -1476,6 +1528,7 @@ namespace Restaurant.View.sales
                         else
                         {
                             // return button content to default
+                            txt_customer.Text = AppSettings.resourcemanager.GetString("trCustomer");
                             // return foreground color to default
                             txt_customer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                             path_customer.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
@@ -1508,6 +1561,7 @@ namespace Restaurant.View.sales
                     w.selectedCopouns = selectedCopouns;
                     w.manualDiscount = _ManualDiscount;
                     w.discountType = _DiscountType;
+                    w.memberShipId = _MemberShipId;
                     w.ShowDialog();
                     if (w.isOk)
                     {

@@ -222,6 +222,7 @@ namespace Restaurant.View.windows
         public string userJob;
 
         public bool isOk { get; set; }
+        public int memberShipId { get; set; }
         public decimal manualDiscount = 0;
         public string discountType = "";
         public decimal _Sum = 0;
@@ -281,7 +282,7 @@ namespace Restaurant.View.windows
         }
         async Task fillCouponsList()
         {
-            coupons = await couponModel.GetEffictiveCoupons();
+            coupons = await couponModel.GetEffictiveByMemberShipID(memberShipId);
 
             cb_coupon.DisplayMemberPath = "name";
             cb_coupon.SelectedValuePath = "cId";
