@@ -697,6 +697,7 @@ namespace Restaurant.View.purchase
                                     multipleValid = w.isOk;
                                     listPayments = w.listPayments;
                                 }
+                                #region save
                                 if (multipleValid)
                                 {
                                     if (cb_paymentProcessType.SelectedValue.ToString() == "cash" && MainWindow.posLogin.balance < invoice.totalNet)
@@ -776,7 +777,7 @@ namespace Restaurant.View.purchase
                                         _InvoiceType = "pd";
                                     }
                                 }
-
+                                #endregion
                             }
                             refreshDraftNotification();
                             refreshInvNotification();
@@ -1163,7 +1164,7 @@ namespace Restaurant.View.purchase
                         dp_desrvedDate.IsEnabled = false;
                         gd_card.Visibility = Visibility.Visible;
                         // update validate list
-                        requiredControlList = new List<string> {"card" };
+                        requiredControlList = new List<string> {"card", "processNum" };
                         break;
                     case 3://multiple
                         gd_card.Visibility = Visibility.Collapsed;

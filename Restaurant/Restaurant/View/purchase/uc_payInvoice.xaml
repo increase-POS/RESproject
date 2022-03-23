@@ -490,13 +490,13 @@
                        x:Name="txt_card"  Margin="2.5"  
                        Foreground="#4E4E4E" Text=""   Background="White"
                         HorizontalAlignment="Left" VerticalAlignment="Center" />
-                                    <Path Grid.Row="1"  Grid.Column="2"  x:Name="p_error_Card" Fill="#E81123" Stretch="Fill"
+                                    <Path Grid.Row="1"  Grid.Column="2"  x:Name="p_error_card" Fill="#E81123" Stretch="Fill"
                                               Margin="2.5"
                               HorizontalAlignment="Right"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                              Data="{StaticResource infoCircle}">
                                         <Path.ToolTip>
-                                            <ToolTip x:Name="tt_errorCard"   Style="{StaticResource ToolTipError}"/>
+                                            <ToolTip x:Name="tt_error_card"   Style="{StaticResource ToolTipError}"/>
                                         </Path.ToolTip>
                                     </Path>
                                 </Grid>
@@ -513,7 +513,7 @@
                                        TextChanged="Tb_textBox_TextChanged"
                                  materialDesign:HintAssist.Hint="Process Number..."  
                                  Foreground="#4E4E4E" />
-                                        <Path Grid.Row="1" x:Name="p_error_ProcessNum" Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
+                                        <Path Grid.Row="1" x:Name="p_error_processNum" Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                              Data="{StaticResource infoCircle}">
