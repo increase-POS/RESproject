@@ -88,9 +88,8 @@ namespace Restaurant.View.reports.accountsReports
                 #endregion
 
                 Btn_vendor_Click(btn_payments, null);
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -123,7 +122,7 @@ namespace Restaurant.View.reports.accountsReports
             col_Type.Header = AppSettings.resourcemanager.GetString("trType");
             col_updateUserAcc.Header = AppSettings.resourcemanager.GetString("trAccoutant");
             col_Bank.Header = AppSettings.resourcemanager.GetString("trBank");
-            col_user.Header = AppSettings.resourcemanager.GetString("trCompany");
+            col_user.Header = AppSettings.resourcemanager.GetString("trUser");
             col_updateDate.Header = AppSettings.resourcemanager.GetString("trDate");
             col_cash.Header = AppSettings.resourcemanager.GetString("trAmount");
 
@@ -254,7 +253,7 @@ namespace Restaurant.View.reports.accountsReports
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 
                 selectedTab = 1;
@@ -275,10 +274,10 @@ namespace Restaurant.View.reports.accountsReports
 
                 fillBanksCombo(recipient);
 
-                userPaymentsCombo = statisticModel.getUserAcc(payments, "bn");
+                userPaymentsCombo = statisticModel.getUserAcc(recipient, "bn");
                 fillUserCombo(userPaymentsCombo, cb_paymentsUser);
 
-                accPaymentsCombo = statisticModel.getAccounantCombo(payments, "bn");
+                accPaymentsCombo = statisticModel.getAccounantCombo(recipient, "bn");
                 fillAccCombo(accPaymentsCombo, cb_paymentsAccountant);
 
                 fillEvents(recipient);
@@ -288,12 +287,12 @@ namespace Restaurant.View.reports.accountsReports
                 chk_allpaymentsAccountant.IsChecked = true;
 
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -306,6 +305,7 @@ namespace Restaurant.View.reports.accountsReports
         {
             temp = fillList(lst, cb_paymentsBank, cb_paymentsUser, cb_paymentsAccountant, dp_paymentsStartDate, dp_paymentsEndDate).Where(s => s.side == "bn" && s.isConfirm == 1);
             dgPayments.ItemsSource = temp;
+            txt_count.Text = dgPayments.Items.Count.ToString();
             //fillPieChart();
             fillColumnChart();
             fillRowChart();
