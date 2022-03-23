@@ -31,6 +31,12 @@ namespace Restaurant.Classes
         public bool isFreeDelivery { get; set; }
         public decimal deliveryDiscountPercent { get; set; }
 
+        public int customersCount { get; set; }
+        public int couponsCount { get; set; }
+        public int offersCount { get; set; }
+        public int invoicesClassesCount { get; set; }
+
+
         public async Task<List<Memberships>> GetAll()
         {
             List<Memberships> items = new List<Memberships>();
