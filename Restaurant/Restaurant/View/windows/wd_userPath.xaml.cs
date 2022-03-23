@@ -81,7 +81,6 @@ namespace Restaurant.View.windows
 
                 // fillFirstLevel();
 
-                await getUserPath();
 
 
                 try
@@ -106,8 +105,9 @@ namespace Restaurant.View.windows
                     HelpClass.ExceptionMessage(ex, this);
                 }
 
-                
-                    HelpClass.EndAwait(grid_main);
+                await getUserPath();
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -203,7 +203,7 @@ namespace Restaurant.View.windows
                 count += 2;
             }
         }
-        private void btn_secondLevelClick(object sender, RoutedEventArgs e)
+        private async void btn_secondLevelClick(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -228,6 +228,7 @@ namespace Restaurant.View.windows
                 //////////////
                 if (list.Count == 0)
                 {
+                    await Task.Delay(0100);
                     //change colors
                     List<Path> tabsPathsList = FindControls.FindVisualChildren<Path>(this)
                     .Where(x => x.Name.Contains("object") && x.Tag != null).ToList();
@@ -384,7 +385,17 @@ namespace Restaurant.View.windows
                 //firstUserSetValue = lst.Where(u => u.valId == firstId && u.userId == MainWindow.userID).FirstOrDefault();
                 defaulPathUserSetValue = lst.Where(u => u.valId == defaulPathId && u.userId == MainWindow.userLogin.userId).FirstOrDefault();
                 //secondUserSetValue = lst.Where(u => u.valId == secondId && u.userId == MainWindow.userID).FirstOrDefault();
-                
+
+                //initializationMainTrack(defaulPathUserSetValue.notes);
+
+                List<Object> _listObjects = new List<Object>();
+                _listObjects = FillCombo.objectModel.GetParents(FillCombo.objectsList, defaulPathUserSetValue.notes);
+                foreach (var item in _listObjects)
+                {
+                    Button button = new Button();
+                    button.Tag = item.name;
+                    btn_secondLevelClick(button, null);
+                }
                 //foreach(var o in newlist)
                 //{
                 //    if (o.name.Equals(HelpClass.translate(firstUserSetValue.note) ))
@@ -570,7 +581,7 @@ namespace Restaurant.View.windows
 
                     defaulPathUserSetValue.userId = MainWindow.userLogin.userId;
                     defaulPathUserSetValue.valId = defaulPathId;
-                    defaulPathUserSetValue.note = _parentObjectName;
+                    defaulPathUserSetValue.notes = _parentObjectName;
                     defaulPathUserSetValue.createUserId = MainWindow.userLogin.userId;
                     defaulPathUserSetValue.updateUserId = MainWindow.userLogin.userId;
                     int res1 = await userSetValuesModel.Save(defaulPathUserSetValue);
