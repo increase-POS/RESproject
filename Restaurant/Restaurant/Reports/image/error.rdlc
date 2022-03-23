@@ -55,9 +55,9 @@
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>POS.Classes</rd:DataSetName>
+        <rd:DataSetName>Restaurant.Classes</rd:DataSetName>
         <rd:TableName>ErrorClass</rd:TableName>
-        <rd:ObjectDataSourceType>POS.Classes.ErrorClass, POS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:ObjectDataSourceType>Restaurant.Classes.ErrorClass, Restaurant, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
