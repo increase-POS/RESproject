@@ -34,7 +34,7 @@
                          BlurRadius="10"/>
                 </Border.Effect>
                 <Button Grid.Column="8" BorderBrush="{x:Null}"     Height="auto" Click="Btn_items_Click"
-                    Background="{x:Null}" x:Name="btn_items" Padding="0"   IsEnabled="False" >
+                    Background="{x:Null}" x:Name="btn_items" Padding="0"  >
                     <StackPanel>
                         <Path Fill="White" Stretch="Fill"  x:Name="path_itemsIcon"
                          Height="30" Width="30"
