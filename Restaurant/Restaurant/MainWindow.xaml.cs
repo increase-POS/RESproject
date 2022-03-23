@@ -403,7 +403,7 @@ namespace Restaurant
                 if (setVLst.Count > 0)
                 {
                     int defaultPathId = setVLst[0].valId;
-                    AppSettings.defaultPath = lst.Where(u => u.valId == defaultPathId && u.userId == userLogin.userId).FirstOrDefault().note;
+                    AppSettings.defaultPath = lst.Where(u => u.valId == defaultPathId && u.userId == userLogin.userId).FirstOrDefault().notes;
                 }
                 else
                 {
