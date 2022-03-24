@@ -1902,13 +1902,13 @@ namespace Restaurant
             try
             {
 
-                //Window.GetWindow(this).Opacity = 0.2;
-                //wd_changePassword w = new wd_changePassword();
-                    //// w.ShowInTaskbar = false;
-                //w.ShowDialog();
-                //Window.GetWindow(this).Opacity = 1;
-
-                //userLogin = await userModel.getUserById(w.userID);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_changePassword w = new wd_changePassword();
+                // w.ShowInTaskbar = false;
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+                
+                //userLogin = await FillCombo.user.getUserById(w.userID);
 
             }
             catch (Exception ex)
