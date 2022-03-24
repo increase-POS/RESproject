@@ -328,7 +328,7 @@
                                     </Path.ToolTip>
                                 </Path>
                             </Button>
-                            <TextBlock   Background="{x:Null}" x:Name="txt_count"    Margin="0,0,0,0" 
+                            <TextBlock   Background="{x:Null}" x:Name="txt_count"
                             Padding="10"   Text="0" Foreground="#378500"  >
                                 <TextBlock.ToolTip>
                                     <ToolTip x:Name="tt_count" 

@@ -704,7 +704,7 @@
                                     </Path>
                                 </Grid>
                             </Button>
-                            <TextBlock   Background="{x:Null}" x:Name="txt_count"   Grid.Column="4" Margin="0,0,0,5" 
+                            <TextBlock   Background="{x:Null}" x:Name="txt_count"   Grid.Column="4" 
                             Padding="10"   Text="0" Foreground="#378500" FontSize="12"  >
                                 <TextBlock.ToolTip>
                                     <ToolTip x:Name="tt_count" Content="Customers Count"
