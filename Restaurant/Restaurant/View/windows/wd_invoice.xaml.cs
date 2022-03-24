@@ -247,6 +247,8 @@ namespace Restaurant.View.windows
             {
                 if (icon == "waitingOrders")
                     FillCombo.invoices = await FillCombo.invoice.getBranchInvoices(invoiceType, branchCreatorId, branchId);
+                else if (icon == "draftOrders")
+                    FillCombo.invoices = await FillCombo.invoice.GetInvoicesByCreator(invoiceType, userId, duration);
             }
             #endregion
             #region spending order in storage

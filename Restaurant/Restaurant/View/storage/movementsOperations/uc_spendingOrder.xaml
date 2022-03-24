@@ -132,7 +132,7 @@
                     </Border>-->
 
 
-                    <!--<Button Grid.Column="1" BorderBrush="{x:Null}"  
+                    <Button Grid.Column="1" BorderBrush="{x:Null}"  
                     Background="{x:Null}" x:Name="btn_newDraft" Padding="0" Margin="5,10,5,0" Height="auto"
                     Click="Btn_newDraft_Click">
                         <StackPanel>
@@ -143,8 +143,8 @@
                                            FontWeight="Regular" FontSize="8" TextAlignment="Center" Width="35"
                                            HorizontalAlignment="Center"/>
                         </StackPanel>
-                    </Button>-->
-                    <!--<materialDesign:Badged VerticalAlignment="Center" Margin="5,10,5,0" 
+                    </Button>
+                    <materialDesign:Badged VerticalAlignment="Center" Margin="5,10,5,0" 
                       BadgeBackground="{StaticResource Red}"  BadgeForeground="White" Name="md_draftsCount">
                         <Button Grid.Column="2" BorderBrush="{x:Null}" Padding="0" Height="auto"
                     Background="{x:Null}" x:Name="btn_drafts"  Click="Btn_draft_Click" >
@@ -158,10 +158,10 @@
                                            HorizontalAlignment="Center"/>
                             </StackPanel>
                         </Button>
-                    </materialDesign:Badged>-->
+                    </materialDesign:Badged>
 
-                    <!--<Border Grid.Column="3"  Background="White" Margin="10,10"   CornerRadius="0,0,0,0"  
-                            Width="1" BorderThickness="0,0,1,0" BorderBrush="{StaticResource LightMainColor}" />-->
+                    <Border Grid.Column="3"  Background="White" Margin="10,10"   CornerRadius="0,0,0,0"  
+                            Width="1" BorderThickness="0,0,1,0" BorderBrush="{StaticResource LightMainColor}" />
                     <materialDesign:Badged VerticalAlignment="Center" Margin="5,10,5,0" 
                       BadgeBackground="{StaticResource Red}"  BadgeForeground="White" Name="md_ordersCount">
                         <Button Grid.Column="4" BorderBrush="{x:Null}" Padding="0"  Height="auto"
