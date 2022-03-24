@@ -95,5 +95,24 @@ namespace Restaurant.Classes
             return await APIResult.post(method, parameters);
         }
 
+        public async Task<AgenttoPayCash> GetmembershipByAgentId(int itemId)
+        {
+            AgenttoPayCash item = new AgenttoPayCash();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("itemId", itemId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("memberships/GetmembershipByAgentId", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    item = JsonConvert.DeserializeObject<AgenttoPayCash>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                    break;
+                }
+            }
+            return item;
+        }
+
     }
 }
