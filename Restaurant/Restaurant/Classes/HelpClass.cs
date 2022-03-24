@@ -25,25 +25,14 @@ namespace Restaurant.Classes
     {
         public static bool iscodeExist = false;
         public static Agent agentModel = new Agent();
-        //public static Bonds bondModel = new Bonds();
         public static Branch branchModel = new Branch();
         public static Category categoryModel = new Category();
         public static Pos posModel = new Pos();
         public static Offer offerModel = new Offer();
-        //public static CashTransfer cashModel = new CashTransfer();
-        //public static Coupon couponModel = new Coupon();
-
         public static string code;
         static public BrushConverter brushConverter = new BrushConverter();
         public static ImageBrush imageBrush = new ImageBrush();
-        
-        
-        //public static void SetError(Control c, Path p_error, ToolTip tt_error, string tr)
-        //{
-        //    p_error.Visibility = Visibility.Visible;
-        //    tt_error.Content = AppSettings.resourcemanager.GetString(tr);
-        //    c.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
-        //}
+
         static public bool isAdminPermision()
         {
             //if (MainWindow.userLogin.userId == 1 || MainWindow.userLogin.userId == 2)
@@ -98,8 +87,6 @@ namespace Restaurant.Classes
             }
             return isValid;
         }
-
-
         public static void SetValidate( Path p_error, string tr)
         {
             #region Tooltip error
@@ -110,7 +97,6 @@ namespace Restaurant.Classes
             p_error.ToolTip = toolTip;
             #endregion
         }
-
         public static void clearValidate( Path p_error)
         {
             p_error.Visibility = Visibility.Collapsed;
@@ -173,136 +159,6 @@ namespace Restaurant.Classes
             catch { }
             return iscodeExist;
         }
-        #region validateEmpty 
-        /*
-        public static bool validateEmptyTextBox(TextBox tb, Path p_error)
-        {
-            bool isValid = true;
-            if (tb.Text.Equals(""))
-            {
-                p_error.Visibility = Visibility.Visible;
-                #region Tooltip
-                ToolTip toolTip = new ToolTip();
-                toolTip.Content = AppSettings.resourcemanager.GetString("trIsRequired");
-                toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
-                p_error.ToolTip = toolTip;
-                #endregion
-                isValid = false;
-            }
-            else
-            {
-                p_error.Visibility = Visibility.Collapsed;
-            }
-            return isValid;
-        }
-        public static bool validateEmptyComboBox(ComboBox cb, Path p_error, ToolTip tt_error, string tr)
-        {
-            bool isValid = true;
-
-            if (cb.SelectedIndex == -1)
-            {
-                p_error.Visibility = Visibility.Visible;
-                tt_error.Content = AppSettings.resourcemanager.GetString(tr);
-                cb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
-                isValid = false;
-            }
-            else
-            {
-                cb.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
-                p_error.Visibility = Visibility.Collapsed;
-
-            }
-            return isValid;
-        }
-        public static bool validateEmptyPassword(PasswordBox pb, Path p_error, ToolTip tt_error, string tr)
-        {
-            bool isValid = true;
-
-            if (pb.Password.Equals(""))
-            {
-                HelpClass.showPasswordValidate(pb, p_error, tt_error, "trEmptyPasswordToolTip");
-                p_error.Visibility = Visibility.Visible;
-                isValid = false;
-            }
-            else
-            {
-                HelpClass.clearPasswordValidate(pb, p_error);
-                p_error.Visibility = Visibility.Collapsed;
-            }
-            return isValid;
-        }
-        public static bool validateEmail(TextBox tb, Path p_error, ToolTip tt_error)
-        {
-            bool isValid = true;
-            if (!tb.Text.Equals(""))
-            {
-                if (!ValidatorExtensions.IsValid(tb.Text))
-                {
-                    p_error.Visibility = Visibility.Visible;
-                    tt_error.Content = AppSettings.resourcemanager.GetString("trErrorEmailToolTip");
-                    tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
-                isValid = false;
-                }
-                else
-                {
-                    p_error.Visibility = Visibility.Collapsed;
-                    tb.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
-                isValid = true;
-                }
-            }
-            return isValid;
-        }
-        public static void validateEmptyDatePicker(DatePicker dp, Path p_error, ToolTip tt_error, string tr)
-        {
-            TextBox tb = (TextBox)dp.Template.FindName("PART_TextBox", dp);
-            if (tb.Text.Trim().Equals(""))
-            {
-                p_error.Visibility = Visibility.Visible;
-                tt_error.Content = AppSettings.resourcemanager.GetString(tr);
-                tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
-            }
-            else
-            {
-                tb.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
-                p_error.Visibility = Visibility.Collapsed;
-            }
-        }
-        public static void validateSmalThanDateNowDatePicker(DatePicker dp, Path p_error, ToolTip tt_error, string tr)
-        {
-            TextBox tb = (TextBox)dp.Template.FindName("PART_TextBox", dp);
-            if (dp.SelectedDate < DateTime.Now)
-            {
-                p_error.Visibility = Visibility.Visible;
-                tt_error.Content = AppSettings.resourcemanager.GetString(tr);
-                tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
-            }
-            else
-            {
-                tb.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
-                p_error.Visibility = Visibility.Collapsed;
-            }
-        }
-        */
-        #endregion
-        #region clearValidate
-        /*
-            public static void clearValidate(TextBox tb , Path p_error)
-        {
-            tb.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
-            p_error.Visibility = Visibility.Collapsed;
-        }
-        public static void clearPasswordValidate(PasswordBox pb, Path p_error)
-        {
-            pb.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
-            p_error.Visibility = Visibility.Collapsed;
-        }
-        public static void clearComboBoxValidate(ComboBox cb, Path p_error)
-        {
-            cb.Background = (Brush)brushConverter.ConvertFrom("#f8f8f8");
-            p_error.Visibility = Visibility.Collapsed;
-        }
-         */
-        #endregion
         #region validate
         public static bool validate(List<string> requiredControlList ,UserControl userControl)
         {
@@ -532,53 +388,6 @@ namespace Restaurant.Classes
             catch { }
         }
         #endregion
-        public static void showTextBoxValidate(TextBox tb, Path p_error, ToolTip tt_error, string tr)
-        {
-            p_error.Visibility = Visibility.Visible;
-            tt_error.Content = AppSettings.resourcemanager.GetString(tr);
-            tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
-        }
-        public static void showPasswordValidate(PasswordBox tb, Path p_error, ToolTip tt_error, string tr)
-        {
-            p_error.Visibility = Visibility.Visible;
-            tt_error.Content = AppSettings.resourcemanager.GetString(tr);
-            tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
-        }
-        public static void showComboBoxValidate(ComboBox cb, Path p_error, ToolTip tt_error, string tr)
-        {
-            p_error.Visibility = Visibility.Visible;
-            tt_error.Content = AppSettings.resourcemanager.GetString(tr);
-            cb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
-        }
-
-        public static void showDatePickerValidate(DatePicker dp, Path p_error, ToolTip tt_error, string tr)
-        {
-            TextBox tb = (TextBox)dp.Template.FindName("PART_TextBox", dp);
-
-            p_error.Visibility = Visibility.Visible;
-            tt_error.Content = AppSettings.resourcemanager.GetString(tr);
-            tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
-        }
-
-        public static void showTimePickerValidate(TimePicker tp, Path p_error, ToolTip tt_error, string tr)
-        {
-            TextBox tb = (TextBox)tp.Template.FindName("PART_TextBox", tp);
-
-            p_error.Visibility = Visibility.Visible;
-            tt_error.Content = AppSettings.resourcemanager.GetString(tr);
-            tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
-        }
-
-       
-
-     
-
-        //public static void validateDuplicateCode(TextBox tb, Path p_error, ToolTip tt_error ,string tr)
-        //{
-        //    p_error.Visibility = Visibility.Visible;
-        //    tt_error.Content = AppSettings.resourcemanager.GetString(tr);
-        //    tb.Background = (Brush)brushConverter.ConvertFrom("#15FF0000");
-        //}
 
         public static void getMobile(string _mobile , ComboBox _area , TextBox _tb)
         {//mobile
@@ -645,7 +454,6 @@ namespace Restaurant.Classes
             }
         }
          
-
         public static void clearImg(Button img)
         {
             Uri resourceUri = new Uri("pic/no-image-icon-125x125.png", UriKind.Relative);
@@ -894,7 +702,6 @@ namespace Restaurant.Classes
             }
             return data;
         }
-
         public static string DateToString(DateTime? date)
         {
             string sdate = "";
@@ -924,7 +731,6 @@ namespace Restaurant.Classes
 
             return sdate;
         }
-
         public static string DecTostring(decimal? dec)
         {
             string sdc = "0";
@@ -967,13 +773,6 @@ namespace Restaurant.Classes
             sdc = string.Format("{0:G29}", decimal.Parse(sdc));
             return sdc;
         }
-        //static public bool isAdminPermision()
-        //{
-        //    //if (MainWindow.userLogin.userId == 1 || MainWindow.userLogin.userId == 2)
-        //    if (MainWindow.userLogin.isAdmin == true)
-        //        return true;
-        //    return false;
-        //}
         /// <summary>
         /// لمنع  الصفر بالبداية
         /// </summary>
@@ -989,7 +788,6 @@ namespace Restaurant.Classes
                 txb.Focus();
             }
         }
-
         static async public void ExceptionMessage(Exception ex, object window)
         {
             try
@@ -1012,7 +810,6 @@ namespace Restaurant.Classes
 
             }
         }
-
         static public void StartAwait(Grid grid, string progressRingName = "")
         {
             grid.IsEnabled = false;
@@ -1040,7 +837,6 @@ namespace Restaurant.Classes
             }
             
         }
-
         /// <summary>
         /// badged name , previous count, new count
         /// </summary>
@@ -1076,7 +872,6 @@ namespace Restaurant.Classes
             else
                 img.Source = null;
         }
-
         static public void activateCategoriesButtons(List<Item> items, List<Category> categories, List<Button> btns)
         {
             foreach (Category cat in categories)
