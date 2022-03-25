@@ -477,25 +477,27 @@ namespace Restaurant.View.accounts
                     this.DataContext = subscription;
                     if (subscription != null)
                     {
-                        switch(subscription.subscriptionType)
-                        {
-                            case "m":
-                                bdr_monthCount.Visibility = Visibility.Visible;
-                                MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trYearCount") + "...");
-                                fillMonthCount();
-                                break;
-                            case "y":
-                                bdr_monthCount.Visibility = Visibility.Visible;
-                                MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trMonthCount") + "...");
-                                fillMonthCount();
-                                break;
-                            case "o":
-                                bdr_monthCount.Visibility = Visibility.Collapsed;
-                                cb_monthsCount.SelectedIndex = -1;
-                                cb_monthsCount.ItemsSource = null;
-                                break;
-                        }
-                       
+                        cb_customerId.SelectedValue = subscription.agentId;
+                        btn_save.IsEnabled = false;
+                        //switch(subscription.subscriptionType)
+                        //{
+                        //    case "m":
+                        //        bdr_monthCount.Visibility = Visibility.Visible;
+                        //        MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trYearCount") + "...");
+                        //        fillMonthCount();
+                        //        break;
+                        //    case "y":
+                        //        bdr_monthCount.Visibility = Visibility.Visible;
+                        //        MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trMonthCount") + "...");
+                        //        fillMonthCount();
+                        //        break;
+                        //    case "o":
+                        //        bdr_monthCount.Visibility = Visibility.Collapsed;
+                        //        cb_monthsCount.SelectedIndex = -1;
+                        //        cb_monthsCount.ItemsSource = null;
+                        //        break;
+                        //}
+
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
@@ -579,6 +581,7 @@ namespace Restaurant.View.accounts
         void Clear()
         {
             this.DataContext = new Agent();
+            cb_customerId.SelectedIndex = -1;
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
@@ -1120,25 +1123,16 @@ namespace Restaurant.View.accounts
                     if (HelpClass.validate(requiredControlList, this))
                     {
                         CashTransfer cashtrans = new CashTransfer();
-
-                        int s = await cashtrans.Save(cashtrans);
                         //save cashTransfer
-                        /*
-                         public int cashTransId { get; set; }
-        public string transType { get; set; }
-        public string transNum { get; set; }
-        public decimal cash { get; set; }
-        public Nullable<int> updateUserId { get; set; }
-        public Nullable<int> createUserId { get; set; }
-        public string notes { get; set; }
-        public string side { get; set; }
-        public string docName { get; set; }
-        public string docNum { get; set; }
-        public string agentName { get; set; }
-        public string processType { get; set; }
-        public Nullable<int> cardId { get; set; }
-        public string cardName { get; set; }// processType=card
-                         */
+                        cashtrans.transType = "p";////????
+                        cashtrans.transNum = await cashtrans.generateCashNumber(cashtrans.transType + "c");////????????
+                        cashtrans.cash = decimal.Parse(tb_amount.Text);
+                        cashtrans.createUserId = MainWindow.userLogin.userId;
+                        cashtrans.updateUserId = MainWindow.userLogin.userId;
+                        cashtrans.side = "";//????
+                        cashtrans.processType = cb_paymentProcessType.SelectedValue.ToString();
+                        int s = await cashtrans.Save(cashtrans);
+                       
                         if (!s.Equals(0))
                         {
                             //save agentCash
@@ -1216,7 +1210,7 @@ namespace Restaurant.View.accounts
         }
 
         private async void Cb_customerId_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        {//select customer
             try
             {
                 AgenttoPayCash a = cb_customerId.SelectedItem as AgenttoPayCash;
@@ -1241,6 +1235,12 @@ namespace Restaurant.View.accounts
                         else if(a.subscriptionType == "y")
                             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trYearCount") + "...");
                     }
+                    tb_discount.Text = a.Amount.ToString();
+                }
+                else
+                {
+                    btn_save.IsEnabled = true;
+                    tb_discount.Text = "";
                 }
             }
             catch (Exception ex)
