@@ -22,7 +22,8 @@ namespace Restaurant.View.windows
     /// </summary>
     public partial class wd_selectCustomer : Window
     {
-        AgentMemberships agentMemberships = new AgentMemberships();
+        Memberships memberships = new Memberships();
+        AgenttoPayCash agentToPayCash = new AgenttoPayCash();
         public wd_selectCustomer() 
         {
             try
@@ -126,6 +127,7 @@ namespace Restaurant.View.windows
             if(cb_customerId.SelectedIndex != -1)
             {
                 customerId = (int)cb_customerId.SelectedValue;
+                agentToPayCash = await memberships.GetmembershipByAgentId(customerId);
                 //agentMemberships = await agentMemberships.GetAgentMemberShip(customerId);
             }
         }

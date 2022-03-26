@@ -1317,25 +1317,35 @@ namespace Restaurant.View.sales
                 HelpClass.StartAwait(grid_main);
                 if (FillCombo.groupObject.HasPermissionAction(invoicePermission, FillCombo.groupObjects, "one"))
                 {
-                    // هي واجهة الدفعات
-                    wd_multiplePayment w = new wd_multiplePayment();
-                    // w.ShowInTaskbar = false;
-                    w.ShowDialog();
-
-                    if (selectedTables.Count == 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trChooseTableFirst"), animation: ToasterAnimation.FadeIn);
-                    else if(billDetailsList.Count > 0)
+                    if (MainWindow.posLogin.boxState == "o") // box is open
                     {
-                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trAddInvoiceWithoutItems"), animation: ToasterAnimation.FadeIn);
+                        // هي واجهة الدفعات
+                        wd_multiplePayment w = new wd_multiplePayment();
+                        // w.ShowInTaskbar = false;
+                        w.ShowDialog();
+
+                        //if (selectedTables.Count == 0)
+                        //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trChooseTableFirst"), animation: ToasterAnimation.FadeIn);
+                        if (billDetailsList.Count > 0)
+                        {
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trAddInvoiceWithoutItems"), animation: ToasterAnimation.FadeIn);
+                        }
+                        else if (invoice.invoiceId != 0)
+                        {
+
+                            await addInvoice("s");
+                            await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns, invoice.invoiceId, "s");
+                            if (invoice.reservationId != null)
+                                await reservation.updateReservationStatus((long)invoice.reservationId, "close", MainWindow.userLogin.userId);
+
+                            // refresh pos balance
+                            await MainWindow.refreshBalance();
+
+                        }
                     }
-                    else if (invoice.invoiceId != 0)
+                    else //box is closed
                     {
-                       
-
-                        await addInvoice("s");
-                        await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns, invoice.invoiceId, "s");
-                        if (invoice.reservationId != null)
-                            await reservation.updateReservationStatus((long)invoice.reservationId,"close",MainWindow.userLogin.userId);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trBoxIsClosed"), animation: ToasterAnimation.FadeIn);
                     }
                 }
                 HelpClass.EndAwait(grid_main);
