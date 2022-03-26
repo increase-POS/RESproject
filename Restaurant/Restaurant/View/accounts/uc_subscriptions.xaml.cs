@@ -83,7 +83,7 @@ namespace Restaurant.View.accounts
 
                 requiredControlList = new List<string> { "customerId" , "monthsCount" , "amount" , "paymentProcessType" };
                 
-                //expirDate
+                //expirDate  //paymentmethod
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -135,7 +135,7 @@ namespace Restaurant.View.accounts
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_paymentProcessType, AppSettings.resourcemanager.GetString("trPaymentProcessType"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
 
-            dg_subscription.Columns[0].Header = AppSettings.resourcemanager.GetString("trTransNumber");
+            dg_subscription.Columns[0].Header = AppSettings.resourcemanager.GetString("trTransferNumberTooltip");
             dg_subscription.Columns[1].Header = AppSettings.resourcemanager.GetString("trCustomer");
             dg_subscription.Columns[2].Header = AppSettings.resourcemanager.GetString("trSubscriptionType");
             dg_subscription.Columns[3].Header = AppSettings.resourcemanager.GetString("trExpireDate");
@@ -474,7 +474,7 @@ namespace Restaurant.View.accounts
                 if (dg_subscription.SelectedIndex != -1)
                 {
                     subscription = dg_subscription.SelectedItem as AgentMembershipCash;
-                    this.DataContext = subscription;
+                    //this.DataContext = subscription;
                     if (subscription != null)
                     {
                         cb_customerId.SelectedValue = subscription.agentId;
@@ -1113,90 +1113,101 @@ namespace Restaurant.View.accounts
 
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {//save
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
                 if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one"))
                 {
                     //subscription = new AgentMembershipCash();
                     if (HelpClass.validate(requiredControlList, this))
                     {
+                        #region cashTransfer
                         CashTransfer cashtrans = new CashTransfer();
-                        //save cashTransfer
-                        cashtrans.transType = "p";////????
+
+                        //cashtrans.agentMembershipsId = 0;
+                        cashtrans.transType = "d";
+                        cashtrans.posId = MainWindow.posLogin.posId;
+                        cashtrans.userId = null;
+                        cashtrans.agentId = (int)cb_customerId.SelectedValue;
+                        cashtrans.invId = null;
                         cashtrans.transNum = await cashtrans.generateCashNumber(cashtrans.transType + "c");////????????
                         cashtrans.cash = decimal.Parse(tb_amount.Text);
                         cashtrans.createUserId = MainWindow.userLogin.userId;
                         cashtrans.updateUserId = MainWindow.userLogin.userId;
-                        cashtrans.side = "";//????
+                        cashtrans.notes = "";
+                        cashtrans.posIdCreator = null;
+                        cashtrans.isConfirm = 0;
+                        cashtrans.cashTransIdSource = null;
+                        cashtrans.side = "c";
+                        cashtrans.docName = "";
+                        cashtrans.docNum = "";//////////////////////?????????????????????????
+                        cashtrans.docImage = "";
+                        cashtrans.bankId = null;
+                        cashtrans.bankName = "";
+                        cashtrans.agentName = null;
+                        cashtrans.usersName = null;
                         cashtrans.processType = cb_paymentProcessType.SelectedValue.ToString();
-                        int s = await cashtrans.Save(cashtrans);
-                       
-                        if (!s.Equals(0))
+                        cashtrans.cardId = null;///////////////////???????????
+                        cashtrans.shippingCompanyId = null;
+                    #endregion
+
+                    #region agentCash
+                    subscription = new AgentMembershipCash();
+
+                        subscription.agentMembershipsId = 0;
+                        subscription.subscriptionFeesId = ag.subscriptionFeesId;
+                        subscription.cashTransId = cashtrans.cashTransId;
+                        subscription.membershipId = ag.membershipId;
+                        subscription.agentId = (int)cb_customerId.SelectedValue;
+                        subscription.startDate = ag.startDate;
+                        subscription.EndDate = ag.updateDate;
+                        subscription.notes = "";
+                        subscription.createUserId = MainWindow.userLogin.userId;
+                        subscription.updateUserId = MainWindow.userLogin.userId;
+                        subscription.isActive = 1;
+                        subscription.Amount = decimal.Parse(tb_amount.Text);
+                        //discount  subscription.discount = decimal.Parse(tb_discount.Text);
+                        //total     subscription.total = decimal.Parse(txt_total.Text);
+                        subscription.monthsCount = (int)cb_monthsCount.SelectedValue;
+                        subscription.agentName = ag.agentName;
+                        subscription.agentcode = ag.agentcode;
+                        subscription.agentcompany = ag.agentcompany;
+                        subscription.agenttype = ag.agenttype;
+                        subscription.membershipName = ag.membershipName;
+                        subscription.membershipcode = ag.membershipcode;
+                        subscription.transType = cashtrans.transType;
+                        subscription.transNum = cashtrans.transNum;
+                        subscription.membershipisActive = ag.membershipisActive;
+                        subscription.subscriptionType = ag.subscriptionType;
+                        #endregion
+
+                        int res = await subscription.Savepay(subscription, cashtrans);
+
+                        if (res <= 0)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        else
                         {
-                            //save agentCash
-                            subscription.Amount = decimal.Parse(tb_amount.Text);
-                            subscription.monthsCount = (int)cb_monthsCount.SelectedValue;
-                            subscription.cashTransId = cashtrans.cashTransId;
-                            subscription.transNum = cashtrans.transNum;
-                            subscription.transType = cashtrans.processType;//??????????
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
-                            int res = await subscription.save(subscription);
-
-                            if (res <= 0)
-                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                            else
-                            {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-
-                                Clear();
-                                await RefreshSubscriptionsList();
-                                await Search();
-                            }
+                            Clear();
+                            await RefreshSubscriptionsList();
+                            await Search();
                         }
-                        /*AgentCash
-            public Nullable<int> subscriptionFeesId { get; set; }
-            public Nullable<int> cashTransId { get; set; }
-            public Nullable<int> membershipId { get; set; }
-            public Nullable<int> agentId { get; set; }
-            public Nullable<System.DateTime> startDate { get; set; }
-            public Nullable<System.DateTime> EndDate { get; set; }
-            public string notes { get; set; }
-            public Nullable<System.DateTime> createDate { get; set; }
-            public Nullable<System.DateTime> updateDate { get; set; }
-            public Nullable<int> createUserId { get; set; }
-            public Nullable<int> updateUserId { get; set; }
-            public byte isActive { get; set; }
-            public decimal Amount { get; set; }
-            public bool canDelete { get; set; }
-            public Nullable<int> monthsCount { get; set; }
-            public string agentName { get; set; }
-            public string agentcode { get; set; }
-            public string agentcompany { get; set; }
-            public string agenttype { get; set; }
-            public string membershipName { get; set; }
-            public string membershipcode { get; set; }
-            public string transType { get; set; }
-            public string transNum { get; set; }
-            public Nullable<System.DateTime> payDate { get; set; }
-            public byte membershipisActive { get; set; }
-            public int agentMembershipCashId { get; set; }
-            public string subscriptionType { get; set; }
 
-                         */
+                      
                     }
                     else
                         Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-                    HelpClass.EndAwait(grid_main);
-                }
-            }
-            catch (Exception ex)
-            {
                 HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
             }
+            //}
+            //    catch (Exception ex)
+            //    {
+            //        HelpClass.EndAwait(grid_main);
+            //        HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void Chb_all_Checked(object sender, RoutedEventArgs e)
@@ -1209,44 +1220,63 @@ namespace Restaurant.View.accounts
 
         }
 
+        AgenttoPayCash ag = new AgenttoPayCash();
+
         private async void Cb_customerId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select customer
-            try
-            {
-                AgenttoPayCash a = cb_customerId.SelectedItem as AgenttoPayCash;
-                if (a != null)
+            //try
+            //{
+                ag = cb_customerId.SelectedItem as AgenttoPayCash;
+
+                this.DataContext = ag;  
+
+                if (ag != null)
                 {
-                    if ((a.subscriptionType == "o") || (a.subscriptionType == "f"))
+                    if ((ag.subscriptionType == "o") || (ag.subscriptionType == "f"))
                     {
                         cb_monthsCount.SelectedIndex = -1;
                         bdr_monthCount.Visibility = Visibility.Collapsed;
                     }
                     else
                     {
+                        bdr_monthCount.Visibility = Visibility.Visible;
                         SubscriptionFees subFee = new SubscriptionFees();
                         List<SubscriptionFees> subFees = await subFee.GetAll();
-                        subFees = subFees.Where(s => s.membershipId == a.membershipId).ToList();
-                        cb_monthsCount.DisplayMemberPath = "monthsCount";
-                        cb_monthsCount.SelectedValuePath = "subscriptionFeesId";
+                        subFees = subFees.Where(s => s.membershipId == ag.membershipId).ToList();
+                        string str = "";
+                        if (ag.subscriptionType == "m")
+                        {
+                            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trMonthCount") + "...");
+                            str = AppSettings.resourcemanager.GetString("trMonth");
+                        }
+                        else if (ag.subscriptionType == "y")
+                        {
+                            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trYearCount") + "...");
+                            str = AppSettings.resourcemanager.GetString("trYear");
+                        }
+
+                        foreach (var m in subFees)
+                        {
+                            m.notes = m.monthsCount + " " +str;
+                        }
+
+                        cb_monthsCount.DisplayMemberPath = "notes";
+                        cb_monthsCount.SelectedValuePath = "monthsCount";
                         cb_monthsCount.ItemsSource = subFees;
 
-                        if (a.subscriptionType == "m")
-                            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trMonthCount") + "...");
-                        else if(a.subscriptionType == "y")
-                            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trYearCount") + "...");
                     }
-                    tb_discount.Text = a.Amount.ToString();
+                    //tb_discount.Text = ag.Amount.ToString();
                 }
                 else
                 {
                     btn_save.IsEnabled = true;
                     tb_discount.Text = "";
                 }
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
     }
 }
