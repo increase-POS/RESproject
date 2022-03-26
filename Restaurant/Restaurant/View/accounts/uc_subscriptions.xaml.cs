@@ -478,26 +478,12 @@ namespace Restaurant.View.accounts
                     if (subscription != null)
                     {
                         cb_customerId.SelectedValue = subscription.agentId;
-                        btn_save.IsEnabled = false;
-                        //switch(subscription.subscriptionType)
-                        //{
-                        //    case "m":
-                        //        bdr_monthCount.Visibility = Visibility.Visible;
-                        //        MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trYearCount") + "...");
-                        //        fillMonthCount();
-                        //        break;
-                        //    case "y":
-                        //        bdr_monthCount.Visibility = Visibility.Visible;
-                        //        MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trMonthCount") + "...");
-                        //        fillMonthCount();
-                        //        break;
-                        //    case "o":
-                        //        bdr_monthCount.Visibility = Visibility.Collapsed;
-                        //        cb_monthsCount.SelectedIndex = -1;
-                        //        cb_monthsCount.ItemsSource = null;
-                        //        break;
-                        //}
 
+                        ag = cb_customerId.SelectedItem as AgenttoPayCash;
+
+                        this.DataContext = ag;
+
+                        btn_save.IsEnabled = false;
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
@@ -508,16 +494,6 @@ namespace Restaurant.View.accounts
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-        }
-
-        private async void fillMonthCount()
-        {
-            SubscriptionFees subFee = new SubscriptionFees();
-            List<SubscriptionFees> subFees = await subFee.GetAll();
-            subFees = subFees.Where(s => s.membershipId == subscription.membershipId).ToList();
-            cb_monthsCount.DisplayMemberPath = "monthsCount";
-            cb_monthsCount.SelectedValuePath = "subscriptionFeesId";
-            cb_monthsCount.ItemsSource = subFees;
         }
 
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
@@ -1228,8 +1204,6 @@ namespace Restaurant.View.accounts
             //{
                 ag = cb_customerId.SelectedItem as AgenttoPayCash;
 
-                this.DataContext = ag;  
-
                 if (ag != null)
                 {
                     if ((ag.subscriptionType == "o") || (ag.subscriptionType == "f"))
@@ -1263,6 +1237,10 @@ namespace Restaurant.View.accounts
                         cb_monthsCount.DisplayMemberPath = "notes";
                         cb_monthsCount.SelectedValuePath = "monthsCount";
                         cb_monthsCount.ItemsSource = subFees;
+                        if (subscription != null)
+                            cb_monthsCount.SelectedValue = subscription.monthsCount;
+                        else
+                            cb_monthsCount.SelectedIndex = -1;
 
                     }
                     //tb_discount.Text = ag.Amount.ToString();

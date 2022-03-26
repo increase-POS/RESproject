@@ -188,9 +188,9 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="*"  Header="Transfer number" Binding="{Binding Path=transNum}"/>
                                 <DataGridTextColumn Width="*"  Header="customer with membership" Binding="{Binding Path=agentName}"/>
-                                <DataGridTextColumn Width="*"  Header="subscription type" Binding="{Binding Path=subscriptionType}"/>
-                                <DataGridTextColumn Width="*"  Header="expirDate" Binding="{Binding Path=updateDate}"/>
-                                <DataGridTextColumn Width="*"  Header="amount" Binding="{Binding Path=Amount}"/>
+                                <DataGridTextColumn Width="*"  Header="subscription type" Binding="{Binding Path=subscriptionType  , Converter={StaticResource subscriptionTypeConverter }}"/>
+                                <DataGridTextColumn Width="*"  Header="expirDate" Binding="{Binding Path=updateDate , Converter={StaticResource dateFrameConverter }}"/>
+                                <DataGridTextColumn Width="*"  Header="amount" Binding="{Binding Path=Amount ,Converter={StaticResource accuracyConverter }}"/>
                                
                             </DataGrid.Columns>
                         </DataGrid>
