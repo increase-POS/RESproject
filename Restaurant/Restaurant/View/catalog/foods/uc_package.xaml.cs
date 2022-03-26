@@ -124,7 +124,7 @@ namespace Restaurant.View.catalog.foods
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-                  FillCombo.FillCategorySale(cb_categoryId);
+                 await FillCombo.FillCategorySale(cb_categoryId);
 
                 Keyboard.Focus(tb_code);
                 await RefreshItemsList();

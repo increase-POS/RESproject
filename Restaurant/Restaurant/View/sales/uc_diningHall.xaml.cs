@@ -1212,6 +1212,7 @@ namespace Restaurant.View.sales
             btn_customer.IsEnabled = false;
             btn_kitchen.IsEnabled = false;
             #endregion
+
             invoice = new Invoice();
             txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
 
@@ -1251,6 +1252,13 @@ namespace Restaurant.View.sales
                 txt_waiter.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                 path_waiter.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
             }
+            else
+            {
+                txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
+                txt_waiter.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                path_waiter.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            }
+
             if (invoice.agentId != null)
             {
                 var customer = FillCombo.customersList.Where(x => x.agentId == invoice.agentId).FirstOrDefault();
@@ -1259,6 +1267,12 @@ namespace Restaurant.View.sales
 
                 txt_customer.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                 path_customer.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            }
+            else
+            {
+                txt_customer.Text = AppSettings.resourcemanager.GetString("trCustomer");
+                txt_customer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                path_customer.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             }
 
             if (invoice.total != 0)
@@ -1459,7 +1473,8 @@ namespace Restaurant.View.sales
                         invoice.waiterId = w.userId;
                         if (w.userId > 0)
                         {                           
-                            string userName = FillCombo.usersList.Where(x => x.createUserId == w.userId).Select(x => x.name).Single();
+                            //string userName = FillCombo.usersList.Where(x => x.createUserId == w.userId).Select(x => x.name).Single();
+                            string userName = FillCombo.usersList.Where(x => x.userId == w.userId).Select(x => x.name).Single();
                             // change button content
                             txt_waiter.Text = userName;
                             // change foreground color

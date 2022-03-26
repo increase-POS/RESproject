@@ -257,6 +257,7 @@ namespace Restaurant.View.sales.promotion.membership
         {
             btn_save.IsEnabled = false;
             this.DataContext = new Agent();
+            p_error_discountValue.Visibility = Visibility.Collapsed;
         }
         string input;
         decimal _decimal = 0;
@@ -550,7 +551,7 @@ namespace Restaurant.View.sales.promotion.membership
         {
             try
             {
-                if (decimal.Parse(tb_discountValue.Text) > 100)
+                if (string.IsNullOrWhiteSpace(tb_discountValue.Text) || decimal.Parse(tb_discountValue.Text) > 100|| decimal.Parse(tb_discountValue.Text) < 0)
                     isValidDiscount = false;
                 else
                 {

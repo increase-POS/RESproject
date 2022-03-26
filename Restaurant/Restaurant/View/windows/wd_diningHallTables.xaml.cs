@@ -478,10 +478,21 @@ namespace Restaurant.View.windows
          }
         async void tableButton_Click(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            string tableName =button.Tag.ToString();
-            tableId = tablesList.Where(x => x.name == tableName).Select(x => x.tableId).FirstOrDefault();
-            await  showDetails();
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                var button = sender as Button;
+                string tableName = button.Tag.ToString();
+                tableId = tablesList.Where(x => x.name == tableName).Select(x => x.tableId).FirstOrDefault();
+                await showDetails();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async Task showDetails()
@@ -1017,6 +1028,8 @@ namespace Restaurant.View.windows
                                 await refreshTablesList();
                                 Search();
                                 await showDetails();
+                                isOk = true;
+                                this.Close();
                             }
                             else
                                 Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -1062,6 +1075,8 @@ namespace Restaurant.View.windows
                                 await refreshTablesList();
                                 Search();
                                 await showDetails();
+                                isOk = true;
+                                this.Close();
                             }
                             else
                                 Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -1139,11 +1154,14 @@ namespace Restaurant.View.windows
                         await refreshTablesList();
                         Search();
                         await showDetails();
+                        isOk = true;
+                        this.Close();
                     }
                     else
                         Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
                     HelpClass.EndAwait(grid_main);
+
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);

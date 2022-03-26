@@ -163,11 +163,12 @@ namespace Restaurant.View.kitchen
         }
        async void loading_salesItems()
         {
-            //try
-            //{
-                await FillCombo.FillComboSalesItemsWithDefault(cb_searchCatalog);
-            //}
-            //catch { }
+            try
+            {
+                //await FillCombo.FillComboSalesItemsWithDefault(cb_searchCatalog);
+                await FillCombo.FillCategorySale(cb_searchCatalog);
+            }
+            catch { }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_salesItems"))
@@ -330,7 +331,7 @@ namespace Restaurant.View.kitchen
 
                     inputEditable(preparingOrder.status);
 
-                    btn_save.IsEnabled = true;
+                    //btn_save.IsEnabled = true;
 
                 }
                 HelpClass.clearValidate(requiredControlList, this);
@@ -379,7 +380,7 @@ namespace Restaurant.View.kitchen
 
             #region seacrch in catalog
             if (cb_searchCatalog.SelectedIndex > 0)
-                ordersQuery = ordersQuery.Where(c => c.items.Where(p => p.itemId == (int)cb_searchCatalog.SelectedValue).Any()).ToList();
+                ordersQuery = ordersQuery.Where(c => c.items.Where(p => p.categoryId == (int)cb_searchCatalog.SelectedValue).Any()).ToList();
             #endregion 
             #region seacrch status
             if (cb_searchStatus.SelectedIndex >0)
