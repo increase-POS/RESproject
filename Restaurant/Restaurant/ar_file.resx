@@ -3598,4 +3598,13 @@
   <data name="maxDiscount" xml:space="preserve">
     <value>الحد الأقصى للخصم</value>
   </data>
+  <data name="trBoxIsClosed" xml:space="preserve">
+    <value>الدفع متوقف</value>
+  </data>
+  <data name="trInternalMovementExport" xml:space="preserve">
+    <value>حركة داخلية - تصدير</value>
+  </data>
+  <data name="trInternalMovementImport" xml:space="preserve">
+    <value>حركة داخلية - استيراد</value>
+  </data>
 </root>

@@ -102,8 +102,9 @@ namespace Restaurant.View.storage.movementsOperations
             dg_billDetails.Columns[3].Header = AppSettings.resourcemanager.GetString("trUnit");
             dg_billDetails.Columns[4].Header = AppSettings.resourcemanager.GetString("trQuantity");
 
+            txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trInternalMovementImport");
+
             txt_shortageInvoice.Text = AppSettings.resourcemanager.GetString("trLack");
-            txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trItemsImport/Export");
             tt_error_previous.Content = AppSettings.resourcemanager.GetString("trPrevious");
             tt_error_next.Content = AppSettings.resourcemanager.GetString("trNext");
 
@@ -423,6 +424,32 @@ namespace Restaurant.View.storage.movementsOperations
             else
                 btn_previous.IsEnabled = true;
         }
+        private async Task navigateInvoice(int index)
+        {
+            try
+            {
+                clearProcess();
+                invoice = FillCombo.invoices[index];
+                _ProcessType = invoice.invType;
+                _invoiceId = invoice.invoiceId;
+                navigateBtnActivate();
+                await fillOrderInputs(invoice);
+
+                #region set title according to invoice type
+                if (_ProcessType == "im" || _ProcessType == "imw" || _ProcessType == "imd")
+                {
+                    txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trInternalMovementImport");
+                }
+                else if (_ProcessType == "ex" || _ProcessType == "exw" || _ProcessType == "exd")
+                {
+                    txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trInternalMovementExport");
+                }
+                #endregion
+            }
+            catch (Exception ex)
+            {
+            }
+        }
         private async void Btn_next_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -431,12 +458,15 @@ namespace Restaurant.View.storage.movementsOperations
 
                 int index = FillCombo.invoices.IndexOf(FillCombo.invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
                 index++;
-                clearProcess();
-                invoice = FillCombo.invoices[index];
-                _ProcessType = invoice.invType;
-                _invoiceId = invoice.invoiceId;
-                navigateBtnActivate();
-                await fillOrderInputs(invoice);
+
+                await navigateInvoice(index);
+
+                //clearProcess();
+                //invoice = FillCombo.invoices[index];
+                //_ProcessType = invoice.invType;
+                //_invoiceId = invoice.invoiceId;
+                //navigateBtnActivate();
+                //await fillOrderInputs(invoice);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -453,12 +483,14 @@ namespace Restaurant.View.storage.movementsOperations
 
                 int index = FillCombo.invoices.IndexOf(FillCombo.invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
                 index--;
-                clearProcess();
-                invoice = FillCombo.invoices[index];
-                _ProcessType = invoice.invType;
-                _invoiceId = invoice.invoiceId;
-                navigateBtnActivate();
-                await fillOrderInputs(invoice);
+                await navigateInvoice(index);
+
+                //clearProcess();
+                //invoice = FillCombo.invoices[index];
+                //_ProcessType = invoice.invType;
+                //_invoiceId = invoice.invoiceId;
+                //navigateBtnActivate();
+                //await fillOrderInputs(invoice);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -1077,9 +1109,14 @@ namespace Restaurant.View.storage.movementsOperations
                     if (invoice.invoiceId == 0)
                         _ProcessType = cb_processType.SelectedValue + "d";
                     if (cb_processType.SelectedValue.ToString() == "im")
+                    {
+                        txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trInternalMovementImport");
+
                         btn_save.Content = AppSettings.resourcemanager.GetString("trImport");
+                    }
                     else if (cb_processType.SelectedValue.ToString() == "ex")
                     {
+                        txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trInternalMovementExport");
                         btn_save.Content = AppSettings.resourcemanager.GetString("trExport");
                         ereaseQuantity();
                     }
@@ -1437,12 +1474,12 @@ namespace Restaurant.View.storage.movementsOperations
                         await fillOrderInputs(invoice);
                         if (_ProcessType == "im")// set title to bill
                         {
-                            //  mainInvoiceItems = invoiceItems;
+                            txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trInternalMovementImport");
 
                         }
                         else if (_ProcessType == "ex")
                         {
-                            //   mainInvoiceItems = await invoiceModel.GetInvoicesItems(invoice.invoiceMainId.Value);
+                            txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trInternalMovementExport");
 
                         }
                         navigateBtnActivate();
@@ -1477,6 +1514,8 @@ namespace Restaurant.View.storage.movementsOperations
                     {
                         if (w.invoice != null)
                         {
+                            txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trInternalMovementExport");
+
                             invoice = w.invoice;
                             _ProcessType = invoice.invType;
                             _invoiceId = invoice.invoiceId;
@@ -1982,6 +2021,8 @@ namespace Restaurant.View.storage.movementsOperations
             tb_barcode.Clear();
             cb_branch.SelectedIndex = -1;
             billDetails.Clear();
+
+            txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trInternalMovementImport");
 
             refrishBillDetails();
             inputEditable();

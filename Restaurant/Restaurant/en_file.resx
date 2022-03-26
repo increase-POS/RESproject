@@ -3622,4 +3622,13 @@ Please add Email in setting</value>
   <data name="maxDiscount" xml:space="preserve">
     <value>Maximum discount</value>
   </data>
+  <data name="trBoxIsClosed" xml:space="preserve">
+    <value>Payment is suspended</value>
+  </data>
+  <data name="trInternalMovementExport" xml:space="preserve">
+    <value>Internal movement - Export</value>
+  </data>
+  <data name="trInternalMovementImport" xml:space="preserve">
+    <value>Internal movement - Import</value>
+  </data>
 </root>

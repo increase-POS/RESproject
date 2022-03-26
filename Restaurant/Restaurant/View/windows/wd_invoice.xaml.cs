@@ -161,6 +161,13 @@ namespace Restaurant.View.windows
                     col_agent.Visibility = Visibility.Visible;
                 }
                 #endregion
+                #region display branch if invoice is export or import process
+                invTypeArray = new string[] { "exw", "im", "ex" };
+                invTypes = invTypeArray.ToList();
+                inCommen = invTypeL.Any(s => invTypes.Contains(s));
+                if (inCommen)
+                    col_branch.Visibility = Visibility.Visible; //make branch column unvisible
+                #endregion
                 await refreshInvoices();
                 Txb_search_TextChanged(null, null);
 
@@ -190,6 +197,11 @@ namespace Restaurant.View.windows
             txt_countTitle.Text = AppSettings.resourcemanager.GetString("trCount") + ":";
 
             btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
+
+            if (page == "storageMov" && icon == "orders") // import
+                col_branch.Header = AppSettings.resourcemanager.GetString("trToBranch");
+            else if (page == "storageMov" && icon == "ordersWait") // export
+                col_branch.Header = AppSettings.resourcemanager.GetString("trFromBranch");
         }
         private async Task refreshInvoices()
         {
@@ -229,8 +241,10 @@ namespace Restaurant.View.windows
             {
                 if (icon == "drafts")
                     FillCombo.invoices = await FillCombo.invoice.GetInvoicesByCreator(invoiceType, userId, duration);
-                else if(icon == "orders" || icon == "ordersWait")
-                    FillCombo.invoices = await FillCombo.invoice.getBranchInvoices(invoiceType, branchCreatorId, branchId);               
+                else if(icon == "orders" )
+                    FillCombo.invoices = await FillCombo.invoice.getExportImportInvoices(invoiceType, branchId);
+                else if(icon == "ordersWait")
+                    FillCombo.invoices =await FillCombo.invoice.getExportInvoices(invoiceType, branchId);
             }
             #endregion
             #region spending Request
