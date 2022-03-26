@@ -70,7 +70,7 @@ namespace Restaurant.Classes
         public static bool validateEmptyCombo(ComboBox cmb, Path p_error)
         {
             bool isValid = true;
-            if (string.IsNullOrWhiteSpace(cmb.Text) || cmb.SelectedValue == null)
+            if (string.IsNullOrWhiteSpace(cmb.Text) || cmb.SelectedValue == null || int.Parse(cmb.SelectedValue.ToString()) <= 0)
             {
                 p_error.Visibility = Visibility.Visible;
                 #region Tooltip
@@ -81,6 +81,17 @@ namespace Restaurant.Classes
                 #endregion
                 isValid = false;
             }
+            //else if(int.Parse(cmb.SelectedValue.ToString()) <= 0)
+            //{
+            //    p_error.Visibility = Visibility.Visible;
+            //    #region Tooltip
+            //    ToolTip toolTip = new ToolTip();
+            //    toolTip.Content = AppSettings.resourcemanager.GetString("trIsRequired");
+            //    toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
+            //    p_error.ToolTip = toolTip;
+            //    #endregion
+            //    isValid = false;
+            //}
             else
             {
                 p_error.Visibility = Visibility.Collapsed;
@@ -183,7 +194,7 @@ namespace Restaurant.Classes
                         .FirstOrDefault();
                     Path path = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_" + control)
                         .FirstOrDefault();
-                    if (comboBox != null && path != null)
+                    if (comboBox != null && path != null )
                         if (!HelpClass.validateEmptyCombo(comboBox, path) )
                             isValid = false;
                 }

@@ -286,12 +286,18 @@ namespace Restaurant.Classes
             cmb.DisplayMemberPath = "name";
             #endregion
         }
-        static public async void FillCategorySale(ComboBox cmb)
+        static public async Task FillCategorySale(ComboBox cmb)
         {
             #region FillCategorySale
             if (categoriesList is null)
                 await RefreshCategory();
-            cmb.ItemsSource = categoriesList.Where(x => x.type == "s").ToList();
+            List<Category> newList = categoriesList.Where(x => x.type == "s").ToList();
+            var ca = new Category();
+            ca.categoryId = 0;
+            ca.name = "-";
+            newList.Insert(0, ca);
+
+            cmb.ItemsSource = newList;
             cmb.SelectedValuePath = "categoryId";
             //cmb.DisplayMemberPath = "name";
             #endregion
