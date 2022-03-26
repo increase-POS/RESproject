@@ -64,6 +64,9 @@ namespace Restaurant.Classes
         public Nullable<int> monthsCount { get; set; }
         public string transType { get; set; }
         public string transNum { get; set; }
+        public Nullable<System.DateTime> createDate { get; set; }
+        public string membershipStatus { get; set; }
+
     }
     public class AgentMembershipCash
     {
