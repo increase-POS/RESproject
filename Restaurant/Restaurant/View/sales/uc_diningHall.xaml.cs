@@ -1246,8 +1246,10 @@ namespace Restaurant.View.sales
             #region text values
             if (invoice.waiterId != null)
             {
+                if (FillCombo.usersList == null)
+                    await FillCombo.RefreshUsers();
                 var user = FillCombo.usersList.Where(x => x.userId == invoice.waiterId).FirstOrDefault();
-                txt_waiter.Text = user.fullName;
+                txt_waiter.Text = user.name;
 
                 txt_waiter.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                 path_waiter.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
