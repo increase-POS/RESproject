@@ -2675,7 +2675,8 @@
             <SolidColorBrush x:Key="MainColor" Color="#D35400"/>
             <SolidColorBrush x:Key="LightMainColor" Color="#EC9256"/>
             <SolidColorBrush x:Key="SecondColor" Color="#2C3E50"/>
-
+            <SolidColorBrush x:Key="MainColorBlue" Color="#178DD2"/>
+            <SolidColorBrush x:Key="MainColorOrange" Color="#FFA926"/>
             <SolidColorBrush x:Key="ThickGrey" Color="#4E4E4E"/>
             <SolidColorBrush x:Key="Grey" Color="#8C8C8C"/>
             <SolidColorBrush x:Key="LightGrey" Color="#B1B1B1"/>
