@@ -1135,7 +1135,13 @@ namespace Restaurant.View.kitchen
                 var cmb = sender as ComboBox;
 
                 if (dg_billDetails.SelectedIndex != -1 && cmb != null)
+                {
                     billDetails[dg_billDetails.SelectedIndex].itemUnitId = (int)cmb.SelectedValue;
+                    if (_InvType == "fbc")
+                        cmb.IsEnabled = false;
+                    else
+                        cmb.IsEnabled = true;
+                }
             }
             catch (Exception ex)
             {
@@ -1148,16 +1154,29 @@ namespace Restaurant.View.kitchen
             {
 
                 //billDetails
-                if (billDetails.Count == 1)
-                {
+                //if (billDetails.Count == 1)
+                //{
                     var cmb = sender as ComboBox;
                     cmb.SelectedValue = (int)billDetails[0].itemUnitId;
-                }
+
+                    if (_InvType == "fbc")
+                        cmb.IsEnabled = false;
+                    else
+                        cmb.IsEnabled = true;
+                //}
+
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+        private void Dg_billDetails_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            int column = dg_billDetails.CurrentCell.Column.DisplayIndex;
+            if (dg_billDetails.SelectedIndex != -1 && column == 3)
+                if (_InvType == "fbc")
+                    e.Cancel = true;
         }
         private void Dg_billDetails_PreviewKeyDown(object sender, KeyEventArgs e)
         {
