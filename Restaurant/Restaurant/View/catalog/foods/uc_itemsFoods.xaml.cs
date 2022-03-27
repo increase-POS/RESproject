@@ -679,7 +679,9 @@ namespace Restaurant.View.catalog.foods
             item = new Item();
             item.price = 0;
             generateBarcode();
-            this.DataContext = item;            
+            this.DataContext = item;   
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
+
             #region image
             HelpClass.clearImg(btn_image);
             openFileDialog.FileName = "";
