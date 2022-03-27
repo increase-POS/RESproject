@@ -10,8 +10,8 @@
              d:DesignHeight="870" d:DesignWidth="950">
     <Grid x:Name="grid_main" Margin="20 10" >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2.5*"/>
-            <ColumnDefinition x:Name="gridWidth" Width="*" MinWidth="225"/>
+            <ColumnDefinition Width="2.5*" MinWidth="705"/>
+            <ColumnDefinition x:Name="gridWidth" Width="*" />
         </Grid.ColumnDefinitions>
 
 
@@ -49,6 +49,7 @@
                     </Border.Effect>
                     <Grid >
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
@@ -198,7 +199,29 @@
                                          Data="{StaticResource sales}" />
                             </Button>
                         </Border>
-                        <Border x:Name="bdr_accounts" Tag="accounts" Grid.Column="6" Background="{StaticResource SecondColor}" BorderThickness="0"  Height="40" Width="55" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="0,5,0,0">
+                        <Border Name="bdr_delivery" Tag="delivery" Grid.Column="6" Background="{StaticResource SecondColor}" BorderThickness="0"  Height="40" Width="55" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="0,5,0,0">
+                                <Button x:Name="btn_delivery" Click="btn_tabs_Click" Tag="delivery" Background="Transparent"  
+                                    materialDesign:RippleAssist.Feedback="Transparent" 
+                                    BorderBrush="Transparent" Height="auto" Width="55" Padding="0">
+                                    <Button.Triggers>
+                                        <EventTrigger RoutedEvent="Button.Click">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation
+                        Storyboard.TargetName="bdrMain"
+                        Storyboard.TargetProperty="Opacity"
+                        From="0" To="1"
+                        Duration="0:0:1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Button.Triggers>
+                                    <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0" HorizontalAlignment="Center"
+                                       Width="25" Height="25"    x:Name="path_delivery" Tag="delivery"
+                                         Data="{StaticResource delivery}" />
+                                </Button>
+                            </Border>
+                        <Border x:Name="bdr_accounts" Tag="accounts" Grid.Column="7" Background="{StaticResource SecondColor}" BorderThickness="0"  Height="40" Width="55" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="0,5,0,0">
                             <Button x:Name="btn_account" Click="btn_tabs_Click" Tag="accounts" Background="Transparent"  
                                     materialDesign:RippleAssist.Feedback="Transparent" 
                                     BorderBrush="Transparent" Height="auto" Width="55" Padding="0">
@@ -220,7 +243,7 @@
                                          Data="{StaticResource accounts}" />
                             </Button>
                         </Border>
-                        <Border x:Name="bdr_reports" Tag="reports" Grid.Column="7" Background="{StaticResource SecondColor}" BorderThickness="0"  Height="40" Width="55" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="0,5,0,0">
+                        <Border x:Name="bdr_reports" Tag="reports" Grid.Column="8" Background="{StaticResource SecondColor}" BorderThickness="0"  Height="40" Width="55" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="0,5,0,0">
                             <Button x:Name="btn_reports" Click="btn_tabs_Click" Tag="reports" Background="Transparent"  
                                     materialDesign:RippleAssist.Feedback="Transparent" 
                                     BorderBrush="Transparent" Height="auto" Width="55"
@@ -244,7 +267,7 @@
                                          Data="{StaticResource reports}" />
                             </Button>
                         </Border>
-                        <Border x:Name="bdr_sectionData" Tag="sectionData" Grid.Column="8" Background="{StaticResource SecondColor}" BorderThickness="0"  Height="40" Width="55" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="0,5,0,0">
+                        <Border x:Name="bdr_sectionData" Tag="sectionData" Grid.Column="9" Background="{StaticResource SecondColor}" BorderThickness="0"  Height="40" Width="55" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="0,5,0,0">
                             <Button x:Name="btn_sectionData" Click="btn_tabs_Click" Tag="sectionData" Background="Transparent"  
                                     materialDesign:RippleAssist.Feedback="Transparent" 
                                     BorderBrush="Transparent" Height="auto" Width="55" Padding="0">
@@ -267,7 +290,7 @@
                                          Data="{StaticResource data}" />
                             </Button>
                         </Border>
-                        <Border x:Name="bdr_settings" Tag="settings" Background="{StaticResource SecondColor}" Grid.Column="9" BorderThickness="0"  Height="40" Width="55" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="0,5,0,0">
+                        <Border x:Name="bdr_settings" Tag="settings" Background="{StaticResource SecondColor}" Grid.Column="10" BorderThickness="0"  Height="40" Width="55" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="0,5,0,0">
                             <Button x:Name="btn_settings" Click="btn_tabs_Click" Tag="settings" Background="Transparent"  
                                     materialDesign:RippleAssist.Feedback="Transparent" 
                                     BorderBrush="Transparent" Height="auto" Width="55" Padding="0">
@@ -290,7 +313,7 @@
                                          Data="{StaticResource settings}"  />
                             </Button>
                         </Border>
-                        <Border x:Name="bdr_alerts" Tag="alerts" Background="{StaticResource SecondColor}" Grid.Column="10" BorderThickness="0"  Height="40" Width="55" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="0,5,0,0">
+                        <Border x:Name="bdr_alerts" Tag="alerts" Background="{StaticResource SecondColor}" Grid.Column="11" BorderThickness="0"  Height="40" Width="55" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="0,5,0,0">
                             <Button x:Name="btn_alerts" Click="btn_tabs_Click" Tag="alerts" Background="Transparent"  
                                     materialDesign:RippleAssist.Feedback="Transparent" 
                                     BorderBrush="Transparent" Height="auto" Width="55" Padding="0">

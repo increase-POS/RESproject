@@ -376,7 +376,7 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
-                            <Path Fill="#E81123" x:Name="p_error_categoryId" Stretch="Fill" Margin="5,5,15,5"
+                            <Path Fill="#E81123" x:Name="p_error_categoryId" Stretch="Fill" Margin="5,5,20,5"
                               HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15" 
                              Data="{StaticResource infoCircle}"/>

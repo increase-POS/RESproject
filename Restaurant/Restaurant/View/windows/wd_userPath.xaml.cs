@@ -578,6 +578,8 @@ namespace Restaurant.View.windows
                     //save first path
                     if(defaulPathUserSetValue == null)
                         defaulPathUserSetValue = new UserSetValues();
+                    if(_parentObjectName == "root")
+                        _parentObjectName = "";
 
                     defaulPathUserSetValue.userId = MainWindow.userLogin.userId;
                     defaulPathUserSetValue.valId = defaulPathId;
