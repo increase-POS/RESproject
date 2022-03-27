@@ -371,8 +371,6 @@ namespace Restaurant.Classes
             //    return list;
             //}
         }
-
-
         public bool HasPermission(string objectname, List<GroupObject> GOList)
         {
             if (HelpClass.isAdminPermision())
@@ -384,7 +382,10 @@ namespace Restaurant.Classes
             {
                 if (currlist.Count > 0)
                 {
-                    return true;
+                    if (HelpClass.branchPermision(objectname, MainWindow.branchLogin.type))
+                        return true;
+                    else
+                        return false;
                 }
                 else
                 {
@@ -395,8 +396,6 @@ namespace Restaurant.Classes
             {
                 return false;
             }
-
-
         }
 
         //

@@ -47,6 +47,29 @@ namespace Restaurant.Classes
                 return true;
             return false;
         }
+        static public bool branchPermision(string _object, string type)
+        {
+            // "b" , "s"
+            if (type == "b")
+                return true;
+            else if (type == "s")
+            {
+                List<string> listStorePermision = new List<string>();
+                listStorePermision = new List<string> {"general_companySettings",
+                    "catalog", "rawMaterials", "itemsRawMaterials", "units", "categorie",
+                    "storage", "storageDivide", "storageOperations", "movementsOperations", "stocktakingOperations",
+                    "locations", "storageSections", "storageCost", "storageInvoice", "itemsStorage", "storageMovements",
+                    "spendingOrder", "itemsShortage", "itemsDestructive", "stocktaking",
+                    "delivery", "deliveryManagement", "shippingCompanies", "driversManagement",
+                    "reports","storageReports", "stockStorageReports", "externalStorageReports", "internalStorageReports"
+                    ,"directStorageReports", "stocktakingStorageReports", "destroiedStorageReports",
+                    "sectionData", "persons", "branchesAndStores", "users", "pos", "residentialSectors",
+                    "settings","general", "permissions" };
+                if (listStorePermision.Contains(_object))
+                    return true;
+            }
+            return false;
+        }
         public static bool validateEmpty(string str, Path p_error)
         {
             bool isValid = true;
