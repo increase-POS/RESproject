@@ -33,7 +33,7 @@ namespace Restaurant.View.storage.movementsOperations
     /// </summary>
     public partial class uc_spendingOrder : UserControl
     {
-        string approvePermission = "spendingOrder_approve";
+        string savePermission = "spendingOrder_save";
         string reportsPermission = "spendingOrder_reports";
         private static uc_spendingOrder _instance;
         public static uc_spendingOrder Instance
@@ -523,7 +523,7 @@ namespace Restaurant.View.storage.movementsOperations
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (FillCombo.groupObject.HasPermissionAction(approvePermission, FillCombo.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(savePermission, FillCombo.groupObjects, "one"))
                     {
                     bool valid = validateItemUnits();
                     if (valid)

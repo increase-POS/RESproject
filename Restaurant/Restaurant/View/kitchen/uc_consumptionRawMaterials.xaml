@@ -384,7 +384,7 @@
                                   VerticalAlignment="Center"  
                                        HorizontalAlignment="Right" Margin="5,10,10,5"/>
                     <DataGrid x:Name="dg_billDetails"  Margin="5,5" Grid.Row="1"   Grid.ColumnSpan="2"    Background="White"
-                      materialDesign:DataGridAssist.CornerRadius="5" Visibility="Visible"
+                      materialDesign:DataGridAssist.CornerRadius="5" Visibility="Visible"  BeginningEdit="Dg_billDetails_BeginningEdit"
                          IsReadOnly="False" CanUserAddRows="False"  PreviewKeyDown="Dg_billDetails_PreviewKeyDown"
                         AutoGenerateColumns="False" CellEditEnding="Dg_billDetails_CellEditEnding"
                         ColumnWidth="SizeToHeader" CanUserSortColumns="False"

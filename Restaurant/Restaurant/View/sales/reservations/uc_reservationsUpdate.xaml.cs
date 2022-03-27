@@ -629,6 +629,7 @@ namespace Restaurant.View.sales.reservations
             dg_tables.ItemsSource = null;
             _PersonsCount = 0;
            // tb_personsCount.Text = "";
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
             // last 
             HelpClass.clearValidate(requiredControlList, this);
 

@@ -562,6 +562,7 @@ namespace Restaurant.View.sectionData.banksData
             card = new Card();
             card.isActive = 1;
             this.DataContext = card;
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
 
             #region image
             HelpClass.clearImg(btn_image);

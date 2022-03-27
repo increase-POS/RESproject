@@ -632,7 +632,9 @@ namespace Restaurant.View.catalog.rawMaterials
             item.min = 0;
             item.max = 0;
 
-            this.DataContext = item;       
+            this.DataContext = item;   
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
+
             #region image
             HelpClass.clearImg(btn_image);
             openFileDialog.FileName = "";

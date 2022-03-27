@@ -577,6 +577,7 @@ namespace Restaurant.View.sectionData.persons
         void Clear()
         {
             this.DataContext = new Agent();
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
 
             #region mobile-Phone-fax-email
             brd_areaPhoneLocal.Visibility =

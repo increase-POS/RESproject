@@ -550,6 +550,7 @@ namespace Restaurant.View.sales.promotion.membership
         void Clear()
         {
             this.DataContext = new Memberships();
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }

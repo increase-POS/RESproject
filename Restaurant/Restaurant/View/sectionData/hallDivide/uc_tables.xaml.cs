@@ -583,6 +583,7 @@ namespace Restaurant.View.sectionData.hallDivide
             dg_table.SelectedIndex = -1;
             if (HelpClass.isAdminPermision())
                 cb_branchId.IsEnabled = true;
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
             // last 
             HelpClass.clearValidate(requiredControlList, this);
 

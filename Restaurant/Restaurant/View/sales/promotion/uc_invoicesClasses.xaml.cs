@@ -584,6 +584,7 @@ namespace Restaurant.View.sales.promotion
         void Clear()
         {
             this.DataContext = new InvoicesClass();
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
 
             tb_discountValue.IsEnabled = true;
             cb_discountType.IsEnabled = true;

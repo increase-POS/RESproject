@@ -531,6 +531,7 @@ namespace Restaurant.View.sectionData.banksData
         void Clear()
         {
             this.DataContext = new Bank();
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
 
             #region mobile-Phone-fax-email
             brd_areaPhoneLocal.Visibility = Visibility.Collapsed;

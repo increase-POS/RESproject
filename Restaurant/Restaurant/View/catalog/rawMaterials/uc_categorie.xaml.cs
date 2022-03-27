@@ -509,6 +509,8 @@ namespace Restaurant.View.catalog.rawMaterials
             categorie = new Category();
             categorie.taxes = 0;
             this.DataContext = categorie;
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
+
             #region image
             openFileDialog.FileName = "";
             HelpClass.clearImg(btn_image);

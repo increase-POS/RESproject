@@ -522,6 +522,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
         {
             this.DataContext = new Pos();
 
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);

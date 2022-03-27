@@ -473,6 +473,8 @@ namespace Restaurant.View.storage.storageOperations
             storageCost = new StorageCost();
             storageCost.cost = 0;
             this.DataContext = storageCost;
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
+
             btn_items.IsEnabled = false;
 
             // last 

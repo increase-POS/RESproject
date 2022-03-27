@@ -518,6 +518,7 @@ namespace Restaurant.View.storage.storageDivide
             btn_locations.IsEnabled = false;
             if (HelpClass.isAdminPermision())
                 cb_branchId.IsEnabled = true;
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
             // last 
             HelpClass.clearValidate(requiredControlList, this);
 

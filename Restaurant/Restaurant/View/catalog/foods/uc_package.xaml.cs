@@ -651,6 +651,7 @@ namespace Restaurant.View.catalog.foods
             itemUnitId = 0;
             generateBarcode();
             this.DataContext = item;
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
             btn_items.IsEnabled = false;
             #region image
             HelpClass.clearImg(btn_image);

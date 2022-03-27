@@ -499,6 +499,7 @@ namespace Restaurant.View.settings.emailsGeneral
         {
             sysEmail = new SysEmails();
             this.DataContext = sysEmail;
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
 
             pb_password.Password = "";
 

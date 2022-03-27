@@ -666,6 +666,7 @@ namespace Restaurant.View.sales.promotion
             coupon = new Coupon();
             coupon.forAgents = "pb";
             this.DataContext = coupon;
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
 
             tb_discountValue.IsEnabled = true;
             cb_discountType.IsEnabled = true;

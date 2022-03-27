@@ -970,7 +970,8 @@ namespace Restaurant.View.storage.storageOperations
                 var cmb = sender as ComboBox;
                 cmb.SelectedValue = (int)billDetails[0].itemUnitId;
 
-                if (billDetails[0].OrderId != 0)
+                if (_InvoiceType == "p" || _InvoiceType == "pw" || _InvoiceType == "pb" ||
+                    _InvoiceType == "pbw" || _InvoiceType == "is")
                     cmb.IsEnabled = false;
                 else
                     cmb.IsEnabled = true;
@@ -990,7 +991,8 @@ namespace Restaurant.View.storage.storageOperations
                 if (dg_billDetails.SelectedIndex != -1 && cmb.SelectedValue != null)
                 {
                     billDetails[dg_billDetails.SelectedIndex].itemUnitId = (int)cmb.SelectedValue;
-                    if (billDetails[dg_billDetails.SelectedIndex].OrderId != 0)
+                    if (_InvoiceType == "p" || _InvoiceType == "pw" || _InvoiceType == "pb" ||
+                    _InvoiceType == "pbw" || _InvoiceType == "is")
                         cmb.IsEnabled = false;
                     else
                         cmb.IsEnabled = true;
@@ -1048,7 +1050,8 @@ namespace Restaurant.View.storage.storageOperations
         {
             int column = dg_billDetails.CurrentCell.Column.DisplayIndex;
             if (dg_billDetails.SelectedIndex != -1 && column == 3)
-                if (billDetails[dg_billDetails.SelectedIndex].OrderId != 0)
+                if (_InvoiceType == "p" || _InvoiceType == "pw" || _InvoiceType == "pb" ||
+                    _InvoiceType == "pbw" ||_InvoiceType == "is")
                     e.Cancel = true;
         }
         private void Dg_billDetails_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)

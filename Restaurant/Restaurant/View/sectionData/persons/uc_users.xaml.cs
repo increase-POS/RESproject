@@ -564,6 +564,7 @@ namespace Restaurant.View.sectionData.persons
             this.DataContext = user;
             numValue_workHours = 1;
             pb_password.Password = "";
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
 
             grid_userNameLabel.Visibility = Visibility.Collapsed;
             grid_userNameInput.Visibility = Visibility.Visible;

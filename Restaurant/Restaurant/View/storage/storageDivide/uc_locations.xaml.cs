@@ -518,6 +518,7 @@ namespace Restaurant.View.storage.storageDivide
             location = new Location();
             location.branchId = MainWindow.branchLogin.branchId;
             this.DataContext = location;
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
             if (HelpClass.isAdminPermision())
                 cb_branchId.IsEnabled = true;
              // last 

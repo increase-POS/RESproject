@@ -476,8 +476,9 @@ namespace Restaurant.View.sectionData
         void Clear()
         {
             this.DataContext = new ResidentialSectors();
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
 
-             
+
 
 
 

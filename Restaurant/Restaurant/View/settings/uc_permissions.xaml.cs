@@ -570,6 +570,7 @@ namespace Restaurant.View.settings
         void Clear()
         {
             this.DataContext = new Group();
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
 
 
 

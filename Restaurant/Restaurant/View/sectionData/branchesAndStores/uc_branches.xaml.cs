@@ -552,9 +552,10 @@ namespace Restaurant.View.sectionData.branchesAndStores
             void Clear()
             {
                 this.DataContext = new Branch();
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
 
-                #region mobile-Phone-fax-email
-                brd_areaPhoneLocal.Visibility =  Visibility.Collapsed;
+            #region mobile-Phone-fax-email
+            brd_areaPhoneLocal.Visibility =  Visibility.Collapsed;
                 cb_areaMobile.SelectedIndex = -1;
                 cb_areaPhone.SelectedIndex = -1;
                 cb_areaPhoneLocal.SelectedIndex = -1;

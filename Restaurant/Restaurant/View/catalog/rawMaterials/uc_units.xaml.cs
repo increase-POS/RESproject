@@ -478,6 +478,7 @@ namespace Restaurant.View.catalog.rawMaterials
         void Clear()
         {
             this.DataContext = new Unit();
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);

@@ -658,6 +658,7 @@ namespace Restaurant.View.sales.promotion
             offer = new Offer();
             offer.forAgents = "pb";
             this.DataContext = offer;
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);
