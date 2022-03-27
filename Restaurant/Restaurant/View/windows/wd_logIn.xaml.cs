@@ -312,7 +312,7 @@ namespace Restaurant.View.windows
                             //MainWindow.posLogin = await MainWindow.posLogin.getById(6);
                             //MainWindow.posLogin = await MainWindow.posLogin.getById(8);
                             //MainWindow.posLogin = await MainWindow.posLogin.getById(9);
-                            MainWindow.posLogin = await MainWindow.posLogin.getById(9);
+                            MainWindow.posLogin = await MainWindow.posLogin.getById(1);
                             MainWindow.branchLogin = await MainWindow.branchLogin.getBranchById(MainWindow.posLogin.branchId.Value);
                             main.Show();
                             this.Close();
