@@ -64,9 +64,8 @@ namespace Restaurant.Classes
         public Nullable<int> monthsCount { get; set; }
         public string transType { get; set; }
         public string transNum { get; set; }
-        public Nullable<System.DateTime> createDate { get; set; }
-        public string membershipStatus { get; set; }
-
+        public decimal discountValue { get; set; }
+        public decimal total { get; set; }
     }
     public class AgentMembershipCash
     {
@@ -98,6 +97,9 @@ namespace Restaurant.Classes
         public byte membershipisActive { get; set; }
         public int agentMembershipCashId { get; set; }
         public string subscriptionType { get; set; }
+        public decimal discountValue { get; set; }
+        public decimal total { get; set; }
+        public string processType { get; set; }
 
         public async Task<List<AgentMembershipCash>> GetAll()
         {

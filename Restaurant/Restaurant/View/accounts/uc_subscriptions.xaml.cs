@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using System.Windows.Resources;
 using System.Windows.Shapes;
 
 
@@ -58,7 +59,7 @@ namespace Restaurant.View.accounts
         IEnumerable<AgentMembershipCash> subscriptions;
         IEnumerable<AgentMembershipCash> subscriptionsQuery;
         //IEnumerable<SubscriptionFees> subscriptionsQueryExcel;
-        //CashTransfer cashModel = new CashTransfer();
+        CashTransfer cashtrans = new CashTransfer();
         AgentMembershipCash subscription = new AgentMembershipCash();
         string searchText = "";
         byte tgl_subscriptionState;
@@ -70,6 +71,135 @@ namespace Restaurant.View.accounts
         string reportsPermission = "subscriptions_reports";
 
         public static List<string> requiredControlList;
+
+
+        #region card
+        List<Button> cardBtnList = new List<Button>();
+        List<Ellipse> cardEllipseList = new List<Ellipse>();
+        IEnumerable<Card> cards;
+        Card cardModel = new Card();
+        bool hasProcessNum = false;
+        static private int _SelectedCard = -1;
+
+        void InitializeCardsPic(IEnumerable<Card> cards)
+        {
+            #region cardImageLoad
+            dkp_cards.Children.Clear();
+            int userCount = 0;
+            foreach (var item in cards)
+            {
+                #region Button
+                Button button = new Button();
+                button.DataContext = item;
+                button.Tag = item.cardId;
+                button.Padding = new Thickness(0, 0, 0, 0);
+                button.Margin = new Thickness(2.5, 5, 2.5, 5);
+                button.Background = null;
+                button.BorderBrush = null;
+                button.Height = 35;
+                button.Width = 35;
+                button.Click += card_Click;
+
+                #region grid
+                Grid grid = new Grid();
+                #region 
+                Ellipse ellipse = new Ellipse();
+                //ellipse.Margin = new Thickness(-5, 0, -5, 0);
+                ellipse.StrokeThickness = 1;
+                ellipse.Stroke = Application.Current.Resources["MainColorOrange"] as SolidColorBrush;
+                ellipse.Height = 35;
+                ellipse.Width = 35;
+                ellipse.FlowDirection = FlowDirection.LeftToRight;
+                ellipse.ToolTip = item.name;
+                ellipse.Tag = item.cardId;
+                userImageLoad(ellipse, item.image);
+                Grid.SetColumn(ellipse, userCount);
+                grid.Children.Add(ellipse);
+                cardEllipseList.Add(ellipse);
+                #endregion
+                #endregion
+
+                button.Content = grid;
+                #endregion
+                dkp_cards.Children.Add(button);
+                cardBtnList.Add(button);
+
+            }
+            #endregion
+        }
+
+        void card_Click(object sender, RoutedEventArgs e)
+        {
+            HelpClass.clearValidate(requiredControlList, this);
+            var button = sender as Button;
+            _SelectedCard = int.Parse(button.Tag.ToString());
+
+            Card card = button.DataContext as Card;
+
+            txt_card.Text = card.name;
+            
+            if (card.hasProcessNum)
+            {
+                tb_processNum.Visibility = Visibility.Visible;
+                hasProcessNum = true;
+                requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType", "processNum" };
+            }
+            else
+            {
+                tb_processNum.Visibility = Visibility.Collapsed;
+                hasProcessNum = false;
+                requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType" };
+            }
+            //set border color
+            foreach (var el in cardEllipseList)
+            {
+                if ((int)el.Tag == (int)button.Tag)
+                    el.Stroke = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
+                else
+                    el.Stroke = Application.Current.Resources["MainColorOrange"] as SolidColorBrush;
+            }
+            HelpClass.validate(requiredControlList, this);
+        }
+        ImageBrush brush = new ImageBrush();
+        async void userImageLoad(Ellipse ellipse, string image)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(image))
+                {
+                    clearImg(ellipse);
+
+                    byte[] imageBuffer = await cardModel.downloadImage(image); // read this as BLOB from your DB
+                    var bitmapImage = new BitmapImage();
+                    using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
+                    {
+                        bitmapImage.BeginInit();
+                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmapImage.StreamSource = memoryStream;
+                        bitmapImage.EndInit();
+                    }
+                    ellipse.Fill = new ImageBrush(bitmapImage);
+                }
+                else
+                {
+                    clearImg(ellipse);
+                }
+            }
+            catch
+            {
+                clearImg(ellipse);
+            }
+        }
+        private void clearImg(Ellipse ellipse)
+        {
+            Uri resourceUri = new Uri("pic/no-image-icon-90x90.png", UriKind.Relative);
+            StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
+            BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
+            brush.ImageSource = temp;
+            ellipse.Fill = brush;
+        }
+        #endregion
+
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             Instance = null;
@@ -77,14 +207,12 @@ namespace Restaurant.View.accounts
         }
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
                 requiredControlList = new List<string> { "customerId" , "monthsCount" , "amount" , "paymentProcessType" };
                 
-                //expirDate  //paymentmethod
-
                 #region translate
                 if (AppSettings.lang.Equals("en"))
                 {
@@ -95,7 +223,13 @@ namespace Restaurant.View.accounts
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-                #endregion
+            #endregion
+
+                dp_searchEndDate.SelectedDate = DateTime.Now;
+                dp_searchStartDate.SelectedDate = DateTime.Now;
+
+                dp_searchStartDate.SelectedDateChanged += this.dp_SelectedStartDateChanged;
+                dp_searchEndDate.SelectedDateChanged += this.dp_SelectedStartDateChanged;
 
                 FillCombo.FillDefaultPayType_cashChequeCard(cb_paymentProcessType);
 
@@ -106,6 +240,15 @@ namespace Restaurant.View.accounts
                 cb_customerId.SelectedIndex = -1;
                 #endregion
 
+                #region fill card combo
+                try
+                {
+                    cards = await cardModel.GetAll();
+                    InitializeCardsPic(cards);
+                }
+                catch { }
+                #endregion
+
                 Keyboard.Focus(cb_customerId);
 
                 await RefreshSubscriptionsList();
@@ -113,13 +256,31 @@ namespace Restaurant.View.accounts
 
                 Clear();
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
+        }
+
+        private async void dp_SelectedStartDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
+
+                await RefreshSubscriptionsList();
+                await Search();
+
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void translate()
@@ -151,257 +312,15 @@ namespace Restaurant.View.accounts
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
         }
 
-        #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
-        private async void Btn_add_Click(object sender, RoutedEventArgs e)
-        {//add
-            /*
-            try
-            {
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add") || HelpClass.isAdminPermision())
-                {
-                    HelpClass.StartAwait(grid_main);
-
-
-
-                    agent = new Agent();
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
-                    {
-                        //deserve
-                        decimal maxDeserveValue = 0;
-                        if (!tb_upperLimit.Text.Equals(""))
-                            maxDeserveValue = decimal.Parse(tb_upperLimit.Text);
-
-                        //payType
-                        string payType = "";
-                        if (cb_payType.SelectedIndex != -1)
-                            payType = cb_payType.SelectedValue.ToString();
-
-                        //tb_code.Text = await agent.generateCodeNumber("c");
-                        agent.code = await agent.generateCodeNumber("c");
-                        agent.name = tb_name.Text;
-                        agent.company = tb_company.Text;
-                        agent.address = tb_address.Text;
-                        agent.email = tb_email.Text;
-                        agent.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text;
-                        if (!tb_phone.Text.Equals(""))
-                            agent.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
-                        if (!tb_fax.Text.Equals(""))
-                            agent.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
-                        agent.type = "c";
-                        agent.accType = "";
-                        agent.balance = 0;
-                        agent.payType = payType;
-                        agent.isLimited = (bool)tgl_hasCredit.IsChecked;
-                        agent.createUserId = MainWindow.userLogin.userId;
-                        agent.updateUserId = MainWindow.userLogin.userId;
-                        agent.notes = tb_notes.Text;
-                        agent.isActive = 1;
-                        agent.maxDeserve = maxDeserveValue;
-
-                        int s = await agent.save(agent);
-                        if (s <= 0)
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                        else
-                        {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-
-                            if (isImgPressed)
-                            {
-                                int agentId = s;
-                                string b = await agent.uploadImage(imgFileName,
-                                    Md5Encription.MD5Hash("Inc-m" + agentId.ToString()), agentId);
-                                agent.image = b;
-                                isImgPressed = false;
-                            }
-
-                            Clear();
-                            await RefreshCustomersList();
-                            await Search();
-                        }
-                    }
-                    HelpClass.EndAwait(grid_main);
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-            */
-        }
-        private async void Btn_update_Click(object sender, RoutedEventArgs e)
-        {//update
-         /*
-                     try
-                     {
-                         if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update") || HelpClass.isAdminPermision())
-                         {
-                             HelpClass.StartAwait(grid_main);
-                             if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
-                             {
-                                 //deserve
-                                 decimal maxDeserveValue = 0;
-                                 if (!tb_upperLimit.Text.Equals(""))
-                                     maxDeserveValue = decimal.Parse(tb_upperLimit.Text);
-
-                                 //payType
-                                 string payType = "";
-                                 if (cb_payType.SelectedIndex != -1)
-                                     payType = cb_payType.SelectedValue.ToString();
-
-                                 //agent.code = "Us-000001";
-                                 //agent.custname = tb_custname.Text;
-                                 //tb_code.Text = await agent.generateCodeNumber("c");
-                                 //agent.code = await agent.generateCodeNumber("c");
-                                 agent.name = tb_name.Text;
-                                 agent.company = tb_company.Text;
-                                 agent.email = tb_email.Text;
-                                 agent.address = tb_address.Text;
-                                 agent.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text;
-                                 if (!tb_phone.Text.Equals(""))
-                                     agent.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
-                                 if (!tb_fax.Text.Equals(""))
-                                     agent.fax = cb_areaFax.Text + "-" + cb_areaFaxLocal.Text + "-" + tb_fax.Text;
-                                 agent.payType = payType;
-                                 agent.isLimited = (bool)tgl_hasCredit.IsChecked;
-                                 agent.updateUserId = MainWindow.userLogin.userId;
-                                 agent.notes = tb_notes.Text;
-                                 agent.maxDeserve = maxDeserveValue;
-
-                                 int s = await agent.save(agent);
-                                 if (s <= 0)
-                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                                 else
-                                 {
-                                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                                     await RefreshCustomersList();
-                                     await Search();
-                                     if (isImgPressed)
-                                     {
-                                         int agentId = s;
-                                         string b = await agent.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + agentId.ToString()), agentId);
-                                         agent.image = b;
-                                         isImgPressed = false;
-                                         if (!b.Equals(""))
-                                         {
-                                             await getImg();
-                                         }
-                                         else
-                                         {
-                                             HelpClass.clearImg(btn_image);
-                                         }
-                                     }
-                                 }
-                             }
-                             HelpClass.EndAwait(grid_main);
-                         }
-                         else
-                             Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                     }
-                     catch (Exception ex)
-                     {
-                         HelpClass.EndAwait(grid_main);
-                         HelpClass.ExceptionMessage(ex, this);
-                     }
-                     */
-        }
-        private async void Btn_delete_Click(object sender, RoutedEventArgs e)
-        {
-            /*
-                        try
-                        {//delete
-                            if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "delete") || HelpClass.isAdminPermision())
-                            {
-                                HelpClass.StartAwait(grid_main);
-                                if (agent.agentId != 0)
-                                {
-                                    if ((!agent.canDelete) && (agent.isActive == 0))
-                                    {
-                                        #region
-                                        Window.GetWindow(this).Opacity = 0.2;
-                                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                                        w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxActivate");
-                                        w.ShowDialog();
-                                        Window.GetWindow(this).Opacity = 1;
-                                        #endregion
-                                        if (w.isOk)
-                                            await activate();
-                                    }
-                                    else
-                                    {
-                                        #region
-                                        Window.GetWindow(this).Opacity = 0.2;
-                                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                                        if (agent.canDelete)
-                                            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
-                                        if (!agent.canDelete)
-                                            w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
-                                        w.ShowDialog();
-                                        Window.GetWindow(this).Opacity = 1;
-                                        #endregion
-                                        if (w.isOk)
-                                        {
-                                            string popupContent = "";
-                                            if (agent.canDelete) popupContent = AppSettings.resourcemanager.GetString("trPopDelete");
-                                            if ((!agent.canDelete) && (agent.isActive == 1)) popupContent = AppSettings.resourcemanager.GetString("trPopInActive");
-
-                                            int s = await agent.delete(agent.agentId, MainWindow.userLogin.userId, agent.canDelete);
-                                            if (s < 0)
-                                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                                            else
-                                            {
-                                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
-
-                                                await RefreshCustomersList();
-                                                await Search();
-                                                Clear();
-                                            }
-                                        }
-                                    }
-                                }
-                                HelpClass.EndAwait(grid_main);
-                            }
-                            else
-                                Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                        }
-                        catch (Exception ex)
-                        {
-                            HelpClass.EndAwait(grid_main);
-                            HelpClass.ExceptionMessage(ex, this);
-                        }
-                        */
-        }
-        private async Task activate()
-        {//activate
-         /*
-                     agent.isActive = 1;
-                     int s = await agent.save(agent);
-                     if (s <= 0)
-                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                     else
-                     {
-                         Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopActive"), animation: ToasterAnimation.FadeIn);
-                         await RefreshCustomersList();
-                         await Search();
-                     }
-                     */
-        }
-        #endregion
-
         #region events
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
         {//search
             try
             {
-
                 HelpClass.StartAwait(grid_main);
+
                 await Search();
+
                 HelpClass.EndAwait(grid_main);
 
             }
@@ -445,7 +364,6 @@ namespace Restaurant.View.accounts
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -455,21 +373,22 @@ namespace Restaurant.View.accounts
             try
             {
                 HelpClass.StartAwait(grid_main);
+
                 Clear();
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
         private async void Dg_subscription_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
          
                 if (dg_subscription.SelectedIndex != -1)
                 {
@@ -481,19 +400,25 @@ namespace Restaurant.View.accounts
 
                         ag = cb_customerId.SelectedItem as AgenttoPayCash;
 
+                        cb_paymentProcessType.SelectedValue = subscription.processType;
+                        try
+                        {
+                            cashtrans = await cashtrans.GetByID(subscription.cashTransId.Value);
+                        }
+                        catch { }
                         this.DataContext = ag;
 
                         btn_save.IsEnabled = false;
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
@@ -526,18 +451,38 @@ namespace Restaurant.View.accounts
 
             searchText = tb_search.Text.ToLower();
 
-            subscriptionsQuery = subscriptions
-                .Where(s => 
-            (
-            s.transNum.ToLower().Contains(searchText) ||
-            s.agentName.ToLower().Contains(searchText) ||
-            s.subscriptionType.ToLower().Contains(searchText)||
-            //s.subscriptionType.ToLower().Contains(searchText)||expireDate
-            s.Amount.ToString().ToLower().Contains(searchText)
-            ) 
-            && 
-            s.isActive == tgl_subscriptionState);
-
+            if (chb_all.IsChecked == false)
+            {
+                subscriptionsQuery = subscriptions
+                .Where(s =>
+                (
+                s.transNum.ToLower().Contains(searchText) ||
+                s.agentName.ToLower().Contains(searchText) ||
+                s.subscriptionType.ToLower().Contains(searchText) ||
+                s.updateDate.ToString().ToLower().Contains(searchText) ||
+                s.Amount.ToString().ToLower().Contains(searchText)
+                )
+                &&
+                s.isActive == tgl_subscriptionState
+                && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
+                && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
+                );
+            }
+            else
+            {
+                subscriptionsQuery = subscriptions
+               .Where(s =>
+               (
+               s.transNum.ToLower().Contains(searchText) ||
+               s.agentName.ToLower().Contains(searchText) ||
+               s.subscriptionType.ToLower().Contains(searchText) ||
+               s.updateDate.ToString().ToLower().Contains(searchText) ||
+               s.Amount.ToString().ToLower().Contains(searchText)
+               )
+               &&
+               s.isActive == tgl_subscriptionState
+               );
+            }
             RefreshCustomersView();
         }
         async Task<IEnumerable<AgentMembershipCash>> RefreshSubscriptionsList()
@@ -556,8 +501,15 @@ namespace Restaurant.View.accounts
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            this.DataContext = new Agent();
+            this.DataContext = new AgenttoPayCash();
             cb_customerId.SelectedIndex = -1;
+            cb_paymentProcessType.SelectedIndex = -1;
+            btn_save.IsEnabled = true;
+            //set border color
+            foreach (var el in cardEllipseList)
+            {
+                el.Stroke = Application.Current.Resources["MainColorOrange"] as SolidColorBrush;
+            }
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
@@ -611,11 +563,28 @@ namespace Restaurant.View.accounts
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        decimal _discount = 0 , totalNet = 0;
         private void ValidateEmpty_TextChange(object sender, TextChangedEventArgs e)
         {
             try
             {
                 HelpClass.validate(requiredControlList, this);
+                {
+                    string name = sender.GetType().Name;
+                    if (name == "TextBox")
+                        if ((sender as TextBox).Name == "tb_discount")
+                        try
+                        {
+                            if (!tb_discount.Text.Equals(""))
+                                _discount = decimal.Parse(tb_discount.Text);
+                            totalNet = decimal.Parse(tb_amount.Text) - _discount;
+                            txt_total.Text = totalNet.ToString();
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                }
             }
             catch (Exception ex)
             {
@@ -635,6 +604,451 @@ namespace Restaurant.View.accounts
         }
 
         #endregion
+
+
+        #region barcode
+        /*List<ItemUnit> barcodesList;
+        static private int _InternalCounter = 0;
+        private Boolean checkBarcodeValidity(string barcode)
+        {
+            if (FillCombo.itemUnitList != null)
+            {
+                var exist = FillCombo.itemUnitList.Where(x => x.barcode == barcode && x.itemId != item.itemId).FirstOrDefault();
+                if (exist != null)
+                    return false;
+                else
+                    return true;
+            }
+            return true;
+        }
+        */
+        private void Tb_barcode_KeyDown(object sender, KeyEventArgs e)
+        {
+            /*
+            try
+            {
+                TextBox tb = (TextBox)sender;
+                string barCode = tb_barcode.Text;
+                if (e.Key == Key.Return && barCode.Length == 13)
+                {
+                    if (isBarcodeCorrect(barCode) == false)
+                    {
+                        item.barcode = "";
+                        this.DataContext = item;
+
+                    }
+                    else
+                        drawBarcode(barCode);
+                }
+                else if (barCode.Length == 13 || barCode.Length == 12)
+                    drawBarcode(barCode);
+                else
+                    drawBarcode("");
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.ExceptionMessage(ex, this);
+            }
+            */
+        }
+        /*
+        private bool isBarcodeCorrect(string barCode)
+        {
+            char checkDigit;
+            char[] barcodeData;
+
+            char cd = barCode[0];
+            barCode = barCode.Substring(1);
+            barcodeData = barCode.ToCharArray();
+            checkDigit = Mod10CheckDigit(barcodeData);
+
+            if (checkDigit != cd)
+            {
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorBarcodeToolTip"), animation: ToasterAnimation.FadeIn);
+                return false;
+            }
+            else
+                return true;
+        }
+        public static char Mod10CheckDigit(char[] data)
+        {
+            // Start the checksum calculation from the right most position.
+            int factor = 3;
+            int weight = 0;
+            int length = data.Length;
+
+            for (int i = 0; i <= length - 1; i++)
+            {
+                weight += (data[i] - '0') * factor;
+                factor = (factor == 3) ? 1 : 3;
+            }
+
+            return (char)(((10 - (weight % 10)) % 10) + '0');
+
+        }
+        private void drawBarcode(string barcodeStr)
+        {
+            try
+            {
+                // configur check sum metrics
+                BarcodeSymbology s = BarcodeSymbology.CodeEan13;
+
+                BarcodeDraw drawObject = BarcodeDrawFactory.GetSymbology(s);
+
+                BarcodeMetrics barcodeMetrics = drawObject.GetDefaultMetrics(60);
+                barcodeMetrics.Scale = 2;
+
+                if (barcodeStr != "")
+                {
+                    if (barcodeStr.Length == 13)
+                        barcodeStr = barcodeStr.Substring(1);//remove check sum from barcode string
+                    var barcodeImage = drawObject.Draw(barcodeStr, barcodeMetrics);
+
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        barcodeImage.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                        byte[] imageBytes = ms.ToArray();
+
+                        img_barcode.Source = ImageProcess.ByteToImage(imageBytes);
+                    }
+                }
+                else
+                    img_barcode.Source = null;
+            }
+            catch { img_barcode.Source = null; }
+
+        }
+        private async void generateBarcode()
+        {
+            string barcodeString = "";
+            barcodeString = generateRandomBarcode();
+            if (FillCombo.itemUnitList != null)
+            {
+                if (!checkBarcodeValidity(barcodeString))
+                    barcodeString = generateRandomBarcode();
+            }
+            item.barcode = barcodeString;
+            this.DataContext = item;
+            //tb_barcode.Text = barcodeString;
+            HelpClass.validateEmpty("trErrorEmptyBarcodeToolTip", p_error_barcode);
+            drawBarcode(tb_barcode.Text);
+        }
+        static public string generateRandomBarcode()
+        {
+            var now = DateTime.Now;
+
+            var days = (int)(now - new DateTime(2000, 1, 1)).TotalDays;
+            var seconds = (int)(now - DateTime.Today).TotalSeconds;
+
+            var counter = _InternalCounter++ % 100;
+            string randomBarcode = days.ToString("00000") + seconds.ToString("00000") + counter.ToString("00");
+            char[] barcodeData = randomBarcode.ToCharArray();
+            char checkDigit = Mod10CheckDigit(barcodeData);
+            return checkDigit + randomBarcode;
+
+        }
+        */
+        #endregion
+
+        private void Cb_customerId_KeyUp(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                cb_customerId.ItemsSource = FillCombo.customersList.Where(x => x.name.Contains(cb_customerId.Text));
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        string _docNum = "";
+        private async void Cb_paymentProcessType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //try
+            //{
+                //    HelpClass.StartAwait(grid_main);
+                //TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
+                //if (elapsed.TotalMilliseconds > 100 && cb_paymentProcessType.SelectedIndex != -1)
+                //{
+                //    _SelectedPaymentType = cb_paymentProcessType.SelectedValue.ToString();
+                //}
+                //else
+                //{
+                //    cb_paymentProcessType.SelectedValue = _SelectedPaymentType;
+                //}
+                HelpClass.clearValidate(requiredControlList, this);
+                switch (cb_paymentProcessType.SelectedIndex)
+                {
+                    case 0://cash
+                        bdr_cheque.Visibility = Visibility.Collapsed;
+                        tb_docNumCheque.Clear();
+                        dp_docDateCheque.SelectedDate = null;
+                        bdr_card.Visibility = Visibility.Collapsed;
+                        _SelectedCard = 0;
+                        _docNum = "";
+                        tb_processNum.Clear();
+                        txt_card.Text = "";
+                        requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType" };
+                        break;
+
+                    case 1://cheque
+                        bdr_cheque.Visibility = Visibility.Visible;
+                        bdr_card.Visibility = Visibility.Collapsed;
+                        _SelectedCard = -1;
+                        tb_processNum.Clear();
+                        txt_card.Text = "";
+                        requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType" , "docNumCheque", "docDateCheque" };
+                        break;
+
+                    case 2://card
+                        bdr_cheque.Visibility = Visibility.Collapsed;
+                        bdr_card.Visibility = Visibility.Visible;
+                       
+                        requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType", "processNum" , "card" };
+                        try
+                        {
+                            if (cashtrans.cardId != null)
+                            {
+                                Button btn = cardBtnList.Where(c => (int)c.Tag == cashtrans.cardId.Value).FirstOrDefault();
+                                card_Click(btn, null);
+                            }
+                        }
+                        catch { }
+                        break;
+                    case -1:
+                        bdr_cheque.Visibility = Visibility.Collapsed;
+                        tb_docNumCheque.Clear();
+                        dp_docDateCheque.SelectedDate = null;
+                        bdr_card.Visibility = Visibility.Collapsed;
+                        _SelectedCard = 0;
+                        _docNum = "";
+                        tb_processNum.Clear();
+                        txt_card.Text = "";
+                        requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType" };
+                        break;
+            }
+
+                HelpClass.validate(requiredControlList, this);
+
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
+        }
+
+        private async void Btn_save_Click(object sender, RoutedEventArgs e)
+        {//save
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one"))
+                {
+                    
+                    if (HelpClass.validate(requiredControlList, this))
+                    {
+                        #region cashTransfer
+
+                        if (bdr_cheque.Visibility == Visibility.Visible)
+                            _docNum = tb_docNumCheque.Text;
+                        else if(bdr_card.Visibility == Visibility.Visible)
+                            _docNum = tb_processNum.Text;
+
+                        CashTransfer cashtrans = new CashTransfer();
+
+                        cashtrans.transType = "d";
+                        cashtrans.posId = MainWindow.posLogin.posId;
+                        cashtrans.userId = null;
+                        cashtrans.agentId = (int)cb_customerId.SelectedValue;
+                        cashtrans.invId = null;
+                        cashtrans.transNum = await cashtrans.generateCashNumber(cashtrans.transType + "c");////????????
+                        cashtrans.cash = decimal.Parse(tb_amount.Text);
+                        cashtrans.createUserId = MainWindow.userLogin.userId;
+                        cashtrans.updateUserId = MainWindow.userLogin.userId;
+                        cashtrans.notes = "";
+                        cashtrans.posIdCreator = null;
+                        cashtrans.isConfirm = 0;
+                        cashtrans.cashTransIdSource = null;
+                        cashtrans.side = "c";
+                        cashtrans.docName = "";
+                        cashtrans.docNum = _docNum;
+                        cashtrans.docImage = "";
+                        cashtrans.bankId = null;
+                        cashtrans.bankName = "";
+                        cashtrans.agentName = null;
+                        cashtrans.usersName = null;
+                        cashtrans.processType = cb_paymentProcessType.SelectedValue.ToString();
+                        cashtrans.cardId = _SelectedCard;
+                        cashtrans.shippingCompanyId = null;
+                        #endregion
+
+                        #region agentCash
+                        subscription = new AgentMembershipCash();
+
+                        subscription.agentMembershipsId = 0;
+                        subscription.subscriptionFeesId = ag.subscriptionFeesId;
+                        subscription.cashTransId = cashtrans.cashTransId;
+                        subscription.membershipId = ag.membershipId;
+                        subscription.agentId = (int)cb_customerId.SelectedValue;
+                        subscription.startDate = ag.startDate;
+                        subscription.EndDate = ag.updateDate;
+                        subscription.notes = "";
+                        subscription.createUserId = MainWindow.userLogin.userId;
+                        subscription.updateUserId = MainWindow.userLogin.userId;
+                        subscription.isActive = 1;
+                        subscription.Amount = decimal.Parse(tb_amount.Text);
+                        subscription.discountValue = decimal.Parse(tb_discount.Text);
+                        subscription.total = decimal.Parse(txt_total.Text);
+                        subscription.monthsCount = (int)cb_monthsCount.SelectedValue;
+                        subscription.agentName = ag.agentName;
+                        subscription.agentcode = ag.agentcode;
+                        subscription.agentcompany = ag.agentcompany;
+                        subscription.agenttype = ag.agenttype;
+                        subscription.membershipName = ag.membershipName;
+                        subscription.membershipcode = ag.membershipcode;
+                        subscription.transType = cashtrans.transType;
+                        subscription.transNum = cashtrans.transNum;
+                        subscription.membershipisActive = ag.membershipisActive;
+                        subscription.subscriptionType = ag.subscriptionType;
+                        #endregion
+
+                        int res = await subscription.Savepay(subscription, cashtrans);
+
+                        if (res <= 0)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        else
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+                            //Clear();
+                            await RefreshSubscriptionsList();
+                            await Search();
+                        }
+                      
+                    }
+                    
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Chb_all_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                dp_searchStartDate.IsEnabled =
+                dp_searchEndDate.IsEnabled = false;
+
+                Btn_refresh_Click(btn_refresh, null);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Chb_all_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                dp_searchStartDate.IsEnabled =
+                dp_searchEndDate.IsEnabled = true;
+
+                Btn_refresh_Click(btn_refresh, null);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        AgenttoPayCash ag = new AgenttoPayCash();
+
+        private void Cb_monthsCount_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {//select month
+            try
+            {
+                subFee = cb_monthsCount.SelectedItem as SubscriptionFees;
+                if(subFee != null)
+                    tb_amount.Text = subFee.Amount.ToString();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        SubscriptionFees subFee = new SubscriptionFees();
+        List<SubscriptionFees> subFees = new List<SubscriptionFees>();
+        private async void Cb_customerId_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {//select customer
+            //try
+            //{
+                ag = cb_customerId.SelectedItem as AgenttoPayCash;
+
+                if (ag != null)
+                {
+                    if ((ag.subscriptionType == "o") || (ag.subscriptionType == "f"))
+                    {
+                        cb_monthsCount.SelectedIndex = -1;
+                        bdr_monthCount.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        bdr_monthCount.Visibility = Visibility.Visible;
+                        subFees = await subFee.GetAll();
+                        subFees = subFees.Where(s => s.membershipId == ag.membershipId).ToList();
+                        string str = "";
+                        if (ag.subscriptionType == "m")
+                        {
+                            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trMonthCount") + "...");
+                            str = AppSettings.resourcemanager.GetString("trMonth");
+                        }
+                        else if (ag.subscriptionType == "y")
+                        {
+                            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trYearCount") + "...");
+                            str = AppSettings.resourcemanager.GetString("trYear");
+                        }
+
+                        foreach (var m in subFees)
+                        {
+                            m.notes = m.monthsCount + " " +str;
+                        }
+
+                        cb_monthsCount.DisplayMemberPath = "notes";
+                        cb_monthsCount.SelectedValuePath = "monthsCount";
+                        cb_monthsCount.ItemsSource = subFees;
+                        if (subscription != null)
+                            cb_monthsCount.SelectedValue = subscription.monthsCount;
+                        else
+                            cb_monthsCount.SelectedIndex = -1;
+
+                    }
+                }
+                else
+                {
+                    btn_save.IsEnabled = true;
+                }
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
+        }
 
         #region report
         /*
@@ -865,396 +1279,5 @@ namespace Restaurant.View.accounts
         */
         #endregion
 
-        #region barcode
-        /*List<ItemUnit> barcodesList;
-        static private int _InternalCounter = 0;
-        private Boolean checkBarcodeValidity(string barcode)
-        {
-            if (FillCombo.itemUnitList != null)
-            {
-                var exist = FillCombo.itemUnitList.Where(x => x.barcode == barcode && x.itemId != item.itemId).FirstOrDefault();
-                if (exist != null)
-                    return false;
-                else
-                    return true;
-            }
-            return true;
-        }
-        */
-        private void Tb_barcode_KeyDown(object sender, KeyEventArgs e)
-        {
-            /*
-            try
-            {
-                TextBox tb = (TextBox)sender;
-                string barCode = tb_barcode.Text;
-                if (e.Key == Key.Return && barCode.Length == 13)
-                {
-                    if (isBarcodeCorrect(barCode) == false)
-                    {
-                        item.barcode = "";
-                        this.DataContext = item;
-
-                    }
-                    else
-                        drawBarcode(barCode);
-                }
-                else if (barCode.Length == 13 || barCode.Length == 12)
-                    drawBarcode(barCode);
-                else
-                    drawBarcode("");
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.ExceptionMessage(ex, this);
-            }
-            */
-        }
-        /*
-        private bool isBarcodeCorrect(string barCode)
-        {
-            char checkDigit;
-            char[] barcodeData;
-
-            char cd = barCode[0];
-            barCode = barCode.Substring(1);
-            barcodeData = barCode.ToCharArray();
-            checkDigit = Mod10CheckDigit(barcodeData);
-
-            if (checkDigit != cd)
-            {
-                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorBarcodeToolTip"), animation: ToasterAnimation.FadeIn);
-                return false;
-            }
-            else
-                return true;
-        }
-        public static char Mod10CheckDigit(char[] data)
-        {
-            // Start the checksum calculation from the right most position.
-            int factor = 3;
-            int weight = 0;
-            int length = data.Length;
-
-            for (int i = 0; i <= length - 1; i++)
-            {
-                weight += (data[i] - '0') * factor;
-                factor = (factor == 3) ? 1 : 3;
-            }
-
-            return (char)(((10 - (weight % 10)) % 10) + '0');
-
-        }
-        private void drawBarcode(string barcodeStr)
-        {
-            try
-            {
-                // configur check sum metrics
-                BarcodeSymbology s = BarcodeSymbology.CodeEan13;
-
-                BarcodeDraw drawObject = BarcodeDrawFactory.GetSymbology(s);
-
-                BarcodeMetrics barcodeMetrics = drawObject.GetDefaultMetrics(60);
-                barcodeMetrics.Scale = 2;
-
-                if (barcodeStr != "")
-                {
-                    if (barcodeStr.Length == 13)
-                        barcodeStr = barcodeStr.Substring(1);//remove check sum from barcode string
-                    var barcodeImage = drawObject.Draw(barcodeStr, barcodeMetrics);
-
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        barcodeImage.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                        byte[] imageBytes = ms.ToArray();
-
-                        img_barcode.Source = ImageProcess.ByteToImage(imageBytes);
-                    }
-                }
-                else
-                    img_barcode.Source = null;
-            }
-            catch { img_barcode.Source = null; }
-
-        }
-        private async void generateBarcode()
-        {
-            string barcodeString = "";
-            barcodeString = generateRandomBarcode();
-            if (FillCombo.itemUnitList != null)
-            {
-                if (!checkBarcodeValidity(barcodeString))
-                    barcodeString = generateRandomBarcode();
-            }
-            item.barcode = barcodeString;
-            this.DataContext = item;
-            //tb_barcode.Text = barcodeString;
-            HelpClass.validateEmpty("trErrorEmptyBarcodeToolTip", p_error_barcode);
-            drawBarcode(tb_barcode.Text);
-        }
-        static public string generateRandomBarcode()
-        {
-            var now = DateTime.Now;
-
-            var days = (int)(now - new DateTime(2000, 1, 1)).TotalDays;
-            var seconds = (int)(now - DateTime.Today).TotalSeconds;
-
-            var counter = _InternalCounter++ % 100;
-            string randomBarcode = days.ToString("00000") + seconds.ToString("00000") + counter.ToString("00");
-            char[] barcodeData = randomBarcode.ToCharArray();
-            char checkDigit = Mod10CheckDigit(barcodeData);
-            return checkDigit + randomBarcode;
-
-        }
-        */
-        #endregion
-
-        private void Cb_customerId_KeyUp(object sender, KeyEventArgs e)
-        {
-            try
-            {
-                cb_customerId.ItemsSource = FillCombo.customersList.Where(x => x.name.Contains(cb_customerId.Text));
-
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void Cb_paymentProcessType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            /*
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
-                if (elapsed.TotalMilliseconds > 100 && cb_paymentProcessType.SelectedIndex != -1)
-                {
-                    _SelectedPaymentType = cb_paymentProcessType.SelectedValue.ToString();
-                }
-                else
-                {
-                    cb_paymentProcessType.SelectedValue = _SelectedPaymentType;
-                }
-
-                switch (cb_paymentProcessType.SelectedIndex)
-                {
-                    case 0://cash
-                        gd_card.Visibility = Visibility.Collapsed;
-                        tb_processNum.Clear();
-                        _SelectedCard = -1;
-                        txt_card.Text = "";
-                        dp_desrvedDate.IsEnabled = false;
-                        // update validate list
-                        requiredControlList = new List<string> { };
-                        break;
-                    case 1:// balance
-                        gd_card.Visibility = Visibility.Collapsed;
-                        dp_desrvedDate.IsEnabled = true;
-                        tb_processNum.Clear();
-                        _SelectedCard = -1;
-                        // update validate list
-                        requiredControlList = new List<string> { "vendor", "invoiceNumber", "desrvedDate" };
-                        break;
-                    case 2://card
-                        dp_desrvedDate.IsEnabled = false;
-                        gd_card.Visibility = Visibility.Visible;
-                        // update validate list
-                        requiredControlList = new List<string> { "card" };
-                        break;
-                    case 3://multiple
-                        gd_card.Visibility = Visibility.Collapsed;
-                        tb_processNum.Clear();
-                        _SelectedCard = -1;
-                        txt_card.Text = "";
-                        dp_desrvedDate.IsEnabled = true;
-                        // update validate list
-                        requiredControlList = new List<string> { };
-                        break;
-
-                }
-                HelpClass.validate(requiredControlList, this);
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-            */
-        }
-
-        private async void Btn_save_Click(object sender, RoutedEventArgs e)
-        {//save
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
-
-                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one"))
-                {
-                    //subscription = new AgentMembershipCash();
-                    if (HelpClass.validate(requiredControlList, this))
-                    {
-                        #region cashTransfer
-                        CashTransfer cashtrans = new CashTransfer();
-
-                        //cashtrans.agentMembershipsId = 0;
-                        cashtrans.transType = "d";
-                        cashtrans.posId = MainWindow.posLogin.posId;
-                        cashtrans.userId = null;
-                        cashtrans.agentId = (int)cb_customerId.SelectedValue;
-                        cashtrans.invId = null;
-                        cashtrans.transNum = await cashtrans.generateCashNumber(cashtrans.transType + "c");////????????
-                        cashtrans.cash = decimal.Parse(tb_amount.Text);
-                        cashtrans.createUserId = MainWindow.userLogin.userId;
-                        cashtrans.updateUserId = MainWindow.userLogin.userId;
-                        cashtrans.notes = "";
-                        cashtrans.posIdCreator = null;
-                        cashtrans.isConfirm = 0;
-                        cashtrans.cashTransIdSource = null;
-                        cashtrans.side = "c";
-                        cashtrans.docName = "";
-                        cashtrans.docNum = "";//////////////////////?????????????????????????
-                        cashtrans.docImage = "";
-                        cashtrans.bankId = null;
-                        cashtrans.bankName = "";
-                        cashtrans.agentName = null;
-                        cashtrans.usersName = null;
-                        cashtrans.processType = cb_paymentProcessType.SelectedValue.ToString();
-                        cashtrans.cardId = null;///////////////////???????????
-                        cashtrans.shippingCompanyId = null;
-                    #endregion
-
-                    #region agentCash
-                    subscription = new AgentMembershipCash();
-
-                        subscription.agentMembershipsId = 0;
-                        subscription.subscriptionFeesId = ag.subscriptionFeesId;
-                        subscription.cashTransId = cashtrans.cashTransId;
-                        subscription.membershipId = ag.membershipId;
-                        subscription.agentId = (int)cb_customerId.SelectedValue;
-                        subscription.startDate = ag.startDate;
-                        subscription.EndDate = ag.updateDate;
-                        subscription.notes = "";
-                        subscription.createUserId = MainWindow.userLogin.userId;
-                        subscription.updateUserId = MainWindow.userLogin.userId;
-                        subscription.isActive = 1;
-                        subscription.Amount = decimal.Parse(tb_amount.Text);
-                        //discount  subscription.discount = decimal.Parse(tb_discount.Text);
-                        //total     subscription.total = decimal.Parse(txt_total.Text);
-                        subscription.monthsCount = (int)cb_monthsCount.SelectedValue;
-                        subscription.agentName = ag.agentName;
-                        subscription.agentcode = ag.agentcode;
-                        subscription.agentcompany = ag.agentcompany;
-                        subscription.agenttype = ag.agenttype;
-                        subscription.membershipName = ag.membershipName;
-                        subscription.membershipcode = ag.membershipcode;
-                        subscription.transType = cashtrans.transType;
-                        subscription.transNum = cashtrans.transNum;
-                        subscription.membershipisActive = ag.membershipisActive;
-                        subscription.subscriptionType = ag.subscriptionType;
-                        #endregion
-
-                        int res = await subscription.Savepay(subscription, cashtrans);
-
-                        if (res <= 0)
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                        else
-                        {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-
-                            Clear();
-                            await RefreshSubscriptionsList();
-                            await Search();
-                        }
-
-                      
-                    }
-                    else
-                        Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                HelpClass.EndAwait(grid_main);
-            }
-            //}
-            //    catch (Exception ex)
-            //    {
-            //        HelpClass.EndAwait(grid_main);
-            //        HelpClass.ExceptionMessage(ex, this);
-            //}
-        }
-
-        private void Chb_all_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Chb_all_Unchecked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        AgenttoPayCash ag = new AgenttoPayCash();
-
-        private async void Cb_customerId_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {//select customer
-            //try
-            //{
-                ag = cb_customerId.SelectedItem as AgenttoPayCash;
-
-                if (ag != null)
-                {
-                    if ((ag.subscriptionType == "o") || (ag.subscriptionType == "f"))
-                    {
-                        cb_monthsCount.SelectedIndex = -1;
-                        bdr_monthCount.Visibility = Visibility.Collapsed;
-                    }
-                    else
-                    {
-                        bdr_monthCount.Visibility = Visibility.Visible;
-                        SubscriptionFees subFee = new SubscriptionFees();
-                        List<SubscriptionFees> subFees = await subFee.GetAll();
-                        subFees = subFees.Where(s => s.membershipId == ag.membershipId).ToList();
-                        string str = "";
-                        if (ag.subscriptionType == "m")
-                        {
-                            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trMonthCount") + "...");
-                            str = AppSettings.resourcemanager.GetString("trMonth");
-                        }
-                        else if (ag.subscriptionType == "y")
-                        {
-                            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trYearCount") + "...");
-                            str = AppSettings.resourcemanager.GetString("trYear");
-                        }
-
-                        foreach (var m in subFees)
-                        {
-                            m.notes = m.monthsCount + " " +str;
-                        }
-
-                        cb_monthsCount.DisplayMemberPath = "notes";
-                        cb_monthsCount.SelectedValuePath = "monthsCount";
-                        cb_monthsCount.ItemsSource = subFees;
-                        if (subscription != null)
-                            cb_monthsCount.SelectedValue = subscription.monthsCount;
-                        else
-                            cb_monthsCount.SelectedIndex = -1;
-
-                    }
-                    //tb_discount.Text = ag.Amount.ToString();
-                }
-                else
-                {
-                    btn_save.IsEnabled = true;
-                    tb_discount.Text = "";
-                }
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
-        }
     }
 }
