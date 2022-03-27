@@ -66,6 +66,11 @@ namespace Restaurant.Classes
         public string transNum { get; set; }
         public decimal discountValue { get; set; }
         public decimal total { get; set; }
+
+        public string membershipStatus { get; set; }
+        public int couponsCount { get; set; }
+        public int invoicesClassesCount { get; set; }
+
     }
     public class AgentMembershipCash
     {

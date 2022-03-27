@@ -81,6 +81,7 @@ namespace Restaurant.View.windows
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
+                await FillCombo.RefreshCustomers();
                 await FillCombo.FillComboCustomers(cb_customerId);
 
                 fillInputs();
@@ -107,7 +108,38 @@ namespace Restaurant.View.windows
         private void fillInputs()
         {
             if (customerId != 0)
-                cb_customerId.SelectedValue = customerId;
+            {
+                cb_customerId.SelectedValue = customerId;               
+            }
+        }
+        private async Task fillMemberShipInfo()
+        {
+            var customer = FillCombo.customersList.Where(x => x.agentId == customerId).FirstOrDefault();
+            if (customer.membershipId != null)
+            {
+                agentToPayCash = await memberships.GetmembershipStateByAgentId(customerId);
+                if(agentToPayCash == null)
+                {
+                    sp_membership.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    sp_membership.Visibility = Visibility.Visible;
+                    #region opacity
+                    if (agentToPayCash.membershipStatus == "valid")
+                    {
+                        sp_membership.Opacity = 1;
+                    }
+                    else
+                    {
+                        sp_membership.Opacity = 0.2;
+                    }
+                    #endregion
+                    #region data context
+                    this.DataContext = agentToPayCash;
+                    #endregion
+                }
+            }
         }
         private void Btn_select_Click(object sender, RoutedEventArgs e)
         {
@@ -127,7 +159,7 @@ namespace Restaurant.View.windows
             if(cb_customerId.SelectedIndex != -1)
             {
                 customerId = (int)cb_customerId.SelectedValue;
-                agentToPayCash = await memberships.GetmembershipByAgentId(customerId);
+                await fillMemberShipInfo();
                 //agentMemberships = await agentMemberships.GetAgentMemberShip(customerId);
             }
         }

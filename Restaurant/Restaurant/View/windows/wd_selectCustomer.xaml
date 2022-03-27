@@ -102,7 +102,7 @@
                                     Text="name" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                            <TextBlock  Grid.Row="1" Grid.Column="1" Text="{Binding Path=name}"
+                            <TextBlock  Grid.Row="1" Grid.Column="1" Text="{Binding Path=memberShipName}"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
                         </Grid>
@@ -146,6 +146,20 @@
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
                             <TextBlock  Grid.Row="1" Grid.Column="1" x:Name="tb_invoicesClassesCount" 
                                     Text="{Binding Path=invoicesClassesCount}"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                        </Grid>
+                        <Grid x:Name="grid_memberShipStatus" Visibility="Visible">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MinWidth="100"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock  Grid.Row="1" Grid.Column="0" x:Name="txt_membershipStatus"
+                                    Text="memberShip status" FontWeight="SemiBold"
+                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                            <TextBlock  Grid.Row="1" Grid.Column="1" x:Name="tb_memberShipStatus" 
+                                    Text="{Binding Path=memberShipStatus}"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
                         </Grid>
