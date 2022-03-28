@@ -3607,4 +3607,25 @@
   <data name="trInternalMovementImport" xml:space="preserve">
     <value>حركة داخلية - استيراد</value>
   </data>
+  <data name="bestOf" xml:space="preserve">
+    <value>أفضل الـ </value>
+  </data>
+  <data name="emptyTables" xml:space="preserve">
+    <value>الطاولات المتاحة</value>
+  </data>
+  <data name="invoicesTypesInDay" xml:space="preserve">
+    <value>أنوع الفواتير في اليوم</value>
+  </data>
+  <data name="mostPopularFoods" xml:space="preserve">
+    <value>أكثر الأطعمة شعبيةً</value>
+  </data>
+  <data name="openTables" xml:space="preserve">
+    <value>الطاولات المفتوحة</value>
+  </data>
+  <data name="months" xml:space="preserve">
+    <value>الأشهر</value>
+  </data>
+  <data name="times" xml:space="preserve">
+    <value>الاوقات</value>
+  </data>
 </root>

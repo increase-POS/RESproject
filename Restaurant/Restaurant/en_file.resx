@@ -3631,4 +3631,25 @@ Please add Email in setting</value>
   <data name="trInternalMovementImport" xml:space="preserve">
     <value>Internal movement - Import</value>
   </data>
+  <data name="bestOf" xml:space="preserve">
+    <value>Best of</value>
+  </data>
+  <data name="emptyTables" xml:space="preserve">
+    <value>Empty tables</value>
+  </data>
+  <data name="invoicesTypesInDay" xml:space="preserve">
+    <value>Invoices types in day</value>
+  </data>
+  <data name="mostPopularFoods" xml:space="preserve">
+    <value>Most popular foods</value>
+  </data>
+  <data name="openTables" xml:space="preserve">
+    <value>Open tables</value>
+  </data>
+  <data name="months" xml:space="preserve">
+    <value>Months</value>
+  </data>
+  <data name="times" xml:space="preserve">
+    <value>Times</value>
+  </data>
 </root>
