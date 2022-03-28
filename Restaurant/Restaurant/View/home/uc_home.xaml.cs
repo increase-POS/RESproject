@@ -158,15 +158,26 @@ namespace Restaurant.View
         }
         private void translate()
         {
-            txt_countAllPurchase.Text = AppSettings.resourcemanager.GetString("trPurchases");
-            txt_countAllSales.Text = AppSettings.resourcemanager.GetString("trSales");
-            txt_countAllVendor.Text = AppSettings.resourcemanager.GetString("trSuppliers");
-            txt_countAllCustomer.Text = AppSettings.resourcemanager.GetString("trCustomers");
+            txt_totalCash.Text = AppSettings.resourcemanager.GetString("trCashBalance");
+            txt_emptyTables.Text = AppSettings.resourcemanager.GetString("emptyTables");
+            txt_openTables.Text = AppSettings.resourcemanager.GetString("openTables");
+            txt_reservations.Text = AppSettings.resourcemanager.GetString("trReservations");
+
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branch, AppSettings.resourcemanager.GetString("trStore/BranchHint"));
-            bestSellerTitle.Text = AppSettings.resourcemanager.GetString("trBestSeller");
-            storageTitle.Text = AppSettings.resourcemanager.GetString("trStorage");
+            txt_mostPopularFoods.Text = AppSettings.resourcemanager.GetString("mostPopularFoods");
+            txt_storageTitle.Text = AppSettings.resourcemanager.GetString("trStorage");
+            txt_bestOf.Text = AppSettings.resourcemanager.GetString("bestOf") + "...";
+            txt_invoicesTypeInDay.Text = AppSettings.resourcemanager.GetString("invoicesTypesInDay");
+
+            txt_times.Text = AppSettings.resourcemanager.GetString("times");
+            txt_days.Text = AppSettings.resourcemanager.GetString("trDays");
+            txt_months.Text = AppSettings.resourcemanager.GetString("months");
+            txt_diningHall.Text = AppSettings.resourcemanager.GetString("trDiningHall");
+            txt_takeAway.Text = AppSettings.resourcemanager.GetString("trTakeAway");
+            txt_orders.Text = AppSettings.resourcemanager.GetString("trOrders");
+
             txt_userOnlineTitle.Text = AppSettings.resourcemanager.GetString("trUsers");
-            purchaseAndSalesTitle.Text = AppSettings.resourcemanager.GetString("trPurchase&Sales");
+            txt_purchaseAndSalesTitle.Text = AppSettings.resourcemanager.GetString("trPurchase&Sales");
             txt_branchOnlineTitle.Text = AppSettings.resourcemanager.GetString("trBranch&Store");
             txt_dailyPurchaseTitle.Text = AppSettings.resourcemanager.GetString("trDailyPurchase");
             txt_dailySalesTitle.Text = AppSettings.resourcemanager.GetString("trDailySales");
@@ -180,10 +191,8 @@ namespace Restaurant.View
             {
                 refreshView();
             }
-            catch (Exception ex)
-            {
-                //SectionData.ExceptionMessage(ex, this);
-            }
+            catch
+            {}
         }
         void timer_Thread10(object sendert, EventArgs et)
         {
@@ -222,10 +231,8 @@ namespace Restaurant.View
                 firstLoad = false;
 
             }
-            catch (Exception ex)
-            {
-                //SectionData.ExceptionMessage(ex, this);
-            }
+            catch
+            {}
         }
 
         List<keyValueBool> loadingList;
@@ -234,9 +241,9 @@ namespace Restaurant.View
             try
             {
                 await CountMonthlySalPur();
-            await DailySalPur();
+                await DailySalPur();
             }
-            catch (Exception)
+            catch
             { }
             foreach (var item in loadingList)
             {
@@ -254,8 +261,9 @@ namespace Restaurant.View
                 #region loading
                 loadingList = new List<keyValueBool>();
                 bool isDone = true;
-                loadingList.Add(new keyValueBool { key = "AllSalPur", value = false });
-                loadingList.Add(new keyValueBool { key = "AgentCount", value = false });
+                //loadingList.Add(new keyValueBool { key = "AllSalPur", value = false });
+                //loadingList.Add(new keyValueBool { key = "AgentCount", value = false });
+                loadingList.Add(new keyValueBool { key = "cashAndTablesCount", value = false });
                 loadingList.Add(new keyValueBool { key = "UserOnline", value = false });
                 loadingList.Add(new keyValueBool { key = "BranchOnline", value = false });
                 loadingList.Add(new keyValueBool { key = "IUStorageRefresh", value = false });
@@ -264,8 +272,10 @@ namespace Restaurant.View
                 loadingList.Add(new keyValueBool { key = "loading_getDailySalPur", value = false });
                 loadingList.Add(new keyValueBool { key = "AmountMonthlySalPur", value = false });
 
-                AllSalPur();
-                AgentCount();
+                //AllSalPur();
+                //AgentCount();
+                cashAndTablesCount();
+
                 UserOnline();
                 BranchOnline();
                 IUStorageRefresh();
@@ -303,10 +313,8 @@ namespace Restaurant.View
                 this.DataContext = new Dash();
                 this.DataContext = dash;
             }
-            catch (Exception ex)
-            {
-                //SectionData.ExceptionMessage(ex, this);
-            }
+            catch
+            {}
         }
 
         async void IUStorageRefresh()
@@ -349,71 +357,71 @@ namespace Restaurant.View
                 }
             }
         }
+         
         void refreshView()
         {
             try
             {
-                AllSalPur();
-            CountMonthlySalPur();
-            DailySalPur();
-            AgentCount();
-            UserOnline();
-            BranchOnline();
-            #region BestSeller
-            BestSeller();
-            paginationBestSeller(listBestSeller, SkipBestSeller);
-            #endregion
-            #region IUStorage
-            IUStorage();
-            paginationIUStorage(listIUStorage, SkipIUStorage);
-            #endregion
-            UserOnlinePic();
-            AmountMonthlySalPur();
+                //AllSalPur();
+                CountMonthlySalPur();
+                DailySalPur();
+                //AgentCount();
+                cashAndTablesCount();
+                UserOnline();
+                BranchOnline();
+                #region BestSeller
+                BestSeller();
+                paginationBestSeller(listBestSeller, SkipBestSeller);
+                #endregion
+                #region IUStorage
+                IUStorage();
+                paginationIUStorage(listIUStorage, SkipIUStorage);
+                #endregion
+                UserOnlinePic();
+                AmountMonthlySalPur();
 
             this.DataContext = new Dash();
             this.DataContext = dash;
             }
-            catch (Exception ex)
-            {
-                //SectionData.ExceptionMessage(ex, this);
-            }
+            catch
+            { }
         }
-        async Task AllSalPur()
-        {
-            try
-            {
-                List<InvoiceCount> listSalPur = await dash.Getdashsalpur();
-                if (cb_branch.SelectedValue != null)
-                    if ((int)cb_branch.SelectedValue == 0)
-                    {
-                        dash.countAllPurchase = listSalPur.Sum(x => x.purCount).ToString();
-                        dash.countAllSalesValue = listSalPur.Sum(x => x.saleCount).ToString();
-                    }
-                    else
-                    {
-                        var newSalPur = listSalPur.Where(s => s.branchCreatorId == (int)cb_branch.SelectedValue).FirstOrDefault();
-                        if (newSalPur != null)
-                        {
-                            dash.countAllPurchase = newSalPur.purCount.ToString();
-                            dash.countAllSalesValue = newSalPur.saleCount.ToString();
-                        }
-                        else
-                            dash.countAllPurchase = dash.countAllSalesValue = "0";
-                    }
-            }
-            catch (Exception ex)
-            {
-                //SectionData.ExceptionMessage(ex, this);
-            }
-            foreach (var item in loadingList)
-            {
-                if (item.key.Equals("AllSalPur"))
-                {
-                    item.value = true;
-                    break;
-                }
-            }
-        }
+        //async Task AllSalPur()
+        //{
+        //    try
+        //    {
+        //        List<InvoiceCount> listSalPur = await dash.Getdashsalpur();
+        //        if (cb_branch.SelectedValue != null)
+        //            if ((int)cb_branch.SelectedValue == 0)
+        //            {
+        //                dash.countAllPurchase = listSalPur.Sum(x => x.purCount).ToString();
+        //                dash.countAllSalesValue = listSalPur.Sum(x => x.saleCount).ToString();
+        //            }
+        //            else
+        //            {
+        //                var newSalPur = listSalPur.Where(s => s.branchCreatorId == (int)cb_branch.SelectedValue).FirstOrDefault();
+        //                if (newSalPur != null)
+        //                {
+        //                    dash.countAllPurchase = newSalPur.purCount.ToString();
+        //                    dash.countAllSalesValue = newSalPur.saleCount.ToString();
+        //                }
+        //                else
+        //                    dash.countAllPurchase = dash.countAllSalesValue = "0";
+        //            }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //SectionData.ExceptionMessage(ex, this);
+        //    }
+        //    foreach (var item in loadingList)
+        //    {
+        //        if (item.key.Equals("AllSalPur"))
+        //        {
+        //            item.value = true;
+        //            break;
+        //        }
+        //    }
+        //}
         async Task CountMonthlySalPur()
         {
             try
@@ -452,6 +460,9 @@ namespace Restaurant.View
                     {
                         dash.countDailyPurchase = listSalPur.Sum(x => x.purCount).ToString();
                         dash.countDailySales = listSalPur.Sum(x => x.saleCount).ToString();
+                        dash.countDailySales = listSalPur.Sum(x => x.saleCount).ToString();
+                        dash.countDailySales = listSalPur.Sum(x => x.saleCount).ToString();
+                        dash.countDailySales = listSalPur.Sum(x => x.saleCount).ToString();
                     }
                     else
                     {
@@ -460,9 +471,13 @@ namespace Restaurant.View
                         {
                             dash.countDailyPurchase = newSalPur.purCount.ToString();
                             dash.countDailySales = newSalPur.saleCount.ToString();
+                            dash.diningHallCount = newSalPur.diningHallCount.ToString();
+                            dash.takeAwayCount = newSalPur.takeAwayCount.ToString();
+                            dash.ordersCount = newSalPur.ordersCount.ToString();
                         }
                         else
-                            dash.countDailyPurchase = dash.countDailySales = "0";
+                            dash.countDailyPurchase = dash.countDailySales =
+                                dash.diningHallCount = dash.takeAwayCount = dash.ordersCount = "0";
                     }
                 InitializePieChart(pch_dailyPurchaseInvoice,
                     int.Parse(dash.countDailyPurchase),
@@ -471,27 +486,84 @@ namespace Restaurant.View
                 InitializePieChart(pch_dailySalesInvoice,
                     int.Parse(dash.countDailySales),
                     (int.Parse(dash.countDailySales) + int.Parse(dash.countMonthlySales)));
+
+                List<keyValueInt> listInvoiceType = new List<keyValueInt>
+                    {
+                        new keyValueInt {key = txt_diningHall.Text, value = int.Parse(dash.diningHallCount) },
+                        new keyValueInt {key = txt_takeAway.Text, value = int.Parse(dash.takeAwayCount) },
+                        new keyValueInt {key = txt_orders.Text, value = int.Parse(dash.ordersCount) },
+                    };
+                //List<keyValueInt> listInvoiceType = new List<keyValueInt>
+                //    {
+                //        new keyValueInt {key = txt_diningHall.Text, value = 10 },
+                //        new keyValueInt {key = txt_takeAway.Text, value = 20 },
+                //        new keyValueInt {key = txt_orders.Text, value = 30 },
+                //    };
+                InitializePieChartList(pch_invoicesTypeInDay, listInvoiceType);
             }
             catch (Exception ex)
             {
                 //SectionData.ExceptionMessage(ex, this);
             }
         }
-        async Task AgentCount()
+        //async Task AgentCount()
+        //{
+        //    try
+        //    {
+        //        List<AgentsCount> listAgentCount = await dash.GetAgentCount();
+        //        var newAgentCount = listAgentCount.FirstOrDefault();
+        //        if (newAgentCount != null)
+        //        {
+        //            dash.customerCount = newAgentCount.customerCount.ToString();
+        //            dash.vendorCount = newAgentCount.vendorCount.ToString();
+        //        }
+        //        else
+        //        {
+        //            dash.customerCount = dash.vendorCount = "0";
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //SectionData.ExceptionMessage(ex, this);
+        //    }
+        //    foreach (var item in loadingList)
+        //    {
+        //        if (item.key.Equals("AgentCount"))
+        //        {
+        //            item.value = true;
+        //            break;
+        //        }
+        //    }
+        //}
+        async Task cashAndTablesCount()
         {
-            try
+            
+             try
             {
-                List<AgentsCount> listAgentCount = await dash.GetAgentCount();
-                var newAgentCount = listAgentCount.FirstOrDefault();
-                if (newAgentCount != null)
-                {
-                    dash.customerCount = newAgentCount.customerCount.ToString();
-                    dash.vendorCount = newAgentCount.vendorCount.ToString();
-                }
-                else
-                {
-                    dash.customerCount = dash.vendorCount = "0";
-                }
+                List<CashAndTablesCount> listCashAndTablesCount = await dash.GetCashAndTablesCount();
+                if (cb_branch.SelectedValue != null)
+                    if ((int)cb_branch.SelectedValue == 0)
+                    {
+                        dash.totalCash = listCashAndTablesCount.Sum(x => x.totalCash).ToString();
+                        dash.emptyTablesCount = listCashAndTablesCount.Sum(x => x.emptyTablesCount).ToString();
+                        dash.openTablesCount = listCashAndTablesCount.Sum(x => x.openTablesCount).ToString();
+                        dash.reservationsCount = listCashAndTablesCount.Sum(x => x.reservationsCount).ToString();
+                    }
+                    else
+                    {
+                        var newCashAndTablesCount = listCashAndTablesCount.Where(s => s.branchCreatorId == (int)cb_branch.SelectedValue).FirstOrDefault();
+                        if (newCashAndTablesCount != null)
+                        {
+                            dash.totalCash = newCashAndTablesCount.totalCash.ToString();
+                            dash.emptyTablesCount = newCashAndTablesCount.emptyTablesCount.ToString();
+                            dash.openTablesCount = newCashAndTablesCount.openTablesCount.ToString();
+                            dash.reservationsCount = newCashAndTablesCount.reservationsCount.ToString();
+                        }
+                        else
+                            dash.totalCash = dash.emptyTablesCount =
+                                dash.openTablesCount = dash.reservationsCount = "0";
+                    }
+
             }
             catch (Exception ex)
             {
@@ -499,7 +571,7 @@ namespace Restaurant.View
             }
             foreach (var item in loadingList)
             {
-                if (item.key.Equals("AgentCount"))
+                if (item.key.Equals("cashAndTablesCount"))
                 {
                     item.value = true;
                     break;
@@ -1077,7 +1149,6 @@ namespace Restaurant.View
             grid_IUStorage.Children.Add(countItem);
         }
         #endregion
-
         async Task AmountMonthlySalPur()
         {
             try
@@ -1182,6 +1253,24 @@ namespace Restaurant.View
                      Fill = Application.Current.Resources["MainColorlightGrey"] as SolidColorBrush
                  }
              );
+            pieChart.Series = series;
+        }
+        void InitializePieChartList(PieChart pieChart, List<keyValueInt> valueList)
+        {
+            SeriesCollection series = new SeriesCollection();
+            foreach (var item in valueList)
+            {
+                series.Add(
+                    new PieSeries
+                    {
+                        Values = new ChartValues<int> { item.value },
+                        Title = item.key,
+                        DataLabels = false,
+                        
+                        Fill = Application.Current.Resources["mediumGreen"] as SolidColorBrush
+                    }
+                );
+            }
             pieChart.Series = series;
         }
         async void userImageLoad(Ellipse ellipse, string image)
