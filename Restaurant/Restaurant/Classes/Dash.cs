@@ -26,16 +26,20 @@ namespace Restaurant.Classes
         public int purBackCount { get; set; }
         public int saleBackCount { get; set; }
 
+        // new
+        public int diningHallCount { get; set; }
+        public int takeAwayCount { get; set; }
+        public int ordersCount { get; set; }
     }
-    public class AgentsCount
-    {
+    //public class AgentsCount
+    //{
 
 
-        public int vendorCount { get; set; }
-        public int customerCount { get; set; }
+    //    public int vendorCount { get; set; }
+    //    public int customerCount { get; set; }
 
 
-    }
+    //}
     public class UserOnlineCount
     {
 
@@ -91,6 +95,7 @@ namespace Restaurant.Classes
         public string branchCreatorName { get; set; }
         public Nullable<decimal> subTotal { get; set; }
     }
+   
     // storage
     public class IUStorage
     {
@@ -118,14 +123,34 @@ namespace Restaurant.Classes
         public int day { get; set; }
 
     }
+    public class CashAndTablesCount
+    {
+        public Nullable<int> branchCreatorId { get; set; }
+        public int totalCash { get; set; }
+        public int emptyTablesCount { get; set; }
+        public int openTablesCount { get; set; }
+        public int reservationsCount { get; set; }
+
+    }
     public class Dash
     {
 
-        public string countAllPurchase { get; set; }
-        public string countAllSalesValue { get; set; }
+        //public string countAllPurchase { get; set; }
+        //public string countAllSalesValue { get; set; }
+        //public string customerCount { get; set; }
+        //public string vendorCount { get; set; }
 
-        public string customerCount { get; set; }
-        public string vendorCount { get; set; }
+        // new
+        public string totalCash { get; set; }
+        public string emptyTablesCount { get; set; }
+        public string openTablesCount { get; set; }
+        public string reservationsCount { get; set; }
+        // new
+        public string diningHallCount { get; set; }
+        public string takeAwayCount { get; set; }
+        public string ordersCount { get; set; }
+
+
 
 
         public string userOnline { get; set; }
@@ -203,61 +228,77 @@ namespace Restaurant.Classes
             //    return list;
             //}
         }
-        // عدد الموردين والزبائن الكلي
-        public async Task<List<AgentsCount>> GetAgentCount()
+        // عدد الطاولات واجمالي الكاش
+        public async Task<List<CashAndTablesCount>> GetCashAndTablesCount()
         {
-            List<AgentsCount> list = new List<AgentsCount>();
+            List<CashAndTablesCount> list = new List<CashAndTablesCount>();
 
-            IEnumerable<Claim> claims = await APIResult.getList("dash/GetAgentCount");
+            IEnumerable<Claim> claims = await APIResult.getList("dash/GetCashAndTablesCount");
 
             foreach (Claim c in claims)
             {
                 if (c.Type == "scopes")
                 {
-                    list.Add(JsonConvert.DeserializeObject<AgentsCount>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                    list.Add(JsonConvert.DeserializeObject<CashAndTablesCount>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
                 }
             }
             return list;
-
-
-            //List<AgentsCount> list = null;
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "dash/GetAgentCount");
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Get;
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    HttpResponseMessage response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var jsonString = await response.Content.ReadAsStringAsync();
-            //        jsonString = jsonString.Replace("\\", string.Empty);
-            //        jsonString = jsonString.Trim('"');
-            //        // fix date format
-            //        JsonSerializerSettings settings = new JsonSerializerSettings
-            //        {
-            //            Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-            //            DateParseHandling = DateParseHandling.None
-            //        };
-            //        list = JsonConvert.DeserializeObject<List<AgentsCount>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-            //        return list;
-            //    }
-            //    else //web api sent error response 
-            //    {
-            //        list = new List<AgentsCount>();
-            //    }
-            //    return list;
-            //}
         }
+        // عدد الموردين والزبائن الكلي
+        //public async Task<List<AgentsCount>> GetAgentCount()
+        //{
+        //    List<AgentsCount> list = new List<AgentsCount>();
+
+        //    IEnumerable<Claim> claims = await APIResult.getList("dash/GetAgentCount");
+
+        //    foreach (Claim c in claims)
+        //    {
+        //        if (c.Type == "scopes")
+        //        {
+        //            list.Add(JsonConvert.DeserializeObject<AgentsCount>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+        //        }
+        //    }
+        //    return list;
+
+
+        //    //List<AgentsCount> list = null;
+        //    //// ... Use HttpClient.
+        //    //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+        //    //using (var client = new HttpClient())
+        //    //{
+        //    //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+        //    //    client.BaseAddress = new Uri(Global.APIUri);
+        //    //    client.DefaultRequestHeaders.Clear();
+        //    //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
+        //    //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
+        //    //    HttpRequestMessage request = new HttpRequestMessage();
+        //    //    request.RequestUri = new Uri(Global.APIUri + "dash/GetAgentCount");
+        //    //    request.Headers.Add("APIKey", Global.APIKey);
+        //    //    request.Method = HttpMethod.Get;
+        //    //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //    //    HttpResponseMessage response = await client.SendAsync(request);
+
+        //    //    if (response.IsSuccessStatusCode)
+        //    //    {
+        //    //        var jsonString = await response.Content.ReadAsStringAsync();
+        //    //        jsonString = jsonString.Replace("\\", string.Empty);
+        //    //        jsonString = jsonString.Trim('"');
+        //    //        // fix date format
+        //    //        JsonSerializerSettings settings = new JsonSerializerSettings
+        //    //        {
+        //    //            Converters = new List<JsonConverter> { new BadDateFixingConverter() },
+        //    //            DateParseHandling = DateParseHandling.None
+        //    //        };
+        //    //        list = JsonConvert.DeserializeObject<List<AgentsCount>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+        //    //        return list;
+        //    //    }
+        //    //    else //web api sent error response 
+        //    //    {
+        //    //        list = new List<AgentsCount>();
+        //    //    }
+        //    //    return list;
+        //    //}
+        //}
         //عدد المستخدمين المتصلين والغير متصلين  حاليا في كل فرع 
         public async Task<List<UserOnlineCount>> Getuseronline()
         {
