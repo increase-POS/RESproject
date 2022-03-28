@@ -88,8 +88,8 @@
                                         Text="code" FontWeight="SemiBold"
                                         Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                         HorizontalAlignment="Left"  VerticalAlignment="Center"/>
-                            <TextBlock  Grid.Row="0" Grid.Column="1" 
-                                        Text="{Binding Path=code}"
+                            <TextBlock  Grid.Row="0" Grid.Column="1" x:Name="tb_code"
+                                        Text="{Binding Path=membershipcode}"
                                         Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                         HorizontalAlignment="Right"  VerticalAlignment="Center"  />
                         </Grid>
@@ -102,7 +102,8 @@
                                     Text="name" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                            <TextBlock  Grid.Row="1" Grid.Column="1" Text="{Binding Path=memberShipName}"
+                            <TextBlock  Grid.Row="1" Grid.Column="1" x:Name="tb_membershipName"
+                                    Text="{Binding Path=membershipName}"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
                         </Grid>
@@ -159,7 +160,7 @@
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
                             <TextBlock  Grid.Row="1" Grid.Column="1" x:Name="tb_memberShipStatus" 
-                                    Text="{Binding Path=memberShipStatus}"
+                                    Text="{Binding Path=membershipStatus}"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
                         </Grid>

@@ -53,11 +53,11 @@ namespace Restaurant.Classes
         public string agentGPSAddress { get; set; }
 
         public string membershipName { get; set; }
+        public string membershipcode { get; set; }
 
         public byte membershipisActive { get; set; }
         public string subscriptionType { get; set; }
         public string cashsubscriptionType { get; set; }
-        public string membershipcode { get; set; }
         public bool isFreeDelivery { get; set; }
         public decimal deliveryDiscountPercent { get; set; }
         public Nullable<decimal> subscriptionFee { get; set; }

@@ -137,6 +137,7 @@ namespace Restaurant.View.windows
                     #endregion
                     #region data context
                     this.DataContext = agentToPayCash;
+
                     #endregion
                 }
             }
