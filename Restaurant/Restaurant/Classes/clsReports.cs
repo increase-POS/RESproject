@@ -324,21 +324,21 @@ namespace Restaurant.Classes
 
                 c.cash = decimal.Parse(HelpClass.DecTostring(c.cash));
             }
-            paramarr.Add(new ReportParameter("trPull", AppSettings.resourcemanagerreport.GetString("trPull")));
-            paramarr.Add(new ReportParameter("trDeposit", AppSettings.resourcemanagerreport.GetString("trDeposit")));
-
-            paramarr.Add(new ReportParameter("trDeposit", AppSettings.resourcemanagerreport.GetString("trDeposit")));
 
             paramarr.Add(new ReportParameter("trTransferNumberTooltip", AppSettings.resourcemanagerreport.GetString("trTransferNumberTooltip")));
-            paramarr.Add(new ReportParameter("trFromPos", AppSettings.resourcemanagerreport.GetString("trFromPos")));
-            paramarr.Add(new ReportParameter("trToPos", AppSettings.resourcemanagerreport.GetString("trToPos")));
-            paramarr.Add(new ReportParameter("trOpperationTypeToolTip", AppSettings.resourcemanagerreport.GetString("trOpperationTypeToolTip")));
+            paramarr.Add(new ReportParameter("trCreator", AppSettings.resourcemanagerreport.GetString("trCreator")));
+            paramarr.Add(new ReportParameter("trStatus", AppSettings.resourcemanagerreport.GetString("trStatus")));
             paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
             paramarr.Add(new ReportParameter("trCashTooltip", AppSettings.resourcemanagerreport.GetString("trCashTooltip")));
+            paramarr.Add(new ReportParameter("trConfirmed", AppSettings.resourcemanagerreport.GetString("trConfirmed")));
+            paramarr.Add(new ReportParameter("trCanceled", AppSettings.resourcemanagerreport.GetString("trCanceled")));
+            paramarr.Add(new ReportParameter("trWaiting", AppSettings.resourcemanagerreport.GetString("trWaiting")));
+
             DateFormConv(paramarr);
 
             rep.DataSources.Add(new ReportDataSource("DataSetBankAcc", cash));
         }
+
         public static void posAccReportSTS(IEnumerable<CashTransfer> cash, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             posAccReport(cash, rep, reppath, paramarr);

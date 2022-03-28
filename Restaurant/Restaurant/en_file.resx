@@ -3652,4 +3652,7 @@ Please add Email in setting</value>
   <data name="times" xml:space="preserve">
     <value>Times</value>
   </data>
+  <data name="trReceives" xml:space="preserve">
+    <value>Cash receipts</value>
+  </data>
 </root>

@@ -1638,6 +1638,90 @@
     <Content Include="Reports\image\image.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\Account\Doc\Ar\ArBankDoc.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\Doc\Ar\ArBankDocA4.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\Doc\Ar\ArBondDoc.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\Doc\Ar\ArBondDocA4.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\Doc\Ar\ArPayReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\Doc\Ar\ArPayReportA4.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\Doc\Ar\ArReciveReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\Doc\Ar\ArReciveReportA4.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\Doc\En\BankDoc.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\Doc\En\BankDocA4.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\Doc\En\BondDoc.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\Doc\En\BondDocA4.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\Doc\En\PayReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\Doc\En\PayReportA4.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\Doc\En\ReciveReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\Doc\En\ReciveReportA4.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\report\Ar\ArBankAcc.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\report\Ar\ArBondAcc.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\report\Ar\ArOrderAcc.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\report\Ar\ArPayAcc.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\report\Ar\ArPosAcc.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\report\Ar\ArReceiptAcc.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\report\En\EnBankAcc.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\report\En\EnBondAcc.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\report\En\EnOrderAcc.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\report\En\EnPayAcc.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\report\En\EnPosAcc.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\report\En\EnReceiptAcc.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Resource Include="pic\programs-Rest-login-bg.png" />
@@ -1789,8 +1873,11 @@
     <None Include="Properties\DataSources\Restaurant.Classes.Bank.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Branch.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Card.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.CashTransfer.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.CashTransfer1.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Coupon.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ErrorClass.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.Invoice.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemLocation.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemTransfer2.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Location.datasource" />

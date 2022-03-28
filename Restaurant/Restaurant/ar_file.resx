@@ -3628,4 +3628,7 @@
   <data name="times" xml:space="preserve">
     <value>الاوقات</value>
   </data>
+  <data name="trReceives" xml:space="preserve">
+    <value>السحوبات</value>
+  </data>
 </root>
