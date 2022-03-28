@@ -44,11 +44,15 @@ namespace Restaurant.View.windows
         SetValues email_on_save_purrow = new SetValues();
         SetValues show_header_row = new SetValues();
         SetValues setvalueModel = new SetValues();
+        SetValues print_on_save_directentryrow = new SetValues();
         string print_on_save_sale;
         string print_on_save_pur;
         string email_on_save_sale;
         string email_on_save_pur;
         string show_header;
+  
+        string print_on_save_directentry;
+
         List<SetValues> printList = new List<SetValues>();
 
         async Task Getprintparameter()
@@ -73,7 +77,8 @@ namespace Restaurant.View.windows
 
             show_header_row = printList.Where(X => X.name == "show_header").FirstOrDefault();
             show_header = show_header_row.value;
-
+            print_on_save_directentryrow = printList.Where(X => X.name == "print_on_save_directentry").FirstOrDefault();
+            print_on_save_directentry = print_on_save_directentryrow.value;
             if (print_on_save_pur == "1")
             {
                 tgl_printOnSavePur.IsChecked = true;
@@ -118,12 +123,16 @@ namespace Restaurant.View.windows
             {
                 tgl_showHeader.IsChecked = false;
             }
+            //   if (print_on_save_directentry == "1")
+            //{
 
-            /*
-             tgl_printOnSaveSale
-             tgl_emailOnSavePur
-             tgl_emailOnSaveSale
-            */
+            //  tgl_directEntry.IsChecked = true;
+            //}
+            //else
+            //{
+            //    tgl_directEntry.IsChecked = false;
+            //}
+           
 
         }
 
