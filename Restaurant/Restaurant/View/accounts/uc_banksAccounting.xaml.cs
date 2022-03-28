@@ -610,64 +610,10 @@ namespace Restaurant.View.accounts
             }
         }
 
-        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
-        {//excel
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+      
 
-                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
-                {
-                    #region
-                    //Thread t1 = new Thread(() =>
-                    //{
-                    BuildReport();
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        saveFileDialog.Filter = "EXCEL|*.xls;";
-                        if (saveFileDialog.ShowDialog() == true)
-                        {
-                            string filepath = saveFileDialog.FileName;
-                            LocalReportExtensions.ExportToExcel(rep, filepath);
-                        }
-                    });
+     
 
-
-                    //});
-                    //t1.Start();
-                    #endregion
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-               
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-               
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        void FN_ExportToExcel()
-        {
-            var QueryExcel = cashesQuery.AsEnumerable().Select(x => new
-            {
-                Tranfer_Number = x.transNum,
-                Bank = x.bankId,
-                DipRecNum = x.docNum,
-                Cash = x.cash
-            });
-            var DTForExcel = QueryExcel.ToDataTable();
-            DTForExcel.Columns[0].Caption = AppSettings.resourcemanager.GetString("trTransferNum");
-            DTForExcel.Columns[1].Caption = AppSettings.resourcemanager.GetString("trBank");
-            DTForExcel.Columns[2].Caption = AppSettings.resourcemanager.GetString("trDepositeReceiptNum");
-            DTForExcel.Columns[3].Caption = AppSettings.resourcemanager.GetString("trCash");
-
-            ExportToExcel.Export(DTForExcel);
-        }
 
         private void Btn_image_Click(object sender, RoutedEventArgs e)
         {//image
@@ -911,145 +857,8 @@ namespace Restaurant.View.accounts
             }
         }
 
-        #region grid reports
-        ReportCls reportclass = new ReportCls();
-        LocalReport rep = new LocalReport();
-        SaveFileDialog saveFileDialog = new SaveFileDialog();
-        public void BuildReport()
-        {
-            List<ReportParameter> paramarr = new List<ReportParameter>();
+        #region   reports doc
 
-            string addpath;
-            bool isArabic = ReportCls.checkLang();
-            if (isArabic)
-            {
-                addpath = @"\Reports\Account\Ar\ArBankAccReport.rdlc";
-            }
-            else addpath = @"\Reports\Account\EN\BankAccReport.rdlc";
-            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-            ReportCls.checkLang();
-            foreach (var r in cashesQuery)
-            {
-                r.cash = decimal.Parse(HelpClass.DecTostring(r.cash));
-            }
-            clsReports.bankAccReport(cashesQuery, rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
-            clsReports.Header(paramarr);
-            clsReports.bankdg(paramarr);
-
-            rep.SetParameters(paramarr);
-
-            rep.Refresh();
-
-        }
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {//pdf
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
-                {
-                    #region
-                    BuildReport();
-                    saveFileDialog.Filter = "PDF|*.pdf;";
-
-                    if (saveFileDialog.ShowDialog() == true)
-                    {
-                        string filepath = saveFileDialog.FileName;
-                        LocalReportExtensions.ExportToPDF(rep, filepath);
-                    }
-                    #endregion
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-               
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-               
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void Btn_print_Click(object sender, RoutedEventArgs e)
-        {//print
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
-                {
-                    #region
-                    BuildReport();
-                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
-                    #endregion
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-               
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-               
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void Btn_preview1_Click(object sender, RoutedEventArgs e)
-        {//preview
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
-                {
-                    #region
-                    Window.GetWindow(this).Opacity = 0.2;
-
-                    string pdfpath = "";
-
-
-
-                    //
-                    pdfpath = @"\Thumb\report\temp.pdf";
-                    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
-
-                    BuildReport();
-
-                    LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                    wd_previewPdf w = new wd_previewPdf();
-                    w.pdfPath = pdfpath;
-                    if (!string.IsNullOrEmpty(w.pdfPath))
-                    {
-                    // w.ShowInTaskbar = false;
-                        w.ShowDialog();
-                        w.wb_pdfWebViewer.Dispose();
-
-
-                    }
-                    Window.GetWindow(this).Opacity = 1;
-                    #endregion
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-               
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-     
         public void getBankData(List<ReportParameter> paramarr)
         {
             string pay = "";
@@ -1091,7 +900,7 @@ namespace Restaurant.View.accounts
             paramarr.Add(new ReportParameter("title", title));
             paramarr.Add(new ReportParameter("docnum", cashtrans.docNum));
             paramarr.Add(new ReportParameter("bondNumber", tb_transNum.Text));
-            //  paramarr.Add(new ReportParameter("deserveDate", HelpClass.DateToString(bond.deserveDate)));
+            //  paramarr.Add(new ReportParameter("deserveDate", SectionData.DateToString(bond.deserveDate)));
 
             //  paramarr.Add(new ReportParameter("isRecieved", bond.isRecieved.ToString()));
             paramarr.Add(new ReportParameter("trPay", pay));
@@ -1116,9 +925,10 @@ namespace Restaurant.View.accounts
 
         }
 
+
         public void buildBankDocReport()
         {
-          /*
+
             List<ReportParameter> paramarr = new List<ReportParameter>();
 
             string addpath;
@@ -1126,25 +936,25 @@ namespace Restaurant.View.accounts
             // bond.type
             if (isArabic)
             {
-                if (MainWindow.docPapersize == "A4")
+                if (AppSettings.docPapersize == "A4")
                 {
-                    addpath = @"\Reports\Account\Ar\ArBankDocA4.rdlc";
+                    addpath = @"\Reports\Account\Doc\Ar\ArBankDocA4.rdlc";
                 }
                 else//A5
                 {
-                    addpath = @"\Reports\Account\Ar\ArBankDoc.rdlc";
+                    addpath = @"\Reports\Account\Doc\Ar\ArBankDoc.rdlc";
                 }
             }
             else
 
             {
-                if (MainWindow.docPapersize == "A4")
+                if (AppSettings.docPapersize == "A4")
                 {
-                    addpath = @"\Reports\Account\EN\BankDocA4.rdlc";
+                    addpath = @"\Reports\Account\Doc\EN\BankDocA4.rdlc";
                 }
                 else//A5
                 {
-                    addpath = @"\Reports\Account\EN\BankDoc.rdlc";
+                    addpath = @"\Reports\Account\Doc\EN\BankDoc.rdlc";
                 }
 
             }
@@ -1158,7 +968,7 @@ namespace Restaurant.View.accounts
 
             rep.SetParameters(paramarr);
             rep.Refresh();
-            */
+
         }
         private void Btn_printInvoice_Click(object sender, RoutedEventArgs e)
         {// doc
@@ -1414,8 +1224,42 @@ namespace Restaurant.View.accounts
 
         #endregion
 
-        #region reports
+        #region reports grid
+        ReportCls reportclass = new ReportCls();
+        LocalReport rep = new LocalReport();
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+        public void BuildReport()
+        {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
 
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
+                addpath = @"\Reports\Account\report\Ar\ArBankAcc.rdlc";
+            }
+            else
+            {
+                addpath = @"\Reports\Account\report\EN\EnBankAcc.rdlc";
+            }
+
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+            ReportCls.checkLang();
+            foreach (var r in cashesQuery)
+            {
+                r.cash = decimal.Parse(HelpClass.DecTostring(r.cash));
+            }
+            clsReports.bankAccReport(cashesQuery, rep, reppath, paramarr);
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+            clsReports.bankdg(paramarr);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+
+        }
         private void Btn_pdf1_Click(object sender, RoutedEventArgs e)
         {//pdf
             try

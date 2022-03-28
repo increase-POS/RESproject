@@ -800,8 +800,7 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=iif(Fields!status.Value="rc",Parameters!trInDelivery.Value,
-iif(Fields!status.Value="tr",Parameters!trDelivered.Value,""))</Value>
+                                  <Value>=iif(Fields!status.Value="rc",Parameters!trDelivered.Value,iif(Fields!status.Value="tr",Parameters!trInDelivery.Value,""))</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
                                   </Style>
@@ -870,7 +869,7 @@ iif(Fields!status.Value="tr",Parameters!trDelivered.Value,""))</Value>
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>الطلبات</Value>
+                    <Value>=Parameters!trTitle.Value</Value>
                     <Style>
                       <FontFamily>Montserrat</FontFamily>
                       <FontSize>20pt</FontSize>
@@ -1721,6 +1720,12 @@ iif(Fields!status.Value="tr",Parameters!trDelivered.Value,""))</Value>
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="trTitle">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
@@ -1856,6 +1861,11 @@ iif(Fields!status.Value="tr",Parameters!trDelivered.Value,""))</Value>
           <ColumnIndex>1</ColumnIndex>
           <RowIndex>6</RowIndex>
           <ParameterName>accuracy</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>6</RowIndex>
+          <ParameterName>trTitle</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

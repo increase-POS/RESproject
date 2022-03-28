@@ -47,9 +47,18 @@ namespace Restaurant.Classes
         public static void bankdg(List<ReportParameter> paramarr)
         {
 
-            ReportCls rep = new ReportCls();
+            
             paramarr.Add(new ReportParameter("trTransferNumber", AppSettings.resourcemanagerreport.GetString("trTransferNumberTooltip")));
 
+
+        }
+        public static void bondsDocReport(LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+
+            DateFormConv(paramarr);
 
         }
         //public static void bondsReport(IEnumerable<Bonds> bondsQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
@@ -81,18 +90,7 @@ namespace Restaurant.Classes
 
         //}
 
-        //public static void bondsDocReport(LocalReport rep, string reppath, List<ReportParameter> paramarr)
-        //{
-        //    rep.ReportPath = reppath;
-        //    rep.EnableExternalImages = true;
-        //    rep.DataSources.Clear();
 
-
-
-        //    DateFormConv(paramarr);
-
-
-        //}
         //public static void orderReport(IEnumerable<Invoice> invoiceQuery, LocalReport rep, string reppath)
         //{
         //    rep.ReportPath = reppath;
@@ -129,6 +127,7 @@ namespace Restaurant.Classes
                 o.deserved = decimal.Parse(HelpClass.DecTostring(o.deserved));
             }
             DeliverStateConv(paramarr);
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trOrders")));
 
             paramarr.Add(new ReportParameter("trInvoiceNumber", AppSettings.resourcemanagerreport.GetString("trInvoiceNumber")));
             paramarr.Add(new ReportParameter("trSalesMan", AppSettings.resourcemanagerreport.GetString("trSalesMan")));
@@ -136,7 +135,7 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
             paramarr.Add(new ReportParameter("trCashTooltip", AppSettings.resourcemanagerreport.GetString("trCashTooltip")));
             paramarr.Add(new ReportParameter("trState", AppSettings.resourcemanagerreport.GetString("trState")));
-
+            
             DateFormConv(paramarr);
 
 
