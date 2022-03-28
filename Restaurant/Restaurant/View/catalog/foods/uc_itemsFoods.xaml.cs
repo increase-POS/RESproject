@@ -1325,7 +1325,7 @@ namespace Restaurant.View.catalog.foods
         #region tags
         void refreshCatalogTags()
         {
-            if (tagsList.Count > 0)
+            if (tagsList.Count > 1)
             {
                 Tag allTag = new Tag();
                 allTag.tagName = AppSettings.resourcemanager.GetString("trAll");

@@ -1109,7 +1109,7 @@ namespace Restaurant.View.kitchen
         {
             //tagsList = new List<string> { "Orient", "Western", "Eastern" };
             tagsList = await FillCombo.tag.Get(categoryId);
-            if (tagsList.Count > 0)
+            if (tagsList.Count > 1)
             {
                 Tag allTag = new Tag();
                 allTag.tagName = AppSettings.resourcemanager.GetString("trAll");

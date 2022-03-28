@@ -522,10 +522,15 @@ namespace Restaurant.View.sales
         async void refreshCatalogTags(string tag)
         {
             tagsList = await FillCombo.tag.Get(categoryId);
-            Tag allTag = new Tag();
-            allTag.tagName = AppSettings.resourcemanager.GetString("trAll");
-            allTag.tagId = 0;
-            tagsList.Add(allTag);
+
+            if (tagsList.Count > 1)
+            {
+                Tag allTag = new Tag();
+                allTag.tagName = AppSettings.resourcemanager.GetString("trAll");
+                allTag.tagId = 0;
+                tagsList.Add(allTag);
+            }
+
             sp_menuTags.Children.Clear();
             foreach (var item in tagsList)
             {
