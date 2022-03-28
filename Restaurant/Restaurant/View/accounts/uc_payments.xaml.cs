@@ -61,8 +61,6 @@ namespace Restaurant.View.accounts
         Agent agentModel = new Agent();
         User userModel = new User();
         ShippingCompanies shCompanyModel = new ShippingCompanies();
-        Card cardModel = new Card();
-        //Bonds bondModel = new Bonds();
         Pos posModel = new Pos();
         CashTransfer cashModel = new CashTransfer();
         CashTransfer cashtrans = new CashTransfer();
@@ -70,12 +68,10 @@ namespace Restaurant.View.accounts
         IEnumerable<Agent> agents;
         IEnumerable<User> users;
         IEnumerable<ShippingCompanies> shCompanies;
-        IEnumerable<Card> cards;
         IEnumerable<CashTransfer> cashesQuery;
         IEnumerable<CashTransfer> cashesQueryExcel;
 
         IEnumerable<CashTransfer> cashes;
-        static private int _SelectedCard = -1;
 
         string searchText = "";
         ReportCls reportclass = new ReportCls();
@@ -88,6 +84,8 @@ namespace Restaurant.View.accounts
         string reportsPermission = "payments_reports";
 
         public static List<string> requiredControlList;
+
+
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             Instance = null;
@@ -190,10 +188,8 @@ namespace Restaurant.View.accounts
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_recipientSh, AppSettings.resourcemanager.GetString("trRecipientHint"));
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_paymentProcessType, AppSettings.resourcemanager.GetString("trPaymentTypeHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_docNum, AppSettings.resourcemanager.GetString("trDocNumHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_docNumCheque, AppSettings.resourcemanager.GetString("trDocNumHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_docNumCard, AppSettings.resourcemanager.GetString("trProcessNumHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_docDate, AppSettings.resourcemanager.GetString("trDocDateHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, AppSettings.resourcemanager.GetString("trCashHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
 
@@ -223,6 +219,14 @@ namespace Restaurant.View.accounts
 
         }
 
+        #region card
+        List<Button> cardBtnList = new List<Button>();
+        List<Ellipse> cardEllipseList = new List<Ellipse>();
+        IEnumerable<Card> cards;
+        Card cardModel = new Card();
+        bool hasProcessNum = false;
+        static private int _SelectedCard = -1;
+
         void InitializeCardsPic(IEnumerable<Card> cards)
         {
             #region cardImageLoad
@@ -232,7 +236,7 @@ namespace Restaurant.View.accounts
             {
                 #region Button
                 Button button = new Button();
-                button.DataContext = item.name;
+                button.DataContext = item;
                 button.Tag = item.cardId;
                 button.Padding = new Thickness(0, 0, 0, 0);
                 button.Margin = new Thickness(2.5, 5, 2.5, 5);
@@ -241,7 +245,7 @@ namespace Restaurant.View.accounts
                 button.Height = 35;
                 button.Width = 35;
                 button.Click += card_Click;
-                //Grid.SetColumn(button, 4);
+
                 #region grid
                 Grid grid = new Grid();
                 #region 
@@ -253,24 +257,54 @@ namespace Restaurant.View.accounts
                 ellipse.Width = 35;
                 ellipse.FlowDirection = FlowDirection.LeftToRight;
                 ellipse.ToolTip = item.name;
+                ellipse.Tag = item.cardId;
                 userImageLoad(ellipse, item.image);
                 Grid.SetColumn(ellipse, userCount);
                 grid.Children.Add(ellipse);
+                cardEllipseList.Add(ellipse);
                 #endregion
                 #endregion
+
                 button.Content = grid;
                 #endregion
                 dkp_cards.Children.Add(button);
+                cardBtnList.Add(button);
 
             }
             #endregion
         }
+
         void card_Click(object sender, RoutedEventArgs e)
         {
+            HelpClass.clearValidate(requiredControlList, this);
             var button = sender as Button;
             _SelectedCard = int.Parse(button.Tag.ToString());
-            txt_card.Text = button.DataContext.ToString();
-            //MessageBox.Show("Hey you Click me! I'm Card: " + _SelectedCard);
+
+            Card card = button.DataContext as Card;
+
+            txt_card.Text = card.name;
+
+            if (card.hasProcessNum)
+            {
+                tb_docNumCard.Visibility = Visibility.Visible;
+                hasProcessNum = true;
+                requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType", "processNum" };
+            }
+            else
+            {
+                tb_docNumCard.Visibility = Visibility.Collapsed;
+                hasProcessNum = false;
+                requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType" };
+            }
+            //set border color
+            foreach (var el in cardEllipseList)
+            {
+                if ((int)el.Tag == (int)button.Tag)
+                    el.Stroke = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
+                else
+                    el.Stroke = Application.Current.Resources["MainColorOrange"] as SolidColorBrush;
+            }
+            HelpClass.validate(requiredControlList, this);
         }
         ImageBrush brush = new ImageBrush();
         async void userImageLoad(Ellipse ellipse, string image)
@@ -310,6 +344,7 @@ namespace Restaurant.View.accounts
             brush.ImageSource = temp;
             ellipse.Fill = brush;
         }
+        #endregion
         private async void dp_SelectedStartDateChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -352,14 +387,6 @@ namespace Restaurant.View.accounts
          //    
          //  HelpClass.StartAwait(grid_main);
 
-            HelpClass.clearValidate(p_error_docNum);
-
-            if (grid_document.IsVisible)
-            {
-                TextBox dpDate = (TextBox)dp_docDate.Template.FindName("PART_TextBox", dp_docDate);
-                HelpClass.clearValidate(p_error_docDate);
-            }
-
             if (dg_paymentsAccounts.SelectedIndex != -1)
             {
                 cashtrans = dg_paymentsAccounts.SelectedItem as CashTransfer;
@@ -380,8 +407,6 @@ namespace Restaurant.View.accounts
                     cb_recipientU.IsEnabled = false;
                     cb_recipientSh.IsEnabled = false;
                     cb_paymentProcessType.IsEnabled = false;
-                    tb_docNum.IsEnabled = false;
-                    dp_docDate.IsEnabled = false;
                     tb_docNumCheque.IsEnabled = false;
                     dp_docDateCheque.IsEnabled = false;
                     tb_docNumCard.IsEnabled = false;
@@ -548,11 +573,11 @@ namespace Restaurant.View.accounts
                         if (cb_paymentProcessType.SelectedValue.ToString().Equals("cheque"))
                             cash.docNum = tb_docNumCheque.Text;
 
-                        if (cb_paymentProcessType.SelectedValue.ToString().Equals("doc"))
-                        {/////////////////////???????????????/////////////cancled
-                            int res = await saveBond(cash.docNum, cash.cash, dp_docDate.SelectedDate.Value, "p");
-                            cash.bondId = res;
-                        }
+                        //if (cb_paymentProcessType.SelectedValue.ToString().Equals("doc"))
+                        //{/////////////////////???????????????/////////////cancled
+                        //    int res = await saveBond(cash.docNum, cash.cash, dp_docDate.SelectedDate.Value, "p");
+                        //    cash.bondId = res;
+                        //}
                         if (bdr_recipientV.IsVisible || bdr_recipientC.IsVisible)
                         {
                             if (tb_cash.IsReadOnly)
@@ -917,75 +942,61 @@ namespace Restaurant.View.accounts
             {
                 HelpClass.StartAwait(grid_main);
 
-                TextBox dpDate = (TextBox)dp_docDate.Template.FindName("PART_TextBox", dp_docDate);
-                TextBox dpDateCheque = (TextBox)dp_docDate.Template.FindName("PART_TextBox", dp_docDateCheque);
-
+                HelpClass.clearValidate(requiredControlList, this);
                 switch (cb_paymentProcessType.SelectedIndex)
                 {
-
                     case 0://cash
-                        grid_document.Visibility = Visibility.Collapsed;
-                        tb_docNum.Clear();
-                        dp_docDate.SelectedDate = null;
-                        grid_cheque.Visibility = Visibility.Collapsed;
+                        bdr_cheque.Visibility = Visibility.Collapsed;
                         tb_docNumCheque.Clear();
                         dp_docDateCheque.SelectedDate = null;
-                        gd_card.Visibility = Visibility.Collapsed;
-                        _SelectedCard = -1;
-                        brd_docNum.Visibility = Visibility.Collapsed;
-                        tb_docNumCard.Visibility = Visibility.Collapsed;
-                        HelpClass.clearValidate(p_error_docNum);
-                        HelpClass.clearValidate(p_error_docCard);
-                        HelpClass.clearValidate(p_error_docNumCheque);
-                        HelpClass.clearValidate(p_error_card);
+                        bdr_card.Visibility = Visibility.Collapsed;
+                        _SelectedCard = 0;
+                        //_docNum = "";
+                        tb_docNumCard.Clear();
+                        txt_card.Text = "";
+                        requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType" };
                         break;
 
-                    //case 1://doc
-                    //    grid_document.Visibility = Visibility.Visible;
-                    //    grid_cheque.Visibility = Visibility.Collapsed;
-                    //    tb_docNumCheque.Clear();
-                    //    dp_docDateCheque.SelectedDate = null;
-                    //    gd_card.Visibility = Visibility.Collapsed;
-                    //    _SelectedCard = -1;
-                    //    tb_docNumCard.Visibility = Visibility.Collapsed;
-                    //    HelpClass.clearValidate(p_error_docNumCheque);
-                    //    HelpClass.clearValidate(p_error_docCard);
-                    //    HelpClass.clearValidate(p_error_card);
-                    //    break;
-
-                    //case 2://cheque
                     case 1://cheque
-                        grid_cheque.Visibility = Visibility.Visible;
-                        grid_document.Visibility = Visibility.Collapsed;
-                        tb_docNum.Clear();
-                        dp_docDate.SelectedDate = null;
-                        gd_card.Visibility = Visibility.Collapsed;
+                        bdr_cheque.Visibility = Visibility.Visible;
+                        bdr_card.Visibility = Visibility.Collapsed;
                         _SelectedCard = -1;
-                        brd_docNum.Visibility = Visibility.Collapsed;
-                        tb_docNumCard.Visibility = Visibility.Collapsed;
-                        HelpClass.clearValidate(p_error_docNum);
-                        HelpClass.clearValidate(p_error_docCard);
-                        HelpClass.clearValidate(p_error_card);
+                        tb_docNumCard.Clear();
+                        txt_card.Text = "";
+                        requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType", "docNumCheque", "docDateCheque" };
                         break;
 
-                    //case 3://card
                     case 2://card
-                        grid_document.Visibility = Visibility.Collapsed;
-                        tb_docNum.Clear();
-                        dp_docDate.SelectedDate = null;
-                        grid_cheque.Visibility = Visibility.Collapsed;
-                        tb_docNum.Clear();
-                        dp_docDate.SelectedDate = null;
-                        gd_card.Visibility = Visibility.Visible;
-                        brd_docNum.Visibility = Visibility.Visible;
-                        tb_docNumCard.Visibility = Visibility.Visible;
-                        HelpClass.clearValidate(p_error_docNum);
-                        HelpClass.clearValidate(p_error_docNumCheque);
+                        bdr_cheque.Visibility = Visibility.Collapsed;
+                        bdr_card.Visibility = Visibility.Visible;
+
+                        requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType", "processNum", "card" };
+                        try
+                        {
+                            if (cashtrans.cardId != null)
+                            {
+                                Button btn = cardBtnList.Where(c => (int)c.Tag == cashtrans.cardId.Value).FirstOrDefault();
+                                card_Click(btn, null);
+                            }
+                        }
+                        catch { }
+                        break;
+                    case -1:
+                        bdr_cheque.Visibility = Visibility.Collapsed;
+                        tb_docNumCheque.Clear();
+                        dp_docDateCheque.SelectedDate = null;
+                        bdr_card.Visibility = Visibility.Collapsed;
+                        _SelectedCard = 0;
+                        //_docNum = "";
+                        tb_docNumCard.Clear();
+                        txt_card.Text = "";
+                        requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType" };
                         break;
                 }
 
+                HelpClass.validate(requiredControlList, this);
 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -1602,26 +1613,27 @@ namespace Restaurant.View.accounts
         void Clear()
         {
             cashtrans = new CashTransfer();
-            //cashtrans.transNum = "";
+
+            foreach (var el in cardEllipseList)
+            {
+                el.Stroke = Application.Current.Resources["MainColorOrange"] as SolidColorBrush;
+            }
+
             tb_transNum.Text = "";
             this.DataContext = cashtrans;
             ///////////////////////////////
-            /// btn_image.IsEnabled = false;
             btn_add.IsEnabled = true;
             btn_invoices.Visibility = Visibility.Collapsed;
             btn_invoices.IsEnabled = false;
             tb_cash.IsReadOnly = false;
-            //tb_transNum.Text = "";
             cb_depositTo.SelectedIndex = -1;
             cb_paymentProcessType.SelectedIndex = -1;
             _SelectedCard = -1;
             gd_card.Visibility = Visibility.Collapsed;
-            dp_docDate.SelectedDate = null;
             bdr_recipientV.Visibility = Visibility.Collapsed;
             bdr_recipientC.Visibility = Visibility.Collapsed;
             bdr_recipientU.Visibility = Visibility.Collapsed;
             bdr_recipientSh.Visibility = Visibility.Collapsed;
-            grid_document.Visibility = Visibility.Collapsed;
             grid_cheque.Visibility = Visibility.Collapsed;
             ///////////////////////////
             btn_add.IsEnabled = true;
@@ -1631,8 +1643,6 @@ namespace Restaurant.View.accounts
             cb_recipientU.IsEnabled = true;
             cb_recipientSh.IsEnabled = true;
             cb_paymentProcessType.IsEnabled = true;
-            tb_docNum.IsEnabled = true;
-            dp_docDate.IsEnabled = true;
             tb_docNumCheque.IsEnabled = true;
             tb_docNumCard.IsEnabled = true;
             dp_docDateCheque.IsEnabled = true;

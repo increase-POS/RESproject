@@ -406,7 +406,7 @@ namespace Restaurant.View.accounts
                             cashtrans = await cashtrans.GetByID(subscription.cashTransId.Value);
                         }
                         catch { }
-                        this.DataContext = ag;
+                        
 
                         btn_save.IsEnabled = false;
                     }
@@ -892,7 +892,7 @@ namespace Restaurant.View.accounts
                         subscription = new AgentMembershipCash();
 
                         subscription.agentMembershipsId = 0;
-                        subscription.subscriptionFeesId = ag.subscriptionFeesId;
+                        subscription.subscriptionFeesId = subFee.subscriptionFeesId;
                         subscription.cashTransId = cashtrans.cashTransId;
                         subscription.membershipId = ag.membershipId;
                         subscription.agentId = (int)cb_customerId.SelectedValue;
@@ -984,8 +984,16 @@ namespace Restaurant.View.accounts
             try
             {
                 subFee = cb_monthsCount.SelectedItem as SubscriptionFees;
-                if(subFee != null)
+                if (subFee != null)
+                {
                     tb_amount.Text = subFee.Amount.ToString();
+                    _monthCount = (int)cb_monthsCount.SelectedValue;
+                }
+                else
+                {
+                    tb_amount.Text = "";
+                    _monthCount = 0;
+                }
             }
             catch (Exception ex)
             {
@@ -994,6 +1002,7 @@ namespace Restaurant.View.accounts
         }
         SubscriptionFees subFee = new SubscriptionFees();
         List<SubscriptionFees> subFees = new List<SubscriptionFees>();
+        int _monthCount = 0;
         private async void Cb_customerId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select customer
             //try
@@ -1002,10 +1011,15 @@ namespace Restaurant.View.accounts
 
                 if (ag != null)
                 {
+                    this.DataContext = ag;
+
+                    txt_total.Text = ag.Amount.ToString();
+
                     if ((ag.subscriptionType == "o") || (ag.subscriptionType == "f"))
                     {
                         cb_monthsCount.SelectedIndex = -1;
                         bdr_monthCount.Visibility = Visibility.Collapsed;
+                        _monthCount = 0;
                     }
                     else
                     {
@@ -1033,10 +1047,15 @@ namespace Restaurant.View.accounts
                         cb_monthsCount.SelectedValuePath = "monthsCount";
                         cb_monthsCount.ItemsSource = subFees;
                         if (subscription != null)
+                        {
                             cb_monthsCount.SelectedValue = subscription.monthsCount;
+                            _monthCount = (int)subscription.monthsCount;
+                        }
                         else
+                        {
                             cb_monthsCount.SelectedIndex = -1;
-
+                            _monthCount = 0;
+                        }
                     }
                 }
                 else

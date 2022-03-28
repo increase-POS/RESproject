@@ -546,7 +546,8 @@
 
                             </Grid>
                         </Border>
-                        <Grid Grid.Row="5" x:Name="grid_document" Visibility="Collapsed">
+                        
+                        <!--<Grid Grid.Row="5" x:Name="grid_document" Visibility="Collapsed">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
@@ -588,30 +589,37 @@
                                 </Grid>
                             </Border>
                             
-                        </Grid>
-                        <Grid Grid.Row="6" x:Name="grid_cheque" Visibility="Collapsed">
-                            <Border Visibility="Visible" Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                                <Grid>
-                                    <TextBox x:Name="tb_docNumCheque"  Text="{Binding docNum, Mode=OneWay}" Padding="10,5,0,0" 
+                        </Grid>-->
+                        
+                        <Border x:Name="bdr_cheque" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Grid Grid.Row="6" x:Name="grid_cheque" Visibility="Collapsed">
+                                <Border Visibility="Visible" Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBox x:Name="tb_docNumCheque"  Text="{Binding docNum, Mode=OneWay}" Padding="10,5,0,0" 
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                              materialDesign:HintAssist.Hint="Document Number..."  
-                                             Foreground="#4E4E4E"  
+                                             Foreground="#4E4E4E"  Grid.Column="0"
                                              MaxLength="20" BorderThickness="0"
                                              materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                              Height="40"   Margin="4,0"  
                                              PreviewTextInput="Code_PreviewTextInput" PreviewKeyDown="PreventSpaces" 
                                              LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
-                                    <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_docNumCheque"
-                                          HorizontalAlignment="Right" Visibility="Collapsed"   
+                                        <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_docNumCheque"
+                                          HorizontalAlignment="Right" Visibility="Collapsed" Grid.Column="0"  
                                           VerticalAlignment="Center" Width="15"  Height="15"
                                           Data="{StaticResource infoCircle}">
-                                    </Path>
-                                </Grid>
-                            </Border>
-                            <Border Visibility="Collapsed" Grid.ColumnSpan="2" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" 
+                                        </Path>
+                                    </Grid>
+                                </Border>
+                                <Border Visibility="Collapsed" Grid.ColumnSpan="2" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" 
                                             BorderBrush="{StaticResource LightGrey}">
-                                <Grid>
-                                    <DatePicker  x:Name="dp_docDateCheque" 
+                                    <Grid>
+                                        <DatePicker  x:Name="dp_docDateCheque"  Grid.Column="1"
                                         Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                                          BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                                         TextBlock.Foreground="#4E4E4E"
@@ -619,68 +627,62 @@
                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                         materialDesign:HintAssist.Hint="Doc date..."  
                                         Foreground="#4E4E4E"   Height="40"    />
-                                    <Path x:Name="p_error_docDateCheque" Fill="#E81123" Stretch="Fill" Margin="5,5,30,5"
+                                        <Path x:Name="p_error_docDateCheque" Fill="#E81123" Stretch="Fill" Margin="5,5,30,5"
                                           HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                                           VerticalAlignment="Center" Width="15"  Height="15"
                                           Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 
                                                 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z" />
-                                </Grid>
-                            </Border>
-
-
-                        </Grid>
-                        <Grid Grid.Row="7" x:Name="gd_card" Visibility="Collapsed">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <DockPanel x:Name="dkp_cards" Grid.ColumnSpan="2" LastChildFill="False" HorizontalAlignment="Center">
-
-                            </DockPanel>
-                            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5 0" >
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Row="1" Grid.Column="1"  x:Name="txt_card"  Margin="2.5"
-                                           Foreground="#4E4E4E" Text=""  Background="White"
-                                           HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <Path Grid.Row="1"  Grid.Column="2"  x:Name="p_error_card" Fill="#E81123" Stretch="Fill"
-                                      Margin="2.5" HorizontalAlignment="Right"  Visibility="Collapsed"   
-                                      VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="{StaticResource infoCircle}"/>
-                            </Grid>
-                        </Grid>
-                        <Border Visibility="Collapsed" Grid.ColumnSpan="2" Grid.Row="8"  CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                            <Grid>
-                                <TextBox x:Name="tb_docNumCard"  MaxLength="20"  Grid.Row="8"  
-                                 materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                 Text="{Binding docNum, Mode=OneWay}" 
-                                 Padding="10,0,5,0" 
-                                 materialDesign:HintAssist.Hint="Process Number..."  
-                                 Foreground="#4E4E4E"   
-                                 Height="40"  
-                                BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
-                                 TextChanged="Tb_validateEmptyTextChange" 
-                                 LostFocus="Tb_validateEmptyLostFocus"
-                                 PreviewKeyDown="PreventSpaces" 
-                                 PreviewTextInput="Code_PreviewTextInput"/>
-
-                                <Path x:Name="p_error_docCard" Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
-                              HorizontalAlignment="Right"   Visibility="Collapsed"  
-                              VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="{StaticResource infoCircle}"/>
-
+                                    </Grid>
+                                </Border>
                             </Grid>
                         </Border>
-                      
 
+                        <Border x:Name="bdr_card" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Grid Grid.Row="7" x:Name="gd_card" Visibility="Collapsed">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <DockPanel x:Name="dkp_cards" Grid.ColumnSpan="2" LastChildFill="False" HorizontalAlignment="Center">
 
+                                </DockPanel>
+                                <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5 0" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Row="1" Grid.Column="1"  x:Name="txt_card"  Margin="2.5"
+                                           Foreground="#4E4E4E" Text=""  Background="White"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <Path Grid.Row="1"  Grid.Column="2"  x:Name="p_error_card" Fill="#E81123" Stretch="Fill"
+                                          Margin="2.5" HorizontalAlignment="Right"  Visibility="Collapsed"   
+                                          VerticalAlignment="Center" Width="15"  Height="15"
+                                          Data="{StaticResource infoCircle}"/>
+                                    <TextBox x:Name="tb_docNumCard"  MaxLength="20"  Grid.Row="8"  
+                                             materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                             Text="{Binding docNum, Mode=OneWay}" 
+                                             Padding="10,0,5,0" 
+                                             materialDesign:HintAssist.Hint="Process Number..."  
+                                             Foreground="#4E4E4E"   
+                                             Height="40"  
+                                             BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
+                                             TextChanged="Tb_validateEmptyTextChange" 
+                                             LostFocus="Tb_validateEmptyLostFocus"
+                                             PreviewKeyDown="PreventSpaces" 
+                                             PreviewTextInput="Code_PreviewTextInput"/>
+
+                                    <Path x:Name="p_error_docCard" Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
+                                          HorizontalAlignment="Right"   Visibility="Collapsed"  
+                                          VerticalAlignment="Center" Width="15"  Height="15"
+                                          Data="{StaticResource infoCircle}"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
 
 
                         <Border Grid.Row="1" Grid.Column="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
