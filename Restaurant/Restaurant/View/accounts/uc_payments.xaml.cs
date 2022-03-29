@@ -288,13 +288,19 @@ namespace Restaurant.View.accounts
             {
                 tb_docNumCard.Visibility = Visibility.Visible;
                 hasProcessNum = true;
-                requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType", "processNum" };
+                if (!requiredControlList.Contains("processNum"))
+                    requiredControlList.Add("processNum");
+                if (!requiredControlList.Contains("card"))
+                    requiredControlList.Add("card");
             }
             else
             {
                 tb_docNumCard.Visibility = Visibility.Collapsed;
                 hasProcessNum = false;
-                requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType" };
+                if (requiredControlList.Contains("processNum"))
+                    requiredControlList.Remove("processNum");
+                if (requiredControlList.Contains("card"))
+                    requiredControlList.Remove("card");
             }
             //set border color
             foreach (var el in cardEllipseList)
@@ -942,6 +948,13 @@ namespace Restaurant.View.accounts
             {
                 HelpClass.StartAwait(grid_main);
 
+                if (requiredControlList.Contains("docNumCheque"))
+                    requiredControlList.Remove("docNumCheque");
+                if (requiredControlList.Contains("processNum"))
+                    requiredControlList.Remove("processNum");
+                if (requiredControlList.Contains("card"))
+                    requiredControlList.Remove("card");
+
                 HelpClass.clearValidate(requiredControlList, this);
                 switch (cb_paymentProcessType.SelectedIndex)
                 {
@@ -951,10 +964,8 @@ namespace Restaurant.View.accounts
                         dp_docDateCheque.SelectedDate = null;
                         bdr_card.Visibility = Visibility.Collapsed;
                         _SelectedCard = 0;
-                        //_docNum = "";
                         tb_docNumCard.Clear();
                         txt_card.Text = "";
-                        requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType" };
                         break;
 
                     case 1://cheque
@@ -963,14 +974,19 @@ namespace Restaurant.View.accounts
                         _SelectedCard = -1;
                         tb_docNumCard.Clear();
                         txt_card.Text = "";
-                        requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType", "docNumCheque", "docDateCheque" };
+                        if (!requiredControlList.Contains("docNumCheque"))
+                            requiredControlList.Add("docNumCheque");
                         break;
 
                     case 2://card
                         bdr_cheque.Visibility = Visibility.Collapsed;
                         bdr_card.Visibility = Visibility.Visible;
 
-                        requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType", "processNum", "card" };
+                        //requiredControlList = new List<string> { "cash", "depositTo", "paymentProcessType", "processNum", "card" };
+                        if (!requiredControlList.Contains("processNum"))
+                            requiredControlList.Add("processNum");
+                        if (!requiredControlList.Contains("card"))
+                            requiredControlList.Add("card");
                         try
                         {
                             if (cashtrans.cardId != null)
@@ -987,10 +1003,9 @@ namespace Restaurant.View.accounts
                         dp_docDateCheque.SelectedDate = null;
                         bdr_card.Visibility = Visibility.Collapsed;
                         _SelectedCard = 0;
-                        //_docNum = "";
                         tb_docNumCard.Clear();
                         txt_card.Text = "";
-                        requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType" };
+                        requiredControlList = new List<string> { "cash", "depositTo", "paymentProcessType", "paymentProcessType" };
                         break;
                 }
 
@@ -1629,7 +1644,7 @@ namespace Restaurant.View.accounts
             cb_depositTo.SelectedIndex = -1;
             cb_paymentProcessType.SelectedIndex = -1;
             _SelectedCard = -1;
-            gd_card.Visibility = Visibility.Collapsed;
+            bdr_card.Visibility = Visibility.Collapsed;
             bdr_recipientV.Visibility = Visibility.Collapsed;
             bdr_recipientC.Visibility = Visibility.Collapsed;
             bdr_recipientU.Visibility = Visibility.Collapsed;
