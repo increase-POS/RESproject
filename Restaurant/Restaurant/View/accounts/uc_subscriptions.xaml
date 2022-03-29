@@ -100,13 +100,12 @@
                     </Border.Effect>
                     <Grid>
                         <DatePicker  x:Name="dp_searchEndDate" 
-                                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
-                                         BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
-                                        TextBlock.Foreground="#4E4E4E"
-                                         Padding="10,0,5,0"  
-                                        materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                        materialDesign:HintAssist.Hint="end date..."  
-                                        Foreground="#4E4E4E"   Height="40"    />
+                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                                     BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
+                                     TextBlock.Foreground="#4E4E4E" Padding="10,0,5,0"  
+                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                     materialDesign:HintAssist.Hint="end date..."  
+                                     Foreground="#4E4E4E"   Height="40"    />
 
                     </Grid>
                 </Border>
@@ -114,16 +113,16 @@
 
                     <CheckBox x:Name="chb_all"  Grid.Column="4"
                               Background="{StaticResource MainColor}"
-                       Content="All" Margin="0" Height="40"
-                        Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
-                        Checked="Chb_all_Checked"  Unchecked="Chb_all_Unchecked"/>
+                              Content="All" Margin="0" Height="40"
+                              Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
+                              Checked="Chb_all_Checked"  Unchecked="Chb_all_Unchecked"/>
                 </Border>
 
                 <Button   FlowDirection="LeftToRight"  Width="40" Height="40" x:Name="btn_refresh" Click="Btn_refresh_Click" Grid.Row="0" Grid.Column="6" Padding="0" 
-                            materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
+                          materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
                           Background="{x:Null}" BorderBrush="{x:Null}"   Style="{StaticResource SmallButtonCircleRotate}"
-                               RenderTransformOrigin="0.5,0.5"
-                            DataContext="M896,0L896,0C401.2,0,0,401.2,0,896v0c0,494.8,401.2,896,896,896h0c494.8,0,896-401.2,896-896v0C1792,401.2,1390.8,0,896,0z
+                          RenderTransformOrigin="0.5,0.5"
+                          DataContext="M896,0L896,0C401.2,0,0,401.2,0,896v0c0,494.8,401.2,896,896,896h0c494.8,0,896-401.2,896-896v0C1792,401.2,1390.8,0,896,0z
 	 M1451.3,1021c-31.9,133.7-98.8,242.1-200.6,325.2c-101.8,83.1-221,124.6-357.7,124.6c-72.8,0-143.3-13.7-211.4-41.2
 	s-128.8-66.6-182.2-117.5l-96.5,96.5c-9.5,9.5-20.7,14.2-33.7,14.2s-24.2-4.7-33.7-14.2c-9.5-9.5-14.2-20.7-14.2-33.7v-335.3
 	c0-13,4.7-24.2,14.2-33.7s20.7-14.2,33.7-14.2h335.3c13,0,24.2,4.7,33.7,14.2c9.5,9.5,14.2,20.7,14.2,33.7c0,13-4.7,24.2-14.2,33.7
@@ -449,7 +448,7 @@
                                      Text="{Binding Amount, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
                                      materialDesign:HintAssist.Hint="amount..."   Foreground="#4E4E4E"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" 
-                                     Tag="decimal" 
+                                     Tag="decimal" IsEnabled="False"
                                      PreviewTextInput="Number_PreviewTextInput" 
                                      PreviewKeyDown="Spaces_PreviewKeyDown"
                                      LostFocus="validateEmpty_LostFocus" 
@@ -528,7 +527,7 @@
                                         Style="{StaticResource MaterialDesignDatePicker}" 
                                         Text="{Binding startDate, Mode=OneWay}"
                                         TextBlock.Foreground="#4E4E4E" 
-                                        Padding="10,0,5,0" Visibility="Visible" 
+                                        Padding="10,0,5,0" Visibility="Collapsed" 
                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                         materialDesign:HintAssist.Hint="Doc date..."  
                                         Foreground="#4E4E4E"  TextBlock.FontSize="12"  Background="#f8f8f8"                                    

@@ -396,6 +396,7 @@ namespace Restaurant.View.accounts
                     //this.DataContext = subscription;
                     if (subscription != null)
                     {
+                        //cashtrans = await cashtrans.GetByID(subscription.cashTransId.Value);
                         cb_customerId.SelectedValue = subscription.agentId;
 
                         ag = cb_customerId.SelectedItem as AgenttoPayCash;
@@ -406,7 +407,11 @@ namespace Restaurant.View.accounts
                             cashtrans = await cashtrans.GetByID(subscription.cashTransId.Value);
                         }
                         catch { }
-                        
+
+                        cb_monthsCount.SelectedValue = subscription.monthsCount;
+
+                        tb_discount.Text = subscription.discountValue.ToString();
+
 
                         btn_save.IsEnabled = false;
                     }
@@ -501,7 +506,7 @@ namespace Restaurant.View.accounts
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            this.DataContext = new AgenttoPayCash();
+            //this.DataContext = new AgenttoPayCash();
             cb_customerId.SelectedIndex = -1;
             cb_paymentProcessType.SelectedIndex = -1;
             btn_save.IsEnabled = true;
@@ -779,6 +784,12 @@ namespace Restaurant.View.accounts
                 //    cb_paymentProcessType.SelectedValue = _SelectedPaymentType;
                 //}
                 HelpClass.clearValidate(requiredControlList, this);
+                if (requiredControlList.Contains("docNumCheque"))
+                    requiredControlList.Remove("docNumCheque");
+                if (requiredControlList.Contains("processNum"))
+                    requiredControlList.Remove("processNum");
+                if (requiredControlList.Contains("card"))
+                    requiredControlList.Remove("card");
                 switch (cb_paymentProcessType.SelectedIndex)
                 {
                     case 0://cash
@@ -790,7 +801,7 @@ namespace Restaurant.View.accounts
                         _docNum = "";
                         tb_processNum.Clear();
                         txt_card.Text = "";
-                        requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType" };
+                        //requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType" };
                         break;
 
                     case 1://cheque
@@ -799,19 +810,25 @@ namespace Restaurant.View.accounts
                         _SelectedCard = -1;
                         tb_processNum.Clear();
                         txt_card.Text = "";
-                        requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType" , "docNumCheque", "docDateCheque" };
+                       //requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType" , "docNumCheque", "docDateCheque" };
+                        if (!requiredControlList.Contains("docNumCheque"))
+                            requiredControlList.Add("docNumCheque");
                         break;
 
                     case 2://card
                         bdr_cheque.Visibility = Visibility.Collapsed;
                         bdr_card.Visibility = Visibility.Visible;
-                       
-                        requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType", "processNum" , "card" };
+
+                        //requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType", "processNum" , "card" };
+                        if (!requiredControlList.Contains("processNum"))
+                            requiredControlList.Add("processNum");
+                        if (!requiredControlList.Contains("card"))
+                            requiredControlList.Add("card");
                         try
                         {
-                            if (cashtrans.cardId != null)
+                            if (subscription.cardId != null)
                             {
-                                Button btn = cardBtnList.Where(c => (int)c.Tag == cashtrans.cardId.Value).FirstOrDefault();
+                                Button btn = cardBtnList.Where(c => (int)c.Tag == subscription.cardId.Value).FirstOrDefault();
                                 card_Click(btn, null);
                             }
                         }
@@ -892,7 +909,7 @@ namespace Restaurant.View.accounts
                         subscription = new AgentMembershipCash();
 
                         subscription.agentMembershipsId = 0;
-                        subscription.subscriptionFeesId = subFee.subscriptionFeesId;
+                        subscription.subscriptionFeesId = _subscriptionFeesId;
                         subscription.cashTransId = cashtrans.cashTransId;
                         subscription.membershipId = ag.membershipId;
                         subscription.agentId = (int)cb_customerId.SelectedValue;
@@ -903,9 +920,16 @@ namespace Restaurant.View.accounts
                         subscription.updateUserId = MainWindow.userLogin.userId;
                         subscription.isActive = 1;
                         subscription.Amount = decimal.Parse(tb_amount.Text);
-                        subscription.discountValue = decimal.Parse(tb_discount.Text);
+                        try
+                        {
+                            subscription.discountValue = decimal.Parse(tb_discount.Text);
+                        }
+                        catch
+                        {
+                            subscription.discountValue = 0;
+                        }
                         subscription.total = decimal.Parse(txt_total.Text);
-                        subscription.monthsCount = (int)cb_monthsCount.SelectedValue;
+                        subscription.monthsCount = _monthCount;
                         subscription.agentName = ag.agentName;
                         subscription.agentcode = ag.agentcode;
                         subscription.agentcompany = ag.agentcompany;
@@ -986,13 +1010,18 @@ namespace Restaurant.View.accounts
                 subFee = cb_monthsCount.SelectedItem as SubscriptionFees;
                 if (subFee != null)
                 {
+                    //this.DataContext = 
+                    txt_total.Text = subFee.Amount.ToString();
                     tb_amount.Text = subFee.Amount.ToString();
                     _monthCount = (int)cb_monthsCount.SelectedValue;
+                    _subscriptionFeesId = subFee.subscriptionFeesId;
                 }
                 else
                 {
                     tb_amount.Text = "";
+                    txt_total.Text = "0";
                     _monthCount = 0;
+                    _subscriptionFeesId = 0;
                 }
             }
             catch (Exception ex)
@@ -1002,28 +1031,42 @@ namespace Restaurant.View.accounts
         }
         SubscriptionFees subFee = new SubscriptionFees();
         List<SubscriptionFees> subFees = new List<SubscriptionFees>();
-        int _monthCount = 0;
+        int _monthCount = 0 , _subscriptionFeesId;
         private async void Cb_customerId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select customer
             //try
             //{
                 ag = cb_customerId.SelectedItem as AgenttoPayCash;
 
+                #region clear
+                tb_amount.Text = "";
+                txt_total.Text = "0";
+                tb_discount.Text = "";
+                cb_paymentProcessType.SelectedIndex = -1;
+                cb_monthsCount.SelectedIndex = -1;
+                HelpClass.clearValidate(requiredControlList, this);
+                #endregion
+
                 if (ag != null)
                 {
-                    this.DataContext = ag;
-
-                    txt_total.Text = ag.Amount.ToString();
-
                     if ((ag.subscriptionType == "o") || (ag.subscriptionType == "f"))
                     {
                         cb_monthsCount.SelectedIndex = -1;
                         bdr_monthCount.Visibility = Visibility.Collapsed;
                         _monthCount = 0;
+                        tb_amount.Text = ag.Amount.ToString();
+                        txt_total.Text = tb_amount.Text;
+                        _subscriptionFeesId = ag.subscriptionFeesId.Value;
+                        if (requiredControlList.Contains("monthsCount"))
+                            requiredControlList.Remove("monthsCount");
                     }
                     else
                     {
+                        if(!requiredControlList.Contains("monthsCount"))
+                            requiredControlList.Add("monthsCount");
                         bdr_monthCount.Visibility = Visibility.Visible;
+
+                        #region fill month count 
                         subFees = await subFee.GetAll();
                         subFees = subFees.Where(s => s.membershipId == ag.membershipId).ToList();
                         string str = "";
@@ -1046,22 +1089,10 @@ namespace Restaurant.View.accounts
                         cb_monthsCount.DisplayMemberPath = "notes";
                         cb_monthsCount.SelectedValuePath = "monthsCount";
                         cb_monthsCount.ItemsSource = subFees;
-                        if (subscription != null)
-                        {
-                            cb_monthsCount.SelectedValue = subscription.monthsCount;
-                            _monthCount = (int)subscription.monthsCount;
-                        }
-                        else
-                        {
-                            cb_monthsCount.SelectedIndex = -1;
-                            _monthCount = 0;
-                        }
+                        #endregion
                     }
                 }
-                else
-                {
-                    btn_save.IsEnabled = true;
-                }
+               
             //}
             //catch (Exception ex)
             //{
