@@ -1486,6 +1486,47 @@ namespace Restaurant.View.purchase
             dg_billDetails.Columns[3].IsReadOnly = false; //make quantity read only
         }
         #endregion
+        #region calculate quantity
+        private async Task<int> getAmountInBill(int itemId, int itemUnitId, int ID)
+        {
+            int quantity = 0;
+            var itemUnits = FillCombo.itemUnitList.Where(a => a.itemId == itemId).ToList();
+
+            var smallUnits = await FillCombo.itemUnit.getSmallItemUnits(itemId, itemUnitId);
+            foreach (ItemUnit u in itemUnits)
+            {
+                var isInBill = billDetails.ToList().Find(x => x.itemUnitId == (int)u.itemUnitId && x.ID != ID); // unit exist in invoice
+                if (isInBill != null)
+                {
+                    var isSmall = smallUnits.Find(x => x.itemUnitId == (int)u.itemUnitId);
+                    int unitValue = 0;
+
+                    int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == u.itemUnitId).FirstOrDefault());
+                    int count = billDetails[index].Count;
+                    if (itemUnitId == u.itemUnitId)
+                    {
+                        quantity += count;
+                    }
+                    else if (isSmall != null) // from-unit is bigger than to-unit
+                    {
+                        unitValue = await FillCombo.itemUnit.largeToSmallUnitQuan(itemUnitId, (int)u.itemUnitId);
+                        quantity += count / unitValue;
+                    }
+                    else
+                    {
+                        unitValue = await FillCombo.itemUnit.smallToLargeUnit(itemUnitId, (int)u.itemUnitId);
+
+                        if (unitValue != 0)
+                        {
+                            quantity += count * unitValue;
+                        }
+                    }
+
+                }
+            }
+            return quantity;
+        }
+        #endregion
         #region  DataGrid
         private void Cbm_unitItemDetails_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -1515,16 +1556,89 @@ namespace Restaurant.View.purchase
                 if (dg_billDetails.SelectedIndex != -1 && cmb.SelectedValue != null)
                 {
                     billDetails[dg_billDetails.SelectedIndex].itemUnitId = (int)cmb.SelectedValue;
-                    //if (billDetails[dg_billDetails.SelectedIndex].OrderId != 0)
-                    if (_InvoiceType == "p" || _InvoiceType == "pw"
-                        ||_InvoiceType == "pb" || _InvoiceType == "pbw")
-                        cmb.IsEnabled = false;
-                    else
-                        cmb.IsEnabled = true;
+
+                    TextBlock tb;
 
                     int _datagridSelectedIndex = dg_billDetails.SelectedIndex;
                     int itemUnitId = (int)cmb.SelectedValue;
+                    int itemId = billDetails[_datagridSelectedIndex].itemId;
                     billDetails[_datagridSelectedIndex].itemUnitId = (int)cmb.SelectedValue;
+                    #region Dina
+
+                    dynamic unit;
+                    unit = FillCombo.itemUnitList.Where(x => x.itemUnitId == (int)cmb.SelectedValue);
+                   
+                    int oldCount = 0;
+                    long newCount = 0;
+                    decimal oldPrice = 0;
+                    decimal itemTax = 0;
+
+                    decimal newPrice = 0;
+                    oldCount = billDetails[_datagridSelectedIndex].Count;
+                    oldPrice = billDetails[_datagridSelectedIndex].Price;
+                    newCount = oldCount;
+                    #region if return invoice
+                    if (_InvoiceType == "pbd")
+                    {
+                        tb = dg_billDetails.Columns[4].GetCellContent(dg_billDetails.Items[_datagridSelectedIndex]) as TextBlock;
+
+                        var itemUnitsIds = FillCombo.itemUnitList.Where(x => x.itemId == itemId).Select(x => x.itemUnitId).ToList();
+
+                        #region caculate available amount in this bil
+                        int availableAmountInBranch = await FillCombo.itemLocation.getAmountInBranch(itemUnitId, MainWindow.branchLogin.branchId);
+                        int amountInBill = await getAmountInBill(itemId, itemUnitId, billDetails[_datagridSelectedIndex].ID);
+                        int availableAmount = availableAmountInBranch - amountInBill;
+                        #endregion
+                        #region calculate amount in purchase invoice
+                        var items = mainInvoiceItems.ToList().Where(i => itemUnitsIds.Contains((int)i.itemUnitId));
+                        int purchasedAmount = 0;
+                        foreach (ItemTransfer it in items)
+                        {
+                            if (itemUnitId == (int)it.itemUnitId)
+                                purchasedAmount += (int)it.quantity;
+                            else
+                                purchasedAmount += await FillCombo.itemUnit.fromUnitToUnitQuantity((int)it.quantity, itemId, (int)it.itemUnitId, itemUnitId);
+                        }
+                        #endregion
+                        if (newCount > (purchasedAmount - amountInBill) || newCount > availableAmount)
+                        {
+                            tb.Text = (purchasedAmount - amountInBill) > availableAmount ? availableAmount.ToString() : (purchasedAmount - amountInBill).ToString();
+
+                            newCount = (purchasedAmount - amountInBill) > availableAmount ? availableAmount : (purchasedAmount - amountInBill);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
+                        }
+                    }
+                    #endregion
+
+
+                    // newPrice = unit.cost;
+                    newPrice = oldPrice;
+
+                    tb = dg_billDetails.Columns[5].GetCellContent(dg_billDetails.Items[_datagridSelectedIndex]) as TextBlock;
+                    tb.Text = newPrice.ToString();
+
+                    // old total for changed item
+                    decimal total = oldPrice * oldCount;
+                    _Sum -= total;
+
+
+                    // new total for changed item
+                    total = newCount * newPrice;
+                    _Sum += total;
+
+                    #region items tax
+                    if (item.taxes != null)
+                        itemTax = (decimal)item.taxes;
+                    #endregion
+
+                    refreshTotalValue();
+
+                    // update item in billdetails           
+                    billDetails[_datagridSelectedIndex].Count = (int)newCount;
+                    billDetails[_datagridSelectedIndex].Price = newPrice;
+                    billDetails[_datagridSelectedIndex].Total = total;
+                    refrishBillDetails();
+                    #endregion
                 }
 
             }
@@ -1581,7 +1695,7 @@ namespace Restaurant.View.purchase
                 || (_InvoiceType == "pbd" && column == 3))
                 e.Cancel = true;
         }
-        private void Dg_billDetails_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        private async void Dg_billDetails_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             try
             {
@@ -1625,26 +1739,58 @@ namespace Restaurant.View.purchase
                         newCount = row.Count;
 
                     oldCount = row.Count;
+                    oldPrice = row.Price;
+                    //if (_InvoiceType == "pbd" || _InvoiceType == "pbw")
+                    //{
+                    //    ItemTransfer item = mainInvoiceItems.ToList().Find(i => i.itemUnitId == row.itemUnitId);
+                    //    if (newCount > item.quantity)
+                    //    {
+                    //        // return old value 
+                    //        t.Text = item.quantity.ToString();
 
+                    //        newCount = (long)item.quantity;
+                    //        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
+                    //    }
+                    //}
+                    #region if return invoice
                     if (_InvoiceType == "pbd" || _InvoiceType == "pbw")
                     {
-                        ItemTransfer item = mainInvoiceItems.ToList().Find(i => i.itemUnitId == row.itemUnitId);
-                        if (newCount > item.quantity)
+                        var selectedItemUnitId = row.itemUnitId;
+
+                        var itemUnitsIds = FillCombo.itemUnitList.Where(x => x.itemId == row.itemId).Select(x => x.itemUnitId).ToList();
+
+                        #region caculate available amount in this bil
+                        int availableAmountInBranch = await FillCombo.itemLocation.getAmountInBranch(row.itemUnitId, MainWindow.branchLogin.branchId);
+                        int amountInBill = await getAmountInBill(row.itemId, row.itemUnitId, row.ID);
+                        int availableAmount = availableAmountInBranch - amountInBill;
+                        #endregion
+                        #region calculate amount in purchase invoice
+                        var items = mainInvoiceItems.ToList().Where(i => itemUnitsIds.Contains((int)i.itemUnitId));
+                        int purchasedAmount = 0;
+                        foreach (ItemTransfer it in items)
+                        {
+                            if (selectedItemUnitId == (int)it.itemUnitId)
+                                purchasedAmount += (int)it.quantity;
+                            else
+                                purchasedAmount += await FillCombo.itemUnit.fromUnitToUnitQuantity((int)it.quantity, row.itemId, (int)it.itemUnitId, selectedItemUnitId);
+                        }
+                        #endregion
+                        if (newCount > (purchasedAmount - amountInBill) || newCount > availableAmount)
                         {
                             // return old value 
-                            t.Text = item.quantity.ToString();
+                            t.Text = (purchasedAmount - amountInBill) > availableAmount ? availableAmount.ToString() : (purchasedAmount - amountInBill).ToString();
 
-                            newCount = (long)item.quantity;
+                            newCount = (purchasedAmount - amountInBill) > availableAmount ? availableAmount : (purchasedAmount - amountInBill);
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
                         }
                     }
-
+                    #endregion
                     if (columnName == AppSettings.resourcemanager.GetString("trPrice") && !t.Text.Equals(""))
                         newPrice = decimal.Parse(t.Text);
                     else
                         newPrice = row.Price;
 
-                    oldPrice = row.Price;
+                   
 
                     // old total for changed item
                     decimal total = oldPrice * oldCount;
@@ -1666,7 +1812,7 @@ namespace Restaurant.View.purchase
                     billDetails[index].Price = newPrice;
                     billDetails[index].Total = total;
                 }
-
+                refrishBillDetails();
             }
             catch (Exception ex)
             {
