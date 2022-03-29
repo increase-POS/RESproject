@@ -429,7 +429,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn  Header="Amount"  Width="*"  Binding="{Binding Path=Count}"/>
+                            <DataGridTextColumn x:Name="col_amount"  Header="Amount"  Width="*"  Binding="{Binding Path=Count}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Separator Margin="5,0" Grid.Row="2"  Background="#DFDFDF" VerticalAlignment="Center" Width="auto" />

@@ -1877,7 +1877,7 @@ namespace Restaurant.View.purchase
                 var defaultPurUnit = itemUnits.ToList().Find(c => c.defaultPurchase == 1);
                 if (defaultPurUnit != null)
                 {
-                    int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == defaultPurUnit.itemUnitId && p.OrderId == 0).FirstOrDefault());
+                    int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == defaultPurUnit.itemUnitId ).FirstOrDefault());
                     if (index == -1)//item doesn't exist in bill
                     {
                         // create new row in bill details data grid

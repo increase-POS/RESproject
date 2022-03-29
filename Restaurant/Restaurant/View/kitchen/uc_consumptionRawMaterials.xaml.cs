@@ -496,6 +496,24 @@ namespace Restaurant.View.kitchen
             }
             return valid;
         }
+        private async Task<Boolean> checkItemsAmounts()
+        {
+            Boolean available = true;
+            for (int i = 0; i < billDetails.Count; i++)
+            {
+                int availableAmountInBranch = await FillCombo.itemLocation.getAmountInBranch(billDetails[i].itemUnitId, MainWindow.branchLogin.branchId,1);
+                int amountInBill = await getAmountInBill(billDetails[i].itemId, billDetails[i].itemUnitId, billDetails[i].ID);
+                int availableAmount = availableAmountInBranch - amountInBill;
+
+                if (availableAmount < billDetails[i].Count )
+                {
+                    available = false;
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountNotAvailableFromToolTip") + " " + billDetails[i].Product, animation: ToasterAnimation.FadeIn);
+                    return available;
+                }
+            }
+            return available;
+        }
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -505,7 +523,8 @@ namespace Restaurant.View.kitchen
                 if (FillCombo.groupObject.HasPermissionAction(consumptionPermission, FillCombo.groupObjects, "one"))
                 {
                     bool valid = validateItemUnits();
-                    if (valid)
+                    bool validateAmount = await checkItemsAmounts();
+                    if (valid && validateAmount)
                     {
                         await addInvoice("fbc");
                         clear();
@@ -887,45 +906,6 @@ namespace Restaurant.View.kitchen
               
         #endregion
         #region DataGrid
-        void deleteRowFromOrderItems(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-
-                HelpClass.StartAwait(grid_main);
-
-                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
-                    if (vis is DataGridRow)
-                    {
-                        BillDetailsPurchase row = (BillDetailsPurchase)dg_billDetails.SelectedItems[0];
-                        int index = dg_billDetails.SelectedIndex;
-
-                        // remove item from bill
-                        billDetails.RemoveAt(index);
-
-                        ObservableCollection<BillDetailsPurchase> data = (ObservableCollection<BillDetailsPurchase>)dg_billDetails.ItemsSource;
-                        data.Remove(row);
-
-                        // calculate new total
-                        //refreshTotalValue();
-                    }
-                _SequenceNum = 0;
-                for (int i = 0; i < billDetails.Count; i++)
-                {
-                    _SequenceNum++;
-                    billDetails[i].ID = _SequenceNum;
-                }
-                refrishBillDetails();
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
         void deleteRowFromInvoiceItems(object sender, RoutedEventArgs e)
         {
             try
@@ -947,11 +927,13 @@ namespace Restaurant.View.kitchen
 
                         tb_count.Text = _Count.ToString();
                     }
+                _SequenceNum = 0;
                 for (int i = 0; i < billDetails.Count; i++)
                 {
                     _SequenceNum++;
                     billDetails[i].ID = _SequenceNum;
                 }
+                refrishBillDetails();
 
             }
             catch (Exception ex)
@@ -977,7 +959,6 @@ namespace Restaurant.View.kitchen
                 }
                 else
                 {
-                    int availableAmount = 0;
 
                     int oldCount = row.Count;
                     int newCount = 0;
@@ -996,7 +977,14 @@ namespace Restaurant.View.kitchen
                     //"tb_amont"
                     if (columnName == AppSettings.resourcemanager.GetString("trQuantity"))
                     {
-                        availableAmount = await getAvailableAmount(row.itemId, row.itemUnitId, MainWindow.branchLogin.branchId, row.ID);
+                        //availableAmount = await getAvailableAmount(row.itemId, row.itemUnitId, MainWindow.branchLogin.branchId, row.ID);
+
+                        #region caculate available amount for this bill
+                        int availableAmountInBranch = await FillCombo.itemLocation.getAmountInBranch(row.itemUnitId, MainWindow.branchLogin.branchId,1);
+                        int amountInBill = await getAmountInBill(row.itemId, row.itemUnitId, row.ID);
+                        int availableAmount = availableAmountInBranch - amountInBill;
+                        #endregion
+
                         if (availableAmount < newCount)
                         {
 
@@ -1034,8 +1022,7 @@ namespace Restaurant.View.kitchen
                     if (invoiceItems != null)
                         invoiceItems[index].quantity = (int)newCount;
                 }
-                //
-                //    HelpClass.EndAwait(grid_main);
+
                 refrishDataGridItems();
 
             }
@@ -1043,13 +1030,16 @@ namespace Restaurant.View.kitchen
             {
                 //
                 //    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
+               // HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async Task<int> getAvailableAmount(int itemId, int itemUnitId, int branchId, int ID)
+
+        #region calculate quantity
+        private async Task<int> getAmountInBill(int itemId, int itemUnitId, int ID)
         {
+            int quantity = 0;
             var itemUnits = FillCombo.itemUnitList.Where(a => a.itemId == itemId).ToList();
-            int availableAmount = await FillCombo.itemLocation.getAmountInBranch(itemUnitId, branchId,1);
+
             var smallUnits = await FillCombo.itemUnit.getSmallItemUnits(itemId, itemUnitId);
             foreach (ItemUnit u in itemUnits)
             {
@@ -1060,13 +1050,15 @@ namespace Restaurant.View.kitchen
                     int unitValue = 0;
 
                     int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == u.itemUnitId).FirstOrDefault());
-                    int quantity = billDetails[index].Count;
+                    int count = billDetails[index].Count;
                     if (itemUnitId == u.itemUnitId)
-                    { }
+                    {
+                        quantity += count;
+                    }
                     else if (isSmall != null) // from-unit is bigger than to-unit
                     {
                         unitValue = await FillCombo.itemUnit.largeToSmallUnitQuan(itemUnitId, (int)u.itemUnitId);
-                        quantity = quantity / unitValue;
+                        quantity += count / unitValue;
                     }
                     else
                     {
@@ -1074,14 +1066,51 @@ namespace Restaurant.View.kitchen
 
                         if (unitValue != 0)
                         {
-                            quantity = quantity * unitValue;
+                            quantity += count * unitValue;
                         }
                     }
-                    availableAmount -= quantity;
+
                 }
             }
-            return availableAmount;
+            return quantity;
         }
+        #endregion
+        //private async Task<int> getAvailableAmount(int itemId, int itemUnitId, int branchId, int ID)
+        //{
+        //    var itemUnits = FillCombo.itemUnitList.Where(a => a.itemId == itemId).ToList();
+        //    int availableAmount = await FillCombo.itemLocation.getAmountInBranch(itemUnitId, branchId,1);
+        //    var smallUnits = await FillCombo.itemUnit.getSmallItemUnits(itemId, itemUnitId);
+        //    foreach (ItemUnit u in itemUnits)
+        //    {
+        //        var isInBill = billDetails.ToList().Find(x => x.itemUnitId == (int)u.itemUnitId && x.ID != ID); // unit exist in invoice
+        //        if (isInBill != null)
+        //        {
+        //            var isSmall = smallUnits.Find(x => x.itemUnitId == (int)u.itemUnitId);
+        //            int unitValue = 0;
+
+        //            int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == u.itemUnitId).FirstOrDefault());
+        //            int quantity = billDetails[index].Count;
+        //            if (itemUnitId == u.itemUnitId)
+        //            { }
+        //            else if (isSmall != null) // from-unit is bigger than to-unit
+        //            {
+        //                unitValue = await FillCombo.itemUnit.largeToSmallUnitQuan(itemUnitId, (int)u.itemUnitId);
+        //                quantity = quantity / unitValue;
+        //            }
+        //            else
+        //            {
+        //                unitValue = await FillCombo.itemUnit.smallToLargeUnit(itemUnitId, (int)u.itemUnitId);
+
+        //                if (unitValue != 0)
+        //                {
+        //                    quantity = quantity * unitValue;
+        //                }
+        //            }
+        //            availableAmount -= quantity;
+        //        }
+        //    }
+        //    return availableAmount;
+        //}
         private void DataGrid_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             try
@@ -1127,12 +1156,15 @@ namespace Restaurant.View.kitchen
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Cbm_unitItemDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Cbm_unitItemDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
 
                 var cmb = sender as ComboBox;
+                int _datagridSelectedIndex = dg_billDetails.SelectedIndex;
+
+                TextBlock t = col_amount.GetCellContent(dg_billDetails.Items[_datagridSelectedIndex]) as TextBlock;
 
                 if (dg_billDetails.SelectedIndex != -1 && cmb != null)
                 {
@@ -1141,6 +1173,58 @@ namespace Restaurant.View.kitchen
                         cmb.IsEnabled = false;
                     else
                         cmb.IsEnabled = true;
+
+
+                    #region check amount & calc new count
+                    int oldCount = billDetails[dg_billDetails.SelectedIndex].Count;
+                    int newCount = 0;
+
+                    newCount = int.Parse(t.Text);
+                    if (newCount < 0)
+                    {
+                        newCount = 0;
+                        t.Text = "0";
+                    }
+                    //availableAmount = await getAvailableAmount(row.itemId, row.itemUnitId, MainWindow.branchLogin.branchId, row.ID);
+
+                    #region caculate available amount for this bill
+                    int availableAmountInBranch = await FillCombo.itemLocation.getAmountInBranch(billDetails[dg_billDetails.SelectedIndex].itemUnitId, MainWindow.branchLogin.branchId, 1);
+                    int amountInBill = await getAmountInBill(billDetails[dg_billDetails.SelectedIndex].itemId, billDetails[dg_billDetails.SelectedIndex].itemUnitId, billDetails[dg_billDetails.SelectedIndex].ID);
+                    int availableAmount = availableAmountInBranch - amountInBill;
+                    #endregion
+
+                    if (availableAmount < newCount)
+                    {
+
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountNotAvailableToolTip"), animation: ToasterAnimation.FadeIn);
+                        newCount = availableAmount;
+                        t.Text = newCount.ToString();
+                        billDetails[dg_billDetails.SelectedIndex].Count = (int)newCount;
+                    }
+                    else
+                    {
+                        if (!t.Text.Equals(""))
+                            newCount = int.Parse(t.Text);
+                        else
+                            newCount = 0;
+                        if (newCount < 0)
+                        {
+                            newCount = 0;
+                            t.Text = "0";
+                        }
+                    }
+
+                    _Count -= oldCount;
+                    _Count += newCount;
+
+                    //  refresh count text box
+                    tb_count.Text = _Count.ToString();
+
+                    // update item in billdetails           
+                    billDetails[dg_billDetails.SelectedIndex].Count = (int)newCount;
+                    if (invoiceItems != null)
+                        invoiceItems[dg_billDetails.SelectedIndex].quantity = (int)newCount;
+                    #endregion
                 }
             }
             catch (Exception ex)
@@ -1240,14 +1324,25 @@ namespace Restaurant.View.kitchen
                 var defaultPurUnit = itemUnits.ToList().Find(c => c.defaultPurchase == 1);
                 if (defaultPurUnit != null)
                 {
+                    int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == defaultPurUnit.itemUnitId ).FirstOrDefault());
                     // create new row in bill details data grid
-                    addRowToBill(item.name, itemId, defaultPurUnit.mainUnit, defaultPurUnit.itemUnitId, 1);
+                    if (index == -1)
+                    {
+                        addRowToBill(item.name, itemId, defaultPurUnit.unitName, defaultPurUnit.itemUnitId, 1);
+                        _Count++;
+                    }
+                    else // item exist prevoiusly in list
+                    {
+                        billDetails[index].Count++;
+                        billDetails[index].Total = billDetails[index].Count * billDetails[index].Price;
+                    }
                 }
                 else
                 {
                     addRowToBill(item.name, itemId, null, 0, 1);
+                    _Count++;
                 }
-                _Count++;
+              
             }
         }
         private void clear()
