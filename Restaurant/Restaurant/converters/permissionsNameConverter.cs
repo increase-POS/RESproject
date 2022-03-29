@@ -16,6 +16,18 @@ namespace Restaurant.converters
         {
             switch (value)
             {
+                case "permissions_users":
+                    value = AppSettings.resourcemanager.GetString("trUsers");
+                    break;
+                case "storageMovements_unitConversion":
+                    value = AppSettings.resourcemanager.GetString("trUnitConversion");
+                    break;
+                case "storageCost_items":
+                    value = AppSettings.resourcemanager.GetString("trItems");
+                    break;
+                case "itemsRawMaterials_units":
+                    value = AppSettings.resourcemanager.GetString("trUnits");
+                    break;
                 case "locations_addRange":
                     value = AppSettings.resourcemanager.GetString("trAddRange");
                     break;
@@ -52,7 +64,6 @@ namespace Restaurant.converters
                 case "package_items":
                     value = AppSettings.resourcemanager.GetString("trItems");
                     break;
-
                 case "medals_customers":
                     value = AppSettings.resourcemanager.GetString("trCustomers");
                     break;
@@ -65,7 +76,7 @@ namespace Restaurant.converters
                 case "salesOrders_delivery":
                     value = AppSettings.resourcemanager.GetString("trDelivery");
                     break;
-                case "posAccounting_transAdmin":
+                case "posTransfers_transAdmin":
                     value = AppSettings.resourcemanager.GetString("trTransfersAdmin");
                     break;
                 case "Permissions_users":
@@ -95,7 +106,17 @@ namespace Restaurant.converters
                 case "saleAlerts_executeOrder":
                     value = AppSettings.resourcemanager.GetString("trWaitingExecuteOrder");
                     break;
-                case "reciptOfInvoice_inputs":
+                case "storageAlerts_spendingOrderApprove":
+                    value = AppSettings.resourcemanager.GetString("spendingOrderApprove");
+                    break;
+                case "kitchenAlerts_spendingOrderRequest":
+                    value = AppSettings.resourcemanager.GetString("spendingOrderRequest");
+                    break;
+
+
+
+
+                case "storageInvoice_inputs":
                     value = AppSettings.resourcemanager.GetString("trDirectEntry");
                     break;
 
@@ -157,18 +178,86 @@ namespace Restaurant.converters
                         {
                             value = AppSettings.resourcemanager.GetString("trStatistic");
                         }
+                        else if (value.ToString().Contains("_companySettings"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trCompanySettings");
+                        }
+                        else if (value.ToString().Contains("_usersSettings"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trUsersSettings");
+                        }
+                        else if (value.ToString().Contains("_dishIngredients"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("dishIngredients");
+                        }
+                        else if (value.ToString().Contains("_selectLocation"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trLocation");
+                        }
+                        else if (value.ToString().Contains("_recipt"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trRecipt");
+                        }
+                        else if (value.ToString().Contains("_import"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trImport");
+                        }
+                        else if (value.ToString().Contains("_export"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trExport");
+                        }
+                        else if (value.ToString().Contains("_package"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trPackage");
+                        }
+                        else if (value.ToString().Contains("_destroy"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trDestroy");
+                        }
+                        else if (value.ToString().Contains("_archive") || value.ToString().Contains("_archiving"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trArchive");
+                        }
+                        else if (value.ToString().Contains("_update"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trUpdate");
+                        }
+                        else if (value.ToString().Contains("_report"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trReports");
+                        }
+                        else if (value.ToString().Contains("_consumption"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trConsumption");
+                        }
+                        else if (value.ToString().Contains("_subscriptionFees"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trSubscriptionFees");
+                        }
+                        else if (value.ToString().Contains("customer"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trCustomers");
+                        }
+                        else if (value.ToString().Contains("_coupon"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trCoupon");
+                        }
+                        else if (value.ToString().Contains("_offers"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trOffer");
+                        }
+                        else if (value.ToString().Contains("_delivery"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trDelivery");
+                        }
+                        else if (value.ToString().Contains("_selectTables"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trTables");
+                        }
                         else if (value.Equals("users_stores") || value.Equals("branches_branches") || value.Equals("stores_branches")
                             || value.ToString().Contains("_branches"))
                         {
                             value = AppSettings.resourcemanager.GetString("trBranchs/Stores");
-                        }
-                        else if (value.Equals("general_usersSettings") || value.Equals("reports_usersSettings"))
-                        {
-                            value = AppSettings.resourcemanager.GetString("trUsersSettings");
-                        }
-                        else if (value.Equals("general_companySettings") || value.Equals("reports_companySettings"))
-                        {
-                            value = AppSettings.resourcemanager.GetString("trCompanySettings");
                         }
                         break;
                     }
