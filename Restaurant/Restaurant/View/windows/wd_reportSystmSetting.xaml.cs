@@ -45,12 +45,12 @@ namespace Restaurant.View.windows
         SetValues show_header_row = new SetValues();
         SetValues setvalueModel = new SetValues();
         SetValues print_on_save_directentryrow = new SetValues();
+
         string print_on_save_sale;
         string print_on_save_pur;
         string email_on_save_sale;
         string email_on_save_pur;
         string show_header;
-  
         string print_on_save_directentry;
 
         List<SetValues> printList = new List<SetValues>();
@@ -77,6 +77,7 @@ namespace Restaurant.View.windows
 
             show_header_row = printList.Where(X => X.name == "show_header").FirstOrDefault();
             show_header = show_header_row.value;
+
             print_on_save_directentryrow = printList.Where(X => X.name == "print_on_save_directentry").FirstOrDefault();
             print_on_save_directentry = print_on_save_directentryrow.value;
             if (print_on_save_pur == "1")
@@ -123,16 +124,16 @@ namespace Restaurant.View.windows
             {
                 tgl_showHeader.IsChecked = false;
             }
-            //   if (print_on_save_directentry == "1")
-            //{
+            if (print_on_save_directentry == "1")
+            {
 
-            //  tgl_directEntry.IsChecked = true;
-            //}
-            //else
-            //{
-            //    tgl_directEntry.IsChecked = false;
-            //}
-           
+                tgl_directEntry.IsChecked = true;
+            }
+            else
+            {
+                tgl_directEntry.IsChecked = false;
+            }
+
 
         }
 
@@ -165,16 +166,18 @@ namespace Restaurant.View.windows
                 #endregion
                 if (windowType == "r")
                 {
-                  //  txt_showHeader.Visibility =
-                  //tgl_showHeader.Visibility =
-                   txt_printOnSavePur.Visibility =
-                    tgl_printOnSavePur.Visibility =
-                    txt_printOnSaveSale.Visibility =
-                    tgl_printOnSaveSale.Visibility = Visibility.Visible;
+                    //txt_showHeader.Visibility =
+                    //tgl_showHeader.Visibility =
+                    txt_printOnSavePur.Visibility =
+                   tgl_printOnSavePur.Visibility =
+                    txt_directEntry.Visibility =
+                   tgl_directEntry.Visibility =
+                   txt_printOnSaveSale.Visibility =
+                   tgl_printOnSaveSale.Visibility = Visibility.Visible;
 
                     txt_showHeader.Visibility =
-                 tgl_showHeader.Visibility =
-                 txt_emailOnSavePur.Visibility =
+                    tgl_showHeader.Visibility =
+                    txt_emailOnSavePur.Visibility =
                     tgl_emailOnSavePur.Visibility =
                     txt_emailOnSaveSale.Visibility =
                     tgl_emailOnSaveSale.Visibility = Visibility.Collapsed;
@@ -182,9 +185,11 @@ namespace Restaurant.View.windows
                 else if (windowType == "e")
                 {
                     txt_showHeader.Visibility =
-                  tgl_showHeader.Visibility =
+                   tgl_showHeader.Visibility =
                    txt_printOnSavePur.Visibility =
                      tgl_printOnSavePur.Visibility =
+                     txt_directEntry.Visibility =
+                    tgl_directEntry.Visibility =
                      txt_printOnSaveSale.Visibility =
                      tgl_printOnSaveSale.Visibility = Visibility.Collapsed;
 
@@ -226,6 +231,7 @@ namespace Restaurant.View.windows
             txt_emailOnSavePur.Text = AppSettings.resourcemanager.GetString("trEmailOnSavePurchase");
             txt_printOnSaveSale.Text = AppSettings.resourcemanager.GetString("trPrintOnSaveSale");
             txt_emailOnSaveSale.Text = AppSettings.resourcemanager.GetString("trEmailOnSaveSale");
+            txt_directEntry.Text = AppSettings.resourcemanager.GetString("trDirectEntry");
 
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
@@ -273,9 +279,12 @@ namespace Restaurant.View.windows
 
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {
-           
-          //  string msg = "";
-            int msg = 0;
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+                //  string msg = "";
+                int msg = 0;
             if ((bool)tgl_printOnSavePur.IsChecked)
             {
                 print_on_save_purrow.value = "1";
@@ -312,7 +321,6 @@ namespace Restaurant.View.windows
             {
                 email_on_save_salerow.value = "0";
             }
-
             if ((bool)tgl_showHeader.IsChecked)
             {
                 show_header_row.value = "1";
@@ -327,7 +335,6 @@ namespace Restaurant.View.windows
             msg = await setvalueModel.Save(email_on_save_purrow);
             msg = await setvalueModel.Save(email_on_save_salerow);
             msg = await setvalueModel.Save(show_header_row);
-
             await Getprintparameter();
             await MainWindow.Getprintparameter();
             if (msg > 0)
@@ -336,10 +343,17 @@ namespace Restaurant.View.windows
                 await Task.Delay(1500);
                 this.Close();
             }
-            
             else
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-        
+
+            HelpClass.EndAwait(grid_main);
         }
+            catch (Exception ex)
+            {
+                
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+        }
+    }
     }
 }

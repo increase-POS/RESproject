@@ -41,12 +41,14 @@ namespace Restaurant.View.windows
         string sale_copy_count;
         string pur_copy_count;
         string rep_copy_count;
+        string directentry_copy_count;
         SetValues setvalueModel = new SetValues();
         List<SetValues> printList = new List<SetValues>();
 
         public SetValues sale_copy_countrow = new SetValues();
         public SetValues pur_copy_countrow = new SetValues();
         public SetValues rep_copy_countrow = new SetValues();
+        public SetValues directentry_copy_countrow = new SetValues();
 
         async Task refreshWindow()
         {
@@ -58,17 +60,20 @@ namespace Restaurant.View.windows
             pur_copy_count = pur_copy_countrow.value;
             rep_copy_countrow = printList.Where(X => X.name == "rep_copy_count").FirstOrDefault();
             rep_copy_count = rep_copy_countrow.value;
+            directentry_copy_countrow = printList.Where(X => X.name == "directentry_copy_count").FirstOrDefault();
+            directentry_copy_count = directentry_copy_countrow.value;
 
             tb_purCopyCount.Text = pur_copy_count;
-
             tb_saleCopyCount.Text = sale_copy_count;
             tb_repPrintCount.Text = rep_copy_count;
+            tb_directEntryCount.Text = directentry_copy_count;
         }
 
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+        public static List<string> requiredControlList;
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
@@ -77,6 +82,7 @@ namespace Restaurant.View.windows
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
+                requiredControlList = new List<string> { "purCopyCount", "saleCopyCount", "repPrintCount", "directEntryCount" };
 
                 #region translate
 
@@ -116,6 +122,7 @@ namespace Restaurant.View.windows
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_purCopyCount, AppSettings.resourcemanager.GetString("trPurchasesCopyCount"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_saleCopyCount, AppSettings.resourcemanager.GetString("trSalesCopyCount"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_repPrintCount, AppSettings.resourcemanager.GetString("trReportsCopyCount"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_directEntryCount, AppSettings.resourcemanager.GetString("trDirectEntry"));
 
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
              
@@ -170,6 +177,7 @@ namespace Restaurant.View.windows
             sale_copy_countrow.value = (string)tb_saleCopyCount.Text;
             pur_copy_countrow.value = (string)tb_purCopyCount.Text;
             rep_copy_countrow.value = (string)tb_repPrintCount.Text;
+            directentry_copy_countrow.value = (string)tb_directEntryCount.Text;
             if (int.Parse(sale_copy_countrow.value) <=0 || int.Parse(pur_copy_countrow.value) <= 0|| int.Parse(rep_copy_countrow.value)<=0)
             {
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trMustBeMoreThanZero"), animation: ToasterAnimation.FadeIn);
@@ -200,38 +208,54 @@ namespace Restaurant.View.windows
 
         private void Tb_validateEmptyLostFocus(object sender, RoutedEventArgs e)
         {
+            //try
+            //{
+            //    string name = sender.GetType().Name;
+            //    validateEmpty(name, sender);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
+
             try
             {
-                string name = sender.GetType().Name;
-                validateEmpty(name, sender);
+                HelpClass.validate(requiredControlList, this);
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
+
         }
-        private void validateEmpty(string name, object sender)
-        {
+        //private void validateEmpty(string name, object sender)
+        //{
            
-            try
-            {
-                if (name == "TextBox")
-                {
-                    HelpClass.SetValidate(p_errorRepPrintCount, "trEmptyError");
-                    if ((sender as TextBox).Name == "tb_purCopyCount")
-                        HelpClass.SetValidate(p_errorPurCopyCount, "trEmptyError");
-                    else if ((sender as TextBox).Name == "tb_saleCopyCount")
-                        HelpClass.SetValidate(p_errorSaleCopyCount, "trEmptyError");
-                    else if ((sender as TextBox).Name == "tb_repPrintCount")
-                        HelpClass.SetValidate(p_errorRepPrintCount, "trEmptyError");
-                }
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
+        //    try
+        //    {
+        //        if (name == "TextBox")
+        //        {
+        //            ////HelpClass.SetValidate(p_errorRepPrintCount, "trEmptyError");
+        //            //HelpClass.clearValidate(p_errorPurCopyCount);
+        //            //HelpClass.clearValidate(p_errorSaleCopyCount);
+        //            //HelpClass.clearValidate(p_errorRepPrintCount);
+        //            //HelpClass.clearValidate(p_error_directEntry);
+        //            //if ((sender as TextBox).Name == "tb_purCopyCount" && string.IsNullOrWhiteSpace((sender as TextBox).Name))
+        //            //    HelpClass.SetValidate(p_errorPurCopyCount, "trEmptyError");
+        //            //else if ((sender as TextBox).Name == "tb_saleCopyCount" && string.IsNullOrWhiteSpace((sender as TextBox).Name))
+        //            //    HelpClass.SetValidate(p_errorSaleCopyCount, "trEmptyError");
+        //            //else if ((sender as TextBox).Name == "tb_repPrintCount" && string.IsNullOrWhiteSpace((sender as TextBox).Name))
+        //            //    HelpClass.SetValidate(p_errorRepPrintCount, "trEmptyError");
+        //            //else if ((sender as TextBox).Name == "tb_directEntryCount" && string.IsNullOrWhiteSpace((sender as TextBox).Name))
+        //            //    HelpClass.SetValidate( p_error_directEntry, "trEmptyError");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
             
-        }
+        //}
 
 
         private void Tb_count_TextChanged(object sender, TextChangedEventArgs e)
@@ -246,7 +270,7 @@ namespace Restaurant.View.windows
 
 
 
-                if (textBox.Name == "tb_purCopyCount" || textBox.Name == "tb_saleCopyCount" || textBox.Name == "tb_repPrintCount")
+                if (textBox.Name == "tb_purCopyCount" || textBox.Name == "tb_saleCopyCount" || textBox.Name == "tb_repPrintCount" || textBox.Name == "tb_directEntryCount")
                     HelpClass.InputJustNumber(ref textBox);
 
                 //if (textBox.Name == "tb_purCopyCount")
@@ -342,10 +366,28 @@ namespace Restaurant.View.windows
                 tb_repPrintCount.Text = value.ToString();
             }
         }
+
+        private int _numValue_directEntryCount = 1;
+        public int numValue_directEntryCount
+        {
+            get
+            {
+                if (int.TryParse(tb_directEntryCount.Text, out _numValue_directEntryCount))
+                    _numValue_directEntryCount = int.Parse(tb_directEntryCount.Text);
+                return _numValue_directEntryCount;
+            }
+            set
+            {
+                _numValue_directEntryCount = value;
+                tb_directEntryCount.Text = value.ToString();
+            }
+        }
+
         private void Btn_countDown_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+
                 Button button = sender as Button;
 
                 if (button.Tag.ToString() == "purCopyCount" && numValue_purCopyCount > 0)
@@ -354,6 +396,11 @@ namespace Restaurant.View.windows
                     numValue_saleCopyCount--;
                 else if (button.Tag.ToString() == "repPrintCount" && numValue_repPrintCount > 0)
                     numValue_repPrintCount--;
+                else if (button.Tag.ToString() == "directEntryCount" && numValue_directEntryCount > 0)
+                    numValue_directEntryCount--;
+
+                HelpClass.validate(requiredControlList, this);
+
             }
             catch (Exception ex)
             {
@@ -365,6 +412,7 @@ namespace Restaurant.View.windows
         {
             try
             {
+
                 Button button = sender as Button;
                 if (button.Tag.ToString() == "purCopyCount")
                     numValue_purCopyCount++;
@@ -372,6 +420,11 @@ namespace Restaurant.View.windows
                     numValue_saleCopyCount++;
                 else if (button.Tag.ToString() == "repPrintCount")
                     numValue_repPrintCount++;
+                else if (button.Tag.ToString() == "directEntryCount")
+                    numValue_directEntryCount++;
+
+                HelpClass.validate(requiredControlList, this);
+
             }
             catch (Exception ex)
             {
