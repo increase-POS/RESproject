@@ -412,6 +412,9 @@ namespace Restaurant.View.accounts
 
                         tb_discount.Text = subscription.discountValue.ToString();
 
+                        tb_processNum.Text = subscription.docNum;
+
+                        tb_docNumCheque.Text = subscription.docNum;
 
                         btn_save.IsEnabled = false;
                     }

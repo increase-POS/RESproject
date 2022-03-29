@@ -510,7 +510,7 @@
                                          Text="{Binding docNum, Mode=OneWay}" Padding="10,5,0,0" 
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                         materialDesign:HintAssist.Hint="Process Number..."  
-                                        Foreground="#4E4E4E" IsReadOnly="True" 
+                                        Foreground="#4E4E4E" 
                                         MaxLength="50" BorderThickness="0"
                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                         Height="40"   Margin="4,0"  
