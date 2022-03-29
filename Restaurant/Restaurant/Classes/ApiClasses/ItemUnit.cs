@@ -583,32 +583,6 @@ namespace Restaurant.Classes
             }
             return AvailableAmount;
 
-
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "itemsUnits/largeToSmallUnitQuan?fromItemUnit=" + fromItemUnit + "&toItemUnit=" + toItemUnit);
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Get;
-            //    //set content type
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    var response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var AvailableAmount = await response.Content.ReadAsStringAsync();
-            //        return int.Parse(AvailableAmount);
-            //    }
-            //    return 0;
-            //}
         }
         public async Task<int> smallToLargeUnit(int fromItemUnit, int toItemUnit)
         {
@@ -630,35 +604,37 @@ namespace Restaurant.Classes
             }
             return AvailableAmount;
 
-
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "itemsUnits/smallToLargeUnitQuan?fromItemUnit=" + fromItemUnit + "&toItemUnit=" + toItemUnit);
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Get;
-            //    //set content type
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    var response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var AvailableAmount = await response.Content.ReadAsStringAsync();
-            //        return int.Parse(AvailableAmount);
-            //    }
-            //    return 0;
-            //}
-
-
         }
+        public async Task<int> fromUnitToUnitQuantity(int quantity, int itemId, int fromItemUnitId, int toItemUnitId)
+        {
+            int remain = 0;
+            int _ConversionQuantity;
+            int _ToQuantity = 0;
 
+            if (quantity != 0)
+            {
+                List<ItemUnit> smallUnits = await getSmallItemUnits(itemId, fromItemUnitId);
+
+                var isSmall = smallUnits.Find(x => x.itemUnitId == toItemUnitId);
+                if (isSmall != null) // from-unit is bigger than to-unit
+                {
+                    _ConversionQuantity = await largeToSmallUnitQuan(fromItemUnitId, toItemUnitId);
+                    _ToQuantity = quantity * _ConversionQuantity;
+
+                }
+                else
+                {
+                    _ConversionQuantity = await smallToLargeUnit(fromItemUnitId, toItemUnitId);
+
+                    if (_ConversionQuantity != 0)
+                    {
+                        _ToQuantity = quantity / _ConversionQuantity;
+                        remain = quantity - (_ToQuantity * _ConversionQuantity); // get remain quantity which cannot be changeed
+                    }
+                }
+            }
+
+            return _ToQuantity;
+        }
     }
 }
