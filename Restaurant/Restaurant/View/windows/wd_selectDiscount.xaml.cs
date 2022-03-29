@@ -180,7 +180,8 @@ namespace Restaurant.View.windows
                         if (couponModel != null && exist == null)
                         {
                             if ((couponModel.invMin != 0 && couponModel.invMax != 0 && _Sum >= couponModel.invMin && _Sum <= couponModel.invMax)
-                                || (couponModel.invMax == 0 && _Sum >= couponModel.invMin))
+                                || (couponModel.invMax == 0 && _Sum >= couponModel.invMin)
+                                || (couponModel.invMax != 0 && couponModel.invMin == 0 && _Sum <= couponModel.invMax))
                             {
                                 CouponInvoice ci = new CouponInvoice();
                                 ci.couponId = couponModel.cId;
@@ -212,8 +213,8 @@ namespace Restaurant.View.windows
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorCouponExist"), animation: ToasterAnimation.FadeIn);
                         }
                         cb_coupon.SelectedIndex = -1;
-                        cb_coupon.SelectedItem = "";
-                        cb_coupon.Text = "";
+                        //cb_coupon.SelectedItem = "";
+                        //cb_coupon.Text = "";
                     }
                     break;
             }
@@ -283,6 +284,9 @@ namespace Restaurant.View.windows
         async Task fillCouponsList()
         {
             coupons = await couponModel.GetEffictiveByMemberShipID(memberShipId);
+
+            foreach (Coupon c in coupons)
+                c.name = c.name + "   #" + c.code;
 
             cb_coupon.DisplayMemberPath = "name";
             cb_coupon.SelectedValuePath = "cId";
