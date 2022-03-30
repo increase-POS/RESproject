@@ -121,6 +121,7 @@ namespace Restaurant.View.windows
                 if(agentToPayCash == null)
                 {
                     sp_membership.Visibility = Visibility.Collapsed;
+                    grid_membershipInctive.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
@@ -129,10 +130,14 @@ namespace Restaurant.View.windows
                     if (agentToPayCash.membershipStatus == "valid")
                     {
                         sp_membership.Opacity = 1;
+                        grid_membershipInctive.Visibility = Visibility.Collapsed;
+
                     }
                     else
                     {
-                        sp_membership.Opacity = 0.2;
+                        sp_membership.Opacity = 0.4;
+                        grid_membershipInctive.Visibility = Visibility.Visible;
+
                     }
                     #endregion
                     #region data context

@@ -150,25 +150,11 @@
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Right"   VerticalAlignment="Center" />
                         </Grid>
-                        <Grid x:Name="grid_memberShipStatus" Visibility="Visible">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" MinWidth="100"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock  Grid.Row="1" Grid.Column="0" x:Name="txt_membershipStatus"
-                                    Text="memberShip status" FontWeight="SemiBold"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                            <TextBlock  Grid.Row="1" Grid.Column="1" x:Name="tb_memberShipStatus" 
-                                    Text="{Binding Path=membershipStatus}"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
-                        </Grid>
-                       
+
                     </StackPanel>
                     <Grid x:Name="grid_membershipInctive" Visibility="Collapsed" Grid.Row="2">
                         <TextBlock     Name="txt_membershipInctive"
-                                Text="this membership is inactive"
+                                Text="{Binding Path=membershipStatus}"
                                    Margin="10,5,5,5" Foreground="{StaticResource MainColorRed}"
                                    HorizontalAlignment="Center" TextWrapping="Wrap" />
                     </Grid>
