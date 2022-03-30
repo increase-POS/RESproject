@@ -16,6 +16,9 @@ namespace Restaurant.converters
         {
             switch (value)
             {
+                case "membershipUpdate_invoicesClasses":
+                    value = AppSettings.resourcemanager.GetString("invoicesClasses");
+                    break;
                 case "permissions_users":
                     value = AppSettings.resourcemanager.GetString("trUsers");
                     break;
@@ -258,6 +261,10 @@ namespace Restaurant.converters
                             || value.ToString().Contains("_branches"))
                         {
                             value = AppSettings.resourcemanager.GetString("trBranchs/Stores");
+                        }
+                        else if (value.ToString().Contains("_delete"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trDelete");
                         }
                         break;
                     }
