@@ -127,7 +127,7 @@
                       <FontFamily>Montserrat</FontFamily>
                       <FontSize>24pt</FontSize>
                       <FontWeight>Bold</FontWeight>
-                      <Color>#178dd2</Color>
+                      <Color>#d35400</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -689,7 +689,7 @@
               <Border>
                 <Style>None</Style>
               </Border>
-              <BackgroundColor>#178dd2</BackgroundColor>
+              <BackgroundColor>#d35400</BackgroundColor>
             </Style>
           </Rectangle>
           <Textbox Name="Textbox9">
@@ -979,7 +979,7 @@
                       <FontFamily>Montserrat</FontFamily>
                       <FontSize>24pt</FontSize>
                       <FontWeight>Bold</FontWeight>
-                      <Color>#178dd2</Color>
+                      <Color>#d35400</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -1542,7 +1542,7 @@
               <Border>
                 <Style>None</Style>
               </Border>
-              <BackgroundColor>#178dd2</BackgroundColor>
+              <BackgroundColor>#d35400</BackgroundColor>
             </Style>
           </Rectangle>
           <Textbox Name="Textbox55">
