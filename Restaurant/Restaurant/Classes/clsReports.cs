@@ -236,7 +236,7 @@ namespace Restaurant.Classes
             //foreach (var c in cash)
             //{
             //    ///////////////////
-            //    c.cash = decimal.Parse(HelpClass.DecTostring(c.cash));
+            //    c.cash = decimal.Parse(SectionData.DecTostring(c.cash));
             //    string s;
             //    switch (c.processType)
             //    {
@@ -259,30 +259,64 @@ namespace Restaurant.Classes
 
 
             //}
-            foreach (var c in cash)
-            {
 
-                c.cash = decimal.Parse(HelpClass.DecTostring(c.cash));
-            }
 
             AccountSideConv(paramarr);
 
             cashTransTypeConv(paramarr);
             cashTransferProcessTypeConv(paramarr);
-
+            //title
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trPayments")));
 
             paramarr.Add(new ReportParameter("trTransferNumberTooltip", AppSettings.resourcemanagerreport.GetString("trTransferNumberTooltip")));
             paramarr.Add(new ReportParameter("trRecepient", AppSettings.resourcemanagerreport.GetString("trRecepient")));
             paramarr.Add(new ReportParameter("trPaymentTypeTooltip", AppSettings.resourcemanagerreport.GetString("trPaymentTypeTooltip")));
             paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
             paramarr.Add(new ReportParameter("trCashTooltip", AppSettings.resourcemanagerreport.GetString("trCashTooltip")));
+            paramarr.Add(new ReportParameter("accuracy", AppSettings.accuracy));
+            paramarr.Add(new ReportParameter("trUnKnown", AppSettings.resourcemanagerreport.GetString("trUnKnown")));
+            paramarr.Add(new ReportParameter("trCashCustomer", AppSettings.resourcemanagerreport.GetString("trCashCustomer")));
 
             DateFormConv(paramarr);
 
 
+            foreach (var c in cash)
+            {
 
+                c.cash = decimal.Parse(HelpClass.DecTostring(c.cash));
+                // c.notes = SectionData.DecTostring(c.cash);
+                c.agentName = AgentUnKnownConvert(c.agentId, c.side, c.agentName);
+
+            }
             rep.DataSources.Add(new ReportDataSource("DataSetBankAcc", cash));
         }
+        public static string AgentUnKnownConvert(int? agentId, string side, string agentName)
+        {
+
+            if (agentId == null)
+            {
+                if (side == "v")
+                {
+                    agentName = AppSettings.resourcemanagerreport.GetString("trUnKnown");
+                }
+                else if (side == "c")
+                {
+                    agentName = AppSettings.resourcemanagerreport.GetString("trCashCustomer");
+                }
+            }
+            return agentName;
+
+        }
+        public static string AgentCompanyUnKnownConvert(int? agentId, string side, string agentCompany)
+        {
+            if (agentId == null)
+            {
+                agentCompany = AppSettings.resourcemanagerreport.GetString("trUnKnown");
+
+            }
+            return agentCompany;
+        }
+
 
         public static void receivedAccReport(IEnumerable<CashTransfer> cash, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
@@ -301,14 +335,15 @@ namespace Restaurant.Classes
 
             cashTransTypeConv(paramarr);
             cashTransferProcessTypeConv(paramarr);
-
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trReceived")));
             paramarr.Add(new ReportParameter("trTransferNumberTooltip", AppSettings.resourcemanagerreport.GetString("trTransferNumberTooltip")));
             paramarr.Add(new ReportParameter("trDepositor", AppSettings.resourcemanagerreport.GetString("trDepositor")));
             paramarr.Add(new ReportParameter("trPaymentTypeTooltip", AppSettings.resourcemanagerreport.GetString("trPaymentTypeTooltip")));
             paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
             paramarr.Add(new ReportParameter("trCashTooltip", AppSettings.resourcemanagerreport.GetString("trCashTooltip")));
-
-
+            paramarr.Add(new ReportParameter("accuracy", AppSettings.accuracy));
+            paramarr.Add(new ReportParameter("trUnKnown", AppSettings.resourcemanagerreport.GetString("trUnKnown")));
+            paramarr.Add(new ReportParameter("trCashCustomer", AppSettings.resourcemanagerreport.GetString("trCashCustomer")));
 
             rep.DataSources.Add(new ReportDataSource("DataSetBankAcc", cash));
         }

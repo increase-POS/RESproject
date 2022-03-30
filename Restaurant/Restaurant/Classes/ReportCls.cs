@@ -478,6 +478,7 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("job", job));
             paramarr.Add(new ReportParameter("isCash", isCash));
             paramarr.Add(new ReportParameter("trans_num_txt", trans_num_txt));
+            paramarr.Add(new ReportParameter("show_header", AppSettings.show_header));
             return paramarr;
         }
         public string ConvertAmountToWords(Nullable<decimal> amount)
