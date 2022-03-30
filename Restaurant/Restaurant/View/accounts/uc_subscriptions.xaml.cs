@@ -72,13 +72,13 @@ namespace Restaurant.View.accounts
 
         public static List<string> requiredControlList;
 
-
         #region card
         List<Button> cardBtnList = new List<Button>();
         List<Ellipse> cardEllipseList = new List<Ellipse>();
         IEnumerable<Card> cards;
         Card cardModel = new Card();
         bool hasProcessNum = false;
+
         static private int _SelectedCard = -1;
 
         void InitializeCardsPic(IEnumerable<Card> cards)
@@ -212,7 +212,7 @@ namespace Restaurant.View.accounts
             //    HelpClass.StartAwait(grid_main);
 
                 requiredControlList = new List<string> { "customerId" , "monthsCount" , "amount" , "paymentProcessType" };
-                
+
                 #region translate
                 if (AppSettings.lang.Equals("en"))
                 {
@@ -223,7 +223,7 @@ namespace Restaurant.View.accounts
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-            #endregion
+                #endregion
 
                 dp_searchEndDate.SelectedDate = DateTime.Now;
                 dp_searchStartDate.SelectedDate = DateTime.Now;
@@ -233,12 +233,7 @@ namespace Restaurant.View.accounts
 
                 FillCombo.FillDefaultPayType_cashChequeCard(cb_paymentProcessType);
 
-                #region fillCustomers
-                cb_customerId.ItemsSource = await subscription.GetAgentToPay();
-                cb_customerId.DisplayMemberPath = "agentName";
-                cb_customerId.SelectedValuePath = "agentId";
-                cb_customerId.SelectedIndex = -1;
-                #endregion
+                await fillCustomersToPay();
 
                 #region fill card combo
                 try
@@ -254,7 +249,7 @@ namespace Restaurant.View.accounts
                 await RefreshSubscriptionsList();
                 await Search();
 
-                Clear();
+                await Clear();
 
             //    HelpClass.EndAwait(grid_main);
             //}
@@ -265,6 +260,13 @@ namespace Restaurant.View.accounts
             //}
         }
 
+        async Task fillCustomersToPay()
+        {
+            cb_customerId.ItemsSource = await subscription.GetAgentToPay();
+            cb_customerId.DisplayMemberPath = "agentName";
+            cb_customerId.SelectedValuePath = "agentId";
+            cb_customerId.SelectedIndex = -1;
+        }
         private async void dp_SelectedStartDateChanged(object sender, SelectionChangedEventArgs e)
         {
             //try
@@ -393,13 +395,32 @@ namespace Restaurant.View.accounts
                 if (dg_subscription.SelectedIndex != -1)
                 {
                     subscription = dg_subscription.SelectedItem as AgentMembershipCash;
-                    //this.DataContext = subscription;
+                    btn_save.IsEnabled = false;
                     if (subscription != null)
                     {
-                        //cashtrans = await cashtrans.GetByID(subscription.cashTransId.Value);
-                        cb_customerId.SelectedValue = subscription.agentId;
+                        if (subscription.subscriptionType.Equals("o"))
+                        {
+                            cb_customerId.Visibility = Visibility.Collapsed;
+                            tb_customer.Visibility = Visibility.Visible;
+                            tb_customer.Text = subscription.agentName;
+                            tb_amount.Text = subscription.Amount.ToString();
+                            cb_monthsCount.SelectedIndex = -1;
+                            cb_monthsCount.Visibility = Visibility.Collapsed;
+                        }
+                        else
+                        {
+                            cb_customerId.Visibility = Visibility.Visible;
+                            tb_customer.Visibility = Visibility.Collapsed;
+                            tb_customer.Clear();
+                            cb_monthsCount.Visibility = Visibility.Visible;
+                            cb_customerId.SelectedValue = subscription.agentId;
+                            //Cb_customerId_SelectionChanged(cb_customerId,null);
+                            cb_monthsCount.SelectedValue = subscription.monthsCount;
+                            //Cb_monthsCount_SelectionChanged(cb_monthsCount , null);
+                        }
+                        btn_save.IsEnabled = false;
 
-                        ag = cb_customerId.SelectedItem as AgenttoPayCash;
+                        //ag = cb_customerId.SelectedItem as AgenttoPayCash;
 
                         cb_paymentProcessType.SelectedValue = subscription.processType;
                         try
@@ -408,15 +429,12 @@ namespace Restaurant.View.accounts
                         }
                         catch { }
 
-                        cb_monthsCount.SelectedValue = subscription.monthsCount;
 
                         tb_discount.Text = subscription.discountValue.ToString();
 
                         tb_processNum.Text = subscription.docNum;
 
                         tb_docNumCheque.Text = subscription.docNum;
-
-                        btn_save.IsEnabled = false;
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
@@ -507,13 +525,14 @@ namespace Restaurant.View.accounts
         #endregion
 
         #region validate - clearValidate - textChange - lostFocus - . . . . 
-        void Clear()
+        async Task Clear()
         {
-            //this.DataContext = new AgenttoPayCash();
+            cb_customerId.IsEnabled = true ;
             cb_customerId.SelectedIndex = -1;
             cb_paymentProcessType.SelectedIndex = -1;
             btn_save.IsEnabled = true;
-            //set border color
+            tb_discount.Clear();
+            //clear border color
             foreach (var el in cardEllipseList)
             {
                 el.Stroke = Application.Current.Resources["MainColorOrange"] as SolidColorBrush;
@@ -813,7 +832,6 @@ namespace Restaurant.View.accounts
                         _SelectedCard = -1;
                         tb_processNum.Clear();
                         txt_card.Text = "";
-                       //requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType" , "docNumCheque", "docDateCheque" };
                         if (!requiredControlList.Contains("docNumCheque"))
                             requiredControlList.Add("docNumCheque");
                         break;
@@ -822,7 +840,6 @@ namespace Restaurant.View.accounts
                         bdr_cheque.Visibility = Visibility.Collapsed;
                         bdr_card.Visibility = Visibility.Visible;
 
-                        //requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType", "processNum" , "card" };
                         if (!requiredControlList.Contains("processNum"))
                             requiredControlList.Add("processNum");
                         if (!requiredControlList.Contains("card"))
@@ -904,7 +921,8 @@ namespace Restaurant.View.accounts
                         cashtrans.agentName = null;
                         cashtrans.usersName = null;
                         cashtrans.processType = cb_paymentProcessType.SelectedValue.ToString();
-                        cashtrans.cardId = _SelectedCard;
+                        if(bdr_card.Visibility == Visibility.Visible)
+                            cashtrans.cardId = _SelectedCard;
                         cashtrans.shippingCompanyId = null;
                         #endregion
 
@@ -953,7 +971,7 @@ namespace Restaurant.View.accounts
                         {
                             Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
-                            //Clear();
+                            
                             await RefreshSubscriptionsList();
                             await Search();
                         }
@@ -1033,14 +1051,12 @@ namespace Restaurant.View.accounts
             }
         }
         SubscriptionFees subFee = new SubscriptionFees();
-        List<SubscriptionFees> subFees = new List<SubscriptionFees>();
+        IEnumerable<SubscriptionFees> subFees ;
         int _monthCount = 0 , _subscriptionFeesId;
         private async void Cb_customerId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select customer
             //try
             //{
-                ag = cb_customerId.SelectedItem as AgenttoPayCash;
-
                 #region clear
                 tb_amount.Text = "";
                 txt_total.Text = "0";
@@ -1050,8 +1066,10 @@ namespace Restaurant.View.accounts
                 HelpClass.clearValidate(requiredControlList, this);
                 #endregion
 
+                ag = cb_customerId.SelectedItem as AgenttoPayCash;
                 if (ag != null)
                 {
+                    btn_save.IsEnabled = true;
                     if ((ag.subscriptionType == "o") || (ag.subscriptionType == "f"))
                     {
                         cb_monthsCount.SelectedIndex = -1;
@@ -1065,11 +1083,12 @@ namespace Restaurant.View.accounts
                     }
                     else
                     {
-                        if(!requiredControlList.Contains("monthsCount"))
+                        if (!requiredControlList.Contains("monthsCount"))
                             requiredControlList.Add("monthsCount");
                         bdr_monthCount.Visibility = Visibility.Visible;
 
                         #region fill month count 
+                        subFee = new SubscriptionFees();
                         subFees = await subFee.GetAll();
                         subFees = subFees.Where(s => s.membershipId == ag.membershipId).ToList();
                         string str = "";
@@ -1086,7 +1105,7 @@ namespace Restaurant.View.accounts
 
                         foreach (var m in subFees)
                         {
-                            m.notes = m.monthsCount + " " +str;
+                            m.notes = m.monthsCount + " " + str;
                         }
 
                         cb_monthsCount.DisplayMemberPath = "notes";
@@ -1095,7 +1114,7 @@ namespace Restaurant.View.accounts
                         #endregion
                     }
                 }
-               
+
             //}
             //catch (Exception ex)
             //{

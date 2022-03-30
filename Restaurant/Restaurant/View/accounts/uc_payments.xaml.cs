@@ -85,6 +85,138 @@ namespace Restaurant.View.accounts
 
         public static List<string> requiredControlList;
 
+        #region card
+        List<Button> cardBtnList = new List<Button>();
+        List<Ellipse> cardEllipseList = new List<Ellipse>();
+        IEnumerable<Card> cards;
+        Card cardModel = new Card();
+        bool hasProcessNum = false;
+        static private int _SelectedCard = -1;
+
+        void InitializeCardsPic(IEnumerable<Card> cards)
+        {
+            #region cardImageLoad
+            dkp_cards.Children.Clear();
+            int userCount = 0;
+            foreach (var item in cards)
+            {
+                #region Button
+                Button button = new Button();
+                button.DataContext = item;
+                button.Tag = item.cardId;
+                button.Padding = new Thickness(0, 0, 0, 0);
+                button.Margin = new Thickness(2.5, 5, 2.5, 5);
+                button.Background = null;
+                button.BorderBrush = null;
+                button.Height = 35;
+                button.Width = 35;
+                button.Click += card_Click;
+
+                #region grid
+                Grid grid = new Grid();
+                #region 
+                Ellipse ellipse = new Ellipse();
+                //ellipse.Margin = new Thickness(-5, 0, -5, 0);
+                ellipse.StrokeThickness = 1;
+                ellipse.Stroke = Application.Current.Resources["MainColorOrange"] as SolidColorBrush;
+                ellipse.Height = 35;
+                ellipse.Width = 35;
+                ellipse.FlowDirection = FlowDirection.LeftToRight;
+                ellipse.ToolTip = item.name;
+                ellipse.Tag = item.cardId;
+                userImageLoad(ellipse, item.image);
+                Grid.SetColumn(ellipse, userCount);
+                grid.Children.Add(ellipse);
+                cardEllipseList.Add(ellipse);
+                #endregion
+                #endregion
+
+                button.Content = grid;
+                #endregion
+                dkp_cards.Children.Add(button);
+                cardBtnList.Add(button);
+
+            }
+            #endregion
+        }
+
+        void card_Click(object sender, RoutedEventArgs e)
+        {
+            HelpClass.clearValidate(requiredControlList, this);
+            var button = sender as Button;
+            _SelectedCard = int.Parse(button.Tag.ToString());
+
+            Card card = button.DataContext as Card;
+
+            txt_card.Text = card.name;
+
+            if (card.hasProcessNum)
+            {
+                tb_docNumCard.Visibility = Visibility.Visible;
+                hasProcessNum = true;
+                if (!requiredControlList.Contains("processNum"))
+                    requiredControlList.Add("processNum");
+                if (!requiredControlList.Contains("card"))
+                    requiredControlList.Add("card");
+            }
+            else
+            {
+                tb_docNumCard.Visibility = Visibility.Collapsed;
+                hasProcessNum = false;
+                if (requiredControlList.Contains("processNum"))
+                    requiredControlList.Remove("processNum");
+                if (!requiredControlList.Contains("card"))
+                    requiredControlList.Add("card");
+            }
+            //set border color
+            foreach (var el in cardEllipseList)
+            {
+                if ((int)el.Tag == (int)button.Tag)
+                    el.Stroke = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
+                else
+                    el.Stroke = Application.Current.Resources["MainColorOrange"] as SolidColorBrush;
+            }
+            HelpClass.validate(requiredControlList, this);
+        }
+        ImageBrush brush = new ImageBrush();
+        async void userImageLoad(Ellipse ellipse, string image)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(image))
+                {
+                    clearImg(ellipse);
+
+                    byte[] imageBuffer = await cardModel.downloadImage(image); // read this as BLOB from your DB
+                    var bitmapImage = new BitmapImage();
+                    using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
+                    {
+                        bitmapImage.BeginInit();
+                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmapImage.StreamSource = memoryStream;
+                        bitmapImage.EndInit();
+                    }
+                    ellipse.Fill = new ImageBrush(bitmapImage);
+                }
+                else
+                {
+                    clearImg(ellipse);
+                }
+            }
+            catch
+            {
+                clearImg(ellipse);
+            }
+        }
+        private void clearImg(Ellipse ellipse)
+        {
+            Uri resourceUri = new Uri("pic/no-image-icon-90x90.png", UriKind.Relative);
+            StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
+            BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
+            brush.ImageSource = temp;
+            ellipse.Fill = brush;
+        }
+        #endregion
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -219,138 +351,6 @@ namespace Restaurant.View.accounts
 
         }
 
-        #region card
-        List<Button> cardBtnList = new List<Button>();
-        List<Ellipse> cardEllipseList = new List<Ellipse>();
-        IEnumerable<Card> cards;
-        Card cardModel = new Card();
-        bool hasProcessNum = false;
-        static private int _SelectedCard = -1;
-
-        void InitializeCardsPic(IEnumerable<Card> cards)
-        {
-            #region cardImageLoad
-            dkp_cards.Children.Clear();
-            int userCount = 0;
-            foreach (var item in cards)
-            {
-                #region Button
-                Button button = new Button();
-                button.DataContext = item;
-                button.Tag = item.cardId;
-                button.Padding = new Thickness(0, 0, 0, 0);
-                button.Margin = new Thickness(2.5, 5, 2.5, 5);
-                button.Background = null;
-                button.BorderBrush = null;
-                button.Height = 35;
-                button.Width = 35;
-                button.Click += card_Click;
-
-                #region grid
-                Grid grid = new Grid();
-                #region 
-                Ellipse ellipse = new Ellipse();
-                //ellipse.Margin = new Thickness(-5, 0, -5, 0);
-                ellipse.StrokeThickness = 1;
-                ellipse.Stroke = Application.Current.Resources["MainColorOrange"] as SolidColorBrush;
-                ellipse.Height = 35;
-                ellipse.Width = 35;
-                ellipse.FlowDirection = FlowDirection.LeftToRight;
-                ellipse.ToolTip = item.name;
-                ellipse.Tag = item.cardId;
-                userImageLoad(ellipse, item.image);
-                Grid.SetColumn(ellipse, userCount);
-                grid.Children.Add(ellipse);
-                cardEllipseList.Add(ellipse);
-                #endregion
-                #endregion
-
-                button.Content = grid;
-                #endregion
-                dkp_cards.Children.Add(button);
-                cardBtnList.Add(button);
-
-            }
-            #endregion
-        }
-
-        void card_Click(object sender, RoutedEventArgs e)
-        {
-            HelpClass.clearValidate(requiredControlList, this);
-            var button = sender as Button;
-            _SelectedCard = int.Parse(button.Tag.ToString());
-
-            Card card = button.DataContext as Card;
-
-            txt_card.Text = card.name;
-
-            if (card.hasProcessNum)
-            {
-                tb_docNumCard.Visibility = Visibility.Visible;
-                hasProcessNum = true;
-                if (!requiredControlList.Contains("processNum"))
-                    requiredControlList.Add("processNum");
-                if (!requiredControlList.Contains("card"))
-                    requiredControlList.Add("card");
-            }
-            else
-            {
-                tb_docNumCard.Visibility = Visibility.Collapsed;
-                hasProcessNum = false;
-                if (requiredControlList.Contains("processNum"))
-                    requiredControlList.Remove("processNum");
-                if (requiredControlList.Contains("card"))
-                    requiredControlList.Remove("card");
-            }
-            //set border color
-            foreach (var el in cardEllipseList)
-            {
-                if ((int)el.Tag == (int)button.Tag)
-                    el.Stroke = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
-                else
-                    el.Stroke = Application.Current.Resources["MainColorOrange"] as SolidColorBrush;
-            }
-            HelpClass.validate(requiredControlList, this);
-        }
-        ImageBrush brush = new ImageBrush();
-        async void userImageLoad(Ellipse ellipse, string image)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(image))
-                {
-                    clearImg(ellipse);
-
-                    byte[] imageBuffer = await cardModel.downloadImage(image); // read this as BLOB from your DB
-                    var bitmapImage = new BitmapImage();
-                    using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
-                    {
-                        bitmapImage.BeginInit();
-                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                        bitmapImage.StreamSource = memoryStream;
-                        bitmapImage.EndInit();
-                    }
-                    ellipse.Fill = new ImageBrush(bitmapImage);
-                }
-                else
-                {
-                    clearImg(ellipse);
-                }
-            }
-            catch
-            {
-                clearImg(ellipse);
-            }
-        }
-        private void clearImg(Ellipse ellipse)
-        {
-            Uri resourceUri = new Uri("pic/no-image-icon-90x90.png", UriKind.Relative);
-            StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
-            BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
-            brush.ImageSource = temp;
-            ellipse.Fill = brush;
-        }
-        #endregion
         private async void dp_SelectedStartDateChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -400,9 +400,8 @@ namespace Restaurant.View.accounts
 
                 if (cashtrans != null)
                 {
+                    cb_paymentProcessType.SelectedIndex = -1;
                     btn_image.IsEnabled = true;
-
-                    //tb_cash.Text = HelpClass.DecTostring(cashtrans.cash);
 
                     cb_depositTo.SelectedValue = cashtrans.side;
                     ///////////////////////////
@@ -414,12 +413,12 @@ namespace Restaurant.View.accounts
                     cb_recipientSh.IsEnabled = false;
                     cb_paymentProcessType.IsEnabled = false;
                     tb_docNumCheque.IsEnabled = false;
-                    dp_docDateCheque.IsEnabled = false;
                     tb_docNumCard.IsEnabled = false;
                     gd_card.IsEnabled = false;
                     tb_cash.IsEnabled = false;
                     tb_notes.IsEnabled = false;
                     /////////////////////////
+                    #region depositor
                     switch (cb_depositTo.SelectedValue.ToString())
                     {
                         case "v":
@@ -467,18 +466,9 @@ namespace Restaurant.View.accounts
                             bdr_recipientSh.Visibility = Visibility.Collapsed;
                             break;
                     }
-
-                    //tb_transNum.Text = cashtrans.transNum;
-
+                    #endregion
                     cb_paymentProcessType.SelectedValue = cashtrans.processType;
-
-                    if (cashtrans.cardId != null)
-                    {
-                        _SelectedCard = (int)cashtrans.cardId;
-                        Card card = await cardModel.getById(_SelectedCard);
-                        txt_card.Text = card.name;
-                    }
-                    //dp_docDate.SelectedDate = cashtrans.bondDeserveDate;
+                   
                 }
             }
             HelpClass.clearValidate(requiredControlList, this);
@@ -961,7 +951,6 @@ namespace Restaurant.View.accounts
                     case 0://cash
                         bdr_cheque.Visibility = Visibility.Collapsed;
                         tb_docNumCheque.Clear();
-                        dp_docDateCheque.SelectedDate = null;
                         bdr_card.Visibility = Visibility.Collapsed;
                         _SelectedCard = 0;
                         tb_docNumCard.Clear();
@@ -981,8 +970,6 @@ namespace Restaurant.View.accounts
                     case 2://card
                         bdr_cheque.Visibility = Visibility.Collapsed;
                         bdr_card.Visibility = Visibility.Visible;
-
-                        //requiredControlList = new List<string> { "cash", "depositTo", "paymentProcessType", "processNum", "card" };
                         if (!requiredControlList.Contains("processNum"))
                             requiredControlList.Add("processNum");
                         if (!requiredControlList.Contains("card"))
@@ -999,13 +986,8 @@ namespace Restaurant.View.accounts
                         break;
                     case -1:
                         bdr_cheque.Visibility = Visibility.Collapsed;
-                        tb_docNumCheque.Clear();
-                        dp_docDateCheque.SelectedDate = null;
                         bdr_card.Visibility = Visibility.Collapsed;
                         _SelectedCard = 0;
-                        tb_docNumCard.Clear();
-                        txt_card.Text = "";
-                        requiredControlList = new List<string> { "cash", "depositTo", "paymentProcessType", "paymentProcessType" };
                         break;
                 }
 
@@ -1245,8 +1227,152 @@ namespace Restaurant.View.accounts
             e.Handled = regex.IsMatch(e.Text);
         }
 
-    
+        private void Btn_pdf_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one") )
+                {
+                    if (cashtrans.cashTransId > 0)
+                    {
+                        BuildVoucherReport();
+
+                        saveFileDialog.Filter = "PDF|*.pdf;";
+
+                        if (saveFileDialog.ShowDialog() == true)
+                        {
+                            string filepath = saveFileDialog.FileName;
+                            try { LocalReportExtensions.ExportToPDF(rep, filepath); }
+                            catch { }
+                        }
+                    }
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_print_pay_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one") )
+                {
+                    if (cashtrans.cashTransId > 0)
+                    {
+                        BuildVoucherReport();
+
+                        LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
+                    }
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        public void BuildVoucherReport()
+        {
+            /*
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
+                if (MainWindow.docPapersize == "A4")
+                {
+                    addpath = @"\Reports\Account\Ar\ArPayReportA4.rdlc";
+                }
+                else //A5
+                {
+                    addpath = @"\Reports\Account\Ar\ArPayReport.rdlc";
+                }
+
+            }
+            else
+            {
+                if (MainWindow.docPapersize == "A4")
+                {
+                    addpath = @"\Reports\Account\En\PayReportA4.rdlc";
+                }
+                else //A5
+                {
+                    addpath = @"\Reports\Account\En\PayReport.rdlc";
+                }
+
+            }
+
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+            rep.ReportPath = reppath;
+            rep.DataSources.Clear();
+            rep.EnableExternalImages = true;
+            rep.SetParameters(reportclass.fillPayReport(cashtrans));
+
+            rep.Refresh();
+            */
+
+        }
+        private void Btn_preview_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one") )
+                {
+                    Window.GetWindow(this).Opacity = 0.2;
+
+                    string pdfpath;
+                    pdfpath = @"\Thumb\report\temp.pdf";
+                    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+
+                    if (cashtrans.cashTransId > 0)
+                    {
+
+                        BuildVoucherReport();
+                        LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                        wd_previewPdf w = new wd_previewPdf();
+                        w.pdfPath = pdfpath;
+                        if (!string.IsNullOrEmpty(w.pdfPath))
+                        {
+                    // w.ShowInTaskbar = false;
+                            w.ShowDialog();
+
+                            w.wb_pdfWebViewer.Dispose();
+                        }
+                        else
+                            Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        Window.GetWindow(this).Opacity = 1;
+                    }
+
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
 
         private void Btn_invoices_Click(object sender, RoutedEventArgs e)
         {//invoices
@@ -1322,7 +1448,132 @@ namespace Restaurant.View.accounts
             }
         }
 
-  
+        #region doc reports
+        public void BuildReport()
+        {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
+                addpath = @"\Reports\Account\Ar\ArPayAccReport.rdlc";
+            }
+            else addpath = @"\Reports\Account\En\PayAccReport.rdlc";
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+            ReportCls.checkLang();
+            //cashesQueryExcel = cashesQuery.ToList();
+            clsReports.paymentAccReport(cashesQuery, rep, reppath, paramarr);
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+            rep.Refresh();
+        }
+        private void Btn_print_Click(object sender, RoutedEventArgs e)
+        {//print
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one") )
+                {
+                    #region
+                    BuildReport();
+
+                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
+                    #endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_preview1_Click(object sender, RoutedEventArgs e)
+        {//preview
+            try
+            {
+                
+                HelpClass.StartAwait(grid_main);
+                /////////////////////
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one") )
+                {
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+                    string pdfpath = "";
+
+
+                    pdfpath = @"\Thumb\report\temp.pdf";
+                    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+
+                    BuildReport();
+                    LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                    wd_previewPdf w = new wd_previewPdf();
+                    w.pdfPath = pdfpath;
+                    if (!string.IsNullOrEmpty(w.pdfPath))
+                    {
+                    // w.ShowInTaskbar = false;
+                        w.ShowDialog();
+                        w.wb_pdfWebViewer.Dispose();
+                    }
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                /////////////////////
+                
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
+        private void Btn_pdf1_Click(object sender, RoutedEventArgs e)
+        {//pdf
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
+                {
+                    #region
+                    BuildReport();
+
+                    saveFileDialog.Filter = "PDF|*.pdf;";
+
+                    if (saveFileDialog.ShowDialog() == true)
+                    {
+                        string filepath = saveFileDialog.FileName;
+                        LocalReportExtensions.ExportToPDF(rep, filepath);
+                    }
+                    #endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        #endregion
 
         private async void Chb_all_Checked(object sender, RoutedEventArgs e)
         {
@@ -1380,7 +1631,7 @@ namespace Restaurant.View.accounts
             bdr_recipientC.Visibility = Visibility.Collapsed;
             bdr_recipientU.Visibility = Visibility.Collapsed;
             bdr_recipientSh.Visibility = Visibility.Collapsed;
-            grid_cheque.Visibility = Visibility.Collapsed;
+            bdr_cheque.Visibility = Visibility.Collapsed;
             ///////////////////////////
             btn_add.IsEnabled = true;
             cb_depositTo.IsEnabled = true;
@@ -1391,7 +1642,7 @@ namespace Restaurant.View.accounts
             cb_paymentProcessType.IsEnabled = true;
             tb_docNumCheque.IsEnabled = true;
             tb_docNumCard.IsEnabled = true;
-            dp_docDateCheque.IsEnabled = true;
+            //dp_docDateCheque.IsEnabled = true;
             gd_card.IsEnabled = true;
             tb_cash.IsEnabled = true;
             tb_notes.IsEnabled = true;
@@ -1473,301 +1724,26 @@ namespace Restaurant.View.accounts
 
         #endregion
 
-        #region doc reports
-        public void BuildVoucherReport()
-        {
-            string addpath;
-            bool isArabic = ReportCls.checkLang();
-            if (isArabic)
-            {
-                if (AppSettings.docPapersize == "A4")
-                {
-                    addpath = @"\Reports\Account\Doc\Ar\ArPayReportA4.rdlc";
-                }
-                else //A5
-                {
-                    addpath = @"\Reports\Account\Doc\Ar\ArPayReport.rdlc";
-                }
-
-            }
-            else
-            {
-                if (AppSettings.docPapersize == "A4")
-                {
-                    addpath = @"\Reports\Account\Doc\En\PayReportA4.rdlc";
-                }
-                else //A5
-                {
-                    addpath = @"\Reports\Account\Doc\En\PayReport.rdlc";
-                }
-
-            }
-
-            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-            rep.ReportPath = reppath;
-            rep.DataSources.Clear();
-            rep.EnableExternalImages = true;
-            rep.SetParameters(reportclass.fillPayReport(cashtrans));
-
-            rep.Refresh();
-        }
-        private void Btn_pdf_Click(object sender, RoutedEventArgs e)
-        {
-          
-        }
-        private void Btn_print_pay_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one"))
-                {
-                    if (cashtrans.cashTransId > 0)
-                    {
-                        BuildVoucherReport();
-
-                        LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
-                    }
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void Btn_preview_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one"))
-                {
-                    Window.GetWindow(this).Opacity = 0.2;
-
-                    string pdfpath;
-                    pdfpath = @"\Thumb\report\temp.pdf";
-                    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
-
-                    if (cashtrans.cashTransId > 0)
-                    {
-
-                        BuildVoucherReport();
-                        LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                        wd_previewPdf w = new wd_previewPdf();
-                        w.pdfPath = pdfpath;
-                        if (!string.IsNullOrEmpty(w.pdfPath))
-                        {
-                            // w.ShowInTaskbar = false;
-                            w.ShowDialog();
-
-                            w.wb_pdfWebViewer.Dispose();
-                        }
-                        else
-                            Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                        Window.GetWindow(this).Opacity = 1;
-                    }
-
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-
-
-        #endregion
-
         #region reports
-        public void BuildReport()
-        {
-            List<ReportParameter> paramarr = new List<ReportParameter>();
-
-            string addpath;
-            bool isArabic = ReportCls.checkLang();
-            if (isArabic)
-            {
-                addpath = @"\Reports\Account\report\Ar\ArPayAcc.rdlc";
-            }
-            else addpath = @"\Reports\Account\report\En\EnPayAcc.rdlc";
-            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-            ReportCls.checkLang();
-            //cashesQueryExcel = cashesQuery.ToList();
-            clsReports.paymentAccReport(cashesQuery, rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
-            clsReports.Header(paramarr);
-
-            rep.SetParameters(paramarr);
-            rep.Refresh();
-        }
         private void Btn_pdf1_Click_1(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one"))
-                {
-                    if (cashtrans.cashTransId > 0)
-                    {
-                        BuildVoucherReport();
-
-                        saveFileDialog.Filter = "PDF|*.pdf;";
-
-                        if (saveFileDialog.ShowDialog() == true)
-                        {
-                            string filepath = saveFileDialog.FileName;
-                    
-                                LocalReportExtensions.ExportToPDF(rep, filepath);
-                            
-                        }
-                    }
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
         }
 
         private void Btn_preview1_Click_1(object sender, RoutedEventArgs e)
         {
-            //preview
-            try
-            {
 
-                HelpClass.StartAwait(grid_main);
-                /////////////////////
-                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
-                {
-                    #region
-                    Window.GetWindow(this).Opacity = 0.2;
-                    string pdfpath = "";
-
-
-                    pdfpath = @"\Thumb\report\temp.pdf";
-                    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
-
-                    BuildReport();
-                    LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                    wd_previewPdf w = new wd_previewPdf();
-                    w.pdfPath = pdfpath;
-                    if (!string.IsNullOrEmpty(w.pdfPath))
-                    {
-                        // w.ShowInTaskbar = false;
-                        w.ShowDialog();
-                        w.wb_pdfWebViewer.Dispose();
-                    }
-                    Window.GetWindow(this).Opacity = 1;
-                    #endregion
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                /////////////////////
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
         }
 
         private void Btn_print_Click_1(object sender, RoutedEventArgs e)
         {
-            //print
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
-                {
-                    #region
-                    BuildReport();
 
-                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
-                    #endregion
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
         }
 
         private void Btn_exportToExcel_Click_1(object sender, RoutedEventArgs e)
         {
-            //excel
-            try
-            {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
-                {
-                    #region
-                    //Thread t1 = new Thread(() =>
-                    //{
-                    #region
-                    BuildReport();
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        saveFileDialog.Filter = "EXCEL|*.xls;";
-                        if (saveFileDialog.ShowDialog() == true)
-                        {
-                            string filepath = saveFileDialog.FileName;
-                            LocalReportExtensions.ExportToExcel(rep, filepath);
-                        }
-
-
-                    });
-                    #endregion
-                    //});
-                    //t1.Start();
-                    #endregion
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                if (sender != null)
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
         }
-
-
         private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
         {//pie
             try
@@ -1796,8 +1772,6 @@ namespace Restaurant.View.accounts
             }
 
         }
-
-         
         #endregion
     }
 }
