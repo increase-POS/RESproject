@@ -109,6 +109,8 @@ namespace Restaurant.Classes
         public Nullable<int> cardId { get; set; }
         public string cardName { get; set; }
         public string docNum { get; set; }
+        public string subscriptionTypeconv { get; set; }
+        public string EndDateconv { get; set; }
 
         public async Task<List<AgentMembershipCash>> GetAll()
         {

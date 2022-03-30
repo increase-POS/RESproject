@@ -348,6 +348,85 @@ namespace Restaurant.Classes
             rep.DataSources.Add(new ReportDataSource("DataSetBankAcc", cash));
         }
 
+        public static void SubscriptionAcc(IEnumerable<AgentMembershipCash> cash, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+
+            foreach (var c in cash)
+            {
+
+                c.total = decimal.Parse(HelpClass.DecTostring(c.total));
+                c.subscriptionTypeconv = subscriptionTypeConverter(c.subscriptionType);
+                c.EndDateconv= unlimitedEndDateConverter(c.subscriptionType,c.EndDate);
+              
+                    }
+            DateFormConv(paramarr);
+         //   cashTransTypeConv(paramarr);
+        //    cashTransferProcessTypeConv(paramarr);
+            paramarr.Add(new ReportParameter("trCustomer", AppSettings.resourcemanagerreport.GetString("trCustomer")));
+            paramarr.Add(new ReportParameter("trSubscriptionType", AppSettings.resourcemanagerreport.GetString("trSubscriptionType")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trReceived")));
+            paramarr.Add(new ReportParameter("trTransferNumberTooltip", AppSettings.resourcemanagerreport.GetString("trTransferNumberTooltip")));
+            paramarr.Add(new ReportParameter("trDepositor", AppSettings.resourcemanagerreport.GetString("trDepositor")));
+            paramarr.Add(new ReportParameter("trPaymentTypeTooltip", AppSettings.resourcemanagerreport.GetString("trPaymentTypeTooltip")));
+            paramarr.Add(new ReportParameter("trExpireDate", AppSettings.resourcemanagerreport.GetString("trExpireDate")));
+            paramarr.Add(new ReportParameter("trAmount", AppSettings.resourcemanagerreport.GetString("trAmount")));
+            paramarr.Add(new ReportParameter("accuracy", AppSettings.accuracy));
+
+            rep.DataSources.Add(new ReportDataSource("DataSetBankAcc", cash));
+        }
+        public static string subscriptionTypeConverter(string subscriptionType)
+        {
+     
+            switch (subscriptionType)
+            {
+                case "f": return AppSettings.resourcemanagerreport.GetString("trFree");
+
+                case "m": return AppSettings.resourcemanagerreport.GetString("trMonthly");
+
+                case "y": return AppSettings.resourcemanagerreport.GetString("trYearly");
+
+                case "o": return AppSettings.resourcemanagerreport.GetString("trOnce");
+
+                default: return AppSettings.resourcemanagerreport.GetString("");
+
+            }
+        }
+
+        public static string unlimitedEndDateConverter(string subscriptionType, DateTime? EndDate )
+        {
+            if (subscriptionType != null && EndDate != null)
+            {
+                string sType = subscriptionType;
+                DateTime sDate = (DateTime)EndDate;
+
+                if (sType == "o")
+                    return AppSettings.resourcemanager.GetString("trUnlimited");
+                else
+                {
+                 
+                   
+                    switch (AppSettings.dateFormat)
+                    {
+                        case "ShortDatePattern":
+                            return sDate.ToString(@"dd/MM/yyyy");
+                        case "LongDatePattern":
+                            return sDate.ToString(@"dddd, MMMM d, yyyy");
+                        case "MonthDayPattern":
+                            return sDate.ToString(@"MMMM dd");
+                        case "YearMonthPattern":
+                            return sDate.ToString(@"MMMM yyyy");
+                        default:
+                            return sDate.ToString(@"dd/MM/yyyy");
+                    }
+
+                }
+            }
+            else return "";
+        }
         public static void posAccReport(IEnumerable<CashTransfer> cash, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             rep.ReportPath = reppath;

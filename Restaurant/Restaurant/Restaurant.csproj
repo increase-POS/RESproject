@@ -1726,6 +1726,12 @@
     <Content Include="Reports\Account\report\En\EnReceiptAcc.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\Account\report\Ar\ArSubscription.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Account\report\En\EnSubscription.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Resource Include="pic\programs-Rest-login-bg.png" />
@@ -1873,6 +1879,7 @@
     <Resource Include="fonts\cairo-font\cairo-light.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Restaurant.Classes.Agent.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.AgentMembershipCash1.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ApiClasses.Tables.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Bank.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Branch.datasource" />
