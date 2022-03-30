@@ -119,7 +119,12 @@ namespace Restaurant.View.kitchen
         }
         private void translate()
         {
-
+            
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
             #region dg_orders
             dg_orders.Columns[1].Header = "";
             dg_orders.Columns[2].Header = AppSettings.resourcemanager.GetString("trRemainingTime");
@@ -127,15 +132,17 @@ namespace Restaurant.View.kitchen
             dg_orders.Columns[4].Header = AppSettings.resourcemanager.GetString("trNote");
             #endregion
 
-            txt_title.Text = AppSettings.resourcemanager.GetString("trOrder");
+            //txt_title.Text = AppSettings.resourcemanager.GetString("trOrder");
             txt_details.Text = AppSettings.resourcemanager.GetString("trDetails");
             txt_items.Text = AppSettings.resourcemanager.GetString("trItems");
-            //txt_byMinute.Text = AppSettings.resourcemanager.GetString("trDetails");
+            txt_minute.Text = AppSettings.resourcemanager.GetString("trMinute");
+            txt_tablesTitle.Text = AppSettings.resourcemanager.GetString("trTables");
 
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_preparingTime, AppSettings.resourcemanager.GetString("trPreparingTime") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchStatus, AppSettings.resourcemanager.GetString("trStatusHint"));
-           // MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchCatalog, AppSettings.resourcemanager.GetString("trSearchHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchCatalog, AppSettings.resourcemanager.GetString("trCategorie") + "...");
 
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
         }
@@ -167,6 +174,7 @@ namespace Restaurant.View.kitchen
             {
                 //await FillCombo.FillComboSalesItemsWithDefault(cb_searchCatalog);
                 await FillCombo.FillCategorySale(cb_searchCatalog);
+                cb_searchCatalog.SelectedIndex = 0;
             }
             catch { }
             foreach (var item in loadingList)

@@ -71,7 +71,7 @@
                                     </EventTrigger>
                                 </Button.Triggers>
                                 <Path Name="path_branch" Fill="{StaticResource SecondColor}" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,-1,0,0" 
-                                       Width="25" Height="25"   
+                                       Width="25" Height="25"   FlowDirection="LeftToRight" 
                                          Data="{StaticResource branches}"  >
                                     <Path.ToolTip>
                                         <ToolTip x:Name="tt_branch" Content="Branch"
@@ -101,7 +101,7 @@
                                     </EventTrigger>
                                 </Button.Triggers>
                                 <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0,-1,0,0" HorizontalAlignment="Center"
-                                       Width="25" Height="25"    x:Name="path_pos" 
+                                       Width="25" Height="25"   FlowDirection="LeftToRight"  x:Name="path_pos" 
                                          Data="{StaticResource POS}"  >
                                     <Path.ToolTip>
                                         <ToolTip x:Name="tt_pos" Content="Pos"
@@ -131,7 +131,7 @@
                                     </EventTrigger>
                                 </Button.Triggers>
                                 <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0,-1,0,0" HorizontalAlignment="Center"
-                                       Width="25" Height="25"    x:Name="path_vendors" 
+                                       Width="25" Height="25"  FlowDirection="LeftToRight"  x:Name="path_vendors" 
                                          Data="{StaticResource vendor}"  >
                                     <Path.ToolTip>
                                         <ToolTip x:Name="tt_vendors" Content="Customers"
@@ -161,7 +161,7 @@
                                     </EventTrigger>
                                 </Button.Triggers>
                                 <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0,-1,0,0" HorizontalAlignment="Center"
-                                       Width="25" Height="25"    x:Name="path_users" 
+                                       Width="25" Height="25"   FlowDirection="LeftToRight"  x:Name="path_users" 
                                          Data="{StaticResource user}"  >
                                     <Path.ToolTip>
                                         <ToolTip x:Name="tt_users" Content="Users"

@@ -70,7 +70,7 @@
                                     </EventTrigger>
                                 </Button.Triggers>
                                 <Path Name="path_invoice" Fill="{StaticResource SecondColor}" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,-1,0,0" 
-                                       Width="25" Height="25"   
+                                       Width="25" Height="25"    FlowDirection="LeftToRight"
                                          Data="{StaticResource invoice}"  >
                                     <Path.ToolTip>
                                         <ToolTip x:Name="tt_invoice" Content="Invoices"
@@ -100,7 +100,7 @@
                                     </EventTrigger>
                                 </Button.Triggers>
                                 <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0,-1,0,0" HorizontalAlignment="Center"
-                                       Width="25" Height="25"    x:Name="path_order" 
+                                       Width="25" Height="25"   FlowDirection="LeftToRight"  x:Name="path_order" 
                                          Data="{StaticResource shippingCompanies}"  >
                                     <Path.ToolTip>
                                         <ToolTip x:Name="tt_order" Content="Orders"
@@ -130,7 +130,7 @@
                                     </EventTrigger>
                                 </Button.Triggers>
                                 <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0,-1,0,0" HorizontalAlignment="Center"
-                                       Width="25" Height="25"    x:Name="path_quotation" 
+                                       Width="25" Height="25"  FlowDirection="LeftToRight"   x:Name="path_quotation" 
                                          Data="{StaticResource dolarsList}"  >
                                     <Path.ToolTip>
                                         <ToolTip x:Name="tt_quotation" Content="Quotations"

@@ -109,6 +109,23 @@ namespace Restaurant.View.storage.storageOperations
 
             tt_error_previous.Content = AppSettings.resourcemanager.GetString("trPrevious");
             tt_error_next.Content = AppSettings.resourcemanager.GetString("trNext");
+
+            txt_sum.Text = AppSettings.resourcemanager.GetString("trSum");
+            txt_total.Text = AppSettings.resourcemanager.GetString("trTotal");
+            txt_store.Text = AppSettings.resourcemanager.GetString("trStore/Branch");
+
+            txt_drafts.Text = AppSettings.resourcemanager.GetString("trDrafts");
+            txt_newDraft.Text = AppSettings.resourcemanager.GetString("trNew");
+
+            txt_printInvoice.Text = AppSettings.resourcemanager.GetString("trPrint");
+            txt_preview.Text = AppSettings.resourcemanager.GetString("trPreview");
+            txt_printCount.Text = AppSettings.resourcemanager.GetString("trPrint");
+            tt_error_previous.Content = AppSettings.resourcemanager.GetString("trPrevious");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_barcode, AppSettings.resourcemanager.GetString("trBarcodeHint"));
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
+            txt_count.Text = AppSettings.resourcemanager.GetString("trCount");
+
+
         }
         #region loading
         List<keyValueBool> loadingList;

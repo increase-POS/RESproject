@@ -169,7 +169,6 @@ namespace Restaurant.View.sectionData.persons
             dg_agent.Columns[3].Header = AppSettings.resourcemanager.GetString("trMobile");
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
 
-            tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");

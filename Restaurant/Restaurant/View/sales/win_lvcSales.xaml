@@ -22,7 +22,8 @@
                         <materialDesign:PackIcon Kind="Close" Height="20" Width="20"/>
                     </Button>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <materialDesign:PackIcon Kind="FileChart" Foreground="White" Height="20" Width="20" VerticalAlignment="Center"/>
+                        <materialDesign:PackIcon Kind="FileChart" Foreground="White" Height="20" Width="20"
+                                                  FlowDirection="LeftToRight" VerticalAlignment="Center"/>
                         <TextBlock x:Name="txt_title" Text="Reports" VerticalAlignment="Center" Foreground="White" FontSize="18"/>
                     </StackPanel>
                 </DockPanel>

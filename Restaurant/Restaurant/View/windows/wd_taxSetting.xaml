@@ -31,7 +31,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="1.2*"/>
                         </Grid.ColumnDefinitions>
-                        <Path Fill="White" Stretch="Fill" Margin="5,0"
+                        <Path Fill="White" Stretch="Fill" Margin="5,0"  FlowDirection="LeftToRight"
                               HorizontalAlignment="Right" Grid.Column="0"  
                          VerticalAlignment="Center"  Width="20" Height="20"
                               Data="{StaticResource tax}"/>

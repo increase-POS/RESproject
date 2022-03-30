@@ -42,7 +42,7 @@
                             <ColumnDefinition Width="1.2*"/>
                         </Grid.ColumnDefinitions>
                         <Path Fill="White" Stretch="Fill" Margin="5,0"
-                              HorizontalAlignment="Right" Grid.Column="0"  
+                              HorizontalAlignment="Right" Grid.Column="0"   FlowDirection="LeftToRight"
                          VerticalAlignment="Center" Width="15" Height="15"
                               Data="{StaticResource subscriptions}"/>
                         <TextBlock Text="Subscription Fees" x:Name="txt_Title" Foreground="White" 

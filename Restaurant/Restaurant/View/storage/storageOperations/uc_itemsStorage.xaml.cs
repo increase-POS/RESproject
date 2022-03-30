@@ -125,7 +125,7 @@ namespace Restaurant.View.storage.storageOperations
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sectionId, AppSettings.resourcemanager.GetString("trSectionHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_locationId, AppSettings.resourcemanager.GetString("trLocationHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
-
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
 
             chk_stored.Content = AppSettings.resourcemanager.GetString("trStored");
             chk_freezone.Content = AppSettings.resourcemanager.GetString("trFreeZone");

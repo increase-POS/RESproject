@@ -66,7 +66,7 @@
                                         </EventTrigger>
                                     </Button.Triggers>
                                     <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  VerticalAlignment="Top" Margin="0,-1,0,0" HorizontalAlignment="Center"
-                                       Width="25" Height="25"    x:Name="path_item" 
+                                       Width="25" Height="25"   FlowDirection="LeftToRight"  x:Name="path_item" 
                                          Data="{StaticResource rawMaterials}"  >
                                         <Path.ToolTip>
                                             <ToolTip x:Name="tt_item" Content="Items"
@@ -96,7 +96,7 @@
                                         </EventTrigger>
                                     </Button.Triggers>
                                     <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0,-1,0,0" HorizontalAlignment="Center"
-                                       Width="25" Height="25"    x:Name="path_operator" 
+                                       Width="25" Height="25"  FlowDirection="LeftToRight"   x:Name="path_operator" 
                                          Data="{StaticResource storageLocations}"  >
                                         <Path.ToolTip>
                                             <ToolTip x:Name="tt_operator" Content="Operator"

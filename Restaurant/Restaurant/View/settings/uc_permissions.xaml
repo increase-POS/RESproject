@@ -81,7 +81,9 @@
                                     </EventTrigger>
                                 </Button.Triggers>
 
-                                <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0"
+                                <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                                       FlowDirection="LeftToRight"
+                                      VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0"
                                        Width="25" Height="25"  x:Name="path_home" Tag="home"
                                          Data="{StaticResource home}"  />
                             </Button>
@@ -103,7 +105,8 @@
                                         </BeginStoryboard>
                                     </EventTrigger>
                                 </Button.Triggers>
-                                <Path Fill="White" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0" 
+                                    <Path Fill="White" Stretch="Fill"  FlowDirection="LeftToRight"
+                                          VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0" 
                                        Width="25" Height="25"    x:Name="path_catalog" Tag="catalog"
                                          Data="{StaticResource catalog}" />
                             </Button>
@@ -126,7 +129,8 @@
                                         </BeginStoryboard>
                                     </EventTrigger>
                                 </Button.Triggers>
-                                <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0" HorizontalAlignment="Center"
+                                    <Path Fill="White" Stretch="Fill"  FlowDirection="LeftToRight"
+                                          VerticalAlignment="Top" Margin="0" HorizontalAlignment="Center"
                                        Width="25" Height="25"    x:Name="path_purchases" Tag="purchase"
                                          Data="{StaticResource purchases}" />
                             </Button>
@@ -149,7 +153,8 @@
                                         </BeginStoryboard>
                                     </EventTrigger>
                                 </Button.Triggers>
-                                <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0" HorizontalAlignment="Center"
+                                    <Path Fill="White" Stretch="Fill"  FlowDirection="LeftToRight"
+                                          VerticalAlignment="Top" Margin="0" HorizontalAlignment="Center"
                                        Width="25" Height="25"    x:Name="path_storage" Tag="storage" 
                                          Data="{StaticResource storage}" />
                             </Button>
@@ -172,7 +177,8 @@
                                         </BeginStoryboard>
                                     </EventTrigger>
                                 </Button.Triggers>
-                                <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0" HorizontalAlignment="Center"
+                                    <Path Fill="White" Stretch="Fill"  FlowDirection="LeftToRight"
+                                          VerticalAlignment="Top" Margin="0" HorizontalAlignment="Center"
                                        Width="25" Height="25"    x:Name="path_kitchen"  Tag="kitchen"
                                          Data="{StaticResource kitchen}"/>
                             </Button>
@@ -194,7 +200,8 @@
                                         </BeginStoryboard>
                                     </EventTrigger>
                                 </Button.Triggers>
-                                <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0" HorizontalAlignment="Center"
+                                    <Path Fill="White" Stretch="Fill"  FlowDirection="LeftToRight"
+                                          VerticalAlignment="Top" Margin="0" HorizontalAlignment="Center"
                                        Width="25" Height="25"    x:Name="path_sales" Tag="sales"
                                          Data="{StaticResource sales}" />
                             </Button>
@@ -216,7 +223,8 @@
                                             </BeginStoryboard>
                                         </EventTrigger>
                                     </Button.Triggers>
-                                    <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0" HorizontalAlignment="Center"
+                                    <Path Fill="White" Stretch="Fill"  FlowDirection="LeftToRight"
+                                          VerticalAlignment="Top" Margin="0" HorizontalAlignment="Center"
                                        Width="25" Height="25"    x:Name="path_delivery" Tag="delivery"
                                          Data="{StaticResource delivery}" />
                                 </Button>
@@ -238,7 +246,8 @@
                                         </BeginStoryboard>
                                     </EventTrigger>
                                 </Button.Triggers>
-                                <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0" HorizontalAlignment="Center"
+                                    <Path Fill="White" Stretch="Fill"  FlowDirection="LeftToRight"
+                                          VerticalAlignment="Top" Margin="0" HorizontalAlignment="Center"
                                  Width="25" Height="25"   x:Name="path_accounting" Tag="accounts"
                                          Data="{StaticResource accounts}" />
                             </Button>
@@ -261,7 +270,8 @@
                                         </BeginStoryboard>
                                     </EventTrigger>
                                 </Button.Triggers>
-                                <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0"
+                                    <Path Fill="White" Stretch="Fill"  FlowDirection="LeftToRight"
+                                          VerticalAlignment="Top" Margin="0"
                                    Width="25" Height="25" x:Name="path_reports" Tag="reports"
                                       HorizontalAlignment="Center"
                                          Data="{StaticResource reports}" />
@@ -284,7 +294,8 @@
                                         </BeginStoryboard>
                                     </EventTrigger>
                                 </Button.Triggers>
-                                <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0"
+                                    <Path Fill="White" Stretch="Fill"  FlowDirection="LeftToRight"
+                                          VerticalAlignment="Top" Margin="0"
                                       Width="25" Height="25"   x:Name="path_sectionData" Tag="sectionData"
                                   HorizontalAlignment="Center"
                                          Data="{StaticResource data}" />
@@ -307,7 +318,8 @@
                                         </BeginStoryboard>
                                     </EventTrigger>
                                 </Button.Triggers>
-                                <Path Fill="White" Stretch="Fill" VerticalAlignment="Top" Margin="0"
+                                    <Path Fill="White" Stretch="Fill"  FlowDirection="LeftToRight"
+                                          VerticalAlignment="Top" Margin="0"
                               Width="25" Height="25"   x:Name="path_settings" Tag="settings"
                                   HorizontalAlignment="Center"
                                          Data="{StaticResource settings}"  />
@@ -330,7 +342,8 @@
                                         </BeginStoryboard>
                                     </EventTrigger>
                                 </Button.Triggers>
-                                <Path Fill="White" Stretch="Fill" VerticalAlignment="Top" Margin="0"
+                                    <Path Fill="White" Stretch="Fill"  FlowDirection="LeftToRight"
+                                          VerticalAlignment="Top" Margin="0"
                               Width="25" Height="25"   x:Name="path_alerts"  Tag="alerts"
                                   HorizontalAlignment="Center"
                                          Data="{StaticResource bell}" />
@@ -558,7 +571,7 @@
                         </Grid.ColumnDefinitions>
                         <Path Fill="White" Stretch="Fill"
                            VerticalAlignment="Center" 
-                        Width="20" Height="20"
+                        Width="20" Height="20" FlowDirection="LeftToRight"
                               Data="{StaticResource lock}"/>
 
                         <TextBlock Grid.Column="1" Text="permission" x:Name="txt_title" Margin="10,0,0,0"  Foreground="White" 
@@ -566,12 +579,8 @@
                            FontWeight="Bold" />
                         <Button   x:Name="btn_clear" Click="Btn_clear_Click" Grid.Column="3" Padding="0" 
                                VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}"   >
-                            <materialDesign:PackIcon Foreground="White" Kind="RefreshCircle"   Width="30" Height="30">
-                                <materialDesign:PackIcon.ToolTip>
-                                    <ToolTip x:Name="tt_clear" Placement="left" HorizontalOffset="5" 
-                                             PlacementRectangle="50,0,0,0" VerticalOffset="20"/>
-                                </materialDesign:PackIcon.ToolTip>
-                            </materialDesign:PackIcon>
+                            <materialDesign:PackIcon Foreground="White" Kind="RefreshCircle"   Width="30" Height="30"/>
+
                         </Button>
 
                     </Grid>
@@ -595,7 +604,7 @@
                             </DockPanel>
                             <Border Grid.Row="1" Margin="10,5,10,5" CornerRadius="10" BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                 <Grid>
-                                    <TextBox x:Name="tb_name"  Text="{Binding name, Mode=OneWay}" Padding="10,5,0,0" 
+                                    <TextBox x:Name="tb_name"  Text="{Binding name, Mode=OneWay}" Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="name..."  
                                      Foreground="#4E4E4E"  
@@ -719,7 +728,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Border Background="White" Grid.Column="0" CornerRadius="10" Margin="10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                     <Grid   >
-                                        <TextBox x:Name="tb_search" Grid.Column="1"    Padding="10,5,0,0" 
+                                        <TextBox x:Name="tb_search" Grid.Column="1"    Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="Enter Here To Start Search ...."  
                                      Foreground="#4E4E4E"  TextChanged="Tb_search_TextChanged"

@@ -128,7 +128,6 @@ namespace Restaurant.View.settings.emailsGeneral
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
 
 
-            tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
 
             txt_infoTitle.Text = AppSettings.resourcemanager.GetString("trTitle");

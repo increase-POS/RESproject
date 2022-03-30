@@ -31,7 +31,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="1.2*"/>
                         </Grid.ColumnDefinitions>
-                        <Path Fill="White" Stretch="Fill" Margin="5,0"
+                        <Path Fill="White" Stretch="Fill" Margin="5,0" FlowDirection="LeftToRight"
                               HorizontalAlignment="Right" Grid.Column="0"  
                          VerticalAlignment="Center" Width="20" Height="20"
                               Data="M368,224c26.5,0,48-21.5,48-48s-21.5-48-48-48s-48,21.5-48,48S341.5,224,368,224z M452,64H60
@@ -156,7 +156,7 @@
                     <Button Grid.Column="1" BorderBrush="{x:Null}" Padding="0" Margin="5,0" Height="auto"
                         Background="{x:Null}" x:Name="btn_scanner" Click="Btn_scan_Click" >
                         <Path Fill="{StaticResource SecondColor}" Stretch="Fill"   
-                              Width="35" Height="35"
+                              Width="35" Height="35"  FlowDirection="LeftToRight"
                            Data="M321.1,35.6c3.5,2,7.3,3.5,10.5,5.9c2.3,1.7,4,4.4,5.9,6.7c5.6,6.7,5.4,9.9-1.2,15.4c-76,63.7-151.9,127.5-227.9,191.2
 	c-16.6,14-33.2,27.9-49.8,41.8c-6.1,5.1-9.8,4.7-14.8-1.2c-1.7-2-3.5-4-5.1-6.1c-5.2-6.6-5.4-13.9-0.2-20.6c22.7-29,46-57.3,75-80.7
 	c41.6-33.5,82.1-68.5,123.1-102.9c23.4-19.6,51.1-32.4,77.6-47c1.8-1,4.1-1.1,6.2-1.6C320.6,36.2,320.8,36,321.1,35.6z M208.4,216.4
@@ -184,7 +184,7 @@
                     <Button Grid.Column="2" BorderBrush="{x:Null}" Padding="0" Margin="5,0"  Height="auto"
                     Background="{x:Null}" x:Name="btn_preview" Click="Btn_preview_Click"   >
                         <Path Fill="{StaticResource SecondColor}" Stretch="Fill"   FlowDirection="LeftToRight"
-                              Width="35" Height="35"
+                              Width="35" Height="35"  
                            Data="M243,83.3c0,2.5,0,4.7,0,6.9c0,23.1,0,46.3,0,69.4c0,5.4,1.7,7.1,7.2,7.1c23.6,0,47.3,0,70.9,0c5.2,0,5.2,0,5.2,5
 	c0,31.9-0.1,63.8,0.1,95.6c0,3.6-1.1,4.6-4.6,4.6c-21.7-0.1-41.5,6.8-60.1,17.6c-13.3,7.8-25.5,17.2-36.2,28.3
 	c-2.1,2.2-4.3,4.7-5.5,7.5c-2.7,6.3-1.7,12.4,3.2,17.3c23.8,24.3,51.1,42.4,85.7,47.1c4.3,0.6,8.7,0.5,13.1,0.7
@@ -223,7 +223,7 @@
                     <Button Grid.Column="3" BorderBrush="{x:Null}" Padding="0" Margin="5,0" Height="auto"
                     Background="{x:Null}" x:Name="btn_pdf" Click="Btn_pdf_Click"   >
                         <Path Fill="{StaticResource SecondColor}" Stretch="Fill"   FlowDirection="LeftToRight"
-                              Width="35" Height="35" 
+                              Width="35" Height="35"  
                            Data="M228,174h10v-18h16v-8h-16v-11h17v-8h-27V174z M213.3,133.5c-4.4-3.3-10.4-4.8-19-4.8c-5.2,0-9.3,0.3-14.3,0.9
 	v44.5c4,0.3,6.8,0.7,12.1,0.7c8.9,0,16.4-1.9,21.1-5.8c4.4-3.7,7.6-9.7,7.6-18.3C220.8,142.6,218,137,213.3,133.5z M194.6,166.7
 	c-1.3,0-2.6,0-3.6-0.2v-29.6c1-0.2,2.4-0.4,4.7-0.4c8.8,0,14.3,5,14.2,14.4C210,161.7,203.9,166.8,194.6,166.7z M169.5,132.3
@@ -252,7 +252,7 @@
                     <Button Grid.Column="4" BorderBrush="{x:Null}" Padding="0" Margin="5,0" Height="auto"
                     Background="{x:Null}" x:Name="btn_print" Click="Btn_print_Click"   >
                         <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
-                              Width="35" Height="35"
+                              Width="35" Height="35"  FlowDirection="LeftToRight"
                            Data="M9,23.9v4.8c0,0.3,0.2,0.5,0.5,0.5h13.1c0.3,0,0.5-0.2,0.5-0.5v-4.8v-3c0-0.3-0.2-0.5-0.5-0.5H9.5
 	c-0.3,0-0.5,0.2-0.5,0.5V23.9z M10.8,22.1h10.5v1.7H10.8V22.1z M10.8,25.6h10.5v1.7H10.8V25.6z M23,8.1V2.9H9v5.2v3.5h14V8.1z
 	 M26.5,8.1h-1.8v3.5v1.8H7.3v-1.8V8.1H5.5C3.6,8.1,2,9.7,2,11.6v8.8c0,1.9,1.6,3.5,3.5,3.5h1.8v-3.5v-1.8h17.5v1.8v3.5h1.8
@@ -270,7 +270,7 @@
                     <Button Grid.Column="5" BorderBrush="{x:Null}" Padding="0" Margin="5,0" Height="auto"
                         Background="{x:Null}" x:Name="btn_delete"  Click="Btn_delete_Click"  >
                         <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
-                             Width="35" Height="35"
+                             Width="35" Height="35"  FlowDirection="LeftToRight"
                            Data="M28.2,7h-5.8c-0.2-3.5-3.1-6.3-6.5-6.3c-3.4,0-6.2,2.8-6.5,6.3H2.5c-1.1,0-2,0.9-2,2s0.9,2,2,2h1.8v18
 	c0,1.1,0.9,2,2,2h19c1.1,0,2-0.9,2-2V11h1c1.1,0,2-0.9,1.9-2C30.2,7.9,29.3,7,28.2,7z M9.7,28.2H8V12.4h1.7V28.2z M16.8,28.2h-1.7
 	V12.4h1.7V28.2z M12.5,7c0.2-1.8,1.6-3.1,3.4-3.1c1.8,0,3.2,1.4,3.5,3.1H12.5z M23.9,28.2h-1.7V12.4h1.7V28.2z"  >
@@ -286,7 +286,7 @@
                     <Button Grid.Column="6" BorderBrush="{x:Null}" Padding="0" Margin="5,0" Height="auto"
                     Background="{x:Null}" x:Name="btn_update"   Click="Btn_update_Click" >
                         <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
-                             Width="35" Height="35"
+                             Width="35" Height="35"  FlowDirection="LeftToRight"
                            Data="M111,233.8c0,16,0,31.3,0,47.1c77.8,0,155.3,0,234.1,0c-1.6,2-2.4,3.1-3.3,4.1c-12.7,12.7-25.5,25.3-38.1,38.2
 	c-2.8,2.9-5.7,3.9-9.6,3.9c-58.7-0.1-117.3-0.1-176-0.1c-2.1,0-4.3,0-6.8,0c0,15.9,0,31.2,0,47.1c46.6,0,93.2,0,140.8,0
 	c-1.6,1.9-2.5,3-3.4,4c-13.5,13.6-27,27.2-40.7,40.6c-2.8,2.8-4.1,5.6-4,9.6c0.2,12.6,0.1,25.3,0.1,38.4c-2.2,0.1-4,0.3-5.8,0.3
@@ -311,7 +311,7 @@
                     <Button Grid.Column="7" BorderBrush="{x:Null}" Padding="0" Margin="5,0" Height="auto"
                     Background="{x:Null}" x:Name="btn_save"   Click="Btn_save_Click" >
                         <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
-                             Width="35" Height="35"
+                             Width="35" Height="35"  FlowDirection="LeftToRight"
                            Data="
                               M250.4,433.1c-54.5,0-109,0.1-163.5-0.1c-6.8,0-13.7-0.3-20.4-1.6c-23.7-4.8-38-22-39.4-46.9c-0.4-7.1-0.3-14.3-0.3-21.5
 	c0-106.5,0-213,0.1-319.4c0-5.6,0.4-11.4,1.5-16.9c5-24,22.3-37.9,48.6-39.4c2.3-0.1,4.7-0.1,7-0.1c99-0.1,198,0,296.9-0.3

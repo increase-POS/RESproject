@@ -38,7 +38,7 @@
                             <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
                             <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
-                              HorizontalAlignment="Center" Grid.Column="1"  
+                              HorizontalAlignment="Center" Grid.Column="1"   FlowDirection="LeftToRight"
                          VerticalAlignment="Center" Height="50" Width="50"
                               Data="{StaticResource system}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
@@ -254,7 +254,7 @@
                             <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
                             <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
-                              HorizontalAlignment="Center" Grid.Column="1"  
+                              HorizontalAlignment="Center" Grid.Column="1"   FlowDirection="LeftToRight"
                          VerticalAlignment="Center" Height="50" Width="50"
                               Data="{StaticResource tax}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
@@ -359,7 +359,7 @@
                             <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
                             <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
-                              HorizontalAlignment="Center" Grid.Column="1"  
+                              HorizontalAlignment="Center" Grid.Column="1"   FlowDirection="LeftToRight"
                          VerticalAlignment="Center" Height="50" Width="50"
                               Data="{StaticResource keys}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
@@ -407,7 +407,7 @@
                             <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
                             <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
-                              HorizontalAlignment="Center" Grid.Column="1"  
+                              HorizontalAlignment="Center" Grid.Column="1"   FlowDirection="LeftToRight"
                          VerticalAlignment="Center" Height="50" Width="50"
                               Data="{StaticResource userPath}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
@@ -747,7 +747,7 @@
                             <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
                             <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
-                              HorizontalAlignment="Center" Grid.Column="1"  
+                              HorizontalAlignment="Center" Grid.Column="1"   FlowDirection="LeftToRight"
                          VerticalAlignment="Center" Height="50" Width="50"
                               Data="{StaticResource table}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
@@ -796,7 +796,7 @@
                             <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
                             <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
                             <Path  Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
-                              HorizontalAlignment="Center" Grid.Column="1"  
+                              HorizontalAlignment="Center" Grid.Column="1"  FlowDirection="LeftToRight" 
                          VerticalAlignment="Center" Height="50" Width="50"
                               Data="{StaticResource downloadFile}"/>
                             <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">

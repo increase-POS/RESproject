@@ -141,9 +141,10 @@ namespace Restaurant.View.catalog.rawMaterials
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_details, AppSettings.resourcemanager.GetString("trDetailsHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, AppSettings.resourcemanager.GetString("trNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_categoryCode, AppSettings.resourcemanager.GetString("trCode"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_categoryCode, AppSettings.resourcemanager.GetString("trCode") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_taxes, AppSettings.resourcemanager.GetString("trTaxesHint") );
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint") );
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNote") + "...");
 
             btn_add.Content = AppSettings.resourcemanager.GetString("trAdd");
             btn_update.Content = AppSettings.resourcemanager.GetString("trUpdate");

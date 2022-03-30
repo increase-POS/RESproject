@@ -146,13 +146,15 @@ namespace Restaurant.View.catalog.rawMaterials
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_details, AppSettings.resourcemanager.GetString("trDetailsHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, AppSettings.resourcemanager.GetString("trNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, AppSettings.resourcemanager.GetString("trCode"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, AppSettings.resourcemanager.GetString("trCode") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_type, AppSettings.resourcemanager.GetString("trType") + "...");
 
 
             txt_contentInformatin.Text = AppSettings.resourcemanager.GetString("trMoreInformation");
+            btn_units.Content = AppSettings.resourcemanager.GetString("trUnits");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_categoryId, AppSettings.resourcemanager.GetString("trSelectCategorieHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_taxes, AppSettings.resourcemanager.GetString("trTax") + "...");
-
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNote") + "...");
 
             txt_minAndMax.Text = AppSettings.resourcemanager.GetString("trMinAndMaxOfItem");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_min, AppSettings.resourcemanager.GetString("trMinHint"));

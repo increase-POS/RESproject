@@ -26,7 +26,7 @@
                     <Grid>
                         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                             <Path x:Name="path_title" Fill="White" Stretch="Fill"
-                           VerticalAlignment="Center" 
+                           VerticalAlignment="Center"  FlowDirection="LeftToRight"
                         Width="20" Height="20"
                          Data="M92.5,50.2c0-2.4-3.2-4.1-6.7-5.8c-3.3-1.7-6.8-3.4-8-6.3c-1.3-3,0-6.6,1.3-10.1c1.2-3.3,2.4-6.5,0.9-7.9
 	c-1.6-1.6-4.7-0.9-8-0.1c-3.3,0.7-6.6,1.5-9.5,0.3c-2.7-1.2-4.5-4-6.3-6.8c-1.9-3-3.7-5.9-6.3-5.9c-2.6,0-4.3,2.9-6.2,6

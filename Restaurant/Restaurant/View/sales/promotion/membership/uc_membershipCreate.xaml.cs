@@ -161,7 +161,6 @@ namespace Restaurant.View.sales.promotion.membership
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             btn_subscriptionFees.Content = AppSettings.resourcemanager.GetString("trSubscriptionFees");
 
-            tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");

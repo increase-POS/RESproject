@@ -68,7 +68,7 @@
                                     </EventTrigger>
                                 </Button.Triggers>
                                 <Path Name="path_branch" Fill="{StaticResource SecondColor}" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,-1,0,0" 
-                                       Width="25" Height="25"   
+                                       Width="25" Height="25"    FlowDirection="LeftToRight"
                                          Data="{StaticResource branches}"  >
                                     <Path.ToolTip>
                                         <ToolTip x:Name="tt_branch" Content="Branches"

@@ -158,7 +158,6 @@ namespace Restaurant.View.sales.promotion.membership
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
-            tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
         }
         #region events
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)

@@ -116,11 +116,18 @@ namespace Restaurant.View.kitchen
         private void translate()
         {
             txt_title.Text = AppSettings.resourcemanager.GetString("trItems");
+            txt_name.Text = AppSettings.resourcemanager.GetString("itemName");
             txt_daysOfWeek.Text = AppSettings.resourcemanager.GetString("trDaysOfWeek");
             txt_minute.Text = AppSettings.resourcemanager.GetString("trMinute");
             txt_activeItem.Text = AppSettings.resourcemanager.GetString("trActive");
             txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");
             txt_allMenu.Text = AppSettings.resourcemanager.GetString("trAll");
+            txt_appetizers.Text = AppSettings.resourcemanager.GetString("trAppetizers");
+            txt_beverages.Text = AppSettings.resourcemanager.GetString("trBeverages");
+            txt_fastFood.Text = AppSettings.resourcemanager.GetString("trFastFood");
+            txt_mainCourses.Text = AppSettings.resourcemanager.GetString("trMainCourses");
+            txt_desserts.Text = AppSettings.resourcemanager.GetString("trDesserts");
+
 
             chb_all.Content = AppSettings.resourcemanager.GetString("trAll");
             chb_sat.Content = AppSettings.resourcemanager.GetString("trSaturday");
@@ -1125,7 +1132,7 @@ namespace Restaurant.View.kitchen
                 button.Tag = "catalogTags-" + item.tagName;
                 button.FontSize = 10;
                 button.Height = 25;
-                button.Padding = new Thickness(5);
+                button.Padding = new Thickness(5, 0, 5, 0);
                 MaterialDesignThemes.Wpf.ButtonAssist.SetCornerRadius(button, (new CornerRadius(7)));
                 button.Margin = new Thickness(5, 0, 5, 0);
                 if (item.tagName == AppSettings.resourcemanager.GetString("trAll"))

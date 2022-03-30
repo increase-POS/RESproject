@@ -180,7 +180,7 @@ namespace Restaurant.View.sales.promotion
             dg_coupon.Columns[4].Header = AppSettings.resourcemanager.GetString("trRemainQuantity");
             dg_coupon.Columns[5].Header = AppSettings.resourcemanager.GetString("trvalidity");
 
-            tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");

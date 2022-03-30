@@ -105,8 +105,32 @@ namespace Restaurant.View.storage.movementsOperations
             txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trInternalMovementImport");
 
             txt_shortageInvoice.Text = AppSettings.resourcemanager.GetString("trLack");
+
+
+
+
+
+            txt_items.Text = AppSettings.resourcemanager.GetString("trItems");
+            txt_newDraft.Text = AppSettings.resourcemanager.GetString("trNew");
+            txt_drafts.Text = AppSettings.resourcemanager.GetString("trDrafts");
+            txt_orders.Text = AppSettings.resourcemanager.GetString("trOrders");
+            txt_ordersWait.Text = AppSettings.resourcemanager.GetString("trOrdersWait");
+            txt_unitConversion.Text = AppSettings.resourcemanager.GetString("trUnitConversion");
+            txt_processType.Text = AppSettings.resourcemanager.GetString("trProcessType");
+            txt_store.Text = AppSettings.resourcemanager.GetString("trStore/Branch");
+            txt_count.Text = AppSettings.resourcemanager.GetString("trCount");
+            txt_printInvoice.Text = AppSettings.resourcemanager.GetString("trPrint");
+            txt_pdf.Text = AppSettings.resourcemanager.GetString("trPdf");
+            txt_preview.Text = AppSettings.resourcemanager.GetString("trPreview");
+
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_barcode, AppSettings.resourcemanager.GetString("trBarcodeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_processType, AppSettings.resourcemanager.GetString("trProcessTypeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branch, AppSettings.resourcemanager.GetString("trStore/BranchHint"));
+
             tt_error_previous.Content = AppSettings.resourcemanager.GetString("trPrevious");
             tt_error_next.Content = AppSettings.resourcemanager.GetString("trNext");
+
 
 
         }

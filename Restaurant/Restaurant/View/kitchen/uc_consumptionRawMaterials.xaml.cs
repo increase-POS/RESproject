@@ -92,13 +92,14 @@ namespace Restaurant.View.kitchen
             dg_billDetails.Columns[3].Header = AppSettings.resourcemanager.GetString("trUnit");
             dg_billDetails.Columns[4].Header = AppSettings.resourcemanager.GetString("trQuantity");
 
+            txt_itemsStorage.Text = AppSettings.resourcemanager.GetString("trItemsStorage");
             txt_orders.Text = AppSettings.resourcemanager.GetString("trOrders");
             txt_newDraft.Text = AppSettings.resourcemanager.GetString("trNew");
             txt_items.Text = AppSettings.resourcemanager.GetString("trItems");
             txt_printInvoice.Text = AppSettings.resourcemanager.GetString("trPrint");
             txt_pdf.Text = AppSettings.resourcemanager.GetString("trPdf");
             txt_preview.Text = AppSettings.resourcemanager.GetString("trPreview");
-            txt_count.Text = AppSettings.resourcemanager.GetString("trCount:");
+            txt_count.Text = AppSettings.resourcemanager.GetString("trCount");
             txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trConsumptionRawMaterials");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_barcode, AppSettings.resourcemanager.GetString("trBarcodeHint"));

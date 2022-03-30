@@ -60,7 +60,7 @@
                     <Grid   >
 
 
-                        <TextBox x:Name="tb_search" Grid.Column="1"    Padding="10,5,0,0" 
+                        <TextBox x:Name="tb_search" Grid.Column="1"    Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="Enter Here To Start Search ...."  
                                      Foreground="#4E4E4E"  TextChanged="Tb_search_TextChanged"
@@ -312,7 +312,7 @@
                     </Grid.ColumnDefinitions>
                     <Path Fill="White" Stretch="Fill"
                            VerticalAlignment="Center" 
-                        Width="20" Height="20"
+                        Width="20" Height="20" FlowDirection="LeftToRight"
                                   Data="{StaticResource emailsTamplates}"/>
 
                     <TextBlock Grid.Column="1" Text="emails tamplates" x:Name="txt_title" Margin="10,0,0,0"  Foreground="White" 
@@ -320,13 +320,8 @@
                            FontWeight="Bold" />
                     <Button   x:Name="btn_clear" Click="Btn_clear_Click" Grid.Column="3" Padding="0" 
                                VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}"   >
-                        <materialDesign:PackIcon Foreground="White" Kind="RefreshCircle"   Width="30" Height="30">
-                            <materialDesign:PackIcon.ToolTip>
-                                <ToolTip x:Name="tt_clear" Placement="left" HorizontalOffset="5" 
-                                             PlacementRectangle="50,0,0,0" VerticalOffset="20"/>
-                            </materialDesign:PackIcon.ToolTip>
-                        </materialDesign:PackIcon>
-                    </Button>
+                            <materialDesign:PackIcon Foreground="White" Kind="RefreshCircle"   Width="30" Height="30"/>
+                        </Button>
 
                 </Grid>
             </Border>
@@ -354,7 +349,7 @@
                     </DockPanel>
                     <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid>
-                            <TextBox x:Name="tb_title"  Text="{Binding title, Mode=OneWay}" Padding="10,5,0,0" 
+                            <TextBox x:Name="tb_title"  Text="{Binding title, Mode=OneWay}" Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="title..."  
                                      Foreground="#4E4E4E"   
@@ -419,7 +414,7 @@
 
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid>
-                                <TextBox x:Name="tb_link1text"  Text="{Binding link1text, Mode=OneWay}" Padding="10,5,0,0" 
+                                <TextBox x:Name="tb_link1text"  Text="{Binding link1text, Mode=OneWay}" Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="link1text..."  
                                      Foreground="#4E4E4E"   
@@ -436,7 +431,7 @@
                         </Border>
                         <Border Grid.Row="1" Grid.Column="1" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid>
-                                <TextBox x:Name="tb_link1url"  Text="{Binding link1url, Mode=OneWay}" Padding="10,5,0,0" 
+                                <TextBox x:Name="tb_link1url"  Text="{Binding link1url, Mode=OneWay}" Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="link1url..."  
                                      Foreground="#4E4E4E"   
@@ -461,7 +456,7 @@
 
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid>
-                                <TextBox x:Name="tb_link2text"  Text="{Binding link2text, Mode=OneWay}" Padding="10,5,0,0" 
+                                <TextBox x:Name="tb_link2text"  Text="{Binding link2text, Mode=OneWay}" Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="link2text..."  
                                      Foreground="#4E4E4E"   
@@ -478,7 +473,7 @@
                         </Border>
                         <Border Grid.Row="1" Grid.Column="1" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid>
-                                <TextBox x:Name="tb_link2url"  Text="{Binding link2url, Mode=OneWay}" Padding="10,5,0,0" 
+                                <TextBox x:Name="tb_link2url"  Text="{Binding link2url, Mode=OneWay}" Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="link2url..."  
                                      Foreground="#4E4E4E"   
@@ -503,7 +498,7 @@
 
                         <Border Grid.Row="1" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid>
-                                <TextBox x:Name="tb_link3text"  Text="{Binding link3text, Mode=OneWay}" Padding="10,5,0,0" 
+                                <TextBox x:Name="tb_link3text"  Text="{Binding link3text, Mode=OneWay}" Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="link1text..."  
                                      Foreground="#4E4E4E"   
@@ -520,7 +515,7 @@
                         </Border>
                         <Border Grid.Row="1" Grid.Column="1" CornerRadius="10" Margin="5,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid>
-                                <TextBox x:Name="tb_link3url"  Text="{Binding link1url, Mode=OneWay}" Padding="10,5,0,0" 
+                                <TextBox x:Name="tb_link3url"  Text="{Binding link1url, Mode=OneWay}" Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="link3url..."  
                                      Foreground="#4E4E4E"   

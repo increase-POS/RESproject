@@ -113,6 +113,9 @@ namespace Restaurant.View.storage.movementsOperations
             tt_error_next.Content = AppSettings.resourcemanager.GetString("trNext");
 
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
+
+            txt_drafts.Text = AppSettings.resourcemanager.GetString("trDrafts");
+            txt_newDraft.Text = AppSettings.resourcemanager.GetString("trNew");
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {

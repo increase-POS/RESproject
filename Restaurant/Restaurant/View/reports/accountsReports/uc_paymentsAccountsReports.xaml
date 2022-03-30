@@ -93,7 +93,7 @@
                                     </Button.Triggers>
                                     <Path Name="path_vendor"
                                       Fill="{StaticResource SecondColor}"
-                                      Stretch="Fill"
+                                      Stretch="Fill" FlowDirection="LeftToRight"
                                       VerticalAlignment="Top"
                                       HorizontalAlignment="Center"
                                       Margin="0,-1,0,0" 
@@ -142,7 +142,7 @@
                                         </EventTrigger>
                                     </Button.Triggers>
                                     <Path x:Name="path_customer" 
-                                      Fill="White"
+                                      Fill="White" FlowDirection="LeftToRight"
                                       Stretch="Fill" 
                                       VerticalAlignment="Top"
                                       Margin="0,-1,0,0"
@@ -193,7 +193,7 @@
                                     </Button.Triggers>
                                     <Path x:Name="path_user" 
                                       Fill="White"
-                                      Stretch="Fill" 
+                                      Stretch="Fill"  FlowDirection="LeftToRight"
                                       VerticalAlignment="Top"
                                       Margin="0,-1,0,0"
                                       HorizontalAlignment="Center"
@@ -240,7 +240,7 @@
                                         </EventTrigger>
                                     </Button.Triggers>
                                     <Path x:Name="path_salary" 
-                                      Fill="White"
+                                      Fill="White" FlowDirection="LeftToRight"
                                       Stretch="Fill" 
                                       VerticalAlignment="Top" 
                                       Margin="0,-1,0,0" 
@@ -290,7 +290,7 @@
                                     </Button.Triggers>
                                     <Path x:Name="path_generalExpenses"
                                       Fill="White" 
-                                      Stretch="Fill" 
+                                      Stretch="Fill"  FlowDirection="LeftToRight"
                                       VerticalAlignment="Top" 
                                       Margin="0,-1,0,0"
                                       HorizontalAlignment="Center"
@@ -338,7 +338,7 @@
                                         </EventTrigger>
                                     </Button.Triggers>
                                     <Path x:Name="path_administrativePull"
-                                      Fill="White" 
+                                      Fill="White"  FlowDirection="LeftToRight"
                                       Stretch="Fill" 
                                       VerticalAlignment="Top" 
                                       Margin="0,-1,0,0"
@@ -368,7 +368,7 @@
                                 BorderBrush="Transparent"
                                 Margin="0,5,0,-1">
                                 <Button x:Name="btn_shipping" Tag="shipping"
-                                    Background="Transparent"  
+                                    Background="Transparent"   FlowDirection="LeftToRight"
                                     materialDesign:RippleAssist.Feedback="Transparent" 
                                     BorderBrush="Transparent"
                                     Height="auto"

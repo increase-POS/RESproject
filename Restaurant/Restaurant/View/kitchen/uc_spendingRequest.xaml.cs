@@ -104,6 +104,17 @@ namespace Restaurant.View.kitchen
             tt_error_next.Content = AppSettings.resourcemanager.GetString("trNext");
 
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_barcode, AppSettings.resourcemanager.GetString("trBarcode"));
+
+            txt_count.Text = AppSettings.resourcemanager.GetString("trCount");
+            txt_orders.Text = AppSettings.resourcemanager.GetString("trOrders");
+            txt_printInvoice.Text = AppSettings.resourcemanager.GetString("trPrint");
+            txt_preview.Text = AppSettings.resourcemanager.GetString("trPreview");
+            txt_items.Text = AppSettings.resourcemanager.GetString("trItems");
+            txt_drafts.Text = AppSettings.resourcemanager.GetString("trDrafts");
+            txt_newDraft.Text = AppSettings.resourcemanager.GetString("trNew");
+            txt_returnInvoice.Text = AppSettings.resourcemanager.GetString("trReturn");
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {

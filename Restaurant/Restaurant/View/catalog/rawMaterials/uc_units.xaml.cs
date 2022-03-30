@@ -131,6 +131,7 @@ namespace Restaurant.View.catalog.rawMaterials
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, AppSettings.resourcemanager.GetString("trUnitNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNote") + "...");
             //tb_isSmallest.Text = AppSettings.resourcemanager.GetString("trIsSmallestHint");
 
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_smallestUnitId, AppSettings.resourcemanager.GetString("trSelectSmallestUnitHint"));

@@ -386,7 +386,10 @@ namespace Restaurant.View.purchase
             txt_returnInvoice.Text = AppSettings.resourcemanager.GetString("trReturn");
             txt_invoices.Text = AppSettings.resourcemanager.GetString("trInvoices");
             txt_purchaseOrder.Text = AppSettings.resourcemanager.GetString("trOrders");
+            txt_payment.Text = AppSettings.resourcemanager.GetString("trPayment1");
+            txt_totalDescount.Text = AppSettings.resourcemanager.GetString("trDiscount");
 
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_paymentProcessType, AppSettings.resourcemanager.GetString("trPaymentProcessType"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_barcode, AppSettings.resourcemanager.GetString("trBarcodeHint"));
            // MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branch, AppSettings.resourcemanager.GetString("trBranchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_discount, AppSettings.resourcemanager.GetString("trDiscountHint"));

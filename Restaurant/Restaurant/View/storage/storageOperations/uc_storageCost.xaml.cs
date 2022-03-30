@@ -151,7 +151,7 @@ namespace Restaurant.View.storage.storageOperations
             tt_update_Button.Content = AppSettings.resourcemanager.GetString("trUpdate");
             tt_delete_Button.Content = AppSettings.resourcemanager.GetString("trDelete");
 
-            tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");

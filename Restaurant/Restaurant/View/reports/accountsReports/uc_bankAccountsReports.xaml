@@ -87,7 +87,7 @@
                                 </Button.Triggers>
                                 <Path Name="path_payments"
                                       Fill="{StaticResource SecondColor}"
-                                      Stretch="Fill"
+                                      Stretch="Fill" FlowDirection="LeftToRight"
                                       VerticalAlignment="Top"
                                       HorizontalAlignment="Center"
                                       Margin="0,-1,0,0" 
@@ -136,7 +136,7 @@
                                     </EventTrigger>
                                 </Button.Triggers>
                                 <Path x:Name="path_recipient" 
-                                      Fill="White"
+                                      Fill="White" FlowDirection="LeftToRight"
                                       Stretch="Fill" 
                                       VerticalAlignment="Top"
                                       Margin="0,-1,0,0"

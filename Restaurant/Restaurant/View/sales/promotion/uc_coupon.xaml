@@ -58,7 +58,7 @@
                          BlurRadius="10"/>
                     </Border.Effect>
                     <Grid   >
-                        <TextBox x:Name="tb_search" Grid.Column="1"    Padding="10,5,0,0" 
+                        <TextBox x:Name="tb_search" Grid.Column="1"    Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="Enter Here To Start Search ...."  
                                      Foreground="#4E4E4E"  TextChanged="Tb_search_TextChanged"
@@ -374,7 +374,7 @@
                     </Grid.ColumnDefinitions>
                     <Path Fill="White" Stretch="Fill"
                            VerticalAlignment="Center" 
-                        Width="20" Height="20"
+                        Width="20" Height="20" FlowDirection="LeftToRight"
                               Data="M484.8,376.1l-223-223c-1.3-1.3-3.2-2-5.1-1.7l0,0L142.5,171c-2.5,0.3-4.6,2.2-5,4.8h0L118,290
 	c-0.4,1.9,0.1,3.9,1.5,5.3l223,223c2.2,2.2,5.9,2.2,8.1,0l134.1-134.1C487,382,487,378.4,484.8,376.1z M284.3,234.3l97.6,97.6
 	c1.4,1.4,0.8,4.5-1.4,6.7s-5.2,2.9-6.7,1.4l-97.6-97.6c-1.4-1.4-0.8-4.5,1.4-6.7S282.8,232.9,284.3,234.3z M246.4,272.2l97.6,97.6
@@ -396,13 +396,8 @@
                            FontWeight="Bold" />
                     <Button   x:Name="btn_clear" Click="Btn_clear_Click" Grid.Column="3" Padding="0" 
                                VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}"   >
-                        <materialDesign:PackIcon Foreground="White" Kind="RefreshCircle"   Width="30" Height="30">
-                            <materialDesign:PackIcon.ToolTip>
-                                <ToolTip x:Name="tt_clear" Placement="left" HorizontalOffset="5" 
-                                             PlacementRectangle="50,0,0,0" VerticalOffset="20"/>
-                            </materialDesign:PackIcon.ToolTip>
-                        </materialDesign:PackIcon>
-                    </Button>
+                            <materialDesign:PackIcon Foreground="White" Kind="RefreshCircle"   Width="30" Height="30"/>
+                        </Button>
 
                 </Grid>
             </Border>
@@ -416,7 +411,7 @@
 
                     <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid>
-                            <TextBox x:Name="tb_code"  Text="{Binding code, Mode=OneWay}" Padding="10,5,0,0" 
+                            <TextBox x:Name="tb_code"  Text="{Binding code, Mode=OneWay}" Padding="10,0,5,0" 
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                      materialDesign:HintAssist.Hint="code..."  
                                      Foreground="#4E4E4E"  
@@ -433,7 +428,7 @@
                     </Border>
                     <Border Grid.Row="2" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid>
-                            <TextBox x:Name="tb_name"  Text="{Binding name, Mode=OneWay}" Padding="10,5,0,0" 
+                            <TextBox x:Name="tb_name"  Text="{Binding name, Mode=OneWay}" Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="name..."  
                                      Foreground="#4E4E4E"  

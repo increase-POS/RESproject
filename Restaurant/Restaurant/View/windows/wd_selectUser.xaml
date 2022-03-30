@@ -25,7 +25,7 @@
                     <Grid>
                         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                             <Path x:Name="path_title" Fill="White" Stretch="Fill"
-                           VerticalAlignment="Center" 
+                           VerticalAlignment="Center"  FlowDirection="LeftToRight"
                         Width="20" Height="20"
                          Data="{StaticResource user}"/>
 

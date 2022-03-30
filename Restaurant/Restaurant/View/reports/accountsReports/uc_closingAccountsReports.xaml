@@ -65,7 +65,7 @@
                                     </EventTrigger>
                                 </Button.Triggers>
                                 <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  VerticalAlignment="Top" Margin="0,-1,0,0" HorizontalAlignment="Center"
-                                       Width="25" Height="25"    x:Name="path_item" 
+                                       Width="25" Height="25"   FlowDirection="LeftToRight"  x:Name="path_item" 
  Data="M33,12c0-0.6,0.4-1,1-1h5c0.6,0,1,0.4,1,1c0,0.6-0.4,1-1,1h-5C33.4,13,33,12.6,33,12z M34,17h5c0.6,0,1-0.4,1-1
 	c0-0.6-0.4-1-1-1h-5c-0.6,0-1,0.4-1,1C33,16.6,33.4,17,34,17z M58,50v8H0v-8H58z M20,54c0-0.6-0.4-1-1-1H5c-0.6,0-1,0.4-1,1
 	s0.4,1,1,1h14C19.6,55,20,54.6,20,54z M55,54c0-0.6-0.4-1-1-1h-1c-0.6,0-1,0.4-1,1s0.4,1,1,1h1C54.6,55,55,54.6,55,54z M4,50h50v-4

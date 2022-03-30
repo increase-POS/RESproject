@@ -153,7 +153,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
             tt_update_Button.Content = AppSettings.resourcemanager.GetString("trUpdate");
             tt_delete_Button.Content = AppSettings.resourcemanager.GetString("trDelete");
 
-            tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");

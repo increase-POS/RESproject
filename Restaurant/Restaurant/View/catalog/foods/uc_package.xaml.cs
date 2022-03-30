@@ -142,11 +142,18 @@ namespace Restaurant.View.catalog.foods
 
         private void translate()
         {
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
 
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_details, AppSettings.resourcemanager.GetString("trDetailsHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, AppSettings.resourcemanager.GetString("trNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, AppSettings.resourcemanager.GetString("trCode"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, AppSettings.resourcemanager.GetString("trCode") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNote") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_tagId, AppSettings.resourcemanager.GetString("trTag") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_price, AppSettings.resourcemanager.GetString("trPrice") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_priceWithService, AppSettings.resourcemanager.GetString("trPriceWithService") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_barcode, AppSettings.resourcemanager.GetString("trBarcode") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_categoryId, AppSettings.resourcemanager.GetString("trCategorie") + "...");
 
 
             txt_contentInformatin.Text = AppSettings.resourcemanager.GetString("trMoreInformation");

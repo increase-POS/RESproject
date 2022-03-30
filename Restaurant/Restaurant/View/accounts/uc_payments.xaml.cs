@@ -331,7 +331,7 @@ namespace Restaurant.View.accounts
             dg_paymentsAccounts.Columns[3].Header = AppSettings.resourcemanager.GetString("trDate");
             dg_paymentsAccounts.Columns[4].Header = AppSettings.resourcemanager.GetString("trCashTooltip");
 
-            tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");

@@ -69,7 +69,7 @@
                                     </EventTrigger>
                                 </Button.Triggers>
                                 <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0,-1,0,0" HorizontalAlignment="Center"
-                                 Width="25" Height="25"   x:Name="path_coupons" 
+                                 Width="25" Height="25"  FlowDirection="LeftToRight"  x:Name="path_coupons" 
                                          Data="{StaticResource coupon}"  >
                                     <Path.ToolTip>
                                         <ToolTip x:Name="tt_coupon" Content="Coupon"
@@ -99,7 +99,7 @@
                                     </EventTrigger>
                                 </Button.Triggers>
                                 <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0,-1,0,0" HorizontalAlignment="Center"
-                                 Width="25" Height="25"   x:Name="path_offers" 
+                                 Width="25" Height="25"   FlowDirection="LeftToRight" x:Name="path_offers" 
                                          Data="{StaticResource offer}"  >
                                     <Path.ToolTip>
                                         <ToolTip x:Name="tt_offers" Content="Offers"

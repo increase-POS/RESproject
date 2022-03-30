@@ -127,7 +127,7 @@ namespace Restaurant.View.storage.stocktakingOperations
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fallCause, AppSettings.resourcemanager.GetString("trReasonOfShortageHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
 
-            tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");

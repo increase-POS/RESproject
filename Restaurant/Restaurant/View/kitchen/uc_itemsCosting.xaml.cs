@@ -128,6 +128,11 @@ namespace Restaurant.View.kitchen
             txt_price.Text = AppSettings.resourcemanager.GetString("trPrice");
             txt_priceWithService.Text = AppSettings.resourcemanager.GetString("trPriceWithService");
             txt_allMenu.Text = AppSettings.resourcemanager.GetString("trAll");
+            txt_appetizers.Text = AppSettings.resourcemanager.GetString("trAppetizers");
+            txt_beverages.Text = AppSettings.resourcemanager.GetString("trBeverages");
+            txt_fastFood.Text = AppSettings.resourcemanager.GetString("trFastFood");
+            txt_mainCourses.Text = AppSettings.resourcemanager.GetString("trMainCourses");
+            txt_desserts.Text = AppSettings.resourcemanager.GetString("trDesserts");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchTags, AppSettings.resourcemanager.GetString("trTagsHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
