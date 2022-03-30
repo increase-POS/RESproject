@@ -3071,7 +3071,7 @@
     <value>السعر مع الخدمة</value>
   </data>
   <data name="trPrimeCost" xml:space="preserve">
-    <value>Prime Cost</value>
+    <value>التكلفة الأولية</value>
   </data>
   <data name="trSaturday" xml:space="preserve">
     <value>السبت</value>
@@ -3630,5 +3630,41 @@
   </data>
   <data name="trReceives" xml:space="preserve">
     <value>السحوبات</value>
+  </data>
+  <data name="dishIngredients" xml:space="preserve">
+    <value>مكونات الطبق</value>
+  </data>
+  <data name="trRecipt" xml:space="preserve">
+    <value>استلام</value>
+  </data>
+  <data name="spendingOrderApprove" xml:space="preserve">
+    <value>الموافقة على أمر الصرف</value>
+  </data>
+  <data name="spendingOrderRequest" xml:space="preserve">
+    <value>طلب أمر صرف</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="trTag" xml:space="preserve">
+    <value>الوسم</value>
+  </data>
+  <data name="trOrdersWait" xml:space="preserve">
+    <value>طلبات في الانتظار</value>
+  </data>
+  <data name="trProcessType" xml:space="preserve">
+    <value>نوع العملية</value>
+  </data>
+  <data name="byMinutes" xml:space="preserve">
+    <value>بالدقيقة</value>
+  </data>
+  <data name="trPreparingTime" xml:space="preserve">
+    <value>وقت التحضير</value>
+  </data>
+  <data name="itemName" xml:space="preserve">
+    <value>اسم العنصر</value>
+  </data>
+  <data name="trItemLocationCollect" xml:space="preserve">
+    <value>عنصر, موقع, تجميع...</value>
   </data>
 </root>

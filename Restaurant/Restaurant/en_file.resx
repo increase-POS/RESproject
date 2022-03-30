@@ -2657,7 +2657,7 @@ Please add Email in setting</value>
     <value>Cash Customer</value>
   </data>
   <data name="trUnKnown" xml:space="preserve">
-    <value>UnKown</value>
+    <value>Unknown</value>
   </data>
   <data name="trQTR" xml:space="preserve">
     <value>QTY</value>
@@ -3654,5 +3654,38 @@ Please add Email in setting</value>
   </data>
   <data name="trReceives" xml:space="preserve">
     <value>Cash receipts</value>
+  </data>
+  <data name="dishIngredients" xml:space="preserve">
+    <value>Dish ingredients</value>
+  </data>
+  <data name="trRecipt" xml:space="preserve">
+    <value>Recipt</value>
+  </data>
+  <data name="spendingOrderApprove" xml:space="preserve">
+    <value>Spending order approve</value>
+  </data>
+  <data name="spendingOrderRequest" xml:space="preserve">
+    <value>Spending order request</value>
+  </data>
+  <data name="trTag" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="trOrdersWait" xml:space="preserve">
+    <value>Orders wait</value>
+  </data>
+  <data name="trProcessType" xml:space="preserve">
+    <value>Process Type</value>
+  </data>
+  <data name="byMinutes" xml:space="preserve">
+    <value>By minutes</value>
+  </data>
+  <data name="trPreparingTime" xml:space="preserve">
+    <value>Preparing time</value>
+  </data>
+  <data name="itemName" xml:space="preserve">
+    <value>Item name</value>
+  </data>
+  <data name="trItemLocationCollect" xml:space="preserve">
+    <value>Item, Location, Collect...</value>
   </data>
 </root>
