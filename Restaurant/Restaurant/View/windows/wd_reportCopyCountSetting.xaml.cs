@@ -188,7 +188,7 @@ namespace Restaurant.View.windows
                 msg = await setvalueModel.Save(sale_copy_countrow);
                 msg = await setvalueModel.Save(pur_copy_countrow);
                 msg = await setvalueModel.Save(rep_copy_countrow);
-
+                msg = await setvalueModel.Save(directentry_copy_countrow);
                 await refreshWindow();
                 await MainWindow.Getprintparameter();
                 if (msg > 0)

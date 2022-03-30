@@ -330,12 +330,22 @@ namespace Restaurant.View.windows
             {
                 show_header_row.value = "0";
             }
-            msg = await setvalueModel.Save(print_on_save_purrow);
+                if ((bool)tgl_directEntry.IsChecked)
+                {
+                    print_on_save_directentryrow.value = "1";
+
+                }
+                else
+                {
+                    print_on_save_directentryrow.value = "0";
+                }
+                msg = await setvalueModel.Save(print_on_save_purrow);
             msg = await setvalueModel.Save(print_on_save_salerow);
             msg = await setvalueModel.Save(email_on_save_purrow);
             msg = await setvalueModel.Save(email_on_save_salerow);
             msg = await setvalueModel.Save(show_header_row);
-            await Getprintparameter();
+                msg = await setvalueModel.Save(print_on_save_directentryrow);
+                await Getprintparameter();
             await MainWindow.Getprintparameter();
             if (msg > 0)
             {
