@@ -932,6 +932,9 @@ namespace Restaurant
 
         }
         #endregion
+        public static int _CachTransfersCount = 0;
+        string deliveryPermission = "salesOrders_delivery";
+
         public async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
@@ -1059,11 +1062,18 @@ namespace Restaurant
                 #endregion
 
                 #region notifications 
-                //setNotifications();
+                setNotifications();
                 setTimer();
                 #endregion
 
+                #region Permision
                 permission();
+                if (FillCombo.groupObject.HasPermissionAction(deliveryPermission, FillCombo.groupObjects, "one"))
+                    md_deliveryWaitConfirmUser.Visibility = Visibility.Visible;
+                else
+                    md_deliveryWaitConfirmUser.Visibility = Visibility.Collapsed;
+                #endregion
+
 
                 //SelectAllText
                 EventManager.RegisterClassHandler(typeof(System.Windows.Controls.TextBox), System.Windows.Controls.TextBox.GotKeyboardFocusEvent, new RoutedEventHandler(SelectAllText));
@@ -1144,6 +1154,9 @@ namespace Restaurant
                 Btn_home_Click(btn_home, null);
         }
         #region notifications
+        Invoice invoice = new Invoice();
+        int _OrdersWaitCount = 0;
+        int _NotCount = 0;
         private void setTimer()
         {
             notTimer = new DispatcherTimer();
@@ -1155,7 +1168,7 @@ namespace Restaurant
         {
             try
             {
-                //setNotifications();
+                setNotifications();
             }
             catch (Exception ex)
             {
@@ -1165,12 +1178,13 @@ namespace Restaurant
 
 
         }
-        /*
         private async void setNotifications()
         {
             try
             {
                 await refreshNotificationCount();
+                await setCashTransferNotification();
+                await refreshOrdersWaitNotification();
             }
             catch (Exception ex)
             {
@@ -1179,12 +1193,12 @@ namespace Restaurant
         }
         private async Task refreshNotificationCount()
         {
-            int notCount = await notificationUser.GetCountByUserId(userID.Value, "alert", posID.Value);
+            int notCount = await notificationUser.GetCountByUserId(userLogin.userId, "alert", posLogin.posId);
 
-            int previouseCount = 0;
-            if (md_notificationCount.Badge != null && md_notificationCount.Badge.ToString() != "") previouseCount = int.Parse(md_notificationCount.Badge.ToString());
+            //int previouseCount = 0;
+            //if (md_notificationCount.Badge != null && md_notificationCount.Badge.ToString() != "") previouseCount = int.Parse(md_notificationCount.Badge.ToString());
 
-            if (notCount != previouseCount)
+            if (notCount != _NotCount)
             {
                 if (notCount > 9)
                 {
@@ -1195,8 +1209,50 @@ namespace Restaurant
                 else
                     md_notificationCount.Badge = notCount.ToString();
             }
+            _NotCount = notCount;
         }
-        */
+        private async Task refreshOrdersWaitNotification()
+        {
+            try
+            {
+                string invoiceType = "s";
+                int ordersCount = await invoice.getDeliverOrdersCount(invoiceType, "ex", MainWindow.userLogin.userId);
+                //if (invoice != null && _InvoiceType == "s" && invoice.invoiceId != 0 )
+                //    ordersCount--;
+
+                if (ordersCount != _OrdersWaitCount)
+                {
+                    if (ordersCount > 9)
+                    {
+                        md_deliveryWaitConfirmUser.Badge = "+9";
+                    }
+                    else if (ordersCount == 0) md_deliveryWaitConfirmUser.Badge = "";
+                    else
+                        md_deliveryWaitConfirmUser.Badge = ordersCount.ToString();
+                }
+                _OrdersWaitCount = ordersCount;
+            }
+            catch { }
+        }
+        private async Task setCashTransferNotification()
+        {
+            try
+            {
+                #region get cachtransfers for current pos
+                CashTransfer cashModel = new CashTransfer();
+                IEnumerable<CashTransfer> cashesQuery;
+                cashesQuery = await cashModel.GetCashTransferForPosById("all", "p", (int)MainWindow.posLogin.posId);
+                cashesQuery = cashesQuery.Where(c => c.posId == MainWindow.posLogin.posId && c.isConfirm == 0);
+                int posCachTransfers = cashesQuery.Count();
+                #endregion
+
+                HelpClass.refreshNotification(md_transfers, ref _CachTransfersCount, posCachTransfers);
+            }
+            catch (Exception ex)
+            {
+                //SectionData.ExceptionMessage(ex, this);
+            }
+        }
         #endregion
         void timer_Idle(object sender, EventArgs e)
         {
@@ -2208,6 +2264,18 @@ namespace Restaurant
 
             HelpClass.EndAwait(grid_mainWindow);
         }
+        private void Btn_deliveryWaitConfirmUser_Click(object sender, RoutedEventArgs e)
+        {
+            HelpClass.StartAwait(grid_mainWindow);
+
+            Window.GetWindow(this).Opacity = 0.2;
+            wd_deliveryWaitConfirmUser w = new wd_deliveryWaitConfirmUser();
+            w.ShowDialog();
+            Window.GetWindow(this).Opacity = 1;
+
+            refreshOrdersWaitNotification();
+                HelpClass.EndAwait(grid_mainWindow);
+        }
         private void Btn_transfers_Click(object sender, RoutedEventArgs e)
         {
            
@@ -2739,8 +2807,9 @@ namespace Restaurant
 
             }
         }
+
         #endregion
 
-        
+       
     }
 }
