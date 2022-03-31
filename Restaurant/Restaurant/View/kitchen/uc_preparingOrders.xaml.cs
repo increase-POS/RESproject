@@ -267,6 +267,7 @@ namespace Restaurant.View.kitchen
                 dg_orders.SelectedIndex = -1;
                 itemsList = new List<ItemOrderPreparing>();
                 BuildOrderItemsDesign();
+                btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
                 btn_save.IsEnabled = false;
             }
             catch { }
@@ -778,18 +779,22 @@ namespace Restaurant.View.kitchen
             {
                 case "Listed":
                     gd_preparingTime.Visibility = Visibility.Visible;
+                    btn_save.Content = AppSettings.resourcemanager.GetString("trPreparing");
                     btn_save.IsEnabled = true;
                     break;
                 case "Preparing":
                     gd_preparingTime.Visibility = Visibility.Collapsed;
+                    btn_save.Content = AppSettings.resourcemanager.GetString("trReady");
                     btn_save.IsEnabled = true;
                     break;
                 case "Ready":
                     gd_preparingTime.Visibility = Visibility.Collapsed;
+                    btn_save.Content = AppSettings.resourcemanager.GetString("trCollected");
                     btn_save.IsEnabled = true;
                     break;
                 case "Collected":
                     gd_preparingTime.Visibility = Visibility.Collapsed;
+                    btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
                     btn_save.IsEnabled = false;
                     break;
             }
