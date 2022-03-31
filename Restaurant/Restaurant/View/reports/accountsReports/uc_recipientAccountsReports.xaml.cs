@@ -1196,6 +1196,8 @@ namespace Restaurant.View.reports.accountsReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        #region report
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -1214,27 +1216,27 @@ namespace Restaurant.View.reports.accountsReports
             {
                 if (selectedTab == 0)
                 {
-                    addpath = @"\Reports\StatisticReport\Accounts\Recipient\Ar\ArVendor.rdlc";
+                    addpath = @"\Reports\StatisticReport\Accounts\Paymetns\Ar\ArVendor.rdlc";
                     secondTitle = "vendors";
                 }
                 else if (selectedTab == 1)
                 {
-                    addpath = @"\Reports\StatisticReport\Accounts\Recipient\Ar\ArCustomer.rdlc";
+                    addpath = @"\Reports\StatisticReport\Accounts\Paymetns\Ar\ArCustomer.rdlc";
                     secondTitle = "customers";
                 }
                 else if (selectedTab == 2)
                 {
-                    addpath = @"\Reports\StatisticReport\Accounts\Recipient\Ar\ArUser.rdlc";
+                    addpath = @"\Reports\StatisticReport\Accounts\Paymetns\Ar\ArUser.rdlc";
                     secondTitle = "users";
                 }
                 else if (selectedTab == 3)
                 {
-                    addpath = @"\Reports\StatisticReport\Accounts\Recipient\Ar\ArAdministrativeDeposit.rdlc";
+                    addpath = @"\Reports\StatisticReport\Accounts\Paymetns\Ar\ArAdministrativePull.rdlc";
                     secondTitle = "AdministrativeDeposit";
                 }
                 else if (selectedTab == 4)
                 {
-                    addpath = @"\Reports\StatisticReport\Accounts\Recipient\Ar\ArShipping.rdlc";
+                    addpath = @"\Reports\StatisticReport\Accounts\Paymetns\Ar\ArShipping.rdlc";
                     secondTitle = "shipping";
                 }
             }
@@ -1242,27 +1244,27 @@ namespace Restaurant.View.reports.accountsReports
             {
                 if (selectedTab == 0)
                 {
-                    addpath = @"\Reports\StatisticReport\Accounts\Recipient\En\Vendor.rdlc";
+                    addpath = @"\Reports\StatisticReport\Accounts\Paymetns\En\Vendor.rdlc";
                     secondTitle = "vendors";
                 }
                 else if (selectedTab == 1)
                 {
-                    addpath = @"\Reports\StatisticReport\Accounts\Recipient\En\Customer.rdlc";
+                    addpath = @"\Reports\StatisticReport\Accounts\Paymetns\En\Customer.rdlc";
                     secondTitle = "customers";
                 }
                 else if (selectedTab == 2)
                 {
-                    addpath = @"\Reports\StatisticReport\Accounts\Recipient\En\User.rdlc";
+                    addpath = @"\Reports\StatisticReport\Accounts\Paymetns\En\User.rdlc";
                     secondTitle = "users";
                 }
                 else if (selectedTab == 3)
                 {
-                    addpath = @"\Reports\StatisticReport\Accounts\Recipient\En\AdministrativeDeposit.rdlc";
+                    addpath = @"\Reports\StatisticReport\Accounts\Paymetns\En\AdministrativePull.rdlc";
                     secondTitle = "AdministrativeDeposit";
                 }
                 else if (selectedTab == 4)
                 {
-                    addpath = @"\Reports\StatisticReport\Accounts\Recipient\En\Shipping.rdlc";
+                    addpath = @"\Reports\StatisticReport\Accounts\Paymetns\En\Shipping.rdlc";
                     secondTitle = "shipping";
                 }
             }
@@ -1319,10 +1321,10 @@ namespace Restaurant.View.reports.accountsReports
                     HelpClass.StartAwait(grid_main);
 
                 #region
-                /*
+                 
                 BuildReport();
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
-                */
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
+              
                 #endregion
 
                 
@@ -1413,7 +1415,7 @@ namespace Restaurant.View.reports.accountsReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
+        #endregion
         private void Cb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
