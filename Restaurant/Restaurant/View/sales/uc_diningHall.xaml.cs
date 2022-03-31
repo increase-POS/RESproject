@@ -34,6 +34,10 @@ namespace Restaurant.View.sales
         string invoicePermission = "saleInvoice_invoice";
         string addRangePermission = "copoun_invoice";
         string addTablePermission = "addTable_invoice";
+
+        #region for report
+        int prinvoiceId = 0;
+        #endregion
         public static uc_diningHall Instance
         {
             get
@@ -1099,7 +1103,7 @@ namespace Restaurant.View.sales
             catch { }
         }
         #endregion
-        #region adddraft - addInvoice - cancleInvoice - clear - table names - fillInvoiceInputs
+        #region adddraft - addInvoice - cancleInvoice - clear - table names - fillInvoiceInputs - validate invoice values
         private async Task addDraft()
         {
             if (billDetailsList.Count > 0 && _InvoiceType == "sd" && selectedTables.Count > 0)
@@ -1300,7 +1304,8 @@ namespace Restaurant.View.sales
             #region invoice items
             invoiceItems = await FillCombo.invoice.GetInvoicesItems(invoice.invoiceId);
             billDetailsList = new ObservableCollection<BillDetailsSales>();
-            foreach(ItemTransfer it in invoiceItems)
+            BuildBillDesign();
+            foreach (ItemTransfer it in invoiceItems)
             {
                 item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
                 addRowToBill(item, it.quantity);
@@ -1310,8 +1315,10 @@ namespace Restaurant.View.sales
                 btn_cancel.IsEnabled = true;
             #endregion
         }
+
+        
         #endregion
-        #region buttons new - orders - tables - customers - waiter - kitchen
+        #region buttons: new - orders - tables - customers - waiter - kitchen 
 
         private async void Btn_newDraft_Click(object sender, RoutedEventArgs e)
         {
@@ -1331,53 +1338,7 @@ namespace Restaurant.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Btn_pay_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                //if (FillCombo.groupObject.HasPermissionAction(invoicePermission, FillCombo.groupObjects, "one"))
-                //{
-                    if (MainWindow.posLogin.boxState == "o") // box is open
-                    {
-                        // هي واجهة الدفعات
-                        wd_multiplePayment w = new wd_multiplePayment();
-                        // w.ShowInTaskbar = false;
-                        w.ShowDialog();
-
-                        //if (selectedTables.Count == 0)
-                        //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trChooseTableFirst"), animation: ToasterAnimation.FadeIn);
-                        if (billDetailsList.Count > 0)
-                        {
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trAddInvoiceWithoutItems"), animation: ToasterAnimation.FadeIn);
-                        }
-                        else if (invoice.invoiceId != 0)
-                        {
-
-                            await addInvoice("s");
-                            await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns, invoice.invoiceId, "s");
-                            if (invoice.reservationId != null)
-                                await reservation.updateReservationStatus((long)invoice.reservationId, "close", MainWindow.userLogin.userId);
-
-                            // refresh pos balance
-                            await MainWindow.refreshBalance();
-
-                        }
-                    }
-                    else //box is closed
-                    {
-                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trBoxIsClosed"), animation: ToasterAnimation.FadeIn);
-                    }
-                //}
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+       
         private async void Btn_cancel_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -1637,7 +1598,152 @@ namespace Restaurant.View.sales
 
 
         #endregion
+        #region PAY
+        private async Task<bool> validateInvoiceValues()
+        {
+            if (decimal.Parse(tb_subtotal.Text) == 0)
+            {
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorTotalIsZeroToolTip"), animation: ToasterAnimation.FadeIn);
+                return false;
+            }
+            return true;
+        }
 
+        private decimal getCusAvailableBlnc(Agent customer)
+        {
+            decimal remain = 0;
+
+            decimal customerBalance = customer.balance;
+
+            if (customer.balanceType == 0)
+                remain = decimal.Parse(tb_total.Text) - (decimal)customerBalance;
+            else
+                remain = (decimal)customer.balance + decimal.Parse(tb_total.Text);
+            return remain;
+        }
+        private async Task saveConfiguredCashTrans(CashTransfer cashTransfer)
+        {
+            switch (cashTransfer.processType)
+            {
+                case "cash":// cash: update pos balance   
+                    MainWindow.posLogin.balance += invoice.totalNet;
+                    await MainWindow.posLogin.save(MainWindow.posLogin);
+
+                    cashTransfer.transType = "d"; //deposit
+                    cashTransfer.posId = MainWindow.posLogin.posId;
+                    cashTransfer.agentId = invoice.agentId;
+                    cashTransfer.invId = invoice.invoiceId;
+                    cashTransfer.transNum = await cashTransfer.generateCashNumber("dc");
+                    cashTransfer.side = "c"; // customer                    
+                    cashTransfer.createUserId = MainWindow.userLogin.userId;
+                    await cashTransfer.Save(cashTransfer); //add cash transfer   
+                    break;
+                case "balance":// balance: update customer balance
+                    //if (cb_company.SelectedIndex != -1 && companyModel.deliveryType.Equals("com"))
+                    //    await invoice.recordComSpecificPaidCash(invoice, "si", cashTransfer);
+                    //else
+                        await invoice.recordConfiguredAgentCash(invoice, "si", cashTransfer);
+                    break;
+                case "card": // card
+                    cashTransfer.transType = "d"; //deposit
+                    cashTransfer.posId = MainWindow.posLogin.posId;
+                    cashTransfer.agentId = invoice.agentId;
+                    cashTransfer.invId = invoice.invoiceId;
+                    cashTransfer.transNum = await cashTransfer.generateCashNumber("dc");
+                    cashTransfer.side = "c"; // customer
+                    cashTransfer.createUserId = MainWindow.userLogin.userId;
+                    await cashTransfer.Save(cashTransfer); //add cash transfer  
+                    break;
+            }
+        }
+        private async void Btn_pay_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //if (FillCombo.groupObject.HasPermissionAction(invoicePermission, FillCombo.groupObjects, "one"))
+                //{
+                if (MainWindow.posLogin.boxState == "o") // box is open
+                {
+                    if (await validateInvoiceValues())
+                    {
+                        refreshTotal();
+
+                        #region payment window
+                        Window.GetWindow(this).Opacity = 0.2;
+
+                        wd_multiplePayment w = new wd_multiplePayment();
+                        w.isPurchase = false;
+                        w.invoice.invType = _InvoiceType;
+                        w.invoice.totalNet = decimal.Parse(tb_total.Text);
+                        w.cards = FillCombo.cardsList;
+
+                        #region customer balance
+                        if (invoice.agentId != null)
+                        {
+                            await FillCombo.RefreshCustomers();
+
+                            var customer = FillCombo.customersList.ToList().Find(b => b.agentId == (int)invoice.agentId && b.isLimited == true);
+                            if (customer != null)
+                            {
+                                decimal remain = 0;
+                                if (customer.maxDeserve != 0)
+                                    remain = getCusAvailableBlnc(customer);
+                                w.hasCredit = true;
+                                w.creditValue = remain;
+                            }
+                            else
+                            {
+                                w.hasCredit = false;
+                                w.creditValue = 0;
+                            }
+                        }
+                        #endregion
+                        w.ShowDialog();
+                        Window.GetWindow(this).Opacity = 1;
+                        #endregion
+                        if (w.isOk)
+                        {
+                            await addInvoice("s");
+
+                            #region savepayment
+                            List<CashTransfer> paymentsList = new List<CashTransfer>();
+                            paymentsList = w.listPayments;
+                            foreach (var item in paymentsList)
+                            {
+                                await saveConfiguredCashTrans(item);
+                                invoice.paid += item.cash;
+                                invoice.deserved -= item.cash;
+                            }
+                            prinvoiceId = await invoice.saveInvoice(invoice);
+                            // refresh pos balance
+                            await MainWindow.refreshBalance();
+                            #endregion
+                            //await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns, invoice.invoiceId, "s");
+                            #region close reservation
+                            if (invoice.reservationId != null)
+                                await reservation.updateReservationStatus((long)invoice.reservationId, "close", MainWindow.userLogin.userId);
+                            #endregion
+
+                            clear();
+                        }                      
+                    }
+                }
+                else //box is closed
+                {
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trBoxIsClosed"), animation: ToasterAnimation.FadeIn);
+                }
+                //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        #endregion
 
     }
 }
