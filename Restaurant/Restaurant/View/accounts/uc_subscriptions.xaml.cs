@@ -250,7 +250,7 @@ namespace Restaurant.View.accounts
                 await RefreshSubscriptionsList();
                 await Search();
 
-                await Clear();
+                Clear();
 
             //    HelpClass.EndAwait(grid_main);
             //}
@@ -394,41 +394,34 @@ namespace Restaurant.View.accounts
          
                 if (dg_subscription.SelectedIndex != -1)
                 {
+                    cb_customerId.SelectedIndex = -1;
                     subscription = dg_subscription.SelectedItem as AgentMembershipCash;
                     btn_save.IsEnabled = false;
+                    HelpClass.clearValidate(p_error_monthsCount);
                     if (subscription != null)
                     {
                         if (subscription.subscriptionType.Equals("o"))
                         {
-                            cb_customerId.Visibility = Visibility.Collapsed;
-                            tb_customer.Visibility = Visibility.Visible;
+                            bdr_cbCustomer.Visibility = Visibility.Collapsed;
+                            cb_customerId.SelectedIndex = -1;
+                            bdr_tbCustomer.Visibility = Visibility.Visible;
                             tb_customer.Text = subscription.agentName;
                             tb_amount.Text = subscription.Amount.ToString();
                             cb_monthsCount.SelectedIndex = -1;
-                            cb_monthsCount.Visibility = Visibility.Collapsed;
+                            bdr_monthCount.Visibility = Visibility.Collapsed;
                         }
                         else
                         {
-                            cb_customerId.Visibility = Visibility.Visible;
-                            tb_customer.Visibility = Visibility.Collapsed;
+                            bdr_cbCustomer.Visibility = Visibility.Visible;
+                            bdr_tbCustomer.Visibility = Visibility.Collapsed;
                             tb_customer.Clear();
-                            cb_monthsCount.Visibility = Visibility.Visible;
+                            bdr_monthCount.Visibility = Visibility.Visible;
                             cb_customerId.SelectedValue = subscription.agentId;
-                            //Cb_customerId_SelectionChanged(cb_customerId,null);
-                            cb_monthsCount.SelectedValue = subscription.monthsCount;
-                            //Cb_monthsCount_SelectionChanged(cb_monthsCount , null);
                         }
-                        btn_save.IsEnabled = false;
-
-                        //ag = cb_customerId.SelectedItem as AgenttoPayCash;
 
                         cb_paymentProcessType.SelectedValue = subscription.processType;
-                        try
-                        {
-                            cashtrans = await cashtrans.GetByID(subscription.cashTransId.Value);
-                        }
-                        catch { }
 
+                        btn_save.IsEnabled = false;
 
                         tb_discount.Text = subscription.discountValue.ToString();
 
@@ -525,10 +518,13 @@ namespace Restaurant.View.accounts
         #endregion
 
         #region validate - clearValidate - textChange - lostFocus - . . . . 
-        async Task Clear()
+        void Clear()
         {
             cb_customerId.IsEnabled = true ;
             cb_customerId.SelectedIndex = -1;
+            bdr_cbCustomer.Visibility = Visibility.Visible;
+            bdr_tbCustomer.Visibility = Visibility.Collapsed;
+            tb_customer.Clear();
             cb_paymentProcessType.SelectedIndex = -1;
             btn_save.IsEnabled = true;
             tb_discount.Clear();
@@ -1115,7 +1111,20 @@ namespace Restaurant.View.accounts
                         cb_monthsCount.SelectedValuePath = "monthsCount";
                         cb_monthsCount.ItemsSource = subFees;
                         #endregion
-                    }
+                        if (subscription.monthsCount > 0)
+                            cb_monthsCount.SelectedValue = subscription.monthsCount;
+                        tb_amount.Text = subscription.Amount.ToString();
+                        try
+                        {
+                            if (!tb_discount.Text.Equals(""))
+                                _discount = decimal.Parse(tb_discount.Text);
+                            totalNet = decimal.Parse(tb_amount.Text) - _discount;
+                            txt_total.Text = totalNet.ToString();
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                }
                 }
 
             //}
