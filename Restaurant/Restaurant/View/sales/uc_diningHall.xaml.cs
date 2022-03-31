@@ -1037,7 +1037,7 @@ namespace Restaurant.View.sales
                 #endregion
                 totalDiscount = couponsDiscount + _ManualDiscount;
                 //tb_totalDiscount.Text = totalDiscount.ToString();
-                tb_totalDiscount.Text = HelpClass.PercentageDecTostring(totalDiscount);
+                tb_totalDiscount.Text = HelpClass.PercentageDecTostring(totalDiscount);              
             }
 
             total = _Sum - totalDiscount;
@@ -1214,8 +1214,21 @@ namespace Restaurant.View.sales
             #endregion
 
             invoice = new Invoice();
-            txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
 
+            #region return waiter button to default
+            txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
+            txt_waiter.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            path_waiter.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            #endregion
+            #region return customer button to default
+            txt_customer.Text = AppSettings.resourcemanager.GetString("trCustomer");
+            txt_customer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            path_customer.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            #endregion
+            #region return discount button to default
+            txt_discount.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            path_discount.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            #endregion
             //last
             BuildBillDesign();
             refreshTotal();
@@ -1243,7 +1256,19 @@ namespace Restaurant.View.sales
 
             #endregion
 
-            #region text values
+            #region text values and colors
+
+            if (_ManualDiscount > 0 || selectedCopouns.Count > 0)
+            {
+                txt_discount.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                path_discount.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            }
+            else
+            {
+                txt_discount.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                path_discount.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            }
+
             if (invoice.waiterId != null)
             {
                 if (FillCombo.usersList == null)
@@ -1358,6 +1383,7 @@ namespace Restaurant.View.sales
                 //if (FillCombo.groupObject.HasPermissionAction(invoicePermission, FillCombo.groupObjects, "one"))
                 //{
                     await addDraft();
+                clear();
                 //}
                 HelpClass.EndAwait(grid_main);
             }
@@ -1605,8 +1631,20 @@ namespace Restaurant.View.sales
                         selectedCopouns = w.selectedCopouns;
 
                         refreshTotal();
-                        #region update invoice
-                        invoice.discountValue = _ManualDiscount;
+                    #region change button Color
+                    if(w.manualDiscount > 0 || w.selectedCopouns.Count>0)
+                    {
+                        txt_discount.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                        path_discount.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                    }
+                    else
+                    {
+                        txt_discount.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                        path_discount.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                    }
+                    #endregion
+                    #region update invoice
+                    invoice.discountValue = _ManualDiscount;
                         invoice.discountType = _DiscountType;
 
                         invoice.total = _Sum;
