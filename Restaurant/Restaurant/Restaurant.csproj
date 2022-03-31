@@ -515,6 +515,9 @@
     <Compile Include="View\sales\uc_salesStatistic.xaml.cs">
       <DependentUpon>uc_salesStatistic.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\sales\uc_takeAway.xaml.cs">
+      <DependentUpon>uc_takeAway.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\sales\win_lvcSales.xaml.cs">
       <DependentUpon>win_lvcSales.xaml</DependentUpon>
     </Compile>
@@ -704,6 +707,9 @@
     <Compile Include="View\windows\wd_notifications.xaml.cs">
       <DependentUpon>wd_notifications.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_ordersReady.xaml.cs">
+      <DependentUpon>wd_ordersReady.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_previewPdf.xaml.cs">
       <DependentUpon>wd_previewPdf.xaml</DependentUpon>
     </Compile>
@@ -724,6 +730,9 @@
     </Compile>
     <Compile Include="View\windows\wd_selectCustomer.xaml.cs">
       <DependentUpon>wd_selectCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_selectDelivery.xaml.cs">
+      <DependentUpon>wd_selectDelivery.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_selectDiscount.xaml.cs">
       <DependentUpon>wd_selectDiscount.xaml</DependentUpon>
@@ -1118,6 +1127,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\sales\uc_takeAway.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\sales\win_lvcSales.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1370,6 +1383,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\windows\wd_ordersReady.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\windows\wd_previewPdf.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1397,6 +1414,10 @@
     <Page Include="View\windows\wd_selectCustomer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_selectDelivery.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_selectDiscount.xaml">
       <SubType>Designer</SubType>

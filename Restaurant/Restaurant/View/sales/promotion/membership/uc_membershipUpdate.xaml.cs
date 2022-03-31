@@ -150,6 +150,10 @@ namespace Restaurant.View.sales.promotion.membership
             txt_couponsCount.Text = AppSettings.resourcemanager.GetString("trCoupons");
             txt_offersCount.Text = AppSettings.resourcemanager.GetString("trOffers");
             txt_invoicesClassesCount.Text = AppSettings.resourcemanager.GetString("trInvoicesClasses");
+            txt_delivery.Text = AppSettings.resourcemanager.GetString("trDelivery");
+            txt_isFree.Text = AppSettings.resourcemanager.GetString("trFree");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_discountValue, AppSettings.resourcemanager.GetString("trDiscountValue"));
+
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
 
             dg_membership.Columns[0].Header = AppSettings.resourcemanager.GetString("trCode");

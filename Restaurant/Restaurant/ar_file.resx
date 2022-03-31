@@ -3667,4 +3667,25 @@
   <data name="trItemLocationCollect" xml:space="preserve">
     <value>عنصر, موقع, تجميع...</value>
   </data>
+  <data name="trArchivesShortfallsHint" xml:space="preserve">
+    <value>أرشيف, نواقص...</value>
+  </data>
+  <data name="trBranchItemHint" xml:space="preserve">
+    <value>فروع, عناصر...</value>
+  </data>
+  <data name="trItemsAgentsInvoiceHint" xml:space="preserve">
+    <value>عناصر, وكلاء, فواتير...</value>
+  </data>
+  <data name="trItemsHint" xml:space="preserve">
+    <value>عناصر...</value>
+  </data>
+  <data name="trItemsOperatorHint" xml:space="preserve">
+    <value>عناصر, عوامل...</value>
+  </data>
+  <data name="trItemCannotDelete" xml:space="preserve">
+    <value>لا يمكن حذف العنصر</value>
+  </data>
+  <data name="trPopCanceled" xml:space="preserve">
+    <value>تم إلغاء العملية بنجاح</value>
+  </data>
 </root>

@@ -99,13 +99,13 @@ namespace Restaurant.View.sales.reservations
         }
         #region loading
         List<keyValueBool> loadingList;
-        async Task loading_reservaitions()
+        async void loading_reservaitions()
         {
-            //try
+            try
             {
                 await refreshReservaitionsList();
             }
-            //catch { }
+            catch { }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_reservaitions"))
@@ -140,7 +140,7 @@ namespace Restaurant.View.sales.reservations
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "reservationDate", "reservationStartTime", "reservationEndTime", "personsCount" };
+                requiredControlList = new List<string> { "reservationDate", "reservationTime", "reservationEndTime", "personsCount" };
                 if (AppSettings.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -200,9 +200,11 @@ namespace Restaurant.View.sales.reservations
             dg_reservation.Columns[4].Header = AppSettings.resourcemanager.GetString("trCustomer");
             dg_reservation.Columns[5].Header = AppSettings.resourcemanager.GetString("trExceed");
             #endregion
+
             txt_title.Text = AppSettings.resourcemanager.GetString("trReservations");
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
             txt_tables.Text = AppSettings.resourcemanager.GetString("trTables");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customerId, AppSettings.resourcemanager.GetString("trCustomerHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_reservationDate, AppSettings.resourcemanager.GetString("trReservationDaterHint"));
@@ -219,6 +221,13 @@ namespace Restaurant.View.sales.reservations
             btn_exportToExcel.ToolTip = AppSettings.resourcemanager.GetString("trExcel");
             btn_preview.ToolTip = AppSettings.resourcemanager.GetString("trPreview");
             txt_count.ToolTip = AppSettings.resourcemanager.GetString("trCount");
+            txt_updateButton.Text = AppSettings.resourcemanager.GetString("trUpdate");
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
+
+            txt_tablesButton.Text = AppSettings.resourcemanager.GetString("trTables");
+            txt_confirmButton.Text = AppSettings.resourcemanager.GetString("trConfirm");
+            txt_cancelButton.Text = AppSettings.resourcemanager.GetString("trCancel_");
+
         }
         #region Update - confirm - Search - Tgl - Clear - DG_SelectionChanged - refresh
        
