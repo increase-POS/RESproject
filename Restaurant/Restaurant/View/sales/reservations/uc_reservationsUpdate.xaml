@@ -600,7 +600,8 @@
                                 <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                            Width="35" Height="35" FlowDirection="LeftToRight"
                            Data="{StaticResource table}"/>
-                                <TextBlock  Text="tables"  Grid.Row="1" 
+                                <TextBlock x:Name="txt_tablesButton"
+                                    Text="tables"  Grid.Row="1" 
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
                                                     Foreground="{StaticResource MainColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
@@ -634,7 +635,8 @@
                                 <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                            Width="35" Height="35" FlowDirection="LeftToRight"
                            Data="{StaticResource confirmReservation}"/>
-                                <TextBlock  Text="confirm"  Grid.Row="1" 
+                                    <TextBlock x:Name="txt_confirmButton"
+                                    Text="confirm"  Grid.Row="1" 
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
                                                     Foreground="{StaticResource MainColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>
@@ -651,7 +653,8 @@
                                 <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                            Width="35" Height="35" FlowDirection="LeftToRight"
                            Data="{StaticResource cancleReservation}"/>
-                                <TextBlock  Text="cancel"  Grid.Row="1" 
+                                    <TextBlock  x:Name="txt_cancelButton"
+                                    Text="cancel"  Grid.Row="1" 
                                                     FontWeight="Regular" FontSize="10" TextAlignment="Center"
                                                     Foreground="{StaticResource MainColor}"
                                                      HorizontalAlignment="Center" TextWrapping="Wrap"/>

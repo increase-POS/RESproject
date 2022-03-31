@@ -136,6 +136,7 @@ namespace Restaurant.View.sales.promotion.membership
         private void translate()
         {
             txt_title.Text = AppSettings.resourcemanager.GetString("trMembership");
+            txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
