@@ -498,6 +498,7 @@ namespace Restaurant.Classes
         #region User
         static public User user = new User();
         static public List<User> usersList;
+        //static public List<User> salesManList;
 
         static public async Task<IEnumerable<User>> RefreshUsers()
         {
@@ -530,6 +531,53 @@ namespace Restaurant.Classes
             cmb.SelectedValuePath = "userId";
             cmb.SelectedIndex = -1;
         }
+        //static public async Task<IEnumerable<User>> RefreshSalesMan()
+        //{
+        //    string deliveryPermission = "salesOrders_delivery";
+        //    salesManList = await user.getBranchSalesMan(MainWindow.branchLogin.branchId, deliveryPermission);
+        //    return salesManList;
+        //}
+        //static public async Task FillComboSalesMan(ComboBox cmb)
+        //{
+        //    if (salesManList is null)
+        //        await RefreshSalesMan();
+           
+        //    cmb.ItemsSource = salesManList;
+        //    cmb.DisplayMemberPath = "name";
+        //    cmb.SelectedValuePath = "userId";
+        //}
+
+
+        #endregion
+        #region ShippingCompanies
+        static public ShippingCompanies shippingCompanie = new ShippingCompanies();
+        static public List<ShippingCompanies> shippingCompaniesList;
+
+        static public async Task<IEnumerable<ShippingCompanies>> RefreshShippingCompanies()
+        {
+            shippingCompaniesList = await shippingCompanie.Get();
+            shippingCompaniesList = shippingCompaniesList.Where(X => X.isActive == 1).ToList();
+            return shippingCompaniesList;
+        }
+
+        static public async Task FillComboShippingCompanies(ComboBox cmb)
+        {
+            if (shippingCompaniesList is null)
+                await RefreshShippingCompanies();
+
+            var shippingCompanies = shippingCompaniesList.ToList();
+            shippingCompanie = new ShippingCompanies();
+            shippingCompanie.shippingCompanyId = 0;
+            shippingCompanie.name = "-";
+            shippingCompanies.Insert(0, shippingCompanie);
+            cmb.ItemsSource = shippingCompanies;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "shippingCompanyId";
+            cmb.SelectedIndex = -1;
+        }
+      
+
+
         #endregion
         #region ResidentialSectors
         static public ResidentialSectors residentialSec = new ResidentialSectors();
