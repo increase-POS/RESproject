@@ -269,17 +269,7 @@ namespace Restaurant.View.windows
                     if (HelpClass.validate(requiredControlList, this))
                     {
                         if (int.Parse(tb_count.Text) > 0)
-                        {
-                            preparingItemsList = new List<ItemOrderPreparing>();
-                            ItemOrderPreparing it = new ItemOrderPreparing()
-                            {
-                                itemUnitId = invoiceRow.itemUnitId,
-                                quantity = int.Parse(tb_count.Text),
-                                notes = tb_notes.Text,
-                                createUserId = MainWindow.userLogin.userId,
-                            };
-                            preparingItemsList.Add(it);
-
+                        {                         
                             await saveOrderPreparing(preparingItemsList);
                         }
                         else
@@ -305,43 +295,8 @@ namespace Restaurant.View.windows
             {
                 HelpClass.StartAwait(grid_main);
                 if (FillCombo.groupObject.HasPermissionAction(kitchenPermission, FillCombo.groupObjects, "send"))
-                {
-                    preparingItemsList = new List<ItemOrderPreparing>();
-                    //foreach (BillDetailsSales b in invoiceItemsList)
-                    //{
-                    //    int itemCountInOrder = 0;
-                    //    try { itemCountInOrder = orders.Where(x => x.itemUnitId == b.itemUnitId).Sum(x => x.quantity); }
-                    //    catch { }
-
-                    //    int remainingCount = b.Count - itemCountInOrder;
-                    //    if(remainingCount > 0)
-                    //    {
-                    //        ItemOrderPreparing it = new ItemOrderPreparing()
-                    //        {
-                    //            itemUnitId = b.itemUnitId,
-                    //            quantity = remainingCount,
-                    //            notes = tb_notes.Text,
-                    //            createUserId = MainWindow.userLogin.userId,
-                    //        };
-                    //        preparingItemsList.Add(it);
-                    //    }                      
-                    //}
-                    foreach (BillDetailsSales b in unSentInvoiceItems)
-                    {                    
-                        ItemOrderPreparing it = new ItemOrderPreparing()
-                        {
-                            itemUnitId = b.itemUnitId,
-                            quantity = b.Count,
-                            notes = tb_notes.Text,
-                            createUserId = MainWindow.userLogin.userId,
-                        };
-                        preparingItemsList.Add(it);
-                    }
-                    if (preparingItemsList.Count == 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trAllItemsListed"), animation: ToasterAnimation.FadeIn);
-
-                    else
-                        await saveOrderPreparing(preparingItemsList);
+                {                   
+                   await saveOrdersPreparing(preparingItemsList);
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -369,6 +324,17 @@ namespace Restaurant.View.windows
 
         async Task saveOrderPreparing(List<ItemOrderPreparing> orderItems)
         {
+            #region order Items
+            preparingItemsList = new List<ItemOrderPreparing>();
+            ItemOrderPreparing it = new ItemOrderPreparing()
+            {
+                itemUnitId = invoiceRow.itemUnitId,
+                quantity = int.Parse(tb_count.Text),
+                notes = tb_notes.Text,
+                createUserId = MainWindow.userLogin.userId,
+            };
+            preparingItemsList.Add(it);
+            #endregion
             #region preparing order object
             preparingOrder = new OrderPreparing();
             preparingOrder.invoiceId = invoiceId;
@@ -394,7 +360,57 @@ namespace Restaurant.View.windows
             }
             else
                 Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+        }
+        async Task saveOrdersPreparing(List<ItemOrderPreparing> orderItems)
+        {
+            #region order Items
+
+            preparingItemsList = new List<ItemOrderPreparing>();
+
+            foreach (BillDetailsSales b in unSentInvoiceItems)
+            {
+                ItemOrderPreparing it = new ItemOrderPreparing()
+                {
+                    itemUnitId = b.itemUnitId,
+                    quantity = b.Count,
+                    notes = tb_notes.Text,
+                    createUserId = MainWindow.userLogin.userId,
+                };
+                preparingItemsList.Add(it);
             }
+            if (preparingItemsList.Count == 0)
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trAllItemsListed"), animation: ToasterAnimation.FadeIn);
+
+            else
+            {
+                #endregion
+                #region preparing order object
+                preparingOrder = new OrderPreparing();
+                preparingOrder.invoiceId = invoiceId;
+                preparingOrder.notes = tb_notes.Text;
+                //preparingOrder.orderNum = await preparingOrder.generateOrderNumber("ko",MainWindow.branchLogin.code,MainWindow.branchLogin.branchId);///???
+                #endregion
+                #region order status object
+                orderPreparingStatus statusObject = new orderPreparingStatus();
+                statusObject.status = "Listed";
+                statusObject.notes = tb_notes.Text;
+                statusObject.createUserId = MainWindow.userLogin.userId;
+                #endregion
+
+                int res = await preparingOrder.savePreparingOrders(preparingOrder, orderItems, statusObject, MainWindow.branchLogin.branchId);
+                if (res > 0)
+                {
+                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+                    clear();
+                    await refreshPreparingOrders();
+                    fillInvoiceItems();
+
+                }
+                else
+                    Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+            }
+        }
 
         #endregion
 

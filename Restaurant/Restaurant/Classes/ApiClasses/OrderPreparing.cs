@@ -110,6 +110,19 @@ namespace Restaurant.Classes.ApiClasses
             parameters.Add("statusObject", myContent);
             return await APIResult.post(method, parameters);
         }
+        public async Task<int> savePreparingOrders(OrderPreparing order, List<ItemOrderPreparing> orderItems, orderPreparingStatus statusObject,int branchId)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "OrderPreparing/SaveOrdersWithItemsAndStatus";
+            var myContent = JsonConvert.SerializeObject(order);
+            parameters.Add("orderObject", myContent);
+            myContent = JsonConvert.SerializeObject(orderItems);
+            parameters.Add("itemsObject", myContent);
+            myContent = JsonConvert.SerializeObject(statusObject);
+            parameters.Add("statusObject", myContent);
+            parameters.Add("branchId", branchId.ToString());
+            return await APIResult.post(method, parameters);
+        }
         public async Task<int> editPreparingOrderAndStatus(OrderPreparing order, orderPreparingStatus statusObject)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
