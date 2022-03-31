@@ -1268,6 +1268,7 @@ namespace Restaurant.View.reports.accountsReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -1413,14 +1414,14 @@ namespace Restaurant.View.reports.accountsReports
                     HelpClass.StartAwait(grid_main);
 
                 #region
-                /*
+
                 BuildReport();
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
-                */
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
+
                 #endregion
 
-               
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -1503,6 +1504,7 @@ namespace Restaurant.View.reports.accountsReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
 
         private void Cb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
