@@ -2507,9 +2507,9 @@ namespace Restaurant
                 case "diningHall":
                     grid_main.Children.Add(uc_diningHall.Instance);
                     break;
-                //case "takeAway":
-                //    grid_main.Children.Add(uc_takeAway.Instance);
-                //    break;
+                case "takeAway":
+                    grid_main.Children.Add(uc_takeAway.Instance);
+                    break;
                 case "salesStatistic":
                     grid_main.Children.Add(uc_salesStatistic.Instance);
                     break;
