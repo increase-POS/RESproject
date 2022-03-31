@@ -1261,6 +1261,10 @@ Parameters!trValueDiscount.Value)
                 secondTitle = AppSettings.resourcemanagerreport.GetString("trBestSeller");
             else if (secondTitle == "MostPurchased")
                 secondTitle = AppSettings.resourcemanagerreport.GetString("trMostPurchased");
+            else if (secondTitle == "pull")
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trPull");
+            else if (secondTitle == "deposit")
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trDeposit");
             //////////////////////////////////////////////////////////////////////////////
             if (firstTitle == "" && secondTitle!="") {
                 trtext = secondTitle;
@@ -1626,7 +1630,15 @@ Parameters!trValueDiscount.Value)
             paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
             paramarr.Add(new ReportParameter("trPull", AppSettings.resourcemanagerreport.GetString("trPull")));
             paramarr.Add(new ReportParameter("trDeposit", AppSettings.resourcemanagerreport.GetString("trDeposit")));
+           
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
 
+            paramarr.Add(new ReportParameter("trType", AppSettings.resourcemanagerreport.GetString("trType")));
+            paramarr.Add(new ReportParameter("trAccoutant", AppSettings.resourcemanagerreport.GetString("trAccoutant")));
+            paramarr.Add(new ReportParameter("trBank", AppSettings.resourcemanagerreport.GetString("trBank")));
+            paramarr.Add(new ReportParameter("trUser", AppSettings.resourcemanagerreport.GetString("trUser")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trAmount", AppSettings.resourcemanagerreport.GetString("trAmount")));
 
         }
 
@@ -1675,6 +1687,13 @@ Parameters!trValueDiscount.Value)
 
             cashTransferProcessTypeConv(paramarr);
             DateFormConv(paramarr);
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("trPaymentTypeTooltip", AppSettings.resourcemanagerreport.GetString("trPaymentTypeTooltip")));
+            paramarr.Add(new ReportParameter("trAccoutant", AppSettings.resourcemanagerreport.GetString("trAccoutant")));
+            paramarr.Add(new ReportParameter("trRecipientTooltip", AppSettings.resourcemanagerreport.GetString("trRecipientTooltip")));
+            paramarr.Add(new ReportParameter("trCompany", AppSettings.resourcemanagerreport.GetString("trCompany")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trAmount", AppSettings.resourcemanagerreport.GetString("trAmount")));
 
         }
         public static void cashTransferStsPos(IEnumerable<CashTransferSts> cashTransfers, LocalReport rep, string reppath, List<ReportParameter> paramarr)
@@ -1694,7 +1713,8 @@ Parameters!trValueDiscount.Value)
             {
                 r.updateDate = DateTime.Parse(HelpClass.DateToString(r.updateDate));
                 r.cash = decimal.Parse(HelpClass.DecTostring(r.cash));
-
+                r.agentName = AgentUnKnownConvert(r.agentId, r.side, r.agentName);
+                r.agentCompany = AgentCompanyUnKnownConvert(r.agentId, r.side, r.agentCompany);
 
             }
             rep.DataSources.Add(new ReportDataSource("DataSetCashTransferSts", cashTransfers));
