@@ -882,11 +882,7 @@ namespace Restaurant.View.sales
                 _SequenceNum++;
             }
             sv_billDetail.Content = gridContainer;
-
-            if (billDetailsList.Count == 0)
-                btn_cancel.IsEnabled = true;
-            else
-                btn_cancel.IsEnabled = false;
+            
         }
         void buttonPlus_Click(object sender, RoutedEventArgs e)
         {
@@ -905,28 +901,39 @@ namespace Restaurant.View.sales
         {
             var button = sender as Button;
             int index = int.Parse(button.Tag.ToString().Replace("minus-", ""));
-           // index--;
-            if (billDetailsList[index].Count < 2)
+            int itemUnitId = billDetailsList[index].itemUnitId;
+            int sentToKitchenCount = sentInvoiceItems.Where(x => x.itemUnitId == itemUnitId).Select(x => x.Count).Sum();
+            // index--;
+            if (billDetailsList[index].Count <= sentToKitchenCount)
             {
-                billDetailsList.Remove(billDetailsList[index]);
-                int counter = 0;
-                foreach (var item in billDetailsList)
-                {
-                    item.index = counter;
-                    counter++;
-                }
-              
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trItemCannotDelete"), animation: ToasterAnimation.FadeIn);
             }
             else
             {
-                billDetailsList[index].Count--;
-                billDetailsList[index].Total = billDetailsList[index].Count * billDetailsList[index].Price;
-                editBillRow(index);
-                if (billDetailsList[index].Count == 1)
-                    refreshDeleteButtonInvoice(index, billDetailsList[index].Count);
+                if (billDetailsList[index].Count < 2)
+                {
+                    billDetailsList.Remove(billDetailsList[index]);
+                    int counter = 0;
+                    foreach (var item in billDetailsList)
+                    {
+                        item.index = counter;
+                        counter++;
+                    }
+
+                }
+                else
+                {
+                    billDetailsList[index].Count--;
+                    billDetailsList[index].Total = billDetailsList[index].Count * billDetailsList[index].Price;
+                    editBillRow(index);
+                    if (billDetailsList[index].Count == 1)
+                        refreshDeleteButtonInvoice(index, billDetailsList[index].Count);
+                }
+
+                BuildBillDesign();
+                refreshTotal();
             }
-            BuildBillDesign();
-            refreshTotal();
+           
         }
         void refreshDeleteButtonInvoice(int index,int count)
         {
@@ -1108,29 +1115,16 @@ namespace Restaurant.View.sales
         {
             if (billDetailsList.Count > 0 && _InvoiceType == "sd" && selectedTables.Count > 0)
             {
-                #region Accept
-                MainWindow.mainWindow.Opacity = 0.2;
-                wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                w.contentText = AppSettings.resourcemanager.GetString("trSaveInvoiceNotification");
-                w.ShowDialog();
-                MainWindow.mainWindow.Opacity = 1;
-                #endregion
-                if (w.isOk)
-                {
-                    await addInvoice("sd");
-                    clear();
-                    refreshOrdersNotification();
-                }
-                else
-                {
-                    clear();
-                }
+                await addInvoice("sd");
+                //clear();
+                refreshOrdersNotification();
+                
             }
-            else
-                clear();
+            //else
+            //    clear();
         }
 
-        async Task addInvoice(string invType)
+        async Task<int> addInvoice(string invType)
         {
             try
             {
@@ -1169,14 +1163,11 @@ namespace Restaurant.View.sales
                 }
                 #endregion
                 int res = await FillCombo.invoice.saveInvoiceWithItems(invoice, invoiceItems);
-                if(res > 0)
-                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                else
-                    Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                return res;
             }
             catch
             {
-
+                return 0;
             }
         }
         async Task cancleInvoice(string invType)
@@ -1314,9 +1305,48 @@ namespace Restaurant.View.sales
             if (invoiceItems.Count == 0)
                 btn_cancel.IsEnabled = true;
             #endregion
+
+            #region items sent to kitchen
+            await sentToKitchenItems();
+            #endregion
+
+            #region enable cancle button if no items sent to kitchen
+            if (kitchenOrders.Count == 0)
+                btn_cancel.IsEnabled = true;
+            else
+                btn_cancel.IsEnabled = false;
+            #endregion
+        }
+        List<BillDetailsSales> sentInvoiceItems = new List<BillDetailsSales>();
+        List<OrderPreparing> kitchenOrders = new List<OrderPreparing>();
+        OrderPreparing preparingOrder = new OrderPreparing();
+        async Task sentToKitchenItems()
+        {
+            kitchenOrders = await preparingOrder.GetInvoicePreparingOrders(invoice.invoiceId);
+
+            sentInvoiceItems = new List<BillDetailsSales>();
+            int index = 1;
+            foreach (ItemTransfer b in invoiceItems)
+            {
+
+                int itemCountInOrder = 0;
+                try { itemCountInOrder = kitchenOrders.Where(x => x.itemUnitId == b.itemUnitId).Sum(x => x.quantity); }
+                catch { }
+
+                //int remainingCount = (int)b.quantity - itemCountInOrder;
+
+                BillDetailsSales newBillRow = new BillDetailsSales()
+                {
+                    itemUnitId = (int) b.itemUnitId,
+                    itemName = b.itemName,
+                    index = index,
+                    Count = itemCountInOrder,
+                };
+                index++;
+                sentInvoiceItems.Add(newBillRow);
+            }
         }
 
-        
         #endregion
         #region buttons: new - orders - tables - customers - waiter - kitchen 
 
@@ -1367,6 +1397,9 @@ namespace Restaurant.View.sales
                 //if (FillCombo.groupObject.HasPermissionAction(addTablePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 //{
                     Window.GetWindow(this).Opacity = 0.2;
+
+                    await addDraft();// save invoice
+
                     wd_diningHallTables w = new wd_diningHallTables();
                     w.ShowDialog();
                     if (w.isOk == true)
@@ -1396,7 +1429,7 @@ namespace Restaurant.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_kitchen_Click(object sender, RoutedEventArgs e)
+        private async void Btn_kitchen_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -1405,7 +1438,9 @@ namespace Restaurant.View.sales
                 //if (FillCombo.groupObject.HasPermissionAction(addRangePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 //{
                     Window.GetWindow(this).Opacity = 0.2;
-                    wd_diningHallKitchen w = new wd_diningHallKitchen();
+                await addDraft();// save invoice
+
+                wd_diningHallKitchen w = new wd_diningHallKitchen();
 
                     w.invoiceItemsList = billDetailsList.ToList();
                     w.invoiceId = invoice.invoiceId;
@@ -1431,7 +1466,9 @@ namespace Restaurant.View.sales
                //if (FillCombo.groupObject.HasPermissionAction(addRangePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                //{
                     Window.GetWindow(this).Opacity = 0.2;
-                    wd_selectUser w = new wd_selectUser();
+                await addDraft();// save invoice
+
+                wd_selectUser w = new wd_selectUser();
                     w.userJob = "waiter";
                     if(invoice.waiterId != null)
                         w.userId = (int)invoice.waiterId;
@@ -1487,7 +1524,10 @@ namespace Restaurant.View.sales
                 //if (FillCombo.groupObject.HasPermissionAction(addRangePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 //{
                     Window.GetWindow(this).Opacity = 0.2;
-                    wd_selectCustomer w = new wd_selectCustomer();
+                await addDraft();// save invoice
+
+
+                wd_selectCustomer w = new wd_selectCustomer();
                     if(invoice.agentId != null)
                     w.customerId =(int) invoice.agentId;
                     w.ShowDialog();
@@ -1549,7 +1589,9 @@ namespace Restaurant.View.sales
                 //if (FillCombo.groupObject.HasPermissionAction(addRangePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 //{
                     Window.GetWindow(this).Opacity = 0.2;
-                    wd_selectDiscount w = new wd_selectDiscount();
+                await addDraft();// save invoice
+
+                wd_selectDiscount w = new wd_selectDiscount();
                     w._Sum = _Sum;
                     w.selectedCopouns = selectedCopouns;
                     w.manualDiscount = _ManualDiscount;
@@ -1704,28 +1746,34 @@ namespace Restaurant.View.sales
                         #endregion
                         if (w.isOk)
                         {
-                            await addInvoice("s");
-
-                            #region savepayment
-                            List<CashTransfer> paymentsList = new List<CashTransfer>();
-                            paymentsList = w.listPayments;
-                            foreach (var item in paymentsList)
+                            int res = await addInvoice("s");
+                            if (res > 0)
                             {
-                                await saveConfiguredCashTrans(item);
-                                invoice.paid += item.cash;
-                                invoice.deserved -= item.cash;
-                            }
-                            prinvoiceId = await invoice.saveInvoice(invoice);
-                            // refresh pos balance
-                            await MainWindow.refreshBalance();
-                            #endregion
-                            //await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns, invoice.invoiceId, "s");
-                            #region close reservation
-                            if (invoice.reservationId != null)
-                                await reservation.updateReservationStatus((long)invoice.reservationId, "close", MainWindow.userLogin.userId);
-                            #endregion
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
-                            clear();
+                                #region savepayment
+                                List<CashTransfer> paymentsList = new List<CashTransfer>();
+                                paymentsList = w.listPayments;
+                                foreach (var item in paymentsList)
+                                {
+                                    await saveConfiguredCashTrans(item);
+                                    invoice.paid += item.cash;
+                                    invoice.deserved -= item.cash;
+                                }
+                                prinvoiceId = await invoice.saveInvoice(invoice);
+                                // refresh pos balance
+                                await MainWindow.refreshBalance();
+                                #endregion
+                                //await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns, invoice.invoiceId, "s");
+                                #region close reservation
+                                if (invoice.reservationId != null)
+                                    await reservation.updateReservationStatus((long)invoice.reservationId, "close", MainWindow.userLogin.userId);
+                                #endregion
+
+                                clear();
+                            }
+                            else
+                                Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         }                      
                     }
                 }
