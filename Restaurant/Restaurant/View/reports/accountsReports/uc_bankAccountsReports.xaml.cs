@@ -782,9 +782,13 @@ namespace Restaurant.View.reports.accountsReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        #region report
+
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
+       
         private void BuildReport()
         {
             List<ReportParameter> paramarr = new List<ReportParameter>();
@@ -800,15 +804,17 @@ namespace Restaurant.View.reports.accountsReports
                 if (selectedTab == 0)
                 {
                     addpath = @"\Reports\StatisticReport\Accounts\Bank\Ar\ArDeposite.rdlc";
-                    secondTitle = "payments";
+                    
 
+                    secondTitle = "pull";
+                  
 
                 }
                 else if (selectedTab == 1)
                 {
                     addpath = @"\Reports\StatisticReport\Accounts\Bank\Ar\ArPull.rdlc";
-                    secondTitle = "recipient";
-
+                  
+                    secondTitle = "deposit";
                 }
 
             }
@@ -817,13 +823,13 @@ namespace Restaurant.View.reports.accountsReports
                 if (selectedTab == 0)
                 {
                     addpath = @"\Reports\StatisticReport\Accounts\Bank\En\Deposite.rdlc";
-                    secondTitle = "payments";
+                    secondTitle = "pull";
 
                 }
                 else if (selectedTab == 1)
                 {
                     addpath = @"\Reports\StatisticReport\Accounts\Bank\En\Pull.rdlc";
-                    secondTitle = "recipient";
+                    secondTitle = "deposit";
 
                 }
 
@@ -843,6 +849,7 @@ namespace Restaurant.View.reports.accountsReports
 
             rep.Refresh();
         }
+
 
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {//pdf
@@ -883,11 +890,12 @@ namespace Restaurant.View.reports.accountsReports
 
                 #region
                 BuildReport();
-                LocalReportExtensions.PrintToPrinter(rep);
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
+
                 #endregion
 
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -973,7 +981,7 @@ namespace Restaurant.View.reports.accountsReports
             }
         }
 
-
+        #endregion
 
 
     }
