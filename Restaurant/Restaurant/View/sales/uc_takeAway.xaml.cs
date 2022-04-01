@@ -1110,7 +1110,7 @@ namespace Restaurant.View.sales
         #region adddraft - addInvoice - cancleInvoice - clear - table names - fillInvoiceInputs - validate invoice values
         private async Task addDraft()
         {
-            if (billDetailsList.Count > 0 && _InvoiceType == "sd" && selectedTables.Count > 0)
+            if (billDetailsList.Count > 0 && _InvoiceType == "sd")
             {
                 await addInvoice("sd");
                 //clear();
