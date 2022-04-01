@@ -1099,11 +1099,8 @@ namespace Restaurant.View.sales
         {
             try
             {
-                string invoiceType = "sd";
-                int duration = 1;
-                int ordersCount = await FillCombo.invoice.GetCountByCreator(invoiceType, MainWindow.userLogin.userId, duration);
-                if (FillCombo.invoice != null && _InvoiceType == "sd" && FillCombo.invoice != null && FillCombo.invoice.invoiceId != 0 && !isFromReport)
-                    ordersCount--;
+                string status = "Ready";
+                int ordersCount = await preparingOrder.GetOrderCount(status, MainWindow.branchLogin.branchId);
 
                 HelpClass.refreshNotification(md_ordersAlerts, ref _OrderCount, ordersCount);
             }

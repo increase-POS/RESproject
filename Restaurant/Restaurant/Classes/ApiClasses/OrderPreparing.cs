@@ -172,5 +172,24 @@ namespace Restaurant.Classes.ApiClasses
             }
             return count;
         }
+        public async Task<int> GetOrderCount(string status, int branchId)
+        {
+            int count = 0;
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("status", status);
+            parameters.Add("branchId", branchId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("OrderPreparing/GetCountPreparingOrders", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    count = int.Parse(c.Value);
+                    break;
+                }
+            }
+            return count;
+        }
     }
 }
