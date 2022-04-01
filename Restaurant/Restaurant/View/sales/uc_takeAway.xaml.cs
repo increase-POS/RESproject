@@ -248,14 +248,10 @@ namespace Restaurant.View.sales
         {
             try
             {
-                if (item != null && selectedTables.Count > 0)
-                {
-                    item = items.Where(x => x.itemId == itemId).FirstOrDefault();
-                    addRowToBill(item, 1);
-                }
-                else if (selectedTables.Count == 0)
-                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trChooseTableFirst"), animation: ToasterAnimation.FadeIn);
 
+                item = items.Where(x => x.itemId == itemId).FirstOrDefault();
+                addRowToBill(item, 1);
+ 
             }
             catch { }
         }
@@ -1859,10 +1855,10 @@ namespace Restaurant.View.sales
                                 await MainWindow.refreshBalance();
                                 #endregion
                                 //await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns, invoice.invoiceId, "s");
-                                #region close reservation
-                                if (invoice.reservationId != null)
-                                    await reservation.updateReservationStatus((long)invoice.reservationId, "close", MainWindow.userLogin.userId);
-                                #endregion
+                                //#region close reservation
+                                //if (invoice.reservationId != null)
+                                //    await reservation.updateReservationStatus((long)invoice.reservationId, "close", MainWindow.userLogin.userId);
+                                //#endregion
 
                                 clear();
                             }
