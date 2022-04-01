@@ -1,5 +1,6 @@
 ﻿using netoaster;
 using Restaurant.Classes;
+using Restaurant.Classes.ApiClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,8 +33,9 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        CashTransfer cashModel = new CashTransfer();
-        IEnumerable<CashTransfer> cashesQuery;
+      
+        OrderPreparing preparingOrder = new OrderPreparing();
+        List<OrderPreparing> orders = new List<OrderPreparing>();
         private void HandleKeyPress(object sender, KeyEventArgs e)
         {
             try
@@ -79,27 +81,17 @@ namespace Restaurant.View.windows
         private void translat()
         {
             txt_title.Text = AppSettings.resourcemanager.GetString("trOrders");
-            dg_transfers.Columns[0].Header = AppSettings.resourcemanager.GetString("trOrders");
-            dg_transfers.Columns[1].Header = AppSettings.resourcemanager.GetString("trTable");
-            dg_transfers.Columns[2].Header = AppSettings.resourcemanager.GetString("trWaiter");
+            dg_orders.Columns[0].Header = AppSettings.resourcemanager.GetString("trOrders");
+            dg_orders.Columns[1].Header = AppSettings.resourcemanager.GetString("trTable");
+            dg_orders.Columns[2].Header = AppSettings.resourcemanager.GetString("trWaiter");
 
         }
 
-        async Task fillDataGrid()
+        async Task fillDataGrid() 
         {
-            //cashesQuery = cashesQuery.Where(c => c.posId == MainWindow.posLogin.posId && c.isConfirm == 0);
+            orders = await preparingOrder.GetPreparingOrdersWithStatus(MainWindow.branchLogin.branchId, "Ready");
 
-            //foreach (var c in cashesQuery)
-            //{
-            //    if (c.transType.Equals("p"))
-            //    {
-            //        string s = c.posName;
-            //        c.posName = c.pos2Name;
-            //        c.pos2Name = s;
-            //    }
-            //}
-
-            //dg_transfers.ItemsSource = cashesQuery;
+            dg_orders.ItemsSource = orders;
         }
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
