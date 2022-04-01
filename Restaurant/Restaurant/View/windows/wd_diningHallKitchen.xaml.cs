@@ -270,7 +270,7 @@ namespace Restaurant.View.windows
                     {
                         if (int.Parse(tb_count.Text) > 0)
                         {                         
-                            await saveOrderPreparing(preparingItemsList);
+                            await saveOrderPreparing();
                         }
                         else
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trMustBeMoreThanZero"), animation: ToasterAnimation.FadeIn);
@@ -296,7 +296,7 @@ namespace Restaurant.View.windows
                 HelpClass.StartAwait(grid_main);
                 if (FillCombo.groupObject.HasPermissionAction(kitchenPermission, FillCombo.groupObjects, "send"))
                 {                   
-                   await saveOrdersPreparing(preparingItemsList);
+                   await saveOrdersPreparing();
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -322,7 +322,7 @@ namespace Restaurant.View.windows
             btn_send.IsEnabled = false;
         }
 
-        async Task saveOrderPreparing(List<ItemOrderPreparing> orderItems)
+        async Task saveOrderPreparing()
         {
             #region order Items
             preparingItemsList = new List<ItemOrderPreparing>();
@@ -348,7 +348,7 @@ namespace Restaurant.View.windows
             statusObject.createUserId = MainWindow.userLogin.userId;
             #endregion
 
-            int res = await preparingOrder.savePreparingOrder(preparingOrder, orderItems,statusObject);
+            int res = await preparingOrder.savePreparingOrder(preparingOrder, preparingItemsList,statusObject);
             if (res > 0)
             {
                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
@@ -361,7 +361,7 @@ namespace Restaurant.View.windows
             else
                 Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
         }
-        async Task saveOrdersPreparing(List<ItemOrderPreparing> orderItems)
+        async Task saveOrdersPreparing()
         {
             #region order Items
 
@@ -397,7 +397,7 @@ namespace Restaurant.View.windows
                 statusObject.createUserId = MainWindow.userLogin.userId;
                 #endregion
 
-                int res = await preparingOrder.savePreparingOrders(preparingOrder, orderItems, statusObject, MainWindow.branchLogin.branchId);
+                int res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId);
                 if (res > 0)
                 {
                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
