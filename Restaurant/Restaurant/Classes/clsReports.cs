@@ -1679,6 +1679,14 @@ Parameters!trValueDiscount.Value)
             cashTransferStatSts(cashTransfers, rep, reppath);
 
             paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo")));
+            paramarr.Add(new ReportParameter("trTransferNumberTooltip", AppSettings.resourcemanagerreport.GetString("trTransferNumberTooltip")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trDescription", AppSettings.resourcemanagerreport.GetString("trDescription")));
+            paramarr.Add(new ReportParameter("trPayment", AppSettings.resourcemanagerreport.GetString("trPayment")));
+            paramarr.Add(new ReportParameter("trCashTooltip", AppSettings.resourcemanagerreport.GetString("trCashTooltip")));
+
+
 
 
         }
@@ -1731,13 +1739,38 @@ Parameters!trValueDiscount.Value)
                 r.updateDate = DateTime.Parse(HelpClass.DateToString(r.updateDate));
                 r.cash = decimal.Parse(HelpClass.DecTostring(r.cash));
 
-              //  r.paymentreport = StsStatementPaymentConvert(r.Description3);
+                r.paymentreport = processTypeAndCardConverter(r.Description3, r.cardName);
 
 
             }
             rep.DataSources.Add(new ReportDataSource("DataSetCashTransferSts", cashTransfers));
         }
+        public static string processTypeAndCardConverter(string processType, string cardName)
+        {
+            string pType = processType;
+            string cName = cardName;
 
+            switch (pType)
+            {
+                case "cash": return AppSettings.resourcemanagerreport.GetString("trCash");
+                //break;
+                case "doc": return AppSettings.resourcemanagerreport.GetString("trDocument");
+                //break;
+                case "cheque": return AppSettings.resourcemanagerreport.GetString("trCheque");
+                //break;
+                case "balance": return AppSettings.resourcemanagerreport.GetString("trCredit");
+                //break;
+                case "card": return cName;
+                //break;
+                case "inv": return AppSettings.resourcemanagerreport.GetString("trInv");
+                case "multiple": return AppSettings.resourcemanagerreport.GetString("trMultiplePayment");
+
+                //break;
+                default: return pType;
+                    //break;
+            }
+
+        }
         public static void FundStsReport(IEnumerable<BalanceSTS> query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             rep.ReportPath = reppath;
@@ -1751,6 +1784,9 @@ Parameters!trValueDiscount.Value)
             rep.DataSources.Add(new ReportDataSource("DataSetBalanceSTS", query));
             paramarr.Add(new ReportParameter("title", AppSettings.resourcemanagerreport.GetString("trBalance")));
             paramarr.Add(new ReportParameter("Currency", AppSettings.Currency));
+            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
+            paramarr.Add(new ReportParameter("trPOS", AppSettings.resourcemanagerreport.GetString("trPOS")));
+            paramarr.Add(new ReportParameter("trBalance", AppSettings.resourcemanagerreport.GetString("trBalance")));
 
 
         }

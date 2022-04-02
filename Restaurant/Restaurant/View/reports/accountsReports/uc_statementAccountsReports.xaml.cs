@@ -680,6 +680,7 @@ namespace Restaurant.View.reports.accountsReports
             }
         }
 
+        #region report email
         private void Btn_emailMessage_Click(object sender, RoutedEventArgs e)
         {//email
             try
@@ -857,6 +858,13 @@ namespace Restaurant.View.reports.accountsReports
                         }
                     }
                 }
+                else
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoEmailForThisDept"), animation: ToasterAnimation.FadeIn);
+                    });
+                }
             }
             else
             {
@@ -865,6 +873,8 @@ namespace Restaurant.View.reports.accountsReports
                 });
             }
         }
+
+
 
         private void Btn_preview_Click(object sender, RoutedEventArgs e)
         {//preview
@@ -901,6 +911,8 @@ namespace Restaurant.View.reports.accountsReports
             }
         }
 
+
+
         private void BuildReport()
         {
             List<ReportParameter> paramarr = new List<ReportParameter>();
@@ -914,12 +926,12 @@ namespace Restaurant.View.reports.accountsReports
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
             {
-                addpath = @"\Reports\StatisticReport\Accounts\AccountStatement\Ar\ArAccStatement.rdlc";
+                addpath = @"\Reports\StatisticReport\Accounts\AccountStatement\Ar\ArStatement.rdlc";
 
             }
             else
             {
-                addpath = @"\Reports\StatisticReport\Accounts\AccountStatement\En\AccStatement.rdlc";
+                addpath = @"\Reports\StatisticReport\Accounts\AccountStatement\En\EnStatement.rdlc";
 
             }
             if (selectedTab == 0)
@@ -1079,5 +1091,7 @@ namespace Restaurant.View.reports.accountsReports
                 }
             });
         }
+
+        #endregion
     }
 }

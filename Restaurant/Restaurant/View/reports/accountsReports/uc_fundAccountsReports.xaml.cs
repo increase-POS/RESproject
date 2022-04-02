@@ -420,7 +420,7 @@ namespace Restaurant.View.reports.accountsReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
+        #region report
         private void BuildReport()
         {
             List<ReportParameter> paramarr = new List<ReportParameter>();
@@ -591,6 +591,8 @@ namespace Restaurant.View.reports.accountsReports
             }
         }
 
+
+# endregion
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh
             try
