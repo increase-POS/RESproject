@@ -766,8 +766,8 @@
                     <Border Grid.Row="2">
 
                         <Button x:Name="btn_add"  materialDesign:ButtonAssist.CornerRadius="7"
-                          Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
-                    Margin="1,1" Click="Btn_add_Click" Foreground="White" >
+                                Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                                Margin="1,1" Click="Btn_add_Click" Foreground="White" >
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <materialDesign:PackIcon Name="txt_add_Icon" Kind="PlusThick" Foreground="White" VerticalAlignment="Center" Width="15"  Height="15" Margin="0,1,2,0">
 

@@ -59,8 +59,6 @@ namespace Restaurant.View.accounts
 
         IEnumerable<AgentMembershipCash> subscriptions;
         IEnumerable<AgentMembershipCash> subscriptionsQuery;
-        //IEnumerable<SubscriptionFees> subscriptionsQueryExcel;
-        CashTransfer cashtrans = new CashTransfer();
         AgentMembershipCash subscription = new AgentMembershipCash();
         string searchText = "";
         byte tgl_subscriptionState;
@@ -208,9 +206,9 @@ namespace Restaurant.View.accounts
         }
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 requiredControlList = new List<string> { "customerId" , "monthsCount" , "amount" , "paymentProcessType" };
 
@@ -252,13 +250,13 @@ namespace Restaurant.View.accounts
 
                 Clear();
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         async Task fillCustomersToPay()
@@ -270,20 +268,20 @@ namespace Restaurant.View.accounts
         }
         private async void dp_SelectedStartDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 await RefreshSubscriptionsList();
                 await Search();
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void translate()
@@ -388,16 +386,16 @@ namespace Restaurant.View.accounts
         }
         private async void Dg_subscription_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
-         
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
                 if (dg_subscription.SelectedIndex != -1)
                 {
                     cb_customerId.SelectedIndex = -1;
                     subscription = dg_subscription.SelectedItem as AgentMembershipCash;
                     btn_save.IsEnabled = false;
-                    HelpClass.clearValidate(p_error_monthsCount);
+                    
                     if (subscription != null)
                     {
                         if (subscription.subscriptionType.Equals("o"))
@@ -431,13 +429,15 @@ namespace Restaurant.View.accounts
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.clearValidate(p_error_monthsCount);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
@@ -629,151 +629,6 @@ namespace Restaurant.View.accounts
         #endregion
 
 
-        #region barcode
-        /*List<ItemUnit> barcodesList;
-        static private int _InternalCounter = 0;
-        private Boolean checkBarcodeValidity(string barcode)
-        {
-            if (FillCombo.itemUnitList != null)
-            {
-                var exist = FillCombo.itemUnitList.Where(x => x.barcode == barcode && x.itemId != item.itemId).FirstOrDefault();
-                if (exist != null)
-                    return false;
-                else
-                    return true;
-            }
-            return true;
-        }
-        */
-        private void Tb_barcode_KeyDown(object sender, KeyEventArgs e)
-        {
-            /*
-            try
-            {
-                TextBox tb = (TextBox)sender;
-                string barCode = tb_barcode.Text;
-                if (e.Key == Key.Return && barCode.Length == 13)
-                {
-                    if (isBarcodeCorrect(barCode) == false)
-                    {
-                        item.barcode = "";
-                        this.DataContext = item;
-
-                    }
-                    else
-                        drawBarcode(barCode);
-                }
-                else if (barCode.Length == 13 || barCode.Length == 12)
-                    drawBarcode(barCode);
-                else
-                    drawBarcode("");
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.ExceptionMessage(ex, this);
-            }
-            */
-        }
-        /*
-        private bool isBarcodeCorrect(string barCode)
-        {
-            char checkDigit;
-            char[] barcodeData;
-
-            char cd = barCode[0];
-            barCode = barCode.Substring(1);
-            barcodeData = barCode.ToCharArray();
-            checkDigit = Mod10CheckDigit(barcodeData);
-
-            if (checkDigit != cd)
-            {
-                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorBarcodeToolTip"), animation: ToasterAnimation.FadeIn);
-                return false;
-            }
-            else
-                return true;
-        }
-        public static char Mod10CheckDigit(char[] data)
-        {
-            // Start the checksum calculation from the right most position.
-            int factor = 3;
-            int weight = 0;
-            int length = data.Length;
-
-            for (int i = 0; i <= length - 1; i++)
-            {
-                weight += (data[i] - '0') * factor;
-                factor = (factor == 3) ? 1 : 3;
-            }
-
-            return (char)(((10 - (weight % 10)) % 10) + '0');
-
-        }
-        private void drawBarcode(string barcodeStr)
-        {
-            try
-            {
-                // configur check sum metrics
-                BarcodeSymbology s = BarcodeSymbology.CodeEan13;
-
-                BarcodeDraw drawObject = BarcodeDrawFactory.GetSymbology(s);
-
-                BarcodeMetrics barcodeMetrics = drawObject.GetDefaultMetrics(60);
-                barcodeMetrics.Scale = 2;
-
-                if (barcodeStr != "")
-                {
-                    if (barcodeStr.Length == 13)
-                        barcodeStr = barcodeStr.Substring(1);//remove check sum from barcode string
-                    var barcodeImage = drawObject.Draw(barcodeStr, barcodeMetrics);
-
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        barcodeImage.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                        byte[] imageBytes = ms.ToArray();
-
-                        img_barcode.Source = ImageProcess.ByteToImage(imageBytes);
-                    }
-                }
-                else
-                    img_barcode.Source = null;
-            }
-            catch { img_barcode.Source = null; }
-
-        }
-        private async void generateBarcode()
-        {
-            string barcodeString = "";
-            barcodeString = generateRandomBarcode();
-            if (FillCombo.itemUnitList != null)
-            {
-                if (!checkBarcodeValidity(barcodeString))
-                    barcodeString = generateRandomBarcode();
-            }
-            item.barcode = barcodeString;
-            this.DataContext = item;
-            //tb_barcode.Text = barcodeString;
-            HelpClass.validateEmpty("trErrorEmptyBarcodeToolTip", p_error_barcode);
-            drawBarcode(tb_barcode.Text);
-        }
-        static public string generateRandomBarcode()
-        {
-            var now = DateTime.Now;
-
-            var days = (int)(now - new DateTime(2000, 1, 1)).TotalDays;
-            var seconds = (int)(now - DateTime.Today).TotalSeconds;
-
-            var counter = _InternalCounter++ % 100;
-            string randomBarcode = days.ToString("00000") + seconds.ToString("00000") + counter.ToString("00");
-            char[] barcodeData = randomBarcode.ToCharArray();
-            char checkDigit = Mod10CheckDigit(barcodeData);
-            return checkDigit + randomBarcode;
-
-        }
-        */
-        #endregion
-
         private void Cb_customerId_KeyUp(object sender, KeyEventArgs e)
         {
             try
@@ -789,18 +644,10 @@ namespace Restaurant.View.accounts
         string _docNum = "";
         private async void Cb_paymentProcessType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //try
-            //{
-                //    HelpClass.StartAwait(grid_main);
-                //TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
-                //if (elapsed.TotalMilliseconds > 100 && cb_paymentProcessType.SelectedIndex != -1)
-                //{
-                //    _SelectedPaymentType = cb_paymentProcessType.SelectedValue.ToString();
-                //}
-                //else
-                //{
-                //    cb_paymentProcessType.SelectedValue = _SelectedPaymentType;
-                //}
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
                 HelpClass.clearValidate(requiredControlList, this);
                 if (requiredControlList.Contains("docNumCheque"))
                     requiredControlList.Remove("docNumCheque");
@@ -819,7 +666,6 @@ namespace Restaurant.View.accounts
                         _docNum = "";
                         tb_processNum.Clear();
                         txt_card.Text = "";
-                        //requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType" };
                         break;
 
                     case 1://cheque
@@ -865,14 +711,14 @@ namespace Restaurant.View.accounts
 
                 HelpClass.validate(requiredControlList, this);
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
 
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
@@ -1027,7 +873,6 @@ namespace Restaurant.View.accounts
                 subFee = cb_monthsCount.SelectedItem as SubscriptionFees;
                 if (subFee != null)
                 {
-                    //this.DataContext = 
                     txt_total.Text = subFee.Amount.ToString();
                     tb_amount.Text = subFee.Amount.ToString();
                     _monthCount = (int)cb_monthsCount.SelectedValue;
@@ -1054,8 +899,8 @@ namespace Restaurant.View.accounts
 
         private async void Cb_customerId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select customer
-            //try
-            //{
+            try
+            {
                 #region clear
                 tb_amount.Text = "";
                 txt_total.Text = "0";
@@ -1124,14 +969,15 @@ namespace Restaurant.View.accounts
                         catch (Exception ex)
                         {
                         }
+                    }
                 }
-                }
+                HelpClass.clearValidate(p_error_monthsCount);
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
 
@@ -1311,29 +1157,28 @@ namespace Restaurant.View.accounts
         {//pie
             try
             {
-               // HelpClass.StartAwait(grid_main);
-               // /////////////////////
-               // if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
-               // {
-               //     Window.GetWindow(this).Opacity = 0.2;
-               //     //cashesQueryExcel = cashesQuery.ToList();
-               //win_IvcAccount win = new win_IvcAccount(subscriptionsQuery, 1);
-               //     // // w.ShowInTaskbar = false;
-               //     win.ShowDialog();
-               //     Window.GetWindow(this).Opacity = 1;
-               // }
-               // else
-               //     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-               // /////////////////////
+                HelpClass.StartAwait(grid_main);
+                /////////////////////
+                if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
+                {
+                    Window.GetWindow(this).Opacity = 0.2;
+                    win_IvcAccount win = new win_IvcAccount(subscriptions, 3);
+                    win.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                /////////////////////
 
-               // HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+
+
         }
 
         #endregion

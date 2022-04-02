@@ -242,6 +242,7 @@ namespace Restaurant.View.sectionData.persons
                         Clear();
                         await RefreshCustomersList();
                         await Search();
+                            FillCombo.customersList = agents.ToList();
                     }
                 }
                 HelpClass.EndAwait(grid_main);
@@ -310,21 +311,22 @@ namespace Restaurant.View.sectionData.persons
                             Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                             await RefreshCustomersList();
                             await Search();
-                                if (openFileDialog.FileName != "")
-                                {
-                                int agentId = s;
-                                string b = await agent.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + agentId.ToString()), agentId);
-                                agent.image = b;
-                                //isImgPressed = false;
-                                if (!b.Equals(""))
-                                {
-                                     getImg();
-                                }
-                                else
-                                {
-                                    HelpClass.clearImg(btn_image);
-                                }
+                            FillCombo.customersList = agents.ToList();
+                            if (openFileDialog.FileName != "")
+                            {
+                            int agentId = s;
+                            string b = await agent.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + agentId.ToString()), agentId);
+                            agent.image = b;
+                            //isImgPressed = false;
+                            if (!b.Equals(""))
+                            {
+                                    getImg();
                             }
+                            else
+                            {
+                                HelpClass.clearImg(btn_image);
+                            }
+                        }
                         }
                     }
                     }
@@ -344,9 +346,9 @@ namespace Restaurant.View.sectionData.persons
             }
         }
         private async void Btn_delete_Click(object sender, RoutedEventArgs e)
-        {
+        {//delete
             try
-            {//delete
+            {
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "delete") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
@@ -361,6 +363,7 @@ namespace Restaurant.View.sectionData.persons
                         w.ShowDialog();
                         Window.GetWindow(this).Opacity = 1;
                         #endregion
+
                         if (w.isOk)
                             await activate();
                     }
@@ -376,6 +379,7 @@ namespace Restaurant.View.sectionData.persons
                         w.ShowDialog();
                         Window.GetWindow(this).Opacity = 1;
                         #endregion
+
                         if (w.isOk)
                         {
                             string popupContent = "";
@@ -387,12 +391,13 @@ namespace Restaurant.View.sectionData.persons
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
-                                    agent.agentId = 0;
+                                agent.agentId = 0;
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
                                 await RefreshCustomersList();
                                 await Search();
                                 Clear();
+                                FillCombo.customersList = agents.ToList();
                             }
                         }
                     }

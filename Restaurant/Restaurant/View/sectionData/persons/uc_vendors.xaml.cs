@@ -178,13 +178,9 @@ namespace Restaurant.View.sectionData.persons
                 {
                     HelpClass.StartAwait(grid_main);
 
-
-
                     agent = new Agent();
                     if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
-                        
-
                         //payType
                         string payType = "";
                         if (cb_payType.SelectedIndex != -1)
@@ -228,6 +224,7 @@ namespace Restaurant.View.sectionData.persons
                             Clear();
                             await RefreshCustomersList();
                             await Search();
+                            FillCombo.vendorsList = agents.ToList();
                         }
                     }
                     HelpClass.EndAwait(grid_main);
@@ -252,7 +249,7 @@ namespace Restaurant.View.sectionData.persons
                     HelpClass.StartAwait(grid_main);
                     if (agent.agentId > 0)
                     {
-                        if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                     {
                         //payType
                         string payType = "";
@@ -280,20 +277,21 @@ namespace Restaurant.View.sectionData.persons
                             Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                             await RefreshCustomersList();
                             await Search();
-                                if (openFileDialog.FileName != "")
-                                {
-                                int agentId = s;
-                                string b = await agent.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + agentId.ToString()), agentId);
-                                agent.image = b;
-                                //isImgPressed = false;
-                                if (!b.Equals(""))
-                                {
-                                      getImg();
-                                }
-                                else
-                                {
-                                    HelpClass.clearImg(btn_image);
-                                }
+                            FillCombo.vendorsList = agents.ToList();
+                            if (openFileDialog.FileName != "")
+                            {
+                            int agentId = s;
+                            string b = await agent.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + agentId.ToString()), agentId);
+                            agent.image = b;
+                            //isImgPressed = false;
+                            if (!b.Equals(""))
+                            {
+                                    await getImg();
+                            }
+                            else
+                            {
+                                HelpClass.clearImg(btn_image);
+                            }
                             }
                         }
                     }
@@ -314,9 +312,9 @@ namespace Restaurant.View.sectionData.persons
             }
         }
         private async void Btn_delete_Click(object sender, RoutedEventArgs e)
-        {
+        {//delete
             try
-            {//delete
+            {
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "delete") || HelpClass.isAdminPermision())
                 {
                     HelpClass.StartAwait(grid_main);
@@ -331,6 +329,7 @@ namespace Restaurant.View.sectionData.persons
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
+
                             if (w.isOk)
                                 await activate();
                         }
@@ -346,6 +345,7 @@ namespace Restaurant.View.sectionData.persons
                             w.ShowDialog();
                             Window.GetWindow(this).Opacity = 1;
                             #endregion
+
                             if (w.isOk)
                             {
                                 string popupContent = "";
@@ -363,6 +363,7 @@ namespace Restaurant.View.sectionData.persons
                                     await RefreshCustomersList();
                                     await Search();
                                     Clear();
+                                    FillCombo.vendorsList = agents.ToList();
                                 }
                             }
                         }
