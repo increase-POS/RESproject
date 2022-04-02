@@ -59,65 +59,19 @@ namespace Restaurant
     /// </summary>
     public partial class MainWindow : Window
     {
-        //public static AppSettings.resourcemanager AppSettings.resourcemanager;
-        //public static AppSettings.resourcemanager AppSettings.resourcemanagerreport;
         bool menuState = false;
-        //ToolTip="{Binding Properties.Settings.Default.Lang}"
-        //public static string first = "";
-        //public static string second = "";
-        //public static string lang = "ar";
-        //public static string Reportlang = "ar";
-        //public static string companyName;
-        //public static string Email;
-        //public static string Fax;
-        //public static string Mobile;
-        //public static string Address;
+       
 
-        //public static string Currency;
-        //public static int CurrencyId;
-        //public static string Phone;
+        
         internal static User userLogin; 
         internal static Pos posLogin; 
         internal static Branch branchLogin; 
-        //internal static Pos posLogIn;
         bool isHome = false;
-        //internal static int? isInvTax;
-        //internal static decimal? tax;
-        //internal static int? itemCost;
-        //internal static string dateFormat;
-        //internal static string timeFormat;
-        //internal static string accuracy;
-        //internal static decimal? StorageCost;
         public static int Idletime = 5;
         public static int threadtime = 5;
         public static string menuIsOpen = "close";
-        //public static List<ItemUnitUser> itemUnitsUsers = new List<ItemUnitUser>();
-        //public static ItemUnitUser itemUnitsUser = new ItemUnitUser();
         
-        /////////// print setting////////////////////
-        //public static string sale_copy_count;
-        //public static string pur_copy_count;
-        //public static string print_on_save_sale;
-        //public static string print_on_save_pur;
-        //public static string email_on_save_sale;
-        //public static string email_on_save_pur;
-        //public static string rep_printer_name;
-        //public static string sale_printer_name;
-        //public static string salePaperSize;
-        //public static string rep_print_count;
-        //public static string docPapersize;
-        //public static string Allow_print_inv_count;
-        /////////////////////////////////////////////
-       
-        
-        //static SettingCls setModel = new SettingCls();
-        //static SetValues valueModel = new SetValues();
-        //static int nameId, addressId, emailId, mobileId, phoneId, faxId, logoId, taxId;
-        //public static string logoImage;
-
-
         ImageBrush myBrush = new ImageBrush();
-        //NotificationUser notificationUser = new NotificationUser();
 
         public static DispatcherTimer timer;
         DispatcherTimer idletimer;//  logout timer
@@ -128,34 +82,17 @@ namespace Restaurant
         public static Boolean go_out = false;
       
 
-        //internal static int? posID=1;
-        //static public List<Item> InvoiceglobalItemsList = new List<Item>();
-        //static public List<ItemUnit> InvoiceGlobalItemUnitsList = new List<ItemUnit>();
-        //static public List<Item> InvoiceglobalSaleUnitsList = new List<Item>();
-
-
-        //public ItemUnit globalItemUnit = new ItemUnit();
-        //public List<ItemUnit> globalItemUnitsList = new List<ItemUnit>();
-        //static public Unit saleUnit = new Unit();
-
-        
-
         static public MainWindow mainWindow;
         public MainWindow()
         {
             try
             {
-               
                 InitializeComponent();
-                //userLogin = new User();
-                //userLogin.userId = 1;
                 mainWindow = this;
                 windowFlowDirection();
-                
             }
             catch
             { }
-
         }
 
         void windowFlowDirection()
@@ -388,7 +325,6 @@ namespace Restaurant
             }
         }
         #endregion
-
         async void loading_getUserPath()
         {
             #region get user path
@@ -424,7 +360,6 @@ namespace Restaurant
                 }
             }
         }
-
         async void loading_getItemCost()
         {
             //get item cost
@@ -539,7 +474,7 @@ namespace Restaurant
             }
 
         }
-       public async void loading_getDefaultSystemInfo()
+        public async void loading_getDefaultSystemInfo()
         {
             try
             {
@@ -797,6 +732,59 @@ namespace Restaurant
                 }
             }
         }
+        async void loading_getTableTimes()
+        {
+            try
+            {
+                SetValues setV = new SetValues();
+
+                #region time_staying
+                SetValues time_stayingSetValues = new SetValues();
+                List<SetValues> settingsValues1 = await AppSettings.valueModel.GetBySetName("time_staying");
+                time_stayingSetValues = settingsValues1.FirstOrDefault();
+                if (time_stayingSetValues != null)
+                    AppSettings.time_staying = double.Parse(time_stayingSetValues.value);
+                else
+                    AppSettings.time_staying = 0;
+                #endregion
+
+                #region warningTimeForLateReservation
+                SetValues warningTimeForLateReservationSetValues = new SetValues();
+                List<SetValues> settingsValues2 = await AppSettings.valueModel.GetBySetName("warningTimeForLateReservation");
+                warningTimeForLateReservationSetValues = settingsValues2.FirstOrDefault();
+                if (warningTimeForLateReservationSetValues != null)
+                    AppSettings.warningTimeForLateReservation = int.Parse(warningTimeForLateReservationSetValues.value);
+                else
+                    AppSettings.warningTimeForLateReservation = 0;
+                #endregion
+
+                #region maximumTimeToKeepReservation
+                SetValues maximumTimeToKeepReservationSetValues = new SetValues();
+                List<SetValues> settingsValues3 = await AppSettings.valueModel.GetBySetName("maximumTimeToKeepReservation");
+                maximumTimeToKeepReservationSetValues = settingsValues3.FirstOrDefault();
+                if (maximumTimeToKeepReservationSetValues != null)
+                    AppSettings.maximumTimeToKeepReservation = double.Parse(maximumTimeToKeepReservationSetValues.value);
+                else
+                    AppSettings.maximumTimeToKeepReservation = 0;
+                #endregion
+
+            }
+            catch (Exception)
+            {
+                AppSettings.time_staying = 0;
+                AppSettings.warningTimeForLateReservation = 0;
+                AppSettings.maximumTimeToKeepReservation = 0;
+            }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getTableTimes"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+
+        }
         #endregion
         #region get setting
         SetValues v = new SetValues();
@@ -1006,6 +994,7 @@ namespace Restaurant
                 loadingList.Add(new keyValueBool { key = "loading_getAccurac", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_getprintSitting", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_POSList", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_getTableTimes", value = false });
 
 
 
@@ -1032,6 +1021,7 @@ namespace Restaurant
                 loading_getAccurac();
                 loading_getprintSitting();
                 loading_POSList();
+                loading_getTableTimes();
 
                
                 do
