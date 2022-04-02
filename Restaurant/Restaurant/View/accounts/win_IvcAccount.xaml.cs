@@ -31,7 +31,7 @@ namespace Restaurant.View.accounts
         int selectedChart = 1;
         IEnumerable<CashTransfer> cashQuery;
         IEnumerable<Invoice> invoiceQuery;
-
+        IEnumerable<AgentMembershipCash> subscriptionQuery;
         List<double> chartList;
         List<double> PiechartList;
         List<double> ColumnchartList;
@@ -68,15 +68,28 @@ namespace Restaurant.View.accounts
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        public win_IvcAccount(IEnumerable<AgentMembershipCash> _subscriptionQuery, int _account)
+        {
+            try
+            {
+                InitializeComponent();
+                subscriptionQuery = _subscriptionQuery;
+                account = _account;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+        {//load
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
-            #region translate
-            if (AppSettings.lang.Equals("en"))
+                #region translate
+                if (AppSettings.lang.Equals("en"))
             {
 
                 grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -94,13 +107,13 @@ namespace Restaurant.View.accounts
             fillDates();
             fillSelectedChart();
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
 
         }
 
@@ -177,6 +190,12 @@ namespace Restaurant.View.accounts
                             chartList.Add(Draw);
                             label = AppSettings.resourcemanager.GetString("trOrdersCount");
                         }
+                        else if (account == 3)
+                        {
+                            var Draw = subscriptionQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Count();
+                            chartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trSubscriptions");
+                        }
                         MyAxis.Separator.Step = 2;
                         MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
                         if (year == dpEndDate.SelectedDate.Value.Year && month == dpEndDate.SelectedDate.Value.Month)
@@ -208,6 +227,12 @@ namespace Restaurant.View.accounts
                         var Draw = invoiceQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
                         chartList.Add(Draw);
                         label = AppSettings.resourcemanager.GetString("trOrdersCount");
+                    }
+                    if (account == 3)
+                    {
+                        var Draw = subscriptionQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
+                        chartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trSubscriptions");
                     }
 
                     MyAxis.Separator.Step = 1;
@@ -273,6 +298,12 @@ namespace Restaurant.View.accounts
                             PiechartList.Add(Draw);
                             label = AppSettings.resourcemanager.GetString("trOrdersCount");
                         }
+                        if (account == 3)
+                        {
+                            var Draw = subscriptionQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Count();
+                            PiechartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trSubscriptions");
+                        }
                         titles.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
                         if (year == dpEndDate.SelectedDate.Value.Year && month == dpEndDate.SelectedDate.Value.Month)
                         {
@@ -303,6 +334,12 @@ namespace Restaurant.View.accounts
                         var Draw = invoiceQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
                         PiechartList.Add(Draw);
                         label = AppSettings.resourcemanager.GetString("trOrdersCount");
+                    }
+                    else if (account == 3)
+                    {
+                        var Draw = subscriptionQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
+                        PiechartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trSubscriptions");
                     }
                     titles.Add(year.ToString());
                 }
@@ -369,6 +406,12 @@ namespace Restaurant.View.accounts
                             ColumnchartList.Add(Draw);
                             label = AppSettings.resourcemanager.GetString("trOrdersCount");
                         }
+                        else if (account == 3)
+                        {
+                            var Draw = subscriptionQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Count();
+                            ColumnchartList.Add(Draw);
+                            label = AppSettings.resourcemanager.GetString("trSubscriptions");
+                        }
                         columnAxis.Separator.Step = 2;
                         columnAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
                         if (year == dpEndDate.SelectedDate.Value.Year && month == dpEndDate.SelectedDate.Value.Month)
@@ -400,6 +443,12 @@ namespace Restaurant.View.accounts
                         var Draw = invoiceQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
                         ColumnchartList.Add(Draw);
                         label = AppSettings.resourcemanager.GetString("trOrdersCount");
+                    }
+                    else if (account == 3)
+                    {
+                        var Draw = subscriptionQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
+                        ColumnchartList.Add(Draw);
+                        label = AppSettings.resourcemanager.GetString("trSubscriptions");
                     }
                     columnAxis.Separator.Step = 1;
                     columnAxis.Labels.Add(year.ToString());
