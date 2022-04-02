@@ -337,7 +337,7 @@
                     </StackPanel>
                 </Button>-->
                 <Button   x:Name="btn_customer"  Click="Btn_customer_Click" Height="40"
-                    materialDesign:ButtonAssist.CornerRadius="7"  IsEnabled="False"
+                    materialDesign:ButtonAssist.CornerRadius="7"  
                           Background="{StaticResource White}" BorderBrush="{x:Null}"
                     Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
                     <StackPanel Orientation="Horizontal" >
@@ -348,7 +348,7 @@
                     </StackPanel>
                 </Button>
                 <Button x:Name="btn_discount" Click="Btn_discount_Click" Height="40"
-                    materialDesign:ButtonAssist.CornerRadius="7"  IsEnabled="False"
+                    materialDesign:ButtonAssist.CornerRadius="7" 
                           Background="{StaticResource White}" BorderBrush="{x:Null}"
                     Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
                     <StackPanel Orientation="Horizontal" >
@@ -370,7 +370,7 @@
                     </StackPanel>
                 </Button>
                 <Button x:Name="btn_delivery" Click="Btn_delivery_Click" Height="40"
-                    materialDesign:ButtonAssist.CornerRadius="7"  IsEnabled="False"
+                    materialDesign:ButtonAssist.CornerRadius="7"  
                           Background="{StaticResource White}" BorderBrush="{x:Null}"
                     Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
                     <StackPanel Orientation="Horizontal" >
@@ -419,6 +419,24 @@
                             </StackPanel>
                         </Button>
 
+                        <materialDesign:Badged VerticalAlignment="Center"   Margin="5,10,5,0" 
+                      BadgeBackground="{StaticResource Red}"  BadgeForeground="White" 
+                                   Name="md_draft" >
+                            <Button Grid.Column="2" BorderBrush="{x:Null}" Padding="0"     Height="auto"
+                    Background="{x:Null}" x:Name="btn_drafts"  Click="Btn_draft_Click" >
+                                <StackPanel>
+
+                                    <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
+                          Width="30" Height="30" FlowDirection="LeftToRight"  
+                           Data="M24,23H4c-2.2,0-4-1.8-4-4V3.3C0.3,2.2,1.3,1,3,1c1.9,0,2.8,1.3,3,2.3L6,5h18V23z M22,7H6v11c0,0-0.6-1-1.9-1
+	C3,17,2,17.9,2,19s0.9,2,2,2h18V7z M20,19H8V9h12V19z M12,10H9v8h10v-8h-6v3h6v1h-2v3h-1v-3h-3v3h-1V10z" />
+                                    <TextBlock Text="drafts" x:Name="txt_drafts" Foreground="{StaticResource MainColor}" 
+                                           FontWeight="Regular" FontSize="8" TextAlignment="Center" Width="35"
+                                           HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </materialDesign:Badged>
+                        
                         <Border    Margin="7.5,10"   CornerRadius="0,0,0,0"  Width="2" BorderThickness="0" Background="{StaticResource MainColor}" />
                         <materialDesign:Badged VerticalAlignment="Center" Margin="5,10,5,0"
                     BadgeBackground="{StaticResource Red}"  BadgeForeground="White" Name="md_ordersAlerts" >
@@ -1053,6 +1071,21 @@
                         HorizontalAlignment="Right" VerticalAlignment="Center"
                                    FontWeight="Bold"  FontSize="12"/>
 
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Delivery" Visibility="Collapsed"
+                                   x:Name="txt_deliveryVal" Foreground="{StaticResource SecondColor}" FontWeight="Bold" FontSize="18"  
+                         VerticalAlignment="Center"     HorizontalAlignment="Left" Margin="0 5"/>
+                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right"   >
+                            <TextBlock    x:Name="tb_delivery"  Margin="5" Visibility="Collapsed"
+                       Foreground="{StaticResource Grey}" Text="0"
+                        HorizontalAlignment="Left" VerticalAlignment="Center"
+                                  FontWeight="Bold"  FontSize="12"/>
+                            <TextBlock Grid.Row="1"   x:Name="tb_moneyIconDelivery" Visibility="Collapsed"
+                                       Grid.Column="1" Margin="0" 
+                       Foreground="{StaticResource Grey}" Text="KWD"
+                        HorizontalAlignment="Left" VerticalAlignment="Center"
+                                  FontWeight="Bold"  FontSize="12"/>
+                        </StackPanel>
                     </Grid>
                 </Grid>
             </Border>
@@ -1112,11 +1145,11 @@
                           Opacity="0.3"
                          BlurRadius="10"/>
                     </Border.Effect>
-                    <Button  Content="X" Name="btn_cancel"   FontSize="22" FontWeight="Bold"
+                    <!--<Button  Content="X" Name="btn_cancel"   FontSize="22" FontWeight="Bold"
                     materialDesign:ButtonAssist.CornerRadius="7" Height="40" Width="50"
                          Padding="5 0"
                              Background="{x:Null}" BorderBrush="{x:Null}"
-                       Foreground="White" IsEnabled="False"  Click="Btn_cancel_Click" />
+                       Foreground="White" IsEnabled="False"  Click="Btn_cancel_Click" />-->
                 </Border>
 
             </Grid>

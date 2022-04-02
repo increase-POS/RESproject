@@ -155,7 +155,7 @@
                             <DataGridTextColumn x:Name="col_user" Width="2*"  Header="User" Binding="{Binding Path=createrUserName}" Visibility="Collapsed"/>
                             <DataGridTextColumn x:Name="col_count" Width="1.5*"  Header="items count" Binding="{Binding Path=itemsCount}"/>
                             <DataGridTextColumn x:Name="col_total" Width="2*" Header="Total" Binding="{Binding Path =totalNet,Converter={StaticResource accuracyConverter }}"/>
-                            <DataGridTextColumn x:Name="col_type" Width="2*"  Header="" Binding="{Binding invType}"/>
+                            <DataGridTextColumn x:Name="col_type" Width="2*"  Header="" Binding="{Binding invType, Converter={StaticResource invoiceTypeConverter}}"/>
                             <!--<DataGridTextColumn x:Name="col_status" Width="2*"  Header="" Binding="{Binding status,Converter={StaticResource orderStatusConverter}}" Visibility="Collapsed"/>-->
                         </DataGrid.Columns>
                         <DataGrid.RowStyle>

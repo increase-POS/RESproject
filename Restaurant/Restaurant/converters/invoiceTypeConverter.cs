@@ -121,6 +121,14 @@ namespace Restaurant.converters
                 case "isd":
                     value = AppSettings.resourcemanager.GetString("trDirectEntryDraft");
                     break;
+                // مسودة طلب خارجي
+                case "tsd":
+                    value = AppSettings.resourcemanager.GetString("trTakeAwayDraft");
+                    break;
+               // طلب خارجي
+                case "ts":
+                    value = AppSettings.resourcemanager.GetString("trTakeAway");
+                    break;
                 default: break;
             }
             return value;

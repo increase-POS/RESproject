@@ -272,6 +272,13 @@ namespace Restaurant.View.windows
                     FillCombo.invoices = await FillCombo.invoice.getBranchInvoices(invoiceType, branchCreatorId, branchId);
             }
             #endregion
+            #region take away
+            else if (page == "takeAway")
+            {
+                if (icon == "drafts")
+                    FillCombo.invoices = await FillCombo.invoice.GetInvoicesByCreator(invoiceType, userId, duration);
+            }
+            #endregion
             //if (condition == "orders")
             //{
             //    invoices = await invoice.getUnHandeldOrders(invoiceType,branchCreatorId, branchId,duration,userId);

@@ -22,6 +22,8 @@ namespace Restaurant.View.windows
     /// </summary>
     public partial class wd_selectDelivery : Window
     {
+        public int? shippingCompanyId { get; set; }
+        public int? shippingUserId { get; set; }
         public wd_selectDelivery()
         {
             try
@@ -63,14 +65,15 @@ namespace Restaurant.View.windows
         }
 
         public bool isOk { get; set; }
+        public static List<string> requiredControlList = new List<string>();
 
-       
-        
+
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
             {
                 HelpClass.StartAwait(grid_main);
+                requiredControlList = new List<string> { "company" };
                 if (AppSettings.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -104,12 +107,15 @@ namespace Restaurant.View.windows
       
         private void Btn_select_Click(object sender, RoutedEventArgs e)
         {
-            isOk = true;
-            this.Close();
+            if (HelpClass.validate(requiredControlList, this))
+            {
+                isOk = true;
+                this.Close();
+            }
         }
         ShippingCompanies shippingCompany = new ShippingCompanies();
-        static private decimal _DeliveryCost = 0;
-        static private decimal _RealDeliveryCost = 0;
+        public decimal _DeliveryCost = 0;
+        public decimal _RealDeliveryCost = 0;
         private void Cb_company_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -121,27 +127,26 @@ namespace Restaurant.View.windows
                     shippingCompany = FillCombo.shippingCompaniesList.Find(c => c.shippingCompanyId == (int)cb_company.SelectedValue);
                     _DeliveryCost = (decimal)shippingCompany.deliveryCost;
                     _RealDeliveryCost = (decimal)shippingCompany.realDeliveryCost;
-                    //refreshTotalValue();
 
-                    //cb_paymentProcessType.SelectedIndex = 1; // balance
-                    //cb_paymentProcessType.IsEnabled = false;
-                    //tb_cashPaid.IsEnabled = false;
                     if (shippingCompany.deliveryType == "local")
                     {
                         brd_user.Visibility = Visibility.Visible;
+                        requiredControlList = new List<string> { "company" ,"user"};
+
                     }
                     else
                     {
                         cb_user.SelectedIndex = -1;
                         brd_user.Visibility = Visibility.Collapsed;
                         p_error_user.Visibility = Visibility.Collapsed;
+
+                        requiredControlList = new List<string> { "company" };
+
                     }
                 }
                 else
                 {
                     shippingCompany = new ShippingCompanies();
-                    //cb_paymentProcessType.IsEnabled = true;
-                    //tb_cashPaid.IsEnabled = true;
                     cb_user.SelectedIndex = -1;
                     _DeliveryCost = 0;
                     _RealDeliveryCost = 0;
@@ -165,17 +170,13 @@ namespace Restaurant.View.windows
             try
             {
                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 #region
                 //com
                 HelpClass.clearValidate(p_error_user);
-                if (shippingCompany.deliveryType == "local" && (cb_user.SelectedIndex == -1 ))
+                if (shippingCompany.deliveryType == "local" && cb_user.SelectedIndex != -1 )
                 {
-                    //valid = false;
-                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectTheDeliveryMan"), animation: ToasterAnimation.FadeIn);
-                    HelpClass.SetValidate( p_error_user, "trSelectTheDeliveryMan");
-
-                    //return valid;
+                    shippingUserId = (int)cb_user.SelectedValue;
                 }
                 #endregion
                

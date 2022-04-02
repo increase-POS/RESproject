@@ -1102,7 +1102,7 @@ namespace Restaurant.Classes
                 new { Text = AppSettings.resourcemanager.GetString("trListed")       , Value = "Listed" },
                 new { Text = AppSettings.resourcemanager.GetString("trPreparing") , Value = "Preparing" },
                 new { Text = AppSettings.resourcemanager.GetString("trReady") , Value = "Ready" },
-                new { Text = AppSettings.resourcemanager.GetString("trCollected") , Value = "Collected" }, 
+                new { Text = AppSettings.resourcemanager.GetString("trDone") , Value = "Done" }, 
                  };
             cmb.DisplayMemberPath = "Text";
             cmb.SelectedValuePath = "Value";
