@@ -145,14 +145,14 @@ namespace Restaurant.View.sales.promotion
 
         private void translate()
         {
-            txt_active.Text = AppSettings.resourcemanager.GetString("trActive");
+            txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             ///////////////////////////////////////------OFFER------///////////////////////////////
             txt_title.Text = AppSettings.resourcemanager.GetString("trOffer");
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, AppSettings.resourcemanager.GetString("trCodeHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, AppSettings.resourcemanager.GetString("trNameHint"));
-            txt_active.Text = AppSettings.resourcemanager.GetString("trActive");
+            txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");
             txt_isActiveOffer.Text = AppSettings.resourcemanager.GetString("trActive");
             txt_contentInformatin.Text = AppSettings.resourcemanager.GetString("trDetails");
 

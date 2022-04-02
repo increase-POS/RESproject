@@ -147,7 +147,7 @@ namespace Restaurant.View.storage.storageDivide
 
             btn_refresh.ToolTip = AppSettings.resourcemanager.GetString("trRefresh");
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
-            txt_active.Text = AppSettings.resourcemanager.GetString("trActive");
+            txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
             btn_addRange.Content = AppSettings.resourcemanager.GetString("trAddRange");

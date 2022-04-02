@@ -133,7 +133,7 @@ namespace Restaurant.View.delivery
         private void translate()
         {
 
-            txt_active.Text = AppSettings.resourcemanager.GetString("trActive");
+            txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             txt_title.Text = AppSettings.resourcemanager.GetString("trShippingCompanies");
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
@@ -148,6 +148,7 @@ namespace Restaurant.View.delivery
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_email, AppSettings.resourcemanager.GetString("trEmailHint"));
             txt_contentInformatin.Text = AppSettings.resourcemanager.GetString("trAnotherInfomation");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fax, AppSettings.resourcemanager.GetString("trFaxHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, AppSettings.resourcemanager.GetString("trAddress") + "...");
 
             dg_shCompany.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
             dg_shCompany.Columns[1].Header = AppSettings.resourcemanager.GetString("trRealDeliveryCost");

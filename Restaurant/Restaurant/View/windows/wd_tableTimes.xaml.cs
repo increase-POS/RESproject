@@ -133,6 +133,14 @@ namespace Restaurant.View.windows
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_maximumTimeToKeepReservation, AppSettings.resourcemanager.GetString("trSalesCopyCount"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_warningTimeForLateReservation, AppSettings.resourcemanager.GetString("trReportsCopyCount"));
 
+            txt_title.Text = AppSettings.resourcemanager.GetString("tablesTimes");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_time_staying, AppSettings.resourcemanager.GetString("timeStaying"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_maximumTimeToKeepReservation, AppSettings.resourcemanager.GetString("maximumTimeToKeepReservation"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_warningTimeForLateReservation, AppSettings.resourcemanager.GetString("warningTimeForLateReservation"));
+            txt_hour.Text = AppSettings.resourcemanager.GetString("hour");
+            txt_hour1.Text = AppSettings.resourcemanager.GetString("hour");
+            txt_minute.Text = AppSettings.resourcemanager.GetString("trMinute");
+            
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
 
@@ -172,10 +180,8 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            catch 
+            { }
         }
 
         private async void Btn_save_Click(object sender, RoutedEventArgs e)

@@ -145,7 +145,7 @@ namespace Restaurant.View.sales.promotion
         private void translate()
         {
             txt_title.Text = AppSettings.resourcemanager.GetString("trCoupon");
-            txt_active.Text = AppSettings.resourcemanager.GetString("trActive");
+            txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
 
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");

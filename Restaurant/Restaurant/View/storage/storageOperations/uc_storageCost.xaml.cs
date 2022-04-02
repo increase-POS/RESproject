@@ -134,7 +134,7 @@ namespace Restaurant.View.storage.storageOperations
 
         private void translate()
         {
-            txt_active.Text = AppSettings.resourcemanager.GetString("trActive");
+            txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             txt_title.Text = AppSettings.resourcemanager.GetString("trStorageCostPerDay");
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");

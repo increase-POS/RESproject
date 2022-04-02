@@ -70,12 +70,10 @@ namespace Restaurant.View.windows
             #region translate
             if (AppSettings.lang.Equals("en"))
             {
-                AppSettings.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                 grid_main.FlowDirection = FlowDirection.LeftToRight;
             }
             else
             {
-                AppSettings.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                 grid_main.FlowDirection = FlowDirection.RightToLeft;
             }
             translate();
@@ -100,6 +98,7 @@ namespace Restaurant.View.windows
             #endregion
 
             txt_title.Text = AppSettings.resourcemanager.GetString("trKitchen");
+            txt_invoiceItems.Text = AppSettings.resourcemanager.GetString("invoiceItems");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_count, AppSettings.resourcemanager.GetString("trCountHint"));

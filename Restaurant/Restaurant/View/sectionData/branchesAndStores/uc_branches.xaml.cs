@@ -177,9 +177,13 @@ namespace Restaurant.View.sectionData.branchesAndStores
             tt_update_Button.Content = AppSettings.resourcemanager.GetString("trUpdate");
             tt_delete_Button.Content = AppSettings.resourcemanager.GetString("trDelete");
             btn_stores.Content = AppSettings.resourcemanager.GetString("trBranchs/Stores");
+
+
+            txt_contactInformation.Text = AppSettings.resourcemanager.GetString("trContactInformation");
+            txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");
         }
-            #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
-            private async void Btn_add_Click(object sender, RoutedEventArgs e)
+        #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
+        private async void Btn_add_Click(object sender, RoutedEventArgs e)
             {//add
                 try
                 {

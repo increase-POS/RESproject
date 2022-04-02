@@ -273,7 +273,7 @@ namespace Restaurant.View.windows
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_discountValue, AppSettings.resourcemanager.GetString("trDiscountValueHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_discountType, AppSettings.resourcemanager.GetString("trDiscountTypeHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_coupon, AppSettings.resourcemanager.GetString("trCouponHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_coupon, AppSettings.resourcemanager.GetString("trCoupon") + "...");
 
             btn_clearCoupon.ToolTip = AppSettings.resourcemanager.GetString("trClear");
 

@@ -642,6 +642,7 @@ namespace Restaurant.View.settings
         }
         private void translate()
         {
+            txt_mainTitle.Text = AppSettings.resourcemanager.GetString("trGeneralSettings");
             txt_companyInfo.Text = AppSettings.resourcemanager.GetString("trComInfo");
             txt_companyInfoHint.Text = AppSettings.resourcemanager.GetString("trSettingHint");
             txt_region.Text = AppSettings.resourcemanager.GetString("trRegion");
@@ -649,6 +650,8 @@ namespace Restaurant.View.settings
             txt_currency.Text = AppSettings.resourcemanager.GetString("trCurrency");
             txt_tax.Text = AppSettings.resourcemanager.GetString("trTax");
             txt_taxHint.Text = AppSettings.resourcemanager.GetString("trInvoice") + ", " + AppSettings.resourcemanager.GetString("trItem") + "...";
+            txt_tableTimes.Text = AppSettings.resourcemanager.GetString("tablesTimes");
+            txt_tableTimesHint.Text = AppSettings.resourcemanager.GetString("tablesTimes") + "...";
             txt_itemsCost.Text = AppSettings.resourcemanager.GetString("trItemCost");
             txt_dateForm.Text = AppSettings.resourcemanager.GetString("trDateForm");
             txt_accuracy.Text = AppSettings.resourcemanager.GetString("trAccuracy");

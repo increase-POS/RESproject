@@ -174,6 +174,11 @@ namespace Restaurant.View.sectionData.persons
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
             //tt_search.Content = AppSettings.resourcemanager.GetString("trSearch");
             txt_isCredit.Text = AppSettings.resourcemanager.GetString("trCredit");
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_residentSecId, AppSettings.resourcemanager.GetString("trResidentialSectors") + "...");
+            txt_canReserve.Text = AppSettings.resourcemanager.GetString("trReserve");
+            txt_addressInformatin.Text = AppSettings.resourcemanager.GetString("trAddressInformation");
+            txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)

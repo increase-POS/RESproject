@@ -126,7 +126,7 @@
                 </Border>
                 
                 <Button   Grid.Row="5"   Content="save" materialDesign:ButtonAssist.CornerRadius="7"
-                       Margin="10,2.5" x:Name="btn_save" Click="Btn_save_Click" Foreground="White"
+                       Margin="10,5" x:Name="btn_save" Click="Btn_save_Click" Foreground="White"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" />
 
             </Grid>

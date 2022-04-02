@@ -157,7 +157,7 @@ namespace Restaurant.View.storage.storageDivide
             dg_section.Columns[2].Header = AppSettings.resourcemanager.GetString("trNote");
 
             txt_title.Text = AppSettings.resourcemanager.GetString("trSection");
-            txt_active.Text = AppSettings.resourcemanager.GetString("trActive");
+            txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
             txt_addButton.Text = AppSettings.resourcemanager.GetString("trAdd");
             txt_updateButton.Text = AppSettings.resourcemanager.GetString("trUpdate");

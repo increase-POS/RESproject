@@ -133,6 +133,7 @@ namespace Restaurant.View.sectionData
         private void translate()
         {
             txt_title.Text = AppSettings.resourcemanager.GetString("trResidentialSectors");
+            txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, AppSettings.resourcemanager.GetString("trNameHint"));
@@ -151,6 +152,8 @@ namespace Restaurant.View.sectionData
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
+
+
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)

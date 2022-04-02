@@ -262,6 +262,7 @@ namespace Restaurant.View.settings.reportsSettings
 
         private void translate()
         {
+            txt_mainTitle.Text = AppSettings.resourcemanager.GetString("trReportsSettings");
             txt_printCount.Text = AppSettings.resourcemanager.GetString("trPrintCount");
             tb_printCount.Text = AppSettings.resourcemanager.GetString("trPrintCount");
 
@@ -283,10 +284,28 @@ namespace Restaurant.View.settings.reportsSettings
             txt_salesInvoiceNote.Text = AppSettings.resourcemanager.GetString("trSalesInvoice");
             txt_salesInvoiceNoteHint.Text = AppSettings.resourcemanager.GetString("trSalesInvoiceNote");
 
+            // openButton
+            List<TextBlock> openTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
+               .Where(x => x.Tag != null).ToList();
+            openTextBlocksList = openTextBlocksList.Where(x => x.Tag.ToString().Contains("openButton")).ToList();
+            foreach (var item in openTextBlocksList)
+            {
+                item.Text = AppSettings.resourcemanager.GetString("open");
+            }
+
+            // saveButton
+            List<TextBlock> saveTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
+               .Where(x => x.Tag != null).ToList();
+            saveTextBlocksList = saveTextBlocksList.Where(x => x.Tag.ToString().Contains("saveButton")).ToList();
+            foreach (var item in saveTextBlocksList)
+            {
+                item.Text = AppSettings.resourcemanager.GetString("trSave");
+            }
+
 
         }
 
-    
+
         private async void Btn_reportlang_Click(object sender, RoutedEventArgs e)
         {
 

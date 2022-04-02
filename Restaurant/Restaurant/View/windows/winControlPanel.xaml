@@ -16,7 +16,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
 
@@ -56,7 +56,7 @@
         <Border Background="White" Grid.Row="2" CornerRadius="0,0,7,7">
 
             <Button x:Name="btn_ok" Foreground="White" Background="{StaticResource SecondColor}" HorizontalAlignment="Stretch" Click="btn_ok_Click" 
-                    Margin="10,0" Content="Ok" BorderBrush="{x:Null}" />
+                    Margin="10" Content="Ok" BorderBrush="{x:Null}" />
 
         </Border>
     </Grid>

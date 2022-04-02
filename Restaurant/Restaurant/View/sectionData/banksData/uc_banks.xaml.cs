@@ -158,6 +158,10 @@ namespace Restaurant.View.sectionData.banksData
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
+
+            txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");
+            txt_contactInformation.Text = AppSettings.resourcemanager.GetString("trContactInformation");
+
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)

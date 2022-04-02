@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:Restaurant.View.windows"
         mc:Ignorable="d" KeyDown="HandleKeyPress"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Increase POS"        
+        Title="Increase Restaurant"        
          WindowStyle="None" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" Margin="0"
-         Height="300" Width="350" Background="Transparent" AllowsTransparency="True"
+         Height="320" Width="350" Background="Transparent" AllowsTransparency="True"
         Loaded="Window_Loaded" MouseDown="Window_MouseDown">
     <Grid Grid.Column="1" Grid.Row="1" x:Name="grid_main"  >
         <Grid.RowDefinitions>
@@ -99,7 +99,7 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Border  Grid.Row="1" Grid.ColumnSpan="3" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                     <Grid>
@@ -247,7 +247,7 @@
 
 
                 <Button Content="Convert" Grid.Row="6" Grid.ColumnSpan="5" Foreground="White"
-                       Margin="10,2.5" x:Name="btn_save" Click="Btn_save_Click" materialDesign:ButtonAssist.CornerRadius="7"
+                       Margin="10,10" x:Name="btn_save" Click="Btn_save_Click" materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  />
             </Grid>
 

@@ -134,8 +134,14 @@ namespace Restaurant.View.settings
         {
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, AppSettings.resourcemanager.GetString("trNameHint"));
             btn_refresh.ToolTip = AppSettings.resourcemanager.GetString("trRefresh");
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
+            txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");
+            btn_usersList.Content = AppSettings.resourcemanager.GetString("trUsers");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trUpdate");
+
+
 
             txt_addButton.Text = AppSettings.resourcemanager.GetString("trAdd");
             txt_updateButton.Text = AppSettings.resourcemanager.GetString("trUpdate");
@@ -145,70 +151,7 @@ namespace Restaurant.View.settings
 
             dg_group.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
             dg_group.Columns[1].Header = AppSettings.resourcemanager.GetString("trNote");
-            /*
-            txt_dashboard.Text = AppSettings.resourcemanager.GetString("trDashBoard");
-
-
-            txt_categories.Text = AppSettings.resourcemanager.GetString("trCategories");
-            txt_properties.Text = AppSettings.resourcemanager.GetString("trProperties");
-            txt_item.Text = AppSettings.resourcemanager.GetString("trItems");
-            txt_package.Text = AppSettings.resourcemanager.GetString("trPackage");
-            txt_service.Text = AppSettings.resourcemanager.GetString("trService");
-            txt_units.Text = AppSettings.resourcemanager.GetString("trUnits");
-            txt_storageCost.Text = AppSettings.resourcemanager.GetString("trStorageCost");
-
-            txt_locations.Text = AppSettings.resourcemanager.GetString("trLocation");
-            txt_section.Text = AppSettings.resourcemanager.GetString("trSection");
-            txt_reciptOfInvoice.Text = AppSettings.resourcemanager.GetString("trInvoice");
-            txt_itemsStorage.Text = AppSettings.resourcemanager.GetString("trStorage");
-            txt_importExport.Text = AppSettings.resourcemanager.GetString("trMovements");
-            txt_itemsDestroy.Text = AppSettings.resourcemanager.GetString("trDestructive");
-            txt_shortage.Text = AppSettings.resourcemanager.GetString("trShortage");
-            txt_inventory.Text = AppSettings.resourcemanager.GetString("trStocktaking");
-
-
-            txt_posAccounting.Text = AppSettings.resourcemanager.GetString("trPOS");
-            txt_banksAccounting.Text = AppSettings.resourcemanager.GetString("trGroups");
-            txt_payments.Text = AppSettings.resourcemanager.GetString("trPayments");
-            txt_received.Text = AppSettings.resourcemanager.GetString("trReceived");
-            txt_bonds.Text = AppSettings.resourcemanager.GetString("trBonds");
-            txt_ordersAccounting.Text = AppSettings.resourcemanager.GetString("trOrders");
-
-            txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trInvoice");
-            txt_purchaseOrder.Text = AppSettings.resourcemanager.GetString("trOrders");
-            txt_salesStatistic.Text = AppSettings.resourcemanager.GetString("trStatistic");
-
-            txt_reciptInvoice.Text = AppSettings.resourcemanager.GetString("trInvoice");
-            txt_coupon.Text = AppSettings.resourcemanager.GetString("trCoupon");
-            txt_offer.Text = AppSettings.resourcemanager.GetString("trOffer");
-
-            txt_quotation.Text = AppSettings.resourcemanager.GetString("trQuotations");
-            txt_salesOrders.Text = AppSettings.resourcemanager.GetString("trOrders");
-
-            txt_customers.Text = AppSettings.resourcemanager.GetString("trCustomers");
-            txt_suppliers.Text = AppSettings.resourcemanager.GetString("trSuppliers");
-            txt_users.Text = AppSettings.resourcemanager.GetString("trUsers");
-            txt_branches.Text = AppSettings.resourcemanager.GetString("trBranches");
-            txt_stores.Text = AppSettings.resourcemanager.GetString("trStores");
-            txt_pos.Text = AppSettings.resourcemanager.GetString("trPOS");
-            txt_groups.Text = AppSettings.resourcemanager.GetString("trGroups");
-            txt_shippingCompany.Text = AppSettings.resourcemanager.GetString("trShipping");
-
-            txt_storageReports.Text = AppSettings.resourcemanager.GetString("trStore");
-            txt_purchaseReports.Text = AppSettings.resourcemanager.GetString("trPurchases");
-            txt_salesReports.Text = AppSettings.resourcemanager.GetString("trSales");
-            txt_accountsReports.Text = AppSettings.resourcemanager.GetString("trAccounting");
-
-            txt_storageAlerts.Text = AppSettings.resourcemanager.GetString("trStore");
-            txt_saleAlerts.Text = AppSettings.resourcemanager.GetString("trSales");
-
-            txt_general.Text = AppSettings.resourcemanager.GetString("trGeneral");
-            txt_reportsSettings.Text = AppSettings.resourcemanager.GetString("trReports");
-            txt_permissions.Text = AppSettings.resourcemanager.GetString("trPermission");
-            txt_emailsSetting.Text = AppSettings.resourcemanager.GetString("trEmail");
-            txt_emailTemplates.Text = AppSettings.resourcemanager.GetString("trEmailTemplates");
-            */
-
+            
             dg_permissions.Columns[0].Header = AppSettings.resourcemanager.GetString("trPermission");
             dg_permissions.Columns[1].Header = AppSettings.resourcemanager.GetString("trShow");
             dg_permissions.Columns[2].Header = AppSettings.resourcemanager.GetString("trAdd");

@@ -134,7 +134,8 @@ namespace Restaurant.View.sectionData.banksData
         {
             txt_title.Text = AppSettings.resourcemanager.GetString("trPaymentMethods");
             txt_hasProcessNum.Text = AppSettings.resourcemanager.GetString("trInputProcessNumber");
-            txt_cardIsActive.Text = txt_isActive.Text = AppSettings.resourcemanager.GetString("trActive");
+            txt_isActive.Text = AppSettings.resourcemanager.GetString("trActive");
+            txt_cardIsActive.Text = AppSettings.resourcemanager.GetString("trActive_"); 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, AppSettings.resourcemanager.GetString("trNameHint"));
@@ -151,6 +152,9 @@ namespace Restaurant.View.sectionData.banksData
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
+
+            dg_card.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
+            dg_card.Columns[1].Header = AppSettings.resourcemanager.GetString("trNotes");
 
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
