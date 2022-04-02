@@ -3709,4 +3709,7 @@ Please add Email in setting</value>
   <data name="trPopCanceled" xml:space="preserve">
     <value>Operation canceled successfully</value>
   </data>
+  <data name="trCharp" xml:space="preserve">
+    <value>#</value>
+  </data>
 </root>

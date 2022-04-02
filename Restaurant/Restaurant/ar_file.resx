@@ -3688,4 +3688,7 @@
   <data name="trPopCanceled" xml:space="preserve">
     <value>تم إلغاء العملية بنجاح</value>
   </data>
+  <data name="trCharp" xml:space="preserve">
+    <value>#</value>
+  </data>
 </root>

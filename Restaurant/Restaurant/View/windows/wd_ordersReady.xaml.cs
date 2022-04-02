@@ -81,7 +81,7 @@ namespace Restaurant.View.windows
         private void translat()
         {
             txt_title.Text = AppSettings.resourcemanager.GetString("trOrders");
-            dg_orders.Columns[0].Header = AppSettings.resourcemanager.GetString("trOrders");
+            dg_orders.Columns[0].Header = AppSettings.resourcemanager.GetString("trCharp");
             dg_orders.Columns[1].Header = AppSettings.resourcemanager.GetString("trTable");
             dg_orders.Columns[2].Header = AppSettings.resourcemanager.GetString("trWaiter");
 
