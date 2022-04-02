@@ -72,7 +72,7 @@
                         </Style>
                     </DataGrid.Resources>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Width="*"  Header="orders" Binding="{Binding Path=test}"/>
+                        <DataGridTextColumn Width="*"  Header="orders" Binding="{Binding Path=orderNum}"/>
                         <DataGridTextColumn Width="*"  Header="table"       Binding="{Binding Path=tables}"/>
                         <DataGridTextColumn Width="*"  Header="waiter"       Binding="{Binding Path=waiter}"/>
                     </DataGrid.Columns>
