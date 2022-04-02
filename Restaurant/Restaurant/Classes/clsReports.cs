@@ -154,6 +154,7 @@ namespace Restaurant.Classes
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
+             paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trBankAccounts")));
             paramarr.Add(new ReportParameter("trTransferNumberTooltip", AppSettings.resourcemanagerreport.GetString("trTransferNumberTooltip")));
             paramarr.Add(new ReportParameter("trBank", AppSettings.resourcemanagerreport.GetString("trBank")));
             paramarr.Add(new ReportParameter("trDepositeNumTooltip", AppSettings.resourcemanagerreport.GetString("trDepositeNumTooltip")));
