@@ -3712,4 +3712,34 @@ Please add Email in setting</value>
   <data name="trCharp" xml:space="preserve">
     <value>#</value>
   </data>
+  <data name="trCantDoProcess" xml:space="preserve">
+    <value>Can't complete the process</value>
+  </data>
+  <data name="trMessageBoxConfirm" xml:space="preserve">
+    <value>Are you sure you want to continue?</value>
+  </data>
+  <data name="hour" xml:space="preserve">
+    <value>hour</value>
+  </data>
+  <data name="maximumTimeToKeepReservation" xml:space="preserve">
+    <value>maximum time to keep reservation</value>
+  </data>
+  <data name="tablesTimes" xml:space="preserve">
+    <value>Tables times</value>
+  </data>
+  <data name="timeStaying" xml:space="preserve">
+    <value>Time staying</value>
+  </data>
+  <data name="warningTimeForLateReservation" xml:space="preserve">
+    <value>allert time for late reservation</value>
+  </data>
+  <data name="trNotes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="trAddressInformation" xml:space="preserve">
+    <value>Address information</value>
+  </data>
+  <data name="trTakeAwayDraft" xml:space="preserve">
+    <value>Take Away - Draft</value>
+  </data>
 </root>

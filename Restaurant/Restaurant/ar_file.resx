@@ -3691,4 +3691,37 @@
   <data name="trCharp" xml:space="preserve">
     <value>#</value>
   </data>
+  <data name="trCantDoProcess" xml:space="preserve">
+    <value>لا يمكنك إتمام العملية</value>
+  </data>
+  <data name="trMessageBoxConfirm" xml:space="preserve">
+    <value>هل أنت متأكد من إتمام العملية؟</value>
+  </data>
+  <data name="hour" xml:space="preserve">
+    <value>ساعة</value>
+  </data>
+  <data name="maximumTimeToKeepReservation" xml:space="preserve">
+    <value>أقصى وقت للاحتفاظ بالحجز</value>
+  </data>
+  <data name="tablesTimes" xml:space="preserve">
+    <value>أوقات الطاولات</value>
+  </data>
+  <data name="timeStaying" xml:space="preserve">
+    <value>وقت البقاء</value>
+  </data>
+  <data name="warningTimeForLateReservation" xml:space="preserve">
+    <value>وقت التنبيه للحجز المتأخر</value>
+  </data>
+  <data name="String2" xml:space="preserve">
+    <value />
+  </data>
+  <data name="trNotes" xml:space="preserve">
+    <value>ملاحظات</value>
+  </data>
+  <data name="trAddressInformation" xml:space="preserve">
+    <value>معلومات السكن</value>
+  </data>
+  <data name="trTakeAwayDraft" xml:space="preserve">
+    <value>طلب خارجي - مسودة</value>
+  </data>
 </root>
