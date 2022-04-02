@@ -3742,4 +3742,7 @@ Please add Email in setting</value>
   <data name="trTakeAwayDraft" xml:space="preserve">
     <value>Take Away - Draft</value>
   </data>
+  <data name="invoiceItems" xml:space="preserve">
+    <value>Invoice items</value>
+  </data>
 </root>
