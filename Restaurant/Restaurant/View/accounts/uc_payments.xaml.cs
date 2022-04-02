@@ -178,6 +178,7 @@ namespace Restaurant.View.accounts
             }
             HelpClass.validate(requiredControlList, this);
         }
+
         ImageBrush brush = new ImageBrush();
         async void userImageLoad(Ellipse ellipse, string image)
         {
@@ -225,9 +226,9 @@ namespace Restaurant.View.accounts
         }
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 requiredControlList = new List<string> { "cash", "depositTo", "paymentProcessType"};
 
@@ -296,14 +297,14 @@ namespace Restaurant.View.accounts
                 btn_image.IsEnabled = false;
 
                 await Search();
-                
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void translate()
@@ -388,99 +389,99 @@ namespace Restaurant.View.accounts
 
         private async void Dg_paymentsAccounts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
-            //try
-         //{
-         //    
-         //  HelpClass.StartAwait(grid_main);
-
-            if (dg_paymentsAccounts.SelectedIndex != -1)
+            try
             {
-                cashtrans = dg_paymentsAccounts.SelectedItem as CashTransfer;
-                this.DataContext = cashtrans;
 
-                if (cashtrans != null)
+                HelpClass.StartAwait(grid_main);
+
+                if (dg_paymentsAccounts.SelectedIndex != -1)
                 {
-                    cb_paymentProcessType.SelectedIndex = -1;
-                    btn_image.IsEnabled = true;
+                    cashtrans = dg_paymentsAccounts.SelectedItem as CashTransfer;
+                    this.DataContext = cashtrans;
 
-                    cb_depositTo.SelectedValue = cashtrans.side;
-                    ///////////////////////////
-                    btn_add.IsEnabled = false;
-                    cb_depositTo.IsEnabled = false;
-                    cb_recipientV.IsEnabled = false;
-                    cb_recipientC.IsEnabled = false;
-                    cb_recipientU.IsEnabled = false;
-                    cb_recipientSh.IsEnabled = false;
-                    cb_paymentProcessType.IsEnabled = false;
-                    tb_docNumCheque.IsEnabled = false;
-                    tb_docNumCard.IsEnabled = false;
-                    gd_card.IsEnabled = false;
-                    tb_cash.IsEnabled = false;
-                    tb_notes.IsEnabled = false;
-                    /////////////////////////
-                    #region depositor
-                    switch (cb_depositTo.SelectedValue.ToString())
+                    if (cashtrans != null)
                     {
-                        case "v":
-                            cb_recipientV.SelectedIndex = -1;
-                            try
-                            { cb_recipientV.SelectedValue = cashtrans.agentId.Value; }
-                            catch { }
-                            bdr_recipientC.Visibility = Visibility.Collapsed; 
-                            bdr_recipientU.Visibility = Visibility.Collapsed; 
-                            bdr_recipientSh.Visibility = Visibility.Collapsed;
-                            break;
-                        case "c":
-                            cb_recipientC.SelectedIndex = -1;
-                            try
-                            { cb_recipientC.SelectedValue = cashtrans.agentId.Value; }
-                            catch { }
-                            bdr_recipientV.Visibility = Visibility.Collapsed; 
-                            bdr_recipientU.Visibility = Visibility.Collapsed; 
-                            bdr_recipientSh.Visibility = Visibility.Collapsed;
-                            break;
-                        case "u":
-                        case "s":
-                            cb_recipientU.SelectedIndex = -1;
-                            try
-                            { cb_recipientU.SelectedValue = cashtrans.userId.Value; }
-                            catch { }
-                            bdr_recipientV.Visibility = Visibility.Collapsed; 
-                            bdr_recipientC.Visibility = Visibility.Collapsed; 
-                            bdr_recipientSh.Visibility = Visibility.Collapsed;
-                            break;
-                        case "sh":
-                            cb_recipientSh.SelectedIndex = -1;
-                            try
-                            { cb_recipientSh.SelectedValue = cashtrans.shippingCompanyId.Value; }
-                            catch { }
-                            bdr_recipientC.Visibility = Visibility.Collapsed; 
-                            bdr_recipientV.Visibility = Visibility.Collapsed; 
-                            bdr_recipientU.Visibility = Visibility.Collapsed; 
-                            break;
-                        case "e":
-                        case "m":
-                            bdr_recipientV.Visibility = Visibility.Collapsed; 
-                            bdr_recipientC.Visibility = Visibility.Collapsed; 
-                            bdr_recipientU.Visibility = Visibility.Collapsed; 
-                            bdr_recipientSh.Visibility = Visibility.Collapsed;
-                            break;
-                    }
-                    #endregion
-                    cb_paymentProcessType.SelectedValue = cashtrans.processType;
+                        cb_paymentProcessType.SelectedIndex = -1;
+                        btn_image.IsEnabled = true;
+
+                        cb_depositTo.SelectedValue = cashtrans.side;
+                        ///////////////////////////
+                        btn_add.IsEnabled = false;
+                        cb_depositTo.IsEnabled = false;
+                        cb_recipientV.IsEnabled = false;
+                        cb_recipientC.IsEnabled = false;
+                        cb_recipientU.IsEnabled = false;
+                        cb_recipientSh.IsEnabled = false;
+                        cb_paymentProcessType.IsEnabled = false;
+                        tb_docNumCheque.IsEnabled = false;
+                        tb_docNumCard.IsEnabled = false;
+                        gd_card.IsEnabled = false;
+                        tb_cash.IsEnabled = false;
+                        tb_notes.IsEnabled = false;
+                        /////////////////////////
+                        #region depositor
+                        switch (cb_depositTo.SelectedValue.ToString())
+                        {
+                            case "v":
+                                cb_recipientV.SelectedIndex = -1;
+                                try
+                                { cb_recipientV.SelectedValue = cashtrans.agentId.Value; }
+                                catch { }
+                                bdr_recipientC.Visibility = Visibility.Collapsed; 
+                                bdr_recipientU.Visibility = Visibility.Collapsed; 
+                                bdr_recipientSh.Visibility = Visibility.Collapsed;
+                                break;
+                            case "c":
+                                cb_recipientC.SelectedIndex = -1;
+                                try
+                                { cb_recipientC.SelectedValue = cashtrans.agentId.Value; }
+                                catch { }
+                                bdr_recipientV.Visibility = Visibility.Collapsed; 
+                                bdr_recipientU.Visibility = Visibility.Collapsed; 
+                                bdr_recipientSh.Visibility = Visibility.Collapsed;
+                                break;
+                            case "u":
+                            case "s":
+                                cb_recipientU.SelectedIndex = -1;
+                                try
+                                { cb_recipientU.SelectedValue = cashtrans.userId.Value; }
+                                catch { }
+                                bdr_recipientV.Visibility = Visibility.Collapsed; 
+                                bdr_recipientC.Visibility = Visibility.Collapsed; 
+                                bdr_recipientSh.Visibility = Visibility.Collapsed;
+                                break;
+                            case "sh":
+                                cb_recipientSh.SelectedIndex = -1;
+                                try
+                                { cb_recipientSh.SelectedValue = cashtrans.shippingCompanyId.Value; }
+                                catch { }
+                                bdr_recipientC.Visibility = Visibility.Collapsed; 
+                                bdr_recipientV.Visibility = Visibility.Collapsed; 
+                                bdr_recipientU.Visibility = Visibility.Collapsed; 
+                                break;
+                            case "e":
+                            case "m":
+                                bdr_recipientV.Visibility = Visibility.Collapsed; 
+                                bdr_recipientC.Visibility = Visibility.Collapsed; 
+                                bdr_recipientU.Visibility = Visibility.Collapsed; 
+                                bdr_recipientSh.Visibility = Visibility.Collapsed;
+                                break;
+                        }
+                        #endregion
+                        cb_paymentProcessType.SelectedValue = cashtrans.processType;
                    
+                    }
                 }
+                HelpClass.clearValidate(requiredControlList, this);
+
+                HelpClass.EndAwait(grid_main);
             }
-            HelpClass.clearValidate(requiredControlList, this);
-            //    
-            //        HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    
-            //        HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
 
         }
 
@@ -629,22 +630,6 @@ namespace Restaurant.View.accounts
             else { return false; }
         }
        
-        private async Task<int> saveBond(string num, decimal ammount, Nullable<DateTime> date, string type)
-        {
-            int s = 0;
-            //Bonds bond = new Bonds();
-            //bond.number = num;
-            //bond.amount = ammount;
-            //bond.deserveDate = date;
-            //bond.type = type;
-            //bond.isRecieved = 0;
-            //bond.createUserId = MainWindow.userID.Value;
-
-            //int s = await bondModel.Save(bond);
-
-            return s;
-
-        }
         
         private async Task calcBalance(decimal ammount, string recipient, int agentid)
         {//balance for pos
@@ -780,8 +765,8 @@ namespace Restaurant.View.accounts
         }
         async Task Search()
         {
-            //try
-            //{
+            try
+            {
                 if (cashes is null)
                     await RefreshCashesList();
 
@@ -811,8 +796,8 @@ namespace Restaurant.View.accounts
                 }
                 cashesQueryExcel = cashesQuery.ToList();
                 RefreshCashView();
-            //}
-            //catch { }
+            }
+            catch { }
         }
 
         private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
@@ -1166,45 +1151,6 @@ namespace Restaurant.View.accounts
 
         private void validateEmpty(string name, object sender)
         {
-            /*
-            if (name == "TextBox")
-            {
-                if ((sender as TextBox).Name == "tb_cash")
-                    HelpClass.validateEmptyTextBox((TextBox)sender, p_error_cash, tt_errorCash, "trEmptyCashToolTip");
-                else if ((sender as TextBox).Name == "tb_docNum")
-                    HelpClass.validateEmptyTextBox((TextBox)sender, p_error_docNum, tt_errorDocNum, "trEmptyDocNumToolTip");
-                else if ((sender as TextBox).Name == "tb_docNumCard")
-                    HelpClass.validateEmptyTextBox((TextBox)sender, p_error_docCard, tt_errorDocCard, "trEmptyProcessNumToolTip");
-                else if ((sender as TextBox).Name == "tb_docNumCheque")
-                    HelpClass.validateEmptyTextBox((TextBox)sender, p_error_docNumCheque, tt_errorDocNumCheque, "trEmptyDocNumToolTip");
-
-            }
-            else if (name == "ComboBox")
-            {
-                if ((sender as ComboBox).Name == "cb_depositTo")
-                    HelpClass.validateEmptyComboBox((ComboBox)sender, p_error_depositTo, tt_errorDepositTo, "trErrorEmptyDepositToToolTip");
-                else if ((sender as ComboBox).Name == "cb_recipientV")
-                    HelpClass.validateEmptyComboBox((ComboBox)sender, p_error_recipient, tt_errorRecipient, "trErrorEmptyRecipientToolTip");
-                else if ((sender as ComboBox).Name == "cb_recipientC")
-                    HelpClass.validateEmptyComboBox((ComboBox)sender, p_error_recipient, tt_errorRecipient, "trErrorEmptyRecipientToolTip");
-                else if ((sender as ComboBox).Name == "cb_recipientU")
-                    HelpClass.validateEmptyComboBox((ComboBox)sender, p_error_recipient, tt_errorRecipient, "trErrorEmptyRecipientToolTip");
-                else if ((sender as ComboBox).Name == "cb_recipientSh")
-                    HelpClass.validateEmptyComboBox((ComboBox)sender, p_error_recipient, tt_errorRecipient, "trErrorEmptyRecipientToolTip");
-                else if ((sender as ComboBox).Name == "cb_paymentProcessType")
-                    HelpClass.validateEmptyComboBox((ComboBox)sender, p_error_paymentProcessType, tt_errorpaymentProcessType, "trErrorEmptyPaymentTypeToolTip");
-                else if ((sender as ComboBox).Name == "cb_card")
-                    HelpClass.validateEmptyComboBox((ComboBox)sender, p_error_card, tt_errorCard, "trEmptyCardTooltip");
-
-            }
-            else if (name == "DatePicker")
-            {
-                if ((sender as DatePicker).Name == "dp_docDate")
-                    HelpClass.validateEmptyDatePicker((DatePicker)sender, p_error_docDate, tt_errorDocDate, "trEmptyDocDateToolTip");
-                if ((sender as DatePicker).Name == "dp_docDateCheque")
-                    HelpClass.validateEmptyDatePicker((DatePicker)sender, p_error_docDateCheque, tt_errorDocDateCheque, "trEmptyDocDateToolTip");
-            }
-            */
         }
 
         private void PreventSpaces(object sender, KeyEventArgs e)
@@ -1376,8 +1322,8 @@ namespace Restaurant.View.accounts
 
         private void Btn_invoices_Click(object sender, RoutedEventArgs e)
         {//invoices
-            //try
-            //{
+            try
+            {
                 invoicesLst.Clear();
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_invoicesList w = new wd_invoicesList();
@@ -1398,11 +1344,11 @@ namespace Restaurant.View.accounts
                     invoicesLst.AddRange(w.selectedInvoices);
                 }
                 Window.GetWindow(this).Opacity = 1;
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_salaries_Click(object sender, RoutedEventArgs e)
