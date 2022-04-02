@@ -358,7 +358,6 @@ namespace Restaurant.View.accounts
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_paymentProcessType, AppSettings.resourcemanager.GetString("trPaymentTypeHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_docNumCheque, AppSettings.resourcemanager.GetString("trDocNumHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_docNumCard, AppSettings.resourcemanager.GetString("trProcessNumHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_docDateCheque, AppSettings.resourcemanager.GetString("trDocDateHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, AppSettings.resourcemanager.GetString("trCashHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
 
@@ -410,7 +409,6 @@ namespace Restaurant.View.accounts
                         gd_card.IsEnabled = false;
                         tb_docNumCheque.IsEnabled = false;
                         tb_docNumCard.IsEnabled = false;
-                        dp_docDateCheque.IsEnabled = false;
                         tb_cash.IsEnabled = false;
                         tb_notes.IsEnabled = false;
                         //////////////////////////
@@ -913,6 +911,7 @@ namespace Restaurant.View.accounts
                 {
                     case 0://cash
                         bdr_cheque.Visibility = Visibility.Collapsed;
+                        tb_docNumCheque.Visibility = Visibility.Collapsed;
                         tb_docNumCheque.Clear();
                         bdr_card.Visibility = Visibility.Collapsed;
                         _SelectedCard = 0;
@@ -922,6 +921,7 @@ namespace Restaurant.View.accounts
 
                     case 1://cheque
                         bdr_cheque.Visibility = Visibility.Visible;
+                        tb_docNumCheque.Visibility = Visibility.Visible;
                         bdr_card.Visibility = Visibility.Collapsed;
                         _SelectedCard = -1;
                         tb_docNumCard.Clear();
@@ -932,6 +932,7 @@ namespace Restaurant.View.accounts
 
                     case 2://card
                         bdr_cheque.Visibility = Visibility.Collapsed;
+                        tb_docNumCheque.Visibility = Visibility.Collapsed;
                         bdr_card.Visibility = Visibility.Visible;
                         if (!requiredControlList.Contains("processNum"))
                             requiredControlList.Add("processNum");
@@ -949,6 +950,7 @@ namespace Restaurant.View.accounts
                         break;
                     case -1:
                         bdr_cheque.Visibility = Visibility.Collapsed;
+                        tb_docNumCheque.Visibility = Visibility.Collapsed;
                         bdr_card.Visibility = Visibility.Collapsed;
                         _SelectedCard = 0;
                         break;
@@ -1594,7 +1596,6 @@ namespace Restaurant.View.accounts
             gd_card.IsEnabled = true;
             tb_docNumCheque.IsEnabled = true;
             tb_docNumCard.IsEnabled = true;
-            dp_docDateCheque.IsEnabled = true;
             tb_cash.IsEnabled = true;
             tb_notes.IsEnabled = true;
 
@@ -1608,7 +1609,6 @@ namespace Restaurant.View.accounts
             cb_paymentProcessType.SelectedIndex = -1;
 
             tb_cash.IsReadOnly = false;
-            tb_docNumCard.Visibility = Visibility.Collapsed;
             tb_docNumCard.Visibility = Visibility.Collapsed;
             grid_cheque.Visibility = Visibility.Collapsed;
 

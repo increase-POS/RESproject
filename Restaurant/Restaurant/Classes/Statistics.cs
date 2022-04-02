@@ -3660,20 +3660,21 @@ namespace Restaurant.Classes
         #endregion
 
 
+
         public List<CashTransferSts> getstate(List<CashTransferSts> list, int tab, List<CashTransferSts> listAll)
         {
             List<CashTransferSts> list2 = new List<CashTransferSts>();
             IEnumerable<CashTransferSts> temp = list;
             if (tab == 1)
             {
-                temp = list.Where(t => (t.invShippingCompanyId == null && t.shipUserId == null && t.invAgentId != null) ||
-                                          (t.invShippingCompanyId != null && t.shipUserId != null && t.invAgentId != null));
+                temp = list.Where(t => (t.shippingCompanyId == null && t.shipUserId == null && t.invAgentId != null) ||
+                                          (t.shippingCompanyId != null && t.shipUserId != null && t.invAgentId != null));
             }
             else if (tab == 3)
             {
-                temp = list.Where(t => (t.invShippingCompanyId != null && t.shipUserId == null && t.invAgentId != null)
+                temp = list.Where(t => (t.shippingCompanyId != null && t.shipUserId == null && t.invAgentId != null)
                                      ||
-                                     (t.invShippingCompanyId != null && t.shipUserId == null && t.invAgentId == null)
+                                     (t.shippingCompanyId != null && t.shipUserId == null && t.invAgentId == null)
                 );
             }
             list2 = temp.OrderBy(X => X.updateDate).GroupBy(obj => obj.transNum).Select(obj => new CashTransferSts
@@ -3699,7 +3700,7 @@ namespace Restaurant.Classes
 
                 updateUserName = obj.FirstOrDefault().updateUserName,
                 updateUserAcc = obj.FirstOrDefault().updateUserAcc,
-                //  cardName = obj.FirstOrDefault().cardName,
+                //cardName = obj.FirstOrDefault().cardName,
                 // get pay type from other trans row of bond
                 cardName = (obj.FirstOrDefault().processType == "doc" && obj.FirstOrDefault().bondIsRecieved == 1)
                 ? (listAll.Where(x => x.bondId == obj.FirstOrDefault().bondId && x.side == "bnd").ToList().Count > 0
@@ -3740,16 +3741,14 @@ namespace Restaurant.Classes
             }).Where(t => !(t.side == "bnd" && t.bondIsRecieved == 1)).ToList();
             decimal rowtotal = 0;
 
-            //row.Description1 + "+ delivery cost";
             foreach (CashTransferSts row in list2)
             {
                 row.Description2 = row.bondId > 0
                 ?
                (row.bondIsRecieved == 0 ?
                    AppSettings.resourcemanager.GetString("trBondNotRecieved") :
-                   AppSettings.resourcemanager.GetString("trBondRecieved") + "-" + getProcessType(row.processType))
+                  AppSettings.resourcemanager.GetString("trBondRecieved") + "-" + getProcessType(row.processType, row.cardName))
                  :
-                  //row.Description1;
                   ((row.side == "c") && (row.invShippingCompanyId != null) && (row.processType == "inv") ?
                                                                   row.Description1 + " + " + AppSettings.resourcemanager.GetString("trDeliveryCost")
                                                                 : row.Description1);
@@ -3761,43 +3760,37 @@ namespace Restaurant.Classes
                   :
                   "2";
 
-                //string invnum = "";
-                //List<string> invnumlist = new List<string>();
-                //invnumlist = list.Where(x => x.transNum == row.transNum).Select(y => y.invNumber).ToList();
-                //foreach (string strrow in invnumlist)
-                //{
-                //    invnum += strrow + " ";
-                //}
-                //row.invNumber = invnum;
                 if (row.transType == "d" && !(row.processType == "doc" && row.bondIsRecieved != 1))
-                //    if (row.transType == "d")
                 {
-                    //if (!((row.processType == "doc")&&(row.Description1 == "Receipt")))
-                    //  if(row.bondIsRecieved == 1)
                     rowtotal += (decimal)row.cash;
                 }
                 else if (row.transType == "p" && !(row.processType == "doc" && row.bondIsRecieved != 1))
-                //   else if (row.transType == "p" )
                 {// p
-                 //if (!((row.processType == "doc") && (row.Description1 == "Receipt")))
-                 //  if (row.bondIsRecieved == 1)
                     rowtotal -= (decimal)row.cash;
                 }
                 row.cashTotal = rowtotal;
 
-                //invoice
-                /*
-                row.desc+= row.invId > 0 ? "invoice" : "";
-                row.desc+= row.invType =="p" ? " purchase" : "";//converter
-                row.desc += "Number:"+row.invNumber;
-
-            */
 
             }
 
             return list2;
 
 
+        }
+
+        private string getProcessType(string value, string name)
+        {
+            switch (value)
+            {
+                case "cash": return AppSettings.resourcemanager.GetString("trCash");
+                case "doc": return AppSettings.resourcemanager.GetString("trDocument");
+                case "cheque": return AppSettings.resourcemanager.GetString("trCheque");
+                case "balance": return AppSettings.resourcemanager.GetString("trCredit");
+                //case "card": return AppSettings.resourcemanager.GetString("trAnotherPaymentMethods");
+                case "card": return name;
+                case "inv": return AppSettings.resourcemanager.GetString("trInv");
+                default: return value;
+            }
         }
 
         private string getProcessType(string value)

@@ -196,6 +196,7 @@ namespace Restaurant.View.reports.accountsReports
             }
 
             return result.ToList();
+            
         }
 
         /*Vendor*/
@@ -567,16 +568,16 @@ namespace Restaurant.View.reports.accountsReports
            {
                Values = card.AsChartValues(),
                DataLabels = true,
-               Title = AppSettings.resourcemanager.GetString("tr_Card")
+               Title = AppSettings.resourcemanager.GetString("trAnotherPaymentMethods")
            });
-            columnChartData.Add(
-           new ColumnSeries
-           {
-               Values = doc.AsChartValues(),
-               DataLabels = true,
-               Title = AppSettings.resourcemanager.GetString("trDocument")
+           // columnChartData.Add(
+           //new ColumnSeries
+           //{
+           //    Values = doc.AsChartValues(),
+           //    DataLabels = true,
+           //    Title = AppSettings.resourcemanager.GetString("trDocument")
 
-           });
+           //});
             columnChartData.Add(
            new ColumnSeries
            {
@@ -585,13 +586,13 @@ namespace Restaurant.View.reports.accountsReports
                Title = AppSettings.resourcemanager.GetString("trCheque")
            });
 
-            columnChartData.Add(
-            new ColumnSeries
-            {
-                Values = inv.AsChartValues(),
-                DataLabels = true,
-                Title = AppSettings.resourcemanager.GetString("tr_Invoice")
-            });
+            //columnChartData.Add(
+            //new ColumnSeries
+            //{
+            //    Values = inv.AsChartValues(),
+            //    DataLabels = true,
+            //    Title = AppSettings.resourcemanager.GetString("tr_Invoice")
+            //});
 
             DataContext = this;
             cartesianChart.Series = columnChartData;
@@ -605,7 +606,7 @@ namespace Restaurant.View.reports.accountsReports
 
             resultList.Add(temp.Where(x => x.processType != "inv" && x.transType == "p").Count());
             resultList.Add(temp.Where(x => x.processType != "inv" && x.transType == "d").Count());
-            resultList.Add(temp.Where(x => x.processType == "inv").Count());
+            //resultList.Add(temp.Where(x => x.processType == "inv").Count());
             SeriesCollection piechartData = new SeriesCollection();
             for (int i = 0; i < resultList.Count(); i++)
             {
@@ -614,7 +615,7 @@ namespace Restaurant.View.reports.accountsReports
                 {
                     AppSettings.resourcemanager.GetString("trOnePayment"),
                     AppSettings.resourcemanager.GetString("trOneDeposit"),
-                    AppSettings.resourcemanager.GetString("tr_Invoice")
+                    //AppSettings.resourcemanager.GetString("tr_Invoice")
                 };
                 final.Add(resultList.Skip(i).FirstOrDefault());
                 piechartData.Add(

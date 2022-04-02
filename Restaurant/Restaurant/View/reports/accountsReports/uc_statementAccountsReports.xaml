@@ -584,14 +584,21 @@
                                     <Setter Property="Foreground" Value="{StaticResource SecondColor}"/>
                                 </Style>
                             </DataGrid.Resources>
-                            <DataGrid.Columns>
-                        <DataGridTextColumn x:Name="col_num"         Width="*" Header="Num"         Binding="{Binding transNum}"/>
-                        <DataGridTextColumn x:Name="col_date"        Width="*" Header="Date"        Binding="{Binding updateDate,Converter={StaticResource dateFrameConverter}}"/>
-                        <DataGridTextColumn x:Name="col_proccesType" Width="*" Header="Description" Binding="{Binding Description2}"/>
-                        <DataGridTextColumn                          Width="*" Header="Payment"     Binding="{Binding Description3,Converter={StaticResource processTypeConverter}}"/>
-                        <DataGridTextColumn x:Name="col_amount"      Width="*" Header="Amount"      Binding="{Binding cash,Converter={StaticResource accuracyConverter}}"/>
-                    </DataGrid.Columns>
-                    <DataGrid.RowStyle>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn x:Name="col_num"         Width="*" Header="Num"         Binding="{Binding transNum}"/>
+                                    <DataGridTextColumn x:Name="col_date"        Width="*" Header="Date"        Binding="{Binding updateDate,Converter={StaticResource dateFrameConverter}}"/>
+                                    <DataGridTextColumn x:Name="col_proccesType" Width="*" Header="Description" Binding="{Binding Description2}"/>
+                                    <DataGridTextColumn                          Width="*" Header="Payment" >
+                                        <DataGridTextColumn.Binding>
+                                            <MultiBinding Converter="{StaticResource processTypeAndCardConverter}">
+                                                <Binding Path="Description3" />
+                                                <Binding Path="cardName" />
+                                            </MultiBinding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn x:Name="col_amount"      Width="*" Header="Amount"      Binding="{Binding cash,Converter={StaticResource accuracyConverter}}"/>
+                                </DataGrid.Columns>
+                                <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
                             <Style.Triggers>
                                 <Trigger Property="AlternationIndex" Value="1">
