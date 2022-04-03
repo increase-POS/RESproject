@@ -3757,4 +3757,7 @@ Please add Email in setting</value>
   <data name="trProfit" xml:space="preserve">
     <value>Profit</value>
   </data>
+  <data name="time" xml:space="preserve">
+    <value>Time</value>
+  </data>
 </root>

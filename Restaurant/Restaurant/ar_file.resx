@@ -3739,4 +3739,7 @@
   <data name="trProfit" xml:space="preserve">
     <value>الربح</value>
   </data>
+  <data name="time" xml:space="preserve">
+    <value>الوقت</value>
+  </data>
 </root>
