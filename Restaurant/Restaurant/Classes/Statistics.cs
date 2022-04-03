@@ -862,8 +862,48 @@ namespace Restaurant.Classes
     {
 
         //****************************************************
+        public async Task<List<ItemUnitInvoiceProfit>> GetInvoiceProfit(int mainBranchId, int userId)
+        {
 
+            List<ItemUnitInvoiceProfit> list = new List<ItemUnitInvoiceProfit>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
 
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Statistics/GetInvoiceProfit", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<ItemUnitInvoiceProfit>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+        }
+
+        public async Task<List<ItemUnitInvoiceProfit>> GetItemProfit(int mainBranchId, int userId)
+        {
+            List<ItemUnitInvoiceProfit> list = new List<ItemUnitInvoiceProfit>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
+
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Statistics/GetItemProfit", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<ItemUnitInvoiceProfit>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+        }
+
+        #region old
         //public async Task<List<ItemLocation>> GetItemQtyInBranches(int itemId, int UnitId, string BranchType)
         //{
         //    List<ItemLocation> list = null;
@@ -904,6 +944,7 @@ namespace Restaurant.Classes
         //        return list;
         //    }
         //}
+        #endregion
 
         // المشتريات
         public async Task<List<Invoice>> GetPurinv(int mainBranchId, int userId)
@@ -926,7 +967,8 @@ namespace Restaurant.Classes
                 }
             }
             return list;
-
+            
+            #region old
             //List<Invoice> list = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -965,8 +1007,7 @@ namespace Restaurant.Classes
             //    return list;
             //}
 
-
-
+            #endregion
 
         }
 
@@ -974,8 +1015,6 @@ namespace Restaurant.Classes
 
         public async Task<List<ItemTransferInvoice>> GetPuritem(int mainBranchId, int userId)
         {
-
-
             List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("mainBranchId", mainBranchId.ToString());
@@ -993,6 +1032,7 @@ namespace Restaurant.Classes
             }
             return list;
 
+            #region old
             //List<ItemTransferInvoice> list = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -1030,6 +1070,7 @@ namespace Restaurant.Classes
             //    }
             //    return list;
             //}
+            #endregion
         }
 
         // عدد الاصناف في الفواتير
@@ -1052,6 +1093,8 @@ namespace Restaurant.Classes
                 }
             }
             return list;
+
+            #region old
             //List<ItemTransferInvoice> list = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -1089,8 +1132,10 @@ namespace Restaurant.Classes
             //    }
             //    return list;
             //}
+            #endregion
         }
 
+        #region 
         //public async Task<List<Invoice>> GetPurinvwithCount()
         //{
         //    List<Invoice> list = null;
@@ -1345,7 +1390,7 @@ namespace Restaurant.Classes
         //        return list;
         //    }
         //}
-
+        #endregion
 
         // الفواتير مع العناصر
         public async Task<List<ItemTransferInvoice>> GetSaleitem(int mainBranchId, int userId)
@@ -1367,6 +1412,7 @@ namespace Restaurant.Classes
             }
             return list;
 
+            #region
             //List<ItemTransferInvoice> list = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -1404,6 +1450,7 @@ namespace Restaurant.Classes
             //    }
             //    return list;
             //}
+            #endregion
         }
 
         //  عدد العناصر في فواتير عرض السعر
@@ -1426,7 +1473,7 @@ namespace Restaurant.Classes
                 }
             }
             return list;
-
+            #region
             //List<ItemTransferInvoice> list = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -1464,6 +1511,7 @@ namespace Restaurant.Classes
             //    }
             //    return list;
             //}
+            #endregion
         }
 
 
@@ -1488,6 +1536,7 @@ namespace Restaurant.Classes
             }
             return list;
 
+            #region
             //List<ItemTransferInvoice> list = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -1525,6 +1574,7 @@ namespace Restaurant.Classes
             //    }
             //    return list;
             //}
+            #endregion
         }
 
 
@@ -1549,7 +1599,7 @@ namespace Restaurant.Classes
             }
             return list;
 
-
+            #region
             //List<ItemTransferInvoice> list = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -1587,6 +1637,7 @@ namespace Restaurant.Classes
             //    }
             //    return list;
             //}
+            #endregion
         }
         public async Task<List<ItemTransferInvoice>> GetSaleitemcount(int mainBranchId, int userId)
         {
@@ -1608,6 +1659,7 @@ namespace Restaurant.Classes
             }
             return list;
 
+            #region
             //List<ItemTransferInvoice> list = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -1645,6 +1697,7 @@ namespace Restaurant.Classes
             //    }
             //    return list;
             //}
+            #endregion
         }
 
         //
@@ -1759,7 +1812,7 @@ namespace Restaurant.Classes
                 }
             }
             return list;
-
+            #region
             //List<ItemTransferInvoice> list = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -1797,6 +1850,7 @@ namespace Restaurant.Classes
             //    }
             //    return list;
             //}
+            #endregion
         }
 
         // الفواتير مع العناصر التي لديها اوفر
@@ -1846,7 +1900,7 @@ namespace Restaurant.Classes
             }
             return list;
 
-
+            #region
             //List<Storage> list = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -1884,9 +1938,10 @@ namespace Restaurant.Classes
             //    }
             //    return list;
             //}
+            #endregion
         }
 
-
+        #region
         // حركة الاصناف التي دخلت الى الفرع
         //public async Task<List<ItemTransferInvoice>> GetInItems()
         //{
@@ -1928,7 +1983,7 @@ namespace Restaurant.Classes
         //        return list;
         //    }
         //}
-
+        #endregion
         // حركة الاصناف الخارجية (مع الزبائن والموردين)
         public async Task<List<ItemTransferInvoice>> GetExternalMov(int mainBranchId, int userId)
         {
@@ -1949,7 +2004,7 @@ namespace Restaurant.Classes
             }
             return list;
 
-
+            #region
             //List<ItemTransferInvoice> list = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -1987,6 +2042,7 @@ namespace Restaurant.Classes
             //    }
             //    return list;
             //}
+            #endregion
         }
         //حركة الإدخال المباشر
         public async Task<List<ItemTransferInvoice>> GetDirectInMov(int mainBranchId, int userId)
@@ -2027,7 +2083,7 @@ namespace Restaurant.Classes
                 }
             }
             return list;
-
+            #region
             //List<ItemTransferInvoice> list = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -2065,9 +2121,8 @@ namespace Restaurant.Classes
             //    }
             //    return list;
             //}
+            #endregion
         }
-
-
         #endregion
 
 
@@ -3352,9 +3407,6 @@ namespace Restaurant.Classes
 
         #endregion
 
-
-        /// //////////////////////////////////////////////////////////
-
         // Combo
         #region combo
 
@@ -3808,6 +3860,7 @@ namespace Restaurant.Classes
             }
         }
 
+        #region
         //public async Task<List<CashTransfer>> GetCashTransferForPosAsync(string type, string side)
         //{
         //    // string type, string side
@@ -3828,8 +3881,7 @@ namespace Restaurant.Classes
         //    }
         //    return list;
         //}
-
-
+        #endregion
 
     }
 }
