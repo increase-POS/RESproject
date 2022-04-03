@@ -281,6 +281,7 @@
     <Compile Include="converters\invoiceTypeConverter.cs" />
     <Compile Include="converters\itemTypeConverter.cs" />
     <Compile Include="converters\locationFreeZoneStorageReportConverter.cs" />
+    <Compile Include="converters\minmaxUnitNameStockConverter.cs" />
     <Compile Include="converters\notificationsContentConverter.cs" />
     <Compile Include="converters\notificationsTitleConverter.cs" />
     <Compile Include="converters\posTransfersStatusConverter.cs" />
@@ -302,6 +303,7 @@
     <Compile Include="converters\unlimitedEndDate.cs" />
     <Compile Include="converters\userJobConverter.cs" />
     <Compile Include="en_file.Designer.cs" />
+    <Compile Include="minmaxUnitNameStockConverter.cs" />
     <Compile Include="View\accounts\uc_accounts.xaml.cs">
       <DependentUpon>uc_accounts.xaml</DependentUpon>
     </Compile>

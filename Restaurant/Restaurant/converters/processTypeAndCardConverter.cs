@@ -28,7 +28,8 @@ namespace Restaurant.converters
                 //break;
                 case "card": return cName;
                 //break;
-                case "inv": return AppSettings.resourcemanager.GetString("trInv");
+                //case "inv": return AppSettings.resourcemanager.GetString("trInv");
+                case "inv": return "-";
                 case "multiple": return AppSettings.resourcemanager.GetString("trMultiplePayment");
 
                 //break;

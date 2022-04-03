@@ -1084,15 +1084,15 @@ namespace Restaurant.View.reports.storageReports
                        branchName = s.FirstOrDefault().branchName,
                        storeCost = s.FirstOrDefault().storeCost,
                        itemUnitId = s.FirstOrDefault().itemUnitId,
-                       ItemUnits = s.FirstOrDefault().ItemUnits
-                   ,
+                       ItemUnits = s.FirstOrDefault().ItemUnits,
                        itemId = s.FirstOrDefault().itemId,
                        itemName = s.FirstOrDefault().itemName,
                        unitId = s.FirstOrDefault().unitId,
                        unitName = s.FirstOrDefault().unitName,
                        quantity = s.Sum(g => g.quantity),
-                       minUnitName = s.FirstOrDefault().minUnitName + s.FirstOrDefault().min,
-                       maxUnitName = s.FirstOrDefault().maxUnitName + s.FirstOrDefault().max
+                       minUnitName = s.FirstOrDefault().minUnitName + ": " + s.FirstOrDefault().min,
+                       maxUnitName = s.FirstOrDefault().maxUnitName + ": " + s.FirstOrDefault().max,
+                       itemType = s.FirstOrDefault().itemType
                    });
             }
 

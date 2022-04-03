@@ -8,6 +8,7 @@
     <!--StartupUri="MainWindow.xaml"-->
     <Application.Resources>
         <ResourceDictionary>
+            <converters:minmaxUnitNameStockConverter x:Key="minmaxUnitNameStockConverter"/>
             <converters:unlimitedEndDate x:Key="unlimitedEndDate"/>
             <converters:unknownAgentConverter x:Key="unknownAgentConverter"/>
             <converters:processTypeAndCardConverter x:Key="processTypeAndCardConverter"/>

@@ -426,7 +426,8 @@ namespace Restaurant.Classes
         public string Description1
         {//
             get =>
-                description1 = (transType == "p" && processType != "inv") ? description1 = AppSettings.resourcemanager.GetString("trPaymentReceipt")
+                //description1 = (transType == "p" && processType != "inv") ? description1 = AppSettings.resourcemanager.GetString("trPaymentReceipt")
+                description1 = (transType == "p" && processType != "inv") ? description1 = AppSettings.resourcemanager.GetString("trPayment")
                 : description1 = (transType == "d" && processType != "inv") ? description1 = AppSettings.resourcemanager.GetString("trReceipt")
                 : invId > 0 && processType == "inv" ? description1 = AppSettings.resourcemanager.GetString("tr_Invoice") + " " + AppSettings.resourcemanager.GetString("trNum:") + " : " + invNumber
                 : ""
@@ -453,7 +454,7 @@ namespace Restaurant.Classes
     }
     public class Storage
     {
-
+        public string itemType { get; set; }
         //storagecost
         public Nullable<int> storageCostId { get; set; }
         public string storageCostName { get; set; }
