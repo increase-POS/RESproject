@@ -349,52 +349,52 @@
                         <DataGridTextColumn x:Name="col_quantity"      Width="*" Header="QTY"       Binding="{Binding ITquantity }" />
                         <DataGridTextColumn x:Name="col_branch"        Width="*" Header="Branch"    Binding="{Binding branchCreatorName }" />
                         <DataGridTextColumn x:Name="col_pos"           Width="*" Header="Pos"       Binding="{Binding posName }" />
-                                    <DataGridTextColumn x:Name="col_invoiceProfit" Width="*" Header="Profits"   Binding="{Binding invoiceProfit  ,Converter={StaticResource accuracyConverter}}" >
-                                        <DataGridTextColumn.CellStyle>
-                                            <Style TargetType="{x:Type DataGridCell}">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding invoiceProfit, Converter={StaticResource profitToColorConverter}}" Value="1">
-                                                        <Setter Property="Background" Value="{StaticResource lightGreen}"/>
-                                                        <Setter Property="Foreground" Value="{StaticResource ThickGrey}"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding invoiceProfit, Converter={StaticResource profitToColorConverter}}" Value="0">
-                                                        <Setter Property="Background" Value="{StaticResource lightRed}"/>
-                                                        <Setter Property="Foreground" Value="{StaticResource ThickGrey}"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </DataGridTextColumn.CellStyle>
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn x:Name="col_itemProfit"    Width="*" Header="Profits"   Binding="{Binding itemProfit    ,Converter={StaticResource accuracyConverter}}" >
-                                        <DataGridTextColumn.CellStyle>
-                                            <Style TargetType="{x:Type DataGridCell}">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding itemProfit, Converter={StaticResource profitToColorConverter}}" Value="1">
-                                                        <Setter Property="Background" Value="{StaticResource lightGreen}"/>
-                                                        <Setter Property="Foreground" Value="{StaticResource ThickGrey}"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding itemProfit, Converter={StaticResource profitToColorConverter}}" Value="0">
-                                                        <Setter Property="Background" Value="{StaticResource lightRed}"/>
-                                                        <Setter Property="Foreground" Value="{StaticResource ThickGrey}"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </DataGridTextColumn.CellStyle>
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
+                        <DataGridTextColumn x:Name="col_invoiceProfit" Width="*" Header="Profits"   Binding="{Binding invoiceProfit  ,Converter={StaticResource accuracyConverter}}" >
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="{x:Type DataGridCell}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding invoiceProfit, Converter={StaticResource profitToColorConverter}}" Value="1">
+                                            <Setter Property="Background" Value="{StaticResource lightGreen}"/>
+                                            <Setter Property="Foreground" Value="{StaticResource ThickGrey}"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding invoiceProfit, Converter={StaticResource profitToColorConverter}}" Value="0">
+                                            <Setter Property="Background" Value="{StaticResource lightRed}"/>
+                                            <Setter Property="Foreground" Value="{StaticResource ThickGrey}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                                    <DataGridTextColumn x:Name="col_itemProfit"    Width="*" Header="Profits"   Binding="{Binding itemunitProfit    ,Converter={StaticResource accuracyConverter}}" >
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="{x:Type DataGridCell}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding itemunitProfit, Converter={StaticResource profitToColorConverter}}" Value="1">
+                                            <Setter Property="Background" Value="{StaticResource lightGreen}"/>
+                                            <Setter Property="Foreground" Value="{StaticResource ThickGrey}"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding itemunitProfit, Converter={StaticResource profitToColorConverter}}" Value="0">
+                                            <Setter Property="Background" Value="{StaticResource lightRed}"/>
+                                            <Setter Property="Foreground" Value="{StaticResource ThickGrey}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
 
-                                </DataGrid.Columns>
+                    </DataGrid.Columns>
                 </DataGrid>
                         </Grid>
 

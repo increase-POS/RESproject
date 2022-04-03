@@ -3733,4 +3733,10 @@
   <data name="trMinStock" xml:space="preserve">
     <value>أدنى مخزون</value>
   </data>
+  <data name="trLoss" xml:space="preserve">
+    <value>الخسارة</value>
+  </data>
+  <data name="trProfit" xml:space="preserve">
+    <value>الربح</value>
+  </data>
 </root>

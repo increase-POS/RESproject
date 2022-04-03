@@ -3751,4 +3751,10 @@ Please add Email in setting</value>
   <data name="trMinStock" xml:space="preserve">
     <value>Min Stock</value>
   </data>
+  <data name="trLoss" xml:space="preserve">
+    <value>Loss</value>
+  </data>
+  <data name="trProfit" xml:space="preserve">
+    <value>Profit</value>
+  </data>
 </root>
