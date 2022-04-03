@@ -190,18 +190,19 @@
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Width="*"  Header="#" Binding="{Binding Path=orderNum}"/>
-                                <DataGridTextColumn Header="invNum - tables" Width="*">
-                                    <DataGridTextColumn.Binding>
+                                <DataGridTextColumn Width="*" x:Name="col_orderNum" Header="#" Binding="{Binding Path=orderNum}"/>
+                                <DataGridTextColumn Header="invNum" Width="*" Binding="{Binding Path=invNum}">
+                                    <!--<DataGridTextColumn.Binding>
                                         <MultiBinding StringFormat="{}{0} - {1}">
                                             <Binding Path="invNum"></Binding>
                                             <Binding Path="tables"></Binding>
                                         </MultiBinding>
-                                    </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn.Binding>-->
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Width="*"  Header="remaining time" Binding="{Binding Path=remainingTime, Converter={StaticResource accuracyConverter}}"/>
+                                <DataGridTextColumn Width="*"  Header="remaining time" x:Name="col_remainingTime" Binding="{Binding Path=remainingTime}"/>
                                 <DataGridTextColumn Width="*"  Header="status" Binding="{Binding Path=status,Converter={StaticResource preparingOrderStatusConverter }}"/>
                                 <DataGridTextColumn Width="*"  Header="notes" Binding="{Binding Path=notes}"/>
+                                <DataGridTextColumn Width="*"  Header="table" x:Name="col_table" Binding="{Binding Path=tables}"/>
                             </DataGrid.Columns>
                         </DataGrid>
 

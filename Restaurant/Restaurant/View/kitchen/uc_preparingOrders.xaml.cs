@@ -126,10 +126,12 @@ namespace Restaurant.View.kitchen
                FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
                );
             #region dg_orders
-            dg_orders.Columns[1].Header = "";
+            col_orderNum.Header = AppSettings.resourcemanager.GetString("trOrderCharp");
+            dg_orders.Columns[1].Header = AppSettings.resourcemanager.GetString("trInvoiceCharp");
             dg_orders.Columns[2].Header = AppSettings.resourcemanager.GetString("trRemainingTime");
             dg_orders.Columns[3].Header = AppSettings.resourcemanager.GetString("trStatus");
             dg_orders.Columns[4].Header = AppSettings.resourcemanager.GetString("trNote");
+            col_table.Header = AppSettings.resourcemanager.GetString("trTable");
             #endregion
 
             //txt_title.Text = AppSettings.resourcemanager.GetString("trOrder");
@@ -240,7 +242,7 @@ namespace Restaurant.View.kitchen
                     res = await preparingOrder.updateOrderStatus(statusObject);
                     break;
                 case "Ready":
-                    statusObject.status = "Collected";
+                    statusObject.status = "Done";
 
                     res = await preparingOrder.updateOrderStatus(statusObject);
                     break;
@@ -789,10 +791,10 @@ namespace Restaurant.View.kitchen
                     break;
                 case "Ready":
                     gd_preparingTime.Visibility = Visibility.Collapsed;
-                    btn_save.Content = AppSettings.resourcemanager.GetString("trCollected");
+                    btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
                     btn_save.IsEnabled = true;
                     break;
-                case "Collected":
+                case "Done":
                     gd_preparingTime.Visibility = Visibility.Collapsed;
                     btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
                     btn_save.IsEnabled = false;

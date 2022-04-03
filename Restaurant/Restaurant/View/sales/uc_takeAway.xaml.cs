@@ -1165,10 +1165,16 @@ namespace Restaurant.View.sales
                 if (invType == "tsd" && invoice.invoiceId == 0)
                 {
                     invoice.invNumber = await invoice.generateInvNumber("tsd", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
-                    invoice.createUserId = MainWindow.userLogin.userId;
                 }
                 else
                     invoice.invNumber = await invoice.generateInvNumber("ts", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+
+                if(invoice.invoiceId == 0)
+                {
+                    invoice.createUserId = MainWindow.userLogin.userId;
+                    invoice.branchId = MainWindow.branchLogin.branchId;
+                }
+
                 invoice.invType = invType;
                 invoice.discountValue = _ManualDiscount;
                 invoice.discountType = _DiscountType;
