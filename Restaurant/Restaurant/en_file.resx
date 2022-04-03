@@ -3760,4 +3760,7 @@ Please add Email in setting</value>
   <data name="time" xml:space="preserve">
     <value>Time</value>
   </data>
+  <data name="trDone" xml:space="preserve">
+    <value>Done</value>
+  </data>
 </root>

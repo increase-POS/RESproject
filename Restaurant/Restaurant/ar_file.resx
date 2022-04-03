@@ -3742,4 +3742,7 @@
   <data name="time" xml:space="preserve">
     <value>الوقت</value>
   </data>
+  <data name="trDone" xml:space="preserve">
+    <value>تم</value>
+  </data>
 </root>

@@ -46,6 +46,7 @@
             <converters:translateConverter x:Key="translateConverter"/>
             <converters:preparingOrderStatusConverter x:Key="preparingOrderStatusConverter"/>
             <converters:profitToColorConverter x:Key="profitToColorConverter"/>
+            <converters:preparingOrderTypeConverter x:Key="preparingOrderTypeConverter"/>
             
 
 
