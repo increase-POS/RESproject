@@ -80,7 +80,8 @@ namespace Restaurant
                                  // print setting
        
         public static Boolean go_out = false;
-      
+        public static Boolean go_out_didNotAnyProcess = false;
+
 
         static public MainWindow mainWindow;
         public MainWindow()
@@ -964,10 +965,7 @@ namespace Restaurant
                 translate();
 
 
-                //await FillCombo.getprintSitting();
-                //await FillCombo.loading_getDefaultSystemInfo();
-
-
+               
                 #region loading 
                 loadingList = new List<keyValueBool>();
                 bool isDone = true;
@@ -1069,9 +1067,7 @@ namespace Restaurant
                 EventManager.RegisterClassHandler(typeof(System.Windows.Controls.TextBox), System.Windows.Controls.TextBox.GotKeyboardFocusEvent, new RoutedEventHandler(SelectAllText));
                 txt_rightReserved.Text = DateTime.Now.Date.Year + " © All Right Reserved for Increase";
 
-                //lang = "ar";
 
-                //SetNotificationsLocation();
 
 
                 HelpClass.EndAwait(grid_mainWindow, "mainWindow_loaded");
@@ -1251,7 +1247,8 @@ namespace Restaurant
             {
                 if (IdleClass.IdleTime.Minutes >= Idletime)
                 {
-                    BTN_logOut_Click(null, null);
+                    go_out_didNotAnyProcess = true;
+                    BTN_logOut_Click(BTN_logOut, null);
                     idletimer.Stop();
                 }
             }
@@ -1273,7 +1270,7 @@ namespace Restaurant
                 //if (thrlog.sOutDate != null)
                 if (go_out)
                 {
-                    BTN_logOut_Click(null, null);
+                    BTN_logOut_Click(BTN_logOut, null);
                     threadtimer.Stop();
                 }
             }
@@ -1316,21 +1313,7 @@ namespace Restaurant
         {
             MessageBox.Show(exception.Message);
         }
-        //private static List<string> QueryWmiKeyboards()
-        //{
-        //    using (var searcher = new ManagementObjectSearcher(new SelectQuery("Win32_Keyboard")))
-        //    using (var result = searcher.Get())
-        //    {
-        //        return result
-        //            .Cast<ManagementBaseObject>()
-        //            .SelectMany(keyboard =>
-        //                keyboard.Properties
-        //                    .Cast<PropertyData>()
-        //                    .Where(k => k.Name == "Description")
-        //                    .Select(k => k.Value as string))
-        //            .ToList();
-        //    }
-        //}
+        
         void FN_tooltipVisibility(Button btn)
         {
             ToolTip T = btn.ToolTip as ToolTip;
@@ -1343,15 +1326,18 @@ namespace Restaurant
             try
             {
                
-                    HelpClass.StartAwait(grid_mainWindow);
+                HelpClass.StartAwait(grid_mainWindow);
 
                 await close();
 
                 Application.Current.Shutdown();
                 System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
 
-               
-                    HelpClass.EndAwait(grid_mainWindow);
+                //wd_logIn wdLogIn = new wd_logIn();
+                //wdLogIn.Show();
+                //this.Close();
+
+                HelpClass.EndAwait(grid_mainWindow);
             }
             catch (Exception ex)
             {
@@ -1366,29 +1352,74 @@ namespace Restaurant
             //update lognin record
             if (!go_out)
             {
-                //await updateLogninRecord();
+                await updateLogninRecord();
             }
             timer.Stop();
             idletimer.Stop();
             threadtimer.Stop();
         }
+        async Task<bool> updateLogninRecord()
+        {
+            //update lognin record
+            UsersLogs userLog = new UsersLogs();
+            userLog = await userLog.GetByID(userLogin.userId);
+
+            await userLog.Save(userLog);
+
+            //update user record
+            userLogin.isOnline = 0;
+            await userLogin.save(userLogin);
+
+
+            return true;
+        }
         private async void BTN_Close_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-               
+                
                     HelpClass.StartAwait(grid_mainWindow);
-                await close();
+                if (go_out)
+                {
+                    await close();
+                    this.Visibility = Visibility.Hidden;
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+                    wd_messageBox w = new wd_messageBox();
+                    w.contentText2 = AppSettings.resourcemanager.GetString("trUserLoginFromOtherPos");
+                    w.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
 
-                Application.Current.Shutdown();
+                    Application.Current.Shutdown();
+                }
+                else if (go_out_didNotAnyProcess)
+                {
+                    await close();
+                    this.Visibility = Visibility.Hidden;
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+                    wd_messageBoxWithIcon w = new wd_messageBoxWithIcon();
+                    w.contentText1 = AppSettings.resourcemanager.GetString("trLoggedOutBecauseDidNotDoneAnyProcess");
+                    w.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
 
-               
-                    HelpClass.EndAwait(grid_mainWindow);
+                    Application.Current.Shutdown();
+                }
+                else
+                {
+                    await close();
+                    Application.Current.Shutdown();
+                }
+
+
+                HelpClass.EndAwait(grid_mainWindow);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_mainWindow);
+
+                HelpClass.EndAwait(grid_mainWindow);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1551,25 +1582,7 @@ namespace Restaurant
             }
 
         }
-        /*
-        User userModel = new User();
-        UsersLogs userLogsModel = new UsersLogs();
-        async Task<bool> updateLogninRecord()
-        {
-            //update lognin record
-            UsersLogs userLog = new UsersLogs();
-            userLog = await userLogsModel.GetByID(userLogInID.Value);
-
-            await userLogsModel.Save(userLog);
-
-            //update user record
-            userLogin.isOnline = 0;
-            await userModel.save(userLogin);
-
-
-            return true;
-        }
-        */
+       
         
         private void Btn_home_Click(object sender, RoutedEventArgs e)
         {
@@ -1788,136 +1801,6 @@ namespace Restaurant
             }
         }
 
-        /*
-        
-        private void BTN_catalog_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_catalog);
-                FN_pathVisible(path_openCatalog);
-                fn_ColorIconRefreash(path_iconCatalog);
-                grid_main.Children.Clear();
-                grid_main.Children.Add(UC_catalog.Instance);
-                isHome = true;
-                Button button = sender as Button;
-                initializationMainTrack(button.Tag.ToString(), 0);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        public void BTN_purchases_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_purchases);
-                FN_pathVisible(path_openPurchases);
-                fn_ColorIconRefreash(path_iconPurchases);
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_purchases.Instance);
-                isHome = true;
-                Button button = sender as Button;
-                initializationMainTrack(button.Tag.ToString(), 0);
-
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        public void BTN_sales_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_sales);
-                FN_pathVisible(path_openSales);
-                fn_ColorIconRefreash(path_iconSales);
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_sales.Instance);
-                isHome = true;
-                Button button = sender as Button;
-                initializationMainTrack(button.Tag.ToString(), 0);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void BTN_accounts_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_accounting);
-                FN_pathVisible(path_openAccount);
-                fn_ColorIconRefreash(path_iconAccounts);
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_accounts.Instance);
-                isHome = true;
-                Button button = sender as Button;
-                initializationMainTrack(button.Tag.ToString(), 0);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void BTN_reports_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_reports);
-                FN_pathVisible(path_openReports);
-                fn_ColorIconRefreash(path_iconReports);
-                isHome = true;
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_reports.Instance);
-                Button button = sender as Button;
-                initializationMainTrack(button.Tag.ToString(), 0);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        public void BTN_settings_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                colorTextRefreash(txt_settings);
-                FN_pathVisible(path_openSettings);
-                fn_ColorIconRefreash(path_iconSettings);
-                isHome = true;
-                grid_main.Children.Clear();
-                grid_main.Children.Add(uc_settings.Instance);
-                Button button = sender as Button;
-                initializationMainTrack(button.Tag.ToString(), 0);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private void BTN_storage_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Button button = sender as Button;
-                initializationMainTrack(button.Tag.ToString(), 0);
-                colorTextRefreash(txt_storage);
-                FN_pathVisible(path_openStorage);
-                fn_ColorIconRefreash(path_iconStorage);
-                grid_main.Children.Clear();
-                grid_main.Children.Add(View.uc_storage.Instance);
-                isHome = true;
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        */
       
         private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -1939,11 +1822,8 @@ namespace Restaurant
             }
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private async void Mi_changePassword_Click(object sender, RoutedEventArgs e)
+     
+        private  void Mi_changePassword_Click(object sender, RoutedEventArgs e)
         {//change password
             try
             {
@@ -1977,80 +1857,7 @@ namespace Restaurant
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        /*
-        SetValues v = new SetValues();
-        async Task<string> getDefaultStorageCost()
-        {
-            v = await uc_general.getDefaultCost();
-            if (v != null)
-                return v.value;
-            else
-                return "";
-        }
-        async Task<string> getDefaultLanguage()
-        {
-            UserSetValues v = await uc_general.getDefaultLanguage();
-            SetValues sVModel = new SetValues();
-            SetValues sValue = new SetValues();
-            sValue = await sVModel.GetByID(v.valId.Value);
-            if (sValue != null)
-                return sValue.value;
-            else
-                return "";
-        }
-        async Task<string> getDefaultTax()
-        {
-            v = await uc_general.getDefaultTax();
-            if (v != null)
-                return v.value;
-            else
-                return "";
-        }
-        async Task<string> getDefaultItemCost()
-        {
-            v = await uc_general.getDefaultItemCost();
-            if (v != null)
-                return v.value;
-            else
-                return "";
-        }
-        async Task<string> getDefaultPrintCount()
-        {
-            v = await uc_general.getDefaultPrintCount();
-            if (v != null)
-                return v.value;
-            else
-                return "";
-        }
-        async Task<string> getDefaultAccuracy()
-        {
-            v = await uc_general.getDefaultAccuracy();
-            if (v != null)
-                return v.value;
-            else
-                return "";
-        }
-        async Task<string> getDefaultDateForm()
-        {
-            v = await uc_general.getDefaultDateForm();
-            if (v != null)
-                return v.value;
-            else
-                return "";
-        }
-        async Task<CountryCode> getDefaultRegion()
-        {
-            CountryCode c = await uc_general.getDefaultRegion();
-            if (c != null)
-                return c;
-            else
-                return null;
-        }
-        */
-        private void Mi_more_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+     
         public static string GetUntilOrEmpty(string text, string stopAt)
         {
             if (!String.IsNullOrWhiteSpace(text))
@@ -2199,21 +2006,8 @@ namespace Restaurant
 
         
 
-        private void Btn_info_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                //Window.GetWindow(this).Opacity = 0.2;
-                //wd_info w = new wd_info();
-                    //// w.ShowInTaskbar = false;
-                //w.ShowDialog();
-                //Window.GetWindow(this).Opacity = 1;
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+       
+
        
         private void Btn_userImage_Click(object sender, RoutedEventArgs e)
         {

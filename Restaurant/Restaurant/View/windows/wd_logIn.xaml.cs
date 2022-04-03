@@ -27,6 +27,7 @@ namespace Restaurant.View.windows
     {
         BrushConverter brushConverter = new BrushConverter();
          bool logInProcessing = false;
+        UsersLogs userLogsModel = new UsersLogs();
         User userModel = new User();
         User user = new User();
         public wd_logIn()
@@ -225,14 +226,21 @@ namespace Restaurant.View.windows
                     logInProcessing = true;
                     
                     HelpClass.StartAwait(grid_main);
-
+                    
                     HelpClass.clearValidate(p_errorUserName);
                     HelpClass.clearValidate(p_errorPassword);
 
                     string password = Md5Encription.MD5Hash("Inc-m" + txtPassword.Password);
                     string userName = txtUserName.Text;
+
+                    //int canLogin = await userModel.checkLoginAvalability(MainWindow.posID.Value, userName, password);
+                    //if (canLogin == 1)
+                    //{
                     MainWindow.userLogin = new User();
-                   user = await userModel.Getloginuser(userName, password);
+                    MainWindow.posLogin = new Pos();
+                    MainWindow.branchLogin = new Branch();
+
+                    user = await userModel.Getloginuser(userName, password);
 
                     if (user.username == null)
                     {
@@ -252,42 +260,28 @@ namespace Restaurant.View.windows
                             //send user info to main window
                             MainWindow.userLogin.userId = user.userId;
                             MainWindow.userLogin = user;
-
-                            //#region send language to main window
-                            //try
-                            //{
-                            //    //MainWindow.lang = await getUserLanguage(user.userId);
-                            //    lang = MainWindow.lang;
-                            //}
-                            //catch
-                            //{
-                            //    MainWindow.lang = "en";
-                            //    lang = MainWindow.lang;
-                            //}
-                            //#endregion
-
-                            #region check if menu is open
-                            //try
-                            //{
-                            //    string m = await SectionData.getUserMenuIsOpen(user.userId);
-                            //    if (!m.Equals("-1"))
-                            //        MainWindow.menuIsOpen = m;
-                            //    else
-                            //        MainWindow.menuIsOpen = "close";
-                            //    menuIsOpen = MainWindow.menuIsOpen;
-                            //}
-                            //catch
-                            //{
-                            //    MainWindow.menuIsOpen = "close";
-                            //    menuIsOpen = MainWindow.menuIsOpen;
-                            //}
-                            #endregion
+                            MainWindow.posLogin = await MainWindow.posLogin.getById(1);
+                            MainWindow.branchLogin = await MainWindow.branchLogin.getBranchById(MainWindow.posLogin.branchId);
 
                             //make user online
                             user.isOnline = 1;
 
-                            int s = await userModel.save(user);
+                            //checkother
+                            //string str1 = await userLogsModel.checkOtherUser(MainWindow.userLogin.userId);
 
+
+                            int s = await userModel.save(user);
+                            /*
+                            //create lognin record
+                            UsersLogs userLog = new UsersLogs();
+                            userLog.posId = MainWindow.posLogin.posId;
+
+                            userLog.userId = user.userId;
+                            int str = await userLogsModel.Save(userLog);
+                            
+                            if (!str.Equals(0))
+                                MainWindow.userLogin.userId = str;
+                            */
                             #region remember me
                             if (cbxRemmemberMe.IsChecked.Value)
                             {
@@ -307,17 +301,22 @@ namespace Restaurant.View.windows
                             #endregion
 
                             MainWindow main = new MainWindow();
-                            MainWindow.posLogin = new Pos();
-                            MainWindow.branchLogin = new Branch();
-                            //MainWindow.posLogin = await MainWindow.posLogin.getById(6);
-                            //MainWindow.posLogin = await MainWindow.posLogin.getById(8);
-                            //MainWindow.posLogin = await MainWindow.posLogin.getById(9);
-                            MainWindow.posLogin = await MainWindow.posLogin.getById(1);
-                            MainWindow.branchLogin = await MainWindow.branchLogin.getBranchById(MainWindow.posLogin.branchId.Value);
                             main.Show();
                             this.Close();
                         }
                     }
+
+                    // }
+                    //else if (canLogin == -1) //program is expired
+                    //    tb_msg.Text = resourcemanager.GetString("trPackageIsExpired");
+                    //else if (canLogin == -2) //device code is not correct 
+                    //    tb_msg.Text = resourcemanager.GetString("trPreventLogIn");
+                    //else if (canLogin == -3) //serial is not active
+                    //    tb_msg.Text = resourcemanager.GetString("trPackageIsNotActive");
+                    //else if (canLogin == -4) //serial is not active
+                    //    tb_msg.Text = resourcemanager.GetString("trServerNotCompatible");
+                    //else if (canLogin == -5) //login date is before last login date
+                    //    tb_msg.Text = resourcemanager.GetString("trDateNotCompatible");
 
                     HelpClass.EndAwait(grid_main);
                     logInProcessing = false;
@@ -331,6 +330,47 @@ namespace Restaurant.View.windows
             }
 
         }
+        /*
+        List<UserSetValues> usValues = new List<UserSetValues>();
+        UserSetValues usLanguage = new UserSetValues();
+        private async Task<string> getUserLanguage(int userId)
+        {
+            SettingCls setModel = new SettingCls();
+            SettingCls set = new SettingCls();
+            SetValues valueModel = new SetValues();
+            List<SetValues> languages = new List<SetValues>();
+            UserSetValues usValueModel = new UserSetValues();
+            var lanSettings = await setModel.GetAll();
+            set = lanSettings.Where(l => l.name == "language").FirstOrDefault<SettingCls>();
+            var lanValues = await valueModel.GetAll();
+
+            if (lanValues.Count > 0)
+            {
+                languages = lanValues.Where(vl => vl.settingId == set.settingId).ToList<SetValues>();
+
+                usValues = await usValueModel.GetAll();
+                if (usValues.Count > 0)
+                {
+                    var curUserValues = usValues.Where(c => c.userId == userId);
+
+                    if (curUserValues.Count() > 0)
+                    {
+                        foreach (var l in curUserValues)
+                            if (languages.Any(c => c.valId == l.valId))
+                            {
+                                usLanguage = l;
+                            }
+
+                        var lan = await valueModel.GetByID(usLanguage.valId.Value);
+                        return lan.value;
+                    }
+                    else return "en";
+                }
+                else return "en";
+            }
+            else return "en";
+        }
+        */
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {//close
             try

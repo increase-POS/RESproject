@@ -9,7 +9,7 @@
         Title="Increase" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         d:DesignHeight="768" d:DesignWidth="1024"
         WindowStartupLocation="CenterScreen"  WindowStyle="None"
-        WindowState="Maximized"  Loaded="Window_Loaded" Closing="Window_Closing" >
+        WindowState="Maximized"  Loaded="Window_Loaded">
     <Window.Resources>
         <Storyboard x:Key="Storyboard1">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="rectangle">
