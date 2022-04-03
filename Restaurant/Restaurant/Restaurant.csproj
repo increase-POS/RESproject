@@ -250,6 +250,7 @@
     <Compile Include="Classes\ApiClasses\Tag.cs" />
     <Compile Include="Classes\ApiClasses\Unit.cs" />
     <Compile Include="Classes\ApiClasses\userSetValues.cs" />
+    <Compile Include="Classes\ApiClasses\UsersLogs.cs" />
     <Compile Include="Classes\AppSettings.cs" />
     <Compile Include="Classes\BackupCls.cs" />
     <Compile Include="Classes\BillDetails.cs" />
@@ -702,6 +703,12 @@
     <Compile Include="View\windows\wd_membershipList.xaml.cs">
       <DependentUpon>wd_membershipList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_messageBox.xaml.cs">
+      <DependentUpon>wd_messageBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_messageBoxWithIcon.xaml.cs">
+      <DependentUpon>wd_messageBoxWithIcon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_multiplePayment.xaml.cs">
       <DependentUpon>wd_multiplePayment.xaml</DependentUpon>
     </Compile>
@@ -743,6 +750,9 @@
     </Compile>
     <Compile Include="View\windows\wd_selectTable.xaml.cs">
       <DependentUpon>wd_selectTable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_selectTime.xaml.cs">
+      <DependentUpon>wd_selectTime.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_selectUser.xaml.cs">
       <DependentUpon>wd_selectUser.xaml</DependentUpon>
@@ -1379,6 +1389,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\windows\wd_messageBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_messageBoxWithIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\windows\wd_multiplePayment.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1434,6 +1452,10 @@
     <Page Include="View\windows\wd_selectTable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_selectTime.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_selectUser.xaml">
       <SubType>Designer</SubType>
