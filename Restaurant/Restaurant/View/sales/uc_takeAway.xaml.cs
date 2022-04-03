@@ -209,13 +209,10 @@ namespace Restaurant.View.sales
             txt_subtotal.Text = AppSettings.resourcemanager.GetString("trSubTotal");
             txt_totalDiscount.Text = AppSettings.resourcemanager.GetString("trDiscount");
             txt_tax.Text = AppSettings.resourcemanager.GetString("trTax");
-            txt_deliveryVal.Text = AppSettings.resourcemanager.GetString("trDelivary");
+            txt_deliveryVal.Text = AppSettings.resourcemanager.GetString("trDelivery");
             txt_total.Text = AppSettings.resourcemanager.GetString("trTotal");
             txt_discount.Text = AppSettings.resourcemanager.GetString("trDiscount");
             txt_customer.Text = AppSettings.resourcemanager.GetString("trCustomer");
-            //txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
-            //txt_kitchen.Text = AppSettings.resourcemanager.GetString("trKitchen");
-            //txt_tables.Text = AppSettings.resourcemanager.GetString("trTables");
             txt_delivery.Text = AppSettings.resourcemanager.GetString("trDelivery");
 
             btn_pay.Content = AppSettings.resourcemanager.GetString("trPay");
@@ -1105,7 +1102,7 @@ namespace Restaurant.View.sales
         {
             try
             {
-                setNotifications();
+                refreshOrdersNotification();
             }
             catch (Exception ex)
             {
@@ -1915,6 +1912,40 @@ namespace Restaurant.View.sales
                     break;
             }
         }
+        async Task saveOrdersPreparing()
+        {
+            #region order Items
+
+            List<ItemOrderPreparing>  preparingItemsList = new List<ItemOrderPreparing>();
+
+            foreach (BillDetailsSales b in billDetailsList)
+            {
+                ItemOrderPreparing it = new ItemOrderPreparing()
+                {
+                    itemUnitId = b.itemUnitId,
+                    quantity = b.Count,
+                    createUserId = MainWindow.userLogin.userId,
+                };
+                preparingItemsList.Add(it);
+            }
+            #endregion
+
+            #region preparing order object
+            preparingOrder = new OrderPreparing();
+            preparingOrder.invoiceId = invoice.invoiceId;
+            preparingOrder.preparingTime = 0;
+            preparingOrder.createUserId = MainWindow.userLogin.userId;
+            #endregion
+
+            #region order status object
+            orderPreparingStatus statusObject = new orderPreparingStatus();
+            statusObject.status = "Listed";
+            statusObject.createUserId = MainWindow.userLogin.userId;
+            #endregion
+
+            int res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId);         
+        }
+
         private async void Btn_pay_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -1976,8 +2007,12 @@ namespace Restaurant.View.sales
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
+                                invoice.invoiceId = res;
+                                #region send orders to kitchen
+                                await saveOrdersPreparing();
+                                #endregion
 
-                                #region savepayment
+                                #region savepayment if no shipping company
                                 if (invoice.shippingCompanyId == null)
                                 {
                                     
@@ -1994,6 +2029,7 @@ namespace Restaurant.View.sales
                                 #endregion                              
 
                                 clear();
+                                refreshDraftNotification();
                             }
                             else
                                 Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);

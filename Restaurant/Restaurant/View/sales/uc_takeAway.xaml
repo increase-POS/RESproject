@@ -436,7 +436,7 @@
                                 </StackPanel>
                             </Button>
                         </materialDesign:Badged>
-                        
+
                         <Border    Margin="7.5,10"   CornerRadius="0,0,0,0"  Width="2" BorderThickness="0" Background="{StaticResource MainColor}" />
                         <materialDesign:Badged VerticalAlignment="Center" Margin="5,10,5,0"
                     BadgeBackground="{StaticResource Red}"  BadgeForeground="White" Name="md_ordersAlerts" >
@@ -1026,6 +1026,7 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -1065,17 +1066,17 @@
 
                         <TextBlock Grid.Row="2" Grid.Column="0" Text="Tax"
                                    x:Name="txt_tax" Foreground="{StaticResource SecondColor}" FontWeight="Bold" FontSize="18"  
-                         VerticalAlignment="Center"     HorizontalAlignment="Left" Margin="0 5"/>
+                         VerticalAlignment="Bottom"     HorizontalAlignment="Left" Margin="0,0,0,5"/>
                         <TextBlock Grid.Row="2" Grid.Column="1"    x:Name="tb_tax"  Margin="0 5" 
                        Foreground="{StaticResource Grey}" Text="0"
                         HorizontalAlignment="Right" VerticalAlignment="Center"
                                    FontWeight="Bold"  FontSize="12"/>
 
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Delivery" Visibility="Collapsed"
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Delivery" Visibility="Collapsed"
                                    x:Name="txt_deliveryVal" Foreground="{StaticResource SecondColor}" FontWeight="Bold" FontSize="18"  
                          VerticalAlignment="Center"     HorizontalAlignment="Left" Margin="0 5"/>
-                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right"   >
+                        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right"   >
                             <TextBlock    x:Name="tb_delivery"  Margin="5" Visibility="Collapsed"
                        Foreground="{StaticResource Grey}" Text="0"
                         HorizontalAlignment="Left" VerticalAlignment="Center"
