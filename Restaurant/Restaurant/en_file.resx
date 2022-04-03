@@ -3745,13 +3745,10 @@ Please add Email in setting</value>
   <data name="invoiceItems" xml:space="preserve">
     <value>Invoice items</value>
   </data>
-  <data name="trDone" xml:space="preserve">
-    <value>Done</value>
+  <data name="trMaxStock" xml:space="preserve">
+    <value>Max Stock</value>
   </data>
-  <data name="trInvoiceCharp" xml:space="preserve">
-    <value># Invoice</value>
-  </data>
-  <data name="trOrderCharp" xml:space="preserve">
-    <value># Order</value>
+  <data name="trMinStock" xml:space="preserve">
+    <value>Min Stock</value>
   </data>
 </root>

@@ -177,8 +177,8 @@ namespace Restaurant.View.reports.storageReports
             col_locationSection.Header = AppSettings.resourcemanager.GetString("trSectionLocation");
             col_startDate.Header = AppSettings.resourcemanager.GetString("trStartDate");
             col_endDate.Header = AppSettings.resourcemanager.GetString("trEndDate");
-            col_MinCollect.Header = AppSettings.resourcemanager.GetString("trMinCollect");
-            col_MaxCollect.Header = AppSettings.resourcemanager.GetString("trMaxCollect");
+            col_MinCollect.Header = AppSettings.resourcemanager.GetString("trMinStock");
+            col_MaxCollect.Header = AppSettings.resourcemanager.GetString("trMaxStock");
             col_quantity.Header = AppSettings.resourcemanager.GetString("trQTR");
 
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
