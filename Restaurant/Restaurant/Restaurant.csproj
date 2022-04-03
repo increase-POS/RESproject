@@ -273,6 +273,7 @@
     <Compile Include="converters\agentNameConverter.cs" />
     <Compile Include="converters\agentTypeConverter.cs" />
     <Compile Include="converters\closingDescriptonConverter.cs" />
+    <Compile Include="converters\decimalToTimeConverter.cs" />
     <Compile Include="converters\deliveryTypeConverter.cs" />
     <Compile Include="converters\depositorNameConverter.cs" />
     <Compile Include="converters\discountTypeConverter.cs" />
