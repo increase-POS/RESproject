@@ -226,7 +226,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <DockPanel LastChildFill="False" Grid.Row="1" Grid.Column="2">
-                                            <Border Grid.Row="0" DockPanel.Dock="Right" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                            <Border Grid.Row="0" DockPanel.Dock="Right" Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                                 <Grid>
 
                                                     <DatePicker SelectedDateFormat="Short" 
@@ -243,7 +243,7 @@
                                                 </Grid>
                                             </Border>
 
-                                            <Border Grid.Row="0" DockPanel.Dock="Right" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                            <Border Grid.Row="0" DockPanel.Dock="Right" Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                                 <Grid>
 
                                                     <DatePicker SelectedDateFormat="Short"  
@@ -261,7 +261,7 @@
                                             </Border>
                                            
                                     </DockPanel>
-                                        <Border Grid.Row="1" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                        <Border Grid.Row="1" Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                             <Grid>
 
                                                 <ComboBox SelectionChanged="Cb_collect_SelectionChanged" 
