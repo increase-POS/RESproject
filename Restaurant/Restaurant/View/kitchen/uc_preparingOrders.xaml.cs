@@ -378,7 +378,7 @@ namespace Restaurant.View.kitchen
         #region Refresh & Search
         async Task refreshPreparingOrders()
         {
-            orders = await preparingOrder.GetPreparingOrdersWithStatus(MainWindow.branchLogin.branchId, "");          
+            orders = await preparingOrder.GetPreparingOrdersWithStatus(MainWindow.branchLogin.branchId, "",24);          
         }
         async Task Search()
         {
