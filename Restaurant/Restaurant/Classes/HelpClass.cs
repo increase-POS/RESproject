@@ -243,7 +243,6 @@ namespace Restaurant.Classes
                         if (!HelpClass.validateEmpty(datePicker.Text, path))
                             isValid = false;
                 }
-                //
                 //TimePicker
                 foreach (var control in requiredControlList)
                 {
@@ -280,6 +279,7 @@ namespace Restaurant.Classes
             bool isValid = true;
             try
             {
+                //TextBox
                 foreach (var control in requiredControlList)
                 {
                     TextBox textBox = FindControls.FindVisualChildren<TextBox>(userControl).Where(x => x.Name == "tb_" + control)
@@ -290,6 +290,7 @@ namespace Restaurant.Classes
                         if (!HelpClass.validateEmpty(textBox.Text, path))
                             isValid = false;
                 }
+                //ComboBox
                 foreach (var control in requiredControlList)
                 {
                     ComboBox comboBox = FindControls.FindVisualChildren<ComboBox>(userControl).Where(x => x.Name == "cb_" + control)
@@ -297,9 +298,43 @@ namespace Restaurant.Classes
                     Path path = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_" + control)
                         .FirstOrDefault();
                     if (comboBox != null && path != null)
-                        if (!HelpClass.validateEmpty(comboBox.Text, path))
+                        if (!HelpClass.validateEmptyCombo(comboBox, path))
                             isValid = false;
                 }
+                //TextBox
+                foreach (var control in requiredControlList)
+                {
+                    TextBlock textBlock = FindControls.FindVisualChildren<TextBlock>(userControl).Where(x => x.Name == "txt_" + control)
+                        .FirstOrDefault();
+                    Path path = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    if (textBlock != null && path != null)
+                        if (!HelpClass.validateEmpty(textBlock.Text, path))
+                            isValid = false;
+                }
+                //DatePicker
+                foreach (var control in requiredControlList)
+                {
+                    DatePicker datePicker = FindControls.FindVisualChildren<DatePicker>(userControl).Where(x => x.Name == "dp_" + control)
+                        .FirstOrDefault();
+                    Path path = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    if (datePicker != null && path != null)
+                        if (!HelpClass.validateEmpty(datePicker.Text, path))
+                            isValid = false;
+                }
+                //TimePicker
+                foreach (var control in requiredControlList)
+                {
+                    TimePicker timePicker = FindControls.FindVisualChildren<TimePicker>(userControl).Where(x => x.Name == "tp_" + control)
+                        .FirstOrDefault();
+                    Path path = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_" + control)
+                        .FirstOrDefault();
+                    if (timePicker != null && path != null)
+                        if (!HelpClass.validateEmpty(timePicker.Text, path))
+                            isValid = false;
+                }
+                //PasswordBox
                 foreach (var control in requiredControlList)
                 {
                     PasswordBox passwordBox = FindControls.FindVisualChildren<PasswordBox>(userControl).Where(x => x.Name == "pb_" + control)
