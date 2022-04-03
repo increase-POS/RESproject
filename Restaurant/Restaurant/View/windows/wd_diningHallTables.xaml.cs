@@ -168,6 +168,15 @@ namespace Restaurant.View.windows
             txt_mergeInvTable.Text = AppSettings.resourcemanager.GetString("trMergeTable");
             txt_changeTable.Text = AppSettings.resourcemanager.GetString("trChangeTable");
 
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+
+            dg_reservation.Columns[0].Header = AppSettings.resourcemanager.GetString("trCode");
+            dg_reservation.Columns[1].Header = AppSettings.resourcemanager.GetString("trDate");
+            dg_reservation.Columns[2].Header = AppSettings.resourcemanager.GetString("time");
+            dg_reservation.Columns[3].Header = AppSettings.resourcemanager.GetString("trCount");
+            dg_reservation.Columns[4].Header = AppSettings.resourcemanager.GetString("trCustomer");
+            dg_reservation.Columns[5].Header = AppSettings.resourcemanager.GetString("trStatus");
+
         }
         #region loading
         List<keyValueBool> loadingList;

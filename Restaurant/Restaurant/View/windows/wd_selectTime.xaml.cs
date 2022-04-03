@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,11 +16,11 @@ using System.Windows.Shapes;
 namespace Restaurant.View.windows
 {
     /// <summary>
-    /// Interaction logic for wd_selectUser.xaml
+    /// Interaction logic for wd_selectTime.xaml
     /// </summary>
-    public partial class wd_selectUser : Window
+    public partial class wd_selectTime : Window
     {
-        public wd_selectUser()
+        public wd_selectTime()
         {
             try
             {
@@ -61,16 +59,14 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        public string userJob;
-        public int userId;
         public bool isOk { get; set; }
         public static List<string> requiredControlList = new List<string>();
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        private  void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "userId" };
+                requiredControlList = new List<string> { "time" };
 
                 if (AppSettings.lang.Equals("en"))
                 {
@@ -81,12 +77,7 @@ namespace Restaurant.View.windows
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-                if(userJob == "waiter")
-                    path_title.Data = App.Current.Resources["waiter"] as Geometry;
 
-                await FillCombo.FillComboUsersWithJob(cb_userId, userJob);
-                if (userId != 0)
-                    cb_userId.SelectedValue = userId;
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -98,30 +89,23 @@ namespace Restaurant.View.windows
         }
         private void translate()
         {
-
-            if (userJob == "waiter")
-                txt_title.Text = AppSettings.resourcemanager.GetString("trWaiter");
-
-
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_userId, AppSettings.resourcemanager.GetString("trUser"));
+            txt_title.Text = AppSettings.resourcemanager.GetString("time");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tp_time, AppSettings.resourcemanager.GetString("time"));
             btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
-
-
-
         }
 
+     
         private void Btn_select_Click(object sender, RoutedEventArgs e)
         {
             // if have id return true
-            
+
             if (HelpClass.validate(requiredControlList, this))
             {
                 isOk = true;
-                userId = (int) cb_userId.SelectedValue;
+                MessageBox.Show(tp_time.SelectedTime.ToString());
+                
                 this.Close();
             }
-            // else return false
-            //isOk = false;
         }
     }
 }

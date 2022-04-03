@@ -100,9 +100,16 @@ namespace Restaurant.View.windows
             txt_membership.Text = AppSettings.resourcemanager.GetString("trMembership");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customerId, AppSettings.resourcemanager.GetString("trCustomerHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_coupon, AppSettings.resourcemanager.GetString("trCouponHint"));
+
+            txt_code.Text = AppSettings.resourcemanager.GetString("trCode");
+            txt_name.Text = AppSettings.resourcemanager.GetString("trName");
+            txt_couponsCount.Text = AppSettings.resourcemanager.GetString("trCoupons");
+            txt_offersCount.Text = AppSettings.resourcemanager.GetString("trOffers");
+            txt_invoicesClassesCount.Text = AppSettings.resourcemanager.GetString("trInvoicesClasses");
+           
 
             btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
+
         }
 
         private void fillInputs()

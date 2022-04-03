@@ -216,7 +216,7 @@ namespace Restaurant.View.sales
             txt_delivery.Text = AppSettings.resourcemanager.GetString("trDelivery");
 
             btn_pay.Content = AppSettings.resourcemanager.GetString("trPay");
-
+            txt_orderTime.Text = AppSettings.resourcemanager.GetString("time");
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -1859,6 +1859,35 @@ namespace Restaurant.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private void Btn_orderTime_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+
+
+                wd_selectTime w = new wd_selectTime();
+                w.ShowDialog();
+                if (w.isOk)
+                {
+
+
+
+
+                }
+
+
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
         #endregion
         #region PAY
         private async Task<bool> validateInvoiceValues()
