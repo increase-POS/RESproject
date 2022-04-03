@@ -303,7 +303,6 @@
     <Compile Include="converters\unlimitedEndDate.cs" />
     <Compile Include="converters\userJobConverter.cs" />
     <Compile Include="en_file.Designer.cs" />
-    <Compile Include="minmaxUnitNameStockConverter.cs" />
     <Compile Include="View\accounts\uc_accounts.xaml.cs">
       <DependentUpon>uc_accounts.xaml</DependentUpon>
     </Compile>
