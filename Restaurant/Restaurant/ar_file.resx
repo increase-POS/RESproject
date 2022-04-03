@@ -3727,4 +3727,13 @@
   <data name="invoiceItems" xml:space="preserve">
     <value>عناصر الفاتورة</value>
   </data>
+  <data name="trDone" xml:space="preserve">
+    <value>تم</value>
+  </data>
+  <data name="trInvoiceCharp" xml:space="preserve">
+    <value># الفاتورة</value>
+  </data>
+  <data name="trOrderCharp" xml:space="preserve">
+    <value>#الطلبية</value>
+  </data>
 </root>
