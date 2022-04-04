@@ -87,9 +87,9 @@ namespace Restaurant.View.windows
 
         }
 
-        async Task fillDataGrid() 
+        async Task fillDataGrid()  
         {
-            orders = await preparingOrder.GetPreparingOrdersWithStatus(MainWindow.branchLogin.branchId, "Ready");
+            orders = await preparingOrder.GetHallOrdersWithStatus(MainWindow.branchLogin.branchId, "Ready",24);
 
             dg_orders.ItemsSource = orders;
         }

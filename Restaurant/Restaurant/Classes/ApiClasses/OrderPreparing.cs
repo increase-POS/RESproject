@@ -100,6 +100,24 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
+        public async Task<List<OrderPreparing>> GetHallOrdersWithStatus( int branchId, string status,int duration=0)
+        {
+            List<OrderPreparing> items = new List<OrderPreparing>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("branchId", branchId.ToString());
+            // status like "Listed, Cooking"
+            parameters.Add("status", status);
+            parameters.Add("duration", duration.ToString());
+            IEnumerable<Claim> claims = await APIResult.getList("OrderPreparing/GetHallOrdersWithStatus", parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<OrderPreparing>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
 
         public async Task<int> savePreparingOrder(OrderPreparing order, List<ItemOrderPreparing> orderItems, orderPreparingStatus statusObject)
         {
@@ -173,14 +191,15 @@ namespace Restaurant.Classes.ApiClasses
             }
             return count;
         }
-        public async Task<int> GetOrderCount(string status, int branchId)
+        public async Task<int> GetHallOrderCount(string status, int branchId, int duration)
         {
             int count = 0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("status", status);
             parameters.Add("branchId", branchId.ToString());
+            parameters.Add("duration", duration.ToString());
             //#################
-            IEnumerable<Claim> claims = await APIResult.getList("OrderPreparing/GetCountPreparingOrders", parameters);
+            IEnumerable<Claim> claims = await APIResult.getList("OrderPreparing/GetCountHallOrders", parameters);
 
             foreach (Claim c in claims)
             {

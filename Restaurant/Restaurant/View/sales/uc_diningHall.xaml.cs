@@ -1100,7 +1100,8 @@ namespace Restaurant.View.sales
             try
             {
                 string status = "Ready";
-                int ordersCount = await preparingOrder.GetOrderCount(status, MainWindow.branchLogin.branchId);
+                int duration = 24; //hours
+                int ordersCount = await preparingOrder.GetHallOrderCount(status, MainWindow.branchLogin.branchId,duration);
 
                 HelpClass.refreshNotification(md_ordersAlerts, ref _OrderCount, ordersCount);
             }
