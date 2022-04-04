@@ -81,7 +81,7 @@ namespace Restaurant
        
         public static Boolean go_out = false;
         public static Boolean go_out_didNotAnyProcess = false;
-
+        internal static int? userLogInID;
 
         static public MainWindow mainWindow;
         public MainWindow()
@@ -1361,13 +1361,13 @@ namespace Restaurant
         async Task<bool> updateLogninRecord()
         {
             UsersLogs userLog = new UsersLogs();
-           userLog = await userLog.GetByID(userLogin.userId);
+           userLog = await userLog.GetByID(userLogInID.Value);
             //update user record
             userLogin.isOnline = 0;
-            int res = await userLogin.save(userLogin);
+            await userLogin.save(userLogin);
 
             //update lognin record
-            res = await userLog.Save(userLog);
+            await userLog.Save(userLog);
 
             return true;
         }

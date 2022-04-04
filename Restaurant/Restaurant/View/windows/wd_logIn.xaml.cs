@@ -280,8 +280,8 @@ namespace Restaurant.View.windows
                             int str = await userLogsModel.Save(userLog);
                             
                             if (!str.Equals(0))
-                                MainWindow.userLogin.userId = user.userId;
-
+                                MainWindow.userLogInID = str;
+                           
                             #region remember me
                             if (cbxRemmemberMe.IsChecked.Value)
                             {
