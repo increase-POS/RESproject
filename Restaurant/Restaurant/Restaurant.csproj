@@ -288,6 +288,7 @@
     <Compile Include="converters\notificationsTitleConverter.cs" />
     <Compile Include="converters\posTransfersStatusConverter.cs" />
     <Compile Include="converters\preparingOrderStatusConverter.cs" />
+    <Compile Include="converters\preparingOrderTypeConverter.cs" />
     <Compile Include="converters\processTypeAndCardConverter.cs" />
     <Compile Include="converters\processTypeConverter.cs" />
     <Compile Include="converters\profitToColorConverter.cs" />
