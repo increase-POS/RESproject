@@ -134,6 +134,7 @@ namespace Restaurant.View.reports.accountsReports
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
             tt_settings.Content = AppSettings.resourcemanager.GetString("trSettings");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
+            tt_emailMessage.Content = AppSettings.resourcemanager.GetString("trSendEmail");
         }
 
         private void fillVendorCombo(IEnumerable<VendorCombo> list, ComboBox cb)

@@ -106,13 +106,10 @@ namespace Restaurant.View.accounts
 
                 requiredControlList = new List<string> { "cash", "paymentProcessType" };
 
-                #region fill branch combo1
+                #region fill branch 
                 try
                 {
-                    branches = await branchModel.GetBranchesActive("b");
-                    cb_branch.ItemsSource = branches;
-                    cb_branch.DisplayMemberPath = "name";
-                    cb_branch.SelectedValuePath = "branchId";
+                    await FillCombo.fillBranchesWithAll(cb_branch);
                     cb_branch.SelectedValue = MainWindow.branchLogin.branchId;
                     if (FillCombo.groupObject.HasPermissionAction(BranchesPermission, FillCombo.groupObjects, "one"))
                         cb_branch.IsEnabled = true;
@@ -140,69 +137,37 @@ namespace Restaurant.View.accounts
                 dp_searchStartDate.SelectedDateChanged += this.dp_SelectedStartDateChanged;
                 dp_searchEndDate.SelectedDateChanged += this.dp_SelectedEndDateChanged;
 
-                btn_image.IsEnabled = false;
-
                 btn_save.IsEnabled = false;
 
-                #region fill process type
-                var typelist = new[] {
-                new { Text = AppSettings.resourcemanager.GetString("trCredit")    , Value = "balance" },
-                new { Text = AppSettings.resourcemanager.GetString("trCash")       , Value = "cash" },
-                //new { Text = AppSettings.resourcemanager.GetString("trDocument")   , Value = "doc" },
-                new { Text = AppSettings.resourcemanager.GetString("trCheque")     , Value = "cheque" },
-                new { Text = AppSettings.resourcemanager.GetString("trAnotherPaymentMethods") , Value = "card" }
-                 };
-                cb_paymentProcessType.DisplayMemberPath = "Text";
-                cb_paymentProcessType.SelectedValuePath = "Value";
-                cb_paymentProcessType.ItemsSource = typelist;
+                #region fill agent combo
+                //List<Agent> agents = new List<Agent>();
+                //List<Agent> customers = new List<Agent>();
+                //try
+                //{
+                //    customers = await agentModel.GetAgentsActive("c");
+                //    agents = await agentModel.GetAgentsActive("v");
+                //    agents.AddRange(customers);
+
+                //    cb_customer.ItemsSource = customers;
+                //    cb_customer.DisplayMemberPath = "name";
+                //    cb_customer.SelectedValuePath = "agentId";
+                //    cb_customer.SelectedIndex = -1;
+                //}
+                //catch { }
+                await FillCombo.FillComboCustomers(cb_customer);
             #endregion
 
-                #region fill card combo
-                try
-                {
-                    cards = await cardModel.GetAll();
-                    InitializeCardsPic(cards);
-                }
-                catch { }
-                #endregion
-
-                #region fill agent combo
-                List<Agent> agents = new List<Agent>();
-                    List<Agent> customers = new List<Agent>();
-                    try
-                    {
-                        customers = await agentModel.GetAgentsActive("c");
-                        agents = await agentModel.GetAgentsActive("v");
-                        agents.AddRange(customers);
-
-                        cb_customer.ItemsSource = customers;
-                        cb_customer.DisplayMemberPath = "name";
-                        cb_customer.SelectedValuePath = "agentId";
-                        cb_customer.SelectedIndex = -1;
-                    }
-                    catch { }
-                    #endregion
-
                 #region fill salesman combo
-                try
-                {
-                    users = await userModel.GetUsersActive();
-                    cb_salesMan.ItemsSource = users;
-                    cb_salesMan.DisplayMemberPath = "username";
-                    cb_salesMan.SelectedValuePath = "userId";
-                    cb_salesMan.SelectedIndex = -1;
-                }
-                catch { }
-                #endregion
-
-                #region fill status combo
-                var statuslist = new[] {
-                new { Text = AppSettings.resourcemanager.GetString("trDelivered")  , Value = "rc" },
-                new { Text = AppSettings.resourcemanager.GetString("trInDelivery")   , Value = "tr" }
-                 };
-                cb_state.DisplayMemberPath = "Text";
-                cb_state.SelectedValuePath = "Value";
-                cb_state.ItemsSource = statuslist;
+                //try
+                //{
+                //    users = await userModel.GetUsersActive();
+                //    cb_salesMan.ItemsSource = users;
+                //    cb_salesMan.DisplayMemberPath = "username";
+                //    cb_salesMan.SelectedValuePath = "userId";
+                //    cb_salesMan.SelectedIndex = -1;
+                //}
+                //catch { }
+                await FillCombo.FillComboUsers(cb_salesMan);
                 #endregion
 
                 await RefreshInvoiceList();
@@ -218,93 +183,6 @@ namespace Restaurant.View.accounts
             //}
         }
 
-        void InitializeCardsPic(IEnumerable<Card> cards)
-        {
-            #region cardImageLoad
-            dkp_cards.Children.Clear();
-            int userCount = 0;
-            foreach (var item in cards)
-            {
-                #region Button
-                Button button = new Button();
-                button.DataContext = item.name;
-                button.Tag = item.cardId;
-                button.Padding = new Thickness(0, 0, 0, 0);
-                button.Margin = new Thickness(2.5, 5, 2.5, 5);
-                button.Background = null;
-                button.BorderBrush = null;
-                button.Height = 35;
-                button.Width = 35;
-                button.Click += card_Click;
-                //Grid.SetColumn(button, 4);
-                #region grid
-                Grid grid = new Grid();
-                #region 
-                Ellipse ellipse = new Ellipse();
-                //ellipse.Margin = new Thickness(-5, 0, -5, 0);
-                ellipse.StrokeThickness = 1;
-                ellipse.Stroke = Application.Current.Resources["MainColorOrange"] as SolidColorBrush;
-                ellipse.Height = 35;
-                ellipse.Width = 35;
-                ellipse.FlowDirection = FlowDirection.LeftToRight;
-                ellipse.ToolTip = item.name;
-                userImageLoad(ellipse, item.image);
-                Grid.SetColumn(ellipse, userCount);
-                grid.Children.Add(ellipse);
-                #endregion
-                #endregion
-                button.Content = grid;
-                #endregion
-                dkp_cards.Children.Add(button);
-
-            }
-            #endregion
-        }
-        void card_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            _SelectedCard = int.Parse(button.Tag.ToString());
-            txt_card.Text = button.DataContext.ToString();
-            //MessageBox.Show("Hey you Click me! I'm Card: " + _SelectedCard);
-        }
-        ImageBrush brush = new ImageBrush();
-        async void userImageLoad(Ellipse ellipse, string image)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(image))
-                {
-                    clearImg(ellipse);
-
-                    byte[] imageBuffer = await cardModel.downloadImage(image); // read this as BLOB from your DB
-                    var bitmapImage = new BitmapImage();
-                    using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
-                    {
-                        bitmapImage.BeginInit();
-                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                        bitmapImage.StreamSource = memoryStream;
-                        bitmapImage.EndInit();
-                    }
-                    ellipse.Fill = new ImageBrush(bitmapImage);
-                }
-                else
-                {
-                    clearImg(ellipse);
-                }
-            }
-            catch
-            {
-                clearImg(ellipse);
-            }
-        }
-        private void clearImg(Ellipse ellipse)
-        {
-            Uri resourceUri = new Uri("pic/no-image-icon-90x90.png", UriKind.Relative);
-            StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
-            BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
-            brush.ImageSource = temp;
-            ellipse.Fill = brush;
-        }
         private async void dp_SelectedEndDateChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -345,20 +223,12 @@ namespace Restaurant.View.accounts
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_invoiceNum, AppSettings.resourcemanager.GetString("trInvoiceNumberHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_paymentProcessType, AppSettings.resourcemanager.GetString("trPaymentTypeHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_docNum, AppSettings.resourcemanager.GetString("trDocNumHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_docDate, AppSettings.resourcemanager.GetString("trDocDateHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_docNumCheque, AppSettings.resourcemanager.GetString("trDocNumHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_docNumCard, AppSettings.resourcemanager.GetString("trProcessNumHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_docDateCheque, AppSettings.resourcemanager.GetString("trDocDateHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, AppSettings.resourcemanager.GetString("trCashHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_card, AppSettings.resourcemanager.GetString("trCardHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_salesMan, AppSettings.resourcemanager.GetString("trSalesManHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customer, AppSettings.resourcemanager.GetString("trCustomerHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchStartDate, AppSettings.resourcemanager.GetString("trSartDateHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchEndDate, AppSettings.resourcemanager.GetString("trEndDateHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_state, AppSettings.resourcemanager.GetString("trStateHint"));
 
             dg_orderAccounts.Columns[0].Header = AppSettings.resourcemanager.GetString("trInvoiceNumber");
             dg_orderAccounts.Columns[1].Header = AppSettings.resourcemanager.GetString("trSalesMan");
@@ -375,77 +245,42 @@ namespace Restaurant.View.accounts
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
-            txt_image.Text = AppSettings.resourcemanager.GetString("trImage");
-            txt_preview.Text = AppSettings.resourcemanager.GetString("trPreview");
-            txt_print_pay.Text = AppSettings.resourcemanager.GetString("trPrint");
-            txt_pdf.Text = AppSettings.resourcemanager.GetString("trPdfBtn");
         }
         private void Dg_orderAccounts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+         //try
+         //{
+         //    HelpClass.StartAwait(grid_main);
 
-                #region clear validate
-                //HelpClass.clearComboBoxValidate(cb_paymentProcessType, p_errorpayment_processType);
-                //HelpClass.clearComboBoxValidate(cb_card, p_errorpayment_processType);
-                //TextBox tbDocDate = (TextBox)dp_docDate.Template.FindName("PART_TextBox", dp_docDate);
-                //HelpClass.clearValidate(tb_docNum, p_error_docNum);
-                //HelpClass.clearValidate(tb_cash, p_error_cash);
-                #endregion
+            if (dg_orderAccounts.SelectedIndex != -1)
+            {
+                invoice = dg_orderAccounts.SelectedItem as Invoice;
+                this.DataContext = cashtrans;
 
-                if (dg_orderAccounts.SelectedIndex != -1)
+                if (invoice != null)
                 {
-                    invoice = dg_orderAccounts.SelectedItem as Invoice;
-                    this.DataContext = cashtrans;
+                    tb_invoiceNum.Text = invoice.invNumber;
 
-                    if (invoice != null)
+                    agentId = invoice.agentId.Value;
+
+                    userId = invoice.shipUserId.Value;
+
+                    if (invoice.status == "rc")
                     {
-                        tb_cash.IsEnabled = true;
-
-                        btn_image.IsEnabled = true;
-
-                        //tb_invoiceNum.Text = invoice.invNumber;
-
-                        agentId = invoice.agentId.Value;
-
-                        userId = invoice.shipUserId.Value;
-
-                        //tb_cash.Text = HelpClass.DecTostring(cashtrans.cash);
-
-                        if (cb_paymentProcessType.SelectedIndex == 0)
-                        {
-                            tb_cash.Text = invoice.deserved.ToString();
-                            tb_cash.IsEnabled = false;
-                        }
-                        else
-                        {
-                            tb_cash.IsEnabled = true;
-                            tb_cash.Clear();
-                        }
-
-                        if (invoice.status == "rc")
-                        {
-                            btn_save.IsEnabled = false;
-                            tb_cash.IsEnabled = false;
-                            cb_paymentProcessType.IsEnabled = false;
-                            tb_notes.IsEnabled = false;
-                            //HelpClass.clearValidate(tb_cash, p_error_cash);
-                        }
-                        else
-                        {
-                            btn_save.IsEnabled = true;
-                            tb_cash.IsEnabled = true;
-                            cb_paymentProcessType.IsEnabled = true;
-                            tb_notes.IsEnabled = true;
-                        }
+                        btn_save.IsEnabled = false;
+                        tb_notes.IsEnabled = false;
                     }
                     else
                     {
-                        btn_save.IsEnabled = false;
-                        btn_image.IsEnabled = false;
+                        btn_save.IsEnabled = true;
+                        tb_notes.IsEnabled = true;
                     }
                 }
+                else
+                {
+                    btn_save.IsEnabled = false;
+                }
+            }
             //    HelpClass.EndAwait(grid_main);
             //}
             //catch (Exception ex)
@@ -467,15 +302,30 @@ namespace Restaurant.View.accounts
                     this.Dispatcher.Invoke(() =>
                     {
                         searchText = tb_search.Text.ToLower();
-                        invoiceQuery = invoices.Where(s => (s.invNumber.ToLower().Contains(searchText)
-                        || s.shipUserName.ToLower().Contains(searchText)
-                        || s.agentName.ToLower().Contains(searchText)
-                        || s.totalNet.ToString().ToLower().Contains(searchText)
-                        || s.status.ToLower().Contains(searchText)
-                        )
-                        && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
-                        && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
-                        );
+                        if (chk_delivered.IsChecked == true)
+                            invoiceQuery = invoices.Where(s => (s.invNumber.ToLower().Contains(searchText)
+                            || s.branchCreatorName.ToLower().Contains(searchText)
+                            || s.shipUserName.ToLower().Contains(searchText)
+                            || s.agentName.ToLower().Contains(searchText)
+                            || s.totalNet.ToString().ToLower().Contains(searchText)
+                            || s.status.ToLower().Contains(searchText)
+                            )
+                            && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
+                            && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
+                            && s.status == "rc"
+                            );
+                        else if (chk_inDelivery.IsChecked == true)
+                            invoiceQuery = invoices.Where(s => (s.invNumber.ToLower().Contains(searchText)
+                           || s.branchCreatorName.ToLower().Contains(searchText)
+                           || s.shipUserName.ToLower().Contains(searchText)
+                           || s.agentName.ToLower().Contains(searchText)
+                           || s.totalNet.ToString().ToLower().Contains(searchText)
+                           || s.status.ToLower().Contains(searchText)
+                           )
+                           && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
+                           && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
+                           && s.status == "tr"
+                           );
 
                     });
                 }
@@ -484,13 +334,26 @@ namespace Restaurant.View.accounts
                     this.Dispatcher.Invoke(() =>
                     {
                         searchText = tb_search.Text.ToLower();
-                        invoiceQuery = invoices.Where(s => (s.invNumber.ToLower().Contains(searchText)
-                        || s.shipUserName.ToLower().Contains(searchText)
-                        || s.agentName.ToLower().Contains(searchText)
-                        || s.totalNet.ToString().ToLower().Contains(searchText)
-                        || s.status.ToLower().Contains(searchText)
-                        )
-                        );
+                        if (chk_delivered.IsChecked == true)
+                            invoiceQuery = invoices.Where(s => (s.invNumber.ToLower().Contains(searchText)
+                            || s.branchCreatorName.ToLower().Contains(searchText)
+                            || s.shipUserName.ToLower().Contains(searchText)
+                            || s.agentName.ToLower().Contains(searchText)
+                            || s.totalNet.ToString().ToLower().Contains(searchText)
+                            || s.status.ToLower().Contains(searchText)
+                            )
+                             && s.status == "rc"
+                            );
+                        else if (chk_inDelivery.IsChecked == true)
+                            invoiceQuery = invoices.Where(s => (s.invNumber.ToLower().Contains(searchText)
+                            || s.branchCreatorName.ToLower().Contains(searchText)
+                            || s.shipUserName.ToLower().Contains(searchText)
+                            || s.agentName.ToLower().Contains(searchText)
+                            || s.totalNet.ToString().ToLower().Contains(searchText)
+                            || s.status.ToLower().Contains(searchText)
+                            )
+                             && s.status == "tr"
+                            );
 
                     });
                 }
@@ -517,20 +380,7 @@ namespace Restaurant.View.accounts
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        /*
-        private async Task<int> saveBond(string num, decimal ammount, Nullable<DateTime> date, string type)
-        {
-            Bonds bond = new Bonds();
-            bond.number = num;
-            bond.amount = ammount;
-            bond.deserveDate = date;
-            bond.type = type;
-            bond.isRecieved = 0;
-            bond.createUserId = MainWindow.userID.Value;
-            int s = await bondModel.Save(bond);
-            return s;
-        }
-        */
+      
         private async Task calcBalance(decimal ammount)
         {
             int s = 0;
@@ -548,54 +398,7 @@ namespace Restaurant.View.accounts
         {//delete
 
         }
-        //void Clear()
-        //{
-        //    cb_paymentProcessType.IsEnabled = true;
-        //    cb_card.IsEnabled = true;
-        //    tb_docNum.IsEnabled = true;
-        //    dp_docDate.IsEnabled = true;
-        //    tb_docNumCheque.IsEnabled = true;
-        //    tb_docNumCard.IsEnabled = true;
-        //    dp_docDateCheque.IsEnabled = true;
-        //    tb_cash.IsEnabled = true;
-        //    tb_notes.IsEnabled = true;
-
-        //    btn_image.IsEnabled = false;
-        //    /////////////////////////
-        //    ///
-        //    //if (grid_doc.IsVisible)
-        //    //{
-        //    //    TextBox tbDocDate = (TextBox)dp_docDate.Template.FindName("PART_TextBox", dp_docDate);
-        //    //    HelpClass.clearValidate(tbDocDate, p_error_docDate);
-        //    //    dp_docDate.SelectedDate = null;
-        //    //    tb_docNum.Clear();
-        //    //    HelpClass.clearValidate(tb_docNum, p_error_docNum);
-        //    //}
-        //    //if (grid_cheque.IsVisible)
-        //    //{
-        //    //    tb_docNumCheque.Clear();
-        //    //    dp_docDateCheque.SelectedDate = null;
-        //    //}
-        //    cb_card.Visibility = Visibility.Collapsed;
-        //    cb_paymentProcessType.SelectedIndex = -1;
-        //    //tb_cash.Clear();
-        //    //tb_notes.Clear();
-        //    //tb_docNumCard.Clear();
-        //    //tb_docNum.Clear();
-        //    //tb_docNumCheque.Clear();
-        //    //tb_invoiceNum.Text = "";
-        //    tb_cash.IsReadOnly = false;
-        //    grid_doc.Visibility = Visibility.Collapsed;
-        //    tb_docNumCard.Visibility = Visibility.Collapsed;
-        //    grid_cheque.Visibility = Visibility.Collapsed;
-        //    //HelpClass.clearValidate(tb_cash, p_error_cash);
-        //    //HelpClass.clearComboBoxValidate(cb_paymentProcessType, p_errorpayment_processType);
-        //    //HelpClass.clearComboBoxValidate(cb_card, p_error_card);
-        //    //HelpClass.clearValidate(tb_docNumCard, p_error_docCard);
-        //    //HelpClass.clearValidate(tb_docNum, p_error_docNum);
-        //    //HelpClass.clearValidate(tb_docNum, p_error_docNum);
-        //    //HelpClass.clearValidate(tb_docNumCheque, p_error_docNumCheque);
-        //}
+        
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {//clear
          //try
@@ -730,16 +533,6 @@ namespace Restaurant.View.accounts
         }
         private void Tb_validateEmptyLostFocus(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //    string name = sender.GetType().Name;
-            //    validateEmpty(name, sender);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
-
             try
             {
                 HelpClass.validate(requiredControlList, this);
@@ -751,33 +544,7 @@ namespace Restaurant.View.accounts
         }
         private void validateEmpty(string name, object sender)
         {
-           /*
-            if (name == "TextBox")
-            {
-                if ((sender as TextBox).Name == "tb_cash")
-                    HelpClass.validateEmptyTextBox((TextBox)sender, p_error_cash, tt_errorCash, "trEmptyCashToolTip");
-                else if ((sender as TextBox).Name == "tb_docNum")
-                    HelpClass.validateEmptyTextBox((TextBox)sender, p_error_docNum, tt_errorDocNum, "trEmptyDocNumToolTip");
-                else if ((sender as TextBox).Name == "tb_docNumCheque")
-                    HelpClass.validateEmptyTextBox((TextBox)sender, p_error_docNumCheque, tt_errorDocNumCheque, "trEmptyDocNumToolTip");
-                else if ((sender as TextBox).Name == "tb_docNumCard")
-                    HelpClass.validateEmptyTextBox((TextBox)sender, p_error_docCard, tt_errorDocCard, "trEmptyProcessNumToolTip");
-            }
-            else if (name == "ComboBox")
-            {
-                if ((sender as ComboBox).Name == "cb_paymentProcessType")
-                    HelpClass.validateEmptyComboBox((ComboBox)sender, p_errorpayment_processType, tt_errorpaymentProcessType, "trErrorEmptyPaymentTypeToolTip");
-                else if ((sender as ComboBox).Name == "cb_card")
-                    HelpClass.validateEmptyComboBox((ComboBox)sender, p_error_card, tt_errorCard, "trEmptyCardTooltip");
-            }
-            else if (name == "DatePicker")
-            {
-                if ((sender as DatePicker).Name == "dp_docDate")
-                    HelpClass.validateEmptyDatePicker((DatePicker)sender, p_error_docDate, tt_errorDocDate, "trEmptyDocDateToolTip");
-                if ((sender as DatePicker).Name == "dp_docDateCheque")
-                    HelpClass.validateEmptyDatePicker((DatePicker)sender, p_error_docDateCheque, tt_errorDocDateCheque, "trEmptyDocDateToolTip");
-            }
-            */
+        
         }
         private void PreventSpaces(object sender, KeyEventArgs e)
         {
@@ -798,19 +565,6 @@ namespace Restaurant.View.accounts
         }
         private void Tb_validateEmptyTextChange(object sender, TextChangedEventArgs e)
         {
-            //try
-            //{
-            //    string name = sender.GetType().Name;
-            //    validateEmpty(name, sender);
-            //    var txb = sender as TextBox;
-            //    if ((sender as TextBox).Name == "tb_cash")
-            //        HelpClass.InputJustNumber(ref txb);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
-
             try
             {
                 HelpClass.validate(requiredControlList, this);
@@ -820,131 +574,111 @@ namespace Restaurant.View.accounts
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        string processType = "";
-        private void Cb_paymentProcessType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {//type selection
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+        //string processType = "";
+        //private void Cb_paymentProcessType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{//type selection
+        //    try
+        //    {
+        //        HelpClass.StartAwait(grid_main);
                 
-                switch (cb_paymentProcessType.SelectedIndex)
-                {
-                    case 0://balance
-                        grid_doc.Visibility = Visibility.Collapsed;
-                        grid_cheque.Visibility = Visibility.Collapsed;
-                        gd_card.Visibility = Visibility.Collapsed;
-                        bdr_docNumCard.Visibility = Visibility.Collapsed;
-                        HelpClass.clearValidate(p_error_docNumCard);
-                        HelpClass.clearValidate(p_error_docNum);
-                        HelpClass.clearValidate(p_error_docNum);
-                        HelpClass.clearValidate(p_error_card);
-                        if (grid_doc.IsVisible)
-                            HelpClass.clearValidate(p_error_docDate);
-                        if (grid_cheque.IsVisible)
-                            HelpClass.clearValidate(p_error_docNumCheque);
-                        if (invoice.invoiceId != 0)
-                        {
-                            tb_cash.Text = invoice.deserved.ToString();
-                            tb_cash.IsEnabled = false;
-                        }
-                        processType = "1";
-                        requiredControlList = new List<string> { "cash", "paymentProcessType" };
-                        break;
+        //        switch (cb_paymentProcessType.SelectedIndex)
+        //        {
+        //            case 0://balance
+        //                grid_doc.Visibility = Visibility.Collapsed;
+        //                grid_cheque.Visibility = Visibility.Collapsed;
+        //                gd_card.Visibility = Visibility.Collapsed;
+        //                bdr_docNumCard.Visibility = Visibility.Collapsed;
+        //                HelpClass.clearValidate(p_error_docNumCard);
+        //                HelpClass.clearValidate(p_error_docNum);
+        //                HelpClass.clearValidate(p_error_docNum);
+        //                HelpClass.clearValidate(p_error_card);
+        //                if (grid_doc.IsVisible)
+        //                    HelpClass.clearValidate(p_error_docDate);
+        //                if (grid_cheque.IsVisible)
+        //                    HelpClass.clearValidate(p_error_docNumCheque);
+        //                if (invoice.invoiceId != 0)
+        //                {
+        //                    tb_cash.Text = invoice.deserved.ToString();
+        //                    tb_cash.IsEnabled = false;
+        //                }
+        //                processType = "1";
+        //                requiredControlList = new List<string> { "cash", "paymentProcessType" };
+        //                break;
 
-                    case 1://cash
-                        grid_doc.Visibility = Visibility.Collapsed;
-                        grid_cheque.Visibility = Visibility.Collapsed;
-                        gd_card.Visibility = Visibility.Collapsed;
-                        bdr_docNumCard.Visibility = Visibility.Collapsed;
-                        HelpClass.clearValidate(p_error_docNumCard);
-                        HelpClass.clearValidate(p_error_docNum);
-                        HelpClass.clearValidate(p_error_docNum);
-                        HelpClass.clearValidate(p_error_card);
+        //            case 1://cash
+        //                grid_doc.Visibility = Visibility.Collapsed;
+        //                grid_cheque.Visibility = Visibility.Collapsed;
+        //                gd_card.Visibility = Visibility.Collapsed;
+        //                bdr_docNumCard.Visibility = Visibility.Collapsed;
+        //                HelpClass.clearValidate(p_error_docNumCard);
+        //                HelpClass.clearValidate(p_error_docNum);
+        //                HelpClass.clearValidate(p_error_docNum);
+        //                HelpClass.clearValidate(p_error_card);
 
-                        if (grid_doc.IsVisible)
-                            HelpClass.clearValidate(p_error_docDate);
+        //                if (grid_doc.IsVisible)
+        //                    HelpClass.clearValidate(p_error_docDate);
 
-                        if (grid_cheque.IsVisible)
-                            HelpClass.clearValidate(p_error_docNumCheque);
+        //                if (grid_cheque.IsVisible)
+        //                    HelpClass.clearValidate(p_error_docNumCheque);
 
-                        tb_cash.IsEnabled = true;
-                        tb_cash.Clear();
-                        HelpClass.clearValidate(p_error_cash);
-                        processType = "0";
-                        requiredControlList = new List<string> { "cash", "paymentProcessType" };
-                        break;
+        //                tb_cash.IsEnabled = true;
+        //                tb_cash.Clear();
+        //                HelpClass.clearValidate(p_error_cash);
+        //                processType = "0";
+        //                requiredControlList = new List<string> { "cash", "paymentProcessType" };
+        //                break;
 
-                    //case 2://doc
-                    //    grid_doc.Visibility = Visibility.Visible;
-                    //    grid_cheque.Visibility = Visibility.Collapsed;
-                    //    cb_card.Visibility = Visibility.Collapsed;
-                    //    tb_docNumCard.Visibility = Visibility.Collapsed;
-                    //    HelpClass.clearValidate(tb_docNumCard, p_error_docCard);
-                    //    HelpClass.clearValidate(tb_docNumCheque, p_error_docNum);
-                    //    HelpClass.clearComboBoxValidate(cb_card, p_error_card);
-                    //    if (grid_cheque.IsVisible)
-                    //    {
-                    //        TextBox dpDateCheque = (TextBox)dp_docDateCheque.Template.FindName("PART_TextBox", dp_docDateCheque);
-                    //        HelpClass.clearValidate(dpDateCheque, p_error_docNumCheque);
-                    //    }
-                    //    tb_cash.IsEnabled = true;
-                    //    tb_cash.Clear();
-                    //    HelpClass.clearValidate(tb_cash, p_error_cash);
-                    //    processType = "0";
-                    //    break;
+        //            case 2://cheque
+        //                grid_doc.Visibility = Visibility.Collapsed;
+        //                grid_cheque.Visibility = Visibility.Visible;
+        //                gd_card.Visibility = Visibility.Collapsed;
+        //                bdr_docNumCard.Visibility = Visibility.Collapsed;
+        //                HelpClass.clearValidate(p_error_docNumCard);
+        //                HelpClass.clearValidate(p_error_docNum);
+        //                HelpClass.clearValidate(p_error_card);
 
-                    //case 3://cheque
-                    case 2://cheque
-                        grid_doc.Visibility = Visibility.Collapsed;
-                        grid_cheque.Visibility = Visibility.Visible;
-                        gd_card.Visibility = Visibility.Collapsed;
-                        bdr_docNumCard.Visibility = Visibility.Collapsed;
-                        HelpClass.clearValidate(p_error_docNumCard);
-                        HelpClass.clearValidate(p_error_docNum);
-                        HelpClass.clearValidate(p_error_card);
+        //                if (grid_doc.IsVisible)
+        //                    HelpClass.clearValidate(p_error_docDate);
 
-                        if (grid_doc.IsVisible)
-                            HelpClass.clearValidate(p_error_docDate);
+        //                tb_cash.IsEnabled = true;
+        //                tb_cash.Clear();
+        //                HelpClass.clearValidate(p_error_cash);
+        //                processType = "0";
+        //                requiredControlList = new List<string> { "cash", "paymentProcessType" , "docNumCheque" };
+        //                break;
 
-                        tb_cash.IsEnabled = true;
-                        tb_cash.Clear();
-                        HelpClass.clearValidate(p_error_cash);
-                        processType = "0";
-                        requiredControlList = new List<string> { "cash", "paymentProcessType" , "docNumCheque" };
-                        break;
+        //            //case 4://card
+        //            case 3://card
+        //                grid_doc.Visibility = Visibility.Collapsed;
+        //                grid_cheque.Visibility = Visibility.Collapsed;
+        //                gd_card.Visibility = Visibility.Visible;
+        //                bdr_docNumCard.Visibility = Visibility.Visible;
+        //                HelpClass.clearValidate(p_error_docNum);
+        //                HelpClass.clearValidate(p_error_docNum);
+        //                HelpClass.clearValidate(p_error_card);
 
-                    //case 4://card
-                    case 3://card
-                        grid_doc.Visibility = Visibility.Collapsed;
-                        grid_cheque.Visibility = Visibility.Collapsed;
-                        gd_card.Visibility = Visibility.Visible;
-                        bdr_docNumCard.Visibility = Visibility.Visible;
-                        HelpClass.clearValidate(p_error_docNum);
-                        HelpClass.clearValidate(p_error_docNum);
-                        HelpClass.clearValidate(p_error_card);
+        //                if (grid_doc.IsVisible)
+        //                    HelpClass.clearValidate(p_error_docDate);
 
-                        if (grid_doc.IsVisible)
-                            HelpClass.clearValidate(p_error_docDate);
+        //                if (grid_cheque.IsVisible)
+        //                    HelpClass.clearValidate(p_error_docNumCheque);
 
-                        if (grid_cheque.IsVisible)
-                            HelpClass.clearValidate(p_error_docNumCheque);
+        //                tb_cash.IsEnabled = true;
+        //                tb_cash.Clear();
+        //                HelpClass.clearValidate(p_error_cash);
+        //                processType = "0";
+        //                requiredControlList = new List<string> { "cash", "paymentProcessType", "docNumCard" };
+        //                break;
+        //        }
 
-                        tb_cash.IsEnabled = true;
-                        tb_cash.Clear();
-                        HelpClass.clearValidate(p_error_cash);
-                        processType = "0";
-                        requiredControlList = new List<string> { "cash", "paymentProcessType", "docNumCard" };
-                        break;
-                }
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+        //        HelpClass.EndAwait(grid_main);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        HelpClass.EndAwait(grid_main);
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
+        //}
         private async Task fillCustomers()
         {
             agents = await agentModel.GetAgentsActive("c");
@@ -1011,15 +745,31 @@ namespace Restaurant.View.accounts
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Cb_state_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {//select state
+        //private void Cb_state_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{//select state
+        //    try
+        //    {
+        //        HelpClass.StartAwait(grid_main);
+
+        //        invoiceQuery = invoiceQuery.Where(s => s.status == cb_state.SelectedValue.ToString());
+        //        invoiceQueryExcel = invoiceQuery;
+        //        RefreshInvoiceView();
+
+        //        HelpClass.EndAwait(grid_main);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        HelpClass.EndAwait(grid_main);
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
+        //}
+        private async void Cb_branch_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {//select branch
             try
             {
                 HelpClass.StartAwait(grid_main);
 
-                invoiceQuery = invoiceQuery.Where(s => s.status == cb_state.SelectedValue.ToString());
-                invoiceQueryExcel = invoiceQuery;
-                RefreshInvoiceView();
+                await Search();
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -1029,144 +779,84 @@ namespace Restaurant.View.accounts
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Cb_branch_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {//select branch
-        }
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
-        {//save
+        {//pay
             try
             {
                 HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one"))
+                //if (MainWindow.groupObject.HasPermissionAction(createPermission, MainWindow.groupObjects, "one"))
                 {
-                    #region validate
-                    //chk empty cash
-                    bool acceptedAmmount = true;
-
-                    //if (tb_cash.Text.Equals(""))
-                    //    HelpClass.validateEmptyTextBox(tb_cash, p_error_cash, tt_errorCash, "trEmptyCashToolTip");
-                    //else
-                    if (!tb_cash.Text.Equals(""))
+                    if (MainWindow.posLogin.boxState == "o")
                     {
-                        decimal ammount = decimal.Parse(tb_cash.Text);
+                        bool multipleValid = true;
+                        List<CashTransfer> listPayments = new List<CashTransfer>();
+                        Window.GetWindow(this).Opacity = 0.2;
+                        wd_multiplePayment w = new wd_multiplePayment();
+                        w.isPurchase = false;
 
-                        if (ammount == 0)
+                        //if (cb_customer.SelectedValue != null)
+                        //{
+                        Agent customer = customers.ToList().Find(b => b.agentId == invoice.agentId && b.isLimited == true);
+                        if (customer != null)
                         {
-                            acceptedAmmount = false;
-                            HelpClass.SetValidate(p_error_cash,  "trZeroAmmount");
-                        }
-                        else if (ammount > invoice.deserved)
-                        {
-                            acceptedAmmount = false;
-                            HelpClass.SetValidate(p_error_cash, "trGreaterAmmount");
-                        }
-                    }
-                    //chk empty doc num
-                    //if (grid_doc.IsVisible)
-                    //{
-                    //    TextBox dpDate = (TextBox)dp_docDate.Template.FindName("PART_TextBox", dp_docDate);
-                    //    HelpClass.validateEmptyTextBox(tb_docNum, p_error_docNum, tt_errorDocNum, "trEmptyDocNumToolTip");
-                    //    HelpClass.validateEmptyTextBox(dpDate, p_error_docDate, tt_errorDocDate, "trEmptyDocDateToolTip");
-                    //}
-                    //else
-                    //{
-                    //}
-
-                    ////chk empty cheque num
-                    //if (grid_cheque.IsVisible)
-                    //{
-                    //    HelpClass.validateEmptyTextBox(tb_docNumCheque, p_error_docNumCheque, tt_errorDocNumCheque, "trEmptyDocNumToolTip");
-                    //}
-                    //else
-                    //{
-                    //}
-                    ////chk empty process num
-                    //if (tb_docNumCard.IsVisible)
-                    //{
-                    //    HelpClass.validateEmptyTextBox(tb_docNumCard, p_error_docCard, tt_errorDocCard, "trEmptyProcessNumToolTip");
-                    //}
-                    //else
-                    //{
-                    //    HelpClass.clearValidate(tb_docNumCard, p_error_docCard);
-                    //}
-                    ////chk empty payment type
-                    //HelpClass.validateEmptyComboBox(cb_paymentProcessType, p_errorpayment_processType, tt_errorpaymentProcessType, "trErrorEmptyPaymentTypeToolTip");
-
-                    ////chk empty card 
-                    //if (cb_card.IsVisible)
-                    //    HelpClass.validateEmptyComboBox(cb_card, p_error_card, tt_errorCard, "trEmptyCardTooltip");
-                    //else
-                    //    HelpClass.clearComboBoxValidate(cb_card, p_error_card);
-
-                    #endregion
-
-                    #region save
-
-                    //if ((!tb_cash.Text.Equals("")) && (!cb_paymentProcessType.Text.Equals("")) &&
-                    // (((grid_cheque.IsVisible) && (!tb_docNumCheque.Text.Equals(""))) || (!grid_cheque.IsVisible)) &&
-                    // (((grid_doc.IsVisible) && (!dp_docDate.Text.Equals("")) && (!tb_docNum.Text.Equals(""))) || (!dp_docDate.IsVisible)) &&
-                    // (((tb_docNumCard.IsVisible) && (!tb_docNumCard.Text.Equals(""))) || (!tb_docNumCard.IsVisible)) &&
-                    // (((cb_card.IsVisible) && (!cb_card.Text.Equals(""))) || (!cb_card.IsVisible)) &&
-                    //    acceptedAmmount
-                    // )
-                    if (HelpClass.validate(requiredControlList, this) && acceptedAmmount)
-                    {
-                        CashTransfer cash = new CashTransfer();
-
-                        cash.transType = "d";
-                        cash.posId = MainWindow.posLogin.posId;
-                        cash.transNum = await cashModel.generateCashNumber(cash.transType + "c");
-                        cash.cash = decimal.Parse(tb_cash.Text);
-                        cash.notes = tb_notes.Text;
-                        cash.createUserId = MainWindow.userLogin.userId;
-                        cash.side = "c";
-                        cash.processType = cb_paymentProcessType.SelectedValue.ToString();
-
-                        cash.agentId = agentId;
-
-                        cash.userId = userId;
-
-                        if (cb_paymentProcessType.SelectedValue.ToString().Equals("card"))
-                        {
-                            //cash.cardId = Convert.ToInt32(cb_card.SelectedValue);
-                            cash.cardId = _SelectedCard;
-                            cash.docNum = tb_docNumCard.Text;
-                        }
-                        if (cb_paymentProcessType.SelectedValue.ToString().Equals("doc"))
-                            cash.docNum = await cashModel.generateDocNumber("pbnd");
-
-                        if (cb_paymentProcessType.SelectedValue.ToString().Equals("cheque"))
-                            cash.docNum = tb_docNumCheque.Text;
-
-                        if (cb_paymentProcessType.SelectedValue.ToString().Equals("doc"))
-                        {
-                            //int res = await saveBond(cash.docNum, cash.cash, dp_docDate.SelectedDate.Value, "d");
-                            //cash.bondId = res;
-                        }
-
-                        int s = await cashModel.payOrderInvoice(invoice.invoiceId, invoice.invStatusId, cash.cash, processType, cash);
-
-                        if (!s.Equals(0))
-                        {
-                            if (cb_paymentProcessType.SelectedValue.ToString().Equals("cash"))
-                                await calcBalance(decimal.Parse(tb_cash.Text));
-
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-
-                            Clear();
-                            await RefreshInvoiceList();
-                            await Search();
+                            decimal remain = 0;
+                            if (customer.maxDeserve != 0)
+                                remain = getCusAvailableBlnc(customer);
+                            w.hasCredit = true;
+                            w.creditValue = remain;
                         }
                         else
                         {
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            w.hasCredit = false;
+                            w.creditValue = 0;
+                        }
+                        //}
+
+                        w.invoice.invType = invoice.invType;
+                        w.invoice.totalNet = invoice.totalNet;
+                        w.cards = cards;
+                        w.ShowDialog();
+                        Window.GetWindow(this).Opacity = 1;
+                        multipleValid = w.isOk;
+                        listPayments = w.listPayments;
+
+                        if (multipleValid)
+                        {
+                            #region Save
+
+                            foreach (var item in listPayments)
+                            {
+                                await saveConfiguredCashTrans(item);
+                                invoice.paid += item.cash;
+                                invoice.deserved -= item.cash;
+                            }
+
+                            int s = await invoice.saveInvoice(invoice);
+                            await saveOrderStatus(invoice.invoiceId, "rc");
+                            if (!s.Equals(0))
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                Clear();
+
+                                await RefreshInvoiceList();
+                                Tb_search_TextChanged(null, null);
+                                await MainWindow.refreshBalance();
+                            }
+                            else
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            }
+                            #endregion
                         }
                     }
-                    #endregion
+                    else //box is closed
+                    {
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trBoxIsClosed"), animation: ToasterAnimation.FadeIn);
+                    }
                 }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -1176,6 +866,62 @@ namespace Restaurant.View.accounts
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        private async Task saveOrderStatus(int invoiceId, string status)
+        {
+            invoiceStatus st = new invoiceStatus();
+            st.status = status;
+            st.invoiceId = invoiceId;
+            st.createUserId = MainWindow.userLogin.userId;
+            st.isActive = 1;
+            await invoice.saveOrderStatus(st);
+        }
+
+        private async Task saveConfiguredCashTrans(CashTransfer cashTransfer)
+        {
+            switch (cashTransfer.processType)
+            {
+                case "cash":// cash: update pos balance   
+                    MainWindow.posLogin.balance += invoice.totalNet;
+                    await MainWindow.posLogin.save(MainWindow.posLogin);
+                    cashTransfer.transType = "d"; //deposit
+                    cashTransfer.posId = MainWindow.posLogin.posId;
+                    cashTransfer.agentId = invoice.agentId;
+                    cashTransfer.invId = invoice.invoiceId;
+                    cashTransfer.transNum = await cashTransfer.generateCashNumber("dc");
+                    cashTransfer.side = "c"; // customer                    
+                    cashTransfer.createUserId = MainWindow.userLogin.userId;
+                    await cashTransfer.Save(cashTransfer); //add cash transfer   
+                    break;
+                case "balance":// balance: update customer balance
+                    await invoice.recordConfiguredAgentCash(invoice, "si", cashTransfer);
+                    break;
+                case "card": // card
+                    cashTransfer.transType = "d"; //deposit
+                    cashTransfer.posId = MainWindow.posLogin.posId;
+                    cashTransfer.agentId = invoice.agentId;
+                    cashTransfer.invId = invoice.invoiceId;
+                    cashTransfer.transNum = await cashTransfer.generateCashNumber("dc");
+                    cashTransfer.side = "c"; // customer
+                    cashTransfer.createUserId = MainWindow.userLogin.userId;
+                    await cashTransfer.Save(cashTransfer); //add cash transfer  
+                    break;
+            }
+        }
+
+        private decimal getCusAvailableBlnc(Agent customer)
+        {
+            decimal remain = 0;
+
+            decimal customerBalance = customer.balance;
+
+            if (customer.balanceType == 0)
+                remain = invoice.totalNet - (decimal)customerBalance;
+            else
+                remain = (decimal)customer.balance + invoice.totalNet;
+            return remain;
+        }
+
         #region report
 
         ReportCls reportclass = new ReportCls();
@@ -1449,10 +1195,9 @@ namespace Restaurant.View.accounts
             }
         }
         private void Code_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
+        { //only english and digits
             try
             {
-                //only english and digits
                 Regex regex = new Regex("^[a-zA-Z0-9. -_?]*$");
                 if (!regex.IsMatch(e.Text))
                     e.Handled = true;
@@ -1479,6 +1224,63 @@ namespace Restaurant.View.accounts
             try
             {
                 HelpClass.validate(requiredControlList, this);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void search_Checking(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox cb = sender as CheckBox;
+                if (cb.IsFocused)
+                {
+                    if (cb.Name == "chk_delivered")
+                    {
+                        chk_inDelivery.IsChecked = false;
+                        dg_orderAccounts.Columns[4].Visibility = Visibility.Collapsed;
+                        dg_orderAccounts.Columns[6].Visibility = Visibility.Visible;
+                        tb_cash.Visibility = Visibility.Collapsed;
+                        tb_cashDelivered.Visibility = Visibility.Visible;
+                    }
+                    else if (cb.Name == "chk_inDelivery")
+                    {
+                        chk_delivered.IsChecked = false;
+                        dg_orderAccounts.Columns[4].Visibility = Visibility.Visible;
+                        dg_orderAccounts.Columns[6].Visibility = Visibility.Collapsed;
+                        tb_cash.Visibility = Visibility.Visible;
+                        tb_cashDelivered.Visibility = Visibility.Collapsed;
+                    }
+                }
+                HelpClass.StartAwait(grid_main);
+                Clear();
+                await RefreshInvoiceList();
+                Tb_search_TextChanged(null, null);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void chk_uncheck(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox cb = sender as CheckBox;
+                if (cb.IsFocused)
+                {
+                    if (cb.Name == "chk_delivered")
+                        chk_delivered.IsChecked = true;
+                    else if (cb.Name == "chk_inDelivery")
+                        chk_inDelivery.IsChecked = true;
+                }
             }
             catch (Exception ex)
             {
