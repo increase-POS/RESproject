@@ -202,6 +202,7 @@ namespace Restaurant.View.sectionData.persons
                         agent.type = "v";
                         agent.accType = "";
                         agent.balance = 0;
+                        agent.balanceType = 0;
                         agent.payType = payType;
                         agent.createUserId = MainWindow.userLogin.userId;
                         agent.updateUserId = MainWindow.userLogin.userId;

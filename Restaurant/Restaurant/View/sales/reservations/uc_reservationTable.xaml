@@ -484,6 +484,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <Border Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid>
@@ -513,20 +514,19 @@
                                             x:Name="btn_addCustomer" Click="Btn_addCustomer_Click"  
                                 Margin="5 5 10 5" IsEnabled="True">
                             <Path Fill="#4E4E4E" Stretch="Fill"  
-                    Width="27.5" Height="27.5"
-                           Data="M275.8,467c-14.1-21.9-21.7-47.5-21.7-74.4c0-6.3,0.4-12.4,1.2-18.5H121.6v0c-3.4,0-6.8,0-10.3,0c0-15.9,0-31.2,0-47.1
-	c2.5,0,4.7,0,6.8,0c50.8,0,101.6,0,152.5,0.1c6.2-11.4,14-22,23.5-31.4c5.4-5.4,11.3-10.4,17.5-14.8c-16.8,0-33.5,0-50.2,0
-	c-50.2,0-100.2,0-150.3,0c0-15.8,0-31.1,0-47.1c2.7,0,4.8,0,7.1,0c89.8,0,179.7,0,269.5,0.1c0.6,0,1.2,0,1.8-0.1c0.6,0,1.2,0,1.9,0
-	c0,7.4,0,14.7,0,22c16,0,31.6,2.8,46.2,7.9c0-29,0-58.8,0-82.2c0.2-12.2,0.2-24.4-0.1-36.7c0-2.3-1.2-5.2-2.9-6.9
-	c-44.6-44.8-89.2-89.4-134-134c-1.5-1.5-4.2-2.7-6.4-2.7c-61.2-0.1-122.3-0.2-183.5,0c-18.4,0.1-31.8,9.3-40.7,25.3
-	c-4.6,8.2-5.1,17.1-5.1,26.2c0,92.2,0,184.3,0,276.5c0,30.8-0.5,61.7,0.3,92.5c0.8,27.1,20.6,45.2,47.7,45.3c2.9,0,5.8,0,8.8,0v0
-	H275.8z M274.2,38c41.8,41.9,84.1,84.4,125.4,125.9c-40.3,0-82.7,0-125.4,0C274.2,121.4,274.2,79.2,274.2,38z M391,284.1
-	c-60.5,0-108.5,48-108.5,108.5c0,60.4,48,108.5,108.5,108.5c60.4,0,108.5-48.1,108.5-108.5C499.5,332.2,451.4,284.1,391,284.1z
-	 M453,409.7h-45v45h-35.6v-45h-45V374h45v-45h37.2v45H453V409.7z M0,250C0,250,0,250,0,250C0,250,0,250,0,250C0,250,0,250,0,250
-	C0,250,0,250,0,250z" />
+                    Width="25.5" Height="27.5"
+                           Data="{StaticResource addFile}" />
                         </Button>
+                        <Button Grid.Column="2"  Padding="0"    
+                                Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" 
+                                            x:Name="btn_updateCustomer" Click="Btn_updateCustomer_Click"  
+                                Margin="5 5 10 5" IsEnabled="True">
+                                <Path Fill="#4E4E4E" Stretch="Fill"  
+                    Width="25.5" Height="27.5"
+                           Data="{StaticResource updateFile}" />
+                            </Button>
 
-                    </Grid>
+                        </Grid>
                     <Border Grid.Row="3" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" 
                                             BorderBrush="{StaticResource LightGrey}">
                         <Grid>

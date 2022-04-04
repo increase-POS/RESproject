@@ -146,6 +146,7 @@ namespace Restaurant.View.kitchen
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchStatus, AppSettings.resourcemanager.GetString("trStatusHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchCatalog, AppSettings.resourcemanager.GetString("trCategorie") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchInvType, AppSettings.resourcemanager.GetString("") + "...");
 
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
         }

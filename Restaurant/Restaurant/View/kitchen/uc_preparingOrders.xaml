@@ -31,6 +31,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition  Width="*"  />
                         <ColumnDefinition  Width="*"  />
+                        <ColumnDefinition  Width="*"  />
                         <ColumnDefinition  Width="auto"  />
                     </Grid.ColumnDefinitions>
                     <Border Height="40" Width="50" CornerRadius="7"  
@@ -82,6 +83,32 @@
                          BlurRadius="10"/>
                         </Border.Effect>
                         <Grid>
+                            <ComboBox x:Name="cb_searchInvType"  Grid.Row="1" 
+                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                  materialDesign:HintAssist.Hint="invoice type..."  
+                                  Grid.Column="1" Height="40" SelectionChanged="Cb_search_SelectionChanged" 
+                                 BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
+                                        ItemsSource="{Binding}"   >
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Converter={StaticResource translateCategoryNameConverter}}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
+                        </Grid>
+                    </Border>
+                    <Border Grid.Column="3" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}" Background="White">
+                        <Border.Effect>
+                            <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                        </Border.Effect>
+                        <Grid>
                             <ComboBox x:Name="cb_searchCatalog"  Grid.Row="1" 
                                    Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}"
@@ -98,7 +125,7 @@
 
                         </Grid>
                     </Border>
-                    <Border Grid.Column="3" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}"  Background="White">
+                    <Border Grid.Column="4" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}"  Background="White">
                         <Border.Effect>
                             <DropShadowEffect
                           ShadowDepth="1"

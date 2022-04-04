@@ -1,4 +1,4 @@
-﻿using POS.Classes;
+﻿using Restaurant.Classes;
 using netoaster;
 using System;
 using System.Collections.Generic;
@@ -24,12 +24,11 @@ using System.IO;
 using Microsoft.Reporting.WinForms;
 
 using System.Data;
-using POS.View.windows;
-using POS.View.sectionData.Charts;
-using POS.View.sectionData;
+using Restaurant.View.windows;
+using Restaurant.View.sectionData;
 
 
-namespace POS.View.windows
+namespace Restaurant.View.windows
 {
     /// <summary>
     /// Interaction logic for wd_updateVendor.xaml
@@ -44,7 +43,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         Agent agentModel = new Agent();
@@ -64,43 +63,43 @@ namespace POS.View.windows
         private void translate()
         {
             if (type == "v")
-            txt_vendor.Text = MainWindow.resourcemanager.GetString("trVendor");
+            txt_vendor.Text = AppSettings.resourcemanager.GetString("trVendor");
             else if(type == "c")
-                txt_vendor.Text = MainWindow.resourcemanager.GetString("trCustomer");
+                txt_vendor.Text = AppSettings.resourcemanager.GetString("trCustomer");
 
 
-            //       MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_search, MainWindow.resourcemanager.GetString("trPamentMethodHint"));
-            txt_baseInformation.Text = MainWindow.resourcemanager.GetString("trBaseInformation");
+            //       MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_search, AppSettings.resourcemanager.GetString("trPamentMethodHint"));
+            txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, MainWindow.resourcemanager.GetString("trCodeHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, MainWindow.resourcemanager.GetString("trNameHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, MainWindow.resourcemanager.GetString("trAdressHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_company, MainWindow.resourcemanager.GetString("trCompanyHint"));
-            txt_contactInformation.Text = MainWindow.resourcemanager.GetString("trContactInformation");
-            //          MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_areaMobile, MainWindow.resourcemanager.GetString("trAreaHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mobile, MainWindow.resourcemanager.GetString("trMobileHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_phone, MainWindow.resourcemanager.GetString("trPhoneHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_email, MainWindow.resourcemanager.GetString("trEmailHint"));
-            txt_moreInformation.Text = MainWindow.resourcemanager.GetString("trAnotherInfomation");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fax, MainWindow.resourcemanager.GetString("trFaxHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, MainWindow.resourcemanager.GetString("trNoteHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_code, AppSettings.resourcemanager.GetString("trCodeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, AppSettings.resourcemanager.GetString("trNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_address, AppSettings.resourcemanager.GetString("trAdressHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_company, AppSettings.resourcemanager.GetString("trCompanyHint"));
+            txt_contactInformation.Text = AppSettings.resourcemanager.GetString("trContactInformation");
+            //          MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_areaMobile, AppSettings.resourcemanager.GetString("trAreaHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_mobile, AppSettings.resourcemanager.GetString("trMobileHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_phone, AppSettings.resourcemanager.GetString("trPhoneHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_email, AppSettings.resourcemanager.GetString("trEmailHint"));
+            txt_moreInformation.Text = AppSettings.resourcemanager.GetString("trAnotherInfomation");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_fax, AppSettings.resourcemanager.GetString("trFaxHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
 
 
-            btn_clear.ToolTip = MainWindow.resourcemanager.GetString("trClear");
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
 
-            tt_code.Content = MainWindow.resourcemanager.GetString("trCode");
-            tt_name.Content = MainWindow.resourcemanager.GetString("trName");
-            tt_company.Content = MainWindow.resourcemanager.GetString("trCompany");
-            tt_mobile.Content = MainWindow.resourcemanager.GetString("trMobile");
-            tt_phone.Content = MainWindow.resourcemanager.GetString("trPhone");
-            tt_fax.Content = MainWindow.resourcemanager.GetString("trFax");
-            tt_email.Content = MainWindow.resourcemanager.GetString("trEmail");
-            tt_address.Content = MainWindow.resourcemanager.GetString("trAddress");
-            tt_notes.Content = MainWindow.resourcemanager.GetString("trNote");
-            tt_clear.Content = MainWindow.resourcemanager.GetString("trClear");
+            tt_code.Content = AppSettings.resourcemanager.GetString("trCode");
+            tt_name.Content = AppSettings.resourcemanager.GetString("trName");
+            tt_company.Content = AppSettings.resourcemanager.GetString("trCompany");
+            tt_mobile.Content = AppSettings.resourcemanager.GetString("trMobile");
+            tt_phone.Content = AppSettings.resourcemanager.GetString("trPhone");
+            tt_fax.Content = AppSettings.resourcemanager.GetString("trFax");
+            tt_email.Content = AppSettings.resourcemanager.GetString("trEmail");
+            tt_address.Content = AppSettings.resourcemanager.GetString("trAddress");
+            tt_notes.Content = AppSettings.resourcemanager.GetString("trNote");
+            tt_clear.Content = AppSettings.resourcemanager.GetString("trClear");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_upperLimit, MainWindow.resourcemanager.GetString("trUpperLimitHint"));
-            txt_isCredit.Text = MainWindow.resourcemanager.GetString("trCredit");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_upperLimit, AppSettings.resourcemanager.GetString("trUpperLimitHint"));
+            txt_isCredit.Text = AppSettings.resourcemanager.GetString("trCredit");
 
         }
 
@@ -120,15 +119,15 @@ namespace POS.View.windows
                 cb_areaPhone.SelectedIndex = 0;
                 cb_areaPhoneLocal.SelectedIndex = 0;
 
-                SectionData.clearImg(img_vendor);
+                HelpClass.clearImg(img_vendor);
 
-                SectionData.clearValidate(tb_name, p_errorName);
-                SectionData.clearValidate(tb_email, p_errorEmail);
-                SectionData.clearValidate(tb_mobile, p_errorMobile);
+                HelpClass.clearValidate(p_errorName);
+                HelpClass.clearValidate(p_errorEmail);
+                HelpClass.clearValidate(p_errorMobile);
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -139,14 +138,14 @@ namespace POS.View.windows
                 if (type == "c")
                     dkp_isCredit.Visibility = Visibility.Visible;
                 if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                    HelpClass.StartAwait(grid_main);
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
-                { MainWindow.resourcemanager = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly());
+                if (AppSettings.lang.Equals("en"))
+                { AppSettings.resourcemanager = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight; }
                 else
-                { MainWindow.resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
+                { AppSettings.resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft; }
 
                 translate();
@@ -159,23 +158,23 @@ namespace POS.View.windows
 
                     tb_code.Text = agent.code;
 
-                    SectionData.getMobile(agent.mobile, cb_areaMobile, tb_mobile);
+                    HelpClass.getMobile(agent.mobile, cb_areaMobile, tb_mobile);
 
-                    SectionData.getPhone(agent.phone, cb_areaPhone, cb_areaPhoneLocal, tb_phone);
+                    HelpClass.getPhone(agent.phone, cb_areaPhone, cb_areaPhoneLocal, tb_phone);
 
-                    SectionData.getPhone(agent.fax, cb_areaFax, cb_areaFaxLocal, tb_fax);
+                    HelpClass.getPhone(agent.fax, cb_areaFax, cb_areaFaxLocal, tb_fax);
 
                     await getImg();
                 }
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
                 Keyboard.Focus(tb_name);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -185,7 +184,7 @@ namespace POS.View.windows
             {
                 if (agent.image.Equals(""))
                 {
-                    SectionData.clearImg(img_vendor);
+                    HelpClass.clearImg(img_vendor);
                 }
                 else
                 {
@@ -204,13 +203,14 @@ namespace POS.View.windows
 
                         img_vendor.Background = new ImageBrush(bitmapImage);
                         // configure trmporary path
-                        string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                        //string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                        string dir = Directory.GetCurrentDirectory();
                         string tmpPath = System.IO.Path.Combine(dir, Global.TMPAgentsFolder);
                         tmpPath = System.IO.Path.Combine(tmpPath, agent.image);
                         openFileDialog.FileName = tmpPath;
                     }
                     else
-                        SectionData.clearImg(img_vendor);
+                        HelpClass.clearImg(img_vendor);
                 }
             }
             catch { }
@@ -238,7 +238,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -250,7 +250,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void Tb_email_LostFocus(object sender, RoutedEventArgs e)
@@ -264,7 +264,7 @@ namespace POS.View.windows
                     if (!ValidatorExtensions.IsValid(tb_email.Text))
                     {
                         p_errorEmail.Visibility = Visibility.Visible;
-                        tt_errorEmail.Content = MainWindow.resourcemanager.GetString("trErrorEmailToolTip");
+                        tt_errorEmail.Content = AppSettings.resourcemanager.GetString("trErrorEmailToolTip");
                         tb_email.Background = (Brush)bc.ConvertFrom("#15FF0000");
                     }
                     else
@@ -276,7 +276,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -291,7 +291,7 @@ namespace POS.View.windows
                 if (tb_mobile.Text.Equals(""))
                 {
                     p_errorMobile.Visibility = Visibility.Visible;
-                    tt_errorMobile.Content = MainWindow.resourcemanager.GetString("trEmptyMobileToolTip");
+                    tt_errorMobile.Content = AppSettings.resourcemanager.GetString("trEmptyMobileToolTip");
                     tb_mobile.Background = (Brush)bc.ConvertFrom("#15FF0000");
 
                 }
@@ -304,7 +304,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -317,7 +317,7 @@ namespace POS.View.windows
                 if (tb_mobile.Text.Equals(""))
                 {
                     p_errorMobile.Visibility = Visibility.Visible;
-                    tt_errorMobile.Content = MainWindow.resourcemanager.GetString("trEmptyMobileToolTip");
+                    tt_errorMobile.Content = AppSettings.resourcemanager.GetString("trEmptyMobileToolTip");
                     tb_mobile.Background = (Brush)bc.ConvertFrom("#15FF0000");
 
                 }
@@ -330,7 +330,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -343,7 +343,7 @@ namespace POS.View.windows
                 if (tb_name.Text.Equals(""))
                 {
                     p_errorName.Visibility = Visibility.Visible;
-                    tt_errorName.Content = MainWindow.resourcemanager.GetString("trEmptyNameToolTip");
+                    tt_errorName.Content = AppSettings.resourcemanager.GetString("trEmptyNameToolTip");
                     tb_name.Background = (Brush)bc.ConvertFrom("#15FF0000");
                 }
                 else
@@ -354,7 +354,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -368,7 +368,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -380,7 +380,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -392,7 +392,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -404,7 +404,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -423,20 +423,20 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                    HelpClass.StartAwait(grid_main);
 
                 if (e.Key == Key.Return)
                 {
                     Btn_save_Click(null, null);
                 }
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
@@ -444,13 +444,16 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                SectionData.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 //chk empty name
-                SectionData.validateEmptyTextBox(tb_name, p_errorName, tt_errorName, "trEmptyNameToolTip");
+                //HelpClass.validateEmptyTextBox(tb_name, p_errorName, tt_errorName, "trEmptyNameToolTip");
+                HelpClass.validateEmpty(tb_name.Text, p_errorName);
                 //chk empty mobile
-                SectionData.validateEmptyTextBox(tb_mobile, p_errorMobile, tt_errorMobile, "trEmptyMobileToolTip");
+                //HelpClass.validateEmptyTextBox(tb_mobile, p_errorMobile, tt_errorMobile, "trEmptyMobileToolTip");
+                HelpClass.validateEmpty(tb_mobile.Text, p_errorMobile);
                 //validate email
-                SectionData.validateEmail(tb_email, p_errorEmail, tt_errorEmail);
+                //HelpClass.validateEmail(tb_email, p_errorEmail, tt_errorEmail);
+                HelpClass.validateEmpty(tb_email.Text, p_errorEmail);
 
                 string phoneStr = "";
                 if (!tb_phone.Text.Equals(""))
@@ -468,10 +471,10 @@ namespace POS.View.windows
                 if ((!tb_name.Text.Equals("")) && (!tb_mobile.Text.Equals("")))
                 {
                     if (emailError)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorEmailToolTip"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorEmailToolTip"), animation: ToasterAnimation.FadeIn);
                     else
                     {
-                        //SectionData.genRandomCode(type);
+                        //HelpClass.genRandomCode(type);
                         if (agent.agentId == 0)
                         {
                             tb_code.Text = await agentModel.generateCodeNumber(type);
@@ -503,20 +506,20 @@ namespace POS.View.windows
                         agent.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text;
                         agent.image = "";
                         
-                        agent.createUserId = MainWindow.userID;
-                        agent.updateUserId = MainWindow.userID;
+                        agent.createUserId = MainWindow.userLogin.userId;
+                        agent.updateUserId = MainWindow.userLogin.userId;
                         agent.notes = tb_notes.Text;
                         agent.fax = faxStr;
 
                         int s = await agentModel.save(agent);
                         if (s > 0)
                         {
-                            //Toaster.ShowSuccess(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                            //Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
                             isOk = true;
                             this.Close();
                         }
                         //else
-                            //Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            //Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
 
                         if (isImgPressed)
@@ -526,19 +529,19 @@ namespace POS.View.windows
                             agent.image = b;
                             isImgPressed = false;
                             //if (b.Equals(""))
-                            //Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trThereWasAnErrorLoadingTheImage"), animation: ToasterAnimation.FadeIn);
+                            //Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trThereWasAnErrorLoadingTheImage"), animation: ToasterAnimation.FadeIn);
                         }
                      
                     }
                 }
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -550,7 +553,7 @@ namespace POS.View.windows
             }
             catch (Exception ex)
             {
-                SectionData.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -571,7 +574,7 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                    HelpClass.StartAwait(grid_main);
 
                 isImgPressed = true;
                 openFileDialog.Filter = "Images|*.png;*.jpg;*.bmp;*.jpeg;*.jfif";
@@ -583,13 +586,13 @@ namespace POS.View.windows
                 }
 
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
     }
