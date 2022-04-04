@@ -1352,7 +1352,7 @@ namespace Restaurant
             //update lognin record
             if (!go_out)
             {
-                //await updateLogninRecord();
+                await updateLogninRecord();
             }
             timer.Stop();
             idletimer.Stop();
@@ -1360,16 +1360,14 @@ namespace Restaurant
         }
         async Task<bool> updateLogninRecord()
         {
-            //update lognin record
             UsersLogs userLog = new UsersLogs();
-            userLog = await userLog.GetByID(userLogin.userId);
-
-            await userLog.Save(userLog);
-
+           userLog = await userLog.GetByID(userLogin.userId);
             //update user record
             userLogin.isOnline = 0;
-            await userLogin.save(userLogin);
+            int res = await userLogin.save(userLogin);
 
+            //update lognin record
+            res = await userLog.Save(userLog);
 
             return true;
         }

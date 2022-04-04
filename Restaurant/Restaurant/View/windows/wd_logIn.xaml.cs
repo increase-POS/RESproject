@@ -271,7 +271,7 @@ namespace Restaurant.View.windows
 
 
                             int s = await userModel.save(user);
-                            /*
+                          
                             //create lognin record
                             UsersLogs userLog = new UsersLogs();
                             userLog.posId = MainWindow.posLogin.posId;
@@ -280,8 +280,8 @@ namespace Restaurant.View.windows
                             int str = await userLogsModel.Save(userLog);
                             
                             if (!str.Equals(0))
-                                MainWindow.userLogin.userId = str;
-                            */
+                                MainWindow.userLogin.userId = user.userId;
+
                             #region remember me
                             if (cbxRemmemberMe.IsChecked.Value)
                             {
