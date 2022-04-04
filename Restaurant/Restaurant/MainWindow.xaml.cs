@@ -1352,7 +1352,7 @@ namespace Restaurant
             //update lognin record
             if (!go_out)
             {
-                await updateLogninRecord();
+                //await updateLogninRecord();
             }
             timer.Stop();
             idletimer.Stop();
@@ -1379,35 +1379,35 @@ namespace Restaurant
             {
                 
                     HelpClass.StartAwait(grid_mainWindow);
-                if (go_out)
-                {
-                    await close();
-                    this.Visibility = Visibility.Hidden;
-                    #region
-                    Window.GetWindow(this).Opacity = 0.2;
-                    wd_messageBox w = new wd_messageBox();
-                    w.contentText2 = AppSettings.resourcemanager.GetString("trUserLoginFromOtherPos");
-                    w.ShowDialog();
-                    Window.GetWindow(this).Opacity = 1;
-                    #endregion
+                //if (go_out)
+                //{
+                //    await close();
+                //    this.Visibility = Visibility.Hidden;
+                //    #region
+                //    Window.GetWindow(this).Opacity = 0.2;
+                //    wd_messageBox w = new wd_messageBox();
+                //    w.contentText2 = AppSettings.resourcemanager.GetString("trUserLoginFromOtherPos");
+                //    w.ShowDialog();
+                //    Window.GetWindow(this).Opacity = 1;
+                //    #endregion
 
-                    Application.Current.Shutdown();
-                }
-                else if (go_out_didNotAnyProcess)
-                {
-                    await close();
-                    this.Visibility = Visibility.Hidden;
-                    #region
-                    Window.GetWindow(this).Opacity = 0.2;
-                    wd_messageBoxWithIcon w = new wd_messageBoxWithIcon();
-                    w.contentText1 = AppSettings.resourcemanager.GetString("trLoggedOutBecauseDidNotDoneAnyProcess");
-                    w.ShowDialog();
-                    Window.GetWindow(this).Opacity = 1;
-                    #endregion
+                //    Application.Current.Shutdown();
+                //}
+                //else if (go_out_didNotAnyProcess)
+                //{
+                //    await close();
+                //    this.Visibility = Visibility.Hidden;
+                //    #region
+                //    Window.GetWindow(this).Opacity = 0.2;
+                //    wd_messageBoxWithIcon w = new wd_messageBoxWithIcon();
+                //    w.contentText1 = AppSettings.resourcemanager.GetString("trLoggedOutBecauseDidNotDoneAnyProcess");
+                //    w.ShowDialog();
+                //    Window.GetWindow(this).Opacity = 1;
+                //    #endregion
 
-                    Application.Current.Shutdown();
-                }
-                else
+                //    Application.Current.Shutdown();
+                //}
+                //else
                 {
                     await close();
                     Application.Current.Shutdown();
