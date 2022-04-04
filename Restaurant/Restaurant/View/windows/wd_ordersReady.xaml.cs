@@ -33,9 +33,11 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-      
+
+        public string page = "";
         OrderPreparing preparingOrder = new OrderPreparing();
         List<OrderPreparing> orders = new List<OrderPreparing>();
+        List<Invoice> invoices = new List<Invoice>();
         private void HandleKeyPress(object sender, KeyEventArgs e)
         {
             try
@@ -81,17 +83,45 @@ namespace Restaurant.View.windows
         private void translat()
         {
             txt_title.Text = AppSettings.resourcemanager.GetString("trOrders");
-            dg_orders.Columns[0].Header = AppSettings.resourcemanager.GetString("trCharp");
-            dg_orders.Columns[1].Header = AppSettings.resourcemanager.GetString("trTable");
-            dg_orders.Columns[2].Header = AppSettings.resourcemanager.GetString("trWaiter");
+            col_orders.Header = AppSettings.resourcemanager.GetString("trCharp");
+            col_tables.Header = AppSettings.resourcemanager.GetString("trTable");
+            col_waiter.Header = AppSettings.resourcemanager.GetString("trWaiter");
+            col_invoices.Header = AppSettings.resourcemanager.GetString("trInvoices");
+            col_status.Header = AppSettings.resourcemanager.GetString("trStatus");
 
         }
 
         async Task fillDataGrid()  
         {
-            orders = await preparingOrder.GetHallOrdersWithStatus(MainWindow.branchLogin.branchId, "Ready",24);
+            if (page == "dinningHall")
+            {
+                #region visible - unvisible columns
+                col_orders.Visibility = Visibility.Visible;
+                col_tables.Visibility = Visibility.Visible;
+                col_waiter.Visibility = Visibility.Visible;
 
-            dg_orders.ItemsSource = orders;
+                col_invoices.Visibility = Visibility.Collapsed;
+                col_status.Visibility = Visibility.Collapsed;
+                #endregion
+                orders = await preparingOrder.GetHallOrdersWithStatus(MainWindow.branchLogin.branchId, "Ready", 24);
+                dg_orders.ItemsSource = orders;
+            }
+            else if(page == "takeAway")
+            {
+                #region visible - unvisible columns
+                col_invoices.Visibility = Visibility.Visible;
+                col_status.Visibility = Visibility.Visible;
+
+                col_orders.Visibility = Visibility.Collapsed;
+                col_tables.Visibility = Visibility.Collapsed;
+                col_waiter.Visibility = Visibility.Collapsed;
+                #endregion
+
+                invoices = await preparingOrder.GetTakAwayOrdersWithStatus(MainWindow.branchLogin.branchId, 24);
+                dg_orders.ItemsSource = invoices;
+            }
+
+         
         }
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {

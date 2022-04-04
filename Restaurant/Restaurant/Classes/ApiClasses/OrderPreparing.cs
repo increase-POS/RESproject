@@ -105,8 +105,9 @@ namespace Restaurant.Classes.ApiClasses
             List<OrderPreparing> items = new List<OrderPreparing>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("branchId", branchId.ToString());
-            // status like "Listed, Cooking"
+            // status like "Listed, Cooking" (optional)
             parameters.Add("status", status);
+            // duration in hours (optional)
             parameters.Add("duration", duration.ToString());
             IEnumerable<Claim> claims = await APIResult.getList("OrderPreparing/GetHallOrdersWithStatus", parameters);
             foreach (Claim c in claims)
@@ -114,6 +115,25 @@ namespace Restaurant.Classes.ApiClasses
                 if (c.Type == "scopes")
                 {
                     items.Add(JsonConvert.DeserializeObject<OrderPreparing>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
+
+        public async Task<List<Invoice>> GetTakAwayOrdersWithStatus( int branchId, int duration=0)
+        {
+            List<Invoice> items = new List<Invoice>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("branchId", branchId.ToString());
+            // duration in hours (optional)
+            parameters.Add("duration", duration.ToString());
+
+            IEnumerable<Claim> claims = await APIResult.getList("OrderPreparing/GetTakAwayOrdersWithStatus", parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<Invoice>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
                 }
             }
             return items;

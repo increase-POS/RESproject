@@ -1401,6 +1401,7 @@ namespace Restaurant.View.sales
 
 
                 wd_ordersReady w = new wd_ordersReady();
+                w.page = "dinningHall";
                 w.ShowDialog();
 
 

@@ -62,7 +62,7 @@ namespace Restaurant.Classes
         internal static string accuracy;
         internal static decimal maxDiscount;
         internal static decimal? StorageCost;
-        internal static string timeFormat;
+        internal static string timeFormat = "ShortTimePattern";
         // hour
         static public double time_staying;
         // hour
