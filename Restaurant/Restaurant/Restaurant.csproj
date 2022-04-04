@@ -789,6 +789,9 @@
     <Compile Include="View\windows\wd_units.xaml.cs">
       <DependentUpon>wd_units.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_updateVendor.xaml.cs">
+      <DependentUpon>wd_updateVendor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_uploadImage.xaml.cs">
       <DependentUpon>wd_uploadImage.xaml</DependentUpon>
     </Compile>
@@ -1502,6 +1505,10 @@
     <Page Include="View\windows\wd_units.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_updateVendor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_uploadImage.xaml">
       <Generator>MSBuild:Compile</Generator>
