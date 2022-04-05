@@ -1949,6 +1949,12 @@
     <Content Include="Reports\StatisticReport\Accounts\Tax\En\EnTaxItem.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\Storage\storageOperations\Ar\ArDirectEntry.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Storage\storageOperations\En\EnDirectEntry.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Resource Include="pic\programs-Rest-login-bg.png" />

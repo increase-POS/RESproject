@@ -64,7 +64,7 @@ namespace Restaurant.Classes
         public Nullable<int> locationIdOld { get; set; }
         public bool isActive { get; set; }
 
-
+        public Nullable<decimal> subTotal { get; set; }
     }
     public class invoiceTables
     {
