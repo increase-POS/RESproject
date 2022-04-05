@@ -1238,47 +1238,193 @@ namespace Restaurant.View.storage.movementsOperations
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
-        private void BuildReport()
+        Branch branchModel = new Branch();
+        public async Task BuildReport()
         {
+            Invoice prInvoice = invoice;
             List<ReportParameter> paramarr = new List<ReportParameter>();
 
-            string addpath;
-            bool isArabic = ReportCls.checkLang();
-            //D:\myproj\posproject5\Restaurant\Restaurant\Reports\Storage\movementsOperations\En\EnStorageMovements.rdlc
-            if (isArabic)
-            {//ItemsExport
-                addpath = @"\Reports\Storage\movementsOperations\Ar\ArStorageMovements.rdlc";
-            }
-            else
+            // string reppath = reportclass.GetDirectEntryRdlcpath(prInvoice);
+            if (prInvoice.invoiceId > 0)
             {
-                addpath = @"\Reports\Storage\movementsOperations\En\EnStorageMovements.rdlc";
+                string addpath;
+                bool isArabic = ReportCls.checkLang();
+                if (isArabic)
+                {//ItemsExport
+                    addpath = @"\Reports\Storage\movementsOperations\Ar\ArMovement.rdlc";
+                }
+                else
+                {
+                    addpath = @"\Reports\Storage\movementsOperations\En\EnMovement.rdlc";
+                }
+                string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+                // invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                //if (prInvoice.agentId != null)
+                //{
+                //    Agent agentinv = new Agent();
+                //    //  agentinv = vendors.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
+                //    agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+                //    prInvoice.agentCode = agentinv.code;
+                //    //new lines
+                //    prInvoice.agentName = agentinv.name;
+                //    prInvoice.agentCompany = agentinv.company;
+                //}
+                //else
+                //{
+
+                //    prInvoice.agentCode = "-";
+                //    //new lines
+                //    prInvoice.agentName = "-";
+                //    prInvoice.agentCompany = "-";
+                //}
+                User employ = new User();
+                employ = await employ.getUserById((int)prInvoice.updateUserId);
+                prInvoice.uuserName = employ.name;
+                prInvoice.uuserLast = employ.lastname;
+
+
+                Branch branchfrom = new Branch();
+                Branch branchto = new Branch();
+                //
+
+                //
+                //if (prInvoice.invoiceMainId == null)
+                //{
+                //    branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                //    prInvoice.branchCreatorName = branch.name;
+                //}
+                //branch creator
+
+                if (prInvoice.invoiceMainId == null)
+                {
+                    if (prInvoice.branchId > 0)
+                    {
+                        //FROM
+                        branchfrom = await branchModel.getBranchById((int)prInvoice.branchId);
+                        prInvoice.branchCreatorName = branchfrom.name;
+                        //TO
+                        Invoice secondinv = new Invoice();
+                        secondinv = await invoice.getgeneratedInvoice(prInvoice.invoiceId);
+                        if (secondinv.branchId != null)
+                        {
+                            branchto = await branchModel.getBranchById((int)secondinv.branchId);
+                            prInvoice.branchName = branchto.name;
+                        }
+                        else
+                        {
+                            prInvoice.branchName = "-";
+                        }
+
+                    }
+                    else
+                    {
+
+                    }
+
+                }
+                else
+                {// NOT THE CREATOR OF ORDER
+                    if (prInvoice.branchId > 0)
+                    {
+                        //TO
+                        branchto = await branchModel.getBranchById((int)prInvoice.branchId);
+                        prInvoice.branchName = branchto.name;
+                        //FROM
+                        Invoice secondinv = new Invoice();
+                        secondinv = await invoice.GetByInvoiceId((int)prInvoice.invoiceMainId); ;
+                        if (secondinv.branchId != null)
+                        {
+                            branchfrom = await branchModel.getBranchById((int)secondinv.branchId);
+                            prInvoice.branchCreatorName = branchfrom.name;
+                        }
+                        else
+                        {
+                            prInvoice.branchName = "-";
+                        }
+
+                    }
+                    else
+                    {
+                        prInvoice.branchName = "-";
+                    }
+                }
+                // end branch  
+
+                paramarr.Add(new ReportParameter("trFromBranchType", clsReports.BranchStoreConverter(branchfrom.type)));
+                paramarr.Add(new ReportParameter("trToBranchType", clsReports.BranchStoreConverter(branchto.type)));
+
+                foreach (var i in invoiceItems)
+                {
+                    i.price = decimal.Parse(HelpClass.DecTostring(i.price));
+                    i.subTotal = decimal.Parse(HelpClass.DecTostring(i.price * i.quantity));
+                }
+                clsReports.purchaseInvoiceReport(invoiceItems, rep, reppath);
+                clsReports.setReportLanguage(paramarr);
+                clsReports.Header(paramarr);
+                paramarr = reportclass.fillMovment(prInvoice, paramarr);
+
+                if (_ProcessType == "im" || _ProcessType == "imw" || _ProcessType == "imd")
+                {
+
+                    paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trInternalMovementImport")));
+
+                }
+                else if (_ProcessType == "ex" || _ProcessType == "exw" || _ProcessType == "exd")
+                {
+
+                    paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trInternalMovementExport")));
+
+                }
+
+                
+
+                rep.SetParameters(paramarr);
+                rep.Refresh();
+
             }
-
-            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-            ReportCls.checkLang();
-          
-            clsReports.ItemsExportReport(invoiceItems, rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
-            clsReports.Header(paramarr);
-
-            rep.SetParameters(paramarr);
-
-            rep.Refresh();
         }
-        private void printExport()
+        //private void BuildReport()
+        //{
+        //    List<ReportParameter> paramarr = new List<ReportParameter>();
+
+        //    string addpath;
+        //    bool isArabic = ReportCls.checkLang();
+        //    //D:\myproj\posproject5\Restaurant\Restaurant\Reports\Storage\movementsOperations\En\EnStorageMovements.rdlc
+        //    if (isArabic)
+        //    {//ItemsExport
+        //        addpath = @"\Reports\Storage\movementsOperations\Ar\ArStorageMovements.rdlc";
+        //    }
+        //    else
+        //    {
+        //        addpath = @"\Reports\Storage\movementsOperations\En\EnStorageMovements.rdlc";
+        //    }
+
+        //    string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+        //    ReportCls.checkLang();
+
+        //    clsReports.ItemsExportReport(invoiceItems, rep, reppath, paramarr);
+        //    clsReports.setReportLanguage(paramarr);
+        //    clsReports.Header(paramarr);
+
+        //    rep.SetParameters(paramarr);
+
+        //    rep.Refresh();
+        //}
+        private async void printExport()
         {
-            BuildReport();
+          await  BuildReport();
 
             this.Dispatcher.Invoke(() =>
             {
                 LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
             });
         }
-        private void pdfExport()
+        private async void pdfExport()
         {
 
-            BuildReport();
+           await  BuildReport();
 
             this.Dispatcher.Invoke(() =>
             {
@@ -1292,7 +1438,7 @@ namespace Restaurant.View.storage.movementsOperations
             });
 
         }
-        private void Btn_preview_Click(object sender, RoutedEventArgs e)
+        private async void Btn_preview_Click(object sender, RoutedEventArgs e)
         {//preview
             try
             {
@@ -1310,7 +1456,7 @@ namespace Restaurant.View.storage.movementsOperations
                         pdfpath = @"\Thumb\report\temp.pdf";
                         pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
 
-                        BuildReport();
+                        await BuildReport();
                         LocalReportExtensions.ExportToPDF(rep, pdfpath);
                         ///////////////////
                         wd_previewPdf w = new wd_previewPdf();
