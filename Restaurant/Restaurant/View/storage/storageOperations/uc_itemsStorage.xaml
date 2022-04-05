@@ -84,14 +84,14 @@
                              Checked="search_Checking"
                              Unchecked="chk_uncheck"/>
                     </Border>
-                    <Border Grid.Column="4" Margin="5" Background="White" CornerRadius="16" Height="40">
+                    <!--<Border Grid.Column="4" Margin="5" Background="White" CornerRadius="16" Height="40">
                         <CheckBox x:Name="chk_locked" 
                              Background="{StaticResource MainColor}"
                              Content="Reserved"  Margin="0" Height="40"
                              Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
                              Checked="search_Checking"
                              Unchecked="chk_uncheck"/>
-                    </Border>
+                    </Border>-->
                         <Border  DockPanel.Dock="Right"   Margin="7.5,10"    CornerRadius="0,0,0,0"  Width="2" BorderThickness="0" Background="{StaticResource LightMainColor}" />
 
                 </StackPanel>
@@ -631,11 +631,11 @@
                     </Grid.RowDefinitions>
                     <Border Background="White" Grid.ColumnSpan="3"  Height="1"  BorderBrush="{StaticResource MainColor}" 
                     BorderThickness="1" Opacity="1" Margin="5,5,5,5"  />
-                    <Border Grid.Row="1" Grid.ColumnSpan="3">
+                    <!--<Border Grid.Row="1" Grid.ColumnSpan="3">
                         <Button Grid.Row="0" Grid.Column="0" x:Name="btn_locked"  Content="locked"
                                 Background="#4E4E4E" BorderBrush="{x:Null}" Visibility="Collapsed" 
                               Margin="1"  Click="Btn_locked_Click" />
-                    </Border>
+                    </Border>-->
 
                     <Border Grid.Row="1" Grid.ColumnSpan="3">
                         <Button x:Name="btn_transfer"   Content="Transfer" materialDesign:ButtonAssist.CornerRadius="7"
