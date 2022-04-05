@@ -2241,6 +2241,7 @@
     <None Include="Properties\DataSources\Restaurant.Classes.Invoice.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemLocation.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemTransfer2.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.ItemUnitInvoiceProfit.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Location.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.PayedInvclass1.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Pos.datasource" />

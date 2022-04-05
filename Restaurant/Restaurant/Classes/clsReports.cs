@@ -1140,13 +1140,23 @@ Parameters!trValueDiscount.Value)
                 r.totalNet = decimal.Parse(HelpClass.DecTostring(r.totalNet));
                 r.invoiceProfit = decimal.Parse(HelpClass.DecTostring(r.invoiceProfit));
                 r.itemProfit = decimal.Parse(HelpClass.DecTostring(r.itemProfit));
-
+                r.itemunitProfit = decimal.Parse(HelpClass.DecTostring(r.itemunitProfit));
             }
             rep.DataSources.Add(new ReportDataSource("DataSetProfit", tempquery));
             paramarr.Add(new ReportParameter("title", AppSettings.resourcemanagerreport.GetString("trProfits")));
             paramarr.Add(new ReportParameter("Currency", AppSettings.Currency));
             itemTransferInvTypeConv(paramarr);
-
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("trType", AppSettings.resourcemanagerreport.GetString("trType")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trTotal", AppSettings.resourcemanagerreport.GetString("trTotal")));
+            paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem")));
+            paramarr.Add(new ReportParameter("trUnit", AppSettings.resourcemanagerreport.GetString("trUnit")));
+            paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
+            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
+            paramarr.Add(new ReportParameter("trPOS", AppSettings.resourcemanagerreport.GetString("trPOS")));
+            paramarr.Add(new ReportParameter("trProfits", AppSettings.resourcemanagerreport.GetString("trProfits")));
+        
         }
 
         public static string ReportTabTitle(string firstTitle, string secondTitle)
@@ -1560,11 +1570,13 @@ Parameters!trValueDiscount.Value)
             paramarr.Add(new ReportParameter("trSectionLocation", AppSettings.resourcemanagerreport.GetString("trSectionLocation")));
             paramarr.Add(new ReportParameter("trStartDate", AppSettings.resourcemanagerreport.GetString("trStartDate")));
             paramarr.Add(new ReportParameter("trEndDate", AppSettings.resourcemanagerreport.GetString("trEndDate")));
-            paramarr.Add(new ReportParameter("trMinCollect", AppSettings.resourcemanagerreport.GetString("trMinCollect")));
-            paramarr.Add(new ReportParameter("trMaxCollect", AppSettings.resourcemanagerreport.GetString("trMaxCollect")));
+            paramarr.Add(new ReportParameter("trMinCollect", AppSettings.resourcemanagerreport.GetString("trMinStock")));
+            paramarr.Add(new ReportParameter("trMaxCollect", AppSettings.resourcemanagerreport.GetString("trMaxStock")));
             paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
         }
-        // stocktaking
+        // stocktaking 
+        
+
         public static void Stocktakingparam(List<ReportParameter> paramarr)
         {
             paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
