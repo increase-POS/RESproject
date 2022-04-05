@@ -65,7 +65,8 @@ namespace Restaurant
         
         internal static User userLogin; 
         internal static Pos posLogin; 
-        internal static Branch branchLogin; 
+        internal static Branch branchLogin;
+        internal static UsersLogs userLog;
         bool isHome = false;
         public static int Idletime = 5;
         public static int threadtime = 5;
@@ -81,7 +82,8 @@ namespace Restaurant
        
         public static Boolean go_out = false;
         public static Boolean go_out_didNotAnyProcess = false;
-        internal static int? userLogInID;
+       
+
 
         static public MainWindow mainWindow;
         public MainWindow()
@@ -1360,14 +1362,14 @@ namespace Restaurant
         }
         async Task<bool> updateLogninRecord()
         {
-            UsersLogs userLog = new UsersLogs();
-           userLog = await userLog.GetByID(userLogInID.Value);
+            UsersLogs userLogModel = new UsersLogs();
+            userLogModel = await userLogModel.GetByID(userLog.logId);
             //update user record
             userLogin.isOnline = 0;
             await userLogin.save(userLogin);
 
             //update lognin record
-            await userLog.Save(userLog);
+            await userLog.Save(userLogModel);
 
             return true;
         }

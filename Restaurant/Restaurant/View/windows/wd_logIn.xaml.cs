@@ -277,10 +277,11 @@ namespace Restaurant.View.windows
                             userLog.posId = MainWindow.posLogin.posId;
 
                             userLog.userId = user.userId;
+                            MainWindow.userLog = userLog;
                             int str = await userLogsModel.Save(userLog);
                             
                             if (!str.Equals(0))
-                                MainWindow.userLogInID = str;
+                                MainWindow.userLog.logId = str;
                            
                             #region remember me
                             if (cbxRemmemberMe.IsChecked.Value)
