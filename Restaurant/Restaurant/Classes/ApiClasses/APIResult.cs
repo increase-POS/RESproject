@@ -48,9 +48,11 @@ namespace Restaurant.ApiClasses
                 {
                     payload.Add(parameters.Keys.ToList()[i], parameters.Values.ToList()[i]);
                 }
-            // add userLogInID to parameters
-            payload.Add("userLogInID", MainWindow.userLogin.userId);
 
+            #region  add logId to parameters
+            if(MainWindow.userLog != null)
+                payload.Add("userLogInID", MainWindow.userLog.logId);
+            #endregion
             var token = new JwtSecurityToken(header, payload);
             var handler = new JwtSecurityTokenHandler();
 
@@ -61,9 +63,7 @@ namespace Restaurant.ApiClasses
             //encryptedToken = HttpUtility.UrlPathEncode(encryptedToken);
 
             string tmpPath = writeToTmpFile(encryptedToken);
-            //string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            //string tmpPath = Path.Combine(dir, Global.TMPFolder);
-           // tmpPath = Path.Combine(tmpPath, "tmp.txt");
+
             FileStream fs = new FileStream(tmpPath, FileMode.Open, FileAccess.Read);
             #endregion
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -116,8 +116,8 @@ namespace Restaurant.ApiClasses
         }
         public static string writeToTmpFile(string text)
         {
-            string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-        string tmpPath = Path.Combine(dir, Global.TMPFolder);
+            string dir = Directory.GetCurrentDirectory();
+            string tmpPath = Path.Combine(dir, Global.TMPFolder);
             if (!Directory.Exists(tmpPath))
                 Directory.CreateDirectory(tmpPath);
             //check if file in use
@@ -160,8 +160,10 @@ namespace Restaurant.ApiClasses
             {
                 payload.Add(parameters.Keys.ToList()[i], parameters.Values.ToList()[i]);    
             }
-            // add userLogInID to parameters
-            payload.Add("userLogInID", MainWindow.userLogin.userId);
+            #region add logId to parameters
+            if (MainWindow.userLog != null)
+                payload.Add("userLogInID", MainWindow.userLog.logId);
+            #endregion
             //
             var token = new JwtSecurityToken(header, payload);
             var handler = new JwtSecurityTokenHandler();
@@ -170,9 +172,7 @@ namespace Restaurant.ApiClasses
             string postToken = handler.WriteToken(token);
             var encryptedToken = EncryptThenCompress(postToken);
             string tmpPath = writeToTmpFile(encryptedToken);
-            //string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            //string tmpPath = Path.Combine(dir, Global.TMPFolder);
-            //tmpPath = Path.Combine(tmpPath, "tmp.txt");
+
             FileStream fs = new FileStream(tmpPath, FileMode.Open, FileAccess.Read);
 
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
