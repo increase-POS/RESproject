@@ -64,8 +64,7 @@ namespace Restaurant.View.windows
         {//load
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 #region translate
 
@@ -88,12 +87,10 @@ namespace Restaurant.View.windows
                 setInvoiceBool = settingsLst.Where(v => v.name == "invoiceTax_bool").FirstOrDefault();
                 setInvoice = settingsLst.Where(v => v.name == "invoiceTax_decimal").FirstOrDefault();
                 setItemBool = settingsLst.Where(v => v.name == "itemsTax_bool").FirstOrDefault();
-                setItem = settingsLst.Where(v => v.name == "itemsTax_decimal").FirstOrDefault();
 
                 setVInvoiceBool = valuesLst.Where(v => v.settingId == setInvoiceBool.settingId).FirstOrDefault();
                 setVInvoice = valuesLst.Where(v => v.settingId == setInvoice.settingId).FirstOrDefault();
                 setVItemBool = valuesLst.Where(v => v.settingId == setItemBool.settingId).FirstOrDefault();
-                setVItem = valuesLst.Where(v => v.settingId == setItem.settingId).FirstOrDefault();
               
                 if (setVInvoiceBool != null)
                     tgl_invoiceTax.IsChecked = Convert.ToBoolean(setVInvoiceBool.value);
@@ -107,18 +104,12 @@ namespace Restaurant.View.windows
                     tgl_itemsTax.IsChecked = Convert.ToBoolean(setVItemBool.value);
                 else
                     tgl_itemsTax.IsChecked = false;
-                if (setVItem != null)
-                    tb_itemsTax.Text = setVItem.value;
-                else
-                    tb_itemsTax.Text = "";
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -191,17 +182,6 @@ namespace Restaurant.View.windows
         {
             try
             {
-                /*
-                if (name == "TextBox")
-                {
-
-                    if ((sender as TextBox).Name == "tb_invoiceTax")
-                        HelpClass.validateEmptyTextBox((TextBox)sender, p_errorInvoiceTax, tt_errorInvoiceTax, "trIsRequired");
-                    else if ((sender as TextBox).Name == "tb_itemsTax")
-                        HelpClass.validateEmptyTextBox((TextBox)sender, p_errorItemsTax, tt_errorItemsTax, "trIsRequired");
-
-                }
-                */
             }
             catch (Exception ex)
             {
@@ -226,14 +206,12 @@ namespace Restaurant.View.windows
         {//save
             try
             {
-
                 HelpClass.StartAwait(grid_main);
 
                 #region validate
 
                 if (tgl_invoiceTax.IsChecked == true)
                 {
-                    //HelpClass.validateEmptyTextBox(tb_invoiceTax, p_error_invoiceTax, tt_errorInvoiceTax, "trEmptyTax");
                     HelpClass.SetValidate(p_error_invoiceTax, "trEmptyTax");
                 }
                 else
@@ -242,7 +220,6 @@ namespace Restaurant.View.windows
                 }
                 if (tgl_itemsTax.IsChecked == true)
                 {
-                    //HelpClass.validateEmptyTextBox(tb_itemsTax, p_error_itemsTax, tt_errorItemsTax, "trEmptyTax");
                     HelpClass.SetValidate( p_error_itemsTax, "trEmptyTax");
                 }
                 else
@@ -280,42 +257,30 @@ namespace Restaurant.View.windows
                     setVItemBool.settingId = setItemBool.settingId;
                     int itemBoolRes = await setValuesModel.Save(setVItemBool);
 
-                    if (setVItem == null)
-                        setVItem = new SetValues();
-                    //save item tax
-                    string itemTax = "0.0";
-                    if (tgl_itemsTax.IsChecked == true) itemTax = tb_itemsTax.Text;
-                    else itemTax = "0.0";
-                    setVItem.value = itemTax;
-                    setVItem.isSystem = 1;
-                    setVItem.settingId = setItem.settingId;
-                    int itemRes = await setValuesModel.Save(setVItem);
-
-                    if ((invoiceBoolRes > 0) && (invoiceRes > 0) && (itemBoolRes > 0) && (itemRes > 0))
+                    if ((invoiceBoolRes > 0) && (invoiceRes > 0) && (itemBoolRes > 0))
                     {
                         //update tax in main window
                         AppSettings.invoiceTax_bool = bool.Parse(setVInvoiceBool.value);
                         AppSettings.invoiceTax_decimal = decimal.Parse(setVInvoice.value);
                         AppSettings.itemsTax_bool = bool.Parse(setVItemBool.value);
-                        AppSettings.itemsTax_decimal = decimal.Parse(setVItem.value);
 
                         Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
                         this.Close();
+                        HelpClass.clearValidate(p_error_invoiceTax);
                     }
                     else
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                 }
 
-
-                HelpClass.EndAwait(grid_main);
-            }
+            HelpClass.EndAwait(grid_main);
+        }
             catch (Exception ex)
             {
 
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
-            }
         }
+    }
 
         private void Tb_PreventSpaces(object sender, KeyEventArgs e)
         {

@@ -3763,4 +3763,13 @@ Please add Email in setting</value>
   <data name="trDone" xml:space="preserve">
     <value>Done</value>
   </data>
+  <data name="trTaxPercentage" xml:space="preserve">
+    <value>Tax %</value>
+  </data>
+  <data name="trTaxValue" xml:space="preserve">
+    <value>Tax Value</value>
+  </data>
+  <data name="trTotalInvoice" xml:space="preserve">
+    <value>Total Net</value>
+  </data>
 </root>
