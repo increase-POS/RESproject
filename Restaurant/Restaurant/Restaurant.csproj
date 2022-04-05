@@ -279,6 +279,7 @@
     <Compile Include="converters\discountTypeConverter.cs" />
     <Compile Include="converters\enabledCouponConverter.cs" />
     <Compile Include="converters\inventoryTypeConverter.cs" />
+    <Compile Include="converters\invoicePayStatus.cs" />
     <Compile Include="converters\invoiceStatusConverter.cs" />
     <Compile Include="converters\invoiceTypeConverter.cs" />
     <Compile Include="converters\itemTypeConverter.cs" />

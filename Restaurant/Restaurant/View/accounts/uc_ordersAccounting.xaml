@@ -215,23 +215,43 @@
                                    SelectionChanged="Cb_customer_SelectionChanged"/>
                             </Grid>
                         </Border>
-                        <Border  Margin="5" Background="White" CornerRadius="16" Height="40">
+                        <!--<Border Grid.Column="3" CornerRadius="10" Margin="5,5,5,5" Height="40"   BorderThickness="1" >
                             <CheckBox x:Name="chk_delivered"  IsChecked="True"
                                       Background="{StaticResource MainColor}"
-                                      Content="Deposit"
+                                      Content="Delivered"
                                       Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
                                       Checked="search_Checking" Margin="0" Height="40"
                                       Unchecked="chk_uncheck"/>
                         </Border>
-                        <Border  Margin="5" Background="White" CornerRadius="16" Height="40">
+                       
+                        <Border Grid.Column="4" CornerRadius="10" Margin="5,5,5,5" Height="40" Background="White"  BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <CheckBox x:Name="chk_inDelivery" 
                                       Background="{StaticResource MainColor}"
-                                      Content="Receive"  Margin="0" Height="40"
+                                      Content="InDelivery"  Margin="0" Height="40"
                                       Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
                                       Checked="search_Checking"
                                       Unchecked="chk_uncheck"/>
-                        </Border>
+                        </Border>-->
+                        <StackPanel  Grid.Row="1"  Grid.Column="3"  Orientation="Horizontal" >
+                            <Border  Margin="5" Background="White" CornerRadius="16" Height="40">
+                                <CheckBox x:Name="chk_delivered"  IsChecked="True"
+                                          Background="{StaticResource MainColor}"
+                                          Content="Delivered"
+                                          Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
+                                          Checked="search_Checking" Margin="0" Height="40"
+                                          Unchecked="chk_uncheck"/>
+                            </Border>
+                            <Border  Margin="5" Background="White" CornerRadius="16" Height="40">
+                                <CheckBox x:Name="chk_inDelivery" 
+                                          Background="{StaticResource MainColor}"
+                                          Content="InDelivery"  Margin="0" Height="40"
+                                          Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
+                                          Checked="search_Checking"
+                                          Unchecked="chk_uncheck"/>
+                            </Border>
+                        </StackPanel>
                     </Grid>
+                    
                 </Grid>
 
 
@@ -272,11 +292,12 @@
                             </DataGrid.Resources>
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="*"  Header="Invoice Number" Binding="{Binding Path=invNumber}"/>
-                                <DataGridTextColumn Width="*"  Header="sales man" Binding="{Binding Path=shipUserName}"/>
-                                <DataGridTextColumn Width="*"  Header="customer" Binding="{Binding Path=agentName}"/>
-                                <DataGridTextColumn Width="*"  Header="Date"          Binding="{Binding updateDate, Converter={StaticResource dateFrameConverter }}"/>
-                                <DataGridTextColumn Width="*"  Header="Cash"  Binding="{Binding Path =deserved,Converter={StaticResource accuracyConverter }}"/>
-                                <DataGridTextColumn Width="*"  Header="Status" Binding="{Binding status,Converter={StaticResource invoiceStatusConverter }}"/>
+                                <DataGridTextColumn Width="*"  Header="sales man"      Binding="{Binding Path=shipUserName}"/>
+                                <DataGridTextColumn Width="*"  Header="customer"       Binding="{Binding Path=agentName}"/>
+                                <DataGridTextColumn Width="*"  Header="Date"           Binding="{Binding updateDate, Converter={StaticResource dateFrameConverter }}"/>
+                                <DataGridTextColumn Width="*"  Header="Cash"           Binding="{Binding Path =deserved,Converter={StaticResource accuracyConverter }}" Visibility="Hidden"/>
+                                <DataGridTextColumn Width="*"  Header="Status"         Binding="{Binding status,Converter={StaticResource invoiceStatusConverter }}" Visibility="Hidden"/>
+                                <DataGridTextColumn Width="*"  Header="Paid"           Binding="{Binding payStatus,Converter={StaticResource invoicePayStatus }}" />
                             </DataGrid.Columns>
                         </DataGrid>
 
@@ -672,7 +693,7 @@
                             </Grid>
                         </Border>-->
 
-                        <Border Grid.Row="1" Grid.Column="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        <Border x:Name="bdr_cash" Grid.Row="1" Grid.Column="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}"  Visibility="Collapsed">
                             <Grid   >
                                 <TextBox Margin="4,0" x:Name="tb_cash"  IsEnabled="False"
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
@@ -688,7 +709,7 @@
                                 </Path>
                             </Grid>
                         </Border>
-                        <Border Grid.Row="1" Grid.Column="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        <Border x:Name="bdr_cashDelivered" Grid.Row="1" Grid.Column="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid   >
                                 <TextBox Margin="4,0" x:Name="tb_cashDelivered"  IsEnabled="False"
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  

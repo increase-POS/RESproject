@@ -220,10 +220,13 @@ namespace Restaurant.View.accounts
             txt_title.Text = AppSettings.resourcemanager.GetString("trOrders");
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trTransaferDetails");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branch, AppSettings.resourcemanager.GetString("trBranchHint"));
+            chk_delivered.Content = AppSettings.resourcemanager.GetString("trDelivered");
+            chk_inDelivery.Content = AppSettings.resourcemanager.GetString("trInDelivery");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_invoiceNum, AppSettings.resourcemanager.GetString("trInvoiceNumberHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, AppSettings.resourcemanager.GetString("trCashHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cashDelivered, AppSettings.resourcemanager.GetString("trCashHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_salesMan, AppSettings.resourcemanager.GetString("trSalesManHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customer, AppSettings.resourcemanager.GetString("trCustomerHint"));
@@ -574,141 +577,37 @@ namespace Restaurant.View.accounts
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        //string processType = "";
-        //private void Cb_paymentProcessType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{//type selection
-        //    try
-        //    {
-        //        HelpClass.StartAwait(grid_main);
-                
-        //        switch (cb_paymentProcessType.SelectedIndex)
-        //        {
-        //            case 0://balance
-        //                grid_doc.Visibility = Visibility.Collapsed;
-        //                grid_cheque.Visibility = Visibility.Collapsed;
-        //                gd_card.Visibility = Visibility.Collapsed;
-        //                bdr_docNumCard.Visibility = Visibility.Collapsed;
-        //                HelpClass.clearValidate(p_error_docNumCard);
-        //                HelpClass.clearValidate(p_error_docNum);
-        //                HelpClass.clearValidate(p_error_docNum);
-        //                HelpClass.clearValidate(p_error_card);
-        //                if (grid_doc.IsVisible)
-        //                    HelpClass.clearValidate(p_error_docDate);
-        //                if (grid_cheque.IsVisible)
-        //                    HelpClass.clearValidate(p_error_docNumCheque);
-        //                if (invoice.invoiceId != 0)
-        //                {
-        //                    tb_cash.Text = invoice.deserved.ToString();
-        //                    tb_cash.IsEnabled = false;
-        //                }
-        //                processType = "1";
-        //                requiredControlList = new List<string> { "cash", "paymentProcessType" };
-        //                break;
-
-        //            case 1://cash
-        //                grid_doc.Visibility = Visibility.Collapsed;
-        //                grid_cheque.Visibility = Visibility.Collapsed;
-        //                gd_card.Visibility = Visibility.Collapsed;
-        //                bdr_docNumCard.Visibility = Visibility.Collapsed;
-        //                HelpClass.clearValidate(p_error_docNumCard);
-        //                HelpClass.clearValidate(p_error_docNum);
-        //                HelpClass.clearValidate(p_error_docNum);
-        //                HelpClass.clearValidate(p_error_card);
-
-        //                if (grid_doc.IsVisible)
-        //                    HelpClass.clearValidate(p_error_docDate);
-
-        //                if (grid_cheque.IsVisible)
-        //                    HelpClass.clearValidate(p_error_docNumCheque);
-
-        //                tb_cash.IsEnabled = true;
-        //                tb_cash.Clear();
-        //                HelpClass.clearValidate(p_error_cash);
-        //                processType = "0";
-        //                requiredControlList = new List<string> { "cash", "paymentProcessType" };
-        //                break;
-
-        //            case 2://cheque
-        //                grid_doc.Visibility = Visibility.Collapsed;
-        //                grid_cheque.Visibility = Visibility.Visible;
-        //                gd_card.Visibility = Visibility.Collapsed;
-        //                bdr_docNumCard.Visibility = Visibility.Collapsed;
-        //                HelpClass.clearValidate(p_error_docNumCard);
-        //                HelpClass.clearValidate(p_error_docNum);
-        //                HelpClass.clearValidate(p_error_card);
-
-        //                if (grid_doc.IsVisible)
-        //                    HelpClass.clearValidate(p_error_docDate);
-
-        //                tb_cash.IsEnabled = true;
-        //                tb_cash.Clear();
-        //                HelpClass.clearValidate(p_error_cash);
-        //                processType = "0";
-        //                requiredControlList = new List<string> { "cash", "paymentProcessType" , "docNumCheque" };
-        //                break;
-
-        //            //case 4://card
-        //            case 3://card
-        //                grid_doc.Visibility = Visibility.Collapsed;
-        //                grid_cheque.Visibility = Visibility.Collapsed;
-        //                gd_card.Visibility = Visibility.Visible;
-        //                bdr_docNumCard.Visibility = Visibility.Visible;
-        //                HelpClass.clearValidate(p_error_docNum);
-        //                HelpClass.clearValidate(p_error_docNum);
-        //                HelpClass.clearValidate(p_error_card);
-
-        //                if (grid_doc.IsVisible)
-        //                    HelpClass.clearValidate(p_error_docDate);
-
-        //                if (grid_cheque.IsVisible)
-        //                    HelpClass.clearValidate(p_error_docNumCheque);
-
-        //                tb_cash.IsEnabled = true;
-        //                tb_cash.Clear();
-        //                HelpClass.clearValidate(p_error_cash);
-        //                processType = "0";
-        //                requiredControlList = new List<string> { "cash", "paymentProcessType", "docNumCard" };
-        //                break;
-        //        }
-
-        //        HelpClass.EndAwait(grid_main);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        HelpClass.EndAwait(grid_main);
-        //        HelpClass.ExceptionMessage(ex, this);
-        //    }
+        
+        //private async Task fillCustomers()
+        //{
+        //    agents = await agentModel.GetAgentsActive("c");
+        //    cb_customer.ItemsSource = agents;
+        //    cb_customer.DisplayMemberPath = "name";
+        //    cb_customer.SelectedValuePath = "agentId";
+        //    cb_salesMan.SelectedIndex = -1;
         //}
-        private async Task fillCustomers()
-        {
-            agents = await agentModel.GetAgentsActive("c");
-            cb_customer.ItemsSource = agents;
-            cb_customer.DisplayMemberPath = "name";
-            cb_customer.SelectedValuePath = "agentId";
-            cb_salesMan.SelectedIndex = -1;
-        }
-        private async Task fillUsers()
-        {
-            users = await userModel.GetUsersActive();
+        //private async Task fillUsers()
+        //{
+        //    users = await userModel.GetUsersActive();
 
-            cb_salesMan.ItemsSource = users;
-            cb_salesMan.DisplayMemberPath = "username";
-            cb_salesMan.SelectedValuePath = "userId";
-            cb_salesMan.SelectedIndex = -1;
-        }
-        private void Btn_printInvoice_Click(object sender, RoutedEventArgs e)
-        {
-            if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
-            {
+        //    cb_salesMan.ItemsSource = users;
+        //    cb_salesMan.DisplayMemberPath = "username";
+        //    cb_salesMan.SelectedValuePath = "userId";
+        //    cb_salesMan.SelectedIndex = -1;
+        //}
+        //private void Btn_printInvoice_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
+        //    {
 
-            }
-            else
-                Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-        }
-        private void Btn_invoices_Click(object sender, RoutedEventArgs e)
-        {
+        //    }
+        //    else
+        //        Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+        //}
+        //private void Btn_invoices_Click(object sender, RoutedEventArgs e)
+        //{
 
-        }
+        //}
         private void Cb_salesMan_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select salesman
             try
@@ -1233,8 +1132,8 @@ namespace Restaurant.View.accounts
 
         private async void search_Checking(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 CheckBox cb = sender as CheckBox;
                 if (cb.IsFocused)
                 {
@@ -1243,36 +1142,35 @@ namespace Restaurant.View.accounts
                         chk_inDelivery.IsChecked = false;
                         dg_orderAccounts.Columns[4].Visibility = Visibility.Collapsed;
                         dg_orderAccounts.Columns[6].Visibility = Visibility.Visible;
-                        tb_cash.Visibility = Visibility.Collapsed;
-                        tb_cashDelivered.Visibility = Visibility.Visible;
+                        bdr_cash.Visibility = Visibility.Collapsed;
+                        bdr_cashDelivered.Visibility = Visibility.Visible;
                     }
                     else if (cb.Name == "chk_inDelivery")
                     {
                         chk_delivered.IsChecked = false;
                         dg_orderAccounts.Columns[4].Visibility = Visibility.Visible;
                         dg_orderAccounts.Columns[6].Visibility = Visibility.Collapsed;
-                        tb_cash.Visibility = Visibility.Visible;
-                        tb_cashDelivered.Visibility = Visibility.Collapsed;
+                        bdr_cash.Visibility = Visibility.Visible;
+                        bdr_cashDelivered.Visibility = Visibility.Collapsed;
                     }
                 }
-                HelpClass.StartAwait(grid_main);
+                //HelpClass.StartAwait(grid_main);
                 Clear();
-                await RefreshInvoiceList();
-                Tb_search_TextChanged(null, null);
+                await Search();
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void chk_uncheck(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 CheckBox cb = sender as CheckBox;
                 if (cb.IsFocused)
                 {
@@ -1281,11 +1179,11 @@ namespace Restaurant.View.accounts
                     else if (cb.Name == "chk_inDelivery")
                         chk_inDelivery.IsChecked = true;
                 }
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void validateEmpty_LostFocus(object sender, RoutedEventArgs e)
