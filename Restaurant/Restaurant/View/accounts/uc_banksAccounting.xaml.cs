@@ -379,8 +379,10 @@ namespace Restaurant.View.accounts
                 HelpClass.clearValidate(p_error_user);
                 if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
-                    //new
-                    if (cashtrans.cashTransId == 0)
+                    if (MainWindow.posLogin.boxState == "o") // box is open
+                    {
+                        //new
+                        if (cashtrans.cashTransId == 0)
                     {
                         //chk user confirmation
                         bool isuserConfirmed = w.isOk;
@@ -427,40 +429,45 @@ namespace Restaurant.View.accounts
                             HelpClass.SetValidate(p_error_user, "trUserConfirm");
                         }
                     }
-                    //exist 
-                    else
-                    {
-                        if (cashtrans.isConfirm == 0)
+                        //exist 
+                        else
                         {
-                            //chk empty deposite number
-                            HelpClass.validateEmpty(tb_depositNumber.Text, p_error_depositNumber);
-
-                            if (!tb_depositNumber.Text.Equals(""))
+                            if (cashtrans.isConfirm == 0)
                             {
-                                cashtrans.isConfirm = 1;
-                                cashtrans.docNum = tb_depositNumber.Text;
+                                //chk empty deposite number
+                                HelpClass.validateEmpty(tb_depositNumber.Text, p_error_depositNumber);
 
-                                int s = await cashModel.Save(cashtrans);
-
-                                if (!s.Equals(0))
+                                if (!tb_depositNumber.Text.Equals(""))
                                 {
-                                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trCompleted"), animation: ToasterAnimation.FadeIn);
-                                    btn_add.IsEnabled = false;
-                                    btn_add.Content = AppSettings.resourcemanager.GetString("trCompleted");
+                                    cashtrans.isConfirm = 1;
+                                    cashtrans.docNum = tb_depositNumber.Text;
 
-                                    await RefreshCashesList();
-                                    await Search();
+                                    int s = await cashModel.Save(cashtrans);
 
-                                    decimal ammount = cashtrans.cash;
-                                    if (cashtrans.transType.Equals("d")) ammount *= -1;
-                                    await calcBalance(ammount);
+                                    if (!s.Equals(0))
+                                    {
+                                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trCompleted"), animation: ToasterAnimation.FadeIn);
+                                        btn_add.IsEnabled = false;
+                                        btn_add.Content = AppSettings.resourcemanager.GetString("trCompleted");
 
-                                    await MainWindow.refreshBalance();
+                                        await RefreshCashesList();
+                                        await Search();
+
+                                        decimal ammount = cashtrans.cash;
+                                        if (cashtrans.transType.Equals("d")) ammount *= -1;
+                                        await calcBalance(ammount);
+
+                                        await MainWindow.refreshBalance();
+                                    }
+                                    else
+                                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                                 }
-                                else
-                                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             }
                         }
+                    }
+                    else //box is closed
+                    {
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trBoxIsClosed"), animation: ToasterAnimation.FadeIn);
                     }
                 }
                 else

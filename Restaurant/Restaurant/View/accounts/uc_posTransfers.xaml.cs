@@ -221,8 +221,8 @@ namespace Restaurant.View.accounts
                 {
 
                     HelpClass.StartAwait(grid_main);
-                    //if (MainWindow.posLogin.boxState == "o") // box is open
-                    //{
+                    if (MainWindow.posLogin.boxState == "o") // box is open
+                    {
                         #region add
                         if (HelpClass.validate(requiredControlList, this))
                         {
@@ -305,11 +305,11 @@ namespace Restaurant.View.accounts
                         }
                     }
                         #endregion
-                    //}
-                    //else //box is closed
-                    //{
-                    //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trBoxIsClosed"), animation: ToasterAnimation.FadeIn);
-                    //}
+                    }
+                    else //box is closed
+                    {
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trBoxIsClosed"), animation: ToasterAnimation.FadeIn);
+                    }
                     HelpClass.EndAwait(grid_main);
                 }
                 else

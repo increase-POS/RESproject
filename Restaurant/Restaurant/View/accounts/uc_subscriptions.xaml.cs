@@ -729,8 +729,9 @@ namespace Restaurant.View.accounts
 
                 if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one"))
                 {
-                    
-                    if (HelpClass.validate(requiredControlList, this))
+                    if (MainWindow.posLogin.boxState == "o") // box is open
+                    {
+                        if (HelpClass.validate(requiredControlList, this))
                     {
                         #region cashTransfer
 
@@ -812,14 +813,16 @@ namespace Restaurant.View.accounts
                         else
                         {
                             Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-
                             
                             await RefreshSubscriptionsList();
                             await Search();
                         }
-                      
                     }
-                    
+                    }
+                    else //box is closed
+                    {
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trBoxIsClosed"), animation: ToasterAnimation.FadeIn);
+                    }
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);

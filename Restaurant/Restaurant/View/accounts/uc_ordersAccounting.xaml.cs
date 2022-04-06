@@ -694,8 +694,6 @@ namespace Restaurant.View.accounts
                         wd_multiplePayment w = new wd_multiplePayment();
                         w.isPurchase = false;
 
-                        //if (cb_customer.SelectedValue != null)
-                        //{
                         Agent customer = customers.ToList().Find(b => b.agentId == invoice.agentId && b.isLimited == true);
                         if (customer != null)
                         {
@@ -710,7 +708,6 @@ namespace Restaurant.View.accounts
                             w.hasCredit = false;
                             w.creditValue = 0;
                         }
-                        //}
 
                         w.invoice.invType = invoice.invType;
                         w.invoice.totalNet = invoice.totalNet;

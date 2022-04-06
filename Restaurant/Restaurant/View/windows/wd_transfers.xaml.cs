@@ -84,13 +84,13 @@ namespace Restaurant.View.windows
             dg_transfers.Columns[0].Header = AppSettings.resourcemanager.GetString("trTransferNumberTooltip");
             dg_transfers.Columns[1].Header = AppSettings.resourcemanager.GetString("trDepositor");
             dg_transfers.Columns[2].Header = AppSettings.resourcemanager.GetString("trRecepient");
-            dg_transfers.Columns[4].Header = AppSettings.resourcemanager.GetString("trCashTooltip");
+            dg_transfers.Columns[3].Header = AppSettings.resourcemanager.GetString("trCashTooltip");
 
         }
 
         async Task fillDataGrid()
         {
-            //cashesQuery = await cashModel.GetCashTransferForPosById("all", "p", (int)MainWindow.posLogin.posId); //////////////??????????
+            cashesQuery = await cashModel.GetCashTransferForPosById("all", "p", (int)MainWindow.posLogin.posId); //////////////??????????
             cashesQuery = cashesQuery.Where(c => c.posId == MainWindow.posLogin.posId && c.isConfirm == 0 );
 
             foreach (var c in cashesQuery)

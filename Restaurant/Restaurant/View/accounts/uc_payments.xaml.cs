@@ -516,97 +516,99 @@ namespace Restaurant.View.accounts
                 s = 0; s1 = 0;
                 if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one") )
                 {
-                    #region validate
-                  
-                    bool enoughMoney = true;
-                    if ((!cb_paymentProcessType.Text.Equals("")) && (cb_paymentProcessType.SelectedValue.ToString().Equals("cash")) &&
-                        (!await chkEnoughBalance(decimal.Parse(tb_cash.Text))))
+                    if (MainWindow.posLogin.boxState == "o") // box is open
                     {
-                        enoughMoney = false;
-                        
-                        HelpClass.SetValidate(p_error_cash, "trPopNotEnoughBalance");
-                    }
-                    #endregion
+                        #region validate
 
-                    #region save
-
-                   if(HelpClass.validate(requiredControlList, this) && enoughMoney)
-                    {
-                        string recipient = cb_depositTo.SelectedValue.ToString();
-                        int agentid = 0;
-
-                        CashTransfer cash = new CashTransfer();
-
-                        cash.transType = "p";
-                        cash.posId = MainWindow.posLogin.posId;
-                        cash.transNum = await cashModel.generateCashNumber(cash.transType + cb_depositTo.SelectedValue.ToString());
-                        cash.cash = decimal.Parse(tb_cash.Text);
-                        cash.notes = tb_notes.Text;
-                        cash.createUserId = MainWindow.userLogin.userId;
-                        cash.side = cb_depositTo.SelectedValue.ToString();
-                        cash.processType = cb_paymentProcessType.SelectedValue.ToString();
-
-                        if (bdr_recipientV.IsVisible)
-                        { cash.agentId = Convert.ToInt32(cb_recipientV.SelectedValue); agentid = Convert.ToInt32(cb_recipientV.SelectedValue); }
-
-                        if (bdr_recipientC.IsVisible)
-                        { cash.agentId = Convert.ToInt32(cb_recipientC.SelectedValue); agentid = Convert.ToInt32(cb_recipientC.SelectedValue); }
-
-                        if (bdr_recipientU.IsVisible)
-                            cash.userId = Convert.ToInt32(cb_recipientU.SelectedValue);
-
-                        if (bdr_recipientSh.IsVisible)
-                            cash.shippingCompanyId = Convert.ToInt32(cb_recipientSh.SelectedValue);
-
-                        if (cb_paymentProcessType.SelectedValue.ToString().Equals("card"))
+                        bool enoughMoney = true;
+                        if ((!cb_paymentProcessType.Text.Equals("")) && (cb_paymentProcessType.SelectedValue.ToString().Equals("cash")) &&
+                            (!await chkEnoughBalance(decimal.Parse(tb_cash.Text))))
                         {
-                            cash.cardId = _SelectedCard;
-                            cash.docNum = tb_docNumCard.Text;
+                            enoughMoney = false;
+
+                            HelpClass.SetValidate(p_error_cash, "trPopNotEnoughBalance");
                         }
+                        #endregion
 
-                        if (cb_paymentProcessType.SelectedValue.ToString().Equals("doc"))
-                            cash.docNum = await cashModel.generateDocNumber("pbnd");
+                        #region save
 
-                        if (cb_paymentProcessType.SelectedValue.ToString().Equals("cheque"))
-                            cash.docNum = tb_docNumCheque.Text;
-
-                        //if (cb_paymentProcessType.SelectedValue.ToString().Equals("doc"))
-                        //{/////////////////////???????????????/////////////cancled
-                        //    int res = await saveBond(cash.docNum, cash.cash, dp_docDate.SelectedDate.Value, "p");
-                        //    cash.bondId = res;
-                        //}
-                        if (bdr_recipientV.IsVisible || bdr_recipientC.IsVisible)
+                        if (HelpClass.validate(requiredControlList, this) && enoughMoney)
                         {
-                            if (tb_cash.IsReadOnly)
-                                s1 = await cashModel.PayListOfInvoices(cash.agentId.Value, invoicesLst, "pay", cash);
-                            else
-                                s1 = await cashModel.PayByAmmount(cash.agentId.Value, decimal.Parse(tb_cash.Text), "pay", cash);
-                        }
-                        else
-                            s = await cashModel.Save(cash);
+                            string recipient = cb_depositTo.SelectedValue.ToString();
+                            int agentid = 0;
 
-                        if ((!s.Equals("0")) || (!s1.Equals("")) || (s1.Equals("-1")))
-                        {
-                            if (cb_paymentProcessType.SelectedValue.ToString().Equals("cash"))
-                                await calcBalance(cash.cash, recipient, agentid);
+                            CashTransfer cash = new CashTransfer();
 
-                            if ((bdr_recipientU.IsVisible) && (cash.side == "u"))
-                                await calcUserBalance(cash.cash, cash.userId.Value);
+                            cash.transType = "p";
+                            cash.posId = MainWindow.posLogin.posId;
+                            cash.transNum = await cashModel.generateCashNumber(cash.transType + cb_depositTo.SelectedValue.ToString());
+                            cash.cash = decimal.Parse(tb_cash.Text);
+                            cash.notes = tb_notes.Text;
+                            cash.createUserId = MainWindow.userLogin.userId;
+                            cash.side = cb_depositTo.SelectedValue.ToString();
+                            cash.processType = cb_paymentProcessType.SelectedValue.ToString();
+
+                            if (bdr_recipientV.IsVisible)
+                            { cash.agentId = Convert.ToInt32(cb_recipientV.SelectedValue); agentid = Convert.ToInt32(cb_recipientV.SelectedValue); }
+
+                            if (bdr_recipientC.IsVisible)
+                            { cash.agentId = Convert.ToInt32(cb_recipientC.SelectedValue); agentid = Convert.ToInt32(cb_recipientC.SelectedValue); }
+
+                            if (bdr_recipientU.IsVisible)
+                                cash.userId = Convert.ToInt32(cb_recipientU.SelectedValue);
 
                             if (bdr_recipientSh.IsVisible)
-                                await calcShippingComBalance(cash.cash, cash.shippingCompanyId.Value);
+                                cash.shippingCompanyId = Convert.ToInt32(cb_recipientSh.SelectedValue);
 
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                            if (cb_paymentProcessType.SelectedValue.ToString().Equals("card"))
+                            {
+                                cash.cardId = _SelectedCard;
+                                cash.docNum = tb_docNumCard.Text;
+                            }
 
-                            Clear();
-                            await RefreshCashesList();
-                            await Search();
-                            await MainWindow.refreshBalance();
+                            if (cb_paymentProcessType.SelectedValue.ToString().Equals("doc"))
+                                cash.docNum = await cashModel.generateDocNumber("pbnd");
+
+                            if (cb_paymentProcessType.SelectedValue.ToString().Equals("cheque"))
+                                cash.docNum = tb_docNumCheque.Text;
+
+                            if (bdr_recipientV.IsVisible || bdr_recipientC.IsVisible)
+                            {
+                                if (tb_cash.IsReadOnly)
+                                    s1 = await cashModel.PayListOfInvoices(cash.agentId.Value, invoicesLst, "pay", cash);
+                                else
+                                    s1 = await cashModel.PayByAmmount(cash.agentId.Value, decimal.Parse(tb_cash.Text), "pay", cash);
+                            }
+                            else
+                                s = await cashModel.Save(cash);
+
+                            if ((!s.Equals("0")) || (!s1.Equals("")) || (s1.Equals("-1")))
+                            {
+                                if (cb_paymentProcessType.SelectedValue.ToString().Equals("cash"))
+                                    await calcBalance(cash.cash, recipient, agentid);
+
+                                if ((bdr_recipientU.IsVisible) && (cash.side == "u"))
+                                    await calcUserBalance(cash.cash, cash.userId.Value);
+
+                                if (bdr_recipientSh.IsVisible)
+                                    await calcShippingComBalance(cash.cash, cash.shippingCompanyId.Value);
+
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+                                Clear();
+                                await RefreshCashesList();
+                                await Search();
+                                await MainWindow.refreshBalance();
+                            }
+                            else
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         }
-                        else
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        #endregion
                     }
-                    #endregion
+                    else //box is closed
+                    {
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trBoxIsClosed"), animation: ToasterAnimation.FadeIn);
+                    }
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -1151,7 +1153,7 @@ namespace Restaurant.View.accounts
                 w.ShowDialog();
                 if (w.isActive)
                 {
-                    tb_cash.Text = w.sum.ToString();
+                    tb_cash.Text = HelpClass.DecTostring(w.sum);
                     tb_cash.IsReadOnly = true;
                     invoicesLst.AddRange(w.selectedInvoices);
                 }

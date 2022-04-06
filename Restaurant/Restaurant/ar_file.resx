@@ -3754,4 +3754,19 @@
   <data name="trTotalInvoice" xml:space="preserve">
     <value>اجمالي الفاتورة</value>
   </data>
+  <data name="trCloseCash" xml:space="preserve">
+    <value>مبلغ الإغلاق</value>
+  </data>
+  <data name="trCloseDate" xml:space="preserve">
+    <value>تاريخ الإغلاق</value>
+  </data>
+  <data name="trOpenCash" xml:space="preserve">
+    <value>مبلغ الفتح</value>
+  </data>
+  <data name="trOpenDate" xml:space="preserve">
+    <value>تاريخ الفتح</value>
+  </data>
+  <data name="trPartialPay" xml:space="preserve">
+    <value>دفع جزئي</value>
+  </data>
 </root>

@@ -137,7 +137,7 @@ namespace Restaurant.View.reports.accountsReports
 
             tt_closing.Content = AppSettings.resourcemanager.GetString("trCash");
 
-            col_Num.Header = AppSettings.resourcemanager.GetString("trNum");
+            col_Num.Header = AppSettings.resourcemanager.GetString("trNo.");
             col_pos.Header = AppSettings.resourcemanager.GetString("trPOS");
             col_openDate.Header = AppSettings.resourcemanager.GetString("trOpenDate");
             col_openCash.Header = AppSettings.resourcemanager.GetString("trOpenCash");

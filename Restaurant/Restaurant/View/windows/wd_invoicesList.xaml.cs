@@ -207,7 +207,7 @@ namespace Restaurant.View.windows
 
                     sum += x;
 
-                    tb_sum.Text = " "+sum.ToString()+" ";
+                    tb_sum.Text = " "+ HelpClass.DecTostring(sum) +" ";
                 }
                 
                 HelpClass.EndAwait(grid_invoices);
@@ -244,7 +244,7 @@ namespace Restaurant.View.windows
 
                     sum -= x;
 
-                    tb_sum.Text = " "+sum.ToString()+" ";
+                    tb_sum.Text = " "+ HelpClass.DecTostring(sum) +" ";
                 }
                 
                 HelpClass.EndAwait(grid_invoices);

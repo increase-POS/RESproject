@@ -70,9 +70,9 @@ namespace Restaurant.View.reports.accountsReports
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -108,14 +108,13 @@ namespace Restaurant.View.reports.accountsReports
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_invoice.Tag.ToString());
 
-                
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         #region methods
@@ -243,9 +242,9 @@ namespace Restaurant.View.reports.accountsReports
          
         private async void Btn_invoice_Click(object sender, RoutedEventArgs e)
         {//invoice
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 
@@ -270,22 +269,19 @@ namespace Restaurant.View.reports.accountsReports
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 
-                
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-                
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private async void Btn_item_Click(object sender, RoutedEventArgs e)
         {//items
-            //try
-            //{
-                
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 hideAllColumns();
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
@@ -314,76 +310,71 @@ namespace Restaurant.View.reports.accountsReports
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 
-                
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-                
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
 
         private async void cb_branches_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select branch
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 await Search();
-                
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-                
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
 
         }
 
         private async void Chk_allBranches_Checked(object sender, RoutedEventArgs e)
         {//select all branches
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 cb_branches.SelectedIndex = -1;
                 cb_branches.IsEnabled = false;
                 await Search();
-                
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-                
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
 
         }
 
         private async void Chk_allBranches_Unchecked(object sender, RoutedEventArgs e)
         {//unselect all branches
-            //try
-            //{ 
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 cb_branches.IsEnabled = true;
 
                 await Search();
-                
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-                
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
 
         }
 

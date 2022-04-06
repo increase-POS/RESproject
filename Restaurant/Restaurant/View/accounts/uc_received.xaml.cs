@@ -535,10 +535,11 @@ namespace Restaurant.View.accounts
                 int s1 = 0;
                 if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
+                    if (MainWindow.posLogin.boxState == "o") // box is open
+                    {
+                        #region save
 
-                    #region save
-
-                    if (HelpClass.validate(requiredControlList, this))
+                        if (HelpClass.validate(requiredControlList, this))
                     {
                         string depositor = cb_depositFrom.SelectedValue.ToString();
                         int agentid = 0;
@@ -625,8 +626,12 @@ namespace Restaurant.View.accounts
                         else
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     }
-                    #endregion
-
+                        #endregion
+                    }
+                    else //box is closed
+                    {
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trBoxIsClosed"), animation: ToasterAnimation.FadeIn);
+                    }
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -1117,7 +1122,7 @@ namespace Restaurant.View.accounts
                 w.ShowDialog();
                 if (w.isActive)
                 {
-                    tb_cash.Text = w.sum.ToString();
+                    tb_cash.Text = HelpClass.DecTostring(w.sum);
                     tb_cash.IsReadOnly = true;
                     invoicesLst.AddRange(w.selectedInvoices);
                 }
@@ -1126,7 +1131,6 @@ namespace Restaurant.View.accounts
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }

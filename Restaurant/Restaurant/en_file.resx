@@ -3772,4 +3772,19 @@ Please add Email in setting</value>
   <data name="trTotalInvoice" xml:space="preserve">
     <value>Total Net</value>
   </data>
+  <data name="trCloseCash" xml:space="preserve">
+    <value>Close Cash</value>
+  </data>
+  <data name="trCloseDate" xml:space="preserve">
+    <value>Close Date</value>
+  </data>
+  <data name="trOpenCash" xml:space="preserve">
+    <value>Open Cash</value>
+  </data>
+  <data name="trOpenDate" xml:space="preserve">
+    <value>Open Date</value>
+  </data>
+  <data name="trPartialPay" xml:space="preserve">
+    <value>partial pay</value>
+  </data>
 </root>
