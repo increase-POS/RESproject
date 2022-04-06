@@ -127,6 +127,7 @@ namespace Restaurant.View.windows
                     shippingCompany = FillCombo.shippingCompaniesList.Find(c => c.shippingCompanyId == (int)cb_company.SelectedValue);
                     _DeliveryCost = (decimal)shippingCompany.deliveryCost;
                     _RealDeliveryCost = (decimal)shippingCompany.realDeliveryCost;
+                    shippingCompanyId = (int)cb_company.SelectedValue;
 
                     if (shippingCompany.deliveryType == "local")
                     {

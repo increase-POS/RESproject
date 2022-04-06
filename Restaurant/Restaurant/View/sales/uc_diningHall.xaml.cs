@@ -610,6 +610,8 @@ namespace Restaurant.View.sales
         List<Tables> selectedTables = new List<Tables>();
         Invoice invoice = new Invoice();
         TablesReservation reservation = new TablesReservation();
+        InvoicesClass invoicesClass = new InvoicesClass();
+        List<InvoicesClass> customerInvClasses = new List<InvoicesClass>();
         private void addRowToBill(Item item, long count)
         {
             decimal total = 0;
@@ -1069,6 +1071,86 @@ namespace Restaurant.View.sales
             #endregion
     
 
+            tb_total.Text = total.ToString();
+
+        }
+        void applyInvClassesOnTotal()
+        {
+            decimal total = 0;
+            #region subtotal
+            _Sum = 0;
+            foreach(var item in billDetailsList)
+            {
+                _Sum += item.Total;
+            }
+            tb_subtotal.Text = _Sum.ToString();
+            total = _Sum;
+            #endregion
+
+            #region discount
+            decimal couponsDiscount = 0;
+            decimal totalDiscount = 0;
+            if (_Sum > 0)
+            {
+                #region calculate coupons discount
+                if(selectedCopouns != null)
+                { 
+                    foreach (CouponInvoice coupon in selectedCopouns)
+                    {
+                        string discountType = coupon.discountType.ToString();
+                        decimal discountValue = (decimal)coupon.discountValue;
+                        if (discountType == "2")
+                            discountValue = HelpClass.calcPercentage(_Sum, discountValue);
+                        couponsDiscount += discountValue;
+                    }
+                }
+                #endregion
+                #region manaula discount           
+                if (_ManualDiscount !=0)
+                {
+                    if (_DiscountType == "2")
+                        _ManualDiscount = HelpClass.calcPercentage(_Sum, _ManualDiscount);
+                }
+                #endregion
+                totalDiscount = couponsDiscount + _ManualDiscount;
+                //tb_totalDiscount.Text = totalDiscount.ToString();
+                tb_totalDiscount.Text = HelpClass.PercentageDecTostring(totalDiscount);              
+            }
+
+            total = _Sum - totalDiscount;
+            if (totalDiscount > 0)
+            {
+                txt_totalDiscount.Visibility = Visibility.Visible;
+                tb_totalDiscount.Visibility = Visibility.Visible;
+                tb_moneyIconDis.Visibility = Visibility.Visible;
+                //tb_totalDiscount.Text = totalDiscount.ToString();
+            }
+            else
+            {
+                txt_totalDiscount.Visibility = Visibility.Collapsed;
+                tb_totalDiscount.Visibility = Visibility.Collapsed;
+                tb_moneyIconDis.Visibility = Visibility.Collapsed;
+            }
+            #endregion
+            #region invoice tax value 
+            decimal taxValue = 0;
+            if (AppSettings.invoiceTax_bool == true)
+            {
+                try
+                {
+                    taxValue = HelpClass.calcPercentage(total, decimal.Parse(tb_tax.Text));
+                }
+                catch { }
+            }
+            total += taxValue;
+            #endregion
+
+            #region customer invoice classes discount
+            foreach(InvoicesClass c in customerInvClasses)
+            {
+
+            }
+            #endregion
             tb_total.Text = total.ToString();
 
         }
@@ -1579,11 +1661,16 @@ namespace Restaurant.View.sales
                     w.ShowDialog();
                     if (w.isOk)
                     {
+                    customerInvClasses = new List<InvoicesClass>();
+
                         if (w.customerId > 0)
                         {
                             var customer = FillCombo.customersList.Where(x => x.agentId == w.customerId).FirstOrDefault();
-                            if (customer.membershipId != null)
-                                _MemberShipId = (int)customer.membershipId;
+                        if (customer.membershipId != null)
+                        {
+                            _MemberShipId = (int)customer.membershipId;
+                            customerInvClasses = await invoicesClass.GetInvclassByMembershipId(_MemberShipId); 
+                        }
 
                             invoice.agentId = w.customerId;
                             invoice.updateUserId = MainWindow.userLogin.userId;
@@ -1612,6 +1699,7 @@ namespace Restaurant.View.sales
                             txt_customer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                             path_customer.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                         }
+
                     }
                     Window.GetWindow(this).Opacity = 1;
                 //}

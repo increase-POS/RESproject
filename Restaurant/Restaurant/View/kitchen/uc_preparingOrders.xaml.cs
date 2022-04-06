@@ -794,7 +794,12 @@ namespace Restaurant.View.kitchen
                 case "Ready":
                     gd_preparingTime.Visibility = Visibility.Collapsed;
                     btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
-                    btn_save.IsEnabled = true;
+
+                    if(preparingOrder.shippingCompanyId != null) // order is take away (make done in delivery managment)
+                        btn_save.IsEnabled = false;
+                    else
+                        btn_save.IsEnabled = true;
+
                     break;
                 case "Done":
                     gd_preparingTime.Visibility = Visibility.Collapsed;

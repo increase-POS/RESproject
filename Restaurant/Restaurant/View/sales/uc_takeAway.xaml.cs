@@ -1799,7 +1799,7 @@ namespace Restaurant.View.sales
             {
                 HelpClass.StartAwait(grid_main);
                 Window.GetWindow(this).Opacity = 0.2;
-
+                await addDraft();// save invoice
 
                 wd_selectDelivery w = new wd_selectDelivery();
                 w.shippingCompanyId = invoice.shippingCompanyId;
@@ -1840,6 +1840,7 @@ namespace Restaurant.View.sales
                     invoice.updateUserId = MainWindow.userLogin.userId;
 
                     int res = await FillCombo.invoice.saveInvoice(invoice);
+
                     if (res > 0)
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
