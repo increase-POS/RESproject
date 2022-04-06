@@ -3796,4 +3796,7 @@ Please add Email in setting</value>
   <data name="management" xml:space="preserve">
     <value>management</value>
   </data>
+  <data name="trTotalTax" xml:space="preserve">
+    <value>Total of Tax</value>
+  </data>
 </root>

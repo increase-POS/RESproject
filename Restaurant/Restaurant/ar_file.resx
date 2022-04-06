@@ -3772,4 +3772,7 @@
   <data name="management" xml:space="preserve">
     <value>إدارة</value>
   </data>
+  <data name="trTotalTax" xml:space="preserve">
+    <value>إجمالي الضريبة</value>
+  </data>
 </root>

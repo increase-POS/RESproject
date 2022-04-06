@@ -1159,6 +1159,43 @@ Parameters!trValueDiscount.Value)
         
         }
 
+        public static void AccTaxReport(IEnumerable<ItemTransferInvoiceTax> invoiceItems, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            rep.DataSources.Add(new ReportDataSource("DataSetITinvoice", invoiceItems));
+            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNo.")));// tt
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
+            paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
+            paramarr.Add(new ReportParameter("trTotal", AppSettings.resourcemanagerreport.GetString("trTotal")));
+            paramarr.Add(new ReportParameter("trTaxValue", AppSettings.resourcemanagerreport.GetString("trTaxValue")));
+            paramarr.Add(new ReportParameter("trTaxPercentage", AppSettings.resourcemanagerreport.GetString("trTaxPercentage")));
+            paramarr.Add(new ReportParameter("trTotalInvoice", AppSettings.resourcemanagerreport.GetString("trTotalInvoice")));
+            paramarr.Add(new ReportParameter("trItemUnit", AppSettings.resourcemanagerreport.GetString("trItemUnit")));
+            paramarr.Add(new ReportParameter("trOnItem", AppSettings.resourcemanagerreport.GetString("trOnItem")));
+            paramarr.Add(new ReportParameter("trPrice", AppSettings.resourcemanagerreport.GetString("trPrice")));
+
+            paramarr.Add(new ReportParameter("trSum", AppSettings.resourcemanagerreport.GetString("trTotalTax")));
+            foreach (var r in invoiceItems)
+            {
+                r.OneItemPriceNoTax = decimal.Parse(HelpClass.DecTostring(r.OneItemPriceNoTax));
+                r.subTotalNotax = decimal.Parse(HelpClass.DecTostring(r.subTotalNotax));//
+                r.ItemTaxes = decimal.Parse(HelpClass.PercentageDecTostring(r.ItemTaxes));
+                r.itemUnitTaxwithQTY = decimal.Parse(HelpClass.DecTostring(r.itemUnitTaxwithQTY));
+                r.subTotalTax = decimal.Parse(HelpClass.DecTostring(r.subTotalTax));
+
+                r.totalNoTax = decimal.Parse(HelpClass.DecTostring(r.totalNoTax));
+                r.tax = decimal.Parse(HelpClass.PercentageDecTostring(r.tax));
+                r.invTaxVal = decimal.Parse(HelpClass.DecTostring(r.invTaxVal));
+                r.totalNet = decimal.Parse(HelpClass.DecTostring(r.totalNet));
+
+            }
+            paramarr.Add(new ReportParameter("Currency", AppSettings.Currency));
+
+        }
+
         public static string ReportTabTitle(string firstTitle, string secondTitle)
         {
             string trtext = "";
@@ -1214,6 +1251,12 @@ Parameters!trValueDiscount.Value)
                 firstTitle = AppSettings.resourcemanagerreport.GetString("trCashBalance");
             else if (firstTitle == "DirectEntry")
                 firstTitle = AppSettings.resourcemanagerreport.GetString("trDirectEntry");
+            else if (firstTitle == "tax")
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trTax");
+            else if (firstTitle == "closing")
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trDailyClosing");
+            else if (firstTitle == "orders")
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trOrderreport");
             //trCashBalance trDirectEntry
             //trTransfers administrativePull
             //////////////////////////////////////////////////////////////////////////////
@@ -1483,7 +1526,7 @@ Parameters!trValueDiscount.Value)
             paramarr.Add(new ReportParameter("CloseCash", HelpClass.DecTostring(openclosrow.cash)));
             paramarr.Add(new ReportParameter("pos", openclosrow.branchName + " / " + openclosrow.posName));
 
-            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo")));
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
             paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
             paramarr.Add(new ReportParameter("trDescription", AppSettings.resourcemanagerreport.GetString("trDescription")));
             paramarr.Add(new ReportParameter("trCashTooltip", AppSettings.resourcemanagerreport.GetString("trCashTooltip")));
@@ -1786,7 +1829,7 @@ Parameters!trValueDiscount.Value)
                 //break;
                 case "card": return cName;
                 //break;
-                case "inv": return AppSettings.resourcemanagerreport.GetString("trInv");
+                case "inv": return "-";
                 case "multiple": return AppSettings.resourcemanagerreport.GetString("trMultiplePayment");
 
                 //break;
