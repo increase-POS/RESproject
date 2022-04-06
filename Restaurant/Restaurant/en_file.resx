@@ -3799,4 +3799,7 @@ Please add Email in setting</value>
   <data name="trTotalTax" xml:space="preserve">
     <value>Total of Tax</value>
   </data>
+  <data name="trDriver" xml:space="preserve">
+    <value>Driver</value>
+  </data>
 </root>

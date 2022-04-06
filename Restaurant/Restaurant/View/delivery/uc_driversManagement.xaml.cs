@@ -115,6 +115,29 @@ namespace Restaurant.View.delivery
 
         private void translate()
         {
+            txt_title.Text = AppSettings.resourcemanager.GetString("trDriversManagement");
+            txt_details.Text = AppSettings.resourcemanager.GetString("trDetails");
+
+            txt_userName.Text = AppSettings.resourcemanager.GetString("trUserName");
+            txt_driverName.Text = AppSettings.resourcemanager.GetString("trDriver");
+            txt_mobile.Text = AppSettings.resourcemanager.GetString("trMobile");
+            txt_sectorsCount.Text = AppSettings.resourcemanager.GetString("trResidentialSectors");
+            txt_ordersCount.Text = AppSettings.resourcemanager.GetString("trOrders");
+            txt_status.Text = AppSettings.resourcemanager.GetString("trStatus");
+
+            txt_preview.Text = AppSettings.resourcemanager.GetString("trPreview");
+            txt_print.Text = AppSettings.resourcemanager.GetString("trPrint");
+            txt_residentialSectors.Text = AppSettings.resourcemanager.GetString("trResidentialSectors");
+            txt_activeInactive.Text = AppSettings.resourcemanager.GetString("trAvailable");
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+
+            dg_user.Columns[0].Header = AppSettings.resourcemanager.GetString("trTransferNumberTooltip");
+            dg_user.Columns[1].Header = AppSettings.resourcemanager.GetString("trRecepient");
+            dg_user.Columns[2].Header = AppSettings.resourcemanager.GetString("trPaymentTypeTooltip");
+
+            tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
+
         }
         #endregion
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)

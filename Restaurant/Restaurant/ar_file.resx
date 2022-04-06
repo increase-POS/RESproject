@@ -3775,4 +3775,7 @@
   <data name="trTotalTax" xml:space="preserve">
     <value>إجمالي الضريبة</value>
   </data>
+  <data name="trDriver" xml:space="preserve">
+    <value>السائق</value>
+  </data>
 </root>
