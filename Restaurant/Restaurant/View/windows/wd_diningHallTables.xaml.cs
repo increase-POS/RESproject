@@ -1116,6 +1116,12 @@ namespace Restaurant.View.windows
 
             invoice.invNumber = await invoice.generateInvNumber("si", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
             invoice.invType = "sd";
+
+            if (AppSettings.invoiceTax_bool == true)
+                invoice.tax = (decimal)AppSettings.invoiceTax_decimal;
+            else
+                invoice.tax = 0;
+
             invoice.branchCreatorId = MainWindow.branchLogin.branchId;
             invoice.posId = MainWindow.posLogin.posId;
             invoice.branchId = MainWindow.branchLogin.branchId;
@@ -1125,7 +1131,7 @@ namespace Restaurant.View.windows
             List<Tables> invTables = new List<Tables>();
             invTables.Add(table);
             #endregion
-            int res = await FillCombo.invoice.saveInvoiceWithTables(invoice, invTables);
+            int res = await FillCombo.invoice.saveInvoiceWithTables(invoice, invTables); 
             return res;
         }
         private async Task<int> openInvoiceForReserve()
