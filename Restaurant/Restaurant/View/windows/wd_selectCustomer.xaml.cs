@@ -65,6 +65,9 @@ namespace Restaurant.View.windows
         }
         public bool isOk { get; set; }
         public int customerId { get; set; }
+
+        public string memberShipStatus;
+
         public static List<string> requiredControlList = new List<string>();
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
@@ -139,11 +142,15 @@ namespace Restaurant.View.windows
                         sp_membership.Opacity = 1;
                         grid_membershipInctive.Visibility = Visibility.Collapsed;
 
+                        memberShipStatus = "valid";
                     }
                     else
                     {
                         sp_membership.Opacity = 0.4;
                         grid_membershipInctive.Visibility = Visibility.Visible;
+
+
+                        memberShipStatus = "notValid";
 
                     }
                     #endregion
@@ -173,7 +180,6 @@ namespace Restaurant.View.windows
             {
                 customerId = (int)cb_customerId.SelectedValue;
                 await fillMemberShipInfo();
-                //agentMemberships = await agentMemberships.GetAgentMemberShip(customerId);
             }
         }
     }

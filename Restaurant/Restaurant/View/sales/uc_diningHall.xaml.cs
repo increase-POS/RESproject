@@ -603,6 +603,7 @@ namespace Restaurant.View.sales
         int _SequenceNum = 0;
         decimal _Sum = 0;
         decimal _ManualDiscount = 0;
+        decimal _invoiceClassDiscount = 0;
         string _DiscountType = "";
         int _MemberShipId = 0;
         List<CouponInvoice> selectedCopouns = new List<CouponInvoice>();
@@ -1030,25 +1031,49 @@ namespace Restaurant.View.sales
                     }
                 }
                 #endregion
-                #region manaula discount           
-                if (_ManualDiscount !=0)
+                #region manaula discount 
+                decimal manualDiscount = _ManualDiscount;
+                if (manualDiscount !=0)
                 {
                     if (_DiscountType == "2")
-                        _ManualDiscount = HelpClass.calcPercentage(_Sum, _ManualDiscount);
+                        manualDiscount = HelpClass.calcPercentage(_Sum, manualDiscount);
                 }
                 #endregion
-                totalDiscount = couponsDiscount + _ManualDiscount;
+
+                #region customer invoice classes discount
+                foreach (InvoicesClass c in customerInvClasses)
+                {
+                    if (_Sum >= c.minInvoiceValue && _Sum <= c.maxInvoiceValue)
+                    {
+                        if (c.discountValue != 0)
+                        {
+                            _invoiceClassDiscount = c.discountValue;
+                            if (c.discountType == 2)
+                                _invoiceClassDiscount = HelpClass.calcPercentage(_Sum, _invoiceClassDiscount);
+                        }
+
+                        break;
+                    }
+                }
+                #endregion
+
+                totalDiscount = couponsDiscount + manualDiscount + _invoiceClassDiscount;
                 //tb_totalDiscount.Text = totalDiscount.ToString();
                 tb_totalDiscount.Text = HelpClass.PercentageDecTostring(totalDiscount);              
             }
 
             total = _Sum - totalDiscount;
+
+            #endregion
+
+           
+
+            #region hid - display discount 
             if (totalDiscount > 0)
             {
                 txt_totalDiscount.Visibility = Visibility.Visible;
                 tb_totalDiscount.Visibility = Visibility.Visible;
                 tb_moneyIconDis.Visibility = Visibility.Visible;
-                //tb_totalDiscount.Text = totalDiscount.ToString();
             }
             else
             {
@@ -1057,6 +1082,8 @@ namespace Restaurant.View.sales
                 tb_moneyIconDis.Visibility = Visibility.Collapsed;
             }
             #endregion
+           
+
             #region invoice tax value 
             decimal taxValue = 0;
             if (AppSettings.invoiceTax_bool == true)
@@ -1132,6 +1159,27 @@ namespace Restaurant.View.sales
                 tb_moneyIconDis.Visibility = Visibility.Collapsed;
             }
             #endregion
+
+            #region customer invoice classes discount
+            foreach (InvoicesClass c in customerInvClasses)
+            {
+                decimal invClassDiscount = 0;
+                if(_Sum >= c.minInvoiceValue && _Sum <= c.maxInvoiceValue)
+                {
+                    if(c.discountValue != 0)
+                    {
+                        invClassDiscount = c.discountValue;
+                        if (c.discountType == 2)
+                            invClassDiscount = HelpClass.calcPercentage(_Sum, invClassDiscount);
+                    }
+
+                    total -= invClassDiscount;
+
+                    break;
+                }
+            }
+            #endregion
+
             #region invoice tax value 
             decimal taxValue = 0;
             if (AppSettings.invoiceTax_bool == true)
@@ -1145,12 +1193,7 @@ namespace Restaurant.View.sales
             total += taxValue;
             #endregion
 
-            #region customer invoice classes discount
-            foreach(InvoicesClass c in customerInvClasses)
-            {
-
-            }
-            #endregion
+           
             tb_total.Text = total.ToString();
 
         }
@@ -1282,6 +1325,7 @@ namespace Restaurant.View.sales
             billDetailsList.Clear();
             _Sum = 0;
             _ManualDiscount = 0;
+            _invoiceClassDiscount = 0;
             _DiscountType = "";
             selectedCopouns.Clear() ;
             selectedTables.Clear();
@@ -1661,18 +1705,23 @@ namespace Restaurant.View.sales
                     w.ShowDialog();
                     if (w.isOk)
                     {
+                   
                     customerInvClasses = new List<InvoicesClass>();
 
                         if (w.customerId > 0)
                         {
-                            var customer = FillCombo.customersList.Where(x => x.agentId == w.customerId).FirstOrDefault();
+                        #region customer Info
+                        var customer = FillCombo.customersList.Where(x => x.agentId == w.customerId).FirstOrDefault();
                         if (customer.membershipId != null)
                         {
                             _MemberShipId = (int)customer.membershipId;
-                            customerInvClasses = await invoicesClass.GetInvclassByMembershipId(_MemberShipId); 
-                        }
 
-                            invoice.agentId = w.customerId;
+                            if(w.memberShipStatus == "valid")
+                                customerInvClasses = await invoicesClass.GetInvclassByMembershipId(_MemberShipId); 
+                        }
+                        #endregion
+                        #region update invoice
+                        invoice.agentId = w.customerId;
                             invoice.updateUserId = MainWindow.userLogin.userId;
 
                             int res = await FillCombo.invoice.saveInvoice(invoice);
@@ -1683,9 +1732,10 @@ namespace Restaurant.View.sales
                             }
                             else
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                            // test if id chnage
-                            // change button content
-                            txt_customer.Text = customer.name.ToString();
+                        #endregion
+                        // test if id chnage
+                        // change button content
+                        txt_customer.Text = customer.name.ToString();
                             // change foreground color
                             txt_customer.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                             path_customer.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
@@ -1700,6 +1750,7 @@ namespace Restaurant.View.sales
                             path_customer.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                         }
 
+                    refreshTotal();
                     }
                     Window.GetWindow(this).Opacity = 1;
                 //}
@@ -1857,6 +1908,7 @@ namespace Restaurant.View.sales
                     {
                         refreshTotal();
 
+                       
                         #region payment window
                         Window.GetWindow(this).Opacity = 0.2;
 
