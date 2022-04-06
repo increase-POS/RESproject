@@ -17,10 +17,10 @@ namespace Restaurant.converters
             switch (s)
             {
                 case "payed": return AppSettings.resourcemanager.GetString("trPaid_");
+                
+                case "unpayed": return AppSettings.resourcemanager.GetString("trCredit");
 
-                case "unpayed": return AppSettings.resourcemanager.GetString("trUnPaid");
-
-                case "partpayed": return AppSettings.resourcemanager.GetString("trCredit");
+                case "partpayed": return AppSettings.resourcemanager.GetString("trPartialPay");
 
                 default: return "";
 
