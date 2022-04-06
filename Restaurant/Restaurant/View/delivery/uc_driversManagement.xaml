@@ -59,12 +59,12 @@
                     </Border.Effect>
                     <Grid   >
                         <TextBox x:Name="tb_search" Grid.Column="1"    Padding="10,0,5,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="Enter Here To Start Search ...."  
-                                     Foreground="#4E4E4E"  TextChanged="Tb_search_TextChanged"
-                                      MaxLength="50"  
-                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                       BorderBrush="#737373"   BorderThickness="0" Margin="4,0"  />
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                 materialDesign:HintAssist.Hint="Enter Here To Start Search ...."  
+                                 Foreground="#4E4E4E" MaxLength="50"  
+                                 materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                 BorderBrush="#737373"   BorderThickness="0" Margin="4,0"  
+                                 TextChanged="Tb_search_TextChanged"/>
                     </Grid>
                 </Border>
                 <TextBlock    x:Name="txt_active" Grid.Column="3"
@@ -72,13 +72,13 @@
                                    HorizontalAlignment="Left" VerticalAlignment="Center"
                                    FontSize="12"/>
                 <ToggleButton Grid.Column="4" Background="{StaticResource MainColor}"   x:Name="tgl_isActive"   Checked="Tgl_isActive_Checked" Unchecked="Tgl_isActive_Unchecked"
-                             VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="True" 
-                                          Margin="0" Height="13" Width="28" />
+                              VerticalAlignment="Center" Padding="10,15,5,5"  IsChecked="True" 
+                              Margin="0" Height="13" Width="28" />
                 <Button   FlowDirection="LeftToRight"  Width="40" Height="40" x:Name="btn_refresh" Click="Btn_refresh_Click" Grid.Row="0" Grid.Column="5" Padding="0" 
-                            materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
+                          materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
                           Background="{x:Null}" BorderBrush="{x:Null}"   Style="{StaticResource SmallButtonCircleRotate}"
-                               RenderTransformOrigin="0.5,0.5"
-                            DataContext="M896,0L896,0C401.2,0,0,401.2,0,896v0c0,494.8,401.2,896,896,896h0c494.8,0,896-401.2,896-896v0C1792,401.2,1390.8,0,896,0z
+                          RenderTransformOrigin="0.5,0.5"
+                          DataContext="M896,0L896,0C401.2,0,0,401.2,0,896v0c0,494.8,401.2,896,896,896h0c494.8,0,896-401.2,896-896v0C1792,401.2,1390.8,0,896,0z
 	 M1451.3,1021c-31.9,133.7-98.8,242.1-200.6,325.2c-101.8,83.1-221,124.6-357.7,124.6c-72.8,0-143.3-13.7-211.4-41.2
 	s-128.8-66.6-182.2-117.5l-96.5,96.5c-9.5,9.5-20.7,14.2-33.7,14.2s-24.2-4.7-33.7-14.2c-9.5-9.5-14.2-20.7-14.2-33.7v-335.3
 	c0-13,4.7-24.2,14.2-33.7s20.7-14.2,33.7-14.2h335.3c13,0,24.2,4.7,33.7,14.2c9.5,9.5,14.2,20.7,14.2,33.7c0,13-4.7,24.2-14.2,33.7
@@ -128,8 +128,8 @@
                         <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                         <DataGrid  Margin="5,5,5,45" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
-                       x:Name="dg_user"   AutoGenerateColumns="False"   Background="White"
-                        ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
+                                   x:Name="dg_user"   AutoGenerateColumns="False"   Background="White"
+                                   ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2" SelectionChanged="Dg_user_SelectionChanged">
                             <DataGrid.OpacityMask>
                                 <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
                             </DataGrid.OpacityMask>
@@ -337,21 +337,6 @@
 
                 <ScrollViewer Background="White"  Grid.Row="1"   VerticalScrollBarVisibility="Auto"   >
                     <StackPanel>
-                        <!--<Grid >
-                        <Grid.RowDefinitions >
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>-->
                         <DockPanel Margin="10 0" LastChildFill="True"  >
                             <TextBlock x:Name="txt_details" Text="details" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
                             <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
@@ -361,72 +346,91 @@
                                 <ColumnDefinition Width="*" MinWidth="100"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="username" FontWeight="SemiBold"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                            <TextBlock  Grid.Row="1" Grid.Column="1" 
-                                    Text="othman112"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" 
+                                       Text="username" FontWeight="SemiBold"
+                                       x:Name="txt_userName"
+                                       Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                       HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                            <TextBlock Grid.Row="0" Grid.Column="1" 
+                                       x:Name="tb_userName" Text="{Binding username, Mode=OneWay}"
+                                       Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                       HorizontalAlignment="Right"  VerticalAlignment="Center"  />
                         </Grid>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" MinWidth="100"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock  Grid.Row="0" Grid.Column="0" 
-                                    Text="driver name" FontWeight="SemiBold"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left"  VerticalAlignment="Center"  />
-                            <TextBlock  Grid.Row="0" Grid.Column="1" 
-                                    Text="othman othman"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Right"  VerticalAlignment="Center"  />
+                            <TextBlock Grid.Row="0" Grid.Column="0" 
+                                       Text="driver name" FontWeight="SemiBold"
+                                       x:Name="txt_driverName"
+                                       Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                       HorizontalAlignment="Left"  VerticalAlignment="Center"  />
+                            <TextBlock Grid.Row="0" Grid.Column="1" 
+                                       x:Name="tb_driverName" Text="{Binding fullName, Mode=OneWay}"
+                                       Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                       HorizontalAlignment="Right"  VerticalAlignment="Center"  />
                         </Grid>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" MinWidth="100"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="mobile" FontWeight="SemiBold"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                            <TextBlock  Grid.Row="1" Grid.Column="1" 
-                                    Text="+963 94 955 955"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" 
+                                       Text="mobile" FontWeight="SemiBold"
+                                       x:Name="txt_mobile"
+                                       Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                       HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                            <TextBlock Grid.Row="1" Grid.Column="1" 
+                                       x:Name="tb_mobile" Text="{Binding mobile, Mode=OneWay}"
+                                       Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                       HorizontalAlignment="Right"   VerticalAlignment="Center" />
                         </Grid>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" MinWidth="100"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="sectors count" FontWeight="SemiBold"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                            <TextBlock  Grid.Row="1" Grid.Column="1" 
-                                    Text="37"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" 
+                                       x:Name="txt_sectorsCount"
+                                       Text="sectors count" FontWeight="SemiBold"
+                                       Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                       HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                            <TextBlock Grid.Row="1" Grid.Column="1" 
+                                       x:Name="tb_sectorsCount" Text="{Binding xxx, Mode=OneWay}"
+                                       Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                       HorizontalAlignment="Right"   VerticalAlignment="Center" />
                         </Grid>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" MinWidth="100"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock  Grid.Row="1" Grid.Column="0" 
-                                    Text="orders count" FontWeight="SemiBold"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                            <TextBlock  Grid.Row="1" Grid.Column="1" 
-                                    Text="12"
-                                   Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" 
+                                       x:Name="txt_ordersCount"
+                                       Text="orders count" FontWeight="SemiBold"
+                                       Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                       HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                            <TextBlock Grid.Row="1" Grid.Column="1" 
+                                       x:Name="tb_ordersCount" Text="{Binding xxx, Mode=OneWay}"
+                                       Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                       HorizontalAlignment="Right"   VerticalAlignment="Center" />
                         </Grid>
-                      
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MinWidth="100"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock  Grid.Row="1" Grid.Column="0"
+                                        x:Name="txt_status"
+                                        Text="status" FontWeight="SemiBold"
+                                        Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                        HorizontalAlignment="Left" VerticalAlignment="Center"   />
+                            <TextBlock  Grid.Row="1" Grid.Column="1" 
+                                        x:Name="tb_status" Text="{Binding status, Mode=OneWay}"
+                                        Margin="10 5" Foreground="{StaticResource ThickGrey}"
+                                        HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                        </Grid>   
 
                         <!--</Grid>-->
                     </StackPanel>
@@ -447,62 +451,85 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Button Grid.Column="0" BorderBrush="{x:Null}" Padding="0" 
-                                  Margin="5 5 2.5 5 " Height="auto"
-                                Background="{x:Null}" VerticalAlignment="Top"  >
+                                    x:Name="btn_preview"
+                                    Margin="5 5 2.5 5 " Height="auto"
+                                    Background="{x:Null}" VerticalAlignment="Top"  >
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
                                     <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
-                           Width="35" Height="35" FlowDirection="LeftToRight"
-                           Data="{StaticResource printer}"/>
-                                    <TextBlock  Text="print orders"  Grid.Row="1" 
-                                                    FontWeight="Regular" FontSize="10" TextAlignment="Center"
-                                                    Foreground="{StaticResource MainColor}"
-                                                     HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                                          Width="35" Height="35" FlowDirection="LeftToRight"
+                                          Data="{StaticResource preview}"/>
+                                    <TextBlock  Text="preview orders"  Grid.Row="1" 
+                                                x:Name="txt_preview"
+                                                FontWeight="Regular" FontSize="10" TextAlignment="Center"
+                                                Foreground="{StaticResource MainColor}"
+                                                HorizontalAlignment="Center" TextWrapping="Wrap"/>
                                 </Grid>
                             </Button>
                             <Button Grid.Column="1" BorderBrush="{x:Null}" Padding="0" 
-                                  Margin="5 5 2.5 5 " Height="auto"
-                                Background="{x:Null}" VerticalAlignment="Top"  >
+                                    x:Name="btn_print"
+                                    Margin="5 5 2.5 5 " Height="auto"
+                                    Background="{x:Null}" VerticalAlignment="Top"  >
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
                                     <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
-                           Width="35" Height="35" FlowDirection="LeftToRight"
-                           Data="{StaticResource map}"/>
-                                    <TextBlock  Text="residential sectors"  Grid.Row="1" 
-                                                    FontWeight="Regular" FontSize="10" TextAlignment="Center"
-                                                    Foreground="{StaticResource MainColor}"
-                                                     HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                                          Width="35" Height="35" FlowDirection="LeftToRight"
+                                          Data="{StaticResource printer}"/>
+                                    <TextBlock  Text="print orders"  Grid.Row="1"
+                                                x:Name="txt_print"
+                                                FontWeight="Regular" FontSize="10" TextAlignment="Center"
+                                                Foreground="{StaticResource MainColor}"
+                                                HorizontalAlignment="Center" TextWrapping="Wrap"/>
                                 </Grid>
                             </Button>
                             <Button Grid.Column="2" BorderBrush="{x:Null}" Padding="0" 
-                                  Margin="5 5 2.5 5 " Height="auto"
-                                Background="{x:Null}" VerticalAlignment="Top"  >
+                                    x:Name="btn_residentialSectors"
+                                    Margin="5 5 2.5 5 " Height="auto"
+                                    Background="{x:Null}" VerticalAlignment="Top"  >
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
                                     <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
-                           Width="35" Height="35" FlowDirection="LeftToRight"
-                           Data="{StaticResource userCancel}"/>
+                                          Width="35" Height="35" FlowDirection="LeftToRight"
+                                          Data="{StaticResource map}"/>
+                                    <TextBlock  Text="residential sectors"  Grid.Row="1" 
+                                                x:Name="txt_residentialSectors"
+                                                FontWeight="Regular" FontSize="10" TextAlignment="Center"
+                                                Foreground="{StaticResource MainColor}"
+                                                HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                                </Grid>
+                            </Button>
+                            <Button Grid.Column="3" BorderBrush="{x:Null}" Padding="0"
+                                    x:Name="btn_activeInactive"
+                                    Margin="5 5 2.5 5 " Height="auto"
+                                    Background="{x:Null}" VerticalAlignment="Top"  >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Path Fill="{StaticResource SecondColor}" Stretch="Fill"
+                                          Width="35" Height="35" FlowDirection="LeftToRight"
+                                          Data="{StaticResource userCancel}"/>
                                     <TextBlock  Text="Active/Inactive"  Grid.Row="1" 
-                                                    FontWeight="Regular" FontSize="10" TextAlignment="Center"
-                                                    Foreground="{StaticResource MainColor}"
-                                                     HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                                                x:Name="txt_activeInactive"
+                                                FontWeight="Regular" FontSize="10" TextAlignment="Center"
+                                                Foreground="{StaticResource MainColor}"
+                                                HorizontalAlignment="Center" TextWrapping="Wrap"/>
                                 </Grid>
                             </Button>
                         </Grid>
-
-                     
-                     
 
                     </Grid>
 
