@@ -2090,6 +2090,8 @@ namespace Restaurant.View.sales
 
                                 #region savepayment
                                 List<CashTransfer> paymentsList = new List<CashTransfer>();
+                                await FillCombo.invoice.recordPosCashTransfer(invoice, "si");
+
                                 paymentsList = w.listPayments;
                                 foreach (var item in paymentsList)
                                 {
