@@ -3787,4 +3787,13 @@ Please add Email in setting</value>
   <data name="trPartialPay" xml:space="preserve">
     <value>partial pay</value>
   </data>
+  <data name="invoiceType" xml:space="preserve">
+    <value>Invoice type</value>
+  </data>
+  <data name="drivers" xml:space="preserve">
+    <value>Drivers</value>
+  </data>
+  <data name="management" xml:space="preserve">
+    <value>management</value>
+  </data>
 </root>
