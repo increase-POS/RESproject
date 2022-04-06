@@ -1141,6 +1141,12 @@ namespace Restaurant.View.windows
 
             invoice.invNumber = await invoice.generateInvNumber("si", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
             invoice.invType = "sd";
+
+            if (AppSettings.invoiceTax_bool == true)
+                invoice.tax = (decimal)AppSettings.invoiceTax_decimal;
+            else
+                invoice.tax = 0;
+
             invoice.agentId = nextReservation.customerId;
             invoice.reservationId = nextReservation.reservationId;
             invoice.branchCreatorId = MainWindow.branchLogin.branchId;
