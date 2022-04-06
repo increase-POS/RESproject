@@ -373,21 +373,6 @@
 
             <ScrollViewer Background="White"  Grid.Row="1"  VerticalScrollBarVisibility="Auto" >
                 <StackPanel>
-                    <!--<Grid >
-                        <Grid.RowDefinitions >
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>-->
                     <DockPanel Margin="10 0" LastChildFill="True"  >
                         <TextBlock x:Name="txt_baseInformation" Text="Base Infomation" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
                         <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
@@ -743,7 +728,6 @@
                     <!--</Grid>-->
                 </StackPanel>
             </ScrollViewer>
-
             <Border Grid.Row="3" Background="White" CornerRadius="0 0 7 7">
                 <Grid  Grid.Row="3" Margin="5,5,5,10" >
                     <Grid.RowDefinitions>
@@ -828,7 +812,6 @@
                 </Grid>
 
             </Border>
-            
         </Grid>
         </Border>
 

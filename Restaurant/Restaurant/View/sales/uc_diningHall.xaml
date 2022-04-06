@@ -303,6 +303,17 @@
                    </Grid>
             </Border>
             <StackPanel Grid.Row="2" Margin="0 5" HorizontalAlignment="Left" Orientation="Horizontal">
+                <Button   Height="40" x:Name="btn_invType" Click="Btn_invType_Click"
+                    materialDesign:ButtonAssist.CornerRadius="7"
+                          Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                    Margin="5 0"  Foreground="White"  >
+                    <StackPanel Orientation="Horizontal" >
+                        <Path Fill="White" Stretch="Fill" Margin="0,0,5,0"
+                         Width="20" Height="20" FlowDirection="LeftToRight"
+                         Data="{StaticResource invoice}"/>
+                        <TextBlock x:Name="txt_invType" Text="invoice Type"  Foreground="White"/>
+                    </StackPanel>
+                </Button>
                 <Button   Height="40" x:Name="btn_tables" Click="Btn_tables_Click"
                     materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
@@ -367,6 +378,28 @@
 	c-0.2,0.2-0.6,0.3-0.9,0.3c-0.5,0-0.9-0.2-1.2-0.6c-0.6-0.6-0.4-1.6,0.2-2.1l30.2-24c0.7-0.5,1.6-0.4,2.1,0.3
 	C66.8,39,66.6,40,66,40.5z"/>
                         <TextBlock x:Name="txt_discount" Text="Discount"  Foreground="{StaticResource SecondColor}"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btn_delivery" Click="Btn_delivery_Click" Height="40"
+                    materialDesign:ButtonAssist.CornerRadius="7"  
+                          Background="{StaticResource White}" BorderBrush="{x:Null}"
+                    Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
+                    <StackPanel Orientation="Horizontal" >
+                        <Path Name="path_delivery" Fill="{StaticResource SecondColor}" Stretch="Fill" Margin="0,0,5,0"
+                         Width="20" Height="20" FlowDirection="LeftToRight"  
+                              Data="{StaticResource delivery}"/>
+                        <TextBlock x:Name="txt_delivery" Text="delivery"  Foreground="{StaticResource SecondColor}"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btn_orderTime" Click="Btn_orderTime_Click" Height="40"
+						materialDesign:ButtonAssist.CornerRadius="7"  
+							  Background="{StaticResource White}" BorderBrush="{x:Null}"
+						Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
+                    <StackPanel Orientation="Horizontal" >
+                        <Path Name="path_orderTime" Fill="{StaticResource SecondColor}" Stretch="Fill" Margin="0,0,5,0"
+							 Width="20" Height="20" FlowDirection="LeftToRight"  
+								  Data="{StaticResource time}"/>
+                        <TextBlock x:Name="txt_orderTime" Text="time"  Foreground="{StaticResource SecondColor}"/>
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -972,6 +1005,7 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -1016,6 +1050,21 @@
                        Foreground="{StaticResource Grey}" Text="0"
                         HorizontalAlignment="Right" VerticalAlignment="Center"
                                    FontWeight="Bold"  FontSize="12"/>
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Delivery" Visibility="Collapsed"
+                                   x:Name="txt_deliveryVal" Foreground="{StaticResource SecondColor}" FontWeight="Bold" FontSize="18"  
+                         VerticalAlignment="Center"     HorizontalAlignment="Left" Margin="0 5"/>
+                        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right"   >
+                            <TextBlock    x:Name="tb_delivery"  Margin="5" Visibility="Collapsed"
+                       Foreground="{StaticResource Grey}" Text="0"
+                        HorizontalAlignment="Left" VerticalAlignment="Center"
+                                  FontWeight="Bold"  FontSize="12"/>
+                            <TextBlock Grid.Row="1"   x:Name="tb_moneyIconDelivery" Visibility="Collapsed"
+                                       Grid.Column="1" Margin="0" 
+                       Foreground="{StaticResource Grey}" Text="KWD"
+                        HorizontalAlignment="Left" VerticalAlignment="Center"
+                                  FontWeight="Bold"  FontSize="12"/>
+                        </StackPanel>
 
                     </Grid>
                 </Grid>

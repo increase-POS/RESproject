@@ -38,6 +38,8 @@ namespace Restaurant.View.sales
         #region for report
         int prinvoiceId = 0;
         #endregion
+        decimal _DeliveryCost = 0;
+
         public static uc_diningHall Instance
         {
             get
@@ -215,8 +217,10 @@ namespace Restaurant.View.sales
             txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
             txt_kitchen.Text = AppSettings.resourcemanager.GetString("trKitchen");
             txt_tables.Text = AppSettings.resourcemanager.GetString("trTables");
-                   
+            txt_invType.Text = AppSettings.resourcemanager.GetString("invoiceType");
             btn_pay.Content = AppSettings.resourcemanager.GetString("trPay");
+            txt_delivery.Text = AppSettings.resourcemanager.GetString("trDelivery");
+            txt_orderTime.Text = AppSettings.resourcemanager.GetString("time");
 
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
@@ -1096,7 +1100,24 @@ namespace Restaurant.View.sales
             }
             total += taxValue;
             #endregion
-    
+            #region delivery cost
+            total += _DeliveryCost;
+
+            if (_DeliveryCost > 0)
+            {
+                txt_deliveryVal.Visibility = Visibility.Visible;
+                tb_delivery.Visibility = Visibility.Visible;
+                tb_moneyIconDelivery.Visibility = Visibility.Visible;
+
+                tb_delivery.Text = _DeliveryCost.ToString();
+            }
+            else
+            {
+                txt_deliveryVal.Visibility = Visibility.Collapsed;
+                tb_delivery.Visibility = Visibility.Collapsed;
+                tb_moneyIconDelivery.Visibility = Visibility.Collapsed;
+            }
+            #endregion
 
             tb_total.Text = total.ToString();
 
@@ -1324,6 +1345,7 @@ namespace Restaurant.View.sales
             txt_tableName.Text = "";
             billDetailsList.Clear();
             _Sum = 0;
+            _DeliveryCost = 0;
             _ManualDiscount = 0;
             _invoiceClassDiscount = 0;
             _DiscountType = "";
@@ -1374,6 +1396,7 @@ namespace Restaurant.View.sales
         {
             #region set parameters
             _Sum = (decimal)invoice.total;
+            _DeliveryCost = (decimal)invoice.shippingCost;
             _ManualDiscount = invoice.discountValue;
             _DiscountType = invoice.discountType;
             selectedCopouns = await FillCombo.invoice.GetInvoiceCoupons(invoice.invoiceId);
@@ -1556,6 +1579,27 @@ namespace Restaurant.View.sales
             catch (Exception ex)
             {
 
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_invType_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+
+
+                wd_selectInvType w = new wd_selectInvType();
+                w.ShowDialog();
+
+
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1835,7 +1879,102 @@ namespace Restaurant.View.sales
             }
         }
 
+        private async void Btn_delivery_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+                await addDraft();// save invoice
 
+                wd_selectDelivery w = new wd_selectDelivery();
+                w.shippingCompanyId = invoice.shippingCompanyId;
+                w.shippingUserId = invoice.shipUserId;
+                w.ShowDialog();
+                if (w.isOk)
+                {
+                    _DeliveryCost = w._DeliveryCost;
+
+                    refreshTotal();
+                    #region change button Color
+                    if (w.shippingCompanyId > 0)
+                    {
+                        var company = FillCombo.shippingCompaniesList.Where(x => x.shippingCompanyId == w.shippingCompanyId).FirstOrDefault();
+
+                        txt_delivery.Text = company.name;
+                        txt_delivery.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                        path_delivery.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                    }
+                    else
+                    {
+                        txt_delivery.Text = AppSettings.resourcemanager.GetString("trDelivery");
+
+                        txt_delivery.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                        path_delivery.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                    }
+                    #endregion
+
+                    #region update invoice
+                    invoice.shippingCompanyId = w.shippingCompanyId;
+                    invoice.shipUserId = w.shippingUserId;
+                    invoice.shippingCost = _DeliveryCost;
+                    invoice.realShippingCost = w._RealDeliveryCost;
+                    invoice.total = _Sum;
+                    invoice.totalNet = decimal.Parse(tb_total.Text);
+                    invoice.paid = 0;
+                    invoice.deserved = invoice.totalNet;
+                    invoice.updateUserId = MainWindow.userLogin.userId;
+
+                    int res = await FillCombo.invoice.saveInvoice(invoice);
+
+                    if (res > 0)
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                        await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns, invoice.invoiceId, "sd");
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    #endregion
+                }
+
+
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_orderTime_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+
+
+                wd_selectTime w = new wd_selectTime();
+                w.ShowDialog();
+                if (w.isOk)
+                {
+
+
+
+
+                }
+
+
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         #endregion
         #region PAY
         private async Task<bool> validateInvoiceValues()
@@ -1989,8 +2128,9 @@ namespace Restaurant.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         #endregion
 
-        
+       
     }
 }
