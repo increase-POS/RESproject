@@ -107,8 +107,11 @@ namespace Restaurant.View.kitchen
                 }
                 while (!isDone);
                 #endregion
-                await Search();
+               
+                FillCombo.FillInvoiceTypeWithDefault(cb_searchInvType);
                 FillCombo.FillPreparingOrderStatusWithDefault(cb_searchStatus);
+
+                await Search();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -398,6 +401,24 @@ namespace Restaurant.View.kitchen
             #region seacrch status
             if (cb_searchStatus.SelectedIndex >0)
                 ordersQuery = ordersQuery.Where(c => c.status == cb_searchStatus.SelectedValue.ToString()).ToList();
+            #endregion
+
+            #region search invoice type
+            if(cb_searchInvType.SelectedIndex > 0)
+            {
+                List<string> invoiceTypes;
+
+                if (cb_searchInvType.SelectedValue.ToString() == "diningHall")
+                    invoiceTypes = new List<string>(){"s","sd" };
+
+                else if(cb_searchInvType.SelectedValue.ToString() == "takeAway")
+                    invoiceTypes = new List<string>() { "ts" };
+
+                else
+                    invoiceTypes = new List<string>() { "ss" }; // self service
+
+                ordersQuery = ordersQuery.Where(c => invoiceTypes.Contains( c.invType)).ToList();
+            }
             #endregion
             dg_orders.ItemsSource = ordersQuery;
         }      
