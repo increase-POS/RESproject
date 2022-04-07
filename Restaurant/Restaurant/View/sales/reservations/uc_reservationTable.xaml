@@ -514,7 +514,7 @@
                                             x:Name="btn_addCustomer" Click="Btn_addCustomer_Click"  
                                 Margin="5 5 10 5" IsEnabled="True">
                             <Path Fill="#4E4E4E" Stretch="Fill"  
-                    Width="25.5" Height="27.5"
+                    Width="25.5" Height="27.5" FlowDirection="LeftToRight"
                            Data="{StaticResource addFile}" />
                         </Button>
                         <Button Grid.Column="2"  Padding="0"    
@@ -522,7 +522,7 @@
                                             x:Name="btn_updateCustomer" Click="Btn_updateCustomer_Click"  
                                 Margin="5 5 10 5" IsEnabled="True">
                                 <Path Fill="#4E4E4E" Stretch="Fill"  
-                    Width="25.5" Height="27.5"
+                    Width="25.5" Height="27.5" FlowDirection="LeftToRight"
                            Data="{StaticResource updateFile}" />
                             </Button>
 
