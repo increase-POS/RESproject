@@ -143,7 +143,7 @@ namespace Restaurant.Classes
         }
         #endregion
         #region fill process type PayType
-      
+
         static public void FillDefaultPayType_cashBalanceCardMultiple(ComboBox cmb)
         {
             #region fill process type
@@ -397,7 +397,6 @@ namespace Restaurant.Classes
             cmb.ItemsSource = typelist;
         }
         #endregion
-        
         #region Countries
         /// <summary>
         /// area code methods
@@ -420,6 +419,7 @@ namespace Restaurant.Classes
         static async Task<IEnumerable<CountryCode>> RefreshCountry()
         {
             countrynum = await countrycodes.GetAllCountries();
+            await RefreshCity();
             return countrynum;
         }
         static public async Task<IEnumerable<City>> RefreshCity()
@@ -1130,7 +1130,7 @@ namespace Restaurant.Classes
         static public void FillInvoiceType(ComboBox cmb)
         {
             var typelist = new[] {
-                new { Text = AppSettings.resourcemanager.GetString("trDiningHall")       , Value = "diningHall" },
+                new { Text = AppSettings.resourcemanager.GetString("trDiningHallType")       , Value = "diningHall" },
                 new { Text = AppSettings.resourcemanager.GetString("trTakeAway") , Value = "takeAway" },
                 new { Text = AppSettings.resourcemanager.GetString("trSelfService") , Value = "selfService" },
                  };

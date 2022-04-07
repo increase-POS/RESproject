@@ -130,6 +130,7 @@ namespace Restaurant.View.sales
             catalogMenuList = new List<string> { "allMenu", "appetizers", "beverages", "fastFood", "mainCourses", "desserts" };
             categoryBtns = new List<Button> { btn_appetizers, btn_beverages, btn_fastFood, btn_mainCourses, btn_desserts };
             #region translate
+            changeInvType();
             tb_moneyIcon.Text = AppSettings.Currency;
             tb_moneyIconTotal.Text = AppSettings.Currency;
             if (AppSettings.lang.Equals("en"))
@@ -185,12 +186,62 @@ namespace Restaurant.View.sales
             tb_moneyIcon.Text = AppSettings.Currency;
             #region notification
             setTimer();
+            refreshDraftNotification();
             refreshOrdersNotification();
             #endregion
             HelpClass.activateCategoriesButtons(items, FillCombo.categoriesList, categoryBtns);
            // FillBillDetailsList(0);
             await Search();
             
+        }
+
+        void changeInvType()
+        {
+            //values(diningHall - takeAway - selfService)
+            if (AppSettings.invType == "diningHall")
+            {
+                txt_invType.Text = AppSettings.resourcemanager.GetString("trDiningHallType");
+
+                btn_cancel.Visibility = Visibility.Visible;
+                btn_tables.Visibility = Visibility.Visible;
+                btn_kitchen.Visibility = Visibility.Visible;
+                btn_waiter.Visibility = Visibility.Visible;
+
+
+                md_draft.Visibility = Visibility.Collapsed;
+                btn_delivery.Visibility = Visibility.Collapsed;
+                btn_orderTime.Visibility = Visibility.Collapsed;
+
+            }
+            else if (AppSettings.invType == "takeAway")
+            {
+                txt_invType.Text = AppSettings.resourcemanager.GetString("trTakeAway");
+
+                btn_cancel.Visibility = Visibility.Collapsed;
+                btn_tables.Visibility = Visibility.Collapsed;
+                btn_kitchen.Visibility = Visibility.Collapsed;
+                btn_waiter.Visibility = Visibility.Collapsed;
+
+
+                md_draft.Visibility = Visibility.Visible;
+                btn_delivery.Visibility = Visibility.Visible;
+                btn_orderTime.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                txt_invType.Text = AppSettings.resourcemanager.GetString("trSelfService");
+
+                btn_cancel.Visibility = Visibility.Collapsed;
+                btn_tables.Visibility = Visibility.Collapsed;
+                btn_kitchen.Visibility = Visibility.Collapsed;
+                btn_waiter.Visibility = Visibility.Collapsed;
+
+
+                md_draft.Visibility = Visibility.Visible;
+                btn_delivery.Visibility = Visibility.Visible;
+                btn_orderTime.Visibility = Visibility.Visible;
+            }
+
         }
         private void translate()
         {
@@ -217,7 +268,7 @@ namespace Restaurant.View.sales
             txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
             txt_kitchen.Text = AppSettings.resourcemanager.GetString("trKitchen");
             txt_tables.Text = AppSettings.resourcemanager.GetString("trTables");
-            txt_invType.Text = AppSettings.resourcemanager.GetString("invoiceType");
+            //txt_invType.Text = AppSettings.resourcemanager.GetString("invoiceType");
             btn_pay.Content = AppSettings.resourcemanager.GetString("trPay");
             txt_delivery.Text = AppSettings.resourcemanager.GetString("trDelivery");
             txt_orderTime.Text = AppSettings.resourcemanager.GetString("time");
@@ -1221,6 +1272,7 @@ namespace Restaurant.View.sales
         #endregion
         #region timer to refresh notifications
         private static DispatcherTimer timer;
+        int _DraftCount = 0;
         int _OrderCount = 0;
         public static bool isFromReport = false;
         private void setTimer()
@@ -1241,6 +1293,26 @@ namespace Restaurant.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private void setNotifications()
+        {
+            refreshDraftNotification();
+            refreshOrdersNotification();
+        }
+        async Task refreshDraftNotification()
+        {
+            try
+            {
+                string invoiceType = "tsd";
+                int duration = 2;
+                int ordersCount = await FillCombo.invoice.GetCountByCreator(invoiceType, MainWindow.userLogin.userId, duration);
+                if (FillCombo.invoice != null && _InvoiceType == "tsd" && FillCombo.invoice != null && FillCombo.invoice.invoiceId != 0 && !isFromReport)
+                    ordersCount--;
+
+                HelpClass.refreshNotification(md_draft, ref _DraftCount, ordersCount);
+            }
+            catch { }
+        }
+
         async Task refreshOrdersNotification()
         {
             try
@@ -1541,6 +1613,46 @@ namespace Restaurant.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private async void Btn_draft_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_invoice w = new wd_invoice();
+                string invoiceType = "tsd";
+                int duration = 2;
+                w.invoiceType = invoiceType;
+                w.userId = MainWindow.userLogin.userId;
+                w.duration = duration; // view drafts which created during 2 last days 
+                w.icon = "drafts";
+                w.page = "takeAway";
+                w.title = AppSettings.resourcemanager.GetString("trDrafts");
+
+                if (w.ShowDialog() == true)
+                {
+                    if (w.invoice != null)
+                    {
+                        invoice = w.invoice;
+                        _InvoiceType = invoice.invType;
+                        // _invoiceId = invoice.invoiceId;
+                        isFromReport = false;
+                        await fillInvoiceInputs(invoice);
+                        setNotifications();
+                        //navigateBtnActivate();
+                    }
+                }
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
         private void Btn_ordersAlerts_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -1592,8 +1704,14 @@ namespace Restaurant.View.sales
 
 
                 wd_selectInvType w = new wd_selectInvType();
-                w.ShowDialog();
 
+                w.ShowDialog();
+                if(w.isOk)
+                {
+                    //MessageBox.Show(w.invTypeValue);
+                    //AppSettings.invType = w.invTypeValue;
+                    changeInvType();
+                }
 
                 Window.GetWindow(this).Opacity = 1;
                 HelpClass.EndAwait(grid_main);

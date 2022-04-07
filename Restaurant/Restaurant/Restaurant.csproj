@@ -740,9 +740,6 @@
     <Compile Include="View\windows\wd_reportSystmSetting.xaml.cs">
       <DependentUpon>wd_reportSystmSetting.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\windows\wd_residentialSctors.xaml.cs">
-      <DependentUpon>wd_residentialSctors.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\windows\wd_residentialSectorsList.xaml.cs">
       <DependentUpon>wd_residentialSectorsList.xaml</DependentUpon>
     </Compile>
@@ -1448,10 +1445,6 @@
     <Page Include="View\windows\wd_reportSystmSetting.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\windows\wd_residentialSctors.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_residentialSectorsList.xaml">
       <SubType>Designer</SubType>
