@@ -59,6 +59,7 @@
                     <Border Grid.Row="0" Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid>
                             <ComboBox x:Name="cb_company"  Grid.Row="0" 
+                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                   materialDesign:HintAssist.Hint="Company..."  
                                   Grid.Column="0" Height="40"   
@@ -76,6 +77,7 @@
                     <Border x:Name="brd_user"  Grid.Row="1" Visibility="Collapsed" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid>
                             <ComboBox x:Name="cb_user"  Grid.Row="1"
+                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                   materialDesign:HintAssist.Hint="User..."  
                                  Visibility="Visible" SelectionChanged="Cb_user_SelectionChanged"
