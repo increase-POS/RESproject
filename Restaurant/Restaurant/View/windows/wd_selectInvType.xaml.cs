@@ -40,7 +40,7 @@ namespace Restaurant.View.windows
             catch
             { }
         }
-        private void Btn_colse_Click(object sender, RoutedEventArgs e)
+        private void Btn_colse_Click(object sender, RoutedEventArgs e) 
         {
             isOk = false;
             this.Close();
@@ -62,7 +62,15 @@ namespace Restaurant.View.windows
         //public Tables table;
         //List<Tables> tables = new List<Tables>();
         public bool isOk { get; set; }
+
+
         public static List<string> requiredControlList = new List<string>();
+        string notes = "";
+        UserSetValues userSetValuesModel = new UserSetValues();
+        SetValues invSet;
+        UserSetValues defaultInvTypeSetValue;
+        int defaulInvType;
+        int settingId;
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
@@ -79,7 +87,9 @@ namespace Restaurant.View.windows
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-                //fillInvTypeCombo();
+
+                FillCombo.FillInvoiceType(cb_invType);
+                await getDefaultInvoiceType();
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -96,17 +106,39 @@ namespace Restaurant.View.windows
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_invType, AppSettings.resourcemanager.GetString("invoiceType") + "...");
             btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
         }
-
-        async Task fillInvTypeCombo()
+        
+        private async Task getDefaultInvoiceType()
         {
-            //tables = await FillCombo.table.GetTablesForDinning(MainWindow.branchLogin.branchId, DateTime.Now.ToString());
-            //tables = tables.Where(x => x.status != "opened" && x.status != "openedReserved").ToList();
 
-            //cb_tableId.SelectedValuePath = "tableId";
-            //cb_tableId.DisplayMemberPath = "name";
-            //cb_tableId.ItemsSource = tables;
+           List<UserSetValues> lst = await userSetValuesModel.GetAll();
+            SetValues setValueModel = new SetValues();
+
+           invSet = await setValueModel.GetBySetNameAndUserId("invType", MainWindow.userLogin.userId);
+            if (invSet != null)
+            {
+                defaulInvType = invSet.valId;
+                settingId =(int)invSet.settingId;
+                notes = invSet.notes;
+
+                try
+                {
+                    defaultInvTypeSetValue = lst.Where(u => u.valId == defaulInvType && u.userId == MainWindow.userLogin.userId).FirstOrDefault();                     
+                    cb_invType.SelectedValue = invSet.value;                
+                }
+                catch {}
+            }
+            else
+            {
+                SettingCls settingCls = new SettingCls();
+                List<SettingCls> lstSettings;
+                lstSettings = await settingCls.GetAll();
+
+                var invTypeSet = lstSettings.Where(x => x.name == "invType").FirstOrDefault();
+                settingId = (int)invTypeSet.settingId;
+                notes = invTypeSet.notes;
+            }
         }
-        private void Btn_select_Click(object sender, RoutedEventArgs e)
+        private async void Btn_select_Click(object sender, RoutedEventArgs e)
         {
             // if have id return true
 
@@ -114,8 +146,37 @@ namespace Restaurant.View.windows
             {
                 isOk = true;
 
-                //int tableId = (int)cb_tableId.SelectedValue;
-                //table = tables.Where(x => x.tableId == tableId).FirstOrDefault();
+                if (defaultInvTypeSetValue == null)
+                    defaultInvTypeSetValue = new UserSetValues();
+
+                #region save set value
+                if (invSet == null)
+                {
+                    invSet = new SetValues();
+                    invSet.settingId = settingId;
+                    invSet.isSystem = 0;
+                    invSet.isDefault = 0;
+                }
+
+                invSet.value = cb_invType.SelectedValue.ToString();
+                invSet.notes = notes;
+
+                int res = await invSet.Save(invSet);
+                #endregion
+
+                #region save user setting value
+                if (res > 0)
+                {
+                    defaultInvTypeSetValue.userId = MainWindow.userLogin.userId;
+                    defaultInvTypeSetValue.valId = res;
+                    defaultInvTypeSetValue.notes = notes;
+                    defaultInvTypeSetValue.createUserId = MainWindow.userLogin.userId;
+                    defaultInvTypeSetValue.updateUserId = MainWindow.userLogin.userId;
+                    await userSetValuesModel.Save(defaultInvTypeSetValue);
+                }
+                #endregion
+
+                AppSettings.invType = cb_invType.SelectedValue.ToString();
                 this.Close();
             }
         }

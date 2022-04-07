@@ -218,6 +218,30 @@ namespace Restaurant.Classes
             //    return list;
             //}
         }
+        public async Task<SetValues> GetBySetNameAndUserId(string name, int userId)
+        {
+
+            SetValues list = new SetValues();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("name", name);
+            parameters.Add("userId", userId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("setValues/GetBySetNameAndUserId", parameters);
+
+
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list = JsonConvert.DeserializeObject<SetValues>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                }
+            }
+            return list;
+
+
+         
+        }
         // email
         public async Task<int> SaveValueByNotes(SetValues obj)
         {
