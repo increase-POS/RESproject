@@ -3784,4 +3784,16 @@
   <data name="trSelfService" xml:space="preserve">
     <value>وجبات جاهزة - داخل</value>
   </data>
+  <data name="activate" xml:space="preserve">
+    <value>تفعيل</value>
+  </data>
+  <data name="deActivate" xml:space="preserve">
+    <value>إلغاء تفعيل</value>
+  </data>
+  <data name="popActivation" xml:space="preserve">
+    <value>تم التفعيل بنجاح</value>
+  </data>
+  <data name="popDeActivation" xml:space="preserve">
+    <value>تم إلغاء التفعيل بنجاح</value>
+  </data>
 </root>

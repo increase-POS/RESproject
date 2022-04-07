@@ -3808,4 +3808,16 @@ Please add Email in setting</value>
   <data name="trSelfService" xml:space="preserve">
     <value>Self-service</value>
   </data>
+  <data name="activate" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="deActivate" xml:space="preserve">
+    <value>Deactivate</value>
+  </data>
+  <data name="popActivation" xml:space="preserve">
+    <value>Activation success</value>
+  </data>
+  <data name="popDeActivation" xml:space="preserve">
+    <value>Deactivation success</value>
+  </data>
 </root>

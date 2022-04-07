@@ -198,7 +198,6 @@
     <Compile Include="ar_file.Designer.cs" />
     <Compile Include="Classes\ApiClasses\Agent.cs" />
     <Compile Include="Classes\ApiClasses\AgentMembershipCash.cs" />
-    <Compile Include="Classes\ApiClasses\ResidentialSectorsUsers.cs" />
     <Compile Include="Classes\ApiClasses\CouponsMemberships.cs" />
     <Compile Include="Classes\ApiClasses\HallSection.cs" />
     <Compile Include="Classes\ApiClasses\DishIngredients.cs" />
@@ -273,6 +272,7 @@
     <Compile Include="converters\agentCompanyConverter.cs" />
     <Compile Include="converters\agentNameConverter.cs" />
     <Compile Include="converters\agentTypeConverter.cs" />
+    <Compile Include="converters\availableConverter.cs" />
     <Compile Include="converters\closingDescriptonConverter.cs" />
     <Compile Include="converters\decimalToTimeConverter.cs" />
     <Compile Include="converters\deliveryTypeConverter.cs" />
@@ -740,6 +740,12 @@
     <Compile Include="View\windows\wd_reportSystmSetting.xaml.cs">
       <DependentUpon>wd_reportSystmSetting.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_residentialSctors.xaml.cs">
+      <DependentUpon>wd_residentialSctors.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_residentialSectorsList.xaml.cs">
+      <DependentUpon>wd_residentialSectorsList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_returnInvoice.xaml.cs">
       <DependentUpon>wd_returnInvoice.xaml</DependentUpon>
     </Compile>
@@ -751,6 +757,9 @@
     </Compile>
     <Compile Include="View\windows\wd_selectDiscount.xaml.cs">
       <DependentUpon>wd_selectDiscount.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_selectInvType.xaml.cs">
+      <DependentUpon>wd_selectInvType.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_selectTable.xaml.cs">
       <DependentUpon>wd_selectTable.xaml</DependentUpon>
@@ -1440,6 +1449,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\windows\wd_residentialSctors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_residentialSectorsList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\windows\wd_returnInvoice.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1455,6 +1472,10 @@
     <Page Include="View\windows\wd_selectDiscount.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_selectInvType.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_selectTable.xaml">
       <SubType>Designer</SubType>

@@ -1,4 +1,6 @@
-﻿using Restaurant.Classes;
+﻿using netoaster;
+using Restaurant.Classes;
+using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -117,7 +119,7 @@ namespace Restaurant.View.delivery
         {
             txt_title.Text = AppSettings.resourcemanager.GetString("trDriversManagement");
             txt_details.Text = AppSettings.resourcemanager.GetString("trDetails");
-
+            txt_active.Text = AppSettings.resourcemanager.GetString("trActive");
             txt_userName.Text = AppSettings.resourcemanager.GetString("trUserName");
             txt_driverName.Text = AppSettings.resourcemanager.GetString("trDriver");
             txt_mobile.Text = AppSettings.resourcemanager.GetString("trMobile");
@@ -128,13 +130,14 @@ namespace Restaurant.View.delivery
             txt_preview.Text = AppSettings.resourcemanager.GetString("trPreview");
             txt_print.Text = AppSettings.resourcemanager.GetString("trPrint");
             txt_residentialSectors.Text = AppSettings.resourcemanager.GetString("trResidentialSectors");
-            txt_activeInactive.Text = AppSettings.resourcemanager.GetString("trAvailable");
+            txt_activeInactive.Text = AppSettings.resourcemanager.GetString("activate");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
 
-            dg_user.Columns[0].Header = AppSettings.resourcemanager.GetString("trTransferNumberTooltip");
-            dg_user.Columns[1].Header = AppSettings.resourcemanager.GetString("trRecepient");
-            dg_user.Columns[2].Header = AppSettings.resourcemanager.GetString("trPaymentTypeTooltip");
+            dg_user.Columns[0].Header = AppSettings.resourcemanager.GetString("trUserName");
+            dg_user.Columns[1].Header = AppSettings.resourcemanager.GetString("trName");
+            dg_user.Columns[2].Header = AppSettings.resourcemanager.GetString("trMobile");
+            dg_user.Columns[3].Header = AppSettings.resourcemanager.GetString("trStatus");
 
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
 
@@ -222,7 +225,7 @@ namespace Restaurant.View.delivery
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
+        int selectedDriver = 0;
         private void Dg_user_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
             try
@@ -232,13 +235,15 @@ namespace Restaurant.View.delivery
                 if (dg_user.SelectedIndex != -1)
                 {
                     driver = dg_user.SelectedItem as User;
+                    selectedDriver = dg_user.SelectedIndex;
                     this.DataContext = driver;
                     if (driver != null)
                     {
-                        //btn_stores.IsEnabled = true;
-                        //grid_userNameLabel.Visibility = Visibility.Visible;
-                        //grid_userNameInput.Visibility = Visibility.Collapsed;
-
+                        if (driver.driverIsAvailable == 0)
+                            txt_activeInactive.Text = AppSettings.resourcemanager.GetString("activate");
+                        else
+                            txt_activeInactive.Text = AppSettings.resourcemanager.GetString("deActivate");
+                       
                     }
                 }
                 HelpClass.EndAwait(grid_main);
@@ -249,6 +254,74 @@ namespace Restaurant.View.delivery
                 HelpClass.ExceptionMessage(ex, this);
             }
 
+        }
+
+        private void Btn_residentialSectors_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //if (FillCombo.groupObject.HasPermissionAction(storesPermission, FillCombo.groupObjects, "one"))
+                {
+                    Window.GetWindow(this).Opacity = 0.2;
+
+                    wd_residentialSectorsList w = new wd_residentialSectorsList();
+                    //w.Id = user.userId;
+                    //w.userOrBranch = 'u';
+                    w.ShowDialog();
+
+                    Window.GetWindow(this).Opacity = 1;
+                }
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void Btn_activeInactive_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //if (FillCombo.groupObject.HasPermissionAction(storesPermission, FillCombo.groupObjects, "one"))
+                {
+                    string resultStr = "";
+                    if (driver.driverIsAvailable == 0)
+                    {
+                        driver.driverIsAvailable = 1;
+                        resultStr = "popActivation";
+                    }
+                    else
+                    {
+                        driver.driverIsAvailable = 0;
+                        resultStr = "popDeActivation";
+                    }
+
+                    int s = await driver.save(driver);
+                    if (s <= 0)
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    else
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString(resultStr), animation: ToasterAnimation.FadeIn);
+                        await RefreshDriversList();
+                        await Search();
+                        dg_user.SelectedIndex = selectedDriver;
+                    }
+                }
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
     }
 }

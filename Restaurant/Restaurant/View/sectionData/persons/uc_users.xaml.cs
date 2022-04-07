@@ -219,6 +219,7 @@ namespace Restaurant.View.sectionData.persons
                             user.createUserId = MainWindow.userLogin.userId;
                             user.updateUserId = MainWindow.userLogin.userId;
                             user.notes = tb_notes.Text;
+                            user.driverIsAvailable = 0;
                             //user.role = "";
                             //user.details = "";
 
