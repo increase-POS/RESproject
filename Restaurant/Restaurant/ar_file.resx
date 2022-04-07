@@ -2975,7 +2975,7 @@
     <value>عمليات التخزين</value>
   </data>
   <data name="trTakeAway" xml:space="preserve">
-    <value>Take Away</value>
+    <value>وجبات جاهزة - خارج</value>
   </data>
   <data name="trSystemSetting" xml:space="preserve">
     <value>إعدادات النظام</value>
@@ -3777,5 +3777,11 @@
   </data>
   <data name="trDriver" xml:space="preserve">
     <value>السائق</value>
+  </data>
+  <data name="trDiningHallType" xml:space="preserve">
+    <value>صالة مطعم</value>
+  </data>
+  <data name="trSelfService" xml:space="preserve">
+    <value>وجبات جاهزة - داخل</value>
   </data>
 </root>

@@ -1111,6 +1111,35 @@ namespace Restaurant.Classes
             #endregion
         }
         #endregion
+
+        #region invoice type
+        static public void FillInvoiceTypeWithDefault(ComboBox cmb)
+        {
+            var typelist = new[] {
+                new { Text = "-"       , Value = "" },
+                new { Text = AppSettings.resourcemanager.GetString("trDiningHallType")       , Value = "diningHall" },
+                new { Text = AppSettings.resourcemanager.GetString("trTakeAway") , Value = "takeAway" },
+                new { Text = AppSettings.resourcemanager.GetString("trSelfService") , Value = "selfService" },
+                 };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = typelist;
+            cmb.SelectedIndex = 0;
+        }
+
+        static public void FillInvoiceType(ComboBox cmb)
+        {
+            var typelist = new[] {
+                new { Text = AppSettings.resourcemanager.GetString("trDiningHall")       , Value = "diningHall" },
+                new { Text = AppSettings.resourcemanager.GetString("trTakeAway") , Value = "takeAway" },
+                new { Text = AppSettings.resourcemanager.GetString("trSelfService") , Value = "selfService" },
+                 };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = typelist;
+            cmb.SelectedIndex = 0;
+        }
+        #endregion
         static public ItemLocation itemLocation = new ItemLocation();
         static public Invoice invoice = new Invoice();
         static public List<Invoice> invoices;
