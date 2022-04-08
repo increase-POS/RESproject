@@ -3796,4 +3796,7 @@
   <data name="popDeActivation" xml:space="preserve">
     <value>تم إلغاء التفعيل بنجاح</value>
   </data>
+  <data name="selectedResidentialSectors" xml:space="preserve">
+    <value>القطاعات السكنية المختارة</value>
+  </data>
 </root>

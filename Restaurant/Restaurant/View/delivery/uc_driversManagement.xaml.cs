@@ -266,8 +266,7 @@ namespace Restaurant.View.delivery
                     Window.GetWindow(this).Opacity = 0.2;
 
                     wd_residentialSectorsList w = new wd_residentialSectorsList();
-                    //w.Id = user.userId;
-                    //w.userOrBranch = 'u';
+                    w.driverId = driver.userId;
                     w.ShowDialog();
 
                     Window.GetWindow(this).Opacity = 1;

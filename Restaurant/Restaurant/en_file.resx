@@ -3820,4 +3820,7 @@ Please add Email in setting</value>
   <data name="popDeActivation" xml:space="preserve">
     <value>Deactivation success</value>
   </data>
+  <data name="selectedResidentialSectors" xml:space="preserve">
+    <value>Selected Residential Sectors</value>
+  </data>
 </root>
