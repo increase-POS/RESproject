@@ -226,6 +226,8 @@ namespace Restaurant.View.sales
                 md_draft.Visibility = Visibility.Visible;
                 btn_delivery.Visibility = Visibility.Visible;
                 btn_orderTime.Visibility = Visibility.Visible;
+
+                refreshDraftNotification();
             }
             else
             {
@@ -240,6 +242,8 @@ namespace Restaurant.View.sales
                 md_draft.Visibility = Visibility.Visible;
                 btn_delivery.Visibility = Visibility.Visible;
                 btn_orderTime.Visibility = Visibility.Visible;
+
+                refreshDraftNotification();
             }
 
         }
@@ -302,13 +306,14 @@ namespace Restaurant.View.sales
         {
             try
             {
-                if (item != null && selectedTables.Count>0)
+                if(AppSettings.invType == "diningHall" && selectedTables.Count == 0)
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trChooseTableFirst"), animation: ToasterAnimation.FadeIn);
+
+                else if (item != null)
                 {
                     item = items.Where(x => x.itemId == itemId).FirstOrDefault();
                     addRowToBill(item,1);
                 }
-                else if(selectedTables.Count == 0)
-                    Toaster.ShowWarning(Window.GetWindow(this), message:  AppSettings.resourcemanager.GetString("trChooseTableFirst"), animation: ToasterAnimation.FadeIn);
 
             }
             catch { }
@@ -1302,10 +1307,15 @@ namespace Restaurant.View.sales
         {
             try
             {
-                string invoiceType = "tsd";
+                string invoiceType = "";
+                if (AppSettings.invType == "takeAway")
+                    invoiceType = "tsd";
+                else if (AppSettings.invType == "selfService")
+                    invoiceType = "ssd";
+
                 int duration = 2;
                 int ordersCount = await FillCombo.invoice.GetCountByCreator(invoiceType, MainWindow.userLogin.userId, duration);
-                if (FillCombo.invoice != null && _InvoiceType == "tsd" && FillCombo.invoice != null && FillCombo.invoice.invoiceId != 0 && !isFromReport)
+                if (FillCombo.invoice != null && _InvoiceType == invoiceType && FillCombo.invoice != null && FillCombo.invoice.invoiceId != 0 && !isFromReport)
                     ordersCount--;
 
                 HelpClass.refreshNotification(md_draft, ref _DraftCount, ordersCount);
@@ -1329,15 +1339,44 @@ namespace Restaurant.View.sales
         #region adddraft - addInvoice - cancleInvoice - clear - table names - fillInvoiceInputs - validate invoice values
         private async Task addDraft()
         {
-            if (billDetailsList.Count > 0 && _InvoiceType == "sd" && selectedTables.Count > 0)
+            if (AppSettings.invType == "dinningHall")
             {
-                await addInvoice("sd");
-                //clear();
-                refreshOrdersNotification();
+                if (billDetailsList.Count > 0 && _InvoiceType == "sd" && selectedTables.Count > 0)
+                {
+                    await addInvoice("sd");
+                    refreshOrdersNotification();
+
+                }
                 
             }
-            //else
-            //    clear();
+            else if(AppSettings.invType == "takeAway")
+            {
+                if (billDetailsList.Count > 0)
+                {
+                    if (invoice.invoiceId == 0)
+                    {
+                        invoice.invNumber = await invoice.generateInvNumber("tsd", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+                    }
+
+                    await addInvoice("tsd");
+
+                    refreshOrdersNotification();
+                    refreshDraftNotification();
+                }
+
+            }
+            else if(AppSettings.invType == "selfService")
+            {
+                if (invoice.invoiceId == 0)
+                {
+                    invoice.invNumber = await invoice.generateInvNumber("ssd", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+                }
+                await addInvoice("ssd");
+
+                refreshDraftNotification();
+                refreshOrdersNotification();
+            }
+            clear();
         }
 
         async Task<int> addInvoice(string invType)
@@ -1345,6 +1384,13 @@ namespace Restaurant.View.sales
             try
             {
                 #region invoice object
+                if (invoice.invoiceId == 0)
+                {
+                    invoice.createUserId = MainWindow.userLogin.userId;
+                    invoice.branchId = MainWindow.branchLogin.branchId;
+                    invoice.branchCreatorId = MainWindow.branchLogin.branchId;
+                }
+                invoice.updateUserId = MainWindow.userLogin.userId;
                 invoice.invType = invType;
                 invoice.discountValue = _ManualDiscount;
                 invoice.discountType = _DiscountType ;
@@ -1466,6 +1512,15 @@ namespace Restaurant.View.sales
         }
         public async Task fillInvoiceInputs(Invoice invoice)
         {
+            if (AppSettings.invType == "diningHall")
+                await fillDiningHallInv();
+            else if (AppSettings.invType == "takeAway")
+                await fillTakeAwayInv();
+            else if (AppSettings.invType == "selfService")
+                await fillSelfServiceInv();
+        }
+        async Task fillDiningHallInv()
+        {
             #region set parameters
             _Sum = (decimal)invoice.total;
             _DeliveryCost = (decimal)invoice.shippingCost;
@@ -1530,7 +1585,7 @@ namespace Restaurant.View.sales
                 tb_total.Text = HelpClass.DecTostring(invoice.totalNet);
             else tb_total.Text = "0";
 
-            if (invoice.tax != 0) 
+            if (invoice.tax != 0)
                 tb_tax.Text = HelpClass.PercentageDecTostring(invoice.tax);
             else
                 tb_tax.Text = "0";
@@ -1559,6 +1614,175 @@ namespace Restaurant.View.sales
                 btn_cancel.IsEnabled = true;
             else
                 btn_cancel.IsEnabled = false;
+            #endregion
+        }
+
+        async Task fillTakeAwayInv()
+        {
+            #region set parameters
+            _Sum = (decimal)invoice.total;
+            _DeliveryCost = (decimal)invoice.shippingCost;
+            _ManualDiscount = invoice.discountValue;
+            _DiscountType = invoice.discountType;
+            selectedCopouns = await FillCombo.invoice.GetInvoiceCoupons(invoice.invoiceId);
+
+            #endregion
+
+            #region text values and colors
+
+            if (_ManualDiscount > 0 || selectedCopouns.Count > 0)
+            {
+                txt_discount.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                path_discount.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            }
+            else
+            {
+                txt_discount.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                path_discount.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            }
+
+            if (invoice.shippingCompanyId != null)
+            {
+                if (FillCombo.shippingCompaniesList == null)
+                    await FillCombo.RefreshShippingCompanies();
+
+                var company = FillCombo.shippingCompaniesList.Where(x => x.shippingCompanyId == invoice.shippingCompanyId).FirstOrDefault();
+
+                txt_delivery.Text = company.name;
+                txt_delivery.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                path_delivery.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            }
+            else
+            {
+                txt_delivery.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                path_delivery.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            }
+
+            if (invoice.agentId != null)
+            {
+                var customer = FillCombo.customersList.Where(x => x.agentId == invoice.agentId).FirstOrDefault();
+                _MemberShipId = (int)customer.membershipId;
+                txt_customer.Text = customer.name;
+
+                txt_customer.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                path_customer.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            }
+            else
+            {
+                txt_customer.Text = AppSettings.resourcemanager.GetString("trCustomer");
+                txt_customer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                path_customer.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            }
+
+            if (invoice.total != 0)
+                tb_subtotal.Text = HelpClass.DecTostring(invoice.total);
+            else
+                tb_subtotal.Text = "0";
+
+            if (invoice.totalNet != 0)
+                tb_total.Text = HelpClass.DecTostring(invoice.totalNet);
+            else tb_total.Text = "0";
+
+            if (invoice.tax != 0)
+                tb_tax.Text = HelpClass.PercentageDecTostring(invoice.tax);
+            else
+                tb_tax.Text = "0";
+            #endregion
+
+            #region invoice items
+            invoiceItems = await FillCombo.invoice.GetInvoicesItems(invoice.invoiceId);
+            billDetailsList = new ObservableCollection<BillDetailsSales>();
+            BuildBillDesign();
+            foreach (ItemTransfer it in invoiceItems)
+            {
+                item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
+                addRowToBill(item, it.quantity);
+            }
+
+            #endregion
+        }
+        async Task fillSelfServiceInv()
+        {
+            #region set parameters
+            _Sum = (decimal)invoice.total;
+            _DeliveryCost = (decimal)invoice.shippingCost;
+            //_ManualDiscount = invoice.discountValue;
+            //_DiscountType = invoice.discountType;
+            //selectedCopouns = await FillCombo.invoice.GetInvoiceCoupons(invoice.invoiceId);
+
+            #endregion
+
+            #region text values and colors
+
+            //if (_ManualDiscount > 0 || selectedCopouns.Count > 0)
+            //{
+            //    txt_discount.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            //    path_discount.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            //}
+            //else
+            //{
+            //    txt_discount.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            //    path_discount.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            //}
+
+            if (invoice.shippingCompanyId != null)
+            {
+                if (FillCombo.shippingCompaniesList == null)
+                    await FillCombo.RefreshShippingCompanies();
+
+                var company = FillCombo.shippingCompaniesList.Where(x => x.shippingCompanyId == invoice.shippingCompanyId).FirstOrDefault();
+
+                txt_delivery.Text = company.name;
+                txt_delivery.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                path_delivery.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            }
+            else
+            {
+                txt_delivery.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                path_delivery.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            }
+
+            //if (invoice.agentId != null)
+            //{
+            //    var customer = FillCombo.customersList.Where(x => x.agentId == invoice.agentId).FirstOrDefault();
+            //    _MemberShipId = (int)customer.membershipId;
+            //    txt_customer.Text = customer.name;
+
+            //    txt_customer.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            //    path_customer.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            //}
+            //else
+            //{
+            //    txt_customer.Text = AppSettings.resourcemanager.GetString("trCustomer");
+            //    txt_customer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            //    path_customer.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            //}
+
+            if (invoice.total != 0)
+                tb_subtotal.Text = HelpClass.DecTostring(invoice.total);
+            else
+                tb_subtotal.Text = "0";
+
+            if (invoice.totalNet != 0)
+                tb_total.Text = HelpClass.DecTostring(invoice.totalNet);
+            else tb_total.Text = "0";
+
+            if (invoice.tax != 0)
+                tb_tax.Text = HelpClass.PercentageDecTostring(invoice.tax);
+            else
+                tb_tax.Text = "0";
+            #endregion
+
+            #region invoice items
+            invoiceItems = await FillCombo.invoice.GetInvoicesItems(invoice.invoiceId);
+            billDetailsList = new ObservableCollection<BillDetailsSales>();
+            BuildBillDesign();
+            foreach (ItemTransfer it in invoiceItems)
+            {
+                item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
+                addRowToBill(item, it.quantity);
+            }
+
             #endregion
         }
         List<BillDetailsSales> sentInvoiceItems = new List<BillDetailsSales>();
@@ -1618,10 +1842,16 @@ namespace Restaurant.View.sales
             try
             {
                 HelpClass.StartAwait(grid_main);
+                string invoiceType = "";
+                if(AppSettings.invType == "takeAway")
+                    invoiceType = "tsd";
+                else if(AppSettings.invType == "selfService")
+                    invoiceType = "ssd";
 
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_invoice w = new wd_invoice();
-                string invoiceType = "tsd";
+
+                
                 int duration = 2;
                 w.invoiceType = invoiceType;
                 w.userId = MainWindow.userLogin.userId;
@@ -1711,6 +1941,7 @@ namespace Restaurant.View.sales
                     //MessageBox.Show(w.invTypeValue);
                     //AppSettings.invType = w.invTypeValue;
                     changeInvType();
+                   
                 }
 
                 Window.GetWindow(this).Opacity = 1;
@@ -2095,6 +2326,7 @@ namespace Restaurant.View.sales
         }
         #endregion
         #region PAY
+        List<CashTransfer> paymentsList = new List<CashTransfer>();
         private async Task<bool> validateInvoiceValues()
         {
             if (decimal.Parse(tb_subtotal.Text) == 0)
@@ -2201,36 +2433,18 @@ namespace Restaurant.View.sales
                         #endregion
                         if (w.isOk)
                         {
-                            int res = await addInvoice("s");
-                            if (res > 0)
-                            {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                           
+                            paymentsList = w.listPayments;
 
-                                #region savepayment
-                                List<CashTransfer> paymentsList = new List<CashTransfer>();
-                                await FillCombo.invoice.recordPosCashTransfer(invoice, "si");
+                            if (AppSettings.invType == "diningHall")
+                                await saveDiningHallInvoice("s");
 
-                                paymentsList = w.listPayments;
-                                foreach (var item in paymentsList)
-                                {
-                                    await saveConfiguredCashTrans(item);
-                                    invoice.paid += item.cash;
-                                    invoice.deserved -= item.cash;
-                                }
-                                prinvoiceId = await invoice.saveInvoice(invoice);
-                                // refresh pos balance
-                                await MainWindow.refreshBalance();
-                                #endregion
-                                //await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns, invoice.invoiceId, "s");
-                                #region close reservation
-                                if (invoice.reservationId != null)
-                                    await reservation.updateReservationStatus((long)invoice.reservationId, "close", MainWindow.userLogin.userId);
-                                #endregion
+                            else if (AppSettings.invType == "takeAway")
+                                await saveTakeAwayInvoice("ts");
 
-                                clear();
-                            }
-                            else
-                                Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            else if (AppSettings.invType == "selfService")
+                                await saveTakeAwayInvoice("ss");
+
                         }                      
                     }
                 }
@@ -2251,6 +2465,116 @@ namespace Restaurant.View.sales
 
         #endregion
 
-       
+        #region save invoice according to invType
+        private async Task saveDiningHallInvoice(string invType)
+        {
+            int res = await addInvoice(invType);
+            if (res > 0)
+            {
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+                #region savepayment
+                
+                await FillCombo.invoice.recordPosCashTransfer(invoice, "si");
+
+                
+                foreach (var item in paymentsList)
+                {
+                    await saveConfiguredCashTrans(item);
+                    invoice.paid += item.cash;
+                    invoice.deserved -= item.cash;
+                }
+                prinvoiceId = await invoice.saveInvoice(invoice);
+                // refresh pos balance
+                await MainWindow.refreshBalance();
+                #endregion
+                //await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns, invoice.invoiceId, "s");
+                #region close reservation
+                if (invoice.reservationId != null)
+                    await reservation.updateReservationStatus((long)invoice.reservationId, "close", MainWindow.userLogin.userId);
+                #endregion
+
+                clear();
+            }
+            else
+                Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+        }
+
+        private async Task saveTakeAwayInvoice(string invType)
+        {
+            if (invType == "tsd" && invoice.invoiceId == 0)
+            {
+                invoice.invNumber = await invoice.generateInvNumber("tsd", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+            }
+            else
+                invoice.invNumber = await invoice.generateInvNumber("ts", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+
+            int res = await addInvoice("ts");
+            if (res > 0)
+            {
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+                invoice.invoiceId = res;
+                #region send orders to kitchen
+                await saveOrdersPreparing();
+                #endregion
+
+                #region savepayment if no shipping company
+                if (invoice.shippingCompanyId == null)
+                {
+
+                    foreach (var item in paymentsList)
+                    {
+                        await saveConfiguredCashTrans(item);
+                        invoice.paid += item.cash;
+                        invoice.deserved -= item.cash;
+                    }
+                    prinvoiceId = await invoice.saveInvoice(invoice);
+                    // refresh pos balance
+                    await MainWindow.refreshBalance();
+                }
+                #endregion
+
+                clear();
+                refreshDraftNotification();
+            }
+            else
+                Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+        }
+        async Task saveOrdersPreparing()
+        {
+            #region order Items
+
+            List<ItemOrderPreparing> preparingItemsList = new List<ItemOrderPreparing>();
+
+            foreach (BillDetailsSales b in billDetailsList)
+            {
+                ItemOrderPreparing it = new ItemOrderPreparing()
+                {
+                    itemUnitId = b.itemUnitId,
+                    quantity = b.Count,
+                    createUserId = MainWindow.userLogin.userId,
+                };
+                preparingItemsList.Add(it);
+            }
+            #endregion
+
+            #region preparing order object
+            preparingOrder = new OrderPreparing();
+            preparingOrder.invoiceId = invoice.invoiceId;
+            preparingOrder.preparingTime = 0;
+            preparingOrder.createUserId = MainWindow.userLogin.userId;
+            #endregion
+
+            #region order status object
+            orderPreparingStatus statusObject = new orderPreparingStatus();
+            statusObject.status = "Listed";
+            statusObject.createUserId = MainWindow.userLogin.userId;
+            #endregion
+
+            int res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId);
+        }
+        #endregion
+
     }
 }

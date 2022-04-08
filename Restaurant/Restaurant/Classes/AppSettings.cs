@@ -56,7 +56,7 @@ namespace Restaurant.Classes
         internal static string itemtax_note;
         internal static string sales_invoice_note;
         //invoice
-        internal static string invType;
+        internal static string invType = "diningHall";
         
 
         internal static string dateFormat;
