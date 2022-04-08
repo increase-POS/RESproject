@@ -3823,4 +3823,22 @@ Please add Email in setting</value>
   <data name="selectedResidentialSectors" xml:space="preserve">
     <value>Selected Residential Sectors</value>
   </data>
+  <data name="deliveryMan" xml:space="preserve">
+    <value>Delivery man</value>
+  </data>
+  <data name="deliveryTime" xml:space="preserve">
+    <value>Delivery time</value>
+  </data>
+  <data name="inTheWay" xml:space="preserve">
+    <value>In the way</value>
+  </data>
+  <data name="minute" xml:space="preserve">
+    <value>minute</value>
+  </data>
+  <data name="readyForDelivery" xml:space="preserve">
+    <value>Ready For Delivery</value>
+  </data>
+  <data name="withDeliveryMan" xml:space="preserve">
+    <value>With delivery man</value>
+  </data>
 </root>

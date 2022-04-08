@@ -3799,4 +3799,22 @@
   <data name="selectedResidentialSectors" xml:space="preserve">
     <value>القطاعات السكنية المختارة</value>
   </data>
+  <data name="deliveryMan" xml:space="preserve">
+    <value>موظف التوصيل</value>
+  </data>
+  <data name="deliveryTime" xml:space="preserve">
+    <value>وقت التوصيل</value>
+  </data>
+  <data name="inTheWay" xml:space="preserve">
+    <value>في الطريق</value>
+  </data>
+  <data name="minute" xml:space="preserve">
+    <value>دقيقة</value>
+  </data>
+  <data name="readyForDelivery" xml:space="preserve">
+    <value>جاهز للتوصيل</value>
+  </data>
+  <data name="withDeliveryMan" xml:space="preserve">
+    <value>مع موظف التوصيل</value>
+  </data>
 </root>

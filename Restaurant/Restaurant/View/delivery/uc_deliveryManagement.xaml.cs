@@ -82,12 +82,18 @@ namespace Restaurant.View.delivery
         //    }
         //}
         #endregion
+
+        IEnumerable<User> drivers;
+        User userModel = new User();
+
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
             {
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "" };
+
+                #region translate
                 if (AppSettings.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -97,31 +103,42 @@ namespace Restaurant.View.delivery
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
-                #region loading
-                loadingList = new List<keyValueBool>();
-                bool isDone = true;
-                //loadingList.Add(new keyValueBool { key = "loading_fillCustomerCombo", value = false });
-
-
-                //loading_fillCustomerCombo();
-                do
-                {
-                    isDone = true;
-                    foreach (var item in loadingList)
-                    {
-                        if (item.value == false)
-                        {
-                            isDone = false;
-                            break;
-                        }
-                    }
-                    if (!isDone)
-                    {
-                        await Task.Delay(0500);
-                    }
-                }
-                while (!isDone);
                 #endregion
+
+                #region loading
+                //loadingList = new List<keyValueBool>();
+                //bool isDone = true;
+                ////loadingList.Add(new keyValueBool { key = "loading_fillCustomerCombo", value = false });
+
+
+                ////loading_fillCustomerCombo();
+                //do
+                //{
+                //    isDone = true;
+                //    foreach (var item in loadingList)
+                //    {
+                //        if (item.value == false)
+                //        {
+                //            isDone = false;
+                //            break;
+                //        }
+                //    }
+                //    if (!isDone)
+                //    {
+                //        await Task.Delay(0500);
+                //    }
+                //}
+                //while (!isDone);
+                #endregion
+
+                drivers = await userModel.GetUsersActive();
+                cb_userId.ItemsSource = drivers.Where(x => x.job == "deliveryEmployee" && x.driverIsAvailable == 1);
+                cb_userId.DisplayMemberPath = "fullName";
+                cb_userId.SelectedValuePath = "userId";
+
+                cb_searchUser.ItemsSource = cb_userId.ItemsSource;
+                cb_searchUser.DisplayMemberPath = "fullName";
+                cb_searchUser.SelectedValuePath = "userId";
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -134,11 +151,35 @@ namespace Restaurant.View.delivery
         }
         private void translate()
         {
+            txt_title.Text = AppSettings.resourcemanager.GetString("trDeliveryManagement");
+            txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trUserInformation");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchUser, AppSettings.resourcemanager.GetString("deliveryMan")+"...");
 
+            chk_readyForDelivery.Content = AppSettings.resourcemanager.GetString("readyForDelivery");
+            chk_withDeliveryMan.Content = AppSettings.resourcemanager.GetString("readyForDelivery");
+            chk_inTheWay.Content = AppSettings.resourcemanager.GetString("inTheWay");
 
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_userId, AppSettings.resourcemanager.GetString("deliveryMan") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_deliveryTime, AppSettings.resourcemanager.GetString("deliveryTime") + "...");
+            txt_minutes.Text = AppSettings.resourcemanager.GetString("minute");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNotes") + "..."); 
 
+            dg_orders.Columns[1].Header = AppSettings.resourcemanager.GetString("trCode");
+            dg_orders.Columns[2].Header = AppSettings.resourcemanager.GetString("deliveryMan");
+            dg_orders.Columns[3].Header = AppSettings.resourcemanager.GetString("deliveryTime");
+            dg_orders.Columns[4].Header = AppSettings.resourcemanager.GetString("trStatus");
 
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
+            tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
+            tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
+            tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
+            tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
+            tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
+
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
         }
+
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         { //add

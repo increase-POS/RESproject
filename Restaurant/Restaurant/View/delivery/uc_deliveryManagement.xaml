@@ -506,13 +506,13 @@
                                 </Path>
                             </Grid>
                         </Border>
-                        <TextBlock  Text="minutes" Grid.Column="1"
+                        <TextBlock x:Name="txt_minutes" Text="minutes" Grid.Column="1"
                             Foreground="{StaticResource ThickGrey}" FontSize="14"
                                     VerticalAlignment="Center" HorizontalAlignment="Right"
                             Margin="5,5,15,5"/>
                     </Grid>
 
-        <Border Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+        <Border Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}" Visibility="Collapsed">
                         <Grid>
                             <ComboBox x:Name="cb_status"  Grid.Row="1"
                                       SelectedValue="{Binding status,Mode=OneWay}"
