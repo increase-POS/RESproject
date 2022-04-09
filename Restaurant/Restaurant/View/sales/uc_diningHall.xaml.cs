@@ -1376,7 +1376,7 @@ namespace Restaurant.View.sales
                 refreshDraftNotification();
                 refreshOrdersNotification();
             }
-            clear();
+
         }
 
         async Task<int> addInvoice(string invType)
@@ -1892,7 +1892,12 @@ namespace Restaurant.View.sales
 
 
                 wd_ordersReady w = new wd_ordersReady();
-                w.page = "dinningHall";
+                if(AppSettings.invType == "diningHall")
+                    w.page = "dinningHall";
+                else if (AppSettings.invType == "takeAway")
+                    w.page = "takeAway";
+                else if (AppSettings.invType == "selfService")
+                    w.page = "selfService";
                 w.ShowDialog();
 
 
