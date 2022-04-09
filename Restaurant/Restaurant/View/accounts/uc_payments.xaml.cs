@@ -498,8 +498,6 @@ namespace Restaurant.View.accounts
                 
                 HelpClass.StartAwait(grid_main);
 
-                searchText = "";
-                tb_search.Text = "";
                 await Search();
                 
                 HelpClass.EndAwait(grid_main);
