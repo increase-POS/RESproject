@@ -144,6 +144,25 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
+        public async Task<List<Invoice>> GetOrdersWithDelivery( int branchId, string status)
+        {
+            List<Invoice> items = new List<Invoice>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("branchId", branchId.ToString());
+            // status in syntax "Listed, Collected" or one status "Collected"
+            // status values: Listed, Ready, Collected, InTheWay,Done
+            parameters.Add("status", status.ToString());
+
+            IEnumerable<Claim> claims = await APIResult.getList("OrderPreparing/GetOrdersWithDelivery", parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<Invoice>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
 
         public async Task<int> savePreparingOrder(OrderPreparing order, List<ItemOrderPreparing> orderItems, orderPreparingStatus statusObject)
         {
@@ -177,6 +196,17 @@ namespace Restaurant.Classes.ApiClasses
             var myContent = JsonConvert.SerializeObject(order);
             parameters.Add("orderObject", myContent);
             myContent = JsonConvert.SerializeObject(statusObject);
+            parameters.Add("statusObject", myContent);
+            return await APIResult.post(method, parameters);
+        }
+
+        public async Task<int> EditInvoiceOrdersStatus(int invoiceId, orderPreparingStatus statusObject)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "OrderPreparing/EditInvoiceOrdersStatus";
+
+            parameters.Add("invoiceId", invoiceId.ToString());
+           string  myContent = JsonConvert.SerializeObject(statusObject);
             parameters.Add("statusObject", myContent);
             return await APIResult.post(method, parameters);
         }
