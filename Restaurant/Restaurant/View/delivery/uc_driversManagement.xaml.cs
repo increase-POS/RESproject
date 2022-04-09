@@ -102,6 +102,12 @@ namespace Restaurant.View.delivery
             catch { }
         }
 
+        async Task refreshDriverSectors()
+        {
+            driverSectors = await residentialSector.GetResSectorsByUserId(driver.userId);
+            tb_sectorsCount.Text = driverSectors.Count.ToString();
+        }
+
         void RefreshDriverView()
         {
             dg_user.ItemsSource = drivers;
@@ -226,7 +232,11 @@ namespace Restaurant.View.delivery
             }
         }
         int selectedDriver = 0;
-        private void Dg_user_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        List<ResidentialSectors> driverSectors = new List<ResidentialSectors>();
+        ResidentialSectors residentialSector = new ResidentialSectors();
+
+        
+        private async void Dg_user_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
             try
             {
@@ -243,7 +253,9 @@ namespace Restaurant.View.delivery
                             txt_activeInactive.Text = AppSettings.resourcemanager.GetString("activate");
                         else
                             txt_activeInactive.Text = AppSettings.resourcemanager.GetString("deActivate");
-                       
+
+                        await refreshDriverSectors();
+
                     }
                 }
                 HelpClass.EndAwait(grid_main);
@@ -256,7 +268,7 @@ namespace Restaurant.View.delivery
 
         }
 
-        private void Btn_residentialSectors_Click(object sender, RoutedEventArgs e)
+        private async void Btn_residentialSectors_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -270,6 +282,8 @@ namespace Restaurant.View.delivery
                     w.ShowDialog();
 
                     Window.GetWindow(this).Opacity = 1;
+
+                    await refreshDriverSectors();
                 }
                 //else
                 //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
