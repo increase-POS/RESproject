@@ -363,6 +363,51 @@ namespace Restaurant
                 }
             }
         }
+
+
+        async void loading_getDefaultInvoiceType()
+        {
+            try
+            {
+                //List<UserSetValues> lst = await userSetValuesModel.GetAll();
+                //int defaulInvType;
+                //int settingId;
+
+                SetValues invSet = new SetValues();
+                invSet = await v.GetBySetNameAndUserId("invType", MainWindow.userLogin.userId);
+                if (invSet != null)
+                {
+                    //defaulInvType = invSet.valId;
+                    //settingId = (int)invSet.settingId;
+                    //notes = invSet.notes;
+                    //try
+                    //{
+                    //defaultInvTypeSetValue = lst.Where(u => u.valId == defaulInvType && u.userId == MainWindow.userLogin.userId).FirstOrDefault();
+                    AppSettings.invType = invSet.value;
+                    //}
+                    //catch { }
+                }
+                else
+                {
+                    AppSettings.invType = "diningHall";
+                }
+            }
+            catch
+            {
+                AppSettings.invType = "diningHall";
+            }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getDefaultInvoiceType"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+
+
+
         async void loading_getItemCost()
         {
             //get item cost
@@ -701,6 +746,8 @@ namespace Restaurant
                 }
             }
         }
+        
+
         async void loading_getprintSitting()
         {
             try
@@ -830,6 +877,9 @@ namespace Restaurant
             else
                 return "";
         }
+        UserSetValues userSetValuesModel = new UserSetValues();
+
+       
         async Task<string> getDefaultDateForm()
         {
             v = await uc_general.getDefaultDateForm();
@@ -995,6 +1045,7 @@ namespace Restaurant
                 loadingList.Add(new keyValueBool { key = "loading_getprintSitting", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_POSList", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_getTableTimes", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_getDefaultInvoiceType", value = false });
 
 
 
@@ -1022,6 +1073,7 @@ namespace Restaurant
                 loading_getprintSitting();
                 loading_POSList();
                 loading_getTableTimes();
+                loading_getDefaultInvoiceType();
 
                
                 do
