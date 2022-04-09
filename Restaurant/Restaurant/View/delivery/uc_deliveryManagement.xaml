@@ -141,6 +141,12 @@
 
                     </Border>
                     <StackPanel  Grid.Column="2"  Margin="0 0 10 0"   Orientation="Horizontal" >
+                        <CheckBox x:Name="chk_allForDelivery"  
+                                                          Background="{StaticResource MainColor}"
+                                                          Content="all"
+                                                          Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
+                                                          Checked="search_Checking"
+                                                          Unchecked="chk_uncheck"/>
                         <CheckBox x:Name="chk_readyForDelivery"  
                                                           Background="{StaticResource MainColor}"
                                                           Content="Ready for delivery"

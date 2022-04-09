@@ -167,6 +167,7 @@ namespace Restaurant.View.delivery
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchUser, AppSettings.resourcemanager.GetString("deliveryMan")+"...");
 
+            chk_allForDelivery.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_readyForDelivery.Content = AppSettings.resourcemanager.GetString("readyForDelivery");
             chk_withDeliveryMan.Content = AppSettings.resourcemanager.GetString("withDeliveryMan");
             chk_inTheWay.Content = AppSettings.resourcemanager.GetString("inTheWay");

@@ -97,7 +97,7 @@ namespace Restaurant.View.windows
         }
         private void translate()
         {
-            txt_title.Text = AppSettings.resourcemanager.GetString("trDiscount");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trDelivery");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_company, AppSettings.resourcemanager.GetString("trCompanyHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_user, AppSettings.resourcemanager.GetString("trUserHint"));
