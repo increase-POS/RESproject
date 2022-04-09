@@ -207,6 +207,7 @@
     <Compile Include="Classes\ApiClasses\InvoicesClass.cs" />
     <Compile Include="Classes\ApiClasses\AgentMemberships.cs" />
     <Compile Include="Classes\ApiClasses\OrderPreparing.cs" />
+    <Compile Include="Classes\ApiClasses\ResidentialSectorsUsers.cs" />
     <Compile Include="Classes\ApiClasses\SubscriptionFees.cs" />
     <Compile Include="Classes\ApiClasses\Memberships.cs" />
     <Compile Include="Classes\ApiClasses\ItemUnitOffer.cs" />
