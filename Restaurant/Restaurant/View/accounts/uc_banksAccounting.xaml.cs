@@ -94,7 +94,10 @@ namespace Restaurant.View.accounts
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             txt_title.Text = AppSettings.resourcemanager.GetString("trBankAccounts");
             chb_all.Content = AppSettings.resourcemanager.GetString("trAll");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchStartDate, AppSettings.resourcemanager.GetString("trStartDate")+"...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchEndDate, AppSettings.resourcemanager.GetString("trEndDate")+"...");
 
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_transNum, AppSettings.resourcemanager.GetString("trNo."));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, AppSettings.resourcemanager.GetString("trCashHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_depositNumber, AppSettings.resourcemanager.GetString("trDepositeNumHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_opperationType, AppSettings.resourcemanager.GetString("trOpperationTypeHint"));
@@ -118,9 +121,12 @@ namespace Restaurant.View.accounts
 
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
+
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
+            tt_preview.Content = AppSettings.resourcemanager.GetString("trPreview");
+            tt_pieChart.Content = AppSettings.resourcemanager.GetString("trPieChart");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
 
             txt_image.Text = AppSettings.resourcemanager.GetString("trImage");

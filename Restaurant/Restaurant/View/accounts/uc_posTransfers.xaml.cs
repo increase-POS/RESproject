@@ -171,18 +171,21 @@ namespace Restaurant.View.accounts
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             txt_title.Text = AppSettings.resourcemanager.GetString("trTransfers");
 
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_transNum, AppSettings.resourcemanager.GetString("trNo."));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, AppSettings.resourcemanager.GetString("trCashHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_pos1, AppSettings.resourcemanager.GetString("trDepositor") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_pos2, AppSettings.resourcemanager.GetString("trRecepient") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_fromBranch, AppSettings.resourcemanager.GetString("trFromBranch")+"...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_toBranch, AppSettings.resourcemanager.GetString("trToBranch")+"...");
 
             chb_all.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_deposit.Content = AppSettings.resourcemanager.GetString("trDeposit");
             chk_receive.Content = AppSettings.resourcemanager.GetString("trReceive");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchStartDate, AppSettings.resourcemanager.GetString("trStartDate"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchEndDate, AppSettings.resourcemanager.GetString("trEndDate"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchStartDate, AppSettings.resourcemanager.GetString("trStartDate")+"...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchEndDate, AppSettings.resourcemanager.GetString("trEndDate")+"...");
 
             dg_posAccounts.Columns[0].Header = AppSettings.resourcemanager.GetString("trTransferNumberTooltip");
             dg_posAccounts.Columns[1].Header = AppSettings.resourcemanager.GetString("trCreator");
@@ -203,9 +206,12 @@ namespace Restaurant.View.accounts
 
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
+
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
+            tt_preview.Content = AppSettings.resourcemanager.GetString("trPreview");
+            tt_pieChart.Content = AppSettings.resourcemanager.GetString("trPieChart");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
 
             btn_confirm.Content = AppSettings.resourcemanager.GetString("trConfirm");
