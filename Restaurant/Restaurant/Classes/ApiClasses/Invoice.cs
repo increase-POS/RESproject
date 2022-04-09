@@ -221,6 +221,26 @@ namespace Restaurant.Classes
             }
             return count;
         }
+
+        public async Task<int> GetLastDialyNumOfInv(string invType, int branchId)
+        {
+            int count =0;
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("invType", invType);
+            parameters.Add("branchId", branchId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Invoices/GetLastDialyNumOfInv", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    count =int.Parse( c.Value);
+                    break;
+                }
+            }
+            return count;
+        }
         public async Task<List<Invoice>> GetInvoicesByType(string invType, int branchId)
         {
             List<Invoice> items = new List<Invoice>();
@@ -911,6 +931,16 @@ namespace Restaurant.Classes
             if (sequence <= 999999)
                 strSeq = sequence.ToString().PadLeft(6, '0');
             string invoiceNum = invoiceCode + "-" + branchCode + "-" + strSeq;
+            return invoiceNum;
+        }
+        public async Task<string> generateDialyInvNumber(string invType,  int branchId)
+        {
+            int sequence = await GetLastDialyNumOfInv(invType, branchId);
+            sequence++;
+            string strSeq = sequence.ToString();
+            if (sequence <= 9999)
+                strSeq = sequence.ToString().PadLeft(4, '0');
+            string invoiceNum =  strSeq;
             return invoiceNum;
         }
         public async Task<Invoice> recordCashTransfer(Invoice invoice, string invType)

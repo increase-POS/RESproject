@@ -325,7 +325,7 @@
                         <TextBlock x:Name="txt_tables" Text="Tables"  Foreground="White"/>
                     </StackPanel>
                 </Button>
-                <Button  x:Name="btn_kitchen" Click="Btn_kitchen_Click"  Height="40" IsEnabled="False"
+                <Button  x:Name="btn_kitchen" Click="Btn_kitchen_Click"  Height="40" IsEnabled="True"
                     materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource White}" BorderBrush="{x:Null}"
                     Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
@@ -337,7 +337,7 @@
                     </StackPanel>
                 </Button>
                 <Button x:Name="btn_waiter" Click="Btn_waiter_Click"  Height="40"
-                    materialDesign:ButtonAssist.CornerRadius="7"  IsEnabled="False"
+                    materialDesign:ButtonAssist.CornerRadius="7"  IsEnabled="True"
                           Background="{StaticResource White}" BorderBrush="{x:Null}"
                     Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
                     <StackPanel Orientation="Horizontal" >
@@ -348,7 +348,7 @@
                     </StackPanel>
                 </Button>
                 <Button   x:Name="btn_customer"  Click="Btn_customer_Click" Height="40"
-                    materialDesign:ButtonAssist.CornerRadius="7"  IsEnabled="False"
+                    materialDesign:ButtonAssist.CornerRadius="7"  IsEnabled="True"
                           Background="{StaticResource White}" BorderBrush="{x:Null}"
                     Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
                     <StackPanel Orientation="Horizontal" >
@@ -359,7 +359,7 @@
                     </StackPanel>
                 </Button>
                 <Button x:Name="btn_discount" Click="Btn_discount_Click" Height="40"
-                    materialDesign:ButtonAssist.CornerRadius="7"  IsEnabled="False"
+                    materialDesign:ButtonAssist.CornerRadius="7"  IsEnabled="True"
                           Background="{StaticResource White}" BorderBrush="{x:Null}"
                     Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
                     <StackPanel Orientation="Horizontal" >

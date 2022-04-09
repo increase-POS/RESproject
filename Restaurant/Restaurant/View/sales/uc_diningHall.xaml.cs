@@ -195,7 +195,7 @@ namespace Restaurant.View.sales
             
         }
 
-        void changeInvType()
+       async void changeInvType()
         {
             //values(diningHall - takeAway - selfService)
             if (AppSettings.invType == "diningHall")
@@ -211,7 +211,27 @@ namespace Restaurant.View.sales
                 md_draft.Visibility = Visibility.Collapsed;
                 btn_delivery.Visibility = Visibility.Collapsed;
                 btn_orderTime.Visibility = Visibility.Collapsed;
+                #region enable btns
+                if (invoice.invoiceId != 0)
+                {
 
+                    btn_waiter.IsEnabled = true;
+                    btn_discount.IsEnabled = true;
+                    btn_customer.IsEnabled = true;
+                    btn_kitchen.IsEnabled = true;
+
+                }
+                else
+                {
+                    btn_waiter.IsEnabled = false;
+                    btn_discount.IsEnabled = false;
+                    btn_customer.IsEnabled = false;
+                    btn_kitchen.IsEnabled = false;
+                }
+                #endregion
+
+                if(invoice.invType != "sd" && invoice.invType != null)
+                    clear();
             }
             else if (AppSettings.invType == "takeAway")
             {
@@ -228,6 +248,11 @@ namespace Restaurant.View.sales
                 btn_orderTime.Visibility = Visibility.Visible;
 
                 refreshDraftNotification();
+
+                if(invoice.invType == "ssd") // transfer  self service draft to take away draft
+                {
+                    await addInvoice("tsd");
+                }
             }
             else
             {
@@ -244,6 +269,10 @@ namespace Restaurant.View.sales
                 btn_orderTime.Visibility = Visibility.Visible;
 
                 refreshDraftNotification();
+                if (invoice.invType == "tsd") // transfer take away  draft to self service draft
+                {
+                    await addInvoice("ssd");
+                }
             }
 
         }
@@ -1355,7 +1384,8 @@ namespace Restaurant.View.sales
                 {
                     if (invoice.invoiceId == 0)
                     {
-                        invoice.invNumber = await invoice.generateInvNumber("tsd", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+                        //invoice.invNumber = await invoice.generateInvNumber("tsd", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+                        invoice.invNumber = await invoice.generateDialyInvNumber("ssd,ss,tsd,ts", MainWindow.branchLogin.branchId);
                     }
 
                     await addInvoice("tsd");
@@ -1369,7 +1399,9 @@ namespace Restaurant.View.sales
             {
                 if (invoice.invoiceId == 0)
                 {
-                    invoice.invNumber = await invoice.generateInvNumber("ssd", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+                    //invoice.invNumber = await invoice.generateInvNumber("ssd", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+                    invoice.invNumber = await invoice.generateDialyInvNumber("ssd,ss,tsd,ts", MainWindow.branchLogin.branchId);
+
                 }
                 await addInvoice("ssd");
 
@@ -1386,6 +1418,7 @@ namespace Restaurant.View.sales
                 #region invoice object
                 if (invoice.invoiceId == 0)
                 {
+
                     invoice.createUserId = MainWindow.userLogin.userId;
                     invoice.branchId = MainWindow.branchLogin.branchId;
                     invoice.branchCreatorId = MainWindow.branchLogin.branchId;
@@ -1469,16 +1502,9 @@ namespace Restaurant.View.sales
             _DiscountType = "";
             selectedCopouns.Clear() ;
             selectedTables.Clear();
-            #region btns
-            btn_cancel.IsEnabled = false;
-            btn_waiter.IsEnabled = false;
-            btn_discount.IsEnabled = false;
-            btn_customer.IsEnabled = false;
-            btn_kitchen.IsEnabled = false;
-            #endregion
-
+            
             invoice = new Invoice();
-
+            
             #region return waiter button to default
             txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
             txt_waiter.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
@@ -1494,6 +1520,7 @@ namespace Restaurant.View.sales
             path_discount.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             #endregion
             //last
+            changeInvType();
             BuildBillDesign();
             refreshTotal();
         }
@@ -2106,20 +2133,30 @@ namespace Restaurant.View.sales
                    
                     customerInvClasses = new List<InvoicesClass>();
 
-                        if (w.customerId > 0)
+                        if (w.customerId > 0 )
                         {
-                        #region customer Info
-                        var customer = FillCombo.customersList.Where(x => x.agentId == w.customerId).FirstOrDefault();
-                        if (customer.membershipId != null)
+                        if (invoice.agentId != w.customerId)
                         {
-                            _MemberShipId = (int)customer.membershipId;
+                            #region clear prevoius client related values (coupons - delivery)
+                            selectedCopouns = new List<CouponInvoice>();
+                            _DeliveryCost = 0;
+                            invoice.shippingCompanyId = null;
+                            invoice.shipUserId = null;
+                            await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns, invoice.invoiceId, "sd");
+                            #endregion
 
-                            if(w.memberShipStatus == "valid")
-                                customerInvClasses = await invoicesClass.GetInvclassByMembershipId(_MemberShipId); 
-                        }
-                        #endregion
-                        #region update invoice
-                        invoice.agentId = w.customerId;
+                            #region customer Info
+                            var customer = FillCombo.customersList.Where(x => x.agentId == w.customerId).FirstOrDefault();
+                            if (customer.membershipId != null)
+                            {
+                                _MemberShipId = (int)customer.membershipId;
+
+                                if (w.memberShipStatus == "valid")
+                                    customerInvClasses = await invoicesClass.GetInvclassByMembershipId(_MemberShipId);
+                            }
+                            #endregion
+                            #region update invoice
+                            invoice.agentId = w.customerId;
                             invoice.updateUserId = MainWindow.userLogin.userId;
 
                             int res = await FillCombo.invoice.saveInvoice(invoice);
@@ -2130,14 +2167,14 @@ namespace Restaurant.View.sales
                             }
                             else
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                        #endregion
-                        // test if id chnage
-                        // change button content
-                        txt_customer.Text = customer.name.ToString();
+                            #endregion
+                            // test if id chnage
+                            // change button content
+                            txt_customer.Text = customer.name.ToString();
                             // change foreground color
                             txt_customer.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                             path_customer.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
-
+                        }
                         }
                         else
                         {
@@ -2507,12 +2544,12 @@ namespace Restaurant.View.sales
 
         private async Task saveTakeAwayInvoice(string invType)
         {
-            if (invType == "tsd" && invoice.invoiceId == 0)
+            if (invoice.invoiceId == 0)
             {
-                invoice.invNumber = await invoice.generateInvNumber("tsd", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+                //invoice.invNumber = await invoice.generateInvNumber("tsd", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+                invoice.invNumber = await invoice.generateDialyInvNumber("ssd,ss,tsd,ts", MainWindow.branchLogin.branchId);
             }
-            else
-                invoice.invNumber = await invoice.generateInvNumber("ts", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+
 
             int res = await addInvoice("ts");
             if (res > 0)
