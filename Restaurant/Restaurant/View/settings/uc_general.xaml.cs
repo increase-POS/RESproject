@@ -508,16 +508,25 @@ namespace Restaurant.View.settings
         }
         public static async Task<SetValues> getDefaultAccuracy()
         {
-            set = settingsCls.Where(s => s.name == "accuracy").FirstOrDefault<SettingCls>();
-            accuracyId = set.settingId;
-            accuracy = settingsValues.Where(i => i.settingId == accuracyId).FirstOrDefault();
+            //set = settingsCls.Where(s => s.name == "accuracy").FirstOrDefault<SettingCls>();
+            //accuracyId = set.settingId;
+
+            //settingsValues = await valueModel.GetBySetName("accuracy");
+            //accuracy = settingsValues.Where(i => i.settingId == accuracyId).FirstOrDefault();
+
+            settingsValues = await valueModel.GetBySetName("accuracy");
+            accuracy = settingsValues.FirstOrDefault();
             return accuracy;
         }
          public static async Task<SetValues> getDefaultMaxDiscount()
         {
-            set = settingsCls.Where(s => s.name == "maxDiscount").FirstOrDefault<SettingCls>();
-            maxDiscountId = set.settingId;
-            maxDiscount = settingsValues.Where(i => i.settingId == maxDiscountId).FirstOrDefault();
+            //set = settingsCls.Where(s => s.name == "maxDiscount").FirstOrDefault<SettingCls>();
+            //maxDiscountId = set.settingId;
+            //maxDiscount = settingsValues.Where(i => i.settingId == maxDiscountId).FirstOrDefault();
+
+
+            settingsValues = await valueModel.GetBySetName("maxDiscount");
+            maxDiscount = settingsValues.FirstOrDefault();
             return maxDiscount;
         }
          public static async Task<ProgramDetails> getDefaultServerStatus()
@@ -528,9 +537,12 @@ namespace Restaurant.View.settings
         }
         public static async Task<SetValues> getDefaultCost()
         {
-            set = settingsCls.Where(s => s.name == "storage_cost").FirstOrDefault<SettingCls>();
-            costId = set.settingId;
-            cost = settingsValues.Where(i => i.settingId == costId).FirstOrDefault();
+            //set = settingsCls.Where(s => s.name == "storage_cost").FirstOrDefault<SettingCls>();
+            //costId = set.settingId;
+            //cost = settingsValues.Where(i => i.settingId == costId).FirstOrDefault();
+
+            settingsValues = await valueModel.GetBySetName("storage_cost");
+            cost = settingsValues.FirstOrDefault();
             return cost;
         }
         public static async Task<CountryCode> getDefaultRegion()
@@ -538,6 +550,8 @@ namespace Restaurant.View.settings
             List<CountryCode> regions = new List<CountryCode>();
             regions = await countryModel.GetAllRegion();
             region = regions.Where(r => r.isDefault == 1).FirstOrDefault<CountryCode>();
+
+      
             return region;
         }
         /*
@@ -553,51 +567,69 @@ namespace Restaurant.View.settings
         */
         public static async Task<List<string>> getDefaultTaxList()
         {
-            List<SetValues> sv = new List<SetValues>();
-            sv = settingsValues.Where(v => v.notes == "tax").ToList();
-            setVInvoiceBool = sv[0];
-            setVInvoice = sv[1];
-            setVItemBool = sv[2];
-            setVItem = sv[3];
+            //List<SetValues> sv = new List<SetValues>();
+            //sv = settingsValues.Where(v => v.notes == "tax").ToList();
+            //setVInvoiceBool = sv[0];
+            //setVInvoice = sv[1];
+            //setVItemBool = sv[2];
+            //setVItem = sv[3];
 
+            settingsValues = await valueModel.GetBySetvalNote("tax");
+            cost = settingsValues.Where(v => v.name == "tax").FirstOrDefault();
+            setVInvoiceBool = settingsValues.Where(v => v.name == "invoiceTax_bool").FirstOrDefault();
+            setVInvoice = settingsValues.Where(v => v.name == "invoiceTax_decimal").FirstOrDefault();
+            setVItemBool = settingsValues.Where(v => v.name == "itemsTax_bool").FirstOrDefault(); ;
+           // setVItem = settingsValues.Where(v => v.name == "invoiceTax_bool").FirstOrDefault();
             List<string> taxLst = new List<string>();
             taxLst.Add(setVInvoiceBool.value);
             taxLst.Add(setVInvoice.value);
             taxLst.Add(setVItemBool.value);
-            taxLst.Add(setVItem.value);
+           // taxLst.Add(setVItem.value);
 
             return taxLst;
         }
         public static async Task<SetValues> getDefaultItemCost()
         {
-            
-            set = settingsCls.Where(s => s.name == "item_cost").FirstOrDefault<SettingCls>();
-            itemCostId = set.settingId;
-            itemCost = settingsValues.Where(i => i.settingId == itemCostId).FirstOrDefault();
+            //if (settingsCls==null)
+            //    settingsCls = await setModel.GetAll();
+            //set = settingsCls.Where(s => s.name == "item_cost").FirstOrDefault<SettingCls>();
+            //itemCostId = set.settingId;
+            //itemCost = settingsValues.Where(i => i.settingId == itemCostId).FirstOrDefault();
+
+
+            settingsValues = await valueModel.GetBySetName("item_cost");
+            itemCost = settingsValues.FirstOrDefault();
+
             return itemCost;
         }
-        public static async Task<SetValues> getDefaultPrintCount()
-        {
-            
-            set = settingsCls.Where(s => s.name == "Allow_print_inv_count").FirstOrDefault<SettingCls>();
-            printCountId = set.settingId;
-            printCount = settingsValues.Where(i => i.settingId == printCountId).FirstOrDefault();
-            return printCount;
-        }
+        //public static async Task<SetValues> getDefaultPrintCount()
+        //{
+
+        //    set = settingsCls.Where(s => s.name == "Allow_print_inv_count").FirstOrDefault<SettingCls>();
+        //    printCountId = set.settingId;
+        //    printCount = settingsValues.Where(i => i.settingId == printCountId).FirstOrDefault();
+        //    return printCount;
+        //}
         public static async Task<SetValues> getDefaultDateForm()
         {
             
-            set = settingsCls.Where(s => s.name == "dateForm").FirstOrDefault<SettingCls>();
-            dateFormId = set.settingId;
-            dateForm = settingsValues.Where(i => i.settingId == dateFormId).FirstOrDefault();
+            //set = settingsCls.Where(s => s.name == "dateForm").FirstOrDefault<SettingCls>();
+            //dateFormId = set.settingId;
+            //dateForm = settingsValues.Where(i => i.settingId == dateFormId).FirstOrDefault();
+
+            settingsValues = await valueModel.GetBySetName("dateForm");
+            dateForm = settingsValues.FirstOrDefault();
             return dateForm;
         }
         public static async Task<UserSetValues> getDefaultLanguage()
         {
-            var lanSettings = await setModel.GetAll();
-            set = lanSettings.Where(l => l.name == "language").FirstOrDefault<SettingCls>();
-            var lanValues = await valueModel.GetAll();
-            languages = lanValues.Where(vl => vl.settingId == set.settingId).ToList<SetValues>();
+            //var lanSettings = await setModel.GetAll();
+            //set = lanSettings.Where(l => l.name == "language").FirstOrDefault<SettingCls>();
+            //var lanValues = await valueModel.GetAll();
+
+            //languages = lanValues.Where(vl => vl.settingId == set.settingId).ToList<SetValues>();
+
+            languages= await valueModel.GetBySetName("language");
             List<UserSetValues> usValues = new List<UserSetValues>();
             usValues = await usValueModel.GetAll();
             var curUserValues = usValues.Where(c => c.userId == MainWindow.userLogin.userId);
@@ -619,10 +651,13 @@ namespace Restaurant.View.settings
         }
         private async Task fillLanguages()
         {
-            var lanSettings = await setModel.GetAll();
-            set = lanSettings.Where(l => l.name == "language").FirstOrDefault<SettingCls>();
-            var lanValues = await valueModel.GetAll();
-            languages = lanValues.Where(vl => vl.settingId == set.settingId).ToList<SetValues>();
+            //    var lanSettings = await setModel.GetAll();
+            //    set = lanSettings.Where(l => l.name == "language").FirstOrDefault<SettingCls>();
+            //    var lanValues = await valueModel.GetAll();
+            //    languages = lanValues.Where(vl => vl.settingId == set.settingId).ToList<SetValues>();
+
+            languages = await valueModel.GetBySetName("language");
+         
             foreach (var v in languages)
             {
                 if (v.value.ToString().Equals("en")) v.value = AppSettings.resourcemanager.GetString("trEnglish");

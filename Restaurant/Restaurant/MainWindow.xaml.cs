@@ -428,26 +428,26 @@ namespace Restaurant
                 }
             }
         }
-        async void loading_getPrintCount()
-        {
-            //get print count
-            try
-            {
-                AppSettings.Allow_print_inv_count = await getDefaultPrintCount();
-            }
-            catch
-            {
-                AppSettings.Allow_print_inv_count = "1";
-            }
-            foreach (var item in loadingList)
-            {
-                if (item.key.Equals("loading_getPrintCount"))
-                {
-                    item.value = true;
-                    break;
-                }
-            }
-        }
+        //async void loading_getPrintCount()
+        //{
+        //    //get print count
+        //    try
+        //    {
+        //        AppSettings.Allow_print_inv_count = await getDefaultPrintCount();
+        //    }
+        //    catch
+        //    {
+        //        AppSettings.Allow_print_inv_count = "1";
+        //    }
+        //    foreach (var item in loadingList)
+        //    {
+        //        if (item.key.Equals("loading_getPrintCount"))
+        //        {
+        //            item.value = true;
+        //            break;
+        //        }
+        //    }
+        //}
         async void loading_getTaxDetails()
         {
             try
@@ -861,14 +861,14 @@ namespace Restaurant
             else
                 return "";
         }
-        async Task<string> getDefaultPrintCount()
-        {
-            v = await uc_general.getDefaultPrintCount();
-            if (v != null)
-                return v.value;
-            else
-                return "";
-        }
+        //async Task<string> getDefaultPrintCount()
+        //{
+        //    v = await uc_general.getDefaultPrintCount();
+        //    if (v != null)
+        //        return v.value;
+        //    else
+        //        return "";
+        //}
         async Task<string> getDefaultAccuracy()
         {
             v = await uc_general.getDefaultAccuracy();
@@ -1035,7 +1035,7 @@ namespace Restaurant
                 loadingList.Add(new keyValueBool { key = "loading_getUserPath", value = false });
 
                 loadingList.Add(new keyValueBool { key = "loading_getItemCost", value = false });
-                loadingList.Add(new keyValueBool { key = "loading_getPrintCount", value = false });
+              //  loadingList.Add(new keyValueBool { key = "loading_getPrintCount", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_getTaxDetails", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_getDefaultSystemInfo", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_getDateForm", value = false });
@@ -1063,7 +1063,7 @@ namespace Restaurant
                 loading_getUserPath();
 
                 loading_getItemCost();
-                loading_getPrintCount();
+              //  loading_getPrintCount();
                 loading_getTaxDetails();
                 loading_getDefaultSystemInfo();
                 loading_getDateForm();
