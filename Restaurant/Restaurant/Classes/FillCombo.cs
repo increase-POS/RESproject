@@ -531,6 +531,14 @@ namespace Restaurant.Classes
             cmb.SelectedValuePath = "userId";
             cmb.SelectedIndex = -1;
         }
+        static public async Task FillComboUsersForDelivery(ComboBox cmb, string job,int customerId)
+        {
+            var users =await user.getUsersForDelivery(job, customerId);
+            cmb.ItemsSource = users;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "userId";
+            cmb.SelectedIndex = -1;
+        }
         //static public async Task<IEnumerable<User>> RefreshSalesMan()
         //{
         //    string deliveryPermission = "salesOrders_delivery";

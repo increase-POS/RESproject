@@ -24,6 +24,7 @@ namespace Restaurant.View.windows
     {
         public int? shippingCompanyId { get; set; }
         public int? shippingUserId { get; set; }
+        public int? customerId { get; set; }
         public wd_selectDelivery()
         {
             try
@@ -85,7 +86,8 @@ namespace Restaurant.View.windows
                 translate();
 
              await FillCombo.FillComboShippingCompanies(cb_company);
-                await FillCombo.FillComboUsersWithJob(cb_user, "deliveryEmployee");
+               // await FillCombo.FillComboUsersWithJob(cb_user, "deliveryEmployee");
+                await FillCombo.FillComboUsersForDelivery(cb_user, "deliveryEmployee",(int)customerId);
 
                 HelpClass.EndAwait(grid_main);
             }
