@@ -13,12 +13,16 @@ namespace Restaurant.converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string s = value.ToString();
-            if(FillCombo.UserJobList is null)
-                FillCombo.RefreshUserJobs();
-            keyValueString keyValueString = FillCombo.UserJobList.Where(x => x.key == s).FirstOrDefault();
+            if (value != null)
+            {
+                string s = value.ToString();
+                if (FillCombo.UserJobList is null)
+                    FillCombo.RefreshUserJobs();
+                keyValueString keyValueString = FillCombo.UserJobList.Where(x => x.key == s).FirstOrDefault();
 
-            return keyValueString.value;
+                return keyValueString.value;
+            }
+            else return "";
         }
 
 
