@@ -386,14 +386,12 @@
                     </DockPanel>
                     <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid>
-                            <TextBox x:Name="tb_transNum"  Text="{Binding transNum, Mode=OneWay}" Padding="10,5,0,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="trans num..."  
-                                     Foreground="#4E4E4E" IsReadOnly="True" 
-                                      MaxLength="50" BorderThickness="0"
-                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"   Margin="4,0"  
-                                 LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
+                                <TextBox x:Name="tb_transNum"  Text="{Binding transNum, Mode=OneWay}" Padding="10,5,0,0" 
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         materialDesign:HintAssist.Hint="trans num..."  Height="40"   Margin="4,0" 
+                                         Foreground="#4E4E4E" IsReadOnly="True" MaxLength="50" BorderThickness="0"
+                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                         LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
                             <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_transNum"
                               HorizontalAlignment="Right" Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"

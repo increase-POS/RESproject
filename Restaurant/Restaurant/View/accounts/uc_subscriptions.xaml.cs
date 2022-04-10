@@ -293,7 +293,7 @@ namespace Restaurant.View.accounts
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_discount, AppSettings.resourcemanager.GetString("trDiscountHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_transNum, AppSettings.resourcemanager.GetString("trTransNumberHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_transNum, AppSettings.resourcemanager.GetString("trTransferNumberTooltip")+"...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customerId, AppSettings.resourcemanager.GetString("trCustomerHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_monthsCount, AppSettings.resourcemanager.GetString("trMonthCount")+"...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_amount, AppSettings.resourcemanager.GetString("trAmountHint"));
@@ -404,6 +404,7 @@ namespace Restaurant.View.accounts
                     
                     if (subscription != null)
                     {
+                        tb_transNum.Text = subscription.transNum;
                         if (subscription.subscriptionType.Equals("o"))
                         {
                             bdr_cbCustomer.Visibility = Visibility.Collapsed;
@@ -526,6 +527,7 @@ namespace Restaurant.View.accounts
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
+            tb_transNum.Clear();
             cb_customerId.IsEnabled = true ;
             cb_customerId.SelectedIndex = -1;
             bdr_cbCustomer.Visibility = Visibility.Visible;

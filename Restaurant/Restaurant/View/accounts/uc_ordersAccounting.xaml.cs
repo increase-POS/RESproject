@@ -222,8 +222,8 @@ namespace Restaurant.View.accounts
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branch, AppSettings.resourcemanager.GetString("trBranchHint"));
             chk_delivered.Content = AppSettings.resourcemanager.GetString("trDelivered");
             chk_inDelivery.Content = AppSettings.resourcemanager.GetString("trInDelivery");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchStartDate, AppSettings.resourcemanager.GetString("trStartDate")+"...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchEndDate, AppSettings.resourcemanager.GetString("trEndDate")+"...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchStartDate, AppSettings.resourcemanager.GetString("trStartDate") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchEndDate, AppSettings.resourcemanager.GetString("trEndDate") + "...");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_invoiceNum, AppSettings.resourcemanager.GetString("trInvoiceNumberHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
@@ -232,8 +232,6 @@ namespace Restaurant.View.accounts
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_salesMan, AppSettings.resourcemanager.GetString("trSalesManHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customer, AppSettings.resourcemanager.GetString("trCustomerHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchStartDate, AppSettings.resourcemanager.GetString("trSartDateHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchEndDate, AppSettings.resourcemanager.GetString("trEndDateHint"));
 
             dg_orderAccounts.Columns[0].Header = AppSettings.resourcemanager.GetString("trInvoiceNumber");
             dg_orderAccounts.Columns[1].Header = AppSettings.resourcemanager.GetString("trSalesMan");
