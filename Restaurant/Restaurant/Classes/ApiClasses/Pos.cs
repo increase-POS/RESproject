@@ -98,5 +98,18 @@ namespace Restaurant.Classes
             string method = "Pos/Delete";
            return await APIResult.post(method, parameters);
         }
+
+        public async Task<int> updateBoxState(int posId, string state, int isAdminClose, int userId, CashTransfer cashTransfer)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "Pos/updateBoxState";
+            parameters.Add("posId", posId.ToString());
+            parameters.Add("state", state);
+            parameters.Add("isAdminClose", isAdminClose.ToString());
+            parameters.Add("userId", userId.ToString());
+            var myContent = JsonConvert.SerializeObject(cashTransfer);
+            parameters.Add("cashTransfer", myContent);
+            return await APIResult.post(method, parameters);
+        }
     }
 }

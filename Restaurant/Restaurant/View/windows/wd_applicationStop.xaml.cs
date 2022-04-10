@@ -52,8 +52,7 @@ namespace Restaurant.View.windows
         {//load
             try
             {
-                
-                    HelpClass.StartAwait(grid_changePassword);
+                HelpClass.StartAwait(grid_changePassword);
 
                 txt_moneyIcon.Text = AppSettings.Currency;
 
@@ -71,18 +70,16 @@ namespace Restaurant.View.windows
                 await fillPos();
                 isAdmin = HelpClass.isAdminPermision();
                 
-                    HelpClass.EndAwait(grid_changePassword);
+                HelpClass.EndAwait(grid_changePassword);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_changePassword);
+                HelpClass.EndAwait(grid_changePassword);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
         private async Task fillPos()
         {
-
             poss = await posModel.Get();
             var pos = poss.Where(p => p.branchId == MainWindow.branchLogin.branchId && p.posId != MainWindow.posLogin.posId);
             cb_pos.ItemsSource = pos;
@@ -163,34 +160,28 @@ namespace Restaurant.View.windows
         }
          private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {//save
-         /*
-          try
-          {
-
+              try
+              {
                   HelpClass.StartAwait(grid_changePassword);
-              if (cashesQuery.Count() > 0)
-                  Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trCantDoProcess"), animation: ToasterAnimation.FadeIn);
-              else
-              { 
-                  bool valid = validate();
-                  if (valid)
-                  {
-                      await transfer();
-                      await fillPosInfo();
+                  if (cashesQuery.Count() > 0)
+                      Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trCantDoProcess"), animation: ToasterAnimation.FadeIn);
+                  else
+                  { 
+                      bool valid = validate();
+                      if (valid)
+                      {
+                          await transfer();
+                          await fillPosInfo();
+                      }
                   }
+
+                  HelpClass.EndAwait(grid_changePassword);
               }
-
-
+              catch (Exception ex)
+              {
                   HelpClass.EndAwait(grid_changePassword);
-
-          }
-          catch (Exception ex)
-          {
-
-                  HelpClass.EndAwait(grid_changePassword);
-              HelpClass.ExceptionMessage(ex, this);
-          }
-          */
+                  HelpClass.ExceptionMessage(ex, this);
+              }
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -323,18 +314,17 @@ namespace Restaurant.View.windows
         #region open - close - validate
         private async Task openCloseBox(string status)
         {
-            /*
             CashTransfer cashTransfer = new CashTransfer();
             cashTransfer.processType = "box";
             cashTransfer.transType = status;
-            cashTransfer.cash = MainWindow.posLogIn.balance;
+            cashTransfer.cash = MainWindow.posLogin.balance;
             cashTransfer.createUserId = MainWindow.userLogin.userId;
-            cashTransfer.posId = (int)MainWindow.posLogIn.posId;
+            cashTransfer.posId = (int)MainWindow.posLogin.posId;
             if (status == "o")
                 cashTransfer.transNum = await cashTransfer.generateCashNumber("bc");
             else
-                cashTransfer.transNum = await cashTransfer.getLastOpenTransNum((int)MainWindow.posLogIn.posId);
-            int res = await posModel.updateBoxState((int)MainWindow.posLogIn.posId, status,Convert.ToInt32(isAdmin),MainWindow.userLogin.userId,cashTransfer);
+                cashTransfer.transNum = await cashTransfer.getLastOpenTransNum((int)MainWindow.posLogin.posId);
+            int res = await posModel.updateBoxState((int)MainWindow.posLogin.posId, status,Convert.ToInt32(isAdmin),MainWindow.userLogin.userId,cashTransfer);
             if (res > 0)
             {
                 await MainWindow.refreshBalance();
@@ -342,7 +332,6 @@ namespace Restaurant.View.windows
             }
             else
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-            */
         }
         private async Task transfer()
         {
@@ -382,20 +371,20 @@ namespace Restaurant.View.windows
                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
         }
         }
-        /*
+        
         private Boolean validate()
         {
-            if(MainWindow.posLogIn.balance == 0)
+            if(MainWindow.posLogin.balance == 0)
             {
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trZeroBalance"), animation: ToasterAnimation.FadeIn);
                 return false;
             }
-            HelpClass.validateEmptyComboBox(cb_pos, p_errorPos, tt_errorPos, "trErrorEmptyPosToolTip");
+            HelpClass.clearValidate(p_errorPos);
             if (cb_pos.SelectedIndex == -1)
                 return false;
             return true;
         }
-        */
+        
         #endregion
     }
 }
