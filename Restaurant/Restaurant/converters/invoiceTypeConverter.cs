@@ -129,6 +129,14 @@ namespace Restaurant.converters
                 case "ts":
                     value = AppSettings.resourcemanager.GetString("trTakeAway");
                     break;
+               // خدمة ذاتية
+                case "ss":
+                    value = AppSettings.resourcemanager.GetString("trSelfService");
+                    break;
+               // خدمة ذاتية مسودة
+                case "ssd":
+                    value = AppSettings.resourcemanager.GetString("trSelfServiceDraft");
+                    break;
                 default: break;
             }
             return value;

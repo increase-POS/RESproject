@@ -3841,4 +3841,7 @@ Please add Email in setting</value>
   <data name="withDeliveryMan" xml:space="preserve">
     <value>With delivery man</value>
   </data>
+  <data name="trSelfServiceDraft" xml:space="preserve">
+    <value>Self-service draft</value>
+  </data>
 </root>

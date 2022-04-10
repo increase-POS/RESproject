@@ -3817,4 +3817,7 @@
   <data name="withDeliveryMan" xml:space="preserve">
     <value>مع موظف التوصيل</value>
   </data>
+  <data name="trSelfServiceDraft" xml:space="preserve">
+    <value>مسودة وجبات جاهزة - داخل</value>
+  </data>
 </root>
