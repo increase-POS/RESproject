@@ -909,6 +909,25 @@ namespace Restaurant.Classes
             parameters.Add("invType", invType);
            return await APIResult.post(method, parameters);
         }
+
+        public async Task<int> saveMemberShipClassDis(InvoicesClass invoiceClass, int invoiceId)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "invoices/saveMemberShipClassDis";
+            var myContent = JsonConvert.SerializeObject(invoiceClass);
+            parameters.Add("itemObject", myContent);
+            parameters.Add("invoiceId", invoiceId.ToString());
+
+           return await APIResult.post(method, parameters);
+        }
+        public async Task<int> clearInvoiceCouponsAndClasses( int invoiceId)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "Invoices/clearInvoiceCouponsAndClasses";
+
+            parameters.Add("invoiceId", invoiceId.ToString());
+           return await APIResult.post(method, parameters);
+        }
         public async Task<int> deleteInvoice(int invoiceId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();

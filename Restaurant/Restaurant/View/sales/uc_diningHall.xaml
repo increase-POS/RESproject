@@ -381,7 +381,8 @@
                     </StackPanel>
                 </Button>
                 <Button x:Name="btn_delivery" Click="Btn_delivery_Click" Height="40"
-                    materialDesign:ButtonAssist.CornerRadius="7"  
+                        IsEnabled="False"
+                        materialDesign:ButtonAssist.CornerRadius="7"  
                           Background="{StaticResource White}" BorderBrush="{x:Null}"
                     Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
                     <StackPanel Orientation="Horizontal" >
