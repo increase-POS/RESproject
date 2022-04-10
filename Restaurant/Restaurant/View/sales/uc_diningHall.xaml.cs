@@ -296,16 +296,31 @@ namespace Restaurant.View.sales
             txt_totalDiscount.Text = AppSettings.resourcemanager.GetString("trDiscount");
             txt_tax.Text = AppSettings.resourcemanager.GetString("trTax");
             txt_total.Text = AppSettings.resourcemanager.GetString("trTotal");
+           
+            btn_pay.Content = AppSettings.resourcemanager.GetString("trPay");
+
+
+            #region
+
+            /*
             txt_discount.Text = AppSettings.resourcemanager.GetString("trDiscount");
             txt_customer.Text = AppSettings.resourcemanager.GetString("trCustomer");
             txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
             txt_kitchen.Text = AppSettings.resourcemanager.GetString("trKitchen");
             txt_tables.Text = AppSettings.resourcemanager.GetString("trTables");
-            //txt_invType.Text = AppSettings.resourcemanager.GetString("invoiceType");
-            btn_pay.Content = AppSettings.resourcemanager.GetString("trPay");
-            txt_delivery.Text = AppSettings.resourcemanager.GetString("trDelivery");
             txt_orderTime.Text = AppSettings.resourcemanager.GetString("time");
+            txt_delivery.Text = AppSettings.resourcemanager.GetString("trDelivery");
+            */
 
+            btn_tables.ToolTip = AppSettings.resourcemanager.GetString("trTables");
+            btn_kitchen.ToolTip = AppSettings.resourcemanager.GetString("trKitchen");
+            btn_waiter.ToolTip = AppSettings.resourcemanager.GetString("trWaiter");
+            btn_customer.ToolTip = AppSettings.resourcemanager.GetString("trCustomer");
+            btn_discount.ToolTip = AppSettings.resourcemanager.GetString("trDiscount");
+            btn_delivery.ToolTip = AppSettings.resourcemanager.GetString("trDelivery");
+            btn_orderTime.ToolTip = AppSettings.resourcemanager.GetString("time");
+
+            #endregion
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -1512,12 +1527,14 @@ namespace Restaurant.View.sales
             invoice = new Invoice();
 
             #region return waiter button to default
-            txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
+            //txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
+            txt_waiter.Text = "";
             txt_waiter.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             path_waiter.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             #endregion
             #region return customer button to default
-            txt_customer.Text = AppSettings.resourcemanager.GetString("trCustomer");
+            //txt_customer.Text = AppSettings.resourcemanager.GetString("trCustomer");
+            txt_customer.Text = "";
             txt_customer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             path_customer.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             #endregion
@@ -1526,7 +1543,8 @@ namespace Restaurant.View.sales
             path_discount.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             #endregion
             #region return delivery button to default
-            txt_customer.Text = AppSettings.resourcemanager.GetString("trDelivery");
+            //txt_customer.Text = AppSettings.resourcemanager.GetString("trDelivery");
+            txt_customer.Text = "";
 
             txt_delivery.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             path_delivery.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
@@ -1598,7 +1616,8 @@ namespace Restaurant.View.sales
             }
             else
             {
-                txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
+                //txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
+                txt_waiter.Text = "";
                 txt_waiter.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                 path_waiter.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             }
@@ -1614,7 +1633,8 @@ namespace Restaurant.View.sales
             }
             else
             {
-                txt_customer.Text = AppSettings.resourcemanager.GetString("trCustomer");
+                //txt_customer.Text = AppSettings.resourcemanager.GetString("trCustomer");
+                txt_customer.Text = "";
                 txt_customer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                 path_customer.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             }
@@ -1712,7 +1732,8 @@ namespace Restaurant.View.sales
             }
             else
             {
-                txt_customer.Text = AppSettings.resourcemanager.GetString("trCustomer");
+                //txt_customer.Text = AppSettings.resourcemanager.GetString("trCustomer");
+                txt_customer.Text = "";
                 txt_customer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                 path_customer.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             }
@@ -2103,9 +2124,10 @@ namespace Restaurant.View.sales
                         else
                         {
                             // return button content to default
-                            txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
-                            // return foreground color to default
-                            txt_waiter.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                            //txt_waiter.Text = AppSettings.resourcemanager.GetString("trWaiter");
+                            txt_waiter.Text = "";
+                        // return foreground color to default
+                        txt_waiter.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                             path_waiter.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                         }
                         int res = await FillCombo.invoice.saveInvoice(invoice);
@@ -2165,7 +2187,8 @@ namespace Restaurant.View.sales
                             await FillCombo.invoice.clearInvoiceCouponsAndClasses(invoice.invoiceId);
 
                             #region return delivery button to default
-                            txt_customer.Text = AppSettings.resourcemanager.GetString("trDelivery");
+                            //txt_customer.Text = AppSettings.resourcemanager.GetString("trDelivery");
+                            txt_customer.Text = "";
 
                             txt_delivery.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                             path_delivery.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
@@ -2211,9 +2234,10 @@ namespace Restaurant.View.sales
                         else
                         {
                             // return button content to default
-                            txt_customer.Text = AppSettings.resourcemanager.GetString("trCustomer");
-                            // return foreground color to default
-                            txt_customer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                            //txt_customer.Text = AppSettings.resourcemanager.GetString("trCustomer");
+                            txt_customer.Text = "";
+                        // return foreground color to default
+                        txt_customer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                             path_customer.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
                         btn_delivery.IsEnabled = false;
@@ -2336,7 +2360,8 @@ namespace Restaurant.View.sales
                     }
                     else
                     {
-                        txt_delivery.Text = AppSettings.resourcemanager.GetString("trDelivery");
+                        //txt_delivery.Text = AppSettings.resourcemanager.GetString("trDelivery");
+                        txt_delivery.Text = "";
 
                         txt_delivery.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                         path_delivery.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;

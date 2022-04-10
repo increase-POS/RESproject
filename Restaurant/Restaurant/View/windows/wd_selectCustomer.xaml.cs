@@ -88,6 +88,12 @@ namespace Restaurant.View.windows
                 await FillCombo.FillComboCustomers(cb_customerId);
 
                 fillInputs();
+
+                if (AppSettings.invType != "")
+                    grid_delivery.Visibility = Visibility.Visible;
+                else
+                    grid_delivery.Visibility = Visibility.Collapsed;
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -109,6 +115,7 @@ namespace Restaurant.View.windows
             txt_couponsCount.Text = AppSettings.resourcemanager.GetString("trCoupons");
             txt_offersCount.Text = AppSettings.resourcemanager.GetString("trOffers");
             txt_invoicesClassesCount.Text = AppSettings.resourcemanager.GetString("trInvoicesClasses");
+            txt_deliveryDetails.Text = AppSettings.resourcemanager.GetString("trDelivery");
            
 
             btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
@@ -156,7 +163,19 @@ namespace Restaurant.View.windows
                     #endregion
                     #region data context
                     this.DataContext = agentToPayCash;
-
+                    #region delivery
+                    if(agentToPayCash != null)
+                    {
+                        if(agentToPayCash.isFreeDelivery)
+                            tb_deliveryDetails.Text = AppSettings.resourcemanager.GetString("trFree");
+                        else
+                            tb_deliveryDetails.Text = agentToPayCash.deliveryDiscountPercent + " %";
+                    }
+                    else
+                    {
+                        tb_deliveryDetails.Text = "0 %";
+                    }
+                    #endregion
                     #endregion
                 }
             }
