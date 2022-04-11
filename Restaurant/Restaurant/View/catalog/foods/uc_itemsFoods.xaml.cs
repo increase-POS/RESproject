@@ -188,14 +188,12 @@ namespace Restaurant.View.catalog.foods
 
             txt_contentInformatin.Text = AppSettings.resourcemanager.GetString("trMoreInformation");
 
-
-
             btn_add.Content = AppSettings.resourcemanager.GetString("trAdd");
             btn_update.Content = AppSettings.resourcemanager.GetString("trUpdate");
             btn_delete.Content = AppSettings.resourcemanager.GetString("trDelete");
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
 
-
+            txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");
 
 
 

@@ -142,7 +142,7 @@ namespace Restaurant.View.catalog.rawMaterials
         }      
         private void translate()
         {
-
+            txt_title.Text = AppSettings.resourcemanager.GetString("trItems");
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_details, AppSettings.resourcemanager.GetString("trDetailsHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, AppSettings.resourcemanager.GetString("trNameHint"));

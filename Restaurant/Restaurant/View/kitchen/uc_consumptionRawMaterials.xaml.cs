@@ -883,7 +883,7 @@ namespace Restaurant.View.kitchen
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_purchaseItems w = new wd_purchaseItems();
                 w.CardType = "consumption";
-                    // w.ShowInTaskbar = false;
+                // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 if (w.isActive)
                 {
@@ -1163,69 +1163,71 @@ namespace Restaurant.View.kitchen
             {
 
                 var cmb = sender as ComboBox;
-                int _datagridSelectedIndex = dg_billDetails.SelectedIndex;
-
-                TextBlock t = col_amount.GetCellContent(dg_billDetails.Items[_datagridSelectedIndex]) as TextBlock;
-
-                if (dg_billDetails.SelectedIndex != -1 && cmb != null)
+                if (dg_billDetails.SelectedIndex != -1 && cmb.SelectedValue != null)
                 {
-                    billDetails[dg_billDetails.SelectedIndex].itemUnitId = (int)cmb.SelectedValue;
-                    if (_InvType == "fbc")
-                        cmb.IsEnabled = false;
-                    else
-                        cmb.IsEnabled = true;
+                    int _datagridSelectedIndex = dg_billDetails.SelectedIndex;
+                    TextBlock t = col_amount.GetCellContent(dg_billDetails.Items[_datagridSelectedIndex]) as TextBlock;
 
-
-                    #region check amount & calc new count
-                    int oldCount = billDetails[dg_billDetails.SelectedIndex].Count;
-                    int newCount = 0;
-
-                    newCount = int.Parse(t.Text);
-                    if (newCount < 0)
+                    if (dg_billDetails.SelectedIndex != -1 && cmb != null)
                     {
-                        newCount = 0;
-                        t.Text = "0";
-                    }
-                    //availableAmount = await getAvailableAmount(row.itemId, row.itemUnitId, MainWindow.branchLogin.branchId, row.ID);
-
-                    #region caculate available amount for this bill
-                    int availableAmountInBranch = await FillCombo.itemLocation.getAmountInBranch(billDetails[dg_billDetails.SelectedIndex].itemUnitId, MainWindow.branchLogin.branchId, 1);
-                    int amountInBill = await getAmountInBill(billDetails[dg_billDetails.SelectedIndex].itemId, billDetails[dg_billDetails.SelectedIndex].itemUnitId, billDetails[dg_billDetails.SelectedIndex].ID);
-                    int availableAmount = availableAmountInBranch - amountInBill;
-                    #endregion
-
-                    if (availableAmount < newCount)
-                    {
-
-                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountNotAvailableToolTip"), animation: ToasterAnimation.FadeIn);
-                        newCount = availableAmount;
-                        t.Text = newCount.ToString();
-                        billDetails[dg_billDetails.SelectedIndex].Count = (int)newCount;
-                    }
-                    else
-                    {
-                        if (!t.Text.Equals(""))
-                            newCount = int.Parse(t.Text);
+                        billDetails[dg_billDetails.SelectedIndex].itemUnitId = (int)cmb.SelectedValue;
+                        if (_InvType == "fbc")
+                            cmb.IsEnabled = false;
                         else
-                            newCount = 0;
+                            cmb.IsEnabled = true;
+
+
+                        #region check amount & calc new count
+                        int oldCount = billDetails[dg_billDetails.SelectedIndex].Count;
+                        int newCount = 0;
+
+                        newCount = int.Parse(t.Text);
                         if (newCount < 0)
                         {
                             newCount = 0;
                             t.Text = "0";
                         }
+                        //availableAmount = await getAvailableAmount(row.itemId, row.itemUnitId, MainWindow.branchLogin.branchId, row.ID);
+
+                        #region caculate available amount for this bill
+                        int availableAmountInBranch = await FillCombo.itemLocation.getAmountInBranch(billDetails[dg_billDetails.SelectedIndex].itemUnitId, MainWindow.branchLogin.branchId, 1);
+                        int amountInBill = await getAmountInBill(billDetails[dg_billDetails.SelectedIndex].itemId, billDetails[dg_billDetails.SelectedIndex].itemUnitId, billDetails[dg_billDetails.SelectedIndex].ID);
+                        int availableAmount = availableAmountInBranch - amountInBill;
+                        #endregion
+
+                        if (availableAmount < newCount)
+                        {
+
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountNotAvailableToolTip"), animation: ToasterAnimation.FadeIn);
+                            newCount = availableAmount;
+                            t.Text = newCount.ToString();
+                            billDetails[dg_billDetails.SelectedIndex].Count = (int)newCount;
+                        }
+                        else
+                        {
+                            if (!t.Text.Equals(""))
+                                newCount = int.Parse(t.Text);
+                            else
+                                newCount = 0;
+                            if (newCount < 0)
+                            {
+                                newCount = 0;
+                                t.Text = "0";
+                            }
+                        }
+
+                        _Count -= oldCount;
+                        _Count += newCount;
+
+                        //  refresh count text box
+                        tb_count.Text = _Count.ToString();
+
+                        // update item in billdetails           
+                        billDetails[dg_billDetails.SelectedIndex].Count = (int)newCount;
+                        if (invoiceItems != null)
+                            invoiceItems[dg_billDetails.SelectedIndex].quantity = (int)newCount;
+                        #endregion
                     }
-
-                    _Count -= oldCount;
-                    _Count += newCount;
-
-                    //  refresh count text box
-                    tb_count.Text = _Count.ToString();
-
-                    // update item in billdetails           
-                    billDetails[dg_billDetails.SelectedIndex].Count = (int)newCount;
-                    if (invoiceItems != null)
-                        invoiceItems[dg_billDetails.SelectedIndex].quantity = (int)newCount;
-                    #endregion
                 }
             }
             catch (Exception ex)

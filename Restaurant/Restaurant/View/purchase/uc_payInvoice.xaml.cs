@@ -1559,7 +1559,6 @@ namespace Restaurant.View.purchase
                 if (dg_billDetails.SelectedIndex != -1 && cmb.SelectedValue != null)
                 {
                     billDetails[dg_billDetails.SelectedIndex].itemUnitId = (int)cmb.SelectedValue;
-
                     TextBlock tb;
 
                     int _datagridSelectedIndex = dg_billDetails.SelectedIndex;

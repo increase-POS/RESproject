@@ -96,13 +96,23 @@ namespace Restaurant.View.sectionData.persons
         }
         private async Task translate()
         {
-            if (FillCombo.objectsList is null)
+            if (FillCombo.objectsList is null || FillCombo.objectsList.Count() == 0)
                 await FillCombo.RefreshObjects();
             // Title
             if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
                 txt_mainTitle.Text = AppSettings.resourcemanager.GetString(
                FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
                );
+            // Icon
+            List<Path> InfoPathsList = FindControls.FindVisualChildren<Path>(this)
+                .Where(x => x.Name.Contains("Icon") && x.Tag != null).ToList();
+            foreach (var item in InfoPathsList)
+            {
+                if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().icon))
+                    item.Data = App.Current.Resources[
+                FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().icon
+                   ] as Geometry;
+            }
             // Info
             List<TextBlock> InfoTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
                 .Where(x => x.Name.Contains("Info") && x.Tag != null).ToList();
