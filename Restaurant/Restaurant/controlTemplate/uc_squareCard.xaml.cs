@@ -206,7 +206,7 @@ namespace Restaurant.controlTemplate
             }
             if (cardViewitem.item.itemCount > 0)
             {
-                this.ToolTip = AppSettings.resourcemanager.GetString("trCount") +":" + cardViewitem.item.itemCount + " " + cardViewitem.item.unitName;
+                this.ToolTip = AppSettings.resourcemanager.GetString("trCount") +": " + cardViewitem.item.itemCount + " " + cardViewitem.item.unitName;
                 //tt_name.Content = "Count" + cardViewitem.item.itemCount;
             }
 
