@@ -1237,7 +1237,7 @@
     <value>مستلمة</value>
   </data>
   <data name="trPayVocher" xml:space="preserve">
-    <value>سند دفع</value>
+    <value>سند صرف</value>
   </data>
   <data name="trBranch/Store" xml:space="preserve">
     <value>الفرع/المخزن</value>

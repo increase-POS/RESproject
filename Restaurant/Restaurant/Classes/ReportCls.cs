@@ -352,7 +352,7 @@ namespace Restaurant.Classes
             string purpose = "";
             string recived_by = "";
             string user_name = cashtrans.createUserName + " " + cashtrans.createUserLName;
-            string job = "Employee"; //cashtrans.createUserJob;
+            string job = AppSettings.resourcemanagerreport.GetString("trAccoutant");
             string pay_to;
 
             if (cashtrans.side == "u")
@@ -479,6 +479,7 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("isCash", isCash));
             paramarr.Add(new ReportParameter("trans_num_txt", trans_num_txt));
             paramarr.Add(new ReportParameter("show_header", AppSettings.show_header));
+            paramarr.Add(new ReportParameter("currency", AppSettings.Currency));
             return paramarr;
         }
         public string ConvertAmountToWords(Nullable<decimal> amount)
