@@ -164,20 +164,26 @@ namespace Restaurant.View.windows
                     #region data context
                     this.DataContext = agentToPayCash;
                     #region delivery
-                    if(agentToPayCash != null)
-                    {
+                    //if(agentToPayCash != null)
+                    //{
                         if(agentToPayCash.isFreeDelivery)
                             tb_deliveryDetails.Text = AppSettings.resourcemanager.GetString("trFree");
                         else
                             tb_deliveryDetails.Text = agentToPayCash.deliveryDiscountPercent + " %";
-                    }
-                    else
-                    {
-                        tb_deliveryDetails.Text = "0 %";
-                    }
+                    //}
+                    //else
+                    //{
+                    //    tb_deliveryDetails.Text = "0 %";
+                    //}
                     #endregion
                     #endregion
                 }
+            }
+            else
+            {
+                agentToPayCash = new AgenttoPayCash();
+                this.DataContext = agentToPayCash;
+                tb_deliveryDetails.Text = agentToPayCash.deliveryDiscountPercent + " %";
             }
         }
         private void Btn_select_Click(object sender, RoutedEventArgs e)
