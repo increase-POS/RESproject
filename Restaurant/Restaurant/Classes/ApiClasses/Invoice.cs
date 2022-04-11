@@ -149,7 +149,7 @@ namespace Restaurant.Classes
         public int printedcount { get; set; }
         public bool isOrginal { get; set; }
         public Nullable<long> reservationId { get; set; }
-
+        public Nullable<System.DateTime> orderTime { get; set; }
         public decimal shippingCost { get; set; }
         public decimal realShippingCost { get; set; }
         public string branchName { get; set; }

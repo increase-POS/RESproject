@@ -60,6 +60,7 @@ namespace Restaurant.View.windows
             }
         }
         public bool isOk { get; set; }
+        public DateTime orderTime { get; set; }
         public static List<string> requiredControlList = new List<string>();
         private  void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
@@ -102,7 +103,7 @@ namespace Restaurant.View.windows
             if (HelpClass.validate(requiredControlList, this))
             {
                 isOk = true;
-                MessageBox.Show(tp_time.SelectedTime.ToString());
+                orderTime =(DateTime)tp_time.SelectedTime;
                 
                 this.Close();
             }
