@@ -1384,12 +1384,12 @@ namespace Restaurant
 
                 await close();
 
-                Application.Current.Shutdown();
-                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                //Application.Current.Shutdown();
+                //System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
 
-                //wd_logIn wdLogIn = new wd_logIn();
-                //wdLogIn.Show();
-                //this.Close();
+                wd_logIn wdLogIn = new wd_logIn();
+                wdLogIn.Show();
+                this.Close();
 
                 HelpClass.EndAwait(grid_mainWindow);
             }
