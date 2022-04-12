@@ -24,10 +24,8 @@ namespace Restaurant.Classes
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
-
         public Boolean canDelete { get; set; }
-
-      
+        public decimal deliveryTime { get; set; }
 
         public async Task<List<ResidentialSectors>> Get()
         {
