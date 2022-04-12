@@ -239,7 +239,8 @@ namespace Restaurant.View.windows
                     MainWindow.userLogin = new User();
                     MainWindow.posLogin = new Pos();
                     MainWindow.branchLogin = new Branch();
-
+                    MainWindow.userLog = null;
+                    //MainWindow.userLog;
                     user = await userModel.Getloginuser(userName, password);
 
                     if (user.username == null)

@@ -2104,14 +2104,17 @@ namespace Restaurant.View.sales
             {
                 HelpClass.StartAwait(grid_main);
 
-                //if (FillCombo.groupObject.HasPermissionAction(addTablePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
-                //{
+                // if (FillCombo.groupObject.HasPermissionAction(addTablePermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
+                // {
+
                     Window.GetWindow(this).Opacity = 0.2;
 
                     await addDraft();// save invoice
+                if (AppSettings.invType == "diningHall")
+                {
 
-                #region invType = diningHall
-                wd_diningHallTables w = new wd_diningHallTables();
+                    #region invType = diningHall
+                    wd_diningHallTables w = new wd_diningHallTables();
                     w.ShowDialog();
                     if (w.isOk == true)
                     {
@@ -2128,39 +2131,44 @@ namespace Restaurant.View.sales
                         setTablesName();
                         await fillInvoiceInputs(invoice);
                     }
-                    Window.GetWindow(this).Opacity = 1;
-                #endregion
-
-                #region self-service
-                wd_selectTable sw = new wd_selectTable();
-                w.ShowDialog();
-                if (w.isOk)
-                {
-                    #region table name
-                    txt_tableName.Text = sw.table.name;
+                    
                     #endregion
-
-                    #region update invoice
-                    List<Tables> tbl = new List<Tables>();
-                    tbl.Add(sw.table);
-                    int res = await addDraft();
-
-                    if (res > 0)
-                    {
-
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                        // set table to invoice
-                        await FillCombo.invoice.updateInvoiceTables(invoice.invoiceId, tbl);
-                    }
-                    else
-                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    #endregion
-
                 }
-                #endregion
+                else if (AppSettings.invType == "selfService")
+                {
+                    #region self-service
+                    wd_selectTable w = new wd_selectTable();
+                    //w.tableId = 0;
+                    w.ShowDialog();
+                    if (w.isOk)
+                    {
+                        #region table name
+                        txt_tableName.Text = w.table.name;
+                        #endregion
+
+                        #region update invoice
+                        List<Tables> tbl = new List<Tables>();
+                        tbl.Add(w.table);
+                        int res = await addDraft();
+
+                        if (res > 0)
+                        {
+
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                            // set table to invoice
+                            await FillCombo.invoice.updateInvoiceTables(invoice.invoiceId, tbl);
+                        }
+                        else
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        #endregion
+
+                    }
+                    #endregion
+                }
                 //}
                 //else
                 //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                Window.GetWindow(this).Opacity = 1;
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
