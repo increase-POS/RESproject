@@ -286,7 +286,13 @@ namespace Restaurant.View.accounts
 
         private void translate()
         {
-            txt_title.Text = AppSettings.resourcemanager.GetString("trSubscription");
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
+
+            //txt_title.Text = AppSettings.resourcemanager.GetString("trSubscription");
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchStartDate, AppSettings.resourcemanager.GetString("trStartDate")+"...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchEndDate, AppSettings.resourcemanager.GetString("trEndDate")+"...");

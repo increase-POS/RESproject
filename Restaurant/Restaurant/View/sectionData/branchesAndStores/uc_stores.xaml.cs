@@ -136,6 +136,12 @@ namespace Restaurant.View.sectionData.branchesAndStores
 
         private void translate()
         {
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
+
             txt_title.Text = AppSettings.resourcemanager.GetString("trStore");
 
             txt_addButton.Text = AppSettings.resourcemanager.GetString("trAdd");

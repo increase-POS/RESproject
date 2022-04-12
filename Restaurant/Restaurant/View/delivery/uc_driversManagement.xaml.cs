@@ -123,7 +123,13 @@ namespace Restaurant.View.delivery
 
         private void translate()
         {
-            txt_title.Text = AppSettings.resourcemanager.GetString("trDriversManagement");
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
+
+            //txt_title.Text = AppSettings.resourcemanager.GetString("trDriversManagement");
             txt_details.Text = AppSettings.resourcemanager.GetString("trDetails");
             txt_active.Text = AppSettings.resourcemanager.GetString("trActive");
             txt_userName.Text = AppSettings.resourcemanager.GetString("trUserName");

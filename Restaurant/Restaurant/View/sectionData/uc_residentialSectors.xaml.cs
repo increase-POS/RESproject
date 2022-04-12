@@ -84,7 +84,6 @@ namespace Restaurant.View.sectionData
                 _instance = value;
             }
         }
-
         string basicsPermission = "residentialSectors_basics";
         ResidentialSectors residential = new ResidentialSectors();
         IEnumerable<ResidentialSectors> residentialsQuery;
@@ -132,17 +131,28 @@ namespace Restaurant.View.sectionData
 
         private void translate()
         {
-            txt_title.Text = AppSettings.resourcemanager.GetString("trResidentialSectors");
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
+
+            //txt_title.Text = AppSettings.resourcemanager.GetString("trResidentialSectors");
+            txt_minute.Text = AppSettings.resourcemanager.GetString("trMinute");
+
+
             txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, AppSettings.resourcemanager.GetString("trNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_deliveryTime, AppSettings.resourcemanager.GetString("deliveryTime"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
             txt_addButton.Text = AppSettings.resourcemanager.GetString("trAdd");
             txt_updateButton.Text = AppSettings.resourcemanager.GetString("trUpdate");
             txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
             dg_residential.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
-            dg_residential.Columns[1].Header = AppSettings.resourcemanager.GetString("trNote");
+            dg_residential.Columns[1].Header = AppSettings.resourcemanager.GetString("deliveryTime");
+            dg_residential.Columns[2].Header = AppSettings.resourcemanager.GetString("trNote");
 
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             tt_add_Button.Content = AppSettings.resourcemanager.GetString("trAdd");
@@ -176,6 +186,7 @@ namespace Restaurant.View.sectionData
                     {
 
                         residential.name = tb_name.Text;
+                        residential.deliveryTime = decimal.Parse(tb_deliveryTime.Text);
                         residential.createUserId = MainWindow.userLogin.userId;
                         residential.updateUserId = MainWindow.userLogin.userId;
                         residential.notes = tb_notes.Text;
@@ -225,6 +236,7 @@ namespace Restaurant.View.sectionData
                     if (HelpClass.validate(requiredControlList, this) && isValidName)
                     {
                         residential.name = tb_name.Text;
+                        residential.deliveryTime = decimal.Parse(tb_deliveryTime.Text);
                         residential.updateUserId = MainWindow.userLogin.userId;
                         residential.notes = tb_notes.Text;
 

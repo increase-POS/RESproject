@@ -133,6 +133,12 @@ namespace Restaurant.View.settings
         private void translate()
         {
 
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
+
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_name, AppSettings.resourcemanager.GetString("trNameHint"));
             btn_refresh.ToolTip = AppSettings.resourcemanager.GetString("trRefresh");
@@ -766,6 +772,7 @@ namespace Restaurant.View.settings
                     path.Fill = Application.Current.Resources["Grey"] as SolidColorBrush;
                 path.Width = 25;
                 path.Height = 25;
+                path.FlowDirection = FlowDirection.LeftToRight;
                 path.Margin = new Thickness(0, 0, 15, 0);
                 path.Data = App.Current.Resources[item.icon] as Geometry;
                 path.Stretch = Stretch.Fill;

@@ -135,7 +135,14 @@ namespace Restaurant.View.sectionData.persons
 
         private void translate()
         {
-            txt_title.Text = AppSettings.resourcemanager.GetString("trVendor");
+
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
+
+            //txt_title.Text = AppSettings.resourcemanager.GetString("trVendor");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");

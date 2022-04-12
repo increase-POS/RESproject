@@ -145,6 +145,8 @@ namespace Restaurant.View.storage.stocktakingOperations
         }
         private void translate()
         {
+
+           
             ////////////////////////////////----Inventory----/////////////////////////////////
             dg_items.Columns[0].Header = AppSettings.resourcemanager.GetString("trNum");
             dg_items.Columns[1].Header = AppSettings.resourcemanager.GetString("trSectionLocation");

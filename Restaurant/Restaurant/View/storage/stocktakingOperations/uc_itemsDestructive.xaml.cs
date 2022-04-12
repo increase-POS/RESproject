@@ -102,7 +102,13 @@ namespace Restaurant.View.storage.stocktakingOperations
         }
         private void translate()
         {
-            txt_title.Text = AppSettings.resourcemanager.GetString("trDestructiveItem");
+
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
+            //txt_title.Text = AppSettings.resourcemanager.GetString("trDestructiveItem");
             txt_destroy.Text = AppSettings.resourcemanager.GetString("trDestructionInfo");
             txt_manually.Text = AppSettings.resourcemanager.GetString("trManually");
 

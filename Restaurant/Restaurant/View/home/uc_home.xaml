@@ -9,7 +9,8 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" 
                xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="700" d:DesignWidth="1024"
-             Loaded="UserControl_Loaded"    TouchLeave="UserControl_TouchLeave"  >
+             Loaded="UserControl_Loaded"   Unloaded="UserControl_Unloaded"  
+             TouchLeave="UserControl_TouchLeave"  >
     <UserControl.Resources>
         <Style TargetType="lvc:DefaultLegend" x:Key="PieChartDefaultLegend">
             <Setter Property="BulletSize" Value="0"/>
@@ -114,7 +115,7 @@
                         <Path Fill="#1D75B8"  Stretch="Fill"  
                           Grid.Column="1"   FlowDirection="LeftToRight"
                          Width="25" Height="25"
-                              Data="{StaticResource table}"/>
+                              Data="{StaticResource table1}"/>
                         <Border Grid.Column="2" Margin="10,12.5"   CornerRadius="0,0,0,0"  Width="1" BorderThickness="0"
                                 Background="#1D75B8" />
 

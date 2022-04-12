@@ -105,7 +105,13 @@ namespace Restaurant.View.kitchen
         }
         private void translate()
         {
-            txt_title.Text = AppSettings.resourcemanager.GetString("trItemsCosting");
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
+
+            //txt_title.Text = AppSettings.resourcemanager.GetString("trItemsCosting");
             btn_update.Content = AppSettings.resourcemanager.GetString("trUpdate");
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             btn_refresh.ToolTip = AppSettings.resourcemanager.GetString("trRefresh");
@@ -418,6 +424,7 @@ namespace Restaurant.View.kitchen
         private async Task refreshCategoryTag()
         {
             await FillCombo.fillTagsWithDefault(cb_searchTags,categoryId);
+            //cb_searchTags.SelectedIndex = 0;
         }
 
         #endregion

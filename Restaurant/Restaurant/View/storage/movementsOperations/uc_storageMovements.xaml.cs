@@ -96,6 +96,8 @@ namespace Restaurant.View.storage.movementsOperations
 
         private void translate()
         {
+           
+
             ////////////////////////////////----Order----/////////////////////////////////
             dg_billDetails.Columns[1].Header = AppSettings.resourcemanager.GetString("trNum");
             dg_billDetails.Columns[2].Header = AppSettings.resourcemanager.GetString("trItem");

@@ -132,7 +132,13 @@ namespace Restaurant.View.sectionData.banksData
 
         private void translate()
         {
-            txt_title.Text = AppSettings.resourcemanager.GetString("trPaymentMethods");
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
+
+            //txt_title.Text = AppSettings.resourcemanager.GetString("trPaymentMethods");
             txt_hasProcessNum.Text = AppSettings.resourcemanager.GetString("trInputProcessNumber");
             txt_isActive.Text = AppSettings.resourcemanager.GetString("trActive");
             txt_cardIsActive.Text = AppSettings.resourcemanager.GetString("trActive_"); 

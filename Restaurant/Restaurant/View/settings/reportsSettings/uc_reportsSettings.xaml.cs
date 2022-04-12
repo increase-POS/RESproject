@@ -262,6 +262,7 @@ namespace Restaurant.View.settings.reportsSettings
 
         private void translate()
         {
+
             txt_mainTitle.Text = AppSettings.resourcemanager.GetString("trReportsSettings");
             txt_printCount.Text = AppSettings.resourcemanager.GetString("trPrintCount");
             tb_printCount.Text = AppSettings.resourcemanager.GetString("trPrintCount");

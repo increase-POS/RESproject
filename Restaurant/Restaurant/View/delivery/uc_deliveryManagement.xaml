@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Restaurant.View.delivery"
-             mc:Ignorable="d"  Tag="reservations"
+             mc:Ignorable="d"  Tag="deliveryManagement"
              Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="672" d:DesignWidth="941">
@@ -129,7 +129,7 @@
                         </Border.Effect>
                         <Grid>
                             <ComboBox x:Name="cb_searchUser"  Grid.Row="1"
-                                      SelectedValue="{Binding userId,Mode=OneWay}"
+                                      
                                       Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                       materialDesign:HintAssist.Hint="delivery man..."  
@@ -139,30 +139,43 @@
 
                     </Border>
                     <StackPanel  Grid.Column="2"  Margin="0 0 10 0"   Orientation="Horizontal" >
-                        <CheckBox x:Name="chk_allForDelivery"  
-                                                          Background="{StaticResource MainColor}"
-                                                          Content="all"
-                                                          Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
-                                                          Checked="search_Checking"
-                                                          Unchecked="chk_uncheck"/>
-                        <CheckBox x:Name="chk_readyForDelivery"  
+                        <Border  Margin="5" Background="White" CornerRadius="16" Height="40">
+
+                            <CheckBox x:Name="chk_allForDelivery"  
+                                     Background="{StaticResource MainColor}"
+                                     Content="all"
+                                     Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
+                                     Checked="search_Checking"  Margin="0" Height="40"
+                                     Unchecked="chk_uncheck"/>
+                        </Border>
+                        <Border  Margin="5" Background="White" CornerRadius="16" Height="40">
+
+                            <CheckBox x:Name="chk_readyForDelivery"  
                                                           Background="{StaticResource MainColor}"
                                                           Content="Ready for delivery"
                                                           Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
-                                                          Checked="search_Checking"
+                                                          Checked="search_Checking"  Margin="0" Height="40"
                                                           Unchecked="chk_uncheck"/>
-                        <CheckBox x:Name="chk_withDeliveryMan" 
+                        </Border>
+                        <Border  Margin="5" Background="White" CornerRadius="16" Height="40">
+
+                            <CheckBox x:Name="chk_withDeliveryMan" 
                                                           Background="{StaticResource MainColor}"
                                                           Content="With delivery man" 
                                                           Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
-                                                          Checked="search_Checking"
+                                                          Checked="search_Checking"  Margin="0" Height="40"
                                                           Unchecked="chk_uncheck"/>
-                        <CheckBox x:Name="chk_inTheWay" 
+                        </Border>
+                        <Border  Margin="5" Background="White" CornerRadius="16" Height="40">
+
+                            <CheckBox x:Name="chk_inTheWay" 
                                                           Background="{StaticResource MainColor}"
                                                           Content="In the way"
                                                           Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
-                                                          Checked="search_Checking"
+                                                          Checked="search_Checking"  Margin="0" Height="40"
                                                           Unchecked="chk_uncheck"/>
+                        </Border>
+
                         <!--<Border  DockPanel.Dock="Right"   Margin="7.5,10"    CornerRadius="0,0,0,0"  Width="2" BorderThickness="0" Background="{StaticResource LightMainColor}" />-->
 
                     </StackPanel>
@@ -209,6 +222,8 @@
                                     <DataGridCheckBoxColumn.ElementStyle>
                                         <Style
                                         TargetType="CheckBox">
+                                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
                                             <EventSetter
                                             Event="CheckBox.Checked"
                                             Handler="FieldDataGridChecked" />

@@ -309,8 +309,14 @@ namespace Restaurant.View.accounts
 
         private void translate()
         {
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
+
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trTransaferDetails");
-            txt_title.Text = AppSettings.resourcemanager.GetString("trPayments");
+            //txt_title.Text = AppSettings.resourcemanager.GetString("trPayments");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             chb_all.Content = AppSettings.resourcemanager.GetString("trAll");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchStartDate, AppSettings.resourcemanager.GetString("trStartDate")+"...");

@@ -111,16 +111,6 @@ namespace Restaurant.View.storage
                 txt_mainTitle.Text = AppSettings.resourcemanager.GetString(
                FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
                );
-            // Info
-            List<TextBlock> InfoTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
-                .Where(x => x.Name.Contains("Info") && x.Tag != null).ToList();
-            foreach (var item in InfoTextBlocksList)
-            {
-                if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translate))
-                    item.Text = AppSettings.resourcemanager.GetString(
-                   FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translate
-                   );
-            }
             // Icon
             List<Path> InfoPathsList = FindControls.FindVisualChildren<Path>(this)
                 .Where(x => x.Name.Contains("Icon") && x.Tag != null).ToList();
@@ -130,6 +120,21 @@ namespace Restaurant.View.storage
                     item.Data = App.Current.Resources[
                 FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().icon
                    ] as Geometry;
+            }
+            // Info
+            List<TextBlock> InfoTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
+                .Where(x => x.Name.Contains("Info") && x.Tag != null).ToList();
+            if (InfoTextBlocksList.Count == 0)
+            {
+                await Task.Delay(0050);
+                await translate();
+            }
+            foreach (var item in InfoTextBlocksList)
+            {
+                if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translate))
+                    item.Text = AppSettings.resourcemanager.GetString(
+                   FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translate
+                   );
             }
             // Hint
             List<TextBlock> HintTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
@@ -141,7 +146,6 @@ namespace Restaurant.View.storage
                    FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translateHint
                    );
             }
-
             // enterButton
             List<TextBlock> enterTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
                 .Where(x => x.Tag != null).ToList();

@@ -171,6 +171,7 @@ namespace Restaurant.View.windows
                 path.Fill = Application.Current.Resources["Grey"] as SolidColorBrush;
                 path.Width = 25;
                 path.Height = 25;
+                path.FlowDirection = FlowDirection.LeftToRight;
                 path.Margin = new Thickness(0, 0, 15, 0);
                 path.Data = App.Current.Resources[item.icon] as Geometry;
                 path.Stretch = Stretch.Fill;

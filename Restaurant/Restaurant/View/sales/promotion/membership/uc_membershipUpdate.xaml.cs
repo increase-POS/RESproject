@@ -142,7 +142,13 @@ namespace Restaurant.View.sales.promotion.membership
 
         void translate()
         {
-            txt_title.Text = AppSettings.resourcemanager.GetString("trMembership");
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
+
+            //txt_title.Text = AppSettings.resourcemanager.GetString("trMembership");
             txt_details.Text = AppSettings.resourcemanager.GetString("trDetails");
             txt_code.Text = AppSettings.resourcemanager.GetString("trCode");
             txt_name.Text = AppSettings.resourcemanager.GetString("trName");

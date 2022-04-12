@@ -110,6 +110,11 @@ namespace Restaurant.View.storage.stocktakingOperations
         private void translate()
         {
 
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
             ////////////////////////////////----Grid----/////////////////////////////////
             dg_invItemLoc.Columns[0].Header = AppSettings.resourcemanager.GetString("trInventoryNum");
             dg_invItemLoc.Columns[1].Header = AppSettings.resourcemanager.GetString("trDate");

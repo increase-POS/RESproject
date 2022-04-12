@@ -201,7 +201,13 @@ namespace Restaurant.View.sales.reservations
             dg_reservation.Columns[5].Header = AppSettings.resourcemanager.GetString("trExceed");
             #endregion
 
-            txt_title.Text = AppSettings.resourcemanager.GetString("trReservations");
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
+
+            //txt_title.Text = AppSettings.resourcemanager.GetString("trReservations");
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
             txt_tables.Text = AppSettings.resourcemanager.GetString("trTables");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
@@ -371,7 +377,8 @@ namespace Restaurant.View.sales.reservations
         private async void Btn_confirm_Click(object sender, RoutedEventArgs e)
         {
             try
-            {//delete
+            { 
+                //confirm
                 if (FillCombo.groupObject.HasPermissionAction(updatePermission, FillCombo.groupObjects, "one"))
                 {
                     HelpClass.StartAwait(grid_main);

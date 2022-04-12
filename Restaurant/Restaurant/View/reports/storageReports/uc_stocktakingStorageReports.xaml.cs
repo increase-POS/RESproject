@@ -126,6 +126,8 @@ namespace Restaurant.View.reports.storageReports
 
         private void translate()
         {
+            
+
             tt_archives.Content = AppSettings.resourcemanager.GetString("trArchives");
             tt_shortfalls.Content = AppSettings.resourcemanager.GetString("trShortages");
 

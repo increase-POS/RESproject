@@ -95,6 +95,7 @@ namespace Restaurant.View.storage.storageOperations
         #endregion
         private void translate()
         {
+          
             ////////////////////////////////----invoice----/////////////////////////////////
             dg_billDetails.Columns[1].Header = AppSettings.resourcemanager.GetString("trNum");
             dg_billDetails.Columns[2].Header = AppSettings.resourcemanager.GetString("trItem");

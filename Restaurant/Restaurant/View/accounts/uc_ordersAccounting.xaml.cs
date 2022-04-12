@@ -217,7 +217,13 @@ namespace Restaurant.View.accounts
         }
         private void translate()
         {
-            txt_title.Text = AppSettings.resourcemanager.GetString("trOrders");
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
+
+            //txt_title.Text = AppSettings.resourcemanager.GetString("trOrders");
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trTransaferDetails");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branch, AppSettings.resourcemanager.GetString("trBranchHint"));
             chk_delivered.Content = AppSettings.resourcemanager.GetString("trDelivered");

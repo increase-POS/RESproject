@@ -137,8 +137,12 @@ namespace Restaurant.View.storage.storageDivide
 
         private void translate()
         {
-            txt_title.Text = AppSettings.resourcemanager.GetString("trLocation");
 
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_x, AppSettings.resourcemanager.GetString("trXHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_y, AppSettings.resourcemanager.GetString("trYHint"));

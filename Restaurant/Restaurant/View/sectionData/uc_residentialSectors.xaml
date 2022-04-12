@@ -154,7 +154,17 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-
+                                <DataGridTextColumn Width="*"  Header="delivery time" Binding="{Binding Path=deliveryTime}">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding isActive}" Value="0">
+                                                    <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Width="*"  Header="notes" Binding="{Binding Path=notes}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
@@ -387,9 +397,35 @@
                             </Path>
                         </Grid>
                     </Border>
-                     
+                        <Grid Grid.Row="1" Name="gd_deliveryTime">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Row="1"  CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" 
+                         BorderBrush="{StaticResource LightGrey}">
+                                <Grid>
+                                    <TextBox Margin="4,0" x:Name="tb_deliveryTime"  
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
+                                         Text="{Binding deliveryTime, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
+                                         materialDesign:HintAssist.Hint="delivery time..."   Foreground="#4E4E4E"
+                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" 
+                                        Tag="int" PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
+                                          LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
+                                    <Path Fill="#E81123" Stretch="Fill"    x:Name="p_error_deliveryTime" 
+                                      HorizontalAlignment="Right" Visibility="Collapsed"   VerticalAlignment="Center" 
+                                      Width="15"  Height="15" Margin="5,5,15,5" 
+                                      Data="{StaticResource infoCircle}">
+                                    </Path>
+                                </Grid>
+                            </Border>
+                            <TextBlock  Text="minutes" Grid.Column="1" Name="txt_minute"
+                            Foreground="{StaticResource ThickGrey}" FontSize="14"
+                                    VerticalAlignment="Center" HorizontalAlignment="Right"
+                            Margin="5,5,15,5"/>
+                        </Grid>
 
-                    <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                             <TextBox  x:Name="tb_notes" Text="{Binding notes, Mode=OneWay}"
                                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"

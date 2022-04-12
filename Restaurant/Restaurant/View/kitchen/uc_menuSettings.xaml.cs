@@ -115,7 +115,13 @@ namespace Restaurant.View.kitchen
         }
         private void translate()
         {
-            txt_title.Text = AppSettings.resourcemanager.GetString("trItems");
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
+
+            //txt_title.Text = AppSettings.resourcemanager.GetString("trItems");
             txt_name.Text = AppSettings.resourcemanager.GetString("itemName");
             txt_daysOfWeek.Text = AppSettings.resourcemanager.GetString("trDaysOfWeek");
             txt_minute.Text = AppSettings.resourcemanager.GetString("trMinute");

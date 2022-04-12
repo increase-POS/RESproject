@@ -121,6 +121,11 @@ namespace Restaurant.View.reports.salesReports
             // Info
             List<TextBlock> InfoTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
                 .Where(x => x.Name.Contains("Info") && x.Tag != null).ToList();
+            if (InfoTextBlocksList.Count == 0)
+            {
+                await Task.Delay(0050);
+                await translate();
+            }
             foreach (var item in InfoTextBlocksList)
             {
                 if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translate))

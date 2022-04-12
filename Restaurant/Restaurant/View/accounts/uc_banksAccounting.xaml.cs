@@ -90,9 +90,15 @@ namespace Restaurant.View.accounts
         }
         private void translate()
         {
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
+
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trTransaferDetails");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
-            txt_title.Text = AppSettings.resourcemanager.GetString("trBankAccounts");
+            //txt_title.Text = AppSettings.resourcemanager.GetString("trBankAccounts");
             chb_all.Content = AppSettings.resourcemanager.GetString("trAll");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchStartDate, AppSettings.resourcemanager.GetString("trStartDate")+"...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchEndDate, AppSettings.resourcemanager.GetString("trEndDate")+"...");

@@ -109,6 +109,12 @@ namespace Restaurant.View.storage.storageOperations
         
         private void translate()
         {
+
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
             ////////////////////////////////----invoice----/////////////////////////////////
             dg_itemsStorage.Columns[0].Header = AppSettings.resourcemanager.GetString("trItemUnit");
             dg_itemsStorage.Columns[1].Header = AppSettings.resourcemanager.GetString("trSectionLocation");

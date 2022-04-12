@@ -192,6 +192,7 @@ namespace Restaurant.View.sales
         }
         private void translate()
         {
+            
             txt_orders.Text = AppSettings.resourcemanager.GetString("trOrders");
             txt_allMenu.Text = AppSettings.resourcemanager.GetString("trAll");
 

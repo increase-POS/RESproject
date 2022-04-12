@@ -134,7 +134,13 @@ namespace Restaurant.View.catalog.rawMaterials
         }
         private void translate()
         {
-            txt_title.Text = AppSettings.resourcemanager.GetString("trCategorie");
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
+
+            //txt_title.Text = AppSettings.resourcemanager.GetString("trCategorie");
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
             txt_contentInformatin.Text = AppSettings.resourcemanager.GetString("trMoreInformation");
             txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");

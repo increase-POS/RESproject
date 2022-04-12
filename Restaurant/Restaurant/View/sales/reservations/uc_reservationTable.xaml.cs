@@ -133,7 +133,13 @@ namespace Restaurant.View.sales.reservations
         private void translate()
         {
 
-            txt_title.Text = AppSettings.resourcemanager.GetString("trReservations");
+            // Title
+            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
+                txt_title.Text = AppSettings.resourcemanager.GetString(
+               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
+               );
+
+            //txt_title.Text = AppSettings.resourcemanager.GetString("trReservations");
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
             txt_tables.Text = AppSettings.resourcemanager.GetString("trTables");
 

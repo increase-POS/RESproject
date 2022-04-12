@@ -39,14 +39,20 @@ namespace Restaurant.View
         int value_sales;
         DispatcherTimer timer = new DispatcherTimer();
         DispatcherTimer timer1 = new DispatcherTimer();
+
+
         private static uc_home _instance;
         public static uc_home Instance
         {
             get
             {
-                if (_instance == null)
+                if (_instance is null)
                     _instance = new uc_home();
                 return _instance;
+            }
+            set
+            {
+                _instance = value;
             }
         }
         public uc_home()
@@ -79,6 +85,11 @@ namespace Restaurant.View
         public List<IUStorage> listIUStorage = new List<IUStorage>();
         public List<ItemUnit> IUList = new List<ItemUnit>();
         bool firstLoading = true;
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Instance = null;
+            GC.Collect();
+        }
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             try
