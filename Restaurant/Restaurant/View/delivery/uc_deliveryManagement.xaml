@@ -69,21 +69,20 @@
                             <TextBox x:Name="tb_search" Grid.Column="1"    Padding="10,0,5,0" 
                                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                       materialDesign:HintAssist.Hint="Enter Here To Start Search ...."  
-                                     Foreground="#4E4E4E"  TextChanged="Tb_search_TextChanged"
+                                      Foreground="#4E4E4E"  TextChanged="Tb_search_TextChanged"
                                       MaxLength="50" Height="40"
-                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                    BorderBrush="#737373"   BorderThickness="0" Margin="4,0"  />
+                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                      BorderBrush="#737373"   BorderThickness="0" Margin="4,0"  />
                         </Grid>
                     </Border>
 
                     <Button   FlowDirection="LeftToRight"  Width="40" Height="40" 
                               x:Name="btn_refresh" Click="Btn_refresh_Click"
-                              Grid.Row="0" Grid.Column="5" Margin="10,5,10,5"
-                              Padding="0" 
-                            materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
-                          Background="{x:Null}" BorderBrush="{x:Null}"   Style="{StaticResource SmallButtonCircleRotate}"
-                               RenderTransformOrigin="0.5,0.5"
-                            DataContext="M896,0L896,0C401.2,0,0,401.2,0,896v0c0,494.8,401.2,896,896,896h0c494.8,0,896-401.2,896-896v0C1792,401.2,1390.8,0,896,0z
+                              Grid.Row="0" Grid.Column="5" Margin="10,5,10,5" Padding="0" 
+                              materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
+                              Background="{x:Null}" BorderBrush="{x:Null}"   Style="{StaticResource SmallButtonCircleRotate}"
+                              RenderTransformOrigin="0.5,0.5"
+                              DataContext="M896,0L896,0C401.2,0,0,401.2,0,896v0c0,494.8,401.2,896,896,896h0c494.8,0,896-401.2,896-896v0C1792,401.2,1390.8,0,896,0z
 	 M1451.3,1021c-31.9,133.7-98.8,242.1-200.6,325.2c-101.8,83.1-221,124.6-357.7,124.6c-72.8,0-143.3-13.7-211.4-41.2
 	s-128.8-66.6-182.2-117.5l-96.5,96.5c-9.5,9.5-20.7,14.2-33.7,14.2s-24.2-4.7-33.7-14.2c-9.5-9.5-14.2-20.7-14.2-33.7v-335.3
 	c0-13,4.7-24.2,14.2-33.7s20.7-14.2,33.7-14.2h335.3c13,0,24.2,4.7,33.7,14.2c9.5,9.5,14.2,20.7,14.2,33.7c0,13-4.7,24.2-14.2,33.7
@@ -131,12 +130,11 @@
                         <Grid>
                             <ComboBox x:Name="cb_searchUser"  Grid.Row="1"
                                       SelectedValue="{Binding userId,Mode=OneWay}"
-                                  Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
-                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                  materialDesign:HintAssist.Hint="delivery man..."  
-                                  Grid.Column="1" Height="40"   
-                                 BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
-                                  LostFocus="validateEmpty_LostFocus" />
+                                      Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
+                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                      materialDesign:HintAssist.Hint="delivery man..."  
+                                      Grid.Column="1" Height="40"   
+                                      BorderBrush="#737373"   BorderThickness="0" Margin="4,0" SelectionChanged="Cb_searchUser_SelectionChanged" />
                         </Grid>
 
                     </Border>
@@ -191,8 +189,8 @@
                         <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                         <DataGrid  Margin="5,5,5,45" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
-                       x:Name="dg_orders" SelectionChanged="Dg_orders_SelectionChanged"  AutoGenerateColumns="False"   Background="White"
-                        ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
+                                   x:Name="dg_orders" SelectionChanged="Dg_orders_SelectionChanged"  AutoGenerateColumns="False"   Background="White"
+                                   ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
                             <DataGrid.OpacityMask>
                                 <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
                             </DataGrid.OpacityMask>
@@ -205,8 +203,9 @@
                                     <Setter Property="Foreground" Value="{StaticResource SecondColor}"/>
                                 </Style>
                             </DataGrid.Resources>
+                            <!--Binding="{Binding false, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"-->
                             <DataGrid.Columns>
-                                <DataGridCheckBoxColumn x:Name="chk_selectedRow" Binding="{Binding false, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False" IsThreeState="False">
+                                <DataGridCheckBoxColumn Binding="{Binding IsChecked, NotifyOnTargetUpdated=True}" IsReadOnly="False" IsThreeState="False">
                                     <DataGridCheckBoxColumn.ElementStyle>
                                         <Style
                                         TargetType="CheckBox">
@@ -227,7 +226,7 @@
                                 <DataGridTextColumn Width="*"  Header="code"   Binding="{Binding Path=invNumber}"/>
                                 <DataGridTextColumn Width="*"  Header="delivery man"   Binding="{Binding Path=shipUserName}"/>
                                 <DataGridTextColumn Width="*"  Header="delivery time"   Binding="{Binding Path=deliveryTime}"/>
-                                <DataGridTextColumn Width="*"  Header="status"   Binding="{Binding Path=status}"/>
+                                <DataGridTextColumn Width="*"  Header="status"   Binding="{Binding Path=status , Converter={StaticResource preparingOrderStatusConverter}}"/>
                              </DataGrid.Columns>
                         </DataGrid>
 
@@ -455,7 +454,7 @@
                         <TextBlock x:Name="txt_baseInformation" Text="Base Infomation" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
                         <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
                     </DockPanel>
-                    <Border Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        <Border x:Name="bdr_cbDeliveryMan" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid>
                             <ComboBox x:Name="cb_userId"  Grid.Row="1"
                                       SelectedValue="{Binding shipUserId,Mode=OneWay}"
@@ -465,11 +464,10 @@
                                       Grid.Column="1" Height="40"   
                                       BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
                                       LostFocus="validateEmpty_LostFocus" />
-                            <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5"
-                                          Name="p_error_userId"
-                              HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52
+                            <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5" Name="p_error_userId"
+                                  HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
+                                  VerticalAlignment="Center" Width="15"  Height="15"
+                                  Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52
                                           6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 
                                           17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8
                                           C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12
@@ -477,20 +475,30 @@
                                           L13,15 L13,17 Z"/>
                         </Grid>
                     </Border>
-                    <Grid>
+                        <Border x:Name="bdr_tbDeliveryMan" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}" Visibility="Collapsed">
+                            <Grid>
+                                <TextBox Margin="4,0" x:Name="tb_userId"  IsEnabled="False" 
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
+                                         Text="{Binding shipUserName, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
+                                         materialDesign:HintAssist.Hint="delivery man..."   Foreground="#4E4E4E"
+                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" />
+                               
+                            </Grid>
+                        </Border>
+                        <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <Border Grid.Row="1"  CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid   >
-                                <TextBox Margin="4,0" x:Name="tb_deliveryTime"  
+                                <TextBox Margin="4,0" x:Name="tb_deliveryTime"  IsEnabled="False"
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
                                          Text="{Binding deliveryTime, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
                                          materialDesign:HintAssist.Hint="delivery time..."   Foreground="#4E4E4E"
                                          materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" 
-                                        Tag="int" PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
-                                          LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
+                                         Tag="int" PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
+                                         LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
                                 <Path Fill="#E81123" Stretch="Fill"    x:Name="p_error_deliveryTime" 
                                       HorizontalAlignment="Right" Visibility="Collapsed"   VerticalAlignment="Center" 
                                       Width="15"  Height="15" Margin="5,5,15,5" 

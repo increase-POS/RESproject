@@ -15,11 +15,13 @@ namespace Restaurant.converters
         {
             switch (value)
             {
-                case "Listed": return AppSettings.resourcemanager.GetString("trListed");
+                case "Listed":    return AppSettings.resourcemanager.GetString("trListed");
                 case "Preparing": return AppSettings.resourcemanager.GetString("trPreparing");
-                case "Ready": return AppSettings.resourcemanager.GetString("trReady");
-                case "Done": return AppSettings.resourcemanager.GetString("trDone");// gived to customer
-                default: return "";
+                case "Ready":     return AppSettings.resourcemanager.GetString("trReady");
+                case "Collected": return AppSettings.resourcemanager.GetString("withDeliveryMan");
+                case "InTheWay": return AppSettings.resourcemanager.GetString("onTheWay");
+                case "Done":      return AppSettings.resourcemanager.GetString("trDone");// gived to customer
+                default:          return "";
             }
         }
 

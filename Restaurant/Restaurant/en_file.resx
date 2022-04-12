@@ -3829,8 +3829,8 @@ Please add Email in setting</value>
   <data name="deliveryTime" xml:space="preserve">
     <value>Delivery time</value>
   </data>
-  <data name="inTheWay" xml:space="preserve">
-    <value>In the way</value>
+  <data name="onTheWay" xml:space="preserve">
+    <value>On the way</value>
   </data>
   <data name="minute" xml:space="preserve">
     <value>minute</value>
@@ -3843,5 +3843,8 @@ Please add Email in setting</value>
   </data>
   <data name="trSelfServiceDraft" xml:space="preserve">
     <value>Self-service draft</value>
+  </data>
+  <data name="notHaveSameStatus" xml:space="preserve">
+    <value>Selected orders must have the same status</value>
   </data>
 </root>

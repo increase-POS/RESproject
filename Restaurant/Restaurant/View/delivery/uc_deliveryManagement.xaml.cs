@@ -71,7 +71,7 @@ namespace Restaurant.View.delivery
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "userId" , "deliveryTime" };
+                requiredControlList = new List<string> { "userId" };
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -136,6 +136,7 @@ namespace Restaurant.View.delivery
                       || s.shipUserName.ToString().Contains(searchText)
                       //|| s.deliveryTime.ToString().Contains(searchText)/////?????????????????
                       )
+                      && (cb_searchUser.SelectedIndex != -1 ?  s.shipUserId == (int)cb_searchUser.SelectedValue : true)
                   );
 
                 RefreshOrdersView();
@@ -146,6 +147,7 @@ namespace Restaurant.View.delivery
         async Task<IEnumerable<Invoice>> RefreshOrdersList(string status)
         {
             orders = await orderModel.GetOrdersWithDelivery(MainWindow.branchLogin.branchId, status);
+            orders = orders.Where(o => o.status == "Ready" || o.status == "Collected" || o.status == "InTheWay");
             return orders;
         }
         void RefreshOrdersView()
@@ -174,9 +176,10 @@ namespace Restaurant.View.delivery
             chk_allForDelivery.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_readyForDelivery.Content = AppSettings.resourcemanager.GetString("readyForDelivery");
             chk_withDeliveryMan.Content = AppSettings.resourcemanager.GetString("withDeliveryMan");
-            chk_inTheWay.Content = AppSettings.resourcemanager.GetString("inTheWay");
+            chk_inTheWay.Content = AppSettings.resourcemanager.GetString("onTheWay");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_userId, AppSettings.resourcemanager.GetString("deliveryMan") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_userId, AppSettings.resourcemanager.GetString("deliveryMan") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_deliveryTime, AppSettings.resourcemanager.GetString("deliveryTime") + "...");
             txt_minutes.Text = AppSettings.resourcemanager.GetString("minute");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNotes") + "..."); 
@@ -198,17 +201,26 @@ namespace Restaurant.View.delivery
         #endregion
 
         #region Refresh - Clear - Search - Select - Save
+
+        private async void Cb_searchUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                await Search();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
                 await Search();
-                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -239,17 +251,36 @@ namespace Restaurant.View.delivery
                     this.DataContext = order;
                     if (order != null)
                     {
-                        
-                        //refreshSaveBtnText
-                        if (chk_readyForDelivery.IsChecked == true)
+                        CheckBox checkboxColumn = (dg_orders.Columns[0].GetCellContent(dg_orders.SelectedItem) as CheckBox);
+
+                        if (selectedOrders.Count != 0 && order.status != selectedOrders[0].status)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("notHaveSameStatus"), animation: ToasterAnimation.FadeIn);
+                        else
+                            checkboxColumn.IsChecked = !checkboxColumn.IsChecked;
+
+                        #region refreshSaveBtnText
+                        if (order.status.Equals("Ready"))
+                        {
                             btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
-                        else if (chk_withDeliveryMan.IsChecked == true)
-                            btn_save.Content = AppSettings.resourcemanager.GetString("inTheWay");
-                        else if (chk_withDeliveryMan.IsChecked == true)
+                            btn_save.IsEnabled = true;
+                            bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                            bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
+                        }
+                        else if (order.status.Equals("Collected"))
+                        {
+                            btn_save.Content = AppSettings.resourcemanager.GetString("onTheWay");
+                            btn_save.IsEnabled = true;
+                            bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                            bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
+                        }
+                        else if (order.status.Equals("InTheWay"))
                         {
                             btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
-                            btn_save.IsEnabled = false;
+                            btn_save.IsEnabled = true;
+                            bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                            bdr_tbDeliveryMan.Visibility = Visibility.Visible;
                         }
+                        #endregion
                     }
                 }
 
@@ -270,7 +301,8 @@ namespace Restaurant.View.delivery
 
                 searchText = "";
                 tb_search.Text = "";
-                chk_readyForDelivery.IsChecked = true;
+                chk_allForDelivery.IsChecked = true;
+                cb_searchUser.SelectedIndex = -1;
                 await Search();
                 
                 HelpClass.EndAwait(grid_main);
@@ -290,43 +322,73 @@ namespace Restaurant.View.delivery
                 //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add"))
                 {
                     HelpClass.StartAwait(grid_main);
+
                     #region add
                     if (HelpClass.validate(requiredControlList, this))
                     {
-                        orderPreparingStatus ops = new orderPreparingStatus();
+                        foreach(Invoice i in selectedOrders)
+                        { 
+                            int driverID = 0;
 
-                        if(chk_readyForDelivery.IsChecked == true)
-                            ops.status = "Collected";
-                        else if (chk_withDeliveryMan.IsChecked == true)
-                            ops.status = "InTheWay";
-                        else if (chk_withDeliveryMan.IsChecked == true)
-                            ops.status = "Done";
+                            orderPreparingStatus ops = new orderPreparingStatus();
 
-                        ops.createUserId = MainWindow.userLogin.userId;
-                        ops.updateUserId = MainWindow.userLogin.userId;
-                        ops.notes = tb_notes.Text;
-                        ops.isActive = 1;
-
-                        int res = await orderModel.EditInvoiceOrdersStatus(order.invoiceId,(int)order.shipUserId, ops);
-
-                        if (!res.Equals(0))
-                        {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                            //refreshSaveBtnText
-                            if (chk_readyForDelivery.IsChecked == true)
-                                btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
-                            else if (chk_withDeliveryMan.IsChecked == true)
-                                btn_save.Content = AppSettings.resourcemanager.GetString("inTheWay");
-                            else if (chk_withDeliveryMan.IsChecked == true)
+                            if (i.status.Equals("Ready"))
                             {
-                                btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
-                                btn_save.IsEnabled = false;
+                                ops.status = "Collected";
+                                driverID = (int)cb_userId.SelectedValue;
                             }
+                            else if (i.status.Equals("Collected"))
+                            {
+                                ops.status = "InTheWay";
+                                driverID = (int)cb_userId.SelectedValue;
+                            }
+                            else if (i.status.Equals("InTheWay"))
+                            {
+                                ops.status = "Done";
+                                driverID = order.shipUserId.Value;
+                            }
+                            ops.createUserId = MainWindow.userLogin.userId;
+                            ops.updateUserId = MainWindow.userLogin.userId;
+                            ops.notes = tb_notes.Text;
+                            ops.isActive = 1;
 
-                            await Search();
+                            int res = await orderModel.EditInvoiceOrdersStatus(i.invoiceId , driverID , ops);
+
+                            if (!res.Equals(0))
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+
+                                #region refreshSaveBtnText
+                                //if (order.status.Equals("Ready"))
+                                //{
+                                //    btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
+                                //    btn_save.IsEnabled = true;
+                                //    bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                                //    bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
+                                //}
+                                //else if (order.status.Equals("Collected"))
+                                //{
+                                //    btn_save.Content = AppSettings.resourcemanager.GetString("onTheWay");
+                                //    btn_save.IsEnabled = true;
+                                //    bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                                //    bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
+                                //}
+                                //else if (order.status.Equals("InTheWay"))
+                                //{
+                                //    btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
+                                //    btn_save.IsEnabled = true;
+                                //    bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                                //    bdr_tbDeliveryMan.Visibility = Visibility.Visible;
+                                //}
+                                #endregion
+
+                              
+                            }
+                            else
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         }
-                        else
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        await Search();
+                        Clear();
                     }
                     
                     #endregion
@@ -750,8 +812,8 @@ namespace Restaurant.View.delivery
             }
         }
 
+
         #endregion
 
-       
     }
 }
