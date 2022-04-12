@@ -297,7 +297,6 @@
     <Compile Include="converters\profitToColorConverter.cs" />
     <Compile Include="converters\sectionFreeZoneStorageReportConverter.cs" />
     <Compile Include="converters\SectionLocationFreeZoneConverter.cs" />
-    <Compile Include="converters\shippingCompanyAndCustomerConverter.cs" />
     <Compile Include="converters\stockSectionLocationFreeZoneConverter.cs" />
     <Compile Include="converters\subscriptionTypeConverter.cs" />
     <Compile Include="converters\timeFrameConverter.cs" />
@@ -429,6 +428,12 @@
     </Compile>
     <Compile Include="View\reports\accountsReports\uc_taxAccountsReports.xaml.cs">
       <DependentUpon>uc_taxAccountsReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\kitchenReports\uc_kitchenReports.xaml.cs">
+      <DependentUpon>uc_kitchenReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\kitchenReports\uc_preparingOrdersKitchenReports.xaml.cs">
+      <DependentUpon>uc_preparingOrdersKitchenReports.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\reports\purchaseReports\uc_invoicePurchaseReports.xaml.cs">
       <DependentUpon>uc_invoicePurchaseReports.xaml</DependentUpon>
@@ -1029,6 +1034,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\reports\accountsReports\uc_taxAccountsReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\kitchenReports\uc_kitchenReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\kitchenReports\uc_preparingOrdersKitchenReports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

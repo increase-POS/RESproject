@@ -1,5 +1,6 @@
 ﻿using Restaurant.Classes;
 using Restaurant.View.reports.accountsReports;
+using Restaurant.View.reports.kitchenReports;
 using Restaurant.View.reports.purchaseReports;
 using Restaurant.View.reports.salesReports;
 using Restaurant.View.reports.storageReports;
@@ -126,11 +127,6 @@ namespace Restaurant.View.reports
             // Info
             List<TextBlock> InfoTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
                 .Where(x => x.Name.Contains("Info") && x.Tag != null).ToList();
-            if (InfoTextBlocksList.Count == 0)
-            {
-                await Task.Delay(0050);
-                await translate();
-            }
             foreach (var item in InfoTextBlocksList)
             {
                 if(!string.IsNullOrWhiteSpace( FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translate))
@@ -212,6 +208,22 @@ namespace Restaurant.View.reports
             {
                 MainWindow.mainWindow.grid_main.Children.Clear();
                 MainWindow.mainWindow.grid_main.Children.Add(uc_accountsReports.Instance);
+
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_kitchsReports_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_kitchenReports.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
