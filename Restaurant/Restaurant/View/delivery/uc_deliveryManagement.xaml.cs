@@ -307,7 +307,7 @@ namespace Restaurant.View.delivery
                         ops.notes = tb_notes.Text;
                         ops.isActive = 1;
 
-                        int res = await orderModel.EditInvoiceOrdersStatus(order.invoiceId, ops);
+                        int res = await orderModel.EditInvoiceOrdersStatus(order.invoiceId,(int)order.shipUserId, ops);
 
                         if (!res.Equals(0))
                         {
