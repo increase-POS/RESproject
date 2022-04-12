@@ -59,12 +59,10 @@ namespace Restaurant.View.windows
                 if (AppSettings.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
-
                 }
                 else
                 {
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
-
                 }
 
                 translate();
@@ -75,7 +73,7 @@ namespace Restaurant.View.windows
 
                 // get it from invoice
                 loading_fillCardCombo();
-              
+
                 //////////////////////////
                 //invoice.agentId
                 //////////////////////////
@@ -155,7 +153,7 @@ namespace Restaurant.View.windows
             try
             {
                 if (!isPurchase &&
-               (invoice.paid >= invoice.totalNet || (hasCredit == true && creditValue > invoice.totalNet - invoice.paid) || (hasCredit == true && creditValue ==0)))
+              (invoice.paid >= invoice.totalNet || (hasCredit == true && creditValue > invoice.totalNet - invoice.paid) || (hasCredit == true && creditValue == 0)))
                 {
                     if (invoice.totalNet - invoice.paid > 0)
                     {
@@ -171,23 +169,32 @@ namespace Restaurant.View.windows
                     isOk = true;
                     this.Close();
                 }
-                else if(isPurchase && hasCredit == true)
+                else if (isPurchase && hasCredit == true)
                 {
-                    if (invoice.totalNet - invoice.paid > 0)
+                    if (listPayments.Where(x => x.processType == "cash").Count() > 0 &&
+                        listPayments.Where(x => x.processType == "cash").FirstOrDefault().cash > MainWindow.posLogin.balance)
                     {
-                        cashTrasnfer = new CashTransfer();
-
-                        ///////////////////////////////////////////////////
-                        cashTrasnfer.agentId = invoice.agentId;
-                        cashTrasnfer.invId = invoice.invoiceId;
-                        cashTrasnfer.processType = "balance";
-                        cashTrasnfer.cash = invoice.totalNet - invoice.paid;
-                        listPayments.Add(cashTrasnfer);
+                        isOk = false;
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn);
                     }
-                    //lst_payments.Items.Add(s);
-                    ///////////////////////////////////////////////////
-                    isOk = true;
-                    this.Close();
+                    else
+                    {
+                        if (invoice.totalNet - invoice.paid > 0)
+                        {
+                            cashTrasnfer = new CashTransfer();
+
+                            ///////////////////////////////////////////////////
+                            cashTrasnfer.agentId = invoice.agentId;
+                            cashTrasnfer.invId = invoice.invoiceId;
+                            cashTrasnfer.processType = "balance";
+                            cashTrasnfer.cash = invoice.totalNet - invoice.paid;
+                            listPayments.Add(cashTrasnfer);
+                        }
+                        //lst_payments.Items.Add(s);
+                        ///////////////////////////////////////////////////
+                        isOk = true;
+                        this.Close();
+                    }
                 }
                 else // if (invoice.paid < invoice.totalNet && hasCredit == false &&)
                 {
@@ -491,10 +498,17 @@ namespace Restaurant.View.windows
                         }
                         else if (cb_paymentProcessType.SelectedValue.ToString().Equals("card"))
                         {
-                            cashTrasnfer.cardId = _SelectedCard;
-                            cashTrasnfer.docNum = tb_processNum.Text;
-
-                            s = txt_card.Text + " : " + cashTrasnfer.cash;
+                            if (_SelectedCard == -1)
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectCreditCard"), animation: ToasterAnimation.FadeIn);
+                                return;
+                            }
+                            else
+                            {
+                                cashTrasnfer.cardId = _SelectedCard;
+                                cashTrasnfer.docNum = tb_processNum.Text;
+                                s = txt_card.Text + " : " + cashTrasnfer.cash;
+                            }
                         }
 
 
@@ -514,7 +528,7 @@ namespace Restaurant.View.windows
                     else
                     {
                         HelpClass.SetValidate(p_error_cash, "trAmountGreaterInvoiceValue");
-                        //p_error_cash.Visibility = Visibility.Visible;
+                        //p_errorCash.Visibility = Visibility.Visible;
                         //tt_errorCash.Content = AppSettings.resourcemanager.GetString("trAmountGreaterInvoiceValue");
                         //tb_cash.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#15FF0000"));
                     }
