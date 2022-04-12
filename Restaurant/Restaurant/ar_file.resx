@@ -3805,8 +3805,8 @@
   <data name="deliveryTime" xml:space="preserve">
     <value>وقت التوصيل</value>
   </data>
-  <data name="inTheWay" xml:space="preserve">
-    <value>في الطريق</value>
+  <data name="onTheWay" xml:space="preserve">
+    <value>على الطريق</value>
   </data>
   <data name="minute" xml:space="preserve">
     <value>دقيقة</value>
@@ -3819,5 +3819,8 @@
   </data>
   <data name="trSelfServiceDraft" xml:space="preserve">
     <value>مسودة وجبات جاهزة - داخل</value>
+  </data>
+  <data name="notHaveSameStatus" xml:space="preserve">
+    <value>الطلبات المختارة يجب أن يكون لها نفس الحالة</value>
   </data>
 </root>
