@@ -79,6 +79,7 @@ namespace Restaurant.View.windows
                 }
                 translate();
 
+                fillInputs();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -95,7 +96,14 @@ namespace Restaurant.View.windows
             btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
         }
 
-     
+        private void fillInputs()
+        {
+            if (orderTime != null )
+            {
+                tp_time.SelectedTime = orderTime;
+            }
+          
+        }
         private void Btn_select_Click(object sender, RoutedEventArgs e)
         {
             // if have id return true

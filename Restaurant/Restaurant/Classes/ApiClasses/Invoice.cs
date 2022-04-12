@@ -151,6 +151,7 @@ namespace Restaurant.Classes
         public Nullable<long> reservationId { get; set; }
         public Nullable<System.DateTime> orderTime { get; set; }
         public decimal shippingCost { get; set; }
+        public Nullable<decimal> shippingCostDiscount { get; set; }
         public decimal realShippingCost { get; set; }
         public string branchName { get; set; }
         public string branchCreatorName { get; set; }
@@ -159,6 +160,7 @@ namespace Restaurant.Classes
 
         public string agentName { get; set; }
         public string shipUserName { get; set; }
+        public string shippingCompanyName { get; set; }
         public string status { get; set; }
         public int invStatusId { get; set; }
 

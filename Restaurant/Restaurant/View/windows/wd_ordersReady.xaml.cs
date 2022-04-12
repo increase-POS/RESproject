@@ -101,6 +101,7 @@ namespace Restaurant.View.windows
                 col_waiter.Visibility = Visibility.Visible;
 
                 col_invoices.Visibility = Visibility.Collapsed;
+                col_shiping.Visibility = Visibility.Collapsed;
                 col_status.Visibility = Visibility.Collapsed;
                 #endregion
                 orders = await preparingOrder.GetHallOrdersWithStatus(MainWindow.branchLogin.branchId, "Ready", 24);
@@ -111,6 +112,7 @@ namespace Restaurant.View.windows
                 #region visible - unvisible columns
                 col_invoices.Visibility = Visibility.Visible;
                 col_status.Visibility = Visibility.Visible;
+                col_shiping.Visibility = Visibility.Visible;
 
                 col_orders.Visibility = Visibility.Collapsed;
                 col_tables.Visibility = Visibility.Collapsed;

@@ -259,7 +259,6 @@ namespace Restaurant.View.sales
                 txt_invType.Text = AppSettings.resourcemanager.GetString("trSelfService");
 
                 btn_cancel.Visibility = Visibility.Collapsed;
-                btn_tables.Visibility = Visibility.Collapsed;
                 btn_kitchen.Visibility = Visibility.Collapsed;
                 btn_waiter.Visibility = Visibility.Collapsed;
 
@@ -267,6 +266,7 @@ namespace Restaurant.View.sales
                 md_draft.Visibility = Visibility.Visible;
                 btn_delivery.Visibility = Visibility.Visible;
                 btn_orderTime.Visibility = Visibility.Visible;
+                btn_tables.Visibility = Visibility.Visible;
 
                 refreshDraftNotification();
                 if (invoice.invType == "tsd") // transfer take away  draft to self service draft
@@ -708,6 +708,7 @@ namespace Restaurant.View.sales
         decimal _Sum = 0;
         decimal _ManualDiscount = 0;
         decimal _invoiceClassDiscount = 0;
+        decimal _DeliveryDiscount = 0;
         string _DiscountType = "";
         int _MemberShipId = 0;
         List<CouponInvoice> selectedCopouns = new List<CouponInvoice>();
@@ -1201,7 +1202,18 @@ namespace Restaurant.View.sales
             total += taxValue;
             #endregion
             #region delivery cost
-            total += _DeliveryCost;
+            decimal deliveryCostAfterDisc = _DeliveryCost;
+
+            if (_DeliveryDiscount > 0)
+            {
+                if (_DeliveryDiscount == 100)
+                    deliveryCostAfterDisc = 0;
+                else
+                    deliveryCostAfterDisc = HelpClass.calcPercentage(_DeliveryCost, _DeliveryDiscount);
+            }
+
+            //total += _DeliveryCost;
+            total += deliveryCostAfterDisc;
 
             if (_DeliveryCost > 0)
             {
@@ -1209,7 +1221,7 @@ namespace Restaurant.View.sales
                 tb_delivery.Visibility = Visibility.Visible;
                 tb_moneyIconDelivery.Visibility = Visibility.Visible;
 
-                tb_delivery.Text = _DeliveryCost.ToString();
+                tb_delivery.Text = deliveryCostAfterDisc.ToString();
             }
             else
             {
@@ -1444,7 +1456,7 @@ namespace Restaurant.View.sales
                 invoice.invType = invType;
                 invoice.discountValue = _ManualDiscount;
                 invoice.discountType = _DiscountType ;
-
+                invoice.shippingCostDiscount = _DeliveryDiscount;
                 invoice.total = _Sum;
                 invoice.totalNet = decimal.Parse(tb_total.Text);
                 invoice.paid = 0;
@@ -1520,6 +1532,7 @@ namespace Restaurant.View.sales
             _DeliveryCost = 0;
             _ManualDiscount = 0;
             _invoiceClassDiscount = 0;
+            _DeliveryDiscount = 0;
             _DiscountType = "";
             selectedCopouns.Clear() ;
             selectedTables.Clear();
@@ -1554,11 +1567,6 @@ namespace Restaurant.View.sales
             txt_orderTime.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             path_orderTime.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             #endregion 
-            #region return selfService table button to default
-            txt_selfServiceTable.Text = "";
-            txt_selfServiceTable.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
-            path_selfServiceTable.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
-            #endregion
 
             #region enable- disable buttons
             btn_delivery.IsEnabled = false;
@@ -1583,6 +1591,16 @@ namespace Restaurant.View.sales
         }
         public async Task fillInvoiceInputs(Invoice invoice)
         {
+            #region set parameters
+            _Sum = (decimal)invoice.total;
+            _DeliveryCost = (decimal)invoice.shippingCost;
+            _DeliveryDiscount = (decimal)invoice.shippingCostDiscount;
+            _ManualDiscount = invoice.discountValue;
+            _DiscountType = invoice.discountType;
+            selectedCopouns = await FillCombo.invoice.GetInvoiceCoupons(invoice.invoiceId);
+
+            #endregion
+
             if (AppSettings.invType == "diningHall")
                 await fillDiningHallInv();
             else if (AppSettings.invType == "takeAway")
@@ -1592,14 +1610,15 @@ namespace Restaurant.View.sales
         }
         async Task fillDiningHallInv()
         {
-            #region set parameters
-            _Sum = (decimal)invoice.total;
-            _DeliveryCost = (decimal)invoice.shippingCost;
-            _ManualDiscount = invoice.discountValue;
-            _DiscountType = invoice.discountType;
-            selectedCopouns = await FillCombo.invoice.GetInvoiceCoupons(invoice.invoiceId);
+            //#region set parameters
+            //_Sum = (decimal)invoice.total;
+            //_DeliveryCost = (decimal)invoice.shippingCost;
+            //_deliveryDiscount = (decimal)invoice.shippingCostDiscount;
+            //_ManualDiscount = invoice.discountValue;
+            //_DiscountType = invoice.discountType;
+            //selectedCopouns = await FillCombo.invoice.GetInvoiceCoupons(invoice.invoiceId);
 
-            #endregion
+            //#endregion
 
             #region text values and colors
 
@@ -1692,14 +1711,14 @@ namespace Restaurant.View.sales
 
         async Task fillTakeAwayInv()
         {
-            #region set parameters
-            _Sum = (decimal)invoice.total;
-            _DeliveryCost = (decimal)invoice.shippingCost;
-            _ManualDiscount = invoice.discountValue;
-            _DiscountType = invoice.discountType;
-            selectedCopouns = await FillCombo.invoice.GetInvoiceCoupons(invoice.invoiceId);
+            //#region set parameters
+            //_Sum = (decimal)invoice.total;
+            //_DeliveryCost = (decimal)invoice.shippingCost;
+            //_ManualDiscount = invoice.discountValue;
+            //_DiscountType = invoice.discountType;
+            //selectedCopouns = await FillCombo.invoice.GetInvoiceCoupons(invoice.invoiceId);
 
-            #endregion
+            //#endregion
 
             #region text values and colors
 
@@ -1727,6 +1746,7 @@ namespace Restaurant.View.sales
             }
             else
             {
+                txt_delivery.Text = "";
                 txt_delivery.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                 path_delivery.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             }
@@ -1739,20 +1759,31 @@ namespace Restaurant.View.sales
 
                 txt_customer.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                 path_customer.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+
+                btn_delivery.IsEnabled = true;
             }
             else
             {
-                //txt_customer.Text = AppSettings.resourcemanager.GetString("trCustomer");
                 txt_customer.Text = "";
                 txt_customer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                 path_customer.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+
+                btn_delivery.IsEnabled = false;
             }
 
-            // order time
             #region change order time Color and value
-            txt_orderTime.Text = invoice.orderTime.ToString();
-            txt_orderTime.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
-            path_orderTime.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            if (invoice.orderTime != null)
+            {
+                txt_orderTime.Text = invoice.orderTime.ToString().Split(' ')[1] + ' ' + invoice.orderTime.ToString().Split(' ')[2];
+                txt_orderTime.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                path_orderTime.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            }
+            else
+            {
+                txt_orderTime.Text = "";
+                txt_orderTime.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                path_orderTime.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            }
             #endregion
 
             if (invoice.total != 0)
@@ -1784,27 +1815,27 @@ namespace Restaurant.View.sales
         }
         async Task fillSelfServiceInv()
         {
-            #region set parameters
-            _Sum = (decimal)invoice.total;
-            _DeliveryCost = (decimal)invoice.shippingCost;
-            //_ManualDiscount = invoice.discountValue;
-            //_DiscountType = invoice.discountType;
-            //selectedCopouns = await FillCombo.invoice.GetInvoiceCoupons(invoice.invoiceId);
+            //#region set parameters
+            //_Sum = (decimal)invoice.total;
+            //_DeliveryCost = (decimal)invoice.shippingCost;
+            ////_ManualDiscount = invoice.discountValue;
+            ////_DiscountType = invoice.discountType;
+            ////selectedCopouns = await FillCombo.invoice.GetInvoiceCoupons(invoice.invoiceId);
 
-            #endregion
+            //#endregion
 
             #region text values and colors
 
-            //if (_ManualDiscount > 0 || selectedCopouns.Count > 0)
-            //{
-            //    txt_discount.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
-            //    path_discount.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
-            //}
-            //else
-            //{
-            //    txt_discount.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
-            //    path_discount.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
-            //}
+            if (_ManualDiscount > 0 || selectedCopouns.Count > 0)
+            {
+                txt_discount.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                path_discount.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            }
+            else
+            {
+                txt_discount.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                path_discount.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            }
 
             if (invoice.shippingCompanyId != null)
             {
@@ -1819,38 +1850,51 @@ namespace Restaurant.View.sales
             }
             else
             {
+                txt_delivery.Text = "";
                 txt_delivery.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                 path_delivery.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             }
 
-            //if (invoice.agentId != null)
-            //{
-            //    var customer = FillCombo.customersList.Where(x => x.agentId == invoice.agentId).FirstOrDefault();
-            //    _MemberShipId = (int)customer.membershipId;
-            //    txt_customer.Text = customer.name;
+            if (invoice.agentId != null)
+            {
+                var customer = FillCombo.customersList.Where(x => x.agentId == invoice.agentId).FirstOrDefault();
+                _MemberShipId = (int)customer.membershipId;
+                txt_customer.Text = customer.name;
 
-            //    txt_customer.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
-            //    path_customer.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
-            //}
-            //else
-            //{
-            //    txt_customer.Text = AppSettings.resourcemanager.GetString("trCustomer");
-            //    txt_customer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
-            //    path_customer.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
-            //}
-            // order time
+                txt_customer.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                path_customer.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+
+                btn_delivery.IsEnabled = true;
+            }
+            else
+            {
+                txt_customer.Text = "";
+                txt_customer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                path_customer.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+
+                btn_delivery.IsEnabled = false;
+
+            }
+
             #region change order time Color and value
-            txt_orderTime.Text = invoice.orderTime.ToString();
-            txt_orderTime.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
-            path_orderTime.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            if (invoice.orderTime != null)
+            {
+                txt_orderTime.Text = invoice.orderTime.ToString().Split(' ')[1] + ' ' + invoice.orderTime.ToString().Split(' ')[2];
+                txt_orderTime.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                path_orderTime.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            }
+            else
+            {
+                txt_orderTime.Text = "";
+                txt_orderTime.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                path_orderTime.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            }
             #endregion
 
             #region change table Color and value
             if (invoice.tables.Count > 0)
             {
-                txt_selfServiceTable.Text = invoice.orderTime.ToString();
-                txt_selfServiceTable.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
-                path_selfServiceTable.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                txt_tableName.Text =invoice.tables[0].name ;
             }
             #endregion
 
@@ -1966,7 +2010,7 @@ namespace Restaurant.View.sales
                         isFromReport = false;
                         await fillInvoiceInputs(invoice);
                         setNotifications();
-                        //navigateBtnActivate();
+
                     }
                 }
                 Window.GetWindow(this).Opacity = 1;
@@ -2066,7 +2110,8 @@ namespace Restaurant.View.sales
 
                     await addDraft();// save invoice
 
-                    wd_diningHallTables w = new wd_diningHallTables();
+                #region invType = diningHall
+                wd_diningHallTables w = new wd_diningHallTables();
                     w.ShowDialog();
                     if (w.isOk == true)
                     {
@@ -2084,6 +2129,35 @@ namespace Restaurant.View.sales
                         await fillInvoiceInputs(invoice);
                     }
                     Window.GetWindow(this).Opacity = 1;
+                #endregion
+
+                #region self-service
+                wd_selectTable sw = new wd_selectTable();
+                w.ShowDialog();
+                if (w.isOk)
+                {
+                    #region table name
+                    txt_tableName.Text = sw.table.name;
+                    #endregion
+
+                    #region update invoice
+                    List<Tables> tbl = new List<Tables>();
+                    tbl.Add(sw.table);
+                    int res = await addDraft();
+
+                    if (res > 0)
+                    {
+
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                        // set table to invoice
+                        await FillCombo.invoice.updateInvoiceTables(invoice.invoiceId, tbl);
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    #endregion
+
+                }
+                #endregion
                 //}
                 //else
                 //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -2219,13 +2293,12 @@ namespace Restaurant.View.sales
                             await FillCombo.invoice.clearInvoiceCouponsAndClasses(invoice.invoiceId);
 
                             #region return delivery button to default
-                            //txt_customer.Text = AppSettings.resourcemanager.GetString("trDelivery");
                             txt_customer.Text = "";
 
                             txt_delivery.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                             path_delivery.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                             #endregion
-                            //await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns, invoice.invoiceId, "sd");
+
                             #endregion
 
                             #region customer Info
@@ -2233,9 +2306,12 @@ namespace Restaurant.View.sales
                             if (customer.membershipId != null)
                             {
                                 _MemberShipId = (int)customer.membershipId;
-
+                                _DeliveryDiscount = w.deliveryDiscount;
                                 if (w.memberShipStatus == "valid")
+                                {
                                     customerInvClasses = await invoiceMemberShipClass.GetInvclassByMembershipId(_MemberShipId);
+                                   
+                                }
                             }
                             #endregion
                             #region update invoice
@@ -2265,8 +2341,8 @@ namespace Restaurant.View.sales
                         }
                         else
                         {
-                            // return button content to default
-                            //txt_customer.Text = AppSettings.resourcemanager.GetString("trCustomer");
+                        // return button content to default
+                        _DeliveryDiscount = 0;
                             txt_customer.Text = "";
                         // return foreground color to default
                         txt_customer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
@@ -2392,7 +2468,6 @@ namespace Restaurant.View.sales
                     }
                     else
                     {
-                        //txt_delivery.Text = AppSettings.resourcemanager.GetString("trDelivery");
                         txt_delivery.Text = "";
 
                         txt_delivery.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
@@ -2443,11 +2518,12 @@ namespace Restaurant.View.sales
 
 
                 wd_selectTime w = new wd_selectTime();
+                w.orderTime = (DateTime)invoice.orderTime;
                 w.ShowDialog();
                 if (w.isOk)
                 {
                     #region change button Color
-                    txt_orderTime.Text = w.orderTime.ToString();
+                    txt_orderTime.Text = w.orderTime.ToString().Split(' ')[1] + ' ' + w.orderTime.ToString().Split(' ')[2];
                     txt_orderTime.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                     path_orderTime.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
                     #endregion
@@ -2477,52 +2553,7 @@ namespace Restaurant.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void Btn_selfServiceTable_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                Window.GetWindow(this).Opacity = 0.2;
-
-
-                wd_selectTable w = new wd_selectTable();
-                w.ShowDialog();
-                if (w.isOk)
-                {
-                    #region change button Color
-                    txt_selfServiceTable.Text = w.table.name;
-                    txt_selfServiceTable.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
-                    path_selfServiceTable.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
-                    #endregion
-
-                    #region update invoice
-                    List<Tables> tbl = new List<Tables>();
-                    tbl.Add(w.table);
-                    int res = await addDraft();
-
-                    if (res > 0)
-                    {
-                        
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                        // set table to invoice
-                        await FillCombo.invoice.updateInvoiceTables(invoice.invoiceId, tbl);
-                    }
-                    else
-                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    #endregion
-
-                }
-
-
-                Window.GetWindow(this).Opacity = 1;
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+       
         #endregion
         #region PAY
         List<CashTransfer> paymentsList = new List<CashTransfer>();

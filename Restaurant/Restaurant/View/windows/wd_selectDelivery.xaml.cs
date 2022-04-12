@@ -86,9 +86,9 @@ namespace Restaurant.View.windows
                 translate();
 
              await FillCombo.FillComboShippingCompanies(cb_company);
-               // await FillCombo.FillComboUsersWithJob(cb_user, "deliveryEmployee");
                 await FillCombo.FillComboUsersForDelivery(cb_user, "deliveryEmployee",(int)customerId);
 
+                fillInputs();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -106,7 +106,18 @@ namespace Restaurant.View.windows
             btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
 
         }
-      
+        private void fillInputs()
+        {
+            if (shippingCompanyId != 0 && shippingCompanyId != null)
+            {
+                cb_company.SelectedValue = shippingCompanyId;
+            }
+            if (shippingUserId != 0 && shippingUserId != null)
+            {
+                cb_user.SelectedValue = shippingUserId;
+            }
+           
+        }
         private void Btn_select_Click(object sender, RoutedEventArgs e)
         {
             if (HelpClass.validate(requiredControlList, this))
@@ -199,8 +210,6 @@ namespace Restaurant.View.windows
         {
             try
             {
-
-
                 //only  digits
                 TextBox textBox = sender as TextBox;
                 HelpClass.InputJustNumber(ref textBox);

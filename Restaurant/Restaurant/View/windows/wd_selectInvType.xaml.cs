@@ -89,7 +89,7 @@ namespace Restaurant.View.windows
                 translate();
 
                 FillCombo.FillInvoiceType(cb_invType);
-                //await getDefaultInvoiceType();
+               // await getDefaultInvoiceType();
                 cb_invType.SelectedValue = AppSettings.invType;
 
                 HelpClass.EndAwait(grid_main);

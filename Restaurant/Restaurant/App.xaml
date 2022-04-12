@@ -50,6 +50,7 @@
             <converters:profitToColorConverter x:Key="profitToColorConverter"/>
             <converters:preparingOrderTypeConverter x:Key="preparingOrderTypeConverter"/>
             <converters:decimalToTimeConverter x:Key="decimalToTimeConverter"/>
+            <converters:shippingCompanyAndCustomerConverter x:Key="shippingCompanyAndCustomerConverter"/>
             
 
 

@@ -403,17 +403,7 @@
                         <TextBlock x:Name="txt_orderTime" Text=""  Foreground="{StaticResource SecondColor}"/>
                     </StackPanel>
                 </Button>
-                <Button x:Name="btn_selfServiceTable" Click="Btn_selfServiceTable_Click" Height="40"
-						materialDesign:ButtonAssist.CornerRadius="7"  
-							  Background="{StaticResource White}" BorderBrush="{x:Null}"
-						Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
-                    <StackPanel Orientation="Horizontal" >
-                        <Path Name="path_selfServiceTable" Fill="{StaticResource SecondColor}" Stretch="Fill" Margin="5,0,5,0"
-							 Width="20" Height="20" FlowDirection="LeftToRight"  
-								  Data="{StaticResource time}"/>
-                        <TextBlock x:Name="txt_selfServiceTable" Text=""  Foreground="{StaticResource SecondColor}"/>
-                    </StackPanel>
-                </Button>
+                
             </StackPanel>
         </Grid>
         <!--#endregion-->

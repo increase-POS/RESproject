@@ -65,6 +65,7 @@ namespace Restaurant.View.windows
         }
         public bool isOk { get; set; }
         public int customerId { get; set; }
+        public decimal deliveryDiscount { get; set; }
 
         public string memberShipStatus;
 
@@ -166,10 +167,16 @@ namespace Restaurant.View.windows
                     #region delivery
                     //if(agentToPayCash != null)
                     //{
-                        if(agentToPayCash.isFreeDelivery)
-                            tb_deliveryDetails.Text = AppSettings.resourcemanager.GetString("trFree");
-                        else
-                            tb_deliveryDetails.Text = agentToPayCash.deliveryDiscountPercent + " %";
+                    if (agentToPayCash.isFreeDelivery)
+                    {
+                        tb_deliveryDetails.Text = AppSettings.resourcemanager.GetString("trFree");
+                        deliveryDiscount = 100;
+                    }
+                    else
+                    {
+                        tb_deliveryDetails.Text = agentToPayCash.deliveryDiscountPercent + " %";
+                        deliveryDiscount = agentToPayCash.deliveryDiscountPercent;
+                    }
                     //}
                     //else
                     //{
