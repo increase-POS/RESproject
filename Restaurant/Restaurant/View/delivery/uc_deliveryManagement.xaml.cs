@@ -97,7 +97,7 @@ namespace Restaurant.View.delivery
                 cb_searchUser.SelectedValuePath = "userId";
                 #endregion
 
-                chk_readyForDelivery.IsChecked = true;
+                chk_allForDelivery.IsChecked = true;
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -115,7 +115,11 @@ namespace Restaurant.View.delivery
             try
             {
                 searchText = tb_search.Text.ToLower();
-                if (chk_readyForDelivery.IsChecked == true)
+                if (chk_allForDelivery.IsChecked == true)
+                {
+                    await RefreshOrdersList("");
+                }
+                else if (chk_readyForDelivery.IsChecked == true)
                 {
                     await RefreshOrdersList("Ready");
                 }
@@ -612,18 +616,27 @@ namespace Restaurant.View.delivery
                 CheckBox cb = sender as CheckBox;
                 if (cb.IsChecked == true)
                 {
-                    if (cb.Name == "chk_readyForDelivery")
+                    if (cb.Name == "chk_allForDelivery")
                     {
+                        chk_readyForDelivery.IsChecked = false;
+                        chk_withDeliveryMan.IsChecked = false;
+                        chk_inTheWay.IsChecked = false;
+                    }
+                    else if (cb.Name == "chk_readyForDelivery")
+                    {
+                        chk_allForDelivery.IsChecked = false;
                         chk_withDeliveryMan.IsChecked = false;
                         chk_inTheWay.IsChecked = false;
                     }
                     else if (cb.Name == "chk_withDeliveryMan")
                     {
+                        chk_allForDelivery.IsChecked = false;
                         chk_readyForDelivery.IsChecked = false;
                         chk_inTheWay.IsChecked = false;
                     }
                     else if (cb.Name == "chk_inTheWay")
                     {
+                        chk_allForDelivery.IsChecked = false;
                         chk_readyForDelivery.IsChecked = false;
                         chk_withDeliveryMan.IsChecked = false;
                     }
@@ -648,7 +661,9 @@ namespace Restaurant.View.delivery
                 CheckBox cb = sender as CheckBox;
                 if (cb.IsFocused)
                 {
-                    if (cb.Name == "chk_readyForDelivery")
+                    if (cb.Name == "chk_allForDelivery")
+                        chk_allForDelivery.IsChecked = true;
+                    else if (cb.Name == "chk_readyForDelivery")
                         chk_readyForDelivery.IsChecked = true;
                     else if (cb.Name == "chk_withDeliveryMan")
                         chk_withDeliveryMan.IsChecked = true;
