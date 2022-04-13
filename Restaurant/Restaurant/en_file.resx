@@ -3847,4 +3847,16 @@ Please add Email in setting</value>
   <data name="notHaveSameStatus" xml:space="preserve">
     <value>Selected orders must have the same status</value>
   </data>
+  <data name="directlyPrint" xml:space="preserve">
+    <value>Directly print</value>
+  </data>
+  <data name="statuses" xml:space="preserve">
+    <value>statuses</value>
+  </data>
+  <data name="statusesOfPreparingOrder" xml:space="preserve">
+    <value>Statuses of preparing order</value>
+  </data>
+  <data name="statusesSequence" xml:space="preserve">
+    <value>Statuses sequence</value>
+  </data>
 </root>

@@ -3823,4 +3823,16 @@
   <data name="notHaveSameStatus" xml:space="preserve">
     <value>الطلبات المختارة يجب أن يكون لها نفس الحالة</value>
   </data>
+  <data name="directlyPrint" xml:space="preserve">
+    <value>طباعة مباشرة</value>
+  </data>
+  <data name="statuses" xml:space="preserve">
+    <value>الحالات</value>
+  </data>
+  <data name="statusesOfPreparingOrder" xml:space="preserve">
+    <value>حالات تحضير الطلب</value>
+  </data>
+  <data name="statusesSequence" xml:space="preserve">
+    <value>تسلسل الحالات</value>
+  </data>
 </root>
