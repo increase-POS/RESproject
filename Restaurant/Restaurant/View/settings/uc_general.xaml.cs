@@ -72,12 +72,13 @@ namespace Restaurant.View.settings
         static SetValues printCount = new SetValues();
         static SetValues accuracy = new SetValues();
         static SetValues maxDiscount = new SetValues();
+        static SetValues statusesOfPreparingOrder = new SetValues();
         static SetValues dateForm = new SetValues();
         static SetValues cost = new SetValues();
         static public UserSetValues usLanguage = new UserSetValues();
         static CountryCode region = new CountryCode();
         static List<SetValues> languages = new List<SetValues>();
-        static int taxId = 0, costId = 0, dateFormId, accuracyId, maxDiscountId, itemCostId = 0, printCountId = 0;
+        static int taxId = 0, costId = 0, dateFormId, accuracyId, maxDiscountId, itemCostId = 0, statusesOfPreparingOrderId, printCountId = 0;
         string usersSettingsPermission = "general_usersSettings";
         string companySettingsPermission = "general_companySettings";
 
@@ -326,6 +327,33 @@ namespace Restaurant.View.settings
                 }
             }
         }
+
+        async void loading_fillStatusesOfPreparingOrder()
+        {
+            try
+            {
+                FillCombo.FillStatusesOfPreparingOrder(cb_statusesOfPreparingOrder);
+
+                //cb_statusesOfPreparingOrder.SelectedValue = AppSettings.statusesOfPreparingOrder;
+                #region get default statusesOfPreparingOrder
+                await getDefaultStatusesOfPreparingOrder();
+                if (statusesOfPreparingOrder != null)
+                {
+                    cb_statusesOfPreparingOrder.SelectedValue = statusesOfPreparingOrder.value;
+                }
+                #endregion
+            }
+            catch (Exception)
+            { }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_fillStatusesOfPreparingOrder"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
         #endregion
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
@@ -368,6 +396,7 @@ namespace Restaurant.View.settings
                     loadingList.Add(new keyValueBool { key = "loading_getDefaultDateForm", value = false });
                     loadingList.Add(new keyValueBool { key = "loading_fillAccuracy", value = false });
                     loadingList.Add(new keyValueBool { key = "loading_fillMaxDiscount", value = false });
+                    loadingList.Add(new keyValueBool { key = "loading_fillStatusesOfPreparingOrder", value = false });
                     //loadingList.Add(new keyValueBool { key = "loading_getDefaultServerStatus", value = false });
 
                     loading_fillRegions();
@@ -377,6 +406,7 @@ namespace Restaurant.View.settings
                     loading_getDefaultDateForm();
                     loading_fillAccuracy();
                     loading_fillMaxDiscount();
+                    loading_fillStatusesOfPreparingOrder();
                     //loading_getDefaultServerStatus();
                     do
                     {
@@ -529,7 +559,22 @@ namespace Restaurant.View.settings
             maxDiscount = settingsValues.FirstOrDefault();
             return maxDiscount;
         }
-         public static async Task<ProgramDetails> getDefaultServerStatus()
+        public static async Task<SetValues> getDefaultStatusesOfPreparingOrder()
+        {
+
+            //settingsValues = await valueModel.GetBySetName("statusesOfPreparingOrder");
+            //statusesOfPreparingOrder = settingsValues.FirstOrDefault();
+            //return statusesOfPreparingOrder;
+
+            List<SetValues> settingsValues = await AppSettings.valueModel.GetBySetName("statusesOfPreparingOrder");
+            statusesOfPreparingOrder = settingsValues.FirstOrDefault();
+            if (statusesOfPreparingOrder != null)
+                AppSettings.statusesOfPreparingOrder = statusesOfPreparingOrder.value;
+            else
+                AppSettings.statusesOfPreparingOrder = "directlyPrint";
+            return statusesOfPreparingOrder;
+        }
+        public static async Task<ProgramDetails> getDefaultServerStatus()
         {
             progDetails = await progDetailsModel.getCurrentInfo();
 
@@ -681,16 +726,22 @@ namespace Restaurant.View.settings
             txt_companyInfo.Text = AppSettings.resourcemanager.GetString("trComInfo");
             txt_companyInfoHint.Text = AppSettings.resourcemanager.GetString("trSettingHint");
             txt_region.Text = AppSettings.resourcemanager.GetString("trRegion");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_region, AppSettings.resourcemanager.GetString("trRegion"));
             txt_language.Text = AppSettings.resourcemanager.GetString("trLanguage");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_language, AppSettings.resourcemanager.GetString("trLanguage"));
             txt_currency.Text = AppSettings.resourcemanager.GetString("trCurrency");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_currency, AppSettings.resourcemanager.GetString("trCurrency"));
             txt_tax.Text = AppSettings.resourcemanager.GetString("trTax");
             txt_taxHint.Text = AppSettings.resourcemanager.GetString("trInvoice") + ", " + AppSettings.resourcemanager.GetString("trItem") + "...";
             txt_tableTimes.Text = AppSettings.resourcemanager.GetString("tablesTimes");
             txt_tableTimesHint.Text = AppSettings.resourcemanager.GetString("tablesTimes") + "...";
             txt_itemsCost.Text = AppSettings.resourcemanager.GetString("trItemCost");
             txt_dateForm.Text = AppSettings.resourcemanager.GetString("trDateForm");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_dateForm, AppSettings.resourcemanager.GetString("trDateForm"));
             txt_accuracy.Text = AppSettings.resourcemanager.GetString("trAccuracy");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_accuracy, AppSettings.resourcemanager.GetString("trAccuracy"));
             txt_maxDiscount.Text = AppSettings.resourcemanager.GetString("maxDiscount");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_maxDiscount, AppSettings.resourcemanager.GetString("maxDiscount"));
             txt_changePassword.Text = AppSettings.resourcemanager.GetString("trChangePassword");
             txt_changePasswordHint.Text = AppSettings.resourcemanager.GetString("trChangePasswordHint");
             txt_userPath.Text = AppSettings.resourcemanager.GetString("trUserPath");
@@ -699,9 +750,19 @@ namespace Restaurant.View.settings
             txt_errorsExportHint.Text = AppSettings.resourcemanager.GetString("trErrorFileDownload") + "...";
             txt_itemsCost.Text = AppSettings.resourcemanager.GetString("trPurchaseCost");
             brd_itemsCost.ToolTip = AppSettings.resourcemanager.GetString("trItemCostHint");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_itemsCost, AppSettings.resourcemanager.GetString("trItemCost"));
             txt_backup.Text = AppSettings.resourcemanager.GetString("trBackUp/Restore");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_backup, AppSettings.resourcemanager.GetString("trBackUp/Restore"));
             txt_activationSite.Text = AppSettings.resourcemanager.GetString("trActivationSite");
             txt_serverStatus.Text = AppSettings.resourcemanager.GetString("trServerType");
+
+            txt_statusesOfPreparingOrder.Text = AppSettings.resourcemanager.GetString("trPreparingOrders");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_statusesOfPreparingOrder, AppSettings.resourcemanager.GetString("statuses"));
+            brd_statusesOfPreparingOrder.ToolTip = AppSettings.resourcemanager.GetString("statusesOfPreparingOrder");
+
+
+
+
             //tt_region.Content = AppSettings.resourcemanager.GetString("trRegion");
             //tt_language.Content = AppSettings.resourcemanager.GetString("trLanguage");
             //tt_currency.Content = AppSettings.resourcemanager.GetString("trCurrency");
@@ -1000,7 +1061,8 @@ namespace Restaurant.View.settings
         */
        
         private async void Btn_dateForm_Click(object sender, RoutedEventArgs e)
-        {//save date form
+        {
+            //save date form
             try
             {
                 
@@ -1348,6 +1410,73 @@ namespace Restaurant.View.settings
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        private async void Btn_statusesOfPreparingOrder_Click(object sender, RoutedEventArgs e)
+        {
+            //save statusesOfPreparingOrder
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+                
+                    if (cb_statusesOfPreparingOrder.Text.Equals(""))
+                    {
+                        HelpClass.SetValidate(p_error_statusesOfPreparingOrder, "trIsRequired");
+                    }
+                    else
+                    {
+                        HelpClass.clearValidate(p_error_statusesOfPreparingOrder);
+                    /*
+                        if (statusesOfPreparingOrder == null)
+                        statusesOfPreparingOrder = new SetValues();
+
+                        statusesOfPreparingOrder.value = cb_statusesOfPreparingOrder.SelectedValue.ToString();
+                        statusesOfPreparingOrder.isSystem = 1;
+                        statusesOfPreparingOrder.settingId = statusesOfPreparingOrderId;
+                        int s = await valueModel.Save(statusesOfPreparingOrder);
+                        if (!s.Equals(0))
+                        {
+                        //update statusesOfPreparingOrder in main window
+                        AppSettings.statusesOfPreparingOrder = statusesOfPreparingOrder.value;
+
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                        }
+                        else
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                  */
+
+
+                
+
+
+                    SetValues setV = new SetValues();
+                    statusesOfPreparingOrder.value = cb_statusesOfPreparingOrder.SelectedValue.ToString();
+                        //update statusesOfPreparingOrder in main window
+                    AppSettings.statusesOfPreparingOrder = statusesOfPreparingOrder.value;
+
+                    int msg = await setV.Save(statusesOfPreparingOrder);
+                    if (msg > 0)
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                    }
+                    else
+                    {
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    }
+
+
+                }
+                
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
         private async void Btn_errorsExport_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -1492,6 +1621,9 @@ namespace Restaurant.View.settings
         #region validate - clearValidate - textChange - lostFocus - . . . . 
 
         string input;
+
+       
+
         decimal _decimal = 0;
 
        
