@@ -203,7 +203,8 @@
                             Background="White"/>
                         <DataGrid  Margin="5,5,5,45" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
                                    x:Name="dg_orders" SelectionChanged="Dg_orders_SelectionChanged"  AutoGenerateColumns="False"   Background="White"
-                                   ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
+                                   ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2"
+                                   SelectedCellsChanged="selectedCellsChanged">
                             <DataGrid.OpacityMask>
                                 <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
                             </DataGrid.OpacityMask>
@@ -218,7 +219,7 @@
                             </DataGrid.Resources>
                             <!--Binding="{Binding false, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"-->
                             <DataGrid.Columns>
-                                <DataGridCheckBoxColumn Binding="{Binding IsChecked, NotifyOnTargetUpdated=True}" IsReadOnly="False" IsThreeState="False">
+                                <DataGridCheckBoxColumn x:Name="col_chk" Binding="{Binding IsChecked, NotifyOnTargetUpdated=True}" IsReadOnly="False" IsThreeState="False">
                                     <DataGridCheckBoxColumn.ElementStyle>
                                         <Style
                                         TargetType="CheckBox">
@@ -234,7 +235,7 @@
                                     </DataGridCheckBoxColumn.ElementStyle>
                                     <DataGridCheckBoxColumn.HeaderTemplate >
                                         <DataTemplate >
-                                            <CheckBox   Checked="FieldDataGridChecked" Unchecked="FieldDataGridUnchecked" Margin="2" />
+                                            <CheckBox   Checked="FieldDataGridCheckedHeader" Unchecked="FieldDataGridUncheckedHeader" Margin="2" />
                                         </DataTemplate>
                                     </DataGridCheckBoxColumn.HeaderTemplate>
                                 </DataGridCheckBoxColumn>

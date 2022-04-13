@@ -645,6 +645,67 @@ namespace Restaurant.View.delivery
         #endregion
 
         #region events
+
+        private void FieldDataGridCheckedHeader(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (chk_allForDelivery.IsChecked != true)
+                {
+                    #region
+                    //CheckBox chkSelectAll = ((CheckBox)sender);
+                    //if (chkSelectAll.IsChecked == true)
+                    //{
+                    //    dg_orders.Items.OfType<CheckBox>().ToList().ForEach(x => x.IsChecked = true);
+                    //}
+                    //else
+                    //{
+                    //    dg_orders.Items.OfType<CheckBox>().ToList().ForEach(x => x.IsChecked = false);
+                    //}
+                    #endregion
+
+                    var chkSelectAll = sender as CheckBox;
+                    var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
+                    if (chkSelectAll == null || firstCol == null || dg_orders?.Items == null)
+                    {
+                        return;
+                    }
+                    foreach (var item in dg_orders.Items)
+                    {
+                        var chBx = firstCol.GetCellContent(item) as CheckBox;
+                        if (chBx == null)
+                        {
+                            continue;
+                        }
+                        chBx.IsChecked = chkSelectAll.IsChecked;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void FieldDataGridUncheckedHeader(object sender, RoutedEventArgs e)
+        {
+            var chkSelectAll = sender as CheckBox;
+            var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
+            if (chkSelectAll == null || firstCol == null || dg_orders?.Items == null)
+            {
+                return;
+            }
+            foreach (var item in dg_orders.Items)
+            {
+                var chBx = firstCol.GetCellContent(item) as CheckBox;
+                if (chBx == null)
+                {
+                    continue;
+                }
+                chBx.IsChecked = chkSelectAll.IsChecked;
+            }
+        }
+
+
         List<Invoice> selectedOrders = new List<Invoice>();
         private void FieldDataGridChecked(object sender, RoutedEventArgs e)
         {
@@ -820,5 +881,11 @@ namespace Restaurant.View.delivery
 
         #endregion
 
+        private void selectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            //CheckBox cb = sender as CheckBox;
+            //Invoice selectedOrder = dg_orders.SelectedItem as Invoice;
+            //MessageBox.Show("select");
+        }
     }
 }
