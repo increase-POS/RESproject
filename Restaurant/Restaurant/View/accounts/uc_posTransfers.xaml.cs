@@ -531,6 +531,7 @@ namespace Restaurant.View.accounts
 
                 btn_confirm.Content = AppSettings.resourcemanager.GetString("trIsConfirmed");
                 btn_confirm.IsEnabled = false;
+                btn_cancel.IsEnabled = false;
             }
         }
         #endregion
@@ -619,18 +620,24 @@ namespace Restaurant.View.accounts
                         {
                             if (cashtrans.isConfirm == 0)
                             {
-                                btn_confirm.Content = AppSettings.resourcemanager.GetString("trConfirm"); btn_confirm.IsEnabled = true;
-                                btn_cancel.Content = AppSettings.resourcemanager.GetString("trCancel_"); btn_cancel.IsEnabled = true;
+                                btn_confirm.Content = AppSettings.resourcemanager.GetString("trConfirm");
+                                btn_confirm.IsEnabled = true;
+                                btn_cancel.Content = AppSettings.resourcemanager.GetString("trCancel_");
+                                btn_cancel.IsEnabled = true;
                             }
                             else if (cashtrans.isConfirm == 1)
                             {
-                                btn_confirm.Content = AppSettings.resourcemanager.GetString("trIsConfirmed"); btn_confirm.IsEnabled = false;
-                                btn_cancel.Content = AppSettings.resourcemanager.GetString("trCancel_"); btn_cancel.IsEnabled = false;
+                                btn_confirm.Content = AppSettings.resourcemanager.GetString("trIsConfirmed");
+                                btn_confirm.IsEnabled = false;
+                                btn_cancel.Content = AppSettings.resourcemanager.GetString("trCancel_");
+                                btn_cancel.IsEnabled = false;
                             }
                             else if (cashtrans.isConfirm == 2)
                             {
-                                btn_confirm.Content = AppSettings.resourcemanager.GetString("trConfirm"); btn_confirm.IsEnabled = false;
-                                btn_cancel.Content = AppSettings.resourcemanager.GetString("trCanceled"); btn_cancel.IsEnabled = false;
+                                btn_confirm.Content = AppSettings.resourcemanager.GetString("trConfirm");
+                                btn_confirm.IsEnabled = false;
+                                btn_cancel.Content = AppSettings.resourcemanager.GetString("trCanceled");
+                                btn_cancel.IsEnabled = false;
                             }
                         }
                         else
@@ -680,7 +687,7 @@ namespace Restaurant.View.accounts
                         #endregion
                     }
                 }
-            HelpClass.clearValidate(requiredControlList, this);
+                HelpClass.clearValidate(requiredControlList, this);
             HelpClass.EndAwait(grid_main);
         }
             catch (Exception ex)
