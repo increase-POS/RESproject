@@ -54,7 +54,7 @@
 
                             <Border x:Name="bdr_preparingOrders" Grid.Column="0" Background="White" BorderThickness="0"  Height="40" Width="60" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="10,5,0,-1">
                                 <Button x:Name="btn_preparingOrders"  Background="Transparent" Tag="invoice"
-                                    materialDesign:RippleAssist.Feedback="Transparent" BorderBrush="Transparent" Height="auto" >
+                                        materialDesign:RippleAssist.Feedback="Transparent" BorderBrush="Transparent" Height="auto" >
                                     <Button.Triggers>
                                         <EventTrigger x:Name="trig" RoutedEvent="Button.Click">
                                             <BeginStoryboard>
@@ -70,7 +70,7 @@
                                     </Button.Triggers>
                                     <Path Name="path_invoice" Fill="{StaticResource SecondColor}" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,-1,0,0" 
                                        Width="25" Height="25"   FlowDirection="LeftToRight" 
-                                          Data="{StaticResource invoice}"  >
+                                         Data="{StaticResource cooking}" >
                                         <Path.ToolTip>
                                             <ToolTip x:Name="tt_invoice" Content="Invoices"
                                               Placement="left" 
@@ -231,10 +231,10 @@
 
 
                                 <Button FlowDirection="LeftToRight" DockPanel.Dock="Right" Width="40" Height="40" x:Name="btn_refresh" 
-                            materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
-                          Background="{x:Null}" BorderBrush="{x:Null}"   Style="{StaticResource SmallButtonCircleRotate}"
-                             Margin="5,1" RenderTransformOrigin="0.5,0.5"
-                            DataContext="M896,0L896,0C401.2,0,0,401.2,0,896v0c0,494.8,401.2,896,896,896h0c494.8,0,896-401.2,896-896v0C1792,401.2,1390.8,0,896,0z
+                                        materialDesign:ButtonAssist.CornerRadius="15" Cursor="Hand"
+                                        Background="{x:Null}" BorderBrush="{x:Null}"   Style="{StaticResource SmallButtonCircleRotate}"
+                                        Margin="5,1" RenderTransformOrigin="0.5,0.5"
+                                        DataContext="M896,0L896,0C401.2,0,0,401.2,0,896v0c0,494.8,401.2,896,896,896h0c494.8,0,896-401.2,896-896v0C1792,401.2,1390.8,0,896,0z
 	 M1451.3,1021c-31.9,133.7-98.8,242.1-200.6,325.2c-101.8,83.1-221,124.6-357.7,124.6c-72.8,0-143.3-13.7-211.4-41.2
 	s-128.8-66.6-182.2-117.5l-96.5,96.5c-9.5,9.5-20.7,14.2-33.7,14.2s-24.2-4.7-33.7-14.2c-9.5-9.5-14.2-20.7-14.2-33.7v-335.3
 	c0-13,4.7-24.2,14.2-33.7s20.7-14.2,33.7-14.2h335.3c13,0,24.2,4.7,33.7,14.2c9.5,9.5,14.2,20.7,14.2,33.7c0,13-4.7,24.2-14.2,33.7
@@ -245,7 +245,8 @@
 	C1083.3,547,996.3,512.9,896,512.9c-66.9,0-129.2,16.2-187.1,48.6s-104.3,77.1-139.2,134c-5.5,8.5-18.7,37.7-39.7,87.6
 	c-4,11.5-11.5,17.2-22.5,17.2H358.7c-6.5,0-12.1-2.4-16.8-7.1c-4.7-4.7-7.1-10.4-7.1-16.8V771c32.4-133.7,99.8-242.1,202-325.2
 	c102.3-83.1,222-124.6,359.2-124.6c72.8,0,143.7,13.8,212.5,41.5s130,66.7,183.3,117.1l97.3-96.5c9.5-9.5,20.7-14.2,33.7-14.2
-	s24.2,4.7,33.7,14.2c9.5,9.5,14.2,20.7,14.2,33.7V752.3z" Click="Btn_refresh_Click" >
+	s24.2,4.7,33.7,14.2c9.5,9.5,14.2,20.7,14.2,33.7V752.3z" 
+                                        Click="Btn_refresh_Click" >
                                     <Button.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -288,59 +289,14 @@
                                 </DataGrid.Resources>
                                 <DataGrid.Columns>
                                     <DataGridTextColumn x:Name="col_invNum"        Width="*" Header="No."       Binding="{Binding invNumber}"/>
-                                    <DataGridTextColumn x:Name="col_invType"       Width="*" Header="Type"      Binding="{Binding Path=invType ,Converter={StaticResource invoiceTypeConverter}}"/>
-                                    <DataGridTextColumn x:Name="col_invDate"       Width="*" Header="Date"       Binding="{Binding updateDate,Converter={StaticResource dateFrameConverter }}"/>
-                                    <DataGridTextColumn x:Name="col_invTotal"      Width="*" Header="Total"     Binding="{Binding totalNet     ,Converter={StaticResource accuracyConverter}}" />
-                                    <DataGridTextColumn x:Name="col_itemName"      Width="*" Header="Item"      Binding="{Binding ITitemName}"/>
-                                    <DataGridTextColumn x:Name="col_unitName"      Width="*" Header="Unit"      Binding="{Binding ITunitName }" />
-                                    <DataGridTextColumn x:Name="col_quantity"      Width="*" Header="QTY"       Binding="{Binding ITquantity }" />
-                                    <DataGridTextColumn x:Name="col_branch"        Width="*" Header="Branch"    Binding="{Binding branchCreatorName }" />
-                                    <DataGridTextColumn x:Name="col_pos"           Width="*" Header="Pos"       Binding="{Binding posName }" />
-                                    <DataGridTextColumn x:Name="col_invoiceProfit" Width="*" Header="Profits"   Binding="{Binding invoiceProfit  ,Converter={StaticResource accuracyConverter}}" >
-                                        <DataGridTextColumn.CellStyle>
-                                            <Style TargetType="{x:Type DataGridCell}">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding invoiceProfit, Converter={StaticResource profitToColorConverter}}" Value="1">
-                                                        <Setter Property="Background" Value="{StaticResource lightGreen}"/>
-                                                        <Setter Property="Foreground" Value="{StaticResource ThickGrey}"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding invoiceProfit, Converter={StaticResource profitToColorConverter}}" Value="0">
-                                                        <Setter Property="Background" Value="{StaticResource lightRed}"/>
-                                                        <Setter Property="Foreground" Value="{StaticResource ThickGrey}"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </DataGridTextColumn.CellStyle>
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn x:Name="col_itemProfit"    Width="*" Header="Profits"   Binding="{Binding itemunitProfit    ,Converter={StaticResource accuracyConverter}}" >
-                                        <DataGridTextColumn.CellStyle>
-                                            <Style TargetType="{x:Type DataGridCell}">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding itemunitProfit, Converter={StaticResource profitToColorConverter}}" Value="1">
-                                                        <Setter Property="Background" Value="{StaticResource lightGreen}"/>
-                                                        <Setter Property="Foreground" Value="{StaticResource ThickGrey}"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding itemunitProfit, Converter={StaticResource profitToColorConverter}}" Value="0">
-                                                        <Setter Property="Background" Value="{StaticResource lightRed}"/>
-                                                        <Setter Property="Foreground" Value="{StaticResource ThickGrey}"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </DataGridTextColumn.CellStyle>
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-
+                                    <DataGridTextColumn x:Name="col_itemName"      Width="*" Header="Item"      Binding="{Binding itemName}"/>
+                                    <DataGridTextColumn x:Name="col_quantity"      Width="*" Header="QTY"       Binding="{Binding quantity }" />
+                                    <DataGridTextColumn x:Name="col_status"        Width="*" Header="Status"    Binding="{Binding status , Converter={StaticResource preparingOrderStatusConverter}}" />
+                                    <DataGridTextColumn x:Name="col_date"          Width="*" Header="Date"      Binding="{Binding createDate,Converter={StaticResource dateFrameConverter }}"/>
+                                    <DataGridTextColumn x:Name="col_branch"        Width="*" Header="Branch"    Binding="{Binding branchName }" />
+                                    <DataGridTextColumn x:Name="col_category"      Width="*" Header="Category"  Binding="{Binding categoryName }" />
+                                    <DataGridTextColumn x:Name="col_tag"           Width="*" Header="Tag"       Binding="{Binding tagName}" />
+                                    <DataGridTextColumn x:Name="col_duration"      Width="*" Header="Duration"  Binding="{Binding realDuration }" />
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
