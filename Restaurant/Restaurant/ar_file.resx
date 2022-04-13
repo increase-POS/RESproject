@@ -3835,4 +3835,7 @@
   <data name="statusesSequence" xml:space="preserve">
     <value>تسلسل الحالات</value>
   </data>
+  <data name="duration" xml:space="preserve">
+    <value>المدة الزمنية</value>
+  </data>
 </root>

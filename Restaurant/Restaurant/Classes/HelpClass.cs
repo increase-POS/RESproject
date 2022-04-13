@@ -1113,6 +1113,8 @@ namespace Restaurant.Classes
                 secondTitle = AppSettings.resourcemanager.GetString("trDeposits");
             else if (secondTitle == "receipts")
                 secondTitle = AppSettings.resourcemanager.GetString("trReceipts");
+            else if (secondTitle == "preparingOrders")
+                secondTitle = AppSettings.resourcemanager.GetString("trPreparingOrders");
             //////////////////////////////////////////////////////////////////////////////
 
             textBlock.Text = firstTitle + " / " + secondTitle;

@@ -3859,4 +3859,7 @@ Please add Email in setting</value>
   <data name="statusesSequence" xml:space="preserve">
     <value>Statuses sequence</value>
   </data>
+  <data name="duration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
 </root>
