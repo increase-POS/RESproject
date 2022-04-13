@@ -2982,7 +2982,8 @@ namespace Restaurant.Classes
             List<VendorCombo> iulist = new List<VendorCombo>();
 
             //iulist = ITInvoice.Where(g => g.side == x).GroupBy(g => g.agentId).Select(g => new VendorCombo { VendorId = g.FirstOrDefault().agentId, VendorName = g.FirstOrDefault().agentName }).ToList();
-            iulist = ITInvoice.Where(g => g.side == x).GroupBy(g => g.agentId).Select(g => new VendorCombo { VendorId = g.FirstOrDefault().agentId, VendorName = g.FirstOrDefault().agentName, Side = g.FirstOrDefault().side }).ToList();
+            //iulist = ITInvoice.Where(g => g.side == x).GroupBy(g => g.agentId).Select(g => new VendorCombo { VendorId = g.FirstOrDefault().agentId, VendorName = g.FirstOrDefault().agentName, Side = g.FirstOrDefault().side }).ToList();
+            iulist = ITInvoice.Where(g => g.side == x && (g.invShippingCompanyId == null || (g.invShippingCompanyId != null && g.shipUserId != null))).GroupBy(g => g.agentId).Select(g => new VendorCombo { VendorId = g.FirstOrDefault().agentId, VendorName = g.FirstOrDefault().agentName, Side = g.FirstOrDefault().side }).ToList();
             return iulist;
 
         }
