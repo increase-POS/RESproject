@@ -1702,46 +1702,7 @@ namespace Restaurant.Classes
                 }
             }
             return list;
-
-            #region
-            //List<ItemTransferInvoice> list = null;
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "Statistics/GetSaleitemcount?mainBranchId=" + mainBranchId + "&userId=" + userId);
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Get;
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    HttpResponseMessage response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var jsonString = await response.Content.ReadAsStringAsync();
-            //        jsonString = jsonString.Replace("\\", string.Empty);
-            //        jsonString = jsonString.Trim('"');
-            //        // fix date format
-            //        JsonSerializerSettings settings = new JsonSerializerSettings
-            //        {
-            //            Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-            //            DateParseHandling = DateParseHandling.None
-            //        };
-            //        list = JsonConvert.DeserializeObject<List<ItemTransferInvoice>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-            //        return list;
-            //    }
-            //    else //web api sent error response 
-            //    {
-            //        list = new List<ItemTransferInvoice>();
-            //    }
-            //    return list;
-            //}
-            #endregion
+ 
         }
 
         //
@@ -3472,6 +3433,50 @@ namespace Restaurant.Classes
             return items;
         }
 
+        // فواتير الصرف 
+        public async Task<List<ItemTransferInvoice>> GetSpendingRequest(int mainBranchId, int userId)
+        {
+
+            List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
+
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Statistics/GetSpendingRequest", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<ItemTransferInvoice>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+
+        }
+        // فواتير الصرف عناصر  
+        public async Task<List<ItemTransferInvoice>> GetSpendingItems(int mainBranchId, int userId)
+        {
+
+            List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
+
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Statistics/GetSpendingItems", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<ItemTransferInvoice>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+
+        }
         #endregion
         // Combo
         #region combo
