@@ -51,11 +51,15 @@ namespace Restaurant.View.windows
        public string icon { get; set; }
        public string page { get; set; }
         public string invoiceType { get; set; }
+        public int duration { get; set; }
+        public int hours { get; set; }
+
+        List<string> invTypeL;
+
         public string invoiceStatus { get; set; }
         public string title { get; set; }
         public string condition { get; set; }
         public bool fromOrder = false;
-        public int duration { get; set; }
         private void Btn_select_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -105,6 +109,8 @@ namespace Restaurant.View.windows
                 
                     HelpClass.StartAwait(grid_ucInvoice);
 
+                invTypeL = invoiceType.Split(',').ToList();
+
                 #region translate
                 if (AppSettings.lang.Equals("en"))
                 {
@@ -118,56 +124,8 @@ namespace Restaurant.View.windows
                 translat();
                 #endregion
                 dg_Invoice.Columns[0].Visibility = Visibility.Collapsed;
-                #region hide Total column in grid if invoice is import/export order/purchase order/ spending request order/Food Beverages Consumption
 
-                string[] invTypeArray = new string[] { "imd" ,"exd","im","ex" ,"exw","pod","po","srd","sr","srw","src" ,"fbc"};
-                var invTypes = invTypeArray.ToList();
-                List<string> invTypeL = invoiceType.Split(',').ToList();
-                var inCommen = invTypeL.Any(s => invTypes.Contains(s));
-                if(inCommen)
-                    col_total.Visibility = Visibility.Collapsed; //make total column unvisible
-                #endregion
-                #region hide delete column in grid if invoice type not in invTypeArray
-                //invTypeArray = new string[] { "or", "q", "po" };
-                //var orderTypes = invTypeArray.ToList();
-               //invTypeL = invoiceType.Split(',').ToList();
-                //inCommen = invTypeL.Any(s => orderTypes.Contains(s));
-                //if (inCommen)
-                //    dg_Invoice.Columns[0].Visibility = Visibility.Visible; //make total column unvisible
-                #endregion
-                #region display branch & user columns in grid if invoice is sales order and purchase orders
-                invTypeArray = new string[] { "or" };
-                invTypes = invTypeArray.ToList();
-                invTypeL = invoiceType.Split(',').ToList();
-                inCommen = invTypeL.Any(s => invTypes.Contains(s));
-                if (inCommen)
-                {
-                    col_agent.Header = AppSettings.resourcemanager.GetString("trCustomer");                                      
-                    col_agent.Visibility = Visibility.Visible;
-                    if (fromOrder == false)
-                    {
-                        col_branch.Visibility = Visibility.Visible; //make branch column visible
-                        col_user.Visibility = Visibility.Visible; //make user column visible
-                    }
-                    //dg_Invoice.Columns[7].Visibility = Visibility.Visible; //make user column visible
-                }
-                #endregion
-                #region display branch, vendor & user columns in grid if invoice is  purchase orders
-                if (invoiceType == "po" && fromOrder == false)
-                {
-                    col_agent.Header = AppSettings.resourcemanager.GetString("trVendor");
-                    col_branch.Visibility = Visibility.Visible; //make branch column visible
-                    col_user.Visibility = Visibility.Visible; //make user column visible
-                    col_agent.Visibility = Visibility.Visible;
-                }
-                #endregion
-                #region display branch if invoice is export or import process
-                invTypeArray = new string[] { "exw", "im", "ex" };
-                invTypes = invTypeArray.ToList();
-                inCommen = invTypeL.Any(s => invTypes.Contains(s));
-                if (inCommen)
-                    col_branch.Visibility = Visibility.Visible; //make branch column unvisible
-                #endregion
+                hidDisplayColumns();
                 await refreshInvoices();
                 Txb_search_TextChanged(null, null);
 
@@ -192,7 +150,17 @@ namespace Restaurant.View.windows
             col_count.Header = AppSettings.resourcemanager.GetString("trQTR");
             col_total.Header = AppSettings.resourcemanager.GetString("trTotal");
             col_type.Header = AppSettings.resourcemanager.GetString("trType");
-            col_agent.Header = AppSettings.resourcemanager.GetString("trVendor");
+
+            #region translate agent column
+            string[] invTypeArray = new string[] { "tsd", "ssd" };
+            var invTypes = invTypeArray.ToList();
+            var inCommen = invTypeL.Any(s => invTypes.Contains(s));
+            if (inCommen)
+                col_agent.Header = AppSettings.resourcemanager.GetString("trCustomer");
+            else
+                col_agent.Header = AppSettings.resourcemanager.GetString("trVendor");
+
+            #endregion
 
             txt_countTitle.Text = AppSettings.resourcemanager.GetString("trCount") + ":";
 
@@ -202,6 +170,62 @@ namespace Restaurant.View.windows
                 col_branch.Header = AppSettings.resourcemanager.GetString("trToBranch");
             else if (page == "storageMov" && icon == "ordersWait") // export
                 col_branch.Header = AppSettings.resourcemanager.GetString("trFromBranch");
+        }
+
+        private void hidDisplayColumns()
+        {
+            #region hide Total column in grid if invoice is import/export order/purchase order/ spending request order/Food Beverages Consumption
+
+            string[] invTypeArray = new string[] { "imd", "exd", "im", "ex", "exw", "pod", "po", "srd", "sr", "srw", "src", "fbc" };
+            var invTypes = invTypeArray.ToList();           
+            var inCommen = invTypeL.Any(s => invTypes.Contains(s));
+            if (inCommen)
+                col_total.Visibility = Visibility.Collapsed; //make total column unvisible
+            #endregion
+
+            #region display branch & user columns in grid if invoice is sales order and purchase orders
+            invTypeArray = new string[] { "or" };
+            invTypes = invTypeArray.ToList();
+            invTypeL = invoiceType.Split(',').ToList();
+            inCommen = invTypeL.Any(s => invTypes.Contains(s));
+            if (inCommen)
+            {
+                col_agent.Header = AppSettings.resourcemanager.GetString("trCustomer");
+                col_agent.Visibility = Visibility.Visible;
+                if (fromOrder == false)
+                {
+                    col_branch.Visibility = Visibility.Visible; //make branch column visible
+                    col_user.Visibility = Visibility.Visible; //make user column visible
+                }
+                //dg_Invoice.Columns[7].Visibility = Visibility.Visible; //make user column visible
+            }
+            #endregion
+
+            #region display branch, vendor & user columns in grid if invoice is  purchase orders
+            if (invoiceType == "po" && fromOrder == false)
+            {
+                col_agent.Header = AppSettings.resourcemanager.GetString("trVendor");
+                col_branch.Visibility = Visibility.Visible; //make branch column visible
+                col_user.Visibility = Visibility.Visible; //make user column visible
+                col_agent.Visibility = Visibility.Visible;
+            }
+            #endregion
+
+            #region display branch if invoice is export or import process
+            invTypeArray = new string[] { "exw", "im", "ex" };
+            invTypes = invTypeArray.ToList();
+            inCommen = invTypeL.Any(s => invTypes.Contains(s));
+            if (inCommen)
+                col_branch.Visibility = Visibility.Visible; //make branch column unvisible
+            #endregion
+
+            #region display customer if invoice is take away or self-service
+            invTypeArray = new string[] { "tsd", "ssd" };
+            invTypes = invTypeArray.ToList();
+            inCommen = invTypeL.Any(s => invTypes.Contains(s));
+            if (inCommen)
+                col_agent.Visibility = Visibility.Visible; //make branch column unvisible
+            #endregion
         }
         private async Task refreshInvoices()
         {
@@ -276,7 +300,7 @@ namespace Restaurant.View.windows
             else if (page == "takeAway")
             {
                 if (icon == "drafts")
-                    FillCombo.invoices = await FillCombo.invoice.GetInvoicesByCreator(invoiceType, userId, duration);
+                    FillCombo.invoices = await FillCombo.invoice.GetInvoicesByCreator(invoiceType, userId, duration,hours);
             }
             #endregion
             //if (condition == "orders")

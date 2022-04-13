@@ -73,9 +73,9 @@
                     </DataGrid.Resources>
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="*" x:Name="col_orders" Header="orders" Binding="{Binding Path=orderNum}"/>
-                        <DataGridTextColumn Width="*" x:Name="col_tables"  Header="table"       Binding="{Binding Path=tables}"/>
                         <DataGridTextColumn Width="*" x:Name="col_waiter"  Header="waiter"       Binding="{Binding Path=waiter}"/>
                         <DataGridTextColumn Width="*" x:Name="col_invoices"  Header="invoices"       Binding="{Binding Path=invNumber}"/>
+                        <DataGridTextColumn Width="*" x:Name="col_tables"  Header="table"       Binding="{Binding Path=tables}"/>
                         <DataGridTextColumn Width="*" x:Name="col_shiping" Header="Shiping Company\Customer"   >
                             <DataGridTextColumn.Binding>
                                 <MultiBinding Converter="{StaticResource shippingCompanyAndCustomerConverter}">

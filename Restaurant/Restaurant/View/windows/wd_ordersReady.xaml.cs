@@ -119,7 +119,22 @@ namespace Restaurant.View.windows
                 col_waiter.Visibility = Visibility.Collapsed;
                 #endregion
 
-                invoices = await preparingOrder.GetTakAwayOrdersWithStatus(MainWindow.branchLogin.branchId, 24);
+                invoices = await preparingOrder.GetOrdersByTypeWithStatus(MainWindow.branchLogin.branchId,"ts" ,24);
+                dg_orders.ItemsSource = invoices;
+            }
+            else if(page == "selfService")
+            {
+                #region visible - unvisible columns
+                col_invoices.Visibility = Visibility.Visible;
+                col_tables.Visibility = Visibility.Visible;
+                col_status.Visibility = Visibility.Visible;
+                col_shiping.Visibility = Visibility.Visible;
+
+                col_orders.Visibility = Visibility.Collapsed;
+                col_waiter.Visibility = Visibility.Collapsed;
+                #endregion
+
+                invoices = await preparingOrder.GetOrdersByTypeWithStatus(MainWindow.branchLogin.branchId,"ss", 24);
                 dg_orders.ItemsSource = invoices;
             }
 

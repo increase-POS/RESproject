@@ -126,15 +126,16 @@ namespace Restaurant.Classes.ApiClasses
             return items;
         }
 
-        public async Task<List<Invoice>> GetTakAwayOrdersWithStatus( int branchId, int duration=0)
+        public async Task<List<Invoice>> GetOrdersByTypeWithStatus( int branchId,string type, int duration=0)
         {
             List<Invoice> items = new List<Invoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("branchId", branchId.ToString());
+            parameters.Add("type", type);
             // duration in hours (optional)
             parameters.Add("duration", duration.ToString());
 
-            IEnumerable<Claim> claims = await APIResult.getList("OrderPreparing/GetTakAwayOrdersWithStatus", parameters);
+            IEnumerable<Claim> claims = await APIResult.getList("OrderPreparing/GetOrdersByTypeWithStatus", parameters);
             foreach (Claim c in claims)
             {
                 if (c.Type == "scopes")

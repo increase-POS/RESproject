@@ -1002,8 +1002,10 @@ namespace Restaurant.View.sales
             editBillRow(index);
             if (billDetailsList[index].Count == 2)
                 refreshDeleteButtonInvoice(index,billDetailsList[index].Count);
+
             BuildBillDesign();
             refreshTotal();
+            setKitchenNotification();
         }
         void buttonMinus_Click(object sender, RoutedEventArgs e)
         {
@@ -1014,7 +1016,7 @@ namespace Restaurant.View.sales
             // index--;
             if (billDetailsList[index].Count <= sentToKitchenCount)
             {
-                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trItemCannotDelete"), animation: ToasterAnimation.FadeIn);
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trItemCannotDelete"), animation: ToasterAnimation.FadeIn);
             }
             else
             {
@@ -1040,6 +1042,7 @@ namespace Restaurant.View.sales
 
                 BuildBillDesign();
                 refreshTotal();
+                setKitchenNotification();
             }
            
         }
@@ -1356,7 +1359,9 @@ namespace Restaurant.View.sales
         }
         private void setNotifications()
         {
-            refreshDraftNotification();
+            if(AppSettings.invType =="takeAway" || AppSettings.invType =="selfService")
+                refreshDraftNotification();
+
             refreshOrdersNotification();
         }
         async Task refreshDraftNotification()
@@ -1364,14 +1369,12 @@ namespace Restaurant.View.sales
             try
             {
                 string invoiceType = "";
-                if (AppSettings.invType == "takeAway")
-                    invoiceType = "tsd";
-                else if (AppSettings.invType == "selfService")
-                    invoiceType = "ssd";
+                invoiceType = "tsd,ssd";
 
-                int duration = 2;
-                int ordersCount = await FillCombo.invoice.GetCountByCreator(invoiceType, MainWindow.userLogin.userId, duration);
-                if (FillCombo.invoice != null && _InvoiceType == invoiceType && FillCombo.invoice != null && FillCombo.invoice.invoiceId != 0 && !isFromReport)
+                int duration = 0;
+                int hours = 24;
+                int ordersCount = await FillCombo.invoice.GetCountByCreator(invoiceType, MainWindow.userLogin.userId, duration,hours);
+                if (FillCombo.invoice != null && (_InvoiceType == "tsd" || _InvoiceType =="ssd") && FillCombo.invoice != null && FillCombo.invoice.invoiceId != 0 && !isFromReport)
                     ordersCount--;
 
                 HelpClass.refreshNotification(md_draft, ref _DraftCount, ordersCount);
@@ -1396,7 +1399,7 @@ namespace Restaurant.View.sales
         private async Task<int> addDraft()
         {
             int res = 0;
-            if (AppSettings.invType == "dinningHall")
+            if (AppSettings.invType == "diningHall")
             {
                 
                 if ( _InvoiceType == "sd" && selectedTables.Count > 0)
@@ -1702,7 +1705,7 @@ namespace Restaurant.View.sales
             #endregion
 
             #region items sent to kitchen
-            await sentToKitchenItems();
+            await refreshSentToKitchenItems();
             #endregion
 
             #region enable cancle button if no items sent to kitchen
@@ -1711,6 +1714,8 @@ namespace Restaurant.View.sales
             else
                 btn_cancel.IsEnabled = false;
             #endregion
+
+            setKitchenNotification();
         }
 
         async Task fillTakeAwayInv()
@@ -1929,10 +1934,14 @@ namespace Restaurant.View.sales
 
             #endregion
         }
+
+        #endregion
+
+        #region kitchen items
         List<BillDetailsSales> sentInvoiceItems = new List<BillDetailsSales>();
         List<OrderPreparing> kitchenOrders = new List<OrderPreparing>();
         OrderPreparing preparingOrder = new OrderPreparing();
-        async Task sentToKitchenItems()
+        async Task refreshSentToKitchenItems()
         {
             kitchenOrders = await preparingOrder.GetInvoicePreparingOrders(invoice.invoiceId);
 
@@ -1949,7 +1958,7 @@ namespace Restaurant.View.sales
 
                 BillDetailsSales newBillRow = new BillDetailsSales()
                 {
-                    itemUnitId = (int) b.itemUnitId,
+                    itemUnitId = (int)b.itemUnitId,
                     itemName = b.itemName,
                     index = index,
                     Count = itemCountInOrder,
@@ -1959,6 +1968,30 @@ namespace Restaurant.View.sales
             }
         }
 
+        private void setKitchenNotification()
+        {
+            foreach (ItemTransfer b in invoiceItems)
+            {
+
+                int itemCountInOrder = 0;
+                try { itemCountInOrder = kitchenOrders.Where(x => x.itemUnitId == b.itemUnitId).Sum(x => x.quantity); }
+                catch { }
+
+                long countInInvoiceItems = billDetailsList.Where(x => x.itemUnitId == b.itemUnitId).Sum(x => x.Count);
+
+                if(countInInvoiceItems == itemCountInOrder) // set btn_kitchen as default
+                {
+                    txt_kitchen.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                    path_kitchen.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                }
+                else
+                {
+                    txt_kitchen.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                    path_kitchen.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                    break;
+                }
+            }
+        }
         #endregion
         #region buttons: new - orders - tables - customers - waiter - kitchen 
 
@@ -1993,11 +2026,10 @@ namespace Restaurant.View.sales
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_invoice w = new wd_invoice();
 
-                
-                int hours = 24;
                 w.invoiceType = invoiceType;
                 w.userId = MainWindow.userLogin.userId;
-                w.duration = 2; // view drafts which created during 2 last days 
+                //w.duration = 2; // view drafts which created during 2 last days 
+                w.hours = 24; // view drafts which created during 24 hours
                 w.icon = "drafts";
                 w.page = "takeAway";
                 w.title = AppSettings.resourcemanager.GetString("trDrafts");
@@ -2195,6 +2227,9 @@ namespace Restaurant.View.sales
                     w.invoiceItemsList = billDetailsList.ToList();
                     w.invoiceId = invoice.invoiceId;
                     w.ShowDialog();
+
+                await refreshSentToKitchenItems();
+                setKitchenNotification();
                     Window.GetWindow(this).Opacity = 1;
                 //}
                 //else

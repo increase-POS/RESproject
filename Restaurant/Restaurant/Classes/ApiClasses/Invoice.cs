@@ -306,13 +306,14 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<List<Invoice>> GetInvoicesByCreator(string invType, int createUserId, int duration)
+        public async Task<List<Invoice>> GetInvoicesByCreator(string invType, int createUserId, int duration,int hours=0)
         {
             List<Invoice> items = new List<Invoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("invType", invType);
             parameters.Add("createUserId", createUserId.ToString());
             parameters.Add("duration", duration.ToString());
+            parameters.Add("hours", hours.ToString());
             IEnumerable<Claim> claims = await APIResult.getList("Invoices/GetInvoicesByCreator", parameters);
             foreach (Claim c in claims)
             {
@@ -359,13 +360,14 @@ namespace Restaurant.Classes
             return items;
         }
 
-        public async Task<int> GetCountByCreator(string invType, int createUserId, int duration)
+        public async Task<int> GetCountByCreator(string invType, int createUserId, int duration,int hours=0)
         {
             int count = 0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("invType", invType);
             parameters.Add("createUserId", createUserId.ToString());
             parameters.Add("duration", duration.ToString());
+            parameters.Add("hours", hours.ToString());
             //#################
             IEnumerable<Claim> claims = await APIResult.getList("Invoices/GetCountByCreator", parameters);
 
