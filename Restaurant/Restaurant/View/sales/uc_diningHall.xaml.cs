@@ -1594,7 +1594,11 @@ namespace Restaurant.View.sales
             #region set parameters
             _Sum = (decimal)invoice.total;
             _DeliveryCost = (decimal)invoice.shippingCost;
-            _DeliveryDiscount = (decimal)invoice.shippingCostDiscount;
+            try
+            {
+                _DeliveryDiscount = (decimal)invoice.shippingCostDiscount;
+            }
+            catch { }
             _ManualDiscount = invoice.discountValue;
             _DiscountType = invoice.discountType;
             selectedCopouns = await FillCombo.invoice.GetInvoiceCoupons(invoice.invoiceId);
@@ -1983,19 +1987,17 @@ namespace Restaurant.View.sales
             {
                 HelpClass.StartAwait(grid_main);
                 string invoiceType = "";
-                if(AppSettings.invType == "takeAway")
-                    invoiceType = "tsd";
-                else if(AppSettings.invType == "selfService")
-                    invoiceType = "ssd";
+
+                invoiceType = "tsd, ssd";
 
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_invoice w = new wd_invoice();
 
                 
-                int duration = 2;
+                int hours = 24;
                 w.invoiceType = invoiceType;
                 w.userId = MainWindow.userLogin.userId;
-                w.duration = duration; // view drafts which created during 2 last days 
+                w.duration = 2; // view drafts which created during 2 last days 
                 w.icon = "drafts";
                 w.page = "takeAway";
                 w.title = AppSettings.resourcemanager.GetString("trDrafts");
