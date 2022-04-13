@@ -406,7 +406,31 @@ namespace Restaurant
             }
         }
 
-
+        async void loading_getStatusesOfPreparingOrder()
+        {
+            try
+            {
+                SetValues invSet = new SetValues();
+                List<SetValues> settingsValues = await AppSettings.valueModel.GetBySetName("statusesOfPreparingOrder");
+                invSet = settingsValues.FirstOrDefault();
+                if (invSet != null)
+                    AppSettings.statusesOfPreparingOrder = invSet.value;
+                else
+                    AppSettings.statusesOfPreparingOrder = "directlyPrint";
+            }
+            catch
+            {
+                AppSettings.statusesOfPreparingOrder = "directlyPrint";
+            }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_getStatusesOfPreparingOrder"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
 
         async void loading_getItemCost()
         {
@@ -1046,6 +1070,7 @@ namespace Restaurant
                 loadingList.Add(new keyValueBool { key = "loading_POSList", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_getTableTimes", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_getDefaultInvoiceType", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_getStatusesOfPreparingOrder", value = false });
 
 
 
@@ -1074,6 +1099,7 @@ namespace Restaurant
                 loading_POSList();
                 loading_getTableTimes();
                 loading_getDefaultInvoiceType();
+                loading_getStatusesOfPreparingOrder();
 
                
                 do
@@ -1531,6 +1557,8 @@ namespace Restaurant
             txt_purchases.Text = AppSettings.resourcemanager.GetString("trPurchases");
             tt_kitchen.Content = AppSettings.resourcemanager.GetString("trKitchen");
             txt_kitchen.Text = AppSettings.resourcemanager.GetString("trKitchen");
+            tt_delivery.Content = AppSettings.resourcemanager.GetString("trDelivery");
+            txt_delivery.Text = AppSettings.resourcemanager.GetString("trDelivery");
             tt_sales.Content = AppSettings.resourcemanager.GetString("trSales");
             txt_sales.Text = AppSettings.resourcemanager.GetString("trSales");
             tt_accounts.Content = AppSettings.resourcemanager.GetString("trAccounting");
