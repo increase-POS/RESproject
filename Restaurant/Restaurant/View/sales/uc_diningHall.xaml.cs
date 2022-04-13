@@ -1569,6 +1569,10 @@ namespace Restaurant.View.sales
             txt_orderTime.Text = "";
             txt_orderTime.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             path_orderTime.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            #endregion  
+            #region return kitchen button to default
+            txt_kitchen.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            path_kitchen.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             #endregion 
 
             #region enable- disable buttons
