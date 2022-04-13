@@ -59,6 +59,7 @@ namespace Restaurant.Classes
         internal static string invType;
         
 
+        internal static string statusesOfPreparingOrder;
         internal static string dateFormat;
         internal static string accuracy;
         internal static decimal maxDiscount;

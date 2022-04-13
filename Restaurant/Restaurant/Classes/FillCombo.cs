@@ -173,6 +173,21 @@ namespace Restaurant.Classes
             cmb.ItemsSource = typelist;
         }
         #endregion
+        #region fill statuses Of Preparing Order
+
+        static public void FillStatusesOfPreparingOrder(ComboBox cmb)
+        {
+            var typelist = new[] {
+                new { Text = AppSettings.resourcemanager.GetString("directlyPrint")       , Value = "directlyPrint" },
+                new { Text = AppSettings.resourcemanager.GetString("statusesSequence") , Value = "statusesSequence" },
+                 };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = typelist;
+            cmb.SelectedIndex = 0;
+        }
+        #endregion
+        
         #region job
         static public List<keyValueString> UserJobList;
 
