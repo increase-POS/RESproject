@@ -292,7 +292,7 @@ namespace Restaurant.View.windows
         async Task refreshReservationsList()
         {
             reservationsList = await reservation.Get(MainWindow.branchLogin.branchId);
-            reservationsList = reservationsList.Where(x => DateTime.Parse( x.reservationDate.ToString().Split(' ')[0]) >= DateTime.Parse(DateTime.Now.ToString().Split(' ')[0])).ToList();
+            //reservationsList = reservationsList.Where(x => DateTime.Parse( x.reservationDate.ToString().Split(' ')[0]) >= DateTime.Parse(DateTime.Now.ToString().Split(' ')[0])).ToList();
             dg_reservation.ItemsSource = reservationsList;
         }
         #endregion      

@@ -1712,12 +1712,7 @@ namespace Restaurant.View.sales
             await refreshSentToKitchenItems();
             #endregion
 
-            #region enable cancle button if no items sent to kitchen
-            if (kitchenOrders.Count == 0)
-                btn_cancel.IsEnabled = true;
-            else
-                btn_cancel.IsEnabled = false;
-            #endregion
+           
 
             setKitchenNotification();
         }
@@ -1970,6 +1965,13 @@ namespace Restaurant.View.sales
                 index++;
                 sentInvoiceItems.Add(newBillRow);
             }
+
+            #region enable cancle button if no items sent to kitchen
+            if (kitchenOrders.Count == 0)
+                btn_cancel.IsEnabled = true;
+            else
+                btn_cancel.IsEnabled = false;
+            #endregion
         }
 
         private void setKitchenNotification()
@@ -2350,7 +2352,7 @@ namespace Restaurant.View.sales
 
                             #endregion
 
-                            #region customer Info
+                            #region customer membership Info
                             var customer = FillCombo.customersList.Where(x => x.agentId == w.customerId).FirstOrDefault();
                             if (customer.membershipId != null)
                             {
