@@ -144,29 +144,49 @@ namespace Restaurant.View.windows
                 else
                 {
                     sp_membership.Visibility = Visibility.Visible;
+
+                    //txt_membershipInctive
+                    //    membershipStatus
                     #region opacity
                     if (agentToPayCash.membershipStatus == "valid")
                     {
                         sp_membership.Opacity = 1;
-                        grid_membershipInctive.Visibility = Visibility.Collapsed;
+                        // warning expir in 7 days
+                        // شرط ان يكون شهري او سنوي وتعديل حساب الارقام
+                        if ((DateTime.Now.Day + 7) < agentToPayCash.endDate.Value.Day)
+                        {
+                            grid_membershipInctive.Visibility = Visibility.Visible;
+                            TimeSpan expire = agentToPayCash.endDate.Value - DateTime.Now;
+                            double expireDays = Math.Round(expire.TotalDays, MidpointRounding.AwayFromZero);
 
-                        memberShipStatus = "valid";
+                            txt_membershipInctive.Text = AppSettings.resourcemanager.GetString("subscriptionWillBeExpiredIn") + " "
+                                +( (expireDays != 0)? expireDays.ToString() : "this")
+                                + " " + AppSettings.resourcemanager.GetString("trDay");
+                        }
+                        else
+                        {
+                            grid_membershipInctive.Visibility = Visibility.Collapsed;
+                            txt_membershipInctive.Text = "";
+                        }
                     }
                     else
                     {
                         sp_membership.Opacity = 0.4;
                         grid_membershipInctive.Visibility = Visibility.Visible;
 
-
-                        memberShipStatus = "notValid";
+                        if (agentToPayCash.membershipStatus == "notpayed")
+                            memberShipStatus = "notPayed";
+                        else if (agentToPayCash.membershipStatus == "expired")
+                            memberShipStatus = "subscriptionHasExpired";
+                        else
+                            memberShipStatus = "notActive";
 
                     }
                     #endregion
                     #region data context
                     this.DataContext = agentToPayCash;
+
                     #region delivery
-                    //if(agentToPayCash != null)
-                    //{
                     if (agentToPayCash.isFreeDelivery)
                     {
                         tb_deliveryDetails.Text = AppSettings.resourcemanager.GetString("trFree");
@@ -177,11 +197,7 @@ namespace Restaurant.View.windows
                         tb_deliveryDetails.Text = agentToPayCash.deliveryDiscountPercent + " %";
                         deliveryDiscount = agentToPayCash.deliveryDiscountPercent;
                     }
-                    //}
-                    //else
-                    //{
-                    //    tb_deliveryDetails.Text = "0 %";
-                    //}
+             
                     #endregion
                     #endregion
                 }

@@ -167,7 +167,7 @@
                     </StackPanel>
                     <Grid x:Name="grid_membershipInctive" Visibility="Collapsed" Grid.Row="2">
                         <TextBlock     Name="txt_membershipInctive"
-                                Text="{Binding Path=membershipStatus}"
+                                
                                    Margin="10,5,5,5" Foreground="{StaticResource MainColorRed}"
                                    HorizontalAlignment="Center" TextWrapping="Wrap" />
                     </Grid>
