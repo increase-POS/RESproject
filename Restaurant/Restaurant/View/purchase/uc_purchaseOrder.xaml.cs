@@ -202,6 +202,8 @@ namespace Restaurant.View.purchase
             try
             {
                 HelpClass.StartAwait(grid_main);
+                requiredControlList = new List<string> { "vendor" };
+
                 // for pagination
                 MainWindow.mainWindow.KeyDown += HandleKeyPress;
                 if (AppSettings.lang.Equals("en"))
@@ -593,6 +595,12 @@ namespace Restaurant.View.purchase
                                 clearInvoice();
                             else
                                 inputEditable();
+                        }
+                        else
+                        {
+                            
+                            HelpClass.validateEmptyCombo(cb_vendor, p_error_vendor);
+                           
                         }
                     }
                 }

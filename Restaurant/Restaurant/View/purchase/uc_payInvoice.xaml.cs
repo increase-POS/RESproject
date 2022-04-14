@@ -809,6 +809,20 @@ namespace Restaurant.View.purchase
                                 await MainWindow.refreshBalance();
                             }
                         }
+                        else
+                        {
+                            // validate card
+                            if (p_error_card.Visibility == Visibility.Visible)
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectCreditCard"), animation: ToasterAnimation.FadeIn);
+                            }
+                            HelpClass.validateEmptyCombo(cb_vendor, p_error_vendor);
+                            if (p_error_vendor.Visibility == Visibility.Visible || p_error_invoiceNumber.Visibility == Visibility.Visible || p_error_desrvedDate.Visibility == Visibility.Visible)
+                            {
+                                exp_vendor.IsExpanded = true;
+                            }
+                        }
+
                     }
                     else //box is closed
                     {
@@ -933,7 +947,8 @@ namespace Restaurant.View.purchase
                 #region Accept
                 MainWindow.mainWindow.Opacity = 0.2;
                 wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                w.contentText = "Do you want save pay invoice in drafts?";
+                    w.contentText = AppSettings.resourcemanager.GetString("trSaveInvoiceNotification");
+                //w.contentText = "Do you want save pay invoice in drafts?";
                     // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 MainWindow.mainWindow.Opacity = 1;
@@ -955,7 +970,8 @@ namespace Restaurant.View.purchase
                 #region Accept
                 MainWindow.mainWindow.Opacity = 0.2;
                 wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                w.contentText = "Do you want save pay invoice in drafts?";
+                    w.contentText = AppSettings.resourcemanager.GetString("trSaveInvoiceNotification");
+                //w.contentText = "Do you want save pay invoice in drafts?";
                     // w.ShowInTaskbar = false;
                 w.ShowDialog();
                 MainWindow.mainWindow.Opacity = 1;
@@ -1156,6 +1172,7 @@ namespace Restaurant.View.purchase
                 {
                     case 0://cash
                         gd_card.Visibility = Visibility.Collapsed;
+                        p_error_card.Visibility = Visibility.Collapsed;
                         tb_processNum.Clear();
                         _SelectedCard = -1;
                         txt_card.Text = "";
@@ -1165,6 +1182,7 @@ namespace Restaurant.View.purchase
                         break;
                     case 1:// balance
                         gd_card.Visibility = Visibility.Collapsed;
+                        p_error_card.Visibility = Visibility.Collapsed;
                         dp_desrvedDate.IsEnabled = true;
                         tb_processNum.Clear();
                         _SelectedCard = -1;
@@ -1179,6 +1197,7 @@ namespace Restaurant.View.purchase
                         break;
                     case 3://multiple
                         gd_card.Visibility = Visibility.Collapsed;
+                        p_error_card.Visibility = Visibility.Collapsed;
                         tb_processNum.Clear();
                         _SelectedCard = -1;
                         txt_card.Text = "";
