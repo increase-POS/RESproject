@@ -676,7 +676,87 @@ namespace Restaurant.Classes
   
         }
 
+        // Catalog
+        public static void categoryReport(IEnumerable<Category> categoryQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            //foreach (var r in categoryQuery)
+            //{
+            //    r.taxes = decimal.Parse(HelpClass.PercentageDecTostring(r.taxes));
+            //}
+            rep.DataSources.Add(new ReportDataSource("DataSetCategory", categoryQuery));
+            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trCategories")));
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trDetails", AppSettings.resourcemanagerreport.GetString("trDetails")));
+        }
 
+        public static void itemReport(IEnumerable<Item> items, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            itemdata(items, rep, reppath, paramarr);
+
+
+            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trItems")));
+        }
+        public static void FoodReport(IEnumerable<Item> items, LocalReport rep, string reppath, List<ReportParameter> paramarr,string categoryName)
+        {
+            string title = AppSettings.resourcemanagerreport.GetString("trFoods");
+            itemdata(items, rep, reppath, paramarr);
+            if (categoryName == "appetizers")
+            {
+                categoryName= AppSettings.resourcemanagerreport.GetString("trAppetizers");
+            }
+            else if (categoryName == "beverages")
+            {
+                categoryName = AppSettings.resourcemanagerreport.GetString("trBeverages");
+            }
+            else if (categoryName == "fastFood")
+            {
+                categoryName = AppSettings.resourcemanagerreport.GetString("trFastFood");
+            }
+            else if (categoryName == "mainCourses")
+            {
+                categoryName = AppSettings.resourcemanagerreport.GetString("trMainCourses"); ;
+            }
+            else if (categoryName == "desserts")
+            {
+                categoryName = AppSettings.resourcemanagerreport.GetString("trDesserts");
+            }
+            title = title + " / " + categoryName;
+
+            paramarr.Add(new ReportParameter("Title", title));
+
+        }
+        public static void itemdata(IEnumerable<Item> items, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            //foreach (Item r in _items)
+            //{
+            //    r.taxes = decimal.Parse(HelpClass.DecTostring(r.taxes));
+            //}
+            rep.DataSources.Add(new ReportDataSource("DataSetItem", items));
+         
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trDetails", AppSettings.resourcemanagerreport.GetString("trDetails")));
+            paramarr.Add(new ReportParameter("trCategory", AppSettings.resourcemanagerreport.GetString("trCategorie")));
+        }
+        public static void unitReport(IEnumerable<Unit> unitQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            rep.DataSources.Add(new ReportDataSource("DataSetUnit", unitQuery));
+            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trUnits")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trUnitName")));
+            paramarr.Add(new ReportParameter("trNotes", AppSettings.resourcemanagerreport.GetString("trNote")));
+
+        }
+        //
         public static void LocationsReport(IEnumerable<Location> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             rep.ReportPath = reppath;
@@ -2037,21 +2117,7 @@ Parameters!trValueDiscount.Value)
 
 
         }
-        public static void categoryReport(IEnumerable<Category> categoryQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
-        {
-            rep.ReportPath = reppath;
-            rep.EnableExternalImages = true;
-            rep.DataSources.Clear();
-            foreach (var r in categoryQuery)
-            {
-                r.taxes = decimal.Parse(HelpClass.DecTostring(r.taxes));
-            }
-            rep.DataSources.Add(new ReportDataSource("DataSetCategory", categoryQuery));
-            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trCategories")));
-            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
-            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
-            paramarr.Add(new ReportParameter("trDetails", AppSettings.resourcemanagerreport.GetString("trDetails")));
-        }
+ 
         //public static void itemReport(IEnumerable<Item> itemQuery, LocalReport rep, string reppath)
         //{
         //    rep.ReportPath = reppath;
@@ -2060,22 +2126,7 @@ Parameters!trValueDiscount.Value)
         //    rep.DataSources.Add(new ReportDataSource("DataSetItem", itemQuery));
 
         //}
-        public static void itemReport(IEnumerable<Item> itemQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
-        {
-            rep.ReportPath = reppath;
-            rep.EnableExternalImages = true;
-            rep.DataSources.Clear();
-            foreach (var r in itemQuery)
-            {
-                r.taxes = decimal.Parse(HelpClass.DecTostring(r.taxes));
-            }
-            rep.DataSources.Add(new ReportDataSource("DataSetItem", itemQuery));
-            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trItems")));
-            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
-            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
-            paramarr.Add(new ReportParameter("trDetails", AppSettings.resourcemanagerreport.GetString("trDetails")));
-            paramarr.Add(new ReportParameter("trCategory", AppSettings.resourcemanagerreport.GetString("trCategorie")));
-        }
+      
         //public static void properyReport(IEnumerable<Property> propertyQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         //{
         //    rep.ReportPath = reppath;
@@ -2102,17 +2153,7 @@ Parameters!trValueDiscount.Value)
             paramarr.Add(new ReportParameter("trCost", AppSettings.resourcemanagerreport.GetString("trStorageCost")));
 
         }
-        public static void unitReport(IEnumerable<Unit> unitQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
-        {
-            rep.ReportPath = reppath;
-            rep.EnableExternalImages = true;
-            rep.DataSources.Clear();
-            rep.DataSources.Add(new ReportDataSource("DataSetUnit", unitQuery));
-            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trUnit")));
-            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trUnitName")));
-            paramarr.Add(new ReportParameter("trNotes", AppSettings.resourcemanagerreport.GetString("trNote")));
-
-        }
+  
         public static void inventoryReport(IEnumerable<InventoryItemLocation> invItemsLocations, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             rep.ReportPath = reppath;

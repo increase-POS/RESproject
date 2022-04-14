@@ -1992,6 +1992,26 @@
     <Content Include="Reports\Storage\movementsOperations\En\EnMovement.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\Catalog\Ar\ArCategory.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Catalog\Ar\ArItem.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Catalog\Ar\ArUnit.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Catalog\En\EnCategory.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Catalog\En\EnItem.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Catalog\En\EnUnit.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Reports\Catalog\Ar\ArFood.rdlc" />
+    <EmbeddedResource Include="Reports\Catalog\En\EnFood.rdlc" />
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Resource Include="pic\programs-Rest-login-bg.png" />
@@ -2267,9 +2287,11 @@
     <None Include="Properties\DataSources\Restaurant.Classes.CashTransfer.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.CashTransfer1.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.CashTransferSts.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.Category.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Coupon.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ErrorClass.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Invoice.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.Item.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemLocation.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemTransfer2.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemUnitInvoiceProfit.datasource" />
@@ -2279,6 +2301,7 @@
     <None Include="Properties\DataSources\Restaurant.Classes.ResidentialSectors.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Section.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.StorageCost.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.Unit.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.User.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
