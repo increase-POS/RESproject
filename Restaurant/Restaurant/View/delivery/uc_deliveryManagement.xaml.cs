@@ -51,7 +51,7 @@ namespace Restaurant.View.delivery
             }
         }
 
-        string basicsPermission = "reservationsUpdate_basics";
+        string updatePermission = "deliveryManagement_update";
         IEnumerable<Invoice> orders;
         IEnumerable<User> drivers;
         User userModel = new User();
@@ -324,7 +324,7 @@ namespace Restaurant.View.delivery
         {//save
             try
             {
-                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add"))
+                if (FillCombo.groupObject.HasPermissionAction(updatePermission, FillCombo.groupObjects, "one"))
                 {
                     HelpClass.StartAwait(grid_main);
 
@@ -400,8 +400,8 @@ namespace Restaurant.View.delivery
                     
                     HelpClass.EndAwait(grid_main);
                 }
-                //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
             }
             catch (Exception ex)

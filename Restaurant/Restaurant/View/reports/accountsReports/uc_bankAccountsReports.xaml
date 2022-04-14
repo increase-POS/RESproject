@@ -311,7 +311,7 @@
                                               Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                               materialDesign:HintAssist.Hint="Bank ...."
                                               Foreground="#4E4E4E" 
-                                              TextBlock.FontSize="12"
+                                              
                                               Background="#f8f8f8"
                                               BorderBrush="AliceBlue"
                                               BorderThickness="0,0,0,2" 
@@ -335,7 +335,7 @@
                                               Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                               materialDesign:HintAssist.Hint="User ...."
                                               Foreground="#4E4E4E" 
-                                              TextBlock.FontSize="12"
+                                              
                                               Background="#f8f8f8"
                                               BorderBrush="AliceBlue"
                                               BorderThickness="0,0,0,2" 
@@ -403,7 +403,7 @@
                                               Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                               materialDesign:HintAssist.Hint="Acountant ...."
                                               Foreground="#4E4E4E" 
-                                              TextBlock.FontSize="12"
+                                              
                                               Background="#f8f8f8"
                                               BorderBrush="AliceBlue"
                                               BorderThickness="0,0,0,2" 

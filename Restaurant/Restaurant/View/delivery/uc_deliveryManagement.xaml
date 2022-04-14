@@ -480,7 +480,7 @@
                                       Grid.Column="1" Height="40"   
                                       BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
                                       LostFocus="validateEmpty_LostFocus" />
-                            <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5" Name="p_error_userId"
+                                <Path Fill="#E81123" Stretch="Fill" Margin="5,5,20,5" Name="p_error_userId"
                                   HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                                   VerticalAlignment="Center" Width="15"  Height="15"
                                   Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52

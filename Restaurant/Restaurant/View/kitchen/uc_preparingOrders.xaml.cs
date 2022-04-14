@@ -201,7 +201,7 @@ namespace Restaurant.View.kitchen
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (FillCombo.groupObject.HasPermissionAction(updatePermission, FillCombo.groupObjects, "add"))
+                if (FillCombo.groupObject.HasPermissionAction(updatePermission, FillCombo.groupObjects, "one"))
                 {
                     if (HelpClass.validate(requiredControlList, this))
                     {

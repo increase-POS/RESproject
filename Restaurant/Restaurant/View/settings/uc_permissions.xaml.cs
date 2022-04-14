@@ -210,6 +210,7 @@ namespace Restaurant.View.settings
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
+                                group.groupId = s;
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
 
@@ -217,8 +218,8 @@ namespace Restaurant.View.settings
                                 Clear();
 
                                 await RefreshGroupsList();
-                                await Search();
                                 await RefreshGroupObjectList();
+                                await Search();
                             }
                         }
                     }

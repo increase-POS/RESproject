@@ -28,6 +28,11 @@ namespace Restaurant.View.delivery
         User driver = new User();
         string searchText = "";
         byte tgl_driverState;
+
+        string viewPermission = "driversManagement_view";
+        string residentialSectorsPermission = "driversManagement_residentialSectors";
+        string activateDriverPermission = "driversManagement_activateDriver";
+
         private static uc_driversManagement _instance;
 
         public static uc_driversManagement Instance
@@ -279,7 +284,7 @@ namespace Restaurant.View.delivery
             try
             {
                 HelpClass.StartAwait(grid_main);
-                //if (FillCombo.groupObject.HasPermissionAction(storesPermission, FillCombo.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(residentialSectorsPermission, FillCombo.groupObjects, "one"))
                 {
                     Window.GetWindow(this).Opacity = 0.2;
 
@@ -291,8 +296,8 @@ namespace Restaurant.View.delivery
 
                     await refreshDriverSectors();
                 }
-                //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -307,7 +312,7 @@ namespace Restaurant.View.delivery
             try
             {
                 HelpClass.StartAwait(grid_main);
-                //if (FillCombo.groupObject.HasPermissionAction(storesPermission, FillCombo.groupObjects, "one"))
+                if (FillCombo.groupObject.HasPermissionAction(activateDriverPermission, FillCombo.groupObjects, "one"))
                 {
                     string resultStr = "";
                     if (driver.driverIsAvailable == 0)
@@ -332,8 +337,8 @@ namespace Restaurant.View.delivery
                         dg_user.SelectedIndex = selectedDriver;
                     }
                 }
-                //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
