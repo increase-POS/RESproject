@@ -266,6 +266,14 @@ namespace Restaurant.converters
                         {
                             value = AppSettings.resourcemanager.GetString("trDelete");
                         }
+                         else if (value.ToString().Contains("_residentialSectors"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("trResidentialSectors");
+                        }
+                         else if (value.ToString().Contains("_activateDriver"))
+                        {
+                            value = AppSettings.resourcemanager.GetString("activateDriver");
+                        }
                         break;
                     }
             }
