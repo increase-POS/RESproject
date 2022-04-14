@@ -1033,10 +1033,10 @@ namespace Restaurant.View.windows
                             if (res > 0)
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                                await refreshReservationsList();
-                                await refreshTablesList();
-                                Search();
-                                await showDetails();
+                                //await refreshReservationsList();
+                                //await refreshTablesList();
+                                //Search();
+                                //await showDetails();
                                 isOk = true;
                                 this.Close();
                             }
@@ -1080,10 +1080,10 @@ namespace Restaurant.View.windows
                             if (res > 0)
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                                await refreshReservationsList();
-                                await refreshTablesList();
-                                Search();
-                                await showDetails();
+                                //await refreshReservationsList();
+                                //await refreshTablesList();
+                                //Search();
+                                //await showDetails();
                                 isOk = true;
                                 this.Close();
                             }
@@ -1131,8 +1131,10 @@ namespace Restaurant.View.windows
             #region table object
             List<Tables> invTables = new List<Tables>();
             invTables.Add(table);
+            selectedTables = invTables;
             #endregion
-            int res = await FillCombo.invoice.saveInvoiceWithTables(invoice, invTables); 
+            int res = await FillCombo.invoice.saveInvoiceWithTables(invoice, invTables);
+            invoice.invoiceId = res;
             return res;
         }
         private async Task<int> openInvoiceForReserve()
@@ -1159,8 +1161,10 @@ namespace Restaurant.View.windows
             #region table object
             List<Tables> invTables = new List<Tables>();
             invTables.AddRange(nextReservation.tables);
+            selectedTables = invTables;
             #endregion
             int res = await FillCombo.invoice.saveInvoiceWithTables(invoice, invTables);
+            invoice.invoiceId = res;
             return res;
         }
         private async void Btn_open_Click(object sender, RoutedEventArgs e)
@@ -1174,9 +1178,9 @@ namespace Restaurant.View.windows
                     if (res > 0)
                     {
                         Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                        await refreshTablesList();
-                        Search();
-                        await showDetails();
+                       // await refreshTablesList();
+                        //Search();
+                        //await showDetails();
                         isOk = true;
                         this.Close();
                     }
