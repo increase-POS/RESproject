@@ -3838,4 +3838,25 @@
   <data name="duration" xml:space="preserve">
     <value>المدة الزمنية</value>
   </data>
+  <data name="activateDriver" xml:space="preserve">
+    <value>تفعيل السائق</value>
+  </data>
+  <data name="notActive" xml:space="preserve">
+    <value>غير فعال</value>
+  </data>
+  <data name="notPayed" xml:space="preserve">
+    <value>غير مدفوع</value>
+  </data>
+  <data name="subscriptionHasExpired" xml:space="preserve">
+    <value>صلاحية الاشتراك منتهية</value>
+  </data>
+  <data name="subscriptionWillBeExpiredIn" xml:space="preserve">
+    <value>ستنتهي صلاحية الاشتراك في</value>
+  </data>
+  <data name="this" xml:space="preserve">
+    <value>هذا</value>
+  </data>
+  <data name="trExpiredS" xml:space="preserve">
+    <value>منتهي الصلاحية</value>
+  </data>
 </root>

@@ -3862,4 +3862,22 @@ Please add Email in setting</value>
   <data name="duration" xml:space="preserve">
     <value>Duration</value>
   </data>
+  <data name="activateDriver" xml:space="preserve">
+    <value>Activate driver</value>
+  </data>
+  <data name="notActive" xml:space="preserve">
+    <value>Not active</value>
+  </data>
+  <data name="notPayed" xml:space="preserve">
+    <value>not payed</value>
+  </data>
+  <data name="subscriptionHasExpired" xml:space="preserve">
+    <value>Subscription has expired</value>
+  </data>
+  <data name="subscriptionWillBeExpiredIn" xml:space="preserve">
+    <value>Subscription will  be expired in</value>
+  </data>
+  <data name="this" xml:space="preserve">
+    <value>this</value>
+  </data>
 </root>
