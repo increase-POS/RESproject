@@ -389,7 +389,7 @@
                                          Text="{Binding minInvoiceValue, Mode=OneWay}"
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="inv min..."    
-                                        Foreground="#4E4E4E"  TextBlock.FontSize="12"  
+                                        Foreground="#4E4E4E"    
                                      BorderThickness="0" Tag="decimal"
                                  BorderBrush="AliceBlue" MaxLength="100" PreviewTextInput="Number_PreviewTextInput"
                                 materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
@@ -408,7 +408,7 @@
                                          Text="{Binding maxInvoiceValue, Mode=OneWay}"
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="inv max..."    
-                                        Foreground="#4E4E4E"  TextBlock.FontSize="12"  
+                                        Foreground="#4E4E4E"    
                                      BorderThickness="0" Tag="decimal"
                                  BorderBrush="AliceBlue" MaxLength="100" PreviewTextInput="Number_PreviewTextInput"
                                 materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
@@ -452,7 +452,7 @@
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                    Grid.Column="0" Height="40"  Margin="4,0"
                                   BorderBrush="#737373" BorderThickness="0"  />
-                                    <Path Fill="#E81123" x:Name="p_error_discountType" Stretch="Fill" Margin="5,5,15,5"
+                                    <Path Fill="#E81123" x:Name="p_error_discountType" Stretch="Fill" Margin="5,5,20,5"
                               HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15" 
                              Data="{StaticResource infoCircle}"/>

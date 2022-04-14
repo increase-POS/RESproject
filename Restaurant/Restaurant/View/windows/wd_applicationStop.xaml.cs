@@ -213,7 +213,7 @@ namespace Restaurant.View.windows
             if (name == "ComboBox")
             {
                 if ((sender as ComboBox).Name == "cb_pos")
-                    validateEmptyComboBox((ComboBox)sender, p_errorPos, tt_errorPos, "trErrorEmptyPosToolTip");
+                    validateEmptyComboBox((ComboBox)sender, p_error_pos, tt_errorPos, "trErrorEmptyPosToolTip");
             }
         }
          private void validateEmptyComboBox(ComboBox cb, Path p_error, ToolTip tt_error, string tr)
@@ -379,7 +379,7 @@ namespace Restaurant.View.windows
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trZeroBalance"), animation: ToasterAnimation.FadeIn);
                 return false;
             }
-            HelpClass.clearValidate(p_errorPos);
+            HelpClass.clearValidate(p_error_pos);
             if (cb_pos.SelectedIndex == -1)
                 return false;
             return true;

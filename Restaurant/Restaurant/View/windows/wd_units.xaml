@@ -232,7 +232,7 @@
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                   materialDesign:HintAssist.Hint="Select Unit..."  
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                  TextBlock.FontSize="12"  
+                                    
                                   Grid.Column="0" Height="40"  Margin="4,0"
                                   BorderBrush="#737373" BorderThickness="0"
                                   SelectionChanged="Cb_unitId_SelectionChanged"/>
@@ -280,7 +280,7 @@
                                          Text="{Binding unitValue, Mode=OneWay}"
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="Count..."    
-                           Foreground="#4E4E4E"  TextBlock.FontSize="12"  
+                           Foreground="#4E4E4E"    
                                      BorderThickness="0"
                                  BorderBrush="AliceBlue" MaxLength="100"  Tag="int" PreviewTextInput="Number_PreviewTextInput"
                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
@@ -299,7 +299,7 @@
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                   materialDesign:HintAssist.Hint="unit..."  
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                  TextBlock.FontSize="12"  
+                                    
                                   Grid.Column="0" Height="40"  Margin="4,0"
                                   BorderBrush="#737373" BorderThickness="0"
                                   SelectionChanged="Cb_subUnitId_SelectionChanged"/>
@@ -319,7 +319,7 @@
                                          Text="{Binding price, Mode=OneWay}"
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="price..."    
-                           Foreground="#4E4E4E"  TextBlock.FontSize="12"  
+                           Foreground="#4E4E4E"    
                                      BorderThickness="0"
                                  BorderBrush="AliceBlue" MaxLength="100" Tag="decimal" PreviewTextInput="Number_PreviewTextInput"
                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
@@ -338,7 +338,7 @@
                                          Text="{Binding barcode, Mode=OneWay}"
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="barcode..."    
-                           Foreground="#4E4E4E"  TextBlock.FontSize="12"  
+                           Foreground="#4E4E4E"    
                                      BorderThickness="0"
                                  BorderBrush="AliceBlue" MaxLength="100"  Tag="int" PreviewTextInput="Number_PreviewTextInput"
                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"

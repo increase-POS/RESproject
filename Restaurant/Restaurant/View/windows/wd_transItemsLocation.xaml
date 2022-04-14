@@ -81,6 +81,8 @@
                             <DataGridCheckBoxColumn.ElementStyle>
                                 <Style
                                         TargetType="CheckBox">
+                                    <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
                                     <EventSetter
                                             Event="CheckBox.Checked"
                                             Handler="FieldDataGridChecked" />

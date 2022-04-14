@@ -258,7 +258,7 @@
                                          materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" 
                                         Tag="int" PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
                                          />
-                                        <Path Fill="#E81123" Stretch="Fill" Margin="0,25,5,15" x:Name="p_error_printCount"
+                                        <Path Fill="#E81123" Stretch="Fill" Margin="5 5 15 5" x:Name="p_error_printCount"
                                   HorizontalAlignment="Right"  Grid.Row="0"  Visibility="Collapsed" 
                                   VerticalAlignment="Center" Width="15"  Height="15"
                                  Data="{StaticResource infoCircle}"/>
@@ -340,8 +340,8 @@
                                     materialDesign:HintAssist.Hint="printHeader..."  
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                                   FontFamily="{StaticResource Font-cairo-light}" />
-                                        <Path Fill="#E81123" Stretch="Fill" Margin="0,25,5,15" x:Name="p_error_printHeader"
-                                  HorizontalAlignment="Right"  Grid.Row="0"  Visibility="Collapsed" 
+                                        <Path Fill="#E81123" Stretch="Fill" Margin="5 5 20 5" x:Name="p_error_printHeader"
+                                  HorizontalAlignment="Right"  Grid.Row="0"  Visibility="Visible" 
                                   VerticalAlignment="Center" Width="15"  Height="15"
                                  Data="{StaticResource infoCircle}"/>
                                     </Grid>

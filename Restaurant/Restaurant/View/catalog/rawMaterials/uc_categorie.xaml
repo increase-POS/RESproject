@@ -492,7 +492,7 @@
                                          Text="{Binding taxes, Mode=OneWay}"
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="tax..."    
-                           Foreground="#4E4E4E"  TextBlock.FontSize="12"  
+                           Foreground="#4E4E4E"    
                                      BorderThickness="0" Tag="decimal"
                                  BorderBrush="AliceBlue" MaxLength="100" 
                                  PreviewTextInput="Number_PreviewTextInput"

@@ -481,7 +481,7 @@
                                          Text="{Binding preparingTime, Mode=OneWay}"
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="preparing time..."    
-                           Foreground="#4E4E4E"  TextBlock.FontSize="12"  
+                           Foreground="#4E4E4E"    
                                      BorderThickness="0" Tag="int"
                                  BorderBrush="AliceBlue" MaxLength="100" PreviewTextInput="Number_PreviewTextInput"
                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"

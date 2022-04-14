@@ -411,7 +411,7 @@
                                       KeyUp="Cb_customerId_KeyUp" IsEditable="True" 
                                       LostFocus="validateEmpty_LostFocus" 
                                       SelectionChanged="Cb_customerId_SelectionChanged" />
-                            <Path Fill="#E81123" Stretch="Fill" Margin="5,5,25,5"
+                                <Path Fill="#E81123" Stretch="Fill" Margin="5,5,20,5"
                                   Name="p_error_customerId"
                                   HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                                   VerticalAlignment="Center" Width="15"  Height="15"
@@ -451,12 +451,11 @@
                                       Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                       materialDesign:HintAssist.Hint="months count..."  
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                      TextBlock.FontSize="12"  
                                       Grid.Column="0" Height="40"  Margin="4,0"
                                       BorderBrush="#737373" BorderThickness="0"  
                                       LostFocus="validateEmpty_LostFocus" 
                                       SelectionChanged="Cb_monthsCount_SelectionChanged"/>
-                            <Path Fill="#E81123" x:Name="p_error_monthsCount" Stretch="Fill" Margin="5,5,25,5"
+                                <Path Fill="#E81123" x:Name="p_error_monthsCount" Stretch="Fill" Margin="5,5,20,5"
                                   HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
                                   VerticalAlignment="Center" Width="15"  Height="15" 
                                   Data="{StaticResource infoCircle}"/>
@@ -515,7 +514,7 @@
                                           LostFocus="validateEmpty_LostFocus"
                                           SelectionChanged="Cb_paymentProcessType_SelectionChanged" >
                                 </ComboBox>
-                                <Path Fill="#E81123" x:Name="p_error_paymentProcessType" Stretch="Fill" Margin="5,5,25,5"
+                                    <Path Fill="#E81123" x:Name="p_error_paymentProcessType" Stretch="Fill" Margin="5,5,20,5"
                                       HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                                       VerticalAlignment="Center" Width="15"  Height="15"
                                       Data="{StaticResource infoCircle}"/>
@@ -552,7 +551,7 @@
                                         Padding="10,0,5,0" Visibility="Collapsed" 
                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                         materialDesign:HintAssist.Hint="Doc date..."  
-                                        Foreground="#4E4E4E"  TextBlock.FontSize="12"  Background="#f8f8f8"                                    
+                                        Foreground="#4E4E4E"    Background="#f8f8f8"                                    
                                         Height="40"  Margin="5,5,5,5" 
                                         LostFocus="validateEmpty_LostFocus">
                                     <DatePicker.ToolTip>
@@ -612,7 +611,7 @@
                                              PreviewTextInput="Code_PreviewTextInput" 
                                              TextChanged="ValidateEmpty_TextChange"
                                              materialDesign:HintAssist.Hint="Process Number..."  
-                                             Foreground="#4E4E4E"  TextBlock.FontSize="12"
+                                             Foreground="#4E4E4E"  
                                              Background="#f8f8f8" BorderBrush="#f8f8f8" />
                                     <Path Grid.Row="1" x:Name="p_error_processNum" Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
                                           HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   

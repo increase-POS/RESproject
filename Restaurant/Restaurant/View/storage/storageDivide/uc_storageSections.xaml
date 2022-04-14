@@ -411,7 +411,7 @@
                                       TextBlock.Foreground="#4E4E4E"
                                          Margin="4,0"
                                       materialDesign:HintAssist.Hint="Store/Branch..."    
-                                      TextBlock.FontSize="12" 
+                                       
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                     Padding="10,0,5,0" 
                                       Height="40" 

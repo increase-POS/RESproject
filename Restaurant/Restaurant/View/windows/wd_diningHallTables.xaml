@@ -109,7 +109,7 @@
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                   materialDesign:HintAssist.Hint="Section..."  
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                  TextBlock.FontSize="12"  
+                                    
                                   Grid.Column="0" Height="40"  Margin="4,0"
                                   BorderBrush="#737373" BorderThickness="0" 
                                    SelectionChanged="Cb_search_SelectionChanged"/>
@@ -130,7 +130,7 @@
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                   materialDesign:HintAssist.Hint="Status..."  
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                  TextBlock.FontSize="12"  
+                                    
                                   Grid.Column="0" Height="40"  Margin="4,0"
                                   BorderBrush="#737373" BorderThickness="0" 
                                           SelectionChanged="Cb_search_SelectionChanged"/>

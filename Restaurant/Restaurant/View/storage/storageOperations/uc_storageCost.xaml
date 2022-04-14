@@ -409,7 +409,7 @@
                                          Text="{Binding cost, Mode=OneWay}"
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="cost..."    
-                           Foreground="#4E4E4E"  TextBlock.FontSize="12"  
+                           Foreground="#4E4E4E"    
                                      BorderThickness="0"
                                  BorderBrush="AliceBlue" MaxLength="100" Tag="decimal" PreviewTextInput="Number_PreviewTextInput"
                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"

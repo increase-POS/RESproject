@@ -476,7 +476,7 @@
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                    Grid.Column="0" Height="40"  Margin="4,0"
                                   BorderBrush="#737373" BorderThickness="0"  />
-                                <Path Fill="#E81123" x:Name="p_error_forAgents" Stretch="Fill" Margin="5,5,15,5"
+                                <Path Fill="#E81123" x:Name="p_error_forAgents" Stretch="Fill" Margin="5,5,20,5"
                               HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15" 
                              Data="{StaticResource infoCircle}"/>
@@ -526,7 +526,7 @@
                                           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                           Grid.Column="0" Height="40"  Margin="4,0"
                                           BorderBrush="#737373" BorderThickness="0"  />
-                                <Path Fill="#E81123" x:Name="p_error_discountType" Stretch="Fill" Margin="5,5,15,5"
+                                    <Path Fill="#E81123" x:Name="p_error_discountType" Stretch="Fill" Margin="5,5,20,5"
                                       HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
                                       VerticalAlignment="Center" Width="15"  Height="15" 
                              Data="{StaticResource infoCircle}"/>

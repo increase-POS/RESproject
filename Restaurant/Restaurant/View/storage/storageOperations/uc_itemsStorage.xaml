@@ -494,7 +494,7 @@
                                          Text="{Binding quantity, Mode=OneWay}"
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="quantity..."    
-                           Foreground="#4E4E4E"  TextBlock.FontSize="12"  
+                           Foreground="#4E4E4E"    
                                      BorderThickness="0"  Tag="int"
                                  BorderBrush="AliceBlue" MaxLength="100" PreviewTextInput="Number_PreviewTextInput"
                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
@@ -514,7 +514,7 @@
                                       TextBlock.Foreground="#4E4E4E"
                                          Margin="4,0"
                                       materialDesign:HintAssist.Hint="section..."    
-                                      TextBlock.FontSize="12" 
+                                       
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                     Padding="10,0,5,0" 
                                       Height="40" 
@@ -536,7 +536,7 @@
                                       TextBlock.Foreground="#4E4E4E"
                                          Margin="4,0"
                                       materialDesign:HintAssist.Hint="X Y Z..."    
-                                      TextBlock.FontSize="12" 
+                                       
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                     Padding="10,0,5,0" 
                                       Height="40" 

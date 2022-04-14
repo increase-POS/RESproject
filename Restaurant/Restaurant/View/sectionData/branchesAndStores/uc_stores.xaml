@@ -451,7 +451,7 @@
                                       TextBlock.Foreground="#4E4E4E"
                                          Margin="4,0"
                                       materialDesign:HintAssist.Hint="Parent Branch..."    
-                                      TextBlock.FontSize="12" 
+                                       
                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
                                     Padding="10,0,5,0" 
                                       Height="40" 
@@ -486,7 +486,7 @@
                             <Grid   >
                                 <ComboBox   x:Name="cb_areaMobile" Padding="10,0,5,0" 
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"  
-                                          TextBlock.Foreground="#4E4E4E"  TextBlock.FontSize="12" Margin="4,0"
+                                          TextBlock.Foreground="#4E4E4E"   Margin="4,0"
                                           VerticalAlignment="Center" BorderThickness="0"
                                           Height="40" Width="60"    />
                             </Grid>
