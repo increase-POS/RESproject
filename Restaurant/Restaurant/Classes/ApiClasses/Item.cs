@@ -179,11 +179,12 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<List<Item>> GetAllSalesItemsInv(string day)
+        public async Task<List<Item>> GetAllSalesItemsInv(string day, int membershipId =0)
         {
             List<Item> items = new List<Item>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("day", day);
+            parameters.Add("membershipId", membershipId.ToString());
 
             IEnumerable<Claim> claims = await APIResult.getList("items/GetAllSalesItemsInv",parameters);
 

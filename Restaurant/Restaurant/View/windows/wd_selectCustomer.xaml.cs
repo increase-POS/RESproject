@@ -66,6 +66,7 @@ namespace Restaurant.View.windows
         public bool isOk { get; set; }
         public int customerId { get; set; }
         public decimal deliveryDiscount { get; set; }
+        public bool hasOffers { get; set; }
 
         public string memberShipStatus;
 
@@ -185,7 +186,8 @@ namespace Restaurant.View.windows
                     #endregion
                     #region data context
                     this.DataContext = agentToPayCash;
-
+                    if (agentToPayCash.offersCount > 0)
+                        hasOffers = true;
                     #region delivery
                     if (agentToPayCash.isFreeDelivery)
                     {

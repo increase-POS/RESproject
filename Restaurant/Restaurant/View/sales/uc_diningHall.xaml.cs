@@ -247,6 +247,8 @@ namespace Restaurant.View.sales
                 btn_delivery.Visibility = Visibility.Visible;
                 btn_orderTime.Visibility = Visibility.Visible;
 
+                btn_customer.IsEnabled = true;
+
                 refreshDraftNotification();
 
                 if(invoice.invType == "ssd") // transfer  self service draft to take away draft
@@ -267,6 +269,8 @@ namespace Restaurant.View.sales
                 btn_delivery.Visibility = Visibility.Visible;
                 btn_orderTime.Visibility = Visibility.Visible;
                 btn_tables.Visibility = Visibility.Visible;
+
+                btn_customer.IsEnabled = true;
 
                 refreshDraftNotification();
                 if (invoice.invType == "tsd") // transfer take away  draft to self service draft
@@ -414,7 +418,7 @@ namespace Restaurant.View.sales
         {
             DateTime dt = DateTime.Now;
             string day = dt.DayOfWeek.ToString();
-           items = await FillCombo.item.GetAllSalesItemsInv(day.ToLower());
+           items = await FillCombo.item.GetAllSalesItemsInv(day.ToLower(), _MemberShipId);
         }
         #endregion
         #region Pagination Y
@@ -1395,7 +1399,7 @@ namespace Restaurant.View.sales
             catch { }
         }
         #endregion
-        #region adddraft - addInvoice - cancleInvoice - clear - table names - fillInvoiceInputs - validate invoice values
+        #region adddraft - addInvoice - cancleInvoice - clear - table names - fillInvoiceInputs - validate invoice values - refresh items price
         private async Task<int> addDraft()
         {
             int res = 0;
@@ -1526,7 +1530,7 @@ namespace Restaurant.View.sales
 
             }
         }
-        void clear()
+        async Task clear()
         {
             _InvoiceType = "sd";
             txt_tableName.Text = "";
@@ -1536,6 +1540,7 @@ namespace Restaurant.View.sales
             _ManualDiscount = 0;
             _invoiceClassDiscount = 0;
             _DeliveryDiscount = 0;
+            _MemberShipId = 0;
             _DiscountType = "";
             selectedCopouns.Clear() ;
             selectedTables.Clear();
@@ -1580,6 +1585,7 @@ namespace Restaurant.View.sales
             #endregion
             //last
             changeInvType();
+            await refreshItemsList();
             BuildBillDesign();
             refreshTotal();
         }
@@ -1618,6 +1624,31 @@ namespace Restaurant.View.sales
                 await fillTakeAwayInv();
             else if (AppSettings.invType == "selfService")
                 await fillSelfServiceInv();
+
+            #region inv items
+            invoiceItems = await FillCombo.invoice.GetInvoicesItems(invoice.invoiceId);
+            billDetailsList = new ObservableCollection<BillDetailsSales>();
+            fillInvoiceItems();
+            #endregion
+        }
+        private void fillInvoiceItems()
+        {
+            
+            foreach (ItemTransfer it in invoiceItems)
+            {
+                item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
+                addRowToBill(item, it.quantity);
+            }
+        }
+        private void refreshItemsPrice()
+        {
+            var tempBill = billDetailsList.ToList();
+            billDetailsList = new ObservableCollection<BillDetailsSales>();
+            foreach (BillDetailsSales it in tempBill)
+            {
+                item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
+                addRowToBill(item, it.Count);
+            }
         }
         async Task fillDiningHallInv()
         {
@@ -1695,14 +1726,7 @@ namespace Restaurant.View.sales
             #endregion
 
             #region invoice items
-            invoiceItems = await FillCombo.invoice.GetInvoicesItems(invoice.invoiceId);
-            billDetailsList = new ObservableCollection<BillDetailsSales>();
-            BuildBillDesign();
-            foreach (ItemTransfer it in invoiceItems)
-            {
-                item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
-                addRowToBill(item, it.quantity);
-            }
+            BuildBillDesign();           
 
             if (invoiceItems.Count == 0)
                 btn_cancel.IsEnabled = true;
@@ -1810,15 +1834,8 @@ namespace Restaurant.View.sales
             #endregion
 
             #region invoice items
-            invoiceItems = await FillCombo.invoice.GetInvoicesItems(invoice.invoiceId);
-            billDetailsList = new ObservableCollection<BillDetailsSales>();
             BuildBillDesign();
-            foreach (ItemTransfer it in invoiceItems)
-            {
-                item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
-                addRowToBill(item, it.quantity);
-            }
-
+           
             #endregion
         }
         async Task fillSelfServiceInv()
@@ -1922,14 +1939,7 @@ namespace Restaurant.View.sales
             #endregion
 
             #region invoice items
-            invoiceItems = await FillCombo.invoice.GetInvoicesItems(invoice.invoiceId);
-            billDetailsList = new ObservableCollection<BillDetailsSales>();
-            BuildBillDesign();
-            foreach (ItemTransfer it in invoiceItems)
-            {
-                item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
-                addRowToBill(item, it.quantity);
-            }
+            BuildBillDesign();      
 
             #endregion
         }
@@ -2361,9 +2371,22 @@ namespace Restaurant.View.sales
                                 if (w.memberShipStatus == "valid")
                                 {
                                     customerInvClasses = await invoiceMemberShipClass.GetInvclassByMembershipId(_MemberShipId);
-                                   
+
                                 }
                             }
+                            else
+                                _MemberShipId = 0;
+
+                            #region refresh items with new pricel
+                            if (w.hasOffers)
+                            {
+                                await refreshItemsList();
+                                Search();
+                                refreshItemsPrice();
+                                //BuildBillDesign();
+                            }
+                            #endregion
+
                             #endregion
                             #region update invoice
                             invoice.agentId = w.customerId;
@@ -2394,6 +2417,7 @@ namespace Restaurant.View.sales
                         {
                         // return button content to default
                         _DeliveryDiscount = 0;
+                        _MemberShipId = 0;
                             txt_customer.Text = "";
                         // return foreground color to default
                         txt_customer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
