@@ -430,11 +430,17 @@
     <Compile Include="View\reports\accountsReports\uc_taxAccountsReports.xaml.cs">
       <DependentUpon>uc_taxAccountsReports.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\reports\kitchenReports\uc_consumptionKitchenReports.xaml.cs">
+      <DependentUpon>uc_consumptionKitchenReports.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\reports\kitchenReports\uc_kitchenReports.xaml.cs">
       <DependentUpon>uc_kitchenReports.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\reports\kitchenReports\uc_preparingOrdersKitchenReports.xaml.cs">
       <DependentUpon>uc_preparingOrdersKitchenReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\reports\kitchenReports\uc_spendingRequestsKitchenReport.xaml.cs">
+      <DependentUpon>uc_spendingRequestsKitchenReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\reports\purchaseReports\uc_invoicePurchaseReports.xaml.cs">
       <DependentUpon>uc_invoicePurchaseReports.xaml</DependentUpon>
@@ -1038,6 +1044,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\reports\kitchenReports\uc_consumptionKitchenReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\reports\kitchenReports\uc_kitchenReports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1045,6 +1055,10 @@
     <Page Include="View\reports\kitchenReports\uc_preparingOrdersKitchenReports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\kitchenReports\uc_spendingRequestsKitchenReport.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\reports\purchaseReports\uc_invoicePurchaseReports.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -1992,30 +2006,6 @@
     <Content Include="Reports\Storage\movementsOperations\En\EnMovement.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\Catalog\Ar\ArCategory.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Catalog\Ar\ArItem.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Catalog\Ar\ArUnit.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Catalog\En\EnCategory.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Catalog\En\EnItem.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Catalog\En\EnUnit.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Catalog\Ar\ArFood.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reports\Catalog\En\EnFood.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Resource Include="pic\programs-Rest-login-bg.png" />
@@ -2291,11 +2281,9 @@
     <None Include="Properties\DataSources\Restaurant.Classes.CashTransfer.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.CashTransfer1.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.CashTransferSts.datasource" />
-    <None Include="Properties\DataSources\Restaurant.Classes.Category.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Coupon.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ErrorClass.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Invoice.datasource" />
-    <None Include="Properties\DataSources\Restaurant.Classes.Item.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemLocation.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemTransfer2.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemUnitInvoiceProfit.datasource" />
@@ -2305,7 +2293,6 @@
     <None Include="Properties\DataSources\Restaurant.Classes.ResidentialSectors.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Section.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.StorageCost.datasource" />
-    <None Include="Properties\DataSources\Restaurant.Classes.Unit.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.User.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

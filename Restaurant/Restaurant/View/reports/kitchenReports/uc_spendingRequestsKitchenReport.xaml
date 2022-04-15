@@ -303,7 +303,7 @@
                             <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                             <DataGrid  Margin="5,5,5,17.5"  IsReadOnly="True"  Background="White"
-                     Name="dgFund" 
+                                       Name="dg_request" 
                         AutoGenerateColumns="False" 
                         ColumnWidth="SizeToHeader"
                             AlternatingRowBackground="#f3f3f3" AlternationCount="2">
@@ -320,59 +320,29 @@
                                     </Style>
                                 </DataGrid.Resources>
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn x:Name="col_invNum"        Width="*" Header="No."       Binding="{Binding invNumber}"/>
-                                    <DataGridTextColumn x:Name="col_invType"       Width="*" Header="Type"      Binding="{Binding Path=invType ,Converter={StaticResource invoiceTypeConverter}}"/>
-                                    <DataGridTextColumn x:Name="col_invDate"       Width="*" Header="Date"       Binding="{Binding updateDate,Converter={StaticResource dateFrameConverter }}"/>
-                                    <DataGridTextColumn x:Name="col_invTotal"      Width="*" Header="Total"     Binding="{Binding totalNet     ,Converter={StaticResource accuracyConverter}}" />
-                                    <DataGridTextColumn x:Name="col_itemName"      Width="*" Header="Item"      Binding="{Binding ITitemName}"/>
-                                    <DataGridTextColumn x:Name="col_unitName"      Width="*" Header="Unit"      Binding="{Binding ITunitName }" />
-                                    <DataGridTextColumn x:Name="col_quantity"      Width="*" Header="QTY"       Binding="{Binding ITquantity }" />
-                                    <DataGridTextColumn x:Name="col_branch"        Width="*" Header="Branch"    Binding="{Binding branchCreatorName }" />
-                                    <DataGridTextColumn x:Name="col_pos"           Width="*" Header="Pos"       Binding="{Binding posName }" />
-                                    <DataGridTextColumn x:Name="col_invoiceProfit" Width="*" Header="Profits"   Binding="{Binding invoiceProfit  ,Converter={StaticResource accuracyConverter}}" >
-                                        <DataGridTextColumn.CellStyle>
-                                            <Style TargetType="{x:Type DataGridCell}">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding invoiceProfit, Converter={StaticResource profitToColorConverter}}" Value="1">
-                                                        <Setter Property="Background" Value="{StaticResource lightGreen}"/>
-                                                        <Setter Property="Foreground" Value="{StaticResource ThickGrey}"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding invoiceProfit, Converter={StaticResource profitToColorConverter}}" Value="0">
-                                                        <Setter Property="Background" Value="{StaticResource lightRed}"/>
-                                                        <Setter Property="Foreground" Value="{StaticResource ThickGrey}"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </DataGridTextColumn.CellStyle>
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn x:Name="col_itemProfit"    Width="*" Header="Profits"   Binding="{Binding itemunitProfit    ,Converter={StaticResource accuracyConverter}}" >
-                                        <DataGridTextColumn.CellStyle>
-                                            <Style TargetType="{x:Type DataGridCell}">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding itemunitProfit, Converter={StaticResource profitToColorConverter}}" Value="1">
-                                                        <Setter Property="Background" Value="{StaticResource lightGreen}"/>
-                                                        <Setter Property="Foreground" Value="{StaticResource ThickGrey}"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding itemunitProfit, Converter={StaticResource profitToColorConverter}}" Value="0">
-                                                        <Setter Property="Background" Value="{StaticResource lightRed}"/>
-                                                        <Setter Property="Foreground" Value="{StaticResource ThickGrey}"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </DataGridTextColumn.CellStyle>
-                                        <DataGridTextColumn.ElementStyle>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                            </Style>
-                                        </DataGridTextColumn.ElementStyle>
-                                    </DataGridTextColumn>
+                                   
+                                    <!--Items-->
+                                    <DataGridTextColumn x:Name="col_invNum"        Width="*"  Header="No."       Binding="{Binding invNumber}"/>
+                                    <DataGridTextColumn x:Name="col_itemName"      Width="*"  Header="Item"      Binding="{Binding itemName}"/>
+                                    <DataGridTextColumn x:Name="col_unitName"      Width="*"  Header="Unit"      Binding="{Binding unitName }" />
+                                    <DataGridTextColumn x:Name="col_quantity"      Width="*"  Header="QTY"       Binding="{Binding quantity }" />
+                                    <!--Invoice-->
+                                    <DataGridTextColumn x:Name="col_processNum"    Width="*"  Header="No."       Binding="{Binding inventoryNumber}"/>
+                                    <DataGridTextColumn x:Name="col_count"         Width="*"  Header="QTY"       Binding="{Binding itemCount }" />
+                                    <DataGridTextColumn x:Name="col_invDate"       Width="*"  Header="Date"      Binding="{Binding updateDate,Converter={StaticResource dateFrameConverter }}"/>
+                                    <DataGridTextColumn x:Name="col_branch"        Width="*"  Header="Branch"    Binding="{Binding branchName }" />
+                                    <DataGridTemplateColumn x:Name="col_details"   Width="35" Header="" IsReadOnly="True" >
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Margin="-10" Padding="0" Click="detailsRowinDatagrid"
+                                                        Background="{x:Null}" BorderBrush="{x:Null}">
+                                                    <materialDesign:PackIcon Foreground="{StaticResource Blue}" Kind="infoCircle"  
+                                                                             HorizontalAlignment="Center" Grid.Column="0"  
+                                                                             VerticalAlignment="Center" Width="25" Height="25"/>
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
 
                                 </DataGrid.Columns>
                             </DataGrid>
@@ -476,18 +446,6 @@
                                 </StackPanel >
                             </Border>
 
-                            <Border BorderThickness="0"     Height="50" Margin="0,0,10,10" HorizontalAlignment="Right" 
-                    CornerRadius="7" BorderBrush="Black" Background="White" Padding="0" x:Name="brd_total">
-                                <StackPanel Orientation="Horizontal" Margin="5,0" VerticalAlignment="Center" >
-
-                                    <TextBlock Text="TOTAL" x:Name="txt_total" Foreground="{StaticResource MainColor}" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" 
-                                       Margin="2,0,5,0" FontSize="18"/>
-                                    <TextBlock  Grid.Column="1" Margin="5,0,0,0" FontWeight="Bold" FontSize="18"  VerticalAlignment="Center"
-                                   TextAlignment="Center" Name="tb_total" Foreground="#4E4E4E" HorizontalAlignment="Right" 
-                                      Text="0"/>
-
-                                </StackPanel>
-                            </Border>
                         </DockPanel>
                     </Border>
                 </Grid>

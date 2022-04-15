@@ -157,7 +157,6 @@ namespace Restaurant.View.kitchen
         {
             try
             {
-
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> {  };
 
@@ -666,8 +665,6 @@ namespace Restaurant.View.kitchen
         }
         #endregion
         #region events
-
-
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             try

@@ -50,7 +50,7 @@ namespace Restaurant.View.kitchen
             Instance = null;
             GC.Collect();
         }
-        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        public async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -170,7 +170,7 @@ namespace Restaurant.View.kitchen
             }
         }
 
-        private void Btn_spendingRequest_Click(object sender, RoutedEventArgs e)
+        public void Btn_spendingRequest_Click(object sender, RoutedEventArgs e)
         {
             try
             {

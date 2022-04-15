@@ -1746,7 +1746,7 @@ namespace Restaurant
             }
 
         }
-        private void Btn_kitchen_Click(object sender, RoutedEventArgs e)
+        public void Btn_kitchen_Click(object sender, RoutedEventArgs e)
         {
             try
             {

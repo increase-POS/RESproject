@@ -2,6 +2,7 @@
 using Microsoft.Reporting.WinForms;
 using Microsoft.Win32;
 using Restaurant.Classes;
+using Restaurant.View.kitchen;
 using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
@@ -26,9 +27,9 @@ namespace Restaurant.View.reports.kitchenReports
     /// </summary>
     public partial class uc_spendingRequestsKitchenReport : UserControl
     {
-        IEnumerable<ItemTransferInvoice> pspendingRequests;
+        IEnumerable<ItemTransferInvoice> spendingRequests;
         Statistics statisticsModel = new Statistics();
-        IEnumerable<ItemTransferInvoice> pspendingRequestsQuery;
+        IEnumerable<ItemTransferInvoice> spendingRequestsQuery;
 
         string searchText = "";
         int selectedTab = 0;
@@ -87,19 +88,106 @@ namespace Restaurant.View.reports.kitchenReports
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
-
+            Instance = null;
+            GC.Collect();
         }
 
-        private void Btn_invoice_Click(object sender, RoutedEventArgs e)
-        {
+        private async void Btn_invoice_Click(object sender, RoutedEventArgs e)
+        {//invoices
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+                //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
+                MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trBranchHint"));
+                hideAllColumns();
+                selectedTab = 0;
+
+                col_processNum.Visibility = Visibility.Visible;
+                col_count.Visibility = Visibility.Visible;
+                col_invDate.Visibility = Visibility.Visible;
+                col_branch.Visibility = Visibility.Visible;
+                col_details.Visibility = Visibility.Visible;
+
+                txt_search.Text = "";
+
+                path_item.Fill = Brushes.White;
+                ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_invoice);
+                path_invoice.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+
+                chk_allBranches.IsChecked = true;
+
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
-        private void Btn_item_Click(object sender, RoutedEventArgs e)
-        {
+        private async void Btn_item_Click(object sender, RoutedEventArgs e)
+        {//items
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                hideAllColumns();
+                //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
+                MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trItemHint"));
 
+                selectedTab = 1;
+
+                chk_allBranches.IsChecked = true;
+
+                col_invNum.Visibility = Visibility.Visible;
+                col_itemName.Visibility = Visibility.Visible;
+                col_unitName.Visibility = Visibility.Visible;
+                col_quantity.Visibility = Visibility.Visible;
+                col_branch.Visibility = Visibility.Visible;
+
+                txt_search.Text = "";
+                path_invoice.Fill = Brushes.White;
+                bdrMain.RenderTransform = Animations.borderAnimation(50, bdrMain, true);
+                ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_item);
+                path_item.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
+
         #region methods
+        private void hideAllColumns()
+        {
+            for (int i = 0; i < dg_request.Columns.Count; i++)
+                dg_request.Columns[0].Visibility = Visibility.Hidden;
+        }
+
+        private async void callSearch(object sender)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
         private void translate()
         {
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_startDate, AppSettings.resourcemanager.GetString("trStartDateHint"));
@@ -107,43 +195,43 @@ namespace Restaurant.View.reports.kitchenReports
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txt_search, AppSettings.resourcemanager.GetString("trSearchHint"));
 
             chk_allBranches.Content = AppSettings.resourcemanager.GetString("trAll");
+            chk_normal.Content = AppSettings.resourcemanager.GetString("trNormal");
+            chk_return.Content = AppSettings.resourcemanager.GetString("trReturn");
 
             tt_invoice.Content = AppSettings.resourcemanager.GetString("trInvoices");
             tt_item.Content = AppSettings.resourcemanager.GetString("trItems");
-
-            col_invNum.Header = AppSettings.resourcemanager.GetString("trNum");
-            col_invType.Header = AppSettings.resourcemanager.GetString("trType");
-            col_invDate.Header = AppSettings.resourcemanager.GetString("trDate");
-            col_invTotal.Header = AppSettings.resourcemanager.GetString("trTotal");
+            //items
+            col_invNum.Header = AppSettings.resourcemanager.GetString("trNo.");
             col_itemName.Header = AppSettings.resourcemanager.GetString("trItem");
             col_unitName.Header = AppSettings.resourcemanager.GetString("trUnit");
             col_quantity.Header = AppSettings.resourcemanager.GetString("trQTR");
+            //invoice
+            col_processNum.Header = AppSettings.resourcemanager.GetString("trNo");
+            col_invDate.Header = AppSettings.resourcemanager.GetString("trDate");
+            col_count.Header = AppSettings.resourcemanager.GetString("trCount");
+            col_invDate.Header = AppSettings.resourcemanager.GetString("trDate");
             col_branch.Header = AppSettings.resourcemanager.GetString("trBranch");
-            col_pos.Header = AppSettings.resourcemanager.GetString("trPOS");
-            col_invoiceProfit.Header = AppSettings.resourcemanager.GetString("trProfits");
-            col_itemProfit.Header = AppSettings.resourcemanager.GetString("trProfits");
+            col_details.Header = AppSettings.resourcemanager.GetString("trDetails");
 
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
+            tt_preview.Content = AppSettings.resourcemanager.GetString("trPreview");
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
 
-            txt_total.Text = AppSettings.resourcemanager.GetString("trTotal");
         }
-
         async Task<IEnumerable<ItemTransferInvoice>> RefreshItemUnitInvoiceProfit()
         {
-            //if (selectedTab == 0)
-            //    profits = await statisticsModel.GetInvoiceProfit(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
-            //else if (selectedTab == 1)
-            //    profits = await statisticsModel.GetItemProfit(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
+            if (selectedTab == 0)
+                spendingRequests = await statisticsModel.GetSpendingRequest(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
+            else if (selectedTab == 1)
+                spendingRequests = await statisticsModel.GetSpendingItems(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
 
-            //return profits;
-            return pspendingRequests;
+            return spendingRequests;
         }
 
-        IEnumerable<ItemUnitInvoiceProfit> profitsTemp = null;
+        IEnumerable<ItemTransferInvoice> requestsTemp = null;
 
         async Task Search()
         {
@@ -151,15 +239,15 @@ namespace Restaurant.View.reports.kitchenReports
 
             searchText = txt_search.Text.ToLower();
 
-            //profitsTemp = profits.Where(p =>
-            //(dp_startDate.SelectedDate != null ? p.updateDate >= dp_startDate.SelectedDate : true)
-            //&&
-            ////end date
-            //(dp_endDate.SelectedDate != null ? p.updateDate <= dp_endDate.SelectedDate : true)
-            //);
+            requestsTemp = spendingRequests.Where(p =>
+            (dp_startDate.SelectedDate != null ? p.updateDate >= dp_startDate.SelectedDate : true)
+            &&
+            //end date
+            (dp_endDate.SelectedDate != null ? p.updateDate <= dp_endDate.SelectedDate : true)
+            );
 
-            //if (selectedTab == 0) await SearchInvoice();
-            //else if (selectedTab == 1) await SearchItem();
+            if (selectedTab == 0) await SearchInvoice();
+            else if (selectedTab == 1) await SearchItem();
 
             RefreshProfitsView();
             fillCombo1();
@@ -170,149 +258,190 @@ namespace Restaurant.View.reports.kitchenReports
 
         async Task SearchInvoice()
         {
-            //profitsQuery = profitsTemp
-            //.Where(s =>
-            //(
-            //s.invNumber.ToLower().Contains(searchText)
-            //||
-            //s.totalNet.ToString().ToLower().Contains(searchText)
-            //||
-            //s.invType.ToLower().Contains(searchText)
-            //||
-            //s.ITitemName.ToLower().Contains(searchText)
-            //||
-            //s.ITunitName.ToLower().Contains(searchText)
-            //||
-            //s.ITquantity.ToString().ToLower().Contains(searchText)
-            //||
-            //s.ITprice.ToString().ToLower().Contains(searchText)
-            //)
-            //&&
-            ////branchID/itemID
-            //(
-            //    cb_branches.SelectedIndex != -1 ? s.branchCreatorId == Convert.ToInt32(cb_branches.SelectedValue) : true
-            //)
-            //&&
-            ////posID/unitID
-            //(
-            //    cb_pos.SelectedIndex != -1 ? s.posId == Convert.ToInt32(cb_pos.SelectedValue) : true
-            //));
+            spendingRequests = requestsTemp
+            .Where(s =>
+            (
+            s.inventoryNum.ToLower().Contains(searchText)
+            ||
+            s.branchName.ToString().ToLower().Contains(searchText)
+            )
+            &&
+            //branchID/itemID
+            (
+                cb_branches.SelectedIndex != -1 ? s.branchCreatorId == Convert.ToInt32(cb_branches.SelectedValue) : true
+            )
+            );
 
-            //profitsQueryExcel = profitsQuery.ToList();
         }
 
         async Task SearchItem()
         {
-            //var quantities = profitsTemp.GroupBy(s => s.ITitemUnitId).Select(inv => new {
-            //    ITquantity = inv.Sum(p => p.ITquantity.Value),
-            //    itemunitProfit = inv.Sum(p => p.itemunitProfit)
-            //}).ToList();
+            requestsTemp = requestsTemp.GroupBy(s => s.ITitemUnitId).SelectMany(inv => inv.Take(1)).ToList();
 
-            //profitsTemp = profitsTemp.GroupBy(s => s.ITitemUnitId).SelectMany(inv => inv.Take(1)).ToList();
-
-            //profitsQuery = profitsTemp
-            //.Where(s =>
-            //(
-            //s.invNumber.ToLower().Contains(searchText)
-            //||
-            //s.totalNet.ToString().ToLower().Contains(searchText)
-            //||
-            //s.invType.ToLower().Contains(searchText)
-            //||
-            //s.ITitemName.ToLower().Contains(searchText)
-            //||
-            //s.ITunitName.ToLower().Contains(searchText)
-            //||
-            //s.ITquantity.ToString().ToLower().Contains(searchText)
-            //||
-            //s.ITprice.ToString().ToLower().Contains(searchText)
-            //)
-            //&&
-            ////branchID/itemID
-            //(
-            //    cb_branches.SelectedIndex != -1 ? s.ITitemId == Convert.ToInt32(cb_branches.SelectedValue) : true
-            //)
-            //&&
-            ////posID/unitID
-            //(
-            //    cb_pos.SelectedIndex != -1 ? s.ITunitId == Convert.ToInt32(cb_pos.SelectedValue) : true)
-            //);
-
-            //int i = 0;
-            //foreach (var x in profitsQuery)
-            //{
-            //    x.ITquantity = quantities[i].ITquantity;
-            //    x.itemunitProfit = quantities[i].itemunitProfit;
-            //    i++;
-            //}
-            //profitsQueryExcel = profitsQuery.ToList();
+            spendingRequestsQuery = requestsTemp
+            .Where(s =>
+            (
+            s.invNumber.ToLower().Contains(searchText)
+            ||
+            s.itemName.ToLower().Contains(searchText)
+            ||
+            s.unitName.ToLower().Contains(searchText)
+            ||
+            s.quantity.ToString().ToLower().Contains(searchText)
+            ||
+            s.branchName.ToString().ToLower().Contains(searchText)
+            )
+            &&
+            //branchID/itemID
+            (
+                cb_branches.SelectedIndex != -1 ? s.ITitemId == Convert.ToInt32(cb_branches.SelectedValue) : true
+            )
+            );
         }
-
 
 
         void RefreshProfitsView()
         {
-            //dgFund.ItemsSource = profitsQuery;
-            //txt_count.Text = profitsQuery.Count().ToString();
-
-            //decimal total = 0;
-            //if (selectedTab == 0)
-            //    total = profitsQuery.Select(b => b.invoiceProfit).Sum();
-            //else
-            //    total = profitsQuery.Select(b => b.itemunitProfit).Sum();
-
-            //tb_total.Text = HelpClass.DecTostring(total);
+            dg_request.ItemsSource = spendingRequestsQuery;
+            txt_count.Text = spendingRequestsQuery.Count().ToString();
         }
 
         private void fillCombo1()
         {
-            //if (selectedTab == 0)
-            //{
-            //    MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trBranchHint"));
-            //    cb_branches.SelectedValuePath = "branchCreatorId";
-            //    cb_branches.DisplayMemberPath = "branchCreatorName";
-            //    cb_branches.ItemsSource = profits.GroupBy(g => g.branchCreatorId).Select(i => new { i.FirstOrDefault().branchCreatorName, i.FirstOrDefault().branchCreatorId });
-            //}
-            //else if (selectedTab == 1)
-            //{
-            //    MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trItemHint"));
-            //    cb_branches.SelectedValuePath = "ITitemId";
-            //    cb_branches.DisplayMemberPath = "ITitemName";
-            //    cb_branches.ItemsSource = profits.GroupBy(g => g.ITitemId).Select(i => new { i.FirstOrDefault().ITitemId, i.FirstOrDefault().ITitemName });
-            //}
+            cb_branches.SelectedValuePath = "branchId";
+            cb_branches.DisplayMemberPath = "branchName";
+            cb_branches.ItemsSource = spendingRequests.GroupBy(g => g.branchId).Select(i => new { i.FirstOrDefault().branchName, i.FirstOrDefault().branchId });
         }
 
         #endregion
 
         #region events
+        private void detailsRowinDatagrid(object sender, RoutedEventArgs e)
+        {//details
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        ItemTransferInvoice row = (ItemTransferInvoice)dg_request.SelectedItems[0];
+                        if(row.invoiceId > 0)
+                        {
+                            BillDetailsPurchase bill = new BillDetailsPurchase();
+                            bill.ID = row.invoiceId;
+                            bill.itemId = row.itemId.Value;
+                            bill.itemUnitId = row.itemUnitId.Value;
+                            bill.Product = "";//////////////////?????????????
+                            bill.Unit = "";/////////////////////////???????????
+                            bill.UnitName = row.unitName;
+                            bill.Count = row.itemsCount.Value;////////?????
+                            bill.Price = row.price.Value;
+                            bill.Total = row.total.Value;
+                            bill.OrderId = 0;////////////////////????????????????
+                            MainWindow.mainWindow.Btn_kitchen_Click(MainWindow.mainWindow.btn_kitchen,null);
+                            uc_kitchen.Instance.UserControl_Loaded(null ,null);
+                            //uc_kitchen.Instance.Btn_spendingRequest_Click(uc_spendingRequest.Instance.);
+                        }
+                    }
+
+                HelpClass.EndAwait(grid_main);
+                /*
+                 invoice = new Invoice();
+                if (dgInvoice.SelectedIndex != -1)
+                {
+                    ItemTransferInvoice item = dgInvoice.SelectedItem as ItemTransferInvoice;
+                    if (item.invoiceId > 0)
+                    {
+                        invoice = await invoice.GetByInvoiceId(item.invoiceId);
+                        MainWindow.mainWindow.Btn_purchase_Click(MainWindow.mainWindow.btn_purchase, null);
+                        //uc_purchases.Instance.UserControl_Loaded(null, null);
+                        //uc_purchases.Instance.btn_payInvoice_Click(uc_purchases.Instance.btn_payInvoice, null);
+
+                        MainWindow.mainWindow.initializationMainTrack("payInvoice");
+
+                        MainWindow.mainWindow.grid_main.Children.Clear();
+                        MainWindow.mainWindow.grid_main.Children.Add(uc_payInvoice.Instance);
+
+                        //uc_payInvoice.Instance.UserControl_Loaded(uc_payInvoice.Instance, null);
+                        uc_payInvoice._InvoiceType = invoice.invType;
+                        uc_payInvoice.Instance.invoice = invoice;
+                        uc_payInvoice.isFromReport = true;
+                        if (item.archived == 0)
+                            uc_payInvoice.archived = false;
+                        else
+                            uc_payInvoice.archived = true;
+                        await uc_payInvoice.Instance.fillInvoiceInputs(invoice);
+                    }
+                }
+
+                 */
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private void RefreshView_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            callSearch(sender);
         }
 
         private void cb_branches_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            callSearch(sender);
         }
 
         private void Chk_allBranches_Checked(object sender, RoutedEventArgs e)
-        {
+        {//select all branches
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                cb_branches.SelectedIndex = -1;
+                cb_branches.IsEnabled = false;
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
 
         }
 
-        private void Chk_allBranches_Unchecked(object sender, RoutedEventArgs e)
-        {
+        private async void Chk_allBranches_Unchecked(object sender, RoutedEventArgs e)
+        {//unselect all branches
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                cb_branches.IsEnabled = true;
+
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
 
         }
 
         private void Txt_search_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
+        {//search
+            callSearch(sender);
         }
 
         private void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
-
+        {//refresh
+            searchText = "";
+            txt_search.Text = "";
+            callSearch(sender);
         }
         #endregion
 
@@ -716,6 +845,7 @@ namespace Restaurant.View.reports.kitchenReports
         }
 
         #endregion
+
         #region reports
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {//pdf
@@ -896,7 +1026,7 @@ namespace Restaurant.View.reports.kitchenReports
 
             // IEnumerable<ItemUnitInvoiceProfit>
             //clsReports.ProfitReport(profitsQuery, rep, reppath, paramarr);
-            paramarr.Add(new ReportParameter("totalBalance", tb_total.Text));
+            //paramarr.Add(new ReportParameter("totalBalance", tb_total.Text));
 
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
@@ -907,5 +1037,7 @@ namespace Restaurant.View.reports.kitchenReports
         }
 
         #endregion
+
+      
     }
 }
