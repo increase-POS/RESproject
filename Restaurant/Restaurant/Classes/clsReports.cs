@@ -365,11 +365,11 @@ namespace Restaurant.Classes
               
                     }
             DateFormConv(paramarr);
-         //   cashTransTypeConv(paramarr);
-        //    cashTransferProcessTypeConv(paramarr);
+            //   cashTransTypeConv(paramarr);
+            //    cashTransferProcessTypeConv(paramarr);
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trSubscriptions")));
             paramarr.Add(new ReportParameter("trCustomer", AppSettings.resourcemanagerreport.GetString("trCustomer")));
             paramarr.Add(new ReportParameter("trSubscriptionType", AppSettings.resourcemanagerreport.GetString("trSubscriptionType")));
-            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trReceived")));
             paramarr.Add(new ReportParameter("trTransferNumberTooltip", AppSettings.resourcemanagerreport.GetString("trTransferNumberTooltip")));
             paramarr.Add(new ReportParameter("trDepositor", AppSettings.resourcemanagerreport.GetString("trDepositor")));
             paramarr.Add(new ReportParameter("trPaymentTypeTooltip", AppSettings.resourcemanagerreport.GetString("trPaymentTypeTooltip")));
@@ -724,6 +724,11 @@ namespace Restaurant.Classes
             {
                 categoryName = AppSettings.resourcemanagerreport.GetString("trDesserts");
             }
+            else if (categoryName == "package")
+            {
+                categoryName = AppSettings.resourcemanagerreport.GetString("trPackages");
+            }
+            
             title = title + " / " + categoryName;
 
             paramarr.Add(new ReportParameter("Title", title));

@@ -21,9 +21,7 @@ using Microsoft.Win32;
 using System.IO;
 using Restaurant.View.windows;
 using Zen.Barcode;
-using Microsoft.Win32;
-using System.IO;
-using Restaurant.View.windows;
+
 using Microsoft.Reporting.WinForms;
 
 namespace Restaurant.View.catalog.foods
@@ -1609,6 +1607,5 @@ namespace Restaurant.View.catalog.foods
 
         }
 
-  
     }
 }

@@ -2010,8 +2010,12 @@
     <Content Include="Reports\Catalog\En\EnUnit.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Reports\Catalog\Ar\ArFood.rdlc" />
-    <EmbeddedResource Include="Reports\Catalog\En\EnFood.rdlc" />
+    <Content Include="Reports\Catalog\Ar\ArFood.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Catalog\En\EnFood.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Resource Include="pic\programs-Rest-login-bg.png" />
