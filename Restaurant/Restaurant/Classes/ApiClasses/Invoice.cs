@@ -151,7 +151,7 @@ namespace Restaurant.Classes
         public Nullable<long> reservationId { get; set; }
         public Nullable<System.DateTime> orderTime { get; set; }
         public decimal shippingCost { get; set; }
-        public Nullable<decimal> shippingCostDiscount { get; set; }
+        public decimal shippingCostDiscount { get; set; }
         public decimal realShippingCost { get; set; }
         public string branchName { get; set; }
         public string branchCreatorName { get; set; }
@@ -840,14 +840,11 @@ namespace Restaurant.Classes
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Invoices/SaveWithItems";
-
-            if (invoice.shippingCostDiscount == null)
-                invoice.shippingCostDiscount = 0;
-
             var myContent = JsonConvert.SerializeObject(invoice);
             parameters.Add("invoiceObject", myContent);
             myContent = JsonConvert.SerializeObject(invoiceItems);
             parameters.Add("itemsObject", myContent);
+
            return await APIResult.post(method, parameters);
         }
         public async Task<int> saveInvoiceWithItemsAndTables(Invoice invoice, List<ItemTransfer> invoiceItems, List<Tables> tables)
