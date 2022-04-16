@@ -857,6 +857,8 @@ namespace Restaurant.Classes
         public int ImportCount { get => importCount; set => importCount = value; }
         public int ExportCount { get => exportCount; set => exportCount = value; }
         public string processType { get; set; }
+
+ 
     }
 
     public class OrderPreparingSTS
@@ -900,6 +902,83 @@ namespace Restaurant.Classes
         public Nullable<System.DateTime> listedDate { get; set; }
 
 
+    }
+    public class SalesMembership
+    { 
+        
+        //invoice
+        public int invoiceId { get; set; }
+        public string invNumber { get; set; }
+     
+    
+        public string invType { get; set; }
+        public string discountType { get; set; }
+ 
+        public Nullable<decimal> discountValue { get; set; }
+        public Nullable<decimal> total { get; set; }
+        public Nullable<decimal> totalNet { get; set; }
+        public Nullable<decimal> paid { get; set; }
+        public Nullable<decimal> deserved { get; set; }
+        public Nullable<System.DateTime> deservedDate { get; set; }
+        public Nullable<System.DateTime> invDate { get; set; }
+   
+        public Nullable<int> invoiceMainId { get; set; }
+        public string invCase { get; set; }
+        public Nullable<System.TimeSpan> invTime { get; set; }
+        public string notes { get; set; }
+        public Nullable<System.DateTime> createDate { get; set; }//
+        public Nullable<System.DateTime> updateDate { get; set; }
+
+        public Nullable<decimal> tax { get; set; }
+ 
+        public Nullable<byte> isApproved { get; set; }
+        public int count { get; set; }
+ 
+       
+
+        //pos
+        public Nullable<int> posId { get; set; }
+        public string posName { get; set; }
+        public string posCode { get; set; }
+        //branch
+
+        public Nullable<int> branchCreatorId { get; set; }
+        public string branchCreatorName { get; set; }
+        public Nullable<int> branchId { get; set; }
+        public string branchName { get; set; }
+        public string branchType { get; set; }
+
+
+        //agent
+        public Nullable<int> agentId { get; set; }
+        public string agentCompany { get; set; }
+        public string agentName { get; set; }
+
+        public string agentType { get; set; }
+        public string agentCode { get; set; }
+        public string vendorInvNum { get; set; }
+
+
+        public Nullable<System.DateTime> vendorInvDate { get; set; }
+        //user
+        public Nullable<int> createUserId { get; set; }
+        public string cuserName { get; set; }
+        public string cuserLast { get; set; }
+        public string cUserAccName { get; set; }
+        public string uuserName { get; set; }
+        public string uuserLast { get; set; }
+        public string uUserAccName { get; set; }
+        public Nullable<int> userId { get; set; }
+        //membership
+
+        public Nullable<int> membershipId { get; set; }
+        public string code { get; set; }
+        public string name { get; set; }
+
+        public List<CouponInvoice> CouponInvoiceList { get; set; }
+        public List<ItemTransfer> itemsTransferList { get; set; }
+        public List<InvoicesClass> invoiceClassDiscountList { get; set; }
+         
     }
 
     class Statistics
@@ -991,6 +1070,7 @@ namespace Restaurant.Classes
         #endregion
 
         // المشتريات
+        #region Purchases
         public async Task<List<Invoice>> GetPurinv(int mainBranchId, int userId)
         {
 
@@ -1178,264 +1258,33 @@ namespace Restaurant.Classes
             //}
             #endregion
         }
+        //    الشراء عدد العناصر في فواتير طلبات
+        public async Task<List<ItemTransferInvoice>> GetPurorderitemcount(int mainBranchId, int userId)
+        {
 
-        #region 
-        //public async Task<List<Invoice>> GetPurinvwithCount()
-        //{
-        //    List<Invoice> list = null;
-        //    // ... Use HttpClient.
-        //    ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        //    using (var client = new HttpClient())
-        //    {
-        //        ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-        //        client.BaseAddress = new Uri(Global.APIUri);
-        //        client.DefaultRequestHeaders.Clear();
-        //        client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-        //        client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-        //        HttpRequestMessage request = new HttpRequestMessage();
-        //        request.RequestUri = new Uri(Global.APIUri + "Statistics/GetPurinvwithCount");
-        //        request.Headers.Add("APIKey", Global.APIKey);
-        //        request.Method = HttpMethod.Get;
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //        HttpResponseMessage response = await client.SendAsync(request);
+            List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
 
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var jsonString = await response.Content.ReadAsStringAsync();
-        //            jsonString = jsonString.Replace("\\", string.Empty);
-        //            jsonString = jsonString.Trim('"');
-        //            // fix date format
-        //            JsonSerializerSettings settings = new JsonSerializerSettings
-        //            {
-        //                Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-        //                DateParseHandling = DateParseHandling.None
-        //            };
-        //            list = JsonConvert.DeserializeObject<List<Invoice>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-        //            return list;
-        //        }
-        //        else //web api sent error response 
-        //        {
-        //            list = new List<Invoice>();
-        //        }
-        //        return list;
-        //    }
-        //}
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Statistics/GetPurorderitemcount", parameters);
 
-        //public async Task<List<Branch>> GetinvInBranch()
-        //{
-        //    List<Branch> list = null;
-        //    // ... Use HttpClient.
-        //    ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        //    using (var client = new HttpClient())
-        //    {
-        //        ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-        //        client.BaseAddress = new Uri(Global.APIUri);
-        //        client.DefaultRequestHeaders.Clear();
-        //        client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-        //        client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-        //        HttpRequestMessage request = new HttpRequestMessage();
-        //        request.RequestUri = new Uri(Global.APIUri + "Statistics/GetinvInBranch");
-        //        request.Headers.Add("APIKey", Global.APIKey);
-        //        request.Method = HttpMethod.Get;
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //        HttpResponseMessage response = await client.SendAsync(request);
-
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var jsonString = await response.Content.ReadAsStringAsync();
-        //            jsonString = jsonString.Replace("\\", string.Empty);
-        //            jsonString = jsonString.Trim('"');
-        //            // fix date format
-        //            JsonSerializerSettings settings = new JsonSerializerSettings
-        //            {
-        //                Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-        //                DateParseHandling = DateParseHandling.None
-        //            };
-        //            list = JsonConvert.DeserializeObject<List<Branch>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-        //            return list;
-        //        }
-        //        else //web api sent error response 
-        //        {
-        //            list = new List<Branch>();
-        //        }
-        //        return list;
-        //    }
-        //}
-
-
-        //public async Task<List<Invoice>> GetPoswithInvCount()
-        //{
-        //    List<Invoice> list = null;
-        //    // ... Use HttpClient.
-        //    ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        //    using (var client = new HttpClient())
-        //    {
-        //        ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-        //        client.BaseAddress = new Uri(Global.APIUri);
-        //        client.DefaultRequestHeaders.Clear();
-        //        client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-        //        client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-        //        HttpRequestMessage request = new HttpRequestMessage();
-        //        request.RequestUri = new Uri(Global.APIUri + "Statistics/GetPoswithInvCount");
-        //        request.Headers.Add("APIKey", Global.APIKey);
-        //        request.Method = HttpMethod.Get;
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //        HttpResponseMessage response = await client.SendAsync(request);
-
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var jsonString = await response.Content.ReadAsStringAsync();
-        //            jsonString = jsonString.Replace("\\", string.Empty);
-        //            jsonString = jsonString.Trim('"');
-        //            // fix date format
-        //            JsonSerializerSettings settings = new JsonSerializerSettings
-        //            {
-        //                Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-        //                DateParseHandling = DateParseHandling.None
-        //            };
-        //            list = JsonConvert.DeserializeObject<List<Invoice>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-        //            return list;
-        //        }
-        //        else //web api sent error response 
-        //        {
-        //            list = new List<Invoice>();
-        //        }
-        //        return list;
-        //    }
-        //}
-
-        // عرض فواتير كل نقطة بيع
-
-        //public async Task<List<Invoice>> GetPoswithInv()
-        //{
-        //    List<Invoice> list = null;
-        //    // ... Use HttpClient.
-        //    ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        //    using (var client = new HttpClient())
-        //    {
-        //        ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-        //        client.BaseAddress = new Uri(Global.APIUri);
-        //        client.DefaultRequestHeaders.Clear();
-        //        client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-        //        client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-        //        HttpRequestMessage request = new HttpRequestMessage();
-        //        request.RequestUri = new Uri(Global.APIUri + "Statistics/GetPoswithInv");
-        //        request.Headers.Add("APIKey", Global.APIKey);
-        //        request.Method = HttpMethod.Get;
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //        HttpResponseMessage response = await client.SendAsync(request);
-
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var jsonString = await response.Content.ReadAsStringAsync();
-        //            jsonString = jsonString.Replace("\\", string.Empty);
-        //            jsonString = jsonString.Trim('"');
-        //            // fix date format
-        //            JsonSerializerSettings settings = new JsonSerializerSettings
-        //            {
-        //                Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-        //                DateParseHandling = DateParseHandling.None
-        //            };
-        //            list = JsonConvert.DeserializeObject<List<Invoice>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-        //            return list;
-        //        }
-        //        else //web api sent error response 
-        //        {
-        //            list = new List<Invoice>();
-        //        }
-        //        return list;
-        //    }
-        //}
-
-
-        // عدد فواتير المشتريات ومرتجع المشتريات ومسودات كل فرع
-
-        //public async Task<List<Invoice>> GetinvCountByBranch()
-        //{
-        //    List<Invoice> list = null;
-        //    // ... Use HttpClient.
-        //    ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        //    using (var client = new HttpClient())
-        //    {
-        //        ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-        //        client.BaseAddress = new Uri(Global.APIUri);
-        //        client.DefaultRequestHeaders.Clear();
-        //        client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-        //        client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-        //        HttpRequestMessage request = new HttpRequestMessage();
-        //        request.RequestUri = new Uri(Global.APIUri + "Statistics/GetinvCountByBranch");
-        //        request.Headers.Add("APIKey", Global.APIKey);
-        //        request.Method = HttpMethod.Get;
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //        HttpResponseMessage response = await client.SendAsync(request);
-
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var jsonString = await response.Content.ReadAsStringAsync();
-        //            jsonString = jsonString.Replace("\\", string.Empty);
-        //            jsonString = jsonString.Trim('"');
-        //            // fix date format
-        //            JsonSerializerSettings settings = new JsonSerializerSettings
-        //            {
-        //                Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-        //                DateParseHandling = DateParseHandling.None
-        //            };
-        //            list = JsonConvert.DeserializeObject<List<Invoice>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-        //            return list;
-        //        }
-        //        else //web api sent error response 
-        //        {
-        //            list = new List<Invoice>();
-        //        }
-        //        return list;
-        //    }
-        //}
-
-        // مبيعات
-
-        // فواتير المبيعات بكل انواعها
-        //public async Task<List<Invoice>> GetSaleinv()
-        //{
-        //    List<Invoice> list = null;
-        //    // ... Use HttpClient.
-        //    ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        //    using (var client = new HttpClient())
-        //    {
-        //        ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-        //        client.BaseAddress = new Uri(Global.APIUri);
-        //        client.DefaultRequestHeaders.Clear();
-        //        client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-        //        client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-        //        HttpRequestMessage request = new HttpRequestMessage();
-        //        request.RequestUri = new Uri(Global.APIUri + "Statistics/GetSaleinv");
-        //        request.Headers.Add("APIKey", Global.APIKey);
-        //        request.Method = HttpMethod.Get;
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //        HttpResponseMessage response = await client.SendAsync(request);
-
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var jsonString = await response.Content.ReadAsStringAsync();
-        //            jsonString = jsonString.Replace("\\", string.Empty);
-        //            jsonString = jsonString.Trim('"');
-        //            // fix date format
-        //            JsonSerializerSettings settings = new JsonSerializerSettings
-        //            {
-        //                Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-        //                DateParseHandling = DateParseHandling.None
-        //            };
-        //            list = JsonConvert.DeserializeObject<List<Invoice>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-        //            return list;
-        //        }
-        //        else //web api sent error response 
-        //        {
-        //            list = new List<Invoice>();
-        //        }
-        //        return list;
-        //    }
-        //}
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<ItemTransferInvoice>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+ 
+        }
         #endregion
 
+       
+        // مبيعات
+        #region Sales 
         // الفواتير مع العناصر
         public async Task<List<ItemTransferInvoice>> GetSaleitem(int mainBranchId, int userId)
         {
@@ -1622,67 +1471,7 @@ namespace Restaurant.Classes
         }
 
 
-        //    الشراء عدد العناصر في فواتير طلبات
-        public async Task<List<ItemTransferInvoice>> GetPurorderitemcount(int mainBranchId, int userId)
-        {
-
-            List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("mainBranchId", mainBranchId.ToString());
-            parameters.Add("userId", userId.ToString());
-
-            //#################
-            IEnumerable<Claim> claims = await APIResult.getList("Statistics/GetPurorderitemcount", parameters);
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    list.Add(JsonConvert.DeserializeObject<ItemTransferInvoice>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return list;
-
-            #region
-            //List<ItemTransferInvoice> list = null;
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "Statistics/GetPurorderitemcount?mainBranchId=" + mainBranchId + "&userId=" + userId);
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Get;
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    HttpResponseMessage response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var jsonString = await response.Content.ReadAsStringAsync();
-            //        jsonString = jsonString.Replace("\\", string.Empty);
-            //        jsonString = jsonString.Trim('"');
-            //        // fix date format
-            //        JsonSerializerSettings settings = new JsonSerializerSettings
-            //        {
-            //            Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-            //            DateParseHandling = DateParseHandling.None
-            //        };
-            //        list = JsonConvert.DeserializeObject<List<ItemTransferInvoice>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-            //        return list;
-            //    }
-            //    else //web api sent error response 
-            //    {
-            //        list = new List<ItemTransferInvoice>();
-            //    }
-            //    return list;
-            //}
-            #endregion
-        }
+      
         public async Task<List<ItemTransferInvoice>> GetSaleitemcount(int mainBranchId, int userId)
         {
 
@@ -1704,40 +1493,6 @@ namespace Restaurant.Classes
             return list;
  
         }
-
-        //
-        #region combo
-
-        public List<ItemUnitCombo> GetIUComboList(List<ItemTransferInvoice> ITInvoice)
-        {
-            List<ItemUnitCombo> iulist = new List<ItemUnitCombo>();
-
-            iulist = ITInvoice.GroupBy(x => x.ITitemUnitId)
-                   .Select(g => new ItemUnitCombo { itemUnitId = (int)g.FirstOrDefault().ITitemUnitId, itemUnitName = g.FirstOrDefault().ITitemName + " - " + g.FirstOrDefault().ITunitName }).ToList();
-            return iulist;
-
-        }
-        public List<CouponCombo> GetCopComboList(List<ItemTransferInvoice> ITInvoice)
-        {
-            List<CouponCombo> iulist = new List<CouponCombo>();
-
-            iulist = ITInvoice.GroupBy(x => x.CopcId)
-                   .Select(g => new CouponCombo { Copcid = g.FirstOrDefault().CopcId, Copname = g.FirstOrDefault().Copname }).ToList();
-            return iulist;
-
-        }
-        public List<OfferCombo> GetOfferComboList(List<ItemTransferInvoice> ITInvoice)
-        {
-            List<OfferCombo> iulist = new List<OfferCombo>();
-
-            iulist = ITInvoice.GroupBy(x => x.OofferId)
-                   .Select(g => new OfferCombo { OofferId = g.FirstOrDefault().OofferId, Oname = g.FirstOrDefault().Oname }).ToList();
-            return iulist;
-
-        }
-        #endregion
-        //OfferCombo
-
         // الفواتير  مع الكوبون
         public async Task<List<ItemTransferInvoice>> GetSalecoupon(int mainBranchId, int userId)
         {
@@ -1880,6 +1635,66 @@ namespace Restaurant.Classes
             return list;
 
         }
+
+        // الاشتراكات
+       
+        public async Task<List<SalesMembership>> GetSaleMembership(int mainBranchId, int userId)
+        {
+
+            List<SalesMembership> list = new List<SalesMembership>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
+
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Statistics/GetSaleMembership", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<SalesMembership>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+
+        }
+        #endregion 
+        //
+        #region combo
+
+        public List<ItemUnitCombo> GetIUComboList(List<ItemTransferInvoice> ITInvoice)
+        {
+            List<ItemUnitCombo> iulist = new List<ItemUnitCombo>();
+
+            iulist = ITInvoice.GroupBy(x => x.ITitemUnitId)
+                   .Select(g => new ItemUnitCombo { itemUnitId = (int)g.FirstOrDefault().ITitemUnitId, itemUnitName = g.FirstOrDefault().ITitemName + " - " + g.FirstOrDefault().ITunitName }).ToList();
+            return iulist;
+
+        }
+        public List<CouponCombo> GetCopComboList(List<ItemTransferInvoice> ITInvoice)
+        {
+            List<CouponCombo> iulist = new List<CouponCombo>();
+
+            iulist = ITInvoice.GroupBy(x => x.CopcId)
+                   .Select(g => new CouponCombo { Copcid = g.FirstOrDefault().CopcId, Copname = g.FirstOrDefault().Copname }).ToList();
+            return iulist;
+
+        }
+        public List<OfferCombo> GetOfferComboList(List<ItemTransferInvoice> ITInvoice)
+        {
+            List<OfferCombo> iulist = new List<OfferCombo>();
+
+            iulist = ITInvoice.GroupBy(x => x.OofferId)
+                   .Select(g => new OfferCombo { OofferId = g.FirstOrDefault().OofferId, Oname = g.FirstOrDefault().Oname }).ToList();
+            return iulist;
+
+        }
+        #endregion
+        //OfferCombo
+
+        
+    
 
 
         // المخزون 

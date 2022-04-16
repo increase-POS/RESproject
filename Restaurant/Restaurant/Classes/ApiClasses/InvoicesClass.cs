@@ -14,6 +14,15 @@ using System.Web;
 
 namespace Restaurant.Classes
 {
+
+    public class invoiceClassDiscount
+    {
+        public int invClassDiscountId { get; set; }
+        public Nullable<int> invClassId { get; set; }
+        public Nullable<int> invoiceId { get; set; }
+        public decimal discountValue { get; set; }
+        public byte discountType { get; set; }
+    }
     public class InvoicesClass
     {
         public int invClassId { get; set; }
