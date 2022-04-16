@@ -64,25 +64,27 @@ namespace Restaurant.View.reports.kitchenReports
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            try
-            {
+            //try
+            //{
                 #region translate
                 if (AppSettings.lang.Equals("en"))
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 else
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 translate();
-                #endregion
+            #endregion
+
+                chk_normal.IsChecked = true;
 
                 Btn_invoice_Click(btn_invoice, null);
 
-                HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_invoice.Tag.ToString());
+                //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_invoice.Tag.ToString());
 
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
 
         }
 
@@ -94,16 +96,17 @@ namespace Restaurant.View.reports.kitchenReports
 
         private async void Btn_invoice_Click(object sender, RoutedEventArgs e)
         {//invoices
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
                 //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
-                MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trBranchHint"));
                 hideAllColumns();
+                chk_normal.Visibility = Visibility.Visible;
+                chk_return.Visibility = Visibility.Visible;
                 selectedTab = 0;
 
-                col_processNum.Visibility = Visibility.Visible;
+                col_invNum.Visibility = Visibility.Visible;
                 col_count.Visibility = Visibility.Visible;
                 col_invDate.Visibility = Visibility.Visible;
                 col_branch.Visibility = Visibility.Visible;
@@ -119,29 +122,28 @@ namespace Restaurant.View.reports.kitchenReports
 
                 await Search();
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private async void Btn_item_Click(object sender, RoutedEventArgs e)
         {//items
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
                 hideAllColumns();
+                chk_normal.Visibility = Visibility.Collapsed;
+                chk_return.Visibility = Visibility.Collapsed;
                 //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
-                MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trItemHint"));
-
                 selectedTab = 1;
 
                 chk_allBranches.IsChecked = true;
 
-                col_invNum.Visibility = Visibility.Visible;
                 col_itemName.Visibility = Visibility.Visible;
                 col_unitName.Visibility = Visibility.Visible;
                 col_quantity.Visibility = Visibility.Visible;
@@ -155,20 +157,20 @@ namespace Restaurant.View.reports.kitchenReports
 
                 await Search();
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         #region methods
         private void hideAllColumns()
         {
             for (int i = 0; i < dg_request.Columns.Count; i++)
-                dg_request.Columns[0].Visibility = Visibility.Hidden;
+                dg_request.Columns[i].Visibility = Visibility.Hidden;
         }
 
         private async void callSearch(object sender)
@@ -206,7 +208,6 @@ namespace Restaurant.View.reports.kitchenReports
             col_unitName.Header = AppSettings.resourcemanager.GetString("trUnit");
             col_quantity.Header = AppSettings.resourcemanager.GetString("trQTR");
             //invoice
-            col_processNum.Header = AppSettings.resourcemanager.GetString("trNo");
             col_invDate.Header = AppSettings.resourcemanager.GetString("trDate");
             col_count.Header = AppSettings.resourcemanager.GetString("trCount");
             col_invDate.Header = AppSettings.resourcemanager.GetString("trDate");
@@ -221,7 +222,7 @@ namespace Restaurant.View.reports.kitchenReports
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
 
         }
-        async Task<IEnumerable<ItemTransferInvoice>> RefreshItemUnitInvoiceProfit()
+        async Task<IEnumerable<ItemTransferInvoice>> RefreshSpendingRequestsList()
         {
             if (selectedTab == 0)
                 spendingRequests = await statisticsModel.GetSpendingRequest(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
@@ -235,7 +236,7 @@ namespace Restaurant.View.reports.kitchenReports
 
         async Task Search()
         {
-            await RefreshItemUnitInvoiceProfit();
+            await RefreshSpendingRequestsList();
 
             searchText = txt_search.Text.ToLower();
 
@@ -249,8 +250,8 @@ namespace Restaurant.View.reports.kitchenReports
             if (selectedTab == 0) await SearchInvoice();
             else if (selectedTab == 1) await SearchItem();
 
-            RefreshProfitsView();
-            fillCombo1();
+            RefreshSpendingRequestsView();
+            fillBranches();
             fillColumnChart();
             fillPieChart();
             fillRowChart();
@@ -258,17 +259,29 @@ namespace Restaurant.View.reports.kitchenReports
 
         async Task SearchInvoice()
         {
-            spendingRequests = requestsTemp
+            spendingRequestsQuery = requestsTemp
             .Where(s =>
             (
-            s.inventoryNum.ToLower().Contains(searchText)
+            s.invNumber.ToLower().Contains(searchText)
             ||
             s.branchName.ToString().ToLower().Contains(searchText)
             )
             &&
-            //branchID/itemID
+            //branchID
             (
-                cb_branches.SelectedIndex != -1 ? s.branchCreatorId == Convert.ToInt32(cb_branches.SelectedValue) : true
+                cb_branches.SelectedIndex != -1 ? s.branchId == Convert.ToInt32(cb_branches.SelectedValue) : true
+            )
+            &&
+            (
+            //normal
+            (
+                chk_normal.IsChecked == true ?  s.invType == "sr" : false
+            )
+            ||
+            //return
+            (
+                chk_return.IsChecked == true ? s.invType == "srb" : false
+            )
             )
             );
 
@@ -276,6 +289,10 @@ namespace Restaurant.View.reports.kitchenReports
 
         async Task SearchItem()
         {
+            var quantities = requestsTemp.GroupBy(s => s.ITitemUnitId).Select(inv => new {
+                ITquantity = inv.Sum(p => p.ITquantity.Value),
+            }).ToList();
+
             requestsTemp = requestsTemp.GroupBy(s => s.ITitemUnitId).SelectMany(inv => inv.Take(1)).ToList();
 
             spendingRequestsQuery = requestsTemp
@@ -283,30 +300,37 @@ namespace Restaurant.View.reports.kitchenReports
             (
             s.invNumber.ToLower().Contains(searchText)
             ||
-            s.itemName.ToLower().Contains(searchText)
+            s.ITitemName.ToLower().Contains(searchText)
             ||
-            s.unitName.ToLower().Contains(searchText)
+            s.ITunitName.ToLower().Contains(searchText)
             ||
-            s.quantity.ToString().ToLower().Contains(searchText)
+            s.ITquantity.ToString().ToLower().Contains(searchText)
             ||
             s.branchName.ToString().ToLower().Contains(searchText)
             )
             &&
-            //branchID/itemID
+            //branchID
             (
-                cb_branches.SelectedIndex != -1 ? s.ITitemId == Convert.ToInt32(cb_branches.SelectedValue) : true
+                cb_branches.SelectedIndex != -1 ? s.branchId == Convert.ToInt32(cb_branches.SelectedValue) : true
             )
             );
+
+            int i = 0;
+            foreach (var x in spendingRequestsQuery)
+            {
+                x.ITquantity = quantities[i].ITquantity;
+                i++;
+            }
         }
 
 
-        void RefreshProfitsView()
+        void RefreshSpendingRequestsView()
         {
             dg_request.ItemsSource = spendingRequestsQuery;
             txt_count.Text = spendingRequestsQuery.Count().ToString();
         }
 
-        private void fillCombo1()
+        private void fillBranches()
         {
             cb_branches.SelectedValuePath = "branchId";
             cb_branches.DisplayMemberPath = "branchName";
@@ -383,6 +407,12 @@ namespace Restaurant.View.reports.kitchenReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        private void Chk_Checked(object sender, RoutedEventArgs e)
+        {
+            callSearch(sender);
+        }
+
         private void RefreshView_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             callSearch(sender);
@@ -1036,8 +1066,9 @@ namespace Restaurant.View.reports.kitchenReports
             rep.Refresh();
         }
 
+
         #endregion
 
-      
+       
     }
 }

@@ -174,8 +174,8 @@
                                         </DockPanel>
 
                                         <DockPanel Grid.ColumnSpan="2" LastChildFill="False">
-                                            <CheckBox x:Name="chk_normal" Content="Normal" Margin="15" Foreground="{StaticResource ThickGrey}" ></CheckBox>
-                                            <CheckBox x:Name="chk_return"  Content="Return" Foreground="{StaticResource ThickGrey}" Margin="15" ></CheckBox>
+                                            <CheckBox x:Name="chk_normal" Content="Normal" Margin="15" Foreground="{StaticResource ThickGrey}" Checked="Chk_Checked" Unchecked="Chk_Checked" ></CheckBox>
+                                            <CheckBox x:Name="chk_return"  Content="Return" Foreground="{StaticResource ThickGrey}" Margin="15" Checked="Chk_Checked" Unchecked="Chk_Checked" ></CheckBox>
                                         </DockPanel>
 
                                         <DockPanel Grid.Row="1"  LastChildFill="False">
@@ -320,18 +320,17 @@
                                     </Style>
                                 </DataGrid.Resources>
                                 <DataGrid.Columns>
-                                   
+                                    
                                     <!--Items-->
-                                    <DataGridTextColumn x:Name="col_invNum"        Width="*"  Header="No."       Binding="{Binding invNumber}"/>
-                                    <DataGridTextColumn x:Name="col_itemName"      Width="*"  Header="Item"      Binding="{Binding itemName}"/>
-                                    <DataGridTextColumn x:Name="col_unitName"      Width="*"  Header="Unit"      Binding="{Binding unitName }" />
-                                    <DataGridTextColumn x:Name="col_quantity"      Width="*"  Header="QTY"       Binding="{Binding quantity }" />
+                                    <DataGridTextColumn x:Name="col_itemName"      Width="*"  Header="Item"      Binding="{Binding ITitemName}"/>
+                                    <DataGridTextColumn x:Name="col_unitName"      Width="*"  Header="Unit"      Binding="{Binding ITunitName }" />
+                                    <DataGridTextColumn x:Name="col_quantity"      Width="*"  Header="QTY"       Binding="{Binding ITquantity }" />
                                     <!--Invoice-->
-                                    <DataGridTextColumn x:Name="col_processNum"    Width="*"  Header="No."       Binding="{Binding inventoryNumber}"/>
-                                    <DataGridTextColumn x:Name="col_count"         Width="*"  Header="QTY"       Binding="{Binding itemCount }" />
+                                    <DataGridTextColumn x:Name="col_invNum"        Width="*"  Header="No."       Binding="{Binding invNumber}"/>
+                                    <DataGridTextColumn x:Name="col_count"         Width="*"  Header="QTY"       Binding="{Binding count }" />
                                     <DataGridTextColumn x:Name="col_invDate"       Width="*"  Header="Date"      Binding="{Binding updateDate,Converter={StaticResource dateFrameConverter }}"/>
                                     <DataGridTextColumn x:Name="col_branch"        Width="*"  Header="Branch"    Binding="{Binding branchName }" />
-                                    <DataGridTemplateColumn x:Name="col_details"   Width="35" Header="" IsReadOnly="True" >
+                                    <DataGridTemplateColumn x:Name="col_details"   Width="75" Header="" IsReadOnly="True" >
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Button Margin="-10" Padding="0" Click="detailsRowinDatagrid"

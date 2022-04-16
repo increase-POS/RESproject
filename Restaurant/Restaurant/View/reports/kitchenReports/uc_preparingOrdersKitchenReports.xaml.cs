@@ -403,7 +403,7 @@ namespace Restaurant.View.reports.kitchenReports
 
             List<string> titles = new List<string>()
             {
-               AppSettings.resourcemanager.GetString("trItem")
+               AppSettings.resourcemanager.GetString("trPreparingOrders")+ "/" +AppSettings.resourcemanager.GetString("trItem")
             };
             int x = 6;
             if (names.Count() <= 6) x = names.Count();
@@ -569,7 +569,7 @@ namespace Restaurant.View.reports.kitchenReports
           new LineSeries
           {
               Values = orderLst.AsChartValues(),
-              Title = AppSettings.resourcemanager.GetString("trItem")
+              Title = AppSettings.resourcemanager.GetString("trPreparingOrders") + "/" + AppSettings.resourcemanager.GetString("trQuantity")
           }); 
           
             DataContext = this;
