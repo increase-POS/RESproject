@@ -382,7 +382,10 @@ namespace Restaurant.View.kitchen
         #region Refresh & Search
         async Task refreshPreparingOrders()
         {
-            orders = await preparingOrder.GetPreparingOrdersWithStatus(MainWindow.branchLogin.branchId, "",24);          
+            List<string> statusLst = new List<string>() { "Listed", "Preparing", "Ready" };
+
+            orders = await preparingOrder.GetKitchenPreparingOrders(MainWindow.branchLogin.branchId, "",24);
+            orders = orders.Where(x=>statusLst.Contains(x.status)).ToList();
         }
         async Task Search()
         {

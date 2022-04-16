@@ -2873,7 +2873,7 @@ namespace Restaurant.View.sales
             #endregion
 
             int res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId);
-            AppSettings.statusesOfPreparingOrder = "directlyPrint";
+
             if (AppSettings.statusesOfPreparingOrder == "directlyPrint")
             {
                 #region save status = Preparing

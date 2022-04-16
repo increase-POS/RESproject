@@ -98,7 +98,7 @@ namespace Restaurant.View.windows
 
         private void fillInputs()
         {
-            if (orderTime != null )
+            if (orderTime != null && orderTime != DateTime.MinValue)
             {
                 tp_time.SelectedTime = orderTime;
             }

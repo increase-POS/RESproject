@@ -88,7 +88,7 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
-        public async Task<List<OrderPreparing>> GetPreparingOrdersWithStatus( int branchId, string status,int duration=0)
+        public async Task<List<OrderPreparing>> GetKitchenPreparingOrders( int branchId, string status,int duration=0)
         {
             List<OrderPreparing> items = new List<OrderPreparing>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -96,7 +96,7 @@ namespace Restaurant.Classes.ApiClasses
             // status like "Listed, Cooking"
             parameters.Add("status", status);
             parameters.Add("duration", duration.ToString());
-            IEnumerable<Claim> claims = await APIResult.getList("OrderPreparing/GetPreparingOrdersWithStatus", parameters);
+            IEnumerable<Claim> claims = await APIResult.getList("OrderPreparing/GetKitchenPreparingOrders", parameters);
             foreach (Claim c in claims)
             {
                 if (c.Type == "scopes")
