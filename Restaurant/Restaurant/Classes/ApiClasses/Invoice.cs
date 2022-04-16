@@ -840,6 +840,10 @@ namespace Restaurant.Classes
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Invoices/SaveWithItems";
+
+            if (invoice.shippingCostDiscount == null)
+                invoice.shippingCostDiscount = 0;
+
             var myContent = JsonConvert.SerializeObject(invoice);
             parameters.Add("invoiceObject", myContent);
             myContent = JsonConvert.SerializeObject(invoiceItems);
