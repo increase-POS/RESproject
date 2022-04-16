@@ -741,6 +741,8 @@ namespace Restaurant.View.delivery
         {
             try
             {
+                selectedOrders.Clear();
+
                 CheckBox cb = sender as CheckBox;
                 if (cb.IsChecked == true)
                 {
