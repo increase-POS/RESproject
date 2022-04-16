@@ -2593,7 +2593,8 @@ namespace Restaurant.View.sales
 
 
                 wd_selectTime w = new wd_selectTime();
-                w.orderTime = (DateTime)invoice.orderTime;
+                if(invoice.orderTime != null)
+                    w.orderTime = (DateTime)invoice.orderTime;
                 w.ShowDialog();
                 if (w.isOk)
                 {
@@ -2813,7 +2814,6 @@ namespace Restaurant.View.sales
                 invoice.invNumber = await invoice.generateDialyInvNumber("ssd,ss,tsd,ts", MainWindow.branchLogin.branchId);
             }
 
-
             int res = await addInvoice("ts");
             if (res > 0)
             {
@@ -2824,21 +2824,16 @@ namespace Restaurant.View.sales
                 await saveOrdersPreparing();
                 #endregion
 
-                #region savepayment if no shipping company
-                if (invoice.shippingCompanyId == null)
+                #region savepayment 
+                await FillCombo.invoice.recordPosCashTransfer(invoice, "si");
+                if (invoice.shippingCompanyId == null || (invoice.shippingCompanyId != null && invoice.shipUserId == null)) //if no shipping company
                 {
-
-                    foreach (var item in paymentsList)
-                    {
-                        await saveConfiguredCashTrans(item);
-                        invoice.paid += item.cash;
-                        invoice.deserved -= item.cash;
-                    }
-                    prinvoiceId = await invoice.saveInvoice(invoice);
-                    // refresh pos balance
-                    await MainWindow.refreshBalance();
+                    await savePayments();
                 }
                 #endregion
+
+                // refresh pos balance
+                await MainWindow.refreshBalance();
 
                 clear();
                 refreshDraftNotification();
@@ -2878,6 +2873,52 @@ namespace Restaurant.View.sales
             #endregion
 
             int res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId);
+            AppSettings.statusesOfPreparingOrder = "directlyPrint";
+            if (AppSettings.statusesOfPreparingOrder == "directlyPrint")
+            {
+                #region save status = Preparing
+                statusObject = new orderPreparingStatus();
+                statusObject.orderPreparingId = res;
+                statusObject.status = "Preparing";
+                statusObject.createUserId = MainWindow.userLogin.userId;
+
+                await preparingOrder.updateOrderStatus(statusObject);
+                #endregion
+                
+                #region save status = Ready
+                statusObject = new orderPreparingStatus();
+                statusObject.orderPreparingId = res;
+                statusObject.status = "Ready";
+                statusObject.createUserId = MainWindow.userLogin.userId;
+
+                await preparingOrder.updateOrderStatus(statusObject);
+                #endregion
+
+                #region save status = Done if no shipping
+                if (invoice.shippingCompanyId == null)
+                {
+                    statusObject = new orderPreparingStatus();
+                    statusObject.orderPreparingId = res;
+                    statusObject.status = "Done";
+                    statusObject.createUserId = MainWindow.userLogin.userId;
+
+                    await preparingOrder.updateOrderStatus(statusObject);
+                }
+                #endregion
+            }
+        }
+
+        async Task savePayments()
+        {
+
+            foreach (var item in paymentsList)
+            {
+                await saveConfiguredCashTrans(item);
+                invoice.paid += item.cash;
+                invoice.deserved -= item.cash;
+            }
+            prinvoiceId = await invoice.saveInvoice(invoice);
+               
         }
         #endregion
 
