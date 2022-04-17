@@ -1133,7 +1133,9 @@ namespace Restaurant.Classes
                         }
                         cashTransfer.transType = "p"; //pull
 
-                        await cashTransfer.Save(cashTransfer); //add agent cash transfer
+                        if (cashTransfer.processType != "balance")
+                            await cashTransfer.Save(cashTransfer); //add agent cash transfer
+
                         await agent.save(agent);
                     }
                     else if (agent.balanceType == 0)
@@ -1174,7 +1176,7 @@ namespace Restaurant.Classes
                         }
                         cashTransfer.transType = "d"; //deposit
 
-                        if (cashTransfer.cash > 0)
+                        if (cashTransfer.cash > 0 && cashTransfer.processType != "balance")
                         {
                             await cashTransfer.Save(cashTransfer); //add cash transfer     
                         }
