@@ -595,6 +595,42 @@ namespace Restaurant.Classes
 
         }
 
+
+        public static void deliveryManagement(IEnumerable<Invoice> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+          
+            //title
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trUsers")));
+            //table columns
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("deliveryMan", AppSettings.resourcemanagerreport.GetString("deliveryMan")));
+            paramarr.Add(new ReportParameter("deliveryTime", AppSettings.resourcemanagerreport.GetString("deliveryTime")));
+            paramarr.Add(new ReportParameter("trStatus", AppSettings.resourcemanagerreport.GetString("trStatus")));
+            foreach (var row in Query)
+            {
+                row.status = preparingOrderStatusConvert(row.status);
+            }
+            rep.DataSources.Add(new ReportDataSource("DataSet", Query));
+
+        }
+
+
+        public static string preparingOrderStatusConvert(string status)
+        {
+            switch (status)
+            {
+                case "Listed": return AppSettings.resourcemanager.GetString("trListed");
+                case "Preparing": return AppSettings.resourcemanager.GetString("trPreparing");
+                case "Ready": return AppSettings.resourcemanager.GetString("trReady");
+                case "Collected": return AppSettings.resourcemanager.GetString("withDeliveryMan");
+                case "InTheWay": return AppSettings.resourcemanager.GetString("onTheWay");
+                case "Done": return AppSettings.resourcemanager.GetString("trDone");// gived to customer
+                default: return "";
+            }
+        }
         public static void BranchesReport(IEnumerable<Branch> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             rep.ReportPath = reppath;
