@@ -1606,7 +1606,12 @@ namespace Restaurant.View.sales
         }
         public async Task fillInvoiceInputs(Invoice invoice)
         {
+            #region inv items
             billDetailsList = new ObservableCollection<BillDetailsSales>();
+            invoiceItems = await FillCombo.invoice.GetInvoicesItems(invoice.invoiceId);
+
+            fillInvoiceItems();
+            #endregion
 
             #region set parameters
             _Sum = (decimal)invoice.total;
@@ -1628,12 +1633,7 @@ namespace Restaurant.View.sales
                 await fillTakeAwayInv();
             else if (AppSettings.invType == "selfService")
                 await fillSelfServiceInv();
-
-            #region inv items
-            invoiceItems = await FillCombo.invoice.GetInvoicesItems(invoice.invoiceId);
-            
-            fillInvoiceItems();
-            #endregion
+           
         }
         private void fillInvoiceItems()
         {           
