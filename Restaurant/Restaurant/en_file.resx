@@ -3880,4 +3880,25 @@ Please add Email in setting</value>
   <data name="this" xml:space="preserve">
     <value>this</value>
   </data>
+  <data name="thisDay" xml:space="preserve">
+    <value>this day</value>
+  </data>
+  <data name="trSpendingRequestReturn" xml:space="preserve">
+    <value>Spending Request  Return</value>
+  </data>
+  <data name="selectOfferFirst" xml:space="preserve">
+    <value>Select offer first</value>
+  </data>
+  <data name="newMembership" xml:space="preserve">
+    <value>New membership</value>
+  </data>
+  <data name="newReservation" xml:space="preserve">
+    <value>New reservation</value>
+  </data>
+  <data name="reservationsManagement" xml:space="preserve">
+    <value>reservations management</value>
+  </data>
+  <data name="sections" xml:space="preserve">
+    <value>Sections</value>
+  </data>
 </root>

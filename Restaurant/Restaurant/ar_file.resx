@@ -3859,4 +3859,31 @@
   <data name="trExpiredS" xml:space="preserve">
     <value>منتهي الصلاحية</value>
   </data>
+  <data name="thisDay" xml:space="preserve">
+    <value>هذا اليوم</value>
+  </data>
+  <data name="trSpendingRequestReturn" xml:space="preserve">
+    <value>مرتجع طلب صرف</value>
+  </data>
+  <data name="selectOfferFirst" xml:space="preserve">
+    <value>اختر عرض أولاً</value>
+  </data>
+  <data name="newMembership" xml:space="preserve">
+    <value>عضوية جديدة</value>
+  </data>
+  <data name="newReservation" xml:space="preserve">
+    <value>حجز جديد</value>
+  </data>
+  <data name="reservationsManagement" xml:space="preserve">
+    <value>إدارة الحجوزات</value>
+  </data>
+  <data name="sections" xml:space="preserve">
+    <value>الاقسام</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="String2" xml:space="preserve">
+    <value />
+  </data>
 </root>
