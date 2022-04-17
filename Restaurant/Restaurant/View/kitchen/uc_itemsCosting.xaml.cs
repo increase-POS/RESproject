@@ -16,6 +16,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
+//using System.IO;
+using Restaurant.View.windows;
+using Microsoft.Reporting.WinForms;
 
 namespace Restaurant.View.kitchen
 {
@@ -429,6 +433,225 @@ namespace Restaurant.View.kitchen
 
         #endregion
 
- 
+        #region report
+
+        //report  parameters
+        ReportCls reportclass = new ReportCls();
+        LocalReport rep = new LocalReport();
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+        // end report parameters
+        public void BuildReport()
+        {
+
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
+                addpath = @"\Reports\Kitchen\Ar\ArItemsCosting.rdlc";
+            }
+            else
+            {
+                addpath = @"\Reports\Kitchen\En\EnItemsCosting.rdlc";
+            }
+            string reppath = reportclass.PathUp(System.IO.Directory.GetCurrentDirectory(), 2, addpath);
+            clsReports.itemCosting(itemsQuery, rep, reppath, paramarr);
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+
+        }
+        private void Btn_pdf_Click(object sender, RoutedEventArgs e)
+        {
+
+            //pdf
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+
+                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
+                //{
+                    #region
+                    BuildReport();
+
+                    saveFileDialog.Filter = "PDF|*.pdf;";
+
+                    if (saveFileDialog.ShowDialog() == true)
+                    {
+                        string filepath = saveFileDialog.FileName;
+                        LocalReportExtensions.ExportToPDF(rep, filepath);
+                    }
+                    #endregion
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_preview_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
+                //{
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+
+                    string pdfpath = "";
+                    //
+                    pdfpath = @"\Thumb\report\temp.pdf";
+                    pdfpath = reportclass.PathUp(System.IO.Directory.GetCurrentDirectory(), 2, pdfpath);
+
+                    BuildReport();
+
+                    LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                    wd_previewPdf w = new wd_previewPdf();
+                    w.pdfPath = pdfpath;
+                    if (!string.IsNullOrEmpty(w.pdfPath))
+                    {
+                        w.ShowDialog();
+                        w.wb_pdfWebViewer.Dispose();
+
+
+                    }
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
+        private void Btn_print_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
+                //{
+
+                    #region
+                    BuildReport();
+                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, AppSettings.rep_print_count == null ? short.Parse("1") : short.Parse(AppSettings.rep_print_count));
+                    #endregion
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+
+                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
+                //{
+                    #region
+                    //Thread t1 = new Thread(() =>
+                    //{
+                    BuildReport();
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        saveFileDialog.Filter = "EXCEL|*.xls;";
+                        if (saveFileDialog.ShowDialog() == true)
+                        {
+                            string filepath = saveFileDialog.FileName;
+                            LocalReportExtensions.ExportToExcel(rep, filepath);
+                        }
+                    });
+
+
+                    //});
+                    //t1.Start();
+                    #endregion
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
+        {//pie
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
+                //{
+                    #region
+                    //Window.GetWindow(this).Opacity = 0.2;
+                    //win_lvc win = new win_lvc(banksQuery, 5);
+                    //win.ShowDialog();
+                    //Window.GetWindow(this).Opacity = 1;
+                    #endregion
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Tt_pieChart_Closed(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        #endregion
+
     }
 }

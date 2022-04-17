@@ -734,101 +734,112 @@ namespace Restaurant.View.kitchen
 
         public async Task BuildReport()
         {
+          if(invoice.invoiceId>0){
+               
             prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
             paramarr = new List<ReportParameter>();
 
             string reppath = reportclass.SpendingRequestRdlcpath( );
-            if (prInvoice.invoiceId > 0)
-            {
-                invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
-                if (prInvoice.agentId != null)
+                if (prInvoice.invoiceId > 0)
                 {
-                    Agent agentinv = new Agent();
-                    //  agentinv = vendors.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
-                    agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
-                    prInvoice.agentCode = agentinv.code;
-                    //new lines
-                    prInvoice.agentName = agentinv.name;
-                    prInvoice.agentCompany = agentinv.company;
-                }
-                else
-                {
-
-                    prInvoice.agentCode = "-";
-                    //new lines
-                    prInvoice.agentName = "-";
-                    prInvoice.agentCompany = "-";
-                }
-                User employ = new User();
-                employ = await employ.getUserById((int)prInvoice.updateUserId);
-                prInvoice.uuserName = employ.name;
-                prInvoice.uuserLast = employ.lastname;
-
-
-                Branch branch = new Branch();
-                //branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
-                //if (branch.branchId > 0)
-                //{
-                //    prInvoice.branchCreatorName = branch.name;
-                //}
-                //branch reciver
-                if (prInvoice.branchId != null)
-                {
-                    if (prInvoice.branchId > 0)
+                    invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                    if (prInvoice.agentId != null)
                     {
-                        branch = await branchModel.getBranchById((int)prInvoice.branchId);
-                        prInvoice.branchName = branch.name;
+                        Agent agentinv = new Agent();
+                        //  agentinv = vendors.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
+                        agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+                        prInvoice.agentCode = agentinv.code;
+                        //new lines
+                        prInvoice.agentName = agentinv.name;
+                        prInvoice.agentCompany = agentinv.company;
+                    }
+                    else
+                    {
+
+                        prInvoice.agentCode = "-";
+                        //new lines
+                        prInvoice.agentName = "-";
+                        prInvoice.agentCompany = "-";
+                    }
+                    User employ = new User();
+                    employ = await employ.getUserById((int)prInvoice.updateUserId);
+                    prInvoice.uuserName = employ.name;
+                    prInvoice.uuserLast = employ.lastname;
+
+
+                    Branch branch = new Branch();
+                    //branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                    //if (branch.branchId > 0)
+                    //{
+                    //    prInvoice.branchCreatorName = branch.name;
+                    //}
+                    //branch reciver
+                    if (prInvoice.branchId != null)
+                    {
+                        if (prInvoice.branchId > 0)
+                        {
+                            branch = await branchModel.getBranchById((int)prInvoice.branchId);
+                            prInvoice.branchName = branch.name;
+                        }
+                        else
+                        {
+                            prInvoice.branchName = "-";
+                        }
+
                     }
                     else
                     {
                         prInvoice.branchName = "-";
                     }
+                    // end branch reciever
 
+
+                    ReportCls.checkLang();
+                    foreach (var i in invoiceItems)
+                    {
+                        i.price = decimal.Parse(HelpClass.DecTostring(i.price));
+                        i.subTotal = decimal.Parse(HelpClass.DecTostring(i.price * i.quantity));
+                    }
+                    clsReports.purchaseInvoiceReport(invoiceItems, rep, reppath);
+                    clsReports.setReportLanguage(paramarr);
+                    clsReports.Header(paramarr);
+                    paramarr = reportclass.fillSpendingRequest(prInvoice, paramarr);
+
+
+                    //if (prInvoice.invType == "p" || prInvoice.invType == "pw" || prInvoice.invType == "pbd" || prInvoice.invType == "pb" || prInvoice.invType == "pd" || prInvoice.invType == "isd" || prInvoice.invType == "is" || prInvoice.invType == "pbw")
+                    //{
+                    //    CashTransfer cachModel = new CashTransfer();
+                    //    List<PayedInvclass> payedList = new List<PayedInvclass>();
+                    //    payedList = await cachModel.GetPayedByInvId(prInvoice.invoiceId);
+                    //    decimal sump = payedList.Sum(x => x.cash) ;
+                    //    decimal deservd = (decimal)prInvoice.totalNet - sump;
+                    //    //convertter
+                    //    foreach (var p in payedList)
+                    //    {
+                    //        p.cash = decimal.Parse(reportclass.DecTostring(p.cash));
+                    //    }
+                    //    paramarr.Add(new ReportParameter("cashTr", AppSettings.resourcemanagerreport.GetString("trCashType")));
+
+                    //    paramarr.Add(new ReportParameter("sumP", reportclass.DecTostring(sump)));
+                    //    paramarr.Add(new ReportParameter("deserved", reportclass.DecTostring(deservd)));
+                    //    rep.DataSources.Add(new ReportDataSource("DataSetPayedInvclass", payedList));
+
+
+                    //}
+                    //  multiplePaytable(paramarr);
+
+                    rep.SetParameters(paramarr);
+                    rep.Refresh();
                 }
                 else
                 {
-                    prInvoice.branchName = "-";
+  
+                    
+                        Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSaveInvoiceToPreview"), animation: ToasterAnimation.FadeIn);
+
+                    
+
                 }
-                // end branch reciever
-
-
-                ReportCls.checkLang();
-                foreach (var i in invoiceItems)
-                {
-                    i.price = decimal.Parse(HelpClass.DecTostring(i.price));
-                    i.subTotal = decimal.Parse(HelpClass.DecTostring(i.price * i.quantity));
-                }
-                clsReports.purchaseInvoiceReport(invoiceItems, rep, reppath);
-                clsReports.setReportLanguage(paramarr);
-                clsReports.Header(paramarr);
-                paramarr = reportclass.fillSpendingRequest(prInvoice, paramarr);
-
-
-                //if (prInvoice.invType == "p" || prInvoice.invType == "pw" || prInvoice.invType == "pbd" || prInvoice.invType == "pb" || prInvoice.invType == "pd" || prInvoice.invType == "isd" || prInvoice.invType == "is" || prInvoice.invType == "pbw")
-                //{
-                //    CashTransfer cachModel = new CashTransfer();
-                //    List<PayedInvclass> payedList = new List<PayedInvclass>();
-                //    payedList = await cachModel.GetPayedByInvId(prInvoice.invoiceId);
-                //    decimal sump = payedList.Sum(x => x.cash) ;
-                //    decimal deservd = (decimal)prInvoice.totalNet - sump;
-                //    //convertter
-                //    foreach (var p in payedList)
-                //    {
-                //        p.cash = decimal.Parse(reportclass.DecTostring(p.cash));
-                //    }
-                //    paramarr.Add(new ReportParameter("cashTr", AppSettings.resourcemanagerreport.GetString("trCashType")));
-
-                //    paramarr.Add(new ReportParameter("sumP", reportclass.DecTostring(sump)));
-                //    paramarr.Add(new ReportParameter("deserved", reportclass.DecTostring(deservd)));
-                //    rep.DataSources.Add(new ReportDataSource("DataSetPayedInvclass", payedList));
-
-
-                //}
-                //  multiplePaytable(paramarr);
-
-                rep.SetParameters(paramarr);
-                rep.Refresh();
-
             }
         }
         private async void Btn_preview_Click(object sender, RoutedEventArgs e)

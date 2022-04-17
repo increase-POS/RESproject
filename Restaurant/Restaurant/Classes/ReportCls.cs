@@ -1294,10 +1294,14 @@ srb
             }
             else if (invoice.invType == "srbd" || invoice.invType == "srb")
             {
-                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trSpendingRequest") + "Return"));
+                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trSpendingRequestReturn") ));
 
             }
+            else if (invoice.invType == "fbc" )
+            {
+                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trConsumption") ));
 
+            }
             /*
              *srd
 srw

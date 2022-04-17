@@ -700,6 +700,31 @@ namespace Restaurant.Classes
 
             paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trItems")));
         }
+        public static void itemCosting(IEnumerable<Item> items, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+
+            foreach (Item r in items)
+            {
+                r.avgPurchasePrice = decimal.Parse(HelpClass.DecTostring(r.avgPurchasePrice));
+
+                r.price = decimal.Parse(HelpClass.DecTostring(r.price));
+
+                r.priceWithService = decimal.Parse(HelpClass.DecTostring(r.priceWithService));
+
+            }
+
+
+            paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem")));
+            paramarr.Add(new ReportParameter("trPrimeCost", AppSettings.resourcemanagerreport.GetString("trPrimeCost")));
+            paramarr.Add(new ReportParameter("trPrice", AppSettings.resourcemanagerreport.GetString("trPrice")));
+            paramarr.Add(new ReportParameter("trPriceWithService", AppSettings.resourcemanagerreport.GetString("trPriceWithService")));
+
+            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trItemCost")));
+            rep.DataSources.Add(new ReportDataSource("DataSetItem", items));
+        }
         public static void FoodReport(IEnumerable<Item> items, LocalReport rep, string reppath, List<ReportParameter> paramarr,string categoryName)
         {
             string title = AppSettings.resourcemanagerreport.GetString("trFoods");
