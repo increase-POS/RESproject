@@ -645,44 +645,170 @@ namespace Restaurant.View.kitchen
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
-        private void Btn_preview_Click(object sender, RoutedEventArgs e)
+        Invoice prInvoice = new Invoice();
+        List<ReportParameter> paramarr = new List<ReportParameter>();
+        Branch branchModel = new Branch();
+
+        Invoice invoiceModel = new Invoice();
+
+
+        public async Task BuildReport()
+        {
+            if (invoice.invoiceId > 0)
+            {
+
+                prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
+                paramarr = new List<ReportParameter>();
+
+                string reppath = reportclass.SpendingRequestRdlcpath();
+                if (prInvoice.invoiceId > 0)
+                {
+                    invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                    if (prInvoice.agentId != null)
+                    {
+                        Agent agentinv = new Agent();
+                        //  agentinv = vendors.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
+                        agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+                        prInvoice.agentCode = agentinv.code;
+                        //new lines
+                        prInvoice.agentName = agentinv.name;
+                        prInvoice.agentCompany = agentinv.company;
+                    }
+                    else
+                    {
+
+                        prInvoice.agentCode = "-";
+                        //new lines
+                        prInvoice.agentName = "-";
+                        prInvoice.agentCompany = "-";
+                    }
+                    User employ = new User();
+                    employ = await employ.getUserById((int)prInvoice.updateUserId);
+                    prInvoice.uuserName = employ.name;
+                    prInvoice.uuserLast = employ.lastname;
+
+
+                    Branch branch = new Branch();
+                    //branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                    //if (branch.branchId > 0)
+                    //{
+                    //    prInvoice.branchCreatorName = branch.name;
+                    //}
+                    //branch reciver
+                    if (prInvoice.branchId != null)
+                    {
+                        if (prInvoice.branchId > 0)
+                        {
+                            branch = await branchModel.getBranchById((int)prInvoice.branchId);
+                            prInvoice.branchName = branch.name;
+                        }
+                        else
+                        {
+                            prInvoice.branchName = "-";
+                        }
+
+                    }
+                    else
+                    {
+                        prInvoice.branchName = "-";
+                    }
+                    // end branch reciever
+
+
+                    ReportCls.checkLang();
+                    foreach (var i in invoiceItems)
+                    {
+                        i.price = decimal.Parse(HelpClass.DecTostring(i.price));
+                        i.subTotal = decimal.Parse(HelpClass.DecTostring(i.price * i.quantity));
+                    }
+                    clsReports.purchaseInvoiceReport(invoiceItems, rep, reppath);
+                    clsReports.setReportLanguage(paramarr);
+                    clsReports.Header(paramarr);
+                    paramarr = reportclass.fillSpendingRequest(prInvoice, paramarr);
+
+
+                    //if (prInvoice.invType == "p" || prInvoice.invType == "pw" || prInvoice.invType == "pbd" || prInvoice.invType == "pb" || prInvoice.invType == "pd" || prInvoice.invType == "isd" || prInvoice.invType == "is" || prInvoice.invType == "pbw")
+                    //{
+                    //    CashTransfer cachModel = new CashTransfer();
+                    //    List<PayedInvclass> payedList = new List<PayedInvclass>();
+                    //    payedList = await cachModel.GetPayedByInvId(prInvoice.invoiceId);
+                    //    decimal sump = payedList.Sum(x => x.cash) ;
+                    //    decimal deservd = (decimal)prInvoice.totalNet - sump;
+                    //    //convertter
+                    //    foreach (var p in payedList)
+                    //    {
+                    //        p.cash = decimal.Parse(reportclass.DecTostring(p.cash));
+                    //    }
+                    //    paramarr.Add(new ReportParameter("cashTr", AppSettings.resourcemanagerreport.GetString("trCashType")));
+
+                    //    paramarr.Add(new ReportParameter("sumP", reportclass.DecTostring(sump)));
+                    //    paramarr.Add(new ReportParameter("deserved", reportclass.DecTostring(deservd)));
+                    //    rep.DataSources.Add(new ReportDataSource("DataSetPayedInvclass", payedList));
+
+
+                    //}
+                    //  multiplePaytable(paramarr);
+
+                    rep.SetParameters(paramarr);
+                    rep.Refresh();
+                }
+                else
+                {
+
+
+                    Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSaveInvoiceToPreview"), animation: ToasterAnimation.FadeIn);
+
+
+
+                }
+            }
+        }
+        private async void Btn_preview_Click(object sender, RoutedEventArgs e)
         {//preview
             try
             {
-
-                HelpClass.StartAwait(grid_main);
-
-                if (FillCombo.groupObject.HasPermissionAction(reportPermission, FillCombo.groupObjects, "one"))
+                if (invoice.invoiceId > 0)
                 {
-                    #region
-                    if (invoiceItems != null)
-                    {
-                        Window.GetWindow(this).Opacity = 0.2;
-                        /////////////////////
-                        string pdfpath = "";
-                        pdfpath = @"\Thumb\report\temp.pdf";
-                        pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+                    HelpClass.StartAwait(grid_main);
 
-                        BuildReport();
-                        LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                        ///////////////////
-                        wd_previewPdf w = new wd_previewPdf();
-                        w.pdfPath = pdfpath;
-                        if (!string.IsNullOrEmpty(w.pdfPath))
+                    if (FillCombo.groupObject.HasPermissionAction(reportPermission, FillCombo.groupObjects, "one"))
+                    {
+                        #region
+                        if (invoiceItems != null)
                         {
-                    // w.ShowInTaskbar = false;
-                            w.ShowDialog();
-                            w.wb_pdfWebViewer.Dispose();
+                            Window.GetWindow(this).Opacity = 0.2;
+                            /////////////////////
+                            string pdfpath = "";
+                            pdfpath = @"\Thumb\report\temp.pdf";
+                            pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+
+                            await BuildReport();
+                            LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                            ///////////////////
+                            wd_previewPdf w = new wd_previewPdf();
+                            w.pdfPath = pdfpath;
+                            if (!string.IsNullOrEmpty(w.pdfPath))
+                            {
+                                // w.ShowInTaskbar = false;
+                                w.ShowDialog();
+                                w.wb_pdfWebViewer.Dispose();
+                            }
+                            Window.GetWindow(this).Opacity = 1;
                         }
-                        Window.GetWindow(this).Opacity = 1;
+                        //////////////////////////////////////
+                        #endregion
                     }
-                    //////////////////////////////////////
-                    #endregion
+                    else
+                        Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                    HelpClass.EndAwait(grid_main);
+
                 }
                 else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                {
+                    Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSaveInvoiceToPreview"), animation: ToasterAnimation.FadeIn);
 
-                HelpClass.EndAwait(grid_main);
+                }
             }
             catch (Exception ex)
             {
@@ -691,30 +817,7 @@ namespace Restaurant.View.kitchen
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void BuildReport()
-        {
-            List<ReportParameter> paramarr = new List<ReportParameter>();
 
-            string addpath;
-            bool isArabic = ReportCls.checkLang();
-            if (isArabic)
-            {//ItemsExport
-                addpath = @"\Reports\Store\Ar\ArItemsExportReport.rdlc";
-            }
-            else
-                addpath = @"\Reports\Store\En\ItemsExportReport.rdlc";
-            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-            ReportCls.checkLang();
-
-            clsReports.ItemsExportReport(invoiceItems, rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
-            clsReports.Header(paramarr);
-
-            rep.SetParameters(paramarr);
-
-            rep.Refresh();
-        }
         private void Btn_printInvoice_Click(object sender, RoutedEventArgs e)
         {//print
             try
@@ -748,9 +851,9 @@ namespace Restaurant.View.kitchen
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void printExport()
+        private async void printExport()
         {
-            BuildReport();
+            await BuildReport();
 
             this.Dispatcher.Invoke(() =>
             {
@@ -787,10 +890,10 @@ namespace Restaurant.View.kitchen
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void pdfExport()
+        private async void pdfExport()
         {
 
-            BuildReport();
+            await BuildReport();
 
             this.Dispatcher.Invoke(() =>
             {
