@@ -335,6 +335,8 @@ namespace Restaurant.View.reports.kitchenReports
                 x.ITquantity = quantitiesNormal[i].ITquantity - quantitiesReturn[i].ITquantity;
                 i++;
             }
+
+            spendingRequestsQuery = spendingRequestsQuery.Where(s => s.ITquantity != 0).ToList();
         }
 
 
@@ -354,7 +356,7 @@ namespace Restaurant.View.reports.kitchenReports
         #endregion
 
         #region events
-        private void detailsRowinDatagrid(object sender, RoutedEventArgs e)
+        private async void detailsRowinDatagrid(object sender, RoutedEventArgs e)
         {//details
             try
             {
@@ -366,54 +368,25 @@ namespace Restaurant.View.reports.kitchenReports
                         ItemTransferInvoice row = (ItemTransferInvoice)dg_request.SelectedItems[0];
                         if(row.invoiceId > 0)
                         {
-                            BillDetailsPurchase bill = new BillDetailsPurchase();
-                            bill.ID = row.invoiceId;
-                            bill.itemId = row.itemId.Value;
-                            bill.itemUnitId = row.itemUnitId.Value;
-                            bill.Product = "";//////////////////?????????????
-                            bill.Unit = "";/////////////////////////???????????
-                            bill.UnitName = row.unitName;
-                            bill.Count = row.itemsCount.Value;////////?????
-                            bill.Price = row.price.Value;
-                            bill.Total = row.total.Value;
-                            bill.OrderId = 0;////////////////////????????????????
+                            Invoice invoice = new Invoice();
+                            invoice = await invoice.getById(row.invoiceId);
+
                             MainWindow.mainWindow.Btn_kitchen_Click(MainWindow.mainWindow.btn_kitchen,null);
                             uc_kitchen.Instance.UserControl_Loaded(null ,null);
-                            //uc_kitchen.Instance.Btn_spendingRequest_Click(uc_spendingRequest.Instance.);
+                            uc_kitchen.Instance.Btn_spendingRequest_Click(uc_kitchen.Instance.btn_spendingRequest , null);
+                            MainWindow.mainWindow.initializationMainTrack("spendingRequests");
+                            MainWindow.mainWindow.grid_main.Children.Add(uc_spendingRequest.Instance);
+                            uc_spendingRequest.Instance.UserControl_Loaded(uc_spendingRequest.Instance, null);
+                            uc_spendingRequest._InvoiceType = invoice.invType;
+                            uc_spendingRequest._invoiceId = invoice.invoiceId;
+                            uc_spendingRequest.isFromReport = false;
+                            uc_spendingRequest.archived = false;
+                            //setNotifications();
+                            await uc_spendingRequest.Instance.fillInvoiceInputs(invoice);
                         }
                     }
 
                 HelpClass.EndAwait(grid_main);
-                /*
-                 invoice = new Invoice();
-                if (dgInvoice.SelectedIndex != -1)
-                {
-                    ItemTransferInvoice item = dgInvoice.SelectedItem as ItemTransferInvoice;
-                    if (item.invoiceId > 0)
-                    {
-                        invoice = await invoice.GetByInvoiceId(item.invoiceId);
-                        MainWindow.mainWindow.Btn_purchase_Click(MainWindow.mainWindow.btn_purchase, null);
-                        //uc_purchases.Instance.UserControl_Loaded(null, null);
-                        //uc_purchases.Instance.btn_payInvoice_Click(uc_purchases.Instance.btn_payInvoice, null);
-
-                        MainWindow.mainWindow.initializationMainTrack("payInvoice");
-
-                        MainWindow.mainWindow.grid_main.Children.Clear();
-                        MainWindow.mainWindow.grid_main.Children.Add(uc_payInvoice.Instance);
-
-                        //uc_payInvoice.Instance.UserControl_Loaded(uc_payInvoice.Instance, null);
-                        uc_payInvoice._InvoiceType = invoice.invType;
-                        uc_payInvoice.Instance.invoice = invoice;
-                        uc_payInvoice.isFromReport = true;
-                        if (item.archived == 0)
-                            uc_payInvoice.archived = false;
-                        else
-                            uc_payInvoice.archived = true;
-                        await uc_payInvoice.Instance.fillInvoiceInputs(invoice);
-                    }
-                }
-
-                 */
             }
             catch (Exception ex)
             {
@@ -508,68 +481,125 @@ namespace Restaurant.View.reports.kitchenReports
             count = tempName.Count();
             names.AddRange(tempName.Select(nn => nn.branchName));
 
-            var tempRequestsLst = temp.GroupBy(s => s.branchId).Select(s => new
+            //invoice
+            if (selectedTab == 0)
             {
-                reqNormal = s.Where(m => m.invType == "sr").Count(),
-                reqReturn = s.Where(m => m.invType == "srb").Count(),
-            });
-
-            requestNormalLst = tempRequestsLst.Select(m => m.reqNormal);
-            requestReturnLst = tempRequestsLst.Select(m => m.reqReturn);
-
-            List<string> lable = new List<string>();
-            SeriesCollection columnChartData = new SeriesCollection();
-
-            List<decimal> cNormal = new List<decimal>();
-            List<decimal> cReturn = new List<decimal>();
-
-            List<string> titles = new List<string>()
-            {
-               AppSettings.resourcemanager.GetString("trNormal") ,
-               AppSettings.resourcemanager.GetString("trReturn")
-            };
-            int x = 6;
-            if (count <= 6) x = count;
-            for (int i = 0; i < x; i++)
-            {
-                cNormal.Add(requestNormalLst.ToList().Skip(i).FirstOrDefault());
-                cReturn.Add(requestReturnLst.ToList().Skip(i).FirstOrDefault());
-
-                axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
-            }
-
-            if (count > 6)
-            {
-                decimal reqNormalSum = 0 , reqReturnSum = 0;
-                for (int i = 6; i < count; i++)
+                var tempRequestsLst = temp.GroupBy(s => s.branchId).Select(s => new
                 {
-                    reqNormalSum = reqNormalSum + requestNormalLst.ToList().Skip(i).FirstOrDefault();
-                    reqReturnSum = reqReturnSum + requestReturnLst.ToList().Skip(i).FirstOrDefault();
-                }
-                if (!((reqNormalSum == 0) && (reqReturnSum == 0)))
-                {
-                    cNormal.Add(reqNormalSum);
-                    cReturn.Add(reqReturnSum);
-
-                    axcolumn.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
-                }
-            }
-            columnChartData.Add(
-                new StackedColumnSeries
-                {
-                    Values = cNormal.AsChartValues(),
-                    Title = titles[0],
-                    DataLabels = true,
+                    reqNormal = s.Where(m => m.invType == "sr").Count(),
+                    reqReturn = s.Where(m => m.invType == "srb").Count(),
                 });
-            columnChartData.Add(
-               new StackedColumnSeries
-               {
-                   Values = cReturn.AsChartValues(),
-                   Title = titles[1],
-                   DataLabels = true,
-               });
-            DataContext = this;
-            cartesianChart.Series = columnChartData;
+
+                requestNormalLst = tempRequestsLst.Select(m => m.reqNormal);
+                requestReturnLst = tempRequestsLst.Select(m => m.reqReturn);
+
+                List<string> lable = new List<string>();
+                SeriesCollection columnChartData = new SeriesCollection();
+
+                List<decimal> cNormal = new List<decimal>();
+                List<decimal> cReturn = new List<decimal>();
+
+                List<string> titles = new List<string>()
+                {
+                   AppSettings.resourcemanager.GetString("trNormal") ,
+                   AppSettings.resourcemanager.GetString("trReturn")
+                };
+                int x = 6;
+                if (count <= 6) x = count;
+                for (int i = 0; i < x; i++)
+                {
+                    cNormal.Add(requestNormalLst.ToList().Skip(i).FirstOrDefault());
+                    cReturn.Add(requestReturnLst.ToList().Skip(i).FirstOrDefault());
+
+                    axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
+                }
+
+                if (count > 6)
+                {
+                    decimal reqNormalSum = 0, reqReturnSum = 0;
+                    for (int i = 6; i < count; i++)
+                    {
+                        reqNormalSum = reqNormalSum + requestNormalLst.ToList().Skip(i).FirstOrDefault();
+                        reqReturnSum = reqReturnSum + requestReturnLst.ToList().Skip(i).FirstOrDefault();
+                    }
+                    if (!((reqNormalSum == 0) && (reqReturnSum == 0)))
+                    {
+                        cNormal.Add(reqNormalSum);
+                        cReturn.Add(reqReturnSum);
+
+                        axcolumn.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
+                    }
+                }
+                columnChartData.Add(
+                    new StackedColumnSeries
+                    {
+                        Values = cNormal.AsChartValues(),
+                        Title = titles[0],
+                        DataLabels = true,
+                    });
+                columnChartData.Add(
+                   new StackedColumnSeries
+                   {
+                       Values = cReturn.AsChartValues(),
+                       Title = titles[1],
+                       DataLabels = true,
+                   });
+                DataContext = this;
+                cartesianChart.Series = columnChartData;
+            }
+            //items
+            else if (selectedTab == 1)
+            {
+                var tempRequestsLst = temp.GroupBy(s => s.branchId).Select(s => new
+                {
+                    reqNormal = s.Count()
+                });
+
+                requestNormalLst = tempRequestsLst.Select(m => m.reqNormal);
+
+                List<string> lable = new List<string>();
+                SeriesCollection columnChartData = new SeriesCollection();
+
+                List<decimal> cNormal = new List<decimal>();
+
+                List<string> titles = new List<string>()
+                {
+                   AppSettings.resourcemanager.GetString("trItems") ,
+                };
+                int x = 6;
+                if (count <= 6) x = count;
+                for (int i = 0; i < x; i++)
+                {
+                    cNormal.Add(requestNormalLst.ToList().Skip(i).FirstOrDefault());
+
+                    axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
+                }
+
+                if (count > 6)
+                {
+                    decimal reqNormalSum = 0;
+                    for (int i = 6; i < count; i++)
+                    {
+                        reqNormalSum = reqNormalSum + requestNormalLst.ToList().Skip(i).FirstOrDefault();
+                    }
+                    if (reqNormalSum != 0)
+                    {
+                        cNormal.Add(reqNormalSum);
+
+                        axcolumn.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
+                    }
+                }
+                columnChartData.Add(
+                    new StackedColumnSeries
+                    {
+                        Values = cNormal.AsChartValues(),
+                        Title = titles[0],
+                        DataLabels = true,
+                    });
+                
+                DataContext = this;
+                cartesianChart.Series = columnChartData;
+            }
         }
 
         private void fillPieChart()
@@ -580,55 +610,110 @@ namespace Restaurant.View.reports.kitchenReports
 
             var temp = spendingRequestsQuery;
 
-            var titleTemp = temp.GroupBy(m => m.ITitemName);
-            titles.AddRange(titleTemp.Select(jj => jj.Key));
-            var result = temp.GroupBy(s => s.ITitemUnitId).Select(s => new { itemId = s.Key, sum = s.Sum(g => (int)g.ITquantity) });
-            x = result.Select(m => m.sum);
-
-            SeriesCollection piechartData = new SeriesCollection();
-
-            int xCount = 6;
-            if (x.Count() <= 6) xCount = x.Count();
-            for (int i = 0; i < xCount; i++)
+            if (selectedTab == 0)
             {
-                List<int> final = new List<int>();
-                List<string> lable = new List<string>();
-                final.Add(x.ToList().Skip(i).FirstOrDefault());
-                piechartData.Add(
-                  new PieSeries
-                  {
-                      Values = final.AsChartValues(),
-                      Title = titles.Skip(i).FirstOrDefault(),
-                      DataLabels = true,
-                  }
-              );
-            }
+                var titleTemp = temp.GroupBy(m => m.branchName);
+                titles.AddRange(titleTemp.Select(jj => jj.Key));
+                var result = temp.GroupBy(s => s.branchName).Select(s => new { branchName = s.Key, sum = s.Sum(g => (int)g.count) });
+                x = result.Select(m => m.sum);
 
-            if (x.Count() > 6)
-            {
-                int xSum = 0;
-                for (int i = 6; i < x.Count(); i++)
-                {
-                    xSum = xSum + x.ToList().Skip(i).FirstOrDefault();
-                }
+                SeriesCollection piechartData = new SeriesCollection();
 
-                if (xSum > 0)
+                int xCount = 6;
+                if (x.Count() <= 6) xCount = x.Count();
+                for (int i = 0; i < xCount; i++)
                 {
                     List<int> final = new List<int>();
                     List<string> lable = new List<string>();
-                    final.Add(xSum);
+                    final.Add(x.ToList().Skip(i).FirstOrDefault());
                     piechartData.Add(
                       new PieSeries
                       {
                           Values = final.AsChartValues(),
-                          Title = AppSettings.resourcemanager.GetString("trOthers"),
+                          Title = titles.Skip(i).FirstOrDefault(),
                           DataLabels = true,
                       }
                   );
                 }
 
+                if (x.Count() > 6)
+                {
+                    int xSum = 0;
+                    for (int i = 6; i < x.Count(); i++)
+                    {
+                        xSum = xSum + x.ToList().Skip(i).FirstOrDefault();
+                    }
+
+                    if (xSum > 0)
+                    {
+                        List<int> final = new List<int>();
+                        List<string> lable = new List<string>();
+                        final.Add(xSum);
+                        piechartData.Add(
+                          new PieSeries
+                          {
+                              Values = final.AsChartValues(),
+                              Title = AppSettings.resourcemanager.GetString("trOthers"),
+                              DataLabels = true,
+                          }
+                      );
+                    }
+
+                }
+                chart1.Series = piechartData;
             }
-            chart1.Series = piechartData;
+            else if (selectedTab == 1)
+            {
+                var titleTemp = temp.GroupBy(m => m.ITitemUnitName1);
+                titles.AddRange(titleTemp.Select(jj => jj.Key));
+                var result = temp.GroupBy(s => s.ITitemUnitName1).Select(s => new { ITitemUnitName1 = s.Key, sum = s.Sum(g => (int)g.ITquantity) });
+                x = result.Select(m => m.sum);
+
+                SeriesCollection piechartData = new SeriesCollection();
+
+                int xCount = 6;
+                if (x.Count() <= 6) xCount = x.Count();
+                for (int i = 0; i < xCount; i++)
+                {
+                    List<int> final = new List<int>();
+                    List<string> lable = new List<string>();
+                    final.Add(x.ToList().Skip(i).FirstOrDefault());
+                    piechartData.Add(
+                      new PieSeries
+                      {
+                          Values = final.AsChartValues(),
+                          Title = titles.Skip(i).FirstOrDefault(),
+                          DataLabels = true,
+                      }
+                  );
+                }
+
+                if (x.Count() > 6)
+                {
+                    int xSum = 0;
+                    for (int i = 6; i < x.Count(); i++)
+                    {
+                        xSum = xSum + x.ToList().Skip(i).FirstOrDefault();
+                    }
+
+                    if (xSum > 0)
+                    {
+                        List<int> final = new List<int>();
+                        List<string> lable = new List<string>();
+                        final.Add(xSum);
+                        piechartData.Add(
+                          new PieSeries
+                          {
+                              Values = final.AsChartValues(),
+                              Title = AppSettings.resourcemanager.GetString("trOthers"),
+                              DataLabels = true,
+                          }
+                      );
+                    }
+
+                }
+                chart1.Series = piechartData;
+            }
         }
 
         private void fillRowChart()
@@ -648,7 +733,6 @@ namespace Restaurant.View.reports.kitchenReports
 
             MyAxis.Labels = new List<string>();
             List<string> names = new List<string>();
-            List<CashTransferSts> resultList = new List<CashTransferSts>();
 
             SeriesCollection rowChartData = new SeriesCollection();
 
@@ -670,8 +754,16 @@ namespace Restaurant.View.reports.kitchenReports
                     {
                         var firstOfThisMonth = new DateTime(year, month, 1);
                         var firstOfNextMonth = firstOfThisMonth.AddMonths(1);
-                        var drawQuantity = spendingRequestsQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Select(s => s.ITitemName).Count();
-                        orderLst.Add(drawQuantity);
+                        if (selectedTab == 0)
+                        {
+                            var drawQuantity = spendingRequestsQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Select(s => s.ITitemUnitName1).Count();
+                            orderLst.Add(drawQuantity);
+                        }
+                        else if (selectedTab == 1)
+                        {
+                            var drawQuantity = spendingRequestsQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Count();
+                            orderLst.Add(drawQuantity);
+                        }
                         MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
 
                         if (year == endYear && month == endMonth)
@@ -692,18 +784,30 @@ namespace Restaurant.View.reports.kitchenReports
                 {
                     var firstOfThisYear = new DateTime(year, 1, 1);
                     var firstOfNextMYear = firstOfThisYear.AddYears(1);
-                    var drawQuantity = spendingRequestsQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Select(s => s.ITitemName).Count();
-
-                    orderLst.Add(drawQuantity);
-
+                    if (selectedTab == 0)
+                    {
+                        var drawQuantity = spendingRequestsQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Select(s => s.ITitemUnitName1).Count();
+                        orderLst.Add(drawQuantity);
+                    }
+                    else if (selectedTab == 1)
+                    {
+                        var drawQuantity = spendingRequestsQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Count();
+                        orderLst.Add(drawQuantity);
+                    }
                     MyAxis.Labels.Add(year.ToString());
                 }
             }
+            string _title = "";
+            if (selectedTab == 0)
+                _title = AppSettings.resourcemanager.GetString("trSpendingRequest") + "/" + AppSettings.resourcemanager.GetString("trCount");
+            else if(selectedTab == 1)
+                _title = AppSettings.resourcemanager.GetString("trItem") + "/" + AppSettings.resourcemanager.GetString("trCount");
+
             rowChartData.Add(
           new LineSeries
           {
               Values = orderLst.AsChartValues(),
-              Title = AppSettings.resourcemanager.GetString("trSpendingRequest") + "/" + AppSettings.resourcemanager.GetString("trQuantity")
+              Title = _title
           });
 
             DataContext = this;
