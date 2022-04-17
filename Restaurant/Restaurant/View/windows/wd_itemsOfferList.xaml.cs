@@ -74,17 +74,17 @@ namespace Restaurant.View.windows
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_offerList);
+            try
+            {
+                HelpClass.StartAwait(grid_offerList);
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
                 { 
-        grid_offerList.FlowDirection = FlowDirection.LeftToRight; }
+                  grid_offerList.FlowDirection = FlowDirection.LeftToRight; }
                 else
                 {
-  grid_offerList.FlowDirection = FlowDirection.RightToLeft; }
+                 grid_offerList.FlowDirection = FlowDirection.RightToLeft; }
 
                 translat();
                 #endregion
@@ -92,20 +92,22 @@ namespace Restaurant.View.windows
                 offer = await offerModel.getOfferById(offerId);
 
                 allItemsSource = await itemModel.Getall();
+                allItemsSource = allItemsSource.Where(x => x.unitName == "saleUnit").ToList();
                 selectedItemsSource = await itemUnitOffer.GetItemsByOfferId(offerId);
 
                 allItems.AddRange(allItemsSource);
 
-                foreach (var i in allItems)
-                {
-                    i.itemName = i.itemName + "-" + i.unitName;
-                }
+                //foreach (var i in allItems)
+                //{
+                //    i.itemName = i.itemName + "-" + i.unitName;
+                //}
 
                 selectedItems.AddRange(selectedItemsSource);
-                foreach (var i in selectedItems)
-                {
-                    i.itemName = i.itemName + "-" + i.unitName;
-                }
+                //foreach (var i in selectedItems)
+                //{
+                //    i.itemName = i.itemName + "-" + i.unitName;
+                //}
+
                 //remove selected items from all items
                 foreach (var i in selectedItems)
                 {
@@ -121,15 +123,15 @@ namespace Restaurant.View.windows
                 dg_selectedItems.SelectedValuePath = "itemUnitId";
                 dg_selectedItems.DisplayMemberPath = "itemName";
 
-            //    HelpClass.EndAwait(grid_offerList);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_offerList);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
-
+            HelpClass.EndAwait(grid_offerList);
         }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_offerList);
+                HelpClass.ExceptionMessage(ex, this);
+        }
+
+    }
 
         private void translat()
         {

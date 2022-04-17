@@ -197,7 +197,7 @@
                 </Button>
                 <Border Grid.Column="4" Height="30" BorderBrush="{StaticResource Grey}" BorderThickness="1,0,0,0" Margin="5" VerticalAlignment="Center" ></Border>
                 <StackPanel Grid.Column="5" VerticalAlignment="Center" Margin="5">
-                    <TextBlock Name="txtTime" Text="05:51PM" HorizontalAlignment="Center" Foreground="{StaticResource SecondColor}"  FontSize="12" ></TextBlock>
+                    <TextBlock Name="txtTime" Text="00:00 PM" HorizontalAlignment="Center" Foreground="{StaticResource SecondColor}"  FontSize="12" ></TextBlock>
                     <TextBlock Name="txtDate" Text="2021/5/1" Foreground="{StaticResource SecondColor}" HorizontalAlignment="Center"  FontSize="12" ></TextBlock>
                 </StackPanel>
                 <Border Grid.Column="6" Height="30" BorderBrush="{StaticResource Grey}" BorderThickness="1,0,0,0" Margin="5" VerticalAlignment="Center" ></Border>

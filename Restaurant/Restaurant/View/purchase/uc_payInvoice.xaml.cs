@@ -1193,7 +1193,8 @@ namespace Restaurant.View.purchase
                         dp_desrvedDate.IsEnabled = false;
                         gd_card.Visibility = Visibility.Visible;
                         // update validate list
-                        requiredControlList = new List<string> {"card", "processNum" };
+                        //requiredControlList = new List<string> {"card", "processNum" };
+                        requiredControlList = new List<string> {"card"};
                         break;
                     case 3://multiple
                         gd_card.Visibility = Visibility.Collapsed;

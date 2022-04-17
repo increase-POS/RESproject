@@ -244,6 +244,7 @@ namespace Restaurant.View.accounts
             if (card.hasProcessNum)
             {
                 tb_docNumCard.Visibility = Visibility.Visible;
+                brd_docNumCard.Visibility = Visibility.Visible;
                 hasProcessNum = true;
                 if (!requiredControlList.Contains("processNum"))
                     requiredControlList.Add("processNum");
@@ -253,6 +254,7 @@ namespace Restaurant.View.accounts
             else
             {
                 tb_docNumCard.Visibility = Visibility.Collapsed;
+                brd_docNumCard.Visibility = Visibility.Collapsed;
                 hasProcessNum = false;
                 if (requiredControlList.Contains("processNum"))
                     requiredControlList.Remove("processNum");
@@ -639,7 +641,15 @@ namespace Restaurant.View.accounts
                         }
                         else
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    }
+                        }
+                        else
+                        {
+                            // validate card
+                            if (p_error_card.Visibility == Visibility.Visible)
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectCreditCard"), animation: ToasterAnimation.FadeIn);
+                            }
+                        }
                         #endregion
                     }
                     else //box is closed
@@ -953,8 +963,8 @@ namespace Restaurant.View.accounts
                         bdr_cheque.Visibility = Visibility.Collapsed;
                         tb_docNumCheque.Visibility = Visibility.Collapsed;
                         bdr_card.Visibility = Visibility.Visible;
-                        if (!requiredControlList.Contains("processNum"))
-                            requiredControlList.Add("processNum");
+                        //if (!requiredControlList.Contains("processNum"))
+                        //    requiredControlList.Add("processNum");
                         if (!requiredControlList.Contains("card"))
                             requiredControlList.Add("card");
                         try
@@ -1628,6 +1638,7 @@ namespace Restaurant.View.accounts
 
             tb_cash.IsReadOnly = false;
             tb_docNumCard.Visibility = Visibility.Collapsed;
+            brd_docNumCard.Visibility = Visibility.Collapsed;
             grid_cheque.Visibility = Visibility.Collapsed;
 
             // last 

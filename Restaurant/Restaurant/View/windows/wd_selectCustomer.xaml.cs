@@ -152,23 +152,38 @@ namespace Restaurant.View.windows
                     if (agentToPayCash.membershipStatus == "valid")
                     {
                         sp_membership.Opacity = 1;
-                        // warning expir in 7 days
-                        // شرط ان يكون شهري او سنوي وتعديل حساب الارقام
-                        if ((DateTime.Now.Day + 7) < agentToPayCash.endDate.Value.Day)
-                        {
-                            grid_membershipInctive.Visibility = Visibility.Visible;
-                            TimeSpan expire = agentToPayCash.endDate.Value - DateTime.Now;
-                            double expireDays = Math.Round(expire.TotalDays, MidpointRounding.AwayFromZero);
 
-                            txt_membershipInctive.Text = AppSettings.resourcemanager.GetString("subscriptionWillBeExpiredIn") + " "
-                                +( (expireDays != 0)? expireDays.ToString() : "this")
-                                + " " + AppSettings.resourcemanager.GetString("trDay");
+                        #region warning expir in 7 days
+                        if (agentToPayCash.subscriptionType == "m" || agentToPayCash.subscriptionType == "y")
+                        {
+                            TimeSpan expireDate = agentToPayCash.endDate.Value - DateTime.Now;
+                            //double days = Math.Round(expireDate.TotalDays, MidpointRounding.AwayFromZero);
+                            //double days = (expireDate.TotalDays == 0)? (int)expireDate.TotalDays : (int) expireDate.TotalDays +1;
+                            double days = (int)expireDate.TotalDays;
+                            if (days < 7)
+                            {
+                                grid_membershipInctive.Visibility = Visibility.Visible;
+                                TimeSpan expire = agentToPayCash.endDate.Value - DateTime.Now;
+                                double expireDays = Math.Round(expire.TotalDays, MidpointRounding.AwayFromZero);
+                                //double expireDays = (expire.TotalDays == 0) ? (int)expire.TotalDays : (int)expire.TotalDays + 1;
+
+                                txt_membershipInctive.Text = AppSettings.resourcemanager.GetString("subscriptionWillBeExpiredIn") + " "
+                                    + ((expireDays == 0) ? AppSettings.resourcemanager.GetString("thisDay")
+                                    : (expireDays + 1).ToString() + " " + AppSettings.resourcemanager.GetString("trDay"));
+                            }
+                            else
+                            {
+                                grid_membershipInctive.Visibility = Visibility.Collapsed;
+                                txt_membershipInctive.Text = "";
+                            }
                         }
                         else
                         {
                             grid_membershipInctive.Visibility = Visibility.Collapsed;
                             txt_membershipInctive.Text = "";
                         }
+                        #endregion
+
                     }
                     else
                     {

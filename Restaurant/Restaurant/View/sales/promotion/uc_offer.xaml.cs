@@ -293,9 +293,10 @@ namespace Restaurant.View.sales.promotion
             {
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update"))
                 {
-                    HelpClass.StartAwait(grid_main);
                     if (offer.offerId > 0)
                     {
+                        HelpClass.StartAwait(grid_main);
+
                         #region validate
                         bool isCodeExist = await HelpClass.isCodeExist(tb_code.Text, "", "Offer", offer.offerId);
 
@@ -359,11 +360,11 @@ namespace Restaurant.View.sales.promotion
                                 #endregion
                             }
                         }
+                    HelpClass.EndAwait(grid_main);
                     }
                     else
-                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("selectOfferFirst"), animation: ToasterAnimation.FadeIn);
 
-                    HelpClass.EndAwait(grid_main);
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -446,6 +447,9 @@ namespace Restaurant.View.sales.promotion
         {//items
             try
             {
+                if(offer.offerId > 0)
+                {
+
                 HelpClass.StartAwait(grid_main);
                
                 if (FillCombo.groupObject.HasPermissionAction(itemsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
@@ -471,6 +475,10 @@ namespace Restaurant.View.sales.promotion
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
+                }
+                else
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("selectOfferFirst"), animation: ToasterAnimation.FadeIn);
+
             }
             catch (Exception ex)
             {

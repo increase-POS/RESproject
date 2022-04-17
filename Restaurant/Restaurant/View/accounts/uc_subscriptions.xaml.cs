@@ -140,12 +140,14 @@ namespace Restaurant.View.accounts
             if (card.hasProcessNum)
             {
                 tb_processNum.Visibility = Visibility.Visible;
+                brd_processNum.Visibility = Visibility.Visible;
                 hasProcessNum = true;
                 requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType", "processNum" };
             }
             else
             {
                 tb_processNum.Visibility = Visibility.Collapsed;
+                brd_processNum.Visibility = Visibility.Collapsed;
                 hasProcessNum = false;
                 requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType" };
             }
@@ -313,6 +315,8 @@ namespace Restaurant.View.accounts
             dg_subscription.Columns[4].Header = AppSettings.resourcemanager.GetString("trAmount");
 
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
+            chb_all.ToolTip = AppSettings.resourcemanager.GetString("trAll");
+            txt_totalTitle.ToolTip = AppSettings.resourcemanager.GetString("trTotal");
 
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
@@ -607,6 +611,7 @@ namespace Restaurant.View.accounts
             try
             {
                 HelpClass.validate(requiredControlList, this);
+                   
                 {
                     string name = sender.GetType().Name;
                     if (name == "TextBox")
@@ -622,6 +627,7 @@ namespace Restaurant.View.accounts
                         {
                         }
                 }
+                
             }
             catch (Exception ex)
             {
@@ -669,6 +675,7 @@ namespace Restaurant.View.accounts
                     requiredControlList.Remove("processNum");
                 if (requiredControlList.Contains("card"))
                     requiredControlList.Remove("card");
+
                 switch (cb_paymentProcessType.SelectedIndex)
                 {
                     case 0://cash
@@ -696,8 +703,8 @@ namespace Restaurant.View.accounts
                         bdr_cheque.Visibility = Visibility.Collapsed;
                         bdr_card.Visibility = Visibility.Visible;
 
-                        if (!requiredControlList.Contains("processNum"))
-                            requiredControlList.Add("processNum");
+                        //if (!requiredControlList.Contains("processNum"))
+                        //    requiredControlList.Add("processNum");
                         if (!requiredControlList.Contains("card"))
                             requiredControlList.Add("card");
                         try
@@ -746,92 +753,101 @@ namespace Restaurant.View.accounts
                     if (MainWindow.posLogin.boxState == "o") // box is open
                     {
                         if (HelpClass.validate(requiredControlList, this))
-                    {
-                        #region cashTransfer
-
-                        if (bdr_cheque.Visibility == Visibility.Visible)
-                            _docNum = tb_docNumCheque.Text;
-                        else if(bdr_card.Visibility == Visibility.Visible)
-                            _docNum = tb_processNum.Text;
-
-                        CashTransfer cashtrans = new CashTransfer();
-
-                        cashtrans.transType = "d";
-                        cashtrans.posId = MainWindow.posLogin.posId;
-                        cashtrans.userId = null;
-                        cashtrans.agentId = (int)cb_customerId.SelectedValue;
-                        cashtrans.invId = null;
-                        cashtrans.transNum = await cashtrans.generateCashNumber(cashtrans.transType + "c");////????????
-                        cashtrans.cash = decimal.Parse(tb_amount.Text);
-                        cashtrans.createUserId = MainWindow.userLogin.userId;
-                        cashtrans.updateUserId = MainWindow.userLogin.userId;
-                        cashtrans.notes = "";
-                        cashtrans.posIdCreator = null;
-                        cashtrans.isConfirm = 0;
-                        cashtrans.cashTransIdSource = null;
-                        cashtrans.side = "c";
-                        cashtrans.docName = "";
-                        cashtrans.docNum = _docNum;
-                        cashtrans.docImage = "";
-                        cashtrans.bankId = null;
-                        cashtrans.bankName = "";
-                        cashtrans.agentName = null;
-                        cashtrans.usersName = null;
-                        cashtrans.processType = cb_paymentProcessType.SelectedValue.ToString();
-                        if(bdr_card.Visibility == Visibility.Visible)
-                            cashtrans.cardId = _SelectedCard;
-                        cashtrans.shippingCompanyId = null;
-                        #endregion
-
-                        #region agentCash
-                        subscription = new AgentMembershipCash();
-
-                        subscription.agentMembershipsId = 0;
-                        subscription.subscriptionFeesId = _subscriptionFeesId;
-                        subscription.cashTransId = cashtrans.cashTransId;
-                        subscription.membershipId = ag.membershipId;
-                        subscription.agentId = (int)cb_customerId.SelectedValue;
-                        subscription.startDate = ag.startDate;
-                        subscription.EndDate = ag.updateDate;
-                        subscription.notes = "";
-                        subscription.createUserId = MainWindow.userLogin.userId;
-                        subscription.updateUserId = MainWindow.userLogin.userId;
-                        subscription.isActive = 1;
-                        subscription.Amount = decimal.Parse(tb_amount.Text);
-                        try
                         {
-                            subscription.discountValue = decimal.Parse(tb_discount.Text);
-                        }
-                        catch
-                        {
-                            subscription.discountValue = 0;
-                        }
-                        subscription.total = decimal.Parse(txt_total.Text);
-                        subscription.monthsCount = _monthCount;
-                        subscription.agentName = ag.agentName;
-                        subscription.agentcode = ag.agentcode;
-                        subscription.agentcompany = ag.agentcompany;
-                        subscription.agenttype = ag.agenttype;
-                        subscription.membershipName = ag.membershipName;
-                        subscription.membershipcode = ag.membershipcode;
-                        subscription.transType = cashtrans.transType;
-                        subscription.transNum = cashtrans.transNum;
-                        subscription.membershipisActive = ag.membershipisActive;
-                        subscription.subscriptionType = ag.subscriptionType;
-                        #endregion
+                            #region cashTransfer
 
-                        int res = await subscription.Savepay(subscription, cashtrans);
+                            if (bdr_cheque.Visibility == Visibility.Visible)
+                                _docNum = tb_docNumCheque.Text;
+                            else if (bdr_card.Visibility == Visibility.Visible)
+                                _docNum = tb_processNum.Text;
 
-                        if (res <= 0)
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            CashTransfer cashtrans = new CashTransfer();
+
+                            cashtrans.transType = "d";
+                            cashtrans.posId = MainWindow.posLogin.posId;
+                            cashtrans.userId = null;
+                            cashtrans.agentId = (int)cb_customerId.SelectedValue;
+                            cashtrans.invId = null;
+                            cashtrans.transNum = await cashtrans.generateCashNumber(cashtrans.transType + "c");////????????
+                            cashtrans.cash = decimal.Parse(tb_amount.Text);
+                            cashtrans.createUserId = MainWindow.userLogin.userId;
+                            cashtrans.updateUserId = MainWindow.userLogin.userId;
+                            cashtrans.notes = "";
+                            cashtrans.posIdCreator = null;
+                            cashtrans.isConfirm = 0;
+                            cashtrans.cashTransIdSource = null;
+                            cashtrans.side = "c";
+                            cashtrans.docName = "";
+                            cashtrans.docNum = _docNum;
+                            cashtrans.docImage = "";
+                            cashtrans.bankId = null;
+                            cashtrans.bankName = "";
+                            cashtrans.agentName = null;
+                            cashtrans.usersName = null;
+                            cashtrans.processType = cb_paymentProcessType.SelectedValue.ToString();
+                            if (bdr_card.Visibility == Visibility.Visible)
+                                cashtrans.cardId = _SelectedCard;
+                            cashtrans.shippingCompanyId = null;
+                            #endregion
+
+                            #region agentCash
+                            subscription = new AgentMembershipCash();
+
+                            subscription.agentMembershipsId = 0;
+                            subscription.subscriptionFeesId = _subscriptionFeesId;
+                            subscription.cashTransId = cashtrans.cashTransId;
+                            subscription.membershipId = ag.membershipId;
+                            subscription.agentId = (int)cb_customerId.SelectedValue;
+                            subscription.startDate = ag.startDate;
+                            subscription.EndDate = ag.updateDate;
+                            subscription.notes = "";
+                            subscription.createUserId = MainWindow.userLogin.userId;
+                            subscription.updateUserId = MainWindow.userLogin.userId;
+                            subscription.isActive = 1;
+                            subscription.Amount = decimal.Parse(tb_amount.Text);
+                            try
+                            {
+                                subscription.discountValue = decimal.Parse(tb_discount.Text);
+                            }
+                            catch
+                            {
+                                subscription.discountValue = 0;
+                            }
+                            subscription.total = decimal.Parse(txt_total.Text);
+                            subscription.monthsCount = _monthCount;
+                            subscription.agentName = ag.agentName;
+                            subscription.agentcode = ag.agentcode;
+                            subscription.agentcompany = ag.agentcompany;
+                            subscription.agenttype = ag.agenttype;
+                            subscription.membershipName = ag.membershipName;
+                            subscription.membershipcode = ag.membershipcode;
+                            subscription.transType = cashtrans.transType;
+                            subscription.transNum = cashtrans.transNum;
+                            subscription.membershipisActive = ag.membershipisActive;
+                            subscription.subscriptionType = ag.subscriptionType;
+                            #endregion
+
+                            int res = await subscription.Savepay(subscription, cashtrans);
+
+                            if (res <= 0)
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            else
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+                                await RefreshSubscriptionsList();
+                                await fillCustomersToPay();
+                                await Search();
+                            }
+                        }
                         else
                         {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                            
-                            await RefreshSubscriptionsList();
-                            await Search();
+                            // validate card
+                            if (p_error_card.Visibility == Visibility.Visible)
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectCreditCard"), animation: ToasterAnimation.FadeIn);
+                            }
                         }
-                    }
                     }
                     else //box is closed
                     {

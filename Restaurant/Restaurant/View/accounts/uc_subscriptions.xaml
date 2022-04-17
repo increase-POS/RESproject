@@ -596,31 +596,31 @@
                                                    HorizontalAlignment="Left" VerticalAlignment="Center" />
                                         <Path Grid.Row="1"  Grid.Column="2"  x:Name="p_error_card" Fill="#E81123" Stretch="Fill"
                                               Margin="2.5" HorizontalAlignment="Right"  Visibility="Collapsed"   
-                                              VerticalAlignment="Center" Width="15"  Height="15"   Data="{StaticResource infoCircle}">
+                                              VerticalAlignment="Center" Width="0"  Height="0"   Data="{StaticResource infoCircle}">
                                             <Path.ToolTip>
                                                 <ToolTip x:Name="tt_errorCard"   Style="{StaticResource ToolTipError}"/>
                                             </Path.ToolTip>
                                         </Path>
                                     </Grid>
-                                    <TextBox Grid.Row="1" x:Name="tb_processNum" MaxLength="20"  Visibility="Collapsed"
-                                             materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                             Text="{Binding docNum, Mode=OneWay}" Margin="5"
-                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             Grid.Column="2" Padding="10,0,5,0" Height="40" BorderThickness="1" 
-                                             PreviewKeyDown="Spaces_PreviewKeyDown" 
-                                             PreviewTextInput="Code_PreviewTextInput" 
-                                             TextChanged="ValidateEmpty_TextChange"
-                                             materialDesign:HintAssist.Hint="Process Number..."  
-                                             Foreground="#4E4E4E"  
-                                             Background="#f8f8f8" BorderBrush="#f8f8f8" />
-                                    <Path Grid.Row="1" x:Name="p_error_processNum" Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
-                                          HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
-                                          VerticalAlignment="Center" Width="15"  Height="15"
-                                          Data="{StaticResource infoCircle}">
-                                        <Path.ToolTip>
-                                            <ToolTip x:Name="tt_errorProcessNum" Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
-                                        </Path.ToolTip>
-                                    </Path>
+                                    <Border x:Name="brd_processNum" Grid.Row="1" Grid.Column="2" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                        <Grid>
+                                        <TextBox Grid.Row="1" x:Name="tb_processNum" MaxLength="20"  Visibility="Collapsed"
+                                                 materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                                 Text="{Binding docNum, Mode=OneWay}"  
+                                                 BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
+                                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                 Grid.Column="2" Padding="10,0,5,0" Height="40" 
+                                                 PreviewKeyDown="Spaces_PreviewKeyDown" 
+                                                 PreviewTextInput="Code_PreviewTextInput" 
+                                                 TextChanged="ValidateEmpty_TextChange"
+                                                 materialDesign:HintAssist.Hint="Process Number..."  
+                                                 Foreground="#4E4E4E"   />
+                                            <Path Grid.Row="1" x:Name="p_error_processNum" Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
+                                              HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
+                                              VerticalAlignment="Center" Width="15"  Height="15"
+                                              Data="{StaticResource infoCircle}"/>  
+                                        </Grid>
+                                    </Border>
                                 </Grid>
                             </Border>
                         </StackPanel>
