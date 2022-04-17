@@ -603,7 +603,7 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
           
             //title
-            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trUsers")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trDeliveryManagement")));
             //table columns
             paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
             paramarr.Add(new ReportParameter("deliveryMan", AppSettings.resourcemanagerreport.GetString("deliveryMan")));
@@ -617,17 +617,53 @@ namespace Restaurant.Classes
 
         }
 
+        public static void ShippingCompanies(IEnumerable<ShippingCompanies> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
 
+            //title
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trShippingCompanies")));
+            //table columns
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trRealDeliveryCost", AppSettings.resourcemanagerreport.GetString("trRealDeliveryCost")));
+            paramarr.Add(new ReportParameter("trDeliveryCost", AppSettings.resourcemanagerreport.GetString("trDeliveryCost")));
+            paramarr.Add(new ReportParameter("trDeliveryType", AppSettings.resourcemanagerreport.GetString("trDeliveryType")));
+            foreach (var row in Query)
+            {
+                
+                row.realDeliveryCost = decimal.Parse(HelpClass.DecTostring(row.realDeliveryCost));
+                row.deliveryCost = decimal.Parse(HelpClass.DecTostring(row.deliveryCost));
+                row.deliveryType = DeliveryTypeConvert(row.deliveryType);
+                //deliveryTypeConverter
+            }
+            rep.DataSources.Add(new ReportDataSource("DataSet", Query));
+
+        }
+        public static string DeliveryTypeConvert(string deliveryType)
+        {
+           
+            switch (deliveryType)
+            {
+                case "local": return AppSettings.resourcemanagerreport.GetString("trLocaly");
+                //break;
+                case "com": return AppSettings.resourcemanagerreport.GetString("trShippingCompany");
+                //break;
+                default: return AppSettings.resourcemanagerreport.GetString("");
+                    //break;
+            }
+        }
         public static string preparingOrderStatusConvert(string status)
         {
             switch (status)
             {
-                case "Listed": return AppSettings.resourcemanager.GetString("trListed");
-                case "Preparing": return AppSettings.resourcemanager.GetString("trPreparing");
-                case "Ready": return AppSettings.resourcemanager.GetString("trReady");
-                case "Collected": return AppSettings.resourcemanager.GetString("withDeliveryMan");
-                case "InTheWay": return AppSettings.resourcemanager.GetString("onTheWay");
-                case "Done": return AppSettings.resourcemanager.GetString("trDone");// gived to customer
+                case "Listed": return AppSettings.resourcemanagerreport.GetString("trListed");
+                case "Preparing": return AppSettings.resourcemanagerreport.GetString("trPreparing");
+                case "Ready": return AppSettings.resourcemanagerreport.GetString("trReady");
+                case "Collected": return AppSettings.resourcemanagerreport.GetString("withDeliveryMan");
+                case "InTheWay": return AppSettings.resourcemanagerreport.GetString("onTheWay");
+                case "Done": return AppSettings.resourcemanagerreport.GetString("trDone");// gived to customer
                 default: return "";
             }
         }

@@ -2048,6 +2048,12 @@
     <Content Include="Reports\Delivery\En\EnDeliveryManag.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\Delivery\Ar\ArShippingCompanies.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Delivery\En\EnShippingCompanies.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Resource Include="pic\programs-Rest-login-bg.png" />
@@ -2334,6 +2340,7 @@
     <None Include="Properties\DataSources\Restaurant.Classes.Pos.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ResidentialSectors.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Section.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.ShippingCompanies.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.StorageCost.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.User.datasource" />
     <None Include="Properties\Settings.settings">

@@ -442,7 +442,7 @@ namespace Restaurant.View.delivery
             }
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
-            clsReports.deliveryManagement(orders, rep, reppath, paramarr);
+            clsReports.deliveryManagement(orders.ToList(), rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
