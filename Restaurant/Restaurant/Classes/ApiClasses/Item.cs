@@ -77,6 +77,8 @@ namespace Restaurant.Classes
         public byte? isActiveOffer { get; set; }
         public Nullable<int> itemUnitId { get; set; }
         public Nullable<int> offerId { get; set; }
+        public string forAgent { get; set; }
+
         public Nullable<decimal> priceTax { get; set; }
         public string discountType { get; set; }
         public Nullable<decimal> discountValue { get; set; }

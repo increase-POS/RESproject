@@ -188,6 +188,7 @@ namespace Restaurant.View.windows
                                 ci.discountType = couponModel.discountType;
                                 ci.discountValue = couponModel.discountValue;
                                 ci.name = couponModel.name;
+                                ci.forAgents = couponModel.forAgents;
 
                                 lst_coupons.Items.Add(couponModel.name);
                                 
@@ -301,7 +302,7 @@ namespace Restaurant.View.windows
             }
             foreach (var coupon in selectedCopouns)
             {
-                lst_coupons.Items.Add(coupon.name);
+                lst_coupons.Items.Add(coupon.name + "   #" + coupon.couponCode);
             }
         }
         private void Btn_select_Click(object sender, RoutedEventArgs e) 

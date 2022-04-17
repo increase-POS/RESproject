@@ -35,6 +35,8 @@ namespace Restaurant.Classes
         public Nullable<decimal> offerType { get; set; }
         public Nullable<decimal> itemTax { get; set; }
         public Nullable<decimal> itemUnitPrice { get; set; }
+        public string forAgents { get; set; }
+
         public decimal profit { get; set; }
         public decimal purchasePrice { get; set; }
         public string cause { get; set; }
@@ -88,6 +90,9 @@ namespace Restaurant.Classes
         public Nullable<int> updateUserId { get; set; }
         public Nullable<decimal> discountValue { get; set; }
         public Nullable<byte> discountType { get; set; }
+        public string forAgents { get; set; }
+
+
         public string couponCode { get; set; }
         public string name { get; set; }
 
@@ -153,6 +158,10 @@ namespace Restaurant.Classes
         public decimal shippingCost { get; set; }
         public decimal shippingCostDiscount { get; set; }
         public decimal realShippingCost { get; set; }
+        public Nullable<int> waiterId { get; set; }
+        public Nullable<int> membershipId { get; set; }
+
+
         public string branchName { get; set; }
         public string branchCreatorName { get; set; }
 
@@ -165,7 +174,6 @@ namespace Restaurant.Classes
         public int invStatusId { get; set; }
 
         public string createrUserName { get; set; }
-        public Nullable<int> waiterId { get; set; }
 
         public List<Tables> tables { get; set; }
         // for report

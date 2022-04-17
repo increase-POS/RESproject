@@ -384,7 +384,7 @@ namespace Restaurant.View.sales
             {
                HelpClass.StartAwait(grid_main);
 
-                if (items is null)
+                //if (items is null)
                     await refreshItemsList();
                 itemsQuery = items.ToList();
 
@@ -764,6 +764,7 @@ namespace Restaurant.View.sales
                     offerId = item.offerId,
                     OfferType = offerType,
                     OfferValue = offerValue,
+                    forAgents = item.forAgent,
                 });
                 _SequenceNum++;
             }
@@ -2395,6 +2396,7 @@ namespace Restaurant.View.sales
                             #endregion
                             #region update invoice
                             invoice.agentId = w.customerId;
+                            invoice.membershipId = customer.membershipId;
                             refreshTotal();
                             int res = await addDraft();
                             if (res > 0)
