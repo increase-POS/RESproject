@@ -70,7 +70,7 @@ namespace Restaurant.View.reports
             }
             catch (Exception ex)
             {
-                HelpClass.ExceptionMessage(ex, this);
+                //HelpClass.ExceptionMessage(ex, this);
             }
         }
         void permission()
