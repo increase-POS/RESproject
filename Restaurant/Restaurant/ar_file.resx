@@ -3898,4 +3898,7 @@
   <data name="trSpendingOrders" xml:space="preserve">
     <value>اوامر صرف</value>
   </data>
+  <data name="orderReport" xml:space="preserve">
+    <value>الطلبات</value>
+  </data>
 </root>

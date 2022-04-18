@@ -1485,7 +1485,7 @@ Parameters!trValueDiscount.Value)
             else if (firstTitle == "closing")
                 firstTitle = AppSettings.resourcemanagerreport.GetString("trDailyClosing");
             else if (firstTitle == "orders")
-                firstTitle = AppSettings.resourcemanagerreport.GetString("trOrderreport");
+                firstTitle = AppSettings.resourcemanagerreport.GetString("orderReport");
             //trCashBalance trDirectEntry
             //trTransfers administrativePull
             //////////////////////////////////////////////////////////////////////////////

@@ -3913,4 +3913,7 @@ Please add Email in setting</value>
   <data name="trSpendingOrders" xml:space="preserve">
     <value>Spending Orders</value>
   </data>
+  <data name="orderReport" xml:space="preserve">
+    <value>Orders</value>
+  </data>
 </root>
