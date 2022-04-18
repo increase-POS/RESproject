@@ -377,7 +377,7 @@ namespace Restaurant.View.reports.kitchenReports
                             MainWindow.mainWindow.initializationMainTrack("spendingRequests");
                             MainWindow.mainWindow.grid_main.Children.Add(uc_spendingRequest.Instance);
                             uc_spendingRequest.Instance.UserControl_Loaded(uc_spendingRequest.Instance, null);
-                            //uc_spendingRequest.invoice = invoice;
+                            uc_spendingRequest.Instance.invoice = invoice;
                             uc_spendingRequest._InvoiceType = invoice.invType;
                             uc_spendingRequest._invoiceId = invoice.invoiceId;
                             uc_spendingRequest.isFromReport = false;
