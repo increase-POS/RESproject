@@ -341,7 +341,7 @@ namespace Restaurant.View.purchase
             try
             {
                 string invoiceType = "pod,pos";
-                int duration = 2;
+                int duration = 1;
                 int draftCount = await invoice.GetCountByCreator(invoiceType, MainWindow.userLogin.userId, duration);
                 if (invoice != null && (invoice.invType == "pod" || invoice.invType == "pos") && !isFromReport)
                     draftCount--;
@@ -2106,7 +2106,7 @@ namespace Restaurant.View.purchase
 
                 // purchase drafts and purchase bounce drafts
                 string invoiceType = "pod, pos";
-                int duration = 2;
+                int duration = 1;
                 w.invoiceType = invoiceType;
                 w.page = "purchaseOrders";
                 w.icon = "drafts";

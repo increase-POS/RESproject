@@ -451,7 +451,7 @@ namespace Restaurant.View.purchase
             try
             {
                 string invoiceType = "pd ,pbd";
-                int duration = 2;
+                int duration = 1;
                 int draftCount = await invoice.GetCountByCreator(invoiceType, MainWindow.userLogin.userId, duration);
                 if (invoice != null && (invoice.invType == "pd" || invoice.invType == "pbd") && invoice.invoiceId != 0 && !isFromReport)
                     draftCount--;
@@ -2714,7 +2714,7 @@ namespace Restaurant.View.purchase
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_invoice w = new wd_invoice();
                 string invoiceType = "pd ,pbd";
-                int duration = 2;
+                int duration = 1;
                 w.invoiceType = invoiceType;
                 w.icon = "drafts";
                 w.page = "purchases";
