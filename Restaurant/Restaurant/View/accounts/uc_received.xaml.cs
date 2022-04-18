@@ -677,7 +677,6 @@ namespace Restaurant.View.accounts
             //increase pos balance
             Pos pos = await posModel.getById(MainWindow.posLogin.posId);
             pos.balance += ammount;
-
             s = await pos.save(pos);
         }
 

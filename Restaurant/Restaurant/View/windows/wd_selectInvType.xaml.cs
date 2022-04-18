@@ -40,7 +40,7 @@ namespace Restaurant.View.windows
             catch
             { }
         }
-        private void Btn_colse_Click(object sender, RoutedEventArgs e) 
+        private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
             isOk = false;
             this.Close();
@@ -89,7 +89,7 @@ namespace Restaurant.View.windows
                 translate();
 
                 FillCombo.FillInvoiceType(cb_invType);
-               await getDefaultInvoiceType();
+                await getDefaultInvoiceType();
                 cb_invType.SelectedValue = AppSettings.invType;
 
                 HelpClass.EndAwait(grid_main);
@@ -137,44 +137,57 @@ namespace Restaurant.View.windows
         }
         private async void Btn_select_Click(object sender, RoutedEventArgs e)
         {
-            // if have id return true
-
-            if (HelpClass.validate(requiredControlList, this))
+            try
             {
-                isOk = true;
-
-                if (defaultInvTypeSetValue == null)
-                    defaultInvTypeSetValue = new UserSetValues();
-
-                #region save set value
-                if (invSet == null)
+                if (HelpClass.validate(requiredControlList, this))
                 {
-                    invSet = new SetValues();
-                    invSet.settingId = settingId;
-                    invSet.isSystem = 0;
-                    invSet.isDefault = 0;
+                    HelpClass.StartAwait(grid_main);
+                    // if have id return true
+
+
+                    isOk = true;
+
+                    if (defaultInvTypeSetValue == null)
+                        defaultInvTypeSetValue = new UserSetValues();
+
+                    #region save set value
+                    if (invSet == null)
+                    {
+                        invSet = new SetValues();
+                        invSet.settingId = settingId;
+                        invSet.isSystem = 0;
+                        invSet.isDefault = 0;
+                    }
+
+                    invSet.value = cb_invType.SelectedValue.ToString();
+                    invSet.notes = notes;
+
+                    int res = await invSet.Save(invSet);
+                    #endregion
+
+                    #region save user setting value
+                    if (res > 0)
+                    {
+                        defaultInvTypeSetValue.userId = MainWindow.userLogin.userId;
+                        defaultInvTypeSetValue.valId = res;
+                        defaultInvTypeSetValue.notes = notes;
+                        defaultInvTypeSetValue.createUserId = MainWindow.userLogin.userId;
+                        defaultInvTypeSetValue.updateUserId = MainWindow.userLogin.userId;
+                        await userSetValuesModel.Save(defaultInvTypeSetValue);
+                    }
+                    #endregion
+
+                    AppSettings.invType = cb_invType.SelectedValue.ToString();
+                    this.Close();
+
+                    HelpClass.EndAwait(grid_main);
                 }
+            }
+            catch (Exception ex)
+            {
 
-                invSet.value = cb_invType.SelectedValue.ToString();
-                invSet.notes = notes;
-
-                int res = await invSet.Save(invSet);
-                #endregion
-
-                #region save user setting value
-                if (res > 0)
-                {
-                    defaultInvTypeSetValue.userId = MainWindow.userLogin.userId;
-                    defaultInvTypeSetValue.valId = res;
-                    defaultInvTypeSetValue.notes = notes;
-                    defaultInvTypeSetValue.createUserId = MainWindow.userLogin.userId;
-                    defaultInvTypeSetValue.updateUserId = MainWindow.userLogin.userId;
-                    await userSetValuesModel.Save(defaultInvTypeSetValue);
-                }
-                #endregion
-
-                AppSettings.invType = cb_invType.SelectedValue.ToString();
-                this.Close();
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
     }

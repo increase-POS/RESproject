@@ -833,6 +833,10 @@ namespace Restaurant.View.accounts
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
+                                if (cb_paymentProcessType.SelectedValue.ToString().Equals("cash"))
+                                    await calcBalance(subscription.total);
+                                await MainWindow.refreshBalance();
+
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
                                 await RefreshSubscriptionsList();
@@ -866,7 +870,14 @@ namespace Restaurant.View.accounts
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
+        private async Task calcBalance(decimal ammount)
+        {
+            int s = 0;
+            //increase pos balance
+            MainWindow.posLogin = await FillCombo.pos.getById(MainWindow.posLogin.posId);
+            MainWindow.posLogin.balance += ammount;
+            s = await FillCombo.pos.save(MainWindow.posLogin);
+        }
         private void Chb_all_Checked(object sender, RoutedEventArgs e)
         {
             try
