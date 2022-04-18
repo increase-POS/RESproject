@@ -1163,6 +1163,7 @@ namespace Restaurant.Classes
             cmb.SelectedIndex = 0;
         }
         #endregion
+        static public Pos pos = new Pos();
         static public ItemLocation itemLocation = new ItemLocation();
         static public Invoice invoice = new Invoice();
         static public List<Invoice> invoices;
