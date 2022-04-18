@@ -3886,4 +3886,16 @@
   <data name="String2" xml:space="preserve">
     <value />
   </data>
+  <data name="internalOrders" xml:space="preserve">
+    <value>طلبات داخلية</value>
+  </data>
+  <data name="membershipSubscriptions" xml:space="preserve">
+    <value>اشتراكات العضوية</value>
+  </data>
+  <data name="transfersBetweenPOS" xml:space="preserve">
+    <value>التحويلات بين نقاط البيع</value>
+  </data>
+  <data name="trSpendingOrders" xml:space="preserve">
+    <value>اوامر صرف</value>
+  </data>
 </root>

@@ -3901,4 +3901,16 @@ Please add Email in setting</value>
   <data name="sections" xml:space="preserve">
     <value>Sections</value>
   </data>
+  <data name="internalOrders" xml:space="preserve">
+    <value>Internal orders</value>
+  </data>
+  <data name="membershipSubscriptions" xml:space="preserve">
+    <value>Membership subscriptions</value>
+  </data>
+  <data name="transfersBetweenPOS" xml:space="preserve">
+    <value>Transfers between POS</value>
+  </data>
+  <data name="trSpendingOrders" xml:space="preserve">
+    <value>Spending Orders</value>
+  </data>
 </root>
