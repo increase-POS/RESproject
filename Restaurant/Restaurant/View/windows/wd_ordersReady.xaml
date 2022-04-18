@@ -84,7 +84,24 @@
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Width="*" x:Name="col_status"  Header="status"       Binding="{Binding Path=status}"/>
+                        <DataGridTextColumn Width="*" x:Name="col_status"  Header="status"  Binding="{Binding Path=status}"/>
+                        <DataGridCheckBoxColumn x:Name="col_chk" Binding="{Binding IsChecked, NotifyOnTargetUpdated=True}" IsReadOnly="False" IsThreeState="False">
+                            <DataGridCheckBoxColumn.ElementStyle>
+                                <Style
+                                        TargetType="CheckBox">
+                                    <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <EventSetter
+                                            Event="CheckBox.Checked"
+                                            Handler="FieldDataGridChecked" />
+                                </Style>
+                            </DataGridCheckBoxColumn.ElementStyle>
+                            <DataGridCheckBoxColumn.HeaderTemplate >
+                                <DataTemplate >
+                                    <CheckBox    Margin="2" />
+                                </DataTemplate>
+                            </DataGridCheckBoxColumn.HeaderTemplate>
+                        </DataGridCheckBoxColumn>
                     </DataGrid.Columns>
                 </DataGrid>
 

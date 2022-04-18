@@ -212,6 +212,16 @@ namespace Restaurant.Classes.ApiClasses
             parameters.Add("statusObject", myContent);
             return await APIResult.post(method, parameters);
         }
+        public async Task<int> finishInvoiceOrders(int invoiceId, int userId)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "OrderPreparing/finishInvoiceOrders";
+
+            parameters.Add("invoiceId", invoiceId.ToString());
+            parameters.Add("userId", userId.ToString());
+
+            return await APIResult.post(method, parameters);
+        }
         public async Task<int> updateOrderStatus(orderPreparingStatus statusObject)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();

@@ -38,7 +38,7 @@ namespace Restaurant.View.windows
         OrderPreparing preparingOrder = new OrderPreparing();
         List<OrderPreparing> orders = new List<OrderPreparing>();
         List<Invoice> invoices = new List<Invoice>();
-        private void HandleKeyPress(object sender, KeyEventArgs e)
+        private void HandleKeyPress(object sender, KeyEventArgs e) 
         {
             try
             {
@@ -82,11 +82,11 @@ namespace Restaurant.View.windows
         }
         private void translat()
         {
-            txt_title.Text = AppSettings.resourcemanager.GetString("trOrders");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trCharp");
             col_orders.Header = AppSettings.resourcemanager.GetString("trCharp");
             col_tables.Header = AppSettings.resourcemanager.GetString("trTable");
             col_waiter.Header = AppSettings.resourcemanager.GetString("trWaiter");
-            col_invoices.Header = AppSettings.resourcemanager.GetString("trInvoices");
+            col_invoices.Header = AppSettings.resourcemanager.GetString("trCharp");
             col_status.Header = AppSettings.resourcemanager.GetString("trStatus");
 
         }
@@ -153,6 +153,41 @@ namespace Restaurant.View.windows
             catch 
             { }
         }
+
+        #region check - uncheck 
+
+
+        List<Invoice> selectedOrders = new List<Invoice>();
+        private async void FieldDataGridChecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox cb = sender as CheckBox;
+
+                #region Accept
+                MainWindow.mainWindow.Opacity = 0.2;
+                wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxConfirm");
+
+                w.ShowDialog();
+                MainWindow.mainWindow.Opacity = 1;
+                #endregion
+                if (w.isOk)
+                {
+                    Invoice invoice = dg_orders.SelectedItem as Invoice;
+                    await preparingOrder.finishInvoiceOrders(invoice.invoiceId, MainWindow.userLogin.userId);
+                    await fillDataGrid();
+                }
+                cb.IsChecked = false;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+      
+        #endregion
 
     }
 }
