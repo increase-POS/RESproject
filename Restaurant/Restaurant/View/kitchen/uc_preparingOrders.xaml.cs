@@ -134,7 +134,7 @@ namespace Restaurant.View.kitchen
             dg_orders.Columns[1].Header = AppSettings.resourcemanager.GetString("trInvoiceCharp");
             dg_orders.Columns[2].Header = AppSettings.resourcemanager.GetString("trRemainingTime");
             dg_orders.Columns[3].Header = AppSettings.resourcemanager.GetString("trStatus");
-            dg_orders.Columns[4].Header = AppSettings.resourcemanager.GetString("trNote");
+            col_orderType.Header = AppSettings.resourcemanager.GetString("trType");
             col_table.Header = AppSettings.resourcemanager.GetString("trTable");
             #endregion
 

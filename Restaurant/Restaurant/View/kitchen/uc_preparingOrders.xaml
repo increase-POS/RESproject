@@ -223,8 +223,8 @@
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Width="*"  Header="remaining time" x:Name="col_remainingTime" Binding="{Binding Path=remainingTime, Converter={StaticResource decimalToTimeConverter}}"/>
                                 <DataGridTextColumn Width="*"  Header="status" Binding="{Binding Path=status,Converter={StaticResource preparingOrderStatusConverter }}"/>
-                                <DataGridTextColumn Width="*"  Header="notes" Binding="{Binding Path=notes}"/>
-                                <DataGridTextColumn Width="*"  Header="table" x:Name="col_table" Binding="{Binding Path=tables, Converter={StaticResource preparingOrderTypeConverter}}"/>
+                                <DataGridTextColumn Width="*"  Header="table" x:Name="col_orderType" Binding="{Binding Path=invType, Converter={StaticResource preparingOrderTypeConverter}}"/>
+                                <DataGridTextColumn Width="*"  Header="table" x:Name="col_table" Binding="{Binding Path=tables}"/>
                             </DataGrid.Columns>
                         </DataGrid>
 

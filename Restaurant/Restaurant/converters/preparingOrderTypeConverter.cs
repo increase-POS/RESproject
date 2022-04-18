@@ -13,10 +13,15 @@ namespace Restaurant.converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value.ToString() == "")
-                return AppSettings.resourcemanager.GetString("trTakeAway");
-            else
-                return value;
+            switch (value)
+            {
+                case "sd":
+                case "s":
+                    return AppSettings.resourcemanager.GetString("trDiningHall");
+                case "ts": return AppSettings.resourcemanager.GetString("trTakeAway");
+                case "ss": return AppSettings.resourcemanager.GetString("trSelfService");
+                default: return "";
+            }
            
         }
 
