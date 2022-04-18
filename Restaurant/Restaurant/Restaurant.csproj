@@ -2054,6 +2054,12 @@
     <Content Include="Reports\Delivery\En\EnShippingCompanies.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\Delivery\Ar\ArDriversManag.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Delivery\En\EnDriversManag.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Resource Include="pic\programs-Rest-login-bg.png" />
@@ -2332,6 +2338,8 @@
     <None Include="Properties\DataSources\Restaurant.Classes.Coupon.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ErrorClass.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Invoice.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.Invoice1.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.Invoice2.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemLocation.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemTransfer2.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemUnitInvoiceProfit.datasource" />

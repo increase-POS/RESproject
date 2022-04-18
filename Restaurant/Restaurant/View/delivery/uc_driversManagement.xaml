@@ -458,7 +458,7 @@
                             <Button Grid.Column="0" BorderBrush="{x:Null}" Padding="0" 
                                     x:Name="btn_preview"
                                     Margin="5 5 2.5 5 " Height="auto"
-                                    Background="{x:Null}" VerticalAlignment="Top"  >
+                                    Background="{x:Null}" VerticalAlignment="Top" Click="Btn_preview_Click"  >
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
@@ -477,7 +477,7 @@
                             <Button Grid.Column="1" BorderBrush="{x:Null}" Padding="0" 
                                     x:Name="btn_print"
                                     Margin="5 5 2.5 5 " Height="auto"
-                                    Background="{x:Null}" VerticalAlignment="Top"  >
+                                    Background="{x:Null}" VerticalAlignment="Top" Click="Btn_print_Click"  >
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>

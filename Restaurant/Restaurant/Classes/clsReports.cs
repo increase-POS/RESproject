@@ -118,6 +118,7 @@ namespace Restaurant.Classes
         //}
         public static void orderReport(IEnumerable<Invoice> invoiceQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
+
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
@@ -125,9 +126,9 @@ namespace Restaurant.Classes
             foreach (var o in invoiceQuery)
             {
                 o.deserved = decimal.Parse(HelpClass.DecTostring(o.deserved));
+                o.payStatus = invoicePayStatusConvert(o.payStatus);
             }
             DeliverStateConv(paramarr);
-            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trOrders")));
 
             paramarr.Add(new ReportParameter("trInvoiceNumber", AppSettings.resourcemanagerreport.GetString("trInvoiceNumber")));
             paramarr.Add(new ReportParameter("trSalesMan", AppSettings.resourcemanagerreport.GetString("trSalesMan")));
@@ -135,11 +136,27 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
             paramarr.Add(new ReportParameter("trCashTooltip", AppSettings.resourcemanagerreport.GetString("trCashTooltip")));
             paramarr.Add(new ReportParameter("trState", AppSettings.resourcemanagerreport.GetString("trState")));
-            
+
             DateFormConv(paramarr);
 
 
             rep.DataSources.Add(new ReportDataSource("DataSetInvoice", invoiceQuery));
+        }
+
+        public static string invoicePayStatusConvert(string payStatus)
+        {
+
+            switch (payStatus)
+            {
+                case "payed": return MainWindow.resourcemanagerreport.GetString("trPaid_");
+
+                case "unpayed": return MainWindow.resourcemanagerreport.GetString("trUnPaid");
+
+                case "partpayed": return MainWindow.resourcemanagerreport.GetString("trCredit");
+
+                default: return "";
+
+            }
         }
         public static void DeliverStateConv(List<ReportParameter> paramarr)
         {
@@ -598,12 +615,12 @@ namespace Restaurant.Classes
 
         public static void deliveryManagement(IEnumerable<Invoice> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
+
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
-          
-            //title
-            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trDeliveryManagement")));
+
+
             //table columns
             paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
             paramarr.Add(new ReportParameter("deliveryMan", AppSettings.resourcemanagerreport.GetString("deliveryMan")));
@@ -615,8 +632,38 @@ namespace Restaurant.Classes
             }
             rep.DataSources.Add(new ReportDataSource("DataSet", Query));
 
+            //title
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trDeliveryManagement")));
+           
         }
+        public static void driverManagement(List<Invoice> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            List<Invoice> tmpQuery =new List<Invoice>();
+            tmpQuery = Query;
+            //table columns
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("deliveryMan", AppSettings.resourcemanagerreport.GetString("deliveryMan")));
+            paramarr.Add(new ReportParameter("deliveryTime", AppSettings.resourcemanagerreport.GetString("deliveryTime")));
+            paramarr.Add(new ReportParameter("trStatus", AppSettings.resourcemanagerreport.GetString("trStatus")));
+            foreach (var row in tmpQuery)
+            {
+                row.notes = preparingOrderStatusConvert(row.status);
+            }
+            rep.DataSources.Add(new ReportDataSource("DataSet", tmpQuery));
+            //title
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trDriversManagement")));
+         
 
+        }
+        //public static void deliveryManagdata(IEnumerable<Invoice> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        //{
+          
+
+        //}
         public static void ShippingCompanies(IEnumerable<ShippingCompanies> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             rep.ReportPath = reppath;

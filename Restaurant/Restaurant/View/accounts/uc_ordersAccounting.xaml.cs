@@ -833,12 +833,34 @@ namespace Restaurant.View.accounts
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
+     
         public void BuildReport()
         {
             List<ReportParameter> paramarr = new List<ReportParameter>();
 
+            string firstTitle = "orders";
+            string secondTitle = "";
+            string state = "";
+            string Title = "";
+
+
+            if (chk_delivered.IsChecked == true)
+            {
+                secondTitle = "delivered";
+                state = "d";
+
+            }
+            else if (chk_inDelivery.IsChecked == true)
+            {
+                secondTitle = "indelivery";
+                state = "i";
+
+            }
+
+
             string addpath;
             bool isArabic = ReportCls.checkLang();
+
             if (isArabic)
             {
                 addpath = @"\Reports\Account\report\Ar\ArOrderAcc.rdlc";
@@ -847,10 +869,16 @@ namespace Restaurant.View.accounts
             {
                 addpath = @"\Reports\Account\report\En\EnOrderAcc.rdlc";
             }
+
+
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
             ReportCls.checkLang();
- 
+            //Title = MainWindow.resourcemanagerreport.GetString("trOrders") + " / " + secondTitle;
+            Title = clsReports.ReportTabTitle(firstTitle, secondTitle);
+            paramarr.Add(new ReportParameter("trTitle", Title));
+            paramarr.Add(new ReportParameter("state", state));
+            //clsReports.orderReport(invoiceQuery, rep, reppath);
             clsReports.orderReport(invoiceQuery, rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
@@ -859,7 +887,6 @@ namespace Restaurant.View.accounts
             rep.Refresh();
 
         }
- 
         private void Btn_preview1_Click_1(object sender, RoutedEventArgs e)
         {
             //preview

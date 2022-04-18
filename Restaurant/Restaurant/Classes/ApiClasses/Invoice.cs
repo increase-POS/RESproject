@@ -201,14 +201,15 @@ namespace Restaurant.Classes
        public Nullable<decimal> totalD{ get; set; }
        public Nullable<decimal> totalNetPb{ get; set; }
        public Nullable<decimal> totalNetD{ get; set; }
-      
-      
-       public Nullable<decimal> paidPb { get; set; }
-       public Nullable<decimal> deservedPb { get; set; }
-       public Nullable<decimal> discountValuePb { get; set; }
-       public Nullable<decimal> paidD { get; set; }
-       public Nullable<decimal> deservedD { get; set; }
-       public Nullable<decimal> discountValueD { get; set; }
+        public string payStatus { get; set; }
+
+        //public Nullable<decimal> paidPb { get; set; }
+        //public Nullable<decimal> deservedPb { get; set; }
+        //public Nullable<decimal> discountValuePb { get; set; }
+        //public Nullable<decimal> paidD { get; set; }
+        //public Nullable<decimal> deservedD { get; set; }
+        //public Nullable<decimal> discountValueD { get; set; }
+
 
         //*************************************************
         //------------------------------------------------------
