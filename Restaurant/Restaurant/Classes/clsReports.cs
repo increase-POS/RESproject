@@ -148,11 +148,11 @@ namespace Restaurant.Classes
 
             switch (payStatus)
             {
-                case "payed": return MainWindow.resourcemanagerreport.GetString("trPaid_");
+                case "payed": return AppSettings.resourcemanagerreport.GetString("trPaid_");
 
-                case "unpayed": return MainWindow.resourcemanagerreport.GetString("trUnPaid");
+                case "unpayed": return AppSettings.resourcemanagerreport.GetString("trUnPaid");
 
-                case "partpayed": return MainWindow.resourcemanagerreport.GetString("trCredit");
+                case "partpayed": return AppSettings.resourcemanagerreport.GetString("trCredit");
 
                 default: return "";
 
