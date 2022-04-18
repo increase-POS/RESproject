@@ -2,6 +2,7 @@
 using Microsoft.Reporting.WinForms;
 using Microsoft.Win32;
 using Restaurant.Classes;
+using Restaurant.View.kitchen;
 using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
@@ -26,9 +27,9 @@ namespace Restaurant.View.reports.kitchenReports
     /// </summary>
     public partial class uc_consumptionKitchenReports : UserControl
     {
-        IEnumerable<ItemTransferInvoice> spendingRequests;
+        IEnumerable<ItemTransferInvoice> consumptions;
         Statistics statisticsModel = new Statistics();
-        IEnumerable<ItemTransferInvoice> spendingRequestsQuery;
+        IEnumerable<ItemTransferInvoice> consumptionsQuery;
 
         string searchText = "";
         int selectedTab = 0;
@@ -216,25 +217,25 @@ namespace Restaurant.View.reports.kitchenReports
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
 
         }
-        async Task<IEnumerable<ItemTransferInvoice>> RefreshSpendingRequestsList()
+        async Task<IEnumerable<ItemTransferInvoice>> RefreshConsumptionsList()
         {
             if (selectedTab == 0)
-                spendingRequests = await statisticsModel.GetConsumption(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
+                consumptions = await statisticsModel.GetConsumption(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
             else if (selectedTab == 1)
-                spendingRequests = await statisticsModel.GetConsumptionItems(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
+                consumptions = await statisticsModel.GetConsumptionItems(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
 
-            return spendingRequests;
+            return consumptions;
         }
 
         IEnumerable<ItemTransferInvoice> requestsTemp = null;
 
         async Task Search()
         {
-            await RefreshSpendingRequestsList();
+            await RefreshConsumptionsList();
 
             searchText = txt_search.Text.ToLower();
 
-            requestsTemp = spendingRequests.Where(p =>
+            requestsTemp = consumptions.Where(p =>
             (dp_startDate.SelectedDate != null ? p.updateDate >= dp_startDate.SelectedDate : true)
             &&
             //end date
@@ -253,7 +254,7 @@ namespace Restaurant.View.reports.kitchenReports
 
         async Task SearchInvoice()
         {
-            spendingRequestsQuery = requestsTemp
+            consumptionsQuery = requestsTemp
             .Where(s =>
             (
             s.invNumber.ToLower().Contains(searchText)
@@ -278,7 +279,7 @@ namespace Restaurant.View.reports.kitchenReports
 
             requestsTemp = requestsTemp.GroupBy(s => s.ITitemUnitId).SelectMany(inv => inv.Take(1)).ToList();
 
-            spendingRequestsQuery = requestsTemp
+            consumptionsQuery = requestsTemp
             .Where(s =>
             (
             s.invNumber.ToLower().Contains(searchText)
@@ -299,7 +300,7 @@ namespace Restaurant.View.reports.kitchenReports
             );
 
             int i = 0;
-            foreach (var x in spendingRequestsQuery)
+            foreach (var x in consumptionsQuery)
             {
                 x.ITquantity = quantities[i].ITquantity;
                 i++;
@@ -309,15 +310,15 @@ namespace Restaurant.View.reports.kitchenReports
 
         void RefreshSpendingRequestsView()
         {
-            dg_request.ItemsSource = spendingRequestsQuery;
-            txt_count.Text = spendingRequestsQuery.Count().ToString();
+            dg_request.ItemsSource = consumptionsQuery;
+            txt_count.Text = consumptionsQuery.Count().ToString();
         }
 
         private void fillBranches()
         {
             cb_branches.SelectedValuePath = "branchId";
             cb_branches.DisplayMemberPath = "branchName";
-            cb_branches.ItemsSource = spendingRequests.GroupBy(g => g.branchId).Select(i => new { i.FirstOrDefault().branchName, i.FirstOrDefault().branchId });
+            cb_branches.ItemsSource = consumptionsQuery.GroupBy(g => g.branchId).Select(i => new { i.FirstOrDefault().branchName, i.FirstOrDefault().branchId });
         }
 
         #endregion
@@ -387,9 +388,47 @@ namespace Restaurant.View.reports.kitchenReports
         }
 
 
-        private void detailsRowinDatagrid(object sender, RoutedEventArgs e)
-        {
+        private async void detailsRowinDatagrid(object sender, RoutedEventArgs e)
+        {//details
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        ItemTransferInvoice row = (ItemTransferInvoice)dg_request.SelectedItems[0];
+                        if (row.invoiceId > 0)
+                        {
+                            Invoice invoice = new Invoice();
+                            invoice = await invoice.GetByInvoiceId(row.invoiceId);
+
+                            MainWindow.mainWindow.Btn_kitchen_Click(MainWindow.mainWindow.btn_kitchen, null);
+                            uc_kitchen.Instance.UserControl_Loaded(null, null);
+                            uc_kitchen.Instance.Btn_consumptionRawMaterials_Click(uc_kitchen.Instance.btn_consumptionRawMaterials, null);
+                            MainWindow.mainWindow.initializationMainTrack("consumptionRawMaterials");
+                            MainWindow.mainWindow.grid_main.Children.Add(uc_consumptionRawMaterials.Instance);
+                            uc_consumptionRawMaterials.Instance.UserControl_Loaded(uc_consumptionRawMaterials.Instance, null);
+                            uc_consumptionRawMaterials.invoice = invoice;
+                            uc_consumptionRawMaterials._InvType = invoice.invType;
+                            uc_consumptionRawMaterials._invoiceId = invoice.invoiceId;
+                            uc_consumptionRawMaterials.isFromReport = false;
+                            uc_consumptionRawMaterials.archived = false;
+
+                            await uc_consumptionRawMaterials.Instance.fillInvoiceInputs(invoice);
+                            uc_consumptionRawMaterials.Instance.navigateBtnActivate();
+
+                            await uc_spendingRequest.Instance.fillInvoiceInputs(invoice);
+                        }
+                    }
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         #endregion
 

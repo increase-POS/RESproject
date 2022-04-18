@@ -35,7 +35,7 @@ namespace Restaurant.View.kitchen
     {
         string consumptionPermission = "consumptionRawMaterials_consumption";
         string reportPermission = "consumptionRawMaterials_report";
-        private static uc_consumptionRawMaterials _instance;
+        public static uc_consumptionRawMaterials _instance;
         public static uc_consumptionRawMaterials Instance
         {
             get
@@ -65,14 +65,14 @@ namespace Restaurant.View.kitchen
         public static bool archived = false;
         public static bool isFromReport = false;
         List<ItemUnit> itemUnits;
-        public Invoice invoice = new Invoice();   
+        public static Invoice invoice = new Invoice();   
         List<ItemTransfer> invoiceItems;
         public List<Control> controls;
         static public string _InvType = "fbcd"; //draft import
 
         static private int _SequenceNum = 0;
         static private int _Count = 0;
-        static private int _invoiceId;
+        static public int _invoiceId;
         #region for barcode
         DateTime _lastKeystroke = new DateTime(0);
         static private string _BarcodeStr = "";
@@ -252,7 +252,7 @@ namespace Restaurant.View.kitchen
 
         #endregion
         #region navigation buttons
-        private void navigateBtnActivate()
+        public void navigateBtnActivate()
         {
             int index = FillCombo.invoices.IndexOf(FillCombo.invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
             if (index == FillCombo.invoices.Count - 1)
@@ -1480,7 +1480,7 @@ namespace Restaurant.View.kitchen
 
             inputEditable();
         }
-        private async Task buildInvoiceDetails()
+        public async Task buildInvoiceDetails()
         {
             //get invoice items
             invoiceItems = await invoice.GetInvoicesItems(invoice.invoiceId);

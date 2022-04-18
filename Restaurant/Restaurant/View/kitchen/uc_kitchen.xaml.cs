@@ -185,7 +185,7 @@ namespace Restaurant.View.kitchen
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_consumptionRawMaterials_Click(object sender, RoutedEventArgs e)
+        public void Btn_consumptionRawMaterials_Click(object sender, RoutedEventArgs e)
         {
             try
             {

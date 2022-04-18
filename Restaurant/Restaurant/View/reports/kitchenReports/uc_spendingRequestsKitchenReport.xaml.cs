@@ -369,7 +369,7 @@ namespace Restaurant.View.reports.kitchenReports
                         if(row.invoiceId > 0)
                         {
                             Invoice invoice = new Invoice();
-                            invoice = await invoice.getById(row.invoiceId);
+                            invoice = await invoice.GetByInvoiceId(row.invoiceId);
 
                             MainWindow.mainWindow.Btn_kitchen_Click(MainWindow.mainWindow.btn_kitchen,null);
                             uc_kitchen.Instance.UserControl_Loaded(null ,null);
@@ -377,6 +377,7 @@ namespace Restaurant.View.reports.kitchenReports
                             MainWindow.mainWindow.initializationMainTrack("spendingRequests");
                             MainWindow.mainWindow.grid_main.Children.Add(uc_spendingRequest.Instance);
                             uc_spendingRequest.Instance.UserControl_Loaded(uc_spendingRequest.Instance, null);
+                            //uc_spendingRequest.invoice = invoice;
                             uc_spendingRequest._InvoiceType = invoice.invType;
                             uc_spendingRequest._invoiceId = invoice.invoiceId;
                             uc_spendingRequest.isFromReport = false;
