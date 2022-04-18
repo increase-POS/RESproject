@@ -144,10 +144,10 @@ namespace Restaurant.View.windows
             //txt_Invoices.Text = AppSettings.resourcemanager.GetString("trInvoices");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
 
-            col_num.Header = AppSettings.resourcemanager.GetString("trInvoiceNumber");
+            col_num.Header = AppSettings.resourcemanager.GetString("trCharp");
             col_branch.Header = AppSettings.resourcemanager.GetString("trBranch");
             col_user.Header = AppSettings.resourcemanager.GetString("trUser");
-            col_count.Header = AppSettings.resourcemanager.GetString("trQTR");
+            col_count.Header = AppSettings.resourcemanager.GetString("trCount");
             col_total.Header = AppSettings.resourcemanager.GetString("trTotal");
             col_type.Header = AppSettings.resourcemanager.GetString("trType");
 
