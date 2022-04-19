@@ -1119,7 +1119,7 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <Border  Grid.Row="3" Grid.Column="0" Height="40" Tag="ssssssss" Background="{StaticResource MainColor}" CornerRadius="7.5"  
-                     Margin="0 15 5 0"  Padding="0">
+                     Margin="0 15 0 0"  Padding="0">
                     <Border.Effect>
                         <DropShadowEffect
                           ShadowDepth="1"
@@ -1134,8 +1134,8 @@
                           Background="{x:Null}" BorderBrush="{x:Null}"
                        Foreground="White" Click="Btn_pay_Click"  />
                 </Border>
-                <Border  Grid.Row="3" Grid.Column="1" Height="40" Tag="ssssssss" Background="{StaticResource Red}" CornerRadius="7.5"  
-                     Margin="0 15 5 0"  Padding="0">
+                <Border  Name="brd_cancel"  Grid.Row="3" Grid.Column="1" Height="40" Tag="ssssssss" Background="{StaticResource Red}" CornerRadius="7.5"  
+                     Margin="5 15 5 0"  Padding="0">
                     <Border.Effect>
                         <DropShadowEffect
                           ShadowDepth="1"
@@ -1144,9 +1144,9 @@
                           Opacity="0.3"
                          BlurRadius="10"/>
                     </Border.Effect>
-                    <Button  Content="X" Name="btn_cancel"   FontSize="22" FontWeight="Bold"
+                    <Button Content="X" Name="btn_cancel"   FontSize="22" FontWeight="Bold"
                     materialDesign:ButtonAssist.CornerRadius="7" Height="40" Width="50"
-                         Padding="5 0"
+                         Padding="5 0" 
                              Background="{x:Null}" BorderBrush="{x:Null}"
                        Foreground="White" IsEnabled="False"  Click="Btn_cancel_Click" />
                 </Border>

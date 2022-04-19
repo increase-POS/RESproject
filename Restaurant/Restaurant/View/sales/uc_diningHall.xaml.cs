@@ -202,6 +202,7 @@ namespace Restaurant.View.sales
             {
                 txt_invType.Text = AppSettings.resourcemanager.GetString("trDiningHallType");
 
+                brd_cancel.Visibility = Visibility.Visible;
                 btn_cancel.Visibility = Visibility.Visible;
                 btn_tables.Visibility = Visibility.Visible;
                 btn_kitchen.Visibility = Visibility.Visible;
@@ -238,6 +239,7 @@ namespace Restaurant.View.sales
                 txt_invType.Text = AppSettings.resourcemanager.GetString("trTakeAway");
 
                 btn_cancel.Visibility = Visibility.Collapsed;
+                brd_cancel.Visibility = Visibility.Collapsed;
                 btn_tables.Visibility = Visibility.Collapsed;
                 btn_kitchen.Visibility = Visibility.Collapsed;
                 btn_waiter.Visibility = Visibility.Collapsed;
@@ -262,6 +264,7 @@ namespace Restaurant.View.sales
                 txt_invType.Text = AppSettings.resourcemanager.GetString("trSelfService");
 
                 btn_cancel.Visibility = Visibility.Collapsed;
+                brd_cancel.Visibility = Visibility.Collapsed;
                 btn_kitchen.Visibility = Visibility.Collapsed;
                 btn_waiter.Visibility = Visibility.Collapsed;
                 btn_delivery.Visibility = Visibility.Collapsed;
