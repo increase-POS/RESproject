@@ -80,7 +80,7 @@ namespace Restaurant.View.reports.kitchenReports
 
                 Btn_invoice_Click(btn_invoice, null);
 
-                HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_invoice.Tag.ToString());
+                //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_invoice.Tag.ToString());
 
             }
             catch (Exception ex)

@@ -359,17 +359,11 @@ namespace Restaurant.View.settings
         {//load
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 permission();
-
-
-
-
 
                 settingsCls = await setModel.GetAll();
                 settingsValues = await valueModel.GetAll();
-
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -441,13 +435,12 @@ namespace Restaurant.View.settings
 
                 #endregion
 
-
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
