@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="trAccNumber" xml:space="preserve">
-    <value>Account Number</value>
+    <value>Account number</value>
   </data>
   <data name="trAccNumberHint" xml:space="preserve">
-    <value>Account Number...</value>
+    <value>Account number...</value>
   </data>
   <data name="trAccounting" xml:space="preserve">
     <value>Accounting</value>
@@ -139,7 +139,7 @@
     <value>Address...</value>
   </data>
   <data name="trAnotherInfomation" xml:space="preserve">
-    <value>Another Information</value>
+    <value>Another information</value>
   </data>
   <data name="trAreaHint" xml:space="preserve">
     <value>+963</value>
@@ -160,7 +160,7 @@
     <value>Banks</value>
   </data>
   <data name="trBaseInformation" xml:space="preserve">
-    <value>Base Information</value>
+    <value>Base information</value>
   </data>
   <data name="trBranchCodeHint" xml:space="preserve">
     <value>Branch Code...</value>
@@ -169,10 +169,10 @@
     <value>Branches</value>
   </data>
   <data name="trBranchName" xml:space="preserve">
-    <value>Branch Name</value>
+    <value>Branch name</value>
   </data>
   <data name="trBranchNameHint" xml:space="preserve">
-    <value>Branch Name...</value>
+    <value>Branch name...</value>
   </data>
   <data name="trCatalog" xml:space="preserve">
     <value>Catalog</value>
@@ -190,7 +190,7 @@
     <value>Increase POS</value>
   </data>
   <data name="trContactInformation" xml:space="preserve">
-    <value>Contact Information</value>
+    <value>Contact information</value>
   </data>
   <data name="trCustomers" xml:space="preserve">
     <value>Customers</value>
@@ -208,7 +208,7 @@
     <value>Email...</value>
   </data>
   <data name="trEmptyAccNumToolTip" xml:space="preserve">
-    <value>Account Number can't be empty!</value>
+    <value>Account number can't be empty!</value>
   </data>
   <data name="trEmptyAreaToolTip" xml:space="preserve">
     <value>Select area</value>
@@ -220,7 +220,7 @@
     <value>Code can't be empty!</value>
   </data>
   <data name="trEmptyLastNameToolTip" xml:space="preserve">
-    <value>Last Name can't be empty!</value>
+    <value>Last name can't be empty!</value>
   </data>
   <data name="trEmptyMobileToolTip" xml:space="preserve">
     <value>Enter the mobile number</value>
@@ -238,16 +238,16 @@
     <value>Email address is not valid</value>
   </data>
   <data name="trFirstNameHint" xml:space="preserve">
-    <value>First Name...</value>
+    <value>First name...</value>
   </data>
   <data name="trHome" xml:space="preserve">
     <value>Home</value>
   </data>
   <data name="trIsSmallest" xml:space="preserve">
-    <value>Is Smallest</value>
+    <value>Is smallest</value>
   </data>
   <data name="trIsSmallestHint" xml:space="preserve">
-    <value>Is Smallest</value>
+    <value>Is smallest</value>
   </data>
   <data name="trJob" xml:space="preserve">
     <value>Job</value>
@@ -256,13 +256,13 @@
     <value>Job..</value>
   </data>
   <data name="trLastName" xml:space="preserve">
-    <value>Last Name</value>
+    <value>Last name</value>
   </data>
   <data name="trLastNameHint" xml:space="preserve">
-    <value>Last Name...</value>
+    <value>Last name...</value>
   </data>
   <data name="trLoginInformation" xml:space="preserve">
-    <value>Login Information</value>
+    <value>Login information</value>
   </data>
   <data name="trMenu" xml:space="preserve">
     <value>Menu</value>
@@ -274,7 +274,7 @@
     <value>Mobile...</value>
   </data>
   <data name="trMoreInformation" xml:space="preserve">
-    <value>More Information</value>
+    <value>More information</value>
   </data>
   <data name="trName" xml:space="preserve">
     <value>Name</value>
@@ -286,7 +286,7 @@
     <value>Notes...</value>
   </data>
   <data name="trPamentMethodHint" xml:space="preserve">
-    <value>Select Payment method...</value>
+    <value>Select payment method...</value>
   </data>
   <data name="trPasswordHint" xml:space="preserve">
     <value>Password...</value>
@@ -298,16 +298,16 @@
     <value>POS</value>
   </data>
   <data name="trPosCode" xml:space="preserve">
-    <value>POS Code</value>
+    <value>POS code</value>
   </data>
   <data name="trPosCodeHint" xml:space="preserve">
-    <value>POS Code...</value>
+    <value>POS code...</value>
   </data>
   <data name="trPosName" xml:space="preserve">
-    <value>POS Name</value>
+    <value>POS name</value>
   </data>
   <data name="trPosNameHint" xml:space="preserve">
-    <value>POS Name...</value>
+    <value>POS name...</value>
   </data>
   <data name="trPurchases" xml:space="preserve">
     <value>Purchases</value>
@@ -319,49 +319,49 @@
     <value>Sales</value>
   </data>
   <data name="trSearchHint" xml:space="preserve">
-    <value>Enter Here To Start Search ....</value>
+    <value>Enter here to start search ....</value>
   </data>
   <data name="trSectionData" xml:space="preserve">
     <value>Data</value>
   </data>
   <data name="trSelectBankNameHint" xml:space="preserve">
-    <value>Select Bank Name</value>
+    <value>Select bank name</value>
   </data>
   <data name="trSelectBranchHint" xml:space="preserve">
-    <value>Parent Branch ...</value>
+    <value>Parent branch ...</value>
   </data>
   <data name="trSelectJobHint" xml:space="preserve">
     <value>Select Job ...</value>
   </data>
   <data name="trSelectPosBranchHint" xml:space="preserve">
-    <value>Select Branch...</value>
+    <value>Select branch...</value>
   </data>
   <data name="trSelectPosNameHint" xml:space="preserve">
-    <value>Select POS Name</value>
+    <value>Select POS name</value>
   </data>
   <data name="trSelectSmallestUnitHint" xml:space="preserve">
-    <value>Select Smallest Unit...</value>
+    <value>Select smallest unit...</value>
   </data>
   <data name="trSelectStoreHint" xml:space="preserve">
-    <value>Select Store Name</value>
+    <value>Select store name</value>
   </data>
   <data name="trSelestUnitNameHint" xml:space="preserve">
-    <value>Select Unit Name</value>
+    <value>Select unit name</value>
   </data>
   <data name="trSettings" xml:space="preserve">
     <value>Settings</value>
   </data>
   <data name="trSmallestUnit" xml:space="preserve">
-    <value>Smallest Unit</value>
+    <value>Smallest unit</value>
   </data>
   <data name="trStorage" xml:space="preserve">
     <value>Storage</value>
   </data>
   <data name="trStoreCodeHint" xml:space="preserve">
-    <value>Store Code...</value>
+    <value>Store code...</value>
   </data>
   <data name="trStoreNameHint" xml:space="preserve">
-    <value>Store Name...</value>
+    <value>Store name...</value>
   </data>
   <data name="trStores" xml:space="preserve">
     <value>Stores</value>
@@ -370,10 +370,10 @@
     <value>Vendors</value>
   </data>
   <data name="trUnitName" xml:space="preserve">
-    <value>Unit Name</value>
+    <value>Unit name</value>
   </data>
   <data name="trUnitNameHint" xml:space="preserve">
-    <value>Unit Name...</value>
+    <value>Unit name...</value>
   </data>
   <data name="trUnits" xml:space="preserve">
     <value>Units</value>
@@ -382,28 +382,28 @@
     <value>Update</value>
   </data>
   <data name="trUserInformation" xml:space="preserve">
-    <value>User Infomration</value>
+    <value>User infomration</value>
   </data>
   <data name="trUserName" xml:space="preserve">
-    <value>User Name</value>
+    <value>User name</value>
   </data>
   <data name="trUserNameHint" xml:space="preserve">
-    <value>User Name...</value>
+    <value>User name...</value>
   </data>
   <data name="trUsers" xml:space="preserve">
     <value>Users</value>
   </data>
   <data name="trUserType" xml:space="preserve">
-    <value>User Type</value>
+    <value>User type</value>
   </data>
   <data name="trWorkHours" xml:space="preserve">
-    <value>Work Hours</value>
+    <value>Work hours</value>
   </data>
   <data name="trWorkHoursHint" xml:space="preserve">
-    <value>Work Hours...</value>
+    <value>Work hours...</value>
   </data>
   <data name="trWorkInformation" xml:space="preserve">
-    <value>Work Information</value>
+    <value>Work information</value>
   </data>
   <data name="trCategorie" xml:space="preserve">
     <value>Category</value>
@@ -412,28 +412,28 @@
     <value>Code...</value>
   </data>
   <data name="trEmptyMainPropNameToolTip" xml:space="preserve">
-    <value>Main Property Name can not be empty</value>
+    <value>Main property name can not be empty</value>
   </data>
   <data name="trMainProperty" xml:space="preserve">
-    <value>Main Property</value>
+    <value>Main property</value>
   </data>
   <data name="trMainPropertyHint" xml:space="preserve">
-    <value>Enter Main Property</value>
+    <value>Enter main property</value>
   </data>
   <data name="trParentCategorieHint" xml:space="preserve">
-    <value>Select Parent Item</value>
+    <value>Select parent item</value>
   </data>
   <data name="trSecondaryInformation" xml:space="preserve">
-    <value>Secondary Information</value>
+    <value>Secondary information</value>
   </data>
   <data name="trSelectPropertyNameHint" xml:space="preserve">
-    <value>Select Property Name</value>
+    <value>Select property name</value>
   </data>
   <data name="trSubProperties" xml:space="preserve">
-    <value>Sub Properties</value>
+    <value>Subproperties</value>
   </data>
   <data name="trSubPropertiesHint" xml:space="preserve">
-    <value>Enter Sub Property</value>
+    <value>Enter subproperty</value>
   </data>
   <data name="trTaxesHint" xml:space="preserve">
     <value>Taxes...</value>
@@ -475,40 +475,40 @@
     <value>Barcode</value>
   </data>
   <data name="trItemData" xml:space="preserve">
-    <value>Item Data</value>
+    <value>Item data</value>
   </data>
   <data name="trMaxHint" xml:space="preserve">
     <value>Max...</value>
   </data>
   <data name="trMinAndMaxOfItem" xml:space="preserve">
-    <value>Maximum and Minimum of Items</value>
+    <value>Maximum and minimum of items</value>
   </data>
   <data name="trMinHint" xml:space="preserve">
     <value>Min...</value>
   </data>
   <data name="trSelectCategorieHint" xml:space="preserve">
-    <value>Select Category</value>
+    <value>Select category</value>
   </data>
   <data name="trSelectItemTypeHint" xml:space="preserve">
-    <value>Select Item Type</value>
+    <value>Select Item type</value>
   </data>
   <data name="trSelectParentItemHint" xml:space="preserve">
-    <value>Select Parent Item</value>
+    <value>Select parent item</value>
   </data>
   <data name="trSelectUnitHint" xml:space="preserve">
-    <value>Select Unit</value>
+    <value>Select unit</value>
   </data>
   <data name="c" xml:space="preserve">
     <value>SelectUnit</value>
   </data>
   <data name="trIsDefaultPurchases" xml:space="preserve">
-    <value>Is Default Purchase</value>
+    <value>Is Default purchase</value>
   </data>
   <data name="trSmallUnit" xml:space="preserve">
-    <value>Small Unit</value>
+    <value>Small unit</value>
   </data>
   <data name="trUnitCount" xml:space="preserve">
-    <value>Unit Count</value>
+    <value>Unit count</value>
   </data>
   <data name="trBarcodeHint" xml:space="preserve">
     <value>Barcode...</value>
@@ -520,13 +520,13 @@
     <value>Count Unit</value>
   </data>
   <data name="trIsDefaultSales" xml:space="preserve">
-    <value>Is Default Sales</value>
+    <value>Is Default sales</value>
   </data>
   <data name="trPriceHint" xml:space="preserve">
     <value>Price...</value>
   </data>
   <data name="trSelectProperties" xml:space="preserve">
-    <value>Select Properties</value>
+    <value>Select properties</value>
   </data>
   <data name="trUnitHint" xml:space="preserve">
     <value>Unit...</value>
@@ -598,10 +598,10 @@
     <value>Cash</value>
   </data>
   <data name="trCreditCard" xml:space="preserve">
-    <value>Credit Card</value>
+    <value>Credit card</value>
   </data>
   <data name="trDeservedDateHint" xml:space="preserve">
-    <value> Deserved Date...</value>
+    <value> Deserved date...</value>
   </data>
   <data name="trDeservedHint" xml:space="preserve">
     <value>Deserved...</value>
@@ -625,10 +625,10 @@
     <value>Invoice...</value>
   </data>
   <data name="trInvoiceNumber" xml:space="preserve">
-    <value>Invoice Number</value>
+    <value>Invoice number</value>
   </data>
   <data name="trInvoiceNumberHint" xml:space="preserve">
-    <value>Invoice Number...</value>
+    <value>Invoice number...</value>
   </data>
   <data name="trItem" xml:space="preserve">
     <value>Item</value>
@@ -652,7 +652,7 @@
     <value>Print</value>
   </data>
   <data name="trReturnInvoice" xml:space="preserve">
-    <value>Return Invoice</value>
+    <value>Return invoice</value>
   </data>
   <data name="trSave" xml:space="preserve">
     <value>Save</value>
@@ -673,7 +673,7 @@
     <value>Vendor...</value>
   </data>
   <data name="trVendorInvoiceDetails" xml:space="preserve">
-    <value>Vendor Invoice Details</value>
+    <value>Vendor invoice details</value>
   </data>
   <data name="trCoponHint" xml:space="preserve">
     <value>Coupon...</value>
@@ -688,10 +688,10 @@
     <value>Coupon</value>
   </data>
   <data name="trCouponCodeHint" xml:space="preserve">
-    <value>Coupon Code...</value>
+    <value>Coupon code...</value>
   </data>
   <data name="trCouponNameHint" xml:space="preserve">
-    <value>Coupon Name...</value>
+    <value>Coupon name...</value>
   </data>
   <data name="trCustomerHint" xml:space="preserve">
     <value>Customer...</value>
@@ -700,34 +700,34 @@
     <value>Delivery</value>
   </data>
   <data name="trDiscountValueHint" xml:space="preserve">
-    <value>Discount Value...</value>
+    <value>Discount value...</value>
   </data>
   <data name="trEndDate" xml:space="preserve">
-    <value>End Date</value>
+    <value>End date</value>
   </data>
   <data name="trEndDateHint" xml:space="preserve">
-    <value>End Date...</value>
+    <value>End date...</value>
   </data>
   <data name="trExcel" xml:space="preserve">
     <value>Export to Excel</value>
   </data>
   <data name="trMaximumInvoiceValueHint" xml:space="preserve">
-    <value>Maximum Invoice Value...</value>
+    <value>Maximum invoice value...</value>
   </data>
   <data name="trMinimumInvoiceValueHint" xml:space="preserve">
-    <value>Minimum Invoice Value...</value>
+    <value>Minimum invoice value...</value>
   </data>
   <data name="trOffer" xml:space="preserve">
     <value>Offers</value>
   </data>
   <data name="trOfferCodeHint" xml:space="preserve">
-    <value>Offer Code...</value>
+    <value>Offer code...</value>
   </data>
   <data name="trOfferNameHint" xml:space="preserve">
-    <value>Offer Name...</value>
+    <value>Offer name...</value>
   </data>
   <data name="trOnItems" xml:space="preserve">
-    <value>On Items</value>
+    <value>On items</value>
   </data>
   <data name="trPdf" xml:space="preserve">
     <value>Print Pdf</value>
@@ -739,25 +739,25 @@
     <value>Quantity...</value>
   </data>
   <data name="trRemainQuantity" xml:space="preserve">
-    <value>Remain Quantity</value>
+    <value>Remain quantity</value>
   </data>
   <data name="trRemainQuantityHint" xml:space="preserve">
-    <value>Remain Quantity...</value>
+    <value>Remain quantity...</value>
   </data>
   <data name="trStartDate" xml:space="preserve">
-    <value>Start Date</value>
+    <value>Start date</value>
   </data>
   <data name="trStartDateHint" xml:space="preserve">
-    <value>Start Date...</value>
+    <value>Start date...</value>
   </data>
   <data name="trTypeDiscountHint" xml:space="preserve">
-    <value>Type Discount...</value>
+    <value>Type discount...</value>
   </data>
   <data name="trStatistic" xml:space="preserve">
     <value>Statistic</value>
   </data>
   <data name="trParentBranch" xml:space="preserve">
-    <value>Parent Branch</value>
+    <value>Parent branch</value>
   </data>
   <data name="trDuplicateCodeToolTip" xml:space="preserve">
     <value>already exists</value>
@@ -775,7 +775,7 @@
     <value>Search</value>
   </data>
   <data name="trEmptyJobToolTip" xml:space="preserve">
-    <value>Job can npt be empty</value>
+    <value>Job can not be empty</value>
   </data>
   <data name="trErrorDuplicateUserNameToolTip" xml:space="preserve">
     <value>Username is already exist</value>
@@ -796,7 +796,7 @@
     <value>View items</value>
   </data>
   <data name="trEmptyAccNumberToolTip" xml:space="preserve">
-    <value>Account Number can not be empty</value>
+    <value>Account number can not be empty</value>
   </data>
   <data name="trEmptyPropertyToolTip" xml:space="preserve">
     <value>Property can not be empty</value>
@@ -853,7 +853,7 @@
     <value>Discount value</value>
   </data>
   <data name="trDuplicateBarcodeToolTip" xml:space="preserve">
-    <value>Bar Code is already exist</value>
+    <value>Barcode is already exist</value>
   </data>
   <data name="trEmptyDiscountTypeToolTip" xml:space="preserve">
     <value>Discount type can not be empty</value>
@@ -886,13 +886,13 @@
     <value>The max invoice value can not be smaller than min value</value>
   </data>
   <data name="trMaxInvoiceValue" xml:space="preserve">
-    <value>Maximum Invoice Value</value>
+    <value>Maximum invoice value</value>
   </data>
   <data name="trMinInvoiceValue" xml:space="preserve">
-    <value>Minimum Invoice Value</value>
+    <value>Minimum invoice value</value>
   </data>
   <data name="trPieChart" xml:space="preserve">
-    <value>Pie Chart</value>
+    <value>Pie chart</value>
   </data>
   <data name="trRefresh" xml:space="preserve">
     <value>Refresh</value>
@@ -937,19 +937,19 @@
     <value>Deposit</value>
   </data>
   <data name="trDepositeNumHint" xml:space="preserve">
-    <value>Deposite/Pull Number...</value>
+    <value>Deposite/Pull number...</value>
   </data>
   <data name="trDepositeNumTooltip" xml:space="preserve">
-    <value>Deposite/Pull Number</value>
+    <value>Deposite/Pull number</value>
   </data>
   <data name="trDepositOperation" xml:space="preserve">
     <value>Deposit</value>
   </data>
   <data name="trOpperationTypeHint" xml:space="preserve">
-    <value>Opperation Type...</value>
+    <value>Opperation type...</value>
   </data>
   <data name="trOpperationTypeToolTip" xml:space="preserve">
-    <value>Opperation Type</value>
+    <value>Opperation type</value>
   </data>
   <data name="trPull" xml:space="preserve">
     <value>Pull</value>
@@ -958,7 +958,7 @@
     <value>Receipt</value>
   </data>
   <data name="trTransferNumberTooltip" xml:space="preserve">
-    <value>Transfer Number</value>
+    <value>Transfer number</value>
   </data>
   <data name="trUserHint" xml:space="preserve">
     <value>User...</value>
@@ -973,16 +973,16 @@
     <value>DepositTo...</value>
   </data>
   <data name="trDocumentNumber" xml:space="preserve">
-    <value>Document Number</value>
+    <value>Document number</value>
   </data>
   <data name="trDocumentNumberHint" xml:space="preserve">
-    <value>Document Number...</value>
+    <value>Document number...</value>
   </data>
   <data name="trDocumenType" xml:space="preserve">
-    <value>Document Type</value>
+    <value>Document type</value>
   </data>
   <data name="trDocumenTypeHint" xml:space="preserve">
-    <value>Document Type...</value>
+    <value>Document type...</value>
   </data>
   <data name="trEmptyCashToolTip" xml:space="preserve">
     <value>Amount can not be empty</value>
@@ -1000,7 +1000,7 @@
     <value>Opperation type can not be empty</value>
   </data>
   <data name="trErrorEmptyToPosToolTip" xml:space="preserve">
-    <value>Deposit Pos can not be empty</value>
+    <value>Deposit POS can not be empty</value>
   </data>
   <data name="trErrorEmptyUserToolTip" xml:space="preserve">
     <value>User can not be empty</value>
@@ -1015,10 +1015,10 @@
     <value>Image</value>
   </data>
   <data name="trPaymentProcessType" xml:space="preserve">
-    <value>Payment Process Type</value>
+    <value>Payment process type</value>
   </data>
   <data name="trPaymentProcessTypeHint" xml:space="preserve">
-    <value>Payment Process Type...</value>
+    <value>Payment process type...</value>
   </data>
   <data name="trRecepient" xml:space="preserve">
     <value>Recepient</value>
@@ -1030,7 +1030,7 @@
     <value>To POS...</value>
   </data>
   <data name="trTransaferDetails" xml:space="preserve">
-    <value>Transafer Details</value>
+    <value>Transafer details</value>
   </data>
   <data name="trConfirmed" xml:space="preserve">
     <value>Confirmed</value>
@@ -1048,7 +1048,7 @@
     <value>Waiting</value>
   </data>
   <data name="trPurchaseInvoices" xml:space="preserve">
-    <value>Purchase Invoices</value>
+    <value>Purchase invoices</value>
   </data>
   <data name="trPopConfirm" xml:space="preserve">
     <value>Operation confirmed</value>
@@ -1069,7 +1069,7 @@
     <value>There is not enough balance</value>
   </data>
   <data name="trDraftBounceBill" xml:space="preserve">
-    <value>Draft Bounce Invoice</value>
+    <value>Draft bounce invoice</value>
   </data>
   <data name="trErrorAmountIncreaseToolTip" xml:space="preserve">
     <value>Quantity can not be exceeded</value>
@@ -1078,13 +1078,13 @@
     <value>It is not possible to pull from the same POS</value>
   </data>
   <data name="trBankAccounts" xml:space="preserve">
-    <value>Bank Accounts</value>
+    <value>Bank accounts</value>
   </data>
   <data name="trIsConfirmed" xml:space="preserve">
     <value>Confirmed</value>
   </data>
   <data name="trPosAccounts" xml:space="preserve">
-    <value>Pos Accounts</value>
+    <value>POS accounts</value>
   </data>
   <data name="trAdministrativePull" xml:space="preserve">
     <value>administrative pull</value>
@@ -1093,7 +1093,7 @@
     <value>Cheque</value>
   </data>
   <data name="trDocNumHint" xml:space="preserve">
-    <value>Document Number...</value>
+    <value>Document number...</value>
   </data>
   <data name="trDocNumTooltip" xml:space="preserve">
     <value>Document number</value>
@@ -1108,7 +1108,7 @@
     <value>Depositor can not be empty</value>
   </data>
   <data name="trErrorEmptyPaymentTypeToolTip" xml:space="preserve">
-    <value>Payment Type can not be empty</value>
+    <value>Payment type can not be empty</value>
   </data>
   <data name="trErrorEmptyRecipientToolTip" xml:space="preserve">
     <value>Recipient can not be empty</value>
@@ -1120,7 +1120,7 @@
     <value>Payments</value>
   </data>
   <data name="trPaymentTypeHint" xml:space="preserve">
-    <value>Payment Type...</value>
+    <value>Payment type...</value>
   </data>
   <data name="trPaymentTypeTooltip" xml:space="preserve">
     <value>Payment type</value>
@@ -1135,7 +1135,7 @@
     <value>Salary</value>
   </data>
   <data name="trPurchaseInvoice" xml:space="preserve">
-    <value>Purchase Invoice</value>
+    <value>Purchase invoice</value>
   </data>
   <data name="trProperty" xml:space="preserve">
     <value>Property</value>
@@ -1165,10 +1165,10 @@
     <value>To Should be begger then From</value>
   </data>
   <data name="trDraftPurchaseBill" xml:space="preserve">
-    <value>Purchase Bill Draft</value>
+    <value>Purchase bill draft</value>
   </data>
   <data name="trPurchaseBill" xml:space="preserve">
-    <value>Purchase Bill</value>
+    <value>Purchase bill</value>
   </data>
   <data name="trAdministrativeDeposit" xml:space="preserve">
     <value>Administrative deposit</value>
@@ -1198,7 +1198,7 @@
     <value>Wrong password</value>
   </data>
   <data name="trEmptyCustomerToolTip" xml:space="preserve">
-    <value>Customer can not be empty</value>
+    <value>Customer can't be empty</value>
   </data>
   <data name="trEmptyProcessNumToolTip" xml:space="preserve">
     <value>Process number can not be empty</value>
@@ -1222,13 +1222,13 @@
     <value>The document due date cannot be empty</value>
   </data>
   <data name="trReturnedInvoice" xml:space="preserve">
-    <value>Returned Invoice</value>
+    <value>Returned invoice</value>
   </data>
   <data name="trSalesInvoice" xml:space="preserve">
-    <value>Sales Invoice</value>
+    <value>Sales invoice</value>
   </data>
   <data name="trAddRange" xml:space="preserve">
-    <value>Add Range</value>
+    <value>Add range</value>
   </data>
   <data name="trLocation" xml:space="preserve">
     <value>Location</value>
@@ -1240,10 +1240,10 @@
     <value>Bonds</value>
   </data>
   <data name="trErrorEmptyDepositFromToolTip" xml:space="preserve">
-    <value>Depositor cann't be empty</value>
+    <value>Depositor can't be empty</value>
   </data>
   <data name="trErrorEmptyDepositorToolTip" xml:space="preserve">
-    <value>Depositor cann't be empty</value>
+    <value>Depositor can't be empty</value>
   </data>
   <data name="trPaid" xml:space="preserve">
     <value>Paid</value>
@@ -1255,7 +1255,7 @@
     <value>Received</value>
   </data>
   <data name="trPayVocher" xml:space="preserve">
-    <value>Payment Voucher</value>
+    <value>Payment voucher</value>
   </data>
   <data name="trBranch/Store" xml:space="preserve">
     <value>Branch/Store</value>
@@ -1354,10 +1354,10 @@
     <value>All coupons are used</value>
   </data>
   <data name="trErrorEmptyEndDateToolTip" xml:space="preserve">
-    <value>End date cann't be empty</value>
+    <value>End date can't be empty</value>
   </data>
   <data name="trErrorEmptyStartDateToolTip" xml:space="preserve">
-    <value>Start date cnn't be empty</value>
+    <value>Start date can't be empty</value>
   </data>
   <data name="trSelectedLocations" xml:space="preserve">
     <value>Selected locations</value>
@@ -1393,7 +1393,7 @@
     <value>Card is already exist</value>
   </data>
   <data name="trCardNameHint" xml:space="preserve">
-    <value>Card Name...</value>
+    <value>Card name...</value>
   </data>
   <data name="trCategorieParentError" xml:space="preserve">
     <value>A category cannot be associated with itself</value>
@@ -1438,46 +1438,46 @@
     <value>Branchs/Stores</value>
   </data>
   <data name="trSelectedBranchs/Stores" xml:space="preserve">
-    <value>Selected Branchs/Stores</value>
+    <value>Selected branchs/stores</value>
   </data>
   <data name="trDublicateLocation" xml:space="preserve">
     <value>Location is already exist</value>
   </data>
   <data name="trEmptyDeliveryCostToolTip" xml:space="preserve">
-    <value>Delivery cost cann't be empty</value>
+    <value>Delivery cost can't be empty</value>
   </data>
   <data name="trEmptyRealDeliveryCostToolTip" xml:space="preserve">
     <value>Real delivery cost cann't be empty</value>
   </data>
   <data name="trErrorEmptyDeliveryTypeToolTip" xml:space="preserve">
-    <value>Delivery type cann't be empty</value>
+    <value>Delivery type can't be empty</value>
   </data>
   <data name="trLocaly" xml:space="preserve">
     <value>Localy</value>
   </data>
   <data name="trEmptyDeliveryTypeToolTip" xml:space="preserve">
-    <value>Delivery type cann't be empty</value>
+    <value>Delivery type can't be empty</value>
   </data>
   <data name="trPurchaseReturnDraft" xml:space="preserve">
-    <value>Purchase Return Draft</value>
+    <value>Purchase return draft</value>
   </data>
   <data name="trPurchaseReturnInvoice" xml:space="preserve">
-    <value>Purchase Return</value>
+    <value>Purchase return</value>
   </data>
   <data name="trQuotations" xml:space="preserve">
     <value>Quotations</value>
   </data>
   <data name="trSalesDraft" xml:space="preserve">
-    <value>Sales Draft</value>
+    <value>Sales draft</value>
   </data>
   <data name="trSalesReturnDraft" xml:space="preserve">
-    <value>Sales Return Draft</value>
+    <value>Sales return draft</value>
   </data>
   <data name="trSalesReturnInvoice" xml:space="preserve">
-    <value>Sales Return</value>
+    <value>Sales return</value>
   </data>
   <data name="trComInfo" xml:space="preserve">
-    <value>Company Info</value>
+    <value>Company info</value>
   </data>
   <data name="trDeliveryCost" xml:space="preserve">
     <value>Delivery cost</value>
@@ -1507,25 +1507,25 @@
     <value>Real delivery cost...</value>
   </data>
   <data name="trShippingCompanies" xml:space="preserve">
-    <value>Shipping Companies</value>
+    <value>Shipping companies</value>
   </data>
   <data name="trShippingCompany" xml:space="preserve">
-    <value>Shipping Company</value>
+    <value>Shipping company</value>
   </data>
   <data name="trDestoryCount" xml:space="preserve">
-    <value>Destructive Count</value>
+    <value>Destructive count</value>
   </data>
   <data name="trErrorDistroyMoreQuanToolTip" xml:space="preserve">
     <value>Distroy count can not be more than real amount</value>
   </data>
   <data name="trInventoryAmount" xml:space="preserve">
-    <value>Inventory Amount</value>
+    <value>Inventory amount</value>
   </data>
   <data name="trItemUnit" xml:space="preserve">
     <value>Item - Unit</value>
   </data>
   <data name="trRealAmount" xml:space="preserve">
-    <value>Real Amount</value>
+    <value>Real amount</value>
   </data>
   <data name="trSectionLocation" xml:space="preserve">
     <value>Section - Location</value>
@@ -1570,13 +1570,13 @@
     <value>English</value>
   </data>
   <data name="trTranseToSameLocation" xml:space="preserve">
-    <value>select new location for transf</value>
+    <value>select new location for transfer</value>
   </data>
   <data name="trEmptyAddress" xml:space="preserve">
     <value>Address cann't be null</value>
   </data>
   <data name="trEmptyLanguage" xml:space="preserve">
-    <value>Language cann't be empty</value>
+    <value>Language can't be empty</value>
   </data>
   <data name="trEmptyRegion" xml:space="preserve">
     <value>Region cann't be empty</value>
@@ -1660,16 +1660,16 @@
     <value>Permission</value>
   </data>
   <data name="trItemType" xml:space="preserve">
-    <value>Item Type</value>
+    <value>Item type</value>
   </data>
   <data name="trHaveExpirationDate" xml:space="preserve">
-    <value>Have Expiration date</value>
+    <value>Have expiration date</value>
   </data>
   <data name="trHaveSerialNumber" xml:space="preserve">
-    <value>Have Serial Number</value>
+    <value>Have serial number</value>
   </data>
   <data name="trNormalItem" xml:space="preserve">
-    <value>Normal Item</value>
+    <value>Normal item</value>
   </data>
   <data name="trPackageItems" xml:space="preserve">
     <value>Package items</value>
@@ -1684,10 +1684,10 @@
     <value>minimum</value>
   </data>
   <data name="trParentName" xml:space="preserve">
-    <value>Parent Name</value>
+    <value>Parent name</value>
   </data>
   <data name="trStorageCostHent" xml:space="preserve">
-    <value>Storage Cost...</value>
+    <value>Storage cost...</value>
   </data>
   <data name="trHR" xml:space="preserve">
     <value>HR</value>
@@ -1708,7 +1708,7 @@
     <value>Support</value>
   </data>
   <data name="trMajorEmail" xml:space="preserve">
-    <value>There is already a Major email</value>
+    <value>There is already a major email</value>
   </data>
   <data name="trDelivered" xml:space="preserve">
     <value>Delivered</value>
@@ -1735,28 +1735,28 @@
     <value>Item count is:</value>
   </data>
   <data name="trDestroyAmountMoreExist" xml:space="preserve">
-    <value>Destroy Amount can not be more than real amount</value>
+    <value>Destroy amount can not be more than real amount</value>
   </data>
   <data name="trErrorNoSerialToolTip" xml:space="preserve">
     <value>There is an item with no serial</value>
   </data>
   <data name="trErrorTotalIsZeroToolTip" xml:space="preserve">
-    <value>Total is Zero</value>
+    <value>Total is zero</value>
   </data>
   <data name="trErrorSerialMoreItemCountToolTip" xml:space="preserve">
     <value>Number of the serial is greater than element quantity</value>
   </data>
   <data name="trPurchaseOrder" xml:space="preserve">
-    <value>Purchase Order</value>
+    <value>Purchase order</value>
   </data>
   <data name="trPurchaseOrdersBill" xml:space="preserve">
-    <value>Purchase Orders</value>
+    <value>Purchase orders</value>
   </data>
   <data name="trProcessNumHint" xml:space="preserve">
-    <value>Process Number...</value>
+    <value>Process number...</value>
   </data>
   <data name="trProcessNumTooltip" xml:space="preserve">
-    <value>Process Number</value>
+    <value>Process number</value>
   </data>
   <data name="trDestructive" xml:space="preserve">
     <value>Destructive</value>
@@ -1831,7 +1831,7 @@
     <value>The source unit cannot be empty</value>
   </data>
   <data name="trInventoryDraft" xml:space="preserve">
-    <value>Inventory Draft</value>
+    <value>Inventory draft</value>
   </data>
   <data name="trNoDraft" xml:space="preserve">
     <value>There is no draft</value>
@@ -1868,13 +1868,13 @@
 Please add Email in setting</value>
   </data>
   <data name="trNoInternetConnection" xml:space="preserve">
-    <value>No Internet connection</value>
+    <value>No internet connection</value>
   </data>
   <data name="trPurchaseInvoiceWaiting" xml:space="preserve">
-    <value>Purchase Invoice Waiting for storage</value>
+    <value>Purchase Invoice waiting for storage</value>
   </data>
   <data name="trPurchaseReturnInvoiceWaiting" xml:space="preserve">
-    <value>Purchase Return invoice awaiting export</value>
+    <value>Purchase return invoice awaiting export</value>
   </data>
   <data name="trThereIsNoItemsToSend" xml:space="preserve">
     <value>There are no items to send</value>
@@ -1883,7 +1883,7 @@ Please add Email in setting</value>
     <value>There is no order to send, please save order then send the email</value>
   </data>
   <data name="trTheVendorHasNoEmail" xml:space="preserve">
-    <value>The vendor Does not Have email.</value>
+    <value>The vendor does not have email.</value>
   </data>
   <data name="trDepartmentHent" xml:space="preserve">
     <value>Department...</value>
@@ -1892,31 +1892,31 @@ Please add Email in setting</value>
     <value>Major</value>
   </data>
   <data name="trEmailTemplates" xml:space="preserve">
-    <value>Email Templates</value>
+    <value>Email templates</value>
   </data>
   <data name="trShortages" xml:space="preserve">
     <value>Shortages</value>
   </data>
   <data name="trCredit" xml:space="preserve">
-    <value>On Credit</value>
+    <value>On credit</value>
   </data>
   <data name="trDepositor" xml:space="preserve">
     <value>Depositor</value>
   </data>
   <data name="trPurchaceOrder" xml:space="preserve">
-    <value>Purchace Order</value>
+    <value>Purchace order</value>
   </data>
   <data name="trPurchaceOrderDraft" xml:space="preserve">
-    <value>Purchace Order Draft</value>
+    <value>Purchace order draft</value>
   </data>
   <data name="trQuotationsDraft" xml:space="preserve">
-    <value>Quotations Draft</value>
+    <value>Quotations draft</value>
   </data>
   <data name="trSaleOrder" xml:space="preserve">
-    <value>Sale Order</value>
+    <value>Sale order</value>
   </data>
   <data name="trSaleOrderDraft" xml:space="preserve">
-    <value>Sale Order Draft</value>
+    <value>Sale order draft</value>
   </data>
   <data name="trErrorEmptyItemToolTip" xml:space="preserve">
     <value>You should choose an item</value>
@@ -1940,7 +1940,7 @@ Please add Email in setting</value>
     <value>Date state</value>
   </data>
   <data name="trEmptyDateFormat" xml:space="preserve">
-    <value>Date format cann't be empty</value>
+    <value>Date format can't be empty</value>
   </data>
   <data name="trAmountHint" xml:space="preserve">
     <value>Amount...</value>
@@ -1952,7 +1952,7 @@ Please add Email in setting</value>
     <value>Item...</value>
   </data>
   <data name="trItemShortage" xml:space="preserve">
-    <value>Item Shortage</value>
+    <value>Item shortage</value>
   </data>
   <data name="trItemStorage" xml:space="preserve">
     <value>Item storage</value>
@@ -2003,13 +2003,13 @@ Please add Email in setting</value>
     <value>Vendors</value>
   </data>
   <data name="trReceiptVoucher" xml:space="preserve">
-    <value>Receipt Voucher</value>
+    <value>Receipt voucher</value>
   </data>
   <data name="trDiscountTypeHint" xml:space="preserve">
-    <value>Discount Type...</value>
+    <value>Discount type...</value>
   </data>
   <data name="trDraftQuontaion" xml:space="preserve">
-    <value>Quotation Draft</value>
+    <value>Quotation draft</value>
   </data>
   <data name="trImages" xml:space="preserve">
     <value>Images</value>
@@ -2021,13 +2021,13 @@ Please add Email in setting</value>
     <value>New draft</value>
   </data>
   <data name="trPrintDraftInvoice" xml:space="preserve">
-    <value>can not print Draft Invoice</value>
+    <value>can not print draft invoice</value>
   </data>
   <data name="trPrintEmptyInvoice" xml:space="preserve">
-    <value>can not print Empty Invoice</value>
+    <value>can not print empty invoice</value>
   </data>
   <data name="trSalesOrders" xml:space="preserve">
-    <value>Sales Orders</value>
+    <value>Sales orders</value>
   </data>
   <data name="trSaveInvoiceNotification" xml:space="preserve">
     <value>Do you want save the invoice in drafts?</value>
@@ -2054,7 +2054,7 @@ Please add Email in setting</value>
     <value>Tax...</value>
   </data>
   <data name="trVendorDetails" xml:space="preserve">
-    <value>Vendor Details</value>
+    <value>Vendor details</value>
   </data>
   <data name="trWaitConfirmUser" xml:space="preserve">
     <value>Waiting for user confirmation</value>
@@ -2069,25 +2069,25 @@ Please add Email in setting</value>
     <value>Validity</value>
   </data>
   <data name="trAmountShortageedHint" xml:space="preserve">
-    <value>Amount Shortageed...</value>
+    <value>Amount shortageed...</value>
   </data>
   <data name="trArchive" xml:space="preserve">
     <value>Archive</value>
   </data>
   <data name="trEmptyCurrency" xml:space="preserve">
-    <value>Currency cann't be empty</value>
+    <value>Currency can't be empty</value>
   </data>
   <data name="trInventory" xml:space="preserve">
     <value>Inventory</value>
   </data>
   <data name="trPurchaseOrders" xml:space="preserve">
-    <value>Purchase Orders</value>
+    <value>Purchase orders</value>
   </data>
   <data name="trStocktakingDetails" xml:space="preserve">
-    <value>Stocktaking Details</value>
+    <value>Stocktaking details</value>
   </data>
   <data name="trStocktakingItems" xml:space="preserve">
-    <value>Stocktaking Items</value>
+    <value>Stocktaking items</value>
   </data>
   <data name="trDepositor/Recipient" xml:space="preserve">
     <value>Depositor/Recipient</value>
@@ -2096,13 +2096,13 @@ Please add Email in setting</value>
     <value>Payments/Received</value>
   </data>
   <data name="trSalesInvoices" xml:space="preserve">
-    <value>Sales Invoices</value>
+    <value>Sales invoices</value>
   </data>
   <data name="trSelect" xml:space="preserve">
     <value>Select</value>
   </data>
   <data name="trAccountStatement" xml:space="preserve">
-    <value>Account Statement</value>
+    <value>Account statement</value>
   </data>
   <data name="trAll" xml:space="preserve">
     <value>All</value>
@@ -2165,7 +2165,7 @@ Please add Email in setting</value>
     <value>You have been assigned to deliver an order</value>
   </data>
   <data name="trDeliverOrderAlertTilte" xml:space="preserve">
-    <value>Deliver Order</value>
+    <value>Deliver order</value>
   </data>
   <data name="trDraftExist" xml:space="preserve">
     <value>There is an inventory draft</value>
@@ -2186,7 +2186,7 @@ Please add Email in setting</value>
     <value>Export order waiting to confirm</value>
   </data>
   <data name="trExportAlertTilte" xml:space="preserve">
-    <value>Export Order</value>
+    <value>Export order</value>
   </data>
   <data name="trFromLocationHint" xml:space="preserve">
     <value>From location ...</value>
@@ -2207,13 +2207,13 @@ Please add Email in setting</value>
     <value>branch have receved order</value>
   </data>
   <data name="trSalesOrderAlertTilte" xml:space="preserve">
-    <value>Sales Order</value>
+    <value>Sales order</value>
   </data>
   <data name="trSelectedCustomers" xml:space="preserve">
-    <value>Selected Customers</value>
+    <value>Selected customers</value>
   </data>
   <data name="trSelectLocations" xml:space="preserve">
-    <value>Select Locations</value>
+    <value>Select locations</value>
   </data>
   <data name="trSerialNum" xml:space="preserve">
     <value>Serial number</value>
@@ -2234,13 +2234,13 @@ Please add Email in setting</value>
     <value>Unit conversion</value>
   </data>
   <data name="trRequiredAmount" xml:space="preserve">
-    <value>Required Amount</value>
+    <value>Required amount</value>
   </data>
   <data name="trTheCustomerHasNoEmail" xml:space="preserve">
     <value>The customer does not have email</value>
   </data>
   <data name="trTheShippingCompaniesHasNoEmail" xml:space="preserve">
-    <value>The Shipping Company does not have email</value>
+    <value>The shipping company does not have email</value>
   </data>
   <data name="trTheUserHasNoEmail" xml:space="preserve">
     <value>The user does not have email</value>
@@ -2249,13 +2249,13 @@ Please add Email in setting</value>
     <value>Purchase invoice awaiting receipt</value>
   </data>
   <data name="trPurchaseInvoiceAlertTilte" xml:space="preserve">
-    <value>Purchase Invoice</value>
+    <value>Purchase invoice</value>
   </data>
   <data name="trPurchaseReturnInvoiceAlertContent" xml:space="preserve">
     <value>Purchase return invoice pending execution</value>
   </data>
   <data name="trPurchaseReturnInvoiceAlertTilte" xml:space="preserve">
-    <value>Purchase Return Invoice</value>
+    <value>Purchase return invoice</value>
   </data>
   <data name="trBankAlertContent" xml:space="preserve">
     <value>trBankAlertContent</value>
@@ -2264,13 +2264,13 @@ Please add Email in setting</value>
     <value>trBankAlertTilte</value>
   </data>
   <data name="trCompanySettings" xml:space="preserve">
-    <value>Company Settings</value>
+    <value>Company settings</value>
   </data>
   <data name="trCreate" xml:space="preserve">
     <value>Create</value>
   </data>
   <data name="trCreateInvocie" xml:space="preserve">
-    <value>Create Invocie</value>
+    <value>Create invocie</value>
   </data>
   <data name="trOverrideStorageLimitAlert" xml:space="preserve">
     <value>Override storage limit</value>
@@ -2282,7 +2282,7 @@ Please add Email in setting</value>
     <value>Transfer pending confirmation</value>
   </data>
   <data name="trTransferAlertTilte" xml:space="preserve">
-    <value>Transfer Operation</value>
+    <value>Transfer operation</value>
   </data>
   <data name="trUsersSettings" xml:space="preserve">
     <value>user settings</value>
@@ -2294,22 +2294,22 @@ Please add Email in setting</value>
     <value>Execute order</value>
   </data>
   <data name="trTransfersAdmin" xml:space="preserve">
-    <value>Transfers Admin</value>
+    <value>Transfers admin</value>
   </data>
   <data name="trNew" xml:space="preserve">
     <value>New</value>
   </data>
   <data name="trNoNotifications" xml:space="preserve">
-    <value>No Notifications There!</value>
+    <value>No notifications there!</value>
   </data>
   <data name="trNotifications" xml:space="preserve">
     <value>Notifications</value>
   </data>
   <data name="trReturnInvoices" xml:space="preserve">
-    <value>Return Invoices</value>
+    <value>Return invoices</value>
   </data>
   <data name="trShowAll" xml:space="preserve">
-    <value>Show All</value>
+    <value>Show all</value>
   </data>
   <data name="trFavorite" xml:space="preserve">
     <value>Favorite</value>
@@ -2348,10 +2348,10 @@ Please add Email in setting</value>
     <value>Purchases</value>
   </data>
   <data name="trReportsSettings" xml:space="preserve">
-    <value>Reports Settings</value>
+    <value>Reports settings</value>
   </data>
   <data name="trFirstPath" xml:space="preserve">
-    <value>The main path cann't be empty</value>
+    <value>The main path can't be empty</value>
   </data>
   <data name="trSecondPath" xml:space="preserve">
     <value>The secondary path cann't be empty</value>
@@ -2363,7 +2363,7 @@ Please add Email in setting</value>
     <value>Secondary path</value>
   </data>
   <data name="trUserPath" xml:space="preserve">
-    <value>User Path</value>
+    <value>User path</value>
   </data>
   <data name="trApproveQuotationNotification" xml:space="preserve">
     <value>Do you want to approve the quotation?</value>
@@ -2396,16 +2396,16 @@ Please add Email in setting</value>
     <value>Vip</value>
   </data>
   <data name="trExportDraft" xml:space="preserve">
-    <value>Export Draft</value>
+    <value>Export draft</value>
   </data>
   <data name="trExportOrder" xml:space="preserve">
-    <value>Export Order</value>
+    <value>Export order</value>
   </data>
   <data name="trImportDraft" xml:space="preserve">
-    <value>Import Draft</value>
+    <value>Import draft</value>
   </data>
   <data name="trImportOrder" xml:space="preserve">
-    <value>Import Order</value>
+    <value>Import order</value>
   </data>
   <data name="trNext" xml:space="preserve">
     <value>Next</value>
@@ -2420,7 +2420,7 @@ Please add Email in setting</value>
     <value>Free Zone</value>
   </data>
   <data name="trOrderNum" xml:space="preserve">
-    <value>Order Num</value>
+    <value>Order num</value>
   </data>
   <data name="trReserved" xml:space="preserve">
     <value>Reserved</value>
@@ -2429,10 +2429,10 @@ Please add Email in setting</value>
     <value>Shipping</value>
   </data>
   <data name="trItemsImport/Export" xml:space="preserve">
-    <value>Export/Import Items</value>
+    <value>Export/Import items</value>
   </data>
   <data name="trReceiptOfPurchasesBill" xml:space="preserve">
-    <value>Receipt of Purchases Bill</value>
+    <value>Receipt of purchases bill</value>
   </data>
   <data name="trInv" xml:space="preserve">
     <value>Invoice</value>
@@ -2462,13 +2462,13 @@ Please add Email in setting</value>
     <value>Buy</value>
   </data>
   <data name="trNetSales" xml:space="preserve">
-    <value>Net Sales</value>
+    <value>Net sales</value>
   </data>
   <data name="trTotalReturn" xml:space="preserve">
-    <value>Total Return</value>
+    <value>Total return</value>
   </data>
   <data name="trTotalSales" xml:space="preserve">
-    <value>Total Sales</value>
+    <value>Total sales</value>
   </data>
   <data name="tr_Sales" xml:space="preserve">
     <value>Sales</value>
@@ -2483,16 +2483,16 @@ Please add Email in setting</value>
     <value>Daily</value>
   </data>
   <data name="trPrintBarcode" xml:space="preserve">
-    <value>Print Barcode</value>
+    <value>Print barcode</value>
   </data>
   <data name="trSerialNumbersEqualItemsNumber" xml:space="preserve">
     <value>The number of serials must be equal to the number of elements</value>
   </data>
   <data name="trNetPurchases" xml:space="preserve">
-    <value>Net Purchases</value>
+    <value>Net purchases</value>
   </data>
   <data name="trTotalPurchases" xml:space="preserve">
-    <value>Total Purchases</value>
+    <value>Total purchases</value>
   </data>
   <data name="tr_Purchases" xml:space="preserve">
     <value>Purchases</value>
@@ -2501,7 +2501,7 @@ Please add Email in setting</value>
     <value>Destructives</value>
   </data>
   <data name="trInitializeShortage" xml:space="preserve">
-    <value>Initialize Shortage</value>
+    <value>Initialize shortage</value>
   </data>
   <data name="trView" xml:space="preserve">
     <value>View</value>
@@ -2513,7 +2513,7 @@ Please add Email in setting</value>
     <value>Others</value>
   </data>
   <data name="trPermissionsGroup" xml:space="preserve">
-    <value>Permissions Group</value>
+    <value>Permissions group</value>
   </data>
   <data name="trShow" xml:space="preserve">
     <value>Show</value>
@@ -2525,16 +2525,16 @@ Please add Email in setting</value>
     <value>Vendor</value>
   </data>
   <data name="trBestSeller" xml:space="preserve">
-    <value>Best Seller</value>
+    <value>Best seller</value>
   </data>
   <data name="trBranch&amp;Store" xml:space="preserve">
     <value>Branch &amp; Store</value>
   </data>
   <data name="trDailyPurchase" xml:space="preserve">
-    <value>Daily Purchase</value>
+    <value>Daily purchase</value>
   </data>
   <data name="trDailySales" xml:space="preserve">
-    <value>Daily Sales</value>
+    <value>Daily sales</value>
   </data>
   <data name="trPurchase&amp;Sales" xml:space="preserve">
     <value>Purchase &amp; Sales</value>
@@ -2561,7 +2561,7 @@ Please add Email in setting</value>
     <value>Bondes count</value>
   </data>
   <data name="trBranchesCount" xml:space="preserve">
-    <value>BranchesCount</value>
+    <value>Branches count</value>
   </data>
   <data name="trCardsCount" xml:space="preserve">
     <value>credit cards count</value>
@@ -2576,7 +2576,7 @@ Please add Email in setting</value>
     <value>Orders count</value>
   </data>
   <data name="trPosCount" xml:space="preserve">
-    <value>POScount</value>
+    <value>POS count</value>
   </data>
   <data name="trShippingCompaniesCount" xml:space="preserve">
     <value>Shipping companies count</value>
@@ -2624,10 +2624,10 @@ Please add Email in setting</value>
     <value>Store</value>
   </data>
   <data name="trCashPaid" xml:space="preserve">
-    <value>Cash Paid</value>
+    <value>Cash paid</value>
   </data>
   <data name="trTheRest" xml:space="preserve">
-    <value>The Rest</value>
+    <value>The rest</value>
   </data>
   <data name="trPosHint" xml:space="preserve">
     <value>POS...</value>
@@ -2636,10 +2636,10 @@ Please add Email in setting</value>
     <value>Profits</value>
   </data>
   <data name="trAdministrativePullHint" xml:space="preserve">
-    <value>Administrative Pull...</value>
+    <value>Administrative pull...</value>
   </data>
   <data name="trGeneralExpensesHint" xml:space="preserve">
-    <value>General Expenses...</value>
+    <value>General dxpenses...</value>
   </data>
   <data name="trSalaryHint" xml:space="preserve">
     <value>Salary...</value>
@@ -2648,13 +2648,13 @@ Please add Email in setting</value>
     <value>Branch, POS,...</value>
   </data>
   <data name="trCashBalance" xml:space="preserve">
-    <value>Cash Balance</value>
+    <value>Cash balance</value>
   </data>
   <data name="trInvoiceItemHint" xml:space="preserve">
     <value>Invoice, Item,...</value>
   </data>
   <data name="trCashCustomer" xml:space="preserve">
-    <value>Cash Customer</value>
+    <value>Cash customer</value>
   </data>
   <data name="trUnKnown" xml:space="preserve">
     <value>Unknown</value>
@@ -2666,7 +2666,7 @@ Please add Email in setting</value>
     <value>payment methods</value>
   </data>
   <data name="trErrorWrongUrl" xml:space="preserve">
-    <value>wrong Url</value>
+    <value>wrong URL</value>
   </data>
   <data name="trInputProcessNumber" xml:space="preserve">
     <value>Input process number</value>
@@ -2678,7 +2678,7 @@ Please add Email in setting</value>
     <value>Payment</value>
   </data>
   <data name="trPaymentMethods" xml:space="preserve">
-    <value>Payment Methods</value>
+    <value>Payment methods</value>
   </data>
   <data name="trErrorWrongActivation" xml:space="preserve">
     <value>Wrong activation key</value>
@@ -2717,13 +2717,13 @@ Please add Email in setting</value>
     <value>Do you want to continue process?</value>
   </data>
   <data name="trNoConnection" xml:space="preserve">
-    <value>No Connection</value>
+    <value>No connection</value>
   </data>
   <data name="trCashType" xml:space="preserve">
     <value>Cash</value>
   </data>
   <data name="trNotReady" xml:space="preserve">
-    <value>Not Ready</value>
+    <value>Not ready</value>
   </data>
   <data name="trReady" xml:space="preserve">
     <value>Ready</value>
@@ -2735,7 +2735,7 @@ Please add Email in setting</value>
     <value>Reserve</value>
   </data>
   <data name="trStorageCostPerDay" xml:space="preserve">
-    <value>Storage Cost Per Day</value>
+    <value>Storage cost per day</value>
   </data>
   <data name="trErrorsFile" xml:space="preserve">
     <value>Errors file</value>
@@ -2759,7 +2759,7 @@ Please add Email in setting</value>
     <value>Default pay type</value>
   </data>
   <data name="trDirectEntry" xml:space="preserve">
-    <value>Direct Entry</value>
+    <value>Direct entry</value>
   </data>
   <data name="trBarcodeEmpty" xml:space="preserve">
     <value>Barcode is empty</value>
@@ -2789,10 +2789,10 @@ Please add Email in setting</value>
     <value> Of </value>
   </data>
   <data name="trTheService" xml:space="preserve">
-    <value>The Service</value>
+    <value>The service</value>
   </data>
   <data name="trTheServices" xml:space="preserve">
-    <value>The Services</value>
+    <value>The services</value>
   </data>
   <data name="trHaveExpirationDates" xml:space="preserve">
     <value>Items with an expiration date</value>
@@ -2801,7 +2801,7 @@ Please add Email in setting</value>
     <value>Items with serial number</value>
   </data>
   <data name="trNormals" xml:space="preserve">
-    <value>Normal Items</value>
+    <value>Normal items</value>
   </data>
   <data name="trPackages" xml:space="preserve">
     <value>Packages</value>
@@ -2840,7 +2840,7 @@ Please add Email in setting</value>
     <value>Accountant</value>
   </data>
   <data name="trAssistantManager" xml:space="preserve">
-    <value>Assistant Manager</value>
+    <value>Assistant manager</value>
   </data>
   <data name="trCashier" xml:space="preserve">
     <value>Cashier</value>
@@ -2849,55 +2849,55 @@ Please add Email in setting</value>
     <value>Chef</value>
   </data>
   <data name="trCleaningEmployee" xml:space="preserve">
-    <value>Cleaning Employee</value>
+    <value>Cleaning employee</value>
   </data>
   <data name="trDeliveryEmployee" xml:space="preserve">
-    <value>Delivery Employee</value>
+    <value>Delivery employee</value>
   </data>
   <data name="trDeliveryManager" xml:space="preserve">
-    <value>Delivery Manager</value>
+    <value>Delivery manager</value>
   </data>
   <data name="trDishwasher" xml:space="preserve">
     <value>Dishwasher</value>
   </data>
   <data name="trExecutiveChef" xml:space="preserve">
-    <value>Executive Chef</value>
+    <value>Executive chef</value>
   </data>
   <data name="trGeneralManager" xml:space="preserve">
-    <value>General Manager</value>
+    <value>General manager</value>
   </data>
   <data name="trHeadWaiter" xml:space="preserve">
-    <value>Head Waiter</value>
+    <value>Head waiter</value>
   </data>
   <data name="trKitchenEmployee" xml:space="preserve">
-    <value>Kitchen Employee</value>
+    <value>Kitchen employee</value>
   </data>
   <data name="trKitchenManager" xml:space="preserve">
-    <value>Kitchen Manager</value>
+    <value>Kitchen manager</value>
   </data>
   <data name="trPurchasingManager" xml:space="preserve">
-    <value>Purchasing Manager</value>
+    <value>Purchasing manager</value>
   </data>
   <data name="trReceptionist" xml:space="preserve">
     <value>Receptionist</value>
   </data>
   <data name="trSalesManager" xml:space="preserve">
-    <value>Sales Manager</value>
+    <value>Sales manager</value>
   </data>
   <data name="trServerUser" xml:space="preserve">
     <value>Server</value>
   </data>
   <data name="trSousChef" xml:space="preserve">
-    <value>Sous Chef</value>
+    <value>Sous chef</value>
   </data>
   <data name="trWaiter" xml:space="preserve">
     <value>Waiter</value>
   </data>
   <data name="trWarehouseEmployee" xml:space="preserve">
-    <value>Warehouse Employee</value>
+    <value>Warehouse employee</value>
   </data>
   <data name="trWarehouseManager" xml:space="preserve">
-    <value>Warehouse Manager</value>
+    <value>Warehouse manager</value>
   </data>
   <data name="trAppetizers" xml:space="preserve">
     <value>Appetizers</value>
@@ -2909,10 +2909,10 @@ Please add Email in setting</value>
     <value>Desserts</value>
   </data>
   <data name="trFastFood" xml:space="preserve">
-    <value>FastFood</value>
+    <value>Fast food</value>
   </data>
   <data name="trMainCourses" xml:space="preserve">
-    <value>MainCourses</value>
+    <value>Main courses</value>
   </data>
   <data name="trSaveStockTakingNotification" xml:space="preserve">
     <value>Do you want save the stock taking in drafts?</value>
@@ -2927,7 +2927,7 @@ Please add Email in setting</value>
     <value>Destroy</value>
   </data>
   <data name="trDestructiveItem" xml:space="preserve">
-    <value>Destructive Item</value>
+    <value>Destructive item</value>
   </data>
   <data name="trManually" xml:space="preserve">
     <value>Manually</value>
@@ -2942,28 +2942,28 @@ Please add Email in setting</value>
     <value>Consumption raw materials</value>
   </data>
   <data name="trDeliveryManagement" xml:space="preserve">
-    <value>Delivery Management</value>
+    <value>Delivery management</value>
   </data>
   <data name="trDiningHall" xml:space="preserve">
-    <value>Dining Hall</value>
+    <value>Dining hall</value>
   </data>
   <data name="trFoods" xml:space="preserve">
     <value>Foods</value>
   </data>
   <data name="trHallDivide" xml:space="preserve">
-    <value>Hall Divide</value>
+    <value>Hall divide</value>
   </data>
   <data name="trHallSections" xml:space="preserve">
     <value>Sections</value>
   </data>
   <data name="trItemsCosting" xml:space="preserve">
-    <value>Items Costing</value>
+    <value>Items costing</value>
   </data>
   <data name="trKitchen" xml:space="preserve">
     <value>kitchen</value>
   </data>
   <data name="trMenuSettings" xml:space="preserve">
-    <value>Menu Settings</value>
+    <value>Menu settings</value>
   </data>
   <data name="trMovementsOperations" xml:space="preserve">
     <value>Movements</value>
@@ -2972,40 +2972,40 @@ Please add Email in setting</value>
     <value>Persons</value>
   </data>
   <data name="trPreparingOrders" xml:space="preserve">
-    <value>Preparing Orders</value>
+    <value>Preparing orders</value>
   </data>
   <data name="trReservations" xml:space="preserve">
     <value>Reservations</value>
   </data>
   <data name="trReservationsUpdate" xml:space="preserve">
-    <value>Reservations Update</value>
+    <value>Reservations update</value>
   </data>
   <data name="trReservationTable" xml:space="preserve">
-    <value>Reservation Table</value>
+    <value>Reservation table</value>
   </data>
   <data name="trSpendingOrder" xml:space="preserve">
-    <value>Spending Order</value>
+    <value>Spending order</value>
   </data>
   <data name="trSpendingRequest" xml:space="preserve">
-    <value>Spending Request</value>
+    <value>Spending request</value>
   </data>
   <data name="trStocktakingOperations" xml:space="preserve">
     <value>Stocktaking</value>
   </data>
   <data name="trStorageDivide" xml:space="preserve">
-    <value>Storage Divide</value>
+    <value>Storage divide</value>
   </data>
   <data name="trStorageOperations" xml:space="preserve">
-    <value>Storage Operations</value>
+    <value>Storage operations</value>
   </data>
   <data name="trTakeAway" xml:space="preserve">
-    <value>Take Away</value>
+    <value>Take away</value>
   </data>
   <data name="trSystemSetting" xml:space="preserve">
-    <value>System Settings</value>
+    <value>System settings</value>
   </data>
   <data name="trCopyCount" xml:space="preserve">
-    <value>Copies Count</value>
+    <value>Copies count</value>
   </data>
   <data name="trDocPaperSize" xml:space="preserve">
     <value>Document paper size</value>
@@ -3017,7 +3017,7 @@ Please add Email in setting</value>
     <value>Sales invoice</value>
   </data>
   <data name="trPrinterSettings" xml:space="preserve">
-    <value>Printer Settings</value>
+    <value>Printer settings</value>
   </data>
   <data name="trPrintOnSavePurchase" xml:space="preserve">
     <value>Purchases invoice</value>
@@ -3071,7 +3071,7 @@ Please add Email in setting</value>
     <value>Coupons</value>
   </data>
   <data name="trExpireDate" xml:space="preserve">
-    <value>Expire Date</value>
+    <value>Expire date</value>
   </data>
   <data name="trErrorDuplicateName" xml:space="preserve">
     <value>Name already exists</value>
@@ -3092,10 +3092,10 @@ Please add Email in setting</value>
     <value>Preparing time...</value>
   </data>
   <data name="trPriceWithService" xml:space="preserve">
-    <value>Price With Service</value>
+    <value>Price with service</value>
   </data>
   <data name="trPrimeCost" xml:space="preserve">
-    <value>prime cost</value>
+    <value>Prime cost</value>
   </data>
   <data name="trSaturday" xml:space="preserve">
     <value>Saturday</value>
@@ -3122,7 +3122,7 @@ Please add Email in setting</value>
     <value>POS</value>
   </data>
   <data name="trResidentialSectors" xml:space="preserve">
-    <value>Residential Sectors</value>
+    <value>Residential sectors</value>
   </data>
   <data name="trSections" xml:space="preserve">
     <value>Sections</value>
@@ -3131,7 +3131,7 @@ Please add Email in setting</value>
     <value>You have to get user confirmation</value>
   </data>
   <data name="trUserConfirmation" xml:space="preserve">
-    <value>User Confirmation</value>
+    <value>User confirmation</value>
   </data>
   <data name="trActive_" xml:space="preserve">
     <value>Active</value>
@@ -3170,7 +3170,7 @@ Please add Email in setting</value>
     <value>Create reservation</value>
   </data>
   <data name="trDailyStatistic" xml:space="preserve">
-    <value>Daily Statistic</value>
+    <value>Daily statistic</value>
   </data>
   <data name="trDiningHallDivide" xml:space="preserve">
     <value>Dining hall divide</value>
@@ -3191,7 +3191,7 @@ Please add Email in setting</value>
     <value>General settings</value>
   </data>
   <data name="trInvoicesItems" xml:space="preserve">
-    <value>Invoices, Items</value>
+    <value>Invoices, items</value>
   </data>
   <data name="trLocationsSections" xml:space="preserve">
     <value>Locations, Sections</value>
@@ -3221,16 +3221,16 @@ Please add Email in setting</value>
     <value>self-service, order</value>
   </data>
   <data name="trShortageDestructive" xml:space="preserve">
-    <value>Shortage, Destructive</value>
+    <value>Shortage, destructive</value>
   </data>
   <data name="trSMSSetting" xml:space="preserve">
-    <value>SMS Setting</value>
+    <value>SMS setting</value>
   </data>
   <data name="trStockExternal" xml:space="preserve">
     <value>stock, external</value>
   </data>
   <data name="trStorageCostInvoices" xml:space="preserve">
-    <value>Storage cost,Invoices</value>
+    <value>Storage cost, Invoices</value>
   </data>
   <data name="trStoredFreezone" xml:space="preserve">
     <value>Stored, Freezone</value>
@@ -3248,19 +3248,19 @@ Please add Email in setting</value>
     <value>Vendors, Customer, Users</value>
   </data>
   <data name="trAddCustomer" xml:space="preserve">
-    <value>Add Customer</value>
+    <value>Add customer</value>
   </data>
   <data name="trEndTimeHint" xml:space="preserve">
     <value>End Time...</value>
   </data>
   <data name="trPersonsCountHint" xml:space="preserve">
-    <value>Persons Count...</value>
+    <value>Persons count...</value>
   </data>
   <data name="trReservationDaterHint" xml:space="preserve">
-    <value>Reservation Date...</value>
+    <value>Reservation date...</value>
   </data>
   <data name="trStartTimeHint" xml:space="preserve">
-    <value>Start Time...</value>
+    <value>Start time...</value>
   </data>
   <data name="trTheTables" xml:space="preserve">
     <value>Tables</value>
@@ -3296,31 +3296,31 @@ Please add Email in setting</value>
     <value>Hide</value>
   </data>
   <data name="trSubTotal" xml:space="preserve">
-    <value>SubTotal</value>
+    <value>Subtotal</value>
   </data>
   <data name="trExpectedEndTime" xml:space="preserve">
     <value>Expected end time</value>
   </data>
   <data name="trInvoiceCode" xml:space="preserve">
-    <value>Invoice Code</value>
+    <value>Invoice code</value>
   </data>
   <data name="trNextReservation" xml:space="preserve">
-    <value>Next Reservation</value>
+    <value>Next reservation</value>
   </data>
   <data name="trTableIsAvailable" xml:space="preserve">
     <value>this table is available</value>
   </data>
   <data name="trTableStatus" xml:space="preserve">
-    <value>Table Status</value>
+    <value>Table status</value>
   </data>
   <data name="trTaxInvoice" xml:space="preserve">
-    <value>Tax, Invoice</value>
+    <value>Tax, invoice</value>
   </data>
   <data name="trTableName" xml:space="preserve">
-    <value>Table Name</value>
+    <value>Table name</value>
   </data>
   <data name="trChooseTableFirst" xml:space="preserve">
-    <value>Choose Table</value>
+    <value>Choose table</value>
   </data>
   <data name="trCountMoreTableCapacity" xml:space="preserve">
     <value>Tables cannot accommodate the specified number</value>
@@ -3341,7 +3341,7 @@ Please add Email in setting</value>
     <value>From Branch</value>
   </data>
   <data name="trToBranch" xml:space="preserve">
-    <value>To Branch</value>
+    <value>To branch</value>
   </data>
   <data name="trCreateMembership" xml:space="preserve">
     <value>Create membership</value>
@@ -3359,22 +3359,22 @@ Please add Email in setting</value>
     <value>Agents</value>
   </data>
   <data name="trAgentType" xml:space="preserve">
-    <value>Agent Type</value>
+    <value>Agent type</value>
   </data>
   <data name="trArchives" xml:space="preserve">
     <value>Archives</value>
   </data>
   <data name="trDestroyedCount" xml:space="preserve">
-    <value>Destroyed Count</value>
+    <value>Destroyed count</value>
   </data>
   <data name="trDiffrencePercentage" xml:space="preserve">
-    <value>Diffrence Percentage</value>
+    <value>Diffrence percentage</value>
   </data>
   <data name="trMaxCollect" xml:space="preserve">
-    <value>Max Collect</value>
+    <value>Max collect</value>
   </data>
   <data name="trMinCollect" xml:space="preserve">
-    <value>Min Collect</value>
+    <value>Min collect</value>
   </data>
   <data name="trOut" xml:space="preserve">
     <value>Out</value>
@@ -3383,7 +3383,7 @@ Please add Email in setting</value>
     <value>Deposits</value>
   </data>
   <data name="trExpiredDate" xml:space="preserve">
-    <value>Expired Date</value>
+    <value>Expired date</value>
   </data>
   <data name="trMostPurchased" xml:space="preserve">
     <value>Most purchased</value>
@@ -3398,13 +3398,13 @@ Please add Email in setting</value>
     <value>Are you sure you want to complete process?</value>
   </data>
   <data name="trPurchaceOrderSaved" xml:space="preserve">
-    <value>Purchase Order - Saved</value>
+    <value>Purchase order - Saved</value>
   </data>
   <data name="trFromBranch/StoreHint" xml:space="preserve">
     <value>From Branch/Store...</value>
   </data>
   <data name="trToBranch/StoreHint" xml:space="preserve">
-    <value>To Branch/Store...</value>
+    <value>To branch/store...</value>
   </data>
   <data name="trTwoWays" xml:space="preserve">
     <value>Two ways</value>
@@ -3416,7 +3416,7 @@ Please add Email in setting</value>
     <value>about us</value>
   </data>
   <data name="trSubscriptionType" xml:space="preserve">
-    <value>Subscription Type</value>
+    <value>Subscription type</value>
   </data>
   <data name="trErrorDuplicateCode" xml:space="preserve">
     <value>Code is already exist</value>
@@ -3467,34 +3467,34 @@ Please add Email in setting</value>
     <value>Purchases,Sales,Reports</value>
   </data>
   <data name="trDailyClosing" xml:space="preserve">
-    <value>Dialy Closing</value>
+    <value>Dialy closing</value>
   </data>
   <data name="trDirectEmail" xml:space="preserve">
-    <value>Direct Email</value>
+    <value>Direct email</value>
   </data>
   <data name="trDirectEmailHint" xml:space="preserve">
     <value>Purchases,Sales invoice</value>
   </data>
   <data name="trDirectPrinting" xml:space="preserve">
-    <value>Direct Printing</value>
+    <value>Direct printing</value>
   </data>
   <data name="trDirectPrintingHint" xml:space="preserve">
     <value>Purchases,Sales invoice</value>
   </data>
   <data name="trItemsTax" xml:space="preserve">
-    <value>Items Tax</value>
+    <value>Items tax</value>
   </data>
   <data name="trItemsTaxNote" xml:space="preserve">
-    <value>Items Tax Note</value>
+    <value>Items tax note</value>
   </data>
   <data name="trPrinterSettingsHint" xml:space="preserve">
     <value>Reports and Sales ,Paper Size</value>
   </data>
   <data name="trPrintHeader" xml:space="preserve">
-    <value>Print Header</value>
+    <value>Print header</value>
   </data>
   <data name="trSalesInvoiceNote" xml:space="preserve">
-    <value>Sales Invoice Note</value>
+    <value>Sales invoice note</value>
   </data>
   <data name="trShowOption" xml:space="preserve">
     <value>Show</value>
@@ -3533,25 +3533,25 @@ Please add Email in setting</value>
     <value>Url link3</value>
   </data>
   <data name="trAlreadyExists" xml:space="preserve">
-    <value>Already Exists</value>
+    <value>Already exists</value>
   </data>
   <data name="trEqualZero" xml:space="preserve">
     <value>Value can not be 0</value>
   </data>
   <data name="trInvoicesClasses" xml:space="preserve">
-    <value>Invoices Classes</value>
+    <value>Invoices classes</value>
   </data>
   <data name="trOffers" xml:space="preserve">
     <value>Offers</value>
   </data>
   <data name="trYearCount" xml:space="preserve">
-    <value>Year Count</value>
+    <value>Year count</value>
   </data>
   <data name="trYearly" xml:space="preserve">
     <value>Yearly</value>
   </data>
   <data name="trStorageReport" xml:space="preserve">
-    <value>Storage Report</value>
+    <value>Storage report</value>
   </data>
   <data name="personsCountMustGreaterOne" xml:space="preserve">
     <value>persons count must be greater than 1</value>
@@ -3560,13 +3560,13 @@ Please add Email in setting</value>
     <value>Not available</value>
   </data>
   <data name="trSelectedCoupons" xml:space="preserve">
-    <value>Selected Coupons</value>
+    <value>Selected coupons</value>
   </data>
   <data name="trSelectedInvoicesClasses" xml:space="preserve">
-    <value>Selected Invoices Classes</value>
+    <value>Selected Invoices classes</value>
   </data>
   <data name="trSelectedOffers" xml:space="preserve">
-    <value>Selected Offers</value>
+    <value>Selected offers</value>
   </data>
   <data name="trExceed" xml:space="preserve">
     <value>Exceed</value>
@@ -3575,7 +3575,7 @@ Please add Email in setting</value>
     <value>Valid range : 0 to 100</value>
   </data>
   <data name="trPurchasesReport" xml:space="preserve">
-    <value>Purchases Report</value>
+    <value>Purchases report</value>
   </data>
   <data name="private" xml:space="preserve">
     <value>private</value>
@@ -3590,13 +3590,13 @@ Please add Email in setting</value>
     <value>Quantity exceeded</value>
   </data>
   <data name="trRemainingTime" xml:space="preserve">
-    <value>Remaining Time</value>
+    <value>Remaining time</value>
   </data>
   <data name="trSend" xml:space="preserve">
     <value>Send</value>
   </data>
   <data name="trSendAll" xml:space="preserve">
-    <value>Send All</value>
+    <value>Send all</value>
   </data>
   <data name="trAllItemsListed" xml:space="preserve">
     <value>All orders sent to kitchen</value>
@@ -3674,7 +3674,7 @@ Please add Email in setting</value>
     <value>Orders wait</value>
   </data>
   <data name="trProcessType" xml:space="preserve">
-    <value>Process Type</value>
+    <value>Process type</value>
   </data>
   <data name="byMinutes" xml:space="preserve">
     <value>By minutes</value>
@@ -3704,7 +3704,7 @@ Please add Email in setting</value>
     <value>Items,Operator,...</value>
   </data>
   <data name="trItemCannotDelete" xml:space="preserve">
-    <value>Item cann't be deleted</value>
+    <value>Item can't be deleted</value>
   </data>
   <data name="trPopCanceled" xml:space="preserve">
     <value>Operation canceled successfully</value>
@@ -3740,16 +3740,16 @@ Please add Email in setting</value>
     <value>Address information</value>
   </data>
   <data name="trTakeAwayDraft" xml:space="preserve">
-    <value>Take Away - Draft</value>
+    <value>Take away - draft</value>
   </data>
   <data name="invoiceItems" xml:space="preserve">
     <value>Invoice items</value>
   </data>
   <data name="trMaxStock" xml:space="preserve">
-    <value>Max Stock</value>
+    <value>Max stock</value>
   </data>
   <data name="trMinStock" xml:space="preserve">
-    <value>Min Stock</value>
+    <value>Min stock</value>
   </data>
   <data name="trLoss" xml:space="preserve">
     <value>Loss</value>
@@ -3767,22 +3767,22 @@ Please add Email in setting</value>
     <value>Tax %</value>
   </data>
   <data name="trTaxValue" xml:space="preserve">
-    <value>Tax Value</value>
+    <value>Tax value</value>
   </data>
   <data name="trTotalInvoice" xml:space="preserve">
-    <value>Total Net</value>
+    <value>Total net</value>
   </data>
   <data name="trCloseCash" xml:space="preserve">
-    <value>Close Cash</value>
+    <value>Close cash</value>
   </data>
   <data name="trCloseDate" xml:space="preserve">
-    <value>Close Date</value>
+    <value>Close date</value>
   </data>
   <data name="trOpenCash" xml:space="preserve">
-    <value>Open Cash</value>
+    <value>Open cash</value>
   </data>
   <data name="trOpenDate" xml:space="preserve">
-    <value>Open Date</value>
+    <value>Open date</value>
   </data>
   <data name="trPartialPay" xml:space="preserve">
     <value>partial pay</value>
@@ -3797,7 +3797,7 @@ Please add Email in setting</value>
     <value>management</value>
   </data>
   <data name="trTotalTax" xml:space="preserve">
-    <value>Total of Tax</value>
+    <value>Total of tax</value>
   </data>
   <data name="trDriver" xml:space="preserve">
     <value>Driver</value>
@@ -3821,7 +3821,7 @@ Please add Email in setting</value>
     <value>Deactivation success</value>
   </data>
   <data name="selectedResidentialSectors" xml:space="preserve">
-    <value>Selected Residential Sectors</value>
+    <value>Selected residential sectors</value>
   </data>
   <data name="deliveryMan" xml:space="preserve">
     <value>Delivery man</value>
@@ -3836,7 +3836,7 @@ Please add Email in setting</value>
     <value>minute</value>
   </data>
   <data name="readyForDelivery" xml:space="preserve">
-    <value>Ready For Delivery</value>
+    <value>Ready for delivery</value>
   </data>
   <data name="withDeliveryMan" xml:space="preserve">
     <value>With delivery man</value>
@@ -3884,7 +3884,7 @@ Please add Email in setting</value>
     <value>this day</value>
   </data>
   <data name="trSpendingRequestReturn" xml:space="preserve">
-    <value>Spending Request  Return</value>
+    <value>Spending request  return</value>
   </data>
   <data name="selectOfferFirst" xml:space="preserve">
     <value>Select offer first</value>
@@ -3911,7 +3911,7 @@ Please add Email in setting</value>
     <value>Transfers between POS</value>
   </data>
   <data name="trSpendingOrders" xml:space="preserve">
-    <value>Spending Orders</value>
+    <value>Spending orders</value>
   </data>
   <data name="orderReport" xml:space="preserve">
     <value>Orders</value>
