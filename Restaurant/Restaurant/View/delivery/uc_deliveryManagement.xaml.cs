@@ -91,15 +91,14 @@ namespace Restaurant.View.delivery
                 #endregion
 
                 #region fill drivers
-                drivers = await userModel.GetUsersActive();
-                //cb_userId.ItemsSource = drivers.Where(x => x.job == "deliveryEmployee" && x.driverIsAvailable == 1);
-                cb_userId.ItemsSource = drivers.Where(x => x.job == "deliveryEmployee");
-                cb_userId.DisplayMemberPath = "fullName";
-                cb_userId.SelectedValuePath = "userId";
+                await FillCombo.FillComboDrivers(cb_userId);
 
-                cb_searchUser.ItemsSource = cb_userId.ItemsSource;
-                cb_searchUser.DisplayMemberPath = "fullName";
-                cb_searchUser.SelectedValuePath = "userId";
+                await FillCombo.FillComboDrivers(cb_searchUser);
+                #endregion
+
+                #region fill companies
+                await FillCombo.FillComboShippingCompaniesForDelivery(cb_companyId);
+
                 #endregion
 
                 chk_allForDelivery.IsChecked = true;
@@ -190,14 +189,16 @@ namespace Restaurant.View.delivery
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_userId, AppSettings.resourcemanager.GetString("deliveryMan") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_userId, AppSettings.resourcemanager.GetString("deliveryMan") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_companyId, AppSettings.resourcemanager.GetString("trCompany") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_deliveryTime, AppSettings.resourcemanager.GetString("deliveryTime") + "...");
             txt_minutes.Text = AppSettings.resourcemanager.GetString("minute");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNotes") + "..."); 
 
             dg_orders.Columns[1].Header = AppSettings.resourcemanager.GetString("trCode");
-            dg_orders.Columns[2].Header = AppSettings.resourcemanager.GetString("deliveryMan");
-            dg_orders.Columns[3].Header = AppSettings.resourcemanager.GetString("deliveryTime");
-            dg_orders.Columns[4].Header = AppSettings.resourcemanager.GetString("trStatus");
+            dg_orders.Columns[2].Header = AppSettings.resourcemanager.GetString("trCompany");
+            dg_orders.Columns[3].Header = AppSettings.resourcemanager.GetString("deliveryMan");
+            dg_orders.Columns[4].Header = AppSettings.resourcemanager.GetString("deliveryTime");
+            dg_orders.Columns[5].Header = AppSettings.resourcemanager.GetString("trStatus");
 
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
@@ -269,27 +270,45 @@ namespace Restaurant.View.delivery
                             checkboxColumn.IsChecked = !checkboxColumn.IsChecked;
 
                         #region refreshSaveBtnText
-                        if (order.status.Equals("Ready"))
+                        if (order.shipUserId != null)
                         {
-                            btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
-                            btn_save.IsEnabled = true;
-                            bdr_cbDeliveryMan.Visibility = Visibility.Visible;
-                            bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
+                            bdr_cbDeliveryCompany.Visibility = Visibility.Collapsed;
+                           
+                            if (order.status.Equals("Ready"))
+                            {
+                                btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
+                                btn_save.IsEnabled = true;
+                                bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                                bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
+                            }
+                            else if (order.status.Equals("Collected"))
+                            {
+                                btn_save.Content = AppSettings.resourcemanager.GetString("onTheWay");
+                                btn_save.IsEnabled = true;
+                                bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                                bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
+                            }
+                            else if (order.status.Equals("InTheWay"))
+                            {
+                                btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
+                                btn_save.IsEnabled = true;
+                                bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                                bdr_tbDeliveryMan.Visibility = Visibility.Visible;
+                            }
                         }
-                        else if (order.status.Equals("Collected"))
+                        else
                         {
-                            btn_save.Content = AppSettings.resourcemanager.GetString("onTheWay");
-                            btn_save.IsEnabled = true;
-                            bdr_cbDeliveryMan.Visibility = Visibility.Visible;
-                            bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
-                        }
-                        else if (order.status.Equals("InTheWay"))
-                        {
-                            btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
-                            btn_save.IsEnabled = true;
+                            bdr_cbDeliveryCompany.Visibility = Visibility.Visible;
                             bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
-                            bdr_tbDeliveryMan.Visibility = Visibility.Visible;
+                            bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
+
+                            if (order.status.Equals("Ready"))
+                            {
+                                btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
+                                btn_save.IsEnabled = true;
+                            }
                         }
+
                         #endregion
                     }
                 }

@@ -535,6 +535,18 @@ namespace Restaurant.Classes
             cmb.SelectedValuePath = "userId";
             cmb.SelectedIndex = -1;
         }
+
+        static public async Task FillComboDrivers(ComboBox cmb)
+        {
+            if (usersList is null)
+                await RefreshUsers();
+            var users = usersList.Where(x => x.isActive == 1 && x.isAdmin != true && x.job == "deliveryEmployee").ToList();
+            cmb.ItemsSource = users;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "userId";
+            cmb.SelectedIndex = -1;
+        }
+
         static public async Task FillComboUsersWithJob(ComboBox cmb, string job)
         {
             if (usersList is null)
@@ -598,7 +610,19 @@ namespace Restaurant.Classes
             cmb.SelectedValuePath = "shippingCompanyId";
             cmb.SelectedIndex = -1;
         }
-      
+
+        static public async Task FillComboShippingCompaniesForDelivery(ComboBox cmb)
+        {
+            if (shippingCompaniesList is null)
+                await RefreshShippingCompanies();
+
+            var shippingCompanies = shippingCompaniesList.Where(s => s.deliveryType != "local").ToList();
+            cmb.ItemsSource = shippingCompanies;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "shippingCompanyId";
+            cmb.SelectedIndex = -1;
+        }
+
 
 
         #endregion
