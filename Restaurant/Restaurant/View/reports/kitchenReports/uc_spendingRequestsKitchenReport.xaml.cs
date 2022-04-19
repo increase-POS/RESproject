@@ -67,8 +67,8 @@ namespace Restaurant.View.reports.kitchenReports
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            //try
-            //{
+            try
+            {
                 #region translate
                 if (AppSettings.lang.Equals("en"))
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -83,11 +83,11 @@ namespace Restaurant.View.reports.kitchenReports
 
                 //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_invoice.Tag.ToString());
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
 
         }
 
@@ -99,17 +99,16 @@ namespace Restaurant.View.reports.kitchenReports
 
         private async void Btn_invoice_Click(object sender, RoutedEventArgs e)
         {//invoices
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 hideAllColumns();
-                //chk_normal.Visibility = Visibility.Visible;
-                //chk_return.Visibility = Visibility.Visible;
                 dkp_chks.Visibility = Visibility.Visible;
                 row_chks.Height = row_cmb.Height;
                 selectedTab = 0;
+                spendingRequests = null;
 
                 col_invNum.Visibility = Visibility.Visible;
                 col_count.Visibility = Visibility.Visible;
@@ -127,27 +126,26 @@ namespace Restaurant.View.reports.kitchenReports
 
                 await Search();
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void Btn_item_Click(object sender, RoutedEventArgs e)
         {//items
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
                 hideAllColumns();
-                //chk_normal.Visibility = Visibility.Collapsed;
-                //chk_return.Visibility = Visibility.Collapsed;
                 dkp_chks.Visibility = Visibility.Collapsed;
                 row_chks.Height = new GridLength(0);
                 //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 selectedTab = 1;
+                spendingRequests = null;
 
                 chk_allBranches.IsChecked = true;
 
@@ -164,13 +162,13 @@ namespace Restaurant.View.reports.kitchenReports
 
                 await Search();
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         #region methods
@@ -245,7 +243,8 @@ namespace Restaurant.View.reports.kitchenReports
         {
             try
             {
-                await RefreshSpendingRequestsList();
+                if(spendingRequests == null)
+                    await RefreshSpendingRequestsList();
 
                 searchText = txt_search.Text.ToLower();
 
@@ -372,11 +371,9 @@ namespace Restaurant.View.reports.kitchenReports
                             invoice = await invoice.GetByInvoiceId(row.invoiceId);
 
                             MainWindow.mainWindow.Btn_kitchen_Click(MainWindow.mainWindow.btn_kitchen,null);
-                            uc_kitchen.Instance.UserControl_Loaded(null ,null);
-                            uc_kitchen.Instance.Btn_spendingRequest_Click(uc_kitchen.Instance.btn_spendingRequest , null);
                             MainWindow.mainWindow.initializationMainTrack("spendingRequests");
+                            MainWindow.mainWindow.grid_main.Children.Clear();
                             MainWindow.mainWindow.grid_main.Children.Add(uc_spendingRequest.Instance);
-                            uc_spendingRequest.Instance.UserControl_Loaded(uc_spendingRequest.Instance, null);
                             uc_spendingRequest.Instance.invoice = invoice;
                             uc_spendingRequest._InvoiceType = invoice.invType;
                             uc_spendingRequest._invoiceId = invoice.invoiceId;
@@ -385,7 +382,8 @@ namespace Restaurant.View.reports.kitchenReports
                             //setNotifications();
                             await uc_spendingRequest.Instance.fillInvoiceInputs(invoice);
                         }
-                    }
+
+                }
 
                 HelpClass.EndAwait(grid_main);
             }
