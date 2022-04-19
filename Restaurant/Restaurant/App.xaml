@@ -51,7 +51,8 @@
             <converters:preparingOrderTypeConverter x:Key="preparingOrderTypeConverter"/>
             <converters:decimalToTimeConverter x:Key="decimalToTimeConverter"/>
             <converters:shippingCompanyAndCustomerConverter x:Key="shippingCompanyAndCustomerConverter"/>
-            
+            <converters:ConvertSolidColorBrushToSystemWindowsMedia x:Key="ConvertSolidColorBrushToSystemWindowsMedia"/>
+            <converters:driverNameConverter x:Key="driverNameConverter"/>
 
 
             <!--#region Fonts-->
