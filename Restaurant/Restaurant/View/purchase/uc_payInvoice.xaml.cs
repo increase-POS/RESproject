@@ -2570,8 +2570,9 @@ namespace Restaurant.View.purchase
             requiredControlList = new List<string> { };
             HelpClass.clearValidate(requiredControlList, this);
         }
-        private void clearVendor()
+        private async void clearVendor()
         {
+            await FillCombo.FillComboVendors(cb_vendor);
             cb_vendor.SelectedIndex = -1;
             cb_vendor.Text = "";
             dp_desrvedDate.SelectedDate = null;
@@ -2580,6 +2581,8 @@ namespace Restaurant.View.purchase
             dp_invoiceDate.SelectedDate = null;
             dp_invoiceDate.Text = "";
             tb_notes.Text = "";
+            invoice.agentId = 0;
+
         }
         #endregion
         #region btn
