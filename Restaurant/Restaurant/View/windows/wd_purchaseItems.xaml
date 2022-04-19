@@ -232,7 +232,7 @@
                                     <Grid Grid.Row="0" x:Name="grid_itemContainerCard"  Background="{x:Null}" Grid.ColumnSpan="2">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="*"/>
-                                            <RowDefinition Height="*"/>
+                                            <!--<RowDefinition Height="*"/>-->
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>

@@ -221,10 +221,10 @@ namespace Restaurant.Classes
         private int pastCatalogItem = -1;
         double gridCatigorieItems_ActualHeight = 0;
         double gridCatigorieItems_ActualWidth = 0;
-        public void FN_refrishCatalogItem(List<Item> items,int columnCount, string cardType)
+        public void FN_refrishCatalogItem(List<Item> items, int rowCount, int columnCount, string cardType)
         {
             gridCatigorieItems.Children.Clear();
-            gridCatigorieItems_ActualHeight = gridCatigorieItems.ActualHeight / 3;
+            gridCatigorieItems_ActualHeight = gridCatigorieItems.ActualHeight / rowCount;
             gridCatigorieItems_ActualWidth = gridCatigorieItems.ActualWidth / columnCount;
             int row = 0;
             int column = 0;

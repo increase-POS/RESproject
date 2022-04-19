@@ -149,7 +149,7 @@
                     <Separator Grid.Row="1" Background="{StaticResource LightGrey}"   Margin="15 5"  VerticalAlignment="Center" />
                     <Grid Grid.Row="2" x:Name="grid_itemContainerCard" Margin="5 10 5 0" >
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
+                                <!--<RowDefinition Height="*"/>-->
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>

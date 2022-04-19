@@ -238,7 +238,7 @@ namespace Restaurant.View.sales
         {
             grid_itemContainerCard.Children.Clear();
             catigoriesAndItemsView.gridCatigorieItems = grid_itemContainerCard;
-            catigoriesAndItemsView.FN_refrishCatalogItem(_items.ToList(), 5, "sales");
+            catigoriesAndItemsView.FN_refrishCatalogItem(_items.ToList(), 3, 5, "sales");
         }
         #endregion
         #region Get Id By Click  Y

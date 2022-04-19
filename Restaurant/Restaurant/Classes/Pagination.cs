@@ -335,7 +335,7 @@ namespace Restaurant.Classes
             }
 
         }
-        public IEnumerable<MenuSetting> refrishPagination(IEnumerable<MenuSetting> _items, int pageIndex, Button[] btns)
+        public IEnumerable<MenuSetting> refrishPagination(IEnumerable<MenuSetting> _items, int pageIndex, Button[] btns ,int countItems)
         {
             try
             {
@@ -346,19 +346,19 @@ namespace Restaurant.Classes
                 }
 
                 #region < 3 Page
-                if (2 >= ((_items.Count() - 1) / 15))
+                if (2 >= ((_items.Count() - 1) / countItems))
                 {
                     if (pageIndex == 1)
                     {
                         pageNumberActive(btns[1], 1);
                         pageNumberDisActive(btns[2], 2);
                         pageNumberDisActive(btns[3], 3);
-                        if (((_items.Count() - 1) / 15) == 0)
+                        if (((_items.Count() - 1) / countItems) == 0)
                         {
                             btns[2].IsEnabled = false;
                             btns[3].IsEnabled = false;
                         }
-                        else if (((_items.Count() - 1) / 15) <= 1)
+                        else if (((_items.Count() - 1) / countItems) <= 1)
                         {
                             btns[2].IsEnabled = true;
                             btns[3].IsEnabled = false;
@@ -369,7 +369,7 @@ namespace Restaurant.Classes
                         pageNumberDisActive(btns[1], 1);
                         pageNumberActive(btns[2], 2);
                         pageNumberDisActive(btns[3], 3);
-                        if (((_items.Count() - 1) / 15) <= 1)
+                        if (((_items.Count() - 1) / countItems) <= 1)
                         {
                             btns[2].IsEnabled = true;
                             btns[3].IsEnabled = false;
@@ -390,14 +390,14 @@ namespace Restaurant.Classes
                 #endregion
 
                 #region > 3 Page
-                if (2 < ((_items.Count() - 1) / 15))
+                if (2 < ((_items.Count() - 1) / countItems))
                 {
                     if (pageIndex == 1)
                     {
                         pageNumberActive(btns[1], pageIndex);
                         pageNumberDisActive(btns[2], pageIndex + 1);
                         pageNumberDisActive(btns[3], pageIndex + 2);
-                        if (((_items.Count() - 1) / 15) == 0)
+                        if (((_items.Count() - 1) / countItems) == 0)
                         {
                             btns[2].IsEnabled = false;
                             btns[3].IsEnabled = false;
@@ -408,14 +408,14 @@ namespace Restaurant.Classes
                         pageNumberDisActive(btns[1], 1);
                         pageNumberActive(btns[2], 2);
                         pageNumberDisActive(btns[3], 3);
-                        if (((_items.Count() - 1) / 15) <= 1)
+                        if (((_items.Count() - 1) / countItems) <= 1)
                         {
                             btns[2].IsEnabled = true;
                             btns[3].IsEnabled = false;
                         }
                     }
                     ///// last
-                    else if ((pageIndex - 1) >= ((_items.Count() - 1) / 15))
+                    else if ((pageIndex - 1) >= ((_items.Count() - 1) / countItems))
                     {
 
                         pageNumberDisActive(btns[1], pageIndex - 2);
@@ -438,12 +438,12 @@ namespace Restaurant.Classes
 
                 #endregion
                 #region 
-                if (2 >= ((_items.Count() - 1) / 15))
+                if (2 >= ((_items.Count() - 1) / countItems))
                 {
                     if (1 == (pageIndex))
                     {
                     }
-                    else if (1 >= ((_items.Count() - 1) / 15))
+                    else if (1 >= ((_items.Count() - 1) / countItems))
                     {
                     }
                     btns[0].IsEnabled = false;
@@ -460,7 +460,7 @@ namespace Restaurant.Classes
                     btns[0].IsEnabled = true;
                 }
                 ///// last
-                else if ((pageIndex - 1) >= ((_items.Count() - 1) / 15))
+                else if ((pageIndex - 1) >= ((_items.Count() - 1) / countItems))
                 {
                     btns[4].IsEnabled = false;
                     btns[0].IsEnabled = true;
@@ -478,7 +478,7 @@ namespace Restaurant.Classes
                 #endregion
 
 
-                _items = _items.Skip((pageIndex - 1) * 15).Take(15);
+                _items = _items.Skip((pageIndex - 1) * countItems).Take(countItems);
                 return _items;
 
             }
