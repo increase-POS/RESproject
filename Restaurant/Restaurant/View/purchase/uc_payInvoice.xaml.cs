@@ -325,8 +325,10 @@ namespace Restaurant.View.purchase
                 btn_emailMessage.Visibility = Visibility.Collapsed;
                 bdr_emailMessage.Visibility = Visibility.Collapsed;
                 #endregion
-                
-                    HelpClass.EndAwait(grid_main);
+
+
+                //txt_payment.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                HelpClass.EndAwait(grid_main);
                 tb_barcode.Focus();
             }
             catch (Exception ex)
@@ -1044,7 +1046,11 @@ namespace Restaurant.View.purchase
                     _SelectedVendor = (int)cb_vendor.SelectedValue;
                     var v = FillCombo.vendorsList.Where(x => x.agentId == _SelectedVendor).FirstOrDefault();
                     if (v.payType != null)
+                    {
                         cb_paymentProcessType.SelectedValue = v.payType;
+                        Animations.shakingControl(cb_paymentProcessType);
+                        Animations.shakingControl(txt_payment);
+                    }
                     //else
                     //    cb_paymentProcessType.SelectedIndex = 0;
 
@@ -1053,6 +1059,7 @@ namespace Restaurant.View.purchase
                 {
                     cb_vendor.SelectedValue = _SelectedVendor;
                 }
+                
 
             }
             catch (Exception ex)
