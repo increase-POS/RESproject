@@ -275,10 +275,12 @@
     <Compile Include="converters\agentTypeConverter.cs" />
     <Compile Include="converters\availableConverter.cs" />
     <Compile Include="converters\closingDescriptonConverter.cs" />
+    <Compile Include="converters\colorConverter.cs" />
     <Compile Include="converters\decimalToTimeConverter.cs" />
     <Compile Include="converters\deliveryTypeConverter.cs" />
     <Compile Include="converters\depositorNameConverter.cs" />
     <Compile Include="converters\discountTypeConverter.cs" />
+    <Compile Include="converters\driverNameConverter.cs" />
     <Compile Include="converters\enabledCouponConverter.cs" />
     <Compile Include="converters\inventoryTypeConverter.cs" />
     <Compile Include="converters\invoicePayStatus.cs" />
