@@ -377,7 +377,7 @@ namespace Restaurant.View.reports.kitchenReports
                             uc_spendingRequest.Instance.invoice = invoice;
                             uc_spendingRequest._InvoiceType = invoice.invType;
                             uc_spendingRequest._invoiceId = invoice.invoiceId;
-                            uc_spendingRequest.isFromReport = false;
+                            uc_spendingRequest.isFromReport = true;
                             uc_spendingRequest.archived = false;
                             //setNotifications();
                             await uc_spendingRequest.Instance.fillInvoiceInputs(invoice);

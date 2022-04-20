@@ -420,7 +420,7 @@ namespace Restaurant.View.reports.kitchenReports
                             uc_consumptionRawMaterials.invoice = invoice;
                             uc_consumptionRawMaterials._InvType = invoice.invType;
                             uc_consumptionRawMaterials._invoiceId = invoice.invoiceId;
-                            uc_consumptionRawMaterials.isFromReport = false;
+                            uc_consumptionRawMaterials.isFromReport = true;
                             uc_consumptionRawMaterials.archived = false;
 
                             await uc_consumptionRawMaterials.Instance.fillInvoiceInputs(invoice);
