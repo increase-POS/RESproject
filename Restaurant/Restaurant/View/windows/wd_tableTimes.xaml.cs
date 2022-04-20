@@ -180,8 +180,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch 
-            { }
+            catch { }
         }
 
         private async void Btn_save_Click(object sender, RoutedEventArgs e)

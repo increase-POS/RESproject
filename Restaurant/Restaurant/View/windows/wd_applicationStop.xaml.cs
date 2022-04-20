@@ -306,10 +306,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch (Exception ex)
-            {
-                //HelpClass.ExceptionMessage(ex, this);
-            }
+            catch { }
         }
         #region open - close - validate
         private async Task openCloseBox(string status)

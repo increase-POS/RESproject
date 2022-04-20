@@ -363,10 +363,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch (Exception ex)
-            {
-                //SectionData.ExceptionMessage(ex, this);
-            }
+            catch { }
         }
         private async void deleteRowFromInvoiceItems(object sender, RoutedEventArgs e)
         {

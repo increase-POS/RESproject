@@ -143,8 +143,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch (Exception)
-            { }
+            catch { }
         }
 
         private void validateEmpty(object sender, RoutedEventArgs e)

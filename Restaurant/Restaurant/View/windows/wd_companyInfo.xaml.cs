@@ -261,10 +261,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch (Exception)
-            {
-
-            }
+            catch { }
         }
 
 

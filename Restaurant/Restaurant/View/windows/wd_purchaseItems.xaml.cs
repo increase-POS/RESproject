@@ -503,10 +503,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch (Exception ex)
-            {
-                //SectionData.ExceptionMessage(ex, this);
-            }
+            catch { }
         }
 
         private void Btn_add_Click(object sender, RoutedEventArgs e)

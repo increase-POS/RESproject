@@ -196,10 +196,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch (Exception ex)
-            {
-                //HelpClass.ExceptionMessage(ex, this);
-            }
+            catch { }
         }
         static SetValues tax = new SetValues();
         private async void Btn_save_Click(object sender, RoutedEventArgs e)

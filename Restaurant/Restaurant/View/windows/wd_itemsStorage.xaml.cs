@@ -103,10 +103,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch (Exception ex)
-            {
-                //HelpClass.ExceptionMessage(ex, this);
-            }
+            catch { }
         }
 
         private async void Txb_search_TextChanged(object sender, TextChangedEventArgs e)

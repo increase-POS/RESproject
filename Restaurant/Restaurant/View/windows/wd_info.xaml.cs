@@ -108,10 +108,8 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch (Exception ex)
-            {
-                //HelpClass.ExceptionMessage(ex, this);
-            }
+            catch { }
+
         }
     }
 }

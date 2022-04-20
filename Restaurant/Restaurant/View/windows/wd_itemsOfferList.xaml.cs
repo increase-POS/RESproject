@@ -160,10 +160,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch (Exception ex)
-            {
-                //SectionData.ExceptionMessage(ex, this);
-            }
+            catch { }
         }
 
         private void Btn_colse_Click(object sender, RoutedEventArgs e)

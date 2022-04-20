@@ -367,10 +367,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch (Exception)
-            {
-
-            }
+            catch { }
         }
         private void Grid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
         {

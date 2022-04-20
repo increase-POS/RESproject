@@ -37,8 +37,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch
-            { }
+            catch { }
         }
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {

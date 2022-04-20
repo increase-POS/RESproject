@@ -192,8 +192,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch
-            { }
+            catch { }
         }
         string input;
         decimal _decimal = 0;

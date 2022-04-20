@@ -392,10 +392,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch (Exception)
-            {
-
-            }
+            catch { }
         }
 
         private void Txb_search_TextChanged(object sender, TextChangedEventArgs e)

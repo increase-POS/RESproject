@@ -88,10 +88,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch (Exception)
-            {
-            }
-
+            catch { }
         }
         public List<string> newHeaderResult
         {

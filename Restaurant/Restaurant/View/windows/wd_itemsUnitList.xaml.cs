@@ -410,10 +410,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch (Exception ex)
-            {
-                //HelpClass.ExceptionMessage(ex, this);
-            }
+            catch { }
         }
 
         private void Dg_allItems_SelectionChanged(object sender, SelectionChangedEventArgs e)

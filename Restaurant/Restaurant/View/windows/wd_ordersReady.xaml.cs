@@ -150,8 +150,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch 
-            { }
+            catch { }
         }
 
         #region check - uncheck 

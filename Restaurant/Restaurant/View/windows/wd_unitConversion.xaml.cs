@@ -290,10 +290,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch (Exception)
-            {
-
-            }
+            catch { }
         }
         #region save
         private async void Btn_save_Click(object sender, RoutedEventArgs e)

@@ -115,10 +115,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch (Exception ex)
-            {
-                //SectionData.ExceptionMessage(ex, this);
-            }
+            catch { }
         }
 
         #region Button In DataGrid

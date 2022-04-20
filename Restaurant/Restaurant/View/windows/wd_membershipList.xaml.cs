@@ -277,10 +277,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch (Exception)
-            {
-
-            }
+            catch { }
         }
 
         private void HandleKeyPress(object sender, KeyEventArgs e)

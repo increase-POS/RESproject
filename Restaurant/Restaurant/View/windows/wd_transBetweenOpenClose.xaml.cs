@@ -106,10 +106,7 @@ namespace Restaurant.View.windows
             {
                 DragMove();
             }
-            catch (Exception ex)
-            {
-                //HelpClass.ExceptionMessage(ex, this);
-            }
+            catch { }
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
