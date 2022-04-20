@@ -460,8 +460,11 @@ namespace Restaurant.View.settings
                 brd_maxDiscount.Visibility = Visibility.Collapsed;
                 //brd_timeStaying.Visibility = Visibility.Collapsed;
                 brd_tableTimes.Visibility = Visibility.Collapsed;
+                brd_statusesOfPreparingOrder.Visibility = Visibility.Collapsed;
+                brd_typesOfService.Visibility = Visibility.Collapsed;
                 brd_activationSite.Visibility = Visibility.Collapsed;
                 brd_serverStatus.Visibility = Visibility.Collapsed;
+                
                 }
 
             if (HelpClass.isSupportPermision())
@@ -716,8 +719,11 @@ namespace Restaurant.View.settings
         private void translate()
         {
             txt_mainTitle.Text = AppSettings.resourcemanager.GetString("trGeneralSettings");
+
             txt_companyInfo.Text = AppSettings.resourcemanager.GetString("trComInfo");
             txt_companyInfoHint.Text = AppSettings.resourcemanager.GetString("trSettingHint");
+            txt_typesOfService.Text = AppSettings.resourcemanager.GetString("typesOfService");
+            txt_typesOfServiceHint.Text = AppSettings.resourcemanager.GetString("diningHallTakeAway");
             txt_region.Text = AppSettings.resourcemanager.GetString("trRegion");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_region, AppSettings.resourcemanager.GetString("trRegion"));
             txt_language.Text = AppSettings.resourcemanager.GetString("trLanguage");
@@ -1470,6 +1476,27 @@ namespace Restaurant.View.settings
             }
         }
 
+        private void Btn_typesOfService_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //if (FillCombo.groupObject.HasPermissionAction(usersSettingsPermission, FillCombo.groupObjects, "one") ||
+                //    FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one"))
+                //{
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_typesOfService w = new wd_typesOfService();
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
         private async void Btn_errorsExport_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -1611,6 +1638,8 @@ namespace Restaurant.View.settings
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+       
         #region validate - clearValidate - textChange - lostFocus - . . . . 
 
         string input;

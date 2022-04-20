@@ -264,6 +264,7 @@ namespace Restaurant.View.settings.reportsSettings
         {
 
             txt_mainTitle.Text = AppSettings.resourcemanager.GetString("trReportsSettings");
+
             txt_printCount.Text = AppSettings.resourcemanager.GetString("trPrintCount");
             tb_printCount.Text = AppSettings.resourcemanager.GetString("trPrintCount");
 
@@ -271,6 +272,9 @@ namespace Restaurant.View.settings.reportsSettings
 
             txt_systmSetting.Text = AppSettings.resourcemanager.GetString("trDirectPrinting");
             txt_systmSettingHint.Text = AppSettings.resourcemanager.GetString("trDirectPrintingHint") + "...";
+
+            txt_kitchenPrinting.Text = AppSettings.resourcemanager.GetString("kitchenPrinting");
+            txt_kitchenPrintingHint.Text = AppSettings.resourcemanager.GetString("kitchenPrintingSettings") + "...";
 
             txt_printerSetting.Text = AppSettings.resourcemanager.GetString("trPrinterSettings");
             txt_printerSettingHint.Text = AppSettings.resourcemanager.GetString("trPrinterSettingsHint") + "...";
@@ -369,7 +373,32 @@ namespace Restaurant.View.settings.reportsSettings
             }
             
         }
+        private void Btn_kitchenPrinting_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
 
+                HelpClass.StartAwait(grid_main);
+                //if (FillCombo.groupObject.HasPermissionAction(companySettingsPermission, FillCombo.groupObjects, "one") )
+                //{
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_kitchenPrinting w = new wd_kitchenPrinting();
+                //w.windowType = "r";
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private void Btn_printerSetting_Click(object sender, RoutedEventArgs e)
         {
             
@@ -664,5 +693,7 @@ namespace Restaurant.View.settings.reportsSettings
             
 
         }
+
+        
     }
 }

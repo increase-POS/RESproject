@@ -282,51 +282,51 @@ namespace Restaurant.View.windows
                 HelpClass.StartAwait(grid_main);
                 //  string msg = "";
                 int msg = 0;
-            if ((bool)tgl_printOnSavePur.IsChecked)
-            {
-                print_on_save_purrow.value = "1";
+                if ((bool)tgl_printOnSavePur.IsChecked)
+                {
+                    print_on_save_purrow.value = "1";
 
-            }
-            else
-            {
-                print_on_save_purrow.value = "0";
-            }
-            if ((bool)tgl_printOnSaveSale.IsChecked)
-            {
-                print_on_save_salerow.value = "1";
+                }
+                else
+                {
+                    print_on_save_purrow.value = "0";
+                }
+                if ((bool)tgl_printOnSaveSale.IsChecked)
+                {
+                    print_on_save_salerow.value = "1";
 
-            }
-            else
-            {
-                print_on_save_salerow.value = "0";
-            }
-            if ((bool)tgl_emailOnSavePur.IsChecked)
-            {
-                email_on_save_purrow.value = "1";
+                }
+                else
+                {
+                    print_on_save_salerow.value = "0";
+                }
+                if ((bool)tgl_emailOnSavePur.IsChecked)
+                {
+                    email_on_save_purrow.value = "1";
 
-            }
-            else
-            {
-                email_on_save_purrow.value = "0";
-            }
-            if ((bool)tgl_emailOnSaveSale.IsChecked)
-            {
-                email_on_save_salerow.value = "1";
+                }
+                else
+                {
+                    email_on_save_purrow.value = "0";
+                }
+                if ((bool)tgl_emailOnSaveSale.IsChecked)
+                {
+                    email_on_save_salerow.value = "1";
 
-            }
-            else
-            {
-                email_on_save_salerow.value = "0";
-            }
-            if ((bool)tgl_showHeader.IsChecked)
-            {
-                show_header_row.value = "1";
+                }
+                else
+                {
+                    email_on_save_salerow.value = "0";
+                }
+                if ((bool)tgl_showHeader.IsChecked)
+                {
+                    show_header_row.value = "1";
 
-            }
-            else
-            {
-                show_header_row.value = "0";
-            }
+                }
+                else
+                {
+                    show_header_row.value = "0";
+                }
                 if ((bool)tgl_directEntry.IsChecked)
                 {
                     print_on_save_directentryrow.value = "1";
@@ -337,30 +337,30 @@ namespace Restaurant.View.windows
                     print_on_save_directentryrow.value = "0";
                 }
                 msg = await setvalueModel.Save(print_on_save_purrow);
-            msg = await setvalueModel.Save(print_on_save_salerow);
-            msg = await setvalueModel.Save(email_on_save_purrow);
-            msg = await setvalueModel.Save(email_on_save_salerow);
-            msg = await setvalueModel.Save(show_header_row);
+                msg = await setvalueModel.Save(print_on_save_salerow);
+                msg = await setvalueModel.Save(email_on_save_purrow);
+                msg = await setvalueModel.Save(email_on_save_salerow);
+                msg = await setvalueModel.Save(show_header_row);
                 msg = await setvalueModel.Save(print_on_save_directentryrow);
                 await Getprintparameter();
-            await MainWindow.Getprintparameter();
-            if (msg > 0)
-            {
-                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
-                await Task.Delay(1500);
-                this.Close();
-            }
-            else
-                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                await MainWindow.Getprintparameter();
+                if (msg > 0)
+                {
+                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                    await Task.Delay(1500);
+                    this.Close();
+                }
+                else
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
-            HelpClass.EndAwait(grid_main);
-        }
+                HelpClass.EndAwait(grid_main);
+            }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
+            }
         }
-    }
     }
 }
