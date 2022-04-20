@@ -3901,4 +3901,10 @@
   <data name="orderReport" xml:space="preserve">
     <value>الطلبات</value>
   </data>
+  <data name="trInvoiceCharp" xml:space="preserve">
+    <value>#الفاتورة</value>
+  </data>
+  <data name="trOrderCharp" xml:space="preserve">
+    <value>#الطلبية</value>
+  </data>
 </root>

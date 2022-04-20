@@ -201,13 +201,14 @@ namespace Restaurant.Classes.ApiClasses
             return await APIResult.post(method, parameters);
         }
 
-        public async Task<int> EditInvoiceOrdersStatus(int invoiceId,int shipUserId, orderPreparingStatus statusObject)
+        public async Task<int> EditInvoiceOrdersStatus(int invoiceId,int shipUserId,int shippingCompanyId, orderPreparingStatus statusObject)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "OrderPreparing/EditInvoiceOrdersStatus";
 
             parameters.Add("invoiceId", invoiceId.ToString());
             parameters.Add("shipUserId", shipUserId.ToString());
+            parameters.Add("shippingCompanyId", shippingCompanyId.ToString());
            string  myContent = JsonConvert.SerializeObject(statusObject);
             parameters.Add("statusObject", myContent);
             return await APIResult.post(method, parameters);

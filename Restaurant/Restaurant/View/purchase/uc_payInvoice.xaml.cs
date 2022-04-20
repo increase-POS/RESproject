@@ -2610,7 +2610,7 @@ namespace Restaurant.View.purchase
                             await addInvoice(_InvoiceType, "pi");
                             clearInvoice();
                             _InvoiceType = "pd";
-                            refreshDraftNotification();
+                            //refreshDraftNotification();
                         }
                         else
                         {
@@ -2622,8 +2622,9 @@ namespace Restaurant.View.purchase
                 else
                     clearInvoice();
 
-                
-                    HelpClass.EndAwait(grid_main);
+                setNotifications();
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
