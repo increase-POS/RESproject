@@ -3910,4 +3910,22 @@
   <data name="notHaveSameType" xml:space="preserve">
     <value>الطلبات المختارة يجب أن تكون من نفس النوع</value>
   </data>
+  <data name="diningHallTakeAway" xml:space="preserve">
+    <value>قاعة الطعام, وجبات جاهزة- خارج, ...</value>
+  </data>
+  <data name="typesOfService" xml:space="preserve">
+    <value>أنواع الخدمة</value>
+  </data>
+  <data name="kitchenPrinting" xml:space="preserve">
+    <value>طباعة المطبخ</value>
+  </data>
+  <data name="kitchenPrintingSettings" xml:space="preserve">
+    <value>إعدادات طباعة المطبخ</value>
+  </data>
+  <data name="printOnPreparing" xml:space="preserve">
+    <value>طباعة عند التحضير</value>
+  </data>
+  <data name="printOnSale" xml:space="preserve">
+    <value>طباعة عند البيع</value>
+  </data>
 </root>

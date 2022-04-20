@@ -3794,7 +3794,7 @@ Please add Email in setting</value>
     <value>Drivers</value>
   </data>
   <data name="management" xml:space="preserve">
-    <value>management</value>
+    <value>Management</value>
   </data>
   <data name="trTotalTax" xml:space="preserve">
     <value>Total of tax</value>
@@ -3924,5 +3924,23 @@ Please add Email in setting</value>
   </data>
   <data name="notHaveSameType" xml:space="preserve">
     <value>Selected orders must have the same type</value>
+  </data>
+  <data name="diningHallTakeAway" xml:space="preserve">
+    <value>Dining hall, Take away, ...</value>
+  </data>
+  <data name="typesOfService" xml:space="preserve">
+    <value>Types of Service</value>
+  </data>
+  <data name="kitchenPrinting" xml:space="preserve">
+    <value>Kitchen printing</value>
+  </data>
+  <data name="kitchenPrintingSettings" xml:space="preserve">
+    <value>Kitchen printing settings</value>
+  </data>
+  <data name="printOnPreparing" xml:space="preserve">
+    <value>Print on preparing</value>
+  </data>
+  <data name="printOnSale" xml:space="preserve">
+    <value>Print on sale</value>
   </data>
 </root>
