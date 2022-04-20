@@ -1165,10 +1165,10 @@
     <value>To Should be begger then From</value>
   </data>
   <data name="trDraftPurchaseBill" xml:space="preserve">
-    <value>Purchase bill draft</value>
+    <value>Purchase invoice draft</value>
   </data>
   <data name="trPurchaseBill" xml:space="preserve">
-    <value>Purchase bill</value>
+    <value>Purchase invoice</value>
   </data>
   <data name="trAdministrativeDeposit" xml:space="preserve">
     <value>Administrative deposit</value>
@@ -2432,7 +2432,7 @@ Please add Email in setting</value>
     <value>Export/Import items</value>
   </data>
   <data name="trReceiptOfPurchasesBill" xml:space="preserve">
-    <value>Receipt of purchases bill</value>
+    <value>Receipt of purchases invoice</value>
   </data>
   <data name="trInv" xml:space="preserve">
     <value>Invoice</value>

@@ -97,7 +97,7 @@ namespace Restaurant.View.storage.storageOperations
         {
           
             ////////////////////////////////----invoice----/////////////////////////////////
-            dg_billDetails.Columns[1].Header = AppSettings.resourcemanager.GetString("trNum");
+            dg_billDetails.Columns[1].Header = AppSettings.resourcemanager.GetString("trNo.");
             dg_billDetails.Columns[2].Header = AppSettings.resourcemanager.GetString("trItem");
             dg_billDetails.Columns[3].Header = AppSettings.resourcemanager.GetString("trUnit");
             dg_billDetails.Columns[4].Header = AppSettings.resourcemanager.GetString("trQTR");
@@ -340,8 +340,6 @@ namespace Restaurant.View.storage.storageOperations
                 if ((_InvoiceType == "isd") && invoice.invoiceId != 0 && invoice != null && !isFromReport)
                     draftCount--;
 
-                //int previouseCount = 0;
-                //if (md_draft.Badge != null && md_draft.Badge.ToString() != "") previouseCount = int.Parse(md_draft.Badge.ToString());
 
                 if (draftCount != _DraftCount)
                 {
@@ -362,21 +360,14 @@ namespace Restaurant.View.storage.storageOperations
         {
             try
             {
-                string invoiceType = "pw";
+                string invoiceType = "p, pb,is";
                 if (invoice == null)
                     invoice = new Invoice();
                 int invoiceCount = await invoice.GetCountBranchInvoices(invoiceType, 0, MainWindow.branchLogin.branchId);
-                if (invoice.invType == "pw" && invoice != null)
+                if ((invoice.invType == "pb" || invoice.invType == "p" || invoice.invType == "is") && invoice != null)
                     invoiceCount--;
 
-                //int previouseCount = 0;
-                //if (md_invoiceCount.Badge != null && md_invoiceCount.Badge.ToString() != "")
-                //{
-                //    if (md_invoiceCount.Badge.ToString() == "+9")
-                //        previouseCount = 10;
-                //    else
-                //        previouseCount = int.Parse(md_invoiceCount.Badge.ToString());
-                //}
+
                 if (invoiceCount != _InvoiceCount)
                 {
                     if (invoiceCount > 9)
@@ -397,14 +388,12 @@ namespace Restaurant.View.storage.storageOperations
             try
             {
 
-                string invoiceType = "pbw";
+                string invoiceType = "pw,pbw";
                 if (invoice == null)
                     invoice = new Invoice();
                 int returnsCount = await invoice.GetCountBranchInvoices(invoiceType, 0, MainWindow.branchLogin.branchId);
-                if (invoice.invType == "pbw" && invoice != null)
+                if ((invoice.invType == "pbw" || invoice.invType == "pw") && invoice != null)
                     returnsCount--;
-                //int previouseCount = 0;
-                //if (md_returnsCount.Badge != null && md_returnsCount.Badge.ToString() != "") previouseCount = int.Parse(md_returnsCount.Badge.ToString());
 
                 if (returnsCount != _ReturnCount)
                 {
@@ -460,8 +449,30 @@ namespace Restaurant.View.storage.storageOperations
                 clearNavigation();
                 invoice = FillCombo.invoices[index];
                 _invoiceId = invoice.invoiceId;
+                _InvoiceType = invoice.invType;
                 navigateBtnActivate();
                 await fillInvoiceInputs(invoice);
+                #region set title according to invoice type
+                if (_InvoiceType == "p" || _InvoiceType == "pw")
+                {
+                    txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaseInvoice");
+                   // txt_titleDataGridInvoice.Foreground = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
+                    btn_save.Content = AppSettings.resourcemanager.GetString("trStoreBtn");
+                }
+                else if (_InvoiceType == "pb" || _InvoiceType == "pbw")
+                {
+                    txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trReturnedInvoice");
+                    btn_save.Content = AppSettings.resourcemanager.GetString("trReturn");
+                    // orange #FFA926 red #D22A17
+                   // txt_titleDataGridInvoice.Foreground = Application.Current.Resources["MainColorRed"] as SolidColorBrush;
+                }
+                else if (_InvoiceType == "is")
+                {
+                    txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trDirectEntry");
+                   // txt_titleDataGridInvoice.Foreground = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
+                    btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
+                }
+                #endregion
             }
             catch (Exception ex)
             {
@@ -890,16 +901,73 @@ namespace Restaurant.View.storage.storageOperations
         }
         private void inputEditable()
         {
-            if (_InvoiceType == "pw") // wait purchase invoice
+            switch (_InvoiceType)
             {
-                dg_billDetails.Columns[0].Visibility = Visibility.Collapsed; //make delete column unvisible
-                dg_billDetails.Columns[4].IsReadOnly = true; //make count read only
+                case "pw":// wait purchase invoice
+                case "pbw":
+                    dg_billDetails.Columns[0].Visibility = Visibility.Collapsed; //make delete column unvisible
+                    dg_billDetails.Columns[4].IsReadOnly = true; //make count read only
+                    dg_billDetails.Columns[5].IsReadOnly = true; //make price read only
 
-            }
-            else if (_InvoiceType == "pbw")
-            {
-                dg_billDetails.Columns[0].Visibility = Visibility.Collapsed; //make delete column visible
-                dg_billDetails.Columns[4].IsReadOnly = true; //make count editable
+                    sp_sum.Visibility = Visibility.Collapsed;
+                    tb_sum.Visibility = Visibility.Collapsed;
+                    txt_sum.Visibility = Visibility.Collapsed;
+                    tb_moneyIcon.Visibility = Visibility.Collapsed;
+                    txt_total.Visibility = Visibility.Collapsed;
+                    tb_total.Visibility = Visibility.Collapsed;
+                    tb_moneyIconTotal.Visibility = Visibility.Collapsed;
+
+                    btn_save.IsEnabled = true;
+
+                    break;
+
+                case "isd":
+                    dg_billDetails.Columns[0].Visibility = Visibility.Visible;
+                    dg_billDetails.Columns[4].IsReadOnly = false; //make count editable
+                    dg_billDetails.Columns[5].IsReadOnly = false; //make price read only
+
+                    sp_sum.Visibility = Visibility.Visible;
+                    tb_sum.Visibility = Visibility.Visible;
+                    txt_sum.Visibility = Visibility.Visible;
+                    tb_moneyIcon.Visibility = Visibility.Visible;
+                    txt_total.Visibility = Visibility.Visible;
+                    tb_total.Visibility = Visibility.Visible;
+                    tb_moneyIconTotal.Visibility = Visibility.Visible;
+
+                    btn_save.IsEnabled = true;
+
+                    break;
+                case "p":
+                case "pb":
+                    dg_billDetails.Columns[0].Visibility = Visibility.Collapsed; //make delete column visible
+                    dg_billDetails.Columns[4].IsReadOnly = true; //make count editable
+                    dg_billDetails.Columns[5].IsReadOnly = true; //make count editable
+
+                    sp_sum.Visibility = Visibility.Collapsed;
+                    tb_sum.Visibility = Visibility.Collapsed;
+                    txt_sum.Visibility = Visibility.Collapsed;
+                    tb_moneyIcon.Visibility = Visibility.Collapsed;
+                    txt_total.Visibility = Visibility.Collapsed;
+                    tb_total.Visibility = Visibility.Collapsed;
+                    tb_moneyIconTotal.Visibility = Visibility.Collapsed;
+
+                    btn_save.IsEnabled = false;
+                    break;
+                case "is":
+                    dg_billDetails.Columns[0].Visibility = Visibility.Collapsed;
+                    dg_billDetails.Columns[4].IsReadOnly = true; //make count editable
+                    dg_billDetails.Columns[5].IsReadOnly = true; //make price read only
+
+                    sp_sum.Visibility = Visibility.Visible;
+                    tb_sum.Visibility = Visibility.Visible;
+                    txt_sum.Visibility = Visibility.Visible;
+                    tb_moneyIcon.Visibility = Visibility.Visible;
+                    txt_total.Visibility = Visibility.Visible;
+                    tb_total.Visibility = Visibility.Visible;
+                    tb_moneyIconTotal.Visibility = Visibility.Visible;
+
+                    btn_save.IsEnabled = false;
+                    break;
             }
             if (!isFromReport)
             {
@@ -1209,7 +1277,8 @@ namespace Restaurant.View.storage.storageOperations
                     wd_invoice w = new wd_invoice();
 
                     #region window parameter
-                    string invoiceType = "pbw";
+                    //string invoiceType = "pbw";
+                    string invoiceType = "pbw, pw";
                     w.invoiceType = invoiceType;
                     w.invoiceStatus = "return";
                     w.branchId = MainWindow.branchLogin.branchId;
@@ -1227,9 +1296,23 @@ namespace Restaurant.View.storage.storageOperations
                             _InvoiceType = invoice.invType;
                             isFromReport = false;
                             setNotifications();
-                            // set title to bill
-                            txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trReturnedInvoice");
-                            btn_save.Content = AppSettings.resourcemanager.GetString("trReturn");
+                            #region set title to bill
+                            if (_InvoiceType == "pbw")
+                            {
+                                txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trReturnedInvoice");
+                                btn_save.Content = AppSettings.resourcemanager.GetString("trReturn");
+                                // orange #FFA926 red #D22A17
+                                //txt_titleDataGridInvoice.Foreground = Application.Current.Resources["MainColorRed"] as SolidColorBrush;
+                            }
+                            else if (_InvoiceType == "pw")
+                            {
+                                txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaseInvoice");
+                                //txt_titleDataGridInvoice.Foreground = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
+                                btn_save.Content = AppSettings.resourcemanager.GetString("trStoreBtn");
+                            }
+                            #endregion
+                            //txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trReturnedInvoice");
+                            //btn_save.Content = AppSettings.resourcemanager.GetString("trReturn");
                             // orange #FFA926 red #D22A17
                             txt_titleDataGridInvoice.Foreground = Application.Current.Resources["MainColorRed"] as SolidColorBrush;
                             await fillInvoiceInputs(invoice);
@@ -1368,8 +1451,9 @@ namespace Restaurant.View.storage.storageOperations
                     Window.GetWindow(this).Opacity = 0.2;
 
                     wd_invoice w = new wd_invoice();
-                    // sale invoices
-                    string invoiceType = "pw";
+                    // purchase invoices
+                    //string invoiceType = "pw";
+                    string invoiceType = "p , pb, is";
                     w.invoiceType = invoiceType;
                     w.branchId = MainWindow.branchLogin.branchId;
                     w.icon = "purInvoices";
@@ -1386,10 +1470,31 @@ namespace Restaurant.View.storage.storageOperations
                             _invoiceId = invoice.invoiceId;
                             isFromReport = false;
                             setNotifications();
-                            // set title to bill
-                            txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaseInvoice");
-                            txt_titleDataGridInvoice.Foreground = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
-                            btn_save.Content = AppSettings.resourcemanager.GetString("trStoreBtn");
+
+                            #region set title to bill
+                            if (_InvoiceType == "p")
+                            {
+                                txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaseInvoice");
+                                //txt_titleDataGridInvoice.Foreground = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
+                                btn_save.Content = AppSettings.resourcemanager.GetString("trStoreBtn");
+                            }
+                            else if (_InvoiceType == "pb")
+                            {
+                                txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trReturnedInvoice");
+                                btn_save.Content = AppSettings.resourcemanager.GetString("trReturn");
+                                // orange #FFA926 red #D22A17
+                                //txt_titleDataGridInvoice.Foreground = Application.Current.Resources["MainColorRed"] as SolidColorBrush;
+                            }
+                            else if (_InvoiceType == "is")
+                            {
+                                txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trDirectEntry");
+                                //txt_titleDataGridInvoice.Foreground = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
+                                btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
+                            }
+                            #endregion
+                            //txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaseInvoice");
+                            //txt_titleDataGridInvoice.Foreground = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
+                            //btn_save.Content = AppSettings.resourcemanager.GetString("trStoreBtn");
                             await fillInvoiceInputs(invoice);
                             navigateBtnActivate();
                         }

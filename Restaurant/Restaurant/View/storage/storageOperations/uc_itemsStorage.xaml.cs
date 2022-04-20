@@ -118,7 +118,7 @@ namespace Restaurant.View.storage.storageOperations
             ////////////////////////////////----invoice----/////////////////////////////////
             dg_itemsStorage.Columns[0].Header = AppSettings.resourcemanager.GetString("trItemUnit");
             dg_itemsStorage.Columns[1].Header = AppSettings.resourcemanager.GetString("trSectionLocation");
-            dg_itemsStorage.Columns[2].Header = AppSettings.resourcemanager.GetString("trQuantity");
+            dg_itemsStorage.Columns[2].Header = AppSettings.resourcemanager.GetString("trQTR");
             dg_itemsStorage.Columns[3].Header = AppSettings.resourcemanager.GetString("trStartDate");
             dg_itemsStorage.Columns[4].Header = AppSettings.resourcemanager.GetString("trEndDate");
             dg_itemsStorage.Columns[5].Header = AppSettings.resourcemanager.GetString("trNote");

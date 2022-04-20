@@ -384,7 +384,7 @@
                             <DataGridTextColumn Width="*"  Header="Total" IsReadOnly="True"   Binding="{Binding Path = Total,Converter={StaticResource accuracyConverter }}"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Separator Margin="5,0" Grid.Row="2"  Background="#DFDFDF" VerticalAlignment="Center" Width="auto" />
+                    <Separator Margin="5,0" Grid.Row="2"  Background="#DFDFDF" VerticalAlignment="Center" Width="auto" Name="sp_sum"/>
                     <StackPanel Grid.Row="3"  Orientation="Horizontal" Margin="5">
                         <Button Grid.Column="1" BorderBrush="{x:Null}" Visibility="Collapsed"  
                         Background="{x:Null}" x:Name="btn_previous" Padding="0"  

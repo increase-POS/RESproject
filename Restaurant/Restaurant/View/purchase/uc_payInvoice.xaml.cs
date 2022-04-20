@@ -238,8 +238,14 @@ namespace Restaurant.View.purchase
                 }
                 while (!isDone);
                 #endregion
-                if (AppSettings.tax == 0)
+                if (AppSettings.invoiceTax_bool == false)
                     sp_tax.Visibility = Visibility.Collapsed;
+                else
+                {
+                    sp_tax.Visibility = Visibility.Visible;
+                    tb_taxValue.Text = HelpClass.PercentageDecTostring(AppSettings.invoiceTax_decimal);
+                }
+
                 setTimer();
                 FillCombo.FillDiscountType(cb_typeDiscount);
                 FillCombo.FillDefaultPayType_cashBalanceCardMultiple(cb_paymentProcessType);
@@ -361,7 +367,7 @@ namespace Restaurant.View.purchase
         private void translate()
         {
             ////////////////////////////////----invoice----/////////////////////////////////
-            dg_billDetails.Columns[1].Header = AppSettings.resourcemanager.GetString("trNum");
+            dg_billDetails.Columns[1].Header = AppSettings.resourcemanager.GetString("trNo.");
             dg_billDetails.Columns[2].Header = AppSettings.resourcemanager.GetString("trItem");
             dg_billDetails.Columns[3].Header = AppSettings.resourcemanager.GetString("trUnit");
             dg_billDetails.Columns[4].Header = AppSettings.resourcemanager.GetString("trQTR");
@@ -2240,6 +2246,7 @@ namespace Restaurant.View.purchase
         }
         private void refreshTotalValue()
         {
+            #region discount
             decimal discountValue = 0;
             if (tb_discount.Text != "." && !tb_discount.Text.Equals(""))
                 discountValue = decimal.Parse(tb_discount.Text);
@@ -2249,24 +2256,30 @@ namespace Restaurant.View.purchase
                 discountValue = HelpClass.calcPercentage(_Sum, discountValue);
             }
 
+            if (discountValue != 0)
+                tb_totalDescount.Text = HelpClass.PercentageDecTostring(discountValue);
+            else
+                tb_totalDescount.Text = "0";
+            #endregion
             decimal total = _Sum - discountValue;
+
+            #region tax
             decimal taxValue = 0;
             decimal taxInputVal = 0;
             if (!tb_taxValue.Text.Equals(""))
                 taxInputVal = decimal.Parse(tb_taxValue.Text);
             if (total != 0)
                 taxValue = HelpClass.calcPercentage(total, taxInputVal);
+            #endregion
+            total = total + taxValue;
 
             if (_Sum != 0)
                 tb_sum.Text = HelpClass.DecTostring(_Sum);
             else
                 tb_sum.Text = "0";
 
-            if (discountValue != 0)
-                tb_totalDescount.Text = HelpClass.PercentageDecTostring(discountValue);
-            else
-                tb_totalDescount.Text = "0";
-            total = total + taxValue;
+           
+
             if (total < 0)
                 total = 0;
             if (total != 0)
@@ -2546,8 +2559,8 @@ namespace Restaurant.View.purchase
             gd_card.Visibility = Visibility.Collapsed;
             tb_total.Text = "0";
             tb_sum.Text = "0";
-            if (AppSettings.tax != 0)
-                tb_taxValue.Text = HelpClass.PercentageDecTostring(AppSettings.tax);
+            if (AppSettings.invoiceTax_decimal != 0)
+                tb_taxValue.Text = HelpClass.PercentageDecTostring(AppSettings.invoiceTax_decimal);
             else
                 tb_taxValue.Text = "0";
 
