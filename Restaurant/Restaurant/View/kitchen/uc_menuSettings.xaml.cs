@@ -189,7 +189,7 @@ namespace Restaurant.View.kitchen
                             else
                                 menuSet.menuSettingId = item.menuSettingId;
                             menuSet.itemUnitId = item.itemUnitId;
-                            menuSet.preparingTime = int.Parse(tb_preparingTime.Text);
+                            menuSet.preparingTime = decimal.Parse(tb_preparingTime.Text);
                             menuSet.branchId = MainWindow.branchLogin.branchId;
 
 

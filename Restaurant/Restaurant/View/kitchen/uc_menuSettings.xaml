@@ -482,7 +482,7 @@
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="preparing time..."    
                            Foreground="#4E4E4E"    
-                                     BorderThickness="0" Tag="int"
+                                     BorderThickness="0" Tag="decimal"
                                  BorderBrush="AliceBlue" MaxLength="100" PreviewTextInput="Number_PreviewTextInput"
                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                   Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
