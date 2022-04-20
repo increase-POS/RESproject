@@ -289,11 +289,11 @@ namespace Restaurant.View.windows
                     FillCombo.invoices = await FillCombo.invoice.GetInvoicesByCreator(invoiceType, userId, duration);
             }
             #endregion
-            #region spending order in storage
+            #region consumption in kitchen
             else if (page == "consumption")
             {
                 if (icon == "invoices")
-                    FillCombo.invoices = await FillCombo.invoice.getBranchInvoices(invoiceType, branchCreatorId, branchId);
+                    FillCombo.invoices = await FillCombo.invoice.getBranchInvoices(invoiceType, branchCreatorId, branchId,duration);
             }
             #endregion
             #region take away
