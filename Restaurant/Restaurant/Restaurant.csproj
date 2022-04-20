@@ -713,6 +713,9 @@
     <Compile Include="View\windows\wd_itemsUnitList.xaml.cs">
       <DependentUpon>wd_itemsUnitList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_kitchenPrinting.xaml.cs">
+      <DependentUpon>wd_kitchenPrinting.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_locationAddRange.xaml.cs">
       <DependentUpon>wd_locationAddRange.xaml</DependentUpon>
     </Compile>
@@ -760,6 +763,9 @@
     </Compile>
     <Compile Include="View\windows\wd_residentialSectorsList.xaml.cs">
       <DependentUpon>wd_residentialSectorsList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_typesOfService.xaml.cs">
+      <DependentUpon>wd_typesOfService.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_returnInvoice.xaml.cs">
       <DependentUpon>wd_returnInvoice.xaml</DependentUpon>
@@ -1420,6 +1426,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\windows\wd_kitchenPrinting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\windows\wd_locationAddRange.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1481,6 +1491,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_residentialSectorsList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_typesOfService.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
