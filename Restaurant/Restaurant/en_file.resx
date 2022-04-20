@@ -3922,4 +3922,7 @@ Please add Email in setting</value>
   <data name="trOrderCharp" xml:space="preserve">
     <value>#Order</value>
   </data>
+  <data name="notHaveSameType" xml:space="preserve">
+    <value>Selected orders must have the same type</value>
+  </data>
 </root>

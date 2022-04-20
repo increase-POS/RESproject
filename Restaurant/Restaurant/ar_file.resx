@@ -3907,4 +3907,7 @@
   <data name="trOrderCharp" xml:space="preserve">
     <value>#الطلبية</value>
   </data>
+  <data name="notHaveSameType" xml:space="preserve">
+    <value>الطلبات المختارة يجب أن تكون من نفس النوع</value>
+  </data>
 </root>
