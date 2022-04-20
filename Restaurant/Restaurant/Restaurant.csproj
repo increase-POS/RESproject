@@ -300,6 +300,7 @@
     <Compile Include="converters\sectionFreeZoneStorageReportConverter.cs" />
     <Compile Include="converters\SectionLocationFreeZoneConverter.cs" />
     <Compile Include="converters\shippingCompanyAndCustomerConverter.cs" />
+    <Compile Include="converters\shippingCompanyNameConverter.cs" />
     <Compile Include="converters\stockSectionLocationFreeZoneConverter.cs" />
     <Compile Include="converters\subscriptionTypeConverter.cs" />
     <Compile Include="converters\timeFrameConverter.cs" />
