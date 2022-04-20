@@ -821,6 +821,148 @@ namespace Restaurant.Classes
             return salesItems;
         }
         #endregion
+        #region coupon
+        static public Coupon coupon = new Coupon();
+        static public void fillDiscountType(ComboBox cmb)
+        {
+            var dislist = new[] {
+            new { Text = AppSettings.resourcemanager.GetString("trValueDiscount"), Value = "1" },
+            new { Text = AppSettings.resourcemanager.GetString("trPercentageDiscount"), Value = "2" },
+             };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = dislist;
+        }
+        #endregion
+        #region membership
+        static public Memberships membership = new Memberships();
+        static public void fillSubscriptionType(ComboBox cmb)
+        {
+            var dislist = new[] {
+            new { Text = AppSettings.resourcemanager.GetString("trFree")    , Value = "f" },
+            new { Text = AppSettings.resourcemanager.GetString("trMonthly") , Value = "m" },
+            new { Text = AppSettings.resourcemanager.GetString("trYearly")  , Value = "y" },
+            new { Text = AppSettings.resourcemanager.GetString("trOnce")    , Value = "o" },
+             };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = dislist;
+
+        }
+        #endregion
+        #region tables
+        static public List<string> tablesStatus = new List<string>() { "empty","opened", "reserved","openedReserved" };
+        static public Tables table = new Tables();
+        static public void FillTablesStatus(ComboBox cmb)
+        {
+            #region fill status
+            var statusList = new[] {
+                 new { Text = "", Value = "" },
+                 new { Text = AppSettings.resourcemanager.GetString("trEmpty"), Value = "empty" },
+                 new { Text = AppSettings.resourcemanager.GetString("trOpened"), Value = "opened" },
+            new { Text = AppSettings.resourcemanager.GetString("trReserved"), Value = "reserved"},
+            new { Text = AppSettings.resourcemanager.GetString("trOpenedReserved"), Value = "openedReserved"},
+            };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = statusList;
+            cmb.SelectedIndex = -1;
+            #endregion
+        }
+        #endregion
+        #region Email
+        static public void FillSideCombo(ComboBox COMBO)
+        {
+            #region fill deposit to combo
+            var list = new[] {
+  new { Text = AppSettings.resourcemanager.GetString("trAccounting")  , Value = "accounting" },
+            new { Text = AppSettings.resourcemanager.GetString("trSales")  , Value = "sales" },
+            new { Text = AppSettings.resourcemanager.GetString("trPurchases")  , Value = "purchase" },
+
+             };
+            COMBO.DisplayMemberPath = "Text";
+            COMBO.SelectedValuePath = "Value";
+            COMBO.ItemsSource = list;
+            #endregion
+
+        }
+        #endregion
+        #region ItemUnitUser
+        static public List<ItemUnitUser> itemUnitsUsersList = new List<ItemUnitUser>();
+        static public ItemUnitUser itemUnitsUser = new ItemUnitUser();
+        static public async Task<IEnumerable<ItemUnitUser>> RefreshItemUnitUser()
+        {
+            itemUnitsUsersList = await itemUnitsUser.GetByUserId(MainWindow.userLogin.userId);
+            return itemUnitsUsersList;
+        }
+
+
+        #endregion
+        #region availability type
+        static public void fillAvailabilityType(ComboBox cmb)
+        {
+            var dislist = new[] {
+            new { Text = AppSettings.resourcemanager.GetString("private"), Value = "pr" },
+            new { Text = AppSettings.resourcemanager.GetString("public"), Value = "pb" },
+             };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = dislist;
+        }
+        #endregion
+        #region preparing Order Status
+        static public void FillPreparingOrderStatusWithDefault(ComboBox cmb)
+        {
+            #region fill process type
+            var typelist = new[] {
+                new { Text = "-"       , Value = "" },
+                new { Text = AppSettings.resourcemanager.GetString("trListed")       , Value = "Listed" },
+                new { Text = AppSettings.resourcemanager.GetString("trPreparing") , Value = "Preparing" },
+                new { Text = AppSettings.resourcemanager.GetString("trReady") , Value = "Ready" },
+                //new { Text = AppSettings.resourcemanager.GetString("trDone") , Value = "Done" }, 
+                 };
+
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = typelist;
+            cmb.SelectedIndex = 0;
+            #endregion
+        }
+        #endregion
+        #region invoice type
+        static public void FillInvoiceTypeWithDefault(ComboBox cmb)
+        {
+            var typelist = new[] {
+                new { Text = "-"       , Value = "" },
+                new { Text = AppSettings.resourcemanager.GetString("trDiningHallType")       , Value = "diningHall" },
+                new { Text = AppSettings.resourcemanager.GetString("trTakeAway") , Value = "takeAway" },
+                new { Text = AppSettings.resourcemanager.GetString("trSelfService") , Value = "selfService" },
+                 };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = typelist;
+            cmb.SelectedIndex = 0;
+        }
+
+        static public void FillInvoiceType(ComboBox cmb)
+        {
+            var typelist = new[] {
+                new { Text = AppSettings.resourcemanager.GetString("trDiningHallType")       , Value = "diningHall" },
+                new { Text = AppSettings.resourcemanager.GetString("trTakeAway") , Value = "takeAway" },
+                new { Text = AppSettings.resourcemanager.GetString("trSelfService") , Value = "selfService" },
+                 };
+            cmb.DisplayMemberPath = "Text";
+            cmb.SelectedValuePath = "Value";
+            cmb.ItemsSource = typelist;
+            cmb.SelectedIndex = 0;
+        }
+        #endregion
+        static public Pos pos = new Pos();
+        static public ItemLocation itemLocation = new ItemLocation();
+        static public Invoice invoice = new Invoice();
+        static public List<Invoice> invoices;
+        static public ShippingCompanies ShipCompany = new ShippingCompanies();
+
         /*
         #region Company Info
 
@@ -1046,154 +1188,5 @@ namespace Restaurant.Classes
 
         #endregion
         */
-        #region coupon
-        static public Coupon coupon = new Coupon();
-        static public void fillDiscountType(ComboBox cmb)
-        {
-            var dislist = new[] {
-            new { Text = AppSettings.resourcemanager.GetString("trValueDiscount"), Value = "1" },
-            new { Text = AppSettings.resourcemanager.GetString("trPercentageDiscount"), Value = "2" },
-             };
-            cmb.DisplayMemberPath = "Text";
-            cmb.SelectedValuePath = "Value";
-            cmb.ItemsSource = dislist;
-        }
-        #endregion
-
-        #region membership
-        static public Memberships membership = new Memberships();
-        static public void fillSubscriptionType(ComboBox cmb)
-        {
-            var dislist = new[] {
-            new { Text = AppSettings.resourcemanager.GetString("trFree")    , Value = "f" },
-            new { Text = AppSettings.resourcemanager.GetString("trMonthly") , Value = "m" },
-            new { Text = AppSettings.resourcemanager.GetString("trYearly")  , Value = "y" },
-            new { Text = AppSettings.resourcemanager.GetString("trOnce")    , Value = "o" },
-             };
-            cmb.DisplayMemberPath = "Text";
-            cmb.SelectedValuePath = "Value";
-            cmb.ItemsSource = dislist;
-
-        }
-        #endregion
-
-        #region tables
-        static public List<string> tablesStatus = new List<string>() { "empty","opened", "reserved","openedReserved" };
-        static public Tables table = new Tables();
-        static public void FillTablesStatus(ComboBox cmb)
-        {
-            #region fill status
-            var statusList = new[] {
-                 new { Text = "", Value = "" },
-                 new { Text = AppSettings.resourcemanager.GetString("trEmpty"), Value = "empty" },
-                 new { Text = AppSettings.resourcemanager.GetString("trOpened"), Value = "opened" },
-            new { Text = AppSettings.resourcemanager.GetString("trReserved"), Value = "reserved"},
-            new { Text = AppSettings.resourcemanager.GetString("trOpenedReserved"), Value = "openedReserved"},
-            };
-            cmb.DisplayMemberPath = "Text";
-            cmb.SelectedValuePath = "Value";
-            cmb.ItemsSource = statusList;
-            cmb.SelectedIndex = -1;
-            #endregion
-        }
-        #endregion
-        #region Email
-        static public void FillSideCombo(ComboBox COMBO)
-        {
-            #region fill deposit to combo
-            var list = new[] {
-  new { Text = AppSettings.resourcemanager.GetString("trAccounting")  , Value = "accounting" },
-            new { Text = AppSettings.resourcemanager.GetString("trSales")  , Value = "sales" },
-            new { Text = AppSettings.resourcemanager.GetString("trPurchases")  , Value = "purchase" },
-
-             };
-            COMBO.DisplayMemberPath = "Text";
-            COMBO.SelectedValuePath = "Value";
-            COMBO.ItemsSource = list;
-            #endregion
-
-        }
-        #endregion
-
-        #region ItemUnitUser
-        static public List<ItemUnitUser> itemUnitsUsersList = new List<ItemUnitUser>();
-        static public ItemUnitUser itemUnitsUser = new ItemUnitUser();
-        static public async Task<IEnumerable<ItemUnitUser>> RefreshItemUnitUser()
-        {
-            itemUnitsUsersList = await itemUnitsUser.GetByUserId(MainWindow.userLogin.userId);
-            return itemUnitsUsersList;
-        }
-
-
-        #endregion
-
-        #region availability type
-        static public void fillAvailabilityType(ComboBox cmb)
-        {
-            var dislist = new[] {
-            new { Text = AppSettings.resourcemanager.GetString("private"), Value = "pr" },
-            new { Text = AppSettings.resourcemanager.GetString("public"), Value = "pb" },
-             };
-            cmb.DisplayMemberPath = "Text";
-            cmb.SelectedValuePath = "Value";
-            cmb.ItemsSource = dislist;
-        }
-        #endregion
-
-        #region preparing Order Status
-        static public void FillPreparingOrderStatusWithDefault(ComboBox cmb)
-        {
-            #region fill process type
-            var typelist = new[] {
-                new { Text = "-"       , Value = "" },
-                new { Text = AppSettings.resourcemanager.GetString("trListed")       , Value = "Listed" },
-                new { Text = AppSettings.resourcemanager.GetString("trPreparing") , Value = "Preparing" },
-                new { Text = AppSettings.resourcemanager.GetString("trReady") , Value = "Ready" },
-                //new { Text = AppSettings.resourcemanager.GetString("trDone") , Value = "Done" }, 
-                 };
-
-            cmb.DisplayMemberPath = "Text";
-            cmb.SelectedValuePath = "Value";
-            cmb.ItemsSource = typelist;
-            cmb.SelectedIndex = 0;
-            #endregion
-        }
-        #endregion
-
-        #region invoice type
-        static public void FillInvoiceTypeWithDefault(ComboBox cmb)
-        {
-            var typelist = new[] {
-                new { Text = "-"       , Value = "" },
-                new { Text = AppSettings.resourcemanager.GetString("trDiningHallType")       , Value = "diningHall" },
-                new { Text = AppSettings.resourcemanager.GetString("trTakeAway") , Value = "takeAway" },
-                new { Text = AppSettings.resourcemanager.GetString("trSelfService") , Value = "selfService" },
-                 };
-            cmb.DisplayMemberPath = "Text";
-            cmb.SelectedValuePath = "Value";
-            cmb.ItemsSource = typelist;
-            cmb.SelectedIndex = 0;
-        }
-
-        static public void FillInvoiceType(ComboBox cmb)
-        {
-            var typelist = new[] {
-                new { Text = AppSettings.resourcemanager.GetString("trDiningHallType")       , Value = "diningHall" },
-                new { Text = AppSettings.resourcemanager.GetString("trTakeAway") , Value = "takeAway" },
-                new { Text = AppSettings.resourcemanager.GetString("trSelfService") , Value = "selfService" },
-                 };
-            cmb.DisplayMemberPath = "Text";
-            cmb.SelectedValuePath = "Value";
-            cmb.ItemsSource = typelist;
-            cmb.SelectedIndex = 0;
-        }
-        #endregion
-        static public Pos pos = new Pos();
-        static public ItemLocation itemLocation = new ItemLocation();
-        static public Invoice invoice = new Invoice();
-        static public List<Invoice> invoices;
-        static public ShippingCompanies ShipCompany = new ShippingCompanies();
-
-        
     }
 }
