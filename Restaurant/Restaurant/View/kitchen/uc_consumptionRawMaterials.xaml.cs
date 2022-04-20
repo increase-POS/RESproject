@@ -240,8 +240,8 @@ namespace Restaurant.View.kitchen
             try
             {
                 string invoiceType = "fbc";
-                int duration = 2;
-                int draftCount = await invoice.GetCountByCreator(invoiceType, MainWindow.userLogin.userId, duration);
+                int duration = 1;
+                int draftCount = await invoice.GetCountBranchInvoices(invoiceType, 0,MainWindow.branchLogin.branchId, duration);
                 if (invoice.invType == "fbc")
                     draftCount--;
 
@@ -914,6 +914,7 @@ namespace Restaurant.View.kitchen
             try
             {
                 clear();
+                setNotifications();
             }
             catch { }
         }

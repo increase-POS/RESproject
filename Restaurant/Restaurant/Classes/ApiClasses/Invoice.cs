@@ -411,13 +411,14 @@ namespace Restaurant.Classes
             }
             return count;
         }
-        public async Task<List<Invoice>> getBranchInvoices(string invType, int branchCreatorId, int branchId=0 )
+        public async Task<List<Invoice>> getBranchInvoices(string invType, int branchCreatorId, int branchId=0,int duration = 0 )
         {
             List<Invoice> items = new List<Invoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("invType", invType);
             parameters.Add("branchCreatorId", branchCreatorId.ToString());
             parameters.Add("branchId", branchId.ToString());
+            parameters.Add("duration", duration.ToString());
             IEnumerable<Claim> claims = await APIResult.getList("Invoices/getBranchInvoices", parameters);
             foreach (Claim c in claims)
             {
@@ -461,13 +462,14 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<int> GetCountBranchInvoices(string invType, int branchCreatorId, int branchId = 0)
+        public async Task<int> GetCountBranchInvoices(string invType, int branchCreatorId, int branchId = 0, int duration = 0)
         {
             int count = 0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("invType", invType);
             parameters.Add("branchCreatorId", branchCreatorId.ToString());
             parameters.Add("branchId", branchId.ToString());
+            parameters.Add("duration", duration.ToString());
             //#################
             IEnumerable<Claim> claims = await APIResult.getList("Invoices/GetCountBranchInvoices", parameters);
 
