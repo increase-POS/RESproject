@@ -18,7 +18,7 @@ namespace Restaurant.converters
                 return dt.ToShortTimeString();
             }
             else
-                return "";
+                return "-";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
