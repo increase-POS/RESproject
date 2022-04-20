@@ -143,7 +143,7 @@ namespace Restaurant.View.accounts
             {
                 DragMove();
             }
-            catch (Exception) { }
+            catch { }
         }
 
         public void fillChart()

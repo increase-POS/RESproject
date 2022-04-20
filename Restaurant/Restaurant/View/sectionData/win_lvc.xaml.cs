@@ -244,7 +244,7 @@ namespace Restaurant.View.sectionData
             {
                 DragMove();
             }
-            catch (Exception) { }
+            catch { }
         }
 
         public void fillChart()

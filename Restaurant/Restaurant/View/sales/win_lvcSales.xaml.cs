@@ -138,7 +138,7 @@ namespace Restaurant.View.sales
             {
                 DragMove();
             }
-            catch (Exception) { }
+            catch { }
         }
 
         public void fillChart()
