@@ -3916,4 +3916,10 @@ Please add Email in setting</value>
   <data name="orderReport" xml:space="preserve">
     <value>Orders</value>
   </data>
+  <data name="trInvoiceCharp" xml:space="preserve">
+    <value>#Invoice</value>
+  </data>
+  <data name="trOrderCharp" xml:space="preserve">
+    <value>#Order</value>
+  </data>
 </root>
