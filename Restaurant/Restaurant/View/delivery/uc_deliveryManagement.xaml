@@ -115,6 +115,7 @@
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition  Width="*"  />
+                        <ColumnDefinition  Width="*"  />
                         <ColumnDefinition  Width="auto"  />
                     </Grid.ColumnDefinitions>
                     
@@ -134,7 +135,27 @@
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                       materialDesign:HintAssist.Hint="delivery man..."  
                                       Grid.Column="1" Height="40"   
-                                      BorderBrush="#737373"   BorderThickness="0" Margin="4,0" SelectionChanged="Cb_searchUser_SelectionChanged" />
+                                      BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
+                                      SelectionChanged="Cb_searchUser_SelectionChanged" />
+                        </Grid>
+
+                    </Border>
+                    <Border Background="White" Grid.Column="1" CornerRadius="10"    Margin="60,5,10,5"  BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        <Border.Effect>
+                            <DropShadowEffect
+                          ShadowDepth="1"
+                          Direction="360"
+                          Color="Gray"
+                          Opacity="0.3"
+                         BlurRadius="10"/>
+                        </Border.Effect>
+                        <Grid>
+                            <ComboBox x:Name="cb_searchCompany"  Grid.Row="1"
+                                      Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
+                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                      materialDesign:HintAssist.Hint="shipping company..."  
+                                      Grid.Column="1" Height="40"   
+                                      BorderBrush="#737373"   BorderThickness="0" Margin="4,0" SelectionChanged="Cb_searchCompany_SelectionChanged"/>
                         </Grid>
 
                     </Border>
@@ -241,9 +262,9 @@
                                     </DataGridCheckBoxColumn.HeaderTemplate>
                                 </DataGridCheckBoxColumn>
                                 <DataGridTextColumn Width="*"  Header="code"          Binding="{Binding Path=invNumber}"/>
-                                <DataGridTextColumn Width="*"  Header="Company"       Binding="{Binding Path=shippingCompanyName , Converter={StaticResource driverNameConverter}}"/>
+                                <DataGridTextColumn Width="*"  Header="Company"       Binding="{Binding Path=shippingCompanyName , Converter={StaticResource shippingCompanyNameConverter}}"/>
                                 <DataGridTextColumn Width="*"  Header="delivery man"  Binding="{Binding Path=shipUserName , Converter={StaticResource driverNameConverter}}"/>
-                                <DataGridTextColumn Width="*"  Header="delivery time" Binding="{Binding Path=deliveryTime}"/>
+                                <DataGridTextColumn Width="*"  Header="delivery time" Binding="{Binding Path=orderTime , Converter={StaticResource dateTimeToTimeConverter}}"/>
                                 <DataGridTextColumn Width="*"  Header="status"   Binding="{Binding Path=status , Converter={StaticResource preparingOrderStatusConverter}}"/>
                              </DataGrid.Columns>
                         </DataGrid>
@@ -474,8 +495,9 @@
                     </DockPanel>
                         <Border x:Name="bdr_cbDeliveryMan" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid>
-                            <ComboBox x:Name="cb_userId"  Grid.Row="1"
-                                      SelectedValue="{Binding shipUserId,Mode=OneWay}"
+                                <!--SelectedValue="{Binding shipUserId,Mode=OneWay}"-->
+                                <ComboBox x:Name="cb_userId"  Grid.Row="1"
+                                      
                                       Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                       materialDesign:HintAssist.Hint="delivery man..."  
@@ -505,8 +527,9 @@
                         </Border>
                         <Border x:Name="bdr_cbDeliveryCompany" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}" Visibility="Collapsed">
                             <Grid>
+                                <!--SelectedValue="{Binding shippingCompanyName,Mode=OneWay}"-->
                                 <ComboBox x:Name="cb_companyId"  Grid.Row="1"
-                                      SelectedValue="{Binding shippingCompanyName,Mode=OneWay}"
+                                      
                                       Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                       materialDesign:HintAssist.Hint="delivery man..."  
@@ -531,9 +554,9 @@
                         </Grid.ColumnDefinitions>
                         <Border Grid.Row="1"  CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid   >
-                                <TextBox Margin="4,0" x:Name="tb_deliveryTime"  IsEnabled="False"
+                                <TextBox Margin="4,0" x:Name="tb_deliveryTime"  
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
-                                         Text="{Binding deliveryTime, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
+                                         Text="{Binding orderTime, Mode=OneWay , Converter={StaticResource dateTimeToTimeConverter}}" Padding="10,0,5,0"   BorderThickness="0" 
                                          materialDesign:HintAssist.Hint="delivery time..."   Foreground="#4E4E4E"
                                          materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" 
                                          Tag="int" PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"

@@ -58,13 +58,12 @@ namespace Restaurant.View.delivery
 
         string updatePermission = "deliveryManagement_update";
         IEnumerable<Invoice> orders;
-        IEnumerable<User> drivers;
-        User userModel = new User();
         OrderPreparing orderModel = new OrderPreparing();
         Invoice order = new Invoice();
         
         string searchText = "";
         public static List<string> requiredControlList;
+
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             Instance = null;
@@ -98,7 +97,7 @@ namespace Restaurant.View.delivery
 
                 #region fill companies
                 await FillCombo.FillComboShippingCompaniesForDelivery(cb_companyId);
-
+                await FillCombo.FillComboShippingCompaniesForDelivery(cb_searchCompany);
                 #endregion
 
                 chk_allForDelivery.IsChecked = true;
@@ -107,7 +106,6 @@ namespace Restaurant.View.delivery
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -138,9 +136,10 @@ namespace Restaurant.View.delivery
                 }
                 orders = orders.Where(s => (s.invNumber.Contains(searchText)
                       || s.shipUserName.ToString().Contains(searchText)
-                      //|| s.deliveryTime.ToString().Contains(searchText)/////?????????????????
+                      || s.orderTime.ToString().Contains(searchText)
                       )
-                      && (cb_searchUser.SelectedIndex != -1 ?  s.shipUserId == (int)cb_searchUser.SelectedValue : true)
+                      && (cb_searchUser.SelectedIndex != -1    ?  s.shipUserId        == (int)cb_searchUser.SelectedValue : true)
+                      && (cb_searchCompany.SelectedIndex != -1 ?  s.shippingCompanyId == (int)cb_searchCompany.SelectedValue : true)
                   );
 
                 RefreshOrdersView();
@@ -177,10 +176,10 @@ namespace Restaurant.View.delivery
                 txt_title.Text = AppSettings.resourcemanager.GetString(
                FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
                );
-            //txt_title.Text = AppSettings.resourcemanager.GetString("trDeliveryManagement");
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trUserInformation");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchUser, AppSettings.resourcemanager.GetString("deliveryMan")+"...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchCompany, AppSettings.resourcemanager.GetString("trCompany") + "...");
 
             chk_allForDelivery.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_readyForDelivery.Content = AppSettings.resourcemanager.GetString("readyForDelivery");
@@ -224,6 +223,18 @@ namespace Restaurant.View.delivery
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        private async void Cb_searchCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                await Search();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -253,19 +264,26 @@ namespace Restaurant.View.delivery
         }
         private async void Dg_orders_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
+
                 if (dg_orders.SelectedIndex != -1)
                 {
                     order = dg_orders.SelectedItem as Invoice;
+                   
                     this.DataContext = order;
+
                     if (order != null)
                     {
                         CheckBox checkboxColumn = (dg_orders.Columns[0].GetCellContent(dg_orders.SelectedItem) as CheckBox);
 
                         if (selectedOrders.Count != 0 && order.status != selectedOrders[0].status)
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("notHaveSameStatus"), animation: ToasterAnimation.FadeIn);
+                        else if(selectedOrders.Count != 0 && order.shippingCompanyName.Equals("local ship") && !selectedOrders[0].shippingCompanyName.Equals("local ship"))
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("notHaveSameType"), animation: ToasterAnimation.FadeIn);
+                        else if (selectedOrders.Count != 0 && order.shipUserId == null && selectedOrders[0].shipUserId != null)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("notHaveSameType"), animation: ToasterAnimation.FadeIn);
                         else
                             checkboxColumn.IsChecked = !checkboxColumn.IsChecked;
 
@@ -314,13 +332,13 @@ namespace Restaurant.View.delivery
                 }
 
                 HelpClass.clearValidate(requiredControlList, this);
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh
@@ -332,13 +350,13 @@ namespace Restaurant.View.delivery
                 tb_search.Text = "";
                 chk_allForDelivery.IsChecked = true;
                 cb_searchUser.SelectedIndex = -1;
+                cb_searchCompany.SelectedIndex = -1;
                 await Search();
                 
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -353,35 +371,47 @@ namespace Restaurant.View.delivery
                     HelpClass.StartAwait(grid_main);
 
                     #region add
-                    if (HelpClass.validate(requiredControlList, this))
+                    //if (HelpClass.validate(requiredControlList, this))
                     {
                         foreach(Invoice i in selectedOrders)
                         { 
                             int driverID = 0;
+                            int comID = 0;
 
                             orderPreparingStatus ops = new orderPreparingStatus();
 
-                            if (i.status.Equals("Ready"))
+                            if (order.shipUserId.Value != null)
                             {
-                                ops.status = "Collected";
-                                driverID = (int)cb_userId.SelectedValue;
+                                if (i.status.Equals("Ready"))
+                                {
+                                    ops.status = "Collected";
+                                    driverID = (int)cb_userId.SelectedValue;
+                                }
+                                else if (i.status.Equals("Collected"))
+                                {
+                                    ops.status = "InTheWay";
+                                    driverID = (int)cb_userId.SelectedValue;
+                                }
+                                else if (i.status.Equals("InTheWay"))
+                                {
+                                    ops.status = "Done";
+                                    driverID = order.shipUserId.Value;
+                                }
                             }
-                            else if (i.status.Equals("Collected"))
+                            else
                             {
-                                ops.status = "InTheWay";
-                                driverID = (int)cb_userId.SelectedValue;
-                            }
-                            else if (i.status.Equals("InTheWay"))
-                            {
-                                ops.status = "Done";
-                                driverID = order.shipUserId.Value;
+                                if (i.status.Equals("Ready"))
+                                {
+                                    ops.status = "Done";
+                                    comID = (int)cb_companyId.SelectedValue;
+                                }
                             }
                             ops.createUserId = MainWindow.userLogin.userId;
                             ops.updateUserId = MainWindow.userLogin.userId;
                             ops.notes = tb_notes.Text;
                             ops.isActive = 1;
 
-                            int res = await orderModel.EditInvoiceOrdersStatus(i.invoiceId , driverID ,0, ops);
+                            int res = await orderModel.EditInvoiceOrdersStatus(i.invoiceId , driverID , comID , ops);
 
                             if (!res.Equals(0))
                             {
@@ -658,7 +688,8 @@ namespace Restaurant.View.delivery
         {
             try
             {
-                if (chk_allForDelivery.IsChecked != true)
+                //if (chk_allForDelivery.IsChecked != true)
+                //if ((chk_allForDelivery.IsChecked == true) && ())??????????????????????
                 {
                     #region
                     //CheckBox chkSelectAll = ((CheckBox)sender);
@@ -759,24 +790,32 @@ namespace Restaurant.View.delivery
                         chk_readyForDelivery.IsChecked = false;
                         chk_withDeliveryMan.IsChecked = false;
                         chk_inTheWay.IsChecked = false;
+                        //col_chk.Visibility = Visibility.Hidden;
+                        //col_chk.IsReadOnly = true;
                     }
                     else if (cb.Name == "chk_readyForDelivery")
                     {
                         chk_allForDelivery.IsChecked = false;
                         chk_withDeliveryMan.IsChecked = false;
                         chk_inTheWay.IsChecked = false;
+                        //col_chk.Visibility = Visibility.Visible;
+                        //col_chk.IsReadOnly = false;
                     }
                     else if (cb.Name == "chk_withDeliveryMan")
                     {
                         chk_allForDelivery.IsChecked = false;
                         chk_readyForDelivery.IsChecked = false;
                         chk_inTheWay.IsChecked = false;
+                        //col_chk.Visibility = Visibility.Visible;
+                        //col_chk.IsReadOnly = false;
                     }
                     else if (cb.Name == "chk_inTheWay")
                     {
                         chk_allForDelivery.IsChecked = false;
                         chk_readyForDelivery.IsChecked = false;
                         chk_withDeliveryMan.IsChecked = false;
+                        //col_chk.Visibility = Visibility.Visible;
+                        //col_chk.IsReadOnly = false;
                     }
                 }
                 HelpClass.StartAwait(grid_main);
@@ -898,6 +937,6 @@ namespace Restaurant.View.delivery
             //MessageBox.Show("select");
         }
 
-    
+       
     }
 }
