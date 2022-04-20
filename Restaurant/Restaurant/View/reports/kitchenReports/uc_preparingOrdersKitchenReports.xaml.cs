@@ -76,7 +76,6 @@ namespace Restaurant.View.reports.kitchenReports
                 translate();
             #endregion
 
-                
                 chk_allCategories.IsChecked = true;
 
                 //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_preparingOrders.Tag.ToString());

@@ -467,6 +467,9 @@
     <Compile Include="View\reports\salesReports\uc_itemSalesReports.xaml.cs">
       <DependentUpon>uc_itemSalesReports.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\reports\salesReports\uc_membershipSalesReports.xaml.cs">
+      <DependentUpon>uc_membershipSalesReports.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\reports\salesReports\uc_orderSalesReports.xaml.cs">
       <DependentUpon>uc_orderSalesReports.xaml</DependentUpon>
     </Compile>
@@ -1095,6 +1098,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\reports\salesReports\uc_itemSalesReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\salesReports\uc_membershipSalesReports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
