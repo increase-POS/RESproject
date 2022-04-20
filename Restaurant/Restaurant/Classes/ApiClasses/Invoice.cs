@@ -169,6 +169,7 @@ namespace Restaurant.Classes
 
         public string agentName { get; set; }
         public string shipUserName { get; set; }
+        public string shipUserLastName { get; set; }
         public string shippingCompanyName { get; set; }
         public string status { get; set; }
         public int invStatusId { get; set; }
