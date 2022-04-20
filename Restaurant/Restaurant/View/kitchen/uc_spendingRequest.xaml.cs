@@ -1175,7 +1175,6 @@ namespace Restaurant.View.kitchen
                     {
                         await saveDraft();
                         clear();
-                        setNotifications();
                     }
                     else
                         clear();
@@ -1183,6 +1182,7 @@ namespace Restaurant.View.kitchen
                 else
                     clear();
 
+                setNotifications();
 
                 HelpClass.EndAwait(grid_main);
             }

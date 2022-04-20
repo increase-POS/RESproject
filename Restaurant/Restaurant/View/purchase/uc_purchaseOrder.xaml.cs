@@ -654,13 +654,14 @@ namespace Restaurant.View.purchase
                         if (w.isOk)
                             await addInvoice(_InvoiceType);
                         clearInvoice();
-                        refreshNotification();
                     }
                 }
                 else if (billDetails.Count == 0)
                 {
                     clearInvoice();
                 }
+
+                refreshNotification();
 
                 HelpClass.EndAwait(grid_main);
             }

@@ -1038,7 +1038,7 @@ namespace Restaurant.View.storage.movementsOperations
                         Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
                         clear();
-                        refreshDraftNotification();
+                        //refreshDraftNotification();
                     }
                     else
                         Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
