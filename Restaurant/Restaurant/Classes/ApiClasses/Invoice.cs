@@ -33,6 +33,8 @@ namespace Restaurant.Classes
         public Nullable<int> offerId { get; set; }
         public Nullable<decimal> offerValue { get; set; }
         public Nullable<decimal> offerType { get; set; }
+        public string offerCode { get; set; }
+        public string offerName { get; set; }
         public Nullable<decimal> itemTax { get; set; }
         public Nullable<decimal> itemUnitPrice { get; set; }
         public string forAgents { get; set; }
@@ -67,6 +69,8 @@ namespace Restaurant.Classes
         public bool isActive { get; set; }
 
         public Nullable<decimal> subTotal { get; set; }
+
+        public Nullable<decimal> finalDiscount { get; set; }
     }
     public class invoiceTables
     {
@@ -95,6 +99,8 @@ namespace Restaurant.Classes
 
         public string couponCode { get; set; }
         public string name { get; set; }
+
+        public Nullable<decimal> finalDiscount { get; set; }
 
     }
     public  class invoiceStatus

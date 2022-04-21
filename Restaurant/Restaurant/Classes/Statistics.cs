@@ -909,11 +909,8 @@ namespace Restaurant.Classes
         //invoice
         public int invoiceId { get; set; }
         public string invNumber { get; set; }
-     
-    
         public string invType { get; set; }
         public string discountType { get; set; }
- 
         public Nullable<decimal> discountValue { get; set; }
         public Nullable<decimal> total { get; set; }
         public Nullable<decimal> totalNet { get; set; }
@@ -972,13 +969,18 @@ namespace Restaurant.Classes
         //membership
 
         public Nullable<int> membershipId { get; set; }
-        public string code { get; set; }
-        public string name { get; set; }
+        public string membershipsCode { get; set; }
+        public string membershipsName { get; set; }
 
         public List<CouponInvoice> CouponInvoiceList { get; set; }
         public List<ItemTransfer> itemsTransferList { get; set; }
         public List<InvoicesClass> invoiceClassDiscountList { get; set; }
-         
+
+        public decimal invclassDiscount { get; set; }
+        public decimal couponDiscount { get; set; }
+        public decimal offerDiscount { get; set; }
+        public decimal totalDiscount { get; set; }
+
     }
 
     class Statistics

@@ -42,7 +42,7 @@ namespace Restaurant.Classes
 
         public int invClassMemberId { get; set; }
         public Nullable<int> membershipId { get; set; }
-
+        public Nullable<decimal> finalDiscount { get; set; }
 
         public async Task<List<InvoicesClass>> GetAll()
         {
