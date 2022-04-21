@@ -521,11 +521,11 @@
                             </Grid>
                         </Border>
                             
-                        <Border x:Name="bdr_cheque" Grid.Row="1" Visibility="Collapsed" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                        <Border x:Name="bdr_cheque" Grid.Row="1"  Visibility="Collapsed" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <!--<ColumnDefinition Width="*"/>-->
                                 </Grid.ColumnDefinitions>
                                 <TextBox x:Name="tb_docNumCheque"  Grid.Column="0"
                                          Text="{Binding docNum, Mode=OneWay}" Padding="10,5,0,0" 

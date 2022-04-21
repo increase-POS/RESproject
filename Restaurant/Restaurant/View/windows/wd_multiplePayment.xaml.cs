@@ -84,17 +84,18 @@ namespace Restaurant.View.windows
             }
             catch (Exception ex)
             {
-
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void translate()
         {
-
             txt_title.Text = AppSettings.resourcemanager.GetString("trMultiplePayment");
 
-            //    MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
-            //    btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_paymentProcessType, AppSettings.resourcemanager.GetString("trPaymentProcessType"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, AppSettings.resourcemanager.GetString("trCash"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_processNum, AppSettings.resourcemanager.GetString("trProcessNumTooltip"));
+
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
         }
         private void configurProcessType()
         {

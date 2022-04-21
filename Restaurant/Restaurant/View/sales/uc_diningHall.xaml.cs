@@ -197,7 +197,51 @@ namespace Restaurant.View.sales
 
        async void changeInvType()
         {
-            //values(diningHall - takeAway - selfService)
+            int diningHall = int.Parse(AppSettings.typesOfService_diningHall);
+            int takeAway = int.Parse(AppSettings.typesOfService_takeAway);
+            int selfService = int.Parse(AppSettings.typesOfService_selfService);
+            int countService = diningHall + takeAway + selfService;
+            if (countService == 1)
+            {
+                if (diningHall == 1)
+                    AppSettings.invType = "diningHall";
+                else if (takeAway == 1)
+                    AppSettings.invType = "takeAway";
+                else if (selfService == 1)
+                    AppSettings.invType = "selfService";
+                btn_invType.IsEnabled = false;
+            }
+            else
+            {
+                try
+                {
+                    if (FillCombo.invoiceTypelist is null)
+                        FillCombo.FillInvoiceType(new ComboBox());
+                    switch (AppSettings.invType)
+                    {
+                        case "diningHall":
+                            if (diningHall == 0)
+                                AppSettings.invType = FillCombo.invoiceTypelist.FirstOrDefault().key;
+                            break;
+                        case "takeAway":
+                            if (takeAway == 0)
+                                AppSettings.invType = FillCombo.invoiceTypelist.FirstOrDefault().key;
+                            break;
+                        case "selfService":
+                            if (selfService == 0)
+                                AppSettings.invType = FillCombo.invoiceTypelist.FirstOrDefault().key;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // don't move this debug ,yasin
+                     HelpClass.ExceptionMessage(ex, this);
+                }
+            }
+
             if (AppSettings.invType == "diningHall")
             {
                 txt_invType.Text = AppSettings.resourcemanager.GetString("trDiningHallType");
@@ -231,10 +275,10 @@ namespace Restaurant.View.sales
                 }
                 #endregion
 
-                if(invoice.invType != "sd" && invoice.invType != null)
+                if (invoice.invType != "sd" && invoice.invType != null)
                     await clear();
             }
-            else if (AppSettings.invType == "takeAway" || _InvoiceType == "tsd") 
+            else if (AppSettings.invType == "takeAway" || _InvoiceType == "tsd")
             {
                 txt_invType.Text = AppSettings.resourcemanager.GetString("trTakeAway");
 
@@ -254,12 +298,12 @@ namespace Restaurant.View.sales
 
                 refreshDraftNotification();
 
-                if(invoice.invType == "ssd") // transfer  self service draft to take away draft
+                if (invoice.invType == "ssd") // transfer  self service draft to take away draft
                 {
                     await addInvoice("tsd");
                 }
             }
-            else if(AppSettings.invType == "selfService" || _InvoiceType == "ssd")
+            else if (AppSettings.invType == "selfService" || _InvoiceType == "ssd")
             {
                 txt_invType.Text = AppSettings.resourcemanager.GetString("trSelfService");
 
@@ -285,6 +329,10 @@ namespace Restaurant.View.sales
             }
 
         }
+        //async Task changeInvTypeView()
+        //{
+           
+        //}
         private void translate()
         {
             txt_orders.Text = AppSettings.resourcemanager.GetString("trOrders");         
@@ -1703,7 +1751,10 @@ namespace Restaurant.View.sales
             if (invoice.agentId != null)
             {
                 var customer = FillCombo.customersList.Where(x => x.agentId == invoice.agentId).FirstOrDefault();
-                _MemberShipId = (int)customer.membershipId;
+                if (customer.membershipId != null)
+                    _MemberShipId = (int)customer.membershipId;
+                else
+                    _MemberShipId = 0;
                 txt_customer.Text = customer.name;
 
                 txt_customer.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
@@ -1793,7 +1844,10 @@ namespace Restaurant.View.sales
             if (invoice.agentId != null)
             {
                 var customer = FillCombo.customersList.Where(x => x.agentId == invoice.agentId).FirstOrDefault();
-                _MemberShipId = (int)customer.membershipId;
+                if (customer.membershipId != null)
+                    _MemberShipId = (int)customer.membershipId;
+                else
+                    _MemberShipId = 0;
                 txt_customer.Text = customer.name;
 
                 txt_customer.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
@@ -1890,7 +1944,10 @@ namespace Restaurant.View.sales
             if (invoice.agentId != null)
             {
                 var customer = FillCombo.customersList.Where(x => x.agentId == invoice.agentId).FirstOrDefault();
-                _MemberShipId = (int)customer.membershipId;
+                if (customer.membershipId != null)
+                    _MemberShipId = (int)customer.membershipId;
+                else
+                    _MemberShipId = 0;
                 txt_customer.Text = customer.name;
 
                 txt_customer.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
@@ -2040,8 +2097,8 @@ namespace Restaurant.View.sales
         }
         private async void Btn_draft_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 HelpClass.StartAwait(grid_main);
                 string invoiceType = "";
 
@@ -2074,12 +2131,12 @@ namespace Restaurant.View.sales
                 }
                 Window.GetWindow(this).Opacity = 1;
                 HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private void Btn_ordersAlerts_Click(object sender, RoutedEventArgs e)

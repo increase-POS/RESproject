@@ -431,7 +431,96 @@ namespace Restaurant
                 }
             }
         }
+        async void loading_typesOfService()
+        {
+            try
+            {
+                List<SetValues> serviceList = new List<SetValues>();
 
+                // typesOfService
+                SetValues diningHallrow = new SetValues();
+                SetValues takeAwayrow = new SetValues();
+                SetValues selfServicerow = new SetValues();
+
+                string diningHall;
+                string takeAway;
+                string selfService;
+
+                serviceList = await AppSettings.valueModel.GetBySetvalNote("typesOfService");
+
+                try
+                {
+                    diningHallrow = serviceList.Where(X => X.name == "typesOfService_diningHall").FirstOrDefault();
+                    diningHall = diningHallrow.value;
+                    if (diningHall == "1")
+                    {
+                        AppSettings.typesOfService_diningHall = "1";
+                    }
+                    else
+                    {
+                        AppSettings.typesOfService_diningHall = "0";
+                    }
+                }
+                catch
+                {
+                    AppSettings.typesOfService_diningHall = "0";
+                }
+                try
+                {
+                    takeAwayrow = serviceList.Where(X => X.name == "typesOfService_selfService").FirstOrDefault();
+                    takeAway = takeAwayrow.value;
+                    if (takeAway == "1")
+                    {
+                        AppSettings.typesOfService_takeAway = "1";
+                    }
+                    else
+                    {
+                        AppSettings.typesOfService_takeAway = "0";
+                    }
+                }
+                catch
+                {
+                    AppSettings.typesOfService_takeAway = "0";
+                }
+                try
+                {
+                    selfServicerow = serviceList.Where(X => X.name == "typesOfService_takeAway").FirstOrDefault();
+                    selfService = selfServicerow.value;
+                    //
+                    if (selfService == "1")
+                    {
+                        AppSettings.typesOfService_selfService = "1";
+                    }
+                    else
+                    {
+                        AppSettings.typesOfService_selfService = "0";
+                    }
+                }
+                catch
+                {
+                    AppSettings.typesOfService_selfService = "0";
+                }
+               
+
+
+
+
+            }
+            catch
+            {
+                AppSettings.typesOfService_diningHall = "0";
+                AppSettings.typesOfService_takeAway = "0";
+                AppSettings.typesOfService_selfService = "0";
+            }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_typesOfService"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
         async void loading_getItemCost()
         {
             //get item cost
@@ -951,6 +1040,11 @@ namespace Restaurant
             AppSettings.Allow_print_inv_count = printList.Where(X => X.name == "Allow_print_inv_count").FirstOrDefault().value;
             AppSettings.show_header = printList.Where(X => X.name == "show_header").FirstOrDefault().value;
 
+
+            AppSettings.print_kitchen_on_sale = printList.Where(X => X.name == "print_kitchen_on_sale").FirstOrDefault().value;
+            AppSettings.print_kitchen_on_preparing = printList.Where(X => X.name == "print_kitchen_on_preparing").FirstOrDefault().value;
+
+
             if (AppSettings.show_header == null || AppSettings.show_header == "")
             {
                 AppSettings.show_header = "1";
@@ -1071,6 +1165,7 @@ namespace Restaurant
                 loadingList.Add(new keyValueBool { key = "loading_getTableTimes", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_getDefaultInvoiceType", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_getStatusesOfPreparingOrder", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_typesOfService", value = false });
 
 
 
@@ -1100,6 +1195,7 @@ namespace Restaurant
                 loading_getTableTimes();
                 loading_getDefaultInvoiceType();
                 loading_getStatusesOfPreparingOrder();
+                loading_typesOfService();
 
                
                 do
@@ -1136,7 +1232,8 @@ namespace Restaurant
 
                 #region Permision
                 permission();
-                if (FillCombo.groupObject.HasPermissionAction(deliveryPermission, FillCombo.groupObjects, "one"))
+                //if (FillCombo.groupObject.HasPermissionAction(deliveryPermission, FillCombo.groupObjects, "one"))
+                if (userLogin.job == "deliveryManager" || userLogin.job == "deliveryEmployee" || HelpClass.isAdminPermision())
                     md_deliveryWaitConfirmUser.Visibility = Visibility.Visible;
                 else
                     md_deliveryWaitConfirmUser.Visibility = Visibility.Collapsed;

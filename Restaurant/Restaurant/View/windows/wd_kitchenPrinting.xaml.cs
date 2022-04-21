@@ -198,7 +198,7 @@ namespace Restaurant.View.windows
                 }
 
                 AppSettings.print_kitchen_on_sale = printOnSalerow.value;
-                AppSettings.print_kitchen_on_sale = printOnPreparingrow.value;
+                AppSettings.print_kitchen_on_preparing = printOnPreparingrow.value;
 
                 msg = await setvalueModel.Save(printOnPreparingrow);
                 msg = await setvalueModel.Save(printOnSalerow);

@@ -142,14 +142,18 @@ namespace Restaurant.View.accounts
                 tb_processNum.Visibility = Visibility.Visible;
                 brd_processNum.Visibility = Visibility.Visible;
                 hasProcessNum = true;
-                requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType", "processNum" };
+                if (!requiredControlList.Contains("processNum"))
+                    requiredControlList.Add("processNum");
+                //requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType", "processNum" };
             }
             else
             {
                 tb_processNum.Visibility = Visibility.Collapsed;
                 brd_processNum.Visibility = Visibility.Collapsed;
                 hasProcessNum = false;
-                requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType" };
+                if (requiredControlList.Contains("processNum"))
+                    requiredControlList.Remove("processNum");
+                //requiredControlList = new List<string> { "customerId", "monthsCount", "amount", "paymentProcessType" };
             }
             //set border color
             foreach (var el in cardEllipseList)

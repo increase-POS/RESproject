@@ -73,6 +73,10 @@ namespace Restaurant.Classes
         static public double maximumTimeToKeepReservation;
         // minutes
         static public int warningTimeForLateReservation;
+        //typesOfService
+        public static string typesOfService_diningHall;
+        public static string typesOfService_takeAway;
+        public static string typesOfService_selfService;
 
         static public PosSetting posSetting = new PosSetting();
         static public List<Pos> posList = new List<Pos>();

@@ -1,4 +1,5 @@
-﻿using Restaurant.Classes;
+﻿using netoaster;
+using Restaurant.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,63 @@ namespace Restaurant.View.windows
             { HelpClass.ExceptionMessage(ex, this); }
         }
 
-         
+        SetValues setvalueModel = new SetValues();
+        // typesOfService
+        SetValues diningHallrow = new SetValues();
+        SetValues takeAwayrow = new SetValues();
+        SetValues selfServicerow = new SetValues();
+
+        string diningHall;
+        string takeAway;
+        string selfService;
+
+        List<SetValues> serviceList = new List<SetValues>();
+        async Task Getprintparameter()
+        {
+
+            serviceList = await setvalueModel.GetBySetvalNote("typesOfService");
+
+            diningHallrow = serviceList.Where(X => X.name == "typesOfService_diningHall").FirstOrDefault();
+            diningHall = diningHallrow.value;
+
+            selfServicerow = serviceList.Where(X => X.name == "typesOfService_takeAway").FirstOrDefault();
+            selfService = selfServicerow.value;
+           
+            takeAwayrow = serviceList.Where(X => X.name == "typesOfService_selfService").FirstOrDefault();
+            takeAway = takeAwayrow.value;
+
+
+            if (diningHall == "1")
+            {
+                tgl_diningHall.IsChecked = true;
+            }
+            else
+            {
+                tgl_diningHall.IsChecked = false;
+            }
+            //
+             if (takeAway == "1")
+            {
+                tgl_takeAway.IsChecked = true;
+            }
+            else
+            {
+                tgl_takeAway.IsChecked = false;
+            }
+            //
+            if (selfService == "1")
+            {
+                tgl_selfService.IsChecked = true;
+            }
+            else
+            {
+                tgl_selfService.IsChecked = false;
+            }
+
+
+
+        }
+
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -59,7 +116,8 @@ namespace Restaurant.View.windows
 
                 translate();
                 #endregion
-               
+                await Getprintparameter();
+
 
 
                 if (sender != null)
@@ -129,11 +187,68 @@ namespace Restaurant.View.windows
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
-                
+                if (!(bool)tgl_diningHall.IsChecked && !(bool)tgl_takeAway.IsChecked && !(bool)tgl_selfService.IsChecked)
+                {
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("atLeastOneMustBeSelected"), animation: ToasterAnimation.FadeIn);
+                }
+                else
+                {
+
+                    HelpClass.StartAwait(grid_main);
+                    //  string msg = "";
+                    int msg = 0;
+                    if ((bool)tgl_diningHall.IsChecked)
+                    {
+                        diningHallrow.value = "1";
+
+                    }
+                    else
+                    {
+                        diningHallrow.value = "0";
+                    }
+
+                    if ((bool)tgl_takeAway.IsChecked)
+                    {
+                        takeAwayrow.value = "1";
+
+                    }
+                    else
+                    {
+                        takeAwayrow.value = "0";
+                    }
+
+                    if ((bool)tgl_selfService.IsChecked)
+                    {
+                        selfServicerow.value = "1";
+
+                    }
+                    else
+                    {
+                        selfServicerow.value = "0";
+                    }
 
 
-                HelpClass.EndAwait(grid_main);
+                    AppSettings.typesOfService_diningHall = diningHallrow.value;
+                    AppSettings.typesOfService_takeAway = takeAwayrow.value;
+                    AppSettings.typesOfService_selfService = selfServicerow.value;
+
+                    msg = await setvalueModel.Save(diningHallrow);
+                    msg = await setvalueModel.Save(takeAwayrow);
+                    msg = await setvalueModel.Save(selfServicerow);
+                    await Getprintparameter();
+                    await MainWindow.Getprintparameter();
+                    if (msg > 0)
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                        await Task.Delay(1500);
+                        this.Close();
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+
+                    HelpClass.EndAwait(grid_main);
+                }
+
             }
             catch (Exception ex)
             {

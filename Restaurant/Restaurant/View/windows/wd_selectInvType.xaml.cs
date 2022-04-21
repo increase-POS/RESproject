@@ -75,7 +75,7 @@ namespace Restaurant.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "tableId" };
+                requiredControlList = new List<string> { "invType" };
 
                 if (AppSettings.lang.Equals("en"))
                 {
@@ -89,7 +89,10 @@ namespace Restaurant.View.windows
 
                 FillCombo.FillInvoiceType(cb_invType);
                 await getDefaultInvoiceType();
+
                 cb_invType.SelectedValue = AppSettings.invType;
+                if (cb_invType.SelectedIndex == -1)
+                    cb_invType.SelectedIndex = 0;
 
                 HelpClass.EndAwait(grid_main);
             }

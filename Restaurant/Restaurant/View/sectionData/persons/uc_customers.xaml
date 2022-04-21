@@ -679,7 +679,7 @@
                         <Border Grid.Row="8" CornerRadius="10" Margin="10,5,0,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
 
                             <TextBox x:Name="tb_upperLimit" Grid.Row="8"  Padding="10,0,5,0"  
-                                         Text="{Binding maxDeserve, Mode=OneWay}"
+                                         Text="{Binding maxDeserve, Mode=OneWay}" IsEnabled="False"
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          materialDesign:HintAssist.Hint="The upper limit of the entitlement..."    
                            Foreground="#4E4E4E"    
