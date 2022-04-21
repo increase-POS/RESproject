@@ -270,6 +270,7 @@
     <Compile Include="controlTemplate\uc_squareCard.xaml.cs">
       <DependentUpon>uc_squareCard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="converters\accuracyDiscountConverter.cs" />
     <Compile Include="converters\agentCompanyConverter.cs" />
     <Compile Include="converters\agentNameConverter.cs" />
     <Compile Include="converters\agentTypeConverter.cs" />
@@ -730,6 +731,9 @@
     </Compile>
     <Compile Include="View\windows\wd_membershipList.xaml.cs">
       <DependentUpon>wd_membershipList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_membershipListForReports.xaml.cs">
+      <DependentUpon>wd_membershipListForReports.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_messageBox.xaml.cs">
       <DependentUpon>wd_messageBox.xaml</DependentUpon>
@@ -1452,6 +1456,10 @@
     <Page Include="View\windows\wd_membershipList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_membershipListForReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_messageBox.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -60,17 +60,16 @@
                                             <BeginStoryboard>
                                                 <Storyboard>
                                                     <DoubleAnimation
-                        Storyboard.TargetName="bdrMain"
-                        Storyboard.TargetProperty="Opacity"
-                        From="0" To="1"
-                        Duration="0:0:1"/>
+                                                        Storyboard.TargetName="bdrMain"
+                                                        Storyboard.TargetProperty="Opacity"
+                                                        From="0" To="1"
+                                                        Duration="0:0:1"/>
                                                 </Storyboard>
                                             </BeginStoryboard>
                                         </EventTrigger>
                                     </Button.Triggers>
                                     <Path Name="path_membership" Fill="{StaticResource SecondColor}" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,-1,0,0" 
-                                       Width="25" Height="25"   FlowDirection="LeftToRight" 
-                                         Data="{StaticResource cooking}" >
+                                       Width="25" Height="25"   FlowDirection="LeftToRight"  Data="{StaticResource membershipAdd}" >
                                         <Path.ToolTip>
                                             <ToolTip x:Name="tt_membership" Content="Membership"
                                               Placement="left" 
@@ -260,7 +259,7 @@
                             <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                             <DataGrid  Margin="5,5,5,17.5"  IsReadOnly="True"  Background="White"
-                                       Name="dg_orders"  AutoGenerateColumns="False" ColumnWidth="SizeToHeader"
+                                       Name="dg_memberships"  AutoGenerateColumns="False" ColumnWidth="SizeToHeader"
                                        AlternatingRowBackground="#f3f3f3" AlternationCount="2">
                                 <DataGrid.OpacityMask>
                                     <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
@@ -279,7 +278,7 @@
                                     <DataGridTextColumn x:Name="col_customerName"  Width="*" Header="Customer"  Binding="{Binding agentName}"/>
                                     <DataGridTextColumn x:Name="col_membership"    Width="*" Header="Membership" Binding="{Binding name }" />
                                     <DataGridTextColumn x:Name="col_branch"        Width="*" Header="Branch"    Binding="{Binding branchName }" />
-                                    <DataGridTemplateColumn x:Name="col_details"   Width="120" Header="" IsReadOnly="True" CanUserResize="False" >
+                                    <DataGridTemplateColumn x:Name="col_details" Width="130" Header="" IsReadOnly="True" CanUserResize="False" >
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Grid>
@@ -287,45 +286,37 @@
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="*"/>
-                                                        <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <Button Margin="-10"   Click="customersRowinDatagrid" Padding="0"    
-                                                            Background="{x:Null}" BorderBrush="{x:Null}">
-                                                        <Path Fill="{StaticResource SecondColor}" Stretch="Fill"
-                                                       HorizontalAlignment="Center" Grid.Column="0" 
-                                                      FlowDirection="LeftToRight"
-                                                       VerticalAlignment="Center" Width="25" Height="25"
-                                                          Data="{StaticResource customer}"/>
-                                                    </Button>
+                                                   
                                                     <Button Margin="-10"   Click="couponsRowinDatagrid" Padding="0"    
-                                                            Background="{x:Null}" BorderBrush="{x:Null}">
+                                                            Background="{x:Null}" BorderBrush="{x:Null}" Grid.Column="0">
                                                         <Path Fill="{StaticResource SecondColor}" Stretch="Fill"
-                                                       HorizontalAlignment="Center" Grid.Column="0"  
-                                                      FlowDirection="LeftToRight"
-                                                       VerticalAlignment="Center" Width="25" Height="25"
-                                                          Data="{StaticResource coupon}"/>
+                                                              HorizontalAlignment="Center" Grid.Column="0"  
+                                                              FlowDirection="LeftToRight"
+                                                              VerticalAlignment="Center" Width="17" Height="17"
+                                                              Data="{StaticResource coupon}"/>
                                                     </Button>
                                                     <Button Margin="-10"   Click="offersRowinDatagrid" Padding="0"    
-                                                            Background="{x:Null}" BorderBrush="{x:Null}">
+                                                            Background="{x:Null}" BorderBrush="{x:Null}" Grid.Column="1">
                                                         <Path Fill="{StaticResource SecondColor}" Stretch="Fill"
-                                                       HorizontalAlignment="Center" Grid.Column="0"  
-                                                      FlowDirection="LeftToRight"
-                                                       VerticalAlignment="Center" Width="25" Height="25"
-                                                          Data="{StaticResource offer}"/>
+                                                              HorizontalAlignment="Center" Grid.Column="1"  
+                                                              FlowDirection="LeftToRight"
+                                                              VerticalAlignment="Center" Width="17" Height="17"
+                                                              Data="{StaticResource offer}"/>
                                                     </Button>
-                                                    <Button Margin="-10 "   Click="invoicesClassesRowinDatagrid" Padding="0"    
-                                                            Background="{x:Null}" BorderBrush="{x:Null}">
+                                                    <Button Margin="-10"   Click="invoicesClassesRowinDatagrid" Padding="0"    
+                                                            Background="{x:Null}" BorderBrush="{x:Null}" Grid.Column="2">
                                                         <Path Fill="{StaticResource SecondColor}" Stretch="Fill"
-                                                       HorizontalAlignment="Center" Grid.Column="0"  
-                                                      FlowDirection="LeftToRight"
-                                                       VerticalAlignment="Center" Width="25" Height="25"
-                                                          Data="{StaticResource invoice}"/>
+                                                              HorizontalAlignment="Center" Grid.Column="2"  
+                                                              FlowDirection="LeftToRight"
+                                                              VerticalAlignment="Center" Width="17" Height="17"
+                                                              Data="{StaticResource invoice}"/>
                                                     </Button>
                                                 </Grid>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
-                                    <DataGridTextColumn x:Name="col_discount"      Width="*" Header="Discount"  Binding="{Binding tagName}" />
+                                    <DataGridTextColumn x:Name="col_discount"      Width="*" Header="Discount"  Binding="{Binding totalDiscount}" />
                                     <DataGridTemplateColumn x:Name="col_print" Width="120" Header="" IsReadOnly="True" CanUserResize="False" >
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>

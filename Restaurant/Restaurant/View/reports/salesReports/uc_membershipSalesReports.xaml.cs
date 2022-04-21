@@ -1,4 +1,8 @@
-﻿using Restaurant.Classes;
+﻿using Microsoft.Reporting.WinForms;
+using Microsoft.Win32;
+using netoaster;
+using Restaurant.Classes;
+using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +25,17 @@ namespace Restaurant.View.reports.salesReports
     /// </summary>
     public partial class uc_membershipSalesReports : UserControl
     {
+
+        IEnumerable<SalesMembership> memberships;
+        Statistics statisticsModel = new Statistics();
+        IEnumerable<SalesMembership> membershipsQuery;
+
+        //prin & pdf
+        ReportCls reportclass = new ReportCls();
+        LocalReport rep = new LocalReport();
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+        string searchText = "";
 
         private static uc_membershipSalesReports _instance;
         public static uc_membershipSalesReports Instance
@@ -51,6 +66,7 @@ namespace Restaurant.View.reports.salesReports
         {
             //try
             //{
+
             #region translate
             if (AppSettings.lang.Equals("en"))
                 grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -59,7 +75,7 @@ namespace Restaurant.View.reports.salesReports
             translate();
             #endregion
 
-            //chk_allCategories.IsChecked = true;
+            chk_allBranches.IsChecked = true;
 
             //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_preparingOrders.Tag.ToString());
 
@@ -109,137 +125,209 @@ namespace Restaurant.View.reports.salesReports
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
         }
 
-        //async Task Search()
-        //{
+        async Task Search()
+        {
 
-        //    if (orders is null)
-        //        await RefreshPreparingOredersList();
+            if (memberships is null)
+                await RefreshMembershipsList();
 
-        //    searchText = txt_search.Text.ToLower();
-        //    ordersQuery = orders
-        //        .Where(s =>
-        //    (
-        //     s.invNumber.ToLower().Contains(searchText)
-        //    ||
-        //    s.branchName.ToLower().Contains(searchText)
-        //    ||
-        //    s.categoryName.ToLower().Contains(searchText)
-        //    ||
-        //    s.itemName.ToLower().Contains(searchText)
-        //    ||
-        //    s.status.ToLower().Contains(searchText)
-        //    ||
-        //    (s.tagName != null ? s.tagName.ToLower().Contains(searchText) : false)
-        //    )
-        //    &&
-        //    //branch
-        //    (cb_branches.SelectedIndex != -1 ? s.branchId == Convert.ToInt32(cb_branches.SelectedValue) : false)
-        //    &&
-        //    //category
-        //    (cb_category.SelectedIndex != -1 ? s.categoryId == Convert.ToInt32(cb_category.SelectedValue) : true)
-        //    &&
-        //    //start date
-        //    (dp_startDate.SelectedDate != null ? s.createDate >= dp_startDate.SelectedDate : true)
-        //    &&
-        //    //end date
-        //    (dp_endDate.SelectedDate != null ? s.createDate <= dp_endDate.SelectedDate : true)
-        //    );
+            searchText = txt_search.Text.ToLower();
+            membershipsQuery = memberships
+                .Where(s =>
+            (
+             s.invNumber.ToLower().Contains(searchText)
+            ||
+            s.branchName.ToLower().Contains(searchText)
+            ||
+            s.membershipsName.ToLower().Contains(searchText)
+            ||
+            s.agentName.ToLower().Contains(searchText)
+            )
+            &&
+            //branch
+            (cb_branches.SelectedIndex != -1 ? s.branchId == Convert.ToInt32(cb_branches.SelectedValue) : true)
+            &&
+            //membership
+            (cb_membership.SelectedIndex != -1 ? s.membershipId == Convert.ToInt32(cb_membership.SelectedValue) : true)
+            &&
+            //start date
+            (dp_startDate.SelectedDate != null ? s.updateDate >= dp_startDate.SelectedDate : true)
+            &&
+            //end date
+            (dp_endDate.SelectedDate != null ? s.updateDate <= dp_endDate.SelectedDate : true)
+            );
 
-        //    RefreshPreparingOrdersView();
+            RefreshMembershipsView();
 
-        //    fillColumnChart();
-        //    fillPieChart();
-        //    fillRowChart();
+            fillColumnChart();
+            fillPieChart();
+            fillRowChart();
 
-        //}
+        }
 
-        //void RefreshPreparingOrdersView()
-        //{
-        //    dg_orders.ItemsSource = ordersQuery;
-        //    txt_count.Text = ordersQuery.Count().ToString();
-        //}
+        void RefreshMembershipsView()
+        {
+            dg_memberships.ItemsSource = membershipsQuery;
+            txt_count.Text = membershipsQuery.Count().ToString();
+        }
 
-        //async Task<IEnumerable<OrderPreparingSTS>> RefreshPreparingOredersList()
-        //{
-        //    orders = await statisticsModel.GetPreparingOrders(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
-        //    fillBranches();
-        //    fillCategories();
-        //    return orders;
-        //}
+        async Task<IEnumerable<SalesMembership>> RefreshMembershipsList()
+        {
+            memberships = await statisticsModel.GetSaleMembership(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
+            fillBranches();
+            fillMemberships();
+            return memberships;
+        }
 
-        //private async void callSearch(object sender)
-        //{
-        //    try
-        //    {
-        //        HelpClass.StartAwait(grid_main);
+        private async void callSearch(object sender)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
-        //        await Search();
+                await Search();
 
-        //        HelpClass.EndAwait(grid_main);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        HelpClass.EndAwait(grid_main);
-        //        HelpClass.ExceptionMessage(ex, this);
-        //    }
-        //}
-        //private void fillBranches()
-        //{
-        //    cb_branches.SelectedValuePath = "branchId";
-        //    cb_branches.DisplayMemberPath = "branchName";
-        //    cb_branches.ItemsSource = orders.Select(i => new { i.branchName, i.branchId }).Distinct();
-        //}
-        //private void fillCategories()
-        //{
-        //    cb_category.SelectedValuePath = "categoryId";
-        //    cb_category.DisplayMemberPath = "categoryName";
-        //    cb_category.ItemsSource = orders.Select(i => new { i.categoryName, i.categoryId }).Distinct();
-        //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void fillBranches()
+        {
+            cb_branches.SelectedValuePath = "branchId";
+            cb_branches.DisplayMemberPath = "branchName";
+            cb_branches.ItemsSource = memberships.Select(i => new { i.branchName, i.branchId }).Distinct();
+        }
+        private void fillMemberships()
+        {
+            cb_membership.SelectedValuePath = "membershipId";
+            cb_membership.DisplayMemberPath = "membershipName";
+            cb_membership.ItemsSource = memberships.Select(i => new { i.membershipsName, i.membershipId }).Distinct();
+        }
         #endregion
 
         #region events
         private void RefreshView_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            callSearch(sender);
         }
 
-        private void cb_branches_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
+        private async void cb_branches_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {//select branch
+            callSearch(sender);
         }
 
         private void Chk_allBranches_Checked(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+                cb_branches.SelectedIndex = -1;
+                cb_branches.IsEnabled = false;
+
+                chk_allMemberships.IsChecked = true;
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
-        private void Chk_allBranches_Unchecked(object sender, RoutedEventArgs e)
+        private async void Chk_allBranches_Unchecked(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+                cb_branches.IsEnabled = true;
+
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Cb_membership_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            callSearch(sender);
         }
 
-        private void Chk_allMemberships_Checked(object sender, RoutedEventArgs e)
+        private async void Chk_allMemberships_Checked(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+                cb_membership.SelectedIndex = -1;
+                cb_membership.IsEnabled = false;
+
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
-        private void Chk_allMemberships_Unchecked(object sender, RoutedEventArgs e)
+        private async void Chk_allMemberships_Unchecked(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+                cb_membership.IsEnabled = true;
+
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Txt_search_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            callSearch(sender);
         }
 
-        private void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {
+        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
+        {//refresh
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                searchText = "";
+                txt_search.Text = "";
+                await RefreshMembershipsList();
+                dp_startDate.SelectedDate = null;
+                dp_endDate.SelectedDate = null;
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
 
         }
         #endregion
@@ -267,33 +355,316 @@ namespace Restaurant.View.reports.salesReports
         #endregion
 
         #region membership datagrid btns
-        private void customerRowinDatagrid(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void customersRowinDatagrid(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+        
         private void couponsRowinDatagrid(object sender, RoutedEventArgs e)
-        {
+        {//coupons
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
+
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        SalesMembership row = (SalesMembership)dg_memberships.SelectedItems[0];
+
+                        if (row.CouponInvoiceList.Count > 0)
+                        {
+                            Window.GetWindow(this).Opacity = 0.2;
+
+                            wd_membershipListForReports w = new wd_membershipListForReports();
+
+                            w.membershipType = "c";
+                            w.CouponInvoiceList = row.CouponInvoiceList;
+                            w.ShowDialog();
+
+                            Window.GetWindow(this).Opacity = 1;
+                        }
+                        else
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("noCoupons"), animation: ToasterAnimation.FadeIn);
+                    }
+
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
 
         }
 
         private void offersRowinDatagrid(object sender, RoutedEventArgs e)
-        {
+        {//offers
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        SalesMembership row = (SalesMembership)dg_memberships.SelectedItems[0];
 
+                        if (row.itemsTransferList.Count > 0)
+                        {
+                            Window.GetWindow(this).Opacity = 0.2;
+
+                            wd_membershipListForReports w = new wd_membershipListForReports();
+
+                            w.membershipType = "o";
+                            w.itemsTransferList = row.itemsTransferList;
+                            w.ShowDialog();
+
+                            Window.GetWindow(this).Opacity = 1;
+                        }
+                        else
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("noOffers"), animation: ToasterAnimation.FadeIn);
+                    }
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void invoicesClassesRowinDatagrid(object sender, RoutedEventArgs e)
-        {
+        {//invoices
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        SalesMembership row = (SalesMembership)dg_memberships.SelectedItems[0];
+
+                        if (row.invoiceClassDiscountList.Count > 0)
+                        {
+                            Window.GetWindow(this).Opacity = 0.2;
+
+                            wd_membershipListForReports w = new wd_membershipListForReports();
+
+                            w.membershipType = "i";
+                            w.itemsTransferList = row.itemsTransferList;
+                            w.ShowDialog();
+
+                            Window.GetWindow(this).Opacity = 1;
+                        }
+                        else
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("noInvoiceClasses"), animation: ToasterAnimation.FadeIn);
+                    }
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         #endregion
 
         #region charts
+        private void fillColumnChart()
+        {
+            //axcolumn.Labels = new List<string>();
+            //List<string> names = new List<string>();
+            //List<int> ordersCount = new List<int>();
+
+            //var result = ordersQuery.GroupBy(s => s.itemUnitId).Select(s => new
+            //{
+            //    itemId = s.Key,
+            //    quantity = s.Count()
+            //});
+
+            //var tempName = ordersQuery.GroupBy(s => s.itemName).Select(s => new
+            //{
+            //    itemName = s.Key
+            //});
+            //names.AddRange(tempName.Select(nn => nn.itemName));
+
+            //ordersCount.AddRange(result.Select(nn => nn.quantity));
+
+            //List<string> lable = new List<string>();
+            //SeriesCollection columnChartData = new SeriesCollection();
+            //List<int> cS = new List<int>();
+
+            //List<string> titles = new List<string>()
+            //{
+            //   AppSettings.resourcemanager.GetString("trPreparingOrders")+ "/" +AppSettings.resourcemanager.GetString("trItem")
+            //};
+            //int x = 6;
+            //if (names.Count() <= 6) x = names.Count();
+
+            //for (int i = 0; i < x; i++)
+            //{
+            //    cS.Add(ordersCount.ToList().Skip(i).FirstOrDefault());
+            //    axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
+            //}
+
+            //if (names.Count() > 6)
+            //{
+            //    int ordersSum = 0;
+            //    for (int i = 6; i < names.Count(); i++)
+            //        ordersSum = ordersSum + ordersCount.ToList().Skip(i).FirstOrDefault();
+
+            //    if (ordersSum != 0)
+            //        cS.Add(ordersSum);
+
+            //    axcolumn.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
+            //}
+
+            //columnChartData.Add(
+            //new StackedColumnSeries
+            //{
+            //    Values = cS.AsChartValues(),
+            //    Title = titles[0],
+            //    DataLabels = true,
+            //});
+
+            //DataContext = this;
+            //cartesianChart.Series = columnChartData;
+        }
+
+        private void fillPieChart()
+        {
+            //List<string> titles = new List<string>();
+            //IEnumerable<int> x = null;
+            //titles.Clear();
+
+            //var temp = ordersQuery;
+
+            //var titleTemp = temp.GroupBy(m => m.itemName);
+            //titles.AddRange(titleTemp.Select(jj => jj.Key));
+            //var result = temp.GroupBy(s => s.itemUnitId).Select(s => new { itemId = s.Key, sum = s.Sum(g => (int)g.quantity) });
+            //x = result.Select(m => m.sum);
+
+            //SeriesCollection piechartData = new SeriesCollection();
+
+            //int xCount = 6;
+            //if (x.Count() <= 6) xCount = x.Count();
+            //for (int i = 0; i < xCount; i++)
+            //{
+            //    List<int> final = new List<int>();
+            //    List<string> lable = new List<string>();
+            //    final.Add(x.ToList().Skip(i).FirstOrDefault());
+            //    piechartData.Add(
+            //      new PieSeries
+            //      {
+            //          Values = final.AsChartValues(),
+            //          Title = titles.Skip(i).FirstOrDefault(),
+            //          DataLabels = true,
+            //      }
+            //  );
+            //}
+
+            //if (x.Count() > 6)
+            //{
+            //    int xSum = 0;
+            //    for (int i = 6; i < x.Count(); i++)
+            //    {
+            //        xSum = xSum + x.ToList().Skip(i).FirstOrDefault();
+            //    }
+
+            //    if (xSum > 0)
+            //    {
+            //        List<int> final = new List<int>();
+            //        List<string> lable = new List<string>();
+            //        final.Add(xSum);
+            //        piechartData.Add(
+            //          new PieSeries
+            //          {
+            //              Values = final.AsChartValues(),
+            //              Title = AppSettings.resourcemanager.GetString("trOthers"),
+            //              DataLabels = true,
+            //          }
+            //      );
+            //    }
+
+            //}
+            //chart1.Series = piechartData;
+        }
+
+        private void fillRowChart()
+        {
+          //  int endYear = DateTime.Now.Year;
+          //  int startYear = endYear - 1;
+          //  int startMonth = DateTime.Now.Month;
+          //  int endMonth = startMonth;
+          //  if (dp_startDate.SelectedDate != null && dp_endDate.SelectedDate != null)
+          //  {
+          //      startYear = dp_startDate.SelectedDate.Value.Year;
+          //      endYear = dp_endDate.SelectedDate.Value.Year;
+          //      startMonth = dp_startDate.SelectedDate.Value.Month;
+          //      endMonth = dp_endDate.SelectedDate.Value.Month;
+          //  }
+
+
+          //  MyAxis.Labels = new List<string>();
+          //  List<string> names = new List<string>();
+          //  List<CashTransferSts> resultList = new List<CashTransferSts>();
+
+          //  SeriesCollection rowChartData = new SeriesCollection();
+
+          //  var tempName = ordersQuery.GroupBy(s => new { s.itemUnitId }).Select(s => new
+          //  {
+          //      Name = s.FirstOrDefault().updateDate,
+          //  });
+          //  names.AddRange(tempName.Select(nn => nn.Name.ToString()));
+
+          //  List<string> lable = new List<string>();
+          //  SeriesCollection columnChartData = new SeriesCollection();
+          //  List<int> orderLst = new List<int>();
+
+          //  if (endYear - startYear <= 1)
+          //  {
+          //      for (int year = startYear; year <= endYear; year++)
+          //      {
+          //          for (int month = startMonth; month <= 12; month++)
+          //          {
+          //              var firstOfThisMonth = new DateTime(year, month, 1);
+          //              var firstOfNextMonth = firstOfThisMonth.AddMonths(1);
+          //              var drawQuantity = ordersQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Select(s => s.itemName).Count();
+          //              orderLst.Add(drawQuantity);
+          //              MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
+
+          //              if (year == endYear && month == endMonth)
+          //              {
+          //                  break;
+          //              }
+          //              if (month == 12)
+          //              {
+          //                  startMonth = 1;
+          //                  break;
+          //              }
+          //          }
+          //      }
+          //  }
+          //  else
+          //  {
+          //      for (int year = startYear; year <= endYear; year++)
+          //      {
+          //          var firstOfThisYear = new DateTime(year, 1, 1);
+          //          var firstOfNextMYear = firstOfThisYear.AddYears(1);
+          //          var drawQuantity = ordersQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Select(s => s.itemName).Count();
+
+          //          orderLst.Add(drawQuantity);
+
+          //          MyAxis.Labels.Add(year.ToString());
+          //      }
+          //  }
+          //  rowChartData.Add(
+          //new LineSeries
+          //{
+          //    Values = orderLst.AsChartValues(),
+          //    Title = AppSettings.resourcemanager.GetString("trPreparingOrders") + "/" + AppSettings.resourcemanager.GetString("trQuantity")
+          //});
+
+          //  DataContext = this;
+          //  rowChart.Series = rowChartData;
+        }
+
         #endregion
 
         #region reports

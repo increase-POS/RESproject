@@ -66,8 +66,8 @@ namespace Restaurant.View.reports.kitchenReports
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 #region translate
                 if (AppSettings.lang.Equals("en"))
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -80,11 +80,11 @@ namespace Restaurant.View.reports.kitchenReports
 
                 //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_preparingOrders.Tag.ToString());
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         #region methods
@@ -222,19 +222,7 @@ namespace Restaurant.View.reports.kitchenReports
 
         private async void cb_branches_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select branch
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                await Search();
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            callSearch(sender);
         }
 
         private void Chk_allBranches_Checked(object sender, RoutedEventArgs e)
@@ -276,22 +264,9 @@ namespace Restaurant.View.reports.kitchenReports
             }
         }
 
-        private async void Cb_category_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Cb_category_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//select category
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                await Search();
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-
+            callSearch(sender);
         }
 
         private async void Chk_allCategories_Checked(object sender, RoutedEventArgs e)
@@ -335,20 +310,7 @@ namespace Restaurant.View.reports.kitchenReports
 
         private async void Txt_search_TextChanged(object sender, TextChangedEventArgs e)
         {//search
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                await Search();
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-
+            callSearch(sender);
         }
 
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)

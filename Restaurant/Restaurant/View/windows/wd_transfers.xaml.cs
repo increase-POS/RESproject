@@ -90,7 +90,7 @@ namespace Restaurant.View.windows
 
         async Task fillDataGrid()
         {
-            cashesQuery = await cashModel.GetCashTransferForPosById("all", "p", (int)MainWindow.posLogin.posId); //////////////??????????
+            cashesQuery = await cashModel.GetCashTransferForPosById("all", "p", (int)MainWindow.posLogin.posId); 
             cashesQuery = cashesQuery.Where(c => c.posId == MainWindow.posLogin.posId && c.isConfirm == 0 );
 
             foreach (var c in cashesQuery)
