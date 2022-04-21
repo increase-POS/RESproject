@@ -3943,4 +3943,7 @@ Please add Email in setting</value>
   <data name="printOnSale" xml:space="preserve">
     <value>Print on sale</value>
   </data>
+  <data name="atLeastOneMustBeSelected" xml:space="preserve">
+    <value>At least one must be selected</value>
+  </data>
 </root>

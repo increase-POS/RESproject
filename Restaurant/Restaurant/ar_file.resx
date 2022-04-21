@@ -3928,4 +3928,7 @@
   <data name="printOnSale" xml:space="preserve">
     <value>طباعة عند البيع</value>
   </data>
+  <data name="atLeastOneMustBeSelected" xml:space="preserve">
+    <value>يجب اختيار واحد على الأقل</value>
+  </data>
 </root>
