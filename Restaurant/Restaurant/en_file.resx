@@ -3946,4 +3946,7 @@ Please add Email in setting</value>
   <data name="atLeastOneMustBeSelected" xml:space="preserve">
     <value>At least one must be selected</value>
   </data>
+  <data name="membership" xml:space="preserve">
+    <value>Membership</value>
+  </data>
 </root>

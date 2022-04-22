@@ -23,6 +23,23 @@ namespace Restaurant.View.windows
     {
         public int membershipID = 0;
         public string membershipType = "";
+        string _title = "";
+
+        private static wd_membershipList _instance;
+        public static wd_membershipList Instance
+        {
+            get
+            {
+                if (_instance is null)
+                    _instance = new wd_membershipList();
+                return _instance;
+            }
+            set
+            {
+                _instance = value;
+            }
+        }
+
         public wd_membershipList()
         {
             try
@@ -98,6 +115,14 @@ namespace Restaurant.View.windows
                 #region customer
                 if (membershipType == "a")
                 {
+                    #region title
+                    _title = "trCustomers";
+                    col_customer.Width = new GridLength(1, GridUnitType.Star);
+                    col_coupon.Width = new GridLength(0);
+                    col_offer.Width = new GridLength(0);
+                    col_invoice.Width = new GridLength(0);
+                    #endregion
+
                     allCustomersSource = await customer.GetAgentsActive("c");////active customers
                     allCustomers.AddRange(allCustomersSource);
 
@@ -105,9 +130,6 @@ namespace Restaurant.View.windows
 
                     foreach (var v in selectedCustomersSource)
                     {
-                        //customerMembership = await customerMembership.GetById(v.agentMembershipsId);
-                        //selectedCustomers.Add(customerMembership);
-
                         customerMembership = new AgentMemberships();
                         customerMembership.agentId = v.agentId;
                         customerMembership.membershipId = membershipID;
@@ -138,6 +160,14 @@ namespace Restaurant.View.windows
                 # region coupon
                 if (membershipType == "c")
                 {
+                    #region title
+                    _title = "trCoupons";
+                    col_customer.Width = new GridLength(0);
+                    col_coupon.Width = new GridLength(1, GridUnitType.Star);
+                    col_offer.Width = new GridLength(0);
+                    col_invoice.Width = new GridLength(0);
+                    #endregion
+
                     allCouponsSource = await coupon.GetEffictiveCoupons();////active coupons
                     allCoupons.AddRange(allCouponsSource);
 
@@ -169,6 +199,14 @@ namespace Restaurant.View.windows
                 #region offer
                 if (membershipType == "o")
                 {
+                    #region title
+                    _title = "trOffers";
+                    col_customer.Width = new GridLength(0);
+                    col_coupon.Width = new GridLength(0);
+                    col_offer.Width = new GridLength(1, GridUnitType.Star);
+                    col_invoice.Width = new GridLength(0);
+                    #endregion
+
                     allOffersSource = await offer.Get();////active offers
                     allOffersSource = allOffersSource.Where(o => o.isActive == 1).ToList();
                     allOffers.AddRange(allOffersSource);
@@ -199,6 +237,14 @@ namespace Restaurant.View.windows
                 #region invoice
                 if (membershipType == "i")
                 {
+                    #region title
+                    _title = "trInvoicesClasses";
+                    col_customer.Width = new GridLength(0);
+                    col_coupon.Width = new GridLength(0);
+                    col_offer.Width = new GridLength(0);
+                    col_invoice.Width = new GridLength(1, GridUnitType.Star);
+                    #endregion
+
                     allInvoicesSource = await invoice.GetAll();////active invoices
                     allInvoicesSource = allInvoicesSource.Where(i => i.isActive == 1).ToList();
                     allInvoices.AddRange(allInvoicesSource);
@@ -226,15 +272,15 @@ namespace Restaurant.View.windows
                 }
             #endregion
 
-            HelpClass.EndAwait(grid_main);
-        }
-            catch (Exception ex)
-            {
                 HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-        }
+            }
+                catch (Exception ex)
+                {
+                    HelpClass.EndAwait(grid_main);
+                    HelpClass.ExceptionMessage(ex, this);
+            }
 
-    }
+        }
 
         private void translat()
         {
@@ -653,6 +699,12 @@ namespace Restaurant.View.windows
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Instance = null;
+            GC.Collect();
         }
     }
 }

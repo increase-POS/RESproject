@@ -27,6 +27,20 @@ namespace Restaurant.View.windows
         public List<ItemTransfer> itemsTransferList = new List<ItemTransfer>();
         public List<InvoicesClass> invoiceClassDiscountList = new List<InvoicesClass>();
 
+        private static wd_membershipListForReports _instance;
+        public static wd_membershipListForReports Instance
+        {
+            get
+            {
+                if (_instance is null)
+                    _instance = new wd_membershipListForReports();
+                return _instance;
+            }
+            set
+            {
+                _instance = value;
+            }
+        }
         public wd_membershipListForReports()
         {
             try
@@ -85,12 +99,17 @@ namespace Restaurant.View.windows
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
+            try
+            {
+                DragMove();
+            }
+            catch { }
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
-
+            Instance = null;
+            GC.Collect();
         }
 
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
@@ -102,10 +121,19 @@ namespace Restaurant.View.windows
         private void translat()
         {
             txt_title.Text = AppSettings.resourcemanager.GetString(_title);
-            //dg_transfers.Columns[0].Header = AppSettings.resourcemanager.GetString("trTransferNumberTooltip");
-            //dg_transfers.Columns[1].Header = AppSettings.resourcemanager.GetString("trDepositor");
-            //dg_transfers.Columns[2].Header = AppSettings.resourcemanager.GetString("trRecepient");
-            //dg_transfers.Columns[3].Header = AppSettings.resourcemanager.GetString("trCashTooltip");
+            //coupn
+            col_cCode.Header = AppSettings.resourcemanager.GetString("trCode");
+            col_cName.Header = AppSettings.resourcemanager.GetString("trName");
+            col_cTypeValue.Header = AppSettings.resourcemanager.GetString("trValue");
+            //offer
+            col_oCode.Header = AppSettings.resourcemanager.GetString("trCode");
+            col_oName.Header = AppSettings.resourcemanager.GetString("trName");
+            col_oTypeValue.Header = AppSettings.resourcemanager.GetString("trValue");
+            //invoice
+            col_iName.Header = AppSettings.resourcemanager.GetString("trName");
+            col_iTypeValue.Header = AppSettings.resourcemanager.GetString("trValue");
+
+            col_discount.Header = AppSettings.resourcemanager.GetString("trDiscount");
 
         }
 

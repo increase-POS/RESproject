@@ -9,7 +9,7 @@
         WindowStyle="None" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" Margin="0"
         Title="wd_membershipList" Height="400" Width="550" Background="Transparent" AllowsTransparency="True" 
-        Loaded="Window_Loaded" MouseDown="Window_MouseDown" KeyDown="HandleKeyPress">
+        Loaded="Window_Loaded" MouseDown="Window_MouseDown" KeyDown="HandleKeyPress" Unloaded="Window_Unloaded">
     <Grid Grid.Column="1" Grid.Row="1"  x:Name="grid_main">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -28,7 +28,7 @@
                         <materialDesign:PackIcon Foreground="White" Kind="Close" 
                                          Width="20" Height="20"/>
                     </Button>
-                    <Grid Width="360" Height="30" HorizontalAlignment="Center"  >
+                    <!--<Grid Width="360" Height="30" HorizontalAlignment="Center"  >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="1.2*"/>
@@ -40,6 +40,34 @@
                         <TextBlock Text="Title" x:Name="txt_title" Foreground="White" 
                                    HorizontalAlignment="Left" VerticalAlignment="Center" 
                                    Grid.Column="1"  Margin="5,0"/>
+                    </Grid>-->
+                    <Grid Width="360" Height="30" HorizontalAlignment="Center"  >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition x:Name="col_customer" Width="*"/>
+                            <ColumnDefinition x:Name="col_coupon"   Width="*"/>
+                            <ColumnDefinition x:Name="col_offer"    Width="*"/>
+                            <ColumnDefinition x:Name="col_invoice"  Width="*"/>
+                            <ColumnDefinition Width="1.2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Path Fill="White" Stretch="Fill" Margin="5,0" FlowDirection="LeftToRight"
+                              HorizontalAlignment="Right" Grid.Column="0"  
+                              VerticalAlignment="Center" Width="20" Height="20"
+                              Data="{StaticResource customer}"/>
+                        <Path Fill="#DFDFDF"    Stretch="Fill" FlowDirection="LeftToRight"
+                              HorizontalAlignment="Right" Grid.Column="0"  
+                              VerticalAlignment="Center" Width="20" Height="20"
+                                  Data="{StaticResource coupon}"/>
+                        <Path Fill="#DFDFDF"    Stretch="Fill" FlowDirection="LeftToRight"
+                              HorizontalAlignment="Right" Grid.Column="1"  
+                              VerticalAlignment="Center" Width="20" Height="20"
+                                  Data="{StaticResource offer}"/>
+                        <Path Fill="#DFDFDF"    Stretch="Fill" FlowDirection="LeftToRight"
+                              HorizontalAlignment="Right" Grid.Column="2"  
+                              VerticalAlignment="Center" Width="20" Height="20"
+                                  Data="{StaticResource invoice}"/>
+                        <TextBlock Text="membership" x:Name="txt_title" Foreground="White" 
+                                   HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                  Grid.Column="3"      Margin="5,0"/>
                     </Grid>
                 </Grid>
 

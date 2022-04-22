@@ -3931,4 +3931,7 @@
   <data name="atLeastOneMustBeSelected" xml:space="preserve">
     <value>يجب اختيار واحد على الأقل</value>
   </data>
+  <data name="membership" xml:space="preserve">
+    <value>العضوية</value>
+  </data>
 </root>
