@@ -182,7 +182,7 @@ namespace Restaurant.View.windows
                             txt_membershipInctive.Text = "";
                         }
                         #endregion
-
+                        memberShipStatus = "valid";
                     }
                     else
                     {
