@@ -1295,102 +1295,7 @@ namespace Restaurant.View.sales
             tb_total.Text = total.ToString();
 
         }
-        void applyInvClassesOnTotal()
-        {
-            decimal total = 0;
-            #region subtotal
-            _Sum = 0;
-            foreach(var item in billDetailsList)
-            {
-                _Sum += item.Total;
-            }
-            tb_subtotal.Text = _Sum.ToString();
-            total = _Sum;
-            #endregion
-
-            #region discount
-            decimal couponsDiscount = 0;
-            decimal totalDiscount = 0;
-            if (_Sum > 0)
-            {
-                #region calculate coupons discount
-                if(selectedCopouns != null)
-                { 
-                    foreach (CouponInvoice coupon in selectedCopouns)
-                    {
-                        string discountType = coupon.discountType.ToString();
-                        decimal discountValue = (decimal)coupon.discountValue;
-                        if (discountType == "2")
-                            discountValue = HelpClass.calcPercentage(_Sum, discountValue);
-                        couponsDiscount += discountValue;
-                    }
-                }
-                #endregion
-                #region manaula discount           
-                if (_ManualDiscount !=0)
-                {
-                    if (_DiscountType == "2")
-                        _ManualDiscount = HelpClass.calcPercentage(_Sum, _ManualDiscount);
-                }
-                #endregion
-                totalDiscount = couponsDiscount + _ManualDiscount;
-                //tb_totalDiscount.Text = totalDiscount.ToString();
-                tb_totalDiscount.Text = HelpClass.PercentageDecTostring(totalDiscount);              
-            }
-
-            total = _Sum - totalDiscount;
-            if (totalDiscount > 0)
-            {
-                txt_totalDiscount.Visibility = Visibility.Visible;
-                tb_totalDiscount.Visibility = Visibility.Visible;
-                tb_moneyIconDis.Visibility = Visibility.Visible;
-                //tb_totalDiscount.Text = totalDiscount.ToString();
-            }
-            else
-            {
-                txt_totalDiscount.Visibility = Visibility.Collapsed;
-                tb_totalDiscount.Visibility = Visibility.Collapsed;
-                tb_moneyIconDis.Visibility = Visibility.Collapsed;
-            }
-            #endregion
-
-            #region customer invoice classes discount
-            foreach (InvoicesClass c in customerInvClasses)
-            {
-                decimal invClassDiscount = 0;
-                if(_Sum >= c.minInvoiceValue && _Sum <= c.maxInvoiceValue)
-                {
-                    if(c.discountValue != 0)
-                    {
-                        invClassDiscount = c.discountValue;
-                        if (c.discountType == 2)
-                            invClassDiscount = HelpClass.calcPercentage(_Sum, invClassDiscount);
-                    }
-
-                    total -= invClassDiscount;
-
-                    break;
-                }
-            }
-            #endregion
-
-            #region invoice tax value 
-            decimal taxValue = 0;
-            if (AppSettings.invoiceTax_bool == true)
-            {
-                try
-                {
-                    taxValue = HelpClass.calcPercentage(total, decimal.Parse(tb_tax.Text));
-                }
-                catch { }
-            }
-            total += taxValue;
-            #endregion
-
-           
-            tb_total.Text = total.ToString();
-
-        }
+        
         #endregion
         #region timer to refresh notifications
         private static DispatcherTimer timer;
@@ -1545,6 +1450,7 @@ namespace Restaurant.View.sales
                     itemT.itemTax = item.Tax;
                     itemT.itemUnitPrice = item.basicPrice;
                     itemT.createUserId = MainWindow.userLogin.userId;
+                    itemT.forAgents = item.forAgents;
 
                     invoiceItems.Add(itemT);
                 }
