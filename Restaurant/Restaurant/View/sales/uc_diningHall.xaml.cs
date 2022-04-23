@@ -2756,14 +2756,8 @@ namespace Restaurant.View.sales
                 
                 await FillCombo.invoice.recordPosCashTransfer(invoice, "si");
 
-                
-                foreach (var item in paymentsList)
-                {
-                    await saveConfiguredCashTrans(item);
-                    invoice.paid += item.cash;
-                    invoice.deserved -= item.cash;
-                }
-                prinvoiceId = await invoice.saveInvoice(invoice);
+                await savePayments();
+
                 // refresh pos balance
                 await MainWindow.refreshBalance();
                 #endregion
