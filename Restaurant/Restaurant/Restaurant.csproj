@@ -681,6 +681,9 @@
     <Compile Include="View\windows\wd_branchesList.xaml.cs">
       <DependentUpon>wd_branchesList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_cashTransfer.xaml.cs">
+      <DependentUpon>wd_cashTransfer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_changePassword.xaml.cs">
       <DependentUpon>wd_changePassword.xaml</DependentUpon>
     </Compile>
@@ -1386,6 +1389,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_branchesList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_cashTransfer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

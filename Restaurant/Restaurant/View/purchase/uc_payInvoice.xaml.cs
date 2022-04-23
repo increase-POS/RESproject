@@ -752,8 +752,7 @@ namespace Restaurant.View.purchase
                                                 #endregion
                                             }
 
-                                            ///// cash Transfer
-                                            #region
+                                            #region save payments
                                             await invoice.recordPosCashTransfer(invoice, "pi");
                                             if (cb_paymentProcessType.SelectedValue.ToString() == "multiple")
                                             {
@@ -2693,7 +2692,6 @@ namespace Restaurant.View.purchase
         }
         private void Btn_payments_Click(object sender, RoutedEventArgs e)
         {//payments
-            /*
             try
             {
                 
@@ -2728,7 +2726,6 @@ namespace Restaurant.View.purchase
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-            */
         }
         private async void Btn_draft_Click(object sender, RoutedEventArgs e)
         {   

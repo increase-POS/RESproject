@@ -1,4 +1,4 @@
-﻿using POS.Classes;
+﻿using Restaurant.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace POS.View.windows
+namespace Restaurant.View.windows
 {
     /// <summary>
     /// Interaction logic for wd_cashTransfer.xaml
@@ -30,7 +30,7 @@ namespace POS.View.windows
             }
             catch(Exception ex)
             {
-                SectionData.ExceptionMessage(ex,this);
+                HelpClass.ExceptionMessage(ex,this);
             }
         }
 
@@ -47,17 +47,17 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                    HelpClass.StartAwait(grid_main);
 
                 #region translate
-                if (MainWindow.lang.Equals("en"))
+                if (AppSettings.lang.Equals("en"))
                 {
-                    MainWindow.resourcemanager = new ResourceManager("POS.en_file", Assembly.GetExecutingAssembly());
+                    AppSettings.resourcemanager = new ResourceManager("Restaurant.en_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 }
                 else
                 {
-                    MainWindow.resourcemanager = new ResourceManager("POS.ar_file", Assembly.GetExecutingAssembly());
+                    AppSettings.resourcemanager = new ResourceManager("Restaurant.ar_file", Assembly.GetExecutingAssembly());
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
 
@@ -67,28 +67,28 @@ namespace POS.View.windows
                 Txb_search_TextChanged(null, null);
 
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
         private void translate()
         {
             txt_accounts.Text = title;
-            txt_paid.Text = MainWindow.resourcemanager.GetString("trCashPaid");
-            txt_total.Text = MainWindow.resourcemanager.GetString("trOf") ;
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, MainWindow.resourcemanager.GetString("trSearchHint"));
-            dg_accounts.Columns[0].Header = MainWindow.resourcemanager.GetString("trTransferNumberTooltip");
-            dg_accounts.Columns[1].Header = MainWindow.resourcemanager.GetString("trDate");
-            dg_accounts.Columns[2].Header = MainWindow.resourcemanager.GetString("trPaymentTypeTooltip");
-            dg_accounts.Columns[3].Header = MainWindow.resourcemanager.GetString("trCashTooltip");
-            btn_pay.Content = MainWindow.resourcemanager.GetString("trPay");
-            btn_colse.ToolTip = MainWindow.resourcemanager.GetString("trClose");
+            txt_paid.Text = AppSettings.resourcemanager.GetString("trCashPaid");
+            txt_total.Text = AppSettings.resourcemanager.GetString("trOf") ;
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+            dg_accounts.Columns[0].Header = AppSettings.resourcemanager.GetString("trTransferNumberTooltip");
+            dg_accounts.Columns[1].Header = AppSettings.resourcemanager.GetString("trDate");
+            dg_accounts.Columns[2].Header = AppSettings.resourcemanager.GetString("trPaymentTypeTooltip");
+            dg_accounts.Columns[3].Header = AppSettings.resourcemanager.GetString("trCashTooltip");
+            btn_pay.Content = AppSettings.resourcemanager.GetString("trPay");
+            btn_colse.ToolTip = AppSettings.resourcemanager.GetString("trClose");
         }
 
         async Task<IEnumerable<CashTransfer>> RefreshCashesList()
@@ -115,7 +115,7 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                    HelpClass.StartAwait(grid_main);
 
                 if (cashes is null)
                     await RefreshCashesList();
@@ -131,13 +131,13 @@ namespace POS.View.windows
                 RefreshCashView();
 
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -153,20 +153,20 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                    HelpClass.StartAwait(grid_main);
 
                 if (e.Key == Key.Return)
                 {
                     Btn_pay_Click(null, null);
                 }
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -180,20 +180,20 @@ namespace POS.View.windows
             try
             {
                 if (sender != null)
-                    SectionData.StartAwait(grid_main);
+                    HelpClass.StartAwait(grid_main);
 
                 //
                 //enter your code here
                 //
 
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 if (sender != null)
-                    SectionData.EndAwait(grid_main);
-                SectionData.ExceptionMessage(ex, this);
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
     }
