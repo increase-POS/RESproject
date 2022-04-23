@@ -75,7 +75,7 @@ namespace Restaurant.View.delivery
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "userId" };
+                requiredControlList = new List<string> { "userId" , "companyId"};
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -187,7 +187,7 @@ namespace Restaurant.View.delivery
             chk_inTheWay.Content = AppSettings.resourcemanager.GetString("onTheWay");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_userId, AppSettings.resourcemanager.GetString("deliveryMan") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_userId, AppSettings.resourcemanager.GetString("deliveryMan") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_user, AppSettings.resourcemanager.GetString("deliveryMan") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_companyId, AppSettings.resourcemanager.GetString("trCompany") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_deliveryTime, AppSettings.resourcemanager.GetString("deliveryTime") + "...");
             txt_minutes.Text = AppSettings.resourcemanager.GetString("minute");
@@ -287,6 +287,14 @@ namespace Restaurant.View.delivery
                         else
                             checkboxColumn.IsChecked = !checkboxColumn.IsChecked;
 
+
+                        if (selectedOrders.Count > 0)
+                        {
+                            if (selectedOrders[0].shipUserId == null)
+                                requiredControlList = new List<string> { "companyId" };
+                            else
+                                requiredControlList = new List<string> { "userId" };
+                        }
                         #region refreshSaveBtnText
                         if (order.shipUserId != null)
                         {
@@ -364,14 +372,14 @@ namespace Restaurant.View.delivery
 
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {//save
-            try
-            {
+            //try
+            //{
                 if (FillCombo.groupObject.HasPermissionAction(updatePermission, FillCombo.groupObjects, "one"))
                 {
                     HelpClass.StartAwait(grid_main);
 
                     #region add
-                    //if (HelpClass.validate(requiredControlList, this))
+                    if (HelpClass.validate(requiredControlList, this))
                     {
                         foreach(Invoice i in selectedOrders)
                         { 
@@ -380,7 +388,7 @@ namespace Restaurant.View.delivery
 
                             orderPreparingStatus ops = new orderPreparingStatus();
 
-                            if (order.shipUserId.Value != null)
+                            if (order.shipUserName != null)
                             {
                                 if (i.status.Equals("Ready"))
                                 {
@@ -417,37 +425,13 @@ namespace Restaurant.View.delivery
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
 
-                                #region refreshSaveBtnText
-                                //if (order.status.Equals("Ready"))
-                                //{
-                                //    btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
-                                //    btn_save.IsEnabled = true;
-                                //    bdr_cbDeliveryMan.Visibility = Visibility.Visible;
-                                //    bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
-                                //}
-                                //else if (order.status.Equals("Collected"))
-                                //{
-                                //    btn_save.Content = AppSettings.resourcemanager.GetString("onTheWay");
-                                //    btn_save.IsEnabled = true;
-                                //    bdr_cbDeliveryMan.Visibility = Visibility.Visible;
-                                //    bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
-                                //}
-                                //else if (order.status.Equals("InTheWay"))
-                                //{
-                                //    btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
-                                //    btn_save.IsEnabled = true;
-                                //    bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
-                                //    bdr_tbDeliveryMan.Visibility = Visibility.Visible;
-                                //}
-                                #endregion
-
-                              
+                                await Search();
+                                Clear();
                             }
                             else
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         }
-                        await Search();
-                        Clear();
+                       
                     }
                     
                     #endregion
@@ -457,12 +441,12 @@ namespace Restaurant.View.delivery
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         #endregion
