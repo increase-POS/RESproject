@@ -103,6 +103,7 @@ namespace Restaurant.View.windows
                 col_invoices.Visibility = Visibility.Collapsed;
                 col_shiping.Visibility = Visibility.Collapsed;
                 col_status.Visibility = Visibility.Collapsed;
+                col_chk.Visibility = Visibility.Collapsed;
                 #endregion
                 orders = await preparingOrder.GetHallOrdersWithStatus(MainWindow.branchLogin.branchId, "Ready", 24);
                 dg_orders.ItemsSource = orders;
@@ -113,6 +114,7 @@ namespace Restaurant.View.windows
                 col_invoices.Visibility = Visibility.Visible;
                 col_status.Visibility = Visibility.Visible;
                 col_shiping.Visibility = Visibility.Visible;
+                col_chk.Visibility = Visibility.Visible;
 
                 col_orders.Visibility = Visibility.Collapsed;
                 col_tables.Visibility = Visibility.Collapsed;
@@ -129,6 +131,7 @@ namespace Restaurant.View.windows
                 col_tables.Visibility = Visibility.Visible;
                 col_status.Visibility = Visibility.Visible;
                 col_shiping.Visibility = Visibility.Visible;
+                col_chk.Visibility = Visibility.Visible;
 
                 col_orders.Visibility = Visibility.Collapsed;
                 col_waiter.Visibility = Visibility.Collapsed;
