@@ -880,12 +880,14 @@ namespace Restaurant.Classes
         public int quantity { get; set; }//
         //order
         public string status { get; set; }//
+        public string statusConv { get; set; }
+        public string categoryNameConv { get; set; }
         //public int num { get; set; }
         //public decimal remainingTime { get; set; }
         //public string tables { get; set; }
         //public string waiter { get; set; }
         //invoice
-     
+
         public string invType { get; set; }
         //public Nullable<int> shippingCompanyId { get; set; }
         public string branchName { get; set; }//

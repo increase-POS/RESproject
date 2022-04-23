@@ -33,6 +33,10 @@
           <DataField>categoryName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="categoryNameConv">
+          <DataField>categoryNameConv</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="createDate">
           <DataField>createDate</DataField>
           <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
@@ -91,6 +95,10 @@
         </Field>
         <Field Name="status">
           <DataField>status</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="statusConv">
+          <DataField>statusConv</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="tagId">
@@ -689,14 +697,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="status">
+                        <Textbox Name="statusConv">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!status.Value</Value>
+                                  <Value>=Fields!statusConv.Value</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -707,7 +715,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>status</rd:DefaultName>
+                          <rd:DefaultName>statusConv</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -719,6 +727,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>

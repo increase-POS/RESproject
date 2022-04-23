@@ -2273,9 +2273,7 @@ Parameters!trValueDiscount.Value)
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
-   
- 
- 
+  
             paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNum")));
 
             paramarr.Add(new ReportParameter("trInvoiceNumber", AppSettings.resourcemanagerreport.GetString("trInvoiceNumber")));
@@ -2289,9 +2287,11 @@ Parameters!trValueDiscount.Value)
             paramarr.Add(new ReportParameter("trStatus", AppSettings.resourcemanagerreport.GetString("trStatus")));
             paramarr.Add(new ReportParameter("duration", AppSettings.resourcemanagerreport.GetString("duration")));
             DateFormConv(paramarr);
+          
+
             foreach (OrderPreparingSTS row in Query)
             {
-                row.status = preparingOrderStatusConvert(row.status);
+                row.statusConv = preparingOrderStatusConvert(row.status);
             }
             
 
