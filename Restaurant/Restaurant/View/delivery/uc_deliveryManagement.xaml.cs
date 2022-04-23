@@ -278,14 +278,33 @@ namespace Restaurant.View.delivery
                     {
                         CheckBox checkboxColumn = (dg_orders.Columns[0].GetCellContent(dg_orders.SelectedItem) as CheckBox);
 
+                        //different status
                         if (selectedOrders.Count != 0 && order.status != selectedOrders[0].status)
+                        {
+                            checkboxColumn.IsChecked = checkboxColumn.IsChecked;
+                            //checkboxColumn.IsEnabled = false;
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("notHaveSameStatus"), animation: ToasterAnimation.FadeIn);
-                        else if(selectedOrders.Count != 0 && order.shippingCompanyName.Equals("local ship") && !selectedOrders[0].shippingCompanyName.Equals("local ship"))
+                        }
+                        //driver
+                        else if (selectedOrders.Count != 0 && order.shipUserId != null && selectedOrders[0].shipUserId == null)
+                        {
+                            checkboxColumn.IsChecked = checkboxColumn.IsChecked;
+                            //checkboxColumn.IsEnabled = false;
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("notHaveSameType"), animation: ToasterAnimation.FadeIn);
+                        }
+                        //company
                         else if (selectedOrders.Count != 0 && order.shipUserId == null && selectedOrders[0].shipUserId != null)
+                        {
+                            checkboxColumn.IsChecked = checkboxColumn.IsChecked;
+                            //checkboxColumn.IsEnabled = false;
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("notHaveSameType"), animation: ToasterAnimation.FadeIn);
+                        }
+
                         else
+                        {
                             checkboxColumn.IsChecked = !checkboxColumn.IsChecked;
+                            //checkboxColumn.IsEnabled = true;
+                        }
 
 
                         if (selectedOrders.Count > 0)
@@ -359,6 +378,7 @@ namespace Restaurant.View.delivery
                 chk_allForDelivery.IsChecked = true;
                 cb_searchUser.SelectedIndex = -1;
                 cb_searchCompany.SelectedIndex = -1;
+                selectedOrders.Clear();
                 await Search();
                 
                 HelpClass.EndAwait(grid_main);
@@ -383,12 +403,12 @@ namespace Restaurant.View.delivery
                     {
                         foreach(Invoice i in selectedOrders)
                         { 
-                            int driverID = 0;
-                            int comID = 0;
+                            int? driverID = i.shipUserId;
+                            int comID = i.shippingCompanyId.Value;
 
                             orderPreparingStatus ops = new orderPreparingStatus();
 
-                            if (order.shipUserName != null)
+                            if (i.shipUserName != null)
                             {
                                 if (i.status.Equals("Ready"))
                                 {
@@ -403,7 +423,7 @@ namespace Restaurant.View.delivery
                                 else if (i.status.Equals("InTheWay"))
                                 {
                                     ops.status = "Done";
-                                    driverID = order.shipUserId.Value;
+                                    driverID = i.shipUserId;
                                 }
                             }
                             else
@@ -422,16 +442,12 @@ namespace Restaurant.View.delivery
                             int res = await orderModel.EditInvoiceOrdersStatus(i.invoiceId , driverID , comID , ops);
 
                             if (!res.Equals(0))
-                            {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
-
-                                await Search();
-                                Clear();
-                            }
                             else
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         }
-                       
+                        await Search();
+                        Clear();
                     }
                     
                     #endregion
@@ -670,44 +686,110 @@ namespace Restaurant.View.delivery
 
         private void FieldDataGridCheckedHeader(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                //if (chk_allForDelivery.IsChecked != true)
-                //if ((chk_allForDelivery.IsChecked == true) && ())??????????????????????
-                {
-                    #region
-                    //CheckBox chkSelectAll = ((CheckBox)sender);
-                    //if (chkSelectAll.IsChecked == true)
-                    //{
-                    //    dg_orders.Items.OfType<CheckBox>().ToList().ForEach(x => x.IsChecked = true);
-                    //}
-                    //else
-                    //{
-                    //    dg_orders.Items.OfType<CheckBox>().ToList().ForEach(x => x.IsChecked = false);
-                    //}
-                    #endregion
+            //try
+            //{
 
-                    var chkSelectAll = sender as CheckBox;
-                    var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
-                    if (chkSelectAll == null || firstCol == null || dg_orders?.Items == null)
+                #region
+                //CheckBox chkSelectAll = ((CheckBox)sender);
+                //if (chkSelectAll.IsChecked == true)
+                //{
+                //    dg_orders.Items.OfType<CheckBox>().ToList().ForEach(x => x.IsChecked = true);
+                //}
+                //else
+                //{
+                //    dg_orders.Items.OfType<CheckBox>().ToList().ForEach(x => x.IsChecked = false);
+                //}
+                #endregion
+
+                selectedOrders.Clear();
+
+                var chkSelectAll = sender as CheckBox;
+                var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
+                var statusCol = dg_orders.Columns[1] as DataGridTextColumn;
+                if (chkSelectAll == null || firstCol == null || dg_orders?.Items == null)
+                {
+                    return;
+                }
+                var item0 = dg_orders.Items[0] as Invoice;
+
+                #region refreshSaveBtnText
+                if (item0.shipUserId != null)
+                {
+                    bdr_cbDeliveryCompany.Visibility = Visibility.Collapsed;
+
+                    if (item0.status.Equals("Ready"))
                     {
-                        return;
+                        btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
+                        btn_save.IsEnabled = true;
+                        bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                        bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
                     }
-                    foreach (var item in dg_orders.Items)
+                    else if (item0.status.Equals("Collected"))
                     {
-                        var chBx = firstCol.GetCellContent(item) as CheckBox;
-                        if (chBx == null)
-                        {
-                            continue;
-                        }
-                        chBx.IsChecked = chkSelectAll.IsChecked;
+                        btn_save.Content = AppSettings.resourcemanager.GetString("onTheWay");
+                        btn_save.IsEnabled = true;
+                        bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                        bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
+                    }
+                    else if (item0.status.Equals("InTheWay"))
+                    {
+                        btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
+                        btn_save.IsEnabled = true;
+                        bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                        bdr_tbDeliveryMan.Visibility = Visibility.Visible;
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
+                else
+                {
+                    bdr_cbDeliveryCompany.Visibility = Visibility.Visible;
+                    bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                    bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
+
+                    if (item0.status.Equals("Ready"))
+                    {
+                        btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
+                        btn_save.IsEnabled = true;
+                    }
+                }
+
+                #endregion
+
+                foreach (var item in dg_orders.Items)
+                {
+                    var chBx = firstCol.GetCellContent(item) as CheckBox;
+                    if (chBx == null)
+                    {
+                        continue;
+                    }
+
+                    var txt = item as Invoice;
+                    if (txt == null)
+                    {
+                        continue;
+                    }
+                    if (txt.status.Equals(item0.status) && 
+                        ((txt.shipUserId == null && item0.shipUserId == null)||(txt.shipUserId != null && item0.shipUserId != null)))
+                    {
+                        chBx.IsChecked = chkSelectAll.IsChecked;
+
+                        if (item0.status == "InTheWay")
+                            requiredControlList = new List<string>();
+                        else
+                        {
+                            if (item0.shipUserId == null)
+                                requiredControlList = new List<string> { "companyId" };
+                            else
+                                requiredControlList = new List<string> { "userId" };
+                        }
+                        selectedOrders.Add(txt);
+                        
+                    }
+                }
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
         private void FieldDataGridUncheckedHeader(object sender, RoutedEventArgs e)
         {
@@ -736,6 +818,7 @@ namespace Restaurant.View.delivery
             {
                 CheckBox cb = sender as CheckBox;
                 Invoice selectedOrder = dg_orders.SelectedItem as Invoice;
+                if(selectedOrder != null)
                 selectedOrders.Add(selectedOrder);
 
             }
@@ -762,8 +845,8 @@ namespace Restaurant.View.delivery
 
         private async void search_Checking(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 selectedOrders.Clear();
 
                 CheckBox cb = sender as CheckBox;
@@ -774,51 +857,43 @@ namespace Restaurant.View.delivery
                         chk_readyForDelivery.IsChecked = false;
                         chk_withDeliveryMan.IsChecked = false;
                         chk_inTheWay.IsChecked = false;
-                        //col_chk.Visibility = Visibility.Hidden;
-                        //col_chk.IsReadOnly = true;
                     }
                     else if (cb.Name == "chk_readyForDelivery")
                     {
                         chk_allForDelivery.IsChecked = false;
                         chk_withDeliveryMan.IsChecked = false;
                         chk_inTheWay.IsChecked = false;
-                        //col_chk.Visibility = Visibility.Visible;
-                        //col_chk.IsReadOnly = false;
                     }
                     else if (cb.Name == "chk_withDeliveryMan")
                     {
                         chk_allForDelivery.IsChecked = false;
                         chk_readyForDelivery.IsChecked = false;
                         chk_inTheWay.IsChecked = false;
-                        //col_chk.Visibility = Visibility.Visible;
-                        //col_chk.IsReadOnly = false;
                     }
                     else if (cb.Name == "chk_inTheWay")
                     {
                         chk_allForDelivery.IsChecked = false;
                         chk_readyForDelivery.IsChecked = false;
                         chk_withDeliveryMan.IsChecked = false;
-                        //col_chk.Visibility = Visibility.Visible;
-                        //col_chk.IsReadOnly = false;
                     }
                 }
-                HelpClass.StartAwait(grid_main);
+                //HelpClass.StartAwait(grid_main);
 
                 Clear();
                 await Search();
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+                //HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
         private void chk_uncheck(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 CheckBox cb = sender as CheckBox;
                 if (cb.IsFocused)
                 {
@@ -831,11 +906,11 @@ namespace Restaurant.View.delivery
                     else if (cb.Name == "chk_inTheWay")
                         chk_inTheWay.IsChecked = true;
                 }
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         string input;

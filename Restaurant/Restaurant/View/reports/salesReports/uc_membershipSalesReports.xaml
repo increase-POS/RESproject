@@ -276,7 +276,7 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn x:Name="col_invNum"        Width="*" Header="No."       Binding="{Binding invNumber}"/>
                                     <DataGridTextColumn x:Name="col_customerName"  Width="*" Header="Customer"  Binding="{Binding agentName}"/>
-                                    <DataGridTextColumn x:Name="col_membership"    Width="*" Header="Membership" Binding="{Binding name }" />
+                                    <DataGridTextColumn x:Name="col_membership"    Width="*" Header="Membership" Binding="{Binding membershipsName }" />
                                     <DataGridTextColumn x:Name="col_branch"        Width="*" Header="Branch"    Binding="{Binding branchName }" />
                                     <DataGridTemplateColumn x:Name="col_details" Width="130" Header="" IsReadOnly="True" CanUserResize="False" >
                                         <DataGridTemplateColumn.CellTemplate>

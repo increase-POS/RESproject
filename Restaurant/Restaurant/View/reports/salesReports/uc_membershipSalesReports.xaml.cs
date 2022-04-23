@@ -65,31 +65,32 @@ namespace Restaurant.View.reports.salesReports
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
+            try
+            {
 
-            #region translate
-            if (AppSettings.lang.Equals("en"))
+                #region translate
+                if (AppSettings.lang.Equals("en"))
                 grid_main.FlowDirection = FlowDirection.LeftToRight;
             else
                 grid_main.FlowDirection = FlowDirection.RightToLeft;
             translate();
             #endregion
 
-            chk_allBranches.IsChecked = true;
+                chk_allBranches.IsChecked = true;
 
-            //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_preparingOrders.Tag.ToString());
+                //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_preparingOrders.Tag.ToString());
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
-          
+            Instance = null;
+            GC.Collect();
         }
 
         #region methods
@@ -201,7 +202,7 @@ namespace Restaurant.View.reports.salesReports
         private void fillMemberships()
         {
             cb_membership.SelectedValuePath = "membershipId";
-            cb_membership.DisplayMemberPath = "membershipName";
+            cb_membership.DisplayMemberPath = "membershipsName";
             cb_membership.ItemsSource = memberships.Select(i => new { i.membershipsName, i.membershipId }).Distinct();
         }
         #endregion
@@ -611,7 +612,7 @@ namespace Restaurant.View.reports.salesReports
                             Window.GetWindow(this).Opacity = 1;
                         }
                         else
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("noInvoiceClasses"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("noInvoicesClasses"), animation: ToasterAnimation.FadeIn);
                     }
 
                 HelpClass.EndAwait(grid_main);
