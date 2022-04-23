@@ -56,7 +56,13 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <Border Grid.Row="0" Grid.ColumnSpan="3" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Row="0"  CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                             <ComboBox x:Name="cb_customerId"     
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
@@ -71,7 +77,23 @@
                               Data="{StaticResource infoCircle}"/>
                         </Grid>
                     </Border>
-
+                        <Button Grid.Column="1"  Padding="0"    
+                                Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" 
+                                            x:Name="btn_addCustomer" Click="Btn_addCustomer_Click"  
+                                Margin="5 5 10 5" IsEnabled="True">
+                            <Path Fill="#4E4E4E" Stretch="Fill"  
+                    Width="25.5" Height="27.5" FlowDirection="LeftToRight"
+                           Data="{StaticResource addFile}" />
+                        </Button>
+                        <Button Grid.Column="2"  Padding="0"    
+                                Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" 
+                                            x:Name="btn_updateCustomer" Click="Btn_updateCustomer_Click"  
+                                Margin="5 5 10 5" IsEnabled="True">
+                            <Path Fill="#4E4E4E" Stretch="Fill"  
+                    Width="25.5" Height="27.5" FlowDirection="LeftToRight"
+                           Data="{StaticResource updateFile}" />
+                        </Button>
+                    </Grid>
                     <StackPanel x:Name="sp_membership" Opacity="0.4" Grid.Row="1">
 
                         <DockPanel Margin="10 0"

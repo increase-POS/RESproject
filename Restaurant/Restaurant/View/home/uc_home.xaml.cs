@@ -139,7 +139,7 @@ namespace Restaurant.View
                 // 
                 //    SectionData.EndAwait(grid_main);
             }
-            catch (Exception ex)
+            catch 
             {
                 // 
                 //    SectionData.EndAwait(grid_main);
@@ -185,7 +185,7 @@ namespace Restaurant.View
             txt_months.Text = AppSettings.resourcemanager.GetString("months");
             txt_diningHall.Text = AppSettings.resourcemanager.GetString("trDiningHall");
             txt_takeAway.Text = AppSettings.resourcemanager.GetString("trTakeAway");
-            txt_orders.Text = AppSettings.resourcemanager.GetString("trOrders");
+            txt_selfService.Text = AppSettings.resourcemanager.GetString("trSelfService");
 
             txt_userOnlineTitle.Text = AppSettings.resourcemanager.GetString("trUsers");
             txt_purchaseAndSalesTitle.Text = AppSettings.resourcemanager.GetString("trPurchase&Sales");
@@ -484,11 +484,11 @@ namespace Restaurant.View
                             dash.countDailySales = newSalPur.saleCount.ToString();
                             dash.diningHallCount = newSalPur.diningHallCount.ToString();
                             dash.takeAwayCount = newSalPur.takeAwayCount.ToString();
-                            dash.ordersCount = newSalPur.ordersCount.ToString();
+                            dash.selfServiceCount = newSalPur.selfServiceCount.ToString();
                         }
                         else
                             dash.countDailyPurchase = dash.countDailySales =
-                                dash.diningHallCount = dash.takeAwayCount = dash.ordersCount = "0";
+                                dash.diningHallCount = dash.takeAwayCount = dash.selfServiceCount = "0";
                     }
                 InitializePieChart(pch_dailyPurchaseInvoice,
                     int.Parse(dash.countDailyPurchase),
@@ -502,7 +502,7 @@ namespace Restaurant.View
                     {
                         new keyValueInt {key = txt_diningHall.Text, value = int.Parse(dash.diningHallCount) },
                         new keyValueInt {key = txt_takeAway.Text, value = int.Parse(dash.takeAwayCount) },
-                        new keyValueInt {key = txt_orders.Text, value = int.Parse(dash.ordersCount) },
+                        new keyValueInt {key = txt_selfService.Text, value = int.Parse(dash.selfServiceCount) },
                     };
                 //List<keyValueInt> listInvoiceType = new List<keyValueInt>
                 //    {

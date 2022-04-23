@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Restaurant.View.kitchen
 {
@@ -59,9 +60,14 @@ namespace Restaurant.View.kitchen
         List<OrderPreparing> ordersQuery = new List<OrderPreparing>();
 
         string searchText = "";
+        public static DispatcherTimer timer;
+
+
+
         public static List<string> requiredControlList;
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
+            timer.Stop();
             Instance = null;
             GC.Collect();
         }
@@ -112,6 +118,12 @@ namespace Restaurant.View.kitchen
                 FillCombo.FillPreparingOrderStatusWithDefault(cb_searchStatus);
 
                 await Search();
+                #region 
+                //timer = new DispatcherTimer();
+                //timer.Interval = TimeSpan.FromSeconds(1);
+                //timer.Tick += timer_Tick;
+                //timer.Start();
+                #endregion
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -121,6 +133,7 @@ namespace Restaurant.View.kitchen
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         private void translate()
         {
             
@@ -153,6 +166,18 @@ namespace Restaurant.View.kitchen
 
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
         }
+        //void timer_Tick(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (dg_orders.Items.Count > 0)
+        //            dg_orders.Items.Refresh();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
+        //}
         #region loading
         List<keyValueBool> loadingList;
         async void loading_orders()

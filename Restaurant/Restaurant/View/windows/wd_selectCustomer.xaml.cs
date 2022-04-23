@@ -1,4 +1,5 @@
-﻿using Restaurant.Classes;
+﻿using netoaster;
+using Restaurant.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -246,5 +247,69 @@ namespace Restaurant.View.windows
                 await fillMemberShipInfo();
             }
         }
+        private async void Btn_addCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_updateVendor w = new wd_updateVendor();
+                //// pass agent id to update windows
+                w.agent.agentId = 0;
+                w.type = "c";
+                w.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
+                if (w.isOk == true)
+                {
+                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                    await FillCombo.RefreshCustomers();
+                    await FillCombo.FillComboCustomers(cb_customerId);
+                }
+
+                HelpClass.EndAwait(grid_main);
+
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private async void Btn_updateCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (cb_customerId.SelectedIndex != -1)
+                {
+                    HelpClass.StartAwait(grid_main);
+                    Window.GetWindow(this).Opacity = 0.2;
+                    wd_updateVendor w = new wd_updateVendor();
+                    //// pass agent id to update windows
+                    w.agent.agentId = (int)cb_customerId.SelectedValue;
+                    w.type = "c";
+                    w.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                    if (w.isOk == true)
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                        await FillCombo.RefreshCustomers();
+                        //await FillCombo.FillComboCustomers(cb_customerId);
+                    }
+
+                    HelpClass.EndAwait(grid_main);
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
     }
 }

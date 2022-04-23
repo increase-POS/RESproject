@@ -572,8 +572,8 @@ namespace Restaurant.View.purchase
         }
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {//save
-            try
-            {
+            //try
+            //{
 
                 HelpClass.StartAwait(grid_main);
                 if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
@@ -608,13 +608,13 @@ namespace Restaurant.View.purchase
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
+            //}
+            //catch (Exception ex)
+            //{
 
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
         private bool validateItemUnits()
         {

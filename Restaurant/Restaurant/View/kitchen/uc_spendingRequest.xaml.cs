@@ -1368,6 +1368,12 @@ namespace Restaurant.View.kitchen
                                 var combo = (ComboBox)cp.ContentTemplate.FindName("cbm_unitItemDetails", cp);
                                 //var combo = (combo)cell.Content;
                                 combo.SelectedValue = (int)item.itemUnitId;
+
+
+                                if (_InvoiceType == "sr" )
+                                    combo.IsEnabled = false;
+                                else
+                                    combo.IsEnabled = true;
                             }
                         }
                     }
@@ -1383,6 +1389,12 @@ namespace Restaurant.View.kitchen
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+        private void Dg_billDetails_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            int column = dg_billDetails.CurrentCell.Column.DisplayIndex;
+            if (_InvoiceType == "sr" && column == 3)
+                e.Cancel = true;
         }
         private void Cbm_unitItemDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -1409,6 +1421,11 @@ namespace Restaurant.View.kitchen
                 {
                     var cmb = sender as ComboBox;
                     cmb.SelectedValue = (int)billDetails[0].itemUnitId;
+
+                    if (_InvoiceType == "sr")
+                        cmb.IsEnabled = false;
+                    else
+                        cmb.IsEnabled = true;
                 }
             }
             catch (Exception ex)
@@ -1456,14 +1473,14 @@ namespace Restaurant.View.kitchen
             tb_count.Text = _Count.ToString();
 
         }
-        void refrishDataGridItems()
-        {
-            dg_billDetails.ItemsSource = null;
-            dg_billDetails.ItemsSource = billDetails;
-            dg_billDetails.Items.Refresh();
-            DataGrid_CollectionChanged(dg_billDetails, null);
+        //void refrishDataGridItems()
+        //{
+        //    dg_billDetails.ItemsSource = null;
+        //    dg_billDetails.ItemsSource = billDetails;
+        //    dg_billDetails.Items.Refresh();
+        //    DataGrid_CollectionChanged(dg_billDetails, null);
 
-        }
+        //}
         public async Task ChangeItemIdEvent(int itemId)
         {
              item = FillCombo.purchaseItems.ToList().Find(c => c.itemId == itemId);

@@ -262,8 +262,8 @@ namespace Restaurant.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (FillCombo.groupObject.HasPermissionAction(kitchenPermission, FillCombo.groupObjects, "send"))
-                {
+                //if (FillCombo.groupObject.HasPermissionAction(kitchenPermission, FillCombo.groupObjects, "send"))
+                //{
                     if (HelpClass.validate(requiredControlList, this))
                     {
                         if (int.Parse(tb_count.Text) > 0)
@@ -274,9 +274,9 @@ namespace Restaurant.View.windows
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trMustBeMoreThanZero"), animation: ToasterAnimation.FadeIn);
 
                     }
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -292,12 +292,12 @@ namespace Restaurant.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (FillCombo.groupObject.HasPermissionAction(kitchenPermission, FillCombo.groupObjects, "send"))
-                {                   
+                //if (FillCombo.groupObject.HasPermissionAction(kitchenPermission, FillCombo.groupObjects, "send"))
+                //{                   
                    await saveOrdersPreparing();
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
