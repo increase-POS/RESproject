@@ -3949,4 +3949,13 @@ Please add Email in setting</value>
   <data name="membership" xml:space="preserve">
     <value>Membership</value>
   </data>
+  <data name="noCoupons" xml:space="preserve">
+    <value>No coupons</value>
+  </data>
+  <data name="noInvoicesClasses" xml:space="preserve">
+    <value>لا يوجد فئات فواتير</value>
+  </data>
+  <data name="noOffers" xml:space="preserve">
+    <value>No offers</value>
+  </data>
 </root>

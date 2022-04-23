@@ -3934,4 +3934,13 @@
   <data name="membership" xml:space="preserve">
     <value>العضوية</value>
   </data>
+  <data name="noCoupons" xml:space="preserve">
+    <value>لا يوجد كوبونات</value>
+  </data>
+  <data name="noInvoicesClasses" xml:space="preserve">
+    <value>noInvoicesClasses</value>
+  </data>
+  <data name="noOffers" xml:space="preserve">
+    <value>لا يوجد عروض</value>
+  </data>
 </root>
