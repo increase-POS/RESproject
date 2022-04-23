@@ -3946,4 +3946,13 @@
   <data name="trSpendingRequests" xml:space="preserve">
     <value>طلبات الصرف</value>
   </data>
+  <data name="trApprove" xml:space="preserve">
+    <value>موافقة</value>
+  </data>
+  <data name="trApproved" xml:space="preserve">
+    <value>مصادق</value>
+  </data>
+  <data name="trApproveOrderNotification" xml:space="preserve">
+    <value>هل تريد تأكيد الطلبية؟</value>
+  </data>
 </root>

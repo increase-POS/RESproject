@@ -3961,4 +3961,13 @@ Please add Email in setting</value>
   <data name="trSpendingRequests" xml:space="preserve">
     <value>Spending Requests</value>
   </data>
+  <data name="trApprove" xml:space="preserve">
+    <value>Approve</value>
+  </data>
+  <data name="trApproved" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="trApproveOrderNotification" xml:space="preserve">
+    <value>Do you want to approve the order?</value>
+  </data>
 </root>
