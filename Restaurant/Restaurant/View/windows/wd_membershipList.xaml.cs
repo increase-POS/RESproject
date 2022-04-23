@@ -51,6 +51,7 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         #region customer
         List<Agent> allCustomersSource = new List<Agent>();
         List<Agent> allCustomers = new List<Agent>();
@@ -96,21 +97,7 @@ namespace Restaurant.View.windows
         {//load
             try
             {
-                if (sender != null)
-                    HelpClass.StartAwait(grid_main);
-
-                #region translate
-                if (AppSettings.lang.Equals("en"))
-                {
-                    grid_main.FlowDirection = FlowDirection.LeftToRight;
-                }
-                else
-                {
-                    grid_main.FlowDirection = FlowDirection.RightToLeft;
-                }
-
-                translat();
-            #endregion
+                HelpClass.StartAwait(grid_main);
 
                 #region customer
                 if (membershipType == "a")
@@ -270,14 +257,27 @@ namespace Restaurant.View.windows
                     dg_all.SelectedValuePath = "invClassId";
                     dg_all.DisplayMemberPath = "name";
                 }
-            #endregion
+                #endregion
+
+                #region translate
+                if (AppSettings.lang.Equals("en"))
+                {
+                    grid_main.FlowDirection = FlowDirection.LeftToRight;
+                }
+                else
+                {
+                    grid_main.FlowDirection = FlowDirection.RightToLeft;
+                }
+
+                translat();
+                #endregion
 
                 HelpClass.EndAwait(grid_main);
             }
-                catch (Exception ex)
-                {
-                    HelpClass.EndAwait(grid_main);
-                    HelpClass.ExceptionMessage(ex, this);
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
 
         }
@@ -288,22 +288,20 @@ namespace Restaurant.View.windows
 
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
-            switch(membershipType)
+            txt_title.Text = AppSettings.resourcemanager.GetString(_title);
+
+            switch (membershipType)
             {
                 case "a":
-                    txt_title.Text = AppSettings.resourcemanager.GetString("trCustomers");
                     txt_selectedItems.Text = AppSettings.resourcemanager.GetString("trSelectedCustomers");
                     break;
                 case "c":
-                    txt_title.Text = AppSettings.resourcemanager.GetString("trCoupons");
                     txt_selectedItems.Text = AppSettings.resourcemanager.GetString("trSelectedCoupons");
                     break;
                 case "o":
-                    txt_title.Text = AppSettings.resourcemanager.GetString("trOffers");
                     txt_selectedItems.Text = AppSettings.resourcemanager.GetString("trSelectedOffers");
                     break;
                 case "i":
-                    txt_title.Text = AppSettings.resourcemanager.GetString("trInvoicesClasses");
                     txt_selectedItems.Text = AppSettings.resourcemanager.GetString("trSelectedInvoicesClasses");
                     break;
             }
