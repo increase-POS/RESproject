@@ -201,7 +201,7 @@ namespace Restaurant.Classes.ApiClasses
             return await APIResult.post(method, parameters);
         }
 
-        public async Task<int> EditInvoiceOrdersStatus(int invoiceId,int shipUserId,int shippingCompanyId, orderPreparingStatus statusObject)
+        public async Task<int> EditInvoiceOrdersStatus(int invoiceId,int? shipUserId,int shippingCompanyId, orderPreparingStatus statusObject)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "OrderPreparing/EditInvoiceOrdersStatus";
