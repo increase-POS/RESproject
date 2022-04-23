@@ -3943,4 +3943,7 @@
   <data name="noOffers" xml:space="preserve">
     <value>لا يوجد عروض</value>
   </data>
+  <data name="trSpendingRequests" xml:space="preserve">
+    <value>طلبات الصرف</value>
+  </data>
 </root>

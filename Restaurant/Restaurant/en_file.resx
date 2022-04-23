@@ -3958,4 +3958,7 @@ Please add Email in setting</value>
   <data name="noOffers" xml:space="preserve">
     <value>No offers</value>
   </data>
+  <data name="trSpendingRequests" xml:space="preserve">
+    <value>Spending Requests</value>
+  </data>
 </root>
