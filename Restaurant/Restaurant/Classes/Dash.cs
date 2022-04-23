@@ -29,7 +29,7 @@ namespace Restaurant.Classes
         // new
         public int diningHallCount { get; set; }
         public int takeAwayCount { get; set; }
-        public int ordersCount { get; set; }
+        public int selfServiceCount { get; set; }
     }
     //public class AgentsCount
     //{
@@ -148,7 +148,7 @@ namespace Restaurant.Classes
         // new
         public string diningHallCount { get; set; }
         public string takeAwayCount { get; set; }
-        public string ordersCount { get; set; }
+        public string selfServiceCount { get; set; }
 
 
 
