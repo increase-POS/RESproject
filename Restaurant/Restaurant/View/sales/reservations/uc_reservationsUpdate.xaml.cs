@@ -1054,16 +1054,36 @@ namespace Restaurant.View.sales.reservations
             }
         }
 
-        private void Btn_cancel_Click(object sender, RoutedEventArgs e)
+        private async void Btn_cancel_Click(object sender, RoutedEventArgs e)
         {
             try
             {//delete
                 if (FillCombo.groupObject.HasPermissionAction(updatePermission, FillCombo.groupObjects, "one"))
                 {
                     HelpClass.StartAwait(grid_main);
-                  
 
+                    #region Accept
+                    MainWindow.mainWindow.Opacity = 0.2;
+                    wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                    w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxContinue");
+                    w.ShowDialog();
+                    MainWindow.mainWindow.Opacity = 1;
+                    #endregion
 
+                    if (w.isOk)
+                    {
+                        int res = await reservation.updateReservationStatus(reservation.reservationId, "cancle", MainWindow.userLogin.userId);
+                        if (res > 0)
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+
+                            await refreshReservaitionsList();
+                            await Search();
+                            Clear();
+                        }
+                        else
+                            Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    }
 
                     HelpClass.EndAwait(grid_main);
                 }
