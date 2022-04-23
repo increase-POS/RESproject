@@ -572,11 +572,14 @@ namespace Restaurant.View.sales.reservations
                     reservation = new TablesReservation();
                     reservation = dg_reservation.SelectedItem as TablesReservation;
                     this.DataContext = reservation;
-                    _PersonsCount = (int)reservation.personsCount;
+                    //_PersonsCount = (int)reservation.personsCount;
+                    _PersonsCount = 0;
                    // tb_personsCount.Text = _PersonsCount.ToString();
                     if (reservation.tables.Count != 0)
                     {
-                        selectedTables = reservation.tables;                      
+                        selectedTables = reservation.tables;
+                        foreach (Tables tb in reservation.tables)
+                            _PersonsCount += tb.personsCount;
                     }
                     dg_tables.ItemsSource = selectedTables;
 
@@ -585,7 +588,8 @@ namespace Restaurant.View.sales.reservations
                     btn_confirm.IsEnabled = true;
                     btn_cancel.IsEnabled = true;
                     btn_update.IsEnabled = true;
-                    btn_delete.IsEnabled = true;
+                    if(reservation.status != "confirm")
+                        btn_delete.IsEnabled = true;
                     #endregion
                 }
                 HelpClass.clearValidate(requiredControlList, this);
