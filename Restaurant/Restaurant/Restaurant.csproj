@@ -2093,6 +2093,12 @@
     <Content Include="Reports\Delivery\En\EnDriversManag.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\StatisticReport\Kitchen\Ar\ArPreparingOrders.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Kitchen\En\EnPreparingOrders.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Resource Include="pic\programs-Rest-login-bg.png" />
@@ -2377,6 +2383,7 @@
     <None Include="Properties\DataSources\Restaurant.Classes.ItemTransfer2.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemUnitInvoiceProfit.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Location.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.OrderPreparingSTS.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.PayedInvclass1.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Pos.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ResidentialSectors.datasource" />

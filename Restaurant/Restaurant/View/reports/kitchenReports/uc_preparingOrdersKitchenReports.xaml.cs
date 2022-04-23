@@ -539,16 +539,57 @@ namespace Restaurant.View.reports.kitchenReports
 
         #endregion
 
-        #region report
+
+        #region reports
+        private void BuildReport()
+        {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+
+            string addpath = "";
+            string firstTitle = "PreparingOrders";
+            string secondTitle = "";
+            string subTitle = "";
+            string Title = "";
+
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
+                addpath = @"\Reports\StatisticReport\Kitchen\Ar\ArPreparingOrders.rdlc";
+
+            }
+            else
+            {
+                addpath = @"\Reports\StatisticReport\Kitchen\En\EnPreparingOrders.rdlc";
+
+            }
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+            ReportCls.checkLang();
+            secondTitle = "";
+            subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+
+            Title = AppSettings.resourcemanagerreport.GetString("trKitchen") + " / " + subTitle;
+            paramarr.Add(new ReportParameter("trTitle", Title));
+
+          clsReports.PreparingOrdersReport(ordersQuery, rep, reppath, paramarr);//PreparingOrders
+
+            clsReports.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+
+        }
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {//pdf
             try
             {
+
                 HelpClass.StartAwait(grid_main);
 
                 #region
-
                 BuildReport();
+
                 saveFileDialog.Filter = "PDF|*.pdf;";
 
                 if (saveFileDialog.ShowDialog() == true)
@@ -556,35 +597,38 @@ namespace Restaurant.View.reports.kitchenReports
                     string filepath = saveFileDialog.FileName;
                     LocalReportExtensions.ExportToPDF(rep, filepath);
                 }
-
                 #endregion
+
 
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
+
                 HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
+
         }
 
         private void Btn_print_Click(object sender, RoutedEventArgs e)
         {//print
             try
             {
+
                 HelpClass.StartAwait(grid_main);
-                List<ItemTransferInvoice> query = new List<ItemTransferInvoice>();
 
                 #region
                 BuildReport();
-
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
-
+                LocalReportExtensions.PrintToPrinter(rep);
                 #endregion
+
 
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
+
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -595,10 +639,12 @@ namespace Restaurant.View.reports.kitchenReports
         {//excel
             try
             {
+
                 HelpClass.StartAwait(grid_main);
-                List<ItemTransferInvoice> query = new List<ItemTransferInvoice>();
 
                 #region
+                //Thread t1 = new Thread(() =>
+                //{
                 BuildReport();
                 this.Dispatcher.Invoke(() =>
                 {
@@ -609,12 +655,19 @@ namespace Restaurant.View.reports.kitchenReports
                         LocalReportExtensions.ExportToExcel(rep, filepath);
                     }
                 });
+
+
+                //});
+                //t1.Start();
+
                 #endregion
+
 
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
+
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -625,6 +678,7 @@ namespace Restaurant.View.reports.kitchenReports
         {//preview
             try
             {
+
                 HelpClass.StartAwait(grid_main);
 
                 #region
@@ -641,64 +695,22 @@ namespace Restaurant.View.reports.kitchenReports
                 w.pdfPath = pdfpath;
                 if (!string.IsNullOrEmpty(w.pdfPath))
                 {
-                    // w.ShowInTaskbar = false;
                     w.ShowDialog();
                     w.wb_pdfWebViewer.Dispose();
                 }
                 Window.GetWindow(this).Opacity = 1;
                 #endregion
 
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
+
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
 
-        }
-        private void BuildReport()
-        {
-            List<ReportParameter> paramarr = new List<ReportParameter>();
-
-            string addpath;
-
-            string firstTitle = "accountProfits";
-            string secondTitle = "";
-            string subTitle = "";
-            string Title = "";
-
-            bool isArabic = ReportCls.checkLang();
-            if (isArabic)
-            {
-                addpath = @"\Reports\StatisticReport\Accounts\Profit\Ar\ProfitItem.rdlc";
-                secondTitle = "items";
-
-                //Reports\StatisticReport\Sale\Daily\Ar
-            }
-            else
-            {
-                addpath = @"\Reports\StatisticReport\Accounts\Profit\En\ProfitItem.rdlc";
-                secondTitle = "items";
-            }
-
-            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-            ReportCls.checkLang();
-            subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-            Title = AppSettings.resourcemanagerreport.GetString("trAccounting") + " / " + subTitle;
-            paramarr.Add(new ReportParameter("trTitle", Title));
-
-            // IEnumerable<ItemUnitInvoiceProfit>
-            //clsReports.ProfitReport(ordersQuery, rep, reppath, paramarr);
-            //paramarr.Add(new ReportParameter("totalBalance", tb_total.Text));
-
-            clsReports.setReportLanguage(paramarr);
-            clsReports.Header(paramarr);
-
-            rep.SetParameters(paramarr);
-
-            rep.Refresh();
         }
 
 

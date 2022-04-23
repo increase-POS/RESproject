@@ -1486,8 +1486,10 @@ Parameters!trValueDiscount.Value)
                 firstTitle = AppSettings.resourcemanagerreport.GetString("trDailyClosing");
             else if (firstTitle == "orders")
                 firstTitle = AppSettings.resourcemanagerreport.GetString("orderReport");
+            else if (firstTitle == "PreparingOrders")
+                firstTitle = AppSettings.resourcemanagerreport.GetString("trPreparingOrders");
             //trCashBalance trDirectEntry
-            //trTransfers administrativePull
+            //trTransfers administrativePull  trPreparingOrders
             //////////////////////////////////////////////////////////////////////////////
 
             if (secondTitle == "branch")
@@ -2266,7 +2268,36 @@ Parameters!trValueDiscount.Value)
 
 
         }
+        public static void PreparingOrdersReport(IEnumerable<OrderPreparingSTS> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+   
  
+ 
+            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNum")));
+
+            paramarr.Add(new ReportParameter("trInvoiceNumber", AppSettings.resourcemanagerreport.GetString("trInvoiceNumber")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem")));
+            paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
+            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
+
+            paramarr.Add(new ReportParameter("trCategorie", AppSettings.resourcemanagerreport.GetString("trCategorie")));
+            paramarr.Add(new ReportParameter("trTag", AppSettings.resourcemanagerreport.GetString("trTag")));
+            paramarr.Add(new ReportParameter("trStatus", AppSettings.resourcemanagerreport.GetString("trStatus")));
+            paramarr.Add(new ReportParameter("duration", AppSettings.resourcemanagerreport.GetString("duration")));
+            DateFormConv(paramarr);
+            foreach (OrderPreparingSTS row in Query)
+            {
+                row.status = preparingOrderStatusConvert(row.status);
+            }
+            
+
+         rep.DataSources.Add(new ReportDataSource("DataSet", Query));
+        }
+    
         //public static void itemReport(IEnumerable<Item> itemQuery, LocalReport rep, string reppath)
         //{
         //    rep.ReportPath = reppath;
@@ -2275,7 +2306,7 @@ Parameters!trValueDiscount.Value)
         //    rep.DataSources.Add(new ReportDataSource("DataSetItem", itemQuery));
 
         //}
-      
+
         //public static void properyReport(IEnumerable<Property> propertyQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         //{
         //    rep.ReportPath = reppath;
