@@ -864,47 +864,76 @@ namespace Restaurant.Classes
     public class OrderPreparingSTS
     {
         public int orderPreparingId { get; set; }
-        public string orderNum { get; set; }//
+        public string orderNum { get; set; }
+        public Nullable<System.DateTime> orderTime { get; set; }
         public Nullable<int> invoiceId { get; set; }
         public string notes { get; set; }
         public Nullable<decimal> preparingTime { get; set; }
-        public Nullable<System.DateTime> createDate { get; set; }//
+        public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> createUserId { get; set; }
         public Nullable<int> updateUserId { get; set; }
 
 
         // item
-        public string itemName { get; set; }//
+        public string itemName { get; set; }
         public Nullable<int> itemUnitId { get; set; }
-        public int quantity { get; set; }//
+        public int quantity { get; set; }
         //order
-        public string status { get; set; }//
-        public string statusConv { get; set; }
-        public string categoryNameConv { get; set; }
-        //public int num { get; set; }
-        //public decimal remainingTime { get; set; }
-        //public string tables { get; set; }
-        //public string waiter { get; set; }
+        public string status { get; set; }
+        public int num { get; set; }
+        public decimal remainingTime { get; set; }
+        public string tables { get; set; }
+        public string waiter { get; set; }
         //invoice
 
         public string invType { get; set; }
-        //public Nullable<int> shippingCompanyId { get; set; }
-        public string branchName { get; set; }//
+        public Nullable<int> shippingCompanyId { get; set; }
+        public string branchName { get; set; }
         public Nullable<int> branchId { get; set; }
 
-        //public List<itemOrderPreparingModel> items { get; set; }
+        public List<itemOrderPreparingModel> items { get; set; }
         //
         public Nullable<int> categoryId { get; set; }
-        public string categoryName { get; set; }//
-        public Nullable<decimal> realDuration { get; set; }//
-        public string invNumber { get; set; }//
+        public string categoryName { get; set; }
+        public Nullable<decimal> realDuration { get; set; }
+        public string invNumber { get; set; }
         public Nullable<int> tagId { get; set; }
-        public string tagName { get; set; }//
+        public string tagName { get; set; }
         public Nullable<System.DateTime> listedDate { get; set; }
+
+        public string shipUserName { get; set; }
+        public string shipUserLastName { get; set; }
+        public string shippingCompanyName { get; set; }
+        public Nullable<int> shipUserId { get; set; }
+     
+        public Nullable<int> agentId { get; set; }
+        public string agentName { get; set; }
+        public string agentCompany { get; set; }
+        public string agentType { get; set; }
+        public string agentCode { get; set; }
+        public List<orderPreparingStatus> orderStatusList { get; set; }
+        public decimal orderDuration { get; set; }
+
+        public string statusConv { get; set; }
+        public string categoryNameConv { get; set; }
+    
+         
 
 
     }
+    public class orderPreparingStatus 
+    {
+        public int orderStatusId { get; set; }
+        public Nullable<int> orderPreparingId { get; set; }
+        public string status { get; set; }
+        public Nullable<System.DateTime> createDate { get; set; }
+        public Nullable<System.DateTime> updateDate { get; set; }
+
+        public string notes { get; set; }
+
+    }
+
     public class SalesMembership
     { 
         
@@ -3341,6 +3370,27 @@ namespace Restaurant.Classes
             }
             return list;
 
+        }
+        #endregion
+
+        //التوصيل
+        #region Delivery
+        public async Task<List<OrderPreparingSTS>> GetDelivery(int mainBranchId, int userId)
+        {
+            List<OrderPreparingSTS> items = new List<OrderPreparingSTS>();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
+            IEnumerable<Claim> claims = await APIResult.getList("Statistics/GetDelivery", parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<OrderPreparingSTS>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
         }
         #endregion
         // Combo
