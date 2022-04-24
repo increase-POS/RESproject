@@ -1,10 +1,14 @@
-﻿using Microsoft.Reporting.WinForms;
+﻿using LiveCharts;
+using LiveCharts.Helpers;
+using LiveCharts.Wpf;
+using Microsoft.Reporting.WinForms;
 using Microsoft.Win32;
 using netoaster;
 using Restaurant.Classes;
 using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -606,7 +610,7 @@ namespace Restaurant.View.reports.salesReports
                             wd_membershipListForReports w = new wd_membershipListForReports();
 
                             w.membershipType = "i";
-                            w.itemsTransferList = row.itemsTransferList;
+                            w.invoiceClassDiscountList = row.invoiceClassDiscountList;
                             w.ShowDialog();
 
                             Window.GetWindow(this).Opacity = 1;
@@ -628,201 +632,210 @@ namespace Restaurant.View.reports.salesReports
         #region charts
         private void fillColumnChart()
         {
-            //axcolumn.Labels = new List<string>();
-            //List<string> names = new List<string>();
-            //List<int> ordersCount = new List<int>();
+            axcolumn.Labels = new List<string>();
+            List<string> names = new List<string>();
+            SeriesCollection columnChartData = new SeriesCollection();
 
-            //var result = ordersQuery.GroupBy(s => s.itemUnitId).Select(s => new
-            //{
-            //    itemId = s.Key,
-            //    quantity = s.Count()
-            //});
+            var tempName = membershipsQuery.GroupBy(s => s.branchName).Select(s => new
+            {
+                name = s.Key
+            });
+            names.AddRange(tempName.Select(nn => nn.name));
 
-            //var tempName = ordersQuery.GroupBy(s => s.itemName).Select(s => new
-            //{
-            //    itemName = s.Key
-            //});
-            //names.AddRange(tempName.Select(nn => nn.itemName));
+            var tempMembership = membershipsQuery.GroupBy(s => s.membershipsName).Select(s => new
+            {
+                name = s.Key
+            });
+            foreach (var m in tempMembership)
+            {
+                List<int> membershipCount = new List<int>();
 
-            //ordersCount.AddRange(result.Select(nn => nn.quantity));
+                #region 
+                var result = membershipsQuery.GroupBy(s => s.branchId).Select(s => new
+                {
+                    branchId = s.Key,
+                    quantity = s.Where(n => n.membershipsName == m.name).Count()
+                });
 
-            //List<string> lable = new List<string>();
-            //SeriesCollection columnChartData = new SeriesCollection();
-            //List<int> cS = new List<int>();
+                membershipCount.AddRange(result.Select(nn => nn.quantity));
 
-            //List<string> titles = new List<string>()
-            //{
-            //   AppSettings.resourcemanager.GetString("trPreparingOrders")+ "/" +AppSettings.resourcemanager.GetString("trItem")
-            //};
-            //int x = 6;
-            //if (names.Count() <= 6) x = names.Count();
+                List<string> lable = new List<string>();
+                List<int> cS = new List<int>();
 
-            //for (int i = 0; i < x; i++)
-            //{
-            //    cS.Add(ordersCount.ToList().Skip(i).FirstOrDefault());
-            //    axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
-            //}
+                List<string> titles = new List<string>();
+               
+                titles.Add(m.name);
 
-            //if (names.Count() > 6)
-            //{
-            //    int ordersSum = 0;
-            //    for (int i = 6; i < names.Count(); i++)
-            //        ordersSum = ordersSum + ordersCount.ToList().Skip(i).FirstOrDefault();
+                int x = 6;
+                if (names.Count() <= 6) x = names.Count();
 
-            //    if (ordersSum != 0)
-            //        cS.Add(ordersSum);
+                for (int i = 0; i < x; i++)
+                {
+                    cS.Add(membershipCount.ToList().Skip(i).FirstOrDefault());
+                    axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
+                }
 
-            //    axcolumn.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
-            //}
+                if (names.Count() > 6)
+                {
+                    int membershipSum = 0;
+                    for (int i = 6; i < names.Count(); i++)
+                        membershipSum = membershipSum + membershipCount.ToList().Skip(i).FirstOrDefault();
 
-            //columnChartData.Add(
-            //new StackedColumnSeries
-            //{
-            //    Values = cS.AsChartValues(),
-            //    Title = titles[0],
-            //    DataLabels = true,
-            //});
+                    if (membershipSum != 0)
+                        cS.Add(membershipSum);
 
-            //DataContext = this;
-            //cartesianChart.Series = columnChartData;
+                    axcolumn.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
+                }
+
+                columnChartData.Add(
+                new StackedColumnSeries
+                {
+                    Values = cS.AsChartValues(),
+                    Title = titles[0],
+                    DataLabels = true,
+                });
+                #endregion
+            }
+            DataContext = this;
+            cartesianChart.Series = columnChartData;
         }
 
         private void fillPieChart()
         {
-            //List<string> titles = new List<string>();
-            //IEnumerable<int> x = null;
-            //titles.Clear();
+            List<string> titles = new List<string>();
+            IEnumerable<int> x = null;
+            titles.Clear();
 
-            //var temp = ordersQuery;
+            var temp = membershipsQuery;
 
-            //var titleTemp = temp.GroupBy(m => m.itemName);
-            //titles.AddRange(titleTemp.Select(jj => jj.Key));
-            //var result = temp.GroupBy(s => s.itemUnitId).Select(s => new { itemId = s.Key, sum = s.Sum(g => (int)g.quantity) });
-            //x = result.Select(m => m.sum);
+            var titleTemp = temp.GroupBy(m => m.membershipsName);
+            titles.AddRange(titleTemp.Select(jj => jj.Key));
+            var result = temp.GroupBy(s => s.membershipId).Select(s => new { membershipId = s.Key, quantity = s.Count() });
+            x = result.Select(m => m.quantity);
 
-            //SeriesCollection piechartData = new SeriesCollection();
+            SeriesCollection piechartData = new SeriesCollection();
 
-            //int xCount = 6;
-            //if (x.Count() <= 6) xCount = x.Count();
-            //for (int i = 0; i < xCount; i++)
-            //{
-            //    List<int> final = new List<int>();
-            //    List<string> lable = new List<string>();
-            //    final.Add(x.ToList().Skip(i).FirstOrDefault());
-            //    piechartData.Add(
-            //      new PieSeries
-            //      {
-            //          Values = final.AsChartValues(),
-            //          Title = titles.Skip(i).FirstOrDefault(),
-            //          DataLabels = true,
-            //      }
-            //  );
-            //}
+            int xCount = 6;
+            if (x.Count() <= 6) xCount = x.Count();
+            for (int i = 0; i < xCount; i++)
+            {
+                List<int> final = new List<int>();
+                List<string> lable = new List<string>();
+                final.Add(x.ToList().Skip(i).FirstOrDefault());
+                piechartData.Add(
+                  new PieSeries
+                  {
+                      Values = final.AsChartValues(),
+                      Title = titles.Skip(i).FirstOrDefault(),
+                      DataLabels = true,
+                  }
+              );
+            }
 
-            //if (x.Count() > 6)
-            //{
-            //    int xSum = 0;
-            //    for (int i = 6; i < x.Count(); i++)
-            //    {
-            //        xSum = xSum + x.ToList().Skip(i).FirstOrDefault();
-            //    }
+            if (x.Count() > 6)
+            {
+                int xSum = 0;
+                for (int i = 6; i < x.Count(); i++)
+                {
+                    xSum = xSum + x.ToList().Skip(i).FirstOrDefault();
+                }
 
-            //    if (xSum > 0)
-            //    {
-            //        List<int> final = new List<int>();
-            //        List<string> lable = new List<string>();
-            //        final.Add(xSum);
-            //        piechartData.Add(
-            //          new PieSeries
-            //          {
-            //              Values = final.AsChartValues(),
-            //              Title = AppSettings.resourcemanager.GetString("trOthers"),
-            //              DataLabels = true,
-            //          }
-            //      );
-            //    }
+                if (xSum > 0)
+                {
+                    List<int> final = new List<int>();
+                    List<string> lable = new List<string>();
+                    final.Add(xSum);
+                    piechartData.Add(
+                      new PieSeries
+                      {
+                          Values = final.AsChartValues(),
+                          Title = AppSettings.resourcemanager.GetString("trOthers"),
+                          DataLabels = true,
+                      }
+                  );
+                }
 
-            //}
-            //chart1.Series = piechartData;
+            }
+            chart1.Series = piechartData;
         }
 
         private void fillRowChart()
         {
-          //  int endYear = DateTime.Now.Year;
-          //  int startYear = endYear - 1;
-          //  int startMonth = DateTime.Now.Month;
-          //  int endMonth = startMonth;
-          //  if (dp_startDate.SelectedDate != null && dp_endDate.SelectedDate != null)
-          //  {
-          //      startYear = dp_startDate.SelectedDate.Value.Year;
-          //      endYear = dp_endDate.SelectedDate.Value.Year;
-          //      startMonth = dp_startDate.SelectedDate.Value.Month;
-          //      endMonth = dp_endDate.SelectedDate.Value.Month;
-          //  }
+            int endYear = DateTime.Now.Year;
+            int startYear = endYear - 1;
+            int startMonth = DateTime.Now.Month;
+            int endMonth = startMonth;
+            if (dp_startDate.SelectedDate != null && dp_endDate.SelectedDate != null)
+            {
+                startYear = dp_startDate.SelectedDate.Value.Year;
+                endYear = dp_endDate.SelectedDate.Value.Year;
+                startMonth = dp_startDate.SelectedDate.Value.Month;
+                endMonth = dp_endDate.SelectedDate.Value.Month;
+            }
 
 
-          //  MyAxis.Labels = new List<string>();
-          //  List<string> names = new List<string>();
-          //  List<CashTransferSts> resultList = new List<CashTransferSts>();
+            MyAxis.Labels = new List<string>();
+            List<string> names = new List<string>();
+            List<CashTransferSts> resultList = new List<CashTransferSts>();
 
-          //  SeriesCollection rowChartData = new SeriesCollection();
+            SeriesCollection rowChartData = new SeriesCollection();
 
-          //  var tempName = ordersQuery.GroupBy(s => new { s.itemUnitId }).Select(s => new
-          //  {
-          //      Name = s.FirstOrDefault().updateDate,
-          //  });
-          //  names.AddRange(tempName.Select(nn => nn.Name.ToString()));
+            var tempName = membershipsQuery.GroupBy(s => new { s.invNumber }).Select(s => new
+            {
+                Name = s.FirstOrDefault().updateDate,
+            });
+            names.AddRange(tempName.Select(nn => nn.Name.ToString()));
 
-          //  List<string> lable = new List<string>();
-          //  SeriesCollection columnChartData = new SeriesCollection();
-          //  List<int> orderLst = new List<int>();
+            List<string> lable = new List<string>();
+            SeriesCollection columnChartData = new SeriesCollection();
+            List<decimal> membershipLst = new List<decimal>();
 
-          //  if (endYear - startYear <= 1)
-          //  {
-          //      for (int year = startYear; year <= endYear; year++)
-          //      {
-          //          for (int month = startMonth; month <= 12; month++)
-          //          {
-          //              var firstOfThisMonth = new DateTime(year, month, 1);
-          //              var firstOfNextMonth = firstOfThisMonth.AddMonths(1);
-          //              var drawQuantity = ordersQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Select(s => s.itemName).Count();
-          //              orderLst.Add(drawQuantity);
-          //              MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
+            if (endYear - startYear <= 1)
+            {
+                for (int year = startYear; year <= endYear; year++)
+                {
+                    for (int month = startMonth; month <= 12; month++)
+                    {
+                        var firstOfThisMonth = new DateTime(year, month, 1);
+                        var firstOfNextMonth = firstOfThisMonth.AddMonths(1);
+                        var drawQuantity = membershipsQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Select(s => s.totalDiscount).Sum();
+                        membershipLst.Add(drawQuantity);
+                        MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
 
-          //              if (year == endYear && month == endMonth)
-          //              {
-          //                  break;
-          //              }
-          //              if (month == 12)
-          //              {
-          //                  startMonth = 1;
-          //                  break;
-          //              }
-          //          }
-          //      }
-          //  }
-          //  else
-          //  {
-          //      for (int year = startYear; year <= endYear; year++)
-          //      {
-          //          var firstOfThisYear = new DateTime(year, 1, 1);
-          //          var firstOfNextMYear = firstOfThisYear.AddYears(1);
-          //          var drawQuantity = ordersQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Select(s => s.itemName).Count();
+                        if (year == endYear && month == endMonth)
+                        {
+                            break;
+                        }
+                        if (month == 12)
+                        {
+                            startMonth = 1;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int year = startYear; year <= endYear; year++)
+                {
+                    var firstOfThisYear = new DateTime(year, 1, 1);
+                    var firstOfNextMYear = firstOfThisYear.AddYears(1);
+                    var drawQuantity = membershipsQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Select(s => s.totalDiscount).Sum();
 
-          //          orderLst.Add(drawQuantity);
+                    membershipLst.Add(drawQuantity);
 
-          //          MyAxis.Labels.Add(year.ToString());
-          //      }
-          //  }
-          //  rowChartData.Add(
-          //new LineSeries
-          //{
-          //    Values = orderLst.AsChartValues(),
-          //    Title = AppSettings.resourcemanager.GetString("trPreparingOrders") + "/" + AppSettings.resourcemanager.GetString("trQuantity")
-          //});
+                    MyAxis.Labels.Add(year.ToString());
+                }
+            }
+            rowChartData.Add(
+          new LineSeries
+          {
+              Values = membershipLst.AsChartValues(),
+              Title = AppSettings.resourcemanager.GetString("trDiscount")
+          });
 
-          //  DataContext = this;
-          //  rowChart.Series = rowChartData;
+            DataContext = this;
+            rowChart.Series = rowChartData;
         }
 
         #endregion
