@@ -74,8 +74,6 @@ namespace Restaurant.View.reports.accountsReports
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
 
-
-
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
@@ -486,6 +484,10 @@ namespace Restaurant.View.reports.accountsReports
         {//refresh
             searchText = "";
             txt_search.Text = "";
+            chk_allBranches.IsChecked = true;
+            chk_allPos.IsChecked = true;
+            dp_startDate.SelectedDate = null;
+            dp_orderDate.SelectedDate = null;
             callSearch(sender);
         }
         private async void RefreshView_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
