@@ -788,31 +788,35 @@ namespace Restaurant.View.purchase
                                             clearInvoice();
                                             _InvoiceType = "pd";
                                         }
+
+                                        #region print
+                                        prInvoice = await FillCombo.invoice.GetByInvoiceId(prInvoiceId);
+                                        ///////////////////////////////////////
+
+                                        if (prInvoice.invType == "pw" || prInvoice.invType == "p")
+                                        {
+                                            Thread t = new Thread(() =>
+                                            {
+                                                if (AppSettings.print_on_save_pur == "1")
+                                                {
+                                                    printPurInvoice();
+                                                }
+                                                if (AppSettings.email_on_save_pur == "1")
+                                                {
+                                                    sendPurEmail();
+                                                }
+                                            });
+                                            t.Start();
+
+                                        }
+                                        #endregion
                                     }
                                     #endregion
                                 }
                                 refreshDraftNotification();
                                 refreshInvNotification();
 
-                                prInvoice = await FillCombo.invoice.GetByInvoiceId(prInvoiceId);
-                                ///////////////////////////////////////
-
-                                if (prInvoice.invType == "pw" || prInvoice.invType == "p")
-                                {
-                                    Thread t = new Thread(() =>
-                                    {
-                                        if (AppSettings.print_on_save_pur == "1")
-                                        {
-                                            printPurInvoice();
-                                        }
-                                        if (AppSettings.email_on_save_pur == "1")
-                                        {
-                                            sendPurEmail();
-                                        }
-                                    });
-                                    t.Start();
-
-                                }
+                                
                                 await MainWindow.refreshBalance();
                             }
                         }

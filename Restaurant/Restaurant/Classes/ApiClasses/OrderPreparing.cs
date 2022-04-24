@@ -63,6 +63,7 @@ namespace Restaurant.Classes.ApiClasses
         public int num { get; set; }
         public decimal remainingTime { get; set; }
         public string waiter { get; set; }
+        public Nullable<System.DateTime> preparingStatusDate { get; set; }
 
         public string tables { get; set; }
         //invoice
