@@ -57,6 +57,7 @@
             <converters:shippingCompanyAndCustomerConverter x:Key="shippingCompanyAndCustomerConverter"/>
             <converters:ConvertSolidColorBrushToSystemWindowsMedia x:Key="ConvertSolidColorBrushToSystemWindowsMedia"/>
             <converters:driverNameConverter x:Key="driverNameConverter"/>
+            <converters:OrderPreparing_remainingTimeConverter x:Key="OrderPreparing_remainingTimeConverter"/>
 
 
             <!--#region Fonts-->
@@ -2800,6 +2801,7 @@
             <SolidColorBrush x:Key="LightGrey" Color="#B1B1B1"/>
             <SolidColorBrush x:Key="veryLightGrey" Color="#DFDFDF"/>
 
+            <SolidColorBrush x:Key="Gold" Color="#FFD700"/>
             <SolidColorBrush x:Key="Blue" Color="#178DD2"/>
             <SolidColorBrush x:Key="Orange" Color="#FFA926"/>
             <SolidColorBrush x:Key="Red" Color="#D22A17"/>

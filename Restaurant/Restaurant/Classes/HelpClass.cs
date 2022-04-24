@@ -110,7 +110,7 @@ namespace Restaurant.Classes
             }
             return isValid;
         }
-        public static void SetValidate( Path p_error, string tr)
+        public static void SetValidate(Path p_error, string tr)
         {
             #region Tooltip error
             p_error.Visibility = Visibility.Visible;
@@ -120,7 +120,7 @@ namespace Restaurant.Classes
             p_error.ToolTip = toolTip;
             #endregion
         }
-        public static void clearValidate( Path p_error)
+        public static void clearValidate(Path p_error)
         {
             p_error.Visibility = Visibility.Collapsed;
         }
@@ -183,7 +183,7 @@ namespace Restaurant.Classes
             return iscodeExist;
         }
         #region validate
-        public static bool validate(List<string> requiredControlList ,UserControl userControl)
+        public static bool validate(List<string> requiredControlList, UserControl userControl)
         {
             bool isValid = true;
             try
@@ -206,8 +206,8 @@ namespace Restaurant.Classes
                         .FirstOrDefault();
                     Path path = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_" + control)
                         .FirstOrDefault();
-                    if (comboBox != null && path != null )
-                        if (!HelpClass.validateEmptyCombo(comboBox, path) )
+                    if (comboBox != null && path != null)
+                        if (!HelpClass.validateEmptyCombo(comboBox, path))
                             isValid = false;
                 }
                 //TextBox
@@ -447,7 +447,7 @@ namespace Restaurant.Classes
         }
         #endregion
 
-        public static void getMobile(string _mobile , ComboBox _area , TextBox _tb)
+        public static void getMobile(string _mobile, ComboBox _area, TextBox _tb)
         {//mobile
             if ((_mobile != null))
             {
@@ -480,7 +480,7 @@ namespace Restaurant.Classes
             }
         }
 
-        public static void getPhone(string _phone , ComboBox _area , ComboBox _areaLocal , TextBox _tb)
+        public static void getPhone(string _phone, ComboBox _area, ComboBox _areaLocal, TextBox _tb)
         {//phone
             if ((_phone != null))
             {
@@ -511,7 +511,7 @@ namespace Restaurant.Classes
                 _tb.Clear();
             }
         }
-         
+
         public static void clearImg(Button img)
         {
             Uri resourceUri = new Uri("pic/no-image-icon-125x125.png", UriKind.Relative);
@@ -893,7 +893,7 @@ namespace Restaurant.Classes
                 grid.IsEnabled = true;
                 grid.Opacity = 1;
             }
-            
+
         }
         /// <summary>
         /// badged name , previous count, new count
@@ -901,7 +901,7 @@ namespace Restaurant.Classes
         /// <param name="badged">badged name</param>
         /// <param name="_count">previous count</param>
         /// <param name="count">new count</param>
-       static public void refreshNotification(Badged badged,ref int _count , int count )
+        static public void refreshNotification(Badged badged, ref int _count, int count)
         {
             if (count != _count)
             {
@@ -915,7 +915,7 @@ namespace Restaurant.Classes
             }
             _count = count;
         }
-        static public void drawBarcode(string barcodeStr , Image img)
+        static public void drawBarcode(string barcodeStr, Image img)
         {//barcode image
             // create encoding object
             Zen.Barcode.Code128BarcodeDraw barcode = Zen.Barcode.BarcodeDrawFactory.Code128WithChecksum;
@@ -936,7 +936,7 @@ namespace Restaurant.Classes
             {
                 string btn_name = "btn_" + cat.categoryCode;
                 Button categoryBtn = new Button();
-                foreach(Button btn in btns)
+                foreach (Button btn in btns)
                 {
                     if (btn.Name == btn_name)
                     {
@@ -958,7 +958,7 @@ namespace Restaurant.Classes
             {
                 string btn_name = "btn_" + cat.categoryCode;
                 Button categoryBtn = new Button();
-                foreach(Button btn in btns)
+                foreach (Button btn in btns)
                 {
                     if (btn.Name == btn_name)
                     {
@@ -1109,7 +1109,18 @@ namespace Restaurant.Classes
             textBlock.Text = firstTitle + " / " + secondTitle;
 
         }
-    }
 
-    
+
+        public  static string decimalToTime(decimal remainingTime)
+        {
+            TimeSpan span = TimeSpan.FromMinutes(double.Parse(remainingTime.ToString()));
+            var timeArr = span.ToString().Split(':');
+
+            //string label = (int)span.TotalMinutes + ":" + span.Seconds;
+            string label = timeArr[1].ToString().PadLeft(2, '0') + ":" + Math.Round(decimal.Parse(timeArr[2])).ToString().PadLeft(2, '0');
+            return label;
+        }
+       
+
+    }
 }

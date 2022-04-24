@@ -282,7 +282,7 @@ namespace Restaurant.Classes.ApiClasses
             return count;
         }
 
-        public decimal calculateRemainingTime(DateTime preparingStatusDate, decimal preparingTime, string status)
+        static public decimal calculateRemainingTime(DateTime preparingStatusDate, decimal preparingTime, string status)
         {
             decimal remainingTime = 0;
             if (status == "Listed")

@@ -293,6 +293,7 @@
     <Compile Include="converters\minmaxUnitNameStockConverter.cs" />
     <Compile Include="converters\notificationsContentConverter.cs" />
     <Compile Include="converters\notificationsTitleConverter.cs" />
+    <Compile Include="converters\OrderPreparing_remainingTimeConverter.cs" />
     <Compile Include="converters\posTransfersStatusConverter.cs" />
     <Compile Include="converters\preparingOrderStatusConverter.cs" />
     <Compile Include="converters\preparingOrderTypeConverter.cs" />

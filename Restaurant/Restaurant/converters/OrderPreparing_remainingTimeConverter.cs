@@ -1,4 +1,5 @@
 ﻿using Restaurant.Classes;
+using Restaurant.Classes.ApiClasses;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -9,16 +10,28 @@ using System.Windows.Data;
 
 namespace Restaurant.converters
 {
-    class decimalToTimeConverter : IValueConverter
+    class OrderPreparing_remainingTimeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value != null)
+            try
             {
-                return HelpClass.decimalToTime((decimal)value);
+
+           
+            decimal remainingTime = 0;
+            OrderPreparing orderPreparing = (OrderPreparing) value ;
+            remainingTime =  OrderPreparing.calculateRemainingTime(orderPreparing.preparingStatusDate.Value,
+                orderPreparing.preparingTime.Value, orderPreparing.status);
+
+
+                return HelpClass.decimalToTime(remainingTime);
+
             }
-            else
+            catch
+            {
                 return "";
+
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
