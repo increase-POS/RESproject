@@ -490,7 +490,7 @@ namespace Restaurant.View.reports.accountsReports
             dp_orderDate.SelectedDate = null;
             callSearch(sender);
         }
-        private async void RefreshView_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        private void RefreshView_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {//change selection
             callSearch(sender);
         }
