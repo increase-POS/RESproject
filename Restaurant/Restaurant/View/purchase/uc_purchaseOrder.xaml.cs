@@ -555,25 +555,28 @@ namespace Restaurant.View.purchase
         }
         private void Tgl_ActiveOffer_Unchecked(object sender, RoutedEventArgs e)
         {
-            _InvoiceType = invoice.invType;
-            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
-            if (tgl_ActiveOffer.IsChecked == true)
+            if (tgl_ActiveOffer.IsFocused)
             {
-                dg_billDetails.Columns[3].IsReadOnly = true; //make unit read only
-                dg_billDetails.Columns[4].IsReadOnly = true; //make count read only
+                _InvoiceType = invoice.invType;
+                btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
+                if (tgl_ActiveOffer.IsChecked == true)
+                {
+                    dg_billDetails.Columns[3].IsReadOnly = true; //make unit read only
+                    dg_billDetails.Columns[4].IsReadOnly = true; //make count read only
+                }
+                else
+                {
+                    dg_billDetails.Columns[3].IsReadOnly = false; //make unit read only
+                    dg_billDetails.Columns[4].IsReadOnly = false; //make count read only
+                }
+                inputEditable();
+                refrishDataGridItems();
             }
-            else
-            {
-                dg_billDetails.Columns[3].IsReadOnly = false; //make unit read only
-                dg_billDetails.Columns[4].IsReadOnly = false; //make count read only
-            }
-            inputEditable();
-            refrishDataGridItems();
         }
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {//save
-            //try
-            //{
+            try
+            {
 
                 HelpClass.StartAwait(grid_main);
                 if (FillCombo.groupObject.HasPermissionAction(createPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
@@ -589,14 +592,20 @@ namespace Restaurant.View.purchase
                             else
                                 _InvoiceType = "pos";
                             await addInvoice(_InvoiceType); // po: purchase order
-                            refreshNotification();
 
-                            if (_InvoiceType == "po")
-                                clearInvoice();
-                            else
-                                inputEditable();
+                        if (_InvoiceType == "po")
+                        {
+                            //_InvoiceType = "pod";
+                            clearInvoice();
+
                         }
                         else
+                            inputEditable();
+
+                        refreshNotification();
+
+                    }
+                    else
                         {
                             
                             HelpClass.validateEmptyCombo(cb_vendor, p_error_vendor);
@@ -608,13 +617,13 @@ namespace Restaurant.View.purchase
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
+            }
+            catch (Exception ex)
+            {
 
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private bool validateItemUnits()
         {
@@ -653,14 +662,11 @@ namespace Restaurant.View.purchase
                         #endregion
                         if (w.isOk)
                             await addInvoice(_InvoiceType);
-                        clearInvoice();
+                        
                     }
                 }
-                else if (billDetails.Count == 0)
-                {
-                    clearInvoice();
-                }
 
+                clearInvoice();
                 refreshNotification();
 
                 HelpClass.EndAwait(grid_main);
@@ -695,8 +701,10 @@ namespace Restaurant.View.purchase
             txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaseOrder");
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 
-            refrishBillDetails();
             inputEditable();
+
+            refrishBillDetails();
+            
             btn_next.Visibility = Visibility.Collapsed;
             btn_previous.Visibility = Visibility.Collapsed;
 
