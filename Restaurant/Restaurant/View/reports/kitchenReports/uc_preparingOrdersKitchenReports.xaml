@@ -157,7 +157,14 @@
                                                               Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                                               materialDesign:HintAssist.Hint="Category ...."
                                                               BorderBrush="#737373"   BorderThickness="0" Margin="4,0" Foreground="#4E4E4E" 
-                                                              Height="40" Padding="10,0,5,0" Grid.Row="1" SelectionChanged="Cb_category_SelectionChanged"  ></ComboBox>
+                                                              Height="40" Padding="10,0,5,0" Grid.Row="1" 
+                                                              SelectionChanged="Cb_category_SelectionChanged"  >
+                                                        <ComboBox.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock Text="{Binding categoryName , Converter={StaticResource translateCategoryNameForReports}}"/>
+                                                            </DataTemplate>
+                                                        </ComboBox.ItemTemplate>
+                                                    </ComboBox>
 
                                                 </Grid>
                                             </Border>
@@ -295,7 +302,7 @@
                                     <DataGridTextColumn x:Name="col_status"        Width="*" Header="Status"    Binding="{Binding status , Converter={StaticResource preparingOrderStatusConverter}}" />
                                     <DataGridTextColumn x:Name="col_date"          Width="*" Header="Date"      Binding="{Binding createDate,Converter={StaticResource dateFrameConverter }}"/>
                                     <DataGridTextColumn x:Name="col_branch"        Width="*" Header="Branch"    Binding="{Binding branchName }" />
-                                    <DataGridTextColumn x:Name="col_category"      Width="*" Header="Category"  Binding="{Binding categoryName }" />
+                                    <DataGridTextColumn x:Name="col_category"      Width="*" Header="Category"  Binding="{Binding categoryName , Converter={StaticResource translateCategoryNameForReports}}" />
                                     <DataGridTextColumn x:Name="col_tag"           Width="*" Header="Tag"       Binding="{Binding tagName}" />
                                     <DataGridTextColumn x:Name="col_duration"      Width="*" Header="Duration"  Binding="{Binding realDuration }" />
                                 </DataGrid.Columns>

@@ -307,6 +307,7 @@
     <Compile Include="converters\subscriptionTypeConverter.cs" />
     <Compile Include="converters\timeFrameConverter.cs" />
     <Compile Include="converters\translateCategoryNameConverter.cs" />
+    <Compile Include="converters\translateCategoryNameForReports.cs" />
     <Compile Include="converters\translateConverter.cs" />
     <Compile Include="converters\transTypeConverter.cs" />
     <Compile Include="converters\unitItemsListConverter.cs" />

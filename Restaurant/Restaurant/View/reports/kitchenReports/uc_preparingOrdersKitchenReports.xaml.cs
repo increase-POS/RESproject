@@ -66,8 +66,8 @@ namespace Restaurant.View.reports.kitchenReports
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 #region translate
                 if (AppSettings.lang.Equals("en"))
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -80,11 +80,11 @@ namespace Restaurant.View.reports.kitchenReports
 
                 //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_preparingOrders.Tag.ToString());
 
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         #region methods
@@ -202,9 +202,11 @@ namespace Restaurant.View.reports.kitchenReports
         }
         private void fillCategories()
         {
+            var catLst = orders.Select(i => new { i.categoryName, i.categoryId }).Distinct();
+           
+            cb_category.ItemsSource = catLst;
             cb_category.SelectedValuePath = "categoryId";
-            cb_category.DisplayMemberPath = "categoryName";
-            cb_category.ItemsSource = orders.Select(i => new { i.categoryName, i.categoryId }).Distinct();
+            //cb_category.DisplayMemberPath = "categoryName";
         }
         #endregion
 
@@ -271,22 +273,22 @@ namespace Restaurant.View.reports.kitchenReports
 
         private async void Chk_allCategories_Checked(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
                 cb_category.SelectedIndex = -1;
                 cb_category.IsEnabled = false;
 
                 await Search();
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private async void Chk_allCategories_Unchecked(object sender, RoutedEventArgs e)
@@ -538,7 +540,6 @@ namespace Restaurant.View.reports.kitchenReports
         }
 
         #endregion
-
 
         #region reports
         private void BuildReport()

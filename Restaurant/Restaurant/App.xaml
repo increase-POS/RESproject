@@ -8,6 +8,7 @@
     <!--StartupUri="MainWindow.xaml"-->
     <Application.Resources>
         <ResourceDictionary>
+            <converters:translateCategoryNameForReports x:Key="translateCategoryNameForReports"/>
             <converters:accuracyDiscountConverter x:Key="accuracyDiscountConverter"/>
             <converters:dateTimeToTimeConverter x:Key="dateTimeToTimeConverter"/>
             <converters:shippingCompanyNameConverter x:Key="shippingCompanyNameConverter"/>
