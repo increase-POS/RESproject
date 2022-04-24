@@ -281,5 +281,25 @@ namespace Restaurant.Classes.ApiClasses
             }
             return count;
         }
+
+        public decimal calculateRemainingTime(DateTime preparingStatusDate, decimal preparingTime, string status)
+        {
+            decimal remainingTime = 0;
+            if (status == "Listed")
+            {
+                remainingTime = (decimal)preparingTime;
+            }
+            else
+            {
+                preparingStatusDate = preparingStatusDate.AddMinutes((double)preparingTime);
+                if (preparingStatusDate > DateTime.Now)
+                {
+                    TimeSpan remainingTimeTmp = preparingStatusDate - DateTime.Now;
+                    remainingTime = (decimal)remainingTimeTmp.TotalMinutes;
+                }
+            }
+
+            return remainingTime;
+        }
     }
 }

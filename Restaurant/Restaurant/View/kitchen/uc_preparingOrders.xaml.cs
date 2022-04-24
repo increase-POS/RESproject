@@ -183,14 +183,14 @@ namespace Restaurant.View.kitchen
         async void loading_orders()
         {
             //get orders
-            //try
-            //{
+            try
+            {
                 await refreshPreparingOrders();
-            //}
-            //catch
-            //{
+            }
+            catch
+            {
 
-            //}
+            }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_orders"))
