@@ -304,7 +304,7 @@
                                     <DataGridTextColumn x:Name="col_branch"        Width="*" Header="Branch"    Binding="{Binding branchName }" />
                                     <DataGridTextColumn x:Name="col_category"      Width="*" Header="Category"  Binding="{Binding categoryName , Converter={StaticResource translateCategoryNameForReports}}" />
                                     <DataGridTextColumn x:Name="col_tag"           Width="*" Header="Tag"       Binding="{Binding tagName}" />
-                                    <DataGridTextColumn x:Name="col_duration"      Width="*" Header="Duration"  Binding="{Binding realDuration }" />
+                                    <DataGridTextColumn x:Name="col_duration"      Width="*" Header="Duration"  Binding="{Binding realDuration , Converter={StaticResource decimalToTimeConverter}}" />
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
