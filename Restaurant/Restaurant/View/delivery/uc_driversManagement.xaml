@@ -155,7 +155,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Width="*"  Header="name" Binding="{Binding Path=name}">
+                                <DataGridTextColumn Width="*"  Header="name" Binding="{Binding Path=fullName}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>
