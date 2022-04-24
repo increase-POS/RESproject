@@ -67,9 +67,7 @@ namespace Restaurant.View.windows
         public int customerId { get; set; }
         public decimal deliveryDiscount { get; set; }
         public bool hasOffers { get; set; }
-
         public string memberShipStatus;
-
         public static List<string> requiredControlList = new List<string>();
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
@@ -86,15 +84,18 @@ namespace Restaurant.View.windows
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
                 translate();
+
+                grid_delivery.Visibility = Visibility.Collapsed;
+                grid_coupon.Visibility = Visibility.Collapsed;
+                grid_offers.Visibility = Visibility.Collapsed;
+                grid_invoicesClasses.Visibility = Visibility.Collapsed;
+
                 await FillCombo.RefreshCustomers();
                 await FillCombo.FillComboCustomers(cb_customerId);
 
                 fillInputs();
 
-                if (AppSettings.invType != "")
-                    grid_delivery.Visibility = Visibility.Visible;
-                else
-                    grid_delivery.Visibility = Visibility.Collapsed;
+               
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -123,7 +124,6 @@ namespace Restaurant.View.windows
             btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
 
         }
-
         private void fillInputs()
         {
             if (customerId != 0)
@@ -133,6 +133,15 @@ namespace Restaurant.View.windows
         }
         private async Task fillMemberShipInfo()
         {
+            grid_delivery.Visibility = Visibility.Visible;
+            grid_coupon.Visibility = Visibility.Visible;
+            grid_offers.Visibility = Visibility.Visible;
+            grid_invoicesClasses.Visibility = Visibility.Visible;
+            sp_couponStars.Children.Clear();
+            sp_offerStars.Children.Clear();
+            sp_invoicesClassStars.Children.Clear();
+            sp_membership.Opacity = 1;
+
             var customer = FillCombo.customersList.Where(x => x.agentId == customerId).FirstOrDefault();
             if (customer.membershipId != null)
             {
@@ -197,12 +206,20 @@ namespace Restaurant.View.windows
                         else
                             memberShipStatus = "notActive";
 
+                        txt_membershipInctive.Text = AppSettings.resourcemanager.GetString(memberShipStatus);
                     }
                     #endregion
                     #region data context
                     this.DataContext = agentToPayCash;
-                    if (agentToPayCash.offersCount > 0)
+                    updateRow(agentToPayCash.couponsCount, grid_coupon,sp_couponStars);
+                    updateRow(agentToPayCash.offersCount, grid_offers, sp_offerStars);
+                    updateRow(agentToPayCash.invoicesClassesCount, grid_invoicesClasses, sp_invoicesClassStars);
+                    //MessageBox.Show("couponsCount: " + agentToPayCash.couponsCount + "\n" +
+                    //   "offersCount: " + agentToPayCash.offersCount + "\n" +
+                    //   "invoicesClassesCount: " + agentToPayCash.invoicesClassesCount);
+                    if (agentToPayCash.offersCount > 0 && agentToPayCash.membershipStatus == "valid")
                         hasOffers = true;
+                   
                     #region delivery
                     if (agentToPayCash.isFreeDelivery)
                     {
@@ -211,10 +228,21 @@ namespace Restaurant.View.windows
                     }
                     else
                     {
-                        tb_deliveryDetails.Text = agentToPayCash.deliveryDiscountPercent + " %";
-                        deliveryDiscount = agentToPayCash.deliveryDiscountPercent;
+                        if(agentToPayCash.deliveryDiscountPercent == 0)
+                        {
+                            grid_delivery.Visibility = Visibility.Collapsed;
+                        }
+                        else
+                        {
+                            tb_deliveryDetails.Text = agentToPayCash.deliveryDiscountPercent + " %";
+                            deliveryDiscount = agentToPayCash.deliveryDiscountPercent;
+                        }
+                        
                     }
-             
+                    if (AppSettings.invType != "")
+                        grid_delivery.Visibility = Visibility.Visible;
+                    else
+                        grid_delivery.Visibility = Visibility.Collapsed;
                     #endregion
                     #endregion
                 }
@@ -223,7 +251,40 @@ namespace Restaurant.View.windows
             {
                 agentToPayCash = new AgenttoPayCash();
                 this.DataContext = agentToPayCash;
-                tb_deliveryDetails.Text = agentToPayCash.deliveryDiscountPercent + " %";
+                updateRow(agentToPayCash.couponsCount, grid_coupon, sp_couponStars);
+                updateRow(agentToPayCash.offersCount, grid_offers, sp_offerStars);
+                updateRow(agentToPayCash.invoicesClassesCount, grid_invoicesClasses, sp_invoicesClassStars);
+                grid_delivery.Visibility = Visibility.Collapsed;
+
+                //tb_deliveryDetails.Text = agentToPayCash.deliveryDiscountPercent + " %";
+                //sp_couponStars.Children.Clear();
+                //sp_offerStars.Children.Clear();
+                //sp_invoicesClassStars.Children.Clear();
+                sp_membership.Opacity = 0.4;
+
+            }
+        }
+        void updateRow(int count, Grid grid, StackPanel stackPanel)
+        {
+            if (count == 0)
+            {
+                grid.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                Path path;
+                stackPanel.Children.Clear();
+                for (int i = 0; i < count; i++)
+                {
+                    path = new Path();
+                    path.Fill = Application.Current.Resources["Gold"] as SolidColorBrush;
+                    path.Stretch = Stretch.Fill;
+                    path.Margin = new Thickness(2.5,0,2.5,0);
+                    path.Width = path.Height = 15;
+                    path.FlowDirection = FlowDirection.LeftToRight;
+                    path.Data = App.Current.Resources["StarIconGeometry"] as Geometry;
+                    stackPanel.Children.Add(path);
+                }
             }
         }
         private void Btn_select_Click(object sender, RoutedEventArgs e)
@@ -238,13 +299,26 @@ namespace Restaurant.View.windows
                 this.Close();
             }
         }
-
         private async void Cb_customerId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(cb_customerId.SelectedIndex != -1)
+            try
             {
-                customerId = (int)cb_customerId.SelectedValue;
-                await fillMemberShipInfo();
+
+                HelpClass.StartAwait(grid_main);
+                if (cb_customerId.SelectedIndex != -1)
+                {
+                    customerId = (int)cb_customerId.SelectedValue;
+                    await fillMemberShipInfo();
+                }
+                HelpClass.EndAwait(grid_main);
+                cb_customerId.Focus();
+
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private async void Btn_addCustomer_Click(object sender, RoutedEventArgs e)

@@ -139,10 +139,18 @@
                                     Text="coupons" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                            <TextBlock  Grid.Row="1" Grid.Column="1" x:Name="tb_couponsCount"
+                            <StackPanel  Grid.Row="1" Grid.Column="1" x:Name="sp_couponStars"
+                                   Margin="10 5"  Orientation="Horizontal"
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" >
+                                <!--<Path Fill="{StaticResource Gold}" Stretch="Fill"  
+                                      Margin="2.5 0"
+                    Width="15" Height="15" FlowDirection="LeftToRight"
+                           Data="{StaticResource StarIconGeometry}" />--> 
+                            </StackPanel>
+                            <!--<TextBlock  Grid.Row="1" Grid.Column="1" x:Name="tb_couponsCount"
                                     Text="{Binding Path=couponsCount}"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />-->
                         </Grid>
                         <Grid x:Name="grid_offers" Visibility="Visible">
                             <Grid.ColumnDefinitions>
@@ -153,10 +161,13 @@
                                     Text="offers" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                            <TextBlock  Grid.Row="1" Grid.Column="1" x:Name="tb_offersCount"
+                            <StackPanel  Grid.Row="1" Grid.Column="1" x:Name="sp_offerStars"
+                                   Margin="10 5"  Orientation="Horizontal"
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                            <!--<TextBlock  Grid.Row="1" Grid.Column="1" x:Name="tb_offersCount"
                                     Text="{Binding Path=offersCount}"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />-->
                         </Grid>
                         <Grid x:Name="grid_invoicesClasses" Visibility="Visible">
                             <Grid.ColumnDefinitions>
@@ -167,10 +178,13 @@
                                     Text="invoices classes" FontWeight="SemiBold"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"   />
-                            <TextBlock  Grid.Row="1" Grid.Column="1" x:Name="tb_invoicesClassesCount" 
+                            <StackPanel  Grid.Row="1" Grid.Column="1" x:Name="sp_invoicesClassStars"
+                                   Margin="10 5"  Orientation="Horizontal"
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                            <!--<TextBlock  Grid.Row="1" Grid.Column="1" x:Name="tb_invoicesClassesCount" 
                                     Text="{Binding Path=invoicesClassesCount}"
                                    Margin="10 5" Foreground="{StaticResource ThickGrey}"
-                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />
+                                   HorizontalAlignment="Right"   VerticalAlignment="Center" />-->
                         </Grid>
                         <Grid x:Name="grid_delivery" Visibility="Visible">
                             <Grid.ColumnDefinitions>

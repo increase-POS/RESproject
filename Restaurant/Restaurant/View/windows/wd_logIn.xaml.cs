@@ -223,9 +223,9 @@ namespace Restaurant.View.windows
                 if (!logInProcessing)
                 {
                     logInProcessing = true;
-                    
+
                     HelpClass.StartAwait(grid_main);
-                    
+
                     HelpClass.clearValidate(p_errorUserName);
                     HelpClass.clearValidate(p_errorPassword);
 
@@ -235,6 +235,8 @@ namespace Restaurant.View.windows
                     //int canLogin = await userModel.checkLoginAvalability(MainWindow.posID.Value, userName, password);
                     //if (canLogin == 1)
                     //{
+
+
                     MainWindow.userLogin = new User();
                     MainWindow.posLogin = new Pos();
                     MainWindow.branchLogin = new Branch();
@@ -271,7 +273,7 @@ namespace Restaurant.View.windows
 
 
                             int s = await userModel.save(user);
-                          
+
                             //create lognin record
                             UsersLogs userLog = new UsersLogs();
                             userLog.posId = MainWindow.posLogin.posId;
@@ -279,10 +281,10 @@ namespace Restaurant.View.windows
                             userLog.userId = user.userId;
                             MainWindow.userLog = userLog;
                             int str = await userLogsModel.Save(userLog);
-                            
+
                             if (!str.Equals(0))
                                 MainWindow.userLog.logId = str;
-                           
+
                             #region remember me
                             if (cbxRemmemberMe.IsChecked.Value)
                             {
@@ -300,6 +302,10 @@ namespace Restaurant.View.windows
                             }
                             Properties.Settings.Default.Save();
                             #endregion
+
+                            MainWindow.go_out = false;
+                            MainWindow.go_out_didNotAnyProcess = false;
+                            MainWindow._CachTransfersCount = 0;
 
                             MainWindow main = new MainWindow();
                             main.Show();

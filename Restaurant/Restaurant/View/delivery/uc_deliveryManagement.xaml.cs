@@ -392,8 +392,8 @@ namespace Restaurant.View.delivery
 
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {//save
-            //try
-            //{
+            try
+            {
                 if (FillCombo.groupObject.HasPermissionAction(updatePermission, FillCombo.groupObjects, "one"))
                 {
                     HelpClass.StartAwait(grid_main);
@@ -457,12 +457,12 @@ namespace Restaurant.View.delivery
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         #endregion
@@ -686,8 +686,8 @@ namespace Restaurant.View.delivery
 
         private void FieldDataGridCheckedHeader(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
+            try
+            {
 
                 #region
                 //CheckBox chkSelectAll = ((CheckBox)sender);
@@ -785,11 +785,11 @@ namespace Restaurant.View.delivery
                         
                     }
                 }
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private void FieldDataGridUncheckedHeader(object sender, RoutedEventArgs e)
         {
@@ -845,8 +845,8 @@ namespace Restaurant.View.delivery
 
         private async void search_Checking(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 selectedOrders.Clear();
 
                 CheckBox cb = sender as CheckBox;
@@ -877,23 +877,23 @@ namespace Restaurant.View.delivery
                         chk_withDeliveryMan.IsChecked = false;
                     }
                 }
-                //HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 Clear();
                 await Search();
 
-                //HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private void chk_uncheck(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 CheckBox cb = sender as CheckBox;
                 if (cb.IsFocused)
                 {
@@ -906,11 +906,11 @@ namespace Restaurant.View.delivery
                     else if (cb.Name == "chk_inTheWay")
                         chk_inTheWay.IsChecked = true;
                 }
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         string input;

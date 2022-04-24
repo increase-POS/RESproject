@@ -1209,7 +1209,7 @@ namespace Restaurant.View.sales
                 #region customer invoice classes discount
                 foreach (InvoicesClass c in customerInvClasses)
                 {
-                    if (_Sum >= c.minInvoiceValue && _Sum <= c.maxInvoiceValue)
+                    if (_Sum >= c.minInvoiceValue && (_Sum <= c.maxInvoiceValue || c.maxInvoiceValue==0))
                     {
                         if (c.discountValue != 0)
                         {
@@ -2724,6 +2724,11 @@ namespace Restaurant.View.sales
                             else if (AppSettings.invType == "selfService")
                                 await saveTakeAwayInvoice("ss");
 
+                            {
+                                await refreshItemsList();
+                                Search();
+                                refreshItemsPrice();
+                            }
                         }                      
                     }
                 }

@@ -115,14 +115,14 @@ namespace Restaurant.View.kitchen
                 #endregion
                
                 FillCombo.FillInvoiceTypeWithDefault(cb_searchInvType);
-                FillCombo.FillPreparingOrderStatusWithDefault(cb_searchStatus);
+                //FillCombo.FillPreparingOrderStatusWithDefault(cb_searchStatus);
 
                 await Search();
                 #region 
-                //timer = new DispatcherTimer();
-                //timer.Interval = TimeSpan.FromSeconds(1);
-                //timer.Tick += timer_Tick;
-                //timer.Start();
+                timer = new DispatcherTimer();
+                timer.Interval = TimeSpan.FromSeconds(5);
+                timer.Tick += timer_Tick;
+                timer.Start();
                 #endregion
                 HelpClass.EndAwait(grid_main);
             }
@@ -160,24 +160,29 @@ namespace Restaurant.View.kitchen
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_preparingTime, AppSettings.resourcemanager.GetString("trPreparingTime") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchStatus, AppSettings.resourcemanager.GetString("trStatusHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchStatus, AppSettings.resourcemanager.GetString("trStatusHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchCatalog, AppSettings.resourcemanager.GetString("trCategorie") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchInvType, AppSettings.resourcemanager.GetString("") + "...");
 
+            chk_allForDelivery.Content = AppSettings.resourcemanager.GetString("trAll");
+            chk_listed.Content = AppSettings.resourcemanager.GetString("trListed");
+            chk_preparing.Content = AppSettings.resourcemanager.GetString("trPreparing");
+            chk_ready.Content = AppSettings.resourcemanager.GetString("trReady");
+
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
         }
-        //void timer_Tick(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (dg_orders.Items.Count > 0)
-        //            dg_orders.Items.Refresh();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        HelpClass.ExceptionMessage(ex, this);
-        //    }
-        //}
+        void timer_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dg_orders.Items.Count > 0)
+                    dg_orders.Items.Refresh();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         #region loading
         List<keyValueBool> loadingList;
         async void loading_orders()
@@ -427,12 +432,30 @@ namespace Restaurant.View.kitchen
                 ordersQuery = ordersQuery.Where(c => c.items.Where(p => p.categoryId == (int)cb_searchCatalog.SelectedValue).Any()).ToList();
             #endregion 
             #region seacrch status
-            if (cb_searchStatus.SelectedIndex >0)
-                ordersQuery = ordersQuery.Where(c => c.status == cb_searchStatus.SelectedValue.ToString()).ToList();
+            //if (cb_searchStatus.SelectedIndex >0)
+            //    ordersQuery = ordersQuery.Where(c => c.status == cb_searchStatus.SelectedValue.ToString()).ToList();
+
+            if (chk_allForDelivery.IsChecked == true)
+            {
+                ordersQuery = ordersQuery.Where(c => c.status.Contains("")).ToList();
+            }
+            else if (chk_listed.IsChecked == true)
+            {
+                ordersQuery = ordersQuery.Where(c => c.status == "Listed").ToList();
+            }
+            else if (chk_preparing.IsChecked == true)
+            {
+                ordersQuery = ordersQuery.Where(c => c.status == "Preparing").ToList();
+            }
+            else if (chk_ready.IsChecked == true)
+            {
+                ordersQuery = ordersQuery.Where(c => c.status == "Ready").ToList();
+
+            }
             #endregion
 
             #region search invoice type
-            if(cb_searchInvType.SelectedIndex > 0)
+            if (cb_searchInvType.SelectedIndex > 0)
             {
                 List<string> invoiceTypes;
 
@@ -449,7 +472,77 @@ namespace Restaurant.View.kitchen
             }
             #endregion
             dg_orders.ItemsSource = ordersQuery;
-        }      
+        }
+
+        private async void search_Checking(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //selectedOrders.Clear();
+
+                CheckBox cb = sender as CheckBox;
+                if (cb.IsChecked == true)
+                {
+                    if (cb.Name == "chk_allForDelivery")
+                    {
+                        chk_listed.IsChecked = false;
+                        chk_preparing.IsChecked = false;
+                        chk_ready.IsChecked = false;
+                    }
+                    else if (cb.Name == "chk_listed")
+                    {
+                        chk_allForDelivery.IsChecked = false;
+                        chk_preparing.IsChecked = false;
+                        chk_ready.IsChecked = false;
+                    }
+                    else if (cb.Name == "chk_preparing")
+                    {
+                        chk_allForDelivery.IsChecked = false;
+                        chk_listed.IsChecked = false;
+                        chk_ready.IsChecked = false;
+                    }
+                    else if (cb.Name == "chk_ready")
+                    {
+                        chk_allForDelivery.IsChecked = false;
+                        chk_listed.IsChecked = false;
+                        chk_preparing.IsChecked = false;
+                    }
+                }
+                HelpClass.StartAwait(grid_main);
+
+                //Clear();
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void chk_uncheck(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox cb = sender as CheckBox;
+                if (cb.IsFocused)
+                {
+                    if (cb.Name == "chk_allForDelivery")
+                        chk_allForDelivery.IsChecked = true;
+                    else if (cb.Name == "chk_listed")
+                        chk_listed.IsChecked = true;
+                    else if (cb.Name == "chk_preparing")
+                        chk_preparing.IsChecked = true;
+                    else if (cb.Name == "chk_ready")
+                        chk_ready.IsChecked = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         #endregion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         string input;
