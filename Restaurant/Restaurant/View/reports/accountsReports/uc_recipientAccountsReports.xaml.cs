@@ -1119,8 +1119,7 @@ namespace Restaurant.View.reports.accountsReports
         {//search
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (selectedTab == 0)
                 {
@@ -1129,9 +1128,11 @@ namespace Restaurant.View.reports.accountsReports
                     &&
                     (obj.transNum.Contains(txt_search.Text) ||
                     obj.processType.Contains(txt_search.Text) ||
-                    obj.updateUserAcc.Contains(txt_search.Text) ||
-                    obj.agentCompany.Contains(txt_search.Text) ||
-                    obj.agentName.Contains(txt_search.Text)
+                    obj.updateUserAcc.Contains(txt_search.Text) 
+                    //||
+                    //obj.agentCompany.Contains(txt_search.Text) 
+                    //||
+                    //obj.agentName.Contains(txt_search.Text)
                     )));
                 }
                 if (selectedTab == 1)
@@ -1186,14 +1187,12 @@ namespace Restaurant.View.reports.accountsReports
                 }
                 txt_count.Text = dgPayments.Items.Count.ToString();
 
-                
-                    HelpClass.EndAwait(grid_main);
+            HelpClass.EndAwait(grid_main);
             }
-            catch (Exception ex)
-            {
-                
+                catch (Exception ex)
+                {
                     HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
+                    HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -1420,18 +1419,15 @@ namespace Restaurant.View.reports.accountsReports
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 fillBySide();
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
