@@ -463,7 +463,7 @@ namespace Restaurant
                 }
                 catch
                 {
-                    AppSettings.typesOfService_diningHall = "0";
+                    AppSettings.typesOfService_diningHall = "1";
                 }
                 try
                 {
@@ -480,7 +480,7 @@ namespace Restaurant
                 }
                 catch
                 {
-                    AppSettings.typesOfService_takeAway = "0";
+                    AppSettings.typesOfService_takeAway = "1";
                 }
                 try
                 {
@@ -498,7 +498,7 @@ namespace Restaurant
                 }
                 catch
                 {
-                    AppSettings.typesOfService_selfService = "0";
+                    AppSettings.typesOfService_selfService = "1";
                 }
                
 
@@ -508,9 +508,9 @@ namespace Restaurant
             }
             catch
             {
-                AppSettings.typesOfService_diningHall = "0";
-                AppSettings.typesOfService_takeAway = "0";
-                AppSettings.typesOfService_selfService = "0";
+                AppSettings.typesOfService_diningHall = "1";
+                AppSettings.typesOfService_takeAway = "1";
+                AppSettings.typesOfService_selfService = "1";
             }
             foreach (var item in loadingList)
             {
