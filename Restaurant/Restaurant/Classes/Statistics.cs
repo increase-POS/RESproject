@@ -13,6 +13,7 @@ using System.Web;
 
 using System.Security.Claims;
 using Restaurant.ApiClasses;
+using Restaurant.Classes.ApiClasses;
 
 namespace Restaurant.Classes
 {
@@ -892,7 +893,7 @@ namespace Restaurant.Classes
         public string branchName { get; set; }
         public Nullable<int> branchId { get; set; }
 
-        public List<itemOrderPreparingModel> items { get; set; }
+      //  public List<itemOrderPreparingModel> items { get; set; }
         //
         public Nullable<int> categoryId { get; set; }
         public string categoryName { get; set; }
@@ -917,22 +918,9 @@ namespace Restaurant.Classes
 
         public string statusConv { get; set; }
         public string categoryNameConv { get; set; }
-    
-         
-
-
+  
     }
-    public class orderPreparingStatus 
-    {
-        public int orderStatusId { get; set; }
-        public Nullable<int> orderPreparingId { get; set; }
-        public string status { get; set; }
-        public Nullable<System.DateTime> createDate { get; set; }
-        public Nullable<System.DateTime> updateDate { get; set; }
-
-        public string notes { get; set; }
-
-    }
+   
 
     public class SalesMembership
     { 
