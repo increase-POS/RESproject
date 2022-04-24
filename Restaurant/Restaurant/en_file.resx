@@ -3970,4 +3970,7 @@ Please add Email in setting</value>
   <data name="trApproveOrderNotification" xml:space="preserve">
     <value>Do you want to approve the order?</value>
   </data>
+  <data name="SalesReport" xml:space="preserve">
+    <value>Sales Report</value>
+  </data>
 </root>

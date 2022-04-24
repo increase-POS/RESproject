@@ -1492,8 +1492,10 @@ Parameters!trValueDiscount.Value)
                 firstTitle = AppSettings.resourcemanagerreport.GetString("trSpendingRequests");
             else if (firstTitle == "Consumption")
                 firstTitle = AppSettings.resourcemanagerreport.GetString("trConsumption");
+            else if (firstTitle == "membership")
+                firstTitle = AppSettings.resourcemanagerreport.GetString("membership");
             //trCashBalance trDirectEntry
-            //trTransfers administrativePull  trPreparingOrders trSpendingRequests trConsumption
+            //membership 
             //////////////////////////////////////////////////////////////////////////////
 
             if (secondTitle == "branch")
@@ -2326,6 +2328,31 @@ Parameters!trValueDiscount.Value)
             //    row.statusConv = preparingOrderStatusConvert(row.status);
             //}
 
+
+            rep.DataSources.Add(new ReportDataSource("DataSet", Query));
+        }
+
+        public static void membershipsReport(IEnumerable<SalesMembership> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
+
+            paramarr.Add(new ReportParameter("trCustomer", AppSettings.resourcemanagerreport.GetString("trCustomer")));
+            paramarr.Add(new ReportParameter("membership", AppSettings.resourcemanagerreport.GetString("membership")));
+            paramarr.Add(new ReportParameter("trDiscount", AppSettings.resourcemanagerreport.GetString("trDiscount")));  
+            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
+
+
+            //     DateFormConv(paramarr);
+
+
+            foreach (SalesMembership row in Query)
+            {
+                row.totalDiscount =decimal.Parse( HelpClass.DecTostring(row.totalDiscount));
+            }
 
             rep.DataSources.Add(new ReportDataSource("DataSet", Query));
         }

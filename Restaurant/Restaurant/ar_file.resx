@@ -3955,4 +3955,7 @@
   <data name="trApproveOrderNotification" xml:space="preserve">
     <value>هل تريد تأكيد الطلبية؟</value>
   </data>
+  <data name="SalesReport" xml:space="preserve">
+    <value>تقرير مبيعات</value>
+  </data>
 </root>

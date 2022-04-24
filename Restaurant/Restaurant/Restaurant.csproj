@@ -2131,6 +2131,18 @@
     <Content Include="Reports\StatisticReport\Kitchen\En\EnConsumItem.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\StatisticReport\Sale\Membership\Ar\ArMembership.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Sale\Membership\En\EnMembership.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Sale\Membership\Ar\ArDiscountDetails.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Sale\Membership\En\EnDiscountDetails.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Resource Include="pic\programs-Rest-login-bg.png" />
@@ -2419,6 +2431,7 @@
     <None Include="Properties\DataSources\Restaurant.Classes.PayedInvclass1.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Pos.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ResidentialSectors.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.SalesMembership.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Section.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ShippingCompanies.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.StorageCost.datasource" />
@@ -2437,9 +2450,7 @@
       <Name>netoaster</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Reports\StatisticReport\Sale\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="pic\increase-logo.png" />
     <Resource Include="pic\no-image-icon-125x125.png" />
