@@ -3976,4 +3976,7 @@ Please add Email in setting</value>
   <data name="consumptionInvoice" xml:space="preserve">
     <value>Consumption  invoice</value>
   </data>
+  <data name="discounts" xml:space="preserve">
+    <value>Discounts</value>
+  </data>
 </root>

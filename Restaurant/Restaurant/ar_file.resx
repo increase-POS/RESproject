@@ -3961,4 +3961,7 @@
   <data name="consumptionInvoice" xml:space="preserve">
     <value>فاتورة استهلاك</value>
   </data>
+  <data name="discounts" xml:space="preserve">
+    <value>الحسومات</value>
+  </data>
 </root>
