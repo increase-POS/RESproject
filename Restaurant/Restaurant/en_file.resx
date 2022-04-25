@@ -3164,7 +3164,7 @@ Please add Email in setting</value>
     <value>Categories, Items</value>
   </data>
   <data name="trConsumption" xml:space="preserve">
-    <value>consumption</value>
+    <value>Consumption</value>
   </data>
   <data name="trCreateReservation" xml:space="preserve">
     <value>Create reservation</value>
@@ -3449,7 +3449,7 @@ Please add Email in setting</value>
     <value>change table</value>
   </data>
   <data name="trConfirmAndOpen" xml:space="preserve">
-    <value>confirm and open</value>
+    <value>Confirm and open</value>
   </data>
   <data name="trMergeTable" xml:space="preserve">
     <value>merge table</value>
@@ -3972,5 +3972,8 @@ Please add Email in setting</value>
   </data>
   <data name="SalesReport" xml:space="preserve">
     <value>Sales Report</value>
+  </data>
+  <data name="consumptionInvoice" xml:space="preserve">
+    <value>Consumption  invoice</value>
   </data>
 </root>

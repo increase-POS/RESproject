@@ -3958,4 +3958,7 @@
   <data name="SalesReport" xml:space="preserve">
     <value>تقرير مبيعات</value>
   </data>
+  <data name="consumptionInvoice" xml:space="preserve">
+    <value>فاتورة استهلاك</value>
+  </data>
 </root>
