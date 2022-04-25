@@ -182,7 +182,7 @@
 
                         <CheckBox x:Name="chk_allForDelivery"  
                                      Background="{StaticResource MainColor}"
-                                     Content="all"
+                                     Content="all" IsChecked="True" 
                                      Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
                                      Checked="search_Checking"  Margin="0" Height="40"
                                      Unchecked="chk_uncheck"/>

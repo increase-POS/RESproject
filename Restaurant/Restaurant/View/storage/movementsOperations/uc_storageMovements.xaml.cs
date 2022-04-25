@@ -876,6 +876,7 @@ namespace Restaurant.View.storage.movementsOperations
                                             {
                                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorQuantIsZeroToolTip"), animation: ToasterAnimation.FadeIn);
 
+                                                Window.GetWindow(this).Opacity = 1;
                                                 HelpClass.EndAwait(grid_main);
                                                 return;
                                             }
@@ -2057,6 +2058,12 @@ namespace Restaurant.View.storage.movementsOperations
                                 var combo = (ComboBox)cp.ContentTemplate.FindName("cbm_unitItemDetails", cp);
                                 //var combo = (combo)cell.Content;
                                 combo.SelectedValue = (int)item.itemUnitId;
+                                #region disable & enable unit comboBox
+                                if (_ProcessType == "ex" || _ProcessType == "im" || _ProcessType == "exw" || _ProcessType == "imw")
+                                    combo.IsEnabled = false;
+                                else
+                                    combo.IsEnabled = true;
+                                #endregion
                             }
                         }
                     }
@@ -2098,12 +2105,26 @@ namespace Restaurant.View.storage.movementsOperations
                 {
                     var cmb = sender as ComboBox;
                     cmb.SelectedValue = (int)billDetails[0].itemUnitId;
+
+                    #region disable & enable unit comboBox
+                    if (_ProcessType == "ex" || _ProcessType == "im" || _ProcessType == "exw" || _ProcessType == "imw")
+                        cmb.IsEnabled = false;
+                    else
+                        cmb.IsEnabled = true;
+                    #endregion
                 }
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+        private void Dg_billDetails_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            int column = dg_billDetails.CurrentCell.Column.DisplayIndex;
+            if ((_ProcessType == "ex" || _ProcessType == "im" || _ProcessType == "exw" || _ProcessType == "imw") 
+                && column == 3)
+                e.Cancel = true;
         }
         private void Dg_billDetails_PreviewKeyDown(object sender, KeyEventArgs e)
         {

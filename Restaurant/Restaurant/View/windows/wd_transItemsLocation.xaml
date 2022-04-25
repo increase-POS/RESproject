@@ -79,8 +79,7 @@
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn  Binding="{Binding false, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False" IsThreeState="False">
                             <DataGridCheckBoxColumn.ElementStyle>
-                                <Style
-                                        TargetType="CheckBox">
+                                <Style TargetType="CheckBox">
                                     <Setter Property="FlowDirection" Value="LeftToRight"/>
                                     <Setter Property="HorizontalAlignment" Value="Center"/>
                                     <EventSetter
@@ -91,6 +90,11 @@
                                             Handler="FieldDataGridUnchecked" />
                                 </Style>
                             </DataGridCheckBoxColumn.ElementStyle>
+                            <DataGridCheckBoxColumn.EditingElementStyle>
+                                <Style TargetType="CheckBox">
+                                    <Setter Property="FlowDirection" Value="LeftToRight" />
+                                </Style>
+                            </DataGridCheckBoxColumn.EditingElementStyle>
                             <DataGridCheckBoxColumn.HeaderTemplate >
                                 <DataTemplate >
                                     <CheckBox  Checked="FieldDataGridChecked" Unchecked="FieldDataGridUnchecked" Margin="2" />
