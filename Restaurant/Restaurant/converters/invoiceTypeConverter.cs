@@ -137,6 +137,10 @@ namespace Restaurant.converters
                 case "ssd":
                     value = AppSettings.resourcemanager.GetString("trSelfServiceDraft");
                     break;
+                // فاتورة استهلاك
+                case "fbc":
+                    value = AppSettings.resourcemanager.GetString("consumptionInvoice");
+                    break;
                 default: break;
             }
             return value;
