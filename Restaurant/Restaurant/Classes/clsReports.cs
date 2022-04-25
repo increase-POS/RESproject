@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Restaurant.View.storage;
 using Restaurant.Classes.ApiClasses;
+using Newtonsoft.Json;
 //Restaurant.Classes
 namespace Restaurant.Classes
 {
@@ -2274,8 +2275,11 @@ Parameters!trValueDiscount.Value)
 
 
         }
-        public static void PreparingOrdersReport(IEnumerable<OrderPreparingSTS> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        public static void PreparingOrdersReport(IEnumerable<OrderPreparingSTS> list, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
+            List<OrderPreparingSTS> Query = JsonConvert.DeserializeObject<List<OrderPreparingSTS>>(JsonConvert.SerializeObject(list));
+
+
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
@@ -2297,7 +2301,8 @@ Parameters!trValueDiscount.Value)
 
             foreach (OrderPreparingSTS row in Query)
             {
-                row.statusConv = preparingOrderStatusConvert(row.status);
+                //row.statusConv = preparingOrderStatusConvert(row.status);
+                row.status = preparingOrderStatusConvert(row.status);
             }
             
 
