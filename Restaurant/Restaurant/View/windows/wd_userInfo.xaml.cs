@@ -54,7 +54,7 @@ namespace Restaurant.View.windows
                 else
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
 
-                //translate();
+                translate();
                 #endregion
 
                 txt_userName.Text = MainWindow.userLogin.fullName;
@@ -74,7 +74,12 @@ namespace Restaurant.View.windows
         }
         private void translate()
         {
-
+            txt_userNameTitle.Text = AppSettings.resourcemanager.GetString("trUserName") + ":";
+            txt_posTitle.Text = AppSettings.resourcemanager.GetString("trPOS") + ":";
+            if (MainWindow.branchLogin.type == "b")
+                txt_branchTitle.Text = AppSettings.resourcemanager.GetString("tr_Branch") + ":";
+            else
+                txt_branchTitle.Text = AppSettings.resourcemanager.GetString("tr_Store") + ":";
         }
         private void HandleKeyPress(object sender, KeyEventArgs e)
         {

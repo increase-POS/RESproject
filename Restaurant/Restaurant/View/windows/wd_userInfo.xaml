@@ -47,7 +47,7 @@
                          Width="2" BorderThickness="0" Background="{StaticResource veryLightGrey}" />
                     <TextBlock Grid.Row="1" Grid.Column="2"  Margin="5"  
                                HorizontalAlignment="Left" Text="User Name:" FontSize="16" 
-                                FontWeight="SemiBold"  
+                                FontWeight="SemiBold"  x:Name="txt_userNameTitle"
                            Foreground="{StaticResource MainColor}"  
                        VerticalAlignment="Center"  />
                 <TextBlock   Grid.Row="1" Grid.Column="3" x:Name="txt_userName"   FontSize="16" 
@@ -57,7 +57,7 @@
 
                 <TextBlock Grid.Row="2" Grid.Column="2"  Margin="5"  
                                HorizontalAlignment="Left" Text="Pos:" FontSize="16" 
-                                FontWeight="SemiBold"  
+                                FontWeight="SemiBold"  x:Name="txt_posTitle" 
                            Foreground="{StaticResource MainColor}"  
                        VerticalAlignment="Center"  />
                 <TextBlock   Grid.Row="2" Grid.Column="3" x:Name="txt_pos" FontSize="16" 
@@ -67,7 +67,7 @@
 
                 <TextBlock Grid.Row="3" Grid.Column="2"  Margin="5"  
                                HorizontalAlignment="Left" Text="Branch:" FontSize="16" 
-                                FontWeight="SemiBold"  
+                                FontWeight="SemiBold"    x:Name="txt_branchTitle" 
                            Foreground="{StaticResource MainColor}"  
                        VerticalAlignment="Center"  />
                 <TextBlock   Grid.Row="3" Grid.Column="3" x:Name="txt_branch" FontSize="16" 
