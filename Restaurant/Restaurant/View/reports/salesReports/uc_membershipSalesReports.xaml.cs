@@ -335,6 +335,63 @@ namespace Restaurant.View.reports.salesReports
         #endregion
 
         #region print datagrid btns
+
+        int cashTransID = 0, openCashTransID = 0;
+        IEnumerable<OpenClosOperatinModel> opquery;
+        POSOpenCloseModel openclosrow = new POSOpenCloseModel();
+        public async Task<IEnumerable<OpenClosOperatinModel>> getopquery(POSOpenCloseModel ocrow)
+        {
+
+            Statistics statisticsModel = new Statistics();
+
+            opquery = await statisticsModel.GetTransBetweenOpenClose((int)ocrow.openCashTransId, ocrow.cashTransId);
+            opquery = opquery.Where(c => c.transType != "c" && c.transType != "o");
+
+            openclosrow = ocrow;
+            return opquery;
+        }
+        private void BuildDetailReport(SalesMembership salesMembership)
+        {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+
+            string addpath = "";
+            string firstTitle = "membership";
+            string secondTitle = "";
+            string subTitle = "";
+            string Title = "";
+
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
+
+                addpath = @"\Reports\StatisticReport\Sale\Membership\Ar\ArDiscountDetails.rdlc";
+            }
+            else
+            {
+                addpath = @"\Reports\StatisticReport\Sale\Membership\En\EnDiscountDetails.rdlc";
+            }
+
+            secondTitle = "discounts";// trOperations
+            subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+            Title = AppSettings.resourcemanagerreport.GetString("SalesReport") + " / " + subTitle;
+            paramarr.Add(new ReportParameter("trTitle", Title));
+
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+            ReportCls.checkLang();
+            /*
+                 public List<CouponInvoice> CouponInvoiceList = new List<CouponInvoice>();
+           public List<ItemTransfer> itemsTransferList = new List<ItemTransfer>();
+           public List<InvoicesClass> invoiceClassDiscountList = new List<InvoicesClass>();
+             * */
+            clsReports.membershiptDiscountReport(salesMembership, rep, reppath, paramarr, openclosrow);
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+        }
         private void pdfRowinDatagrid(object sender, RoutedEventArgs e)
         {
             try
@@ -343,26 +400,24 @@ namespace Restaurant.View.reports.salesReports
                 for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                     if (vis is DataGridRow)
                     {
-                        POSOpenCloseModel row = (POSOpenCloseModel)dg_memberships.SelectedItems[0];
-                        //cashTransID = row.cashTransId;
-                        //openCashTransID = row.openCashTransId.Value;
-                        //await getopquery(row);
-                        //if (opquery.Count() == 0)
-                        //{
-                        //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoChange"), animation: ToasterAnimation.FadeIn);
-                        //}
-                        //else
-                        //{
-                        //    BuildOperationReport();
+                        SalesMembership row = (SalesMembership)dg_memberships.SelectedItems[0];
+                       
+                        if (row == null)
+                        {
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoChange"), animation: ToasterAnimation.FadeIn);
+                        }
+                        else
+                        {
+                            BuildDetailReport(row);
 
-                        //    saveFileDialog.Filter = "PDF|*.pdf;";
+                            saveFileDialog.Filter = "PDF|*.pdf;";
 
-                        //    if (saveFileDialog.ShowDialog() == true)
-                        //    {
-                        //        string filepath = saveFileDialog.FileName;
-                        //        LocalReportExtensions.ExportToPDF(rep, filepath);
-                        //    }
-                        //}
+                            if (saveFileDialog.ShowDialog() == true)
+                            {
+                                string filepath = saveFileDialog.FileName;
+                                LocalReportExtensions.ExportToPDF(rep, filepath);
+                            }
+                        }
                     }
 
                 HelpClass.EndAwait(grid_main);
@@ -385,34 +440,24 @@ namespace Restaurant.View.reports.salesReports
                 for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                     if (vis is DataGridRow)
                     {
-                        POSOpenCloseModel row = (POSOpenCloseModel)dg_memberships.SelectedItems[0];
-                        //cashTransID = row.cashTransId;
-                        //openCashTransID = row.openCashTransId.Value;
-                        //await getopquery(row);
-                        //if (opquery.Count() == 0)
-                        //{
-                        //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoChange"), animation: ToasterAnimation.FadeIn);
+                        SalesMembership row = (SalesMembership)dg_memberships.SelectedItems[0];
 
-                        //}
-                        //else
-                        //{
-                        //    string pdfpath = "";
+                        if (row == null)
+                        {
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoChange"), animation: ToasterAnimation.FadeIn);
 
-                        //    pdfpath = @"\Thumb\report\temp.pdf";
-                        //    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+                        }
+                        else
+                        {
+                            string pdfpath = "";
 
-                        //    BuildOperationReport();
-                        //    LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                        //    wd_previewPdf w = new wd_previewPdf();
-                        //    w.pdfPath = pdfpath;
-                        //    if (!string.IsNullOrEmpty(w.pdfPath))
-                        //    {
-                        //        // w.ShowInTaskbar = false;
-                        //        w.ShowDialog();
-                        //        w.wb_pdfWebViewer.Dispose();
-                        //    }
-                        //    Window.GetWindow(this).Opacity = 1;
-                        //}
+                            pdfpath = @"\Thumb\report\temp.pdf";
+                            pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+
+                            BuildDetailReport(row);
+
+                            LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
+                        }
                     }
 
                 HelpClass.EndAwait(grid_main);
@@ -434,29 +479,28 @@ namespace Restaurant.View.reports.salesReports
                 for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                     if (vis is DataGridRow)
                     {
-                        POSOpenCloseModel row = (POSOpenCloseModel)dg_memberships.SelectedItems[0];
-                        //cashTransID = row.cashTransId;
-                        //openCashTransID = row.openCashTransId.Value;
-                        //await getopquery(row);
-                        //if (opquery.Count() == 0)
-                        //{
-                        //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoChange"), animation: ToasterAnimation.FadeIn);
+                        SalesMembership row = (SalesMembership)dg_memberships.SelectedItems[0];
 
-                        //}
-                        //else
-                        //{
-                        //    BuildOperationReport();
+                        if (row == null)
+                        {
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoChange"), animation: ToasterAnimation.FadeIn);
 
-                        //    this.Dispatcher.Invoke(() =>
-                        //    {
-                        //        saveFileDialog.Filter = "EXCEL|*.xls;";
-                        //        if (saveFileDialog.ShowDialog() == true)
-                        //        {
-                        //            string filepath = saveFileDialog.FileName;
-                        //            LocalReportExtensions.ExportToExcel(rep, filepath);
-                        //        }
-                        //    });
-                        //}
+                        }
+                        else
+                        {
+
+                            BuildDetailReport(row);
+
+                            this.Dispatcher.Invoke(() =>
+                            {
+                                saveFileDialog.Filter = "EXCEL|*.xls;";
+                                if (saveFileDialog.ShowDialog() == true)
+                                {
+                                    string filepath = saveFileDialog.FileName;
+                                    LocalReportExtensions.ExportToExcel(rep, filepath);
+                                }
+                            });
+                        }
                     }
 
                 HelpClass.EndAwait(grid_main);
@@ -477,34 +521,32 @@ namespace Restaurant.View.reports.salesReports
                 for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                     if (vis is DataGridRow)
                     {
-                        POSOpenCloseModel row = (POSOpenCloseModel)dg_memberships.SelectedItems[0];
-                        //cashTransID = row.cashTransId;
-                        //openCashTransID = row.openCashTransId.Value;
-                        //await getopquery(row);
-                        //if (opquery.Count() == 0)
-                        //{
-                        //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoChange"), animation: ToasterAnimation.FadeIn);
+                        SalesMembership row = (SalesMembership)dg_memberships.SelectedItems[0];
+                       
+                        if (row == null)
+                        {
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoChange"), animation: ToasterAnimation.FadeIn);
 
-                        //}
-                        //else
-                        //{
-                        //    string pdfpath = "";
+                        }
+                        else
+                        {
+                            string pdfpath = "";
 
-                        //    pdfpath = @"\Thumb\report\temp.pdf";
-                        //    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+                            pdfpath = @"\Thumb\report\temp.pdf";
+                            pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
 
-                        //    BuildOperationReport();
-                        //    LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                        //    wd_previewPdf w = new wd_previewPdf();
-                        //    w.pdfPath = pdfpath;
-                        //    if (!string.IsNullOrEmpty(w.pdfPath))
-                        //    {
-                        //        // w.ShowInTaskbar = false;
-                        //        w.ShowDialog();
-                        //        w.wb_pdfWebViewer.Dispose();
-                        //    }
-                        //    Window.GetWindow(this).Opacity = 1;
-                        //}
+                            BuildDetailReport(row);
+                            LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                            wd_previewPdf w = new wd_previewPdf();
+                            w.pdfPath = pdfpath;
+                            if (!string.IsNullOrEmpty(w.pdfPath))
+                            {
+                                // w.ShowInTaskbar = false;
+                                w.ShowDialog();
+                                w.wb_pdfWebViewer.Dispose();
+                            }
+                            Window.GetWindow(this).Opacity = 1;
+                        }
                     }
 
                 HelpClass.EndAwait(grid_main);
@@ -846,7 +888,7 @@ namespace Restaurant.View.reports.salesReports
             List<ReportParameter> paramarr = new List<ReportParameter>();
 
             string addpath = "";
-            string firstTitle = "membership";//trSpendingRequests
+            string firstTitle = "membership";
             string secondTitle = "";
             string subTitle = "";
             string Title = "";
@@ -920,7 +962,8 @@ namespace Restaurant.View.reports.salesReports
 
                 #region
                 BuildReport();
-                LocalReportExtensions.PrintToPrinter(rep);
+
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
                 #endregion
 
 

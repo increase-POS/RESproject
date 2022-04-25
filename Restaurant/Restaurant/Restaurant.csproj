@@ -2420,10 +2420,12 @@
     <None Include="Properties\DataSources\Restaurant.Classes.CashTransfer1.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.CashTransferSts.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Coupon.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.CouponInvoice.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ErrorClass.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Invoice.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Invoice1.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Invoice2.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.InvoicesClass.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemLocation.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemTransfer2.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemUnitInvoiceProfit.datasource" />

@@ -1569,6 +1569,9 @@ Parameters!trValueDiscount.Value)
                 secondTitle = AppSettings.resourcemanagerreport.GetString("trPull");
             else if (secondTitle == "deposit")
                 secondTitle = AppSettings.resourcemanagerreport.GetString("trDeposit");
+            else if (secondTitle == "discounts")
+                secondTitle = AppSettings.resourcemanagerreport.GetString("discounts");
+            //discounts
             //////////////////////////////////////////////////////////////////////////////
             if (firstTitle == "" && secondTitle!="") {
                 trtext = secondTitle;
@@ -2360,6 +2363,60 @@ Parameters!trValueDiscount.Value)
             }
 
             rep.DataSources.Add(new ReportDataSource("DataSet", Query));
+        }
+
+        public static void membershiptDiscountReport(SalesMembership salesMembership, LocalReport rep, string reppath, List<ReportParameter> paramarr, POSOpenCloseModel openclosrow)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            foreach (var r in salesMembership.CouponInvoiceList.ToList())
+            {
+                r.finalDiscount = decimal.Parse(HelpClass.DecTostring(r.finalDiscount));
+                //  r.openCash = decimal.Parse(SectionData.DecTostring(r.openCash));
+                //  r.notes = closingDescriptonConverter(r);
+
+
+            }
+
+             paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trValue", AppSettings.resourcemanagerreport.GetString("trValue")));
+            paramarr.Add(new ReportParameter("trDiscount", AppSettings.resourcemanagerreport.GetString("trDiscount")));
+
+            paramarr.Add(new ReportParameter("trCustomer", AppSettings.resourcemanagerreport.GetString("trCustomer")));
+           // paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
+
+           // paramarr.Add(new ReportParameter("membership", AppSettings.resourcemanagerreport.GetString("membership")));
+            paramarr.Add(new ReportParameter("trExpire", AppSettings.resourcemanagerreport.GetString("trExpire")));
+            paramarr.Add(new ReportParameter("trTotal", AppSettings.resourcemanagerreport.GetString("trTotal")));
+            paramarr.Add(new ReportParameter("hidecop", AppSettings.resourcemanagerreport.GetString("hidecop")));
+            paramarr.Add(new ReportParameter("hideoff", AppSettings.resourcemanagerreport.GetString("hideoff")));
+            paramarr.Add(new ReportParameter("hideinvclass", AppSettings.resourcemanagerreport.GetString("hideinvclass")));
+            paramarr.Add(new ReportParameter("trInvoiceCode", AppSettings.resourcemanagerreport.GetString("trInvoiceCode")));
+
+            paramarr.Add(new ReportParameter("trmembership", AppSettings.resourcemanagerreport.GetString("membership")));
+          //  paramarr.Add(new ReportParameter("trTotal", AppSettings.resourcemanagerreport.GetString("trTotal")));
+            paramarr.Add(new ReportParameter("trCoupons", AppSettings.resourcemanagerreport.GetString("trCoupons")));
+            paramarr.Add(new ReportParameter("trOffer", AppSettings.resourcemanagerreport.GetString("trOffer")));
+            paramarr.Add(new ReportParameter("trinvoicesClasses", AppSettings.resourcemanagerreport.GetString("invoicesClasses")));
+
+         
+            paramarr.Add(new ReportParameter("Customer", AgentUnKnownConvert(salesMembership.agentId, "c", salesMembership.agentName)));// unknown conv
+            paramarr.Add(new ReportParameter("InvoiceCode", salesMembership.invNumber));
+
+            paramarr.Add(new ReportParameter("membership", salesMembership.membershipsName));
+
+            paramarr.Add(new ReportParameter("Expire",HelpClass.DateToString( salesMembership.endDate)));// get datas
+            paramarr.Add(new ReportParameter("total", HelpClass.DecTostring( salesMembership.totalDiscount) ));
+
+            paramarr.Add(new ReportParameter("Currency", AppSettings.Currency));
+
+            rep.DataSources.Add(new ReportDataSource("DataSetCoupon", salesMembership.CouponInvoiceList.ToList()));
+
+            rep.DataSources.Add(new ReportDataSource("DataSetOffer", salesMembership.itemsTransferList.ToList()));
+
+            rep.DataSources.Add(new ReportDataSource("DataSetinvoicesClasses", salesMembership.invoiceClassDiscountList.ToList()));
         }
         //public static void itemReport(IEnumerable<Item> itemQuery, LocalReport rep, string reppath)
         //{

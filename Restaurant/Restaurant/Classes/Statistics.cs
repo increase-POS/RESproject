@@ -1000,6 +1000,9 @@ namespace Restaurant.Classes
         public decimal offerDiscount { get; set; }
         public decimal totalDiscount { get; set; }
 
+        public Nullable<System.DateTime> endDate { get; set; }
+        public string subscriptionType { get; set; }
+
     }
 
     class Statistics
