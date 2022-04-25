@@ -104,6 +104,22 @@ namespace Restaurant.View
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 translate();
                 #endregion
+                if (AppSettings.typesOfService_diningHall != "1")
+                {
+                    txt_diningHall.Foreground = Application.Current.Resources["veryLightGrey"] as SolidColorBrush;
+                    txt_diningHallValue.Foreground = Application.Current.Resources["veryLightGrey"] as SolidColorBrush;
+                }
+                if (AppSettings.typesOfService_takeAway != "1")
+                {
+                    txt_takeAway.Foreground = Application.Current.Resources["veryLightGrey"] as SolidColorBrush;
+                    txt_takeAwayValue.Foreground = Application.Current.Resources["veryLightGrey"] as SolidColorBrush;
+                }
+                if (AppSettings.typesOfService_selfService != "1")
+                {
+                    txt_selfService.Foreground = Application.Current.Resources["veryLightGrey"] as SolidColorBrush;
+                    txt_selfServiceValue.Foreground = Application.Current.Resources["veryLightGrey"] as SolidColorBrush;
+                }
+
                 if (FillCombo.itemUnitsUsersList is null)
                    await FillCombo.RefreshItemUnitUser();
                 refrishIUList(FillCombo.itemUnitsUsersList);
