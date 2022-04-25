@@ -1049,26 +1049,30 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
-                if (elapsed.TotalMilliseconds > 100 && cb_vendor.SelectedIndex != -1)
+                if (cb_vendor.IsFocused || _InvoiceType == "pd")
                 {
-                    _SelectedVendor = (int)cb_vendor.SelectedValue;
-                    var v = FillCombo.vendorsList.Where(x => x.agentId == _SelectedVendor).FirstOrDefault();
-                    if (v.payType != null)
+
+                    TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
+                    if (elapsed.TotalMilliseconds > 100 && cb_vendor.SelectedIndex != -1)
                     {
-                        cb_paymentProcessType.SelectedValue = v.payType;
-                        Animations.shakingControl(cb_paymentProcessType);
-                        Animations.shakingControl(txt_payment);
+                        _SelectedVendor = (int)cb_vendor.SelectedValue;
+                        var v = FillCombo.vendorsList.Where(x => x.agentId == _SelectedVendor).FirstOrDefault();
+                        if (v.payType != null)
+                        {
+                            cb_paymentProcessType.SelectedValue = v.payType;
+                            Animations.shakingControl(cb_paymentProcessType);
+                            Animations.shakingControl(txt_payment);
+                        }
+                        //else
+                        //    cb_paymentProcessType.SelectedIndex = 0;
+
                     }
-                    //else
-                    //    cb_paymentProcessType.SelectedIndex = 0;
+                    else
+                    {
+                        cb_vendor.SelectedValue = _SelectedVendor;
+                    }
 
                 }
-                else
-                {
-                    cb_vendor.SelectedValue = _SelectedVendor;
-                }
-                
 
             }
             catch (Exception ex)
@@ -2292,17 +2296,54 @@ namespace Restaurant.View.purchase
         }
         public async Task fillInvoiceInputs(Invoice invoice)
         {
-            if (_InvoiceType == "p" || _InvoiceType == "pb")
+            #region payment process
+            if (_InvoiceType == "p" || _InvoiceType == "pw" || _InvoiceType == "pbw" || _InvoiceType == "pb")
             {
+                //payments
                 var cashTransfers = await cashTransfer.GetListByInvId(invoice.invoiceId);
-                if (cashTransfers.Count == 1)
+                if (cashTransfers.Count == 0)
+                {
+                    cb_paymentProcessType.SelectedValue = "balance";
+
+                }
+                else if (cashTransfers.Count == 1)
                 {
                     cb_paymentProcessType.SelectedValue = cashTransfers[0].processType;
-                    tb_processNum.Text = cashTransfers[0].docNum;
+                    try
+                    {
+                        _SelectedCard = (int)cashTransfers[0].cardId;
+                        tb_processNum.Text = cashTransfers[0].docNum;
+
+                        if ((int)cashTransfers[0].cardId != 0)
+                        {
+                            var card = FillCombo.cardsList.Where(x => x.cardId == (int)cashTransfers[0].cardId).FirstOrDefault();
+                            txt_card.Text = card.name;
+                            if (card.hasProcessNum)
+                                tb_processNum.Visibility = Visibility.Visible;
+                            else
+                                tb_processNum.Visibility = Visibility.Collapsed;
+                        }
+                    }
+                    catch { }
                 }
                 else
                     cb_paymentProcessType.SelectedValue = "multiple";
+
             }
+            #endregion
+            #region tax
+            if (_InvoiceType == "p" || _InvoiceType == "pw" || _InvoiceType == "pd")
+            {
+                if (invoice.tax != null)
+                    tb_taxValue.Text = HelpClass.PercentageDecTostring(invoice.tax);
+                else
+                    tb_taxValue.Text = "0";
+            }
+            else if (_InvoiceType == "pbw" || _InvoiceType == "pb" || _InvoiceType == "pbd")
+            {
+                tb_taxValue.Text = "0";
+            }
+            #endregion
             _Sum = (decimal)invoice.total;
             txt_invNumber.Text = invoice.invNumber.ToString();
             cb_branch.SelectedValue = invoice.branchId;
@@ -2337,7 +2378,7 @@ namespace Restaurant.View.purchase
 
             // build invoice details grid
             await buildInvoiceDetails();
-
+            refreshTotalValue();
             inputEditable();
         }
         private async Task buildInvoiceDetails()
