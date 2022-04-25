@@ -572,7 +572,8 @@ namespace Restaurant.View.reports.kitchenReports
             Title = AppSettings.resourcemanagerreport.GetString("trKitchen") + " / " + subTitle;
             paramarr.Add(new ReportParameter("trTitle", Title));
 
-          clsReports.PreparingOrdersReport(ordersQuery, rep, reppath, paramarr);//PreparingOrders
+           
+            clsReports.PreparingOrdersReport(ordersQuery.ToList(), rep, reppath, paramarr);//PreparingOrders
 
             clsReports.Header(paramarr);
 
@@ -699,6 +700,7 @@ namespace Restaurant.View.reports.kitchenReports
                     w.ShowDialog();
                     w.wb_pdfWebViewer.Dispose();
                 }
+                //dg_orders.ItemsSource = ordersQuery;
                 Window.GetWindow(this).Opacity = 1;
                 #endregion
 
