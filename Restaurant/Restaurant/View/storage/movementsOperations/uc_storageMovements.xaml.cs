@@ -1820,11 +1820,11 @@ namespace Restaurant.View.storage.movementsOperations
                     if (w.isOk)
                     {
                         await saveDraft();
-                    }
-                    clearProcess();
-                    setNotifications();
-
+                    }                 
                 }
+
+                clearProcess();
+                setNotifications();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
