@@ -697,14 +697,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="statusConv">
+                        <Textbox Name="status">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!statusConv.Value</Value>
+                                  <Value>=Fields!status.Value</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -715,7 +715,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>statusConv</rd:DefaultName>
+                          <rd:DefaultName>status</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
