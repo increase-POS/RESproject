@@ -834,12 +834,12 @@
             <Border x:Name="bdrMain"  
                     Grid.RowSpan="5" Grid.ColumnSpan="5" Visibility="Collapsed" VerticalAlignment="Top"   Margin="0,70,29,0" HorizontalAlignment="Right" >
                 <Grid>
-                    <Border x:Name="bdr_shadow" Background="White" CornerRadius="10"  Height="450" Width="250">
+                    <Border x:Name="bdr_shadow" Background="White" CornerRadius="10"  Height="440" Width="250">
                         <Border.Effect>
                             <DropShadowEffect   ShadowDepth="0" Color="Gray" BlurRadius="20"/>
                         </Border.Effect>
                     </Border>
-                    <Border  x:Name="bdr_notification"  CornerRadius="10" Background="White" Height="450" Width="250" >
+                    <Border  x:Name="bdr_notification"  CornerRadius="10" Background="White" Height="440" Width="250" >
                         <Grid >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="60"></RowDefinition>
