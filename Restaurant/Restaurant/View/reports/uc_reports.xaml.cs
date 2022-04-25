@@ -1,5 +1,6 @@
 ﻿using Restaurant.Classes;
 using Restaurant.View.reports.accountsReports;
+using Restaurant.View.reports.deliveryReports;
 using Restaurant.View.reports.kitchenReports;
 using Restaurant.View.reports.purchaseReports;
 using Restaurant.View.reports.salesReports;
@@ -224,6 +225,22 @@ namespace Restaurant.View.reports
             {
                 MainWindow.mainWindow.grid_main.Children.Clear();
                 MainWindow.mainWindow.grid_main.Children.Add(uc_kitchenReports.Instance);
+
+                Button button = sender as Button;
+                MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_deliveryReports_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                MainWindow.mainWindow.grid_main.Children.Add(uc_deliveryReports.Instance);
 
                 Button button = sender as Button;
                 MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
