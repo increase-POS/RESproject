@@ -20,7 +20,13 @@ namespace Restaurant.converters
            
             decimal remainingTime = 0;
             OrderPreparing orderPreparing = (OrderPreparing) value ;
-            remainingTime =  OrderPreparing.calculateRemainingTime(orderPreparing.preparingStatusDate.Value,
+                DateTime dt;
+                if (orderPreparing.preparingStatusDate == null)
+                    dt = DateTime.Now;
+                else
+                    dt = orderPreparing.preparingStatusDate.Value;
+
+            remainingTime =  OrderPreparing.calculateRemainingTime(dt,
                 orderPreparing.preparingTime.Value, orderPreparing.status);
 
 
