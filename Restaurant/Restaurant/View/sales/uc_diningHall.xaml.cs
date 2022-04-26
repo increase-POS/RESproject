@@ -1358,7 +1358,7 @@ namespace Restaurant.View.sales
             catch { }
         }
         #endregion
-        #region adddraft - addInvoice - cancleInvoice - clear - table names - fillInvoiceInputs - validate invoice values - refresh items price
+        #region adddraft - addInvoice - cancleInvoice - clear - table names - fillInvoiceInputs  - refresh items price
         private async Task<int> addDraft()
         {
             int res = 0;
@@ -1613,16 +1613,6 @@ namespace Restaurant.View.sales
         }
         async Task fillDiningHallInv()
         {
-            //#region set parameters
-            //_Sum = (decimal)invoice.total;
-            //_DeliveryCost = (decimal)invoice.shippingCost;
-            //_deliveryDiscount = (decimal)invoice.shippingCostDiscount;
-            //_ManualDiscount = invoice.discountValue;
-            //_DiscountType = invoice.discountType;
-            //selectedCopouns = await FillCombo.invoice.GetInvoiceCoupons(invoice.invoiceId);
-
-            //#endregion
-
             #region text values and colors
 
             if (_ManualDiscount > 0 || selectedCopouns.Count > 0)
@@ -1699,22 +1689,12 @@ namespace Restaurant.View.sales
             #region items sent to kitchen
             await refreshSentToKitchenItems();
             #endregion
-
-           
-
+         
             setKitchenNotification();
         }
 
         async Task fillTakeAwayInv()
         {
-            //#region set parameters
-            //_Sum = (decimal)invoice.total;
-            //_DeliveryCost = (decimal)invoice.shippingCost;
-            //_ManualDiscount = invoice.discountValue;
-            //_DiscountType = invoice.discountType;
-            //selectedCopouns = await FillCombo.invoice.GetInvoiceCoupons(invoice.invoiceId);
-
-            //#endregion
 
             #region text values and colors
 
@@ -1807,14 +1787,6 @@ namespace Restaurant.View.sales
         }
         async Task fillSelfServiceInv()
         {
-            //#region set parameters
-            //_Sum = (decimal)invoice.total;
-            //_DeliveryCost = (decimal)invoice.shippingCost;
-            ////_ManualDiscount = invoice.discountValue;
-            ////_DiscountType = invoice.discountType;
-            ////selectedCopouns = await FillCombo.invoice.GetInvoiceCoupons(invoice.invoiceId);
-
-            //#endregion
 
             #region text values and colors
 
@@ -2608,11 +2580,22 @@ namespace Restaurant.View.sales
         List<CashTransfer> paymentsList = new List<CashTransfer>();
         private async Task<bool> validateInvoiceValues()
         {
+            #region check total
             if (decimal.Parse(tb_subtotal.Text) == 0)
             {
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorTotalIsZeroToolTip"), animation: ToasterAnimation.FadeIn);
                 return false;
             }
+            #endregion
+            #region check discount value 
+            decimal validDiscountValue = HelpClass.calcPercentage(_Sum, AppSettings.maxDiscount);
+            if (decimal.Parse(tb_totalDiscount.Text) > validDiscountValue)
+            {
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorMaxDiscountToolTip"), animation: ToasterAnimation.FadeIn);
+
+                return false;
+            }
+            #endregion
             return true;
         }
 
