@@ -3982,4 +3982,10 @@ Please add Email in setting</value>
   <data name="trErrorMaxDiscountToolTip" xml:space="preserve">
     <value>The discount exceeded the permissible value</value>
   </data>
+  <data name="minimize" xml:space="preserve">
+    <value>Minimize</value>
+  </data>
+  <data name="trOrdersWaitConfirmUser" xml:space="preserve">
+    <value>Orders Waiting for user confirmation</value>
+  </data>
 </root>

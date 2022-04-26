@@ -3967,4 +3967,10 @@
   <data name="trErrorMaxDiscountToolTip" xml:space="preserve">
     <value>الحسم تجاوز القيمة المسموحة</value>
   </data>
+  <data name="minimize" xml:space="preserve">
+    <value>تصغير</value>
+  </data>
+  <data name="trOrdersWaitConfirmUser" xml:space="preserve">
+    <value>طلبات بانتظار تأكيد المستخدم</value>
+  </data>
 </root>
