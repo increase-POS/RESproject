@@ -95,12 +95,7 @@
                             <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" >
                                 <Grid x:Name="grid_father">
                                     <Grid Grid.Row="1" x:Name="grid_invoice" Margin="10,0,10,10"  Visibility="Visible">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto"></RowDefinition>
-                                            <RowDefinition Height="auto"></RowDefinition>
-                                            <RowDefinition Height="auto"></RowDefinition>
-
-                                        </Grid.RowDefinitions>
+                                       
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"></ColumnDefinition>
                                             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -277,14 +272,12 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn x:Name="col_orderNum"      Width="*" Header="No."       Binding="{Binding orderNum}"/>
                                     <DataGridTextColumn x:Name="col_invNum"        Width="*" Header="No."       Binding="{Binding invNumber}"/>
-                                    <DataGridTextColumn x:Name="col_itemName"      Width="*" Header="Item"      Binding="{Binding itemName}"/>
-                                    <DataGridTextColumn x:Name="col_quantity"      Width="*" Header="QTY"       Binding="{Binding quantity }" />
-                                    <DataGridTextColumn x:Name="col_status"        Width="*" Header="Status"    Binding="{Binding status , Converter={StaticResource preparingOrderStatusConverter}}" />
-                                    <DataGridTextColumn x:Name="col_date"          Width="*" Header="Date"      Binding="{Binding createDate,Converter={StaticResource dateFrameConverter }}"/>
                                     <DataGridTextColumn x:Name="col_branch"        Width="*" Header="Branch"    Binding="{Binding branchName }" />
-                                    <DataGridTextColumn x:Name="col_category"      Width="*" Header="Category"  Binding="{Binding categoryName , Converter={StaticResource translateCategoryNameForReports}}" />
-                                    <DataGridTextColumn x:Name="col_tag"           Width="*" Header="Tag"       Binding="{Binding tagName}" />
-                                    <DataGridTextColumn x:Name="col_duration"      Width="*" Header="Duration"  Binding="{Binding realDuration , Converter={StaticResource decimalToTimeConverter}}" />
+                                    <DataGridTextColumn x:Name="col_customer"      Width="*" Header="Customer"  Binding="{Binding agentName}"/>
+                                    <DataGridTextColumn x:Name="col_company"       Width="*" Header="Company"   Binding="{Binding shippingCompanyName}"/>
+                                    <DataGridTextColumn x:Name="col_driver"        Width="*" Header="Driver"    Binding="{Binding shipUserName }" />
+                                    <DataGridTextColumn x:Name="col_duration"      Width="*" Header="Duration"  Binding="{Binding orderTime , Converter={StaticResource dateFrameConverter}}" />
+                                    
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>

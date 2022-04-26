@@ -64,7 +64,7 @@ namespace Restaurant.View.reports.deliveryReports
             { }
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             //try
             //{
@@ -79,6 +79,7 @@ namespace Restaurant.View.reports.deliveryReports
 
             chk_allBranches.IsChecked = true;
 
+            await Search();
             //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_preparingOrders.Tag.ToString());
 
             //}
@@ -91,34 +92,30 @@ namespace Restaurant.View.reports.deliveryReports
         #region methods
         private void translate()
         {
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_startDate, AppSettings.resourcemanager.GetString("trStartDateHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_endDate, AppSettings.resourcemanager.GetString("trEndDateHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(txt_search, AppSettings.resourcemanager.GetString("trSearchHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trBranch") + "...");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_category, AppSettings.resourcemanager.GetString("trCategorie") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_startDate, AppSettings.resourcemanager.GetString("trStartDateHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_endDate, AppSettings.resourcemanager.GetString("trEndDateHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(txt_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trBranch") + "...");
 
-            //chk_allBranches.Content = AppSettings.resourcemanager.GetString("trAll");
-            //chk_allCategories.Content = AppSettings.resourcemanager.GetString("trAll");
+            chk_allBranches.Content = AppSettings.resourcemanager.GetString("trAll");
 
-            //tt_delivery.Content = AppSettings.resourcemanager.GetString("trPreparingOrders");
+            tt_delivery.Content = AppSettings.resourcemanager.GetString("trDelivery");
 
-            //col_orderNum.Header = AppSettings.resourcemanager.GetString("trNum");
-            //col_invNum.Header = AppSettings.resourcemanager.GetString("trInvoiceNumber");
-            //col_date.Header = AppSettings.resourcemanager.GetString("trDate");
-            //col_itemName.Header = AppSettings.resourcemanager.GetString("trItem");
-            //col_quantity.Header = AppSettings.resourcemanager.GetString("trQTR");
-            //col_branch.Header = AppSettings.resourcemanager.GetString("trBranch");
-            //col_category.Header = AppSettings.resourcemanager.GetString("trCategorie");
-            //col_tag.Header = AppSettings.resourcemanager.GetString("trTag");
-            //col_status.Header = AppSettings.resourcemanager.GetString("trStatus");
-            //col_duration.Header = AppSettings.resourcemanager.GetString("duration");
+            col_orderNum.Header = AppSettings.resourcemanager.GetString("trNo.");
+            col_invNum.Header = AppSettings.resourcemanager.GetString("trInvoiceNumber");
+            col_branch.Header = AppSettings.resourcemanager.GetString("trBranch");
+            col_customer.Header = AppSettings.resourcemanager.GetString("trCustomer");
+            col_company.Header = AppSettings.resourcemanager.GetString("trCompany");
+            col_driver.Header = AppSettings.resourcemanager.GetString("trDriver");
+            col_duration.Header = AppSettings.resourcemanager.GetString("duration");
 
-            //tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
-            //tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
-            //tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
-            //tt_preview.Content = AppSettings.resourcemanager.GetString("trPreview");
-            //tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
-            //tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
+            tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
+            tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
+            tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
+            tt_preview.Content = AppSettings.resourcemanager.GetString("trPreview");
+            tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
+            tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
+
         }
 
         async Task Search()
@@ -164,7 +161,7 @@ namespace Restaurant.View.reports.deliveryReports
 
         async Task<IEnumerable<OrderPreparingSTS>> RefreshDeliveriesList()
         {
-            deliveries = await statisticsModel.GetPreparingOrders(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
+            deliveries = await statisticsModel.GetDelivery(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
             fillBranches();
             return deliveries;
         }
@@ -218,8 +215,6 @@ namespace Restaurant.View.reports.deliveryReports
 
                 cb_branches.SelectedIndex = -1;
                 cb_branches.IsEnabled = false;
-
-                chk_allCategories.IsChecked = true;
 
                 HelpClass.EndAwait(grid_main);
             }
