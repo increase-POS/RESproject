@@ -2439,7 +2439,7 @@ Parameters!trValueDiscount.Value)
             paramarr.Add(new ReportParameter("Expire", unlimitedEndDateConverter(salesMembership.subscriptionType,  salesMembership.endDate )));// get datas
             paramarr.Add(new ReportParameter("total", HelpClass.DecTostring( salesMembership.totalDiscount) ));
             paramarr.Add(new ReportParameter("Currency", AppSettings.Currency));
-
+            paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
             paramarr.Add(new ReportParameter("hidecop", salesMembership.CouponInvoiceList.ToList().Count()>0?"0":"1"));
             paramarr.Add(new ReportParameter("hideoff", salesMembership.itemsTransferList.ToList().Count() > 0 ? "0" : "1"));
             paramarr.Add(new ReportParameter("hideinvclass", salesMembership.invoiceClassDiscountList.ToList().Count() > 0 ? "0" : "1"));
