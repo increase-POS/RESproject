@@ -34,14 +34,18 @@ namespace Restaurant.View.windows
         StorageCost storageCost = new StorageCost();
 
         List<Package> allIPackagesSource = new List<Package>();
-       public List<Package> allPackages = new List<Package>();
+        public List<Package> allPackages = new List<Package>();
 
         List<ItemUnit> allItemsUnitsSource = new List<ItemUnit>();
         public List<ItemUnit> selectedItemUnits = new List<ItemUnit>();
 
-        List<ItemUnitUser> allItemsUnitsUserSource = new List<ItemUnitUser>();
         public List<ItemUnitUser> selectedItemUnitsUser = new List<ItemUnitUser>();
 
+        //home
+        List<ItemUnitUser> selectedItemUnitsHomeSource = new List<ItemUnitUser>();
+        public List<ItemUnitUser> selectedItemUnitsHome = new List<ItemUnitUser>();
+        ItemUnitUser itemUnitUserModel = new ItemUnitUser();
+        ItemUnitUser itemUnitUser = new ItemUnitUser();
 
         string searchText = "";
 
@@ -93,10 +97,17 @@ namespace Restaurant.View.windows
                 }
                 translat();
                 #endregion
+
+               
                 #region item units for package
                 if (CallerName == "package")
                 {
+                    //bdr_general.Visibility = Visibility.Visible;
+                    //bdr_home.Visibility = Visibility.Collapsed;
+                    item.Visibility = Visibility.Visible;
+                    note.Visibility = Visibility.Collapsed;
                     quantity.Visibility = Visibility.Visible;
+
                     allItemUnitsSource = FillCombo.itemUnitList.Where(x => x.type == "SalesNormal").ToList();
                     allItemUnits.AddRange(allItemUnitsSource);
                     for (int i = 0; i < allItemUnits.Count; i++)
@@ -133,15 +144,18 @@ namespace Restaurant.View.windows
                     dg_allItems.SelectedValuePath = "packageId";
                     dg_allItems.DisplayMemberPath = "notes";
 
-                    dg_allItems.ItemsSource = allItemUnits;
-                    dg_allItems.SelectedValuePath = "itemUnitId";
-                    dg_allItems.DisplayMemberPath = "itemName";
                 }
                 #endregion
+
                 #region storageCost
                 else if (CallerName == "storageCost")
                 {
+                    //bdr_general.Visibility = Visibility.Visible;
+                    //bdr_home.Visibility = Visibility.Collapsed;
+                    item.Visibility = Visibility.Visible;
+                    note.Visibility = Visibility.Collapsed;
                     quantity.Visibility = Visibility.Collapsed;
+
                     allItemUnitsSource = FillCombo.itemUnitList.Select( x => new ItemUnit() { itemId = x.itemId, itemName = x.itemName, unitName = x.unitName,itemUnitId = x.itemUnitId }).ToList();
                     allItemUnits.AddRange(allItemUnitsSource);
 
@@ -166,17 +180,64 @@ namespace Restaurant.View.windows
                     dg_selectedItems.SelectedValuePath = "itemUnitId";
                     dg_selectedItems.DisplayMemberPath = "itemName";
 
-                    dg_allItems.ItemsSource = allItemUnits;
-                    dg_allItems.SelectedValuePath = "itemUnitId";
-                    dg_allItems.DisplayMemberPath = "itemName";
                 }
                 #endregion
+
                 #region dashboard
                else if (CallerName.Equals("IUList"))
                 {
-                    
+                    //bdr_general.Visibility = Visibility.Collapsed;
+                    //bdr_home.Visibility = Visibility.Visible;
+
+                    item.Visibility = Visibility.Collapsed;
+                    note.Visibility = Visibility.Visible;
+                    quantity.Visibility = Visibility.Collapsed;
+
+                    //if (FillCombo.itemUnitList == null)
+                    //    FillCombo.itemUnitList = await FillCombo.RefreshItemUnit();
+
+                    //allItemUnitsSource = FillCombo.itemUnitList.Where(i => i.type == "PurchaseNormal" || i.type == "PurchaseExpire").ToList();
+                    allItemUnitsSource = await itemUnit.GetIU();
+                    allItemUnitsSource = allItemUnitsSource.Where(i => i.type == "PurchaseNormal" || i.type == "PurchaseExpire").ToList();
+                    allItemUnits.AddRange(allItemUnitsSource);
+                   
+                    foreach (var iu in allItemUnits)
+                    {
+                        iu.itemName = iu.itemName + "-" + iu.unitName;
+                    }
+
+                    selectedItemUnitsHomeSource = await itemUnitUserModel.GetByUserId(MainWindow.userLogin.userId);
+
+                    //remove selected itemunits from source itemunits
+                    foreach (var p in selectedItemUnitsHomeSource)
+                    {
+                        for (int i = 0; i < allItemUnits.Count; i++)
+                        {
+                            //remove saved itemunits
+                            if (p.itemUnitId == allItemUnits[i].itemUnitId)
+                            {
+                                allItemUnits.Remove(allItemUnits[i]);
+                            }
+                        }
+                    }
+                    selectedItemUnitsHome.AddRange(selectedItemUnitsHomeSource);
+                    foreach (var p in selectedItemUnitsHome)
+                    {
+                        foreach (var iu in allItemUnits)
+                            if (p.itemUnitId == iu.itemUnitId)
+                                p.notes = iu.itemName + "-" + iu.unitName;
+                    }
+
+                    dg_selectedItems.ItemsSource = selectedItemUnitsHome;
+                    dg_selectedItems.SelectedValuePath = "id";
+                    dg_selectedItems.DisplayMemberPath = "notes";
                 }
                 #endregion
+
+                dg_allItems.ItemsSource = allItemUnits;
+                dg_allItems.SelectedValuePath = "itemUnitId";
+                dg_allItems.DisplayMemberPath = "itemName";
+
                 if (sender != null)
                     HelpClass.EndAwait(grid_offerList);
             }
@@ -286,6 +347,24 @@ namespace Restaurant.View.windows
                         dg_allItems.ItemsSource = allItemUnits;
                         dg_selectedItems.ItemsSource = allPackages;
                     }
+                    else if(CallerName == "IUList")
+                    {
+                        ItemUnitUser iu = new ItemUnitUser();
+
+                        iu.itemUnitId = itemUnit.itemUnitId;
+                        iu.userId = MainWindow.userLogin.userId;
+                        iu.isActive = 1;
+                        iu.notes = itemUnit.itemName;
+                        iu.createUserId = MainWindow.userLogin.userId;
+
+                        allItemUnits.Remove(itemUnit);
+                        selectedItemUnitsHome.Add(iu);
+
+                        dg_allItems.ItemsSource = allItemUnits;
+                        dg_selectedItems.ItemsSource = selectedItemUnitsHome;
+
+
+                    }
                     else
                     {
                         ItemUnit p = new ItemUnit();
@@ -305,6 +384,7 @@ namespace Restaurant.View.windows
                     }
 
                     dg_allItems.Items.Refresh();
+                    dg_selectedItems.Items.Refresh();
                     dg_selectedItems.Items.Refresh();
                 }
             }
@@ -334,6 +414,20 @@ namespace Restaurant.View.windows
                         dg_selectedItems.ItemsSource = allPackages;
                     }
                 }
+                else if(CallerName.Equals("IUList"))
+                {
+                    itemUnitUser = dg_selectedItems.SelectedItem as ItemUnitUser;
+                    if (itemUnitUser != null)
+                    {
+                        i = allItemUnitsSource.Where(s => s.itemUnitId == itemUnitUser.itemUnitId.Value).FirstOrDefault();
+
+                        allItemUnits.Add(i);
+
+                        selectedItemUnitsHome.Remove(itemUnitUser);
+
+                        dg_selectedItems.ItemsSource = selectedItemUnits;
+                    }
+                }
                 else
                 {
                     itemUnit = dg_selectedItems.SelectedItem as ItemUnit;
@@ -352,6 +446,7 @@ namespace Restaurant.View.windows
                 dg_allItems.ItemsSource = allItemUnits;
 
                 dg_allItems.Items.Refresh();
+                dg_selectedItems.Items.Refresh();
                 dg_selectedItems.Items.Refresh();
             }
             catch (Exception ex)
@@ -387,7 +482,6 @@ namespace Restaurant.View.windows
             {
                 if (sender != null)
                     HelpClass.StartAwait(grid_offerList);
-
 
                 isActive = true;
                 DialogResult = true;

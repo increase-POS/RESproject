@@ -989,10 +989,26 @@ namespace Restaurant.View
                 w.ShowDialog();
                 if (w.isActive)
                 {
-                    FillCombo.itemUnitsUsersList = w.selectedItemUnitsUser;
+                    ItemUnitUser itemUnitUserModel = new ItemUnitUser();
+                    ItemUnit itemUnitModel = new ItemUnit();
 
-                    refrishIUList(FillCombo.itemUnitsUsersList);
-                    await IUStorage();
+                    foreach (var x in w.selectedItemUnitsHome)
+                    {
+                        x.id = 0;
+                        ItemUnit iu = new ItemUnit();
+                        iu = await itemUnitModel.GetById(x.itemUnitId.Value);
+                        x.itemId = iu.itemId;
+                        x.unitId = iu.unitId;
+                    }
+                    int result = await itemUnitUserModel.UpdateList(w.selectedItemUnitsHome, MainWindow.userLogin.userId);
+
+                    if (result > 0)
+                    {
+                        FillCombo.itemUnitsUsersList = w.selectedItemUnitsUser;
+
+                        refrishIUList(FillCombo.itemUnitsUsersList);
+                        await IUStorage();
+                    }
                     //SkipIUStorage = 0;
                     //refreshView();
                 }

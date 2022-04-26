@@ -187,7 +187,7 @@
                 </Grid>
                 <TextBlock x:Name="txt_selectedItems" Text="Selcted items" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"
                            Foreground="#999999" FontWeight="SemiBold"  FontSize="16"/>
-                <Border  Margin="10" Grid.Row="3"  Grid.Column="4"  BorderBrush="#999999" BorderThickness="1"  >
+                <Border x:Name="bdr_general"  Margin="10" Grid.Row="3"  Grid.Column="4"  BorderBrush="#999999" BorderThickness="1"  >
                     
                     <DataGrid x:Name="dg_selectedItems"  Background="White"
                     Visibility="Visible" HeadersVisibility="None" 
@@ -195,16 +195,30 @@
                         AutoGenerateColumns="False"   BeginningEdit="Grid_BeginningEdit" 
                         ColumnWidth="SizeToHeader" MouseDoubleClick="Dg_selectedItems_MouseDoubleClick" SelectionChanged="Dg_selectedItems_SelectionChanged"  >
                         <DataGrid.Columns >
-                            <DataGridTextColumn  Width="3*" IsReadOnly="True"  Header="Item" Binding="{Binding Path=itemName}" />
+                            <DataGridTextColumn x:Name="item" Width="3*" IsReadOnly="True"  Header="Item" Binding="{Binding Path=itemName}" />
+                            <DataGridTextColumn x:Name="note" Width="*"  IsReadOnly="True"  Header="Item" Binding="{Binding Path=notes}" />
                             <DataGridTextColumn Width="*" x:Name="quantity" Header="Quantity" Binding="{Binding Path=quantity}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>
+                <!--<Border x:Name="bdr_home"  Margin="10" Grid.Row="3"  Grid.Column="4"  BorderBrush="#999999" BorderThickness="1"  Visibility="Collapsed">
+
+                    <DataGrid x:Name="dg_selectedItemsHome"  Background="White"
+                    Visibility="Visible" HeadersVisibility="None" 
+                         IsReadOnly="False" CanUserAddRows="False"
+                        AutoGenerateColumns="False"   BeginningEdit="Grid_BeginningEdit" 
+                        ColumnWidth="SizeToHeader" MouseDoubleClick="Dg_selectedItems_MouseDoubleClick" SelectionChanged="Dg_selectedItems_SelectionChanged"  >
+                        <DataGrid.Columns >
+                            <DataGridTextColumn Width="*"  IsReadOnly="True"  Header="Item" Binding="{Binding Path=notes}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>-->
 
 
                 <Button Content="Save" Grid.Row="5" Grid.ColumnSpan="5" Foreground="White"
-                       Margin="10,2.5" x:Name="btn_save" Click="Btn_save_Click" materialDesign:ButtonAssist.CornerRadius="7"
-                          Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  />
+                        Margin="10,2.5" x:Name="btn_save" materialDesign:ButtonAssist.CornerRadius="7"
+                        Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"  
+                        Click="Btn_save_Click" />
             </Grid>
 
         </Border>
