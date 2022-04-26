@@ -422,7 +422,7 @@ namespace Restaurant.Classes
                 string sType = subscriptionType;
                 DateTime sDate = (DateTime)EndDate;
 
-                if (sType == "o")
+                if (sType == "o" || sType =="f" )
                     return AppSettings.resourcemanager.GetString("trUnlimited");
                 else
                 {
@@ -443,6 +443,9 @@ namespace Restaurant.Classes
                     }
 
                 }
+            }else if (subscriptionType== "o" || subscriptionType == "f")
+            {
+                return AppSettings.resourcemanager.GetString("trUnlimited");
             }
             else return "";
         }
@@ -2373,26 +2376,38 @@ Parameters!trValueDiscount.Value)
             foreach (var r in salesMembership.CouponInvoiceList.ToList())
             {
                 r.finalDiscount = decimal.Parse(HelpClass.DecTostring(r.finalDiscount));
-                //  r.openCash = decimal.Parse(SectionData.DecTostring(r.openCash));
-                //  r.notes = closingDescriptonConverter(r);
+                r.discountValue = decimal.Parse(accuracyDiscountConvert(r.discountValue, r.discountType));
+              
+
+
+            }
+            foreach (var r in salesMembership.itemsTransferList.ToList())
+            {
+                r.finalDiscount = decimal.Parse(HelpClass.DecTostring(r.finalDiscount));
+                r.offerValue = decimal.Parse(accuracyDiscountConvert(r.offerValue, (byte?)r.offerType));
+              
 
 
             }
 
-             paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            foreach (var r in salesMembership.invoiceClassDiscountList.ToList())
+            {
+                r.finalDiscount = decimal.Parse(HelpClass.DecTostring(r.finalDiscount));
+                r.discountValue = decimal.Parse(accuracyDiscountConvert(r.discountValue, r.discountType));
+           
+
+
+            }
+
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
             paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
             paramarr.Add(new ReportParameter("trValue", AppSettings.resourcemanagerreport.GetString("trValue")));
             paramarr.Add(new ReportParameter("trDiscount", AppSettings.resourcemanagerreport.GetString("trDiscount")));
-
             paramarr.Add(new ReportParameter("trCustomer", AppSettings.resourcemanagerreport.GetString("trCustomer")));
            // paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
-
            // paramarr.Add(new ReportParameter("membership", AppSettings.resourcemanagerreport.GetString("membership")));
             paramarr.Add(new ReportParameter("trExpire", AppSettings.resourcemanagerreport.GetString("trExpire")));
             paramarr.Add(new ReportParameter("trTotal", AppSettings.resourcemanagerreport.GetString("trTotal")));
-            paramarr.Add(new ReportParameter("hidecop", AppSettings.resourcemanagerreport.GetString("hidecop")));
-            paramarr.Add(new ReportParameter("hideoff", AppSettings.resourcemanagerreport.GetString("hideoff")));
-            paramarr.Add(new ReportParameter("hideinvclass", AppSettings.resourcemanagerreport.GetString("hideinvclass")));
             paramarr.Add(new ReportParameter("trInvoiceCode", AppSettings.resourcemanagerreport.GetString("trInvoiceCode")));
 
             paramarr.Add(new ReportParameter("trmembership", AppSettings.resourcemanagerreport.GetString("membership")));
@@ -2400,45 +2415,90 @@ Parameters!trValueDiscount.Value)
             paramarr.Add(new ReportParameter("trCoupons", AppSettings.resourcemanagerreport.GetString("trCoupons")));
             paramarr.Add(new ReportParameter("trOffer", AppSettings.resourcemanagerreport.GetString("trOffer")));
             paramarr.Add(new ReportParameter("trinvoicesClasses", AppSettings.resourcemanagerreport.GetString("invoicesClasses")));
-
-         
             paramarr.Add(new ReportParameter("Customer", AgentUnKnownConvert(salesMembership.agentId, "c", salesMembership.agentName)));// unknown conv
             paramarr.Add(new ReportParameter("InvoiceCode", salesMembership.invNumber));
 
             paramarr.Add(new ReportParameter("membership", salesMembership.membershipsName));
-
-            paramarr.Add(new ReportParameter("Expire",HelpClass.DateToString( salesMembership.endDate)));// get datas
+            paramarr.Add(new ReportParameter("Expire", unlimitedEndDateConverter(salesMembership.subscriptionType,  salesMembership.endDate )));// get datas
             paramarr.Add(new ReportParameter("total", HelpClass.DecTostring( salesMembership.totalDiscount) ));
-
             paramarr.Add(new ReportParameter("Currency", AppSettings.Currency));
+
+            paramarr.Add(new ReportParameter("hidecop", salesMembership.CouponInvoiceList.ToList().Count()>0?"0":"1"));
+            paramarr.Add(new ReportParameter("hideoff", salesMembership.itemsTransferList.ToList().Count() > 0 ? "0" : "1"));
+            paramarr.Add(new ReportParameter("hideinvclass", salesMembership.invoiceClassDiscountList.ToList().Count() > 0 ? "0" : "1"));
 
             rep.DataSources.Add(new ReportDataSource("DataSetCoupon", salesMembership.CouponInvoiceList.ToList()));
 
             rep.DataSources.Add(new ReportDataSource("DataSetOffer", salesMembership.itemsTransferList.ToList()));
 
             rep.DataSources.Add(new ReportDataSource("DataSetinvoicesClasses", salesMembership.invoiceClassDiscountList.ToList()));
+
         }
-        //public static void itemReport(IEnumerable<Item> itemQuery, LocalReport rep, string reppath)
-        //{
-        //    rep.ReportPath = reppath;
-        //    rep.EnableExternalImages = true;
-        //    rep.DataSources.Clear();
-        //    rep.DataSources.Add(new ReportDataSource("DataSetItem", itemQuery));
 
-        //}
+      
 
-        //public static void properyReport(IEnumerable<Property> propertyQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
-        //{
-        //    rep.ReportPath = reppath;
-        //    rep.EnableExternalImages = true;
-        //    rep.DataSources.Clear();
-        //    rep.DataSources.Add(new ReportDataSource("DataSetProperty", propertyQuery));
-        //    paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trProperties")));
-        //    paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trProperty")));
-        //    paramarr.Add(new ReportParameter("trValues", AppSettings.resourcemanagerreport.GetString("trValues")));
-        //}
+            public static string accuracyDiscountConvert(decimal? discountValue, byte? discountType)
+            {
+                if (discountValue != null && discountType != null)
+                {
+                    byte type = (byte) discountType;
+                    decimal value = (decimal)discountValue;
 
-        public static void storageCostReport(IEnumerable<StorageCost> storageCostQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+                    decimal num = decimal.Parse(value.ToString());
+                    string s = num.ToString();
+              
+                    switch (AppSettings.accuracy)
+                    {
+                        case "0":
+                            s = string.Format("{0:F0}", num);
+                            break;
+                        case "1":
+                            s = string.Format("{0:F1}", num);
+                            break;
+                        case "2":
+                            s = string.Format("{0:F2}", num);
+                            break;
+                        case "3":
+                            s = string.Format("{0:F3}", num);
+                            break;
+                        default:
+                            s = string.Format("{0:F1}", num);
+                            break;
+                    }
+
+                    if (type == 2)
+                {
+                    string sdc = string.Format("{0:G29}", decimal.Parse(s));
+                    //return sdc + "%";
+                    return sdc ;
+                }                      
+                    else
+                        return s;
+
+                }
+                else return "";
+            }
+            //public static void itemReport(IEnumerable<Item> itemQuery, LocalReport rep, string reppath)
+            //{
+            //    rep.ReportPath = reppath;
+            //    rep.EnableExternalImages = true;
+            //    rep.DataSources.Clear();
+            //    rep.DataSources.Add(new ReportDataSource("DataSetItem", itemQuery));
+
+            //}
+
+            //public static void properyReport(IEnumerable<Property> propertyQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+            //{
+            //    rep.ReportPath = reppath;
+            //    rep.EnableExternalImages = true;
+            //    rep.DataSources.Clear();
+            //    rep.DataSources.Add(new ReportDataSource("DataSetProperty", propertyQuery));
+            //    paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trProperties")));
+            //    paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trProperty")));
+            //    paramarr.Add(new ReportParameter("trValues", AppSettings.resourcemanagerreport.GetString("trValues")));
+            //}
+
+            public static void storageCostReport(IEnumerable<StorageCost> storageCostQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;

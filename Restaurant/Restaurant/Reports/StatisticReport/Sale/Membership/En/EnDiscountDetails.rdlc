@@ -688,7 +688,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!discountValue.Value</Value>
+                                  <Value>=iif(Fields!discountType.Value=2,Fields!discountValue.Value.ToString()+" "+"%",Fields!discountValue.Value)</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -774,11 +774,14 @@
             </TablixRowHierarchy>
             <RepeatRowHeaders>true</RepeatRowHeaders>
             <DataSetName>DataSetCoupon</DataSetName>
-            <Top>5.11942cm</Top>
+            <Top>4.80192cm</Top>
             <Left>1.18768cm</Left>
             <Height>1.2cm</Height>
             <Width>27.09898cm</Width>
             <ZIndex>1</ZIndex>
+            <Visibility>
+              <Hidden>=iif(Parameters!hidecop.Value="1",true,false)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -792,10 +795,10 @@
                   <Width>9.78167cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>9.58205cm</Width>
+                  <Width>10.76917cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>7.79167cm</Width>
+                  <Width>6.54813cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -906,6 +909,22 @@
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
+                                <TextRun>
+                                  <Value xml:space="preserve"> </Value>
+                                  <Style>
+                                    <FontFamily>Montserrat</FontFamily>
+                                    <FontSize>11pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=Parameters!Currency.Value</Value>
+                                  <Style>
+                                    <FontFamily>Montserrat</FontFamily>
+                                    <FontSize>11pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
                               </TextRuns>
                               <Style />
                             </Paragraph>
@@ -941,10 +960,10 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSetCoupon</DataSetName>
-            <Top>12.25258cm</Top>
+            <Top>10.91908cm</Top>
             <Left>1.18768cm</Left>
             <Height>0.73229cm</Height>
-            <Width>27.15539cm</Width>
+            <Width>27.09897cm</Width>
             <ZIndex>2</ZIndex>
             <Style>
               <Border>
@@ -1356,11 +1375,14 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox25</rd:DefaultName>
-            <Top>4.19867cm</Top>
+            <Top>3.88117cm</Top>
             <Left>1.30051cm</Left>
             <Height>0.75142cm</Height>
             <Width>26.98614cm</Width>
             <ZIndex>4</ZIndex>
+            <Visibility>
+              <Hidden>=iif(Parameters!hidecop.Value="1",true,false)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1392,11 +1414,14 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox25</rd:DefaultName>
-            <Top>6.91047cm</Top>
+            <Top>6.27547cm</Top>
             <Left>1.35693cm</Left>
             <Height>0.75142cm</Height>
             <Width>26.98614cm</Width>
             <ZIndex>5</ZIndex>
+            <Visibility>
+              <Hidden>=iif(Parameters!hideoff.Value="1",true,false)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1715,14 +1740,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="notes2">
+                        <Textbox Name="discountValue3">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!offerValue.Value</Value>
+                                  <Value>=iif(Fields!offerType.Value = 2, Fields!offerValue.Value.ToString + " " + "%", Fields!offerValue.Value)</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1733,7 +1758,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>notes</rd:DefaultName>
+                          <rd:DefaultName>discountValue</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1808,11 +1833,14 @@
             </TablixRowHierarchy>
             <RepeatRowHeaders>true</RepeatRowHeaders>
             <DataSetName>DataSetOffer</DataSetName>
-            <Top>7.86093cm</Top>
+            <Top>7.19418cm</Top>
             <Left>1.30051cm</Left>
             <Height>1.2cm</Height>
             <Width>27.09898cm</Width>
             <ZIndex>6</ZIndex>
+            <Visibility>
+              <Hidden>=iif(Parameters!hideoff.Value="1",true,false)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1840,11 +1868,14 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox25</rd:DefaultName>
-            <Top>9.6082cm</Top>
+            <Top>8.62395cm</Top>
             <Left>1.35693cm</Left>
             <Height>0.75142cm</Height>
             <Width>26.98614cm</Width>
             <ZIndex>7</ZIndex>
+            <Visibility>
+              <Hidden>=iif(Parameters!hideinvclass.Value="1",true,false)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -2091,14 +2122,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="notes3">
+                        <Textbox Name="discountValue2">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!discountValue.Value</Value>
+                                  <Value>=iif(Fields!discountType.Value = 2, Fields!discountValue.Value.ToString + " " + "%", Fields!discountValue.Value)</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -2109,7 +2140,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>notes</rd:DefaultName>
+                          <rd:DefaultName>discountValue</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -2132,7 +2163,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!discountType.Value</Value>
+                                  <Value>=Fields!finalDiscount.Value</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -2183,11 +2214,14 @@
             </TablixRowHierarchy>
             <RepeatRowHeaders>true</RepeatRowHeaders>
             <DataSetName>DataSetinvoicesClasses</DataSetName>
-            <Top>10.55866cm</Top>
+            <Top>9.54266cm</Top>
             <Left>1.30051cm</Left>
             <Height>1.2cm</Height>
             <Width>26.98614cm</Width>
             <ZIndex>8</ZIndex>
+            <Visibility>
+              <Hidden>=iif(Parameters!hideinvclass.Value="1",true,false)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -2195,7 +2229,7 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>13.09746cm</Height>
+        <Height>11.65137cm</Height>
         <Style>
           <Border>
             <Style>None</Style>
