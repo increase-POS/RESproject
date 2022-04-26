@@ -463,6 +463,7 @@ namespace Restaurant
                 }
                 catch
                 {
+                    // don't move this debug
                     AppSettings.typesOfService_diningHall = "1";
                 }
                 try
@@ -480,6 +481,7 @@ namespace Restaurant
                 }
                 catch
                 {
+                    // don't move this debug
                     AppSettings.typesOfService_takeAway = "1";
                 }
                 try
@@ -498,16 +500,15 @@ namespace Restaurant
                 }
                 catch
                 {
+                    // don't move this debug
                     AppSettings.typesOfService_selfService = "1";
                 }
                
 
-
-
-
             }
             catch
             {
+                    // don't move this debug
                 AppSettings.typesOfService_diningHall = "1";
                 AppSettings.typesOfService_takeAway = "1";
                 AppSettings.typesOfService_selfService = "1";
@@ -515,6 +516,28 @@ namespace Restaurant
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_typesOfService"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
+        async void loading_maxDiscount()
+        {
+            try
+            {
+                SetValues maxDiscount = new SetValues();
+                List<SetValues> settingsValues = await AppSettings.valueModel.GetBySetName("maxDiscount");
+                maxDiscount = settingsValues.FirstOrDefault();
+                AppSettings.maxDiscount =decimal.Parse(maxDiscount.value); 
+            }
+            catch
+            {
+                AppSettings.maxDiscount = 0;
+            }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_maxDiscount"))
                 {
                     item.value = true;
                     break;
@@ -1166,6 +1189,7 @@ namespace Restaurant
                 loadingList.Add(new keyValueBool { key = "loading_getDefaultInvoiceType", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_getStatusesOfPreparingOrder", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_typesOfService", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_maxDiscount", value = false });
 
 
 
@@ -1196,6 +1220,7 @@ namespace Restaurant
                 loading_getDefaultInvoiceType();
                 loading_getStatusesOfPreparingOrder();
                 loading_typesOfService();
+                loading_maxDiscount();
 
                
                 do
@@ -1675,6 +1700,14 @@ namespace Restaurant
             txt_notifications.Text = AppSettings.resourcemanager.GetString("trNotifications");
             txt_noNoti.Text = AppSettings.resourcemanager.GetString("trNoNotifications");
             btn_showAll.Content = AppSettings.resourcemanager.GetString("trShowAll");
+
+
+            BTN_Close.ToolTip = AppSettings.resourcemanager.GetString("trClose");
+            BTN_Minimize.ToolTip = AppSettings.resourcemanager.GetString("minimize");
+            btn_deliveryWaitConfirmUser.ToolTip = AppSettings.resourcemanager.GetString("trOrdersWaitConfirmUser");
+            btn_transfers.ToolTip = AppSettings.resourcemanager.GetString("trDailyClosing");
+            BTN_notifications.ToolTip = AppSettings.resourcemanager.GetString("trNotification");
+
         }
 
         //فتح
