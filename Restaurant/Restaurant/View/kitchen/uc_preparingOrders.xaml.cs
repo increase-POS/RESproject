@@ -416,6 +416,7 @@ namespace Restaurant.View.kitchen
 
             orders = await preparingOrder.GetKitchenPreparingOrders(MainWindow.branchLogin.branchId, "",24);
             orders = orders.Where(x=>statusLst.Contains(x.status)).ToList();
+            orders = orders.Where(x => x.status != "Ready" || (x.status == "Ready" && x.shippingCompanyId == null)).ToList();
         }
         async Task Search()
         {
