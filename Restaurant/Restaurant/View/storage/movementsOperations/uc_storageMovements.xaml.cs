@@ -106,7 +106,7 @@ namespace Restaurant.View.storage.movementsOperations
 
             txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trInternalMovementImport");
 
-            txt_shortageInvoice.Text = AppSettings.resourcemanager.GetString("trLack");
+            //txt_shortageInvoice.Text = AppSettings.resourcemanager.GetString("trLack");
 
 
 
@@ -231,7 +231,8 @@ namespace Restaurant.View.storage.movementsOperations
                     md_orderWaitCount.Visibility = Visibility.Visible;
                 else
                     md_orderWaitCount.Visibility = Visibility.Collapsed;
-
+                
+                /*
                 if (FillCombo.groupObject.HasPermissionAction(initializeShortagePermission, FillCombo.groupObjects, "one"))
                 {
                     btn_shortageInvoice.Visibility = Visibility.Visible;
@@ -244,6 +245,7 @@ namespace Restaurant.View.storage.movementsOperations
                     bdr_shortageInvoice.Visibility = Visibility.Collapsed;
                     md_shortage.Visibility = Visibility.Collapsed;
                 }
+                */
 
                 //if (FillCombo.groupObject.HasPermissionAction(packagePermission, FillCombo.groupObjects, "one"))
                 //    btn_package.Visibility = Visibility.Visible;
@@ -359,7 +361,7 @@ namespace Restaurant.View.storage.movementsOperations
             {
                 refreshDraftNotification();
                 refreshOrderWaitNotification();
-                refreshLackNotification();
+                //refreshLackNotification();
             }
             catch (Exception ex)
             {
@@ -423,6 +425,7 @@ namespace Restaurant.View.storage.movementsOperations
                 //HelpClass.ExceptionMessage(ex, this);
             }
         }
+        /*
         private async Task refreshLackNotification()
         {
             try
@@ -435,6 +438,7 @@ namespace Restaurant.View.storage.movementsOperations
             }
             catch { }
         }
+        */
         #endregion
         #region navigation buttons
         private void navigateBtnActivate()

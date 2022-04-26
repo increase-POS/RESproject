@@ -185,7 +185,7 @@
                                  TextChanged="Tb_textBox_TextChanged"
                                  materialDesign:HintAssist.Hint="Process Number..."  
                                  Foreground="#4E4E4E"    />
-                                <Path Grid.Row="1" x:Name="p_errorProcessNum" Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
+                                <Path Grid.Row="1" x:Name="p_error_processNum" Fill="#E81123" Stretch="Fill" Margin="5,5,15,5"
                               HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                               Data="{StaticResource infoCircle}"/>

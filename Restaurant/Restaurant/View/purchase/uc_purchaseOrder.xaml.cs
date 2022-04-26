@@ -110,7 +110,7 @@ namespace Restaurant.View.purchase
             dg_billDetails.Columns[3].Header = AppSettings.resourcemanager.GetString("trUnit");
             dg_billDetails.Columns[4].Header = AppSettings.resourcemanager.GetString("trQTR");
 
-            txt_shortageInvoice.Text = AppSettings.resourcemanager.GetString("trLack");
+            //txt_shortageInvoice.Text = AppSettings.resourcemanager.GetString("trLack");
             txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaceOrder");
             txt_vendor.Text = AppSettings.resourcemanager.GetString("trVendor");
             tb_count.Text = AppSettings.resourcemanager.GetString("trCount:");
@@ -246,7 +246,7 @@ namespace Restaurant.View.purchase
                 #endregion
 
                 refreshNotification();
-                refreshLackNotification();
+                //refreshLackNotification();
                 //List all the UIElement in the VisualTree
                 controls = new List<Control>();
                 FindControl(this.grid_main, controls);
@@ -266,7 +266,7 @@ namespace Restaurant.View.purchase
                 //    bdr_emailMessage.Visibility = Visibility.Collapsed;
                 //}
 
-
+                /*
                 if (FillCombo.groupObject.HasPermissionAction(initializeShortagePermission, FillCombo.groupObjects, "one"))
                 {
                     btn_shortageInvoice.Visibility = Visibility.Visible;
@@ -279,7 +279,7 @@ namespace Restaurant.View.purchase
                     bdr_shortageInvoice.Visibility = Visibility.Collapsed;
                     md_shortage.Visibility = Visibility.Collapsed;
                 }
-
+                */
                 #endregion
                 #region print - pdf - send email
                 btn_printInvoice.Visibility = Visibility.Collapsed;
@@ -317,7 +317,7 @@ namespace Restaurant.View.purchase
                     refreshOrdersNotification();
                     refreshDocCount(invoice.invoiceId);
 
-                    refreshLackNotification();
+                    //refreshLackNotification();
                 }
             }
             catch (Exception ex)
@@ -364,6 +364,7 @@ namespace Restaurant.View.purchase
             }
             catch { }
         }
+        /*
         private async Task refreshLackNotification()
         {
             try
@@ -376,6 +377,7 @@ namespace Restaurant.View.purchase
             }
             catch { }
         }
+        */
         private async void refreshDocCount(int invoiceId)
         {
             try

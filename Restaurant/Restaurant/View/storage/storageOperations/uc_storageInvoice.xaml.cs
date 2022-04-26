@@ -105,7 +105,8 @@ namespace Restaurant.View.storage.storageOperations
             dg_billDetails.Columns[6].Header = AppSettings.resourcemanager.GetString("trTotal");
 
             txt_invoices.Text = AppSettings.resourcemanager.GetString("trInvoices");
-            txt_returnInvoice.Text = AppSettings.resourcemanager.GetString("trReturnInvoices");
+            //txt_returnInvoice.Text = AppSettings.resourcemanager.GetString("trReturnInvoices");
+            txt_returnInvoice.Text = AppSettings.resourcemanager.GetString("trPurchase");
             txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trDirectEntry");
 
             tt_error_previous.Content = AppSettings.resourcemanager.GetString("trPrevious");

@@ -153,9 +153,9 @@
                             </StackPanel>
                         </Button>
                     </materialDesign:Badged>
-                    <Border  DockPanel.Dock="Right"   Margin="7.5,10" x:Name="bdr_shortageInvoice" Visibility="Collapsed"
-                             CornerRadius="0,0,0,0"  Width="2" BorderThickness="0" Background="{StaticResource LightMainColor}" />
-                    <materialDesign:Badged VerticalAlignment="Center"   Margin="5,10,5,0"  Visibility="Collapsed"
+                    <!--<Border  DockPanel.Dock="Right"   Margin="7.5,10" x:Name="bdr_shortageInvoice" Visibility="Collapsed"
+                             CornerRadius="0,0,0,0"  Width="2" BorderThickness="0" Background="{StaticResource LightMainColor}" />-->
+                    <!--<materialDesign:Badged VerticalAlignment="Center"   Margin="5,10,5,0"  Visibility="Collapsed"
                       BadgeBackground="{StaticResource Orange}"  BadgeForeground="White" Name="md_shortage" Badge="">
                         <Button Grid.Column="4" BorderBrush="{x:Null}" Padding="0"   Height="auto"
                     Background="{x:Null}" x:Name="btn_shortageInvoice" Visibility="Collapsed"
@@ -169,7 +169,7 @@
                                            HorizontalAlignment="Center"/>
                             </StackPanel>
                         </Button>
-                    </materialDesign:Badged>
+                    </materialDesign:Badged>-->
 
                     <Border  DockPanel.Dock="Right"   Margin="7.5,10" x:Name="bdr_payments" Visibility="Collapsed"
                                  CornerRadius="0,0,0,0"  Width="2" BorderThickness="0" Background="{StaticResource LightMainColor}" />

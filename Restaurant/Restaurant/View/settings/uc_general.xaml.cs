@@ -308,7 +308,7 @@ namespace Restaurant.View.settings
         {
             try
             {
-                 #region get default accracy
+                #region get default max discount
                 await getDefaultMaxDiscount();
                 if (maxDiscount != null)
                 {
@@ -1364,8 +1364,8 @@ namespace Restaurant.View.settings
                     if (maxDiscount == null)
                         maxDiscount = new SetValues();
                     maxDiscount.value = tb_maxDiscount.Text;
-                    maxDiscount.isSystem = 1;
-                    maxDiscount.settingId = maxDiscountId;
+                    //maxDiscount.isSystem = 1;
+                    //maxDiscount.settingId = maxDiscountId;
                     int s = await valueModel.Save(maxDiscount);
                     if (!s.Equals(0))
                     {

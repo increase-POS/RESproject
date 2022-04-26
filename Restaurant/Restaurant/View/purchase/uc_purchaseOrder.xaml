@@ -153,9 +153,9 @@
                             </StackPanel>
                         </Button>
                     </materialDesign:Badged>
-                    <Border  x:Name="bdr_shortageInvoice" Visibility="Collapsed" Background="White" Margin="7.5,10"   CornerRadius="0,0,0,0"  
-                            Width="1" BorderThickness="0,0,1,0" BorderBrush="{StaticResource LightMainColor}" />
-                    <materialDesign:Badged VerticalAlignment="Center"   Margin="5,10,5,0"  Visibility="Collapsed"
+                    <!--<Border  x:Name="bdr_shortageInvoice" Visibility="Collapsed" Background="White" Margin="7.5,10"   CornerRadius="0,0,0,0"  
+                            Width="1" BorderThickness="0,0,1,0" BorderBrush="{StaticResource LightMainColor}" />-->
+                    <!--<materialDesign:Badged VerticalAlignment="Center"   Margin="5,10,5,0"  Visibility="Collapsed"
                       BadgeBackground="{StaticResource Orange}"  BadgeForeground="White" Name="md_shortage" Badge="">
                         <Button Grid.Column="4" BorderBrush="{x:Null}" Padding="0"  Height="auto"
                     Background="{x:Null}" x:Name="btn_shortageInvoice" Click="Btn_shortageInvoice_Click" Visibility="Collapsed">
@@ -168,7 +168,7 @@
                                            HorizontalAlignment="Center"/>
                             </StackPanel>
                         </Button>
-                    </materialDesign:Badged>
+                    </materialDesign:Badged>-->
                     <Border   x:Name="bdr_emailMessage" Visibility="Collapsed"   Margin="7.5,10"   CornerRadius="0,0,0,0"  Width="2" BorderThickness="0" Background="{StaticResource LightMainColor}" />
                     <Button Grid.Column="1" DockPanel.Dock="Right" BorderBrush="{x:Null}" Padding="0"  Margin="5,10,5,0" Height="auto" 
                     Background="{x:Null}" x:Name="btn_emailMessage" Click="Btn_emailMessage_Click" Visibility="Collapsed"   >

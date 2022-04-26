@@ -476,7 +476,7 @@ namespace Restaurant.View.catalog.rawMaterials
         async Task<IEnumerable<Unit>> RefreshUnitsList()
         {
             units = await unit.Get();
-            units = units.Where(u => u.name != "package" && u.name != "service");
+            units = units.Where(u => u.name != "saleUnit" && u.name != "package" && u.name != "service");
             return units;
         }
         void RefreshCustomersView()

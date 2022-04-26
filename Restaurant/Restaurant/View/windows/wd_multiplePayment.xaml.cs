@@ -243,6 +243,7 @@ namespace Restaurant.View.windows
         {
             try
             {
+                HelpClass.clearValidate(p_error_processNum);
 
                 switch (cb_paymentProcessType.SelectedIndex)
                 {
@@ -315,6 +316,7 @@ namespace Restaurant.View.windows
         {
             try
             {
+
                 var button = sender as Button;
                 _SelectedCard = int.Parse(button.Tag.ToString());
                 //txt_card.Text = button.DataContext.ToString();
@@ -469,6 +471,7 @@ namespace Restaurant.View.windows
             try
             {
                 HelpClass.clearValidate(p_error_cash);
+                HelpClass.clearValidate(p_error_processNum);
                 //tb_cash.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#f8f8f8"));
                 //p_error_cash.Visibility = Visibility.Collapsed;
                 //listPayments
@@ -501,8 +504,14 @@ namespace Restaurant.View.windows
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectCreditCard"), animation: ToasterAnimation.FadeIn);
                                 return;
                             }
+                            else if (tb_processNum.Visibility == Visibility.Visible)
+                            {
+                                HelpClass.SetValidate(p_error_processNum, "trIsRequired");
+                                return;
+                            }
                             else
                             {
+
                                 cashTrasnfer.cardId = _SelectedCard;
                                 cashTrasnfer.docNum = tb_processNum.Text;
                                 s = txt_card.Text + " : " + cashTrasnfer.cash;

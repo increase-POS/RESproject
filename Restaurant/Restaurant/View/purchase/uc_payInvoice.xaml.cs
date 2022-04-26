@@ -298,7 +298,7 @@ namespace Restaurant.View.purchase
                 //    bdr_emailMessage.Visibility = Visibility.Collapsed;
                 //}
 
-
+                /*
                 if (FillCombo.groupObject.HasPermissionAction(initializeShortagePermission, FillCombo.groupObjects, "one"))
                 {
                     btn_shortageInvoice.Visibility = Visibility.Visible;
@@ -311,6 +311,7 @@ namespace Restaurant.View.purchase
                     bdr_shortageInvoice.Visibility = Visibility.Collapsed;
                     md_shortage.Visibility = Visibility.Collapsed;
                 }
+                */
 
                 //if (FillCombo.groupObject.HasPermissionAction(printCountPermission, FillCombo.groupObjects, "one"))
                 //{
@@ -383,7 +384,7 @@ namespace Restaurant.View.purchase
             txt_vendor.Text = AppSettings.resourcemanager.GetString("trVendor");
             txt_vendorIvoiceDetails.Text = AppSettings.resourcemanager.GetString("trVendorDetails");
 
-            txt_shortageInvoice.Text = AppSettings.resourcemanager.GetString("trLack");
+            //txt_shortageInvoice.Text = AppSettings.resourcemanager.GetString("trLack");
             txt_printInvoice.Text = AppSettings.resourcemanager.GetString("trPrint");
             txt_preview.Text = AppSettings.resourcemanager.GetString("trPreview");
             txt_invoiceImages.Text = AppSettings.resourcemanager.GetString("trImages");
@@ -427,7 +428,7 @@ namespace Restaurant.View.purchase
             try
             {
                 await refreshOrdersNotification();
-                refreshLackNotification();
+                //refreshLackNotification();
                 if (invoice.invoiceId != 0)
                 {
                     refreshDocCount(invoice.invoiceId);
@@ -449,7 +450,7 @@ namespace Restaurant.View.purchase
                 refreshDraftNotification();
                 refreshInvNotification();
                 refreshOrdersNotification();
-                refreshLackNotification();
+                //refreshLackNotification();
             }
             catch { }
 
@@ -495,7 +496,9 @@ namespace Restaurant.View.purchase
             }
             catch { }
         }
-        private async Task refreshLackNotification()
+
+       /* 
+         private async Task refreshLackNotification()
         {
             try
             {
@@ -507,6 +510,7 @@ namespace Restaurant.View.purchase
             }
             catch { }
         }
+        */
         private async void refreshDocCount(int invoiceId)
         {
             try
@@ -2919,6 +2923,7 @@ namespace Restaurant.View.purchase
                         txt_payInvoice.Foreground = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
                         await fillInvoiceInputs(invoice);
                         navigateBtnActivate();
+                        
                     }
                 }
                 Window.GetWindow(this).Opacity = 1;

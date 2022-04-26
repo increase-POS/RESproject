@@ -174,9 +174,9 @@
                             </StackPanel>
                         </Button>
                     </materialDesign:Badged>
-                    <Border x:Name="bdr_shortageInvoice" Visibility="Collapsed"  Background="White" Margin="7.5,10"   CornerRadius="0,0,0,0"  
-                            Width="1" BorderThickness="0,0,1,0" BorderBrush="{StaticResource LightMainColor}" />
-                    <materialDesign:Badged VerticalAlignment="Center"   Margin="5,10,5,0"  Visibility="Collapsed"
+                    <!--<Border x:Name="bdr_shortageInvoice" Visibility="Collapsed"  Background="White" Margin="7.5,10"   CornerRadius="0,0,0,0"  
+                            Width="1" BorderThickness="0,0,1,0" BorderBrush="{StaticResource LightMainColor}" />-->
+                    <!--<materialDesign:Badged VerticalAlignment="Center"   Margin="5,10,5,0"  Visibility="Collapsed"
                       BadgeBackground="{StaticResource Orange}"  BadgeForeground="White" Name="md_shortage" Badge="">
                         <Button  Visibility="Collapsed"  Grid.Column="4" BorderBrush="{x:Null}" Padding="0"   Height="auto"
                     Background="{x:Null}" x:Name="btn_shortageInvoice" Click="Btn_shortageInvoice_Click">
@@ -189,7 +189,7 @@
                                            HorizontalAlignment="Center"/>
                             </StackPanel>
                         </Button>
-                    </materialDesign:Badged>
+                    </materialDesign:Badged>-->
                     <Border Visibility="Collapsed" x:Name="bdr_package_converter"  Background="White" Margin="7.5,10"   CornerRadius="0,0,0,0"  
                             Width="1" BorderThickness="0,0,1,0" BorderBrush="{StaticResource LightMainColor}" />
 
