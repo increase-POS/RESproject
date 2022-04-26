@@ -66,8 +66,8 @@ namespace Restaurant.View.reports.kitchenReports
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 #region translate
                 if (AppSettings.lang.Equals("en"))
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -80,11 +80,11 @@ namespace Restaurant.View.reports.kitchenReports
 
                 //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_preparingOrders.Tag.ToString());
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         #region methods
@@ -101,7 +101,7 @@ namespace Restaurant.View.reports.kitchenReports
 
             tt_preparingOrder.Content = AppSettings.resourcemanager.GetString("trPreparingOrders");
 
-            col_orderNum.Header = AppSettings.resourcemanager.GetString("trNum");
+            col_orderNum.Header = AppSettings.resourcemanager.GetString("trNo.");
             col_invNum.Header = AppSettings.resourcemanager.GetString("trInvoiceNumber");
             col_date.Header = AppSettings.resourcemanager.GetString("trDate");
             col_itemName.Header = AppSettings.resourcemanager.GetString("trItem");

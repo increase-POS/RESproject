@@ -73,10 +73,10 @@ namespace Restaurant.View.reports.kitchenReports
                 #region translate
                 if (AppSettings.lang.Equals("en"))
                 grid_main.FlowDirection = FlowDirection.LeftToRight;
-            else
-                grid_main.FlowDirection = FlowDirection.RightToLeft;
-            translate();
-            #endregion
+                else
+                    grid_main.FlowDirection = FlowDirection.RightToLeft;
+                translate();
+                #endregion
 
                 Btn_invoice_Click(btn_invoice, null);
 

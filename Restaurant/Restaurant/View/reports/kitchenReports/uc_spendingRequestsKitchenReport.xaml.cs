@@ -75,7 +75,7 @@ namespace Restaurant.View.reports.kitchenReports
                 else
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 translate();
-            #endregion
+                #endregion
 
                 chk_normal.IsChecked = true;
 

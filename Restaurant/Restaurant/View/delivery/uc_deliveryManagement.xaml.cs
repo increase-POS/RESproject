@@ -439,7 +439,7 @@ namespace Restaurant.View.delivery
                             ops.notes = tb_notes.Text;
                             ops.isActive = 1;
 
-                            int res = await orderModel.EditInvoiceOrdersStatus(i.invoiceId , driverID.Value , comID , ops);
+                            int res = await orderModel.EditInvoiceOrdersStatus(i.invoiceId , driverID , comID , ops);
 
                             if (!res.Equals(0))
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
