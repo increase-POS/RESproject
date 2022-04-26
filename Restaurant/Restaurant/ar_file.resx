@@ -3964,4 +3964,7 @@
   <data name="discounts" xml:space="preserve">
     <value>الحسومات</value>
   </data>
+  <data name="trErrorMaxDiscountToolTip" xml:space="preserve">
+    <value>الحسم تجاوز القيمة المسموحة</value>
+  </data>
 </root>

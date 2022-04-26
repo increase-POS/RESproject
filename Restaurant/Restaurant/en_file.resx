@@ -3979,4 +3979,7 @@ Please add Email in setting</value>
   <data name="discounts" xml:space="preserve">
     <value>Discounts</value>
   </data>
+  <data name="trErrorMaxDiscountToolTip" xml:space="preserve">
+    <value>The discount exceeded the permissible value</value>
+  </data>
 </root>
