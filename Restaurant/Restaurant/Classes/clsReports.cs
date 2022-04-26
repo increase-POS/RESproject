@@ -617,9 +617,9 @@ namespace Restaurant.Classes
         }
 
 
-        public static void deliveryManagement(IEnumerable<Invoice> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        public static void deliveryManagement(IEnumerable<Invoice> Query1, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
-
+            List<Invoice> Query = JsonConvert.DeserializeObject<List<Invoice>>(JsonConvert.SerializeObject(Query1));
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
@@ -633,6 +633,8 @@ namespace Restaurant.Classes
             foreach (var row in Query)
             {
                 row.status = preparingOrderStatusConvert(row.status);
+                row.orderTimeConv = dateTimeToTimeConvert(row.orderTime);
+
             }
             rep.DataSources.Add(new ReportDataSource("DataSet", Query));
 
@@ -640,9 +642,23 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trDeliveryManagement")));
            
         }
-        public static void driverManagement(List<Invoice> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        
+            public static string dateTimeToTimeConvert(DateTime? orderTime )
+            {
+                if (orderTime != null)
+                {
+                    DateTime dt = (DateTime)orderTime;
+                    return dt.ToShortTimeString();
+                }
+                else
+                    return "-";
+            }
+
+            public static void driverManagement(List<Invoice> Query1, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
-            
+
+            List<Invoice> Query = JsonConvert.DeserializeObject<List<Invoice>>(JsonConvert.SerializeObject(Query1));
+
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
@@ -655,7 +671,8 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trStatus", AppSettings.resourcemanagerreport.GetString("trStatus")));
             foreach (var row in tmpQuery)
             {
-                row.notes = preparingOrderStatusConvert(row.status);
+                row.status = preparingOrderStatusConvert(row.status);
+                row.orderTimeConv = dateTimeToTimeConvert(row.orderTime);
             }
             rep.DataSources.Add(new ReportDataSource("DataSet", tmpQuery));
             //title

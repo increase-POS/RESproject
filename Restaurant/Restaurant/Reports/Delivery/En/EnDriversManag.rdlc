@@ -97,17 +97,9 @@
           <DataField>deserved</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="deservedD">
-          <DataField>deservedD</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
         <Field Name="deservedDate">
           <DataField>deservedDate</DataField>
           <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="deservedPb">
-          <DataField>deservedPb</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="discountType">
           <DataField>discountType</DataField>
@@ -116,14 +108,6 @@
         <Field Name="discountValue">
           <DataField>discountValue</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="discountValueD">
-          <DataField>discountValueD</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="discountValuePb">
-          <DataField>discountValuePb</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="invCase">
           <DataField>invCase</DataField>
@@ -201,17 +185,17 @@
           <DataField>orderTime</DataField>
           <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
+        <Field Name="orderTimeConv">
+          <DataField>orderTimeConv</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="paid">
           <DataField>paid</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="paidD">
-          <DataField>paidD</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="paidPb">
-          <DataField>paidPb</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        <Field Name="payStatus">
+          <DataField>payStatus</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="posCode">
           <DataField>posCode</DataField>
@@ -261,6 +245,10 @@
           <DataField>shipUserId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
+        <Field Name="shipUserLastName">
+          <DataField>shipUserLastName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="shipUserName">
           <DataField>shipUserName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -281,24 +269,12 @@
           <DataField>total</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="totalD">
-          <DataField>totalD</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
         <Field Name="totalNet">
           <DataField>totalNet</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="totalNetD">
-          <DataField>totalNetD</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
         <Field Name="totalNetP">
           <DataField>totalNetP</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="totalNetPb">
-          <DataField>totalNetPb</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="totalNetS">
@@ -307,10 +283,6 @@
         </Field>
         <Field Name="totalP">
           <DataField>totalP</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="totalPb">
-          <DataField>totalPb</DataField>
           <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="totalS">
@@ -577,7 +549,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!shipUserName.Value</Value>
+                                  <Value>=Fields!shipUserName.Value+" "+Fields!shipUserLastName.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
                                   </Style>
@@ -604,14 +576,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="orderTime">
+                        <Textbox Name="orderTimeConv">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!orderTime.Value</Value>
+                                  <Value>=Fields!orderTimeConv.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
                                   </Style>
@@ -622,7 +594,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>orderTime</rd:DefaultName>
+                          <rd:DefaultName>orderTimeConv</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -638,14 +610,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="notes">
+                        <Textbox Name="status">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!notes.Value</Value>
+                                  <Value>=Fields!status.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
                                   </Style>
@@ -656,7 +628,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>notes</rd:DefaultName>
+                          <rd:DefaultName>status</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
