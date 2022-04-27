@@ -1338,7 +1338,7 @@ namespace Restaurant
                     }
                 }
                 while (!isDone);
-                MessageBox.Show(catchError + " and count: " + catchErrorCount);
+                //MessageBox.Show(catchError + " and count: " + catchErrorCount);
                 #endregion
 
                 #region notifications 
