@@ -66,28 +66,28 @@ namespace Restaurant.View.reports.deliveryReports
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
+            try
+            {
 
-            #region translate
-            if (AppSettings.lang.Equals("en"))
+                #region translate
+                if (AppSettings.lang.Equals("en"))
                 grid_main.FlowDirection = FlowDirection.LeftToRight;
-            else
-                grid_main.FlowDirection = FlowDirection.RightToLeft;
-            translate();
-            #endregion
+                else
+                    grid_main.FlowDirection = FlowDirection.RightToLeft;
+                translate();
+                #endregion
 
-            chk_allBranches.IsChecked = true;
-            chk_allCompanies.IsChecked = true;
+                chk_allBranches.IsChecked = true;
+                chk_allCompanies.IsChecked = true;
 
-            await Search();
-            //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_preparingOrders.Tag.ToString());
+                await Search();
+                //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_preparingOrders.Tag.ToString());
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         #region methods
@@ -97,8 +97,10 @@ namespace Restaurant.View.reports.deliveryReports
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_endDate, AppSettings.resourcemanager.GetString("trEndDateHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txt_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trBranch") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_company, AppSettings.resourcemanager.GetString("trShippingCompany") + "...");
 
             chk_allBranches.Content = AppSettings.resourcemanager.GetString("trAll");
+            chk_allCompanies.Content = AppSettings.resourcemanager.GetString("trAll");
 
             tt_delivery.Content = AppSettings.resourcemanager.GetString("trDelivery");
 

@@ -143,8 +143,8 @@ namespace Restaurant.View.reports.accountsReports
             tt_branch.Content = AppSettings.resourcemanager.GetString("trBranches");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tt_branch, AppSettings.resourcemanager.GetString("trBranches"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trBranch"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_pos, AppSettings.resourcemanager.GetString("trPOS"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trBranch")+"...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_pos, AppSettings.resourcemanager.GetString("trPOS")+"...");
 
             chk_allBranches.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_allPos.Content = AppSettings.resourcemanager.GetString("trAll");
