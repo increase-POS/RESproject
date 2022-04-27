@@ -425,7 +425,7 @@ namespace Restaurant.View.windows
 
                         selectedItemUnitsHome.Remove(itemUnitUser);
 
-                        dg_selectedItems.ItemsSource = selectedItemUnits;
+                        dg_selectedItems.ItemsSource = selectedItemUnitsHome;
                     }
                 }
                 else
