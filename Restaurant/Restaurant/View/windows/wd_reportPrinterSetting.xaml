@@ -9,7 +9,7 @@
          WindowStyle="None" WindowStartupLocation="CenterScreen"
         Title="Increase Restaurant"
         ResizeMode="NoResize" Margin="0"
-          Height="400" Width="300"  Background="Transparent" AllowsTransparency="True" MouseDown="Window_MouseDown"
+          Height="410" Width="300"  Background="Transparent" AllowsTransparency="True" MouseDown="Window_MouseDown"
         Loaded="Window_Loaded" Closing="Window_Closing" >
     <Grid Grid.Column="1" Grid.Row="1"    x:Name="grid_main">
         <Grid.RowDefinitions>
