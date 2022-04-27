@@ -81,8 +81,14 @@ namespace Restaurant.View.windows
                 if (sender != null)
                     HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "name", "address", "email", "mobile" };
+
+                /*
                 await fillCountries();
                 await fillCity();
+                */
+                await FillCombo.fillCountries(cb_areaMobile);
+                await FillCombo.fillCountries(cb_areaPhone);
+                await FillCombo.fillCountries(cb_areaFax);
 
                 List<SettingCls> settingsCls = await setModel.GetAll();
                 List<SetValues> settingsValues = await valueModel.GetAll();
@@ -212,7 +218,7 @@ namespace Restaurant.View.windows
         }
 
         //area code methods
-
+        /*
         async Task<IEnumerable<CountryCode>> RefreshCountry()
         {
             countrynum = await countrycodes.GetAllCountries();
@@ -242,7 +248,6 @@ namespace Restaurant.View.windows
             cb_areaPhone.SelectedValue = FillCombo.Region.countryId;
             cb_areaFax.SelectedValue = FillCombo.Region.countryId;
         }
-
         async Task<IEnumerable<City>> RefreshCity()
         {
             citynum = await cityCodes.Get();
@@ -253,7 +258,7 @@ namespace Restaurant.View.windows
             if (citynum is null)
                 await RefreshCity();
         }
-
+        */
         //end areacod
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {

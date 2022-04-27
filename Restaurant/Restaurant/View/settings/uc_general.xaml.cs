@@ -1076,12 +1076,11 @@ namespace Restaurant.View.settings
                     else
                     {
                         HelpClass.clearValidate(p_error_dateForm);
-                        if (dateForm == null)
-                            dateForm = new SetValues();
-
+                        if (dateForm != null)
+                        { 
                         dateForm.value = cb_dateForm.SelectedValue.ToString();
-                        dateForm.isSystem = 1;
-                        dateForm.settingId = dateFormId;
+                        //dateForm.isSystem = 1;
+                        //dateForm.settingId = dateFormId;
                         int s = await valueModel.Save(dateForm);
                         if (!s.Equals(0))
                         {
@@ -1092,6 +1091,10 @@ namespace Restaurant.View.settings
                         }
                         else
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    }
+                        else
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+
                     }
                 }
                 else
@@ -1306,12 +1309,12 @@ namespace Restaurant.View.settings
                 else
                 {
                     HelpClass.clearValidate(p_error_itemsCost);
-                    if (itemCost == null)
-                            itemCost = new SetValues();
+                    if (itemCost != null)
+                    {
                         itemCost.value = tb_itemsCost.Text;
-                        itemCost.isSystem = 1;
-                        itemCost.isDefault = 1;
-                        itemCost.settingId = itemCostId;
+                        //itemCost.isSystem = 1;
+                        //itemCost.isDefault = 1;
+                        //itemCost.settingId = itemCostId;
 
                         int s = await valueModel.Save(itemCost);
                         if (!s.Equals(0))
@@ -1324,11 +1327,15 @@ namespace Restaurant.View.settings
                         else
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+
+                }
                 //}
                 //else
                 //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -1584,21 +1591,25 @@ namespace Restaurant.View.settings
                 {
                     HelpClass.clearValidate(p_error_accuracy);
 
-                    if (accuracy == null)
-                        accuracy = new SetValues();
-                    accuracy.value = cb_accuracy.SelectedValue.ToString();
-                    accuracy.isSystem = 1;
-                    accuracy.settingId = accuracyId;
-                    int s = await valueModel.Save(accuracy);
-                    if (!s.Equals(0))
+                    if (accuracy != null)
                     {
-                        //update accuracy in main window
-                        AppSettings.accuracy = accuracy.value;
+                        accuracy.value = cb_accuracy.SelectedValue.ToString();
+                        //accuracy.isSystem = 1;
+                        //accuracy.settingId = accuracyId;
+                        int s = await valueModel.Save(accuracy);
+                        if (!s.Equals(0))
+                        {
+                            //update accuracy in main window
+                            AppSettings.accuracy = accuracy.value;
 
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                        }
+                        else
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                     }
                     else
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+
                 }
                 //}
                 //else
