@@ -341,21 +341,25 @@ namespace Restaurant.View.reports.deliveryReports
         {
             axcolumn.Labels = new List<string>();
             List<string> names = new List<string>();
-            List<int> ordersCount = new List<int>();
+            List<int> deliveriesCount = new List<int>();
 
-            var result = deliveriesQuery.GroupBy(s => s.itemUnitId).Select(s => new
+            var result = deliveriesQuery.GroupBy(s => new { s.branchId , s.invNumber}).Select(s => new
             {
-                itemId = s.Key,
+                Id = s.Key.branchId,
+                inv = s.Key.invNumber,
+            }) ;
+
+            var finalResult = result.GroupBy(s => s.Id).Select(s => new
+            {
                 quantity = s.Count()
             });
-
-            var tempName = deliveriesQuery.GroupBy(s => s.itemName).Select(s => new
+            var tempName = deliveriesQuery.GroupBy(s => s.branchName).Select(s => new
             {
-                itemName = s.Key
+                name = s.Key
             });
-            names.AddRange(tempName.Select(nn => nn.itemName));
+            names.AddRange(tempName.Select(nn => nn.name));
 
-            ordersCount.AddRange(result.Select(nn => nn.quantity));
+            deliveriesCount.AddRange(finalResult.Select(nn => nn.quantity));
 
             List<string> lable = new List<string>();
             SeriesCollection columnChartData = new SeriesCollection();
@@ -363,25 +367,25 @@ namespace Restaurant.View.reports.deliveryReports
 
             List<string> titles = new List<string>()
             {
-               AppSettings.resourcemanager.GetString("trPreparingOrders")+ "/" +AppSettings.resourcemanager.GetString("trItem")
+               AppSettings.resourcemanager.GetString("trInvoice")
             };
             int x = 6;
             if (names.Count() <= 6) x = names.Count();
 
             for (int i = 0; i < x; i++)
             {
-                cS.Add(ordersCount.ToList().Skip(i).FirstOrDefault());
+                cS.Add(deliveriesCount.ToList().Skip(i).FirstOrDefault());
                 axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
             }
 
             if (names.Count() > 6)
             {
-                int ordersSum = 0;
+                int deliverSum = 0;
                 for (int i = 6; i < names.Count(); i++)
-                    ordersSum = ordersSum + ordersCount.ToList().Skip(i).FirstOrDefault();
+                    deliverSum = deliverSum + deliveriesCount.ToList().Skip(i).FirstOrDefault();
 
-                if (ordersSum != 0)
-                    cS.Add(ordersSum);
+                if (deliverSum != 0)
+                    cS.Add(deliverSum);
 
                 axcolumn.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
             }
@@ -404,12 +408,23 @@ namespace Restaurant.View.reports.deliveryReports
             IEnumerable<int> x = null;
             titles.Clear();
 
-            var temp = deliveriesQuery;
+            var result = deliveriesQuery.GroupBy(s => new { s.shippingCompanyId, s.invNumber }).Select(s => new
+            {
+                Id = s.Key.shippingCompanyId,
+                inv = s.Key.invNumber,
+            });
 
-            var titleTemp = temp.GroupBy(m => m.itemName);
-            titles.AddRange(titleTemp.Select(jj => jj.Key));
-            var result = temp.GroupBy(s => s.itemUnitId).Select(s => new { itemId = s.Key, sum = s.Sum(g => (int)g.quantity) });
-            x = result.Select(m => m.sum);
+            var finalResult = result.GroupBy(s => s.Id).Select(s => new
+            {
+                quantity = s.Count()
+            });
+            var tempName = deliveriesQuery.GroupBy(s => s.shippingCompanyName).Select(s => new
+            {
+                name = s.Key
+            });
+            titles.AddRange(tempName.Select(jj => jj.name));
+
+            x = finalResult.Select(m => m.quantity);
 
             SeriesCollection piechartData = new SeriesCollection();
 
@@ -478,11 +493,18 @@ namespace Restaurant.View.reports.deliveryReports
 
             SeriesCollection rowChartData = new SeriesCollection();
 
-            var tempName = deliveriesQuery.GroupBy(s => new { s.itemUnitId }).Select(s => new
+            var tempName = deliveriesQuery.GroupBy(s => new { s.branchId , s.invNumber }).Select(s => new
             {
-                Name = s.FirstOrDefault().updateDate,
+                Name = s.FirstOrDefault().createDate,
             });
             names.AddRange(tempName.Select(nn => nn.Name.ToString()));
+
+            var result = deliveriesQuery.GroupBy(s => new { s.branchId, s.invNumber }).Select(s => new
+            {
+                Id = s.Key.branchId,
+                inv = s.Key.invNumber,
+                createDate = s.FirstOrDefault().createDate
+            });
 
             List<string> lable = new List<string>();
             SeriesCollection columnChartData = new SeriesCollection();
@@ -496,7 +518,7 @@ namespace Restaurant.View.reports.deliveryReports
                     {
                         var firstOfThisMonth = new DateTime(year, month, 1);
                         var firstOfNextMonth = firstOfThisMonth.AddMonths(1);
-                        var drawQuantity = deliveriesQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Select(s => s.itemName).Count();
+                        var drawQuantity = result.ToList().Where(c => c.createDate > firstOfThisMonth && c.createDate <= firstOfNextMonth).Select(s => s.inv).Count();
                         orderLst.Add(drawQuantity);
                         MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
 
@@ -518,7 +540,7 @@ namespace Restaurant.View.reports.deliveryReports
                 {
                     var firstOfThisYear = new DateTime(year, 1, 1);
                     var firstOfNextMYear = firstOfThisYear.AddYears(1);
-                    var drawQuantity = deliveriesQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Select(s => s.itemName).Count();
+                    var drawQuantity = result.ToList().Where(c => c.createDate > firstOfThisYear && c.createDate <= firstOfNextMYear).Select(s => s.inv).Count();
 
                     orderLst.Add(drawQuantity);
 
@@ -529,7 +551,7 @@ namespace Restaurant.View.reports.deliveryReports
           new LineSeries
           {
               Values = orderLst.AsChartValues(),
-              Title = AppSettings.resourcemanager.GetString("trPreparingOrders") + "/" + AppSettings.resourcemanager.GetString("trQuantity")
+              Title = AppSettings.resourcemanager.GetString("trBranch") +" / "+ AppSettings.resourcemanager.GetString("trInvoice")
           });
 
             DataContext = this;
