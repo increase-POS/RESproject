@@ -110,6 +110,8 @@ namespace Restaurant
 
         #region loading
         List<keyValueBool> loadingList;
+        List<string> catchError = new List<string>();
+        int catchErrorCount = 0;
         async void loading_listObjects()
         {
             //get tax
@@ -119,7 +121,9 @@ namespace Restaurant
             }
             catch
             {
-                
+                loading_listObjects();
+                catchError.Add("loading_listObjects");
+                catchErrorCount++;
             }
             foreach (var item in loadingList)
             {
@@ -137,7 +141,11 @@ namespace Restaurant
                 FillCombo.groupObjects = await FillCombo.groupObject.GetUserpermission(userLogin.userId);
             }
             catch (Exception)
-            { }
+            {
+                loading_getGroupObjects();
+                catchError.Add("loading_getGroupObjects");
+                catchErrorCount++;
+            }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_getGroupObjects"))
@@ -151,10 +159,14 @@ namespace Restaurant
         {
             try
             {
-                FillCombo.itemUnitList =   await FillCombo.RefreshItemUnit();
+                FillCombo.itemUnitList = await FillCombo.RefreshItemUnit();
             }
             catch (Exception)
-            { }
+            {
+                loading_globalItemUnitsList();
+                catchError.Add("loading_globalItemUnitsList");
+                catchErrorCount++;
+            }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_globalItemUnitsList"))
@@ -195,7 +207,10 @@ namespace Restaurant
             }
             catch
             {
-                clearImg();
+                //clearImg();
+                loading_getUserPersonalInfo();
+                catchError.Add("loading_getUserPersonalInfo");
+                catchErrorCount++;
             }
             foreach (var item in loadingList)
             {
@@ -215,7 +230,11 @@ namespace Restaurant
                 await FillCombo.RefreshBranches();
             }
             catch (Exception)
-            { }
+            {
+                loading_RefreshBranches();
+                catchError.Add("loading_RefreshBranches");
+                catchErrorCount++;
+            }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_RefreshBranches"))
@@ -232,7 +251,11 @@ namespace Restaurant
                 await FillCombo.RefreshBranchesAllWithoutMain();
             }
             catch (Exception)
-            { }
+            {
+                loading_RefreshBranchesAllWithoutMain();
+                catchError.Add("loading_RefreshBranchesAllWithoutMain");
+                catchErrorCount++;
+            }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_RefreshBranchesAllWithoutMain"))
@@ -249,7 +272,11 @@ namespace Restaurant
                 await FillCombo.RefreshByBranchandUser();
             }
             catch (Exception)
-            { }
+            {
+                loading_RefreshByBranchandUser();
+                catchError.Add("loading_RefreshByBranchandUser");
+                catchErrorCount++;
+            }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_RefreshByBranchandUser"))
@@ -266,7 +293,11 @@ namespace Restaurant
                 await FillCombo.RefreshCategory();
             }
             catch (Exception)
-            { }
+            {
+                loading_RefreshCategory();
+                catchError.Add("loading_RefreshCategory");
+                catchErrorCount++;
+            }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_RefreshCategory"))
@@ -280,10 +311,14 @@ namespace Restaurant
         {
             try
             {
-                FillCombo.unitsList =  await FillCombo.RefreshUnit();
+                FillCombo.unitsList = await FillCombo.RefreshUnit();
             }
             catch (Exception)
-            { }
+            {
+                loading_RefreshUnit();
+                catchError.Add("loading_RefreshUnit");
+                catchErrorCount++;
+            }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_RefreshUnit"))
@@ -300,7 +335,11 @@ namespace Restaurant
                 await FillCombo.RefreshVendors();
             }
             catch (Exception)
-            { }
+            {
+                loading_RefreshVendors();
+                catchError.Add("loading_RefreshVendors");
+                catchErrorCount++;
+            }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_RefreshVendors"))
@@ -317,7 +356,11 @@ namespace Restaurant
                 await FillCombo.RefreshCards();
             }
             catch (Exception)
-            { }
+            {
+                loading_RefreshCards();
+                catchError.Add("loading_RefreshCards");
+                catchErrorCount++;
+            }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_RefreshCards"))
@@ -351,7 +394,10 @@ namespace Restaurant
             }
             catch
             {
-                AppSettings.defaultPath = "";
+                //AppSettings.defaultPath = "";
+                loading_getUserPath();
+                catchError.Add("loading_getUserPath");
+                catchErrorCount++;
             }
             #endregion
             foreach (var item in loadingList)
@@ -394,7 +440,10 @@ namespace Restaurant
             }
             catch
             {
-                AppSettings.invType = "diningHall";
+                //AppSettings.invType = "diningHall";
+                loading_getDefaultInvoiceType();
+                catchError.Add("loading_getDefaultInvoiceType");
+                catchErrorCount++;
             }
             foreach (var item in loadingList)
             {
@@ -420,7 +469,10 @@ namespace Restaurant
             }
             catch
             {
-                AppSettings.statusesOfPreparingOrder = "directlyPrint";
+                //AppSettings.statusesOfPreparingOrder = "directlyPrint";
+                loading_getStatusesOfPreparingOrder();
+                catchError.Add("loading_getStatusesOfPreparingOrder");
+                catchErrorCount++;
             }
             foreach (var item in loadingList)
             {
@@ -448,70 +500,73 @@ namespace Restaurant
 
                 serviceList = await AppSettings.valueModel.GetBySetvalNote("typesOfService");
 
-                try
+                //try
+                //{
+                diningHallrow = serviceList.Where(X => X.name == "typesOfService_diningHall").FirstOrDefault();
+                diningHall = diningHallrow.value;
+                if (diningHall == "1")
                 {
-                    diningHallrow = serviceList.Where(X => X.name == "typesOfService_diningHall").FirstOrDefault();
-                    diningHall = diningHallrow.value;
-                    if (diningHall == "1")
-                    {
-                        AppSettings.typesOfService_diningHall = "1";
-                    }
-                    else
-                    {
-                        AppSettings.typesOfService_diningHall = "0";
-                    }
-                }
-                catch
-                {
-                    // don't move this debug
                     AppSettings.typesOfService_diningHall = "1";
                 }
-                try
+                else
                 {
-                    takeAwayrow = serviceList.Where(X => X.name == "typesOfService_selfService").FirstOrDefault();
-                    takeAway = takeAwayrow.value;
-                    if (takeAway == "1")
-                    {
-                        AppSettings.typesOfService_takeAway = "1";
-                    }
-                    else
-                    {
-                        AppSettings.typesOfService_takeAway = "0";
-                    }
+                    AppSettings.typesOfService_diningHall = "0";
                 }
-                catch
+                //}
+                //catch
+                //{
+                //    // don't move this debug
+                //    AppSettings.typesOfService_diningHall = "1";
+                //}
+                //try
+                //{
+                takeAwayrow = serviceList.Where(X => X.name == "typesOfService_selfService").FirstOrDefault();
+                takeAway = takeAwayrow.value;
+                if (takeAway == "1")
                 {
-                    // don't move this debug
                     AppSettings.typesOfService_takeAway = "1";
                 }
-                try
+                else
                 {
-                    selfServicerow = serviceList.Where(X => X.name == "typesOfService_takeAway").FirstOrDefault();
-                    selfService = selfServicerow.value;
-                    //
-                    if (selfService == "1")
-                    {
-                        AppSettings.typesOfService_selfService = "1";
-                    }
-                    else
-                    {
-                        AppSettings.typesOfService_selfService = "0";
-                    }
+                    AppSettings.typesOfService_takeAway = "0";
                 }
-                catch
+                //}
+                //catch
+                //{
+                //    // don't move this debug
+                //    AppSettings.typesOfService_takeAway = "1";
+                //}
+                //try
+                //{
+                selfServicerow = serviceList.Where(X => X.name == "typesOfService_takeAway").FirstOrDefault();
+                selfService = selfServicerow.value;
+                //
+                if (selfService == "1")
                 {
-                    // don't move this debug
                     AppSettings.typesOfService_selfService = "1";
                 }
-               
+                else
+                {
+                    AppSettings.typesOfService_selfService = "0";
+                }
+                //}
+                //catch
+                //{
+                //    // don't move this debug
+                //    AppSettings.typesOfService_selfService = "1";
+                //}
+
 
             }
             catch
             {
-                    // don't move this debug
-                AppSettings.typesOfService_diningHall = "1";
-                AppSettings.typesOfService_takeAway = "1";
-                AppSettings.typesOfService_selfService = "1";
+                loading_typesOfService();
+                //    // don't move this debug
+                //AppSettings.typesOfService_diningHall = "1";
+                //AppSettings.typesOfService_takeAway = "1";
+                //AppSettings.typesOfService_selfService = "1";
+                catchError.Add("loading_typesOfService");
+                catchErrorCount++;
             }
             foreach (var item in loadingList)
             {
@@ -529,11 +584,14 @@ namespace Restaurant
                 SetValues maxDiscount = new SetValues();
                 List<SetValues> settingsValues = await AppSettings.valueModel.GetBySetName("maxDiscount");
                 maxDiscount = settingsValues.FirstOrDefault();
-                AppSettings.maxDiscount =decimal.Parse(maxDiscount.value); 
+                AppSettings.maxDiscount = decimal.Parse(maxDiscount.value);
             }
             catch
             {
-                AppSettings.maxDiscount = 0;
+                //AppSettings.maxDiscount = 0;
+                loading_maxDiscount();
+                catchError.Add("loading_maxDiscount");
+                catchErrorCount++;
             }
             foreach (var item in loadingList)
             {
@@ -549,11 +607,14 @@ namespace Restaurant
             //get item cost
             try
             {
-               AppSettings.itemCost = int.Parse(await getDefaultItemCost());
+                AppSettings.itemCost = int.Parse(await getDefaultItemCost());
             }
             catch
             {
-                AppSettings.itemCost = 0;
+                //AppSettings.itemCost = 0;
+                loading_getItemCost();
+                catchError.Add("loading_getItemCost");
+                catchErrorCount++;
             }
             foreach (var item in loadingList)
             {
@@ -643,10 +704,13 @@ namespace Restaurant
             }
             catch (Exception)
             {
-                AppSettings.invoiceTax_bool = false;
-                AppSettings.invoiceTax_decimal = 0;
-                AppSettings.itemsTax_bool = false;
-                AppSettings.itemsTax_decimal = 0;
+                loading_getTaxDetails();
+                //AppSettings.invoiceTax_bool = false;
+                //AppSettings.invoiceTax_decimal = 0;
+                //AppSettings.itemsTax_bool = false;
+                //AppSettings.itemsTax_decimal = 0;
+                catchError.Add("loading_getTaxDetails");
+                catchErrorCount++;
             }
             foreach (var item in loadingList)
             {
@@ -786,7 +850,11 @@ namespace Restaurant
                 #endregion
             }
             catch (Exception)
-            { }
+            {
+                loading_getDefaultSystemInfo();
+                catchError.Add("loading_getDefaultSystemInfo");
+                catchErrorCount++;
+            }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_getDefaultSystemInfo"))
@@ -806,7 +874,10 @@ namespace Restaurant
             }
             catch
             {
-                AppSettings.dateFormat = "ShortDatePattern";
+                //AppSettings.dateFormat = "ShortDatePattern";
+                loading_getDateForm();
+                catchError.Add("loading_getDateForm");
+                catchErrorCount++;
             }
             foreach (var item in loadingList)
             {
@@ -831,7 +902,9 @@ namespace Restaurant
             }
             catch
             {
-
+                loading_getRegionAndCurrency();
+                catchError.Add("loading_getRegionAndCurrency");
+                catchErrorCount++;
             }
             foreach (var item in loadingList)
             {
@@ -851,7 +924,10 @@ namespace Restaurant
             }
             catch
             {
-                AppSettings.StorageCost = 0;
+                //AppSettings.StorageCost = 0;
+                loading_getStorageCost();
+                catchError.Add("loading_getStorageCost");
+                catchErrorCount++;
             }
             foreach (var item in loadingList)
             {
@@ -871,7 +947,10 @@ namespace Restaurant
             }
             catch
             {
-                AppSettings.accuracy = "1";
+                //AppSettings.accuracy = "1";
+                loading_getAccurac();
+                catchError.Add("loading_getAccurac");
+                catchErrorCount++;
             }
             foreach (var item in loadingList)
             {
@@ -882,7 +961,7 @@ namespace Restaurant
                 }
             }
         }
-        
+
 
         async void loading_getprintSitting()
         {
@@ -891,7 +970,11 @@ namespace Restaurant
                 await getprintSitting();
             }
             catch (Exception)
-            { }
+            {
+                loading_getprintSitting();
+                catchError.Add("loading_getprintSitting");
+                catchErrorCount++;
+            }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_getprintSitting"))
@@ -908,7 +991,11 @@ namespace Restaurant
                 AppSettings.posList = await posLogin.Get();
             }
             catch (Exception)
-            { }
+            {
+                loading_POSList();
+                catchError.Add("loading_POSList");
+                catchErrorCount++;
+            }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_POSList"))
@@ -957,9 +1044,12 @@ namespace Restaurant
             }
             catch (Exception)
             {
-                AppSettings.time_staying = 0;
-                AppSettings.warningTimeForLateReservation = 0;
-                AppSettings.maximumTimeToKeepReservation = 0;
+                loading_getTableTimes();
+                catchError.Add("loading_getTableTimes");
+                catchErrorCount++;
+                //AppSettings.time_staying = 0;
+                //AppSettings.warningTimeForLateReservation = 0;
+                //AppSettings.maximumTimeToKeepReservation = 0;
             }
             foreach (var item in loadingList)
             {
@@ -1248,6 +1338,7 @@ namespace Restaurant
                     }
                 }
                 while (!isDone);
+                MessageBox.Show(catchError + " and count: " + catchErrorCount);
                 #endregion
 
                 #region notifications 
