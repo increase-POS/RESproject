@@ -8,23 +8,22 @@ using System.Windows.Data;
 
 namespace Restaurant.converters
 {
-    class driverNameConverter : IValueConverter
+    class driverNameConverter : IMultiValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value != null)
+            if (values[0] != null && values[1] != null)
             {
-                string s = value.ToString();
-                if (s is null)
-                    return "-";
-                else
-                    return s;
+                string name = (string)values[0];
+                string lname = (string)values[1];
+
+                return name +" "+ lname;
             }
             else return "-";
         }
 
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

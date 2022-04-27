@@ -513,12 +513,25 @@ namespace Restaurant.Classes
         #region User
         static public User user = new User();
         static public List<User> usersList;
+        static public List<User> driversList;
         //static public List<User> salesManList;
 
         static public async Task<IEnumerable<User>> RefreshUsers()
         {
             usersList = await user.Get();
             return usersList;
+        }
+
+        static public async Task<IEnumerable<User>> RefreshDrivers()
+        {
+            if (usersList is null)
+                await RefreshUsers();
+            driversList = usersList.Where(x => x.isActive == 1 && x.isAdmin != true && x.job == "deliveryEmployee").ToList();
+            foreach (var d in driversList)
+            {
+                d.name = d.name + " " + d.lastname;
+            }
+            return driversList;
         }
 
         static public async Task FillComboUsers(ComboBox cmb)
@@ -538,10 +551,9 @@ namespace Restaurant.Classes
 
         static public async Task FillComboDrivers(ComboBox cmb)
         {
-            if (usersList is null)
-                await RefreshUsers();
-            var users = usersList.Where(x => x.isActive == 1 && x.isAdmin != true && x.job == "deliveryEmployee").ToList();
-            cmb.ItemsSource = users;
+            if (driversList is null)
+                await RefreshDrivers();
+            cmb.ItemsSource = driversList;
             cmb.DisplayMemberPath = "name";
             cmb.SelectedValuePath = "userId";
             cmb.SelectedIndex = -1;

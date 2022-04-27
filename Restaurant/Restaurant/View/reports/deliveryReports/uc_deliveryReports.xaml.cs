@@ -78,6 +78,7 @@ namespace Restaurant.View.reports.deliveryReports
             #endregion
 
             chk_allBranches.IsChecked = true;
+            chk_allCompanies.IsChecked = true;
 
             await Search();
             //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_preparingOrders.Tag.ToString());
@@ -128,15 +129,26 @@ namespace Restaurant.View.reports.deliveryReports
             deliveriesQuery = deliveries
                 .Where(s =>
             (
-             s.invNumber.ToLower().Contains(searchText)
+            s.orderNum.ToLower().Contains(searchText)
+            ||
+            s.invNumber.ToLower().Contains(searchText)
             ||
             s.branchName.ToLower().Contains(searchText)
             ||
-            s.status.ToLower().Contains(searchText)
+            s.shippingCompanyName.ToLower().Contains(searchText)
+            ||
+            s.agentName.ToLower().Contains(searchText)
+            ||
+            (s.shipUserName != null ? s.shipUserName.ToLower().Contains(searchText) : false)
+            ||
+            s.orderTime.ToString().ToLower().Contains(searchText)
             )
             &&
             //branch
-            (cb_branches.SelectedIndex != -1 ? s.branchId == Convert.ToInt32(cb_branches.SelectedValue) : false)
+            (cb_branches.SelectedIndex != -1 ? s.branchId == Convert.ToInt32(cb_branches.SelectedValue) : true)
+            &&
+            //company
+            (cb_company.SelectedIndex != -1 ? s.shippingCompanyId == Convert.ToInt32(cb_company.SelectedValue) : true)
             &&
             //start date
             (dp_startDate.SelectedDate != null ? s.createDate >= dp_startDate.SelectedDate : true)
@@ -163,6 +175,7 @@ namespace Restaurant.View.reports.deliveryReports
         {
             deliveries = await statisticsModel.GetDelivery(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
             fillBranches();
+            fillCompanies();
             return deliveries;
         }
 
@@ -187,6 +200,12 @@ namespace Restaurant.View.reports.deliveryReports
             cb_branches.SelectedValuePath = "branchId";
             cb_branches.DisplayMemberPath = "branchName";
             cb_branches.ItemsSource = deliveries.Select(i => new { i.branchName, i.branchId }).Distinct();
+        }
+        private void fillCompanies()
+        {
+            cb_company.SelectedValuePath = "shippingCompanyId";
+            cb_company.DisplayMemberPath = "shippingCompanyName";
+            cb_company.ItemsSource = deliveries.Select(i => new { i.shippingCompanyName, i.shippingCompanyId }).Distinct();
         }
         #endregion
 
@@ -244,6 +263,47 @@ namespace Restaurant.View.reports.deliveryReports
             }
         }
 
+        private void Cb_company_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {//select company
+            callSearch(sender);
+        }
+
+        private void Chk_allCompanies_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                cb_company.SelectedIndex = -1;
+                cb_company.IsEnabled = false;
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void Chk_allCompanies_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                cb_company.IsEnabled = true;
+
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh
             try
@@ -255,6 +315,9 @@ namespace Restaurant.View.reports.deliveryReports
                 await RefreshDeliveriesList();
                 dp_startDate.SelectedDate = null;
                 dp_endDate.SelectedDate = null;
+                chk_allBranches.IsChecked = true;
+                chk_allCompanies.IsChecked = true;
+
                 await Search();
 
                 HelpClass.EndAwait(grid_main);
@@ -652,8 +715,9 @@ namespace Restaurant.View.reports.deliveryReports
 
 
         }
+
         #endregion
 
-      
+     
     }
 }

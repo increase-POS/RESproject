@@ -67,7 +67,19 @@
                                     </Button.Triggers>
                                     <Path Name="path_preparingOrder" Fill="{StaticResource SecondColor}" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,-1,0,0" 
                                           Width="25" Height="25"   FlowDirection="LeftToRight" 
-                                          Data="{StaticResource cooking}" >
+                                          Data="M247.3,201.6l-13.5-46.9h-32.3v42.2c0,12.9-10.5,23.4-23.4,23.4h-23.4c-0.8-4.7,3.4-20.9-11-33.8c6.6-2.3,10.9-8.5,11-15.4
+	c0-2.4-0.6-4.8-1.6-7h7.2l10,46.9h7.8c7.8,0,14.1-6.3,14.1-14.1v-18.1l-6.8-31.7c-1.4-6.5-7.1-11.1-13.7-11.1h-13.2
+	c3.8-7.1,9.7-17.1,13.4-23.1l7.6,7.6c0.7,0.6,1.5,1.1,2.4,1.3l19.7,3.9v19.6h37.5c7.8,0,14.1-6.3,14.1-14.1v-28.1
+	c0-7.8-6.3-14.1-14.1-14.1h-32.8c-2.6,0-4.7,2.1-4.7,4.7v2.8l-8-1.8c-7-7.6-14.5-14.8-22.3-21.7c-5.8-3.3-12.9-3.7-19-1.1
+	C140,77.3,129,85.1,119.8,94.8c-9.9,11-17.4,24-21.9,38.1c-2.5,7.1-1.4,15,3,21.2l0.5,0.5H53.9c-9,0-16.4,7.3-16.4,16.3
+	c0,6,3.3,11.6,8.6,14.4c-19.7,10.6-32,31.2-32,53.6c0,2.6,2.1,4.7,4.7,4.7h9.4c0,23.3,18.9,42.2,42.2,42.2s42.2-18.9,42.2-42.2h89.1
+	c0.1,23.3,19,42.1,42.3,42c23.3-0.1,42.1-19,42-42.3C285.9,221.6,269.1,203.4,247.3,201.6L247.3,201.6z M70.3,276.6
+	c-18.1,0-32.8-14.7-32.8-32.8s14.7-32.8,32.8-32.8s32.8,14.7,32.8,32.8S88.4,276.6,70.3,276.6z M243.8,276.6
+	c-18.1,0-32.8-14.7-32.8-32.8s14.7-32.8,32.8-32.8s32.8,14.7,32.8,32.8S261.9,276.6,243.8,276.6z M243.8,225
+	c10.4,0,18.8,8.4,18.8,18.8s-8.4,18.8-18.8,18.8s-18.8-8.4-18.8-18.8S233.4,225,243.8,225z M70.3,225c10.4,0,18.8,8.4,18.8,18.8
+	s-8.4,18.8-18.8,18.8s-18.8-8.4-18.8-18.8S60,225,70.3,225z M89.1,93.8c0-2.6-2.1-4.7-4.7-4.7H18.8c-2.6,0-4.7,2.1-4.7,4.7v51.6h75
+	V93.8z M234.4,39.8c0-14.2-11.6-25.8-25.8-25.8h-14.1c-14.1,0-25.6,11.4-25.8,25.5V51c0,16.3,12,30.1,28.1,32.4V46.9
+	c0-2.6,2.1-4.7,4.7-4.7h32.8V39.8z M206.3,80.7c14.4-0.9,25.4-13.4,24.4-27.9c0-0.4-0.1-0.8-0.1-1.3h-24.3V80.7z" >
                                         <Path.ToolTip>
                                             <ToolTip x:Name="tt_delivery" Content="Delivery"
                                                      Placement="left" 
@@ -94,75 +106,69 @@
                         <Border BorderThickness="15,0,15,0" x:Name="bdrMain" Height="auto" Background="Transparent">
                             <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" >
                                 <Grid x:Name="grid_father">
-                                    <Grid Grid.Row="1" x:Name="grid_invoice" Margin="10,0,10,10"  Visibility="Visible">
-                                       
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="1.5*" MinWidth="200"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"></RowDefinition>
+                                        <RowDefinition Height="auto"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="1.5*" MinWidth="200"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
 
+                                    <DockPanel Grid.Row="0" Grid.Column="2" LastChildFill="False" >
+                                        <Border  CornerRadius="10" Height="40" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                            <Grid>
 
-                                        <DockPanel Grid.Row="0" Grid.Column="2" LastChildFill="False" >
-                                            <Border Grid.Row="0" CornerRadius="10" Height="40" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                                                <Grid>
+                                                <DatePicker Name="dp_startDate" SelectedDateFormat="Short"   Width="100" 
+                                                            Padding="10,0,5,0" Height="40" DockPanel.Dock="Right" 
+                                                            BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
+                                                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
+                                                            materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                                            materialDesign:HintAssist.Hint="Start Date..."
+                                                            SelectedDateChanged="RefreshView_SelectedDateChanged"/>
+                                            </Grid>
+                                        </Border>
 
-                                                    <DatePicker Name="dp_startDate" SelectedDateFormat="Short"   Width="100" 
-                                                                Padding="10,0,5,0" Height="40" DockPanel.Dock="Right" 
-                                                                BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
-                                                                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
-                                                                materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                                                materialDesign:HintAssist.Hint="Start Date..."
-                                                                SelectedDateChanged="RefreshView_SelectedDateChanged"/>
-                                                </Grid>
-                                            </Border>
+                                        <Border  Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                            <Grid>
+                                                <DatePicker  Name="dp_endDate" SelectedDateFormat="Short"  Width="100"
+                                                            Padding="10,0,5,0" Height="40" DockPanel.Dock="Right"
+                                                            BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
+                                                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
+                                                            materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                                            materialDesign:HintAssist.Hint="End Date..."
+                                                            SelectedDateChanged="RefreshView_SelectedDateChanged"></DatePicker>
+                                            </Grid>
+                                        </Border>
+                                    </DockPanel>
+                                    <DockPanel Grid.Row="0"  LastChildFill="False">
+                                        <Border Grid.Row="0" CornerRadius="10" Height="40" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                            <Grid>
+                                                <ComboBox SelectionChanged="cb_branches_SelectionChanged" MinWidth="150" Name="cb_branches" 
+                                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                                            materialDesign:HintAssist.Hint="Branch ...."
+                                                            BorderBrush="#737373"   BorderThickness="0" Margin="4,0" Foreground="#4E4E4E"  
+                                                            Height="40" Padding="10,0,5,0" Grid.Row="1"></ComboBox>
+                                            </Grid>
+                                        </Border>
+                                        <CheckBox  Background="{StaticResource MainColor}" x:Name="chk_allBranches" Grid.Row="1"  Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_allBranches_Checked" Unchecked="Chk_allBranches_Unchecked"></CheckBox>
 
-                                            <Border Grid.Row="0" Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                                                <Grid>
-                                                    <DatePicker  Name="dp_endDate" SelectedDateFormat="Short"  Width="100"
-                                                                Padding="10,0,5,0" Height="40" DockPanel.Dock="Right"
-                                                                BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
-                                                                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
-                                                                materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                                                materialDesign:HintAssist.Hint="End Date..."
-                                                                SelectedDateChanged="RefreshView_SelectedDateChanged"></DatePicker>
-                                                </Grid>
-                                            </Border>
-                                        </DockPanel>
-                                        <DockPanel Grid.Row="0"  LastChildFill="False">
-                                            <Border Grid.Row="0" CornerRadius="10" Height="40" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                                                <Grid>
-                                                    <ComboBox SelectionChanged="cb_branches_SelectionChanged" MinWidth="150" Name="cb_branches" 
-                                                              Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                                              materialDesign:HintAssist.Hint="Branch ...."
-                                                              BorderBrush="#737373"   BorderThickness="0" Margin="4,0" Foreground="#4E4E4E"  
-                                                              Height="40" Padding="10,0,5,0" Grid.Row="1"></ComboBox>
-                                                </Grid>
-                                            </Border>
-                                            <CheckBox  Background="{StaticResource MainColor}" x:Name="chk_allBranches" Grid.Row="1"  Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_allBranches_Checked" Unchecked="Chk_allBranches_Unchecked"></CheckBox>
+                                    </DockPanel>
+                                    <DockPanel Grid.Row="2"  LastChildFill="False" >
+                                        <Border Grid.Row="1" Height="40"  CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}" >
+                                            <Grid>
+                                                <ComboBox MinWidth="150" Name="cb_company" 
+                                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                                            materialDesign:HintAssist.Hint="Company ...."
+                                                            BorderBrush="#737373"   BorderThickness="0" Margin="4,0" Foreground="#4E4E4E" 
+                                                            Height="40" Padding="10,0,5,0" Grid.Row="1" SelectionChanged="Cb_company_SelectionChanged"  ></ComboBox>
 
-                                        </DockPanel>
-                                        <DockPanel Grid.Row="2"  LastChildFill="False" Visibility="Collapsed">
-                                            <Border Grid.Row="0" Height="40"  CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}" Visibility="Collapsed">
-                                                <Grid>
-                                                    <ComboBox MinWidth="150" Name="cb_category" 
-                                                              Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                                              materialDesign:HintAssist.Hint="Category ...."
-                                                              BorderBrush="#737373"   BorderThickness="0" Margin="4,0" Foreground="#4E4E4E" 
-                                                              Height="40" Padding="10,0,5,0" Grid.Row="1"  >
-                                                        <ComboBox.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <TextBlock Text="{Binding categoryName , Converter={StaticResource translateCategoryNameForReports}}"/>
-                                                            </DataTemplate>
-                                                        </ComboBox.ItemTemplate>
-                                                    </ComboBox>
+                                            </Grid>
+                                        </Border>
+                                        <CheckBox  Background="{StaticResource MainColor}" x:Name="chk_allCompanies" Grid.Row="2"  Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_allCompanies_Checked" Unchecked="Chk_allCompanies_Unchecked"  ></CheckBox>
 
-                                                </Grid>
-                                            </Border>
-                                            <CheckBox  Background="{StaticResource MainColor}" x:Name="chk_allCategories" Grid.Row="2"  Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"  ></CheckBox>
-
-                                        </DockPanel>
-                                    </Grid>
+                                    </DockPanel>
 
                                 </Grid>
 
@@ -274,9 +280,17 @@
                                     <DataGridTextColumn x:Name="col_invNum"        Width="*" Header="No."       Binding="{Binding invNumber}"/>
                                     <DataGridTextColumn x:Name="col_branch"        Width="*" Header="Branch"    Binding="{Binding branchName }" />
                                     <DataGridTextColumn x:Name="col_customer"      Width="*" Header="Customer"  Binding="{Binding agentName}"/>
-                                    <DataGridTextColumn x:Name="col_company"       Width="*" Header="Company"   Binding="{Binding shippingCompanyName}"/>
-                                    <DataGridTextColumn x:Name="col_driver"        Width="*" Header="Driver"    Binding="{Binding shipUserName }" />
-                                    <DataGridTextColumn x:Name="col_duration"      Width="*" Header="Duration"  Binding="{Binding orderTime , Converter={StaticResource dateFrameConverter}}" />
+                                    <DataGridTextColumn x:Name="col_company"       Width="*" Header="Company"   Binding="{Binding shippingCompanyName , Converter={StaticResource shippingCompanyNameConverter}}"/>
+                                    <!--Binding="{Binding shipUserName ,Converter={StaticResource driverNameConverter}}"-->
+                                    <DataGridTextColumn x:Name="col_driver"        Width="*" Header="Driver"     >
+                                        <DataGridTextColumn.Binding>
+                                            <MultiBinding Converter="{StaticResource driverNameConverter}">
+                                                <Binding Path="shipUserName" />
+                                                <Binding Path="shipUserLastName" />
+                                            </MultiBinding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn x:Name="col_duration"      Width="*" Header="Duration"  Binding="{Binding orderTime , Converter={StaticResource dateTimeToTimeConverter}}" />
                                     
                                 </DataGrid.Columns>
                             </DataGrid>
