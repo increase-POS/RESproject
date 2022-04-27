@@ -944,26 +944,35 @@ namespace Restaurant.Classes
         #region invoice type
         static public void FillInvoiceTypeWithDefault(ComboBox cmb)
         {
-            var typelist = new[] {
-                new { Text = "-"       , Value = "" },
-                new { Text = AppSettings.resourcemanager.GetString("trDiningHallType")       , Value = "diningHall" },
-                new { Text = AppSettings.resourcemanager.GetString("trTakeAway") , Value = "takeAway" },
-                new { Text = AppSettings.resourcemanager.GetString("trSelfService") , Value = "selfService" },
-                 };
-            cmb.DisplayMemberPath = "Text";
-            cmb.SelectedValuePath = "Value";
-            cmb.ItemsSource = typelist;
+            //var typelist = new[] {
+            //    new { Text = "-"       , Value = "" },
+            //    new { Text = AppSettings.resourcemanager.GetString("trDiningHallType")       , Value = "diningHall" },
+            //    new { Text = AppSettings.resourcemanager.GetString("trTakeAway") , Value = "takeAway" },
+            //    new { Text = AppSettings.resourcemanager.GetString("trSelfService") , Value = "selfService" },
+            //     };
+
+            invoiceTypelist = new List<keyValueString>();
+            invoiceTypelist.Add(new keyValueString { key = "", value = "-" });
+            if (AppSettings.typesOfService_diningHall == "1")
+                invoiceTypelist.Add(new keyValueString { key = "diningHall", value = AppSettings.resourcemanager.GetString("trDiningHallType") });
+
+            if (AppSettings.typesOfService_takeAway == "1")
+                invoiceTypelist.Add(new keyValueString { key = "takeAway", value = AppSettings.resourcemanager.GetString("trTakeAway") });
+
+            if (AppSettings.typesOfService_selfService == "1")
+                invoiceTypelist.Add(new keyValueString { key = "selfService", value = AppSettings.resourcemanager.GetString("trSelfService") });
+
+            cmb.SelectedValuePath = "key";
+            cmb.DisplayMemberPath = "value";
+            cmb.ItemsSource = invoiceTypelist;
             cmb.SelectedIndex = 0;
         }
         static public List<keyValueString> invoiceTypelist;
 
         static public void FillInvoiceType(ComboBox cmb)
         {
-            //var typelist = new[] {
-            //    new { Text = AppSettings.resourcemanager.GetString("trDiningHallType")       , Value = "diningHall" },
-            //    new { Text = AppSettings.resourcemanager.GetString("trTakeAway") , Value = "takeAway" },
-            //    new { Text = AppSettings.resourcemanager.GetString("trSelfService") , Value = "selfService" },
-            //     };
+           
+
             invoiceTypelist = new List<keyValueString>();
             if (AppSettings.typesOfService_diningHall == "1")
                 invoiceTypelist.Add(new keyValueString {key= "diningHall", value= AppSettings.resourcemanager.GetString("trDiningHallType") });
@@ -974,8 +983,8 @@ namespace Restaurant.Classes
             if (AppSettings.typesOfService_selfService == "1")
                 invoiceTypelist.Add(new keyValueString { key = "selfService", value = AppSettings.resourcemanager.GetString("trSelfService") });
 
-            cmb.DisplayMemberPath = "value";
             cmb.SelectedValuePath = "key";
+            cmb.DisplayMemberPath = "value";
             cmb.ItemsSource = invoiceTypelist;
             cmb.SelectedIndex = 0;
         }
