@@ -453,22 +453,22 @@ namespace Restaurant.Classes
             }
             return items;
         }
-        public async Task<List<Invoice>> getInvoicesToReturn(string invType, int userId )
-        {
-            List<Invoice> items = new List<Invoice>();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("invType", invType);
-            parameters.Add("userId", userId.ToString());
-            IEnumerable<Claim> claims = await APIResult.getList("Invoices/getInvoicesToReturn", parameters);
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    items.Add(JsonConvert.DeserializeObject<Invoice>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return items;
-        }
+        //public async Task<List<Invoice>> getInvoicesToReturn(string invType, int userId )
+        //{
+        //    List<Invoice> items = new List<Invoice>();
+        //    Dictionary<string, string> parameters = new Dictionary<string, string>();
+        //    parameters.Add("invType", invType);
+        //    parameters.Add("userId", userId.ToString());
+        //    IEnumerable<Claim> claims = await APIResult.getList("Invoices/getInvoicesToReturn", parameters);
+        //    foreach (Claim c in claims)
+        //    {
+        //        if (c.Type == "scopes")
+        //        {
+        //            items.Add(JsonConvert.DeserializeObject<Invoice>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+        //        }
+        //    }
+        //    return items;
+        //}
         public async Task<int> GetCountBranchInvoices(string invType, int branchCreatorId, int branchId = 0, int duration = 0)
         {
             int count = 0;
@@ -1361,12 +1361,13 @@ namespace Restaurant.Classes
             }
             return invoice;
         }
-        public async Task<Invoice> GetInvoicesByBarcodeAndUser(string invNum, int userId)
+        public async Task<Invoice> GetInvoicesByBarcodeAndUser(string invNum, int userId, int branchId)
         {
             Invoice item = new Invoice();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("invNum", invNum);
             parameters.Add("userId", userId.ToString());
+            parameters.Add("branchId", branchId.ToString());
             //#################
             IEnumerable<Claim> claims = await APIResult.getList("Invoices/GetInvoicesByBarcodeAndUser", parameters);
 

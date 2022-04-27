@@ -158,14 +158,14 @@ namespace Restaurant.View.windows
  
             if (prefix == "pi" && page=="purchase")              
             {
-                invoice = await FillCombo.invoice.GetInvoicesByBarcodeAndUser(barcode,MainWindow.userLogin.userId);
+                invoice = await FillCombo.invoice.GetInvoicesByBarcodeAndUser(barcode,MainWindow.userLogin.userId,MainWindow.branchLogin.branchId);
                 if (invoice == null) // check if agent invoice number
                 {
                     invoice = await FillCombo.invoice.getInvoiceByNumAndUser(invoiceType, barcode, MainWindow.userLogin.userId);
                 }
             }
             else if (prefix == "sr" && page == "spendingOrder")
-                invoice = await FillCombo.invoice.GetInvoicesByBarcodeAndUser(barcode, MainWindow.userLogin.userId);
+                invoice = await FillCombo.invoice.GetInvoicesByBarcodeAndUser(barcode, MainWindow.userLogin.userId,MainWindow.branchLogin.branchId);
 
             //else if(prefix == "si" && !fromPurchase)
             //{
