@@ -512,12 +512,10 @@ namespace Restaurant.Classes
             }
             return count;
         }
-        public async Task<int> getDeliverOrdersCount(string invType, string status, int userId)
+        public async Task<int> getDeliverOrdersCount( int userId)
         {
             int count = 0;
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("invType", invType);
-            parameters.Add("status", status);
             parameters.Add("userId", userId.ToString());
             //#################
             IEnumerable<Claim> claims = await APIResult.getList("Invoices/getDeliverOrdersCount", parameters);
@@ -626,12 +624,11 @@ namespace Restaurant.Classes
             }
             return item;
         }
-        public async Task<List<Invoice>> getDeliverOrders(string invType, string status, int userId)
+        public async Task<List<Invoice>> getUserDeliverOrders(int userId)
         {
             List<Invoice> items = new List<Invoice>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("invType", invType);
-            parameters.Add("status", status);
+
             parameters.Add("userId", userId.ToString());
             IEnumerable<Claim> claims = await APIResult.getList("Invoices/getDeliverOrders", parameters);
             foreach (Claim c in claims)

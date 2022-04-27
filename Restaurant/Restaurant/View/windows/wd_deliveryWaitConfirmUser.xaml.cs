@@ -1,5 +1,6 @@
 ﻿using netoaster;
 using Restaurant.Classes;
+using Restaurant.Classes.ApiClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,11 +91,9 @@ namespace Restaurant.View.windows
 
         public Invoice invoice = new Invoice();
         IEnumerable<Invoice> invoices;
-        async Task fillDataGrid()
+        async Task fillDataGrid() 
         {
-            string invoiceType = "s";
-            string invoiceStatus = "ex";
-            invoices = await invoice.getDeliverOrders(invoiceType, invoiceStatus, MainWindow.userLogin.userId);
+            invoices = await invoice.getUserDeliverOrders( MainWindow.userLogin.userId);
 
            dg_invoice.ItemsSource = invoices;
         }
@@ -133,8 +132,8 @@ namespace Restaurant.View.windows
                         if (w.isOk)
                         {
                             // Pos posModel = new Pos();
-                            Invoice row = (Invoice)dg_invoice.SelectedItems[0];
-                            await saveOrderStatus(row.invoiceId, "tr");
+                            invoice = (Invoice)dg_invoice.SelectedItems[0];
+                            await saveOrderStatus();
                             await fillDataGrid();
                         }
                         
@@ -150,14 +149,16 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async Task saveOrderStatus(int invoiceId, string status)
+        private async Task saveOrderStatus()
         {
-            invoiceStatus st = new invoiceStatus();
-            st.status = status;
-            st.invoiceId = invoiceId;
+            OrderPreparing orderModel = new OrderPreparing();
+
+            orderPreparingStatus st = new orderPreparingStatus();
+            st.status = "Collected";
             st.createUserId = MainWindow.userLogin.userId;
             st.isActive = 1;
-            int res = await invoice.saveOrderStatus(st);
+
+            int res = await orderModel.EditInvoiceOrdersStatus(invoice.invoiceId, invoice.shipUserId, (int)invoice.shippingCompanyId, st);
             if (res > 0)
                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopConfirm"), animation: ToasterAnimation.FadeIn);
             else

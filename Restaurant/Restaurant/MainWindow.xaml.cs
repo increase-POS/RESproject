@@ -1403,10 +1403,7 @@ namespace Restaurant
         {
             try
             {
-                string invoiceType = "s";
-                int ordersCount = await invoice.getDeliverOrdersCount(invoiceType, "ex", MainWindow.userLogin.userId);
-                //if (invoice != null && _InvoiceType == "s" && invoice.invoiceId != 0 )
-                //    ordersCount--;
+                int ordersCount = await invoice.getDeliverOrdersCount( MainWindow.userLogin.userId);
 
                 if (ordersCount != _OrdersWaitCount)
                 {
@@ -2268,7 +2265,7 @@ namespace Restaurant
             Window.GetWindow(this).Opacity = 1;
 
             refreshOrdersWaitNotification();
-                HelpClass.EndAwait(grid_mainWindow);
+            HelpClass.EndAwait(grid_mainWindow);
         }
         private void Btn_transfers_Click(object sender, RoutedEventArgs e)
         {
