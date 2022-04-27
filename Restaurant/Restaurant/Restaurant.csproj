@@ -315,6 +315,7 @@
     <Compile Include="converters\unknownAgentConverter.cs" />
     <Compile Include="converters\unlimitedCouponConverter.cs" />
     <Compile Include="converters\unlimitedEndDate.cs" />
+    <Compile Include="converters\unlimitedRemainCoupon.cs" />
     <Compile Include="converters\userJobConverter.cs" />
     <Compile Include="en_file.Designer.cs" />
     <Compile Include="View\accounts\uc_accounts.xaml.cs">

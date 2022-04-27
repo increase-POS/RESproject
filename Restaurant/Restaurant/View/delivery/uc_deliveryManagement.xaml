@@ -239,7 +239,6 @@
                                     <Setter Property="Foreground" Value="{StaticResource SecondColor}"/>
                                 </Style>
                             </DataGrid.Resources>
-                            <!--Binding="{Binding false, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"-->
                             <DataGrid.Columns>
                                 <DataGridCheckBoxColumn x:Name="col_chk" Binding="{Binding IsChecked, NotifyOnTargetUpdated=True}" IsReadOnly="False" IsThreeState="False">
                                     <DataGridCheckBoxColumn.ElementStyle>
@@ -263,7 +262,14 @@
                                 </DataGridCheckBoxColumn>
                                 <DataGridTextColumn Width="*"  Header="code"          Binding="{Binding Path=invNumber}"/>
                                 <DataGridTextColumn Width="*"  Header="Company"       Binding="{Binding Path=shippingCompanyName , Converter={StaticResource shippingCompanyNameConverter}}"/>
-                                <DataGridTextColumn Width="*"  Header="delivery man"  Binding="{Binding Path=shipUserName , Converter={StaticResource driverNameConverter}}"/>
+                                <DataGridTextColumn Width="*"  Header="delivery man"  >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource driverNameConverter}">
+                                            <Binding Path="shipUserName" />
+                                            <Binding Path="shipUserLastName" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Width="*"  Header="delivery time" Binding="{Binding Path=orderTime , Converter={StaticResource dateTimeToTimeConverter}}"/>
                                 <DataGridTextColumn Width="*"  Header="status"   Binding="{Binding Path=status , Converter={StaticResource preparingOrderStatusConverter}}"/>
                              </DataGrid.Columns>
@@ -517,11 +523,19 @@
                         </Border>
                         <Border x:Name="bdr_tbDeliveryMan" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}" Visibility="Collapsed">
                             <Grid>
+                                <!--Text="{Binding shipUserName, Mode=OneWay}"-->
                                 <TextBox Margin="4,0" x:Name="tb_user"  IsEnabled="False" 
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
-                                         Text="{Binding shipUserName, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
+                                          Padding="10,0,5,0"   BorderThickness="0" 
                                          materialDesign:HintAssist.Hint="delivery man..."   Foreground="#4E4E4E"
-                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" />
+                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" >
+                                    <TextBox.Text>
+                                        <MultiBinding StringFormat="{}{0}  {1}">
+                                            <Binding Path="shipUserName"  />
+                                            <Binding Path="shipUserLastName"  />
+                                        </MultiBinding>
+                                    </TextBox.Text>
+                                </TextBox>
                             </Grid>
                         </Border>
                         <Border x:Name="bdr_cbDeliveryCompany" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}" Visibility="Collapsed">
