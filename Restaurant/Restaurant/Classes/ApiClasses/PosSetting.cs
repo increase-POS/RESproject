@@ -39,8 +39,14 @@ namespace Restaurant.Classes
         public string docPapersize { get; set; }
         public string saleSizeValue { get; set; }
         public string docSizeValue { get; set; }
-        
+        public string kitchenSizeValue { get; set; }
 
+        public Nullable<int> kitchenPrinterId { get; set; }
+        public Nullable<int> kitchenPapersizeId { get; set; }
+        public string kitchenPrinter { get; set; }
+        public string kitchenPapersize { get; set; }
+        public string kitchenprintFor { get; set; }
+     
         /// <summary>
         /// ///////////////////////////////////////
         /// </summary>
@@ -96,10 +102,13 @@ namespace Restaurant.Classes
             if (oldsetting.saleInvPrinterId == null)
             {
 
-
-
-
                 defpossetting.salname = defpr.name;
+
+            }
+            if (oldsetting.kitchenPrinterId == null)
+            {
+
+                defpossetting.kitchenPrinter = defpr.name;
 
             }
             if (oldsetting.reportPrinterId == null)
@@ -110,11 +119,16 @@ namespace Restaurant.Classes
 
             }
 
-
+            // paper
             if (oldsetting.saleInvPapersizeId == null)
             {
 
-                defpossetting.saleSizeValue = "A4";
+                defpossetting.saleSizeValue = "5.7cm";
+            }
+            if (oldsetting.kitchenPapersizeId == null)
+            {
+
+                defpossetting.kitchenPapersize = "5.7cm";
             }
 
             if (oldsetting.docPapersizeId == null)

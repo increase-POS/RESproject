@@ -39,6 +39,9 @@ namespace Restaurant.Classes
         public static string email_on_save_pur;
         public static string rep_printer_name;
         public static string sale_printer_name;
+        public static string kitchen_printer_name;
+
+        public static string kitchenPaperSize;
         public static string salePaperSize;
         public static string rep_print_count;
         public static string docPapersize;

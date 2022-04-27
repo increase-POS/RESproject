@@ -385,7 +385,7 @@ namespace Restaurant.View.delivery
             }
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
-          clsReports.driverManagement(driverOrder, rep, reppath, paramarr);
+          clsReports.driverManagement(driverOrder.ToList(), rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 

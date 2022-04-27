@@ -45,12 +45,16 @@ namespace Restaurant.View.windows
         List<Printers> printersList = new List<Printers>();
         Printers repprinterRow = new Printers();
         Printers salprinterRow = new Printers();
+        Printers kitchenprinterRow = new Printers();
         PosSetting possettingModel = new PosSetting();
 
         int saleInvPrinterId;
         int reportPrinterId;
         int salepapersizeId;
         int docpapersizeId;
+        int kitchenPrinterId;
+        int kitchenPapersizeId;
+
 
         Printers printerModel = new Printers();
         Papersize papersizeModel = new Papersize();
@@ -110,6 +114,17 @@ namespace Restaurant.View.windows
                 defpossetting.salprinterId = saleInvPrinterId;
 
             }
+            if (oldsetting.kitchenPrinterId == null)
+            {
+
+                defpr.printFor = "kitchen";
+                int kitchenPrinterId = await printerModel.Save(defpr);
+                defpossetting.kitchenPrinterId = kitchenPrinterId;
+                defpossetting.kitchenPrinter = defpr.name;
+                defpossetting.kitchenprintFor = "kitchen";
+                defpossetting.kitchenPrinterId = kitchenPrinterId;
+
+            }
             if (oldsetting.reportPrinterId == null)
             {
                 defpr.printFor = "doc";//"doc"
@@ -127,10 +142,18 @@ namespace Restaurant.View.windows
           
             if (oldsetting.saleInvPapersizeId == null)
             {
-                int salsizeid = papersizeList.Where(x => x.printfor.Contains("sal") && x.sizeValue == "A4").FirstOrDefault().sizeId;
+                int salsizeid = papersizeList.Where(x => x.printfor.Contains("sal") && x.sizeValue == "5.7cm").FirstOrDefault().sizeId;
                 defpossetting.saleInvPapersizeId = salsizeid;
-                defpossetting.saleSizeValue = "A4";
+                defpossetting.saleSizeValue = "5.7cm";
             
+
+            }
+            if (oldsetting.kitchenPapersizeId == null)
+            {
+                int kitchenPapersizeId = papersizeList.Where(x => x.printfor.Contains("kitchen") && x.sizeValue == "5.7cm").FirstOrDefault().sizeId;
+                defpossetting.kitchenPapersizeId = kitchenPapersizeId;
+                defpossetting.kitchenPapersize = "5.7cm";
+
 
             }
 
@@ -169,8 +192,11 @@ namespace Restaurant.View.windows
 
                 reportPrinterId = (int)possettingModel.reportPrinterId;
                 saleInvPrinterId = (int)possettingModel.saleInvPrinterId;
+                kitchenPrinterId = (int)possettingModel.kitchenPrinterId;
 
                 salepapersizeId = (int)possettingModel.saleInvPapersizeId;
+                kitchenPapersizeId = (int)possettingModel.kitchenPapersizeId;
+
                 if (possettingModel.docPapersizeId != null && possettingModel.docPapersizeId > 0)
                 {
                     docpapersizeId = (int)possettingModel.docPapersizeId;
@@ -181,7 +207,8 @@ namespace Restaurant.View.windows
                     repprinterRow = await printerModel.GetByID(reportPrinterId);
                 if (saleInvPrinterId > 0)
                     salprinterRow = await printerModel.GetByID(saleInvPrinterId);
-
+                if (kitchenPrinterId > 0)
+                    kitchenprinterRow = await printerModel.GetByID(kitchenPrinterId);
 
 
             }
@@ -214,6 +241,19 @@ namespace Restaurant.View.windows
             }
 
         }
+
+        public void fillcb_kitname()
+        {
+            cb_kitname.ItemsSource = printersList;
+            cb_kitname.DisplayMemberPath = "name";
+            cb_kitname.SelectedValuePath = "name";
+            if (kitchenprinterRow.printerId > 0)
+            {
+                cb_kitname.SelectedValue = (string)Encoding.UTF8.GetString(Convert.FromBase64String(kitchenprinterRow.name));
+
+            }
+
+        }
         //
         public void fillcb_docpapersize()
         {
@@ -242,6 +282,20 @@ namespace Restaurant.View.windows
 
 
         }
+        public void fillcb_kitpapersize()
+        {
+
+            cb_kitpapersize.ItemsSource = papersizeList.Where(x => x.printfor.Contains("kitchen"));
+            // var paperList = papersizeList.Where(x => x.printfor.Contains("sal"));
+            cb_kitpapersize.DisplayMemberPath = "paperSize1";
+            cb_kitpapersize.SelectedValuePath = "sizeId";
+            if (kitchenPapersizeId > 0)
+            {
+                cb_kitpapersize.SelectedValue = kitchenPapersizeId;
+            }
+
+
+        }
 
         async Task refreshWindow()
         {
@@ -251,8 +305,8 @@ namespace Restaurant.View.windows
             fillcb_salname();
             fillcb_repname();
             fillcb_docpapersize();
-
-
+            fillcb_kitname();
+            fillcb_kitpapersize();
 
             fillcb_saleInvPaperSize();
 
@@ -262,6 +316,7 @@ namespace Restaurant.View.windows
             PosSetting posscls = new PosSetting();
             // string msg = "";
             int msg = 0;
+            // report printer
             string printern = (string)cb_repname.SelectedValue;
 
 
@@ -283,6 +338,7 @@ namespace Restaurant.View.windows
             reportPrinterId = msg;
 
 
+            //sale printer
             printern = (string)cb_salname.SelectedValue;
             if (printern != null && printern != "")
             {
@@ -296,9 +352,6 @@ namespace Restaurant.View.windows
             }
 
 
-
-
-
             salprinterRow.printFor = "sal";
             salprinterRow.createUserId = MainWindow.userLogin.userId;
 
@@ -306,14 +359,37 @@ namespace Restaurant.View.windows
             // saleInvPrinterId = int.Parse(msg);
             saleInvPrinterId = msg;
 
+            //kitchen
+            printern = (string)cb_kitname.SelectedValue;
+            if (printern != null && printern != "")
+            {
+                kitchenprinterRow.name = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(printern));
+
+            }
+            else
+            {
+                printern = possettingModel.getdefaultPrinters();
+                kitchenprinterRow.name = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(printern));
+            }
 
 
+            kitchenprinterRow.printFor = "kitchen";
+            kitchenprinterRow.createUserId = MainWindow.userLogin.userId;
+
+            msg = await printerModel.Save(kitchenprinterRow);
+         
+            kitchenPrinterId = msg;
+            //
             possettingModel.posId = MainWindow.posLogin.posId;
             possettingModel.reportPrinterId = reportPrinterId;
             possettingModel.saleInvPrinterId = saleInvPrinterId;
+            possettingModel.kitchenPrinterId = kitchenPrinterId;
             ////
-            int salsizeid = papersizeList.Where(x => x.printfor.Contains("sal") && x.sizeValue == "A4").FirstOrDefault().sizeId;
+            int salsizeid = papersizeList.Where(x => x.printfor.Contains("sal") && x.sizeValue == "5.7cm").FirstOrDefault().sizeId;
             int docsizeid = papersizeList.Where(x => x.printfor.Contains("doc") && x.sizeValue == "A5").FirstOrDefault().sizeId;
+
+            int kitchensizeid = papersizeList.Where(x => x.printfor.Contains("kitchen") && x.sizeValue == "5.7cm").FirstOrDefault().sizeId;
+            //sale
             string psize = "";
             if (cb_saleInvPaperSize.SelectedIndex != -1)
             {
@@ -332,10 +408,27 @@ namespace Restaurant.View.windows
             {
                 possettingModel.saleInvPapersizeId = salsizeid;
             }
+            //kitchen
 
+            if (cb_kitpapersize.SelectedIndex != -1)
+            {
+                psize = (string)cb_kitpapersize.SelectedValue.ToString();
+                if (psize != null && psize != "")
+                {
+                    possettingModel.kitchenPapersizeId = int.Parse(psize);
+                }
+                else
+                {
+                    possettingModel.kitchenPapersizeId = kitchensizeid;
+                }
 
+            }
+            else
+            {
+                possettingModel.kitchenPapersizeId = kitchensizeid;
+            }
 
-            // possettingModel.saleInvPapersizeId = (int)cb_saleInvPaperSize.SelectedValue;
+            // doc
 
             if (cb_docpapersize.SelectedIndex != -1)
             {
@@ -367,7 +460,8 @@ namespace Restaurant.View.windows
             posscls.saleInvPapersizeId = possettingModel.saleInvPapersizeId;
             posscls.docPapersizeId = possettingModel.docPapersizeId;
 
-
+            posscls.kitchenPrinterId = possettingModel.kitchenPrinterId;
+            posscls.kitchenPapersizeId = possettingModel.kitchenPapersizeId;
 
             // msg = await possettingModel.Save(posscls);
             msg = await possettingModel.Save(posscls);

@@ -1181,7 +1181,7 @@ namespace Restaurant
 
             AppSettings.posSetting = await AppSettings.posSetting.GetByposId((int)MainWindow.posLogin.posId);
             AppSettings.posSetting = AppSettings.posSetting.MaindefaultPrinterSetting(AppSettings.posSetting);
-
+            // report
             if (AppSettings.posSetting.repname is null || AppSettings.posSetting.repname == "")
             {
                 AppSettings.rep_printer_name = "";
@@ -1190,6 +1190,7 @@ namespace Restaurant
             {
                 AppSettings.rep_printer_name = Encoding.UTF8.GetString(Convert.FromBase64String(AppSettings.posSetting.repname));
             }
+            //sale
             if (AppSettings.posSetting.salname is null || AppSettings.posSetting.salname == "")
             {
                 AppSettings.posSetting.salname = "";
@@ -1198,10 +1199,19 @@ namespace Restaurant
             {
                 AppSettings.sale_printer_name = Encoding.UTF8.GetString(Convert.FromBase64String(AppSettings.posSetting.salname));
             }
-
+            //kitchen
+            if (AppSettings.posSetting.kitchenPrinter is null || AppSettings.posSetting.kitchenPrinter == "")
+            {
+                AppSettings.posSetting.kitchenPrinter = "";
+            }
+            else
+            {
+                AppSettings.kitchen_printer_name = Encoding.UTF8.GetString(Convert.FromBase64String(AppSettings.posSetting.kitchenPrinter));
+            }
             AppSettings.salePaperSize = AppSettings.posSetting.saleSizeValue;
             AppSettings.docPapersize = AppSettings.posSetting.docPapersize;
 
+            AppSettings.kitchenPaperSize = AppSettings.posSetting.kitchenSizeValue;
         }
         #endregion
         public static int _CachTransfersCount = 0;
