@@ -147,7 +147,7 @@ namespace Restaurant.View.storage.stocktakingOperations
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 if (FillCombo.groupObject.HasPermissionAction(destroyPermission, FillCombo.groupObjects, "one") )
@@ -299,12 +299,12 @@ namespace Restaurant.View.storage.stocktakingOperations
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -711,7 +711,7 @@ namespace Restaurant.View.storage.stocktakingOperations
         //{//pie
         //    try
         //    {
-        //        if (sender != null)
+        //        
         //            SectionData.StartAwait(grid_main);
 
         //        if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
@@ -725,12 +725,12 @@ namespace Restaurant.View.storage.stocktakingOperations
         //        }
         //        else
         //            Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-        //        if (sender != null)
+        //        
         //            SectionData.EndAwait(grid_main);
         //    }
         //    catch (Exception ex)
         //    {
-        //        if (sender != null)
+        //        
         //            SectionData.EndAwait(grid_main);
         //        SectionData.ExceptionMessage(ex, this);
         //    }
@@ -745,16 +745,16 @@ namespace Restaurant.View.storage.stocktakingOperations
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 tglManuallyChecking();
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -764,16 +764,16 @@ namespace Restaurant.View.storage.stocktakingOperations
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 tglManuallyChecking();
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -803,7 +803,7 @@ namespace Restaurant.View.storage.stocktakingOperations
             /*
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 if (e.Key == Key.Return && !tb_amount.Text.Equals(""))
@@ -829,12 +829,12 @@ namespace Restaurant.View.storage.stocktakingOperations
                     }
                     tb_serialNum.Clear();
                 }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -844,7 +844,7 @@ namespace Restaurant.View.storage.stocktakingOperations
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                     if (cb_item.SelectedIndex != -1)
@@ -860,12 +860,12 @@ namespace Restaurant.View.storage.stocktakingOperations
                     {
                         cb_unit.ItemsSource = null;
                     }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }

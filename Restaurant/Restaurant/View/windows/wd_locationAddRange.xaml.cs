@@ -267,7 +267,7 @@ namespace Restaurant.View.windows
         {//save
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_locationRange);
                 
                 if (validate(location))
@@ -299,12 +299,12 @@ namespace Restaurant.View.windows
 
                 }
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_locationRange);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_locationRange);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -430,7 +430,7 @@ namespace Restaurant.View.windows
         {//load
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_locationRange);
 
                 #region translate
@@ -446,12 +446,12 @@ namespace Restaurant.View.windows
 
                 AllLocations = await location.Get();
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_locationRange);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_locationRange);
                 HelpClass.ExceptionMessage(ex, this);
             }

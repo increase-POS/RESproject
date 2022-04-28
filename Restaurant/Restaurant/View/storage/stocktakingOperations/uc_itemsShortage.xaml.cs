@@ -653,7 +653,7 @@ namespace Restaurant.View.storage.stocktakingOperations
         //{//pie
         //    try
         //    {
-        //        if (sender != null)
+        //        
         //            SectionData.StartAwait(grid_main);
 
         //        if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
@@ -667,12 +667,12 @@ namespace Restaurant.View.storage.stocktakingOperations
         //        }
         //        else
         //            Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-        //        if (sender != null)
+        //        
         //            SectionData.EndAwait(grid_main);
         //    }
         //    catch (Exception ex)
         //    {
-        //        if (sender != null)
+        //        
         //            SectionData.EndAwait(grid_main);
         //        SectionData.ExceptionMessage(ex, this);
         //    }
@@ -701,7 +701,7 @@ namespace Restaurant.View.storage.stocktakingOperations
             /*
             try
             {
-                if (sender != null)
+                
                     SectionData.StartAwait(grid_main);
 
 
@@ -728,12 +728,12 @@ namespace Restaurant.View.storage.stocktakingOperations
                     }
                     tb_serialNum.Clear();
                 }
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
                 SectionData.ExceptionMessage(ex, this);
             }

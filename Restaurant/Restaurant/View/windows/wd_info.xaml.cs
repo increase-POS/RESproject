@@ -43,7 +43,7 @@ namespace Restaurant.View.windows
         {//load
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 #region translate
@@ -57,12 +57,12 @@ namespace Restaurant.View.windows
                 #endregion
 
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }

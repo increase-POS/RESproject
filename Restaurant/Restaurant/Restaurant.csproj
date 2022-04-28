@@ -549,9 +549,6 @@
     <Compile Include="View\sales\uc_salesStatistic.xaml.cs">
       <DependentUpon>uc_salesStatistic.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\sales\uc_takeAway.xaml.cs">
-      <DependentUpon>uc_takeAway.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\sales\win_lvcSales.xaml.cs">
       <DependentUpon>win_lvcSales.xaml</DependentUpon>
     </Compile>
@@ -1217,10 +1214,6 @@
     <Page Include="View\sales\uc_salesStatistic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\sales\uc_takeAway.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\sales\win_lvcSales.xaml">
       <Generator>MSBuild:Compile</Generator>

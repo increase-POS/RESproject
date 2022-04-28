@@ -136,9 +136,9 @@
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="70"></ColumnDefinition>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
                                         <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="70"></ColumnDefinition>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
                                         <ColumnDefinition Width="1.5*" MinWidth="200"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                         <Border Grid.Row="0" Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">

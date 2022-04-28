@@ -818,7 +818,7 @@ namespace Restaurant.View.sales.reservations
             try
             {
 
-                if (sender != null)
+                
                     SectionData.StartAwait(grid_main);
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
                 {
@@ -832,12 +832,12 @@ namespace Restaurant.View.sales.reservations
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
                 SectionData.ExceptionMessage(ex, this);
             }
@@ -855,7 +855,7 @@ namespace Restaurant.View.sales.reservations
         {//print
             try
             {
-                if (sender != null)
+                
                     SectionData.StartAwait(grid_main);
 
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
@@ -872,12 +872,12 @@ namespace Restaurant.View.sales.reservations
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
                 SectionData.ExceptionMessage(ex, this);
             }
@@ -886,7 +886,7 @@ namespace Restaurant.View.sales.reservations
         {//pie
             try
             {
-                if (sender != null)
+                
                     SectionData.StartAwait(grid_main);
 
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
@@ -900,12 +900,12 @@ namespace Restaurant.View.sales.reservations
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
                 SectionData.ExceptionMessage(ex, this);
             }
@@ -914,7 +914,7 @@ namespace Restaurant.View.sales.reservations
         {//preview
             try
             {
-                if (sender != null)
+                
                     SectionData.StartAwait(grid_main);
 
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
@@ -940,12 +940,12 @@ namespace Restaurant.View.sales.reservations
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
                 SectionData.ExceptionMessage(ex, this);
             }
@@ -969,7 +969,7 @@ namespace Restaurant.View.sales.reservations
         {//excel
             try
             {
-                if (sender != null)
+                
                     SectionData.StartAwait(grid_main);
 
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
@@ -983,12 +983,12 @@ namespace Restaurant.View.sales.reservations
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
                 SectionData.ExceptionMessage(ex, this);
             }

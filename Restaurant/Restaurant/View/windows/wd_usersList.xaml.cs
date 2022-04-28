@@ -60,7 +60,7 @@ namespace Restaurant.View.windows
         {//load
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -102,12 +102,12 @@ namespace Restaurant.View.windows
                 lst_selectedUsers.ItemsSource = selectedUsers;
                 lst_selectedUsers.SelectedValuePath = "fullName";
                 lst_selectedUsers.DisplayMemberPath = "userId";
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -136,19 +136,19 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 if (e.Key == Key.Return)
                 {
                     Btn_save_Click(null, null);
                 }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -157,7 +157,7 @@ namespace Restaurant.View.windows
         {//save
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 //get selcted ids
                 List<int> userIds = new List<int>();
@@ -168,12 +168,12 @@ namespace Restaurant.View.windows
 
                 isActive = true;
                 this.Close();
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -197,16 +197,16 @@ namespace Restaurant.View.windows
 
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 Btn_selectedUser_Click(null, null);
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -216,16 +216,16 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 Btn_unSelectedUser_Click(null, null);
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -236,7 +236,7 @@ namespace Restaurant.View.windows
         {//select all
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 int x = allUsers.Count;
@@ -245,12 +245,12 @@ namespace Restaurant.View.windows
                     lst_allUsers.SelectedIndex = 0;
                     Btn_selectedUser_Click(null, null);
                 }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -259,7 +259,7 @@ namespace Restaurant.View.windows
         {//select one
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 user = lst_allUsers.SelectedItem as User;
@@ -275,12 +275,12 @@ namespace Restaurant.View.windows
                     lst_selectedUsers.Items.Refresh();
                 }
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -291,7 +291,7 @@ namespace Restaurant.View.windows
         {//unselect one
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 user = lst_selectedUsers.SelectedItem as User;
@@ -307,12 +307,12 @@ namespace Restaurant.View.windows
                     lst_allUsers.Items.Refresh();
                     lst_selectedUsers.Items.Refresh();
                 }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -322,7 +322,7 @@ namespace Restaurant.View.windows
         {//unselect all
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 int x = selectedUsers.Count;
@@ -331,12 +331,12 @@ namespace Restaurant.View.windows
                     lst_selectedUsers.SelectedIndex = 0;
                     Btn_unSelectedUser_Click(null, null);
                 }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -346,16 +346,16 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 lst_allUsers.ItemsSource = allUsers.Where(x => (x.fullName.ToLower().Contains(txb_search.Text.ToLower())) && x.isActive == 1);
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }

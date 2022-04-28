@@ -218,7 +218,8 @@ namespace Restaurant.View.sales
 
         private void Btn_takeAway_Click(object sender, RoutedEventArgs e)
         {
-            try
+            /*
+             try
             {
                 MainWindow.mainWindow.grid_main.Children.Clear();
                 MainWindow.mainWindow.grid_main.Children.Add(uc_takeAway.Instance);
@@ -229,6 +230,7 @@ namespace Restaurant.View.sales
             {
                 HelpClass.ExceptionMessage(ex, this);
             }
+            */
         }
     }
 }

@@ -935,7 +935,7 @@ namespace Restaurant.View.reports.accountsReports
         {//pdf
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 #region
@@ -951,12 +951,12 @@ namespace Restaurant.View.reports.accountsReports
 
                 #endregion
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -966,7 +966,7 @@ namespace Restaurant.View.reports.accountsReports
         {//print
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 List<ItemTransferInvoice> query = new List<ItemTransferInvoice>();
 
@@ -977,12 +977,12 @@ namespace Restaurant.View.reports.accountsReports
 
                 #endregion
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -992,7 +992,7 @@ namespace Restaurant.View.reports.accountsReports
         {//excel
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 List<ItemTransferInvoice> query = new List<ItemTransferInvoice>();
 
@@ -1009,12 +1009,12 @@ namespace Restaurant.View.reports.accountsReports
                 });
                 #endregion
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1024,7 +1024,7 @@ namespace Restaurant.View.reports.accountsReports
         {//preview
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 #region
@@ -1048,12 +1048,12 @@ namespace Restaurant.View.reports.accountsReports
                 Window.GetWindow(this).Opacity = 1;
                 #endregion
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }

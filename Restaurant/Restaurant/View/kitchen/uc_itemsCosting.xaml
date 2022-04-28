@@ -545,7 +545,7 @@
                          BlurRadius="10"/>
                 </Border.Effect>
                 <Button  Content="update" Name="btn_update"   FontSize="20" FontWeight="Bold"
-                    materialDesign:ButtonAssist.CornerRadius="7" Height="40"
+                    materialDesign:ButtonAssist.CornerRadius="7" Height="40" Padding="0"
                           Background="{x:Null}" BorderBrush="{x:Null}"
                        Foreground="White" Click="Btn_update_Click"  />
             </Border>

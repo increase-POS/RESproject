@@ -59,17 +59,17 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 string barcode = tb_invoiceNum.Text;
                 await dealWithBarcode(barcode);               
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -85,7 +85,7 @@ namespace Restaurant.View.windows
                         tb_invoiceNum.Focus();
                     _IsFocused = true;
                 }
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
@@ -125,12 +125,12 @@ namespace Restaurant.View.windows
                     e.Handled = true;
                 }
               
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -188,7 +188,7 @@ namespace Restaurant.View.windows
             try
             {
                 tb_invoiceNum.Focus();
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);            
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -206,12 +206,12 @@ namespace Restaurant.View.windows
 
                 controls = new List<Control>();
                 FindControl(this.grid_main, controls);
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -261,7 +261,7 @@ namespace Restaurant.View.windows
                         tb_invoiceNum.Focus();
                     _IsFocused = true;
                 }
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
@@ -301,12 +301,12 @@ namespace Restaurant.View.windows
                     e.Handled = true;
                 }
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -328,19 +328,19 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 if (e.Key == Key.Return)
                 {
                     string barcode = tb_invoiceNum.Text;
                     await dealWithBarcode(barcode);
                 }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }

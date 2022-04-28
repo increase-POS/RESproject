@@ -46,7 +46,7 @@ namespace Restaurant.View.windows
         {//load
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 #region translate
@@ -66,12 +66,12 @@ namespace Restaurant.View.windows
 
                 Txb_search_TextChanged(null, null);
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -114,7 +114,7 @@ namespace Restaurant.View.windows
         {//search
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 if (cashes is null)
@@ -130,12 +130,12 @@ namespace Restaurant.View.windows
 
                 RefreshCashView();
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -152,19 +152,19 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 if (e.Key == Key.Return)
                 {
                     Btn_pay_Click(null, null);
                 }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -179,19 +179,19 @@ namespace Restaurant.View.windows
         {//pay
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 //
                 //enter your code here
                 //
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }

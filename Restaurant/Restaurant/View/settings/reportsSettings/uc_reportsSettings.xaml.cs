@@ -168,7 +168,7 @@ namespace Restaurant.View.settings.reportsSettings
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
 
@@ -197,12 +197,12 @@ namespace Restaurant.View.settings.reportsSettings
                 #endregion
  
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -556,7 +556,7 @@ namespace Restaurant.View.settings.reportsSettings
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 //  SectionData.validateEmptyComboBox(cb_serverStatus, p_errorServerStatus, tt_errorServerStatus, "trEmptyServerStatus");
@@ -582,12 +582,12 @@ namespace Restaurant.View.settings.reportsSettings
                     await MainWindow.Getprintparameter();
                 }
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }

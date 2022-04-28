@@ -167,7 +167,7 @@ namespace Restaurant.View.windows
                     isOk = true;
                     this.Close();
                 }
-                else if (isPurchase && hasCredit == true)
+                else if (isPurchase && (hasCredit == true || invoice.totalNet == invoice.paid))
                 {
                     if (listPayments.Where(x => x.processType == "cash").Count() > 0 &&
                         listPayments.Where(x => x.processType == "cash").FirstOrDefault().cash > MainWindow.posLogin.balance)
@@ -504,7 +504,7 @@ namespace Restaurant.View.windows
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectCreditCard"), animation: ToasterAnimation.FadeIn);
                                 return;
                             }
-                            else if (tb_processNum.Visibility == Visibility.Visible)
+                            else if (tb_processNum.Visibility == Visibility.Visible && string.IsNullOrEmpty(tb_processNum.Text))
                             {
                                 HelpClass.SetValidate(p_error_processNum, "trIsRequired");
                                 return;

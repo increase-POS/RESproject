@@ -1593,7 +1593,7 @@ namespace Restaurant.View.sales
                 await fillSelfServiceInv();
            
         }
-        private void fillInvoiceItems()
+        private  void fillInvoiceItems()
         {           
             foreach (ItemTransfer it in invoiceItems)
             {
@@ -2644,6 +2644,7 @@ namespace Restaurant.View.sales
                     cashTransfer.createUserId = MainWindow.userLogin.userId;
                     await cashTransfer.Save(cashTransfer); //add cash transfer  
                     break;
+                    
             }
         }
         private async void Btn_pay_Click(object sender, RoutedEventArgs e)

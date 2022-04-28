@@ -60,7 +60,7 @@ namespace Restaurant.View.windows
         {//load
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_locations);
 
                 #region translate
@@ -110,12 +110,12 @@ namespace Restaurant.View.windows
                 lst_selectedLocations.DisplayMemberPath = "locationId";
                 HelpClass.EndAwait(grid_mainGrid);
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_locations);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_locations);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -160,7 +160,7 @@ namespace Restaurant.View.windows
         {//save
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_locations);
 
                 int s = await location.saveLocationsSection(selectedLocations , sectionId, MainWindow.userLogin.userId);
@@ -168,12 +168,12 @@ namespace Restaurant.View.windows
                 isActive = true;
                 this.Close();
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_locations);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_locations);
                 HelpClass.ExceptionMessage(ex, this);
             }

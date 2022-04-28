@@ -673,7 +673,7 @@ namespace Restaurant.View.kitchen
             try
             {
 
-                if (sender != null)
+                
                     SectionData.StartAwait(grid_main);
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
                 {
@@ -687,12 +687,12 @@ namespace Restaurant.View.kitchen
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
                 SectionData.ExceptionMessage(ex, this);
             }
@@ -710,7 +710,7 @@ namespace Restaurant.View.kitchen
         {//print
             try
             {
-                if (sender != null)
+                
                     SectionData.StartAwait(grid_main);
 
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
@@ -727,12 +727,12 @@ namespace Restaurant.View.kitchen
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
                 SectionData.ExceptionMessage(ex, this);
             }
@@ -741,7 +741,7 @@ namespace Restaurant.View.kitchen
         {//pie
             try
             {
-                if (sender != null)
+                
                     SectionData.StartAwait(grid_main);
 
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
@@ -755,12 +755,12 @@ namespace Restaurant.View.kitchen
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
                 SectionData.ExceptionMessage(ex, this);
             }
@@ -769,7 +769,7 @@ namespace Restaurant.View.kitchen
         {//preview
             try
             {
-                if (sender != null)
+                
                     SectionData.StartAwait(grid_main);
 
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
@@ -795,12 +795,12 @@ namespace Restaurant.View.kitchen
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
                 SectionData.ExceptionMessage(ex, this);
             }
@@ -824,7 +824,7 @@ namespace Restaurant.View.kitchen
         {//excel
             try
             {
-                if (sender != null)
+                
                     SectionData.StartAwait(grid_main);
 
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
@@ -838,12 +838,12 @@ namespace Restaurant.View.kitchen
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
                 SectionData.ExceptionMessage(ex, this);
             }

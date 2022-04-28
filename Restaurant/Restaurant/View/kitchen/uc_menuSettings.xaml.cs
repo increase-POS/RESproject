@@ -170,8 +170,11 @@ namespace Restaurant.View.kitchen
                     #endregion
 
                     #region save
-                    if (HelpClass.validate(requiredControlList, this))
+                    if(item.itemUnitId != null)
                     {
+                        if (HelpClass.validate(requiredControlList, this))
+                    {
+                        //item.itemUnitId
                         var menuSet = new MenuSetting();
 
                         if (tgl_isActiveItem.IsChecked == true)
@@ -234,6 +237,9 @@ namespace Restaurant.View.kitchen
                                 Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         }
                     }
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
                     #endregion
                 }
                 else

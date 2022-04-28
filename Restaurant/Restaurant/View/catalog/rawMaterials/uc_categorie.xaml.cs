@@ -990,7 +990,7 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 categoriesQuery = categories.ToList();
@@ -1013,12 +1013,12 @@ namespace Restaurant.View.catalog.rawMaterials
                 RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns, 15));
                 #endregion
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1029,7 +1029,7 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 pageIndex = 1;
@@ -1038,12 +1038,12 @@ namespace Restaurant.View.catalog.rawMaterials
                 RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns, 15));
                 #endregion
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1052,7 +1052,7 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 pageIndex = int.Parse(btn_prevPage.Content.ToString());
@@ -1062,12 +1062,12 @@ namespace Restaurant.View.catalog.rawMaterials
                 RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns, 15));
                 #endregion
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1076,7 +1076,7 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 pageIndex = int.Parse(btn_activePage.Content.ToString());
@@ -1085,12 +1085,12 @@ namespace Restaurant.View.catalog.rawMaterials
                 RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns, 15));
                 #endregion
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1099,7 +1099,7 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 pageIndex = int.Parse(btn_nextPage.Content.ToString());
@@ -1108,12 +1108,12 @@ namespace Restaurant.View.catalog.rawMaterials
                 RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns, 15));
                 #endregion
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1122,7 +1122,7 @@ namespace Restaurant.View.catalog.rawMaterials
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 categoriesQuery = categories.ToList();
@@ -1132,12 +1132,12 @@ namespace Restaurant.View.catalog.rawMaterials
                 RefrishCategorysCard(pagination.refrishPagination(categoriesQuery, pageIndex, btns, 15));
                 #endregion
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }

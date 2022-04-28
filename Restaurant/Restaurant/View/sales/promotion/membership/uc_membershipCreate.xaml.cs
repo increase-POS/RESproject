@@ -685,7 +685,7 @@ namespace Restaurant.View.sales.promotion.membership
             try
             {
 
-                if (sender != null)
+                
                     SectionData.StartAwait(grid_main);
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
                 {
@@ -699,12 +699,12 @@ namespace Restaurant.View.sales.promotion.membership
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
                 SectionData.ExceptionMessage(ex, this);
             }
@@ -722,7 +722,7 @@ namespace Restaurant.View.sales.promotion.membership
         {//print
             try
             {
-                if (sender != null)
+                
                     SectionData.StartAwait(grid_main);
 
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
@@ -739,12 +739,12 @@ namespace Restaurant.View.sales.promotion.membership
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
                 SectionData.ExceptionMessage(ex, this);
             }
@@ -753,7 +753,7 @@ namespace Restaurant.View.sales.promotion.membership
         {//pie
             try
             {
-                if (sender != null)
+                
                     SectionData.StartAwait(grid_main);
 
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
@@ -767,12 +767,12 @@ namespace Restaurant.View.sales.promotion.membership
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
                 SectionData.ExceptionMessage(ex, this);
             }
@@ -781,7 +781,7 @@ namespace Restaurant.View.sales.promotion.membership
         {//preview
             try
             {
-                if (sender != null)
+                
                     SectionData.StartAwait(grid_main);
 
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
@@ -807,12 +807,12 @@ namespace Restaurant.View.sales.promotion.membership
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
                 SectionData.ExceptionMessage(ex, this);
             }
@@ -836,7 +836,7 @@ namespace Restaurant.View.sales.promotion.membership
         {//excel
             try
             {
-                if (sender != null)
+                
                     SectionData.StartAwait(grid_main);
 
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || SectionData.isAdminPermision())
@@ -850,12 +850,12 @@ namespace Restaurant.View.sales.promotion.membership
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     SectionData.EndAwait(grid_main);
                 SectionData.ExceptionMessage(ex, this);
             }

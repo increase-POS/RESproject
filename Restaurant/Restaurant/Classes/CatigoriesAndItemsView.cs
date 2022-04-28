@@ -28,7 +28,7 @@ namespace Restaurant.Classes
     {
 
         public uc_diningHall ucdiningHall;
-        public uc_takeAway uctakeAway;
+        //public uc_takeAway uctakeAway;
         public uc_itemsRawMaterials ucitemsRawMaterials;
         public uc_itemsFoods ucitemsFoods;
         public uc_package ucpackage;
@@ -75,10 +75,10 @@ namespace Restaurant.Classes
             {
                 ucdiningHall.ChangeItemIdEvent(idItem);
             }
-            if (uctakeAway != null)
-            {
-                uctakeAway.ChangeItemIdEvent(idItem);
-            }
+            //if (uctakeAway != null)
+            //{
+            //    uctakeAway.ChangeItemIdEvent(idItem);
+            //}
             
             if (ucitemsRawMaterials != null)
             {

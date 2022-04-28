@@ -82,7 +82,7 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 grid_main.Opacity = 1;
 
@@ -129,12 +129,12 @@ namespace Restaurant.View.windows
                 await RefrishCategoriesCard();
                 Txb_searchitems_TextChanged(txb_searchitems, null);
                
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -255,7 +255,7 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 if (FillCombo.purchaseItems is null)
@@ -281,12 +281,12 @@ namespace Restaurant.View.windows
                 #endregion
                 //RefrishItemsDatagrid(itemsQuery);
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -302,7 +302,7 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 itemsQuery = items.Where(x => x.isActive == tglItemState).ToList();
@@ -328,12 +328,12 @@ namespace Restaurant.View.windows
                 RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns,6));
                 #endregion
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -344,7 +344,7 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 pageIndex = 1;
@@ -356,12 +356,12 @@ namespace Restaurant.View.windows
                 RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 6));
                 #endregion
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -370,7 +370,7 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 pageIndex = int.Parse(btn_prevPage.Content.ToString());
@@ -382,12 +382,12 @@ namespace Restaurant.View.windows
                 RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 6));
                 #endregion
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -396,7 +396,7 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 pageIndex = int.Parse(btn_activePage.Content.ToString());
@@ -408,12 +408,12 @@ namespace Restaurant.View.windows
                 RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 6));
                 #endregion
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -422,7 +422,7 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 pageIndex = int.Parse(btn_nextPage.Content.ToString());
@@ -434,12 +434,12 @@ namespace Restaurant.View.windows
                 RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 6));
                 #endregion
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -448,7 +448,7 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 itemsQuery = items.Where(x => x.isActive == 1).ToList();
@@ -461,12 +461,12 @@ namespace Restaurant.View.windows
                 RefrishItemsCard(pagination.refrishPagination(itemsQuery, pageIndex, btns, 6));
                 #endregion
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -480,18 +480,18 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 await FillCombo.RefreshPurchaseItems();
                FillCombo.RefreshItemUnit();
                 RefrishItems();
                 Txb_searchitems_TextChanged(null, null);
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }

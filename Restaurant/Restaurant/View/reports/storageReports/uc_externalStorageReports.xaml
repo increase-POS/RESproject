@@ -179,9 +179,9 @@
                                                 </Grid.RowDefinitions>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
-                                                        <ColumnDefinition Width="70"></ColumnDefinition>
+                                                        <ColumnDefinition Width="auto"></ColumnDefinition>
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
-                                                        <ColumnDefinition Width="70"></ColumnDefinition>
+                                                        <ColumnDefinition Width="auto"></ColumnDefinition>
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                                 </Grid.ColumnDefinitions>
@@ -343,9 +343,9 @@
                                                 </Grid.RowDefinitions>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
-                                                        <ColumnDefinition Width="70"></ColumnDefinition>
+                                                        <ColumnDefinition Width="auto"></ColumnDefinition>
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
-                                                        <ColumnDefinition Width="70"></ColumnDefinition>
+                                                        <ColumnDefinition Width="auto"></ColumnDefinition>
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                                 </Grid.ColumnDefinitions>
@@ -500,9 +500,9 @@
                                                 </Grid.RowDefinitions>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
-                                                    <ColumnDefinition Width="60"></ColumnDefinition>
+                                                        <ColumnDefinition Width="auto"></ColumnDefinition>
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
-                                                    <ColumnDefinition Width="60"></ColumnDefinition>
+                                                        <ColumnDefinition Width="auto"></ColumnDefinition>
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                                 </Grid.ColumnDefinitions>

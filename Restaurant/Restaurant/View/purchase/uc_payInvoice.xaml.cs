@@ -883,13 +883,13 @@ namespace Restaurant.View.purchase
                     break;
                 case "balance":// balance: update customer balance
                     await invoice.recordConfiguredAgentCash(invoice, "pi", cashTransfer);
-                    invoice.paid += cashTransfer.cash;
-                    invoice.deserved -= cashTransfer.cash;
+                    //invoice.paid += cashTransfer.cash;
+                    //invoice.deserved -= cashTransfer.cash;
                     await invoice.saveInvoice(invoice);
                     break;
                 case "card": // card 
                     cashTransfer.docNum = tb_processNum.Text;
-                    cashTransfer.cardId = _SelectedCard;
+                    //cashTransfer.cardId = _SelectedCard;
                     await cashTransfer.Save(cashTransfer); //add cash transfer 
                     invoice.paid += cashTransfer.cash;
                     invoice.deserved -= cashTransfer.cash;
@@ -1444,17 +1444,17 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 int index = FillCombo.invoices.IndexOf(FillCombo.invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
                 index++;
                 await navigateInvoice(index);
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1463,17 +1463,17 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 int index = FillCombo.invoices.IndexOf(FillCombo.invoices.Where(x => x.invoiceId == _invoiceId).FirstOrDefault());
                 index--;
                 await navigateInvoice(index);
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -3145,7 +3145,7 @@ namespace Restaurant.View.purchase
         {//pdf
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 if (FillCombo.groupObject.HasPermissionAction(paymentsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
@@ -3159,12 +3159,12 @@ namespace Restaurant.View.purchase
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                  HelpClass.ExceptionMessage(ex, this);
             }
@@ -4065,7 +4065,7 @@ namespace Restaurant.View.purchase
         {//print
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 if (FillCombo.groupObject.HasPermissionAction(paymentsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
@@ -4083,12 +4083,12 @@ namespace Restaurant.View.purchase
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                  HelpClass.ExceptionMessage(ex, this);
             }
@@ -4099,7 +4099,7 @@ namespace Restaurant.View.purchase
         {//preview
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 if (FillCombo.groupObject.HasPermissionAction(paymentsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
@@ -4109,12 +4109,12 @@ namespace Restaurant.View.purchase
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                HelpClass.ExceptionMessage(ex, this);
             }
@@ -4123,7 +4123,7 @@ namespace Restaurant.View.purchase
         {//email
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 if (FillCombo.groupObject.HasPermissionAction(paymentsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
@@ -4139,12 +4139,12 @@ namespace Restaurant.View.purchase
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                  HelpClass.ExceptionMessage(ex, this);
             }
@@ -4153,7 +4153,7 @@ namespace Restaurant.View.purchase
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 int result = 0;
@@ -4177,12 +4177,12 @@ namespace Restaurant.View.purchase
                 {
                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trChooseInvoiceToolTip"), animation: ToasterAnimation.FadeIn);
                 }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
               HelpClass.ExceptionMessage(ex, this);
             }

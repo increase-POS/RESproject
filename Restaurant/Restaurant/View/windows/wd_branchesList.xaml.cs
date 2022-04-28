@@ -67,7 +67,7 @@ namespace Restaurant.View.windows
         {//load
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_branchList);
 
                 #region translate
@@ -129,12 +129,12 @@ namespace Restaurant.View.windows
                 dg_allStores.SelectedValuePath = "branchId";
                 dg_allStores.DisplayMemberPath = "name";
           
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_branchList);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_branchList);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -205,7 +205,7 @@ namespace Restaurant.View.windows
         {//select one 
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_branchList);
 
                 branch = dg_allStores.SelectedItem as Branch;
@@ -246,12 +246,12 @@ namespace Restaurant.View.windows
                 dg_allStores.Items.Refresh();
                 dg_selectedStores.Items.Refresh();
             }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_branchList);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_branchList);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -283,7 +283,7 @@ namespace Restaurant.View.windows
         {//unselect one
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_branchList);
 
                 if (userOrBranch == 'u')
@@ -320,12 +320,12 @@ namespace Restaurant.View.windows
                 dg_allStores.Items.Refresh();
                 dg_selectedStores.Items.Refresh();
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_branchList);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_branchList);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -336,7 +336,7 @@ namespace Restaurant.View.windows
         {//save
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_branchList);
                 int s = 0;
                 if (userOrBranch == 'u')
@@ -375,12 +375,12 @@ namespace Restaurant.View.windows
                 }
                 isActive = true;
                 this.Close();
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_branchList);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_branchList);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -399,19 +399,19 @@ namespace Restaurant.View.windows
         {//search
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_branchList);
                 txtStoreSearch = txb_search.Text.ToLower();
 
                 searchText = txb_search.Text;
                 storeQuery = allStores.Where(s => s.name.Contains(searchText) );
                 dg_allStores.ItemsSource = storeQuery;
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_branchList);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_branchList);
                 HelpClass.ExceptionMessage(ex, this);
             }

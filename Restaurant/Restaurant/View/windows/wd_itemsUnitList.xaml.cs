@@ -83,7 +83,7 @@ namespace Restaurant.View.windows
         {//load
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_offerList);
 
                 #region translate
@@ -238,12 +238,12 @@ namespace Restaurant.View.windows
                 dg_allItems.SelectedValuePath = "itemUnitId";
                 dg_allItems.DisplayMemberPath = "itemName";
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_offerList);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_offerList);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -480,19 +480,19 @@ namespace Restaurant.View.windows
         {//save
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_offerList);
 
                 isActive = true;
                 DialogResult = true;
                 this.Close();
 
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_offerList);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_offerList);
                 HelpClass.ExceptionMessage(ex, this);
             }

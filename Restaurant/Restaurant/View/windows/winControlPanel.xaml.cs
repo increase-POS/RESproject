@@ -53,7 +53,7 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 for (int i = 0; i < headers.Count; i++)
@@ -71,12 +71,12 @@ namespace Restaurant.View.windows
 
                 }
             this.DataContext = this;
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }

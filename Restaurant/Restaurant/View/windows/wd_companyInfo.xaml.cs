@@ -78,7 +78,7 @@ namespace Restaurant.View.windows
 
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "name", "address", "email", "mobile" };
 
@@ -159,12 +159,12 @@ namespace Restaurant.View.windows
                     #endregion
 
                 }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -194,7 +194,7 @@ namespace Restaurant.View.windows
 
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 isImgPressed = true;
@@ -205,12 +205,12 @@ namespace Restaurant.View.windows
                     img_customer.Background = brush;
                     imgFileName = openFileDialog.FileName;
                 }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -300,7 +300,7 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
 
@@ -308,12 +308,12 @@ namespace Restaurant.View.windows
                 {
                     Btn_save_Click(null, null);
                 }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -325,7 +325,7 @@ namespace Restaurant.View.windows
 
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 #region validate
@@ -434,12 +434,12 @@ namespace Restaurant.View.windows
                     MainWindow.mainWindow.loading_getDefaultSystemInfo();
                     this.Close();
                 }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }

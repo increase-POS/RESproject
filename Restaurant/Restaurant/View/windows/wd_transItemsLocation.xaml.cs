@@ -58,19 +58,19 @@ namespace Restaurant.View.windows
         {
             try
             {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 if (e.Key == Key.Return)
             {
                 Btn_save_Click(null, null);
             }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -79,7 +79,7 @@ namespace Restaurant.View.windows
         {
                 try
                 {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 bool valid = true;
@@ -101,12 +101,12 @@ namespace Restaurant.View.windows
                 DialogResult = true;
                 this.Close();
             }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -136,7 +136,7 @@ namespace Restaurant.View.windows
         {
                         try
                         {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 if (AppSettings.lang.Equals("en"))
@@ -149,12 +149,12 @@ namespace Restaurant.View.windows
             }
 
             await refreshItemsLocations();
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -208,7 +208,7 @@ namespace Restaurant.View.windows
         {
                                     try
                                     {
-                if (sender != null)
+                
                     HelpClass.StartAwait(grid_main);
 
                 TextBox t = new TextBox();
@@ -296,12 +296,12 @@ namespace Restaurant.View.windows
                     }
                 }
             }
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                if (sender != null)
+                
                     HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
