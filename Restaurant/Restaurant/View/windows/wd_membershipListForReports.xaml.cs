@@ -126,9 +126,9 @@ namespace Restaurant.View.windows
             col_cName.Header = AppSettings.resourcemanager.GetString("trName");
             col_cTypeValue.Header = AppSettings.resourcemanager.GetString("trValue");
             //offer
-            col_oCode.Header = AppSettings.resourcemanager.GetString("trCode");
             col_oName.Header = AppSettings.resourcemanager.GetString("trName");
             col_oTypeValue.Header = AppSettings.resourcemanager.GetString("trValue");
+            col_oQuantity.Header = AppSettings.resourcemanager.GetString("trQTR");
             //invoice
             col_iName.Header = AppSettings.resourcemanager.GetString("trName");
             col_iTypeValue.Header = AppSettings.resourcemanager.GetString("trValue");
@@ -160,9 +160,9 @@ namespace Restaurant.View.windows
                 dg_memberships.ItemsSource = itemsTransferList;
 
                 //view columns
-                col_oCode.Visibility = Visibility.Visible;
                 col_oName.Visibility = Visibility.Visible;
                 col_oTypeValue.Visibility = Visibility.Visible;
+                col_oQuantity.Visibility = Visibility.Visible;
 
                 _title = "trOffers";
 

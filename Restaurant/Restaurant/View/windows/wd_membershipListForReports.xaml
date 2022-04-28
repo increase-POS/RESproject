@@ -94,7 +94,6 @@
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
                         <!--Offer-->
-                        <DataGridTextColumn x:Name="col_oCode"   Width="*"  Header="Code"           Binding="{Binding Path=offerCode}"/>
                         <DataGridTextColumn x:Name="col_oName"   Width="*"  Header="Name"           Binding="{Binding Path=offerName}"/>
                         <DataGridTextColumn x:Name="col_oTypeValue" Width="*" Header="Value" Visibility="Hidden">
                             <DataGridTextColumn.Binding >
@@ -104,6 +103,7 @@
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
+                        <DataGridTextColumn x:Name="col_oQuantity"   Width="*"  Header="Code"           Binding="{Binding Path=quantity}"/>
                         <!--invoices-->
                         <DataGridTextColumn x:Name="col_iName"   Width="*"  Header="Name"           Binding="{Binding Path=name}"/>
                         <DataGridTextColumn x:Name="col_iTypeValue" Width="*" Header="Value" Visibility="Hidden">
