@@ -273,22 +273,22 @@ namespace Restaurant.View.reports.kitchenReports
 
         private async void Chk_allCategories_Checked(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 cb_category.SelectedIndex = -1;
                 cb_category.IsEnabled = false;
 
                 await Search();
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void Chk_allCategories_Unchecked(object sender, RoutedEventArgs e)
