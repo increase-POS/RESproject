@@ -751,7 +751,7 @@
     <value>Start date...</value>
   </data>
   <data name="trTypeDiscountHint" xml:space="preserve">
-    <value>Type discount...</value>
+    <value>Discount type...</value>
   </data>
   <data name="trStatistic" xml:space="preserve">
     <value>Statistic</value>
