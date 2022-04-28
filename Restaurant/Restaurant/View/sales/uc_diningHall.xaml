@@ -479,7 +479,7 @@
                         <Border    Margin="7.5,10"   CornerRadius="0,0,0,0"  Width="2" BorderThickness="0" Background="{StaticResource MainColor}" />
 
                         <Button DockPanel.Dock="Right" Grid.Column="3" BorderBrush="{x:Null}" Padding="0"   Margin="5,10,5,5" Height="auto"
-                    Background="{x:Null}" x:Name="btn_preview"     >
+                    Background="{x:Null}" x:Name="btn_preview" Click="Btn_preview_Click"     >
                             <StackPanel>
                                 <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                         Height="30" Width="30" FlowDirection="LeftToRight"  
@@ -515,7 +515,7 @@
                             </StackPanel>
                         </Button>
                         <Button Grid.Column="2" DockPanel.Dock="Right" BorderBrush="{x:Null}" Padding="0"   Margin="5,10,5,5" Height="auto"
-                    Background="{x:Null}" x:Name="btn_pdf"    >
+                    Background="{x:Null}" x:Name="btn_pdf" Click="Btn_pdf_Click"    >
                             <StackPanel>
                                 <Path Fill="{StaticResource SecondColor}" Stretch="Fill"  
                          Height="30" Width="25" FlowDirection="LeftToRight"  
@@ -541,7 +541,7 @@
                             </StackPanel>
                         </Button>
                         <Button Grid.Column="1" DockPanel.Dock="Right" BorderBrush="{x:Null}" Padding="0"  Margin="5,10,5,5" Height="auto"
-                    Background="{x:Null}" x:Name="btn_printInvoice"    >
+                    Background="{x:Null}" x:Name="btn_printInvoice" Click="Btn_printInvoice_Click"    >
                             <StackPanel>
                                 <Path Fill="{StaticResource SecondColor}"  Stretch="Fill"  
                        Height="30" Width="30" FlowDirection="LeftToRight"  
