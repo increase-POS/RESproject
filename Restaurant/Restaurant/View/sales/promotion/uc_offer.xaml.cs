@@ -728,6 +728,19 @@ namespace Restaurant.View.sales.promotion
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        private decimal _numValue = 0;
+
+        public decimal NumValue
+        {
+            get { return _numValue; }
+            set
+            {
+                _numValue = value;
+                tb_discountValue.Text = value.ToString();
+            }
+        }
+
         private void ValidateEmpty_TextChange(object sender, TextChangedEventArgs e)
         {
             try

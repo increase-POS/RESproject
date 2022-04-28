@@ -165,17 +165,6 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <!--<DataGridTextColumn Width="*"  Header="Value" Binding="{Binding Path=discountValue , Converter={StaticResource accuracyConverter}}">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="{x:Type TextBlock}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding isActive}" Value="0">
-                                                    <Setter Property="TextDecorations" Value="Strikethrough"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>-->
                                 <DataGridTextColumn Width="*"  Header="Value" >
                                     <DataGridTextColumn.Binding >
                                         <MultiBinding Converter="{StaticResource accuracyDiscountConverter}" >
@@ -523,11 +512,14 @@
                             <Grid   >
                                 <TextBox Margin="4,0" x:Name="tb_discountValue"  
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
-                                         Text="{Binding discountValue, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
+                                         Text="{Binding discountValue, Mode=OneWay ,StringFormat={}{0:G29} ,Converter={StaticResource accuracyConverter}}" Padding="10,0,5,0"   BorderThickness="0" 
                                          materialDesign:HintAssist.Hint="discount..."   Foreground="#4E4E4E"
                                          materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" 
-                                        Tag="decimal" PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"
-                                          LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
+                                         Tag="decimal" 
+                                         PreviewTextInput="Number_PreviewTextInput" 
+                                         PreviewKeyDown="Spaces_PreviewKeyDown"
+                                         LostFocus="validateEmpty_LostFocus" 
+                                         TextChanged="ValidateEmpty_TextChange"/>
                                 <Path Fill="#E81123" Stretch="Fill"    x:Name="p_error_discountValue" 
                                       HorizontalAlignment="Right" Visibility="Collapsed"   VerticalAlignment="Center" 
                                       Width="15"  Height="15" Margin="5,5,15,5" 
