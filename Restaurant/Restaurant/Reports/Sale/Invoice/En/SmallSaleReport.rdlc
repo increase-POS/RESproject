@@ -243,7 +243,7 @@
             <Height>2.19762cm</Height>
             <Width>4.57891cm</Width>
             <Visibility>
-              <Hidden>=iif(Parameters!isOrginal.Value = "True" Or Parameters!isOrginal.Value = "true" Or  Parameters!isOrginal.Value = "1"  ,True,False)</Hidden>
+              <Hidden>=iif(Parameters!isOrginal.Value = "False" Or Parameters!isOrginal.Value = "false" Or  Parameters!isOrginal.Value = "0" And Parameters!watermark.Value="0" And Parameters!isSaved.Value="y" ,False,True)</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -280,7 +280,7 @@
             <Width>4.57891cm</Width>
             <ZIndex>1</ZIndex>
             <Visibility>
-              <Hidden>=Parameters!watermark.Value = "0"</Hidden>
+              <Hidden>=iif( (Parameters!watermark.Value="1" Or Parameters!isSaved.Value="n" ),False,True)</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -482,7 +482,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!itemName.Value+"-"+Fields!unitName.Value</Value>
+                                  <Value>=Fields!itemName.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
                                     <FontSize>6pt</FontSize>
@@ -1982,7 +1982,7 @@
               <Width>2.19275cm</Width>
               <ZIndex>1</ZIndex>
               <Visibility>
-                <Hidden>=iif(Parameters!isSaved.Value="n",True,False)</Hidden>
+                <Hidden>=iif( (Parameters!watermark.Value="1" Or Parameters!isSaved.Value="n" ),True,False)</Hidden>
               </Visibility>
               <Style>
                 <Border />
@@ -2195,7 +2195,7 @@
               <Width>2.19275cm</Width>
               <ZIndex>7</ZIndex>
               <Visibility>
-                <Hidden>=iif(Parameters!isSaved.Value="n",False,True)</Hidden>
+                <Hidden>=iif( (Parameters!watermark.Value="1" Or Parameters!isSaved.Value="n" ),False,True)</Hidden>
               </Visibility>
               <Style>
                 <Border />
@@ -2507,7 +2507,7 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
-  <ReportParameter Name="trNo">
+    <ReportParameter Name="trNo">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
@@ -2789,7 +2789,7 @@
           <RowIndex>11</RowIndex>
           <ParameterName>totalNoShip</ParameterName>
         </CellDefinition>
-       <CellDefinition>
+        <CellDefinition>
           <ColumnIndex>0</ColumnIndex>
           <RowIndex>12</RowIndex>
           <ParameterName>trNo</ParameterName>

@@ -1462,6 +1462,7 @@ namespace Restaurant.View.sales
                 int res = await FillCombo.invoice.saveInvoiceWithItems(invoice, invoiceItems);
 
                 invoice.invoiceId = res;
+                prinvoiceId = invoice.invoiceId;
                 return res;
             }
             catch
@@ -2711,12 +2712,42 @@ namespace Restaurant.View.sales
 
                             else if (AppSettings.invType == "selfService")
                                 await saveTakeAwayInvoice("ss");
-
+                            /// print
+                        
                             {
                                 await refreshItemsList();
                                 Search();
                                 refreshItemsPrice();
                             }
+                            ///print 
+                            //thread  
+                            if (prinvoiceId > 0)
+                            {
+                                prInvoice = await invoiceModel.GetByInvoiceId(prinvoiceId);
+                                if (prInvoice.invType == "s" || prInvoice.invType == "ss" || prInvoice.invType == "ts")
+                                {
+
+                                    if (AppSettings.print_on_save_sale == "1")
+                                    {
+                                        // printInvoice();
+                                        Thread t1 = new Thread(() =>
+                                        {
+                                            printInvoice(prinvoiceId);
+                                        });
+                                        t1.Start();
+                                    }
+                                    if (AppSettings.email_on_save_sale == "1")
+                                    {
+                                        //sendsaleEmail();
+                                        Thread t2 = new Thread(() =>
+                                        {
+                                            sendsaleEmail(prinvoiceId);
+                                        });
+                                        t2.Start();
+                                    }
+                                }
+                            }
+                          
                         }                      
                     }
                 }
@@ -3694,27 +3725,46 @@ namespace Restaurant.View.sales
                         pdfpath = @"\Thumb\report\Temp" + DateTime.Now.ToFileTime().ToString() + ".pdf";
                         pdfpath = reportclass.PathUp(System.IO.Directory.GetCurrentDirectory(), 2, pdfpath);
                         //////////////////////////////////
+                        #region fill invoice data
 
-
+                        //items
                         invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
                         itemscount = invoiceItems.Count();
                         string reppath = reportclass.GetreceiptInvoiceRdlcpath(prInvoice);
-
+                        //user
                         User employ = new User();
-                        employ = await userModel.getUserById((int)prInvoice.updateUserId);
+                        if (FillCombo.usersList != null)
+                        {
+                            employ = FillCombo.usersList.Where(X => X.userId == (int)prInvoice.updateUserId).FirstOrDefault();
+                        }
+                        else
+                        {
+                            employ = await userModel.getUserById((int)prInvoice.updateUserId);
+                        }
+
                         prInvoice.uuserName = employ.name;
                         prInvoice.uuserLast = employ.lastname;
-
-                        //   invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                        //agent
                         if (prInvoice.agentId != null)
                         {
                             Agent agentinv = new Agent();
-                            //    agentinv = customers.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
-                            agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+
+                            // agentinv = customers.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
+
+                            if (FillCombo.customersList != null)
+                            {
+                                agentinv = FillCombo.customersList.Where(X => X.agentId == (int)prInvoice.agentId).FirstOrDefault();
+                            }
+                            else
+                            {
+                                agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+                            }
+
                             prInvoice.agentCode = agentinv.code;
                             //new lines
                             prInvoice.agentName = agentinv.name;
                             prInvoice.agentCompany = agentinv.company;
+
                         }
                         else
                         {
@@ -3722,18 +3772,39 @@ namespace Restaurant.View.sales
                             prInvoice.agentName = "-";
                             prInvoice.agentCompany = "-";
                         }
-                        //branch name
+                        //branch
                         Branch branch = new Branch();
-                        branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                        if (FillCombo.branchsList != null)
+                        {
+                            branch = FillCombo.branchsList.Where(X => X.branchId == (int)prInvoice.branchCreatorId).FirstOrDefault();
+
+                        }
+                        else
+                        {
+                            branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                        }
+
                         if (branch.branchId > 0)
                         {
                             prInvoice.branchName = branch.name;
                         }
+
+                        ReportCls.checkLang();
                         //shipping
                         ShippingCompanies shippingcom = new ShippingCompanies();
+
                         if (prInvoice.shippingCompanyId > 0)
                         {
-                            shippingcom = await shippingcom.GetByID((int)prInvoice.shippingCompanyId);
+                            if (FillCombo.shippingCompaniesList != null)
+                            {
+                                shippingcom = FillCombo.shippingCompaniesList.Where(X => X.shippingCompanyId == (int)prInvoice.shippingCompanyId).FirstOrDefault();
+
+                            }
+                            else
+                            {
+                                shippingcom = await shippingcom.GetByID((int)prInvoice.shippingCompanyId);
+                            }
+
                         }
                         User shipuser = new User();
                         if (prInvoice.shipUserId > 0)
@@ -3742,21 +3813,20 @@ namespace Restaurant.View.sales
                         }
                         prInvoice.shipUserName = shipuser.name + " " + shipuser.lastname;
                         //end shipping
-                        //    invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
-                        ReportCls.checkLang();
+                        //items subTotal & itemTax
                         decimal totaltax = 0;
                         foreach (var i in invoiceItems)
                         {
                             i.price = decimal.Parse(HelpClass.DecTostring(i.price));
                             if (i.itemTax != null)
                             {
-
                                 totaltax += (decimal)i.itemTax;
 
                             }
                             i.subTotal = decimal.Parse(HelpClass.DecTostring(i.price * i.quantity));
 
                         }
+
                         if (totaltax > 0 && prInvoice.invType != "sbd" && prInvoice.invType != "sb")
                         {
                             paramarr.Add(new ReportParameter("itemtax_note", AppSettings.itemtax_note.Trim()));
@@ -3768,29 +3838,25 @@ namespace Restaurant.View.sales
                             // paramarr.Add(new ReportParameter("itemtax_note", AppSettings.itemtax_note.Trim()));
                             paramarr.Add(new ReportParameter("hasItemTax", "0"));
                         }
+                        //
+
                         clsReports.purchaseInvoiceReport(invoiceItems, rep, reppath);
+
                         clsReports.setReportLanguage(paramarr);
                         clsReports.Header(paramarr);
-
+                        paramarr.Add(new ReportParameter("isSaved", "y"));
                         paramarr = reportclass.fillSaleInvReport(prInvoice, paramarr, shippingcom);
+                        //   multiplePaytable(paramarr);
+                        // payment methods
 
-                        if (prInvoice.invType == "pd" || prInvoice.invType == "sd" || prInvoice.invType == "qd"
-     || prInvoice.invType == "sbd" || prInvoice.invType == "pbd"
-     || prInvoice.invType == "ord" || prInvoice.invType == "imd" || prInvoice.invType == "exd")
-                        {
-                            paramarr.Add(new ReportParameter("isOrginal", true.ToString()));
-                            paramarr.Add(new ReportParameter("isSaved", "n"));
-                        }
-                        else
-                        {
-                            paramarr.Add(new ReportParameter("isOrginal", false.ToString()));
-                            paramarr.Add(new ReportParameter("isSaved", "y"));
-                        }
-                        if ((prInvoice.invType == "s" || prInvoice.invType == "sd" || prInvoice.invType == "sbd" || prInvoice.invType == "sb"))
+                        if (prInvoice.invType == "s" || prInvoice.invType == "sd" || prInvoice.invType == "sbd" || prInvoice.invType == "sb"
+                            || prInvoice.invType == "ts" || prInvoice.invType == "ss" || prInvoice.invType == "tsd" || prInvoice.invType == "ssd"
+                            )
                         {
                             CashTransfer cachModel = new CashTransfer();
                             List<PayedInvclass> payedList = new List<PayedInvclass>();
                             payedList = await cachModel.GetPayedByInvId(prInvoice.invoiceId);
+                            mailpayedList = payedList;
                             decimal sump = payedList.Sum(x => x.cash);
                             decimal deservd = (decimal)prInvoice.totalNet - sump;
                             //convertter
@@ -3809,12 +3875,14 @@ namespace Restaurant.View.sales
 
 
                         rep.SetParameters(paramarr);
-                        rep.Refresh();
 
+                        rep.Refresh();
+                        #endregion
+                        //
 
 
                         //copy count
-                        if (prInvoice.invType == "s" || prInvoice.invType == "sb" || prInvoice.invType == "p" || prInvoice.invType == "pb")
+                        if (prInvoice.invType == "s" || prInvoice.invType == "sb" || prInvoice.invType == "p" || prInvoice.invType == "pb" || prInvoice.invType == "ts" || prInvoice.invType == "ss")
                         {
 
                             //   paramarr.Add(new ReportParameter("isOrginal", prInvoice.isOrginal.ToString()));
@@ -3833,7 +3901,7 @@ namespace Restaurant.View.sales
                             rep.SetParameters(paramarr);
 
                             rep.Refresh();
-
+                            /////////////////////////
                             if (int.Parse(AppSettings.Allow_print_inv_count) > prInvoice.printedcount)
                             {
 
@@ -4215,30 +4283,7 @@ namespace Restaurant.View.sales
             }
         }
 
-        //public void BuildReport()
-        //{
-        //    List<ReportParameter> paramarr = new List<ReportParameter>();
-
-        //    string addpath;
-        //    bool isArabic = ReportCls.checkLang();
-        //    if (isArabic)
-        //    {
-        //        addpath = @"\Reports\Sale\Ar\PackageReport.rdlc";
-        //    }
-        //    else
-        //        addpath = @"\Reports\Sale\En\PackageReport.rdlc";
-        //    string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-        //    ReportCls.checkLang();
-
-        //    clsReports.purchaseInvoiceReport(invoiceItems, rep, reppath);
-        //    clsReports.setReportLanguage(paramarr);
-        //    clsReports.Header(paramarr);
-
-        //    rep.SetParameters(paramarr);
-
-        //    rep.Refresh();
-        //}
+  
         public async void sendsaleEmail(int invoiceId)
         {
             try

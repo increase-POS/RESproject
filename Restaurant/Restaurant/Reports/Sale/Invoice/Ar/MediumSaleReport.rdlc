@@ -482,7 +482,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!itemName.Value+"-"+Fields!unitName.Value</Value>
+                                  <Value>=Fields!itemName.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
                                     <FontSize>7pt</FontSize>
@@ -506,6 +506,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -2591,7 +2592,7 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
-  <ReportParameter Name="trNo">
+    <ReportParameter Name="trNo">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
@@ -2873,7 +2874,7 @@
           <RowIndex>11</RowIndex>
           <ParameterName>totalNoShip</ParameterName>
         </CellDefinition>
-       <CellDefinition>
+        <CellDefinition>
           <ColumnIndex>0</ColumnIndex>
           <RowIndex>13</RowIndex>
           <ParameterName>trNo</ParameterName>

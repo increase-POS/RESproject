@@ -227,7 +227,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox30</rd:DefaultName>
-            <Top>1.85121cm</Top>
+            <Top>1.53371cm</Top>
             <Left>1.82402cm</Left>
             <Height>7.57051cm</Height>
             <Width>16.97713cm</Width>
@@ -277,13 +277,13 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox30</rd:DefaultName>
-            <Top>2.26294cm</Top>
+            <Top>1.94544cm</Top>
             <Left>2.88677cm</Left>
             <Height>7.57051cm</Height>
             <Width>13.95646cm</Width>
             <ZIndex>1</ZIndex>
             <Visibility>
-              <Hidden>=iif( (Parameters!watermark.Value="0" And  Parameters!isSaved.Value&lt;&gt;"n")Or Parameters!isSaved.Value&lt;&gt;"n" ,True,False)</Hidden>
+              <Hidden>=iif(Parameters!watermark.Value Like "0" Or Parameters!isSaved.Value&lt;&gt;"n" ,True,False)</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -302,13 +302,10 @@
                   <Width>1.27967cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>5.1cm</Width>
+                  <Width>6.43171cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.52321cm</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>1.96088cm</Width>
+                  <Width>2.86078cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.57722cm</Width>
@@ -354,7 +351,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -390,43 +386,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox15">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Parameters!trUnit.Value</Value>
-                                  <Style>
-                                    <FontFamily>Montserrat</FontFamily>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox15</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -462,7 +421,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -498,7 +456,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -534,7 +491,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -599,41 +555,6 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>itemName</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="unitName">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!unitName.Value</Value>
-                                  <Style>
-                                    <FontFamily>Montserrat</FontFamily>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>unitName</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -763,7 +684,6 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
-                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -780,7 +700,7 @@
             <Top>3.99636cm</Top>
             <Left>1.78874cm</Left>
             <Height>1.2cm</Height>
-            <Width>17.30401cm</Width>
+            <Width>17.01241cm</Width>
             <ZIndex>2</ZIndex>
             <Style>
               <Border>
@@ -3101,7 +3021,7 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
-  <ReportParameter Name="trNo">
+    <ReportParameter Name="trNo">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
@@ -3378,7 +3298,7 @@
           <RowIndex>11</RowIndex>
           <ParameterName>totalNoShip</ParameterName>
         </CellDefinition>
-       <CellDefinition>
+        <CellDefinition>
           <ColumnIndex>3</ColumnIndex>
           <RowIndex>11</RowIndex>
           <ParameterName>trNo</ParameterName>
