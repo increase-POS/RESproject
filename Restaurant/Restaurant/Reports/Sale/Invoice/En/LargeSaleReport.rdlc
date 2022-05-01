@@ -243,7 +243,7 @@
             <Height>3.45409cm</Height>
             <Width>8.89189cm</Width>
             <Visibility>
-              <Hidden>=iif(Parameters!isOrginal.Value = "True" Or Parameters!isOrginal.Value = "true" Or  Parameters!isOrginal.Value = "1"  ,True,False)</Hidden>
+              <Hidden>=iif(Parameters!isOrginal.Value = "False" Or Parameters!isOrginal.Value = "false" Or  Parameters!isOrginal.Value = "0" And Parameters!watermark.Value="0" And Parameters!isSaved.Value="y" ,False,True)</Hidden>
             </Visibility>
             <RepeatWith>Tablix1</RepeatWith>
             <Style>
@@ -281,7 +281,7 @@
             <Width>8.89189cm</Width>
             <ZIndex>1</ZIndex>
             <Visibility>
-              <Hidden>=Parameters!watermark.Value = "0"</Hidden>
+              <Hidden>=iif( (Parameters!watermark.Value="1" Or Parameters!isSaved.Value="n" ),False,True)</Hidden>
             </Visibility>
             <RepeatWith>Tablix1</RepeatWith>
             <Style>
@@ -508,7 +508,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>

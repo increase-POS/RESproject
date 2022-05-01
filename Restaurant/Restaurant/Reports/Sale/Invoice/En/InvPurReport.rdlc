@@ -232,7 +232,7 @@
             <Height>7.57051cm</Height>
             <Width>16.97713cm</Width>
             <Visibility>
-              <Hidden>=iif(Parameters!isOrginal.Value = "True" Or Parameters!isOrginal.Value = "true" Or  Parameters!isOrginal.Value = "1" Or Parameters!isSaved.Value="n"  ,True,False)</Hidden>
+              <Hidden>=iif(Parameters!isOrginal.Value = "False" Or Parameters!isOrginal.Value = "false" Or  Parameters!isOrginal.Value = "0" And Parameters!watermark.Value="0" And Parameters!isSaved.Value="y" ,False,True)</Hidden>
             </Visibility>
             <RepeatWith>Tablix1</RepeatWith>
             <Style>
@@ -277,13 +277,13 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox30</rd:DefaultName>
-            <Top>1.94544cm</Top>
+            <Top>2.26294cm</Top>
             <Left>2.88677cm</Left>
             <Height>7.57051cm</Height>
             <Width>13.95646cm</Width>
             <ZIndex>1</ZIndex>
             <Visibility>
-              <Hidden>=iif(Parameters!watermark.Value Like "0" Or Parameters!isSaved.Value&lt;&gt;"n" ,True,False)</Hidden>
+              <Hidden>=iif( (Parameters!watermark.Value="1" Or Parameters!isSaved.Value="n" ),False,True)</Hidden>
             </Visibility>
             <Style>
               <Border>

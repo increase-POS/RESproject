@@ -198,7 +198,7 @@
             <Height>7.57051cm</Height>
             <Width>16.44354cm</Width>
             <Visibility>
-              <Hidden>=Parameters!watermark.Value = "0"</Hidden>
+              <Hidden>=iif( (Parameters!watermark.Value="1" Or Parameters!isSaved.Value="n" ),False,True)</Hidden>
             </Visibility>
             <RepeatWith>Tablix1</RepeatWith>
             <Style>

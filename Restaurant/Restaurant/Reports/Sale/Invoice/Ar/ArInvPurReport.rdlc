@@ -232,7 +232,7 @@
             <Height>8.40475cm</Height>
             <Width>17.32432cm</Width>
             <Visibility>
-              <Hidden>=iif(Parameters!isOrginal.Value = "True" Or Parameters!isOrginal.Value = "true" Or  Parameters!isOrginal.Value = "1" Or Parameters!isSaved.Value="n"  ,True,False)</Hidden>
+              <Hidden>=iif(Parameters!isOrginal.Value = "False" Or Parameters!isOrginal.Value = "false" Or  Parameters!isOrginal.Value = "0" And Parameters!watermark.Value="0" And Parameters!isSaved.Value="y" ,False,True)</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -269,7 +269,7 @@
             <Width>16.44354cm</Width>
             <ZIndex>1</ZIndex>
             <Visibility>
-              <Hidden>=iif( (Parameters!watermark.Value="0" And  Parameters!isSaved.Value&lt;&gt;"n")Or Parameters!isSaved.Value&lt;&gt;"n" ,True,False)</Hidden>
+              <Hidden>=iif( (Parameters!watermark.Value="1" Or Parameters!isSaved.Value="n" ),False,True)</Hidden>
             </Visibility>
             <Style>
               <Border>
