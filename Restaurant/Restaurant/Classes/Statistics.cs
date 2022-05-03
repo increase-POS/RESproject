@@ -915,7 +915,7 @@ namespace Restaurant.Classes
         public string agentCode { get; set; }
         public List<orderPreparingStatus> orderStatusList { get; set; }
         public decimal orderDuration { get; set; }
-
+        public string orderDurationConv { get; set; }
         public string statusConv { get; set; }
         public string categoryNameConv { get; set; }
   

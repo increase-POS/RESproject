@@ -3973,4 +3973,7 @@
   <data name="trOrdersWaitConfirmUser" xml:space="preserve">
     <value>طلبات بانتظار تأكيد المستخدم</value>
   </data>
+  <data name="deliveryReport" xml:space="preserve">
+    <value>تقرير التوصيل</value>
+  </data>
 </root>

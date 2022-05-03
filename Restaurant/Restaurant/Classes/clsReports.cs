@@ -1112,10 +1112,11 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             foreach (var c in CouponQuery2)
             {
-                c.discountValue = decimal.Parse(HelpClass.DecTostring(c.discountValue));
-                c.invMin = decimal.Parse(HelpClass.DecTostring(c.invMin));
-                c.invMax = decimal.Parse(HelpClass.DecTostring(c.invMax));
-               
+                c.discountValue = decimal.Parse(accuracyDiscountConvert(c.discountValue, c.discountType));
+
+                //c.invMin = decimal.Parse(HelpClass.DecTostring(c.invMin));
+                //c.invMax = decimal.Parse(HelpClass.DecTostring(c.invMax));
+
                 string state = "";
                 //(c.isActive == 1) && ((c.endDate > DateTime.Now)||(c.endDate == null)) && ((c.quantity == 0) || (c.quantity > 0 && c.remainQ != 0))
                 if ((c.isActive == 1) && ((c.endDate > DateTime.Now) || (c.endDate == null)) && ((c.quantity == 0) || (c.quantity > 0 && c.remainQ != 0)))
@@ -1139,6 +1140,32 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trUnlimited", AppSettings.resourcemanagerreport.GetString("trUnlimited")));
 
         }
+
+
+        public static void OfferReport(IEnumerable<Offer> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            foreach (var c in Query)
+            {
+                c.discountValue = decimal.Parse(accuracyDiscountConvert(c.discountValue,byte.Parse(c.discountType)));
+ 
+            }
+
+            rep.DataSources.Add(new ReportDataSource("DataSet", Query));
+            paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
+            // paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trCoupons")));
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trValue", AppSettings.resourcemanagerreport.GetString("trValue")));
+            paramarr.Add(new ReportParameter("trStartDate", AppSettings.resourcemanagerreport.GetString("trStartDate")));
+            paramarr.Add(new ReportParameter("trEndDate", AppSettings.resourcemanagerreport.GetString("trEndDate")));
+ 
+
+        }
+
         public string unlimitedCouponConv(decimal quantity)
         {
            
@@ -2332,7 +2359,52 @@ Parameters!trValueDiscount.Value)
          rep.DataSources.Add(new ReportDataSource("DataSet", Query));
         }
 
-        public static void spendingRequestReport(IEnumerable<ItemTransferInvoice> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        public static void DeliveryReport(IEnumerable<OrderPreparingSTS> list, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            List<OrderPreparingSTS> Query = JsonConvert.DeserializeObject<List<OrderPreparingSTS>>(JsonConvert.SerializeObject(list));
+
+
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
+
+            paramarr.Add(new ReportParameter("trInvoiceNumber", AppSettings.resourcemanagerreport.GetString("trInvoiceNumber")));
+             paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
+
+            paramarr.Add(new ReportParameter("trCustomer", AppSettings.resourcemanagerreport.GetString("trCustomer")));
+            paramarr.Add(new ReportParameter("trCompany", AppSettings.resourcemanagerreport.GetString("trCompany")));
+            paramarr.Add(new ReportParameter("trDriver", AppSettings.resourcemanagerreport.GetString("trDriver")));
+            paramarr.Add(new ReportParameter("duration", AppSettings.resourcemanagerreport.GetString("duration")));
+            DateFormConv(paramarr);
+
+
+            foreach (OrderPreparingSTS row in Query)
+            {
+                //row.statusConv = preparingOrderStatusConvert(row.status);
+                row.orderDurationConv = HelpClass.decimalToTime(row.orderDuration);
+                row.shippingCompanyName = shippingCompanyNameConvert(row.shippingCompanyName);
+            }
+
+
+            rep.DataSources.Add(new ReportDataSource("DataSet", Query));
+        }
+
+       
+            public static string shippingCompanyNameConvert(string shippingCompanyName)
+            {
+                if (shippingCompanyName != null)
+                {
+                    string s = shippingCompanyName;
+                    if (s.Equals("local ship"))
+                        return "-";
+                    else
+                        return s;
+                }
+                else return "-";
+            }
+            public static void spendingRequestReport(IEnumerable<ItemTransferInvoice> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;

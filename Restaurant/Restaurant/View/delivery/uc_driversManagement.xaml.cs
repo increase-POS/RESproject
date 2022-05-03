@@ -372,7 +372,11 @@ namespace Restaurant.View.delivery
             List<Invoice> driverOrder = new List<Invoice>();
 
             List<ReportParameter> paramarr = new List<ReportParameter>();
-            driverOrder = orders.Where(o => o.shipUserId == driver.userId).ToList();
+            if (orders!=null)
+            {
+                driverOrder = orders.Where(o => (int)o.shipUserId == driver.userId).ToList();
+            }
+         
             string addpath;
             bool isArabic = ReportCls.checkLang();
             if (isArabic)

@@ -568,33 +568,33 @@ namespace Restaurant.View.reports.deliveryReports
             List<ReportParameter> paramarr = new List<ReportParameter>();
 
             string addpath = "";
-            string firstTitle = "PreparingOrders";
-            string secondTitle = "";
-            string subTitle = "";
+            //string firstTitle = "PreparingOrders";
+            //string secondTitle = "";
+            //string subTitle = "";
             string Title = "";
 
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
             {
-                addpath = @"\Reports\StatisticReport\Kitchen\Ar\ArPreparingOrders.rdlc";
+                addpath = @"\Reports\StatisticReport\Delivery\Ar\ArDelivery.rdlc";
 
             }
             else
             {
-                addpath = @"\Reports\StatisticReport\Kitchen\En\EnPreparingOrders.rdlc";
+                addpath = @"\Reports\StatisticReport\Delivery\En\EnDelivery.rdlc";
 
             }
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
             ReportCls.checkLang();
-            secondTitle = "";
-            subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+            //secondTitle = "";
+           // subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
 
-            Title = AppSettings.resourcemanagerreport.GetString("trKitchen") + " / " + subTitle;
+            Title = AppSettings.resourcemanagerreport.GetString("deliveryReport") ;
             paramarr.Add(new ReportParameter("trTitle", Title));
 
 
-            clsReports.PreparingOrdersReport(deliveriesQuery.ToList(), rep, reppath, paramarr);
+            clsReports.DeliveryReport(deliveriesQuery.ToList(), rep, reppath, paramarr);
 
             clsReports.Header(paramarr);
 

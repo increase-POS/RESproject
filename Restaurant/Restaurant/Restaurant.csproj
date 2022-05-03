@@ -2175,6 +2175,18 @@
     <Content Include="Reports\Sale\Invoice\En\SmallSaleReport.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\Sale\Ar\ArOffer.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Sale\En\EnOffer.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Delivery\Ar\ArDelivery.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Delivery\En\EnDelivery.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Resource Include="pic\programs-Rest-login-bg.png" />
@@ -2461,6 +2473,7 @@
     <None Include="Properties\DataSources\Restaurant.Classes.ItemTransfer2.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemUnitInvoiceProfit.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Location.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.Offer1.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.OrderPreparingSTS.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.PayedInvclass1.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Pos.datasource" />

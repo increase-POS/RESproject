@@ -3988,4 +3988,7 @@ Please add Email in setting</value>
   <data name="trOrdersWaitConfirmUser" xml:space="preserve">
     <value>Orders Waiting for user confirmation</value>
   </data>
+  <data name="deliveryReport" xml:space="preserve">
+    <value>Delivery Report</value>
+  </data>
 </root>

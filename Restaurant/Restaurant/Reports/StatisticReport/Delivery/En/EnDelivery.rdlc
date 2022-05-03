@@ -2,40 +2,60 @@
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="RestaurantClasses">
+    <DataSource Name="POSClasses">
       <ConnectionProperties>
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>ecfe0612-0c65-4308-98e6-2753b4292ab5</rd:DataSourceID>
+      <rd:DataSourceID>62b90ea9-e8b9-4186-94f6-a646dc984651</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="DataSetCoupon">
+    <DataSet Name="DataSet">
       <Query>
-        <DataSourceName>RestaurantClasses</DataSourceName>
+        <DataSourceName>POSClasses</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="barcode">
-          <DataField>barcode</DataField>
+        <Field Name="agentCode">
+          <DataField>agentCode</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="canDelete">
-          <DataField>canDelete</DataField>
-          <rd:TypeName>System.Boolean</rd:TypeName>
-        </Field>
-        <Field Name="cId">
-          <DataField>cId</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="code">
-          <DataField>code</DataField>
+        <Field Name="agentCompany">
+          <DataField>agentCompany</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="couponMembershipId">
-          <DataField>couponMembershipId</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+        <Field Name="agentId">
+          <DataField>agentId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="agentName">
+          <DataField>agentName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="agentType">
+          <DataField>agentType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="branchId">
+          <DataField>branchId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="branchName">
+          <DataField>branchName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="categoryId">
+          <DataField>categoryId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="categoryName">
+          <DataField>categoryName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="categoryNameConv">
+          <DataField>categoryNameConv</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="createDate">
           <DataField>createDate</DataField>
@@ -45,56 +65,112 @@
           <DataField>createUserId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
-        <Field Name="discountType">
-          <DataField>discountType</DataField>
-          <rd:TypeName>System.Byte</rd:TypeName>
+        <Field Name="invNumber">
+          <DataField>invNumber</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="discountValue">
-          <DataField>discountValue</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="endDate">
-          <DataField>endDate</DataField>
-          <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="invMax">
-          <DataField>invMax</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="invMin">
-          <DataField>invMin</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="isActive">
-          <DataField>isActive</DataField>
-          <rd:TypeName>System.Byte</rd:TypeName>
-        </Field>
-        <Field Name="membershipId">
-          <DataField>membershipId</DataField>
+        <Field Name="invoiceId">
+          <DataField>invoiceId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
-        <Field Name="name">
-          <DataField>name</DataField>
+        <Field Name="invType">
+          <DataField>invType</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="itemName">
+          <DataField>itemName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="itemUnitId">
+          <DataField>itemUnitId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="listedDate">
+          <DataField>listedDate</DataField>
+          <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
         <Field Name="notes">
           <DataField>notes</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="num">
+          <DataField>num</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="orderDuration">
+          <DataField>orderDuration</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="orderDurationConv">
+          <DataField>orderDurationConv</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="orderNum">
+          <DataField>orderNum</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="orderPreparingId">
+          <DataField>orderPreparingId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="orderTime">
+          <DataField>orderTime</DataField>
+          <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="preparingTime">
+          <DataField>preparingTime</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
         <Field Name="quantity">
           <DataField>quantity</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="remainQ">
-          <DataField>remainQ</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+        <Field Name="realDuration">
+          <DataField>realDuration</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
-        <Field Name="startDate">
-          <DataField>startDate</DataField>
-          <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        <Field Name="remainingTime">
+          <DataField>remainingTime</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="state">
-          <DataField>state</DataField>
+        <Field Name="shippingCompanyId">
+          <DataField>shippingCompanyId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="shippingCompanyName">
+          <DataField>shippingCompanyName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="shipUserId">
+          <DataField>shipUserId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="shipUserLastName">
+          <DataField>shipUserLastName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="shipUserName">
+          <DataField>shipUserName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="status">
+          <DataField>status</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="statusConv">
+          <DataField>statusConv</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="tables">
+          <DataField>tables</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="tagId">
+          <DataField>tagId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="tagName">
+          <DataField>tagName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="updateDate">
@@ -105,11 +181,15 @@
           <DataField>updateUserId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
+        <Field Name="waiter">
+          <DataField>waiter</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>Restaurant.Classes</rd:DataSetName>
-        <rd:TableName>Coupon</rd:TableName>
-        <rd:ObjectDataSourceType>Restaurant.Classes.Coupon, Restaurant, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>OrderPreparingSTS</rd:TableName>
+        <rd:ObjectDataSourceType>Restaurant.Classes.OrderPreparingSTS, Restaurant, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
@@ -142,7 +222,7 @@
             <Top>0.37422cm</Top>
             <Left>1.18768cm</Left>
             <Height>1.21167cm</Height>
-            <Width>18.5cm</Width>
+            <Width>27.09897cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -157,22 +237,25 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>3.08334cm</Width>
+                  <Width>3.19cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.08334cm</Width>
+                  <Width>2.98979cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.08334cm</Width>
+                  <Width>5.00705cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.08334cm</Width>
+                  <Width>3.64963cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.08334cm</Width>
+                  <Width>4.00812cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.08334cm</Width>
+                  <Width>4.61667cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>3.63771cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -188,7 +271,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Parameters!trCode.Value</Value>
+                                  <Value>=Parameters!trNo.Value</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -216,6 +299,76 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="Textbox32">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Parameters!trInvoiceNumber.Value</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox32</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>WhiteSmoke</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox2">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Parameters!trBranch.Value</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox2</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>WhiteSmoke</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="Textbox3">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -223,7 +376,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Parameters!trName.Value</Value>
+                                  <Value>=Parameters!trCustomer.Value</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -251,14 +404,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox12">
+                        <Textbox Name="Textbox4">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Parameters!trValue.Value</Value>
+                                  <Value>=Parameters!trCompany.Value</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -269,7 +422,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox12</rd:DefaultName>
+                          <rd:DefaultName>Textbox4</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -286,14 +439,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox10">
+                        <Textbox Name="Textbox5">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Parameters!trQuantity.Value</Value>
+                                  <Value>=Parameters!trDriver.Value</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -304,7 +457,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox10</rd:DefaultName>
+                          <rd:DefaultName>Textbox5</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -321,14 +474,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox15">
+                        <Textbox Name="Textbox6">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Parameters!trRemainQuantity.Value</Value>
+                                  <Value>=Parameters!duration.Value</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -339,42 +492,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox15</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BackgroundColor>WhiteSmoke</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox16">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Parameters!trvalidity.Value</Value>
-                                  <Style>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox16</rd:DefaultName>
+                          <rd:DefaultName>Textbox6</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -396,15 +514,17 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="code">
+                        <Textbox Name="orderNum">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!code.Value</Value>
-                                  <Style />
+                                  <Value>=Fields!orderNum.Value</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -412,7 +532,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>code</rd:DefaultName>
+                          <rd:DefaultName>orderNum</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -428,15 +548,17 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="name">
+                        <Textbox Name="invNumber">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!name.Value</Value>
-                                  <Style />
+                                  <Value>=Fields!invNumber.Value</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -444,7 +566,42 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>name</rd:DefaultName>
+                          <rd:DefaultName>invNumber</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Direction>RTL</Direction>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="branchName">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!branchName.Value</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>branchName</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -460,15 +617,17 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="discountValue">
+                        <Textbox Name="agentName">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=iif(Fields!discountType.Value="2",Fields!discountValue.Value.ToString+"%",Fields!discountValue.Value)</Value>
-                                  <Style />
+                                  <Value>=Fields!agentName.Value</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
@@ -476,7 +635,109 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>discountValue</rd:DefaultName>
+                          <rd:DefaultName>agentName</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="shippingCompanyName">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!shippingCompanyName.Value</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>shippingCompanyName</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="shipUserName">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=iif(Fields!shipUserName.Value&lt;&gt;"" AND Fields!shipUserLastName.Value&lt;&gt;"" ,Fields!shipUserName.Value+" "+Fields!shipUserLastName.Value,"-")</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>shipUserName</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="orderDurationConv">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!orderDurationConv.Value</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>orderDurationConv</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -491,113 +752,13 @@
                         <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="quantity">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=iif(Fields!quantity.Value=0,Parameters!trUnlimited.Value,Fields!quantity.Value)</Value>
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>quantity</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="remainQ">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!remainQ.Value</Value>
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>remainQ</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="state">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!state.Value</Value>
-                                  <Style>
-                                    <Format>=IIf(Parameters!dateForm.Value="ShortDatePattern","dd/MM/yyyy",
-(IIf(Parameters!dateForm.Value="LongDatePattern","dddd, MMMM d, yyyy",
-IIf(Parameters!dateForm.Value="MonthDayPattern","MMMM dd",
-IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</Format>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>state</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
               </TablixRows>
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
+                <TablixMember />
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
@@ -616,11 +777,11 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <DataSetName>DataSetCoupon</DataSetName>
-            <Top>1.68575cm</Top>
+            <DataSetName>DataSet</DataSetName>
+            <Top>2.07142cm</Top>
             <Left>1.18768cm</Left>
             <Height>1.2cm</Height>
-            <Width>18.50004cm</Width>
+            <Width>27.09897cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -629,25 +790,25 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>3.746cm</Height>
+        <Height>4.03871cm</Height>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Body>
-      <Width>21cm</Width>
+      <Width>29.7cm</Width>
       <Page>
         <PageHeader>
           <Height>4.43416cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
-            <Image Name="Logo">
+            <Image Name="Logo2">
               <Source>External</Source>
               <Value>=Parameters!logoImage.Value</Value>
               <Sizing>FitProportional</Sizing>
-              <Top>0.55928cm</Top>
+              <Top>0.62742cm</Top>
               <Left>1.18768cm</Left>
               <Height>3cm</Height>
               <Width>3cm</Width>
@@ -664,7 +825,7 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
               <KeepTogether>true</KeepTogether>
               <Top>0.00366in</Top>
               <Height>0.17391in</Height>
-              <Width>21cm</Width>
+              <Width>29.7cm</Width>
               <ZIndex>1</ZIndex>
               <Visibility>
                 <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
@@ -696,8 +857,8 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>0.24999in</Top>
-              <Left>4.86626in</Left>
+              <Top>0.24701in</Top>
+              <Left>8.25168in</Left>
               <Height>0.3587in</Height>
               <Width>2.8848in</Width>
               <ZIndex>2</ZIndex>
@@ -743,8 +904,8 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.62257in</Top>
-              <Left>4.86626in</Left>
+              <Top>0.61959in</Top>
+              <Left>8.25168in</Left>
               <Height>0.25in</Height>
               <Width>2.8848in</Width>
               <ZIndex>3</ZIndex>
@@ -790,8 +951,8 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>0.88646in</Top>
-              <Left>4.86626in</Left>
+              <Top>0.88348in</Top>
+              <Left>8.25168in</Left>
               <Height>0.25in</Height>
               <Width>2.8848in</Width>
               <ZIndex>4</ZIndex>
@@ -837,8 +998,8 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>1.13646in</Top>
-              <Left>4.86626in</Left>
+              <Top>1.13348in</Top>
+              <Left>8.25168in</Left>
               <Height>0.25in</Height>
               <Width>2.8848in</Width>
               <ZIndex>5</ZIndex>
@@ -884,8 +1045,8 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>1.38646in</Top>
-              <Left>4.86626in</Left>
+              <Top>1.38348in</Top>
+              <Left>8.25168in</Left>
               <Height>0.25in</Height>
               <Width>2.8848in</Width>
               <ZIndex>6</ZIndex>
@@ -987,7 +1148,7 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
               </Paragraphs>
               <rd:DefaultName>ExecutionTime</rd:DefaultName>
               <Top>0.03528cm</Top>
-              <Left>13.89885cm</Left>
+              <Left>22.49782cm</Left>
               <Height>0.6cm</Height>
               <Width>5.78883cm</Width>
               <ZIndex>1</ZIndex>
@@ -1005,7 +1166,7 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
               <KeepTogether>true</KeepTogether>
               <Top>0.27789in</Top>
               <Height>0.2cm</Height>
-              <Width>21cm</Width>
+              <Width>29.7cm</Width>
               <ZIndex>2</ZIndex>
               <Visibility>
                 <Hidden>=IIf(Parameters!show_header.Value=1,False,True)</Hidden>
@@ -1025,8 +1186,8 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
             <BackgroundColor>White</BackgroundColor>
           </Style>
         </PageFooter>
-        <PageHeight>29.7cm</PageHeight>
-        <PageWidth>21cm</PageWidth>
+        <PageHeight>21cm</PageHeight>
+        <PageWidth>29.7cm</PageWidth>
         <LeftMargin>0cm</LeftMargin>
         <RightMargin>0cm</RightMargin>
         <TopMargin>0cm</TopMargin>
@@ -1037,7 +1198,7 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
     </ReportSection>
   </ReportSections>
   <ReportParameters>
-    <ReportParameter Name="trTitle">
+    <ReportParameter Name="trAddress">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
@@ -1090,55 +1251,61 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
-    <ReportParameter Name="show_header">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="trCode">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="trName">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="trValue">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="trQuantity">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="trRemainQuantity">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="trvalidity">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
     <ReportParameter Name="dateForm">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
-    <ReportParameter Name="trUnlimited">
+    <ReportParameter Name="trTitle">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="show_header">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="trInvoiceNumber">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="trBranch">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="duration">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="trNo">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="trCustomer">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="trCompany">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="trDriver">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
@@ -1148,12 +1315,12 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
   <ReportParametersLayout>
     <GridLayoutDefinition>
       <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>9</NumberOfRows>
+      <NumberOfRows>15</NumberOfRows>
       <CellDefinitions>
         <CellDefinition>
-          <ColumnIndex>0</ColumnIndex>
+          <ColumnIndex>3</ColumnIndex>
           <RowIndex>0</RowIndex>
-          <ParameterName>trTitle</ParameterName>
+          <ParameterName>trAddress</ParameterName>
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>1</ColumnIndex>
@@ -1192,48 +1359,53 @@ IIf(Parameters!dateForm.Value="YearMonthPattern","MMMM yyyy","dd/MM/yyyy")))))</
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>3</ColumnIndex>
-          <RowIndex>6</RowIndex>
-          <ParameterName>show_header</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
-          <ColumnIndex>0</ColumnIndex>
-          <RowIndex>7</RowIndex>
-          <ParameterName>trCode</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
-          <ColumnIndex>1</ColumnIndex>
-          <RowIndex>7</RowIndex>
-          <ParameterName>trName</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
-          <ColumnIndex>2</ColumnIndex>
-          <RowIndex>7</RowIndex>
-          <ParameterName>trValue</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
-          <ColumnIndex>3</ColumnIndex>
-          <RowIndex>7</RowIndex>
-          <ParameterName>trQuantity</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
-          <ColumnIndex>0</ColumnIndex>
-          <RowIndex>8</RowIndex>
-          <ParameterName>trRemainQuantity</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
-          <ColumnIndex>1</ColumnIndex>
-          <RowIndex>8</RowIndex>
-          <ParameterName>trvalidity</ParameterName>
-        </CellDefinition>
-        <CellDefinition>
-          <ColumnIndex>2</ColumnIndex>
-          <RowIndex>8</RowIndex>
+          <RowIndex>3</RowIndex>
           <ParameterName>dateForm</ParameterName>
         </CellDefinition>
         <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>10</RowIndex>
+          <ParameterName>trTitle</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
           <ColumnIndex>3</ColumnIndex>
-          <RowIndex>8</RowIndex>
-          <ParameterName>trUnlimited</ParameterName>
+          <RowIndex>10</RowIndex>
+          <ParameterName>show_header</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>11</RowIndex>
+          <ParameterName>trInvoiceNumber</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>12</RowIndex>
+          <ParameterName>trBranch</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>13</RowIndex>
+          <ParameterName>duration</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>13</RowIndex>
+          <ParameterName>trNo</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>13</RowIndex>
+          <ParameterName>trCustomer</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>14</RowIndex>
+          <ParameterName>trCompany</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>14</RowIndex>
+          <ParameterName>trDriver</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>
