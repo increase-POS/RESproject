@@ -1002,6 +1002,14 @@ namespace Restaurant.Classes
 
         public Nullable<System.DateTime> endDate { get; set; }
         public string subscriptionType { get; set; }
+        //invClass
+        public string invoicesClassName { get; set; }
+        public Nullable<int> invClassDiscountId { get; set; }
+
+        public Nullable<int> invClassId { get; set; }
+        public byte invClassdiscountType { get; set; }
+        public decimal invClassdiscountValue { get; set; }
+        public decimal finalDiscount { get; set; }
 
     }
 
@@ -1672,6 +1680,28 @@ namespace Restaurant.Classes
 
             //#################
             IEnumerable<Claim> claims = await APIResult.getList("Statistics/GetSaleMembership", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<SalesMembership>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+
+        }
+        //Inv class
+        public async Task<List<SalesMembership>> GetInvoiceClass(int mainBranchId, int userId)
+        {
+
+            List<SalesMembership> list = new List<SalesMembership>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
+
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("Statistics/GetInvoiceClass", parameters);
 
             foreach (Claim c in claims)
             {
