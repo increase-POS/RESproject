@@ -1166,6 +1166,9 @@ namespace Restaurant
            AppSettings.sales_invoice_note = printList.Where(X => X.name == "sales_invoice_note").FirstOrDefault().value;
            AppSettings.print_on_save_directentry = printList.Where(X => X.name == "print_on_save_directentry").FirstOrDefault().value;
            AppSettings.directentry_copy_count = printList.Where(X => X.name == "directentry_copy_count").FirstOrDefault().value;
+            AppSettings.kitchen_copy_count = printList.Where(X => X.name == "kitchen_copy_count").FirstOrDefault().value;
+
+         
         }
         public static async Task GetReportlang()
         {

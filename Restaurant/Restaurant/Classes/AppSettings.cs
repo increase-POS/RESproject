@@ -51,6 +51,7 @@ namespace Restaurant.Classes
         public static string directentry_copy_count;
         public static string print_kitchen_on_sale;
         public static string print_kitchen_on_preparing;
+        public static string kitchen_copy_count;
         internal static int? isInvTax;
         internal static decimal? tax;
         //tax
