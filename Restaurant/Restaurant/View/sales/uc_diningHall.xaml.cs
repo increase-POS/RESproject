@@ -357,9 +357,10 @@ namespace Restaurant.View.sales
             txt_totalDiscount.Text = AppSettings.resourcemanager.GetString("trDiscount");
             txt_tax.Text = AppSettings.resourcemanager.GetString("trTax");
             txt_total.Text = AppSettings.resourcemanager.GetString("trTotal");
-           
-            btn_pay.Content = AppSettings.resourcemanager.GetString("trPay");
+            txt_drafts.Text = AppSettings.resourcemanager.GetString("trDraft");
 
+
+            btn_pay.Content = AppSettings.resourcemanager.GetString("trPay");
 
             #region
 
@@ -1517,6 +1518,11 @@ namespace Restaurant.View.sales
             txt_waiter.Text = "";
             txt_waiter.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             path_waiter.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            #endregion
+            #region return delivery button to default
+            txt_delivery.Text = "";
+            txt_delivery.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            path_delivery.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             #endregion
             #region return customer button to default
             //txt_customer.Text = AppSettings.resourcemanager.GetString("trCustomer");

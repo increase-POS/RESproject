@@ -68,7 +68,8 @@ namespace Restaurant.View
             }
         }
         int NumberDaysInMonth { get; set; }
-        DispatcherTimer threadtimer;
+        DispatcherTimer threadtimer10 = new DispatcherTimer();
+        DispatcherTimer threadtimer30 = new DispatcherTimer();
         public static int secondTimer10 = 10;
         public static int secondTimer30 = 30;
         int SkipBestSeller = 0;
@@ -87,6 +88,9 @@ namespace Restaurant.View
         bool firstLoading = true;
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
+
+            threadtimer10.Stop();
+            threadtimer30.Stop();
             Instance = null;
             GC.Collect();
         }
@@ -167,20 +171,20 @@ namespace Restaurant.View
         {
             await Task.Delay(10000);
             // thread 10
-            threadtimer = new DispatcherTimer();
-            threadtimer.Interval = TimeSpan.FromSeconds(secondTimer10);
-            threadtimer.Tick += timer_Thread10;
-            threadtimer.Start();
+            //threadtimer10 = new DispatcherTimer();
+            threadtimer10.Interval = TimeSpan.FromSeconds(secondTimer10);
+            threadtimer10.Tick += timer_Thread10;
+            threadtimer10.Start();
             ////////////////////
         }
         async void starTimerAfter30()
         {
             await Task.Delay(30000);
             //thread 30
-            threadtimer = new DispatcherTimer();
-            threadtimer.Interval = TimeSpan.FromSeconds(secondTimer30);
-            threadtimer.Tick += timer_Thread30;
-            threadtimer.Start();
+            //threadtimer30 = new DispatcherTimer();
+            threadtimer30.Interval = TimeSpan.FromSeconds(secondTimer30);
+            threadtimer30.Tick += timer_Thread30;
+            threadtimer30.Start();
             ////////////////////
         }
         private void translate()
@@ -1004,7 +1008,7 @@ namespace Restaurant.View
 
                     if (result > 0)
                     {
-                        FillCombo.itemUnitsUsersList = w.selectedItemUnitsUser;
+                        FillCombo.itemUnitsUsersList = w.selectedItemUnitsHome;
 
                         refrishIUList(FillCombo.itemUnitsUsersList);
                         await IUStorage();

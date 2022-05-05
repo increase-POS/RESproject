@@ -48,9 +48,9 @@ namespace Restaurant.View.windows
         public string invType ;
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_invoices);
+            try
+            {
+                HelpClass.StartAwait(grid_invoices);
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -81,15 +81,15 @@ namespace Restaurant.View.windows
                 lst_selectedInvoices.ItemsSource = selectedInvoices;
                 lst_selectedInvoices.SelectedValuePath = "invNumber";
                 lst_selectedInvoices.DisplayMemberPath = "invoiceId";
-                
-                
-            //    HelpClass.EndAwait(grid_invoices);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_invoices);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+
+
+                HelpClass.EndAwait(grid_invoices);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_invoices);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void translat()

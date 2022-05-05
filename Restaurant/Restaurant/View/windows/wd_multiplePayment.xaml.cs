@@ -48,6 +48,8 @@ namespace Restaurant.View.windows
         CashTransfer cashTrasnfer;
         Card cardModel = new Card();
         public IEnumerable<Card> cards;
+        List<Ellipse> cardEllipseList = new List<Ellipse>();
+
         public Invoice invoice = new Invoice();
         bool amountIsValid = false;
         private  void Window_Loaded(object sender, RoutedEventArgs e)
@@ -252,6 +254,7 @@ namespace Restaurant.View.windows
                         tb_processNum.Clear();
                         _SelectedCard = -1;
                         txt_card.Text = "";
+                        brd_processNum.Visibility = Visibility.Collapsed;
                         /*
                         HelpClass.clearTextBlockValidate(txt_card, p_errorCard);
                         HelpClass.clearValidate(tb_processNum, p_errorCard);
@@ -260,6 +263,10 @@ namespace Restaurant.View.windows
                     case 1://card
                         gd_card.Visibility = Visibility.Visible;
                         break;
+                }
+                foreach (var el in cardEllipseList)
+                {
+                    el.Stroke = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                 }
 
             }
@@ -295,14 +302,16 @@ namespace Restaurant.View.windows
                 Ellipse ellipse = new Ellipse();
                 //ellipse.Margin = new Thickness(-5, 0, -5, 0);
                 ellipse.StrokeThickness = 1;
-                ellipse.Stroke = Application.Current.Resources["MainColorOrange"] as SolidColorBrush;
+                ellipse.Stroke = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                 ellipse.Height = 35;
                 ellipse.Width = 35;
                 ellipse.FlowDirection = FlowDirection.LeftToRight;
                 ellipse.ToolTip = item.name;
+                ellipse.Tag = item.cardId;
                 userImageLoad(ellipse, item.image);
                 Grid.SetColumn(ellipse, userCount);
                 grid.Children.Add(ellipse);
+                cardEllipseList.Add(ellipse);
                 #endregion
                 #endregion
                 button.Content = grid;
@@ -331,6 +340,14 @@ namespace Restaurant.View.windows
                 {
                     brd_processNum.Visibility = Visibility.Collapsed;
                     tb_processNum.Visibility = Visibility.Collapsed;
+                }
+                //set border color
+                foreach (var el in cardEllipseList)
+                {
+                    if ((int)el.Tag == (int)button.Tag)
+                        el.Stroke = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                    else
+                        el.Stroke = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                 }
             }
             catch (Exception ex)

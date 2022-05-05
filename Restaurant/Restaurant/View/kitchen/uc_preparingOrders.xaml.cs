@@ -519,7 +519,7 @@ namespace Restaurant.View.kitchen
             catch (Exception ex)
             {
                 HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
+                //HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void chk_uncheck(object sender, RoutedEventArgs e)

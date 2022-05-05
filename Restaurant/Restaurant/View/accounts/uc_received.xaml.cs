@@ -208,7 +208,7 @@ namespace Restaurant.View.accounts
                 Ellipse ellipse = new Ellipse();
                 //ellipse.Margin = new Thickness(-5, 0, -5, 0);
                 ellipse.StrokeThickness = 1;
-                ellipse.Stroke = Application.Current.Resources["MainColorOrange"] as SolidColorBrush;
+                ellipse.Stroke = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                 ellipse.Height = 35;
                 ellipse.Width = 35;
                 ellipse.FlowDirection = FlowDirection.LeftToRight;
@@ -265,9 +265,9 @@ namespace Restaurant.View.accounts
             foreach (var el in cardEllipseList)
             {
                 if ((int)el.Tag == (int)button.Tag)
-                    el.Stroke = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
+                    el.Stroke = Application.Current.Resources["MainColor"] as SolidColorBrush;
                 else
-                    el.Stroke = Application.Current.Resources["MainColorOrange"] as SolidColorBrush;
+                    el.Stroke = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             }
             HelpClass.validate(requiredControlList, this);
         }
@@ -1606,7 +1606,7 @@ namespace Restaurant.View.accounts
             this.DataContext = new CashTransfer();
             foreach (var el in cardEllipseList)
             {
-                el.Stroke = Application.Current.Resources["MainColorOrange"] as SolidColorBrush;
+                el.Stroke = Application.Current.Resources["SecondColor"] as SolidColorBrush;
             }
 
             /////////////////////////
