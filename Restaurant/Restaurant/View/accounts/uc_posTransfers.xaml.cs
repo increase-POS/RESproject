@@ -176,6 +176,7 @@ namespace Restaurant.View.accounts
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trTransaferDetails");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             //txt_title.Text = AppSettings.resourcemanager.GetString("trTransfers");
+            txt_Cash.Text = AppSettings.resourcemanager.GetString("trCash_") + " : ";
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_transNum, AppSettings.resourcemanager.GetString("trNo."));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cash, AppSettings.resourcemanager.GetString("trCashHint"));
@@ -188,7 +189,9 @@ namespace Restaurant.View.accounts
             chb_all.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_deposit.Content = AppSettings.resourcemanager.GetString("trDeposit");
             chk_receive.Content = AppSettings.resourcemanager.GetString("trReceive");
-
+            /*
+           //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_state, MainWindow.resourcemanager.GetString("trStateHint"));
+            */
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchStartDate, AppSettings.resourcemanager.GetString("trStartDate")+"...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_searchEndDate, AppSettings.resourcemanager.GetString("trEndDate")+"...");
@@ -208,7 +211,6 @@ namespace Restaurant.View.accounts
             dg_posAccounts.Columns[5].Header = AppSettings.resourcemanager.GetString("trStatus");
             dg_posAccounts.Columns[4].Header = AppSettings.resourcemanager.GetString("trDate");
             dg_posAccounts.Columns[6].Header = AppSettings.resourcemanager.GetString("trCashTooltip");
-
 
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");

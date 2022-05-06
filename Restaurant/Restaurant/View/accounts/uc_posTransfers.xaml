@@ -159,6 +159,7 @@
                     </Button.ToolTip>
                 </Button>
                 </Grid>
+                <TextBlock Text="Cash : " x:Name="txt_Cash" Foreground="#737373" VerticalAlignment="Center"  Margin="5" FontSize="14"/>
                 <StackPanel Margin="60 0 0 0" Grid.Row="1"    Orientation="Horizontal" >
                     <Border  Margin="5" Background="White" CornerRadius="16" Height="40">
                         <CheckBox x:Name="chk_deposit"  IsChecked="True"
