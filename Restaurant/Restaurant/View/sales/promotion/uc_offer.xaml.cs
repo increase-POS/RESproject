@@ -183,8 +183,9 @@ namespace Restaurant.View.sales.promotion
             dg_offer.Columns[0].Header = AppSettings.resourcemanager.GetString("trCode");
             dg_offer.Columns[1].Header = AppSettings.resourcemanager.GetString("trName");
             dg_offer.Columns[2].Header = AppSettings.resourcemanager.GetString("trValue");
-            dg_offer.Columns[3].Header = AppSettings.resourcemanager.GetString("trStartDate");
-            dg_offer.Columns[4].Header = AppSettings.resourcemanager.GetString("trEndDate");
+            dg_offer.Columns[3].Header = AppSettings.resourcemanager.GetString("trState");
+            dg_offer.Columns[4].Header = AppSettings.resourcemanager.GetString("trStartDate");
+            dg_offer.Columns[5].Header = AppSettings.resourcemanager.GetString("trEndDate");
 
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");

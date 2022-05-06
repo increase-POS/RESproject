@@ -182,9 +182,10 @@ namespace Restaurant.View.sales.promotion
             dg_coupon.Columns[0].Header = AppSettings.resourcemanager.GetString("trCode");
             dg_coupon.Columns[1].Header = AppSettings.resourcemanager.GetString("trName");
             dg_coupon.Columns[2].Header = AppSettings.resourcemanager.GetString("trValue");
-            dg_coupon.Columns[3].Header = AppSettings.resourcemanager.GetString("trQuantity");
-            dg_coupon.Columns[4].Header = AppSettings.resourcemanager.GetString("trRemainQuantity");
-            dg_coupon.Columns[5].Header = AppSettings.resourcemanager.GetString("trvalidity");
+            dg_coupon.Columns[3].Header = AppSettings.resourcemanager.GetString("trState");
+            dg_coupon.Columns[4].Header = AppSettings.resourcemanager.GetString("trQuantity");
+            dg_coupon.Columns[5].Header = AppSettings.resourcemanager.GetString("trRemainQuantity");
+            dg_coupon.Columns[6].Header = AppSettings.resourcemanager.GetString("trvalidity");
 
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
