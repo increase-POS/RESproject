@@ -28,6 +28,7 @@ using Microsoft.Win32;
 using System.Threading;
 using System.Resources;
 using System.Reflection;
+using Restaurant.View.sales;
 
 namespace Restaurant.View.reports.salesReports
 {
@@ -96,16 +97,16 @@ namespace Restaurant.View.reports.salesReports
         ObservableCollection<Agent> comboVendorTemp = new ObservableCollection<Agent>();
         ObservableCollection<User> comboUserTemp = new ObservableCollection<User>();
 
-        //ObservableCollection<Branch> dynamicComboBranches;
-        List<Branch> dynamicComboBranches;
+        ObservableCollection<Branch> dynamicComboBranches;
+        //List<Branch> dynamicComboBranches;
         ObservableCollection<Pos> dynamicComboPoss;
         ObservableCollection<Agent> dynamicComboVendors;
         ObservableCollection<User> dynamicComboUsers;
 
         Branch branchModel = new Branch();
-        //Pos posModel = new Pos();
-        //Agent agentModel = new Agent();
-        //User userModel = new User();
+        Pos posModel = new Pos();
+        Agent agentModel = new Agent();
+        User userModel = new User();
 
         ObservableCollection<int> selectedBranchId = new ObservableCollection<int>();
         ObservableCollection<int> selectedPosId = new ObservableCollection<int>();
@@ -116,11 +117,8 @@ namespace Restaurant.View.reports.salesReports
         {//load
             try
             {
-               
                 HelpClass.StartAwait(grid_main);
 
-                //Invoices = await statisticModel.GetSaleitemcount((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
-                
                 #region translate
                 if (AppSettings.lang.Equals("en"))
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -135,20 +133,7 @@ namespace Restaurant.View.reports.salesReports
                 chk_allServices.IsChecked = true;
 
                 btn_branch_Click(btn_branch , null);
-                //comboBranches = await branchModel.GetAllWithoutMain("b");
-                //comboPoss = await posModel.Get();
-                //comboVendors = await agentModel.Get("c");
-                //comboUsers = await userModel.Get();
-
-                //dynamicComboBranches = new ObservableCollection<Branch>(comboBranches);
-                //dynamicComboPoss = new ObservableCollection<Pos>(comboPoss);
-                //dynamicComboVendors = new ObservableCollection<Agent>(comboVendors);
-                //dynamicComboUsers = new ObservableCollection<User>(comboUsers);
-
-                //fillComboBranches();
-
-                //chk_invoice.IsChecked = true;
-
+               
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_pos.Tag.ToString());
                
                 HelpClass.EndAwait(grid_main);
@@ -288,23 +273,23 @@ namespace Restaurant.View.reports.salesReports
             }
         }
 
-        IEnumerable<ItemTransferInvoice> invLst = null;
-        private IEnumerable<ItemTransferInvoice> fillList(IEnumerable<ItemTransferInvoice> Invoices, CheckBox chkInvoice, CheckBox chkReturn, CheckBox chkDraft
-           , DatePicker startDate, DatePicker endDate, TimePicker startTime, TimePicker endTime)
-        {
-            fillDates(startDate, endDate, startTime, endTime);
-            var result = Invoices.Where(x => (
+        //IEnumerable<ItemTransferInvoice> invLst = null;
+        //private IEnumerable<ItemTransferInvoice> fillList(IEnumerable<ItemTransferInvoice> Invoices, CheckBox chkInvoice, CheckBox chkReturn, CheckBox chkDraft
+        //   , DatePicker startDate, DatePicker endDate, TimePicker startTime, TimePicker endTime)
+        //{
+        //    fillDates(startDate, endDate, startTime, endTime);
+        //    var result = Invoices.Where(x => (
 
-               ((chkDraft.IsChecked == true ? (x.invType == "sd" || x.invType == "sbd") : false)
-                          || (chkReturn.IsChecked == true ? (x.invType == "sb") : false)
-                          || (chkInvoice.IsChecked == true ? (x.invType == "s") : false))
-                      && (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
-                      && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true)
-                      && (startTime.SelectedTime != null ? x.invDate >= startTime.SelectedTime : true)
-                      && (endTime.SelectedTime != null ? x.invDate <= endTime.SelectedTime : true)));
-            invLst = result;
-            return result;
-        }
+        //       ((chkDraft.IsChecked == true ? (x.invType == "sd" || x.invType == "sbd") : false)
+        //                  || (chkReturn.IsChecked == true ? (x.invType == "sb") : false)
+        //                  || (chkInvoice.IsChecked == true ? (x.invType == "s") : false))
+        //              && (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
+        //              && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true)
+        //              && (startTime.SelectedTime != null ? x.invDate >= startTime.SelectedTime : true)
+        //              && (endTime.SelectedTime != null ? x.invDate <= endTime.SelectedTime : true)));
+        //    invLst = result;
+        //    return result;
+        //}
         IEnumerable<ItemTransferInvoice> invLstRowChart = null;
         private IEnumerable<ItemTransferInvoice> fillRowChartList(IEnumerable<ItemTransferInvoice> Invoices, CheckBox chkInvoice, CheckBox chkReturn, CheckBox chkDraft
           , DatePicker startDate, DatePicker endDate, TimePicker startTime, TimePicker endTime)
@@ -385,53 +370,45 @@ namespace Restaurant.View.reports.salesReports
             InvoicesQuery = Invoices
                .Where(s =>
             (
-             s.invNumber.ToLower().Contains(searchText)
-            //||
-            //s.branchName.ToLower().Contains(searchText)
-            //||
-            //s.categoryName.ToLower().Contains(searchText)
-            //||
-            //s.itemName.ToLower().Contains(searchText)
-            //||
-            //s.status.ToLower().Contains(searchText)
-            //||
-            //(s.tagName != null ? s.tagName.ToLower().Contains(searchText) : false)
+            s.invNumber.ToLower().Contains(searchText)
+            ||
+            (s.branchCreatorName != null ? s.branchCreatorName.ToLower().Contains(searchText) : false)
+            ||
+            (s.posName      != null ? s.posName.ToLower().Contains(searchText)      : false)//////?????
+            ||
+            (s.agentName    != null ? s.agentName.ToLower().Contains(searchText)    : false)//////?????
+            ||
+            (s.agentCompany != null ? s.agentCompany.ToLower().Contains(searchText) : false)//////?????
+            ||
+            (s.uUserAccName != null ? s.uUserAccName.ToLower().Contains(searchText) : false)//////?????
             )
             &&
             //branch
-            (cb_branches.SelectedIndex != -1 ? s.branchCreatorId == Convert.ToInt32(cb_branches.SelectedValue) : true)
+            (cb_branches.SelectedIndex != -1    ? s.branchCreatorId == Convert.ToInt32(cb_branches.SelectedValue) : true)
             &&
             //service
-            (cb_sevices.SelectedIndex != -1 ? s.invType == cb_sevices.SelectedValue.ToString() : true)
+            (cb_sevices.SelectedIndex != -1     ? s.invType == cb_sevices.SelectedValue.ToString() : true)
             &&
             //start date
-            (dp_startDate.SelectedDate != null ? s.updateDate >= dp_startDate.SelectedDate : true)
+            (dp_startDate.SelectedDate != null  ? s.updateDate >= dp_startDate.SelectedDate : true)
             &&
             //end date
-            (dp_endDate.SelectedDate != null ? s.updateDate <= dp_endDate.SelectedDate : true)
+            (dp_endDate.SelectedDate != null    ? s.updateDate <= dp_endDate.SelectedDate : true)
+            && 
+            //start time
+            (dt_startTime.SelectedTime != null  ? s.updateDate >= dt_startTime.SelectedTime : true)///???
+            && 
+            //end time
+            (dt_endTime.SelectedTime != null    ? s.updateDate <= dt_endTime.SelectedTime : true)///???
             ).ToList();
 
             RefreshInvoicesView();
-
-            //fillColumnChart();
-            //fillPieChart();
-            //fillRowChart();
         }
 
         void RefreshInvoicesView()
         {
             dgInvoice.ItemsSource = InvoicesQuery;
             txt_count.Text = InvoicesQuery.Count().ToString();
-        }
-
-        async Task<IEnumerable<ItemTransferInvoice>> RefreshInvoicesList()
-        {
-            Invoices = await statisticModel.GetSaleitemcount((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
-            return Invoices;
-        }
-        public void fillEvent()
-        {
-            //itemTransfers = fillList(Invoices, chk_invoice, chk_return, chk_drafs, dp_startDate, dp_endDate, dt_startTime, dt_endTime).Where(j => (selectedBranchId.Count != 0 ? selectedBranchId.Contains((int)j.branchCreatorId) : true));
 
             //hide tax column if region tax equals to 0
             if (!AppSettings.invoiceTax_bool.Value)
@@ -439,27 +416,31 @@ namespace Restaurant.View.reports.salesReports
             else
                 col_tax.Visibility = Visibility.Visible;
 
-            dgInvoice.ItemsSource = itemTransfers;
-            txt_count.Text = dgInvoice.Items.Count.ToString();
-
             ObservableCollection<int> selected = new ObservableCollection<int>();
-            //if (selectedTab == 0)
-            //    selected = selectedBranchId;
-            //if (selectedTab == 1)
-            //    selected = selectedPosId;
-            //if (selectedTab == 2)
-            //    selected = selectedVendorsId;
-            //if (selectedTab == 3)
-            //    selected = selectedUserId;
+            if (selectedTab == 0)
+                selected = selectedBranchId;
+            if (selectedTab == 1)
+                selected = selectedPosId;
+            if (selectedTab == 2)
+                selected = selectedVendorsId;
+            if (selectedTab == 3)
+                selected = selectedUserId;
 
-            fillPieChart(cb_branches, selected);
-            fillColumnChart(cb_branches, selected);
-            fillRowChart(cb_branches, selected);
+            fillColumnChart(selected);
+            fillPieChart(selected);
+            fillRowChart(selected);
         }
 
+        async Task<IEnumerable<ItemTransferInvoice>> RefreshInvoicesList()
+        {
+            Invoices = await statisticModel.GetSaleitemcount((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
+            return Invoices;
+        }
+       
         #endregion
       
         #region Events
+
         #region tabControl
         private void hidAllColumns()
         {
@@ -513,12 +494,11 @@ namespace Restaurant.View.reports.salesReports
             }
         }
 
-        private void btn_pos_Click(object sender, RoutedEventArgs e)
+        private async void btn_pos_Click(object sender, RoutedEventArgs e)
         {//pos
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trPosHint"));
@@ -542,26 +522,23 @@ namespace Restaurant.View.reports.salesReports
                 col_tax.Visibility = Visibility.Visible;
                 col_type.Visibility = Visibility.Visible;
 
+                await Search();
                 fillComboPos();
-                fillEvent();
-
                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
-        private void btn_vendors_Click(object sender, RoutedEventArgs e)
+        private async void btn_vendors_Click(object sender, RoutedEventArgs e)
         {//vendor
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trVendorHint"));
@@ -586,26 +563,23 @@ namespace Restaurant.View.reports.salesReports
                 col_tax.Visibility = Visibility.Visible;
                 col_type.Visibility = Visibility.Visible;
 
+                await Search();
                 fillComboVendors();
-                fillEvent();
 
-               
-                    HelpClass.EndAwait(grid_main);
+               HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
-        private void btn_users_Click(object sender, RoutedEventArgs e)
+        private async void btn_users_Click(object sender, RoutedEventArgs e)
         {//users
             try
             {
-               
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trUserHint"));
@@ -629,83 +603,34 @@ namespace Restaurant.View.reports.salesReports
                 col_tax.Visibility = Visibility.Visible;
                 col_type.Visibility = Visibility.Visible;
 
+                await Search();
                 fillComboUsers();
-                fillEvent();
 
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
         #endregion
 
-        #region refreshButton
         private void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-               
                 HelpClass.StartAwait(grid_main);
 
                 cb_branches.SelectedItem = null;
+                chk_allBranches.IsChecked = false;
+                cb_sevices.SelectedItem = null;
+                chk_allServices.IsChecked = false;
                 dp_endDate.SelectedDate = null;
                 dp_startDate.SelectedDate = null;
                 dt_startTime.SelectedTime = null;
                 dt_endTime.SelectedTime = null;
-                chk_allBranches.IsChecked = false;
-                cb_branches.IsEnabled = true;
-
-                //if (selectedTab == 0)
-                //{
-                //    for (int i = 0; i < comboBrachTemp.Count; i++)
-                //    {
-                //        dynamicComboBranches.Add(comboBrachTemp.Skip(i).FirstOrDefault());
-                //    }
-                //    comboBrachTemp.Clear();
-                //    stk_tagsBranches.Children.Clear();
-                //    selectedBranchId.Clear();
-                //}
-
-                //else if (selectedTab == 1)
-                //{
-                //    for (int i = 0; i < comboPosTemp.Count; i++)
-                //    {
-                //        dynamicComboPoss.Add(comboPosTemp.Skip(i).FirstOrDefault());
-                //    }
-                //    comboPosTemp.Clear();
-                //    stk_tagsPos.Children.Clear();
-                //    selectedPosId.Clear();
-                //}
-
-                //else if (selectedTab == 2)
-                //{
-                //    for (int i = 0; i < comboVendorTemp.Count; i++)
-                //    {
-                //        dynamicComboVendors.Add(comboVendorTemp.Skip(i).FirstOrDefault());
-                //    }
-                //    comboVendorTemp.Clear();
-                //    stk_tagsVendors.Children.Clear();
-                //    selectedVendorsId.Clear();
-                //}
-
-                //else if (selectedTab == 3)
-                //{
-                //    for (int i = 0; i < comboUserTemp.Count; i++)
-                //    {
-                //        dynamicComboUsers.Add(comboUserTemp.Skip(i).FirstOrDefault());
-                //    }
-                //    comboUserTemp.Clear();
-                //    stk_tagsUsers.Children.Clear();
-                //    selectedUserId.Clear();
-                //}
-
-                fillEvent();
 
                 txt_search.Text = "";
                
@@ -717,87 +642,16 @@ namespace Restaurant.View.reports.salesReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        #endregion
-
-        #region branchesEvents
-
-        private void fillEventsCall(object sender)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                fillEvent();
-               
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void chk_Checked(object sender, RoutedEventArgs e)
-        {
-            fillEventsCall(sender);
-        }
 
         private void dp_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            fillEventsCall(sender);
+            callSearch(sender);
         }
 
         private void dt_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
         {
-            fillEventsCall(sender);
+            callSearch(sender);
         }
-
-        #endregion
-
-        #region settings
-        private void btn_settings_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-               
-                HelpClass.StartAwait(grid_main);
-                List<string> Headers = new List<string>();
-                List<string> Headers1 = new List<string>();
-                foreach (var item in dgInvoice.Columns)
-                {
-                    Headers.Add(item.Header.ToString());
-                }
-
-                winControlPanel win = new winControlPanel(Headers);
-
-                if (win.ShowDialog() == false)
-                {
-                    Headers1.Clear();
-                    Headers1.AddRange(win.newHeaderResult);
-                }
-                for (int i = 0; i < Headers1.Count; i++)
-                {
-                    if (dgInvoice.Columns[i].Header.ToString() == Headers1[i])
-                    {
-                        dgInvoice.Columns[i].Visibility = Visibility.Visible;
-                    }
-                    else
-                        dgInvoice.Columns[i].Visibility = Visibility.Hidden;
-                }
-
-               
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-               
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        #endregion
 
         private async void Chk_allBranches_Checked(object sender, RoutedEventArgs e)
         {
@@ -839,7 +693,6 @@ namespace Restaurant.View.reports.salesReports
         }
         private async void cb_branches_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //callSearch(sender);
             try
             {
 
@@ -868,146 +721,81 @@ namespace Restaurant.View.reports.salesReports
                             dynamicComboBranches.Remove(selectedBranch);
                         }
                     }
-                    //else if (selectedTab == 1)
-                    //{
-                    //    if (stk_tagsPos.Children.Count < 5)
-                    //    {
-                    //        selectedPos = cb_branches.SelectedItem as Pos;
-                    //        var b = new MaterialDesignThemes.Wpf.Chip()
-                    //        {
-                    //            Content = selectedPos.name,
-                    //            Name = "btn" + selectedPos.posId.ToString(),
-                    //            IsDeletable = true,
-                    //            Margin = new Thickness(5, 0, 5, 0)
-                    //        };
-                    //        b.DeleteClick += Chip_OnDeleteClick;
-                    //        stk_tagsPos.Children.Add(b);
-                    //        comboPosTemp.Add(selectedPos);
-                    //        selectedPosId.Add(selectedPos.posId);
-                    //        dynamicComboPoss.Remove(selectedPos);
-                    //    }
-                    //}
-                    //else if (selectedTab == 2)
-                    //{
-                    //    if (stk_tagsVendors.Children.Count < 5)
-                    //    {
-                    //        selectedVendor = cb_branches.SelectedItem as Agent;
-                    //        var b = new MaterialDesignThemes.Wpf.Chip()
-                    //        {
-                    //            Content = selectedVendor.name,
-                    //            Name = "btn" + selectedVendor.agentId.ToString(),
-                    //            IsDeletable = true,
-                    //            Margin = new Thickness(5, 0, 5, 0)
-                    //        };
-                    //        b.DeleteClick += Chip_OnDeleteClick;
-                    //        stk_tagsVendors.Children.Add(b);
-                    //        comboVendorTemp.Add(selectedVendor);
-                    //        selectedVendorsId.Add(selectedVendor.agentId);
-                    //        dynamicComboVendors.Remove(selectedVendor);
-                    //    }
-                    //}
-                    //else if (selectedTab == 3)
-                    //{
-                    //    if (stk_tagsUsers.Children.Count < 5)
-                    //    {
-                    //        selectedUser = cb_branches.SelectedItem as User;
-                    //        var b = new MaterialDesignThemes.Wpf.Chip()
-                    //        {
-                    //            Content = selectedUser.username,
-                    //            Name = "btn" + selectedUser.userId.ToString(),
-                    //            IsDeletable = true,
-                    //            Margin = new Thickness(5, 0, 5, 0)
-                    //        };
-                    //        b.DeleteClick += Chip_OnDeleteClick;
-                    //        stk_tagsUsers.Children.Add(b);
-                    //        comboUserTemp.Add(selectedUser);
-                    //        selectedUserId.Add(selectedUser.userId);
-                    //        dynamicComboUsers.Remove(selectedUser);
-                    //    }
-                    //}
-                    await Search();
+                    if (selectedTab == 1)
+                    {
+                        if (stk_tagsPos.Children.Count < 5)
+                        {
+                            int pId = (int)cb_branches.SelectedValue;
 
+                            selectedPos = await posModel.getById(pId);
+                            var p = new MaterialDesignThemes.Wpf.Chip()
+                            {
+                                Content = selectedPos.name,
+                                Name = "btn" + selectedPos.posId.ToString(),
+                                IsDeletable = true,
+                                Margin = new Thickness(5, 0, 5, 0)
+                            };
+                            p.DeleteClick += Chip_OnDeleteClick;
+                            stk_tagsPos.Children.Add(p);
+                            comboPosTemp.Add(selectedPos);
+                            selectedPosId.Add(selectedPos.posId);
+                            dynamicComboPoss.Remove(selectedPos);
+                        }
+                    }
+                    if (selectedTab == 2)
+                    {
+                        if (stk_tagsVendors.Children.Count < 5)
+                        {
+                            int aId = (int)cb_branches.SelectedValue;
+
+                            selectedVendor = await agentModel.getAgentById(aId);
+                            var a = new MaterialDesignThemes.Wpf.Chip()
+                            {
+                                Content = selectedVendor.name,
+                                Name = "btn" + selectedVendor.agentId.ToString(),
+                                IsDeletable = true,
+                                Margin = new Thickness(5, 0, 5, 0)
+                            };
+                            a.DeleteClick += Chip_OnDeleteClick;
+                            stk_tagsVendors.Children.Add(a);
+                            comboVendorTemp.Add(selectedVendor);
+                            selectedVendorsId.Add(selectedVendor.agentId);
+                            dynamicComboVendors.Remove(selectedVendor);
+                        }
+                    }
+                    if (selectedTab == 3)
+                    {
+                        if (stk_tagsUsers.Children.Count < 5)
+                        {
+                            int uId = (int)cb_branches.SelectedValue;
+
+                            selectedUser = await userModel.getUserById(uId);
+                            var u = new MaterialDesignThemes.Wpf.Chip()
+                            {
+                                Content = selectedUser.name,
+                                Name = "btn" + selectedUser.userId.ToString(),
+                                IsDeletable = true,
+                                Margin = new Thickness(5, 0, 5, 0)
+                            };
+                            u.DeleteClick += Chip_OnDeleteClick;
+                            stk_tagsUsers.Children.Add(u);
+                            comboUserTemp.Add(selectedUser);
+                            selectedUserId.Add(selectedUser.userId);
+                            dynamicComboUsers.Remove(selectedUser);
+                        }
                     }
 
-                    HelpClass.EndAwait(grid_main);
+                    await Search();
+
                 }
+
+                HelpClass.EndAwait(grid_main);
+            }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-        }
-
-        bool isClickedAllBranches = false;
-        private void chk_allBranches_Click(object sender, RoutedEventArgs e)
-        {
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
-
-            //    if (!isClickedAllBranches)
-            //    {
-            //        isClickedAllBranches = true;
-            //        cb_branches.SelectedItem = null;
-            //        cb_branches.IsEnabled = false;
-            //        if (selectedTab == 1)
-            //        {
-            //            for (int i = 0; i < comboBrachTemp.Count; i++)
-            //            {
-            //                dynamicComboBranches.Add(comboBrachTemp.Skip(i).FirstOrDefault());
-            //            }
-            //            comboBrachTemp.Clear();
-            //            stk_tagsBranches.Children.Clear();
-            //            selectedBranchId.Clear();
-            //        }
-            //        else if (selectedTab == 1)
-            //        {
-            //            for (int i = 0; i < comboPosTemp.Count; i++)
-            //            {
-            //                dynamicComboPoss.Add(comboPosTemp.Skip(i).FirstOrDefault());
-            //            }
-            //            comboPosTemp.Clear();
-            //            stk_tagsPos.Children.Clear();
-            //            selectedPosId.Clear();
-            //        }
-            //        else if (selectedTab == 2)
-            //        {
-            //            for (int i = 0; i < comboVendorTemp.Count; i++)
-            //            {
-            //                dynamicComboVendors.Add(comboVendorTemp.Skip(i).FirstOrDefault());
-            //            }
-            //            comboVendorTemp.Clear();
-            //            stk_tagsVendors.Children.Clear();
-            //            selectedVendorsId.Clear();
-            //        }
-            //        else if (selectedTab == 3)
-            //        {
-            //            for (int i = 0; i < comboUserTemp.Count; i++)
-            //            {
-            //                dynamicComboUsers.Add(comboUserTemp.Skip(i).FirstOrDefault());
-            //            }
-            //            comboUserTemp.Clear();
-            //            stk_tagsUsers.Children.Clear();
-            //            selectedUserId.Clear();
-            //        }
-            //    }
-            //    else
-            //    {
-            //        isClickedAllBranches = false;
-            //        cb_branches.IsEnabled = true;
-            //    }
-            //    fillEvent();
-
-
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
         }
 
         private async void Chk_allServices_Checked(object sender, RoutedEventArgs e)
@@ -1053,86 +841,17 @@ namespace Restaurant.View.reports.salesReports
             callSearch(sender);
         }
 
-        private void Chk_allServices_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
         IEnumerable<ItemTransferInvoice> itemTransfers = null;
 
         private void Txt_search_TextChanged(object sender, TextChangedEventArgs e)
         {//search
-            //try
-            //{
-
-            //    HelpClass.StartAwait(grid_main);
-
-            //    if (selectedTab == 0)
-            //    {
-            //        itemTransfers = invLst
-            //            .Where(j => (selectedBranchId.Count != 0 ? selectedBranchId.Contains((int)j.branchCreatorId) : true));
-
-            //        dgInvoice.ItemsSource = itemTransfers
-            //            .Where(s =>
-            //            (s.branchCreatorName.Contains(txt_search.Text) ||
-            //             s.invNumber.Contains(txt_search.Text)
-            //             ));
-            //    }
-            //    else if (selectedTab == 1)
-            //    {
-            //        itemTransfers = invLst
-            //            .Where(j => (selectedPosId.Count != 0 ? selectedPosId.Contains((int)j.posId) : true));
-
-            //        dgInvoice.ItemsSource = itemTransfers
-            //            .Where(s => (s.branchCreatorName.Contains(txt_search.Text) ||
-            //           s.posName.Contains(txt_search.Text) ||
-            //           s.invNumber.Contains(txt_search.Text)
-            //          ));
-            //    }
-
-            //    else if (selectedTab == 2)
-            //    {
-            //        itemTransfers = invLst
-            //        .Where(j => (selectedVendorsId.Count != 0 ? selectedVendorsId.Contains((int)j.agentId) : true));
-
-            //        dgInvoice.ItemsSource = itemTransfers
-            //            .Where(s => (s.branchCreatorName.Contains(txt_search.Text) ||
-            //           s.agentName.Contains(txt_search.Text) ||
-            //           s.agentCompany.Contains(txt_search.Text) ||
-            //           s.invNumber.Contains(txt_search.Text)
-            //           ));
-            //    }
-
-            //    else if (selectedTab == 3)
-            //    {
-            //        itemTransfers = invLst
-            //        .Where(j => (selectedUserId.Count != 0 ? selectedUserId.Contains((int)j.updateUserId) : true));
-
-            //        dgInvoice.ItemsSource = itemTransfers
-            //            .Where(s => (s.branchCreatorName.Contains(txt_search.Text) ||
-            //           s.posName.Contains(txt_search.Text) ||
-            //           s.uUserAccName.Contains(txt_search.Text) ||
-            //           s.invNumber.Contains(txt_search.Text)
-            //          ));
-            //    }
-
-            //    txt_count.Text = dgInvoice.Items.Count.ToString();
-
-
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            callSearch(sender);
         }
         Invoice invoice;
         private async void DgInvoice_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
+        {//double click
             try
             {
-
                 HelpClass.StartAwait(grid_main);
                 invoice = new Invoice();
                 if (dgInvoice.SelectedIndex != -1)
@@ -1140,21 +859,18 @@ namespace Restaurant.View.reports.salesReports
                     ItemTransferInvoice item = dgInvoice.SelectedItem as ItemTransferInvoice;
                     if (item.invoiceId > 0)
                     {
-                        /*
+                        Invoice invoice = new Invoice();
                         invoice = await invoice.GetByInvoiceId(item.invoiceId);
-                        MainWindow.mainWindow.BTN_sales_Click(MainWindow.mainWindow.btn_sales, null);
-                        uc_sales.Instance.UserControl_Loaded(null, null);
-                        uc_sales.Instance.Btn_receiptInvoice_Click(uc_sales.Instance.btn_reciptInvoice, null);
-                        uc_receiptInvoice.Instance.UserControl_Loaded(null, null);
-                        uc_receiptInvoice._InvoiceType = invoice.invType;
-                        uc_receiptInvoice.Instance.invoice = invoice;
-                        uc_receiptInvoice.isFromReport = true;
-                        if (item.archived == 0)
-                            uc_receiptInvoice.archived = false;
-                        else
-                            uc_receiptInvoice.archived = true;
-                        await uc_receiptInvoice.Instance.fillInvoiceInputs(invoice);
-                        */
+
+                        MainWindow.mainWindow.Btn_sales_Click(MainWindow.mainWindow.btn_sales, null);
+                        MainWindow.mainWindow.initializationMainTrack("invoiceSales");/////???????????
+                        MainWindow.mainWindow.grid_main.Children.Clear();
+                        MainWindow.mainWindow.grid_main.Children.Add(uc_diningHall.Instance);
+                        uc_diningHall.Instance.invoice = invoice;
+                        uc_diningHall.Instance._InvoiceType = invoice.invType;
+                        uc_diningHall.Instance.changeInvType();
+                        uc_diningHall.isFromReport = true;
+                        await uc_diningHall.Instance.fillInvoiceInputs(invoice);
                     }
                 }
 
@@ -1162,463 +878,470 @@ namespace Restaurant.View.reports.salesReports
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
-        private void Chip_OnDeleteClick(object sender, RoutedEventArgs e)
+        private async void Chip_OnDeleteClick(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
-            //    HelpClass.StartAwait(grid_main);
+                var currentChip = (Chip)sender;
+                if (selectedTab == 0)
+                {
+                    stk_tagsBranches.Children.Remove(currentChip);
+                    var m = comboBrachTemp.Where(j => j.branchId == (Convert.ToInt32(currentChip.Name.Remove(0, 3))));
+                    dynamicComboBranches.Add(m.FirstOrDefault());
+                    selectedBranchId.Remove(Convert.ToInt32(currentChip.Name.Remove(0, 3)));
+                    if (selectedBranchId.Count == 0)
+                    {
+                        cb_branches.SelectedItem = null;
+                    }
+                }
+                else if (selectedTab == 1)
+                {
+                    stk_tagsPos.Children.Remove(currentChip);
+                    var m = comboPosTemp.Where(j => j.posId == (Convert.ToInt32(currentChip.Name.Remove(0, 3))));
+                    dynamicComboPoss.Add(m.FirstOrDefault());
+                    selectedPosId.Remove(Convert.ToInt32(currentChip.Name.Remove(0, 3)));
+                    if (selectedPosId.Count == 0)
+                    {
+                        cb_branches.SelectedItem = null;
+                    }
+                }
+                else if (selectedTab == 2)
+                {
+                    stk_tagsVendors.Children.Remove(currentChip);
+                    var m = comboVendorTemp.Where(j => j.agentId == (Convert.ToInt32(currentChip.Name.Remove(0, 3))));
+                    dynamicComboVendors.Add(m.FirstOrDefault());
+                    selectedVendorsId.Remove(Convert.ToInt32(currentChip.Name.Remove(0, 3)));
+                    if (selectedVendorsId.Count == 0)
+                    {
+                        cb_branches.SelectedItem = null;
+                    }
+                }
+                else if (selectedTab == 3)
+                {
+                    stk_tagsUsers.Children.Remove(currentChip);
+                    var m = comboUserTemp.Where(j => j.userId == (Convert.ToInt32(currentChip.Name.Remove(0, 3))));
+                    dynamicComboUsers.Add(m.FirstOrDefault());
+                    selectedUserId.Remove(Convert.ToInt32(currentChip.Name.Remove(0, 3)));
+                    if (selectedUserId.Count == 0)
+                    {
+                        cb_branches.SelectedItem = null;
+                    }
+                }
+                await Search();
 
-            //    var currentChip = (Chip)sender;
-            //    if (selectedTab == 0)
-            //    {
-            //        stk_tagsBranches.Children.Remove(currentChip);
-            //        var m = comboBrachTemp.Where(j => j.branchId == (Convert.ToInt32(currentChip.Name.Remove(0, 3))));
-            //        dynamicComboBranches.Add(m.FirstOrDefault());
-            //        selectedBranchId.Remove(Convert.ToInt32(currentChip.Name.Remove(0, 3)));
-            //        if (selectedBranchId.Count == 0)
-            //        {
-            //            cb_branches.SelectedItem = null;
-            //        }
-            //    }
-            //    else if (selectedTab == 1)
-            //    {
-            //        stk_tagsPos.Children.Remove(currentChip);
-            //        var m = comboPosTemp.Where(j => j.posId == (Convert.ToInt32(currentChip.Name.Remove(0, 3))));
-            //        dynamicComboPoss.Add(m.FirstOrDefault());
-            //        selectedPosId.Remove(Convert.ToInt32(currentChip.Name.Remove(0, 3)));
-            //        if (selectedPosId.Count == 0)
-            //        {
-            //            cb_branches.SelectedItem = null;
-            //        }
-            //    }
-            //    else if (selectedTab == 2)
-            //    {
-            //        stk_tagsVendors.Children.Remove(currentChip);
-            //        var m = comboVendorTemp.Where(j => j.agentId == (Convert.ToInt32(currentChip.Name.Remove(0, 3))));
-            //        dynamicComboVendors.Add(m.FirstOrDefault());
-            //        selectedVendorsId.Remove(Convert.ToInt32(currentChip.Name.Remove(0, 3)));
-            //        if (selectedVendorsId.Count == 0)
-            //        {
-            //            cb_branches.SelectedItem = null;
-            //        }
-            //    }
-            //    else if (selectedTab == 3)
-            //    {
-            //        stk_tagsUsers.Children.Remove(currentChip);
-            //        var m = comboUserTemp.Where(j => j.userId == (Convert.ToInt32(currentChip.Name.Remove(0, 3))));
-            //        dynamicComboUsers.Add(m.FirstOrDefault());
-            //        selectedUserId.Remove(Convert.ToInt32(currentChip.Name.Remove(0, 3)));
-            //        if (selectedUserId.Count == 0)
-            //        {
-            //            cb_branches.SelectedItem = null;
-            //        }
-            //    }
-            //    fillEvent();
-
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
+        
         #endregion
 
         #region charts
-        private void fillPieChart(ComboBox comboBox, ObservableCollection<int> stackedButton)
+        private void fillPieChart(ObservableCollection<int> stackedButton)
         {
-            //List<string> titles = new List<string>();
-            //IEnumerable<int> x = null;
+            List<string> titles = new List<string>();
+            IEnumerable<int> x = null;
 
-            //var temp = invLst;
+            var temp = InvoicesQuery;
 
-            //if (selectedTab == 0)
-            //{
-            //    temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((int)j.branchCreatorId) : true));
-            //    var titleTemp = temp.GroupBy(m => m.branchCreatorName);
-            //    titles.AddRange(titleTemp.Select(jj => jj.Key));
-            //    var result = temp.GroupBy(s => s.branchCreatorId).Select(s => new { branchCreatorId = s.Key, count = s.Count() });
-            //    x = result.Select(m => m.count);
-            //}
-            //else if (selectedTab == 1)
-            //{
-            //    temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((int)j.posId) : true));
-            //    var titleTemp = temp.GroupBy(m => new { m.posName, m.posId });
-            //    titles.AddRange(titleTemp.Select(jj => jj.Key.posName));
-            //    var result = temp.GroupBy(s => s.posId).Select(s => new { posId = s.Key, count = s.Count() });
-            //    x = result.Select(m => m.count);
-            //}
-            //else if (selectedTab == 2)
-            //{
-            //    temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((int)j.agentId) : true));
-            //    var titleTemp = temp.GroupBy(m => m.agentName);
-            //    titles.AddRange(titleTemp.Select(jj => jj.Key));
-            //    var result = temp.GroupBy(s => s.agentId).Select(s => new { agentId = s.Key, count = s.Count() });
-            //    x = result.Select(m => m.count);
-            //}
-            //else if (selectedTab == 3)
-            //{
-            //    temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((int)j.updateUserId) : true));
-            //    var titleTemp = temp.GroupBy(m => m.cUserAccName);
-            //    titles.AddRange(titleTemp.Select(jj => jj.Key));
-            //    var result = temp.GroupBy(s => s.updateUserId).Select(s => new { updateUserId = s.Key, count = s.Count() });
-            //    x = result.Select(m => m.count);
-            //}
+            if (selectedTab == 0)
+            {
+                temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((int)j.branchCreatorId) : true)).ToList();
+                var titleTemp = temp.GroupBy(m => m.branchCreatorName);
+                titles.AddRange(titleTemp.Select(jj => jj.Key));
+                var result = temp.GroupBy(s => s.branchCreatorId).Select(s => new { branchCreatorId = s.Key, count = s.Count() });
+                x = result.Select(m => m.count);
+            }
+            else if (selectedTab == 1)
+            {
+                temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((int)j.posId) : true)).ToList();
+                var titleTemp = temp.GroupBy(m => new { m.posName, m.posId });
+                titles.AddRange(titleTemp.Select(jj => jj.Key.posName));
+                var result = temp.GroupBy(s => s.posId).Select(s => new { posId = s.Key, count = s.Count() });
+                x = result.Select(m => m.count);
+            }
+            else if (selectedTab == 2)
+            {
+                temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((int)j.agentId) : true)).ToList();
+                var titleTemp = temp.GroupBy(m => m.agentName);
+                titles.AddRange(titleTemp.Select(jj => jj.Key));
+                var result = temp.GroupBy(s => s.agentId).Select(s => new { agentId = s.Key, count = s.Count() });
+                x = result.Select(m => m.count);
+            }
+            else if (selectedTab == 3)
+            {
+                temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((int)j.updateUserId) : true)).ToList();
+                var titleTemp = temp.GroupBy(m => m.cUserAccName);
+                titles.AddRange(titleTemp.Select(jj => jj.Key));
+                var result = temp.GroupBy(s => s.updateUserId).Select(s => new { updateUserId = s.Key, count = s.Count() });
+                x = result.Select(m => m.count);
+            }
 
-            //SeriesCollection piechartData = new SeriesCollection();
-            //int xCount = 6;
-            //if (x.Count() <= 6) xCount = x.Count();
-            //for (int i = 0; i < xCount; i++)
-            //{
-            //    List<int> final = new List<int>();
+            SeriesCollection piechartData = new SeriesCollection();
+            int xCount = 6;
+            if (x.Count() <= 6) xCount = x.Count();
+            for (int i = 0; i < xCount; i++)
+            {
+                List<int> final = new List<int>();
 
-            //    final.Add(x.ToList().Skip(i).FirstOrDefault());
-            //    piechartData.Add(
-            //      new PieSeries
-            //      {
-            //          Values = final.AsChartValues(),
-            //          Title = titles.Skip(i).FirstOrDefault(),
-            //          DataLabels = true,
-            //      }
-            //  );
-            //}
-            //if (x.Count() > 6)
-            //{
-            //    int finalSum = 0;
-            //    for (int i = 6; i < x.Count(); i++)
-            //    {
-            //        finalSum = finalSum + x.ToList().Skip(i).FirstOrDefault();
-            //    }
-            //    if (finalSum != 0)
-            //    {
-            //        List<int> final = new List<int>();
+                final.Add(x.ToList().Skip(i).FirstOrDefault());
+                piechartData.Add(
+                  new PieSeries
+                  {
+                      Values = final.AsChartValues(),
+                      Title = titles.Skip(i).FirstOrDefault(),
+                      DataLabels = true,
+                  }
+              );
+            }
+            if (x.Count() > 6)
+            {
+                int finalSum = 0;
+                for (int i = 6; i < x.Count(); i++)
+                {
+                    finalSum = finalSum + x.ToList().Skip(i).FirstOrDefault();
+                }
+                if (finalSum != 0)
+                {
+                    List<int> final = new List<int>();
 
-            //        final.Add(finalSum);
-            //        piechartData.Add(
-            //          new PieSeries
-            //          {
-            //              Values = final.AsChartValues(),
-            //              Title = AppSettings.resourcemanager.GetString("trOthers"),
-            //              DataLabels = true,
-            //          }
-            //      );
-            //    }
-            //}
-            //chart1.Series = piechartData;
+                    final.Add(finalSum);
+                    piechartData.Add(
+                      new PieSeries
+                      {
+                          Values = final.AsChartValues(),
+                          Title = AppSettings.resourcemanager.GetString("trOthers"),
+                          DataLabels = true,
+                      }
+                  );
+                }
+            }
+            chart1.Series = piechartData;
         }
 
-        private void fillColumnChart(ComboBox comboBox, ObservableCollection<int> stackedButton)
+        private void fillColumnChart(ObservableCollection<int> stackedButton)
         {
             axcolumn.Labels = new List<string>();
             List<string> names = new List<string>();
             IEnumerable<int> x = null;
             IEnumerable<int> y = null;
             IEnumerable<int> z = null;
+           
+            var temp = InvoicesQuery;
+            if (selectedTab == 0)
+            {
+                temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((int)j.branchCreatorId) : true)).ToList();
+                var result = temp.GroupBy(s => s.branchCreatorId).Select(s => new
+                {
+                    branchCreatorId = s.Key,
+                    countP  = s.Where(m => m.invType == "s").Count(),
+                    countPb = s.Where(m => m.invType == "ts").Count(),
+                    countD  = s.Where(m => m.invType == "ss").Count()
+                });
+                x = result.Select(m => m.countP);
+                y = result.Select(m => m.countPb);
+                z = result.Select(m => m.countD);
+                var tempName = temp.GroupBy(s => s.branchCreatorName).Select(s => new
+                {
+                    uUserName = s.Key
+                });
+                names.AddRange(tempName.Select(nn => nn.uUserName));
+            }
+            else if (selectedTab == 1)
+            {
+                temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((int)j.posId) : true)).ToList();
+                var result = temp.GroupBy(s => s.posId).Select(s => new
+                {
+                    posId = s.Key,
+                    countP  = s.Where(m => m.invType == "s").Count(),
+                    countPb = s.Where(m => m.invType == "ts").Count(),
+                    countD  = s.Where(m => m.invType == "ss").Count()
+                });
+                x = result.Select(m => m.countP);
+                y = result.Select(m => m.countPb);
+                z = result.Select(m => m.countD);
+                var tempName = temp.GroupBy(s => s.posName).Select(s => new
+                {
+                    uUserName = s.Key + "/" + s.FirstOrDefault().branchCreatorName
+                });
+                names.AddRange(tempName.Select(nn => nn.uUserName));
+            }
+            else if (selectedTab == 2)
+            {
+                temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((int)j.agentId) : true)).ToList();
+                var result = temp.GroupBy(s => s.agentId).Select(s => new
+                {
+                    agentId = s.Key,
+                    countP  = s.Where(m => m.invType == "s").Count(),
+                    countPb = s.Where(m => m.invType == "ts").Count(),
+                    countD  = s.Where(m => m.invType == "ss").Count()
 
-           // var temp = invLst;
-           // if (selectedTab == 0)
-           // {
-           //     temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((int)j.branchCreatorId) : true));
-           //     var result = temp.GroupBy(s => s.branchCreatorId).Select(s => new
-           //     {
-           //         branchCreatorId = s.Key,
-           //         countP = s.Where(m => m.invType == "s").Count(),
-           //         countPb = s.Where(m => m.invType == "sb").Count(),
-           //         countD = s.Where(m => m.invType == "sd" || m.invType == "sbd").Count()
-           //     });
-           //     x = result.Select(m => m.countP);
-           //     y = result.Select(m => m.countPb);
-           //     z = result.Select(m => m.countD);
-           //     var tempName = temp.GroupBy(s => s.branchCreatorName).Select(s => new
-           //     {
-           //         uUserName = s.Key
-           //     });
-           //     names.AddRange(tempName.Select(nn => nn.uUserName));
-           // }
-           // else if (selectedTab == 1)
-           // {
-           //     temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((int)j.posId) : true));
-           //     var result = temp.GroupBy(s => s.posId).Select(s => new
-           //     {
-           //         posId = s.Key,
-           //         countP = s.Where(m => m.invType == "s").Count(),
-           //         countPb = s.Where(m => m.invType == "sb").Count(),
-           //         countD = s.Where(m => m.invType == "sd" || m.invType == "sbd").Count()
-           //     });
-           //     x = result.Select(m => m.countP);
-           //     y = result.Select(m => m.countPb);
-           //     z = result.Select(m => m.countD);
-           //     var tempName = temp.GroupBy(s => s.posName).Select(s => new
-           //     {
-           //         uUserName = s.Key + "/" + s.FirstOrDefault().branchCreatorName
-           //     });
-           //     names.AddRange(tempName.Select(nn => nn.uUserName));
-           // }
-           // else if (selectedTab == 2)
-           // {
-           //     temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((int)j.agentId) : true));
-           //     var result = temp.GroupBy(s => s.agentId).Select(s => new
-           //     {
-           //         agentId = s.Key,
-           //         countP = s.Where(m => m.invType == "s").Count(),
-           //         countPb = s.Where(m => m.invType == "sb").Count(),
-           //         countD = s.Where(m => m.invType == "sd" || m.invType == "sbd").Count()
+                });
+                x = result.Select(m => m.countP);
+                y = result.Select(m => m.countPb);
+                z = result.Select(m => m.countD);
+                var tempName = temp.GroupBy(s => s.agentName).Select(s => new
+                {
+                    uUserName = s.Key
+                });
+                names.AddRange(tempName.Select(nn => nn.uUserName));
+            }
+            else if (selectedTab == 3)
+            {
+                temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((int)j.updateUserId) : true)).ToList();
+                var result = temp.GroupBy(s => s.updateUserId).Select(s => new
+                {
+                    updateUserId = s.Key,
+                    countP  = s.Where(m => m.invType == "s").Count(),
+                    countPb = s.Where(m => m.invType == "ts").Count(),
+                    countD  = s.Where(m => m.invType == "ss").Count()
 
-           //     });
-           //     x = result.Select(m => m.countP);
-           //     y = result.Select(m => m.countPb);
-           //     z = result.Select(m => m.countD);
-           //     var tempName = temp.GroupBy(s => s.agentName).Select(s => new
-           //     {
-           //         uUserName = s.Key
-           //     });
-           //     names.AddRange(tempName.Select(nn => nn.uUserName));
-           // }
-           // else if (selectedTab == 3)
-           // {
-           //     temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((int)j.updateUserId) : true));
-           //     var result = temp.GroupBy(s => s.updateUserId).Select(s => new
-           //     {
-           //         updateUserId = s.Key,
-           //         countP = s.Where(m => m.invType == "s").Count(),
-           //         countPb = s.Where(m => m.invType == "sb").Count(),
-           //         countD = s.Where(m => m.invType == "sd" || m.invType == "sbd").Count()
+                });
+                x = result.Select(m => m.countP);
+                y = result.Select(m => m.countPb);
+                z = result.Select(m => m.countD);
+                var tempName = temp.GroupBy(s => s.uUserAccName).Select(s => new
+                {
+                    uUserName = s.Key
+                });
+                names.AddRange(tempName.Select(nn => nn.uUserName));
+            }
 
-           //     });
-           //     x = result.Select(m => m.countP);
-           //     y = result.Select(m => m.countPb);
-           //     z = result.Select(m => m.countD);
-           //     var tempName = temp.GroupBy(s => s.uUserAccName).Select(s => new
-           //     {
-           //         uUserName = s.Key
-           //     });
-           //     names.AddRange(tempName.Select(nn => nn.uUserName));
-           // }
+            SeriesCollection columnChartData = new SeriesCollection();
+            List<int> cP = new List<int>();
+            List<int> cPb = new List<int>();
+            List<int> cD = new List<int>();
+            List<string> titles = new List<string>()
+            {
+                AppSettings.resourcemanager.GetString("trDiningHallType"),
+                AppSettings.resourcemanager.GetString("trTakeAway"),
+                AppSettings.resourcemanager.GetString("trSelfService")
+            };
+          
+            int xCount = 6;
+            if (x.Count() <= 6) xCount = x.Count();
 
-           // SeriesCollection columnChartData = new SeriesCollection();
-           // List<int> cP = new List<int>();
-           // List<int> cPb = new List<int>();
-           // List<int> cD = new List<int>();
-           // List<string> titles = new List<string>()
-           // {
-           //     AppSettings.resourcemanager.GetString("trSales"),
-           //     AppSettings.resourcemanager.GetString("trReturned"),
-           //     AppSettings.resourcemanager.GetString("trDraft")
-           // };
+            for (int i = 0; i < xCount; i++)
+            {
+                cP.Add(x.ToList().Skip(i).FirstOrDefault());
+                cPb.Add(y.ToList().Skip(i).FirstOrDefault());
+                cD.Add(z.ToList().Skip(i).FirstOrDefault());
+                axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
+            }
+            if (x.Count() > 6)
+            {
+                int cPSum = 0, cPbSum = 0, cDSum = 0;
+                for (int i = 6; i < x.Count(); i++)
+                {
+                    cPbSum = cPSum + x.ToList().Skip(i).FirstOrDefault();
+                    cPbSum = cPbSum + y.ToList().Skip(i).FirstOrDefault();
+                    cDSum = cDSum + z.ToList().Skip(i).FirstOrDefault();
+                }
+                if (!((cPbSum == 0) && (cPbSum == 0) && (cDSum == 0)))
+                {
+                    cP.Add(cPSum);
+                    cPb.Add(cPbSum);
+                    cD.Add(cDSum);
+                    axcolumn.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
+                }
+            }
+            //3 فوق بعض
+            columnChartData.Add(
+            new StackedColumnSeries
+            {
+                Values = cP.AsChartValues(),
+                Title = titles[0],
+                DataLabels = true,
+            });
+            columnChartData.Add(
+           new StackedColumnSeries
+           {
+               Values = cPb.AsChartValues(),
+               Title = titles[1],
+               DataLabels = true,
+           });
+            columnChartData.Add(
+           new StackedColumnSeries
+           {
+               Values = cD.AsChartValues(),
+               Title = titles[2],
+               DataLabels = true,
+           });
 
-           // int xCount = 6;
-           // if (x.Count() <= 6) xCount = x.Count();
-
-           // for (int i = 0; i < xCount; i++)
-           // {
-           //     cP.Add(x.ToList().Skip(i).FirstOrDefault());
-           //     cPb.Add(y.ToList().Skip(i).FirstOrDefault());
-           //     cD.Add(z.ToList().Skip(i).FirstOrDefault());
-           //     axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
-           // }
-           // if (x.Count() > 6)
-           // {
-           //     int cPSum = 0, cPbSum = 0, cDSum = 0;
-           //     for (int i = 6; i < x.Count(); i++)
-           //     {
-           //         cPbSum = cPSum + x.ToList().Skip(i).FirstOrDefault();
-           //         cPbSum = cPbSum + y.ToList().Skip(i).FirstOrDefault();
-           //         cDSum = cDSum + z.ToList().Skip(i).FirstOrDefault();
-           //     }
-           //     if (!((cPbSum == 0) && (cPbSum == 0) && (cDSum == 0)))
-           //     {
-           //         cP.Add(cPSum);
-           //         cPb.Add(cPbSum);
-           //         cD.Add(cDSum);
-           //         axcolumn.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
-           //     }
-           // }
-           // //3 فوق بعض
-           // columnChartData.Add(
-           // new StackedColumnSeries
-           // {
-           //     Values = cP.AsChartValues(),
-           //     Title = titles[0],
-           //     DataLabels = true,
-           // });
-           // columnChartData.Add(
-           //new StackedColumnSeries
-           //{
-           //    Values = cPb.AsChartValues(),
-           //    Title = titles[1],
-           //    DataLabels = true,
-           //});
-           // columnChartData.Add(
-           //new StackedColumnSeries
-           //{
-           //    Values = cD.AsChartValues(),
-           //    Title = titles[2],
-           //    DataLabels = true,
-           //});
-
-           // DataContext = this;
-           // cartesianChart.Series = columnChartData;
+            DataContext = this;
+            cartesianChart.Series = columnChartData;
         }
 
-        private void fillRowChart(ComboBox comboBox, ObservableCollection<int> stackedButton)
+        private void fillRowChart(ObservableCollection<int> stackedButton)
+        {//////?????????????????????
+            MyAxis.Labels = new List<string>();
+            List<string> names = new List<string>();
+            IEnumerable<decimal> sTemp = null;
+            IEnumerable<decimal> tsTemp = null;
+            IEnumerable<decimal> ssTemp = null;
+            IEnumerable<decimal> resultTemp = null;
+
+            var temp = InvoicesQuery;
+            if (selectedTab == 0)
+            {
+                temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((int)j.branchCreatorId) : true)).ToList();
+                var result = temp.GroupBy(s => s.branchCreatorId).Select(s => new
+                {
+                    branchCreatorId = s.Key,
+                    totals = s.Where(x => x.invType == "s").Sum(x => x.totalNet),
+                    totalts = s.Where(x => x.invType == "ts").Sum(x => x.totalNet),
+                    totalss = s.Where(x => x.invType == "ss").Sum(x => x.totalNet)
+                }
+
+             );
+                //var resultTotal = result.Select(x => new { x.branchCreatorId, total = x.totalP - x.totalPb }).ToList();
+                sTemp = result.Select(x => (decimal)x.totals);
+                tsTemp = result.Select(x => (decimal)x.totalts);
+                ssTemp = result.Select(x => (decimal)x.totalss);
+                //resultTemp = result.Select(x => (decimal)x.totalP - (decimal)x.totalPb);
+                var tempName = temp.GroupBy(s => s.branchCreatorName).Select(s => new
+                {
+                    name = s.Key
+                });
+                names.AddRange(tempName.Select(nn => nn.name));
+            }
+            if (selectedTab == 1)
+            {
+                temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((int)j.posId) : true)).ToList();
+                var result = temp.GroupBy(s => s.posId).Select(s => new
+                {
+                    posId = s.Key,
+                    totals = s.Where(x => x.invType == "s").Sum(x => x.totalNet),
+                    totalts = s.Where(x => x.invType == "ts").Sum(x => x.totalNet),
+                    totalss = s.Where(x => x.invType == "ss").Sum(x => x.totalNet)
+                }
+             );
+                //var resultTotal = result.Select(x => new { x.posId, total = x.totalP - x.totalPb }).ToList();
+                sTemp = result.Select(x => (decimal)x.totals);
+                tsTemp = result.Select(x => (decimal)x.totalts);
+                ssTemp = result.Select(x => (decimal)x.totalss);
+                //resultTemp = result.Select(x => (decimal)x.totalP - (decimal)x.totalPb);
+                var tempName = temp.GroupBy(s => s.posName).Select(s => new
+                {
+                    name = s.Key
+                });
+                names.AddRange(tempName.Select(nn => nn.name));
+            }
+            if (selectedTab == 2)
+            {
+                temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((int)j.agentId) : true)).ToList();
+                var result = temp.GroupBy(s => s.agentId).Select(s => new
+                {
+                    agentId = s.Key,
+                    totals = s.Where(x => x.invType == "s").Sum(x => x.totalNet),
+                    totalts = s.Where(x => x.invType == "ts").Sum(x => x.totalNet),
+                    totalss = s.Where(x => x.invType == "ss").Sum(x => x.totalNet)
+                }
+             );
+                //var resultTotal = result.Select(x => new { x.agentId, total = x.totalP - x.totalPb }).ToList();
+                sTemp = result.Select(x => (decimal)x.totals);
+                tsTemp = result.Select(x => (decimal)x.totalts);
+                ssTemp = result.Select(x => (decimal)x.totalss);
+                //resultTemp = result.Select(x => (decimal)x.totalP - (decimal)x.totalPb);
+                var tempName = temp.GroupBy(s => s.agentName).Select(s => new
+                {
+                    name = s.Key
+                });
+                names.AddRange(tempName.Select(nn => nn.name));
+            }
+            if (selectedTab == 3)
+            {
+                temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((int)j.updateUserId) : true)).ToList();
+                var result = temp.GroupBy(s => s.updateUserId).Select(s => new
+                {
+                    updateUserId = s.Key,
+                    totals = s.Where(x => x.invType == "s").Sum(x => x.totalNet),
+                    totalts = s.Where(x => x.invType == "ts").Sum(x => x.totalNet),
+                    totalss = s.Where(x => x.invType == "ss").Sum(x => x.totalNet)
+                }
+             );
+                //var resultTotal = result.Select(x => new { x.updateUserId, total = x.totalP - x.totalPb }).ToList();
+                sTemp = result.Select(x => (decimal)x.totals);
+                tsTemp = result.Select(x => (decimal)x.totalts);
+                ssTemp = result.Select(x => (decimal)x.totalss);
+                //resultTemp = result.Select(x => (decimal)x.totalP - (decimal)x.totalPb);
+                var tempName = temp.GroupBy(s => s.uUserAccName).Select(s => new
+                {
+                    name = s.Key
+                });
+                names.AddRange(tempName.Select(nn => nn.name));
+            }
+
+            SeriesCollection rowChartData = new SeriesCollection();
+            List<decimal> dinningHall = new List<decimal>();
+            List<decimal> takeAway = new List<decimal>();
+            List<decimal> selfService = new List<decimal>();
+            List<string> titles = new List<string>()
+            {
+                AppSettings.resourcemanager.GetString("trDiningHallType"),
+                AppSettings.resourcemanager.GetString("trTakeAway"),
+                AppSettings.resourcemanager.GetString("trSelfService")
+            };
+          
+            int xCount = 0;
+            if (sTemp.Count() <= 6) xCount = sTemp.Count();
+            for (int i = 0; i < xCount; i++)
+            {
+                dinningHall.Add(sTemp.ToList().Skip(i).FirstOrDefault());
+                takeAway.Add(tsTemp.ToList().Skip(i).FirstOrDefault());
+                selfService.Add(ssTemp.ToList().Skip(i).FirstOrDefault());
+                MyAxis.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
+            }
+            if (sTemp.Count() > 6)
+            {
+                decimal dinningSum = 0, takeSum = 0, selfSum = 0;
+                for (int i = 6; i < sTemp.Count(); i++)
+                {
+                    dinningSum = dinningSum + sTemp.ToList().Skip(i).FirstOrDefault();
+                    takeSum = takeSum + tsTemp.ToList().Skip(i).FirstOrDefault();
+                    selfSum = selfSum + ssTemp.ToList().Skip(i).FirstOrDefault();
+                }
+                if (!((dinningSum == 0) && (takeSum == 0) && (selfSum == 0)))
+                {
+                    dinningHall.Add(dinningSum);
+                    takeAway.Add(takeSum);
+                    selfService.Add(selfSum);
+                    MyAxis.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
+                }
+            }
+
+            rowChartData.Add(
+          new LineSeries
+          {
+              Values = dinningHall.AsChartValues(),
+              Title = titles[0]
+          });
+            rowChartData.Add(
+         new LineSeries
+         {
+             Values = takeAway.AsChartValues(),
+             Title = titles[1]
+         });
+            rowChartData.Add(
+        new LineSeries
         {
-        //    MyAxis.Labels = new List<string>();
-        //    List<string> names = new List<string>();
-        //    IEnumerable<decimal> pTemp = null;
-        //    IEnumerable<decimal> pbTemp = null;
-        //    IEnumerable<decimal> resultTemp = null;
+            Values = selfService.AsChartValues(),
+            Title = titles[2]
 
-        //    var temp = fillRowChartList(Invoices, chk_invoice, chk_return, chk_drafs, dp_startDate, dp_endDate, dt_startTime, dt_endTime);
-        //    if (selectedTab == 0)
-        //    {
-        //        temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((int)j.branchCreatorId) : true));
-        //        var result = temp.GroupBy(s => s.branchCreatorId).Select(s => new
-        //        {
-        //            branchCreatorId = s.Key,
-        //            totalP = s.Where(x => x.invType == "s").Sum(x => x.totalNet),
-        //            totalPb = s.Where(x => x.invType == "sb").Sum(x => x.totalNet)
-        //        }
-
-        //     );
-        //        var resultTotal = result.Select(x => new { x.branchCreatorId, total = x.totalP - x.totalPb }).ToList();
-        //        pTemp = result.Select(x => (decimal)x.totalP);
-        //        pbTemp = result.Select(x => (decimal)x.totalPb);
-        //        resultTemp = result.Select(x => (decimal)x.totalP - (decimal)x.totalPb);
-        //        var tempName = temp.GroupBy(s => s.branchCreatorName).Select(s => new
-        //        {
-        //            uUserName = s.Key
-        //        });
-        //        names.AddRange(tempName.Select(nn => nn.uUserName));
-        //    }
-        //    if (selectedTab == 1)
-        //    {
-        //        temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((int)j.posId) : true));
-        //        var result = temp.GroupBy(s => s.posId).Select(s => new
-        //        {
-        //            posId = s.Key,
-        //            totalP = s.Where(x => x.invType == "s").Sum(x => x.totalNet),
-        //            totalPb = s.Where(x => x.invType == "sb").Sum(x => x.totalNet)
-        //        }
-        //     );
-        //        var resultTotal = result.Select(x => new { x.posId, total = x.totalP - x.totalPb }).ToList();
-        //        pTemp = result.Select(x => (decimal)x.totalP);
-        //        pbTemp = result.Select(x => (decimal)x.totalPb);
-        //        resultTemp = result.Select(x => (decimal)x.totalP - (decimal)x.totalPb);
-        //        var tempName = temp.GroupBy(s => s.posName).Select(s => new
-        //        {
-        //            uUserName = s.Key
-        //        });
-        //        names.AddRange(tempName.Select(nn => nn.uUserName));
-        //    }
-        //    if (selectedTab == 2)
-        //    {
-        //        temp = temp.Where(j => (selectedVendorsId.Count != 0 ? stackedButton.Contains((int)j.agentId) : true));
-        //        var result = temp.GroupBy(s => s.agentId).Select(s => new
-        //        {
-        //            agentId = s.Key,
-        //            totalP = s.Where(x => x.invType == "s").Sum(x => x.totalNet),
-        //            totalPb = s.Where(x => x.invType == "sb").Sum(x => x.totalNet)
-        //        }
-        //     );
-        //        var resultTotal = result.Select(x => new { x.agentId, total = x.totalP - x.totalPb }).ToList();
-        //        pTemp = result.Select(x => (decimal)x.totalP);
-        //        pbTemp = result.Select(x => (decimal)x.totalPb);
-        //        resultTemp = result.Select(x => (decimal)x.totalP - (decimal)x.totalPb);
-        //        var tempName = temp.GroupBy(s => s.agentName).Select(s => new
-        //        {
-        //            uUserName = s.Key
-        //        });
-        //        names.AddRange(tempName.Select(nn => nn.uUserName));
-        //    }
-        //    if (selectedTab == 3)
-        //    {
-        //        temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((int)j.updateUserId) : true));
-        //        var result = temp.GroupBy(s => s.updateUserId).Select(s => new
-        //        {
-        //            updateUserId = s.Key,
-        //            totalP = s.Where(x => x.invType == "s").Sum(x => x.totalNet),
-        //            totalPb = s.Where(x => x.invType == "sb").Sum(x => x.totalNet)
-        //        }
-        //     );
-        //        var resultTotal = result.Select(x => new { x.updateUserId, total = x.totalP - x.totalPb }).ToList();
-        //        pTemp = result.Select(x => (decimal)x.totalP);
-        //        pbTemp = result.Select(x => (decimal)x.totalPb);
-        //        resultTemp = result.Select(x => (decimal)x.totalP - (decimal)x.totalPb);
-        //        var tempName = temp.GroupBy(s => s.uUserAccName).Select(s => new
-        //        {
-        //            uUserName = s.Key
-        //        });
-        //        names.AddRange(tempName.Select(nn => nn.uUserName));
-        //    }
-
-        //    SeriesCollection rowChartData = new SeriesCollection();
-        //    List<decimal> purchase = new List<decimal>();
-        //    List<decimal> returns = new List<decimal>();
-        //    List<decimal> sub = new List<decimal>();
-        //    List<string> titles = new List<string>()
-        //    {
-        //        AppSettings.resourcemanager.GetString("trNetSales"),
-        //        AppSettings.resourcemanager.GetString("trTotalReturn"),
-        //        AppSettings.resourcemanager.GetString("trTotalSales")
-        //    };
-
-        //    int xCount = 0;
-        //    if (pTemp.Count() <= 6) xCount = pTemp.Count();
-        //    for (int i = 0; i < xCount; i++)
-        //    {
-        //        purchase.Add(pTemp.ToList().Skip(i).FirstOrDefault());
-        //        returns.Add(pbTemp.ToList().Skip(i).FirstOrDefault());
-        //        sub.Add(resultTemp.ToList().Skip(i).FirstOrDefault());
-        //        MyAxis.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
-        //    }
-        //    if (pTemp.Count() > 6)
-        //    {
-        //        decimal purchaseSum = 0, returnsSum = 0, subSum = 0;
-        //        for (int i = 6; i < pTemp.Count(); i++)
-        //        {
-        //            purchaseSum = purchaseSum + pTemp.ToList().Skip(i).FirstOrDefault();
-        //            returnsSum = returnsSum + pbTemp.ToList().Skip(i).FirstOrDefault();
-        //            subSum = subSum + resultTemp.ToList().Skip(i).FirstOrDefault();
-        //        }
-        //        if (!((purchaseSum == 0) && (returnsSum == 0) && (subSum == 0)))
-        //        {
-        //            purchase.Add(purchaseSum);
-        //            returns.Add(returnsSum);
-        //            sub.Add(subSum);
-        //            MyAxis.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
-        //        }
-        //    }
-
-        //    rowChartData.Add(
-        //  new LineSeries
-        //  {
-        //      Values = purchase.AsChartValues(),
-        //      Title = titles[0]
-        //  });
-        //    rowChartData.Add(
-        // new LineSeries
-        // {
-        //     Values = returns.AsChartValues(),
-        //     Title = titles[1]
-        // });
-        //    rowChartData.Add(
-        //new LineSeries
-        //{
-        //    Values = sub.AsChartValues(),
-        //    Title = titles[2]
-
-        //});
-        //    DataContext = this;
-        //    rowChart.Series = rowChartData;
+        });
+            DataContext = this;
+            rowChart.Series = rowChartData;
         }
 
         #endregion

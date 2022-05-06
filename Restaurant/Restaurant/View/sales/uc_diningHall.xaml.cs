@@ -199,7 +199,7 @@ namespace Restaurant.View.sales
             
         }
 
-       async void changeInvType()
+       public async void changeInvType()
         {
             int diningHall = int.Parse(AppSettings.typesOfService_diningHall);
             int takeAway = int.Parse(AppSettings.typesOfService_takeAway);
@@ -398,7 +398,7 @@ namespace Restaurant.View.sales
         IEnumerable<Item> itemsQuery;
         int categoryId = 0;
         int tagId = 0;
-        string _InvoiceType = "sd";
+        public string _InvoiceType = "sd";
         void RefrishItemsCard(IEnumerable<Item> _items)
         {
             grid_itemContainerCard.Children.Clear();
@@ -776,7 +776,7 @@ namespace Restaurant.View.sales
         List<CouponInvoice> selectedCopouns = new List<CouponInvoice>();
         List<ItemTransfer> invoiceItems = new List<ItemTransfer>();
         List<Tables> selectedTables = new List<Tables>();
-        Invoice invoice = new Invoice();
+        public Invoice invoice = new Invoice();
         TablesReservation reservation = new TablesReservation();
         InvoicesClass invoiceMemberShipClass = new InvoicesClass();
         List<InvoicesClass> customerInvClasses = new List<InvoicesClass>();

@@ -1996,7 +1996,7 @@ namespace Restaurant
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_sales_Click(object sender, RoutedEventArgs e)
+        public void Btn_sales_Click(object sender, RoutedEventArgs e)
         {
             try
             {

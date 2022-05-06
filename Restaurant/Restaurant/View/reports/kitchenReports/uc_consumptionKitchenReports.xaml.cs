@@ -424,9 +424,6 @@ namespace Restaurant.View.reports.kitchenReports
                             uc_consumptionRawMaterials.archived = false;
 
                             await uc_consumptionRawMaterials.Instance.fillInvoiceInputs(invoice);
-                            //uc_consumptionRawMaterials.Instance.navigateBtnActivate();
-
-                            await uc_spendingRequest.Instance.fillInvoiceInputs(invoice);
                         }
                     }
 
