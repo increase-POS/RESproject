@@ -559,8 +559,7 @@ namespace Restaurant.View.reports.salesReports
         {//offers
             try
             {
-                 
-                    HelpClass.StartAwait(grid_main);
+                 HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_Coupons, AppSettings.resourcemanager.GetString("trOfferHint"));
@@ -588,18 +587,17 @@ namespace Restaurant.View.reports.salesReports
                 col_offersTotalValue.Visibility = Visibility.Visible;
                 col_total.Visibility = Visibility.Visible;
 
-
-
-
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
+                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
+        }
+        private void Btn_invoicesClasses_Click(object sender, RoutedEventArgs e)
+        {
+
         }
         #endregion
 
@@ -1260,5 +1258,6 @@ namespace Restaurant.View.reports.salesReports
             }
         }
 
+      
     }
 }

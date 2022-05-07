@@ -46,11 +46,11 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
-
+                            <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="auto"/>
-
                         </Grid.ColumnDefinitions>
+                        
                         <Border x:Name="bdr_coupon"  Visibility="Visible" Background="{StaticResource SecondColor}"  Grid.Column="0"  BorderThickness="0"  Height="40" Width="60" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="10,5,0,-1">
                             <Button x:Name="btn_coupons"  Background="Transparent"  Tag="coupon"
                                     materialDesign:RippleAssist.Feedback="Transparent" Click="btn_coupons_Click"
@@ -60,10 +60,10 @@
                                         <BeginStoryboard>
                                             <Storyboard>
                                                 <DoubleAnimation
-                        Storyboard.TargetName="bdrMain"
-                        Storyboard.TargetProperty="Opacity"
-                        From="0" To="1"
-                        Duration="0:0:1"/>
+                                                 Storyboard.TargetName="bdrMain"
+                                                 Storyboard.TargetProperty="Opacity"
+                                                 From="0" To="1"
+                                                 Duration="0:0:1"/>
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </EventTrigger>
@@ -90,10 +90,10 @@
                                         <BeginStoryboard>
                                             <Storyboard>
                                                 <DoubleAnimation
-                        Storyboard.TargetName="bdrMain"
-                        Storyboard.TargetProperty="Opacity"
-                        From="0" To="1"
-                        Duration="0:0:1"/>
+                                                 Storyboard.TargetName="bdrMain"
+                                                 Storyboard.TargetProperty="Opacity"
+                                                 From="0" To="1"
+                                                 Duration="0:0:1"/>
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </EventTrigger>
@@ -111,10 +111,40 @@
                                 </Path>
                             </Button>
                         </Border>
+                        <Border x:Name="bdr_invoiceClass"  Visibility="Visible"  Grid.Column="2" Background="{StaticResource SecondColor}" BorderThickness="0"  Height="40" Width="60" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="0,5,0,-1">
+                            <Button x:Name="btn_invoicesClasses"  Background="Transparent"  Tag="invoicesClasses"
+                                materialDesign:RippleAssist.Feedback="Transparent" 
+                                BorderBrush="Transparent" Height="auto" Width="60" Click="Btn_invoicesClasses_Click">
+                                    <Button.Triggers>
+                                        <EventTrigger RoutedEvent="Button.Click">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation
+                                                Storyboard.TargetName="bdrMain"
+                                                Storyboard.TargetProperty="Opacity"
+                                                From="0" To="1"
+                                                Duration="0:0:1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Button.Triggers>
+                                    <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0,-1,0,0" HorizontalAlignment="Center"
+                                          Width="25" Height="25"   FlowDirection="LeftToRight" x:Name="path_invoicesClasses" 
+                                          Data="{StaticResource invoice}" >
+                                        <Path.ToolTip>
+                                            <ToolTip x:Name="tt_invoicesClasses" Content="Offers"
+                                            Placement="left" 
+                                            HorizontalOffset="35"
+                                            PlacementRectangle="50,0,0,0"
+                                            VerticalOffset="-10"/>
+                                        </Path.ToolTip>
+                                    </Path>
+                            </Button>
+                        </Border>
 
                         <Border Grid.Column="10" CornerRadius="7" >
                             <TextBlock  x:Name="txt_tabTitle"  Foreground="White"   Grid.Column="10" 
-                              VerticalAlignment="Center"      FontSize="16"     Margin="5 5 10 5"/>
+                                        VerticalAlignment="Center"      FontSize="16"     Margin="5 5 10 5"/>
                         </Border>
                     </Grid>
                 </Border>
