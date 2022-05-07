@@ -97,11 +97,10 @@ namespace Restaurant.View.reports.salesReports
         ObservableCollection<Agent> comboVendorTemp = new ObservableCollection<Agent>();
         ObservableCollection<User> comboUserTemp = new ObservableCollection<User>();
 
-        ObservableCollection<Branch> dynamicComboBranches;
-        //List<Branch> dynamicComboBranches;
-        ObservableCollection<Pos> dynamicComboPoss;
-        ObservableCollection<Agent> dynamicComboVendors;
-        ObservableCollection<User> dynamicComboUsers;
+        List<Branch> dynamicComboBranches = new List<Branch>();
+        List<Pos> dynamicComboPoss = new List<Pos>();
+        List<Agent> dynamicComboVendors = new List<Agent>();
+        List<User> dynamicComboUsers = new List<User>();
 
         Branch branchModel = new Branch();
         Pos posModel = new Pos();
@@ -115,9 +114,9 @@ namespace Restaurant.View.reports.salesReports
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -136,13 +135,13 @@ namespace Restaurant.View.reports.salesReports
                
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_pos.Tag.ToString());
                
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         #region methods
@@ -227,113 +226,28 @@ namespace Restaurant.View.reports.salesReports
 
         private void fillComboPos()
         {
-            //cb_branches.SelectedValuePath = "posId";
-            //cb_branches.DisplayMemberPath = "name";
-            //cb_branches.ItemsSource = dynamicComboPoss;
+            cb_branches.SelectedValuePath = "posId";
+            cb_branches.DisplayMemberPath = "posName";
+            var lst = Invoices.GroupBy(i => i.posId).Select(i => new { i.FirstOrDefault().posName, i.FirstOrDefault().posId });
+            cb_branches.ItemsSource = lst;
         }
 
         private void fillComboVendors()
         {
-            //cb_branches.SelectedValuePath = "agentId";
-            //cb_branches.DisplayMemberPath = "name";
-            //cb_branches.ItemsSource = dynamicComboVendors;
+            cb_branches.SelectedValuePath = "agentId";
+            cb_branches.DisplayMemberPath = "agentName";
+            var lst = Invoices.GroupBy(i => i.agentId).Select(i => new { i.FirstOrDefault().agentName, i.FirstOrDefault().agentId });
+            cb_branches.ItemsSource = lst;
         }
 
         private void fillComboUsers()
         {
-            //cb_branches.SelectedValuePath = "userId";
-            //cb_branches.DisplayMemberPath = "username";
-            //cb_branches.ItemsSource = dynamicComboUsers;
+            cb_branches.SelectedValuePath = "updateUserId";
+            cb_branches.DisplayMemberPath = "uUserAccName";
+            var lst = Invoices.GroupBy(i => i.updateUserId).Select(i => new { i.FirstOrDefault().updateUserId, i.FirstOrDefault().uUserAccName });
+            cb_branches.ItemsSource = lst;
         }
 
-        private static void fillDates(DatePicker startDate, DatePicker endDate, TimePicker startTime, TimePicker endTime)
-        {
-            try
-            {
-                if (startDate.SelectedDate != null && startTime.SelectedTime != null)
-                {
-                    string x = startDate.SelectedDate.Value.Date.ToShortDateString();
-                    string y = startTime.SelectedTime.Value.ToShortTimeString();
-                    string resultStartTime = x + " " + y;
-                    startTime.SelectedTime = DateTime.Parse(resultStartTime);
-                    startDate.SelectedDate = DateTime.Parse(resultStartTime);
-                }
-                if (endDate.SelectedDate != null && endTime.SelectedTime != null)
-                {
-                    string x = endDate.SelectedDate.Value.Date.ToShortDateString();
-                    string y = endTime.SelectedTime.Value.ToShortTimeString();
-                    string resultEndTime = x + " " + y;
-                    endTime.SelectedTime = DateTime.Parse(resultEndTime);
-                    endDate.SelectedDate = DateTime.Parse(resultEndTime);
-                }
-            }
-            catch (Exception ex)
-            {
-                //HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        //IEnumerable<ItemTransferInvoice> invLst = null;
-        //private IEnumerable<ItemTransferInvoice> fillList(IEnumerable<ItemTransferInvoice> Invoices, CheckBox chkInvoice, CheckBox chkReturn, CheckBox chkDraft
-        //   , DatePicker startDate, DatePicker endDate, TimePicker startTime, TimePicker endTime)
-        //{
-        //    fillDates(startDate, endDate, startTime, endTime);
-        //    var result = Invoices.Where(x => (
-
-        //       ((chkDraft.IsChecked == true ? (x.invType == "sd" || x.invType == "sbd") : false)
-        //                  || (chkReturn.IsChecked == true ? (x.invType == "sb") : false)
-        //                  || (chkInvoice.IsChecked == true ? (x.invType == "s") : false))
-        //              && (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
-        //              && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true)
-        //              && (startTime.SelectedTime != null ? x.invDate >= startTime.SelectedTime : true)
-        //              && (endTime.SelectedTime != null ? x.invDate <= endTime.SelectedTime : true)));
-        //    invLst = result;
-        //    return result;
-        //}
-        IEnumerable<ItemTransferInvoice> invLstRowChart = null;
-        private IEnumerable<ItemTransferInvoice> fillRowChartList(IEnumerable<ItemTransferInvoice> Invoices, CheckBox chkInvoice, CheckBox chkReturn, CheckBox chkDraft
-          , DatePicker startDate, DatePicker endDate, TimePicker startTime, TimePicker endTime)
-        {
-            fillDates(startDate, endDate, startTime, endTime);
-            var result = Invoices.Where(x => ((txt_search.Text != null ? x.invNumber.Contains(txt_search.Text)
-              || x.invType.Contains(txt_search.Text)
-              || x.discountType.Contains(txt_search.Text) : true)
-              &&
-                         (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
-                        && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true)
-                        && (startTime.SelectedTime != null ? x.invDate >= startTime.SelectedTime : true)
-                        && (endTime.SelectedTime != null ? x.invDate <= endTime.SelectedTime : true)));
-            return result;
-        }
-
-        private List<ItemTransferInvoice> converter(List<ItemTransferInvoice> query)
-        {
-            foreach (var item in query)
-            {
-                if (item.invType == "p")
-                {
-                    item.invType = AppSettings.resourcemanager.GetString("trPurchaseInvoice");
-                }
-                else if (item.invType == "pw")
-                {
-                    item.invType = AppSettings.resourcemanager.GetString("trPurchaseInvoice");
-                }
-                else if (item.invType == "pb")
-                {
-                    item.invType = AppSettings.resourcemanager.GetString("trPurchaseReturnInvoice");
-                }
-                else if (item.invType == "pd")
-                {
-                    item.invType = AppSettings.resourcemanager.GetString("trDraftPurchaseBill");
-                }
-                else if (item.invType == "pbd")
-                {
-                    item.invType = AppSettings.resourcemanager.GetString("trPurchaseReturnDraft");
-                }
-            }
-            return query;
-
-        }
         private void hideSatacks()
         {
             stk_tagsBranches.Visibility = Visibility.Collapsed;
@@ -384,7 +298,16 @@ namespace Restaurant.View.reports.salesReports
             )
             &&
             //branch
-            (cb_branches.SelectedIndex != -1    ? s.branchCreatorId == Convert.ToInt32(cb_branches.SelectedValue) : true)
+            ((cb_branches.SelectedIndex != -1  && selectedTab == 0)  ?  s.branchCreatorId == Convert.ToInt32(cb_branches.SelectedValue) : true)
+             &&
+            //pos
+            ((cb_branches.SelectedIndex != -1  && selectedTab == 1)  ? s.posId == Convert.ToInt32(cb_branches.SelectedValue) : true)
+             &&
+            //agent
+            ((cb_branches.SelectedIndex != -1  && selectedTab == 2) ? s.agentId == Convert.ToInt32(cb_branches.SelectedValue) : true)
+             &&
+            //user
+            ((cb_branches.SelectedIndex != -1  && selectedTab == 3) ? s.updateUserId == Convert.ToInt32(cb_branches.SelectedValue) : true)
             &&
             //service
             (cb_sevices.SelectedIndex != -1     ? s.invType == cb_sevices.SelectedValue.ToString() : true)
@@ -693,10 +616,9 @@ namespace Restaurant.View.reports.salesReports
         }
         private async void cb_branches_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
-            {
-
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
                 if (cb_branches.SelectedItem != null)
                 {
@@ -789,13 +711,13 @@ namespace Restaurant.View.reports.salesReports
 
                 }
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+        //        HelpClass.EndAwait(grid_main);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        HelpClass.EndAwait(grid_main);
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
         }
 
         private async void Chk_allServices_Checked(object sender, RoutedEventArgs e)
@@ -850,9 +772,9 @@ namespace Restaurant.View.reports.salesReports
         Invoice invoice;
         private async void DgInvoice_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {//double click
-            try
-            {
-                HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
                 invoice = new Invoice();
                 if (dgInvoice.SelectedIndex != -1)
                 {
@@ -874,13 +796,13 @@ namespace Restaurant.View.reports.salesReports
                     }
                 }
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
         }
 
         private async void Chip_OnDeleteClick(object sender, RoutedEventArgs e)
