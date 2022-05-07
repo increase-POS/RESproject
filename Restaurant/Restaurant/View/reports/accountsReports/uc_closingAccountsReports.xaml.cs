@@ -147,8 +147,6 @@ namespace Restaurant.View.reports.accountsReports
             tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
-
-
         }
         async Task Search()
         {

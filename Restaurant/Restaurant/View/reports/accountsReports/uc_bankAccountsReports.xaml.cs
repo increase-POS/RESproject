@@ -118,7 +118,7 @@ namespace Restaurant.View.reports.accountsReports
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txt_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
 
-            col_tansNum.Header = AppSettings.resourcemanager.GetString("trNum");
+            col_tansNum.Header = AppSettings.resourcemanager.GetString("trNo.");
             col_Type.Header = AppSettings.resourcemanager.GetString("trType");
             col_updateUserAcc.Header = AppSettings.resourcemanager.GetString("trAccoutant");
             col_Bank.Header = AppSettings.resourcemanager.GetString("trBank");

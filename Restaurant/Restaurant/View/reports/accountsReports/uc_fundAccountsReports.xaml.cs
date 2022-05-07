@@ -162,6 +162,7 @@ namespace Restaurant.View.reports.accountsReports
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
 
             txt_total.Text = AppSettings.resourcemanager.GetString("trTotal");
+           
         }
 
         private void fillBranches()

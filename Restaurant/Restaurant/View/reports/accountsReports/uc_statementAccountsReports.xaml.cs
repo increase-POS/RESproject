@@ -122,7 +122,7 @@ namespace Restaurant.View.reports.accountsReports
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendorsDate, AppSettings.resourcemanager.GetString("trDateHint"));
             chk_allVendors.Content = AppSettings.resourcemanager.GetString("trAll");
 
-            dgPayments.Columns[0].Header = AppSettings.resourcemanager.GetString("trTransferNumberTooltip");
+            dgPayments.Columns[0].Header = AppSettings.resourcemanager.GetString("trNo.");
             dgPayments.Columns[1].Header = AppSettings.resourcemanager.GetString("trDate");
             dgPayments.Columns[2].Header = AppSettings.resourcemanager.GetString("trDescription");
             dgPayments.Columns[3].Header = AppSettings.resourcemanager.GetString("trPayment");
@@ -135,6 +135,7 @@ namespace Restaurant.View.reports.accountsReports
             tt_settings.Content = AppSettings.resourcemanager.GetString("trSettings");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
             tt_emailMessage.Content = AppSettings.resourcemanager.GetString("trSendEmail");
+           
         }
 
         private void fillVendorCombo(IEnumerable<VendorCombo> list, ComboBox cb)

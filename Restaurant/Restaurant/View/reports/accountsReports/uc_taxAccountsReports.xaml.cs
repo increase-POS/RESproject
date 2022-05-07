@@ -206,7 +206,6 @@ namespace Restaurant.View.reports.accountsReports
             col_itemsTotal.Header = AppSettings.resourcemanager.GetString("trTotal");
             col_totalNetItem.Header = AppSettings.resourcemanager.GetString("trTotalInvoice");
             //////////////////////////////////////////////////////////////////////////
-
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");

@@ -108,8 +108,8 @@ namespace Restaurant.View.reports.accountsReports
 
         private void translate()
         {
-            tt_payments.Content = AppSettings.resourcemanager.GetString("trDeposits");
-            tt_pulls.Content = AppSettings.resourcemanager.GetString("trReceipts");
+            tt_payments.Content = AppSettings.resourcemanager.GetString("trDeposit");
+            tt_pulls.Content = AppSettings.resourcemanager.GetString("trReceive");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_formBranch, AppSettings.resourcemanager.GetString("trFromBranch") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_toBranch, AppSettings.resourcemanager.GetString("trToBranch") + "...");
@@ -128,8 +128,8 @@ namespace Restaurant.View.reports.accountsReports
             chk_allToPos.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_allAccountant.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_twoWay.Content = AppSettings.resourcemanager.GetString("trTwoWays");
-
-            col_tansNum.Header = AppSettings.resourcemanager.GetString("trNum");
+          
+            col_tansNum.Header = AppSettings.resourcemanager.GetString("trNo.");
             col_creatorBranch.Header = AppSettings.resourcemanager.GetString("trCreator");
             col_fromBranch.Header = AppSettings.resourcemanager.GetString("trFromBranch");
             col_fromPos.Header = AppSettings.resourcemanager.GetString("trDepositor");

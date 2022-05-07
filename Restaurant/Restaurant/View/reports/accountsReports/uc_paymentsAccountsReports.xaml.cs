@@ -122,7 +122,7 @@ namespace Restaurant.View.reports.accountsReports
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_vendorStartDate, AppSettings.resourcemanager.GetString("trStartDateHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_vendorEndDate, AppSettings.resourcemanager.GetString("trEndDateHint"));
-
+          
             chk_allVendors.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_allVendorsPaymentType.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_allVendorsAccountant.Content = AppSettings.resourcemanager.GetString("trAll");
@@ -145,7 +145,6 @@ namespace Restaurant.View.reports.accountsReports
             tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
-
         }
 
         private void fillPaymentsTypeCombo(ComboBox cb)

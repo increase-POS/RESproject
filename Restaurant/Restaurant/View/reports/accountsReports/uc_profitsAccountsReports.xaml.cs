@@ -109,7 +109,7 @@ namespace Restaurant.View.reports.accountsReports
             tt_invoice.Content = AppSettings.resourcemanager.GetString("trInvoices");
             tt_item.Content = AppSettings.resourcemanager.GetString("trItems");
 
-            col_invNum.Header = AppSettings.resourcemanager.GetString("trNum");
+            col_invNum.Header = AppSettings.resourcemanager.GetString("trNo.");
             col_invType.Header = AppSettings.resourcemanager.GetString("trType");
             col_invDate.Header = AppSettings.resourcemanager.GetString("trDate");
             col_invTotal.Header = AppSettings.resourcemanager.GetString("trTotal");
