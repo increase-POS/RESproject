@@ -169,9 +169,9 @@
                                     </Grid.ColumnDefinitions>
 
                                     <DockPanel Grid.ColumnSpan="2" LastChildFill="False">
-                                        <CheckBox x:Name="chk_couponInvoice" Content="Invoice" Margin="10" Foreground="{StaticResource ThickGrey}" Checked="chk_Checked" Unchecked="chk_Checked"></CheckBox>
+                                        <!--<CheckBox x:Name="chk_couponInvoice" Content="Invoice" Margin="10" Foreground="{StaticResource ThickGrey}" Checked="chk_Checked" Unchecked="chk_Checked"></CheckBox>
                                         <CheckBox x:Name="chk_couponReturn" IsEnabled="True" Content="Return invoice" Margin="10" Foreground="{StaticResource ThickGrey}" Checked="chk_Checked" Unchecked="chk_Checked"></CheckBox>
-                                        <CheckBox x:Name="chk_couponDrafs" IsEnabled="True" Content="Drafts" Checked="chk_Checked" Foreground="{StaticResource ThickGrey}" Margin="10" Unchecked="chk_Checked"></CheckBox>
+                                        <CheckBox x:Name="chk_couponDrafs" IsEnabled="True" Content="Drafts" Checked="chk_Checked" Foreground="{StaticResource ThickGrey}" Margin="10" Unchecked="chk_Checked"></CheckBox>-->
                                             <Border Grid.Row="0" DockPanel.Dock="Right"  Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                                 <Grid>
                                                     <DatePicker SelectedDateFormat="Short"  Name="dp_couponEndDate" Width="100"
@@ -489,8 +489,9 @@
 
                         </StackPanel >
                     </Border>
-                    <StackPanel DockPanel.Dock="Right"  x:Name="stk_tagsCoupons" Orientation="Horizontal"/>
-                    <StackPanel DockPanel.Dock="Right"  x:Name="stk_tagsOffers" Orientation="Horizontal"/>
+                    <StackPanel DockPanel.Dock="Right"  x:Name="stk_tagsCoupons"  Orientation="Horizontal"/>
+                    <StackPanel DockPanel.Dock="Right"  x:Name="stk_tagsOffers"   Orientation="Horizontal"/>
+                    <StackPanel DockPanel.Dock="Right"  x:Name="stk_tagsInvoices" Orientation="Horizontal"/>
 
                 </DockPanel>
             </Border>

@@ -600,12 +600,21 @@ namespace Restaurant.Classes
         public int Copcid { get; set; }
         public string Copname { get; set; }
     }
+
     public class OfferCombo
     {
 
         public int OofferId { get; set; }
         public string Oname { get; set; }
     }
+
+    public class InvoiceClassCombo
+    {
+
+        public int invoiceId { get; set; }
+        public string invNumber { get; set; }
+    }
+
     public class ItemTransferInvoice
     {// new properties
         public int archived { get; set; }
@@ -1744,11 +1753,20 @@ namespace Restaurant.Classes
             return iulist;
 
         }
+        public List<InvoiceClassCombo> GetInvoiceClassComboList(List<SalesMembership> ITInvoice)
+        {
+            List<InvoiceClassCombo> iulist = new List<InvoiceClassCombo>();
+
+            iulist = ITInvoice.GroupBy(x => x.invoiceId)
+                   .Select(g => new InvoiceClassCombo { invoiceId = g.FirstOrDefault().invoiceId, invNumber = g.FirstOrDefault().invNumber }).ToList();
+            return iulist;
+
+        }
         #endregion
         //OfferCombo
 
-        
-    
+
+
 
 
         // المخزون 
