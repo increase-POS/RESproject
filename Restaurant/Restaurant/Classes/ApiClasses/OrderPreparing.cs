@@ -73,6 +73,10 @@ namespace Restaurant.Classes.ApiClasses
 
         public List<ItemOrderPreparing> items { get; set; }
 
+        public Nullable<int> branchId { get; set; }
+        public string branchName { get; set; }
+        public Nullable<System.DateTime> invDate { get; set; }
+        public Nullable<System.TimeSpan> invTime { get; set; }
         //-------------------------------------------
         public async Task<List<OrderPreparing>> GetInvoicePreparingOrders( int invoiceId)
         {
@@ -301,5 +305,21 @@ namespace Restaurant.Classes.ApiClasses
 
             return remainingTime;
         }
+        public async Task<List<OrderPreparing>> GetOrdersByInvoiceId(int invoiceId)
+        {
+            List<OrderPreparing> items = new List<OrderPreparing>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("invoiceId", invoiceId.ToString());
+            IEnumerable<Claim> claims = await APIResult.getList("OrderPreparing/GetOrdersByInvoiceId", parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<OrderPreparing>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
+        
     }
 }

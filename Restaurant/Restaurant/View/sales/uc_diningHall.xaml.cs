@@ -2742,6 +2742,17 @@ namespace Restaurant.View.sales
                                         });
                                         t1.Start();
                                     }
+                                    if (AppSettings.print_kitchen_on_sale == "1")
+                                    {
+
+                                        // printInvoice();
+                                        //Thread t1 = new Thread(() =>
+                                        //{
+                                        prOrderPreparingList = await preparingOrder.GetOrdersByInvoiceId(prinvoiceId);
+                                        printInvoiceInkitchen(prinvoiceId, prOrderPreparingList);
+                                        //});
+                                        //t1.Start();
+                                    }
                                     if (AppSettings.email_on_save_sale == "1")
                                     {
                                         //sendsaleEmail();
@@ -3741,284 +3752,16 @@ namespace Restaurant.View.sales
                 //else
 
 
-                List<ReportParameter> paramarr = new List<ReportParameter>();
+              
 
                 if (invoiceId > 0)
                 {
-                    #region fill invoice data
-
-                    //items
-                    //   invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
-                    //  itemscount = invoiceItems.Count();
-
-                    reportsize rs = reportclass.GetKitchenRdlcpath(AppSettings.salePaperSize, 1, rep);
-                    rep = rs.rep;
-                    width = rs.width;
-                    height = rs.height;
-                    //user
-
-
-                    User employ = new User();
-                    //if (FillCombo.usersList != null)
-                    //{
-                    //    employ = FillCombo.usersList.Where(X => X.userId == (int)prInvoice.updateUserId).FirstOrDefault();
-                    //}
-                    //else
-                    //{
-                    //    employ = await userModel.getUserById((int)prInvoice.updateUserId);
-                    //}
-
-                    //prInvoice.uuserName = employ.name;
-                    //prInvoice.uuserLast = employ.lastname;
-                    ////agent
-                    //if (prInvoice.agentId != null)
-                    //{
-                    //    Agent agentinv = new Agent();
-
-                    //    // agentinv = customers.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
-
-                    //    if (FillCombo.customersList != null)
-                    //    {
-                    //        agentinv = FillCombo.customersList.Where(X => X.agentId == (int)prInvoice.agentId).FirstOrDefault();
-                    //    }
-                    //    else
-                    //    {
-                    //        agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
-                    //    }
-
-                    //    prInvoice.agentCode = agentinv.code;
-                    //    //new lines
-                    //    prInvoice.agentName = agentinv.name;
-                    //    prInvoice.agentCompany = agentinv.company;
-
-                    //}
-                    //else
-                    //{
-                    //    prInvoice.agentCode = "-";
-                    //    prInvoice.agentName = "-";
-                    //    prInvoice.agentCompany = "-";
-                    //}
-                    //branch
-                    //Branch branch = new Branch();
-                    //if (FillCombo.branchsList != null)
-                    //{
-                    //    branch = FillCombo.branchsList.Where(X => X.branchId == (int)prInvoice.branchCreatorId).FirstOrDefault();
-
-                    //}
-                    //else
-                    //{
-                    //    branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
-                    //}
-
-                    //if (branch.branchId > 0)
-                    //{
-                    //    prInvoice.branchName = branch.name;
-                    //}
-
-                    ReportCls.checkLang();
-                    ////shipping
-                    //ShippingCompanies shippingcom = new ShippingCompanies();
-
-                    //if (prInvoice.shippingCompanyId > 0)
-                    //{
-                    //    if (FillCombo.shippingCompaniesList != null)
-                    //    {
-                    //        shippingcom = FillCombo.shippingCompaniesList.Where(X => X.shippingCompanyId == (int)prInvoice.shippingCompanyId).FirstOrDefault();
-
-                    //    }
-                    //    else
-                    //    {
-                    //        shippingcom = await shippingcom.GetByID((int)prInvoice.shippingCompanyId);
-                    //    }
-
-                    //}
-                    //User shipuser = new User();
-                    //if (prInvoice.shipUserId > 0)
-                    //{
-                    //    shipuser = await userModel.getUserById((int)prInvoice.shipUserId);
-                    //}
-                    //prInvoice.shipUserName = shipuser.name + " " + shipuser.lastname;
-                    ////end shipping
-                    ////items subTotal & itemTax
-                    //decimal totaltax = 0;
-                    //foreach (var i in invoiceItems)
-                    //{
-                    //    i.price = decimal.Parse(HelpClass.DecTostring(i.price));
-                    //    if (i.itemTax != null)
-                    //    {
-                    //        totaltax += (decimal)i.itemTax;
-
-                    //    }
-                    //    i.subTotal = decimal.Parse(HelpClass.DecTostring(i.price * i.quantity));
-
-                    //}
-
-                    //if (totaltax > 0 && prInvoice.invType != "sbd" && prInvoice.invType != "sb")
-                    //{
-                    //    paramarr.Add(new ReportParameter("itemtax_note", AppSettings.itemtax_note.Trim()));
-                    //    paramarr.Add(new ReportParameter("hasItemTax", "1"));
-
-                    //}
-                    //else
-                    //{
-                    //    // paramarr.Add(new ReportParameter("itemtax_note", AppSettings.itemtax_note.Trim()));
-                    //    paramarr.Add(new ReportParameter("hasItemTax", "0"));
-                    //}
-                    //
-
-                    //clsReports.purchaseInvoiceReport(invoiceItems, rep, rep.ReportPath);
-                    clsReports.PreparingOrdersPrint(prOrderPreparingList.ToList(), rep, paramarr);
-                    clsReports.setReportLanguage(paramarr);
-                    clsReports.Header(paramarr);
-                    paramarr.Add(new ReportParameter("isSaved", "y"));
-                    //paramarr = reportclass.fillSaleInvReport(prInvoice, paramarr, shippingcom);
-                    //   multiplePaytable(paramarr);
-                    // payment methods
-
-                    //if (prInvoice.invType == "s" || prInvoice.invType == "sd" || prInvoice.invType == "sbd" || prInvoice.invType == "sb"
-                    //    || prInvoice.invType == "ts" || prInvoice.invType == "ss" || prInvoice.invType == "tsd" || prInvoice.invType == "ssd"
-                    //    )
-                    //{
-                    //    CashTransfer cachModel = new CashTransfer();
-                    //    List<PayedInvclass> payedList = new List<PayedInvclass>();
-                    //    payedList = await cachModel.GetPayedByInvId(prInvoice.invoiceId);
-                    //    mailpayedList = payedList;
-                    //    decimal sump = payedList.Sum(x => x.cash);
-                    //    decimal deservd = (decimal)prInvoice.totalNet - sump;
-                    //    //convertter
-                    //    foreach (var p in payedList)
-                    //    {
-                    //        p.cash = decimal.Parse(reportclass.DecTostring(p.cash));
-                    //    }
-                    //    paramarr.Add(new ReportParameter("cashTr", AppSettings.resourcemanagerreport.GetString("trCashType")));
-
-                    //    paramarr.Add(new ReportParameter("sumP", reportclass.DecTostring(sump)));
-                    //    paramarr.Add(new ReportParameter("deserved", reportclass.DecTostring(deservd)));
-                    //    rep.DataSources.Add(new ReportDataSource("DataSetPayedInvclass", payedList));
-
-
-                    //}
-
-
-                    rep.SetParameters(paramarr);
-
-                    rep.Refresh();
-                    #endregion
-                    //copy count
-                    if (prInvoice.invType == "s" || prInvoice.invType == "sb" || prInvoice.invType == "p" || prInvoice.invType == "pb" || prInvoice.invType == "ts"
-                        || prInvoice.invType == "ss")
+                    foreach (OrderPreparing row in OrderPreparingList)
                     {
-
-                        paramarr.Add(new ReportParameter("isOrginal", prInvoice.isOrginal.ToString()));
-
-                        //for (int i = 1; i <= short.Parse(AppSettings.sale_copy_count); i++)
-                        //{
-                        //    if (i > 1)
-                        //    {
-                        //        // update paramarr->isOrginal
-                        //        foreach (var item in paramarr.Where(x => x.Name == "isOrginal").ToList())
-                        //        {
-                        //            StringCollection myCol = new StringCollection();
-                        //            myCol.Add(prInvoice.isOrginal.ToString());
-                        //            item.Values = myCol;
-
-
-                        //        }
-                        //        //end update
-
-                        //    }
-                        //    rep.SetParameters(paramarr);
-
-                        //    rep.Refresh();
-
-
-                        //    if (int.Parse(AppSettings.Allow_print_inv_count) > prInvoice.printedcount)
-                        //    {
-
-                        //        this.Dispatcher.Invoke(() =>
-                        //        {
-                        //            if (AppSettings.salePaperSize == "A4")
-                        //            {
-
-                        //                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.sale_printer_name, 1);
-
-                        //            }
-                        //            else
-                        //            {
-                        //                LocalReportExtensions.customPrintToPrinter(rep, AppSettings.sale_printer_name, 1, width, height);
-
-                        //            }
-
-                        //        });
-
-
-                        //        int res = 0;
-                        //        res = await invoiceModel.updateprintstat(prInvoice.invoiceId, 1, false, true);
-                        //        prInvoice.printedcount = prInvoice.printedcount + 1;
-
-                        //        prInvoice.isOrginal = false;
-
-
-                        //    }
-                        //    else
-                        //    {
-                        //        this.Dispatcher.Invoke(() =>
-                        //        {
-                        //            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trYouExceedLimit"), animation: ToasterAnimation.FadeIn);
-                        //        });
-
-                        //    }
-
-                        //}
-                        //kitchen
-
-                        this.Dispatcher.Invoke(() =>
-                        {
-                            if (AppSettings.kitchenPaperSize == "A4")
-                            {
-
-                                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.kitchen_printer_name, 1);
-
-                            }
-                            else
-                            {
-                                //   rs = reportclass.GetreceiptInvoiceRdlcpath(prInvoice, 1, AppSettings.kitchenPaperSize, itemscount, rep);
-                                //rep = rs.rep;
-                                //width = rs.width;
-                                //height = rs.height;
-                                //rep.SetParameters(paramarr);
-                                //rep.Refresh();
-                                LocalReportExtensions.customPrintToPrinter(rep, AppSettings.kitchen_printer_name, short.Parse(AppSettings.kitchen_copy_count), width, height);
-
-                            }
-
-                        });
-
+                        List<OrderPreparing> templist = new List<OrderPreparing>();
+                        templist.Add(row);
+                        printPrepOrder(templist);
                     }
-                    else
-                    {
-
-                        //this.Dispatcher.Invoke(() =>
-                        //{
-
-                        //    if (AppSettings.salePaperSize == "A4")
-                        //    {
-
-                        //        LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.sale_printer_name, short.Parse(AppSettings.sale_copy_count));
-
-                        //    }
-                        //    else
-                        //    {
-                        //        LocalReportExtensions.customPrintToPrinter(rep, AppSettings.sale_printer_name, short.Parse(AppSettings.sale_copy_count), width, height);
-
-                        //    }
-
-
-                        //});
-
-                    }
-                    // end copy count
-
 
                 }
                 else
@@ -4040,6 +3783,286 @@ namespace Restaurant.View.sales
                 });
             }
 
+
+        }
+        public async void printPrepOrder(  List<OrderPreparing> OrderPreparingList)
+        {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+            #region fill invoice data
+
+            //items
+            //   invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+            //  itemscount = invoiceItems.Count();
+
+            reportsize rs = reportclass.GetKitchenRdlcpath(AppSettings.salePaperSize, 1, rep);
+            rep = rs.rep;
+            width = rs.width;
+            height = rs.height;
+            //user
+
+
+       //     User employ = new User();
+            //if (FillCombo.usersList != null)
+            //{
+            //    employ = FillCombo.usersList.Where(X => X.userId == (int)prInvoice.updateUserId).FirstOrDefault();
+            //}
+            //else
+            //{
+            //    employ = await userModel.getUserById((int)prInvoice.updateUserId);
+            //}
+
+            //prInvoice.uuserName = employ.name;
+            //prInvoice.uuserLast = employ.lastname;
+            ////agent
+            //if (prInvoice.agentId != null)
+            //{
+            //    Agent agentinv = new Agent();
+
+            //    // agentinv = customers.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
+
+            //    if (FillCombo.customersList != null)
+            //    {
+            //        agentinv = FillCombo.customersList.Where(X => X.agentId == (int)prInvoice.agentId).FirstOrDefault();
+            //    }
+            //    else
+            //    {
+            //        agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+            //    }
+
+            //    prInvoice.agentCode = agentinv.code;
+            //    //new lines
+            //    prInvoice.agentName = agentinv.name;
+            //    prInvoice.agentCompany = agentinv.company;
+
+            //}
+            //else
+            //{
+            //    prInvoice.agentCode = "-";
+            //    prInvoice.agentName = "-";
+            //    prInvoice.agentCompany = "-";
+            //}
+            //branch
+            //Branch branch = new Branch();
+            //if (FillCombo.branchsList != null)
+            //{
+            //    branch = FillCombo.branchsList.Where(X => X.branchId == (int)prInvoice.branchCreatorId).FirstOrDefault();
+
+            //}
+            //else
+            //{
+            //    branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+            //}
+
+            //if (branch.branchId > 0)
+            //{
+            //    prInvoice.branchName = branch.name;
+            //}
+
+            ReportCls.checkLang();
+            ////shipping
+            //ShippingCompanies shippingcom = new ShippingCompanies();
+
+            //if (prInvoice.shippingCompanyId > 0)
+            //{
+            //    if (FillCombo.shippingCompaniesList != null)
+            //    {
+            //        shippingcom = FillCombo.shippingCompaniesList.Where(X => X.shippingCompanyId == (int)prInvoice.shippingCompanyId).FirstOrDefault();
+
+            //    }
+            //    else
+            //    {
+            //        shippingcom = await shippingcom.GetByID((int)prInvoice.shippingCompanyId);
+            //    }
+
+            //}
+            //User shipuser = new User();
+            //if (prInvoice.shipUserId > 0)
+            //{
+            //    shipuser = await userModel.getUserById((int)prInvoice.shipUserId);
+            //}
+            //prInvoice.shipUserName = shipuser.name + " " + shipuser.lastname;
+            ////end shipping
+            ////items subTotal & itemTax
+            //decimal totaltax = 0;
+            //foreach (var i in invoiceItems)
+            //{
+            //    i.price = decimal.Parse(HelpClass.DecTostring(i.price));
+            //    if (i.itemTax != null)
+            //    {
+            //        totaltax += (decimal)i.itemTax;
+
+            //    }
+            //    i.subTotal = decimal.Parse(HelpClass.DecTostring(i.price * i.quantity));
+
+            //}
+
+            //if (totaltax > 0 && prInvoice.invType != "sbd" && prInvoice.invType != "sb")
+            //{
+            //    paramarr.Add(new ReportParameter("itemtax_note", AppSettings.itemtax_note.Trim()));
+            //    paramarr.Add(new ReportParameter("hasItemTax", "1"));
+
+            //}
+            //else
+            //{
+            //    // paramarr.Add(new ReportParameter("itemtax_note", AppSettings.itemtax_note.Trim()));
+            //    paramarr.Add(new ReportParameter("hasItemTax", "0"));
+            //}
+            //
+
+            //clsReports.purchaseInvoiceReport(invoiceItems, rep, rep.ReportPath);
+            clsReports.PreparingOrdersPrint(OrderPreparingList.ToList(), rep, paramarr);
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+            paramarr.Add(new ReportParameter("isSaved", "y"));
+            //paramarr = reportclass.fillSaleInvReport(prInvoice, paramarr, shippingcom);
+            //   multiplePaytable(paramarr);
+            // payment methods
+
+            //if (prInvoice.invType == "s" || prInvoice.invType == "sd" || prInvoice.invType == "sbd" || prInvoice.invType == "sb"
+            //    || prInvoice.invType == "ts" || prInvoice.invType == "ss" || prInvoice.invType == "tsd" || prInvoice.invType == "ssd"
+            //    )
+            //{
+            //    CashTransfer cachModel = new CashTransfer();
+            //    List<PayedInvclass> payedList = new List<PayedInvclass>();
+            //    payedList = await cachModel.GetPayedByInvId(prInvoice.invoiceId);
+            //    mailpayedList = payedList;
+            //    decimal sump = payedList.Sum(x => x.cash);
+            //    decimal deservd = (decimal)prInvoice.totalNet - sump;
+            //    //convertter
+            //    foreach (var p in payedList)
+            //    {
+            //        p.cash = decimal.Parse(reportclass.DecTostring(p.cash));
+            //    }
+            //    paramarr.Add(new ReportParameter("cashTr", AppSettings.resourcemanagerreport.GetString("trCashType")));
+
+            //    paramarr.Add(new ReportParameter("sumP", reportclass.DecTostring(sump)));
+            //    paramarr.Add(new ReportParameter("deserved", reportclass.DecTostring(deservd)));
+            //    rep.DataSources.Add(new ReportDataSource("DataSetPayedInvclass", payedList));
+
+
+            //}
+
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+            #endregion
+            //copy count
+            string invType = prOrderPreparingList.FirstOrDefault().invType;
+            if (invType == "s" || invType == "sb" || invType == "ts"
+                || invType == "ss")
+            {
+
+                paramarr.Add(new ReportParameter("isOrginal", prInvoice.isOrginal.ToString()));
+
+                //for (int i = 1; i <= short.Parse(AppSettings.sale_copy_count); i++)
+                //{
+                //    if (i > 1)
+                //    {
+                //        // update paramarr->isOrginal
+                //        foreach (var item in paramarr.Where(x => x.Name == "isOrginal").ToList())
+                //        {
+                //            StringCollection myCol = new StringCollection();
+                //            myCol.Add(prInvoice.isOrginal.ToString());
+                //            item.Values = myCol;
+
+
+                //        }
+                //        //end update
+
+                //    }
+                //    rep.SetParameters(paramarr);
+
+                //    rep.Refresh();
+
+
+                //    if (int.Parse(AppSettings.Allow_print_inv_count) > prInvoice.printedcount)
+                //    {
+
+                //        this.Dispatcher.Invoke(() =>
+                //        {
+                //            if (AppSettings.salePaperSize == "A4")
+                //            {
+
+                //                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.sale_printer_name, 1);
+
+                //            }
+                //            else
+                //            {
+                //                LocalReportExtensions.customPrintToPrinter(rep, AppSettings.sale_printer_name, 1, width, height);
+
+                //            }
+
+                //        });
+
+
+                //        int res = 0;
+                //        res = await invoiceModel.updateprintstat(prInvoice.invoiceId, 1, false, true);
+                //        prInvoice.printedcount = prInvoice.printedcount + 1;
+
+                //        prInvoice.isOrginal = false;
+
+
+                //    }
+                //    else
+                //    {
+                //        this.Dispatcher.Invoke(() =>
+                //        {
+                //            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trYouExceedLimit"), animation: ToasterAnimation.FadeIn);
+                //        });
+
+                //    }
+
+                //}
+                //kitchen
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    if (AppSettings.kitchenPaperSize == "A4")
+                    {
+
+                        LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.kitchen_printer_name, 1);
+
+                    }
+                    else
+                    {
+                        //   rs = reportclass.GetreceiptInvoiceRdlcpath(prInvoice, 1, AppSettings.kitchenPaperSize, itemscount, rep);
+                        //rep = rs.rep;
+                        //width = rs.width;
+                        //height = rs.height;
+                        //rep.SetParameters(paramarr);
+                        //rep.Refresh();
+
+                        LocalReportExtensions.customPrintToPrinter(rep, AppSettings.kitchen_printer_name, short.Parse(AppSettings.kitchen_copy_count), width, height);
+
+                    }
+
+                });
+
+            }
+            else
+            {
+
+                //this.Dispatcher.Invoke(() =>
+                //{
+
+                //    if (AppSettings.salePaperSize == "A4")
+                //    {
+
+                //        LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.sale_printer_name, short.Parse(AppSettings.sale_copy_count));
+
+                //    }
+                //    else
+                //    {
+                //        LocalReportExtensions.customPrintToPrinter(rep, AppSettings.sale_printer_name, short.Parse(AppSettings.sale_copy_count), width, height);
+
+                //    }
+
+
+                //});
+
+            }
+            // end copy count
 
         }
         private void Btn_printInvoice_Click(object sender, RoutedEventArgs e)

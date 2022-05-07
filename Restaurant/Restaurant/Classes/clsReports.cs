@@ -2362,23 +2362,32 @@ Parameters!trValueDiscount.Value)
         public static void PreparingOrdersPrint(IEnumerable<OrderPreparing> list, LocalReport rep,   List<ReportParameter> paramarr)
         {
             List<OrderPreparing> Query = JsonConvert.DeserializeObject<List<OrderPreparing>>(JsonConvert.SerializeObject(list));
+            ReportCls reportclass = new ReportCls();
 
-
-       //     rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
+            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trPreparingOrders")));
+            paramarr.Add(new ReportParameter("invNumber", list.FirstOrDefault().invNum));
 
-            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNum")));
+            paramarr.Add(new ReportParameter("invDate", reportclass.DateToString(list.FirstOrDefault().invDate) == null ? "-" : reportclass.DateToString(list.FirstOrDefault().createDate)));
+            paramarr.Add(new ReportParameter("invTime", reportclass.TimeToString(list.FirstOrDefault().invTime)));
+            paramarr.Add(new ReportParameter("branchName", list.FirstOrDefault().branchName));
+            paramarr.Add(new ReportParameter("Notes", list.FirstOrDefault().notes));
 
-            paramarr.Add(new ReportParameter("trInvoiceNumber", AppSettings.resourcemanagerreport.GetString("trInvoiceNumber")));
-            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trNotes", AppSettings.resourcemanagerreport.GetString("trNotes")));
+
+            paramarr.Add(new ReportParameter("trWaiter", AppSettings.resourcemanagerreport.GetString("trWaiter")));
+
+            paramarr.Add(new ReportParameter("trTables", AppSettings.resourcemanagerreport.GetString("trTables")));
+
+            paramarr.Add(new ReportParameter("Tables", list.FirstOrDefault().tables));
+            paramarr.Add(new ReportParameter("trInvoice", AppSettings.resourcemanagerreport.GetString("trBranch")));
+            paramarr.Add(new ReportParameter("trOrder", AppSettings.resourcemanagerreport.GetString("trBranch")));
+            paramarr.Add(new ReportParameter("orderNum", list.FirstOrDefault().orderNum));
+            paramarr.Add(new ReportParameter("userName", list.FirstOrDefault().waiter));
             paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem")));
             paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
-            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
-
-              paramarr.Add(new ReportParameter("duration", AppSettings.resourcemanagerreport.GetString("duration")));
             DateFormConv(paramarr);
-
 
             //foreach (OrderPreparing row in Query)
             //{
@@ -2386,8 +2395,7 @@ Parameters!trValueDiscount.Value)
             // //   row.status = preparingOrderStatusConvert(row.status);
             //}
 
-
-            rep.DataSources.Add(new ReportDataSource("DataSet", Query));
+            rep.DataSources.Add(new ReportDataSource("DataSet", Query)); 
         }
         public static void DeliveryReport(IEnumerable<OrderPreparingSTS> list, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {

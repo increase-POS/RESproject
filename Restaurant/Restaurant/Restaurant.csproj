@@ -2480,6 +2480,7 @@
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Restaurant.Classes.Agent.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.AgentMembershipCash1.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.ApiClasses.OrderPreparing1.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ApiClasses.Tables.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Bank.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Branch.datasource" />
