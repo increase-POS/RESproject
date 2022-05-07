@@ -75,13 +75,13 @@ namespace Restaurant.Classes
             {
                 if (branchsList is null)
                     await RefreshBranches();
-                branchesWithAll = branchsList;
+                branchesWithAll = branchsList.ToList();
             }
             else
             {
                 if (BranchesByBranchandUser is null)
                     await RefreshByBranchandUser();
-                branchesWithAll = BranchesByBranchandUser;
+                branchesWithAll = BranchesByBranchandUser.ToList();
             }
             //branchesWithAll = branches.ToList();
             Branch branch = new Branch();
