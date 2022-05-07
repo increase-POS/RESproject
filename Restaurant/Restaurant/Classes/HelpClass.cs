@@ -985,6 +985,7 @@ namespace Restaurant.Classes
                 firstTitle = AppSettings.resourcemanager.GetString(
                FillCombo.objectsList.Where(x => x.name == firstTitle).FirstOrDefault().translate
                );
+            #region
             //if (firstTitle == "invoiceSalesReports" || firstTitle == "invoicePurchaseReports")
             //    firstTitle = AppSettings.resourcemanager.GetString("trInvoices");
             //else if (firstTitle == "itemSalesReports" || firstTitle == "itemPurchaseReports")
@@ -1025,7 +1026,7 @@ namespace Restaurant.Classes
             //    firstTitle = AppSettings.resourcemanager.GetString("trCashBalance");
             //else if (firstTitle == "bankAccountsReports")
             //    firstTitle = AppSettings.resourcemanager.GetString("trBanks");
-
+            #endregion
             //////////////////////////////////////////////////////////////////////////////
 
             if (secondTitle == "branch")
@@ -1046,6 +1047,8 @@ namespace Restaurant.Classes
                 secondTitle = AppSettings.resourcemanager.GetString("trOffer");
             else if (secondTitle == "invoice")
                 secondTitle = AppSettings.resourcemanager.GetString("tr_Invoice");
+            else if (secondTitle == "invoices")
+                secondTitle = AppSettings.resourcemanager.GetString("trInvoices");
             else if (secondTitle == "order")
                 secondTitle = AppSettings.resourcemanager.GetString("trOrders");
             else if (secondTitle == "quotation")
@@ -1084,14 +1087,22 @@ namespace Restaurant.Classes
                 secondTitle = AppSettings.resourcemanager.GetString("trMostPurchased");
             else if (secondTitle == "shipping")
                 secondTitle = AppSettings.resourcemanager.GetString("trShipping");
+            else if (secondTitle == "shippings")
+                secondTitle = AppSettings.resourcemanager.GetString("trShippingCompanies");
             else if (secondTitle == "salary")
                 secondTitle = AppSettings.resourcemanager.GetString("trSalary");
+            else if (secondTitle == "salaries")
+                secondTitle = AppSettings.resourcemanager.GetString("trSalaries");
             else if (secondTitle == "generalExpenses")
                 secondTitle = AppSettings.resourcemanager.GetString("trGeneralExpenses");
             else if (secondTitle == "administrativePull")
                 secondTitle = AppSettings.resourcemanager.GetString("trAdministrativePull");
+            else if (secondTitle == "administrativePulls")
+                secondTitle = AppSettings.resourcemanager.GetString("trAdministrativePulls");
             else if (secondTitle == "administrativeDeposit")
                 secondTitle = AppSettings.resourcemanager.GetString("trAdministrativeDeposit");
+            else if (secondTitle == "administrativeDeposits")
+                secondTitle = AppSettings.resourcemanager.GetString("trAdministrativeDeposits");
             else if (secondTitle == "deposit")
                 secondTitle = AppSettings.resourcemanager.GetString("trDeposit");
             else if (secondTitle == "receive")
@@ -1104,6 +1115,10 @@ namespace Restaurant.Classes
                 secondTitle = AppSettings.resourcemanager.GetString("trReceipts");
             else if (secondTitle == "preparingOrders")
                 secondTitle = AppSettings.resourcemanager.GetString("trPreparingOrders");
+            else if (secondTitle == "pull")
+                secondTitle = AppSettings.resourcemanager.GetString("trPull");
+            else if (secondTitle == "cash")
+                secondTitle = AppSettings.resourcemanager.GetString("trCash_");
             //////////////////////////////////////////////////////////////////////////////
 
             textBlock.Text = firstTitle + " / " + secondTitle;

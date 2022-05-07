@@ -3994,4 +3994,13 @@ Please add Email in setting</value>
   <data name="trCash_" xml:space="preserve">
     <value>Cash</value>
   </data>
+  <data name="trAdministrativeDeposits" xml:space="preserve">
+    <value>Administrative deposits</value>
+  </data>
+  <data name="trAdministrativePulls" xml:space="preserve">
+    <value>Administrative pulls</value>
+  </data>
+  <data name="trSalaries" xml:space="preserve">
+    <value>Salaries</value>
+  </data>
 </root>

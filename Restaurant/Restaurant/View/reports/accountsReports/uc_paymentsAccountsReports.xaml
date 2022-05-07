@@ -173,7 +173,7 @@
                                 BorderBrush="Transparent"
                                 Margin="0,5,0,-1">
 
-                                <Button x:Name="btn_user" Tag="user"
+                                <Button x:Name="btn_user" Tag="users"
                                     Background="Transparent" 
                                     materialDesign:RippleAssist.Feedback="Transparent"
                                     BorderBrush="Transparent"
@@ -221,7 +221,7 @@
                                 CornerRadius="7,7,0,0"
                                 BorderBrush="Transparent" 
                                 Margin="0,5,0,-1">
-                                <Button x:Name="btn_salary"  Tag="salary"
+                                <Button x:Name="btn_salary"  Tag="salaries"
                                     Background="Transparent"  
                                     materialDesign:RippleAssist.Feedback="Transparent"
                                     BorderBrush="Transparent"
@@ -319,7 +319,7 @@
                                 BorderBrush="Transparent"
                                 Margin="0,5,0,-1">
                                 <Button x:Name="btn_administrativePull" 
-                                    Background="Transparent"  Tag="administrativePull"
+                                    Background="Transparent"  Tag="administrativePulls"
                                     materialDesign:RippleAssist.Feedback="Transparent" 
                                     BorderBrush="Transparent"
                                     Height="auto"
@@ -367,7 +367,7 @@
                                 CornerRadius="7,7,0,0"
                                 BorderBrush="Transparent"
                                 Margin="0,5,0,-1">
-                                <Button x:Name="btn_shipping" Tag="shipping"
+                                <Button x:Name="btn_shipping" Tag="shippings"
                                     Background="Transparent"   FlowDirection="LeftToRight"
                                     materialDesign:RippleAssist.Feedback="Transparent" 
                                     BorderBrush="Transparent"

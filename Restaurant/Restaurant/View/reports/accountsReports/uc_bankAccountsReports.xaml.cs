@@ -204,7 +204,6 @@ namespace Restaurant.View.reports.accountsReports
         {//payments
             try
             {
-                
                 HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());

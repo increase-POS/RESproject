@@ -3979,4 +3979,13 @@
   <data name="trCash_" xml:space="preserve">
     <value>المبلغ</value>
   </data>
+  <data name="trAdministrativeDeposits" xml:space="preserve">
+    <value>إيداعات إدارية</value>
+  </data>
+  <data name="trAdministrativePulls" xml:space="preserve">
+    <value>سحوبات إدارية</value>
+  </data>
+  <data name="trSalaries" xml:space="preserve">
+    <value>الرواتب</value>
+  </data>
 </root>
