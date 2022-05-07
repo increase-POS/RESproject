@@ -14,8 +14,20 @@ using System.Collections;
 using Restaurant.View.sales;
 namespace Restaurant.Classes
 {
+    class reportsize
+    {
+       
+            public int width { get; set; }
+        public int height { get; set; }
+       // public string path { get; set; }
+        public LocalReport rep { get; set; }
+      
+
+
+    }
     class ReportCls
     {
+
         List<CurrencyInfo> currencies = new List<CurrencyInfo>();
         public static void clearFolder(string FolderName)
         {
@@ -981,7 +993,198 @@ namespace Restaurant.Classes
             string reppath = PathUp(Directory.GetCurrentDirectory(), 2, addpath);
             return reppath;
         }
+        public  reportsize GetreceiptInvoiceRdlcpath(Invoice invoice, int isPreview,string PaperSize,int itemscount, LocalReport rep)
+        {
+            string addpath;
+            bool isArabic = checkLang();
+            reportsize rs = new reportsize();
+            if (isArabic)
+            {
+
+                //if ((invoice.invType == "q" || invoice.invType == "qd" || invoice.invType == "qs"))
+                //{
+                //    addpath = @"\Reports\Sale\Ar\ArInvPurQtReport.rdlc";
+                //}
+                //else 
+                if (invoice.invType == "or" || invoice.invType == "ord" || invoice.invType == "ors")
+                {
+                    addpath = @"\Reports\Sale\Invoice\Ar\ArInvPurOrderReport.rdlc";
+                }
+                else
+                {
+
+                    if (PaperSize == "10cm" && isPreview == 1)
+                    {
+                        addpath = @"\Reports\Sale\Invoice\Ar\LargeSaleReport.rdlc";
+                        rs.width = 400;//400 =10cm
+                        rs.height = GetpageHeight( itemscount, 500);
+
+                    }
+                    else if ( PaperSize == "8cm" && isPreview == 1)
+                    {
+                        addpath = @"\Reports\Sale\Invoice\Ar\MediumSaleReport.rdlc";
+                        rs.width = 315;//315 =8cm
+                        rs.height = GetpageHeight( itemscount, 500);
+
+
+                    }
+                    else if ( PaperSize == "5.7cm" && isPreview == 1)
+                    {
+                        addpath = @"\Reports\Sale\Invoice\Ar\SmallSaleReport.rdlc";
+                        rs.width = 224;//224 =5.7cm
+                        rs.height = GetpageHeight( itemscount, 460);
+
+                    }
+                    else //MainWindow.salePaperSize == "A4"
+                    {
+
+                        addpath = @"\Reports\Sale\Invoice\Ar\ArInvPurReport.rdlc";
+                    }
+
+                    //   addpath = @"\Reports\Sale\Ar\LargeSaleReport.rdlc";
+                    //   addpath = @"\Reports\Sale\Ar\MediumSaleReport.rdlc";
+                    //   addpath = @"\Reports\Sale\Ar\SmallSaleReport.rdlc";
+                }
+
+            }
+            else
+            {
+                //if (invoice.invType == "q" || invoice.invType == "qd" || invoice.invType == "qs")
+                //{
+                //    addpath = @"\Reports\Sale\En\InvPurQtReport.rdlc";
+                //}
+                //else
+                if (invoice.invType == "or" || invoice.invType == "ord" || invoice.invType == "ors")
+                {
+                    addpath = @"\Reports\Sale\Invoice\En\InvPurOrderReport.rdlc";
+                }
+                else
+                {
+                    if (PaperSize == "10cm" && isPreview == 1)
+                    {
+                        addpath = @"\Reports\Sale\Invoice\En\LargeSaleReport.rdlc";
+                       rs.width = 400;//400 =10cm
+                         rs.height = GetpageHeight( itemscount, 500);
+
+                    }
+                    else if (PaperSize == "8cm" && isPreview == 1)
+                    {
+                        addpath = @"\Reports\Sale\Invoice\En\MediumSaleReport.rdlc";
+                        rs.width = 315;//315 =8cm
+                        rs.height = GetpageHeight( itemscount, 500);
+
+                    }
+                    else if (PaperSize == "5.7cm" && isPreview == 1)
+                    {
+                        addpath = @"\Reports\Sale\Invoice\En\SmallSaleReport.rdlc";
+                        rs.width = 224;//224 =5.7cm
+                        rs.height = GetpageHeight( itemscount, 460);
+
+                    }
+                    else //MainWindow.salePaperSize == "A4"
+                    {
+
+                        addpath = @"\Reports\Sale\Invoice\En\InvPurReport.rdlc";
+                    }
+                    //  addpath = @"\Reports\Sale\En\InvPurReport.rdlc";
+                    //    addpath = @"\Reports\Sale\En\LargeSaleReport.rdlc";
+                    //   addpath = @"\Reports\Sale\En\MediumSaleReport.rdlc";
+                    // addpath = @"\Reports\Sale\En\SmallSaleReport.rdlc";
+                }
+
+            }
+            
+
+            //
+
+            string reppath = PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+            // rs.path = reppath;
+            rep.ReportPath = reppath;
+            rs.rep = rep;
+            return rs;
+        }
+        public reportsize GetKitchenRdlcpath( string PaperSize, int itemscount, LocalReport rep)
+        {
+            string addpath;
+            bool isArabic = checkLang();
+            reportsize rs = new reportsize();
+            if (isArabic)
+            {
+                    if (PaperSize == "10cm"  )
+                    {
+                        addpath = @"\Reports\Kitchen\Ar\LargeReport.rdlc";
+                        rs.width = 400;//400 =10cm
+                        rs.height = GetpageHeight(itemscount, 400);
+
+                    }
+                    else if (PaperSize == "8cm"  )
+                    {
+                        addpath = @"\Reports\Kitchen\Ar\MediumReport.rdlc";
+                        rs.width = 315;//315 =8cm
+                        rs.height = GetpageHeight(itemscount, 400);
+
+
+                    }
+                    else if (PaperSize == "5.7cm"  )
+                    {
+                        addpath = @"\Reports\Kitchen\Ar\SmallReport.rdlc";
+                        rs.width = 224;//224 =5.7cm
+                        rs.height = GetpageHeight(itemscount, 400);
+
+                    }
+                    else //MainWindow.salePaperSize == "A4"
+                    {
+
+                        addpath = @"\Reports\Kitchen\Ar\ArInvReport.rdlc";
+                    }
  
+
+            }
+            else
+            {
+              
+                    if (PaperSize == "10cm" )
+                    {
+                        addpath = @"\Reports\Kitchen\En\LargeReport.rdlc";
+                        rs.width = 400;//400 =10cm
+                        rs.height = GetpageHeight(itemscount, 400);
+
+                    }
+                    else if (PaperSize == "8cm"  )
+                    {
+                        addpath = @"\Reports\Kitchen\En\MediumReport.rdlc";
+                        rs.width = 315;//315 =8cm
+                        rs.height = GetpageHeight(itemscount, 400);
+
+                    }
+                    else if (PaperSize == "5.7cm" )
+                    {
+                        addpath = @"\Reports\Kitchen\En\SmallReport.rdlc";
+                        rs.width = 224;//224 =5.7cm
+                        rs.height = GetpageHeight(itemscount, 400);
+
+                    }
+                    else //MainWindow.salePaperSize == "A4"
+                    {
+
+                        addpath = @"\Reports\Kitchen\En\InvReport.rdlc";
+                    }
+                  
+                
+
+            }
+
+
+            //
+
+            string reppath = PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+            // rs.path = reppath;
+            rep.ReportPath = reppath;
+            rs.rep = rep;
+            return rs;
+        }
+
+
         public List<ReportParameter> fillPurInvReport(Invoice invoice, List<ReportParameter> paramarr)
         {
             checkLang();

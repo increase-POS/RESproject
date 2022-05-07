@@ -2358,7 +2358,37 @@ Parameters!trValueDiscount.Value)
 
          rep.DataSources.Add(new ReportDataSource("DataSet", Query));
         }
+        //sale 
+        public static void PreparingOrdersPrint(IEnumerable<OrderPreparing> list, LocalReport rep,   List<ReportParameter> paramarr)
+        {
+            List<OrderPreparing> Query = JsonConvert.DeserializeObject<List<OrderPreparing>>(JsonConvert.SerializeObject(list));
 
+
+       //     rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+
+            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNum")));
+
+            paramarr.Add(new ReportParameter("trInvoiceNumber", AppSettings.resourcemanagerreport.GetString("trInvoiceNumber")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem")));
+            paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
+            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
+
+              paramarr.Add(new ReportParameter("duration", AppSettings.resourcemanagerreport.GetString("duration")));
+            DateFormConv(paramarr);
+
+
+            //foreach (OrderPreparing row in Query)
+            //{
+            //    //row.statusConv = preparingOrderStatusConvert(row.status);
+            // //   row.status = preparingOrderStatusConvert(row.status);
+            //}
+
+
+            rep.DataSources.Add(new ReportDataSource("DataSet", Query));
+        }
         public static void DeliveryReport(IEnumerable<OrderPreparingSTS> list, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             List<OrderPreparingSTS> Query = JsonConvert.DeserializeObject<List<OrderPreparingSTS>>(JsonConvert.SerializeObject(list));
