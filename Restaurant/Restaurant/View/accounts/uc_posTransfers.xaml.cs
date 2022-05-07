@@ -71,7 +71,7 @@ namespace Restaurant.View.accounts
                 _instance = value;
             }
         }
-
+        bool UserControlLoaded = false;
         Pos posModel = new Pos();
         Branch branchModel = new Branch();
         IEnumerable<Pos> poss;
@@ -94,6 +94,7 @@ namespace Restaurant.View.accounts
             Instance = null;
             GC.Collect();
         }
+
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
@@ -156,7 +157,7 @@ namespace Restaurant.View.accounts
                 await RefreshCashesList();
 
                 await Search();
-
+                UserControlLoaded = true;
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -994,6 +995,8 @@ namespace Restaurant.View.accounts
         {
             try
             {
+                if(UserControlLoaded)
+                { 
                 CheckBox cb = sender as CheckBox;
                 if (cb.IsFocused)
                 {
@@ -1014,6 +1017,7 @@ namespace Restaurant.View.accounts
                 Tb_search_TextChanged(null, null);
 
                 HelpClass.EndAwait(grid_main);
+                }
             }
             catch (Exception ex)
             {

@@ -54,7 +54,7 @@ namespace Restaurant.View.reports.kitchenReports
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
                 else
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
-                //await translate();
+                await translate();
                 #endregion
 
                 permission();

@@ -288,22 +288,26 @@ namespace Restaurant.View.delivery
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
-                if (FillCombo.groupObject.HasPermissionAction(residentialSectorsPermission, FillCombo.groupObjects, "one"))
+                if (driver.userId > 0)
                 {
-                    Window.GetWindow(this).Opacity = 0.2;
+                    HelpClass.StartAwait(grid_main);
 
-                    wd_residentialSectorsList w = new wd_residentialSectorsList();
-                    w.driverId = driver.userId;
-                    w.ShowDialog();
+                    if (FillCombo.groupObject.HasPermissionAction(residentialSectorsPermission, FillCombo.groupObjects, "one"))
+                    {
+                        Window.GetWindow(this).Opacity = 0.2;
 
-                    Window.GetWindow(this).Opacity = 1;
+                        wd_residentialSectorsList w = new wd_residentialSectorsList();
+                        w.driverId = driver.userId;
+                        w.ShowDialog();
 
-                    await refreshDriverSectors();
+                        Window.GetWindow(this).Opacity = 1;
+
+                        await refreshDriverSectors();
+                    }
+                    else
+                        Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    HelpClass.EndAwait(grid_main);
                 }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {

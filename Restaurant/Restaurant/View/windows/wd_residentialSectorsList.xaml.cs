@@ -27,6 +27,7 @@ namespace Restaurant.View.windows
         List<ResidentialSectors> allSectorsQuery = new List<ResidentialSectors>();
         List<ResidentialSectors> selectedSectorsSource = new List<ResidentialSectors>();
 
+        ResidentialSectorsUsers residentialSectorsUserModel = new ResidentialSectorsUsers();
         ResidentialSectorsUsers residentialSectorsUser = new ResidentialSectorsUsers();
         List<ResidentialSectorsUsers> selectedSectors = new List<ResidentialSectorsUsers>();
         public int driverId = 0;
@@ -56,17 +57,17 @@ namespace Restaurant.View.windows
                 #endregion
 
                 
-                allSectorsSource = await residentialSector.Get();////active sectors
+                allSectorsSource = await residentialSector.Get(); ////active sectors
                 allSectorsSource = allSectorsSource.Where(r => r.isActive == 1).ToList();
                 allSectors.AddRange(allSectorsSource);
 
                 selectedSectorsSource = await residentialSector.GetResSectorsByUserId(driverId);
 
-                foreach (var v in selectedSectorsSource)
-                {
-                    residentialSectorsUser = await residentialSectorsUser.GetById(v.residentSecId);
-                    selectedSectors.Add(residentialSectorsUser);
-                }
+                //foreach (var v in selectedSectorsSource)
+                //{
+                //    residentialSectorsUser = await residentialSectorsUserModel.GetById(v.residentSecId);
+                //    selectedSectors.Add(residentialSectorsUser);
+                //}
 
                 //remove selected items from all items
                 foreach (var i in selectedSectorsSource)
@@ -209,7 +210,7 @@ namespace Restaurant.View.windows
         }
 
         private void Btn_selectedOne_Click(object sender, RoutedEventArgs e)
-        {//select one
+        {   //select one
             try
             {
                 residentialSector = dg_all.SelectedItem as ResidentialSectors;
@@ -219,14 +220,14 @@ namespace Restaurant.View.windows
                     selectedSectorsSource.Add(residentialSector);
                     dg_selectedItems.ItemsSource = selectedSectorsSource;
 
-                    ResidentialSectorsUsers rs = new ResidentialSectorsUsers();
-                    rs.residentSecId = residentialSector.residentSecId;
-                    rs.userId = driverId;
-                    rs.notes = "";
-                    rs.createUserId = MainWindow.userLogin.userId;
-                    rs.updateUserId = MainWindow.userLogin.userId;
+                    //ResidentialSectorsUsers rs = new ResidentialSectorsUsers();
+                    //rs.residentSecId = residentialSector.residentSecId;
+                    //rs.userId = driverId;
+                    //rs.notes = "";
+                    //rs.createUserId = MainWindow.userLogin.userId;
+                    //rs.updateUserId = MainWindow.userLogin.userId;
 
-                    selectedSectors.Add(rs);
+                    //selectedSectors.Add(rs);
                 }
                
                 dg_all.Items.Refresh();
@@ -253,8 +254,8 @@ namespace Restaurant.View.windows
                     allSectors.Add(residentialSector);
                     dg_all.ItemsSource = allSectors;
 
-                    residentialSectorsUser = selectedSectors.Where(a => a.residentSecId == residentialSector.residentSecId).FirstOrDefault();
-                    selectedSectors.Remove(residentialSectorsUser);
+                    //residentialSectorsUser = selectedSectors.Where(a => a.residentSecId == residentialSector.residentSecId).FirstOrDefault();
+                    //selectedSectors.Remove(residentialSectorsUser);
                 }
                
                 dg_all.Items.Refresh();
@@ -309,7 +310,17 @@ namespace Restaurant.View.windows
             {
                 HelpClass.StartAwait(grid_main);
                 int s = 0;
-                
+                foreach (var item in selectedSectors)
+                {
+                    ResidentialSectorsUsers rs = new ResidentialSectorsUsers();
+                    rs.residentSecId = item.residentSecId;
+                    rs.userId = driverId;
+                    rs.notes = "";
+                    rs.createUserId = MainWindow.userLogin.userId;
+                    rs.updateUserId = MainWindow.userLogin.userId;
+
+                    selectedSectors.Add(rs);
+                }
                 s = await residentialSectorsUser.UpdateResSectorsByUserId(selectedSectors, driverId, MainWindow.userLogin.userId);
 
                 if (s <= 0)
