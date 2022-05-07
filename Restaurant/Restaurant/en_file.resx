@@ -3991,4 +3991,7 @@ Please add Email in setting</value>
   <data name="deliveryReport" xml:space="preserve">
     <value>Delivery Report</value>
   </data>
+  <data name="trCash_" xml:space="preserve">
+    <value>Cash</value>
+  </data>
 </root>

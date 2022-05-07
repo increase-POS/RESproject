@@ -3976,4 +3976,7 @@
   <data name="deliveryReport" xml:space="preserve">
     <value>تقرير التوصيل</value>
   </data>
+  <data name="trCash_" xml:space="preserve">
+    <value>المبلغ</value>
+  </data>
 </root>

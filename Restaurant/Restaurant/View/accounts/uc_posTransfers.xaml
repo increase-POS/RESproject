@@ -159,8 +159,9 @@
                     </Button.ToolTip>
                 </Button>
                 </Grid>
-                <TextBlock Text="Cash : " x:Name="txt_Cash" Foreground="#737373" VerticalAlignment="Center"  Margin="5" FontSize="14"/>
+                <TextBlock Text="Cash : " x:Name="txt_Cash" Grid.Row="1" Foreground="#737373" VerticalAlignment="Center"  Margin="5" FontSize="14"/>
                 <StackPanel Margin="60 0 0 0" Grid.Row="1"    Orientation="Horizontal" >
+                    
                     <Border  Margin="5" Background="White" CornerRadius="16" Height="40">
                         <CheckBox x:Name="chk_deposit"  IsChecked="True"
                           Background="{StaticResource MainColor}"
@@ -177,38 +178,6 @@
                           Checked="search_Checking"
                           Unchecked="chk_uncheck"/>
                     </Border>
-                    <!--<Border Grid.Column="4" Margin="5" Background="White" CornerRadius="16" Height="40">
-                        <CheckBox x:Name="chk_unConfirmed"  
-                          Background="{StaticResource MainColor}"
-                          Content="UnConfirmed"
-                          Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
-                          Checked="search_Checking" Margin="0" Height="40"
-                          Unchecked="chk_uncheck"/>
-                    </Border>-->
-                    <!--<Border Grid.Column="4" Margin="5" Background="White" CornerRadius="16" Height="40">
-                        <CheckBox x:Name="chk_waiting" 
-                          Background="{StaticResource MainColor}"
-                          Content="Waiting"  Margin="0" Height="40"
-                          Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
-                          Checked="search_Checking"
-                          Unchecked="chk_uncheck"/>
-                    </Border>-->
-                    <!--<Border Grid.Column="4"  Margin="5" Background="White" CornerRadius="16" Height="40">
-                        <CheckBox x:Name="chk_confirmed" 
-                          Background="{StaticResource MainColor}"
-                          Content="Confirmed" Margin="0" Height="40"
-                          Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
-                          Checked="search_Checking"
-                          Unchecked="chk_uncheck"/>
-                    </Border>-->
-                    <!--<Border Grid.Column="4"  Margin="5" Background="White" CornerRadius="16" Height="40">
-                        <CheckBox x:Name="chk_createdOper" 
-                          Background="{StaticResource MainColor}"
-                          Content="CreatedOper" Margin="0" Height="40"
-                          Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
-                          Checked="search_Checking"
-                          Unchecked="chk_uncheck"/>
-                    </Border>-->
                 </StackPanel>
 
 
