@@ -51,6 +51,8 @@ using Restaurant.View.reports.salesReports;
 using Restaurant.View.reports.accountsReports;
 using Restaurant.View.sales.promotion.membership;
 using Restaurant.View;
+using Restaurant.View.reports.kitchenReports;
+using Restaurant.View.reports.deliveryReports;
 
 namespace Restaurant
 {
@@ -2895,6 +2897,34 @@ namespace Restaurant
                 case "invoicesClasses":
                     grid_main.Children.Add(uc_invoicesClasses.Instance);
                     break;
+
+                //216 dashboard
+                //290 membershipSalesReports
+                case "membershipSalesReports":
+                    grid_main.Children.Add(uc_membershipSalesReports.Instance);
+                    break;
+                //291 kitchenReports
+                case "kitchenReports":
+                    grid_main.Children.Add(uc_kitchenReports.Instance);
+                    break;
+                //292 deliveryReports
+                case "deliveryReports":
+                    grid_main.Children.Add(uc_deliveryReports.Instance);
+                    break;                
+                //293 preparingOrdersKitchenReports
+                case "preparingOrdersKitchenReports":
+                    grid_main.Children.Add(uc_preparingOrdersKitchenReports.Instance);
+                    break;                 
+                //294 spendingRequestsKitchenReports
+                case "spendingRequestsKitchenReports":
+                    grid_main.Children.Add(uc_spendingRequestsKitchenReport.Instance);
+                    break;                 
+                //295 consumptionKitchenReports
+                case "consumptionKitchenReports":
+                    grid_main.Children.Add(uc_consumptionKitchenReports.Instance);
+                    break;
+
+
 
 
                 default:
