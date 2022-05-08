@@ -762,6 +762,9 @@ namespace Restaurant.View.purchase
                                             {
                                                 foreach (var item in listPayments)
                                                 {
+                                                    // if is card
+                                                    tb_processNum.Text = item.docNum;
+
                                                     item.transType = "p"; //pull
                                                     item.posId = MainWindow.posLogin.posId;
                                                     item.agentId = invoice.agentId;
@@ -2890,8 +2893,9 @@ namespace Restaurant.View.purchase
                         navigateBtnActivate();
                     }
                 }
-                Window.GetWindow(this).Opacity = 1;
 
+                HelpClass.clearValidate(requiredControlList, this);
+                Window.GetWindow(this).Opacity = 1;
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)

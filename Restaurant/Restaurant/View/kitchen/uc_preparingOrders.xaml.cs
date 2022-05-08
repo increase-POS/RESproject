@@ -171,6 +171,20 @@ namespace Restaurant.View.kitchen
 
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
         }
+        private void UserControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) || e.KeyboardDevice.IsKeyDown(Key.RightCtrl))
+            {
+                switch (e.Key)
+                {
+                    case Key.S:
+                        //handle S key
+                        Btn_save_Click(btn_save, null);
+                        break;
+
+                }
+            }
+        }
         void timer_Tick(object sender, EventArgs e)
         {
             try

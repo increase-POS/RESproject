@@ -264,9 +264,9 @@ namespace Restaurant.View.delivery
         }
         private async void Dg_orders_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 if (dg_orders.SelectedIndex != -1)
                 {
@@ -359,13 +359,13 @@ namespace Restaurant.View.delivery
                 }
 
                 HelpClass.clearValidate(requiredControlList, this);
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh

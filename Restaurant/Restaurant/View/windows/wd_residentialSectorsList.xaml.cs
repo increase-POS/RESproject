@@ -310,7 +310,7 @@ namespace Restaurant.View.windows
             {
                 HelpClass.StartAwait(grid_main);
                 int s = 0;
-                foreach (var item in selectedSectors)
+                foreach (var item in selectedSectorsSource)
                 {
                     ResidentialSectorsUsers rs = new ResidentialSectorsUsers();
                     rs.residentSecId = item.residentSecId;

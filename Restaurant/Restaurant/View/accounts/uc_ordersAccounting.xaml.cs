@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using netoaster;
 using Restaurant.Classes;
+using Restaurant.Classes.ApiClasses;
 using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
@@ -245,6 +246,7 @@ namespace Restaurant.View.accounts
             dg_orderAccounts.Columns[3].Header = AppSettings.resourcemanager.GetString("trDate");
             dg_orderAccounts.Columns[4].Header = AppSettings.resourcemanager.GetString("trCashTooltip");
             dg_orderAccounts.Columns[5].Header = AppSettings.resourcemanager.GetString("trState");
+            dg_orderAccounts.Columns[6].Header = AppSettings.resourcemanager.GetString("paid");
 
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
@@ -261,11 +263,11 @@ namespace Restaurant.View.accounts
         }
         private void Dg_orderAccounts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {//selection
-         //try
-         //{
-         //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
-            if (dg_orderAccounts.SelectedIndex != -1)
+                if (dg_orderAccounts.SelectedIndex != -1)
             {
                 invoice = dg_orderAccounts.SelectedItem as Invoice;
                 this.DataContext = cashtrans;
@@ -278,7 +280,11 @@ namespace Restaurant.View.accounts
 
                     userId = invoice.shipUserId.Value;
 
-                    if (invoice.status == "rc")
+                    tb_cash.Text = HelpClass.DecTostring(invoice.deserved);
+                    
+                    tb_cashDelivered.Text = HelpClass.DecTostring(invoice.paid);
+                    
+                    if (invoice.status == "Done")
                     {
                         btn_save.IsEnabled = false;
                         tb_notes.IsEnabled = false;
@@ -294,14 +300,14 @@ namespace Restaurant.View.accounts
                     btn_save.IsEnabled = false;
                 }
             }
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            HelpClass.EndAwait(grid_main);
         }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+        }
+    }
 
         async Task Search()
         {
@@ -325,7 +331,7 @@ namespace Restaurant.View.accounts
                             )
                             && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
                             && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
-                            && s.status == "rc"
+                            && s.status == "Done"
                             );
                         else if (chk_inDelivery.IsChecked == true)
                             invoiceQuery = invoices.Where(s => (s.invNumber.ToLower().Contains(searchText)
@@ -337,7 +343,7 @@ namespace Restaurant.View.accounts
                            )
                            && s.updateDate.Value.Date >= dp_searchStartDate.SelectedDate.Value.Date
                            && s.updateDate.Value.Date <= dp_searchEndDate.SelectedDate.Value.Date
-                           && s.status == "tr"
+                           && s.status == "InTheWay"
                            );
 
                     });
@@ -355,7 +361,7 @@ namespace Restaurant.View.accounts
                             || s.totalNet.ToString().ToLower().Contains(searchText)
                             || s.status.ToLower().Contains(searchText)
                             )
-                             && s.status == "rc"
+                             && s.status == "Done"
                             );
                         else if (chk_inDelivery.IsChecked == true)
                             invoiceQuery = invoices.Where(s => (s.invNumber.ToLower().Contains(searchText)
@@ -365,7 +371,7 @@ namespace Restaurant.View.accounts
                             || s.totalNet.ToString().ToLower().Contains(searchText)
                             || s.status.ToLower().Contains(searchText)
                             )
-                             && s.status == "tr"
+                             && s.status == "InTheWay"
                             );
 
                     });
@@ -701,7 +707,7 @@ namespace Restaurant.View.accounts
                         wd_multiplePayment w = new wd_multiplePayment();
                         w.isPurchase = false;
 
-                        Agent customer = customers.ToList().Find(b => b.agentId == invoice.agentId && b.isLimited == true);
+                        Agent customer = FillCombo.customersList.ToList().Find(b => b.agentId == invoice.agentId && b.isLimited == true);
                         if (customer != null)
                         {
                             decimal remain = 0;
@@ -731,14 +737,22 @@ namespace Restaurant.View.accounts
                             foreach (var item in listPayments)
                             {
                                 await saveConfiguredCashTrans(item);
-                                invoice.paid += item.cash;
-                                invoice.deserved -= item.cash;
+                                // yasin code
+                                if (item.processType != "balance")
+                                {
+                                    invoice.paid += item.cash;
+                                    invoice.deserved -= item.cash;
+                                }
                             }
 
                             int s = await invoice.saveInvoice(invoice);
-                            await saveOrderStatus(invoice.invoiceId, "rc");
+                            
                             if (!s.Equals(0))
                             {
+                                List<OrderPreparing> orderPpList = await orderModel.GetOrdersByInvoiceId(s);
+                                OrderPreparing orderPp = orderPpList.FirstOrDefault(); 
+                                await saveOrderStatus(orderPp.orderPreparingId, "Done");
+
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                                 Clear();
 
@@ -770,14 +784,28 @@ namespace Restaurant.View.accounts
             }
         }
 
-        private async Task saveOrderStatus(int invoiceId, string status)
+        OrderPreparing orderModel = new OrderPreparing();
+        private async Task saveOrderStatus(int orderPreparingId, string status)
         {
-            invoiceStatus st = new invoiceStatus();
-            st.status = status;
-            st.invoiceId = invoiceId;
-            st.createUserId = MainWindow.userLogin.userId;
-            st.isActive = 1;
-            await invoice.saveOrderStatus(st);
+            //invoiceStatus st = new invoiceStatus();
+            //st.status = status;
+            //st.invoiceId = invoiceId;
+            //st.createUserId = MainWindow.userLogin.userId;
+            //st.isActive = 1;
+            //await invoice.saveOrderStatus(st);
+
+          
+
+            orderPreparingStatus ops = new orderPreparingStatus();
+            ops.orderPreparingId = orderPreparingId;
+            //ops.status = "Done";
+            ops.status = status;
+            ops.createUserId = MainWindow.userLogin.userId;
+            ops.updateUserId = MainWindow.userLogin.userId;
+            ops.notes = tb_notes.Text;
+            ops.isActive = 1;
+            await orderModel.updateOrderStatus(ops);
+
         }
 
         private async Task saveConfiguredCashTrans(CashTransfer cashTransfer)

@@ -172,6 +172,7 @@ namespace Restaurant.View.settings
 
 
         }
+        
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         {//add
