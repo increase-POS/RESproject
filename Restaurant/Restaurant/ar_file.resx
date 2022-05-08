@@ -3991,4 +3991,7 @@
   <data name="trInvoiceClass" xml:space="preserve">
     <value>فئة الفاتورة</value>
   </data>
+  <data name="preparingOrdersConsumption" xml:space="preserve">
+    <value>تحضير الطلبات, استهلاك, ...</value>
+  </data>
 </root>

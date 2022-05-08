@@ -4006,4 +4006,7 @@ Please add Email in setting</value>
   <data name="trInvoiceClass" xml:space="preserve">
     <value>Invoice class</value>
   </data>
+  <data name="preparingOrdersConsumption" xml:space="preserve">
+    <value>Preparing orders, Consumption, ...</value>
+  </data>
 </root>
