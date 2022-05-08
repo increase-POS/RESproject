@@ -1732,7 +1732,7 @@ srb
             {
                 paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trSalesReturnInvTitle")));
             }
-            else if (invoice.invType == "s" || invoice.invType == "sd")
+            else if (invoice.invType == "s" || invoice.invType == "sd"|| invoice.invType == "ss" || invoice.invType == "ts" )
             {
                 paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trSalesInvoice")));
 
