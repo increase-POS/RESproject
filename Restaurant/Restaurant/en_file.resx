@@ -4009,4 +4009,7 @@ Please add Email in setting</value>
   <data name="preparingOrdersConsumption" xml:space="preserve">
     <value>Preparing orders, Consumption, ...</value>
   </data>
+  <data name="paid" xml:space="preserve">
+    <value>Paid</value>
+  </data>
 </root>

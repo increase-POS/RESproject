@@ -3994,4 +3994,7 @@
   <data name="preparingOrdersConsumption" xml:space="preserve">
     <value>تحضير الطلبات, استهلاك, ...</value>
   </data>
+  <data name="paid" xml:space="preserve">
+    <value>المدفوع</value>
+  </data>
 </root>
