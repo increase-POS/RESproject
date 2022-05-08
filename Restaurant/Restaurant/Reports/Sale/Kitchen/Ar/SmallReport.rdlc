@@ -508,13 +508,13 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.68943cm</Width>
+                  <Width>1.95281cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.72329cm</Width>
+                  <Width>2.24574cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.16639cm</Width>
+                  <Width>1.17071cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -774,7 +774,7 @@
             <Top>3.40649cm</Top>
             <Left>0.13215cm</Left>
             <Height>1.2cm</Height>
-            <Width>4.57911cm</Width>
+            <Width>5.36927cm</Width>
             <ZIndex>10</ZIndex>
             <Style>
               <Border>
@@ -803,7 +803,7 @@
             <rd:DefaultName>ExecutionTime</rd:DefaultName>
             <Top>2.21133cm</Top>
             <Left>0.08426cm</Left>
-            <Height>0.38198cm</Height>
+            <Height>0.47995cm</Height>
             <Width>2.0231cm</Width>
             <ZIndex>11</ZIndex>
             <Style>
@@ -946,7 +946,7 @@
             <rd:DefaultName>Textbox1</rd:DefaultName>
             <Top>2.21133cm</Top>
             <Left>4.13851cm</Left>
-            <Height>0.38198cm</Height>
+            <Height>0.47995cm</Height>
             <Width>1.36291cm</Width>
             <ZIndex>15</ZIndex>
             <Style>
@@ -980,7 +980,7 @@
             <rd:DefaultName>Textbox1</rd:DefaultName>
             <Top>2.21133cm</Top>
             <Left>2.28375cm</Left>
-            <Height>0.38198cm</Height>
+            <Height>0.48904cm</Height>
             <Width>1.7591cm</Width>
             <ZIndex>16</ZIndex>
             <Visibility>
@@ -1013,9 +1013,9 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>ExecutionTime</rd:DefaultName>
-            <Top>2.67011cm</Top>
+            <Top>2.70673cm</Top>
             <Left>0.08426cm</Left>
-            <Height>0.38198cm</Height>
+            <Height>0.46827cm</Height>
             <Width>2.0231cm</Width>
             <ZIndex>17</ZIndex>
             <Style>
