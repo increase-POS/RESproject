@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Restaurant.View.reports.salesReports"
              mc:Ignorable="d" Tag="promotionSalesReports"
-                 xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="800" d:DesignWidth="1000">
@@ -201,7 +201,7 @@
                                             </Border>
                                            
                                     </DockPanel>
-                                    <Grid Grid.Column="0" Grid.Row="1">
+                                    <Grid Grid.Column="0" Grid.Row="0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1.5*"/>
                                             <ColumnDefinition Width="*"/>
@@ -216,12 +216,10 @@
                                                   BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
                                                   Foreground="#4E4E4E"  
                                                   Height="40"  Padding="10,0,5,0" />
-
-
                                                 </Grid>
                                             </Border>
                                             
-                                        <CheckBox  Grid.Column="1"  Background="{StaticResource MainColor}" Margin="5" x:Name="chk_allCoupon" Click="chk_allCoupon_Click" Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" ></CheckBox>
+                                        <CheckBox  Grid.Column="1"  Background="{StaticResource MainColor}" Margin="5" x:Name="chk_allCoupon" Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_allCoupon_Checked" Unloaded="Chk_allCoupon_Unloaded" ></CheckBox>
                                     </Grid>
                                     <DockPanel  Grid.Row="1" Grid.Column="1" LastChildFill="False">
                                             <Border Grid.Row="0" DockPanel.Dock="Right" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
@@ -354,10 +352,8 @@
                     <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                     <DataGrid  Margin="5,4,5,18"  IsReadOnly="True"  Background="White"
-                     Name="dgInvoice"
-                        AutoGenerateColumns="False"  MouseDoubleClick="DgInvoice_MouseDoubleClick"
-                        ColumnWidth="SizeToHeader"
-                            AlternatingRowBackground="#f3f3f3" AlternationCount="2">
+                               Name="dgInvoice" AutoGenerateColumns="False" ColumnWidth="SizeToHeader"
+                               AlternatingRowBackground="#f3f3f3" AlternationCount="2">
                     <DataGrid.OpacityMask>
                         <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
                     </DataGrid.OpacityMask>
@@ -373,6 +369,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn x:Name="col_No" Width="*" Header="No." Binding="{Binding invNumber}"/>
                         <DataGridTextColumn x:Name="col_date" Width="*" Header="Date" Binding="{Binding updateDate,Converter={StaticResource dateFrameConverter }}"/>
+                        <!--coupon-->
                         <DataGridTextColumn x:Name="col_coupon" Width="*" Header="Name" Binding="{Binding Copname}" Visibility="Hidden"/>
                         <DataGridTextColumn x:Name="col_code" Width="*" Header="Code" Binding="{Binding Copcode}" Visibility="Visible"/>
                         <DataGridTextColumn x:Name="col_couponType" Width="*" Header="Type" Binding="{Binding CopdiscountType,Converter={StaticResource discountTypeConverter }}" Visibility="Hidden"/>
@@ -380,7 +377,7 @@
                         <DataGridTextColumn x:Name="col_couponTotalValue" Width="*" Header="Discount Amount" Binding="{Binding couponTotalValue,Converter={StaticResource accuracyConverter}}" Visibility="Hidden"/>
                         <DataGridTextColumn x:Name="col_item" Width="*" Header="Item" Binding="{Binding ITitemUnitName1}" Visibility="Hidden"/>
                         <DataGridTextColumn x:Name="col_price" Width="*" Header="Price" Binding="{Binding price ,Converter={StaticResource accuracyConverter}}" Visibility="Hidden"/>
-
+                        <!--offer-->
                         <DataGridTextColumn x:Name="col_itQuantity" Width="*" Header="QTY" Binding="{Binding ITquantity}" Visibility="Hidden"/>
                         <DataGridTextColumn x:Name="col_offers" Width="*" Header="Offer" Binding="{Binding Oname}" Visibility="Hidden"/>
                         <DataGridTextColumn x:Name="col_offerCode" Width="*" Header="Code" Binding="{Binding Ocode}" Visibility="Visible"/>
@@ -469,7 +466,7 @@
                             </Button>
                             <Button   Background="{x:Null}"    Grid.Column="3" Margin="5,0,5,-0.6" 
                             Padding="0" Height="Auto"   x:Name="btn_settings" Visibility="Collapsed"
-                                       BorderBrush="{x:Null}" Click="btn_settings_Click">
+                                       BorderBrush="{x:Null}" >
                                 <materialDesign:PackIcon 
                           Width="20" Height="20" 
                            FlowDirection="LeftToRight" Kind="Settings" Foreground="Gray"  >
