@@ -2736,31 +2736,32 @@ namespace Restaurant.View.sales
                                     if (AppSettings.print_on_save_sale == "1")
                                     {
                                         // printInvoice();
-                                        Thread t1 = new Thread(() =>
-                                        {
-                                            printInvoice(prinvoiceId);
-                                        });
-                                        t1.Start();
+                                        //Thread t1 = new Thread(() =>
+                                        //{
+                                               await   printInvoice(prinvoiceId);
+                                        //});
+                                        //t1.Start();
                                     }
                                     if (AppSettings.print_kitchen_on_sale == "1")
                                     {
+                                        prOrderPreparingList = await preparingOrder.GetOrdersByInvoiceId(prinvoiceId);
 
                                         // printInvoice();
-                                        //Thread t1 = new Thread(() =>
-                                        //{
-                                        prOrderPreparingList = await preparingOrder.GetOrdersByInvoiceId(prinvoiceId);
-                                        printInvoiceInkitchen(prinvoiceId, prOrderPreparingList);
-                                        //});
-                                        //t1.Start();
+                                        Thread t2 = new Thread( () =>
+                                        {
+                                           
+                                            printInvoiceInkitchen(prinvoiceId, prOrderPreparingList);
+                                        });
+                                        t2.Start();
                                     }
                                     if (AppSettings.email_on_save_sale == "1")
                                     {
                                         //sendsaleEmail();
-                                        Thread t2 = new Thread(() =>
+                                        Thread t3 = new Thread(() =>
                                         {
                                             sendsaleEmail(prinvoiceId);
                                         });
-                                        t2.Start();
+                                        t3.Start();
                                     }
                                 }
                             }
@@ -3384,7 +3385,7 @@ namespace Restaurant.View.sales
 
             }
         }
-        public async void printInvoice(int invoiceId)
+        public async Task printInvoice(int invoiceId)
         {
             try
             {
