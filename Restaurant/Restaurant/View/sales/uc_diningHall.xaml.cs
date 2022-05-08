@@ -2921,8 +2921,12 @@ namespace Restaurant.View.sales
             foreach (var item in paymentsList)
             {
                 await saveConfiguredCashTrans(item);
-                invoice.paid += item.cash;
-                invoice.deserved -= item.cash;
+                // yasin code
+                if (item.processType != "balance")
+                {
+                    invoice.paid += item.cash;
+                    invoice.deserved -= item.cash;
+                }
             }
             prinvoiceId = await invoice.saveInvoice(invoice);
                
