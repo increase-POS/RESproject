@@ -299,6 +299,9 @@
             <Height>0.18377in</Height>
             <Width>0.45803in</Width>
             <ZIndex>4</ZIndex>
+            <Visibility>
+              <Hidden>=iif(Parameters!invType.Value="s" ,False,True)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -336,6 +339,9 @@
             <Height>0.18377in</Height>
             <Width>1.65589in</Width>
             <ZIndex>5</ZIndex>
+            <Visibility>
+              <Hidden>=iif(Parameters!invType.Value="s" ,False,True)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -383,6 +389,9 @@
             <Height>0.18377in</Height>
             <Width>0.45803in</Width>
             <ZIndex>6</ZIndex>
+            <Visibility>
+              <Hidden>=iif(Parameters!invType.Value="s" OR Parameters!invType.Value="ss",false,true)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -420,6 +429,9 @@
             <Height>0.18377in</Height>
             <Width>1.65589in</Width>
             <ZIndex>7</ZIndex>
+            <Visibility>
+              <Hidden>=iif(Parameters!invType.Value="s" OR Parameters!invType.Value="ss",false,true)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -774,7 +786,7 @@
             <Top>3.40649cm</Top>
             <Left>0.13215cm</Left>
             <Height>1.2cm</Height>
-            <Width>5.36927cm</Width>
+            <Width>5.36926cm</Width>
             <ZIndex>10</ZIndex>
             <Style>
               <Border>
@@ -1242,11 +1254,23 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="dateForm">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="invType">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
       <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>15</NumberOfRows>
+      <NumberOfRows>16</NumberOfRows>
       <CellDefinitions>
         <CellDefinition>
           <ColumnIndex>0</ColumnIndex>
@@ -1407,6 +1431,16 @@
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>14</RowIndex>
           <ParameterName>orderNum</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>14</RowIndex>
+          <ParameterName>dateForm</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>15</RowIndex>
+          <ParameterName>invType</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

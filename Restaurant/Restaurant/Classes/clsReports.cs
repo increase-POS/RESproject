@@ -2359,13 +2359,14 @@ Parameters!trValueDiscount.Value)
          rep.DataSources.Add(new ReportDataSource("DataSet", Query));
         }
         //sale 
-        public static void PreparingOrdersPrint(IEnumerable<OrderPreparing> list, LocalReport rep,   List<ReportParameter> paramarr)
+        public static void PreparingOrdersPrint(IEnumerable<OrderPreparing> Query , LocalReport rep,   List<ReportParameter> paramarr)
         {
-            List<OrderPreparing> Query = JsonConvert.DeserializeObject<List<OrderPreparing>>(JsonConvert.SerializeObject(list));
+            List<OrderPreparing> list = JsonConvert.DeserializeObject<List<OrderPreparing>>(JsonConvert.SerializeObject(Query));
             ReportCls reportclass = new ReportCls();
 
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
+            paramarr.Add(new ReportParameter("invType", list.FirstOrDefault().invType));
             paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trPreparingOrders")));
             paramarr.Add(new ReportParameter("invNumber", list.FirstOrDefault().invNum));
 
@@ -2395,7 +2396,7 @@ Parameters!trValueDiscount.Value)
             // //   row.status = preparingOrderStatusConvert(row.status);
             //}
 
-            rep.DataSources.Add(new ReportDataSource("DataSet", Query)); 
+            rep.DataSources.Add(new ReportDataSource("DataSet", list)); 
         }
         public static void DeliveryReport(IEnumerable<OrderPreparingSTS> list, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {

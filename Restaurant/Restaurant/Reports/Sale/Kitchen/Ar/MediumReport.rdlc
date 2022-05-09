@@ -301,6 +301,9 @@
             <Height>0.57cm</Height>
             <Width>0.78226in</Width>
             <ZIndex>4</ZIndex>
+            <Visibility>
+              <Hidden>=iif(Parameters!invType.Value="s" ,False,True)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -338,6 +341,9 @@
             <Height>0.57cm</Height>
             <Width>2.18223in</Width>
             <ZIndex>5</ZIndex>
+            <Visibility>
+              <Hidden>=iif(Parameters!invType.Value="s" ,False,True)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -385,6 +391,9 @@
             <Height>0.57cm</Height>
             <Width>0.78226in</Width>
             <ZIndex>6</ZIndex>
+            <Visibility>
+              <Hidden>=iif(Parameters!invType.Value="s" OR Parameters!invType.Value="ss",false,true)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -422,6 +431,9 @@
             <Height>0.57cm</Height>
             <Width>2.18223in</Width>
             <ZIndex>7</ZIndex>
+            <Visibility>
+              <Hidden>=iif(Parameters!invType.Value="s" OR Parameters!invType.Value="ss",false,true)</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1244,11 +1256,23 @@
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="dateForm">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="invType">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
       <NumberOfColumns>4</NumberOfColumns>
-      <NumberOfRows>16</NumberOfRows>
+      <NumberOfRows>17</NumberOfRows>
       <CellDefinitions>
         <CellDefinition>
           <ColumnIndex>0</ColumnIndex>
@@ -1409,6 +1433,16 @@
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>15</RowIndex>
           <ParameterName>orderNum</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>15</RowIndex>
+          <ParameterName>dateForm</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>16</RowIndex>
+          <ParameterName>invType</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>
