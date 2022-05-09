@@ -76,8 +76,12 @@ namespace Restaurant.View.reports.salesReports
         Statistics statisticModel = new Statistics();
 
         List<ItemTransferInvoice> coupons;
-        List<ItemTransferInvoice> Offers;
+        List<ItemTransferInvoice> offers;
         List<SalesMembership> invoicesClasses;
+
+        List<ItemTransferInvoice> couponsQuery;
+        List<ItemTransferInvoice> offersQuery;
+        List<SalesMembership> invoicesClassesQuery;
 
         //for combo boxes
         /*************************/
@@ -103,6 +107,9 @@ namespace Restaurant.View.reports.salesReports
         List<int> selectedOfferId = new List<int>();
         List<int> selectedInvoiceId = new List<int>();
 
+        Coupon couponModel = new Coupon();
+        Offer offerModel = new Offer();
+        InvoicesClass invoiceModel = new InvoicesClass();
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
@@ -139,7 +146,22 @@ namespace Restaurant.View.reports.salesReports
         }
 
         #region methods
+        private async void callSearch(object sender)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         async Task Search()
         {
             searchText = txt_search.Text.ToLower();
@@ -151,7 +173,7 @@ namespace Restaurant.View.reports.salesReports
             }
             else if(selectedTab == 1)
             {
-                if (Offers is null)
+                if (offers is null)
                     await RefreshOffersList();
                 await offerSearch();
             }
@@ -170,17 +192,17 @@ namespace Restaurant.View.reports.salesReports
             if (selectedTab == 0)
             {
                 selected = selectedcouponId;
-                //dgInvoice.ItemsSource = InvoicesQuery;
+                dgInvoice.ItemsSource = couponsQuery;
             }
             if (selectedTab == 1)
             {
                 selected = selectedOfferId;
-                //dgInvoice.ItemsSource = InvoicesQuery;
+                dgInvoice.ItemsSource = offersQuery;
             }
             if (selectedTab == 2)
             {
                 selected = selectedInvoiceId;
-                //dgInvoice.ItemsSource = InvoicesQuery;
+                dgInvoice.ItemsSource = invoicesClassesQuery;
             }
 
             txt_count.Text = dgInvoice.Items.Count.ToString();
@@ -192,149 +214,110 @@ namespace Restaurant.View.reports.salesReports
 
         async Task coupounSearch()
         {
-
-            //InvoicesQuery = Invoices
-            //   .Where(s =>
-            //(
-            //s.invNumber.ToLower().Contains(searchText)
-            //||
-            //(s.branchCreatorName != null ? s.branchCreatorName.ToLower().Contains(searchText) : false)
-            //||
-            //(s.posName != null ? s.posName.ToLower().Contains(searchText) : false)
-            //||
-            //(s.agentName != null ? s.agentName.ToLower().Contains(searchText) : false)
-            //||
-            //(s.agentCompany != null ? s.agentCompany.ToLower().Contains(searchText) : false)
-            //||
-            //(s.uUserAccName != null ? s.uUserAccName.ToLower().Contains(searchText) : false)
-            //)
-            //&&
-            ////service
-            //(cb_sevices.SelectedIndex != -1 ? s.invType == cb_sevices.SelectedValue.ToString() : true)
-            //&&
-            ////start date
-            //(dp_startDate.SelectedDate != null ? s.updateDate >= dp_startDate.SelectedDate : true)
-            //&&
-            ////end date
-            //(dp_endDate.SelectedDate != null ? s.updateDate <= dp_endDate.SelectedDate : true)
-            //&&
-            ////start time
-            //(dt_startTime.SelectedTime != null ? s.updateDate >= dt_startTime.SelectedTime : true)
-            //&&
-            ////end time
-            //(dt_endTime.SelectedTime != null ? s.updateDate <= dt_endTime.SelectedTime : true)
-            //).ToList();
-            ////branch
-            //if (selectedTab == 0)
-            //    InvoicesQuery = InvoicesQuery.Where(j => (selectedBranchId.Count != 0 ? selectedBranchId.Contains((int)j.branchCreatorId) : true)).ToList();
-            ////pos
-            //if (selectedTab == 1)
-            //    InvoicesQuery = InvoicesQuery.Where(j => (selectedPosId.Count != 0 ? selectedPosId.Contains((int)j.posId) : true)).ToList();
-            ////agent
-            //if (selectedTab == 2)
-            //    InvoicesQuery = InvoicesQuery.Where(j => (selectedVendorsId.Count != 0 ? selectedVendorsId.Contains((int)j.agentId) : true)).ToList();
-            ////user
-            //if (selectedTab == 3)
-            //    InvoicesQuery = InvoicesQuery.Where(j => (selectedUserId.Count != 0 ? selectedUserId.Contains((int)j.updateUserId) : true)).ToList();
-
+            couponsQuery = coupons
+               .Where(s =>
+            (
+            s.invNumber.ToLower().Contains(searchText)
+            ||
+            (s.Copname != null ? s.branchCreatorName.ToLower().Contains(searchText) : false)
+            ||
+            (s.Copcode != null ? s.posName.ToLower().Contains(searchText) : false)
+            )
+            &&
+            //start date
+            (dp_couponStartDate.SelectedDate != null   ? s.updateDate >= dp_couponStartDate.SelectedDate : true)
+            &&
+            //end date
+            (dp_couponEndDate.SelectedDate   != null   ? s.updateDate <= dp_couponEndDate.SelectedDate : true)
+            &&
+            //start time
+            (dt_couponStartTime.SelectedTime != null   ? s.updateDate >= dt_couponStartTime.SelectedTime : true)
+            &&
+            //end time
+            (dt_couponEndTime.SelectedTime   != null   ? s.updateDate <= dt_couponEndTime.SelectedTime : true)
+            ).ToList();
+            
+            couponsQuery = couponsQuery.Where(j => (selectedcouponId.Count != 0 ? selectedcouponId.Contains((int)j.CopcId) : true)).ToList();
         }
 
         async Task offerSearch()
         {
+            offersQuery = offers
+               .Where(s =>
+            (
+            s.invNumber.ToLower().Contains(searchText)
+            ||
+            (s.Oname != null ? s.branchCreatorName.ToLower().Contains(searchText) : false)
+            ||
+            (s.Ocode != null ? s.posName.ToLower().Contains(searchText) : false)
+            )
+            &&
+            //start date
+            (dp_couponStartDate.SelectedDate != null ? s.updateDate >= dp_couponStartDate.SelectedDate : true)
+            &&
+            //end date
+            (dp_couponEndDate.SelectedDate != null ? s.updateDate <= dp_couponEndDate.SelectedDate : true)
+            &&
+            //start time
+            (dt_couponStartTime.SelectedTime != null ? s.updateDate >= dt_couponStartTime.SelectedTime : true)
+            &&
+            //end time
+            (dt_couponEndTime.SelectedTime != null ? s.updateDate <= dt_couponEndTime.SelectedTime : true)
+            ).ToList();
 
-            //InvoicesQuery = Invoices
-            //   .Where(s =>
-            //(
-            //s.invNumber.ToLower().Contains(searchText)
-            //||
-            //(s.branchCreatorName != null ? s.branchCreatorName.ToLower().Contains(searchText) : false)
-            //||
-            //(s.posName != null ? s.posName.ToLower().Contains(searchText) : false)
-            //||
-            //(s.agentName != null ? s.agentName.ToLower().Contains(searchText) : false)
-            //||
-            //(s.agentCompany != null ? s.agentCompany.ToLower().Contains(searchText) : false)
-            //||
-            //(s.uUserAccName != null ? s.uUserAccName.ToLower().Contains(searchText) : false)
-            //)
-            //&&
-            ////service
-            //(cb_sevices.SelectedIndex != -1 ? s.invType == cb_sevices.SelectedValue.ToString() : true)
-            //&&
-            ////start date
-            //(dp_startDate.SelectedDate != null ? s.updateDate >= dp_startDate.SelectedDate : true)
-            //&&
-            ////end date
-            //(dp_endDate.SelectedDate != null ? s.updateDate <= dp_endDate.SelectedDate : true)
-            //&&
-            ////start time
-            //(dt_startTime.SelectedTime != null ? s.updateDate >= dt_startTime.SelectedTime : true)
-            //&&
-            ////end time
-            //(dt_endTime.SelectedTime != null ? s.updateDate <= dt_endTime.SelectedTime : true)
-            //).ToList();
-            ////branch
-            //if (selectedTab == 0)
-            //    InvoicesQuery = InvoicesQuery.Where(j => (selectedBranchId.Count != 0 ? selectedBranchId.Contains((int)j.branchCreatorId) : true)).ToList();
-            ////pos
-            //if (selectedTab == 1)
-            //    InvoicesQuery = InvoicesQuery.Where(j => (selectedPosId.Count != 0 ? selectedPosId.Contains((int)j.posId) : true)).ToList();
-            ////agent
-            //if (selectedTab == 2)
-            //    InvoicesQuery = InvoicesQuery.Where(j => (selectedVendorsId.Count != 0 ? selectedVendorsId.Contains((int)j.agentId) : true)).ToList();
-            ////user
-            //if (selectedTab == 3)
-            //    InvoicesQuery = InvoicesQuery.Where(j => (selectedUserId.Count != 0 ? selectedUserId.Contains((int)j.updateUserId) : true)).ToList();
-
+            offersQuery = offersQuery.Where(j => (selectedOfferId.Count != 0 ? selectedOfferId.Contains((int)j.OofferId) : true)).ToList();
         }
 
         async Task invoiceSearch()
         {
+            invoicesClassesQuery = invoicesClasses
+              .Where(s =>
+           (
+           s.invNumber.ToLower().Contains(searchText)
+           //||
+           //(s.Oname != null ? s.branchCreatorName.ToLower().Contains(searchText) : false)
+           //||
+           //(s.Ocode != null ? s.posName.ToLower().Contains(searchText) : false)
+           )
+           /*
+        public string invNumber { get; set; }
+        public string invType { get; set; }
+        public string discountType { get; set; }
+        public Nullable<decimal> discountValue { get; set; }
+        public Nullable<decimal> total { get; set; }
+        public Nullable<decimal> totalNet { get; set; }
+        public Nullable<decimal> paid { get; set; }
+        public Nullable<decimal> deserved { get; set; }
+        public Nullable<System.DateTime> deservedDate { get; set; }
+        public Nullable<System.DateTime> invDate { get; set; }
+   
+        public Nullable<int> invoiceMainId { get; set; }
+        public string invCase { get; set; }
+        public Nullable<System.TimeSpan> invTime { get; set; }
+        public string notes { get; set; }
+        public Nullable<System.DateTime> createDate { get; set; }//
+        public Nullable<System.DateTime> updateDate { get; set; }
 
-            //InvoicesQuery = Invoices
-            //   .Where(s =>
-            //(
-            //s.invNumber.ToLower().Contains(searchText)
-            //||
-            //(s.branchCreatorName != null ? s.branchCreatorName.ToLower().Contains(searchText) : false)
-            //||
-            //(s.posName != null ? s.posName.ToLower().Contains(searchText) : false)
-            //||
-            //(s.agentName != null ? s.agentName.ToLower().Contains(searchText) : false)
-            //||
-            //(s.agentCompany != null ? s.agentCompany.ToLower().Contains(searchText) : false)
-            //||
-            //(s.uUserAccName != null ? s.uUserAccName.ToLower().Contains(searchText) : false)
-            //)
-            //&&
-            ////service
-            //(cb_sevices.SelectedIndex != -1 ? s.invType == cb_sevices.SelectedValue.ToString() : true)
-            //&&
-            ////start date
-            //(dp_startDate.SelectedDate != null ? s.updateDate >= dp_startDate.SelectedDate : true)
-            //&&
-            ////end date
-            //(dp_endDate.SelectedDate != null ? s.updateDate <= dp_endDate.SelectedDate : true)
-            //&&
-            ////start time
-            //(dt_startTime.SelectedTime != null ? s.updateDate >= dt_startTime.SelectedTime : true)
-            //&&
-            ////end time
-            //(dt_endTime.SelectedTime != null ? s.updateDate <= dt_endTime.SelectedTime : true)
-            //).ToList();
-            ////branch
-            //if (selectedTab == 0)
-            //    InvoicesQuery = InvoicesQuery.Where(j => (selectedBranchId.Count != 0 ? selectedBranchId.Contains((int)j.branchCreatorId) : true)).ToList();
-            ////pos
-            //if (selectedTab == 1)
-            //    InvoicesQuery = InvoicesQuery.Where(j => (selectedPosId.Count != 0 ? selectedPosId.Contains((int)j.posId) : true)).ToList();
-            ////agent
-            //if (selectedTab == 2)
-            //    InvoicesQuery = InvoicesQuery.Where(j => (selectedVendorsId.Count != 0 ? selectedVendorsId.Contains((int)j.agentId) : true)).ToList();
-            ////user
-            //if (selectedTab == 3)
-            //    InvoicesQuery = InvoicesQuery.Where(j => (selectedUserId.Count != 0 ? selectedUserId.Contains((int)j.updateUserId) : true)).ToList();
+        public Nullable<decimal> tax { get; set; }
+ 
+        public Nullable<byte> isApproved { get; set; }
+        public int count { get; set; }
+            */
+           &&
+           //start date
+           (dp_couponStartDate.SelectedDate != null ? s.updateDate >= dp_couponStartDate.SelectedDate : true)
+           &&
+           //end date
+           (dp_couponEndDate.SelectedDate != null ? s.updateDate <= dp_couponEndDate.SelectedDate : true)
+           &&
+           //start time
+           (dt_couponStartTime.SelectedTime != null ? s.updateDate >= dt_couponStartTime.SelectedTime : true)
+           &&
+           //end time
+           (dt_couponEndTime.SelectedTime != null ? s.updateDate <= dt_couponEndTime.SelectedTime : true)
+           ).ToList();
 
+            invoicesClassesQuery = invoicesClassesQuery.Where(j => (selectedInvoiceId.Count != 0 ? selectedInvoiceId.Contains((int)j.invClassId) : true)).ToList();
         }
 
         async Task<IEnumerable<ItemTransferInvoice>> RefreshCouponsList()
@@ -344,8 +327,8 @@ namespace Restaurant.View.reports.salesReports
         }
         async Task<IEnumerable<ItemTransferInvoice>> RefreshOffersList()
         {
-            Offers = await statisticModel.GetPromoOffer((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
-            return Offers;
+            offers = await statisticModel.GetPromoOffer((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
+            return offers;
         }
         async Task<IEnumerable<SalesMembership>> RefreshInvoicesList()
         {
@@ -397,21 +380,25 @@ namespace Restaurant.View.reports.salesReports
         {
             cb_Coupons.SelectedValuePath = "Copcid";
             cb_Coupons.DisplayMemberPath = "Copname";
-            cb_Coupons.ItemsSource = dynamicComboCoupon;
+            var lst = coupons.GroupBy(i => i.CopcId).Select(i => new { i.FirstOrDefault().CopcId, i.FirstOrDefault().Copname });
+            cb_Coupons.ItemsSource = lst;
+
         }
 
         private void fillComboOffer()
         {
             cb_Coupons.SelectedValuePath = "OofferId";
             cb_Coupons.DisplayMemberPath = "Oname";
-            cb_Coupons.ItemsSource = dynamicComboOffer;
+            var lst = offers.GroupBy(i => i.OofferId).Select(i => new { i.FirstOrDefault().OofferId, i.FirstOrDefault().Oname });
+            cb_Coupons.ItemsSource = lst;
         }
 
         private void fillComboInvoice()
         {
-            cb_Coupons.SelectedValuePath = "invoiceId";
-            cb_Coupons.DisplayMemberPath = "invNumber";
-            cb_Coupons.ItemsSource = dynamicComboOffer;
+            cb_Coupons.SelectedValuePath = "invClassId";
+            cb_Coupons.DisplayMemberPath = "invoicesClassName";
+            var lst = invoicesClasses.GroupBy(i => i.invClassId).Select(i => new { i.FirstOrDefault().invClassId, i.FirstOrDefault().invoicesClassName });
+            cb_Coupons.ItemsSource = lst;
         }
         private static void fillDates(DatePicker startDate, DatePicker endDate, TimePicker startTime, TimePicker endTime)
         {
@@ -463,56 +450,9 @@ namespace Restaurant.View.reports.salesReports
             return result;
         }
 
-        IEnumerable<ItemTransferInvoice> invRowChartLst = null;
-        private IEnumerable<ItemTransferInvoice> fillRowChartList(IEnumerable<ItemTransferInvoice> Invoices, DatePicker startDate, DatePicker endDate, TimePicker startTime, TimePicker endTime)
-        {
-            fillDates(startDate, endDate, startTime, endTime);
-            var result = Invoices.Where(x => ((txt_search.Text != null ? x.invNumber.Contains(txt_search.Text)
-              || x.invType.Contains(txt_search.Text)
-              || x.discountType.Contains(txt_search.Text) : true)
-              &&
-                         (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
-                        && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true)
-                        && (startTime.SelectedTime != null ? x.invDate >= startTime.SelectedTime : true)
-                        && (endTime.SelectedTime != null ? x.invDate <= endTime.SelectedTime : true)));
+      
 
-            invRowChartLst = result;
-            return result;
-        }
-
-        public void fillEvent()
-        {
-            if (selectedTab == 0)
-            {
-                itemTransfers = fillList(coupons, dp_couponStartDate, dp_couponEndDate, dt_couponStartTime, dt_couponEndTime).Where(j => (selectedcouponId.Count != 0 ? selectedcouponId.Contains((int)j.CopcId) : true));
-                fillRowChartList(coupons, dp_couponStartDate, dp_couponEndDate, dt_couponStartTime, dt_couponEndTime).Where(j => (selectedcouponId.Count != 0 ? selectedcouponId.Contains((int)j.CopcId) : true));
-            }
-            else if (selectedTab == 1)
-            {
-                itemTransfers = fillList(Offers, dp_couponStartDate, dp_couponEndDate, dt_couponStartTime, dt_couponEndTime).Where(j => (selectedOfferId.Count != 0 ? selectedOfferId.Contains((int)j.OofferId) : true));
-                fillRowChartList(Offers, dp_couponStartDate, dp_couponEndDate, dt_couponStartTime, dt_couponEndTime).Where(j => (selectedOfferId.Count != 0 ? selectedOfferId.Contains((int)j.OofferId) : true));
-            }
-            else if (selectedTab == 2)
-            {
-                salesMemberships = fillSalesList(invoicesClasses, dp_couponStartDate, dp_couponEndDate, dt_couponStartTime, dt_couponEndTime).ToList();
-                fillRowChartList(Offers, dp_couponStartDate, dp_couponEndDate, dt_couponStartTime, dt_couponEndTime).Where(j => (selectedOfferId.Count != 0 ? selectedOfferId.Contains((int)j.OofferId) : true));
-            }
-            dgInvoice.ItemsSource = itemTransfers;
-            txt_count.Text = dgInvoice.Items.Count.ToString();
-
-            List<int> selected = new List<int>();
-            if (selectedTab == 0)
-                selected = selectedcouponId;
-            else if (selectedTab == 1)
-                selected = selectedOfferId;
-            else if (selectedTab == 2)
-                selected = selectedInvoiceId;
-
-            //fillPieChart(selected);
-            //fillColumnChart(selected);
-            //fillRowChartCoupAndOffer(cb_Coupons, selected);
-        }
-
+      
         private void hideSatacks()
         {
             stk_tagsCoupons.Visibility = Visibility.Collapsed;
@@ -738,13 +678,30 @@ namespace Restaurant.View.reports.salesReports
             cartesianChart.Series = columnChartData;
         }
 
+        IEnumerable<ItemTransferInvoice> invRowChartLst = null;
+        private IEnumerable<ItemTransferInvoice> fillRowChartList(IEnumerable<ItemTransferInvoice> Invoices, DatePicker startDate, DatePicker endDate, TimePicker startTime, TimePicker endTime)
+        {
+            fillDates(startDate, endDate, startTime, endTime);
+            var result = Invoices.Where(x => ((txt_search.Text != null ? x.invNumber.Contains(txt_search.Text)
+              || x.invType.Contains(txt_search.Text)
+              || x.discountType.Contains(txt_search.Text) : true)
+              &&
+                         (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
+                        && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true)
+                        && (startTime.SelectedTime != null ? x.invDate >= startTime.SelectedTime : true)
+                        && (endTime.SelectedTime != null ? x.invDate <= endTime.SelectedTime : true)));
+
+            invRowChartLst = result;
+            return result;
+        }
+
         #endregion
-       
+
         #region Events
 
         #region tabControl
-    
-        private void btn_coupons_Click(object sender, RoutedEventArgs e)
+
+        private async void btn_coupons_Click(object sender, RoutedEventArgs e)
         {//copouns
             try
             {
@@ -762,7 +719,7 @@ namespace Restaurant.View.reports.salesReports
                 path_coupons.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
                 fillComboCoupon();
-                fillEvent();
+                await Search();
 
                 hidAllColumns();
                 col_code.Visibility = Visibility.Visible;
@@ -779,7 +736,7 @@ namespace Restaurant.View.reports.salesReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void btn_offers_Click(object sender, RoutedEventArgs e)
+        private async void btn_offers_Click(object sender, RoutedEventArgs e)
         {//offers
             try
             {
@@ -797,7 +754,7 @@ namespace Restaurant.View.reports.salesReports
                 path_offers.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
                 fillComboOffer();
-                fillEvent();
+                await Search();
 
                 hidAllColumns();
 
@@ -819,7 +776,7 @@ namespace Restaurant.View.reports.salesReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_invoicesClasses_Click(object sender, RoutedEventArgs e)
+        private async void Btn_invoicesClasses_Click(object sender, RoutedEventArgs e)
         {//invoicesClasses
             //try
             //{
@@ -837,10 +794,10 @@ namespace Restaurant.View.reports.salesReports
                 path_invoicesClasses.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
                 fillComboInvoice();
-                fillEvent();
+                await Search();
 
                 hidAllColumns();
-
+                /////????????????
                 col_offerCode.Visibility = Visibility.Visible;
                 col_offers.Visibility = Visibility.Visible;
                 col_offersType.Visibility = Visibility.Visible;
@@ -860,6 +817,12 @@ namespace Restaurant.View.reports.salesReports
             //}
         }
         #endregion
+
+        private void Txt_search_TextChanged(object sender, TextChangedEventArgs e)
+        {//search
+            callSearch(sender);
+        }
+
 
         private async void Chk_allCoupon_Checked(object sender, RoutedEventArgs e)
         {
@@ -919,192 +882,91 @@ namespace Restaurant.View.reports.salesReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Btn_refresh_Click(object sender, RoutedEventArgs e)
+        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh
             try
             {
-                 HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
-                cb_Coupons.SelectedItem = null;
-                dp_couponEndDate.SelectedDate = null;
+                chk_allCoupon.IsChecked = true;
                 dp_couponStartDate.SelectedDate = null;
+                dp_couponEndDate.SelectedDate = null;
                 dt_couponStartTime.SelectedTime = null;
                 dt_couponEndTime.SelectedTime = null;
-                chk_allCoupon.IsChecked = false;
-                cb_Coupons.IsEnabled = true;
 
-                if (selectedTab == 0)
-                {
-                    for (int i = 0; i < comboCouponTemp.Count; i++)
-                    {
-                        dynamicComboCoupon.Add(comboCouponTemp.Skip(i).FirstOrDefault());
-                    }
-                    comboCouponTemp.Clear();
-                    stk_tagsCoupons.Children.Clear();
-                    selectedcouponId.Clear();
-                    fillEvent();
-                }
-
-                else if (selectedTab == 1)
-                {
-                    for (int i = 0; i < comboOfferTemp.Count; i++)
-                    {
-                        dynamicComboOffer.Add(comboOfferTemp.Skip(i).FirstOrDefault());
-                    }
-                    comboOfferTemp.Clear();
-                    stk_tagsOffers.Children.Clear();
-                    selectedOfferId.Clear();
-                    fillEvent();
-                }
                 txt_search.Text = "";
 
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
-        private void Chip_OnDeleteClick(object sender, RoutedEventArgs e)
+        private async void Chip_OnDeleteClick(object sender, RoutedEventArgs e)
         {
             try
             {
-
                 HelpClass.StartAwait(grid_main);
 
                 var currentChip = (Chip)sender;
-                //if (selectedTab == 0)
-                //{
-                //    stk_tagsCoupons.Children.Remove(currentChip);
-                //    var m = comboCouponTemp.Where(j => j.Copcid == (Convert.ToInt32(currentChip.Name.Remove(0, 3))));
-                //    dynamicComboCoupon.Add(m.FirstOrDefault());
-                //    selectedcouponId.Remove(Convert.ToInt32(currentChip.Name.Remove(0, 3)));
-                //    if (selectedcouponId.Count == 0)
-                //    {
-                //        cb_Coupons.SelectedItem = null;
-                //    }
-                //}
-                //else if (selectedTab == 1)
-                //{
-                //    stk_tagsOffers.Children.Remove(currentChip);
-                //    var m = comboOfferTemp.Where(j => j.OofferId == (Convert.ToInt32(currentChip.Name.Remove(0, 3))));
-                //    dynamicComboOffer.Add(m.FirstOrDefault());
-                //    selectedOfferId.Remove(Convert.ToInt32(currentChip.Name.Remove(0, 3)));
-                //    if (selectedOfferId.Count == 0)
-                //    {
-                //        cb_Coupons.SelectedItem = null;
-                //    }
-                //}
-                fillEvent();
-
+                if (selectedTab == 0)
+                {
+                    stk_tagsCoupons.Children.Remove(currentChip);
+                    var m = comboCouponTemp.Where(j => j.cId == (Convert.ToInt32(currentChip.Name.Remove(0, 3))));
+                    dynamicComboCoupon.Add(m.FirstOrDefault());
+                    selectedcouponId.Remove(Convert.ToInt32(currentChip.Name.Remove(0, 3)));
+                    if (selectedcouponId.Count == 0)
+                    {
+                        cb_Coupons.SelectedItem = null;
+                    }
+                }
+                else if (selectedTab == 1)
+                {
+                    stk_tagsOffers.Children.Remove(currentChip);
+                    var m = comboOfferTemp.Where(j => j.offerId == (Convert.ToInt32(currentChip.Name.Remove(0, 3))));
+                    dynamicComboOffer.Add(m.FirstOrDefault());
+                    selectedOfferId.Remove(Convert.ToInt32(currentChip.Name.Remove(0, 3)));
+                    if (selectedOfferId.Count == 0)
+                    {
+                        cb_Coupons.SelectedItem = null;
+                    }
+                }
+                else if (selectedTab == 2)
+                {
+                    stk_tagsInvoices.Children.Remove(currentChip);
+                    var m = comboInvoiceTemp.Where(j => j.invClassId == (Convert.ToInt32(currentChip.Name.Remove(0, 3))));
+                    dynamicComboInvoice.Add(m.FirstOrDefault());
+                    selectedInvoiceId.Remove(Convert.ToInt32(currentChip.Name.Remove(0, 3)));
+                    if (selectedInvoiceId.Count == 0)
+                    {
+                        cb_Coupons.SelectedItem = null;
+                    }
+                }
+                await Search();
 
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-        }
-
-        #endregion
-
-
-        private void fillEventCall(object sender)
-        {
-            try
-            {
-                 
-                    HelpClass.StartAwait(grid_main);
-
-                fillEvent();
-
-                 
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                 
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void chk_Checked(object sender, RoutedEventArgs e)
-        {
-            fillEventCall(sender);
         }
 
         private void dp_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            fillEventCall(sender);
+            callSearch(sender);
         }
 
         private void dt_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
         {
-            fillEventCall(sender);
+            callSearch(sender);
         }
 
-        //bool isClicked = true;
-        //private void chk_allCoupon_Click(object sender, RoutedEventArgs e)
-        //{//all coupons
-        //    try
-        //    {
-                 
-        //            HelpClass.StartAwait(grid_main);
-
-        //        if (isClicked)
-        //        {
-        //            cb_Coupons.SelectedItem = null;
-        //            cb_Coupons.IsEnabled = false;
-        //            isClicked = false;
-
-        //            if (selectedTab == 0)
-        //            {
-        //                for (int i = 0; i < comboCouponTemp.Count; i++)
-        //                {
-        //                    dynamicComboCoupon.Add(comboCouponTemp.Skip(i).FirstOrDefault());
-        //                }
-        //                comboCouponTemp.Clear();
-        //                stk_tagsCoupons.Children.Clear();
-        //                selectedcouponId.Clear();
-        //            }
-        //            else if (selectedTab == 1)
-        //            {
-        //                for (int i = 0; i < comboOfferTemp.Count; i++)
-        //                {
-        //                    dynamicComboOffer.Add(comboOfferTemp.Skip(i).FirstOrDefault());
-        //                }
-        //                comboOfferTemp.Clear();
-        //                stk_tagsOffers.Children.Clear();
-        //                selectedOfferId.Clear();
-        //            }
-        //        }
-        //        else
-        //        {
-        //            cb_Coupons.IsEnabled = true;
-        //            isClicked = true;
-        //        }
-
-        //        fillEvent();
-
-                 
-        //            HelpClass.EndAwait(grid_main);
-        //    }
-        //    catch (Exception ex)
-        //    {
-                 
-        //            HelpClass.EndAwait(grid_main);
-        //        HelpClass.ExceptionMessage(ex, this);
-        //    }
-        //}
-
-        private void cb_Coupons_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void cb_Coupons_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
@@ -1112,77 +974,95 @@ namespace Restaurant.View.reports.salesReports
 
                 if (cb_Coupons.SelectedItem != null)
                 {
-                    //if (selectedTab == 0)
-                    //{
-                    //    if (stk_tagsCoupons.Children.Count < 5)
-                    //    {
-                    //        selectedCoupon = cb_Coupons.SelectedItem as CouponCombo;
-                    //        var b = new MaterialDesignThemes.Wpf.Chip()
-                    //        {
-                    //            Content = selectedCoupon.Copname,
-                    //            Name = "btn" + selectedCoupon.Copcid.ToString(),
-                    //            IsDeletable = true,
-                    //            Margin = new Thickness(5, 0, 5, 0)
-                    //        };
-                    //        b.DeleteClick += Chip_OnDeleteClick;
-                    //        stk_tagsCoupons.Children.Add(b);
-                    //        comboCouponTemp.Add(selectedCoupon);
-                    //        selectedcouponId.Add(selectedCoupon.Copcid);
-                    //        dynamicComboCoupon.Remove(selectedCoupon);
-                    //    }
-                    //}
-                    //else if (selectedTab == 1)
-                    //{
-                    //    if (stk_tagsOffers.Children.Count < 5)
-                    //    {
-                    //        selectedOffer = cb_Coupons.SelectedItem as OfferCombo;
-                    //        var b = new MaterialDesignThemes.Wpf.Chip()
-                    //        {
-                    //            Content = selectedOffer.Oname,
-                    //            Name = "btn" + selectedOffer.OofferId.ToString(),
-                    //            IsDeletable = true,
-                    //            Margin = new Thickness(5, 0, 5, 0)
-                    //        };
-                    //        b.DeleteClick += Chip_OnDeleteClick;
-                    //        stk_tagsOffers.Children.Add(b);
-                    //        comboOfferTemp.Add(selectedOffer);
-                    //        selectedOfferId.Add(selectedOffer.OofferId);
-                    //        dynamicComboOffer.Remove(selectedOffer);
-                    //    }
-                    //}
-                    //else if (selectedTab == 2)
-                    //{
-                    //    if (stk_tagsInvoices.Children.Count < 5)
-                    //    {
-                    //        selectedInvoice = cb_Coupons.SelectedItem as InvoiceClassCombo;
-                    //        var b = new MaterialDesignThemes.Wpf.Chip()
-                    //        {
-                    //            Content = selectedInvoice.invNumber,
-                    //            Name = "btn" + selectedInvoice.invoiceId.ToString(),
-                    //            IsDeletable = true,
-                    //            Margin = new Thickness(5, 0, 5, 0)
-                    //        };
-                    //        b.DeleteClick += Chip_OnDeleteClick;
-                    //        stk_tagsInvoices.Children.Add(b);
-                    //        comboInvoiceTemp.Add(selectedInvoice);
-                    //        selectedInvoiceId.Add(selectedInvoice.invoiceId);
-                    //        dynamicComboInvoice.Remove(selectedInvoice);
-                    //    }
-                    //}
-                    fillEvent();
+                    if (selectedTab == 0)
+                    {
+                        stk_tagsCoupons.Visibility = Visibility.Visible;
+                        if (stk_tagsCoupons.Children.Count < 5)
+                        {
+                            int cId = (int)cb_Coupons.SelectedValue;
+
+                            selectedCoupon = await couponModel.getById(cId);
+                            var c = new MaterialDesignThemes.Wpf.Chip()
+                            {
+                                Content = selectedCoupon.name,
+                                Name = "btn" + selectedCoupon.cId.ToString(),
+                                IsDeletable = true,
+                                Margin = new Thickness(5, 0, 5, 0)
+                            };
+                            c.DeleteClick += Chip_OnDeleteClick;
+                            stk_tagsCoupons.Children.Add(c);
+                            comboCouponTemp.Add(selectedCoupon);
+                            selectedcouponId.Add(selectedCoupon.cId);
+                            dynamicComboCoupon.Remove(selectedCoupon);
+                        }
+                    }
+                    if (selectedTab == 1)
+                    {
+                        stk_tagsOffers.Visibility = Visibility.Visible;
+                        if (stk_tagsOffers.Children.Count < 5)
+                        {
+                            int oId = (int)cb_Coupons.SelectedValue;
+
+                            selectedOffer = await offerModel.getOfferById(oId);
+                            var o = new MaterialDesignThemes.Wpf.Chip()
+                            {
+                                Content = selectedOffer.name,
+                                Name = "btn" + selectedOffer.offerId.ToString(),
+                                IsDeletable = true,
+                                Margin = new Thickness(5, 0, 5, 0)
+                            };
+                            o.DeleteClick += Chip_OnDeleteClick;
+                            stk_tagsOffers.Children.Add(o);
+                            comboOfferTemp.Add(selectedOffer);
+                            selectedOfferId.Add(selectedOffer.offerId);
+                            dynamicComboOffer.Remove(selectedOffer);
+                        }
+                    }
+                    if (selectedTab == 2)
+                    {
+                        stk_tagsInvoices.Visibility = Visibility.Visible;
+                        if (stk_tagsInvoices.Children.Count < 5)
+                        {
+                            int iId = (int)cb_Coupons.SelectedValue;
+
+                            selectedInvoice = await invoiceModel.GetById(iId);
+                            try
+                            {
+                                var i = new MaterialDesignThemes.Wpf.Chip()
+                                {
+                                    Content = selectedInvoice.name,
+                                    Name = "btn" + selectedInvoice.invClassId.ToString(),
+                                    IsDeletable = true,
+                                    Margin = new Thickness(5, 0, 5, 0)
+                                };
+                                i.DeleteClick += Chip_OnDeleteClick;
+                                stk_tagsInvoices.Children.Add(i);
+                                comboInvoiceTemp.Add(selectedInvoice);
+                                selectedInvoiceId.Add(selectedInvoice.invClassId);
+                                dynamicComboInvoice.Remove(selectedInvoice);
+                            }
+                            catch { }
+                        }
+                    }
+
+                    await Search();
+
                 }
-                 
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
-       
+
+        #endregion
+
+
+
         private void fillRowChartCoupAndOffer(ComboBox comboBox, ObservableCollection<int> stackedButton)
         {
             MyAxis.Labels = new List<string>();
@@ -1275,6 +1155,7 @@ namespace Restaurant.View.reports.salesReports
             rowChart.Series = rowChartData;
         }
 
+        #region reports
         private void BuildReport()
         {
             List<ReportParameter> paramarr = new List<ReportParameter>();
@@ -1326,7 +1207,7 @@ namespace Restaurant.View.reports.salesReports
             ReportCls.checkLang();
             Title = AppSettings.resourcemanagerreport.GetString("trSalesReport") + " / " + subTitle;
             paramarr.Add(new ReportParameter("trTitle", Title));
-            clsReports.SalePromoStsReport(itemTransfers, rep, reppath, paramarr);
+            //clsReports.SalePromoStsReport(itemTransfers, rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
@@ -1382,50 +1263,12 @@ namespace Restaurant.View.reports.salesReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        IEnumerable<ItemTransferInvoice> itemTransfers = null;
-        IEnumerable<SalesMembership> salesMemberships = null;
-
-        private void Txt_search_TextChanged(object sender, TextChangedEventArgs e)
-        {//search
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                if (selectedTab == 0)
-                {
-                    itemTransfers = fillList(coupons , dp_couponStartDate, dp_couponEndDate, dt_couponStartTime, dt_couponEndTime).Where(j => (selectedcouponId.Count != 0 ? selectedcouponId.Contains((int)j.CopcId) : true));
-                    dgInvoice.ItemsSource = itemTransfers.Where(s => (s.Copname.Contains(txt_search.Text) || s.invNumber.Contains(txt_search.Text) ));
-                }
-                else if (selectedTab == 1)
-                {
-                    itemTransfers = fillList(Offers, dp_couponStartDate, dp_couponStartDate, dt_couponStartTime, dt_couponEndTime).Where(j => (selectedOfferId.Count != 0 ? selectedOfferId.Contains((int)j.OofferId) : true));
-
-                    dgInvoice.ItemsSource = itemTransfers.Where(s => (s.Oname.Contains(txt_search.Text) || s.invNumber.Contains(txt_search.Text)));
-                }
-                else if (selectedTab == 2)
-                {
-                    salesMemberships = fillSalesList(invoicesClasses, dp_couponStartDate, dp_couponStartDate, dt_couponStartTime, dt_couponEndTime).Where(j => (selectedInvoiceId.Count != 0 ? selectedInvoiceId.Contains((int)j.invoiceId) : true));
-
-                    dgInvoice.ItemsSource = salesMemberships.Where(s => (s.invNumber.Contains(txt_search.Text) ));
-                }
-
-                txt_count.Text = dgInvoice.Items.Count.ToString();
-                 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
+     
         private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
         {//excel
             try
             {
-                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 #region
                 //Thread t1 = new Thread(() =>
@@ -1444,13 +1287,11 @@ namespace Restaurant.View.reports.salesReports
                 //t1.Start();
                 #endregion
 
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
+                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1459,8 +1300,7 @@ namespace Restaurant.View.reports.salesReports
         {//preview
             try
             {
-                 
-                    HelpClass.StartAwait(grid_main);
+                 HelpClass.StartAwait(grid_main);
 
                 #region
                 Window.GetWindow(this).Opacity = 0.2;
@@ -1484,17 +1324,15 @@ namespace Restaurant.View.reports.salesReports
                 Window.GetWindow(this).Opacity = 1;
                 #endregion
 
-                 
-                    HelpClass.EndAwait(grid_main);
+                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        #endregion
 
-        
     }
 }

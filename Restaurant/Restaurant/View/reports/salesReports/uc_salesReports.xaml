@@ -163,7 +163,7 @@
                     </Border>
                     <!--#endregion-->
                     <!--#region orderSalesReports-->
-                    <Border Tag="orderSalesReports" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
+                    <Border Tag="orderSalesReports" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" Visibility="Collapsed">
                         <Border.Effect>
                             <DropShadowEffect
                           ShadowDepth="1"
