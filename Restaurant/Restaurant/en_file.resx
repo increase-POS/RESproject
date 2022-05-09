@@ -4012,4 +4012,16 @@ Please add Email in setting</value>
   <data name="paid" xml:space="preserve">
     <value>Paid</value>
   </data>
+  <data name="popCanceled" xml:space="preserve">
+    <value>Canceled successfully</value>
+  </data>
+  <data name="popConfirmed" xml:space="preserve">
+    <value>Confirmed successfully</value>
+  </data>
+  <data name="oneTableAtLeast" xml:space="preserve">
+    <value>You must select at least one table</value>
+  </data>
+  <data name="trSelectedTables" xml:space="preserve">
+    <value>Selected tables</value>
+  </data>
 </root>

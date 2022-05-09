@@ -3997,4 +3997,16 @@
   <data name="paid" xml:space="preserve">
     <value>المدفوع</value>
   </data>
+  <data name="popCanceled" xml:space="preserve">
+    <value>تم الإلغاء بنجاح</value>
+  </data>
+  <data name="popConfirmed" xml:space="preserve">
+    <value>تم التأكيد بنجاح</value>
+  </data>
+  <data name="oneTableAtLeast" xml:space="preserve">
+    <value>يجب اختيار طاولة واحدة على الأقل</value>
+  </data>
+  <data name="trSelectedTables" xml:space="preserve">
+    <value>الطاولات المختارة</value>
+  </data>
 </root>
