@@ -375,7 +375,7 @@ namespace Restaurant.View.settings
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
 
-                translate();
+                await translate();
                 #endregion
 
                 #region loading
@@ -716,7 +716,7 @@ namespace Restaurant.View.settings
             cb_region.DisplayMemberPath = "name";
             cb_region.SelectedValuePath = "countryId";
         }
-        private void translate()
+        private async Task translate()
         {
             txt_mainTitle.Text = AppSettings.resourcemanager.GetString("trGeneralSettings");
 
@@ -761,17 +761,15 @@ namespace Restaurant.View.settings
 
 
 
-
-            //tt_region.Content = AppSettings.resourcemanager.GetString("trRegion");
-            //tt_language.Content = AppSettings.resourcemanager.GetString("trLanguage");
-            //tt_currency.Content = AppSettings.resourcemanager.GetString("trCurrency");
-            //tt_dateForm.Content = AppSettings.resourcemanager.GetString("trDateForm");
-            //tt_accuracy.Content = AppSettings.resourcemanager.GetString("trAccuracy");
-            //tt_activationSite.Content = AppSettings.resourcemanager.GetString("trActivationSite");
-
+ 
             // openButton
             List<TextBlock> openTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
                .Where(x => x.Tag != null).ToList();
+            if (openTextBlocksList.Count == 0)
+            {
+                await Task.Delay(0050);
+                await translate();
+            }
             openTextBlocksList = openTextBlocksList.Where(x => x.Tag.ToString().Contains("openButton")).ToList();
             foreach (var item in openTextBlocksList)
             {
@@ -901,7 +899,7 @@ namespace Restaurant.View.settings
                                 parentWindow.translate();
                                 MainWindow.mainWindow.grid_main.Children.Clear();
                                 MainWindow.loadingDefaultPath("general");
-                                translate();
+                               await translate();
                             }
                         }
                     }

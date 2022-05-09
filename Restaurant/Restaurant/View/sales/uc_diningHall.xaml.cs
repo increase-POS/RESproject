@@ -414,13 +414,11 @@ namespace Restaurant.View.sales
             {
                 if(AppSettings.invType == "diningHall" && selectedTables.Count == 0)
                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trChooseTableFirst"), animation: ToasterAnimation.FadeIn);
-
                 else if (item != null)
                 {
                     item = items.Where(x => x.itemId == itemId).FirstOrDefault();
                     addRowToBill(item,1);
                 }
-
             }
             catch { }
         }

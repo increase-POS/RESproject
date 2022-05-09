@@ -115,16 +115,36 @@ namespace Restaurant.View.settings.emailsGeneral
         }
         private async Task translate()
         {
-            if (FillCombo.objectsList is null)
+
+            txt_systmSetting.Text = AppSettings.resourcemanager.GetString("trDirectEmail");
+            txt_systmSettingHint.Text = AppSettings.resourcemanager.GetString("trDirectEmail") + "...";
+
+
+            if (FillCombo.objectsList is null || FillCombo.objectsList.Count() == 0)
                 await FillCombo.RefreshObjects();
             // Title
             if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
                 txt_mainTitle.Text = AppSettings.resourcemanager.GetString(
                FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
                );
+            // Icon
+            List<Path> InfoPathsList = FindControls.FindVisualChildren<Path>(this)
+                .Where(x => x.Name.Contains("Icon") && x.Tag != null).ToList();
+            foreach (var item in InfoPathsList)
+            {
+                if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().icon))
+                    item.Data = App.Current.Resources[
+                FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().icon
+                   ] as Geometry;
+            }
             // Info
             List<TextBlock> InfoTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
                 .Where(x => x.Name.Contains("Info") && x.Tag != null).ToList();
+            if (InfoTextBlocksList.Count == 0)
+            {
+                await Task.Delay(0050);
+                await translate();
+            }
             foreach (var item in InfoTextBlocksList)
             {
                 if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translate))
@@ -143,6 +163,21 @@ namespace Restaurant.View.settings.emailsGeneral
                    );
             }
 
+
+
+            // openButton
+            List<TextBlock> openTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
+               .Where(x => x.Tag != null).ToList();
+            if (openTextBlocksList.Count == 0)
+            {
+                await Task.Delay(0050);
+                await translate();
+            }
+            openTextBlocksList = openTextBlocksList.Where(x => x.Tag.ToString().Contains("openButton")).ToList();
+            foreach (var item in openTextBlocksList)
+            {
+                item.Text = AppSettings.resourcemanager.GetString("open");
+            }
             // enterButton
             List<TextBlock> enterTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
                 .Where(x => x.Tag != null).ToList();
@@ -151,18 +186,6 @@ namespace Restaurant.View.settings.emailsGeneral
             {
                 item.Text = AppSettings.resourcemanager.GetString("enter");
             }
-
-            // openButton
-            List<TextBlock> openTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
-               .Where(x => x.Tag != null).ToList();
-            openTextBlocksList = openTextBlocksList.Where(x => x.Tag.ToString().Contains("openButton")).ToList();
-            foreach (var item in openTextBlocksList)
-            {
-                item.Text = AppSettings.resourcemanager.GetString("open");
-            }
-
-            txt_systmSetting.Text = AppSettings.resourcemanager.GetString("trDirectEmail");
-            txt_systmSettingHint.Text = AppSettings.resourcemanager.GetString("trDirectEmailHint") + "...";
         }
 
 

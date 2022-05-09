@@ -182,7 +182,7 @@ namespace Restaurant.View.settings.reportsSettings
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 }
 
-                translate();
+                await translate();
                 #endregion
 
                 ///naji code
@@ -260,7 +260,7 @@ namespace Restaurant.View.settings.reportsSettings
         #endregion
 
 
-        private void translate()
+        private async Task translate()
         {
 
             txt_mainTitle.Text = AppSettings.resourcemanager.GetString("trReportsSettings");
@@ -292,6 +292,11 @@ namespace Restaurant.View.settings.reportsSettings
             // openButton
             List<TextBlock> openTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
                .Where(x => x.Tag != null).ToList();
+            if (openTextBlocksList.Count == 0)
+            {
+                await Task.Delay(0050);
+                await translate();
+            }
             openTextBlocksList = openTextBlocksList.Where(x => x.Tag.ToString().Contains("openButton")).ToList();
             foreach (var item in openTextBlocksList)
             {

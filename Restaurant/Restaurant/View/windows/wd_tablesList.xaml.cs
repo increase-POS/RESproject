@@ -152,8 +152,8 @@ namespace Restaurant.View.windows
             dg_allItems.Columns[0].Header = AppSettings.resourcemanager.GetString("trItem");
             dg_selectedItems.Columns[0].Header = AppSettings.resourcemanager.GetString("trItem");
 
-            txt_title.Text = AppSettings.resourcemanager.GetString("trTables_");
-            txt_items.Text = AppSettings.resourcemanager.GetString("trTables_");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trTables");
+            txt_items.Text = AppSettings.resourcemanager.GetString("trTables");
             txt_selectedItems.Text = AppSettings.resourcemanager.GetString("trSelectedTables");
 
             tt_search.Content = AppSettings.resourcemanager.GetString("trSearch");
