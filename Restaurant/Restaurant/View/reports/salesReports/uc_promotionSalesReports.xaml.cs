@@ -60,12 +60,7 @@ namespace Restaurant.View.reports.salesReports
             catch
             { }
         }
-        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
-        {
-            Instance = null;
-            GC.Collect();
-        }
-
+      
         //prin & pdf
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
@@ -89,17 +84,17 @@ namespace Restaurant.View.reports.salesReports
         Offer selectedOffer;
         InvoicesClass selectedInvoice;
 
-        List<Coupon> comboCoupon;
-        List<Offer> comboOffer;
-        List<InvoicesClass> comboInvoice;
+        List<Coupon> comboCoupon = new List<Coupon>();
+        List<Offer> comboOffer = new List<Offer>();
+        List<InvoicesClass> comboInvoice = new List<InvoicesClass>();
 
         List<Coupon> comboCouponTemp = new List<Coupon>();
         List<Offer> comboOfferTemp = new List<Offer>();
         List<InvoicesClass> comboInvoiceTemp = new List<InvoicesClass>();
 
-        List<Coupon> dynamicComboCoupon;
-        List<Offer> dynamicComboOffer;
-        List<InvoicesClass> dynamicComboInvoice;
+        List<Coupon> dynamicComboCoupon = new List<Coupon>();
+        List<Offer> dynamicComboOffer = new List<Offer>();
+        List<InvoicesClass> dynamicComboInvoice = new List<InvoicesClass>();
 
         /*************************/
 
@@ -114,7 +109,7 @@ namespace Restaurant.View.reports.salesReports
         {//load
             try
             {
-               HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -123,14 +118,6 @@ namespace Restaurant.View.reports.salesReports
                     grid_main.FlowDirection = FlowDirection.RightToLeft;
                 translate();
                 #endregion
-
-                //comboCoupon = statisticModel.GetCopComboList(coupons);
-                //comboOffer = statisticModel.GetOfferComboList(Offers);
-                //comboInvoice = statisticModel.GetInvoiceClassComboList(invoicesClasses);
-
-                //dynamicComboCoupon = new ObservableCollection<CouponCombo>(comboCoupon);
-                //dynamicComboOffer = new ObservableCollection<OfferCombo>(comboOffer);
-                //dynamicComboInvoice = new ObservableCollection<InvoiceClassCombo>(comboInvoice);
 
                 chk_allCoupon.IsChecked = true;
 
@@ -207,9 +194,9 @@ namespace Restaurant.View.reports.salesReports
 
             txt_count.Text = dgInvoice.Items.Count.ToString();
 
-            //fillColumnChart(selected);
-            //fillPieChart(selected);
-            //fillRowChart(selected);
+            fillColumnChart(selected);
+            fillPieChart(selected);
+            fillRowChart(selected);
         }
 
         async Task coupounSearch()
@@ -219,9 +206,11 @@ namespace Restaurant.View.reports.salesReports
             (
             s.invNumber.ToLower().Contains(searchText)
             ||
-            (s.Copname != null ? s.branchCreatorName.ToLower().Contains(searchText) : false)
+            (s.Copname != null ? s.Copname.ToLower().Contains(searchText) : false)
             ||
-            (s.Copcode != null ? s.posName.ToLower().Contains(searchText) : false)
+            (s.Copcode != null ? s.Copcode.ToLower().Contains(searchText) : false)
+            ||
+            (s.ITitemUnitName1 != null ? s.ITitemUnitName1.ToLower().Contains(searchText) : false)
             )
             &&
             //start date
@@ -247,9 +236,11 @@ namespace Restaurant.View.reports.salesReports
             (
             s.invNumber.ToLower().Contains(searchText)
             ||
-            (s.Oname != null ? s.branchCreatorName.ToLower().Contains(searchText) : false)
+            (s.Oname != null ? s.Oname.ToLower().Contains(searchText) : false)
             ||
-            (s.Ocode != null ? s.posName.ToLower().Contains(searchText) : false)
+            (s.Ocode != null ? s.Ocode.ToLower().Contains(searchText) : false)
+            ||
+            (s.ITitemUnitName1 != null ? s.ITitemUnitName1.ToLower().Contains(searchText) : false)
             )
             &&
             //start date
@@ -353,8 +344,6 @@ namespace Restaurant.View.reports.salesReports
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
 
             col_No.Header = AppSettings.resourcemanager.GetString("trNo.");
-            col_couponType.Header = AppSettings.resourcemanager.GetString("trType");
-            col_offersType.Header = AppSettings.resourcemanager.GetString("trType");
             col_date.Header = AppSettings.resourcemanager.GetString("trDate");
             col_coupon.Header = AppSettings.resourcemanager.GetString("trCoupon");
             col_code.Header = AppSettings.resourcemanager.GetString("trCode");
@@ -378,7 +367,7 @@ namespace Restaurant.View.reports.salesReports
 
         private void fillComboCoupon()
         {
-            cb_Coupons.SelectedValuePath = "Copcid";
+            cb_Coupons.SelectedValuePath = "CopcId";
             cb_Coupons.DisplayMemberPath = "Copname";
             var lst = coupons.GroupBy(i => i.CopcId).Select(i => new { i.FirstOrDefault().CopcId, i.FirstOrDefault().Copname });
             cb_Coupons.ItemsSource = lst;
@@ -475,36 +464,25 @@ namespace Restaurant.View.reports.salesReports
 
         private void hidAllColumns()
         {
-            col_code.Visibility = Visibility.Hidden;
-            col_offerCode.Visibility = Visibility.Hidden;
-            col_item.Visibility = Visibility.Hidden;
-            col_itQuantity.Visibility = Visibility.Hidden;
-            col_total.Visibility = Visibility.Hidden;
-            col_coupon.Visibility = Visibility.Hidden;
-            col_offers.Visibility = Visibility.Hidden;
-            col_coupoValue.Visibility = Visibility.Hidden;
-            col_couponType.Visibility = Visibility.Hidden;
-            col_offersType.Visibility = Visibility.Hidden;
-            col_offersValue.Visibility = Visibility.Hidden;
-            col_offersTotalValue.Visibility = Visibility.Hidden;
-            col_couponTotalValue.Visibility = Visibility.Hidden;
-            col_price.Visibility = Visibility.Hidden;
+            for (int i = 2; i < dgInvoice.Columns.Count; i++)
+                dgInvoice.Columns[i].Visibility = Visibility.Hidden;
         }
 
         #endregion
 
         #region charts
-        private void fillPieChart(ObservableCollection<int> stackedButton)
+        private void fillPieChart(List<int> stackedButton)
         {
             List<string> titles = new List<string>();
             IEnumerable<int> x = null;
 
-            var temp = invLst;
-
+           
             if (selectedTab == 0)
             {
+                var temp = couponsQuery;
+
                 titles.Clear();
-                temp = temp.Where(j => (selectedcouponId.Count != 0 ? stackedButton.Contains((int)j.CopcId) : true));
+                temp = temp.Where(j => (selectedcouponId.Count != 0 ? stackedButton.Contains((int)j.CopcId) : true)).ToList();
                 var titleTemp = temp.GroupBy(m => m.Copname);
                 titles.AddRange(titleTemp.Select(jj => jj.Key));
                 var result = temp.GroupBy(s => s.CopcId).Select(s => new { CopcId = s.Key, count = s.Count() });
@@ -513,11 +491,25 @@ namespace Restaurant.View.reports.salesReports
 
             else if (selectedTab == 1)
             {
+                var temp = offersQuery;
+
                 titles.Clear();
-                temp = temp.Where(j => (selectedOfferId.Count != 0 ? stackedButton.Contains((int)j.OofferId) : true));
+                temp = temp.Where(j => (selectedOfferId.Count != 0 ? stackedButton.Contains((int)j.OofferId) : true)).ToList();
                 var titleTemp = temp.GroupBy(m => m.Oname);
                 titles.AddRange(titleTemp.Select(jj => jj.Key));
                 var result = temp.GroupBy(s => s.OofferId).Select(s => new { OofferId = s.Key, count = s.Count() });
+                x = result.Select(m => m.count);
+            }
+
+            else if (selectedTab == 2)
+            {
+                var temp = invoicesClassesQuery;
+
+                titles.Clear();
+                temp = temp.Where(j => (selectedInvoiceId.Count != 0 ? stackedButton.Contains((int)j.invClassId) : true)).ToList();
+                var titleTemp = temp.GroupBy(m => m.invoicesClassName);
+                titles.AddRange(titleTemp.Select(jj => jj.Key));
+                var result = temp.GroupBy(s => s.invClassId).Select(s => new { OofferId = s.Key, count = s.Count() });
                 x = result.Select(m => m.count);
             }
 
@@ -562,7 +554,7 @@ namespace Restaurant.View.reports.salesReports
             chart1.Series = piechartData;
         }
 
-        private void fillColumnChart(ObservableCollection<int> stackedButton)
+        private void fillColumnChart(List<int> stackedButton)
         {
             axcolumn.Labels = new List<string>();
             List<string> names = new List<string>();
@@ -570,17 +562,17 @@ namespace Restaurant.View.reports.salesReports
             IEnumerable<int> y = null;
             IEnumerable<int> z = null;
 
-            var temp = invLst;
-
             if (selectedTab == 0)
             {
-                temp = temp.Where(j => (selectedcouponId.Count != 0 ? stackedButton.Contains((int)j.CopcId) : true));
+                var temp = couponsQuery;
+
+                temp = temp.Where(j => (selectedcouponId.Count != 0 ? stackedButton.Contains((int)j.CopcId) : true)).ToList();
                 var result = temp.GroupBy(s => s.CopcId).Select(s => new
                 {
                     CopcId = s.Key,
                     countP = s.Where(m => m.invType == "s").Count(),
-                    countPb = s.Where(m => m.invType == "sb").Count(),
-                    countD = s.Where(m => m.invType == "sd" || m.invType == "sbd").Count()
+                    countPb = s.Where(m => m.invType == "ts").Count(),
+                    countD = s.Where(m => m.invType == "ss").Count()
 
                 });
                 x = result.Select(m => m.countP);
@@ -595,13 +587,15 @@ namespace Restaurant.View.reports.salesReports
 
             else if (selectedTab == 1)
             {
-                temp = temp.Where(j => (selectedOfferId.Count != 0 ? stackedButton.Contains((int)j.OofferId) : true));
+                var temp = offersQuery;
+
+                temp = temp.Where(j => (selectedOfferId.Count != 0 ? stackedButton.Contains((int)j.OofferId) : true)).ToList();
                 var result = temp.GroupBy(s => s.OofferId).Select(s => new
                 {
                     CopcId = s.Key,
                     countP = s.Where(m => m.invType == "s").Count(),
-                    countPb = s.Where(m => m.invType == "sb").Count(),
-                    countD = s.Where(m => m.invType == "sd" || m.invType == "sbd").Count()
+                    countPb = s.Where(m => m.invType == "ts").Count(),
+                    countD = s.Where(m => m.invType == "ss" ).Count()
 
                 });
                 x = result.Select(m => m.countP);
@@ -613,17 +607,44 @@ namespace Restaurant.View.reports.salesReports
                 });
                 names.AddRange(tempName.Select(nn => nn.uUserName));
             }
+            else if (selectedTab == 2)
+            {
+                var temp = invoicesClassesQuery;
+
+                temp = temp.Where(j => (selectedInvoiceId.Count != 0 ? stackedButton.Contains((int)j.invClassId) : true)).ToList();
+                var result = temp.GroupBy(s => s.invClassId).Select(s => new
+                {
+                    CopcId = s.Key,
+                    countP = s.Where(m => m.invType == "s").Count(),
+                    countPb = s.Where(m => m.invType == "ts").Count(),
+                    countD = s.Where(m => m.invType == "ss").Count()
+
+                });
+                x = result.Select(m => m.countP);
+                y = result.Select(m => m.countPb);
+                z = result.Select(m => m.countD);
+                var tempName = temp.GroupBy(s => s.invoicesClassName).Select(s => new
+                {
+                    uUserName = s.Key
+                });
+                names.AddRange(tempName.Select(nn => nn.uUserName));
+            }
 
             List<string> lable = new List<string>();
             SeriesCollection columnChartData = new SeriesCollection();
             List<int> cP = new List<int>();
             List<int> cPb = new List<int>();
             List<int> cD = new List<int>();
+
+            //string title = "trCoupon";
+            //if (selectedTab == 1)
+            //    title = "trOffer";
             List<string> titles = new List<string>()
             {
-                AppSettings.resourcemanager.GetString("trSales"),
-                AppSettings.resourcemanager.GetString("trReturned"),
-                AppSettings.resourcemanager.GetString("trDraft")
+                //AppSettings.resourcemanager.GetString(title)
+                AppSettings.resourcemanager.GetString("trDiningHallType"),
+                AppSettings.resourcemanager.GetString("trTakeAway"),
+                AppSettings.resourcemanager.GetString("trSelfService")
             };
             int xCount = 0;
             if (x.Count() <= 6) xCount = x.Count();
@@ -659,50 +680,163 @@ namespace Restaurant.View.reports.salesReports
                 Title = titles[0],
                 DataLabels = true,
             });
+
             columnChartData.Add(
-           new StackedColumnSeries
-           {
-               Values = cPb.AsChartValues(),
-               Title = titles[1],
-               DataLabels = true,
-           });
+            new StackedColumnSeries
+            {
+                Values = cPb.AsChartValues(),
+                Title = titles[1],
+                DataLabels = true,
+            });
+
             columnChartData.Add(
-           new StackedColumnSeries
-           {
-               Values = cD.AsChartValues(),
-               Title = titles[2],
-               DataLabels = true,
-           });
+            new StackedColumnSeries
+            {
+                Values = cD.AsChartValues(),
+                Title = titles[2],
+                DataLabels = true,
+            });
 
             DataContext = this;
             cartesianChart.Series = columnChartData;
         }
 
-        IEnumerable<ItemTransferInvoice> invRowChartLst = null;
-        private IEnumerable<ItemTransferInvoice> fillRowChartList(IEnumerable<ItemTransferInvoice> Invoices, DatePicker startDate, DatePicker endDate, TimePicker startTime, TimePicker endTime)
+        private void fillRowChart(List<int> stackedButton)
         {
-            fillDates(startDate, endDate, startTime, endTime);
-            var result = Invoices.Where(x => ((txt_search.Text != null ? x.invNumber.Contains(txt_search.Text)
-              || x.invType.Contains(txt_search.Text)
-              || x.discountType.Contains(txt_search.Text) : true)
-              &&
-                         (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
-                        && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true)
-                        && (startTime.SelectedTime != null ? x.invDate >= startTime.SelectedTime : true)
-                        && (endTime.SelectedTime != null ? x.invDate <= endTime.SelectedTime : true)));
+            MyAxis.Labels = new List<string>();
+            List<string> names = new List<string>();
+            IEnumerable<decimal> pTemp = null;
 
-            invRowChartLst = result;
-            return result;
+            if (selectedTab == 0)
+            {
+                names.Clear();
+
+                var temp = couponsQuery;
+
+                temp = temp.Where(j => (selectedcouponId.Count != 0 ? stackedButton.Contains((int)j.CopcId) : true)).ToList();
+                var result = temp.GroupBy(s => new { s.CopcId }).Select(s => new
+                {
+                    CopcId = s.FirstOrDefault().CopcId,
+                    copName = s.FirstOrDefault().Copname,
+                    invId = s.FirstOrDefault().invoiceId,
+                    copTotalValue = s.Sum(x => x.couponTotalValue)
+                }
+                );
+
+                var name = temp.GroupBy(s => s.invoiceId).Select(s => new
+                {
+                    uUserName = s.FirstOrDefault().Copname
+                });
+                names.AddRange(name.Select(nn => nn.uUserName));
+                pTemp = result.Select(x => (decimal)x.copTotalValue);
+            }
+            else if (selectedTab == 1)
+            {
+                names.Clear();
+
+                var temp = offersQuery;
+
+                temp = temp.Where(j => (selectedOfferId.Count != 0 ? stackedButton.Contains((int)j.OofferId) : true)).ToList();
+                var result1 = temp.GroupBy(s => new { s.OofferId, s.ITitemUnitId }).Select(s => new
+                {
+                    offerId = s.FirstOrDefault().OofferId,
+                    offerName = s.FirstOrDefault().Oname,
+                    itemId = s.FirstOrDefault().ITitemUnitId,
+                    offerTotalValue = s.Sum(x => x.offerTotalValue)
+                }
+             );
+
+                var name = result1.GroupBy(s => s.offerId).Select(s => new
+                {
+                    uUserName = s.FirstOrDefault().offerName,
+                    offerTotalValue = s.Sum(x => x.offerTotalValue)
+                });
+                names.AddRange(name.Select(nn => nn.uUserName));
+                pTemp = name.Select(x => (decimal)x.offerTotalValue);
+            }
+
+            else if (selectedTab == 2)
+            {
+                names.Clear();
+
+                var temp = invoicesClassesQuery;
+
+                temp = temp.Where(j => (selectedInvoiceId.Count != 0 ? stackedButton.Contains((int)j.invClassId) : true)).ToList();
+                var result1 = temp.GroupBy(s => new { s.invClassId}).Select(s => new
+                {
+                    invClassId = s.FirstOrDefault().invClassId,
+                    invoicesClassName = s.FirstOrDefault().invoicesClassName,
+                    invId = s.FirstOrDefault().invoiceId,
+                    totalValue = s.Sum(x => x.total)
+                }
+             );
+
+                var name = result1.GroupBy(s => s.invClassId).Select(s => new
+                {
+                    uUserName = s.FirstOrDefault().invoicesClassName,
+                    offerTotalValue = s.Sum(x => x.totalValue)
+                });
+                names.AddRange(name.Select(nn => nn.uUserName));
+                pTemp = name.Select(x => (decimal)x.offerTotalValue);
+            }
+
+            SeriesCollection rowChartData = new SeriesCollection();
+            List<decimal> purchase = new List<decimal>();
+            List<decimal> returns = new List<decimal>();
+            List<decimal> sub = new List<decimal>();
+            List<string> titles = new List<string>()
+            {
+                AppSettings.resourcemanager.GetString("trTotalDiscountValue"),
+                //MainWindow.resourcemanager.GetString("trTotalReturn"),
+                //MainWindow.resourcemanager.GetString("trSum"),
+            };
+            int xCount = 0;
+            if (pTemp.Count() <= 6) xCount = pTemp.Count();
+            for (int i = 0; i < xCount; i++)
+            {
+                purchase.Add(pTemp.ToList().Skip(i).FirstOrDefault());
+                MyAxis.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
+            }
+
+            if (pTemp.Count() > 6)
+            {
+                decimal purchaseSum = 0;
+                for (int i = xCount; i < pTemp.Count(); i++)
+                {
+                    purchaseSum = purchaseSum + pTemp.ToList().Skip(i).FirstOrDefault();
+                }
+                if (purchaseSum != 0)
+                {
+                    purchase.Add(purchaseSum);
+                    MyAxis.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
+                }
+            }
+            rowChartData.Add(
+                  new LineSeries
+                  {
+                      Values = purchase.AsChartValues(),
+                      Title = titles[0]
+                  });
+
+            DataContext = this;
+            rowChart.Series = rowChartData;
         }
+
 
         #endregion
 
         #region Events
 
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Instance = null;
+            GC.Collect();
+        }
+
         #region tabControl
 
         private async void btn_coupons_Click(object sender, RoutedEventArgs e)
-        {//copouns
+        {//coupons
             try
             {
                 HelpClass.StartAwait(grid_main);
@@ -718,17 +852,16 @@ namespace Restaurant.View.reports.salesReports
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_coupon);
                 path_coupons.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
-                fillComboCoupon();
                 await Search();
+                fillComboCoupon();
 
                 hidAllColumns();
                 col_code.Visibility = Visibility.Visible;
                 col_coupon.Visibility = Visibility.Visible;
-                col_couponType.Visibility = Visibility.Visible;
                 col_coupoValue.Visibility = Visibility.Visible;
                 col_couponTotalValue.Visibility = Visibility.Visible;
 
-                 HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
@@ -753,14 +886,13 @@ namespace Restaurant.View.reports.salesReports
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_offers);
                 path_offers.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
-                fillComboOffer();
                 await Search();
+                fillComboOffer();
 
                 hidAllColumns();
 
                 col_offerCode.Visibility = Visibility.Visible;
                 col_offers.Visibility = Visibility.Visible;
-                col_offersType.Visibility = Visibility.Visible;
                 col_offersValue.Visibility = Visibility.Visible;
                 col_item.Visibility = Visibility.Visible;
                 col_price.Visibility = Visibility.Visible;
@@ -778,9 +910,9 @@ namespace Restaurant.View.reports.salesReports
         }
         private async void Btn_invoicesClasses_Click(object sender, RoutedEventArgs e)
         {//invoicesClasses
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_Coupons, AppSettings.resourcemanager.GetString("trInvoiceClass")+"...");
@@ -793,28 +925,20 @@ namespace Restaurant.View.reports.salesReports
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_invoiceClass);
                 path_invoicesClasses.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
-                fillComboInvoice();
                 await Search();
+                fillComboInvoice();
 
                 hidAllColumns();
                 /////????????????
-                col_offerCode.Visibility = Visibility.Visible;
-                col_offers.Visibility = Visibility.Visible;
-                col_offersType.Visibility = Visibility.Visible;
-                col_offersValue.Visibility = Visibility.Visible;
-                col_item.Visibility = Visibility.Visible;
-                col_price.Visibility = Visibility.Visible;
-                col_itQuantity.Visibility = Visibility.Visible;
-                col_offersTotalValue.Visibility = Visibility.Visible;
-                col_total.Visibility = Visibility.Visible;
+                col_invoiceValue.Visibility = Visibility.Visible;
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         #endregion
 
@@ -864,7 +988,7 @@ namespace Restaurant.View.reports.salesReports
             }
         }
 
-        private async void Chk_allCoupon_Unloaded(object sender, RoutedEventArgs e)
+        private async void Chk_allCoupon_Unchecked(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -882,6 +1006,7 @@ namespace Restaurant.View.reports.salesReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh
             try
@@ -1058,103 +1183,8 @@ namespace Restaurant.View.reports.salesReports
             }
         }
 
-
         #endregion
-
-
-
-        private void fillRowChartCoupAndOffer(ComboBox comboBox, ObservableCollection<int> stackedButton)
-        {
-            MyAxis.Labels = new List<string>();
-            List<string> names = new List<string>();
-            IEnumerable<decimal> pTemp = null;
-
-            var temp = invRowChartLst;
-            if (selectedTab == 0)
-            {
-                names.Clear();
-                temp = temp.Where(j => (selectedcouponId.Count != 0 ? stackedButton.Contains((int)j.CopcId) : true));
-                var result = temp.GroupBy(s => new { s.CopcId }).Select(s => new
-                {
-                    CopcId = s.FirstOrDefault().CopcId,
-                    copName = s.FirstOrDefault().Copname,
-                    invId = s.FirstOrDefault().invoiceId,
-                    copTotalValue = s.Sum(x => x.couponTotalValue)
-                }
-                );
-
-
-                var name = temp.GroupBy(s => s.invoiceId).Select(s => new
-                {
-                    uUserName = s.FirstOrDefault().Copname
-                });
-                names.AddRange(name.Select(nn => nn.uUserName));
-                pTemp = result.Select(x => (decimal)x.copTotalValue);
-            }
-            if (selectedTab == 1)
-            {
-                names.Clear();
-                temp = temp.Where(j => (selectedOfferId.Count != 0 ? stackedButton.Contains((int)j.OofferId) : true));
-                var result1 = temp.GroupBy(s => new { s.OofferId, s.ITitemUnitId }).Select(s => new
-                {
-                    offerId = s.FirstOrDefault().OofferId,
-                    offerName = s.FirstOrDefault().Oname,
-                    itemId = s.FirstOrDefault().ITitemUnitId,
-                    offerTotalValue = s.Sum(x => x.offerTotalValue)
-                }
-             );
-
-                var name = result1.GroupBy(s => s.offerId).Select(s => new
-                {
-                    uUserName = s.FirstOrDefault().offerName,
-                    offerTotalValue = s.Sum(x => x.offerTotalValue)
-                });
-                names.AddRange(name.Select(nn => nn.uUserName));
-                pTemp = name.Select(x => (decimal)x.offerTotalValue);
-            }
-
-            SeriesCollection rowChartData = new SeriesCollection();
-            List<decimal> purchase = new List<decimal>();
-            List<decimal> returns = new List<decimal>();
-            List<decimal> sub = new List<decimal>();
-            List<string> titles = new List<string>()
-            {
-                AppSettings.resourcemanager.GetString("trNetSales"),
-                AppSettings.resourcemanager.GetString("trTotalReturn"),
-                AppSettings.resourcemanager.GetString("trSum"),
-            };
-            int xCount = 0;
-            if (pTemp.Count() <= 6) xCount = pTemp.Count();
-            for (int i = 0; i < xCount; i++)
-            {
-                purchase.Add(pTemp.ToList().Skip(i).FirstOrDefault());
-                MyAxis.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
-            }
-
-            if (pTemp.Count() > 6)
-            {
-                decimal purchaseSum = 0;
-                for (int i = xCount; i < pTemp.Count(); i++)
-                {
-                    purchaseSum = purchaseSum + pTemp.ToList().Skip(i).FirstOrDefault();
-                }
-                if (purchaseSum != 0)
-                {
-                    purchase.Add(purchaseSum);
-                    MyAxis.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
-                }
-            }
-            rowChartData.Add(
-                  new LineSeries
-                  {
-                      Values = purchase.AsChartValues(),
-                      Title = titles[0]
-                  });
-
-            DataContext = this;
-            rowChart.Series = rowChartData;
-        }
-
+       
         #region reports
         private void BuildReport()
         {
@@ -1332,6 +1362,7 @@ namespace Restaurant.View.reports.salesReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         #endregion
 
     }

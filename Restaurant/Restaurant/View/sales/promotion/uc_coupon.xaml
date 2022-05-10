@@ -59,12 +59,12 @@
                     </Border.Effect>
                     <Grid   >
                         <TextBox x:Name="tb_search" Grid.Column="1"    Padding="10,0,5,0" 
-                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                      materialDesign:HintAssist.Hint="Enter Here To Start Search ...."  
-                                     Foreground="#4E4E4E"  TextChanged="Tb_search_TextChanged"
-                                      MaxLength="50" 
-                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                   BorderBrush="#737373"   BorderThickness="0" Margin="4,0"  />
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                 materialDesign:HintAssist.Hint="Enter Here To Start Search ...."  
+                                 Foreground="#4E4E4E"  TextChanged="Tb_search_TextChanged"
+                                 MaxLength="50" 
+                                 materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                 BorderBrush="#737373"   BorderThickness="0" Margin="4,0"  />
                     </Grid>
                 </Border>
                 <TextBlock    x:Name="txt_active" Grid.Column="3"

@@ -219,7 +219,7 @@
                                                 </Grid>
                                             </Border>
                                             
-                                        <CheckBox  Grid.Column="1"  Background="{StaticResource MainColor}" Margin="5" x:Name="chk_allCoupon" Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_allCoupon_Checked" Unloaded="Chk_allCoupon_Unloaded" ></CheckBox>
+                                        <CheckBox  Grid.Column="1"  Background="{StaticResource MainColor}" Margin="5" x:Name="chk_allCoupon" Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_allCoupon_Checked" Unchecked="Chk_allCoupon_Unchecked"  ></CheckBox>
                                     </Grid>
                                     <DockPanel  Grid.Row="1" Grid.Column="1" LastChildFill="False">
                                             <Border Grid.Row="0" DockPanel.Dock="Right" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
@@ -372,8 +372,23 @@
                         <!--coupon-->
                         <DataGridTextColumn x:Name="col_coupon" Width="*" Header="Name" Binding="{Binding Copname}" Visibility="Hidden"/>
                         <DataGridTextColumn x:Name="col_code" Width="*" Header="Code" Binding="{Binding Copcode}" Visibility="Visible"/>
-                        <DataGridTextColumn x:Name="col_couponType" Width="*" Header="Type" Binding="{Binding CopdiscountType,Converter={StaticResource discountTypeConverter }}" Visibility="Hidden"/>
-                        <DataGridTextColumn x:Name="col_coupoValue" Width="*" Header="Value" Binding="{Binding CopdiscountValue ,Converter={StaticResource accuracyConverter}}" Visibility="Hidden"/>
+                        <DataGridTextColumn x:Name="col_coupoValue" Width="*"  Header="Value" >
+                             <DataGridTextColumn.Binding >
+                                  <MultiBinding Converter="{StaticResource accuracyDiscountConverter}" >
+                                       <Binding Path="CopdiscountType" />
+                                       <Binding Path="CopdiscountValue" />
+                                  </MultiBinding>
+                             </DataGridTextColumn.Binding>
+                                  <DataGridTextColumn.ElementStyle>
+                                       <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                 <DataTrigger Binding="{Binding isActive}" Value="0">
+                                                     <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                                 </DataTrigger>
+                                            </Style.Triggers>
+                                       </Style>
+                                  </DataGridTextColumn.ElementStyle>
+                         </DataGridTextColumn>
                         <DataGridTextColumn x:Name="col_couponTotalValue" Width="*" Header="Discount Amount" Binding="{Binding couponTotalValue,Converter={StaticResource accuracyConverter}}" Visibility="Hidden"/>
                         <DataGridTextColumn x:Name="col_item" Width="*" Header="Item" Binding="{Binding ITitemUnitName1}" Visibility="Hidden"/>
                         <DataGridTextColumn x:Name="col_price" Width="*" Header="Price" Binding="{Binding price ,Converter={StaticResource accuracyConverter}}" Visibility="Hidden"/>
@@ -381,11 +396,43 @@
                         <DataGridTextColumn x:Name="col_itQuantity" Width="*" Header="QTY" Binding="{Binding ITquantity}" Visibility="Hidden"/>
                         <DataGridTextColumn x:Name="col_offers" Width="*" Header="Offer" Binding="{Binding Oname}" Visibility="Hidden"/>
                         <DataGridTextColumn x:Name="col_offerCode" Width="*" Header="Code" Binding="{Binding Ocode}" Visibility="Visible"/>
-                        <DataGridTextColumn x:Name="col_offersType" Width="*" Header="Type" Binding="{Binding OdiscountType,Converter={StaticResource discountTypeConverter }}" Visibility="Hidden"/>
-                        <DataGridTextColumn x:Name="col_offersValue" Width="*" Header="Value" Binding="{Binding OdiscountValue ,Converter={StaticResource accuracyConverter}}" Visibility="Hidden"/>
+                        <DataGridTextColumn x:Name="col_offersValue" Width="*"  Header="Value" >
+                             <DataGridTextColumn.Binding >
+                                  <MultiBinding Converter="{StaticResource accuracyDiscountConverter}" >
+                                       <Binding Path="OdiscountType" />
+                                       <Binding Path="OdiscountValue" />
+                                  </MultiBinding>
+                             </DataGridTextColumn.Binding>
+                                  <DataGridTextColumn.ElementStyle>
+                                       <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding isActive}" Value="0">
+                                                    <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                       </Style>
+                                  </DataGridTextColumn.ElementStyle>
+                             </DataGridTextColumn>
                         <DataGridTextColumn x:Name="col_offersTotalValue" Width="*" Header="Discount Amount" Binding="{Binding offerTotalValue,Converter={StaticResource accuracyConverter}}" Visibility="Hidden"/>
                         <DataGridTextColumn x:Name="col_total" Width="*" Header="Total" Binding="{Binding subTotal ,Converter={StaticResource accuracyConverter}}" Visibility="Hidden"/>
-
+                        <!--invoices classes-->
+                        <DataGridTextColumn x:Name="col_invoiceValue" Width="*"  Header="Value" >
+                            <DataGridTextColumn.Binding >
+                                <MultiBinding Converter="{StaticResource accuracyDiscountConverter}" >
+                                    <Binding Path="discountType" />
+                                    <Binding Path="discountValue" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding isActive}" Value="0">
+                                            <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
                 </Grid>
