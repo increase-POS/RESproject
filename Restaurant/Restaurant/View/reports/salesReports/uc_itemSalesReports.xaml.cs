@@ -77,18 +77,18 @@ namespace Restaurant.View.reports.salesReports
         List<Branch> comboBranches;
         List<ItemUnitCombo> itemUnitCombos;
 
-        ObservableCollection<Branch> comboBrachTemp = new ObservableCollection<Branch>();
-        ObservableCollection<ItemUnitCombo> comboItemTemp = new ObservableCollection<ItemUnitCombo>();
+        List<Branch> comboBrachTemp = new List<Branch>();
+        List<ItemUnitCombo> comboItemTemp = new List<ItemUnitCombo>();
 
-        ObservableCollection<Branch> dynamicComboBranches;
-        ObservableCollection<ItemUnitCombo> dynamicComboItem;
+        List<Branch> dynamicComboBranches = new List<Branch>();
+        List<ItemUnitCombo> dynamicComboItem = new List<ItemUnitCombo>();
 
         Branch branchModel = new Branch();
         /*************************/
 
-        ObservableCollection<int> selectedBranchId = new ObservableCollection<int>();
+        List<int> selectedBranchId = new List<int>();
 
-        ObservableCollection<int> selectedItemId = new ObservableCollection<int>();
+        List<int> selectedItemId = new List<int>();
 
         // report
         ReportCls reportclass = new ReportCls();
@@ -101,8 +101,7 @@ namespace Restaurant.View.reports.salesReports
         {//load
             try
             {
-                 
-                    HelpClass.StartAwait(grid_main);
+               HelpClass.StartAwait(grid_main);
 
                 Items = await statisticModel.GetSaleitem((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
 
@@ -122,24 +121,18 @@ namespace Restaurant.View.reports.salesReports
 
                 itemUnitCombos = statisticModel.GetIUComboList(Items);
 
-                dynamicComboBranches = new ObservableCollection<Branch>(comboBranches);
-                dynamicComboItem = new ObservableCollection<ItemUnitCombo>(itemUnitCombos);
-
                 fillComboBranches(cb_collect);
                 fillComboItemsBranches(cb_ItemsBranches);
+                await fillComboItemTypes();
                 fillComboItems();
-                fillComboItemTypes();
 
-                chk_itemInvoice.IsChecked = true;
-                HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_items.Tag.ToString());
+                btn_items_Click(btn_items, null);
 
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
 
@@ -150,13 +143,9 @@ namespace Restaurant.View.reports.salesReports
             tt_items.Content = AppSettings.resourcemanager.GetString("trItems");
             tt_collect.Content = AppSettings.resourcemanager.GetString("trBestSeller");
 
-            chk_itemInvoice.Content = AppSettings.resourcemanager.GetString("tr_Invoice");
-            chk_itemReturn.Content = AppSettings.resourcemanager.GetString("trReturned");
-            chk_itemDrafs.Content = AppSettings.resourcemanager.GetString("trDraft");
-
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_ItemsBranches, AppSettings.resourcemanager.GetString("trBranchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_Items, AppSettings.resourcemanager.GetString("trItemHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_Types, AppSettings.resourcemanager.GetString("trType") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_Types, AppSettings.resourcemanager.GetString("trCategorie") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_collect, AppSettings.resourcemanager.GetString("trBranchHint"));
 
             chk_allcollect.Content = AppSettings.resourcemanager.GetString("trAll");
@@ -175,19 +164,19 @@ namespace Restaurant.View.reports.salesReports
 
             col_number.Header = AppSettings.resourcemanager.GetString("trNo.");
             col_date.Header = AppSettings.resourcemanager.GetString("trDate");
-            col_type.Header = AppSettings.resourcemanager.GetString("trType");
+            col_type.Header = AppSettings.resourcemanager.GetString("trCategorie");
             col_branch.Header = AppSettings.resourcemanager.GetString("trBranch");
             col_item.Header = AppSettings.resourcemanager.GetString("trItem");
-            col_unit.Header = AppSettings.resourcemanager.GetString("trUnit");
             col_itQuantity.Header = AppSettings.resourcemanager.GetString("trQTR");
             col_invCount.Header = AppSettings.resourcemanager.GetString("trInvoices");
             col_price.Header = AppSettings.resourcemanager.GetString("trPrice");
             col_total.Header = AppSettings.resourcemanager.GetString("trTotal");
-            col_avg.Header = AppSettings.resourcemanager.GetString("trItem") + "/" + AppSettings.resourcemanager.GetString("trI_nvoice");
+            col_avg.Header = AppSettings.resourcemanager.GetString("trItem") + "/" + AppSettings.resourcemanager.GetString("tr_Invoice");
 
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
+            tt_preview.Content = AppSettings.resourcemanager.GetString("trPreview");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
 
         }
@@ -196,7 +185,9 @@ namespace Restaurant.View.reports.salesReports
         {
             cb.SelectedValuePath = "branchId";
             cb.DisplayMemberPath = "name";
-            cb.ItemsSource = dynamicComboBranches;
+            var lst = Items.GroupBy(i => i.itemId).Select(i => new { i.FirstOrDefault().itemUnitId, i.FirstOrDefault().ITitemName });
+            cb.ItemsSource = lst;
+
         }
         private void fillComboItemsBranches(ComboBox cb)
         {
@@ -207,37 +198,35 @@ namespace Restaurant.View.reports.salesReports
 
         private void fillComboItems()
         {
+            var lst = Items;///////where category
+            cb_Items.ItemsSource = lst;
             cb_Items.SelectedValuePath = "itemUnitId";
             cb_Items.DisplayMemberPath = "itemUnitName";
-            cb_Items.ItemsSource = dynamicComboItem;
         }
 
-        private void fillComboItemTypes()
+        private async Task fillComboItemTypes()
         {
-            var typelist = new[] {
-                new { Text = AppSettings.resourcemanager.GetString("trNormal")               , Value = "n" },//normal
-                new { Text = AppSettings.resourcemanager.GetString("trHaveExpirationDate")   , Value = "d" },//expired
-                new { Text = AppSettings.resourcemanager.GetString("trHaveSerialNumber")     , Value = "sn" },//serial
-                new { Text = AppSettings.resourcemanager.GetString("trService")              , Value = "sr" },//service
-                new { Text = AppSettings.resourcemanager.GetString("trPackage")              , Value = "p" },//package
-                 };
-            cb_Types.DisplayMemberPath = "Text";
-            cb_Types.SelectedValuePath = "Value";
-            cb_Types.ItemsSource = typelist;
+            if (FillCombo.categoriesList is null)
+                await FillCombo.RefreshCategory();
+            List<Category> newList = FillCombo.categoriesList.Where(x => x.type == "s").ToList();
+           
+            cb_Types.ItemsSource = newList;
+            cb_Types.SelectedValuePath = "categoryId";
+            cb_Types.DisplayMemberPath = "name";
         }
 
         public void fillItemsEvent()
         {
-            temp = fillList(Items, cb_ItemsBranches, cb_Items, chk_itemInvoice, chk_itemReturn, dp_ItemStartDate, dp_ItemEndDate)
-                .Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemUnitId) : true));
+            //temp = fillList(Items, cb_ItemsBranches, cb_Items, chk_itemInvoice, chk_itemReturn, dp_ItemStartDate, dp_ItemEndDate)
+            //    .Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemUnitId) : true));
 
-            dgInvoice.ItemsSource = temp;
+            //dgInvoice.ItemsSource = temp;
 
-            txt_count.Text = dgInvoice.Items.Count.ToString();
+            //txt_count.Text = dgInvoice.Items.Count.ToString();
 
-            fillPieChart();
-            fillColumnChart();
-            fillRowChart(selectedItemId);
+            //fillPieChart();
+            //fillColumnChart();
+            //fillRowChart(selectedItemId);
         }
 
         public void fillCollectEvent()
@@ -281,8 +270,7 @@ namespace Restaurant.View.reports.salesReports
         {//items
             try
             {
-                 
-                    HelpClass.StartAwait(grid_main);
+               HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 
@@ -303,7 +291,6 @@ namespace Restaurant.View.reports.salesReports
                 col_date.Visibility = Visibility.Visible;
                 col_branch.Visibility = Visibility.Visible;
                 col_item.Visibility = Visibility.Visible;
-                col_unit.Visibility = Visibility.Visible;
                 col_type.Visibility = Visibility.Visible;
                 col_itQuantity.Visibility = Visibility.Visible;
                 col_price.Visibility = Visibility.Visible;
@@ -311,13 +298,11 @@ namespace Restaurant.View.reports.salesReports
 
                 fillItemsEvent();
 
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
 
@@ -327,8 +312,7 @@ namespace Restaurant.View.reports.salesReports
         {//collect
             try
             {
-                 
-                    HelpClass.StartAwait(grid_main);
+                 HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 
@@ -347,7 +331,6 @@ namespace Restaurant.View.reports.salesReports
                 grid_collect.Visibility = Visibility.Visible;
                 col_branch.Visibility = Visibility.Visible;
                 col_item.Visibility = Visibility.Visible;
-                col_unit.Visibility = Visibility.Visible;
                 col_itQuantity.Visibility = Visibility.Visible;
                 col_invCount.Visibility = Visibility.Visible;
                 col_avg.Visibility = Visibility.Visible;
@@ -361,13 +344,11 @@ namespace Restaurant.View.reports.salesReports
                     fillCollectEvent();
                 }
 
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -777,7 +758,7 @@ namespace Restaurant.View.reports.salesReports
             cartesianChart.Series = columnChartData;
         }
 
-        private void fillRowChart(ObservableCollection<int> stackedButton)
+        private void fillRowChart(List<int> stackedButton)
         {
             MyAxis.Labels = new List<string>();
             List<string> names = new List<string>();
@@ -785,8 +766,9 @@ namespace Restaurant.View.reports.salesReports
             IEnumerable<decimal> pbTemp = null;
             IEnumerable<decimal> resultTemp = null;
 
-            var temp = fillRowChartList(Items, chk_itemInvoice, chk_itemReturn, chk_itemDrafs, dp_ItemStartDate, dp_ItemEndDate, dt_itemStartTime, dt_ItemEndTime);
-            temp = temp.Where(j => (selectedItemId.Count != 0 ? stackedButton.Contains((int)j.ITitemUnitId) : true));
+            //var temp = fillRowChartList(Items, chk_itemInvoice, chk_itemReturn, chk_itemDrafs, dp_ItemStartDate, dp_ItemEndDate, dt_itemStartTime, dt_ItemEndTime);
+            var temp = Items;
+            temp = temp.Where(j => (selectedItemId.Count != 0 ? stackedButton.Contains((int)j.ITitemUnitId) : true)).ToList();
             var result = temp.GroupBy(s => s.ITitemUnitId).Select(s => new
             {
                 ITitemUnitId = s.Key,
@@ -1174,8 +1156,6 @@ namespace Restaurant.View.reports.salesReports
                 {
                     chk_allBranchesItem.IsChecked = true;
                     chk_allItems.IsChecked = true;
-                    chk_itemInvoice.IsChecked = true;
-                    chk_itemReturn.IsChecked = true;
                     dp_ItemStartDate.SelectedDate = null;
                     dp_ItemEndDate.SelectedDate = null;
 
@@ -1648,50 +1628,6 @@ namespace Restaurant.View.reports.salesReports
 
 
         #endregion
-
-       
-
-
-        Invoice invoice;
-        private async void DgInvoice_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                 
-                    HelpClass.StartAwait(grid_main);
-                invoice = new Invoice();
-                if (dgInvoice.SelectedIndex != -1)
-                {
-                    ItemTransferInvoice item = dgInvoice.SelectedItem as ItemTransferInvoice;
-                    if (item.invoiceId > 0)
-                    {
-                        /*
-                        invoice = await invoice.GetByInvoiceId(item.invoiceId);
-                        MainWindow.mainWindow.BTN_sales_Click(MainWindow.mainWindow.btn_sales, null);
-                        uc_sales.Instance.UserControl_Loaded(null, null);
-                        uc_sales.Instance.Btn_receiptInvoice_Click(uc_sales.Instance.btn_reciptInvoice, null);
-                        uc_receiptInvoice.Instance.UserControl_Loaded(null, null);
-                        uc_receiptInvoice._InvoiceType = invoice.invType;
-                        uc_receiptInvoice.Instance.invoice = invoice;
-                        uc_receiptInvoice.isFromReport = true;
-                        if (item.archived == 0)
-                            uc_receiptInvoice.archived = false;
-                        else
-                            uc_receiptInvoice.archived = true;
-                        await uc_receiptInvoice.Instance.fillInvoiceInputs(invoice);
-                        */
-                    }
-                }
-                 
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                 
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
 
     }
 }

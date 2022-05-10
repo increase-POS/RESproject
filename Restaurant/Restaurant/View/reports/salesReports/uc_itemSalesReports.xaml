@@ -18,11 +18,9 @@
 
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-
 
             <!--First Grid Grid-->
             <Border Margin="10,10,5,5" >
@@ -144,33 +142,32 @@
                                         <Border Grid.Row="0" Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                             <Grid>
                                                 <ComboBox SelectionChanged="Cb_ItemsBranches_SelectionChanged" Name="cb_ItemsBranches"  Grid.Row="0"
-                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                      materialDesign:HintAssist.Hint="Branches ...."
-                                    Foreground="#4E4E4E"  
-                                    BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
-                                    Height="40"  Padding="10,0,5,0" />
+                                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                                            materialDesign:HintAssist.Hint="Branches ...."
+                                                            Foreground="#4E4E4E"  
+                                                            BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
+                                                            Height="40"  Padding="10,0,5,0" />
                                             </Grid>
                                         </Border>
-                                    <CheckBox  Background="{StaticResource MainColor}" x:Name="chk_allBranchesItem" Checked="Chk_allBranchesItem_Checked" Unchecked="Chk_allBranchesItem_Unchecked" Grid.Row="0" Grid.Column="1" Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"></CheckBox>
-                                        <Border Grid.Row="0" Grid.Column="2" Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                        <CheckBox Grid.Row="0" Background="{StaticResource MainColor}" x:Name="chk_allBranchesItem" Checked="Chk_allBranchesItem_Checked" Unchecked="Chk_allBranchesItem_Unchecked"  Grid.Column="1" Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"></CheckBox>
+                                        <Border Grid.Row="1" Grid.Column="2" Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                             <Grid>
                                                 <ComboBox Grid.Row="0" Grid.Column="2" SelectionChanged="cb_Items_SelectionChanged" Name="cb_Items" 
-                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                      materialDesign:HintAssist.Hint="Item ...."
-                                    Foreground="#4E4E4E" 
-                                    BorderBrush="#737373"   BorderThickness="0" Margin="4,0"                       
-                                    Height="40"  Padding="10,0,5,0" />
+                                                           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                                           materialDesign:HintAssist.Hint="Item ...."
+                                                           Foreground="#4E4E4E" 
+                                                           BorderBrush="#737373"   BorderThickness="0" Margin="4,0"                       
+                                                           Height="40"  Padding="10,0,5,0" />
                                             </Grid>
                                         </Border>
-                                    <CheckBox Grid.Row="0" Grid.Column="3" 
+                                        <CheckBox Grid.Row="1" Grid.Column="3" 
                                               Background="{StaticResource MainColor}" x:Name="chk_allItems" Checked="Chk_allItems_Checked" Unchecked="Chk_allItems_Unchecked"   Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"></CheckBox>
 
-
-                                    <DockPanel  Grid.Column="4" HorizontalAlignment="Right" LastChildFill="False">
+                                    <!--<DockPanel  Grid.Column="4" HorizontalAlignment="Right" LastChildFill="False">
                                         <CheckBox x:Name="chk_itemInvoice" Content="Invoice" Margin="10,5,10,5" Foreground="{StaticResource ThickGrey}" Checked="chk_Checked" Unchecked="chk_Checked"></CheckBox>
                                         <CheckBox x:Name="chk_itemReturn" Content="Return invoice" Margin="5" Foreground="{StaticResource ThickGrey}" Checked="chk_Checked" Unchecked="chk_Checked"></CheckBox>
                                         <CheckBox x:Name="chk_itemDrafs" Visibility="Collapsed"></CheckBox>
-                                    </DockPanel>
+                                    </DockPanel>-->
 
                                         <Border Grid.Row="1" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                             <Grid>
@@ -188,18 +185,18 @@
                                     <CheckBox  Background="{StaticResource MainColor}" x:Name="chk_allTypes" Grid.Row="1" Grid.Column="1" Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_allTypes_Checked" Unchecked="Chk_allTypes_Unchecked"></CheckBox>
 
 
-                                    <DockPanel  Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" HorizontalAlignment="Right" LastChildFill="False">
+                                    <DockPanel  Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4" HorizontalAlignment="Right" LastChildFill="False">
                                             <Border Grid.Row="0" DockPanel.Dock="Right" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                                 <Grid>
                                                     <DatePicker SelectedDateFormat="Short"  Name="dp_ItemEndDate"
-                                              Width="100" 
-                                              Padding="10,0,5,0" Height="40"
-                                              DockPanel.Dock="Right" 
-                                              SelectedDateChanged="dp_SelectedDateChanged" 
-                                              BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
-                                              Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  
-                                              materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                materialDesign:HintAssist.Hint="End Date..."/>
+                                                                  Width="100" 
+                                                                  Padding="10,0,5,0" Height="40"
+                                                                  DockPanel.Dock="Right" 
+                                                                  SelectedDateChanged="dp_SelectedDateChanged" 
+                                                                  BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
+                                                                  Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  
+                                                                  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                                                  materialDesign:HintAssist.Hint="End Date..."/>
                                                 </Grid>
                                             </Border>
                                             <Border Grid.Row="0" DockPanel.Dock="Right" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
@@ -210,9 +207,9 @@
                                                                 Padding="10,0,5,0" Height="40" 
                                                                 DockPanel.Dock="Right"  
                                                                 BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
-                                       Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  
+                                                                Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  
                                                                 materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                materialDesign:HintAssist.Hint="Start date..."  />
+                                                                materialDesign:HintAssist.Hint="Start date..."  />
                                                 </Grid>
                                             </Border>
                                         <materialDesign:TimePicker Visibility="Collapsed" SelectedTimeChanged="dt_SelectedTimeChanged" Name="dt_ItemEndTime" Margin="10,5,10,5" Padding="10,0,5,0" Height="40" Width="100" DockPanel.Dock="Right"  BorderBrush="#737373"  BorderThickness="0" 
@@ -379,7 +376,7 @@
                     <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                     <DataGrid  Margin="5,4,5,18"  IsReadOnly="True"  Background="White"
-                     Name="dgInvoice"  MouseDoubleClick="DgInvoice_MouseDoubleClick"
+                     Name="dgInvoice"  
                         AutoGenerateColumns="False" 
                         ColumnWidth="SizeToHeader"
                             AlternatingRowBackground="#f3f3f3" AlternationCount="2">
@@ -400,7 +397,6 @@
                         <DataGridTextColumn x:Name="col_date"   Width="*" Header="Date" Binding="{Binding updateDate,Converter={StaticResource dateFrameConverter }}" />
                         <DataGridTextColumn x:Name="col_branch" Width="*" Header="Branch" Binding="{Binding branchCreatorName}" />
                         <DataGridTextColumn x:Name="col_item"   Width="*" Header="Item" Binding="{Binding ITitemName}" />
-                        <DataGridTextColumn x:Name="col_unit"   Width="*" Header="Unit" Binding="{Binding ITunitName}" />
                         <DataGridTextColumn x:Name="col_type"   Width="*" Header="Type" Binding="{Binding ITtype , Converter={StaticResource itemTypeConverter}}" />
                         <DataGridTextColumn x:Name="col_itQuantity" Width="*" Header="QTY" Binding="{Binding ITquantity}" />
                         <DataGridTextColumn x:Name="col_price"  Width="*" Header="Price" Binding="{Binding ITprice,Converter={StaticResource accuracyConverter}}" />
