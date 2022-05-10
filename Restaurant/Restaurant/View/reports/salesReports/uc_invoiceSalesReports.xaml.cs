@@ -158,11 +158,11 @@ namespace Restaurant.View.reports.salesReports
         {
             tt_branch.Content = AppSettings.resourcemanager.GetString("trBranches");
             tt_pos.Content = AppSettings.resourcemanager.GetString("trPOSs");
-            tt_vendors.Content = AppSettings.resourcemanager.GetString("trVendors");
+            tt_vendors.Content = AppSettings.resourcemanager.GetString("trCustomers");
             tt_users.Content = AppSettings.resourcemanager.GetString("trUsers");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trBranchHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sevices, AppSettings.resourcemanager.GetString("trServices")+"...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sevices, AppSettings.resourcemanager.GetString("typesOfService") +"...");
 
             chk_allBranches.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_allServices.Content = AppSettings.resourcemanager.GetString("trAll");
@@ -180,7 +180,7 @@ namespace Restaurant.View.reports.salesReports
             col_date.Header = AppSettings.resourcemanager.GetString("trDate");
             col_branch.Header = AppSettings.resourcemanager.GetString("trBranch");
             col_pos.Header = AppSettings.resourcemanager.GetString("trPOS");
-            col_vendor.Header = AppSettings.resourcemanager.GetString("trVendor");
+            col_vendor.Header = AppSettings.resourcemanager.GetString("trCustomer");
             col_agentCompany.Header = AppSettings.resourcemanager.GetString("trCompany");
             col_user.Header = AppSettings.resourcemanager.GetString("trUser");
             col_count.Header = AppSettings.resourcemanager.GetString("trQTR");
@@ -455,7 +455,7 @@ namespace Restaurant.View.reports.salesReports
                 HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
-                MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trVendorHint"));
+                MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trCustomerHint"));
 
                 txt_search.Text = "";
                 hideSatacks();

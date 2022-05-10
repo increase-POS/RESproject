@@ -414,8 +414,8 @@
                                   </DataGridTextColumn.ElementStyle>
                              </DataGridTextColumn>
                         <DataGridTextColumn x:Name="col_offersTotalValue" Width="*" Header="Discount Amount" Binding="{Binding offerTotalValue,Converter={StaticResource accuracyConverter}}" Visibility="Hidden"/>
-                        <DataGridTextColumn x:Name="col_total" Width="*" Header="Total" Binding="{Binding subTotal ,Converter={StaticResource accuracyConverter}}" Visibility="Hidden"/>
                         <!--invoices classes-->
+                                    <DataGridTextColumn x:Name="col_invoiceClass" Width="*" Header="Name" Binding="{Binding invoicesClassName}" />
                         <DataGridTextColumn x:Name="col_invoiceValue" Width="*"  Header="Value" >
                             <DataGridTextColumn.Binding >
                                 <MultiBinding Converter="{StaticResource accuracyDiscountConverter}" >
@@ -433,7 +433,8 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                    </DataGrid.Columns>
+                                    <DataGridTextColumn x:Name="col_invoiceTotalValue" Width="*" Header="Discount Amount" Binding="{Binding finalDiscount,Converter={StaticResource accuracyConverter}}" Visibility="Hidden"/>
+                        </DataGrid.Columns>
                 </DataGrid>
                 </Grid>
             </Border>

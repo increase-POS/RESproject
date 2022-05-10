@@ -265,8 +265,8 @@ namespace Restaurant.View.reports.salesReports
               .Where(s =>
            (
            s.invNumber.ToLower().Contains(searchText)
-           //||
-           //(s.Oname != null ? s.branchCreatorName.ToLower().Contains(searchText) : false)
+           ||
+           (s.invoicesClassName != null ? s.invoicesClassName.ToLower().Contains(searchText) : false)
            //||
            //(s.Ocode != null ? s.posName.ToLower().Contains(searchText) : false)
            )
@@ -357,7 +357,9 @@ namespace Restaurant.View.reports.salesReports
 
             col_offerCode.Header = AppSettings.resourcemanager.GetString("trCode");
             col_itQuantity.Header = AppSettings.resourcemanager.GetString("trQTR");
-            col_total.Header = AppSettings.resourcemanager.GetString("trTotal");
+
+            col_invoiceClass.Header = AppSettings.resourcemanager.GetString("trInvoiceClass");
+            col_invoiceValue.Header = AppSettings.resourcemanager.GetString("trDiscount");
 
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
@@ -898,7 +900,7 @@ namespace Restaurant.View.reports.salesReports
                 col_price.Visibility = Visibility.Visible;
                 col_itQuantity.Visibility = Visibility.Visible;
                 col_offersTotalValue.Visibility = Visibility.Visible;
-                col_total.Visibility = Visibility.Visible;
+                //col_total.Visibility = Visibility.Visible;
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -929,9 +931,10 @@ namespace Restaurant.View.reports.salesReports
                 fillComboInvoice();
 
                 hidAllColumns();
-                /////????????????
+                
+                col_invoiceClass.Visibility = Visibility.Visible;
                 col_invoiceValue.Visibility = Visibility.Visible;
-
+                col_invoiceTotalValue.Visibility = Visibility.Visible;
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
