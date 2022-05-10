@@ -101,9 +101,9 @@ namespace Restaurant.View.accounts
         }
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 requiredControlList = new List<string> { "cash", "paymentProcessType" };
 
@@ -175,13 +175,13 @@ namespace Restaurant.View.accounts
                 await Search();
                 Clear();
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private async void dp_SelectedEndDateChanged(object sender, SelectionChangedEventArgs e)
@@ -420,20 +420,20 @@ namespace Restaurant.View.accounts
         
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {//clear
-         //try
-         //{
+            try
+            {
 
             HelpClass.StartAwait(grid_main);
 
-            Clear();
+                Clear();
 
             HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
@@ -1191,8 +1191,8 @@ namespace Restaurant.View.accounts
 
         private async void search_Checking(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 CheckBox cb = sender as CheckBox;
                 if (cb.IsFocused)
                 {
@@ -1213,23 +1213,23 @@ namespace Restaurant.View.accounts
                         bdr_cashDelivered.Visibility = Visibility.Collapsed;
                     }
                 }
-                //HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 Clear();
                 await Search();
 
-            //HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void chk_uncheck(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 CheckBox cb = sender as CheckBox;
                 if (cb.IsFocused)
                 {
@@ -1238,11 +1238,11 @@ namespace Restaurant.View.accounts
                     else if (cb.Name == "chk_inDelivery")
                         chk_inDelivery.IsChecked = true;
                 }
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void validateEmpty_LostFocus(object sender, RoutedEventArgs e)

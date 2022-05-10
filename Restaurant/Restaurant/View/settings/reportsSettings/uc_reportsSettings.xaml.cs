@@ -266,9 +266,13 @@ namespace Restaurant.View.settings.reportsSettings
             txt_mainTitle.Text = AppSettings.resourcemanager.GetString("trReportsSettings");
 
             txt_printCount.Text = AppSettings.resourcemanager.GetString("trPrintCount");
-            tb_printCount.Text = AppSettings.resourcemanager.GetString("trPrintCount");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_printCount, AppSettings.resourcemanager.GetString("trPrintCount"));
 
             txt_reportlang.Text = AppSettings.resourcemanager.GetString("trLanguage");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_reportlang, AppSettings.resourcemanager.GetString("trLanguage"));
+
+            txt_printHeader.Text = AppSettings.resourcemanager.GetString("trPrintHeader");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_printHeader, AppSettings.resourcemanager.GetString("trPrintHeader"));
 
             txt_systmSetting.Text = AppSettings.resourcemanager.GetString("trDirectPrinting");
             txt_systmSettingHint.Text = AppSettings.resourcemanager.GetString("trDirectPrintingHint") + "...";
@@ -282,12 +286,14 @@ namespace Restaurant.View.settings.reportsSettings
             txt_copyCount.Text = AppSettings.resourcemanager.GetString("trCopyCount");
             txt_copyCountHint.Text = AppSettings.resourcemanager.GetString("trCopyCountHint") + "...";
 
-            txt_printCount.Text = AppSettings.resourcemanager.GetString("trPrintCount");
-            txt_printHeader.Text = AppSettings.resourcemanager.GetString("trPrintHeader");
+            //txt_printCount.Text = AppSettings.resourcemanager.GetString("trPrintCount");
+            //txt_printHeader.Text = AppSettings.resourcemanager.GetString("trPrintHeader");
             txt_itemsTaxNote.Text = AppSettings.resourcemanager.GetString("trItemsTax");
             txt_itemsTaxNoteHint.Text = AppSettings.resourcemanager.GetString("trItemsTaxNote");
             txt_salesInvoiceNote.Text = AppSettings.resourcemanager.GetString("trSalesInvoice");
             txt_salesInvoiceNoteHint.Text = AppSettings.resourcemanager.GetString("trSalesInvoiceNote");
+
+
 
             // openButton
             List<TextBlock> openTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)

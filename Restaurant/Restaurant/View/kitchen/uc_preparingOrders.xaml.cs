@@ -67,7 +67,8 @@ namespace Restaurant.View.kitchen
         public static List<string> requiredControlList;
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
-            timer.Stop();
+            if (timer != null)
+                timer.Stop();
             Instance = null;
             GC.Collect();
         }
@@ -144,9 +145,9 @@ namespace Restaurant.View.kitchen
                );
             #region dg_orders
             col_orderNum.Header = AppSettings.resourcemanager.GetString("trOrderCharp");
-            dg_orders.Columns[1].Header = AppSettings.resourcemanager.GetString("trInvoiceCharp");
-            dg_orders.Columns[2].Header = AppSettings.resourcemanager.GetString("trRemainingTime");
-            dg_orders.Columns[3].Header = AppSettings.resourcemanager.GetString("trStatus");
+            dg_orders.Columns[2].Header = AppSettings.resourcemanager.GetString("trInvoiceCharp");
+            dg_orders.Columns[3].Header = AppSettings.resourcemanager.GetString("trRemainingTime");
+            dg_orders.Columns[4].Header = AppSettings.resourcemanager.GetString("trStatus");
             col_orderType.Header = AppSettings.resourcemanager.GetString("trType");
             col_table.Header = AppSettings.resourcemanager.GetString("trTable");
             #endregion
@@ -162,7 +163,7 @@ namespace Restaurant.View.kitchen
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchStatus, AppSettings.resourcemanager.GetString("trStatusHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchCatalog, AppSettings.resourcemanager.GetString("trCategorie") + "...");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchInvType, AppSettings.resourcemanager.GetString("") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchInvType, AppSettings.resourcemanager.GetString("typesOfService") + "...");
 
             chk_allForDelivery.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_listed.Content = AppSettings.resourcemanager.GetString("trListed");
@@ -328,6 +329,182 @@ namespace Restaurant.View.kitchen
 
         #endregion
         #region events
+        //checkboxColumn yasin
+        private void FieldDataGridCheckedHeader(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                /*
+                selectedOrders.Clear();
+                var chkSelectAll = sender as CheckBox;
+                if (chk_allForDelivery.IsChecked == true)
+                {
+                    chkSelectAll.IsChecked = false;
+                }
+                else
+                {
+                    var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
+                    var statusCol = dg_orders.Columns[1] as DataGridTextColumn;
+                    if (chkSelectAll == null || firstCol == null || dg_orders?.Items == null || dg_orders.Items.Count == 0)
+                    {
+                        return;
+                    }
+
+                    var item0 = dg_orders.Items[0] as Invoice;
+
+                    #region refreshSaveBtnText
+                    if (item0.shipUserId != null)
+                    {
+                        bdr_cbDeliveryCompany.Visibility = Visibility.Collapsed;
+
+                        if (item0.status.Equals("Ready"))
+                        {
+                            btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
+                            btn_save.IsEnabled = true;
+                            bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                            bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
+                        }
+                        else if (item0.status.Equals("Collected"))
+                        {
+                            btn_save.Content = AppSettings.resourcemanager.GetString("onTheWay");
+                            btn_save.IsEnabled = true;
+                            bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                            bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
+                        }
+                        else if (item0.status.Equals("InTheWay"))
+                        {
+                            btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
+                            btn_save.IsEnabled = true;
+                            bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                            bdr_tbDeliveryMan.Visibility = Visibility.Visible;
+                        }
+                    }
+                    else
+                    {
+                        bdr_cbDeliveryCompany.Visibility = Visibility.Visible;
+                        bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                        bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
+
+                        if (item0.status.Equals("Ready"))
+                        {
+                            btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
+                            btn_save.IsEnabled = true;
+                        }
+                    }
+
+                    #endregion
+
+                    foreach (var item in dg_orders.Items)
+                    {
+                        var chBx = firstCol.GetCellContent(item) as CheckBox;
+                        if (chBx == null)
+                        {
+                            continue;
+                        }
+
+                        var txt = item as Invoice;
+                        if (txt == null)
+                        {
+                            continue;
+                        }
+                        if (txt.status.Equals(item0.status) &&
+                            ((txt.shipUserId == null && item0.shipUserId == null) || (txt.shipUserId != null && item0.shipUserId != null)))
+                        {
+                            chBx.IsChecked = chkSelectAll.IsChecked;
+
+                            if (item0.status == "InTheWay")
+                                requiredControlList = new List<string>();
+                            else
+                            {
+                                if (item0.shipUserId == null)
+                                    requiredControlList = new List<string> { "companyId" };
+                                else
+                                    requiredControlList = new List<string> { "userId" };
+                            }
+                            selectedOrders.Add(txt);
+
+                        }
+                    }
+
+                }
+                */
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void FieldDataGridUncheckedHeader(object sender, RoutedEventArgs e)
+        {
+            var chkSelectAll = sender as CheckBox;
+            if (chk_allForDelivery.IsChecked == true)
+            {
+                chkSelectAll.IsChecked = false;
+            }
+            else
+            {
+                var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
+                if (chkSelectAll == null || firstCol == null || dg_orders?.Items == null || dg_orders.Items.Count == 0)
+                {
+                    return;
+                }
+                foreach (var item in dg_orders.Items)
+                {
+                    var chBx = firstCol.GetCellContent(item) as CheckBox;
+                    if (chBx == null)
+                    {
+                        continue;
+                    }
+                    chBx.IsChecked = chkSelectAll.IsChecked;
+                }
+            }
+        }
+
+
+        List<Invoice> selectedOrders = new List<Invoice>();
+        private void FieldDataGridChecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox cb = sender as CheckBox;
+                if (chk_allForDelivery.IsChecked == true)
+                {
+                    cb.IsChecked = false;
+                }
+                else
+                {
+                    Invoice selectedOrder = dg_orders.SelectedItem as Invoice;
+                    if (selectedOrder != null)
+                        selectedOrders.Add(selectedOrder);
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void FieldDataGridUnchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox cb = sender as CheckBox;
+                if (chk_allForDelivery.IsChecked == true)
+                {
+                    cb.IsChecked = false;
+                }
+                else
+                {
+                    var index = dg_orders.SelectedIndex;
+                    Invoice selectedOrder = dg_orders.SelectedItem as Invoice;
+                    selectedOrders.Remove(selectedOrder);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private async void Cb_search_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -385,7 +562,91 @@ namespace Restaurant.View.kitchen
                     preparingOrder = dg_orders.SelectedItem as OrderPreparing;
 
                     this.DataContext = preparingOrder;
+                    //checkboxColumn yasin
+                    /*
+                    if (order != null)
+                    {
+                        CheckBox checkboxColumn = (dg_orders.Columns[0].GetCellContent(dg_orders.SelectedItem) as CheckBox);
 
+                        //different status
+                        if (selectedOrders.Count != 0 && order.status != selectedOrders[0].status)
+                        {
+                            checkboxColumn.IsChecked = checkboxColumn.IsChecked;
+                            //checkboxColumn.IsEnabled = false;
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("notHaveSameStatus"), animation: ToasterAnimation.FadeIn);
+                        }
+                        //driver
+                        else if (selectedOrders.Count != 0 && order.shipUserId != null && selectedOrders[0].shipUserId == null)
+                        {
+                            checkboxColumn.IsChecked = checkboxColumn.IsChecked;
+                            //checkboxColumn.IsEnabled = false;
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("notHaveSameType"), animation: ToasterAnimation.FadeIn);
+                        }
+                        //company
+                        else if (selectedOrders.Count != 0 && order.shipUserId == null && selectedOrders[0].shipUserId != null)
+                        {
+                            checkboxColumn.IsChecked = checkboxColumn.IsChecked;
+                            //checkboxColumn.IsEnabled = false;
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("notHaveSameType"), animation: ToasterAnimation.FadeIn);
+                        }
+
+                        else
+                        {
+                            checkboxColumn.IsChecked = !checkboxColumn.IsChecked;
+                            //checkboxColumn.IsEnabled = true;
+                        }
+
+
+                        if (selectedOrders.Count > 0)
+                        {
+                            if (selectedOrders[0].shipUserId == null)
+                                requiredControlList = new List<string> { "companyId" };
+                            else
+                                requiredControlList = new List<string> { "userId" };
+                        }
+                        #region refreshSaveBtnText
+                        if (order.shipUserId != null)
+                        {
+                            bdr_cbDeliveryCompany.Visibility = Visibility.Collapsed;
+
+                            if (order.status.Equals("Ready"))
+                            {
+                                btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
+                                btn_save.IsEnabled = true;
+                                bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                                bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
+                            }
+                            else if (order.status.Equals("Collected"))
+                            {
+                                btn_save.Content = AppSettings.resourcemanager.GetString("onTheWay");
+                                btn_save.IsEnabled = true;
+                                bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                                bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
+                            }
+                            else if (order.status.Equals("InTheWay"))
+                            {
+                                btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
+                                btn_save.IsEnabled = true;
+                                bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                                bdr_tbDeliveryMan.Visibility = Visibility.Visible;
+                            }
+                        }
+                        else
+                        {
+                            bdr_cbDeliveryCompany.Visibility = Visibility.Visible;
+                            bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                            bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
+
+                            if (order.status.Equals("Ready"))
+                            {
+                                btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
+                                btn_save.IsEnabled = true;
+                            }
+                        }
+
+                        #endregion
+                    }
+                    */
                     itemsList = preparingOrder.items;
                     BuildOrderItemsDesign();
 

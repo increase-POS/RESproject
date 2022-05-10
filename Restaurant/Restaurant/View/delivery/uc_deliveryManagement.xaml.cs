@@ -715,88 +715,96 @@ namespace Restaurant.View.delivery
                 #endregion
 
                 selectedOrders.Clear();
-
                 var chkSelectAll = sender as CheckBox;
-                var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
-                var statusCol = dg_orders.Columns[1] as DataGridTextColumn;
-                if (chkSelectAll == null || firstCol == null || dg_orders?.Items == null)
+                if (chk_allForDelivery.IsChecked == true)
                 {
-                    return;
-                }
-                var item0 = dg_orders.Items[0] as Invoice;
-
-                #region refreshSaveBtnText
-                if (item0.shipUserId != null)
-                {
-                    bdr_cbDeliveryCompany.Visibility = Visibility.Collapsed;
-
-                    if (item0.status.Equals("Ready"))
-                    {
-                        btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
-                        btn_save.IsEnabled = true;
-                        bdr_cbDeliveryMan.Visibility = Visibility.Visible;
-                        bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
-                    }
-                    else if (item0.status.Equals("Collected"))
-                    {
-                        btn_save.Content = AppSettings.resourcemanager.GetString("onTheWay");
-                        btn_save.IsEnabled = true;
-                        bdr_cbDeliveryMan.Visibility = Visibility.Visible;
-                        bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
-                    }
-                    else if (item0.status.Equals("InTheWay"))
-                    {
-                        btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
-                        btn_save.IsEnabled = true;
-                        bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
-                        bdr_tbDeliveryMan.Visibility = Visibility.Visible;
-                    }
+                    chkSelectAll.IsChecked = false;
                 }
                 else
                 {
-                    bdr_cbDeliveryCompany.Visibility = Visibility.Visible;
-                    bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
-                    bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
-
-                    if (item0.status.Equals("Ready"))
+                    var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
+                    var statusCol = dg_orders.Columns[1] as DataGridTextColumn;
+                    if (chkSelectAll == null || firstCol == null || dg_orders?.Items == null || dg_orders.Items.Count == 0)
                     {
-                        btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
-                        btn_save.IsEnabled = true;
-                    }
-                }
-
-                #endregion
-
-                foreach (var item in dg_orders.Items)
-                {
-                    var chBx = firstCol.GetCellContent(item) as CheckBox;
-                    if (chBx == null)
-                    {
-                        continue;
+                        return;
                     }
 
-                    var txt = item as Invoice;
-                    if (txt == null)
-                    {
-                        continue;
-                    }
-                    if (txt.status.Equals(item0.status) && 
-                        ((txt.shipUserId == null && item0.shipUserId == null)||(txt.shipUserId != null && item0.shipUserId != null)))
-                    {
-                        chBx.IsChecked = chkSelectAll.IsChecked;
+                    var item0 = dg_orders.Items[0] as Invoice;
 
-                        if (item0.status == "InTheWay")
-                            requiredControlList = new List<string>();
-                        else
+                    #region refreshSaveBtnText
+                    if (item0.shipUserId != null)
+                    {
+                        bdr_cbDeliveryCompany.Visibility = Visibility.Collapsed;
+
+                        if (item0.status.Equals("Ready"))
                         {
-                            if (item0.shipUserId == null)
-                                requiredControlList = new List<string> { "companyId" };
-                            else
-                                requiredControlList = new List<string> { "userId" };
+                            btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
+                            btn_save.IsEnabled = true;
+                            bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                            bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
                         }
-                        selectedOrders.Add(txt);
-                        
+                        else if (item0.status.Equals("Collected"))
+                        {
+                            btn_save.Content = AppSettings.resourcemanager.GetString("onTheWay");
+                            btn_save.IsEnabled = true;
+                            bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                            bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
+                        }
+                        else if (item0.status.Equals("InTheWay"))
+                        {
+                            btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
+                            btn_save.IsEnabled = true;
+                            bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                            bdr_tbDeliveryMan.Visibility = Visibility.Visible;
+                        }
                     }
+                    else
+                    {
+                        bdr_cbDeliveryCompany.Visibility = Visibility.Visible;
+                        bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                        bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
+
+                        if (item0.status.Equals("Ready"))
+                        {
+                            btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
+                            btn_save.IsEnabled = true;
+                        }
+                    }
+
+                    #endregion
+
+                    foreach (var item in dg_orders.Items)
+                    {
+                        var chBx = firstCol.GetCellContent(item) as CheckBox;
+                        if (chBx == null)
+                        {
+                            continue;
+                        }
+
+                        var txt = item as Invoice;
+                        if (txt == null)
+                        {
+                            continue;
+                        }
+                        if (txt.status.Equals(item0.status) &&
+                            ((txt.shipUserId == null && item0.shipUserId == null) || (txt.shipUserId != null && item0.shipUserId != null)))
+                        {
+                            chBx.IsChecked = chkSelectAll.IsChecked;
+
+                            if (item0.status == "InTheWay")
+                                requiredControlList = new List<string>();
+                            else
+                            {
+                                if (item0.shipUserId == null)
+                                    requiredControlList = new List<string> { "companyId" };
+                                else
+                                    requiredControlList = new List<string> { "userId" };
+                            }
+                            selectedOrders.Add(txt);
+
+                        }
+                    }
+
                 }
             }
             catch (Exception ex)
@@ -807,19 +815,26 @@ namespace Restaurant.View.delivery
         private void FieldDataGridUncheckedHeader(object sender, RoutedEventArgs e)
         {
             var chkSelectAll = sender as CheckBox;
-            var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
-            if (chkSelectAll == null || firstCol == null || dg_orders?.Items == null)
+            if (chk_allForDelivery.IsChecked == true)
             {
-                return;
+                chkSelectAll.IsChecked = false;
             }
-            foreach (var item in dg_orders.Items)
+            else
             {
-                var chBx = firstCol.GetCellContent(item) as CheckBox;
-                if (chBx == null)
+                var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
+                if (chkSelectAll == null || firstCol == null || dg_orders?.Items == null || dg_orders.Items.Count == 0)
                 {
-                    continue;
+                    return;
                 }
-                chBx.IsChecked = chkSelectAll.IsChecked;
+                foreach (var item in dg_orders.Items)
+                {
+                    var chBx = firstCol.GetCellContent(item) as CheckBox;
+                    if (chBx == null)
+                    {
+                        continue;
+                    }
+                    chBx.IsChecked = chkSelectAll.IsChecked;
+                }
             }
         }
 
@@ -830,10 +845,16 @@ namespace Restaurant.View.delivery
             try
             {
                 CheckBox cb = sender as CheckBox;
-                Invoice selectedOrder = dg_orders.SelectedItem as Invoice;
-                if(selectedOrder != null)
-                selectedOrders.Add(selectedOrder);
-
+                if (chk_allForDelivery.IsChecked == true)
+                {
+                    cb.IsChecked = false;
+                }
+                else
+                {
+                    Invoice selectedOrder = dg_orders.SelectedItem as Invoice;
+                    if (selectedOrder != null)
+                        selectedOrders.Add(selectedOrder);
+                }
             }
             catch (Exception ex)
             {
@@ -845,10 +866,17 @@ namespace Restaurant.View.delivery
             try
             {
                 CheckBox cb = sender as CheckBox;
-                var index = dg_orders.SelectedIndex;
-                Invoice selectedOrder = dg_orders.SelectedItem as Invoice;
-                selectedOrders.Remove(selectedOrder);
-
+                if (chk_allForDelivery.IsChecked == true)
+                {
+                    cb.IsChecked = false;
+                }
+                else
+                {
+                    var index = dg_orders.SelectedIndex;
+                    Invoice selectedOrder = dg_orders.SelectedItem as Invoice;
+                    selectedOrders.Remove(selectedOrder);
+                }
+            
             }
             catch (Exception ex)
             {
@@ -1009,6 +1037,9 @@ namespace Restaurant.View.delivery
             //MessageBox.Show("select");
         }
 
-       
+        private void Btn_updateDeliveryMan_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

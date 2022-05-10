@@ -226,8 +226,8 @@
                         <DataGrid  Margin="5,5,5,45" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
                                    x:Name="dg_orders" AutoGenerateColumns="False"   Background="White"
                                    ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2"
-                                   SelectionChanged="Dg_orders_SelectionChanged" 
-                                   SelectedCellsChanged="selectedCellsChanged">
+                                   SelectionChanged="Dg_orders_SelectionChanged"  
+                                   SelectedCellsChanged="selectedCellsChanged" >
                             <DataGrid.OpacityMask>
                                 <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
                             </DataGrid.OpacityMask>
@@ -272,7 +272,7 @@
                                     </DataGridTextColumn.Binding>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Width="*"  Header="delivery time" Binding="{Binding Path=orderTime , Converter={StaticResource dateTimeToTimeConverter}}"/>
-                                <DataGridTextColumn Width="*"  Header="status"   Binding="{Binding Path=status , Converter={StaticResource preparingOrderStatusConverter}}"/>
+                                <DataGridTextColumn x:Name="col_status" Width="*"  Header="status"   Binding="{Binding Path=status , Converter={StaticResource preparingOrderStatusConverter}}"/>
                              </DataGrid.Columns>
                         </DataGrid>
 
@@ -500,10 +500,14 @@
                         <TextBlock x:Name="txt_baseInformation" Text="Base Infomation" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
                         <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
                     </DockPanel>
-                        <Border x:Name="bdr_cbDeliveryMan" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid>
-                                
-                                <ComboBox x:Name="cb_userId"  Grid.Row="1"
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="bdr_cbDeliveryMan" Grid.Row="0" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                <Grid>
+                                    <ComboBox x:Name="cb_userId"  Grid.Row="1"
                                           SelectedValue="{Binding shipUserId,Mode=OneWay}"
                                       Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}"
@@ -511,7 +515,7 @@
                                       Grid.Column="1" Height="40"   
                                       BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
                                       LostFocus="validateEmpty_LostFocus" />
-                                <Path Fill="#E81123" Stretch="Fill" Margin="5,5,20,5" Name="p_error_userId"
+                                    <Path Fill="#E81123" Stretch="Fill" Margin="5,5,20,5" Name="p_error_userId"
                                   HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                                   VerticalAlignment="Center" Width="15"  Height="15"
                                   Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52
@@ -520,8 +524,17 @@
                                           C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12
                                           C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 
                                           L13,15 L13,17 Z"/>
+                                </Grid>
+                            </Border>
+                            <Button Grid.Column="2"  Padding="0"    
+                                Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" 
+                                            x:Name="btn_updateDeliveryMan" Click="Btn_updateDeliveryMan_Click"  
+                                Margin="5 5 10 5" IsEnabled="True">
+                                <Path Fill="#4E4E4E" Stretch="Fill"  
+                    Width="25.5" Height="27.5" FlowDirection="LeftToRight"
+                           Data="{StaticResource save}" />
+                            </Button>
                         </Grid>
-                        </Border>
                         <Border x:Name="bdr_tbDeliveryMan" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}" Visibility="Collapsed">
                             <Grid>
                                 <!--Text="{Binding shipUserName, Mode=OneWay}"-->
