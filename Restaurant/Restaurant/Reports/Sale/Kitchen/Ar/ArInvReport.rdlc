@@ -331,7 +331,7 @@
             <Width>1.31652in</Width>
             <ZIndex>5</ZIndex>
             <Visibility>
-              <Hidden>=iif(Parameters!invType.Value="s" ,False,True)</Hidden>
+              <Hidden>=iif(Parameters!invType.Value="s"  OR Parameters!invType.Value="sd",False,True)</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -371,7 +371,7 @@
             <Width>5.5065in</Width>
             <ZIndex>6</ZIndex>
             <Visibility>
-              <Hidden>=iif(Parameters!invType.Value="s" ,False,True)</Hidden>
+              <Hidden>=iif(Parameters!invType.Value="s"  OR Parameters!invType.Value="sd",False,True)</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -421,7 +421,7 @@
             <Width>1.3141in</Width>
             <ZIndex>7</ZIndex>
             <Visibility>
-              <Hidden>=iif(Parameters!invType.Value="s" OR Parameters!invType.Value="ss",false,true)</Hidden>
+              <Hidden>=iif(Parameters!invType.Value="s" OR Parameters!invType.Value="ss" OR Parameters!invType.Value="sd",false,true)</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -461,7 +461,7 @@
             <Width>5.5065in</Width>
             <ZIndex>8</ZIndex>
             <Visibility>
-              <Hidden>=iif(Parameters!invType.Value="s" OR Parameters!invType.Value="ss",false,true)</Hidden>
+              <Hidden>=iif(Parameters!invType.Value="s" OR Parameters!invType.Value="ss" OR Parameters!invType.Value="sd",false,true)</Hidden>
             </Visibility>
             <Style>
               <Border>

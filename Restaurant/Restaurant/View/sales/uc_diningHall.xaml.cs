@@ -27,6 +27,7 @@ using Microsoft.Win32;
 using System.Collections.Specialized;
 using System.Threading;
 
+
 namespace Restaurant.View.sales
 {
     /// <summary>
@@ -2745,11 +2746,11 @@ namespace Restaurant.View.sales
                                         prOrderPreparingList = await preparingOrder.GetOrdersByInvoiceId(prinvoiceId);
 
                                         // printInvoice();
-                                        Thread t2 = new Thread( () =>
-                                        {
-                                           
-                                            printInvoiceInkitchen(prinvoiceId, prOrderPreparingList);
-                                        });
+                                        Thread t2 = new Thread(() =>
+                                       {
+
+                                           printInvoiceInkitchen(prinvoiceId, prOrderPreparingList);
+                                       });
                                         t2.Start();
                                     }
                                     if (AppSettings.email_on_save_sale == "1")
@@ -3719,47 +3720,32 @@ namespace Restaurant.View.sales
 
 
         }
-        public async void printInvoiceInkitchen(int invoiceId, List<OrderPreparing> OrderPreparingList)
+        public  void printInvoiceInkitchen(int invoiceId, List<OrderPreparing> OrderPreparingList)
         {
-
             try
             {
-                prInvoice = new Invoice();
-                //if (isdirect)
-                //{
-                // prInvoice = await invoiceModel.GetByInvoiceId(invoiceId);
-                //}
-                //else
-                //{
-                //    prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
-                //}
-
-                ////if (prinvoiceId != 0)
-                ////    prInvoice = await invoiceModel.GetByInvoiceId(prinvoiceId);
-                //else
-
-
-                //  int resu=await  invoiceModel.updateprintstat(prInvoice.invoiceId, 1, true, false);
-
-                //if (prInvoice.invType == "pd" || prInvoice.invType == "sd" || prInvoice.invType == "qd"
-                //    || prInvoice.invType == "sbd" || prInvoice.invType == "pbd"
-                //    || prInvoice.invType == "ord" || prInvoice.invType == "imd" || prInvoice.invType == "exd"
-                //    || prInvoice.invType == "tsd" || prInvoice.invType == "ssd"
-                //    )
-                //{
-                //    this.Dispatcher.Invoke(() =>
-                //    {
-                //        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPrintDraftInvoice"), animation: ToasterAnimation.FadeIn);
-                //    });
-                //}
-                //else
-
-
-              
+             //   prInvoice = new Invoice();
 
                 if (invoiceId > 0)
                 {
-                    printPrepOrder(OrderPreparingList);
+                    reportsize rs=reportclass.PrintPrepOrder(OrderPreparingList);
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        if (AppSettings.kitchenPaperSize == "A4")
+                        {
+
+                            LocalReportExtensions.PrintToPrinterbyNameAndCopy(rs.rep, AppSettings.kitchen_printer_name, short.Parse(AppSettings.kitchen_copy_count));
+
+                        }
+                        else
+                        {
+
+
+                            LocalReportExtensions.customPrintToPrinter(rs.rep, AppSettings.kitchen_printer_name, short.Parse(AppSettings.kitchen_copy_count), rs.width, rs.height);
+
+                        }
+
+                    });
                     //foreach (OrderPreparing row in OrderPreparingList)
                     //{
                     //    List<OrderPreparing> templist = new List<OrderPreparing>();
@@ -3789,69 +3775,54 @@ namespace Restaurant.View.sales
 
 
         }
-        public async void printPrepOrder(  List<OrderPreparing> OrderPreparingList)
-        {
-            List<ReportParameter> paramarr = new List<ReportParameter>();
-            #region fill invoice data
- 
-            reportsize rs = reportclass.GetKitchenRdlcpath(AppSettings.kitchenPaperSize, OrderPreparingList.Count(), rep);
-            rep = rs.rep;
-            width = rs.width;
-            height = rs.height;
+
+        //public  reportsize PrintPrepOrder(List<OrderPreparing> OrderPreparingList)
+        //{
+        //    List<ReportParameter> paramarr = new List<ReportParameter>();
+
+        //    #region fill invoice data
+        //    reportsize rs = new reportsize();
+        // //LocalReport rep = new LocalReport();
+        //   rs = reportclass.GetKitchenRdlcpath(AppSettings.kitchenPaperSize, OrderPreparingList.Count(), rs.rep);
+        //   //rs.rep;
+        //   // rs.width;
+        //   //rs.height;
       
 
-            ReportCls.checkLang();
+        //    ReportCls.checkLang();
   
-            clsReports.PreparingOrdersPrint(OrderPreparingList.ToList(), rep, paramarr);
-            clsReports.setReportLanguage(paramarr);
-            clsReports.Header(paramarr);
-            paramarr.Add(new ReportParameter("isSaved", "y"));
-      
+        //    clsReports.PreparingOrdersPrint(OrderPreparingList.ToList(), rs.rep, paramarr);
+        //    clsReports.setReportLanguage(paramarr);
+        //    clsReports.Header(paramarr);
+        //    paramarr.Add(new ReportParameter("isSaved", "y"));
 
+        //    rs.rep.SetParameters(paramarr);
 
-            rep.SetParameters(paramarr);
+        //    rs.rep.Refresh();
+        //    #endregion
+        //    //copy count
+        //    string invType = OrderPreparingList.FirstOrDefault().invType;
+        //    //if (invType == "s" || invType == "sb" || invType == "ts"
+        //    //    || invType == "ss")
+        //    //{
 
-            rep.Refresh();
-            #endregion
-            //copy count
-            string invType = prOrderPreparingList.FirstOrDefault().invType;
-            if (invType == "s" || invType == "sb" || invType == "ts"
-                || invType == "ss")
-            {
+        //        paramarr.Add(new ReportParameter("isOrginal","true"));
 
-                paramarr.Add(new ReportParameter("isOrginal", prInvoice.isOrginal.ToString()));
+        //    return rs;
+        //        //kitchen
 
-               
-                //kitchen
+   
 
-                this.Dispatcher.Invoke(() =>
-                {
-                    if (AppSettings.kitchenPaperSize == "A4")
-                    {
-
-                        LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.kitchen_printer_name, short.Parse(AppSettings.kitchen_copy_count));
-
-                    }
-                    else
-                    {
-                      
-
-                        LocalReportExtensions.customPrintToPrinter(rep, AppSettings.kitchen_printer_name, short.Parse(AppSettings.kitchen_copy_count), width, height);
-
-                    }
-
-                });
-
-            }
-            else
-            {
+        //    //}
+        //    //else
+        //    //{
 
                
 
-            }
-            // end copy count
+        //    //}
+        //    // end copy count
 
-        }
+        //}
         private void Btn_printInvoice_Click(object sender, RoutedEventArgs e)
         {//print
             try

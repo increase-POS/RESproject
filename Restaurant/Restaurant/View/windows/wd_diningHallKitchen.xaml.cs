@@ -17,7 +17,12 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Threading;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using Microsoft.Reporting.WinForms;
+using Microsoft.Win32;
+using System.Collections.Specialized;
 
 namespace Restaurant.View.windows
 {
@@ -345,7 +350,12 @@ namespace Restaurant.View.windows
             statusObject.notes = tb_notes.Text;
             statusObject.createUserId = MainWindow.userLogin.userId;
             #endregion
-
+            if (AppSettings.print_kitchen_on_sale == "1")
+            {
+                //list before save->  orders
+                // OrderListbeforesave = orders;
+                OrderListBeforesave = await preparingOrder.GetOrdersByInvoiceId(invoiceId);
+            }
             int res = await preparingOrder.savePreparingOrder(preparingOrder, preparingItemsList,statusObject);
             if (res > 0)
             {
@@ -354,7 +364,26 @@ namespace Restaurant.View.windows
                 clear();
                 await refreshPreparingOrders();
                fillInvoiceItems();
-                
+                if (AppSettings.print_kitchen_on_sale == "1")
+                {
+                    //list after before save->  orders
+                    // OrderListAftersave = orders;
+                    OrderListAftersave = await preparingOrder.GetOrdersByInvoiceId(invoiceId);
+
+                    prOrderPreparingList = neworderList(OrderListBeforesave, OrderListAftersave);
+
+                    //print
+
+                    // prOrderPreparingList = await preparingOrder.GetOrdersByInvoiceId(prinvoiceId);
+
+                    Thread t2 = new Thread(() =>
+                    {
+
+                        printInvoiceInkitchen(invoiceId, prOrderPreparingList);
+                    });
+                    t2.Start();
+                }
+
             }
             else
                 Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -394,16 +423,40 @@ namespace Restaurant.View.windows
                 statusObject.notes = tb_notes.Text;
                 statusObject.createUserId = MainWindow.userLogin.userId;
                 #endregion
-
+                if (AppSettings.print_kitchen_on_sale == "1")
+                {
+                    //list before save->  orders
+                    // OrderListbeforesave = orders;
+                    OrderListBeforesave = await preparingOrder.GetOrdersByInvoiceId(invoiceId);
+                }
                 int res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId);
                 if (res > 0)
                 {
                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+               
 
                     clear();
                     await refreshPreparingOrders();
                     fillInvoiceItems();
+                    if (AppSettings.print_kitchen_on_sale == "1")
+                    {
+                        //list after before save->  orders
+                        // OrderListAftersave = orders;
+                        OrderListAftersave = await preparingOrder.GetOrdersByInvoiceId(invoiceId);
 
+                    prOrderPreparingList = neworderList(OrderListBeforesave, OrderListAftersave);
+
+                    //print
+                    
+                        // prOrderPreparingList = await preparingOrder.GetOrdersByInvoiceId(prinvoiceId);
+
+                        Thread t2 = new Thread(() =>
+                        {
+
+                            printInvoiceInkitchen(invoiceId, prOrderPreparingList);
+                        });
+                        t2.Start();
+                    }
                 }
                 else
                     Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -411,7 +464,74 @@ namespace Restaurant.View.windows
         }
 
         #endregion
+        #region report
+        ReportCls reportclass = new ReportCls();
+        //SaveFileDialog saveFileDialog = new SaveFileDialog();
+        List<OrderPreparing> prOrderPreparingList = new List<OrderPreparing>();
+        List<OrderPreparing> OrderListBeforesave = new List<OrderPreparing>();
+        List<OrderPreparing> OrderListAftersave = new List<OrderPreparing>();
+        public void printInvoiceInkitchen(int invoiceId, List<OrderPreparing> OrderPreparingList)
+        {
+            try
+            {
+                //   prInvoice = new Invoice();
 
-       
+                if (invoiceId > 0)
+                {
+                    reportsize rs = reportclass.PrintPrepOrder(OrderPreparingList);
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        if (AppSettings.kitchenPaperSize == "A4")
+                        {
+
+                            LocalReportExtensions.PrintToPrinterbyNameAndCopy(rs.rep, AppSettings.kitchen_printer_name, short.Parse(AppSettings.kitchen_copy_count));
+
+                        }
+                        else
+                        {
+
+
+                            LocalReportExtensions.customPrintToPrinter(rs.rep, AppSettings.kitchen_printer_name, short.Parse(AppSettings.kitchen_copy_count), rs.width, rs.height);
+
+                        }
+
+                    });
+                    //foreach (OrderPreparing row in OrderPreparingList)
+                    //{
+                    //    List<OrderPreparing> templist = new List<OrderPreparing>();
+                    //    templist.Add(row);
+                    //    printPrepOrder(templist);
+                    //}
+
+                }
+                else
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPrintEmptyInvoice"), animation: ToasterAnimation.FadeIn);
+                    });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+                this.Dispatcher.Invoke(() =>
+                {
+                    Toaster.ShowWarning(Window.GetWindow(this), message: "Not completed", animation: ToasterAnimation.FadeIn);
+
+                });
+            }
+
+
+        }
+        public List<OrderPreparing> neworderList(List<OrderPreparing> OrderListbeforesave, List<OrderPreparing> OrderListaftersave)
+        {
+            List<OrderPreparing> newOrderList = new List<OrderPreparing>();
+            List<int> oldids = OrderListbeforesave.Select(X => (int)X.orderPreparingId).ToList();
+            newOrderList = OrderListaftersave.Where(X => !oldids.Contains(X.orderPreparingId)).ToList();
+            return newOrderList;
+        }
+        #endregion
     }
 }

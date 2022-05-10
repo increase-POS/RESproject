@@ -12,9 +12,14 @@ using System.Globalization;
 using System.Collections;
 // Restaurant.Classes
 using Restaurant.View.sales;
+using Restaurant.Classes.ApiClasses;
+using System.Windows.Threading;
+using netoaster;
+
+
 namespace Restaurant.Classes
 {
-    class reportsize
+    public class reportsize
     {
        
             public int width { get; set; }
@@ -1103,8 +1108,9 @@ namespace Restaurant.Classes
             rs.rep = rep;
             return rs;
         }
-        public reportsize GetKitchenRdlcpath( string PaperSize, int itemscount, LocalReport rep)
+        public reportsize GetKitchenRdlcpath( string PaperSize, int itemscount )
         {
+            LocalReport rep = new LocalReport();
             string addpath;
             bool isArabic = checkLang();
             reportsize rs = new reportsize();
@@ -1184,7 +1190,56 @@ namespace Restaurant.Classes
             return rs;
         }
 
+        // kitchen send
 
+        public reportsize PrintPrepOrder(List<OrderPreparing> OrderPreparingList)
+        {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+
+            #region fill invoice data
+            reportsize rs = new reportsize();
+       //LocalReport rep = new LocalReport();
+       //     rs.rep = rep;
+            rs = GetKitchenRdlcpath(AppSettings.kitchenPaperSize, OrderPreparingList.Count());
+            //rs.rep;
+            // rs.width;
+            //rs.height;
+
+
+       checkLang();
+
+            clsReports.PreparingOrdersPrint(OrderPreparingList.ToList(), rs.rep, paramarr);
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+     
+
+            rs.rep.SetParameters(paramarr);
+
+            rs.rep.Refresh();
+            #endregion
+            //copy count
+            string invType = OrderPreparingList.FirstOrDefault().invType;
+            //if (invType == "s" || invType == "sb" || invType == "ts"
+            //    || invType == "ss")
+            //{
+
+         
+
+            return rs;
+            //kitchen
+
+
+
+            //}
+            //else
+            //{
+
+
+
+            //}
+            // end copy count
+
+        }
         public List<ReportParameter> fillPurInvReport(Invoice invoice, List<ReportParameter> paramarr)
         {
             checkLang();

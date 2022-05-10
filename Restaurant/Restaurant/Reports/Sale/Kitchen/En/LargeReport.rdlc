@@ -221,7 +221,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox30</rd:DefaultName>
-            <Top>4.11856cm</Top>
+            <Top>3.16606cm</Top>
             <Left>0.83375cm</Left>
             <Height>1.5518cm</Height>
             <Width>6.77495cm</Width>
@@ -520,7 +520,7 @@
             <Top>5.37384cm</Top>
             <Left>0.27516cm</Left>
             <Height>0cm</Height>
-            <Width>7.64887cm</Width>
+            <Width>9.52741cm</Width>
             <ZIndex>3</ZIndex>
             <Style>
               <Border>
@@ -577,7 +577,7 @@
             <Width>0.81045in</Width>
             <ZIndex>5</ZIndex>
             <Visibility>
-              <Hidden>=iif(Parameters!invType.Value="s" ,False,True)</Hidden>
+              <Hidden>=iif(Parameters!invType.Value="s" OR Parameters!invType.Value="sd" ,False,True)</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -615,7 +615,7 @@
             <Width>2.95836in</Width>
             <ZIndex>6</ZIndex>
             <Visibility>
-              <Hidden>=iif(Parameters!invType.Value="s" ,False,True)</Hidden>
+              <Hidden>=iif(Parameters!invType.Value="s" OR Parameters!invType.Value="sd" ,False,True)</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -702,7 +702,7 @@
             <Width>2.05856cm</Width>
             <ZIndex>8</ZIndex>
             <Visibility>
-              <Hidden>=iif(Parameters!invType.Value="s" OR Parameters!invType.Value="ss",false,true)</Hidden>
+              <Hidden>=iif(Parameters!invType.Value="s" OR Parameters!invType.Value="ss"  OR Parameters!invType.Value="sd",false,true)</Hidden>
             </Visibility>
             <Style>
               <Border />
@@ -740,7 +740,7 @@
             <Width>7.51424cm</Width>
             <ZIndex>9</ZIndex>
             <Visibility>
-              <Hidden>=iif(Parameters!invType.Value="s" OR Parameters!invType.Value="ss",false,true)</Hidden>
+              <Hidden>=iif(Parameters!invType.Value="s" OR Parameters!invType.Value="ss"  OR Parameters!invType.Value="sd",false,true)</Hidden>
             </Visibility>
             <Style>
               <Border />

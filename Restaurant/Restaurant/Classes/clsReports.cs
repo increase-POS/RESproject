@@ -2388,6 +2388,10 @@ Parameters!trValueDiscount.Value)
             paramarr.Add(new ReportParameter("userName", list.FirstOrDefault().waiter));
             paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem")));
             paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
+
+            paramarr.Add(new ReportParameter("isSaved", "y"));
+            paramarr.Add(new ReportParameter("isOrginal", true.ToString()));
+
             DateFormConv(paramarr);
 
             //foreach (OrderPreparing row in Query)
