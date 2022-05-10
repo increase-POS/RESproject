@@ -4009,4 +4009,7 @@
   <data name="trSelectedTables" xml:space="preserve">
     <value>الطاولات المختارة</value>
   </data>
+  <data name="trOrderSharp" xml:space="preserve">
+    <value>رمز الطلب</value>
+  </data>
 </root>

@@ -4024,4 +4024,7 @@ Please add Email in setting</value>
   <data name="trSelectedTables" xml:space="preserve">
     <value>Selected tables</value>
   </data>
+  <data name="trOrderSharp" xml:space="preserve">
+    <value>Order #</value>
+  </data>
 </root>
