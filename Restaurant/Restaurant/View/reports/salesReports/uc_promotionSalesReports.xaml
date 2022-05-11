@@ -415,12 +415,12 @@
                              </DataGridTextColumn>
                         <DataGridTextColumn x:Name="col_offersTotalValue" Width="*" Header="Discount Amount" Binding="{Binding offerTotalValue,Converter={StaticResource accuracyConverter}}" Visibility="Hidden"/>
                         <!--invoices classes-->
-                                    <DataGridTextColumn x:Name="col_invoiceClass" Width="*" Header="Name" Binding="{Binding invoicesClassName}" />
+                        <DataGridTextColumn x:Name="col_invoiceClass" Width="*" Header="Name" Binding="{Binding invoicesClassName}" />
                         <DataGridTextColumn x:Name="col_invoiceValue" Width="*"  Header="Value" >
                             <DataGridTextColumn.Binding >
                                 <MultiBinding Converter="{StaticResource accuracyDiscountConverter}" >
-                                    <Binding Path="discountType" />
-                                    <Binding Path="discountValue" />
+                                    <Binding Path="invClassdiscountType" />
+                                    <Binding Path="invClassdiscountValue" />
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                             <DataGridTextColumn.ElementStyle>
@@ -433,7 +433,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                                    <DataGridTextColumn x:Name="col_invoiceTotalValue" Width="*" Header="Discount Amount" Binding="{Binding finalDiscount,Converter={StaticResource accuracyConverter}}" Visibility="Hidden"/>
+                        <DataGridTextColumn x:Name="col_invoiceTotalValue" Width="*" Header="Discount Amount" Binding="{Binding finalDiscount,Converter={StaticResource accuracyConverter}}" Visibility="Hidden"/>
                         </DataGrid.Columns>
                 </DataGrid>
                 </Grid>
