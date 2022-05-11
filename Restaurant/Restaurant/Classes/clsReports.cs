@@ -869,9 +869,17 @@ namespace Restaurant.Classes
         {
             string title = AppSettings.resourcemanagerreport.GetString("trFoods");
             itemdata(items, rep, reppath, paramarr);
+        
+            title = title + " / " + CategoryConv( categoryName);
+
+            paramarr.Add(new ReportParameter("Title", title));
+
+        }
+        public static string CategoryConv(string categoryName)
+        {
             if (categoryName == "appetizers")
             {
-                categoryName= AppSettings.resourcemanagerreport.GetString("trAppetizers");
+                categoryName = AppSettings.resourcemanagerreport.GetString("trAppetizers");
             }
             else if (categoryName == "beverages")
             {
@@ -893,13 +901,25 @@ namespace Restaurant.Classes
             {
                 categoryName = AppSettings.resourcemanagerreport.GetString("trPackages");
             }
-            
-            title = title + " / " + categoryName;
-
-            paramarr.Add(new ReportParameter("Title", title));
-
+            else if (categoryName == "RawMaterials")
+            {
+                categoryName = AppSettings.resourcemanagerreport.GetString("trRawMaterials");
+            }
+            else if (categoryName == "Vegetables")
+            {
+                categoryName = AppSettings.resourcemanagerreport.GetString("trVegetables");
+            }
+            else if (categoryName == "Meat")
+            {
+                categoryName = AppSettings.resourcemanagerreport.GetString("trMeat");
+            }
+            else if (categoryName == "Drinks")
+            {
+                categoryName = AppSettings.resourcemanagerreport.GetString("trDrinks");
+            }
+          return  categoryName;
         }
-        public static void itemdata(IEnumerable<Item> items, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+            public static void itemdata(IEnumerable<Item> items, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
@@ -2359,14 +2379,20 @@ Parameters!trValueDiscount.Value)
          rep.DataSources.Add(new ReportDataSource("DataSet", Query));
         }
         //sale 
-        public static void PreparingOrdersPrint(IEnumerable<OrderPreparing> Query , LocalReport rep,   List<ReportParameter> paramarr)
+        public static reportsize PreparingOrdersPrint(IEnumerable<OrderPreparing> Query ,    List<ReportParameter> paramarr)
         {
+            LocalReport rep = new LocalReport();
+            reportsize rs = new reportsize();
+            rs.rep = rep;
             List<OrderPreparing> list = JsonConvert.DeserializeObject<List<OrderPreparing>>(JsonConvert.SerializeObject(Query));
+            List<OrderPreparing> reportOrderList = new List<OrderPreparing>();
             ReportCls reportclass = new ReportCls();
 
-            rep.EnableExternalImages = true;
-            rep.DataSources.Clear();
+            rs.rep.EnableExternalImages = true;
+            rs.rep.DataSources.Clear();
+            //ReportCls.checkLang();
             paramarr.Add(new ReportParameter("invType", list.FirstOrDefault().invType));
+           // string ss = AppSettings.resourcemanagerreport.GetString("trPreparingOrders");
             paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trPreparingOrders")));
             paramarr.Add(new ReportParameter("invNumber", list.FirstOrDefault().invNum));
 
@@ -2393,16 +2419,69 @@ Parameters!trValueDiscount.Value)
             paramarr.Add(new ReportParameter("isOrginal", true.ToString()));
 
             DateFormConv(paramarr);
+            if (Query.Count() > 0)
+            {
 
-            //foreach (OrderPreparing row in Query)
-            //{
-            //    //row.statusConv = preparingOrderStatusConvert(row.status);
-            // //   row.status = preparingOrderStatusConvert(row.status);
-            //}
+                OrderPreparing tempObj = new OrderPreparing();
+    
+                //empty row
+                tempObj.itemUnitId = -1;
+                tempObj.orderNum = CategoryConv(list[0].categoryName);
+                reportOrderList.Add(tempObj);
+                //header row
+                tempObj = addOrderHeader();
+                reportOrderList.Add(tempObj);
+                for (int i=0;i< list.Count();i++ )
+            {
+                    tempObj = new OrderPreparing();
+                    //list[i].categoryName = CategoryConv(list[i].categoryName);
+                    //list[i].categoryCode = list[i].quantity.ToString();
+                    tempObj = list[i];
+                    //tempObj.categoryName= CategoryConv(list[i].categoryName);
+                    tempObj.categoryCode = list[i].quantity.ToString();
+                    reportOrderList.Add(tempObj);
+                    tempObj = new OrderPreparing();
+                 
+                    if (i+1 < list.Count())
+                    {
+                        //&& i< list.Count()
+                       //add headrer
+                        if (list[i].categoryId!= list[i + 1].categoryId)
+                        {
+                            tempObj = new OrderPreparing();
+                            //empty row
+                            tempObj.itemUnitId = -1;
+                            tempObj.orderNum = CategoryConv(list[i + 1].categoryName);
+                            reportOrderList.Add(tempObj);
+                            //header row
+                            tempObj = addOrderHeader();
+                           
+                            reportOrderList.Add(tempObj);
+                          //  trCategorie
+                              //  trOrderSharp
+                        }
+                    }
+                //row.statusConv = preparingOrderStatusConvert(row.status);
+                //   row.status = preparingOrderStatusConvert(row.status);
+                }
+            }
+            //rep.DataSources.Add(new ReportDataSource("DataSet", list)); 
+          
+            rs= reportclass. GetKitchenRdlcpath(AppSettings.kitchenPaperSize, reportOrderList.Count(), rs.rep);
+            rs.rep.DataSources.Add(new ReportDataSource("DataSet", reportOrderList));
+            return rs;
 
-            rep.DataSources.Add(new ReportDataSource("DataSet", list)); 
         }
-        public static void DeliveryReport(IEnumerable<OrderPreparingSTS> list, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        public static OrderPreparing addOrderHeader( )
+        {
+            OrderPreparing tempObj = new OrderPreparing();
+            tempObj.itemUnitId = -2;
+            tempObj.orderNum = AppSettings.resourcemanagerreport.GetString("trOrderSharp");
+            tempObj.itemName = AppSettings.resourcemanagerreport.GetString("trItem");
+            tempObj.categoryCode = AppSettings.resourcemanagerreport.GetString("trQTR");
+            return tempObj;
+        }
+            public static void DeliveryReport(IEnumerable<OrderPreparingSTS> list, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             List<OrderPreparingSTS> Query = JsonConvert.DeserializeObject<List<OrderPreparingSTS>>(JsonConvert.SerializeObject(list));
 

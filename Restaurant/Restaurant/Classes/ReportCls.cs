@@ -1108,12 +1108,13 @@ namespace Restaurant.Classes
             rs.rep = rep;
             return rs;
         }
-        public reportsize GetKitchenRdlcpath( string PaperSize, int itemscount )
+        public reportsize GetKitchenRdlcpath( string PaperSize, int itemscount,LocalReport rep )
         {
-            LocalReport rep = new LocalReport();
+           // LocalReport rep = new LocalReport();
             string addpath;
             bool isArabic = checkLang();
             reportsize rs = new reportsize();
+            rs.rep = rep;
             if (isArabic)
             {
                     if (PaperSize == "10cm"  )
@@ -1185,8 +1186,8 @@ namespace Restaurant.Classes
 
             string reppath = PathUp(Directory.GetCurrentDirectory(), 2, addpath);
             // rs.path = reppath;
-            rep.ReportPath = reppath;
-            rs.rep = rep;
+            rs.rep.ReportPath = reppath;
+            //rs.rep = rep;
             return rs;
         }
 
@@ -1194,23 +1195,24 @@ namespace Restaurant.Classes
 
         public reportsize PrintPrepOrder(List<OrderPreparing> OrderPreparingList)
         {
+
             List<ReportParameter> paramarr = new List<ReportParameter>();
 
             #region fill invoice data
             reportsize rs = new reportsize();
-       //LocalReport rep = new LocalReport();
-       //     rs.rep = rep;
-            rs = GetKitchenRdlcpath(AppSettings.kitchenPaperSize, OrderPreparingList.Count());
+            //LocalReport rep = new LocalReport();
+            //     rs.rep = rep;
+            //   rs = GetKitchenRdlcpath(AppSettings.kitchenPaperSize, OrderPreparingList.Count());
             //rs.rep;
             // rs.width;
             //rs.height;
 
 
-       checkLang();
-
-            clsReports.PreparingOrdersPrint(OrderPreparingList.ToList(), rs.rep, paramarr);
+            checkLang();
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
+            rs= clsReports.PreparingOrdersPrint(OrderPreparingList.ToList(),  paramarr);
+       
      
 
             rs.rep.SetParameters(paramarr);
@@ -1218,7 +1220,7 @@ namespace Restaurant.Classes
             rs.rep.Refresh();
             #endregion
             //copy count
-            string invType = OrderPreparingList.FirstOrDefault().invType;
+            //string invType = OrderPreparingList.FirstOrDefault().invType;
             //if (invType == "s" || invType == "sb" || invType == "ts"
             //    || invType == "ss")
             //{

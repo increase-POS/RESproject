@@ -77,6 +77,10 @@ namespace Restaurant.Classes.ApiClasses
         public string branchName { get; set; }
         public Nullable<System.DateTime> invDate { get; set; }
         public Nullable<System.TimeSpan> invTime { get; set; }
+        //category
+        public Nullable<int> categoryId { get; set; }
+        public string categoryCode { get; set; }
+        public string categoryName { get; set; }
         //-------------------------------------------
         public async Task<List<OrderPreparing>> GetInvoicePreparingOrders( int invoiceId)
         {

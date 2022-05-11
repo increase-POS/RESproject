@@ -446,13 +446,13 @@ namespace Restaurant.View.windows
 
                     prOrderPreparingList = neworderList(OrderListBeforesave, OrderListAftersave);
 
-                    //print
-                    
+                        //print
+
                         // prOrderPreparingList = await preparingOrder.GetOrdersByInvoiceId(prinvoiceId);
 
                         Thread t2 = new Thread(() =>
                         {
-
+                            //send all
                             printInvoiceInkitchen(invoiceId, prOrderPreparingList);
                         });
                         t2.Start();

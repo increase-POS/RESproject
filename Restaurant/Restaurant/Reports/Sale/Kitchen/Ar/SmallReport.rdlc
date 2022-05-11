@@ -60,6 +60,18 @@
           <DataField>branchName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="categoryCode">
+          <DataField>categoryCode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="categoryId">
+          <DataField>categoryId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="categoryName">
+          <DataField>categoryName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="createDate">
           <DataField>createDate</DataField>
           <rd:TypeName>System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
@@ -185,7 +197,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox30</rd:DefaultName>
-            <Top>3.57459cm</Top>
+            <Top>3.47934cm</Top>
             <Left>0.48282cm</Left>
             <Height>1.79803cm</Height>
             <Width>4.73436cm</Width>
@@ -221,7 +233,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox30</rd:DefaultName>
-            <Top>3.42194cm</Top>
+            <Top>3.32669cm</Top>
             <Left>0.48282cm</Left>
             <Height>2.30243cm</Height>
             <Width>4.73436cm</Width>
@@ -240,24 +252,11 @@
             </Style>
           </Textbox>
           <Line Name="Line8">
-            <Top>4.69486cm</Top>
+            <Top>3.96461cm</Top>
             <Left>0.20991cm</Left>
             <Height>0cm</Height>
             <Width>5.29297cm</Width>
             <ZIndex>2</ZIndex>
-            <Style>
-              <Border>
-                <Color>LightGrey</Color>
-                <Style>Dashed</Style>
-              </Border>
-            </Style>
-          </Line>
-          <Line Name="Line11">
-            <Top>3.31611cm</Top>
-            <Left>0.0857cm</Left>
-            <Height>0cm</Height>
-            <Width>5.5cm</Width>
-            <ZIndex>3</ZIndex>
             <Style>
               <Border>
                 <Color>LightGrey</Color>
@@ -294,11 +293,11 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
-            <Top>2.11949in</Top>
+            <Top>1.86949in</Top>
             <Left>1.68963in</Left>
             <Height>0.18377in</Height>
             <Width>0.45803in</Width>
-            <ZIndex>4</ZIndex>
+            <ZIndex>3</ZIndex>
             <Visibility>
               <Hidden>=iif(Parameters!invType.Value="s"  OR Parameters!invType.Value="sd",False,True)</Hidden>
             </Visibility>
@@ -334,11 +333,11 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox7</rd:DefaultName>
-            <Top>2.11949in</Top>
+            <Top>1.83199in</Top>
             <Left>0.03374in</Left>
             <Height>0.18377in</Height>
             <Width>1.65589in</Width>
-            <ZIndex>5</ZIndex>
+            <ZIndex>4</ZIndex>
             <Visibility>
               <Hidden>=iif(Parameters!invType.Value="s"  OR Parameters!invType.Value="sd",False,True)</Hidden>
             </Visibility>
@@ -384,11 +383,11 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
-            <Top>1.90497in</Top>
+            <Top>1.65497in</Top>
             <Left>1.68963in</Left>
             <Height>0.18377in</Height>
             <Width>0.45803in</Width>
-            <ZIndex>6</ZIndex>
+            <ZIndex>5</ZIndex>
             <Visibility>
               <Hidden>=iif(Parameters!invType.Value="s" OR Parameters!invType.Value="ss" OR Parameters!invType.Value="sd",false,true)</Hidden>
             </Visibility>
@@ -424,11 +423,11 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox7</rd:DefaultName>
-            <Top>1.90497in</Top>
+            <Top>1.61747in</Top>
             <Left>0.03374in</Left>
             <Height>0.18377in</Height>
             <Width>1.65589in</Width>
-            <ZIndex>7</ZIndex>
+            <ZIndex>6</ZIndex>
             <Visibility>
               <Hidden>=iif(Parameters!invType.Value="s" OR Parameters!invType.Value="ss" OR Parameters!invType.Value="sd",false,true)</Hidden>
             </Visibility>
@@ -467,11 +466,11 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
-            <Top>2.52972in</Top>
+            <Top>2.24222in</Top>
             <Left>0.0431in</Left>
             <Height>0.18377in</Height>
             <Width>2.1129in</Width>
-            <ZIndex>8</ZIndex>
+            <ZIndex>7</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -503,11 +502,11 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>6.00455cm</Top>
+            <Top>5.2743cm</Top>
             <Left>0.10947cm</Left>
             <Height>0.42093cm</Height>
             <Width>5.36677cm</Width>
-            <ZIndex>9</ZIndex>
+            <ZIndex>8</ZIndex>
             <Style>
               <Border />
               <PaddingLeft>2pt</PaddingLeft>
@@ -531,129 +530,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.6cm</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox2">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>رمز الطلب</Value>
-                                  <Style>
-                                    <FontFamily>Montserrat</FontFamily>
-                                    <FontSize>5pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox2</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>None</Style>
-                            </Border>
-                            <BottomBorder>
-                              <Style>Dashed</Style>
-                            </BottomBorder>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox13">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Parameters!trItem.Value</Value>
-                                  <Style>
-                                    <FontFamily>Montserrat</FontFamily>
-                                    <FontSize>5pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox13</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>None</Style>
-                            </Border>
-                            <BottomBorder>
-                              <Style>Dashed</Style>
-                            </BottomBorder>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox17">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Parameters!trQTR.Value</Value>
-                                  <Style>
-                                    <FontFamily>Montserrat</FontFamily>
-                                    <FontSize>5pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox17</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>None</Style>
-                            </Border>
-                            <BottomBorder>
-                              <Style>Dashed</Style>
-                            </BottomBorder>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                  </TablixCells>
-                </TablixRow>
-                <TablixRow>
-                  <Height>0.6cm</Height>
+                  <Height>0.47172cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -680,8 +557,15 @@
                           <rd:DefaultName>orderNum</rd:DefaultName>
                           <Style>
                             <Border>
+                              <Color>LightGrey</Color>
                               <Style>None</Style>
                             </Border>
+                            <TopBorder>
+                              <Style>=iif(Fields!itemUnitId.Value=-2 or Fields!itemUnitId.Value=-1 ,"Dashed","")</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Style>=iif(Fields!itemUnitId.Value=-2,"Dashed","")</Style>
+                            </BottomBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -715,8 +599,15 @@
                           <rd:DefaultName>itemName</rd:DefaultName>
                           <Style>
                             <Border>
+                              <Color>LightGrey</Color>
                               <Style>None</Style>
                             </Border>
+                            <TopBorder>
+                              <Style>=iif(Fields!itemUnitId.Value=-2 or Fields!itemUnitId.Value=-1 ,"Dashed","")</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Style>=iif(Fields!itemUnitId.Value=-2,"Dashed","")</Style>
+                            </BottomBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -727,14 +618,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="quantity">
+                        <Textbox Name="categoryCode">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!quantity.Value</Value>
+                                  <Value>=Fields!categoryCode.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
                                     <FontSize>6pt</FontSize>
@@ -747,11 +638,18 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>quantity</rd:DefaultName>
+                          <rd:DefaultName>categoryCode</rd:DefaultName>
                           <Style>
                             <Border>
+                              <Color>LightGrey</Color>
                               <Style>None</Style>
                             </Border>
+                            <TopBorder>
+                              <Style>=iif(Fields!itemUnitId.Value=-2 or Fields!itemUnitId.Value=-1 ,"Dashed","")</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Style>=iif(Fields!itemUnitId.Value=-2,"Dashed","")</Style>
+                            </BottomBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -774,22 +672,20 @@
             <TablixRowHierarchy>
               <TablixMembers>
                 <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
                   <Group Name="Details" />
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
             <LayoutDirection>RTL</LayoutDirection>
             <DataSetName>DataSet</DataSetName>
-            <Top>3.40649cm</Top>
+            <Top>3.31124cm</Top>
             <Left>0.13215cm</Left>
-            <Height>1.2cm</Height>
+            <Height>0.47172cm</Height>
             <Width>5.36926cm</Width>
-            <ZIndex>10</ZIndex>
+            <ZIndex>9</ZIndex>
             <Style>
               <Border>
+                <Color>LightGrey</Color>
                 <Style>None</Style>
               </Border>
             </Style>
@@ -817,7 +713,7 @@
             <Left>0.08426cm</Left>
             <Height>0.47995cm</Height>
             <Width>2.0231cm</Width>
-            <ZIndex>11</ZIndex>
+            <ZIndex>10</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -852,7 +748,7 @@
             <Left>0.08426cm</Left>
             <Height>0.67058cm</Height>
             <Width>5.41716cm</Width>
-            <ZIndex>12</ZIndex>
+            <ZIndex>11</ZIndex>
             <Style>
               <Border />
               <PaddingLeft>2pt</PaddingLeft>
@@ -887,7 +783,7 @@
             <Left>0.03317in</Left>
             <Height>0.21147in</Height>
             <Width>2.13275in</Width>
-            <ZIndex>13</ZIndex>
+            <ZIndex>12</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -924,7 +820,7 @@
             <Left>0.03317in</Left>
             <Height>0.21147in</Height>
             <Width>2.13275in</Width>
-            <ZIndex>14</ZIndex>
+            <ZIndex>13</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -960,7 +856,7 @@
             <Left>4.13851cm</Left>
             <Height>0.47995cm</Height>
             <Width>1.36291cm</Width>
-            <ZIndex>15</ZIndex>
+            <ZIndex>14</ZIndex>
             <Style>
               <Border />
               <PaddingLeft>2pt</PaddingLeft>
@@ -994,7 +890,7 @@
             <Left>2.28375cm</Left>
             <Height>0.48904cm</Height>
             <Width>1.7591cm</Width>
-            <ZIndex>16</ZIndex>
+            <ZIndex>15</ZIndex>
             <Visibility>
               <Hidden>=iif(Parameters!isSaved.Value="n",True,False)</Hidden>
             </Visibility>
@@ -1029,7 +925,7 @@
             <Left>0.08426cm</Left>
             <Height>0.46827cm</Height>
             <Width>2.0231cm</Width>
-            <ZIndex>17</ZIndex>
+            <ZIndex>16</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1041,7 +937,7 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>7.09095cm</Height>
+        <Height>6.41747cm</Height>
         <Style>
           <Border>
             <Style>None</Style>
