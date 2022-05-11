@@ -662,27 +662,52 @@ namespace Restaurant.Classes
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
-            List<Invoice> tmpQuery =new List<Invoice>();
-            tmpQuery = Query;
+            
             //table columns
             paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
-            paramarr.Add(new ReportParameter("deliveryMan", AppSettings.resourcemanagerreport.GetString("deliveryMan")));
+         
             paramarr.Add(new ReportParameter("deliveryTime", AppSettings.resourcemanagerreport.GetString("deliveryTime")));
-            paramarr.Add(new ReportParameter("trStatus", AppSettings.resourcemanagerreport.GetString("trStatus")));
-            foreach (var row in tmpQuery)
+            //paramarr.Add(new ReportParameter("trStatus", AppSettings.resourcemanagerreport.GetString("trStatus")));
+          
+            paramarr.Add(new ReportParameter("trDeliveryMan", AppSettings.resourcemanagerreport.GetString("deliveryMan")));
+            paramarr.Add(new ReportParameter("trCustomer", AppSettings.resourcemanagerreport.GetString("trCustomer")));
+            paramarr.Add(new ReportParameter("deliveryMan", Query.Count>0?( Query.FirstOrDefault().shipUserName+ " "+ Query.FirstOrDefault().shipUserLastName):"-"));
+            paramarr.Add(new ReportParameter("trCustomerAddress", AppSettings.resourcemanagerreport.GetString("trAddress")));
+
+            paramarr.Add(new ReportParameter("trCustomerMobile", AppSettings.resourcemanagerreport.GetString("trMobile")));
+
+
+            foreach (var row in Query)
             {
-                row.status = preparingOrderStatusConvert(row.status);
+                //row.status = preparingOrderStatusConvert(row.status);
                 row.orderTimeConv = dateTimeToTimeConvert(row.orderTime);
+                row.agentAddress= agentResSectorsAddressConv(row.agentResSectorsName,row.agentAddress);
             }
-            rep.DataSources.Add(new ReportDataSource("DataSet", tmpQuery));
+            rep.DataSources.Add(new ReportDataSource("DataSet", Query));
             //title
-            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trDriversManagement")));
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("deliveryList")));
          
 
         }
+        public static string agentResSectorsAddressConv(string agentResSectorsName, string agentAddress)
+        {
+            if(agentResSectorsName == "" && agentAddress == "")
+            {
+                agentAddress = "-";
+
+            }
+           else if((agentResSectorsName=="" || agentAddress == "" ) )
+            {
+                agentAddress = agentResSectorsName + agentAddress;
+            }else 
+            {
+                agentAddress = agentResSectorsName +"-"+ agentAddress;
+            }
+            return agentAddress;
+        }
         //public static void deliveryManagdata(IEnumerable<Invoice> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         //{
-          
+
 
         //}
         public static void ShippingCompanies(IEnumerable<ShippingCompanies> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
@@ -1849,18 +1874,18 @@ Parameters!trValueDiscount.Value)
             switch (s.side)
             {
                 case "bnd": break;
-                case "v": name = AppSettings.resourcemanager.GetString("trVendor"); break;
-                case "c": name = AppSettings.resourcemanager.GetString("trCustomer"); break;
-                case "u": name = AppSettings.resourcemanager.GetString("trUser"); break;
-                case "s": name = AppSettings.resourcemanager.GetString("trSalary"); break;
-                case "e": name = AppSettings.resourcemanager.GetString("trGeneralExpenses"); break;
+                case "v": name = AppSettings.resourcemanagerreport.GetString("trVendor"); break;
+                case "c": name = AppSettings.resourcemanagerreport.GetString("trCustomer"); break;
+                case "u": name = AppSettings.resourcemanagerreport.GetString("trUser"); break;
+                case "s": name = AppSettings.resourcemanagerreport.GetString("trSalary"); break;
+                case "e": name = AppSettings.resourcemanagerreport.GetString("trGeneralExpenses"); break;
                 case "m":
                     if (s.transType == "d")
-                        name = AppSettings.resourcemanager.GetString("trAdministrativeDeposit");
+                        name = AppSettings.resourcemanagerreport.GetString("trAdministrativeDeposit");
                     if (s.transType == "p")
-                        name = AppSettings.resourcemanager.GetString("trAdministrativePull");
+                        name = AppSettings.resourcemanagerreport.GetString("trAdministrativePull");
                     break;
-                case "sh": name = AppSettings.resourcemanager.GetString("trShippingCompany"); break;
+                case "sh": name = AppSettings.resourcemanagerreport.GetString("trShippingCompany"); break;
                 default: break;
             }
 
@@ -1871,20 +1896,20 @@ Parameters!trValueDiscount.Value)
             else if (!string.IsNullOrEmpty(s.shippingCompanyName))
                 name = name + " " + s.shippingCompanyName;
             else if ((s.side != "e") && (s.side != "m"))
-                name = name + " " + AppSettings.resourcemanager.GetString("trUnKnown");
+                name = name + " " + AppSettings.resourcemanagerreport.GetString("trUnKnown");
 
             if (s.transType.Equals("p"))
             {
                 if ((s.side.Equals("bn")) || (s.side.Equals("p")))
                 {
-                    return AppSettings.resourcemanager.GetString("trPull") + " " +
-                           AppSettings.resourcemanager.GetString("trFrom") + " " +
+                    return AppSettings.resourcemanagerreport.GetString("trPull") + " " +
+                           AppSettings.resourcemanagerreport.GetString("trFrom") + " " +
                            name;//receive
                 }
                 else if ((!s.side.Equals("bn")) || (!s.side.Equals("p")))
                 {
-                    return AppSettings.resourcemanager.GetString("trPayment") + " " +
-                           AppSettings.resourcemanager.GetString("trTo") + " " +
+                    return AppSettings.resourcemanagerreport.GetString("trPayment") + " " +
+                           AppSettings.resourcemanagerreport.GetString("trTo") + " " +
                            name;//دفع
                 }
                 else return "";
@@ -1893,14 +1918,14 @@ Parameters!trValueDiscount.Value)
             {
                 if ((s.side.Equals("bn")) || (s.side.Equals("p")))
                 {
-                    return AppSettings.resourcemanager.GetString("trDeposit") + " " +
-                           AppSettings.resourcemanager.GetString("trTo") + " " +
+                    return AppSettings.resourcemanagerreport.GetString("trDeposit") + " " +
+                           AppSettings.resourcemanagerreport.GetString("trTo") + " " +
                            name;
                 }
                 else if ((!s.side.Equals("bn")) || (!s.side.Equals("p")))
                 {
-                    return AppSettings.resourcemanager.GetString("trReceiptOperation") + " " +
-                           AppSettings.resourcemanager.GetString("trFrom") + " " +
+                    return AppSettings.resourcemanagerreport.GetString("trReceiptOperation") + " " +
+                           AppSettings.resourcemanagerreport.GetString("trFrom") + " " +
                            name;//قبض
                 }
                 else return "";
