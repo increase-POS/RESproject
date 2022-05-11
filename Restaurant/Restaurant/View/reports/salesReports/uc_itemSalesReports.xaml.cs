@@ -77,8 +77,8 @@ namespace Restaurant.View.reports.salesReports
         List<Branch> comboBranches;
         List<ItemUnitCombo> itemUnitCombos;
 
-        List<Branch> comboBrachTemp = new List<Branch>();
-        List<ItemUnitCombo> comboItemTemp = new List<ItemUnitCombo>();
+        ObservableCollection<Branch> comboBrachTemp = new ObservableCollection<Branch>();
+        ObservableCollection<ItemUnitCombo> comboItemTemp = new ObservableCollection<ItemUnitCombo>();
 
         List<Branch> dynamicComboBranches = new List<Branch>();
         List<ItemUnitCombo> dynamicComboItem = new List<ItemUnitCombo>();
@@ -86,9 +86,9 @@ namespace Restaurant.View.reports.salesReports
         Branch branchModel = new Branch();
         /*************************/
 
-        List<int> selectedBranchId = new List<int>();
+        ObservableCollection<int> selectedBranchId = new ObservableCollection<int>();
 
-        List<int> selectedItemId = new List<int>();
+        ObservableCollection<int> selectedItemId = new ObservableCollection<int>();
 
         // report
         ReportCls reportclass = new ReportCls();
@@ -99,9 +99,9 @@ namespace Restaurant.View.reports.salesReports
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            try
-            {
-               HelpClass.StartAwait(grid_main);
+            //try
+            //{
+            //    HelpClass.StartAwait(grid_main);
 
                 Items = await statisticModel.GetSaleitem((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
 
@@ -117,24 +117,23 @@ namespace Restaurant.View.reports.salesReports
                 translate();
                 #endregion
 
-                comboBranches = await branchModel.GetAllWithoutMain("b");
-
-                itemUnitCombos = statisticModel.GetIUComboList(Items);
-
-                fillComboBranches(cb_collect);
-                fillComboItemsBranches(cb_ItemsBranches);
                 await fillComboItemTypes();
-                fillComboItems();
 
-                btn_items_Click(btn_items, null);
+                //dynamicComboBranches = new List<Branch>(comboBranches);
+                //dynamicComboItem = new List<ItemUnitCombo>(itemUnitCombos);
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+                fillComboItemsBranches(cb_collect);
+                fillComboItemsBranches(cb_ItemsBranches);
+
+                btn_items_Click(btn_items , null);
+
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
 
         }
 
@@ -175,8 +174,8 @@ namespace Restaurant.View.reports.salesReports
 
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
-            tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
             tt_preview.Content = AppSettings.resourcemanager.GetString("trPreview");
+            tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
 
         }
@@ -185,48 +184,50 @@ namespace Restaurant.View.reports.salesReports
         {
             cb.SelectedValuePath = "branchId";
             cb.DisplayMemberPath = "name";
-            var lst = Items.GroupBy(i => i.itemId).Select(i => new { i.FirstOrDefault().itemUnitId, i.FirstOrDefault().ITitemName });
-            cb.ItemsSource = lst;
-
+            cb.ItemsSource = dynamicComboBranches;
         }
         private void fillComboItemsBranches(ComboBox cb)
         {
-            cb.SelectedValuePath = "branchId";
-            cb.DisplayMemberPath = "name";
-            cb.ItemsSource = comboBranches;
+            cb.SelectedValuePath = "branchCreatorId";
+            cb.DisplayMemberPath = "branchCreatorName";
+            cb.ItemsSource = Items.GroupBy(i => i.branchCreatorId)
+                .Select(i => new { i.FirstOrDefault().branchCreatorId, i.FirstOrDefault().branchCreatorName});
         }
 
         private void fillComboItems()
         {
-            var lst = Items;///////where category
-            cb_Items.ItemsSource = lst;
-            cb_Items.SelectedValuePath = "itemUnitId";
-            cb_Items.DisplayMemberPath = "itemUnitName";
+            try
+            {
+                cb_Items.SelectedValuePath = "ITitemId";
+                cb_Items.DisplayMemberPath = "ITitemName";
+                cb_Items.ItemsSource = Items.GroupBy(i => i.ITitemId)
+                    .Select(i => new { i.FirstOrDefault().ITitemId, i.FirstOrDefault().ITitemName, i.FirstOrDefault().categoryId, i.FirstOrDefault().categoryName })
+                    .Where(i => i.categoryId == (int)cb_Types.SelectedValue);
+            }
+            catch
+            { }
         }
 
         private async Task fillComboItemTypes()
         {
-            if (FillCombo.categoriesList is null)
-                await FillCombo.RefreshCategory();
-            List<Category> newList = FillCombo.categoriesList.Where(x => x.type == "s").ToList();
-           
-            cb_Types.ItemsSource = newList;
             cb_Types.SelectedValuePath = "categoryId";
-            cb_Types.DisplayMemberPath = "name";
+            cb_Types.DisplayMemberPath = "categoryName";
+            cb_Types.ItemsSource = Items.GroupBy(i => i.categoryId)
+                .Select(i => new { i.FirstOrDefault().categoryId, i.FirstOrDefault().categoryName });
         }
 
         public void fillItemsEvent()
         {
-            //temp = fillList(Items, cb_ItemsBranches, cb_Items, chk_itemInvoice, chk_itemReturn, dp_ItemStartDate, dp_ItemEndDate)
-            //    .Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemUnitId) : true));
+            temp = fillList(Items, cb_ItemsBranches, cb_Items,dp_ItemStartDate, dp_ItemEndDate)
+                .Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemUnitId) : true));
 
-            //dgInvoice.ItemsSource = temp;
+            dgInvoice.ItemsSource = temp;
 
-            //txt_count.Text = dgInvoice.Items.Count.ToString();
+            txt_count.Text = dgInvoice.Items.Count.ToString();
 
-            //fillPieChart();
-            //fillColumnChart();
-            //fillRowChart(selectedItemId);
+            fillPieChart();
+            fillColumnChart();
+            fillRowChart(selectedItemId);
         }
 
         public void fillCollectEvent()
@@ -257,7 +258,7 @@ namespace Restaurant.View.reports.salesReports
 
         public void paint()
         {
-            bdrMain.RenderTransform = Animations.borderAnimation(50, bdrMain, true);
+            //bdrMain.RenderTransform = Animations.borderAnimation(50, bdrMain, true);
 
             bdr_items.Background =  Application.Current.Resources["SecondColor"] as SolidColorBrush;
             bdr_collect.Background =  Application.Current.Resources["SecondColor"] as SolidColorBrush;
@@ -268,9 +269,10 @@ namespace Restaurant.View.reports.salesReports
 
         private void btn_items_Click(object sender, RoutedEventArgs e)
         {//items
-            try
-            {
-               HelpClass.StartAwait(grid_main);
+            //try
+            //{
+                 
+            //   HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 
@@ -296,15 +298,17 @@ namespace Restaurant.View.reports.salesReports
                 col_price.Visibility = Visibility.Visible;
                 col_total.Visibility = Visibility.Visible;
 
+                chk_allBranchesItem.IsChecked = true;
+                chk_allTypes.IsChecked = true;
                 fillItemsEvent();
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //}
+            //catch (Exception ex)
+            //{
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this);
+            //}
 
         }
 
@@ -312,7 +316,8 @@ namespace Restaurant.View.reports.salesReports
         {//collect
             try
             {
-                 HelpClass.StartAwait(grid_main);
+                 
+                    HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 
@@ -344,11 +349,13 @@ namespace Restaurant.View.reports.salesReports
                     fillCollectEvent();
                 }
 
-                HelpClass.EndAwait(grid_main);
+                 
+                    HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_main);
+                 
+                    HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -371,34 +378,34 @@ namespace Restaurant.View.reports.salesReports
 
         private void cb_Items_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cb_Items.SelectedItem != null)
-            {
-                if (stk_tagsItems.Children.Count < 5)
-                {
-                    selectedItem = cb_Items.SelectedItem as ItemUnitCombo;
-                    var b = new MaterialDesignThemes.Wpf.Chip()
-                    {
-                        Content = selectedItem.itemUnitName,
-                        Name = "btn" + selectedItem.itemUnitId.ToString(),
-                        IsDeletable = true,
-                        Margin = new Thickness(5, 0, 5, 0)
-                    };
-                    b.DeleteClick += Chip_OnDeleteItemClick;
-                    stk_tagsItems.Children.Add(b);
-                    comboItemTemp.Add(selectedItem);
-                    selectedItemId.Add(selectedItem.itemUnitId);
-                    dynamicComboItem.Remove(selectedItem);
-                    fillItemsEvent();
-                }
-            }
+            //if (cb_Items.SelectedItem != null)
+            //{
+            //    if (stk_tagsItems.Children.Count < 5)
+            //    {
+            //        selectedItem = cb_Items.SelectedItem as ItemUnitCombo;
+            //        var b = new MaterialDesignThemes.Wpf.Chip()
+            //        {
+            //            Content = selectedItem.itemUnitName,
+            //            Name = "btn" + selectedItem.itemUnitId.ToString(),
+            //            IsDeletable = true,
+            //            Margin = new Thickness(5, 0, 5, 0)
+            //        };
+            //        b.DeleteClick += Chip_OnDeleteItemClick;
+            //        stk_tagsItems.Children.Add(b);
+            //        comboItemTemp.Add(selectedItem);
+            //        selectedItemId.Add(selectedItem.itemUnitId);
+            //        dynamicComboItem.Remove(selectedItem);
+            //        fillItemsEvent();
+            //    }
+            //}
+            fillItemsEvent();
         }
 
         private void chk_allItems_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                 
-                    HelpClass.StartAwait(grid_main); if (cb_Items.IsEnabled == true)
+                HelpClass.StartAwait(grid_main); if (cb_Items.IsEnabled == true)
                 {
                     cb_Items.SelectedItem = null;
                     cb_Items.IsEnabled = false;
@@ -490,25 +497,23 @@ namespace Restaurant.View.reports.salesReports
         private void Cb_ItemsBranches_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             fillItemsEvent();
+
         }
 
         private void Chk_allBranchesItem_Checked(object sender, RoutedEventArgs e)
         {
             try
             {
-                 
-                    HelpClass.StartAwait(grid_main);
+                 HelpClass.StartAwait(grid_main);
 
                 cb_ItemsBranches.SelectedItem = null;
                 cb_ItemsBranches.IsEnabled = false;
 
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
 
@@ -540,7 +545,7 @@ namespace Restaurant.View.reports.salesReports
             try
             {
                  
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_Items.SelectedItem = null;
                 cb_Items.IsEnabled = false;
@@ -553,13 +558,11 @@ namespace Restaurant.View.reports.salesReports
                 selectedItemId.Clear();
                 fillItemsEvent();
 
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -568,19 +571,16 @@ namespace Restaurant.View.reports.salesReports
         {
             try
             {
-                 
-                    HelpClass.StartAwait(grid_main);
+                 HelpClass.StartAwait(grid_main);
 
                 cb_Items.IsEnabled = true;
                 fillItemsEvent();
 
-                 
-                    HelpClass.EndAwait(grid_main);
+                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -589,19 +589,19 @@ namespace Restaurant.View.reports.salesReports
         {
             try
             {
-                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
+
+                //cb_Items.SelectedItem = null;
+                //cb_Items.IsEnabled = false;
 
                 cb_Types.SelectedItem = null;
                 cb_Types.IsEnabled = false;
 
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -610,18 +610,15 @@ namespace Restaurant.View.reports.salesReports
         {
             try
             {
-                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_Types.IsEnabled = true;
 
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -753,12 +750,11 @@ namespace Restaurant.View.reports.salesReports
                DataLabels = true,
            });
 
-
             DataContext = this;
             cartesianChart.Series = columnChartData;
         }
 
-        private void fillRowChart(List<int> stackedButton)
+        private void fillRowChart(ObservableCollection<int> stackedButton)
         {
             MyAxis.Labels = new List<string>();
             List<string> names = new List<string>();
@@ -766,9 +762,8 @@ namespace Restaurant.View.reports.salesReports
             IEnumerable<decimal> pbTemp = null;
             IEnumerable<decimal> resultTemp = null;
 
-            //var temp = fillRowChartList(Items, chk_itemInvoice, chk_itemReturn, chk_itemDrafs, dp_ItemStartDate, dp_ItemEndDate, dt_itemStartTime, dt_ItemEndTime);
-            var temp = Items;
-            temp = temp.Where(j => (selectedItemId.Count != 0 ? stackedButton.Contains((int)j.ITitemUnitId) : true)).ToList();
+            var temp = fillRowChartList(Items, dp_ItemStartDate, dp_ItemEndDate);
+            temp = temp.Where(j => (selectedItemId.Count != 0 ? stackedButton.Contains((int)j.ITitemUnitId) : true));
             var result = temp.GroupBy(s => s.ITitemUnitId).Select(s => new
             {
                 ITitemUnitId = s.Key,
@@ -856,8 +851,7 @@ namespace Restaurant.View.reports.salesReports
         {
             try
             {
-                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 var currentChip = (Chip)sender;
                 stk_tagsBranches.Children.Remove(currentChip);
@@ -878,13 +872,11 @@ namespace Restaurant.View.reports.salesReports
                     fillCollectEvent();
                 }
 
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -893,8 +885,7 @@ namespace Restaurant.View.reports.salesReports
         {
             try
             {
-                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 if (cb_collect.SelectedItem != null)
                 {
@@ -917,12 +908,11 @@ namespace Restaurant.View.reports.salesReports
                     }
                 }
                  
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -931,8 +921,7 @@ namespace Restaurant.View.reports.salesReports
         {
             try
             {
-                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_collect.SelectedItem = null;
                 cb_collect.IsEnabled = false;
@@ -949,12 +938,12 @@ namespace Restaurant.View.reports.salesReports
                     fillCollectEventAll();
                 }
                  
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                  
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -963,8 +952,7 @@ namespace Restaurant.View.reports.salesReports
         {
             try
             {
-                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_collect.IsEnabled = true;
                 fillCollectEvent();
@@ -973,12 +961,12 @@ namespace Restaurant.View.reports.salesReports
                     fillCollectEventAll();
                 }
                  
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                  
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -986,25 +974,24 @@ namespace Restaurant.View.reports.salesReports
 
         #region fillLists
         List<ItemTransferInvoice> itemList = null;
-        private List<ItemTransferInvoice> fillList(IEnumerable<ItemTransferInvoice> Invoices, ComboBox cbBranch, ComboBox cbitem, CheckBox chkInvoice, CheckBox chkReturn, DatePicker startDate, DatePicker endDate)
+        private List<ItemTransferInvoice> fillList(IEnumerable<ItemTransferInvoice> Invoices, ComboBox cbBranch, ComboBox cbitem,  DatePicker startDate, DatePicker endDate)
         {
             var selectedBranch = cbBranch.SelectedItem as Branch;
             var selectedItemUnit = cbitem.SelectedItem as ItemUnitCombo;
 
             var result = Invoices.Where(x => (
 
-           ((chkReturn.IsChecked == true ? (x.invType == "sb") : false) || (chkInvoice.IsChecked == true ? (x.invType == "s") : false))
-                      && (cbBranch.SelectedItem != null ? x.branchCreatorId == selectedBranch.branchId : true)
-                      && (cb_Items.SelectedItem != null ? x.itemUnitId == selectedItemUnit.itemUnitId : true)
-                      && (cb_Types.SelectedItem != null ? x.ITtype == cb_Types.SelectedValue.ToString() : true)
+           ( (cb_ItemsBranches.SelectedIndex != -1 ? x.branchCreatorId == (int)cb_ItemsBranches.SelectedValue: true)
+                      && (cb_Items.SelectedIndex != -1 ? x.ITitemId == (int)cb_Items.SelectedValue : true)
+                      && (cb_Types.SelectedIndex != -1 ? x.categoryId == (int)cb_Types.SelectedValue : true)
                       && (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
-                      && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true)));
+                      && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true))));
 
             itemList = result.ToList();
             return result.ToList();
         }
 
-        private IEnumerable<ItemTransferInvoice> fillRowChartList(IEnumerable<ItemTransferInvoice> Invoices, CheckBox chkInvoice, CheckBox chkReturn, CheckBox chkDraft, DatePicker startDate, DatePicker endDate, TimePicker startTime, TimePicker endTime)
+        private IEnumerable<ItemTransferInvoice> fillRowChartList(IEnumerable<ItemTransferInvoice> Invoices, DatePicker startDate, DatePicker endDate)
         {
             var result = Invoices.Where(x => (
                          (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
@@ -1628,6 +1615,11 @@ namespace Restaurant.View.reports.salesReports
 
 
         #endregion
-
+      
+        private void Cb_Types_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            fillComboItems();
+            fillItemsEvent();
+        }
     }
 }
