@@ -566,7 +566,7 @@ namespace Restaurant.Classes
             var users = usersList.Where(x => x.isActive == 1 && x.job == job).ToList();
 
             cmb.ItemsSource = users;
-            cmb.DisplayMemberPath = "name";
+            cmb.DisplayMemberPath = "fullName";
             cmb.SelectedValuePath = "userId";
             cmb.SelectedIndex = -1;
         }
