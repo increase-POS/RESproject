@@ -529,7 +529,7 @@ namespace Restaurant.View.windows
         {
             List<OrderPreparing> newOrderList = new List<OrderPreparing>();
             List<int> oldids = OrderListbeforesave.Select(X => (int)X.orderPreparingId).ToList();
-            newOrderList = OrderListaftersave.Where(X => !oldids.Contains(X.orderPreparingId)).ToList();
+            newOrderList = OrderListaftersave.Where(X => !oldids.Contains(X.orderPreparingId)).ToList().OrderBy(X=>X.categoryId).ToList();
             return newOrderList;
         }
         #endregion
