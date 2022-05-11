@@ -751,7 +751,6 @@ namespace Restaurant.View.storage.storageOperations
             _SequenceNum = 0;
             _Count = 0;
             _Sum = 0;
-            // _InvoiceType = "pbw";
             _InvoiceType = "isd";
             invoice = new Invoice();
             txt_branch.Text = "_____________";
@@ -764,6 +763,9 @@ namespace Restaurant.View.storage.storageOperations
             isFromReport = false;
             refrishBillDetails();
             inputEditable();
+            txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trDirectEntry");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
+
             if (!isFromReport)
             {
                 btn_next.Visibility = Visibility.Collapsed;
@@ -1118,7 +1120,8 @@ namespace Restaurant.View.storage.storageOperations
                                 //var combo = (combo)cell.Content;
                                 combo.SelectedValue = (int)item.itemUnitId;
 
-                                if (item.OrderId != 0)
+                                if (_InvoiceType == "p" || _InvoiceType == "pw" || _InvoiceType == "pb" ||
+                                    _InvoiceType == "pbw" || _InvoiceType == "is")
                                     combo.IsEnabled = false;
                                 else
                                     combo.IsEnabled = true;
@@ -1493,9 +1496,7 @@ namespace Restaurant.View.storage.storageOperations
                                 btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
                             }
                             #endregion
-                            //txt_titleDataGridInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaseInvoice");
-                            //txt_titleDataGridInvoice.Foreground = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
-                            //btn_save.Content = AppSettings.resourcemanager.GetString("trStoreBtn");
+
                             await fillInvoiceInputs(invoice);
                             navigateBtnActivate();
                         }
