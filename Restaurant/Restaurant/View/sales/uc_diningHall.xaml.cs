@@ -2670,103 +2670,107 @@ namespace Restaurant.View.sales
                     if (await validateInvoiceValues())
                     {
                         refreshTotal();
+                        bool multipleValid = true;
 
-                       
                         #region payment window
-                        Window.GetWindow(this).Opacity = 0.2;
-
-                        wd_multiplePayment w = new wd_multiplePayment();
-                        w.isPurchase = false;
-                        w.invoice.invType = _InvoiceType;
-                        w.invoice.totalNet = decimal.Parse(tb_total.Text);
-                        w.cards = FillCombo.cardsList;
-
-                        #region customer balance
-                        if (invoice.agentId != null)
+                        if (invoice.shippingCompanyId == null)// no shipping
                         {
-                            await FillCombo.RefreshCustomers();
+                            Window.GetWindow(this).Opacity = 0.2;
 
-                            var customer = FillCombo.customersList.ToList().Find(b => b.agentId == (int)invoice.agentId && b.isLimited == true);
-                            if (customer != null)
-                            {
-                                decimal remain = 0;
-                                if (customer.maxDeserve != 0)
-                                    remain = getCusAvailableBlnc(customer);
-                                w.hasCredit = true;
-                                w.creditValue = remain;
-                            }
-                            else
-                            {
-                                w.hasCredit = false;
-                                w.creditValue = 0;
-                            }
-                        }
-                        #endregion
-                        w.ShowDialog();
-                        Window.GetWindow(this).Opacity = 1;
-                        #endregion
-                        if (w.isOk)
-                        {
-                           
-                            paymentsList = w.listPayments;
+                            wd_multiplePayment w = new wd_multiplePayment();
+                            w.isPurchase = false;
+                            w.invoice.invType = _InvoiceType;
+                            w.invoice.totalNet = decimal.Parse(tb_total.Text);
+                            w.cards = FillCombo.cardsList;
 
-                            if (AppSettings.invType == "diningHall")
-                                await saveDiningHallInvoice("s");
 
-                            else if (AppSettings.invType == "takeAway")
-                                await saveTakeAwayInvoice("ts");
+                            #region customer balance
+                            if (invoice.agentId != null)
+                            {
+                                await FillCombo.RefreshCustomers();
 
-                            else if (AppSettings.invType == "selfService")
-                                await saveTakeAwayInvoice("ss");
-                            /// print
-                        
-                            {
-                                await refreshItemsList();
-                                Search();
-                                refreshItemsPrice();
-                            }
-                            ///print 
-                            //thread  
-                            if (prinvoiceId > 0)
-                            {
-                                prInvoice = await invoiceModel.GetByInvoiceId(prinvoiceId);
-                                if (prInvoice.invType == "s" || prInvoice.invType == "ss" || prInvoice.invType == "ts")
+                                var customer = FillCombo.customersList.ToList().Find(b => b.agentId == (int)invoice.agentId && b.isLimited == true);
+                                if (customer != null)
                                 {
-
-                                    if (AppSettings.print_on_save_sale == "1")
-                                    {
-                                        // printInvoice();
-                                        //Thread t1 = new Thread(() =>
-                                        //{
-                                               await   printInvoice(prinvoiceId);
-                                        //});
-                                        //t1.Start();
-                                    }
-                                    if (AppSettings.print_kitchen_on_sale == "1" && (prInvoice.invType=="ss"|| prInvoice.invType == "ts"))
-                                    {
-                                        prOrderPreparingList = await preparingOrder.GetOrdersByInvoiceId(prinvoiceId);
-
-                                        // printInvoice();
-                                        Thread t2 = new Thread(() =>
-                                       {
-
-                                           printInvoiceInkitchen(prinvoiceId, prOrderPreparingList);
-                                       });
-                                        t2.Start();
-                                    }
-                                    if (AppSettings.email_on_save_sale == "1")
-                                    {
-                                        //sendsaleEmail();
-                                        Thread t3 = new Thread(() =>
-                                        {
-                                            sendsaleEmail(prinvoiceId);
-                                        });
-                                        t3.Start();
-                                    }
+                                    decimal remain = 0;
+                                    if (customer.maxDeserve != 0)
+                                        remain = getCusAvailableBlnc(customer);
+                                    w.hasCredit = true;
+                                    w.creditValue = remain;
+                                }
+                                else
+                                {
+                                    w.hasCredit = false;
+                                    w.creditValue = 0;
                                 }
                             }
-                          
-                        }                      
+                            #endregion
+                            w.ShowDialog();
+                            Window.GetWindow(this).Opacity = 1;
+                            multipleValid = w.isOk;
+                            paymentsList = w.listPayments;
+                            #endregion
+                        }
+                            if (multipleValid)
+                            {                              
+                                if (AppSettings.invType == "diningHall")
+                                    await saveDiningHallInvoice("s");
+
+                                else if (AppSettings.invType == "takeAway")
+                                    await saveTakeAwayInvoice("ts");
+
+                                else if (AppSettings.invType == "selfService")
+                                    await saveTakeAwayInvoice("ss");
+                                /// print
+
+                                {
+                                    await refreshItemsList();
+                                    Search();
+                                    refreshItemsPrice();
+                                }
+                                ///print 
+                                //thread  
+                                if (prinvoiceId > 0)
+                                {
+                                    prInvoice = await invoiceModel.GetByInvoiceId(prinvoiceId);
+                                    if (prInvoice.invType == "s" || prInvoice.invType == "ss" || prInvoice.invType == "ts")
+                                    {
+
+                                        if (AppSettings.print_on_save_sale == "1")
+                                        {
+                                            // printInvoice();
+                                            //Thread t1 = new Thread(() =>
+                                            //{
+                                            await printInvoice(prinvoiceId);
+                                            //});
+                                            //t1.Start();
+                                        }
+                                        if (AppSettings.print_kitchen_on_sale == "1" && (prInvoice.invType == "ss" || prInvoice.invType == "ts"))
+                                        {
+                                            prOrderPreparingList = await preparingOrder.GetOrdersByInvoiceId(prinvoiceId);
+
+                                            // printInvoice();
+                                            Thread t2 = new Thread(() =>
+                                           {
+
+                                               printInvoiceInkitchen(prinvoiceId, prOrderPreparingList);
+                                           });
+                                            t2.Start();
+                                        }
+                                        if (AppSettings.email_on_save_sale == "1")
+                                        {
+                                            //sendsaleEmail();
+                                            Thread t3 = new Thread(() =>
+                                            {
+                                                sendsaleEmail(prinvoiceId);
+                                            });
+                                            t3.Start();
+                                        }
+                                    }
+                                }
+
+                            }
+                        
                     }
                 }
                 else //box is closed
