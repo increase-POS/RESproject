@@ -289,6 +289,25 @@ namespace Restaurant.View.delivery
 
                     if (order != null)
                     {
+                        if (chk_allForDelivery.IsChecked.Value)
+                        {
+                            selectedOrders.Clear();
+
+                            if (dg_orders.Items.Count > 1)
+                            {
+                                var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
+                                if(firstCol != null || dg_orders?.Items != null )
+                                foreach (var item in dg_orders.Items)
+                                {
+                                    var chBx = firstCol.GetCellContent(item) as CheckBox;
+                                    if (chBx == null)
+                                    {
+                                        continue;
+                                    }
+                                    chBx.IsChecked = false;
+                                }
+                            }
+                        }
                         CheckBox checkboxColumn = (dg_orders.Columns[0].GetCellContent(dg_orders.SelectedItem) as CheckBox);
 
                         //different status
@@ -337,6 +356,7 @@ namespace Restaurant.View.delivery
                                 btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
                                 btn_save.IsEnabled = true;
                                 bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                                grid_deliveryMan.Visibility = Visibility.Visible;
                                 bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
                             }
                             else if (order.status.Equals("Collected"))
@@ -344,6 +364,7 @@ namespace Restaurant.View.delivery
                                 btn_save.Content = AppSettings.resourcemanager.GetString("onTheWay");
                                 btn_save.IsEnabled = true;
                                 bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                                grid_deliveryMan.Visibility = Visibility.Visible;
                                 bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
                             }
                             else if (order.status.Equals("InTheWay"))
@@ -351,6 +372,7 @@ namespace Restaurant.View.delivery
                                 btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
                                 btn_save.IsEnabled = true;
                                 bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                                grid_deliveryMan.Visibility = Visibility.Collapsed;
                                 bdr_tbDeliveryMan.Visibility = Visibility.Visible;
                             }
                         }
@@ -358,6 +380,7 @@ namespace Restaurant.View.delivery
                         {
                             bdr_cbDeliveryCompany.Visibility = Visibility.Visible;
                             bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                            grid_deliveryMan.Visibility = Visibility.Collapsed;
                             bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
 
                             if (order.status.Equals("Ready"))
@@ -741,6 +764,7 @@ namespace Restaurant.View.delivery
                             btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
                             btn_save.IsEnabled = true;
                             bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                            grid_deliveryMan.Visibility = Visibility.Visible;
                             bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
                         }
                         else if (item0.status.Equals("Collected"))
@@ -748,6 +772,7 @@ namespace Restaurant.View.delivery
                             btn_save.Content = AppSettings.resourcemanager.GetString("onTheWay");
                             btn_save.IsEnabled = true;
                             bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                            grid_deliveryMan.Visibility = Visibility.Visible;
                             bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
                         }
                         else if (item0.status.Equals("InTheWay"))
@@ -755,6 +780,7 @@ namespace Restaurant.View.delivery
                             btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
                             btn_save.IsEnabled = true;
                             bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                            grid_deliveryMan.Visibility = Visibility.Collapsed;
                             bdr_tbDeliveryMan.Visibility = Visibility.Visible;
                         }
                     }
@@ -762,6 +788,7 @@ namespace Restaurant.View.delivery
                     {
                         bdr_cbDeliveryCompany.Visibility = Visibility.Visible;
                         bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                        grid_deliveryMan.Visibility = Visibility.Collapsed;
                         bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
 
                         if (item0.status.Equals("Ready"))
@@ -847,14 +874,14 @@ namespace Restaurant.View.delivery
                 CheckBox cb = sender as CheckBox;
                 if (chk_allForDelivery.IsChecked == true)
                 {
-                    cb.IsChecked = false;
+                    selectedOrders.Clear();
                 }
-                else
-                {
+                //else
+                //{
                     Invoice selectedOrder = dg_orders.SelectedItem as Invoice;
                     if (selectedOrder != null)
                         selectedOrders.Add(selectedOrder);
-                }
+                //}
             }
             catch (Exception ex)
             {
@@ -868,14 +895,14 @@ namespace Restaurant.View.delivery
                 CheckBox cb = sender as CheckBox;
                 if (chk_allForDelivery.IsChecked == true)
                 {
-                    cb.IsChecked = false;
+                    selectedOrders.Clear();
                 }
-                else
-                {
-                    var index = dg_orders.SelectedIndex;
+                //else
+                //{
+                var index = dg_orders.SelectedIndex;
                     Invoice selectedOrder = dg_orders.SelectedItem as Invoice;
                     selectedOrders.Remove(selectedOrder);
-                }
+                //}
             
             }
             catch (Exception ex)

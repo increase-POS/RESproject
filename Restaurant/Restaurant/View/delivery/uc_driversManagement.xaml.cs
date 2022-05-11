@@ -20,6 +20,7 @@ using System.IO;
  
 using Microsoft.Reporting.WinForms;
 using Restaurant.Classes.ApiClasses;
+using System.ComponentModel;
 
 namespace Restaurant.View.delivery
 {
@@ -31,6 +32,11 @@ namespace Restaurant.View.delivery
         IEnumerable<User> drivers;
         User userModel = new User();
         User driver = new User();
+
+        IEnumerable<ShippingCompanies> companies;
+        ShippingCompanies companyModel = new ShippingCompanies();
+        ShippingCompanies company = new ShippingCompanies();
+
         string searchText = "";
         byte tgl_driverState;
 
@@ -96,18 +102,33 @@ namespace Restaurant.View.delivery
         {
             try
             {
-                if (drivers is null)
-                    await RefreshDriversList();
 
-                searchText = tb_search.Text.ToLower();
-                drivers = drivers.Where(s => (
-                   s.name.ToLower().Contains(searchText)
-                || s.mobile.ToString().ToLower().Contains(searchText)
-                )
-                && s.isActive == tgl_driverState
-                );
+                if (chk_drivers.IsChecked.Value)
+                {
+                    if (drivers is null)
+                        await RefreshDriversList();
+                    searchText = tb_search.Text.ToLower();
+                    drivers = drivers.Where(s => (
+                       s.name.ToLower().Contains(searchText)
+                    || s.mobile.ToString().ToLower().Contains(searchText)
+                    ));
+                    RefreshDriverView();
+                }
+                else if (chk_shippingCompanies.IsChecked.Value)
+                {
+                    if (companies is null)
+                       await RefreshCompaniesList();
+                    searchText = tb_search.Text.ToLower();
+                    companies = companies.Where(x => x.deliveryType == "com").ToList();
+                    companies = companies.Where(s => (
+                       s.name.ToLower().Contains(searchText)
+                    || s.mobile.ToString().ToLower().Contains(searchText)
+                    ));
+                    RefreshCompanyView();
+                }
+                    
 
-                RefreshDriverView();
+
             }
             catch { }
         }
@@ -117,18 +138,25 @@ namespace Restaurant.View.delivery
             driverSectors = await residentialSector.GetResSectorsByUserId(driver.userId);
             tb_sectorsCount.Text = driverSectors.Count.ToString();
         }
-
-        void RefreshDriverView()
-        {
-            dg_user.ItemsSource = drivers;
-        }
-
         async Task<IEnumerable<User>> RefreshDriversList()
         {
             drivers = await userModel.GetUsersActive();
             drivers = drivers.Where(x => x.job == "deliveryEmployee");
 
             return drivers;
+        }
+        async Task<IEnumerable<ShippingCompanies>> RefreshCompaniesList()
+        {
+            companies = await companyModel.Get();
+            return companies;
+        }
+        void RefreshDriverView()
+        {
+            dg_user.ItemsSource = drivers;
+        }
+        void RefreshCompanyView()
+        {
+            dg_user.ItemsSource = companies;
         }
 
         private void translate()
@@ -141,13 +169,22 @@ namespace Restaurant.View.delivery
 
             //txt_title.Text = AppSettings.resourcemanager.GetString("trDriversManagement");
             txt_details.Text = AppSettings.resourcemanager.GetString("trDetails");
-            txt_active.Text = AppSettings.resourcemanager.GetString("trActive");
-            txt_userName.Text = AppSettings.resourcemanager.GetString("trUserName");
+
+            chk_drivers.Content = AppSettings.resourcemanager.GetString("drivers");
+            chk_shippingCompanies.Content = AppSettings.resourcemanager.GetString("trShippingCompanies");
+
+            txt_driverUserName.Text = AppSettings.resourcemanager.GetString("trUserName");
             txt_driverName.Text = AppSettings.resourcemanager.GetString("trDriver");
-            txt_mobile.Text = AppSettings.resourcemanager.GetString("trMobile");
-            txt_sectorsCount.Text = AppSettings.resourcemanager.GetString("trResidentialSectors");
-            txt_ordersCount.Text = AppSettings.resourcemanager.GetString("trOrders");
-            txt_status.Text = AppSettings.resourcemanager.GetString("trStatus");
+            txt_driverMobile.Text = AppSettings.resourcemanager.GetString("trMobile");
+            txt_driverSectorsCount.Text = AppSettings.resourcemanager.GetString("trResidentialSectors");
+            txt_driverOrdersCount.Text = AppSettings.resourcemanager.GetString("trOrders");
+            txt_driverStatus.Text = AppSettings.resourcemanager.GetString("trStatus");
+
+            txt_companyName.Text = AppSettings.resourcemanager.GetString("trDriver");
+            txt_companyMobile.Text = AppSettings.resourcemanager.GetString("trMobile");
+            txt_companyEmail.Text = AppSettings.resourcemanager.GetString("trEmail");
+            txt_companyOrdersCount.Text = AppSettings.resourcemanager.GetString("trOrders");
+            txt_companyStatus.Text = AppSettings.resourcemanager.GetString("trStatus");
 
             txt_preview.Text = AppSettings.resourcemanager.GetString("trPreview");
             txt_print.Text = AppSettings.resourcemanager.GetString("trPrint");
@@ -156,10 +193,16 @@ namespace Restaurant.View.delivery
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
 
-            dg_user.Columns[0].Header = AppSettings.resourcemanager.GetString("trUserName");
-            dg_user.Columns[1].Header = AppSettings.resourcemanager.GetString("trName");
-            dg_user.Columns[2].Header = AppSettings.resourcemanager.GetString("trMobile");
-            dg_user.Columns[3].Header = AppSettings.resourcemanager.GetString("trStatus");
+            col_driversUsername.Header = AppSettings.resourcemanager.GetString("trUserName");
+            col_driversName.Header = AppSettings.resourcemanager.GetString("trName");
+            col_driversMobile.Header = AppSettings.resourcemanager.GetString("trMobile");
+            col_driversAvailable.Header = AppSettings.resourcemanager.GetString("trStatus");
+
+            col_companyName.Header = AppSettings.resourcemanager.GetString("trName");
+            col_companyMobile.Header = AppSettings.resourcemanager.GetString("trMobile");
+            col_companyEmail.Header = AppSettings.resourcemanager.GetString("trEmail");
+            col_companyAvailable.Header = AppSettings.resourcemanager.GetString("trStatus");
+
 
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
 
@@ -177,6 +220,8 @@ namespace Restaurant.View.delivery
             {
                 HelpClass.StartAwait(grid_main);
 
+                await RefreshDriversList();
+                await RefreshCompaniesList();
                 searchText = "";
                 tb_search.Text = "";
                 await Search();
@@ -207,7 +252,7 @@ namespace Restaurant.View.delivery
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
+        /*
         private async void Tgl_isActive_Checked(object sender, RoutedEventArgs e)
         {
             try
@@ -227,7 +272,6 @@ namespace Restaurant.View.delivery
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
         {
             try
@@ -247,7 +291,107 @@ namespace Restaurant.View.delivery
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        int selectedDriver = 0;
+        */
+        private async void deliveryType_check(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox cb = sender as CheckBox;
+                if (cb.IsFocused)
+                {
+                    if (cb.IsChecked == true)
+                    {
+                        if (cb.Name == "chk_drivers")
+                        {
+                            chk_shippingCompanies.IsChecked = false;
+                        }
+                        else if (cb.Name == "chk_shippingCompanies")
+                        {
+                            chk_drivers.IsChecked = false;
+                        }
+                    }
+                }
+                
+                await changeDeliveryType();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void deliveryType_uncheck(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox cb = sender as CheckBox;
+                if (cb.IsFocused)
+                {
+                   if (cb.Name == "chk_drivers")
+                        chk_drivers.IsChecked = true;
+                   else if (cb.Name == "chk_shippingCompanies")
+                        chk_shippingCompanies.IsChecked = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        async Task changeDeliveryType()
+        {
+            HelpClass.StartAwait(grid_main);
+
+            if (col_driversUsername is null)
+              await  Task.Delay(500);
+            if (chk_drivers.IsChecked.Value)
+            {
+                col_driversUsername.Visibility = Visibility.Visible;
+                col_driversName.Visibility = Visibility.Visible;
+                col_driversMobile.Visibility = Visibility.Visible;
+                col_driversAvailable.Visibility = Visibility.Visible;
+                cd_residentialSectors.Width =  new GridLength(1, GridUnitType.Star) ;
+                btn_residentialSectors.Visibility = Visibility.Visible;
+                sp_driverDetails.Visibility = Visibility.Visible;
+                tb_sectorsCount.Text = "0";
+                this.DataContext = new User();
+
+                col_companyName.Visibility = Visibility.Collapsed;
+                col_companyMobile.Visibility = Visibility.Collapsed;
+                col_companyEmail.Visibility = Visibility.Collapsed;
+                col_companyAvailable.Visibility = Visibility.Collapsed;
+                sp_companyDetails.Visibility = Visibility.Collapsed;
+                
+            }
+            else if (chk_shippingCompanies.IsChecked.Value)
+            {
+                col_driversUsername.Visibility = Visibility.Collapsed;
+                col_driversName.Visibility = Visibility.Collapsed;
+                col_driversMobile.Visibility = Visibility.Collapsed;
+                col_driversAvailable.Visibility = Visibility.Collapsed;
+                cd_residentialSectors.Width = new GridLength(0, GridUnitType.Star);
+                btn_residentialSectors.Visibility = Visibility.Collapsed;
+                sp_driverDetails.Visibility = Visibility.Collapsed;
+
+                col_companyName.Visibility = Visibility.Visible;
+                col_companyMobile.Visibility = Visibility.Visible;
+                col_companyEmail.Visibility = Visibility.Visible;
+                col_companyAvailable.Visibility = Visibility.Visible;
+                sp_companyDetails.Visibility = Visibility.Visible;
+                this.DataContext = new ShippingCompanies();
+
+            }
+
+
+
+            await Search();
+
+            HelpClass.EndAwait(grid_main);
+        }
+
+      
+
+        int selectedIndexDataGrid = 0;
         List<ResidentialSectors> driverSectors = new List<ResidentialSectors>();
         ResidentialSectors residentialSector = new ResidentialSectors();
 
@@ -260,19 +404,36 @@ namespace Restaurant.View.delivery
                 
                 if (dg_user.SelectedIndex != -1)
                 {
-                    driver = dg_user.SelectedItem as User;
-                    selectedDriver = dg_user.SelectedIndex;
-                    this.DataContext = driver;
-                    if (driver != null)
+                    if (chk_drivers.IsChecked.Value)
                     {
-                        if (driver.driverIsAvailable == 0)
-                            txt_activeInactive.Text = AppSettings.resourcemanager.GetString("activate");
-                        else
-                            txt_activeInactive.Text = AppSettings.resourcemanager.GetString("deActivate");
+                        driver = dg_user.SelectedItem as User;
+                        selectedIndexDataGrid = dg_user.SelectedIndex;
+                        this.DataContext = driver;
+                        if (driver != null)
+                        {
+                            if (driver.driverIsAvailable == 0)
+                                txt_activeInactive.Text = AppSettings.resourcemanager.GetString("activate");
+                            else
+                                txt_activeInactive.Text = AppSettings.resourcemanager.GetString("deActivate");
+                            await refreshDriverSectors();
 
-                        await refreshDriverSectors();
-
+                        }
                     }
+                    else if (chk_shippingCompanies.IsChecked.Value)
+                    {
+                        company = dg_user.SelectedItem as ShippingCompanies;
+                        selectedIndexDataGrid = dg_user.SelectedIndex;
+                        this.DataContext = company;
+                        if (company != null)
+                        {
+                            if (company.isActive == 0)
+                                txt_activeInactive.Text = AppSettings.resourcemanager.GetString("activate");
+                            else
+                                txt_activeInactive.Text = AppSettings.resourcemanager.GetString("deActivate");
+
+                        }
+                    }
+                    
                 }
                 HelpClass.EndAwait(grid_main);
             }
@@ -324,26 +485,52 @@ namespace Restaurant.View.delivery
                 if (FillCombo.groupObject.HasPermissionAction(activateDriverPermission, FillCombo.groupObjects, "one"))
                 {
                     string resultStr = "";
-                    if (driver.driverIsAvailable == 0)
+                    if(chk_drivers.IsChecked.Value)
                     {
-                        driver.driverIsAvailable = 1;
-                        resultStr = "popActivation";
+                        if (driver.driverIsAvailable == 0)
+                        {
+                            driver.driverIsAvailable = 1;
+                            resultStr = "popActivation";
+                        }
+                        else
+                        {
+                            driver.driverIsAvailable = 0;
+                            resultStr = "popDeActivation";
+                        }
+                        int s = await driver.save(driver);
+                        if (s <= 0)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        else
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString(resultStr), animation: ToasterAnimation.FadeIn);
+                            await RefreshDriversList();
+                            await Search();
+                            dg_user.SelectedIndex = selectedIndexDataGrid;
+                        }
                     }
-                    else
+                    else if (chk_shippingCompanies.IsChecked.Value)
                     {
-                        driver.driverIsAvailable = 0;
-                        resultStr = "popDeActivation";
-                    }
-
-                    int s = await driver.save(driver);
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    else
-                    {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString(resultStr), animation: ToasterAnimation.FadeIn);
-                        await RefreshDriversList();
-                        await Search();
-                        dg_user.SelectedIndex = selectedDriver;
+                        if (company.isActive == 0)
+                        {
+                            company.isActive = 1;
+                            resultStr = "popActivation";
+                        }
+                        else
+                        {
+                            company.isActive = 0;
+                            resultStr = "popDeActivation";
+                        }
+                        int s = await company.save(company);
+                        if (s <= 0)
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                        else
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString(resultStr), animation: ToasterAnimation.FadeIn);
+                            await FillCombo.RefreshShippingCompanies();
+                            await RefreshCompaniesList();
+                            await Search();
+                            dg_user.SelectedIndex = selectedIndexDataGrid;
+                        }
                     }
                 }
                 else

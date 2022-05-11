@@ -500,7 +500,7 @@
                         <TextBlock x:Name="txt_baseInformation" Text="Base Infomation" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
                         <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
                     </DockPanel>
-                        <Grid>
+                        <Grid x:Name="grid_deliveryMan">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
