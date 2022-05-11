@@ -3089,7 +3089,7 @@ namespace Restaurant.View.sales
             return pdfpath;
         }
 
-        private void Btn_pdf_Click(object sender, RoutedEventArgs e)
+        private async void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {//pdf
             try
             {
@@ -3099,7 +3099,7 @@ namespace Restaurant.View.sales
                 /////////////////////////////////////
                 //Thread t1 = new Thread(() =>
                 //{
-                pdfPurInvoice();
+                await pdfPurInvoice();
                 //});
                 //t1.Start();
                 //////////////////////////////////////
@@ -3114,7 +3114,7 @@ namespace Restaurant.View.sales
             }
         }
 
-        public async void pdfPurInvoice()
+        public async Task pdfPurInvoice()
         {
             try
             {
@@ -3356,7 +3356,7 @@ namespace Restaurant.View.sales
                 }
 
             }
-            catch
+            catch (Exception ex)
             {
                 this.Dispatcher.Invoke(() =>
                 {
@@ -3727,15 +3727,15 @@ namespace Restaurant.View.sales
 
 
         }
-        public  void printInvoiceInkitchen(int invoiceId, List<OrderPreparing> OrderPreparingList)
+        public void printInvoiceInkitchen(int invoiceId, List<OrderPreparing> OrderPreparingList)
         {
             try
             {
-             //   prInvoice = new Invoice();
+                //   prInvoice = new Invoice();
 
                 if (invoiceId > 0)
                 {
-                    reportsize rs=reportclass.PrintPrepOrder(OrderPreparingList);
+                    reportsize rs = reportclass.PrintPrepOrder(OrderPreparingList);
                     this.Dispatcher.Invoke(() =>
                     {
                         if (AppSettings.kitchenPaperSize == "A4")
@@ -3794,10 +3794,10 @@ namespace Restaurant.View.sales
         //   //rs.rep;
         //   // rs.width;
         //   //rs.height;
-      
+
 
         //    ReportCls.checkLang();
-  
+
         //    clsReports.PreparingOrdersPrint(OrderPreparingList.ToList(), rs.rep, paramarr);
         //    clsReports.setReportLanguage(paramarr);
         //    clsReports.Header(paramarr);
@@ -3818,19 +3818,19 @@ namespace Restaurant.View.sales
         //    return rs;
         //        //kitchen
 
-   
+
 
         //    //}
         //    //else
         //    //{
 
-               
+
 
         //    //}
         //    // end copy count
 
         //}
-        private void Btn_printInvoice_Click(object sender, RoutedEventArgs e)
+        private async void Btn_printInvoice_Click(object sender, RoutedEventArgs e)
         {//print
             try
             {
@@ -3838,11 +3838,11 @@ namespace Restaurant.View.sales
                     HelpClass.StartAwait(grid_main);
 
                 ////////////////
-                Thread t1 = new Thread(() =>
-                {
-                    printInvoice(invoice.invoiceId);
-                });
-                t1.Start();
+                //Thread t1 = new Thread(() =>
+                //{
+                printInvoice(invoice.invoiceId);
+                //});
+                //t1.Start();
                 /////////////////
 
 
@@ -4140,8 +4140,8 @@ namespace Restaurant.View.sales
                     //     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSaveInvoiceToPreview"), animation: ToasterAnimation.FadeIn);
                     ////
                     Invoice tmpinvoice = new Invoice();
-                    tmpinvoice.invType = "s";
-                    if (txt_customer.Text != null)
+                    tmpinvoice.invType = "sd";
+                    if (txt_customer.Text != null && txt_customer.Text != "")
                     {
 
                         tmpinvoice.agentId = (int)invoice.agentId;
@@ -4299,7 +4299,7 @@ namespace Restaurant.View.sales
                         clsReports.setReportLanguage(paramarr);
                         clsReports.Header(paramarr);
                         paramarr.Add(new ReportParameter("isSaved", "n"));
-                        paramarr = reportclass.fillSaleInvReport(tmpinvoice, paramarr);
+                        paramarr = reportclass.fillSaleInvReport(tmpinvoice, paramarr, shippingcomp);
 
                         if (tmpinvoice.invType == "pd" || tmpinvoice.invType == "sd" || tmpinvoice.invType == "qd"
      || tmpinvoice.invType == "sbd" || tmpinvoice.invType == "pbd"
