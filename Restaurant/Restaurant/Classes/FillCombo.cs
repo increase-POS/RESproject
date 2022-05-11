@@ -574,7 +574,7 @@ namespace Restaurant.Classes
         {
             var users =await user.getUsersForDelivery(job, customerId);
             cmb.ItemsSource = users;
-            cmb.DisplayMemberPath = "name";
+            cmb.DisplayMemberPath = "fullName";
             cmb.SelectedValuePath = "userId";
             cmb.SelectedIndex = -1;
         }
