@@ -469,14 +469,14 @@ namespace Restaurant.View.kitchen
                 CheckBox cb = sender as CheckBox;
                 if (chk_allForDelivery.IsChecked == true)
                 {
-                    cb.IsChecked = false;
+                    selectedOrders.Clear();
                 }
-                else
-                {
+                //else
+                //{
                     Invoice selectedOrder = dg_orders.SelectedItem as Invoice;
                     if (selectedOrder != null)
                         selectedOrders.Add(selectedOrder);
-                }
+                //}
             }
             catch (Exception ex)
             {
@@ -490,14 +490,14 @@ namespace Restaurant.View.kitchen
                 CheckBox cb = sender as CheckBox;
                 if (chk_allForDelivery.IsChecked == true)
                 {
-                    cb.IsChecked = false;
+                    selectedOrders.Clear();
                 }
-                else
-                {
+                //else
+                //{
                     var index = dg_orders.SelectedIndex;
                     Invoice selectedOrder = dg_orders.SelectedItem as Invoice;
                     selectedOrders.Remove(selectedOrder);
-                }
+                //}
 
             }
             catch (Exception ex)
@@ -564,8 +564,27 @@ namespace Restaurant.View.kitchen
                     this.DataContext = preparingOrder;
                     //checkboxColumn yasin
                     /*
-                    if (order != null)
+                     if (order != null)
                     {
+                        if (chk_allForDelivery.IsChecked.Value)
+                        {
+                            selectedOrders.Clear();
+
+                            if (dg_orders.Items.Count > 1)
+                            {
+                                var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
+                                if(firstCol != null || dg_orders?.Items != null )
+                                foreach (var item in dg_orders.Items)
+                                {
+                                    var chBx = firstCol.GetCellContent(item) as CheckBox;
+                                    if (chBx == null)
+                                    {
+                                        continue;
+                                    }
+                                    chBx.IsChecked = false;
+                                }
+                            }
+                        }
                         CheckBox checkboxColumn = (dg_orders.Columns[0].GetCellContent(dg_orders.SelectedItem) as CheckBox);
 
                         //different status
@@ -608,7 +627,7 @@ namespace Restaurant.View.kitchen
                         if (order.shipUserId != null)
                         {
                             bdr_cbDeliveryCompany.Visibility = Visibility.Collapsed;
-
+                           
                             if (order.status.Equals("Ready"))
                             {
                                 btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
@@ -646,6 +665,7 @@ namespace Restaurant.View.kitchen
 
                         #endregion
                     }
+
                     */
                     itemsList = preparingOrder.items;
                     BuildOrderItemsDesign();
