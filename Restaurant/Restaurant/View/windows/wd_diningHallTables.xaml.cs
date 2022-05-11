@@ -1047,11 +1047,8 @@ namespace Restaurant.View.windows
                             res = await openInvoiceForReserve();
                             if (res > 0)
                             {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("popConfirmed"), animation: ToasterAnimation.FadeIn);
-                                //await refreshReservationsList();
-                                //await refreshTablesList();
-                                //Search();
-                                //await showDetails();
+                                //Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("popConfirmed"), animation: ToasterAnimation.FadeIn);
+                                
                                 isOk = true;
                                 this.Close();
                             }
@@ -1094,11 +1091,8 @@ namespace Restaurant.View.windows
                             res = await openEmptyInvoice();
                             if (res > 0)
                             {
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("popCanceled"), animation: ToasterAnimation.FadeIn);
-                                //await refreshReservationsList();
-                                //await refreshTablesList();
-                                //Search();
-                                //await showDetails();
+                                //Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("popCanceled"), animation: ToasterAnimation.FadeIn);
+                                
                                 isOk = true;
                                 this.Close();
                             }
@@ -1192,10 +1186,8 @@ namespace Restaurant.View.windows
                     int res = await openEmptyInvoice();
                     if (res > 0)
                     {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                       // await refreshTablesList();
-                        //Search();
-                        //await showDetails();
+                        //Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                      
                         isOk = true;
                         this.Close();
                     }

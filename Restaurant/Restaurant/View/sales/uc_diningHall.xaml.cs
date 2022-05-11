@@ -2253,12 +2253,14 @@ namespace Restaurant.View.sales
                             path_waiter.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                         }
                         int res = await FillCombo.invoice.saveInvoice(invoice);
-                        if(res >0)
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                        else
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    if (res > 0)
+                    {
+                        //Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                    }
+                    else
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
-                        }
+                }
                         Window.GetWindow(this).Opacity = 1;
                 //}
                 //else
@@ -2353,7 +2355,7 @@ namespace Restaurant.View.sales
                                 // save invoice memberShip discount class
                                 if(invoiceMemberShipClass.invClassMemberId != 0)
                                     await FillCombo.invoice.saveMemberShipClassDis(invoiceMemberShipClass,invoice.invoiceId);
-                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                                //Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
 
                             }
                             else
@@ -2450,7 +2452,7 @@ namespace Restaurant.View.sales
                     int res = await addDraft();
                         if (res > 0)
                         {
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                            //Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                             await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns,invoice.invoiceId,"sd");
                         }
                         else
@@ -2522,7 +2524,7 @@ namespace Restaurant.View.sales
                     if (res > 0)
                     {
 
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                        //Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                         await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns, invoice.invoiceId, "sd");
                     }
                     else
@@ -2567,7 +2569,7 @@ namespace Restaurant.View.sales
 
                     if (res > 0)
                     {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                        //Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                     }
                     else
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
