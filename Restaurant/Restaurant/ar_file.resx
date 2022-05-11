@@ -4012,4 +4012,10 @@
   <data name="trOrderSharp" xml:space="preserve">
     <value>رمز الطلب</value>
   </data>
+  <data name="deliveryList" xml:space="preserve">
+    <value>قائمة الطلبات</value>
+  </data>
+  <data name="driversShippingCompanies" xml:space="preserve">
+    <value>السائقين, شركات الشحن</value>
+  </data>
 </root>

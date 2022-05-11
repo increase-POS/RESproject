@@ -4027,4 +4027,10 @@ Please add Email in setting</value>
   <data name="trOrderSharp" xml:space="preserve">
     <value>Order #</value>
   </data>
+  <data name="deliveryList" xml:space="preserve">
+    <value>Delivery list</value>
+  </data>
+  <data name="driversShippingCompanies" xml:space="preserve">
+    <value>Drivers, Shipping companies</value>
+  </data>
 </root>
