@@ -432,7 +432,7 @@
                                 <Grid   >
                                     <TextBox Margin="4,0" x:Name="tb_discountValue"  
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
-                                         Text="{Binding discountValue, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
+                                         Text="{Binding discountValue, Mode=OneWay,StringFormat={}{0:G29} ,Converter={StaticResource accuracyConverter}}" Padding="10,0,5,0"   BorderThickness="0" 
                                          materialDesign:HintAssist.Hint="discount value..."   Foreground="#4E4E4E"
                                          materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}" Height="40" 
                                         Tag="decimal" PreviewTextInput="Number_PreviewTextInput" PreviewKeyDown="Spaces_PreviewKeyDown"

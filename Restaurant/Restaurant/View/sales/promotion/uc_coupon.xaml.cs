@@ -682,6 +682,7 @@ namespace Restaurant.View.sales.promotion
             HelpClass.clearValidate(requiredControlList, this);
         }
         string input;
+        decimal _decimal = 0;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {//only  digits
             try
@@ -696,8 +697,8 @@ namespace Restaurant.View.sales.promotion
                 else if (textBox.Tag.ToString() == "decimal")
                 {
                     input = e.Text;
-                    decimal _decimal;
                     e.Handled = !decimal.TryParse(textBox.Text + input, out _decimal);
+
                 }
             }
             catch (Exception ex)
