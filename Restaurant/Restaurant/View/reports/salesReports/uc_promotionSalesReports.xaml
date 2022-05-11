@@ -415,6 +415,7 @@
                              </DataGridTextColumn>
                         <DataGridTextColumn x:Name="col_offersTotalValue" Width="*" Header="Discount Amount" Binding="{Binding offerTotalValue,Converter={StaticResource accuracyConverter}}" Visibility="Hidden"/>
                         <!--invoices classes-->
+                        <DataGridTextColumn x:Name="col_invoiceTotal" Width="*" Header="Discount Amount" Binding="{Binding total,Converter={StaticResource accuracyConverter}}" Visibility="Hidden"/>
                         <DataGridTextColumn x:Name="col_invoiceClass" Width="*" Header="Name" Binding="{Binding invoicesClassName}" />
                         <DataGridTextColumn x:Name="col_invoiceValue" Width="*"  Header="Value" >
                             <DataGridTextColumn.Binding >
