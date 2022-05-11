@@ -780,7 +780,7 @@ namespace Restaurant.View.accounts
                             cashtrans.posIdCreator = null;
                             cashtrans.isConfirm = 0;
                             cashtrans.cashTransIdSource = null;
-                            cashtrans.side = "c";
+                            cashtrans.side = "mb";
                             cashtrans.docName = "";
                             cashtrans.docNum = _docNum;
                             cashtrans.docImage = "";
