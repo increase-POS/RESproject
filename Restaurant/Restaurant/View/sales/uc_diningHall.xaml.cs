@@ -1421,6 +1421,7 @@ namespace Restaurant.View.sales
                     invoice.createUserId = MainWindow.userLogin.userId;
                     invoice.branchId = MainWindow.branchLogin.branchId;
                     invoice.branchCreatorId = MainWindow.branchLogin.branchId;
+                    invoice.posId = MainWindow.posLogin.posId;
                 }
                 invoice.updateUserId = MainWindow.userLogin.userId;
                 invoice.invType = invType;
