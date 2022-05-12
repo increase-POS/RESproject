@@ -249,6 +249,7 @@ namespace Restaurant.View.sales
 
             if (AppSettings.invType == "diningHall")
             {
+                _InvoiceType = "sd";
                 txt_invType.Text = AppSettings.resourcemanager.GetString("trDiningHallType");
 
                 brd_cancel.Visibility = Visibility.Visible;
@@ -285,6 +286,7 @@ namespace Restaurant.View.sales
             }
             else if (AppSettings.invType == "takeAway" || _InvoiceType == "tsd")
             {
+                _InvoiceType = "tsd";
                 txt_invType.Text = AppSettings.resourcemanager.GetString("trTakeAway");
 
                 btn_cancel.Visibility = Visibility.Collapsed;
@@ -310,6 +312,8 @@ namespace Restaurant.View.sales
             }
             else if (AppSettings.invType == "selfService" || _InvoiceType == "ssd")
             {
+                _InvoiceType = "ssd";
+
                 txt_invType.Text = AppSettings.resourcemanager.GetString("trSelfService");
 
                 btn_cancel.Visibility = Visibility.Collapsed;
@@ -1498,7 +1502,7 @@ namespace Restaurant.View.sales
         }
         async Task clear()
         {
-            _InvoiceType = "sd";
+           // _InvoiceType = "sd";
             txt_tableName.Text = "";
             billDetailsList.Clear();
             _Sum = 0;
@@ -2011,6 +2015,10 @@ namespace Restaurant.View.sales
                     {
                         invoice = w.invoice;
                         _InvoiceType = invoice.invType;
+                        if (_InvoiceType == "ssd")
+                            AppSettings.invType = "selfService";
+                        else
+                            AppSettings.invType = "takeAway";
                         changeInvType();
                         isFromReport = false;
                         await fillInvoiceInputs(invoice);
@@ -2826,10 +2834,10 @@ namespace Restaurant.View.sales
             if (invoice.invoiceId == 0)
             {
                 //invoice.invNumber = await invoice.generateInvNumber("tsd", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
-                invoice.invNumber = await invoice.generateDialyInvNumber("ssd,ss,tsd,ts", MainWindow.branchLogin.branchId);
+                invoice.invNumber = await invoice.generateDialyInvNumber("ssd,ss,tsd,ts,sd,s", MainWindow.branchLogin.branchId);
             }
 
-            int res = await addInvoice("ts");
+            int res = await addInvoice(invType);
             if (res > 0)
             {
                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
