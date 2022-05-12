@@ -188,17 +188,21 @@
         </Field>
         <Field Name="cash">
           <DataField>cash</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="processType">
           <DataField>processType</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="sequenc">
+          <DataField>sequenc</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>POS.Classes</rd:DataSetName>
+        <rd:DataSetName>Restaurant.Classes</rd:DataSetName>
         <rd:TableName>PayedInvclass</rd:TableName>
-        <rd:ObjectDataSourceType>POS.Classes.PayedInvclass, POS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:ObjectDataSourceType>Restaurant.Classes.PayedInvclass, Restaurant, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
