@@ -1387,8 +1387,7 @@ namespace Restaurant.View.sales
                 //{
                     if (invoice.invoiceId == 0)
                     {
-                        //invoice.invNumber = await invoice.generateInvNumber("tsd", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
-                        invoice.invNumber = await invoice.generateDialyInvNumber("ssd,ss,tsd,ts", MainWindow.branchLogin.branchId);
+                        invoice.invNumber = await invoice.generateDialyInvNumber("ssd,ss,tsd,ts,sd,s", MainWindow.branchLogin.branchId);
                     }
 
                     res = await addInvoice("tsd");
@@ -1403,7 +1402,7 @@ namespace Restaurant.View.sales
                 if (invoice.invoiceId == 0)
                 {
                     //invoice.invNumber = await invoice.generateInvNumber("ssd", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
-                    invoice.invNumber = await invoice.generateDialyInvNumber("ssd,ss,tsd,ts", MainWindow.branchLogin.branchId);
+                    invoice.invNumber = await invoice.generateDialyInvNumber("ssd,ss,tsd,ts,sd,s", MainWindow.branchLogin.branchId);
 
                 }
                res =  await addInvoice("ssd");

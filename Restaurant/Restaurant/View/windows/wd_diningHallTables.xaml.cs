@@ -1123,8 +1123,7 @@ namespace Restaurant.View.windows
             #region invoice object
             invoice = new Invoice();
 
-            //invoice.invNumber = await invoice.generateInvNumber("si", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
-            invoice.invNumber = await invoice.generateDialyInvNumber("s,sd",  MainWindow.branchLogin.branchId);
+            invoice.invNumber = await invoice.generateDialyInvNumber("s,sd,ssd,ss,tsd,ts",  MainWindow.branchLogin.branchId); 
             invoice.invType = "sd";
 
             if (AppSettings.invoiceTax_bool == true)
@@ -1151,8 +1150,7 @@ namespace Restaurant.View.windows
             #region invoice object
             invoice = new Invoice();
 
-            //invoice.invNumber = await invoice.generateInvNumber("si", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
-            invoice.invNumber = await invoice.generateDialyInvNumber("s,sd", MainWindow.branchLogin.branchId);
+            invoice.invNumber = await invoice.generateDialyInvNumber("s,sd,ssd,ss,tsd,ts", MainWindow.branchLogin.branchId);
             invoice.invType = "sd";
 
             if (AppSettings.invoiceTax_bool == true)
