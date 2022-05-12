@@ -4018,4 +4018,7 @@
   <data name="driversShippingCompanies" xml:space="preserve">
     <value>السائقين, شركات الشحن</value>
   </data>
+  <data name="theShippingCompany" xml:space="preserve">
+    <value>شركة الشحن</value>
+  </data>
 </root>

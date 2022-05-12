@@ -1583,7 +1583,7 @@
             <Width>5.12354cm</Width>
             <ZIndex>22</ZIndex>
             <Visibility>
-              <Hidden>=iif(Parameters!isSaved.Value="n",True,False)</Hidden>
+              <Hidden>=iif(Parameters!isSaved.Value="n" or( Parameters!isSaved.Value="y" and  Parameters!watermark.Value=1),True,False)</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -1806,7 +1806,7 @@
                   </TextRun>
                 </TextRuns>
                 <Style>
-                  <TextAlign>Left</TextAlign>
+                  <TextAlign>Right</TextAlign>
                 </Style>
               </Paragraph>
             </Paragraphs>
@@ -2141,7 +2141,7 @@
             <Width>5.12354cm</Width>
             <ZIndex>36</ZIndex>
             <Visibility>
-              <Hidden>=iif(Parameters!isSaved.Value="n",False,True)</Hidden>
+              <Hidden>=iif(Parameters!isSaved.Value="n" or Parameters!isSaved.Value="y" and Parameters!watermark.Value = 1,False,True)</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -2175,7 +2175,7 @@
                   </TextRun>
                 </TextRuns>
                 <Style>
-                  <TextAlign>Left</TextAlign>
+                  <TextAlign>Right</TextAlign>
                 </Style>
               </Paragraph>
             </Paragraphs>
@@ -2220,7 +2220,9 @@
                     </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
@@ -2264,7 +2266,9 @@
                     </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
@@ -2309,7 +2313,7 @@
                   </TextRun>
                 </TextRuns>
                 <Style>
-                  <TextAlign>Left</TextAlign>
+                  <TextAlign>Right</TextAlign>
                 </Style>
               </Paragraph>
             </Paragraphs>

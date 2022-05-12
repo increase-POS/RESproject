@@ -4033,4 +4033,7 @@ Please add Email in setting</value>
   <data name="driversShippingCompanies" xml:space="preserve">
     <value>Drivers, Shipping companies</value>
   </data>
+  <data name="theShippingCompany" xml:space="preserve">
+    <value>Shipping Company</value>
+  </data>
 </root>

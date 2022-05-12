@@ -3118,12 +3118,14 @@ namespace Restaurant.View.sales
         {
             try
             {
+               
                 prInvoice = new Invoice();
                 //if (prinvoiceId != 0)
                 //    prInvoice = await invoiceModel.GetByInvoiceId(prinvoiceId);
                 //else
                 prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
-
+      
+                ///
                 if (int.Parse(AppSettings.Allow_print_inv_count) <= prInvoice.printedcount)
                 {
                     this.Dispatcher.Invoke(() =>
@@ -3135,9 +3137,10 @@ namespace Restaurant.View.sales
                 else
                 {
 
-                    if (prInvoice.invType == "pd" || prInvoice.invType == "sd" || prInvoice.invType == "qd"
-                             || prInvoice.invType == "sbd" || prInvoice.invType == "pbd"
-                             || prInvoice.invType == "ord" || prInvoice.invType == "imd" || prInvoice.invType == "exd")
+
+                    if (prInvoice.invType == "pd" || prInvoice.invType == "sd"
+                             || prInvoice.invType == "sbd" || prInvoice.invType == "pbd" ||
+                             prInvoice.invType == "ssd" || prInvoice.invType == "tsd")
                     {
                         this.Dispatcher.Invoke(() =>
                         {
@@ -3146,28 +3149,58 @@ namespace Restaurant.View.sales
                     }
                     else
                     {
-
+                        //////////////////////////////////////////
                         List<ReportParameter> paramarr = new List<ReportParameter>();
 
 
                         if (prInvoice.invoiceId > 0)
                         {
+                            #region fill invoice data
+
+                            //items
                             invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                            itemscount = invoiceItems.Count();
+
+                            reportsize rs = reportclass.GetreceiptInvoiceRdlcpath(prInvoice, 1, AppSettings.salePaperSize, itemscount, rep);
+                            rep = rs.rep;
+                            width = rs.width;
+                            height = rs.height;
+                            //user
+
 
                             User employ = new User();
-                            employ = await userModel.getUserById((int)prInvoice.updateUserId);
+                            if (FillCombo.usersList != null)
+                            {
+                                employ = FillCombo.usersList.Where(X => X.userId == (int)prInvoice.updateUserId).FirstOrDefault();
+                            }
+                            else
+                            {
+                                employ = await userModel.getUserById((int)prInvoice.updateUserId);
+                            }
+
                             prInvoice.uuserName = employ.name;
                             prInvoice.uuserLast = employ.lastname;
-
+                            //agent
                             if (prInvoice.agentId != null)
                             {
                                 Agent agentinv = new Agent();
-                                //  agentinv = customers.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
-                                agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+
+                                // agentinv = customers.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
+
+                                if (FillCombo.customersList != null)
+                                {
+                                    agentinv = FillCombo.customersList.Where(X => X.agentId == (int)prInvoice.agentId).FirstOrDefault();
+                                }
+                                else
+                                {
+                                    agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+                                }
+
                                 prInvoice.agentCode = agentinv.code;
                                 //new lines
                                 prInvoice.agentName = agentinv.name;
                                 prInvoice.agentCompany = agentinv.company;
+
                             }
                             else
                             {
@@ -3175,22 +3208,39 @@ namespace Restaurant.View.sales
                                 prInvoice.agentName = "-";
                                 prInvoice.agentCompany = "-";
                             }
-
-
-
-                            string reppath = reportclass.GetreceiptInvoiceRdlcpath(prInvoice, 1);
-                            ReportCls.checkLang();
+                            //branch
                             Branch branch = new Branch();
-                            branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                            if (FillCombo.branchsList != null)
+                            {
+                                branch = FillCombo.branchsList.Where(X => X.branchId == (int)prInvoice.branchCreatorId).FirstOrDefault();
+
+                            }
+                            else
+                            {
+                                branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                            }
+
                             if (branch.branchId > 0)
                             {
                                 prInvoice.branchName = branch.name;
                             }
+
+                            ReportCls.checkLang();
                             //shipping
                             ShippingCompanies shippingcom = new ShippingCompanies();
+
                             if (prInvoice.shippingCompanyId > 0)
                             {
-                                shippingcom = await shippingcom.GetByID((int)prInvoice.shippingCompanyId);
+                                if (FillCombo.shippingCompaniesList != null)
+                                {
+                                    shippingcom = FillCombo.shippingCompaniesList.Where(X => X.shippingCompanyId == (int)prInvoice.shippingCompanyId).FirstOrDefault();
+
+                                }
+                                else
+                                {
+                                    shippingcom = await shippingcom.GetByID((int)prInvoice.shippingCompanyId);
+                                }
+
                             }
                             User shipuser = new User();
                             if (prInvoice.shipUserId > 0)
@@ -3199,7 +3249,7 @@ namespace Restaurant.View.sales
                             }
                             prInvoice.shipUserName = shipuser.name + " " + shipuser.lastname;
                             //end shipping
-
+                            //items subTotal & itemTax
                             decimal totaltax = 0;
                             foreach (var i in invoiceItems)
                             {
@@ -3209,9 +3259,10 @@ namespace Restaurant.View.sales
                                     totaltax += (decimal)i.itemTax;
 
                                 }
-
                                 i.subTotal = decimal.Parse(HelpClass.DecTostring(i.price * i.quantity));
+
                             }
+
                             if (totaltax > 0 && prInvoice.invType != "sbd" && prInvoice.invType != "sb")
                             {
                                 paramarr.Add(new ReportParameter("itemtax_note", AppSettings.itemtax_note.Trim()));
@@ -3223,15 +3274,20 @@ namespace Restaurant.View.sales
                                 // paramarr.Add(new ReportParameter("itemtax_note", AppSettings.itemtax_note.Trim()));
                                 paramarr.Add(new ReportParameter("hasItemTax", "0"));
                             }
+                            //
 
-                            clsReports.purchaseInvoiceReport(invoiceItems, rep, reppath);
+                            clsReports.purchaseInvoiceReport(invoiceItems, rep, rep.ReportPath);
+
                             clsReports.setReportLanguage(paramarr);
                             clsReports.Header(paramarr);
                             paramarr.Add(new ReportParameter("isSaved", "y"));
                             paramarr = reportclass.fillSaleInvReport(prInvoice, paramarr, shippingcom);
+                            //   multiplePaytable(paramarr);
+                            // payment methods
 
-                            //  multiplePaytable(paramarr);
-                            if ((prInvoice.invType == "s" || prInvoice.invType == "sd" || prInvoice.invType == "sbd" || prInvoice.invType == "sb"))
+                            if (prInvoice.invType == "s" || prInvoice.invType == "sd" || prInvoice.invType == "sbd" || prInvoice.invType == "sb"
+                                || prInvoice.invType == "ts" || prInvoice.invType == "ss" || prInvoice.invType == "tsd" || prInvoice.invType == "ssd"
+                                )
                             {
                                 CashTransfer cachModel = new CashTransfer();
                                 List<PayedInvclass> payedList = new List<PayedInvclass>();
@@ -3252,13 +3308,13 @@ namespace Restaurant.View.sales
 
 
                             }
+
+
                             rep.SetParameters(paramarr);
 
-
                             rep.Refresh();
-
-
-
+                            #endregion
+                            /////////////////////////////////////////////////////////
                             saveFileDialog.Filter = "PDF|*.pdf;";
                             bool? savdialog = false;
                             this.Dispatcher.Invoke(() =>
@@ -3274,7 +3330,9 @@ namespace Restaurant.View.sales
                                 string filepath = saveFileDialog.FileName;
 
                                 //copy count
-                                if (prInvoice.invType == "s" || prInvoice.invType == "sb" || prInvoice.invType == "p" || prInvoice.invType == "pb")
+                                if (prInvoice.invType == "s" || prInvoice.invType == "sb" || prInvoice.invType == "p" 
+                                    || prInvoice.invType == "pb" 
+                                    || prInvoice.invType == "ss" || prInvoice.invType == "ts"  )
                                 {
 
                                     paramarr.Add(new ReportParameter("isOrginal", false.ToString()));
@@ -3297,6 +3355,7 @@ namespace Restaurant.View.sales
                                     rep.SetParameters(paramarr);
 
                                     rep.Refresh();
+
 
                                     if (int.Parse(AppSettings.Allow_print_inv_count) > prInvoice.printedcount)
                                     {
@@ -3840,7 +3899,7 @@ namespace Restaurant.View.sales
                 ////////////////
                 //Thread t1 = new Thread(() =>
                 //{
-                printInvoice(invoice.invoiceId);
+                await printInvoice(invoice.invoiceId);
                 //});
                 //t1.Start();
                 /////////////////

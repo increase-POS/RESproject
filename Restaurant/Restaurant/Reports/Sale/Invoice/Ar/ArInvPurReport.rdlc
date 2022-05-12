@@ -1756,7 +1756,7 @@
             <Width>4.99664cm</Width>
             <ZIndex>27</ZIndex>
             <Visibility>
-              <Hidden>=iif(Parameters!isSaved.Value="n",True,False)</Hidden>
+              <Hidden>=iif(Parameters!isSaved.Value="n" or( Parameters!isSaved.Value="y" and  Parameters!watermark.Value=1),True,False)</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -2144,7 +2144,7 @@
             <Width>4.99664cm</Width>
             <ZIndex>36</ZIndex>
             <Visibility>
-              <Hidden>=iif(Parameters!isSaved.Value="n",False,True)</Hidden>
+              <Hidden>=iif(Parameters!isSaved.Value="n" or Parameters!isSaved.Value="y" and Parameters!watermark.Value = 1,False,True)</Hidden>
             </Visibility>
             <Style>
               <Border>
@@ -2186,7 +2186,7 @@
             <Top>10.57276cm</Top>
             <Left>8.28534cm</Left>
             <Height>0.67938cm</Height>
-            <Width>1.2cm</Width>
+            <Width>2.31125cm</Width>
             <ZIndex>37</ZIndex>
             <Visibility>
               <Hidden>=iif(Parameters!shippingCompanyId.Value = 0 Or Parameters!shippingCompanyId.Value = "0" Or (Parameters!deliveryType.Value = "com" And Parameters!deliveryType.Value &lt;&gt; "local"), True, False)</Hidden>

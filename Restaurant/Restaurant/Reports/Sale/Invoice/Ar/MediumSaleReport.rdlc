@@ -2049,7 +2049,7 @@
               <Width>2.65977cm</Width>
               <ZIndex>1</ZIndex>
               <Visibility>
-                <Hidden>=iif(Parameters!isSaved.Value="n",True,False)</Hidden>
+                <Hidden>=iif(Parameters!isSaved.Value="n" or( Parameters!isSaved.Value="y" and  Parameters!watermark.Value=1),True,False)</Hidden>
               </Visibility>
               <Style>
                 <Border />
@@ -2128,9 +2128,9 @@
               </Paragraphs>
               <rd:DefaultName>agentTitle</rd:DefaultName>
               <Top>0.17947cm</Top>
-              <Left>2.45542cm</Left>
+              <Left>0.20991cm</Left>
               <Height>0.73189cm</Height>
-              <Width>3.53186cm</Width>
+              <Width>7.36638cm</Width>
               <ZIndex>3</ZIndex>
               <Style>
                 <Border />
@@ -2276,7 +2276,7 @@
               <Width>2.65977cm</Width>
               <ZIndex>7</ZIndex>
               <Visibility>
-                <Hidden>=iif(Parameters!isSaved.Value="n",False,True)</Hidden>
+                <Hidden>=iif(Parameters!isSaved.Value="n" or Parameters!isSaved.Value="y" and Parameters!watermark.Value = 1,False,True)</Hidden>
               </Visibility>
               <Style>
                 <Border />

@@ -1789,15 +1789,15 @@ srb
             {
                 paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trSalesReturnInvTitle")));
             }
-            else if (invoice.invType == "s" || invoice.invType == "sd"|| invoice.invType == "ss" || invoice.invType == "ts" )
+            else if (invoice.invType == "s" || invoice.invType == "sd"|| invoice.invType == "ss" || invoice.invType == "ts" ||  invoice.invType == "tsd" || invoice.invType == "ssd")
             {
                 paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trSalesInvoice")));
 
             }
-            paramarr.Add(new ReportParameter("trDeliveryMan", AppSettings.resourcemanagerreport.GetString("trDeliveryMan")));
-            paramarr.Add(new ReportParameter("trTheShippingCompany", AppSettings.resourcemanagerreport.GetString("trTheShippingCompany")));
+            paramarr.Add(new ReportParameter("trDeliveryMan", AppSettings.resourcemanagerreport.GetString("deliveryMan")));
+            paramarr.Add(new ReportParameter("trTheShippingCompany", AppSettings.resourcemanagerreport.GetString("theShippingCompany")));
             paramarr.Add(new ReportParameter("DeliveryMan", invoice.shipUserName));
-            paramarr.Add(new ReportParameter("ShippingCompany", shippingcompany.name));
+            paramarr.Add(new ReportParameter("ShippingCompany",clsReports.shippingCompanyNameConvert(shippingcompany.name)));
             paramarr.Add(new ReportParameter("deliveryType", shippingcompany.deliveryType));
             paramarr.Add(new ReportParameter("shippingCompanyId", invoice.shippingCompanyId == null ? "0" : invoice.shippingCompanyId.ToString()));
             paramarr.Add(new ReportParameter("trFree", AppSettings.resourcemanagerreport.GetString("trFree")));
