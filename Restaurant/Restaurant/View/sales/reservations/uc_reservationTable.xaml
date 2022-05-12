@@ -535,6 +535,8 @@
                                         Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                                          BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                                         TextBlock.Foreground="#4E4E4E"
+                                         xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                                         DisplayDateStart="{x:Static sys:DateTime.Today}"
                                          SelectedDate="{Binding reservationDate, Mode=OneWay}" Padding="10,0,5,0"  
                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                         materialDesign:HintAssist.Hint="reservation date..."  
