@@ -994,6 +994,42 @@ namespace Restaurant.Classes
         static public Invoice invoice = new Invoice();
         static public List<Invoice> invoices;
         static public ShippingCompanies ShipCompany = new ShippingCompanies();
+        static public List<keyValueString> UserJobListReport;
+
+        static public List<keyValueString> RefreshUserJobsReport()
+        {
+            UserJobListReport = new List<keyValueString> {
+                //manager
+                new keyValueString { key = "admin" ,  value = AppSettings.resourcemanagerreport.GetString("trAdmin") },
+                new keyValueString { key = "generalManager" , value = AppSettings.resourcemanagerreport.GetString("trGeneralManager") },
+                new keyValueString { key = "assistantManager" , value = AppSettings.resourcemanagerreport.GetString("trAssistantManager") },
+                new keyValueString { key = "purchasingManager",   value = AppSettings.resourcemanagerreport.GetString("trPurchasingManager") },
+                new keyValueString { key = "salesManager",    value = AppSettings.resourcemanagerreport.GetString("trSalesManager") },
+                new keyValueString { key = "accountant" , value = AppSettings.resourcemanagerreport.GetString("trAccountant")},
+                //Kitchen
+                new keyValueString { key = "kitchenManager",  value = AppSettings.resourcemanagerreport.GetString("trKitchenManager") },
+                new keyValueString { key = "executiveChef",   value = AppSettings.resourcemanagerreport.GetString("trExecutiveChef")  },
+                new keyValueString { key = "sousChef" ,   value = AppSettings.resourcemanagerreport.GetString("trSousChef") },
+                new keyValueString { key = "chef" ,   value = AppSettings.resourcemanagerreport.GetString("trChef") },
+                new keyValueString { key = "dishwasher" , value = AppSettings.resourcemanagerreport.GetString("trDishwasher")},
+                new keyValueString { key = "kitchenEmployee" , value = AppSettings.resourcemanagerreport.GetString("trKitchenEmployee")},
+                //hall
+                new keyValueString { key = "Headwaiter" , value = AppSettings.resourcemanagerreport.GetString("trHeadWaiter")},
+                new keyValueString { key = "waiter",  value = AppSettings.resourcemanagerreport.GetString("trWaiter")  },
+                new keyValueString { key = "cashier" ,    value = AppSettings.resourcemanagerreport.GetString("trCashier") },
+                new keyValueString { key = "receptionist" , value = AppSettings.resourcemanagerreport.GetString("trReceptionist")},
+                //warehouse manager
+                new keyValueString { key = "warehouseManager", value = AppSettings.resourcemanagerreport.GetString("trWarehouseManager")  },
+                new keyValueString { key = "warehouseEmployee" ,  value = AppSettings.resourcemanagerreport.GetString("trWarehouseEmployee")},
+                //Delivery
+                new keyValueString { key = "deliveryManager", value = AppSettings.resourcemanagerreport.GetString("trDeliveryManager") },
+                new keyValueString { key = "deliveryEmployee" ,   value = AppSettings.resourcemanagerreport.GetString("trDeliveryEmployee")},
+                //other
+                new keyValueString { key = "cleaningEmployee" ,   value = AppSettings.resourcemanagerreport.GetString("trCleaningEmployee") },
+                new keyValueString { key = "employee",    value = AppSettings.resourcemanagerreport.GetString("trEmployee") },
+                 };
+            return UserJobListReport;
+        }
 
         /*
         #region Company Info

@@ -600,12 +600,14 @@ namespace Restaurant.Classes
 
         }
 
-        public static void UserReport(IEnumerable<User> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        public static void UserReport(IEnumerable<User> Query1, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
+            List<User> Query = JsonConvert.DeserializeObject<List<User>>(JsonConvert.SerializeObject(Query1));
+
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
-            rep.DataSources.Add(new ReportDataSource("DataSetUser", Query));
+    
             //title
             paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trUsers")));
             //table columns
@@ -613,7 +615,25 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trJob", AppSettings.resourcemanagerreport.GetString("trJob")));
             paramarr.Add(new ReportParameter("trWorkHours", AppSettings.resourcemanagerreport.GetString("trWorkHours")));
             paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
+         
+            foreach (User row in Query)
+            {
+                row.job = UserJobConv(row.job);
+            }
+            rep.DataSources.Add(new ReportDataSource("DataSetUser", Query));
+        }
+        public static string UserJobConv(string job)
+        {
+            if (job != null)
+            {
+                string s = job.ToString();
+                if (FillCombo.UserJobListReport is null)
+                    FillCombo.RefreshUserJobsReport();
+                keyValueString keyValueString = FillCombo.UserJobListReport.Where(x => x.key == s).FirstOrDefault();
 
+                return keyValueString.value;
+            }
+            else return "";
         }
 
 
