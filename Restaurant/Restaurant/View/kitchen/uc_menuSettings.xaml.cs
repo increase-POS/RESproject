@@ -1280,8 +1280,8 @@ namespace Restaurant.View.kitchen
                         selectedDays.Remove("tues");
                     else if (checkBox.Name == "chb_wed")
                         selectedDays.Remove("wed");
-                    else if (checkBox.Name == "chb_thu")
-                        selectedDays.Remove("thu");
+                    else if (checkBox.Name == "chb_thur")
+                        selectedDays.Remove("thur");
                     else if (checkBox.Name == "chb_fri")
                         selectedDays.Remove("fri");
                 }
