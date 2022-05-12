@@ -1559,7 +1559,11 @@ namespace Restaurant.View.sales
             #endregion
             //last
             changeInvType();
+            #region refresh items with new price
             await refreshItemsList();
+            Search();
+            refreshItemsPrice();
+            #endregion
             BuildBillDesign();
             refreshTotal();
         }
@@ -1597,6 +1601,33 @@ namespace Restaurant.View.sales
             _DiscountType = invoice.discountType;
             selectedCopouns = await FillCombo.invoice.GetInvoiceCoupons(invoice.invoiceId);
 
+            #endregion
+
+            #region get customer memberShip
+            if (invoice.agentId != null)
+            {
+                var customer = FillCombo.customersList.Where(x => x.agentId == invoice.agentId).FirstOrDefault();
+                if (customer.membershipId != null)
+                {
+                    _MemberShipId = (int)customer.membershipId;
+                    Memberships memberships = new Memberships();
+                    AgenttoPayCash agentToPayCash = new AgenttoPayCash();
+                    agentToPayCash = await memberships.GetmembershipStateByAgentId((int)invoice.agentId);
+                    if (agentToPayCash.membershipStatus == "valid")
+                    {
+                        customerInvClasses = await invoiceMemberShipClass.GetInvclassByMembershipId(_MemberShipId);
+                        if(agentToPayCash.offersCount > 0)
+                        {
+                            await refreshItemsList();
+                            Search();
+                            refreshItemsPrice();
+                        }
+                    }
+                }
+                else
+                    _MemberShipId = 0;
+            }
+           
             #endregion
 
             if (AppSettings.invType == "diningHall")
@@ -2300,7 +2331,7 @@ namespace Restaurant.View.sales
                     if (w.isOk)
                     {
                    
-                    customerInvClasses = new List<InvoicesClass>();
+                        customerInvClasses = new List<InvoicesClass>();
 
                         if (w.customerId > 0 )
                         {
@@ -2341,14 +2372,10 @@ namespace Restaurant.View.sales
                             else
                                 _MemberShipId = 0;
 
-                            #region refresh items with new pricel
-                            if (w.hasOffers)
-                            {
-                                await refreshItemsList();
-                                Search();
-                                refreshItemsPrice();
-                                //BuildBillDesign();
-                            }
+                            #region refresh items with new price
+                            await refreshItemsList();
+                            Search();
+                            refreshItemsPrice();
                             #endregion
 
                             #endregion
