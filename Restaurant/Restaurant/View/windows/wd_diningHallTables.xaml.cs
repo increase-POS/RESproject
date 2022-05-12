@@ -698,7 +698,7 @@ namespace Restaurant.View.windows
                         {
                             Tables row = (Tables)dg_tables.SelectedItems[0];
                             selectedTables.Remove(row);
-                            int res = await FillCombo.invoice.updateInvoiceTables(invoice.invoiceId,selectedTables);
+                            int res = await FillCombo.invoice.updateInvoiceTables(invoice.invoiceId,selectedTables,invoice.reservationId);
                             if (res > 0)
                             {                              
                                 gridTables = selectedTables.Where(x => x.tableId != table.tableId).ToList();
@@ -859,7 +859,7 @@ namespace Restaurant.View.windows
                         if (valid)
                         {
                             //save
-                            int res = await FillCombo.invoice.updateInvoiceTables(invoice.invoiceId, selectedTables);
+                            int res = await FillCombo.invoice.updateInvoiceTables(invoice.invoiceId, selectedTables,invoice.reservationId);
                             if (res > 0)
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
@@ -916,7 +916,7 @@ namespace Restaurant.View.windows
                     if (valid)
                     {
                         //save
-                        int res = await FillCombo.invoice.updateInvoiceTables(invoice.invoiceId, newTables);
+                        int res = await FillCombo.invoice.updateInvoiceTables(invoice.invoiceId, newTables,invoice.reservationId);
                         if (res > 0)
                         {
                             Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);

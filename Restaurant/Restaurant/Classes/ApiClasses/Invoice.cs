@@ -892,11 +892,12 @@ namespace Restaurant.Classes
             parameters.Add("tablesObject", myContent);
            return await APIResult.post(method, parameters);
         }
-        public async Task<int> updateInvoiceTables(int invoiceId, List<Tables> tables)
+        public async Task<int> updateInvoiceTables(int invoiceId, List<Tables> tables, long? reservationId = null)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Invoices/updateInvoiceTables";
             parameters.Add("invoiceId", invoiceId.ToString());
+            parameters.Add("reservationId", reservationId.ToString());
             parameters.Add("userId", MainWindow.userLogin.userId.ToString());
             string myContent = JsonConvert.SerializeObject(tables);
             parameters.Add("tablesObject", myContent);
