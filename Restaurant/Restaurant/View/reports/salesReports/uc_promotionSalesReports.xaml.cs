@@ -612,12 +612,8 @@ namespace Restaurant.View.reports.salesReports
             List<int> cPb = new List<int>();
             List<int> cD = new List<int>();
 
-            //string title = "trCoupon";
-            //if (selectedTab == 1)
-            //    title = "trOffer";
             List<string> titles = new List<string>()
             {
-                //AppSettings.resourcemanager.GetString(title)
                 AppSettings.resourcemanager.GetString("trDiningHallType"),
                 AppSettings.resourcemanager.GetString("trTakeAway"),
                 AppSettings.resourcemanager.GetString("trSelfService")

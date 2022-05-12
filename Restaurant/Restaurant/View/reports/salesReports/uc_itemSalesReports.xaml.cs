@@ -72,23 +72,21 @@ namespace Restaurant.View.reports.salesReports
         //for combo boxes
         /*************************/
         Branch selectedBranch;
-        ItemUnitCombo selectedItem;
+        Item selectedItem;
 
-        List<Branch> comboBranches;
-        List<ItemUnitCombo> itemUnitCombos;
-
-        ObservableCollection<Branch> comboBrachTemp = new ObservableCollection<Branch>();
-        ObservableCollection<ItemUnitCombo> comboItemTemp = new ObservableCollection<ItemUnitCombo>();
+        List<Branch> comboBrachTemp = new List<Branch>();
+        List<Item> comboItemTemp = new List<Item>();
 
         List<Branch> dynamicComboBranches = new List<Branch>();
-        List<ItemUnitCombo> dynamicComboItem = new List<ItemUnitCombo>();
+        List<Item> dynamicComboItem = new List<Item>();
 
         Branch branchModel = new Branch();
+        Item itemModel = new Item();
         /*************************/
 
-        ObservableCollection<int> selectedBranchId = new ObservableCollection<int>();
+        List<int> selectedBranchId = new List<int>();
 
-        ObservableCollection<int> selectedItemId = new ObservableCollection<int>();
+        List<int> selectedItemId = new List<int>();
 
         // report
         ReportCls reportclass = new ReportCls();
@@ -96,12 +94,11 @@ namespace Restaurant.View.reports.salesReports
         SaveFileDialog saveFileDialog = new SaveFileDialog();
         IEnumerable<ItemTransferInvoice> temp;
 
-
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {//load
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 Items = await statisticModel.GetSaleitem((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
 
@@ -119,21 +116,18 @@ namespace Restaurant.View.reports.salesReports
 
                 await fillComboItemTypes();
 
-                //dynamicComboBranches = new List<Branch>(comboBranches);
-                //dynamicComboItem = new List<ItemUnitCombo>(itemUnitCombos);
-
                 fillComboItemsBranches(cb_collect);
                 fillComboItemsBranches(cb_ItemsBranches);
 
                 btn_items_Click(btn_items , null);
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
 
         }
 
@@ -219,7 +213,7 @@ namespace Restaurant.View.reports.salesReports
         public void fillItemsEvent()
         {
             temp = fillList(Items, cb_ItemsBranches, cb_Items,dp_ItemStartDate, dp_ItemEndDate)
-                .Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemUnitId) : true));
+                .Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemId) : true));
 
             dgInvoice.ItemsSource = temp;
 
@@ -233,7 +227,8 @@ namespace Restaurant.View.reports.salesReports
         public void fillCollectEvent()
         {
             temp = fillCollectListBranch(Items, dp_collectStartDate, dp_collectEndDate)
-                .Where(j => (selectedBranchId.Count != 0 ? selectedBranchId.Contains((int)j.branchCreatorId) : true));
+                //.Where(j => (selectedBranchId.Count != 0 ? selectedBranchId.Contains((int)j.branchCreatorId) : true));
+                .Where(j => j.branchCreatorId == (int)cb_collect.SelectedValue);
 
             dgInvoice.ItemsSource = temp;
             txt_count.Text = dgInvoice.Items.Count.ToString();
@@ -269,17 +264,17 @@ namespace Restaurant.View.reports.salesReports
 
         private void btn_items_Click(object sender, RoutedEventArgs e)
         {//items
-            //try
-            //{
-                 
-            //   HelpClass.StartAwait(grid_main);
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 
                 txt_search.Text = "";
                 selectedTab = 0;
 
-                ReportsHelp.showSelectedStack(grid_stacks, stk_tagsItems);
+                //ReportsHelp.showSelectedStack(grid_stacks, stk_tagsItems);
 
                 paint();
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_items);
@@ -302,13 +297,13 @@ namespace Restaurant.View.reports.salesReports
                 chk_allTypes.IsChecked = true;
                 fillItemsEvent();
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
 
         }
 
@@ -316,15 +311,14 @@ namespace Restaurant.View.reports.salesReports
         {//collect
             try
             {
-                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
 
                 txt_search.Text = "";
                 selectedTab = 1;
 
-                ReportsHelp.showSelectedStack(grid_stacks, stk_tagsBranches);
+                //ReportsHelp.showSelectedStack(grid_stacks, stk_tagsBranches);
 
                 paint();
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_collect);
@@ -340,32 +334,38 @@ namespace Restaurant.View.reports.salesReports
                 col_invCount.Visibility = Visibility.Visible;
                 col_avg.Visibility = Visibility.Visible;
 
-                if (stk_tagsBranches.Children.Count == 0)
-                {
-                    fillCollectEventAll();
-                }
-                else
-                {
-                    fillCollectEvent();
-                }
+                chk_allcollect.IsChecked = true;
+                fillCollectEventAll();
+                //if (stk_tagsBranches.Children.Count == 0)
+                //{
+                //    fillCollectEventAll();
+                //}
+                //else
+                //{
+                //    fillCollectEvent();
+                //}
 
-                 
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
+        private void Cb_Types_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            fillComboItems();
+            fillItemsEvent();
+        }
         #region Items Events
         private void Chip_OnDeleteItemClick(object sender, RoutedEventArgs e)
         {
             var currentChip = (Chip)sender;
             stk_tagsItems.Children.Remove(currentChip);
-            var m = comboItemTemp.Where(j => j.itemUnitId == (Convert.ToInt32(currentChip.Name.Remove(0, 3))));
+            var m = comboItemTemp.Where(j => j.itemId == (Convert.ToInt32(currentChip.Name.Remove(0, 3))));
             dynamicComboItem.Add(m.FirstOrDefault());
             selectedItemId.Remove(Convert.ToInt32(currentChip.Name.Remove(0, 3)));
             if (selectedItemId.Count == 0)
@@ -376,29 +376,29 @@ namespace Restaurant.View.reports.salesReports
 
         }
 
-        private void cb_Items_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void cb_Items_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //if (cb_Items.SelectedItem != null)
-            //{
-            //    if (stk_tagsItems.Children.Count < 5)
-            //    {
-            //        selectedItem = cb_Items.SelectedItem as ItemUnitCombo;
-            //        var b = new MaterialDesignThemes.Wpf.Chip()
-            //        {
-            //            Content = selectedItem.itemUnitName,
-            //            Name = "btn" + selectedItem.itemUnitId.ToString(),
-            //            IsDeletable = true,
-            //            Margin = new Thickness(5, 0, 5, 0)
-            //        };
-            //        b.DeleteClick += Chip_OnDeleteItemClick;
-            //        stk_tagsItems.Children.Add(b);
-            //        comboItemTemp.Add(selectedItem);
-            //        selectedItemId.Add(selectedItem.itemUnitId);
-            //        dynamicComboItem.Remove(selectedItem);
-            //        fillItemsEvent();
-            //    }
-            //}
-            fillItemsEvent();
+            if (cb_Items.SelectedItem != null)
+            {
+                //if (stk_tagsItems.Children.Count < 5)
+                //{
+                //    selectedItem = await itemModel.GetItemByID((int) cb_Items.SelectedValue);
+                //    var b = new MaterialDesignThemes.Wpf.Chip()
+                //    {
+                //        Content = selectedItem.name,
+                //        Name = "btn" + selectedItem.itemId.ToString(),
+                //        IsDeletable = true,
+                //        Margin = new Thickness(5, 0, 5, 0)
+                //    };
+                //    b.DeleteClick += Chip_OnDeleteItemClick;
+                //    stk_tagsItems.Children.Add(b);
+                //    comboItemTemp.Add(selectedItem);
+                //    selectedItemId.Add(selectedItem.itemId);
+                //    dynamicComboItem.Remove(selectedItem);
+                //    fillItemsEvent();
+                //}
+                fillItemsEvent();
+            }
         }
 
         private void chk_allItems_Click(object sender, RoutedEventArgs e)
@@ -458,8 +458,7 @@ namespace Restaurant.View.reports.salesReports
         {
             try
             {
-                 
-                    HelpClass.StartAwait(grid_main);
+                 HelpClass.StartAwait(grid_main);
 
                 fillCollectEvent();
 
@@ -468,13 +467,11 @@ namespace Restaurant.View.reports.salesReports
                     fillCollectEventAll();
                 }
 
-                 
-                    HelpClass.EndAwait(grid_main);
+                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -494,10 +491,33 @@ namespace Restaurant.View.reports.salesReports
             fillItemsEventCall(sender);
         }
 
-        private void Cb_ItemsBranches_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Cb_ItemsBranches_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            fillItemsEvent();
+            #region
+            //if (cb_ItemsBranches.SelectedItem != null)
+            //{
+            //    if (stk_tagsBranches.Children.Count < 5)
+            //    {
+            //        selectedBranch = await branchModel.getBranchById((int)cb_ItemsBranches.SelectedValue);
+            //        var b = new MaterialDesignThemes.Wpf.Chip()
+            //        {
+            //            Content = selectedBranch.name,
+            //            Name = "btn" + selectedBranch.branchId.ToString(),
+            //            IsDeletable = true,
+            //            Margin = new Thickness(5, 0, 5, 0)
+            //        };
+            //        b.DeleteClick += Chip_OnDeleteItemClick;
+            //        stk_tagsBranches.Children.Add(b);
+            //        comboBrachTemp.Add(selectedBranch);
+            //        selectedBranchId.Add(selectedBranch.branchId);
+            //        dynamicComboBranches.Remove(selectedBranch);
+            //        fillItemsEvent();
+            //    }
 
+            //}
+            #endregion
+
+            fillItemsEvent();
         }
 
         private void Chk_allBranchesItem_Checked(object sender, RoutedEventArgs e)
@@ -523,18 +543,16 @@ namespace Restaurant.View.reports.salesReports
         {
             try
             {
-                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_ItemsBranches.IsEnabled = true;
 
                  
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
 
@@ -632,43 +650,49 @@ namespace Restaurant.View.reports.salesReports
             titles.Clear();
 
             var temp = itemList
-             .Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemUnitId) : true));
-            var titleTemp = temp.GroupBy(jj => jj.ITitemUnitId)
-             .Select(g => new ItemUnitCombo
+             .Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemId) : true));
+            var titleTemp = temp.GroupBy(jj => jj.ITitemId)
+             .Select(g => new Item
              {
                  itemUnitId = (int)g.FirstOrDefault().ITitemUnitId,
-                 itemUnitName = g.FirstOrDefault().ITitemName + "-" + g.FirstOrDefault().ITunitName
+                 name = g.FirstOrDefault().ITitemName 
              }).ToList();
-            titles.AddRange(titleTemp.Select(jj => jj.itemUnitName));
-            var result = temp.GroupBy(s => s.ITitemUnitId).Select(s => new
+            titles.AddRange(titleTemp.Select(jj => jj.name));
+            var result = temp.GroupBy(s => s.ITitemId).Select(s => new
             {
-                ITitemUnitId = s.Key,
+                ITitemId = s.Key,
                 count = s.Count()
             });
             x = result.Select(m => m.count).ToList();
             int count = x.Count();
             SeriesCollection piechartData = new SeriesCollection();
-            for (int i = 0; i < count; i++)
+            int xCount = 0;
+            if (x.Count() <= 6) xCount = x.Count();
+            for (int i = 0; i < xCount; i++)
             {
-                List<long> final = new List<long>();
-                List<string> lable = new List<string>();
-                if (i < 5)
+                List<int> final = new List<int>();
+
+                final.Add(x.ToList().Skip(i).FirstOrDefault());
+                piechartData.Add(
+                  new PieSeries
+                  {
+                      Values = final.AsChartValues(),
+                      Title = titles.Skip(i).FirstOrDefault(),
+                      DataLabels = true,
+                  }
+              );
+            }
+            if (x.Count() > 6)
+            {
+                int finalSum = 0;
+                for (int i = 6; i < x.Count(); i++)
                 {
-                    final.Add(x.Max());
-                    lable.Add(titles.Skip(i).FirstOrDefault());
-                    piechartData.Add(
-                      new PieSeries
-                      {
-                          Values = final.AsChartValues(),
-                          Title = lable.FirstOrDefault(),
-                          DataLabels = true,
-                      }
-                  );
-                    x.Remove(x.Max());
+                    finalSum = finalSum + x.ToList().Skip(i).FirstOrDefault();
                 }
-                else
+                if (finalSum != 0)
                 {
-                    final.Add(x.Sum());
+                    List<int> final = new List<int>();
+                    final.Add(finalSum);
                     piechartData.Add(
                       new PieSeries
                       {
@@ -677,9 +701,7 @@ namespace Restaurant.View.reports.salesReports
                           DataLabels = true,
                       }
                   );
-                    break;
                 }
-
             }
             chart1.Series = piechartData;
         }
@@ -689,22 +711,26 @@ namespace Restaurant.View.reports.salesReports
             axcolumn.Labels = new List<string>();
             List<string> names = new List<string>();
             List<int> x = new List<int>();
-            IEnumerable<int> y = null;
+            List<int> y = new List<int>();
+            List<int> z = new List<int>();
 
             var temp = itemList
-                   .Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemUnitId) : true));
-            var result = temp.GroupBy(s => s.ITitemUnitId).Select(s => new
+                   .Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemId) : true));
+            var result = temp.GroupBy(s => s.ITitemId).Select(s => new
             {
-                ITitemUnitId = s.Key,
-                countP = s.Where(m => m.invType == "s").Count(),
-                countPb = s.Where(m => m.invType == "sb").Count(),
+                ITitemId = s.Key,
+                countS   = s.Where(m => m.invType == "s").Count(),
+                countTs  = s.Where(m => m.invType == "ts").Count(),
+                countSs  = s.Where(m => m.invType == "ss").Count(),
 
             });
-            x = result.Select(m => m.countP).ToList();
-            y = result.Select(m => m.countPb);
-            var tempName = temp.GroupBy(jj => jj.ITitemUnitId)
-             .Select(g => new ItemUnitCombo { itemUnitId = (int)g.FirstOrDefault().ITitemUnitId, itemUnitName = g.FirstOrDefault().ITitemName + "-" + g.FirstOrDefault().ITunitName }).ToList();
-            names.AddRange(tempName.Select(nn => nn.itemUnitName));
+            x = result.Select(m => m.countS).ToList();
+            y = result.Select(m => m.countTs).ToList();
+            z = result.Select(m => m.countSs).ToList();
+
+            var tempName = temp.GroupBy(jj => jj.ITitemId)
+             .Select(g => new Item { itemId = (int)g.FirstOrDefault().ITitemId, name = g.FirstOrDefault().ITitemName }).ToList();
+            names.AddRange(tempName.Select(nn => nn.name));
 
             List<string> lable = new List<string>();
             SeriesCollection columnChartData = new SeriesCollection();
@@ -713,27 +739,36 @@ namespace Restaurant.View.reports.salesReports
             List<int> cD = new List<int>();
             List<string> titles = new List<string>()
             {
-                AppSettings.resourcemanager.GetString("trSales"),
-                AppSettings.resourcemanager.GetString("trReturned"),
-                AppSettings.resourcemanager.GetString("trDraft"),
+                AppSettings.resourcemanager.GetString("trDiningHallType"),
+                AppSettings.resourcemanager.GetString("trTakeAway"),
+                AppSettings.resourcemanager.GetString("trSelfService")
             };
-            int count = x.Count();
-            for (int i = 0; i < count; i++)
+            int xCount = 0;
+            if (x.Count() <= 6) xCount = x.Count();
+            for (int i = 0; i < xCount; i++)
             {
-                if (i < 5)
-                {
-                    cP.Add(x.Max());
-                    x.Remove(x.Max());
-                }
-                else
-                {
-                    cP.Add(x.Sum());
-                    break;
-                }
+                cP.Add(x.ToList().Skip(i).FirstOrDefault());
+                cPb.Add(y.ToList().Skip(i).FirstOrDefault());
+                cD.Add(z.ToList().Skip(i).FirstOrDefault());
                 axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
             }
-            axcolumn.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
-
+            if (x.Count() > 6)
+            {
+                int cPSum = 0, cPbSum = 0, cDSum = 0;
+                for (int i = 0; i < xCount; i++)
+                {
+                    cPSum = cPSum + x.ToList().Skip(i).FirstOrDefault();
+                    cPbSum = cPbSum + y.ToList().Skip(i).FirstOrDefault();
+                    cDSum = cDSum + z.ToList().Skip(i).FirstOrDefault();
+                }
+                if (!((cPSum == 0) && (cPbSum == 0) && (cDSum == 0)))
+                {
+                    cP.Add(cPSum);
+                    cPb.Add(cPbSum);
+                    cD.Add(cDSum);
+                    axcolumn.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
+                }
+            }
             //3 فوق بعض
             columnChartData.Add(
             new StackedColumnSeries
@@ -742,19 +777,28 @@ namespace Restaurant.View.reports.salesReports
                 Title = titles[0],
                 DataLabels = true,
             });
+
             columnChartData.Add(
-           new StackedColumnSeries
-           {
-               Values = cPb.AsChartValues(),
-               Title = titles[1],
-               DataLabels = true,
-           });
+            new StackedColumnSeries
+            {
+                Values = cPb.AsChartValues(),
+                Title = titles[1],
+                DataLabels = true,
+            });
+
+            columnChartData.Add(
+            new StackedColumnSeries
+            {
+                Values = cD.AsChartValues(),
+                Title = titles[2],
+                DataLabels = true,
+            });
 
             DataContext = this;
             cartesianChart.Series = columnChartData;
         }
 
-        private void fillRowChart(ObservableCollection<int> stackedButton)
+        private void fillRowChart(List<int> stackedButton)
         {
             MyAxis.Labels = new List<string>();
             List<string> names = new List<string>();
@@ -764,30 +808,32 @@ namespace Restaurant.View.reports.salesReports
 
             var temp = fillRowChartList(Items, dp_ItemStartDate, dp_ItemEndDate);
             temp = temp.Where(j => (selectedItemId.Count != 0 ? stackedButton.Contains((int)j.ITitemUnitId) : true));
-            var result = temp.GroupBy(s => s.ITitemUnitId).Select(s => new
+            var result = temp.GroupBy(s => s.ITitemId).Select(s => new
             {
                 ITitemUnitId = s.Key,
                 totalP = s.Where(x => x.invType == "s").Sum(x => x.totalNet),
-                totalPb = s.Where(x => x.invType == "sb").Sum(x => x.totalNet),
+                totalPb = s.Where(x => x.invType == "ts").Sum(x => x.totalNet),
+                resultTemp = s.Where(x => x.invType == "ss").Sum(x => x.totalNet),
             }
          );
-            var resultTotal = result.Select(x => new { x.ITitemUnitId, total = x.totalP - x.totalPb }).ToList();
+            //var resultTotal = result.Select(x => new { x.ITitemId, total = x.totalP - x.totalPb }).ToList();
             pTemp = result.Select(x => (decimal)x.totalP);
             pbTemp = result.Select(x => (decimal)x.totalPb);
-            resultTemp = result.Select(x => (decimal)x.totalP - (decimal)x.totalPb);
-            var tempName = temp.GroupBy(jj => jj.ITitemUnitId)
-             .Select(g => new ItemUnitCombo { itemUnitId = (int)g.FirstOrDefault().ITitemUnitId, itemUnitName = g.FirstOrDefault().ITitemName + "-" + g.FirstOrDefault().ITunitName }).ToList();
-            names.AddRange(tempName.Select(nn => nn.itemUnitName));
+            //resultTemp = result.Select(x => (decimal)x.totalP - (decimal)x.totalPb);
+            resultTemp = result.Select(x => (decimal)x.resultTemp);
+            var tempName = temp.GroupBy(jj => jj.ITitemId)
+             .Select(g => new Item { itemId = (int)g.FirstOrDefault().ITitemId, name = g.FirstOrDefault().ITitemName }).ToList();
+            names.AddRange(tempName.Select(nn => nn.name));
             /********************************************************************************/
             SeriesCollection rowChartData = new SeriesCollection();
-            List<decimal> purchase = new List<decimal>();
-            List<decimal> returns = new List<decimal>();
-            List<decimal> sub = new List<decimal>();
+            List<decimal> dh = new List<decimal>();
+            List<decimal> ta = new List<decimal>();
+            List<decimal> ss = new List<decimal>();
             List<string> titles = new List<string>()
             {
-                AppSettings.resourcemanager.GetString("trNetSales"),
-                AppSettings.resourcemanager.GetString("trTotalReturn"),
-                AppSettings.resourcemanager.GetString("trTotalSales")
+                AppSettings.resourcemanager.GetString("trDiningHallType"),
+                AppSettings.resourcemanager.GetString("trTakeAway"),
+                AppSettings.resourcemanager.GetString("trSelfService")
             };
 
             int xCount = 0;
@@ -795,44 +841,44 @@ namespace Restaurant.View.reports.salesReports
 
             for (int i = 0; i < xCount; i++)
             {
-                purchase.Add(pTemp.ToList().Skip(i).FirstOrDefault());
-                returns.Add(pbTemp.ToList().Skip(i).FirstOrDefault());
-                sub.Add(resultTemp.ToList().Skip(i).FirstOrDefault());
+                dh.Add(pTemp.ToList().Skip(i).FirstOrDefault());
+                ta.Add(pbTemp.ToList().Skip(i).FirstOrDefault());
+                ss.Add(resultTemp.ToList().Skip(i).FirstOrDefault());
                 MyAxis.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
             }
             if (pTemp.Count() > 6)
             {
-                decimal purchaseSum = 0, returnsSum = 0, subSum = 0;
+                decimal sSum = 0, tsSum = 0, ssSum = 0;
                 for (int i = 0; i < xCount; i++)
                 {
-                    purchaseSum = purchaseSum + pTemp.ToList().Skip(i).FirstOrDefault();
-                    returnsSum = returnsSum + pbTemp.ToList().Skip(i).FirstOrDefault();
-                    subSum = subSum + resultTemp.ToList().Skip(i).FirstOrDefault();
+                    sSum = sSum + pTemp.ToList().Skip(i).FirstOrDefault();
+                    tsSum = tsSum + pbTemp.ToList().Skip(i).FirstOrDefault();
+                    ssSum = ssSum + resultTemp.ToList().Skip(i).FirstOrDefault();
                 }
-                if (!((purchaseSum == 0) && (returnsSum == 0) && (subSum == 0)))
+                if (!((sSum == 0) && (tsSum == 0) && (ssSum == 0)))
                 {
-                    purchase.Add(purchaseSum);
-                    returns.Add(returnsSum);
-                    sub.Add(subSum);
+                    dh.Add(sSum);
+                    ta.Add(tsSum);
+                    ss.Add(ssSum);
                     MyAxis.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
                 }
             }
             rowChartData.Add(
           new LineSeries
           {
-              Values = purchase.AsChartValues(),
+              Values = dh.AsChartValues(),
               Title = titles[0]
           });
             rowChartData.Add(
          new LineSeries
          {
-             Values = returns.AsChartValues(),
+             Values = ta.AsChartValues(),
              Title = titles[1]
          });
             rowChartData.Add(
         new LineSeries
         {
-            Values = sub.AsChartValues(),
+            Values = ss.AsChartValues(),
             Title = titles[2]
 
         });
@@ -881,7 +927,7 @@ namespace Restaurant.View.reports.salesReports
             }
         }
 
-        private void Cb_collect_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Cb_collect_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
@@ -889,25 +935,28 @@ namespace Restaurant.View.reports.salesReports
 
                 if (cb_collect.SelectedItem != null)
                 {
-                    if (stk_tagsBranches.Children.Count < 5)
-                    {
-                        selectedBranch = cb_collect.SelectedItem as Branch;
-                        var b = new MaterialDesignThemes.Wpf.Chip()
-                        {
-                            Content = selectedBranch.name,
-                            Name = "btn" + selectedBranch.branchId.ToString(),
-                            IsDeletable = true,
-                            Margin = new Thickness(5, 0, 5, 0)
-                        };
-                        b.DeleteClick += Chip_OnDeleteBranchClick;
-                        stk_tagsBranches.Children.Add(b);
-                        comboBrachTemp.Add(selectedBranch);
-                        selectedBranchId.Add(selectedBranch.branchId);
-                        dynamicComboBranches.Remove(selectedBranch);
-                        fillCollectEvent();
-                    }
+                    //if (stk_tagsBranches.Children.Count < 5)
+                    //{
+                    //    selectedBranch = await branchModel.getBranchById((int)cb_collect.SelectedValue);
+                    //    var b = new MaterialDesignThemes.Wpf.Chip()
+                    //    {
+                    //        Content = selectedBranch.name,
+                    //        Name = "btn" + selectedBranch.branchId.ToString(),
+                    //        IsDeletable = true,
+                    //        Margin = new Thickness(5, 0, 5, 0)
+                    //    };
+                    //    b.DeleteClick += Chip_OnDeleteBranchClick;
+                    //    stk_tagsBranches.Children.Add(b);
+                    //    comboBrachTemp.Add(selectedBranch);
+                    //    selectedBranchId.Add(selectedBranch.branchId);
+                    //    dynamicComboBranches.Remove(selectedBranch);
+                    //    fillCollectEvent();
+                    //}
+                    fillCollectEvent();
                 }
-                 
+                else
+                    fillCollectEventAll();
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -925,24 +974,25 @@ namespace Restaurant.View.reports.salesReports
 
                 cb_collect.SelectedItem = null;
                 cb_collect.IsEnabled = false;
-                for (int i = 0; i < comboBrachTemp.Count; i++)
-                {
-                    dynamicComboBranches.Add(comboBrachTemp.Skip(i).FirstOrDefault());
-                }
-                comboBrachTemp.Clear();
-                stk_tagsBranches.Children.Clear();
-                selectedBranchId.Clear();
-                fillCollectEvent();
-                if (stk_tagsBranches.Children.Count == 0)
-                {
-                    fillCollectEventAll();
-                }
-                 
+                //for (int i = 0; i < comboBrachTemp.Count; i++)
+                //{
+                //    dynamicComboBranches.Add(comboBrachTemp.Skip(i).FirstOrDefault());
+                //}
+                //comboBrachTemp.Clear();
+                //stk_tagsBranches.Children.Clear();
+                //selectedBranchId.Clear();
+                //fillCollectEvent();
+
+                //if (stk_tagsBranches.Children.Count == 0)
+                //{
+                //    fillCollectEventAll();
+                //}
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
+
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -955,11 +1005,11 @@ namespace Restaurant.View.reports.salesReports
                 HelpClass.StartAwait(grid_main);
 
                 cb_collect.IsEnabled = true;
-                fillCollectEvent();
-                if (stk_tagsBranches.Children.Count == 0)
-                {
-                    fillCollectEventAll();
-                }
+                //fillCollectEvent();
+                //if (stk_tagsBranches.Children.Count == 0)
+                //{
+                //    fillCollectEventAll();
+                //}
                  
                 HelpClass.EndAwait(grid_main);
             }
@@ -976,9 +1026,6 @@ namespace Restaurant.View.reports.salesReports
         List<ItemTransferInvoice> itemList = null;
         private List<ItemTransferInvoice> fillList(IEnumerable<ItemTransferInvoice> Invoices, ComboBox cbBranch, ComboBox cbitem,  DatePicker startDate, DatePicker endDate)
         {
-            var selectedBranch = cbBranch.SelectedItem as Branch;
-            var selectedItemUnit = cbitem.SelectedItem as ItemUnitCombo;
-
             var result = Invoices.Where(x => (
 
            ( (cb_ItemsBranches.SelectedIndex != -1 ? x.branchCreatorId == (int)cb_ItemsBranches.SelectedValue: true)
@@ -1009,7 +1056,7 @@ namespace Restaurant.View.reports.salesReports
                 .GroupBy(obj => new
                 {
                     obj.branchCreatorId,
-                    obj.ITitemUnitId
+                    obj.ITitemId
                 }).Select(obj => new ItemTransferInvoice
                 {
                     branchCreatorId = obj.FirstOrDefault().branchCreatorId,
@@ -1039,7 +1086,7 @@ namespace Restaurant.View.reports.salesReports
                 && (endDate.SelectedDate != null ? x.updateDate <= endDate.SelectedDate : true))
                 .GroupBy(obj => new
                 {
-                    obj.ITitemUnitId
+                    obj.ITitemId
                 }).Select(obj => new ItemTransferInvoice
                 {
                     branchCreatorId = obj.FirstOrDefault().branchCreatorId,
@@ -1068,7 +1115,7 @@ namespace Restaurant.View.reports.salesReports
             try
             {
                  
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 IEnumerable<ItemTransferInvoice> tempSearch = itemList;
 
@@ -1078,7 +1125,7 @@ namespace Restaurant.View.reports.salesReports
                                                 s.invNumber.ToLower().Contains(txt_search.Text) ||
                                                  s.branchCreatorName.ToLower().Contains(txt_search.Text) ||
                                                  s.ITitemName.ToLower().Contains(txt_search.Text) ||
-                                                 s.ITunitName.ToLower().Contains(txt_search.Text) ||
+                                                 s.categoryName.ToLower().Contains(txt_search.Text) ||
                                                  s.ITquantity.ToString().ToLower().Contains(txt_search.Text) ||
                                                  s.ITprice.ToString().ToLower().Contains(txt_search.Text) ||
                                                  s.subTotal.ToString().ToLower().Contains(txt_search.Text)
@@ -1095,7 +1142,6 @@ namespace Restaurant.View.reports.salesReports
                         tempSearch = collectListAll.Where(s =>
                                                      s.branchCreatorName.ToLower().Contains(txt_search.Text) ||
                                                      s.ITitemName.ToLower().Contains(txt_search.Text) ||
-                                                     s.ITunitName.ToLower().Contains(txt_search.Text) ||
                                                      s.count.ToString().ToLower().Contains(txt_search.Text) ||
                                                      s.ITquantity.ToString().ToLower().Contains(txt_search.Text) ||
                                                      s.itemAvg.ToString().ToLower().Contains(txt_search.Text)
@@ -1122,12 +1168,12 @@ namespace Restaurant.View.reports.salesReports
                 txt_count.Text = dgInvoice.Items.Count.ToString();
 
                  
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                  
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1137,8 +1183,10 @@ namespace Restaurant.View.reports.salesReports
             try
             {
                  
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
+                txt_search.Text = "";
+                
                 if (selectedTab == 0)
                 {
                     chk_allBranchesItem.IsChecked = true;
@@ -1156,14 +1204,12 @@ namespace Restaurant.View.reports.salesReports
                     stk_tagsBranches.Children.Clear();
                     fillCollectEventAll();
                 }
-
                  
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1393,8 +1439,7 @@ namespace Restaurant.View.reports.salesReports
         {//preview
             try
             {
-                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 #region
                 Window.GetWindow(this).Opacity = 0.2;
@@ -1414,14 +1459,12 @@ namespace Restaurant.View.reports.salesReports
                 }
                 Window.GetWindow(this).Opacity = 1;
                 #endregion
-
                  
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1439,7 +1482,7 @@ namespace Restaurant.View.reports.salesReports
                 temp = collectListBranch
                  .Where(j => (selectedBranchId.Count != 0 ? selectedBranchId.Contains((int)j.branchCreatorId) : true)).ToList();
             }
-            var titleTemp = temp.Select(obj => obj.ITitemUnitName1);
+            var titleTemp = temp.Select(obj => obj.ITitemName);
             titles.AddRange(titleTemp);
             x = temp.Select(m => (long)m.ITquantity).ToList();
             int count = x.Count();
@@ -1448,7 +1491,7 @@ namespace Restaurant.View.reports.salesReports
             {
                 List<long> final = new List<long>();
                 List<string> lable = new List<string>();
-                if (i < 5)
+                if (i < 6)
                 {
                     final.Add(x.Max());
                     lable.Add(titles.Skip(i).FirstOrDefault());
@@ -1494,7 +1537,7 @@ namespace Restaurant.View.reports.salesReports
             }
 
             x = temp.Select(m => m.count).ToList();
-            var tempName = temp.OrderByDescending(obj => obj.count).Select(obj => obj.ITitemUnitName1);
+            var tempName = temp.OrderByDescending(obj => obj.count).Select(obj => obj.ITitemName);
             names.AddRange(tempName);
 
             SeriesCollection columnChartData = new SeriesCollection();
@@ -1508,7 +1551,7 @@ namespace Restaurant.View.reports.salesReports
             int count = x.Count();
             for (int i = 0; i < count; i++)
             {
-                if (i < 5)
+                if (i < 6)
                 {
                     cP.Add(x.Max());
                     x.Remove(x.Max());
@@ -1616,10 +1659,6 @@ namespace Restaurant.View.reports.salesReports
 
         #endregion
       
-        private void Cb_Types_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            fillComboItems();
-            fillItemsEvent();
-        }
+      
     }
 }
