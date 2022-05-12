@@ -121,10 +121,10 @@ namespace Restaurant.View.reports.salesReports
 
                 HelpClass.EndAwait(grid_main);
             }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
+                catch (Exception ex)
+                {
+                    HelpClass.EndAwait(grid_main);
+                    HelpClass.ExceptionMessage(ex, this);
             }
         }
 
@@ -263,33 +263,7 @@ namespace Restaurant.View.reports.salesReports
            s.invNumber.ToLower().Contains(searchText)
            ||
            (s.invoicesClassName != null ? s.invoicesClassName.ToLower().Contains(searchText) : false)
-           //||
-           //(s.Ocode != null ? s.posName.ToLower().Contains(searchText) : false)
            )
-           /*
-        public string invNumber { get; set; }
-        public string invType { get; set; }
-        public string discountType { get; set; }
-        public Nullable<decimal> discountValue { get; set; }
-        public Nullable<decimal> total { get; set; }
-        public Nullable<decimal> totalNet { get; set; }
-        public Nullable<decimal> paid { get; set; }
-        public Nullable<decimal> deserved { get; set; }
-        public Nullable<System.DateTime> deservedDate { get; set; }
-        public Nullable<System.DateTime> invDate { get; set; }
-   
-        public Nullable<int> invoiceMainId { get; set; }
-        public string invCase { get; set; }
-        public Nullable<System.TimeSpan> invTime { get; set; }
-        public string notes { get; set; }
-        public Nullable<System.DateTime> createDate { get; set; }//
-        public Nullable<System.DateTime> updateDate { get; set; }
-
-        public Nullable<decimal> tax { get; set; }
- 
-        public Nullable<byte> isApproved { get; set; }
-        public int count { get; set; }
-            */
            &&
            //start date
            (dp_couponStartDate.SelectedDate != null ? s.updateDate >= dp_couponStartDate.SelectedDate : true)
@@ -326,6 +300,7 @@ namespace Restaurant.View.reports.salesReports
         {
             tt_coupon.Content = AppSettings.resourcemanager.GetString("trCoupons");
             tt_offers.Content = AppSettings.resourcemanager.GetString("trOffer");
+            tt_invoicesClasses.Content = AppSettings.resourcemanager.GetString("invoicesClasses");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_Coupons, AppSettings.resourcemanager.GetString("trCouponHint"));
 
@@ -354,8 +329,10 @@ namespace Restaurant.View.reports.salesReports
             col_offerCode.Header = AppSettings.resourcemanager.GetString("trCode");
             col_itQuantity.Header = AppSettings.resourcemanager.GetString("trQTR");
 
+            col_invoiceTotal.Header = AppSettings.resourcemanager.GetString("trTotal");
             col_invoiceClass.Header = AppSettings.resourcemanager.GetString("trInvoiceClass");
-            col_invoiceValue.Header = AppSettings.resourcemanager.GetString("trDiscount");
+            col_invoiceValue.Header = AppSettings.resourcemanager.GetString("trValue");
+            col_invoiceTotalValue.Header = AppSettings.resourcemanager.GetString("trDiscount");
 
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
@@ -928,10 +905,12 @@ namespace Restaurant.View.reports.salesReports
                 fillComboInvoice();
 
                 hidAllColumns();
-                
+
+                col_invoiceTotal.Visibility = Visibility.Visible;
                 col_invoiceClass.Visibility = Visibility.Visible;
                 col_invoiceValue.Visibility = Visibility.Visible;
                 col_invoiceTotalValue.Visibility = Visibility.Visible;
+                
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
