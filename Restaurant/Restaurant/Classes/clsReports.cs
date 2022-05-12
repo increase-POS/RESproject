@@ -1444,7 +1444,75 @@ Parameters!trValueDiscount.Value)
             itemTransferInvTypeConv(paramarr);
 
         }
+        public static void SaleInvoiceSTS(IEnumerable<ItemTransferInvoice> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            List<ItemTransferInvoice> tempquery = JsonConvert.DeserializeObject<List<ItemTransferInvoice>>(JsonConvert.SerializeObject(Query));
 
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            foreach (var r in tempquery)
+            {
+                r.CopdiscountValue = decimal.Parse(HelpClass.DecTostring(r.CopdiscountValue));
+                r.couponTotalValue = decimal.Parse(HelpClass.DecTostring(r.couponTotalValue));//
+                r.OdiscountValue = decimal.Parse(HelpClass.DecTostring(r.OdiscountValue));
+                r.offerTotalValue = decimal.Parse(HelpClass.DecTostring(r.offerTotalValue));
+                r.ITprice = decimal.Parse(HelpClass.DecTostring(r.ITprice));
+                r.subTotal = decimal.Parse(HelpClass.DecTostring(r.subTotal));
+                r.totalNet = decimal.Parse(HelpClass.DecTostring(r.totalNet));
+                r.discountValue = decimal.Parse(HelpClass.DecTostring(r.discountValue));
+                r.tax = decimal.Parse(HelpClass.PercentageDecTostring(r.tax));
+
+                r.invType = InvoiceTypeConv(r.invType);
+                if (r.itemAvg != null)
+                {
+                    r.itemAvg = double.Parse(HelpClass.DecTostring(decimal.Parse(r.itemAvg.ToString())));
+
+                }
+            }
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("trType", AppSettings.resourcemanagerreport.GetString("trType")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
+            paramarr.Add(new ReportParameter("trPOS", AppSettings.resourcemanagerreport.GetString("trPOS")));
+            paramarr.Add(new ReportParameter("trCustomer", AppSettings.resourcemanagerreport.GetString("trCustomer")));
+            paramarr.Add(new ReportParameter("trCompany", AppSettings.resourcemanagerreport.GetString("trCompany")));
+            paramarr.Add(new ReportParameter("trUser", AppSettings.resourcemanagerreport.GetString("trUser")));
+            paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
+            paramarr.Add(new ReportParameter("trTax", AppSettings.resourcemanagerreport.GetString("trTax")));
+            paramarr.Add(new ReportParameter("trTotal", AppSettings.resourcemanagerreport.GetString("trTotal")));
+            paramarr.Add(new ReportParameter("trDiscount", AppSettings.resourcemanagerreport.GetString("trDiscount")));
+
+            
+            DateFormConv(paramarr);
+            paramarr.Add(new ReportParameter("isTax", AppSettings.invoiceTax_bool.ToString()));
+
+            rep.DataSources.Add(new ReportDataSource("DataSetITinvoice", tempquery));
+           
+         
+           // itemTransferInvTypeConv(paramarr);
+
+        }
+        public static string InvoiceTypeConv(string invType)
+        {
+            switch (invType)
+            {
+                //مبيعات
+                case "s":
+                    invType = AppSettings.resourcemanager.GetString("trDiningHallType");
+                    break;
+                // طلب خارجي
+                case "ts":
+                    invType = AppSettings.resourcemanager.GetString("trTakeAway");
+                    break;
+                // خدمة ذاتية
+                case "ss":
+                    invType = AppSettings.resourcemanager.GetString("trSelfService");
+                    break;
+                default: break;
+            }
+            return invType;
+        }
         public static void SaledailyReport(IEnumerable<ItemTransferInvoice> tempquery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             string date = "";

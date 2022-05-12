@@ -67,9 +67,7 @@ namespace Restaurant.View.reports.salesReports
         }
 
         //prin & pdf
-        ReportCls reportclass = new ReportCls();
-        LocalReport rep = new LocalReport();
-        SaveFileDialog saveFileDialog = new SaveFileDialog();
+     
 
         private int selectedTab = 0;
 
@@ -1256,138 +1254,107 @@ namespace Restaurant.View.reports.salesReports
 
         #endregion
 
-        #region reports
-        private List<ItemTransferInvoice> fillPdfList(ComboBox comboBox, ObservableCollection<int> stackedButton)
-        {
-            List<ItemTransferInvoice> list = new List<ItemTransferInvoice>();
-
-            //var temp = invLstRowChart;
-            //if (selectedTab == 0)
-            //{
-            //    temp = temp.Where(j => (selectedBranchId.Count != 0 ? stackedButton.Contains((int)j.branchCreatorId) : true));
-            //    list = temp.ToList();
-            //}
-            //if (selectedTab == 1)
-            //{
-            //    temp = temp.Where(j => (selectedPosId.Count != 0 ? stackedButton.Contains((int)j.posId) : true));
-            //    list = temp.ToList();
-            //}
-            //if (selectedTab == 3)
-            //{
-            //    temp = temp.Where(j => (selectedUserId.Count != 0 ? stackedButton.Contains((int)j.updateUserId) : true));
-            //    list = temp.ToList();
-            //}
-
-            return list;
-
-        }
-        public List<ItemTransferInvoice> filltoprint()
-        {
-            List<ItemTransferInvoice> xx = new List<ItemTransferInvoice>();
-            //if (selectedTab == 0)
-            //{
-            //    xx = fillPdfList(cb_branches, selectedBranchId);
-            //}
-            //else if (selectedTab == 1)
-            //{
-            //    xx = fillPdfList(cb_branches, selectedPosId);
-            //}
-            //else if (selectedTab == 2)
-            //{
-            //    xx = fillPdfList(cb_branches, selectedVendorsId);
-            //}
-            //else if (selectedTab == 3)
-            //{
-            //    xx = fillPdfList(cb_branches, selectedUserId);
-            //}
-
-            return xx;
-        }
+        #region report
+        //prin & pdf
+        ReportCls reportclass = new ReportCls();
+        LocalReport rep = new LocalReport();
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+   
         public void BuildReport()
         {
             List<ReportParameter> paramarr = new List<ReportParameter>();
-            string addpath = "";
             string firstTitle = "invoice";
             string secondTitle = "";
             string subTitle = "";
             string Title = "";
-
-
+            string addpath = "";
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
             {
                 if (selectedTab == 0)
                 {
-                    addpath = @"\Reports\StatisticReport\Sale\Ar\ArPurSts.rdlc";
+                    addpath = @"\Reports\StatisticReport\Sale\Invoice\Ar\ArBranch.rdlc";
                     secondTitle = "branch";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+
                 }
                 else if (selectedTab == 1)
                 {
-                    addpath = @"\Reports\StatisticReport\Sale\Ar\ArPurPosSts.rdlc";
+                    addpath = @"\Reports\StatisticReport\Sale\Invoice\Ar\ArPos.rdlc";
                     secondTitle = "pos";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
                 }
                 else if (selectedTab == 2)
                 {
-                    addpath = @"\Reports\StatisticReport\Sale\Ar\ArPurVendorSts.rdlc";
+                    addpath = @"\Reports\StatisticReport\Sale\Invoice\Ar\ArCustomer.rdlc";
+                    //    paramarr.Add(new ReportParameter("isTax", MainWindow.tax.ToString()));
                     secondTitle = "customers";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-
                 }
-                else
+                else if (selectedTab == 3)
                 {
-                    addpath = @"\Reports\StatisticReport\Sale\Ar\ArPurUserSts.rdlc";
+                    addpath = @"\Reports\StatisticReport\Sale\Invoice\Ar\ArUser.rdlc";
                     secondTitle = "users";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-
                 }
-
+                //else
+                //{
+                //    addpath = @"\Reports\StatisticReport\Purchase\Invoice\Ar\ArPurItemSts.rdlc";
+                //    secondTitle = "items";
+                //    subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+                //}
             }
             else
             {
                 //english
                 if (selectedTab == 0)
                 {
-                    addpath = @"\Reports\StatisticReport\Sale\En\EnPurSts.rdlc";
+                    addpath = @"\Reports\StatisticReport\Sale\Invoice\En\EnBranch.rdlc";
                     secondTitle = "branch";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
                 }
                 else if (selectedTab == 1)
                 {
-                    addpath = @"\Reports\StatisticReport\Sale\En\EnPurPosSts.rdlc";
+                    addpath = @"\Reports\StatisticReport\Sale\Invoice\En\EnPos.rdlc";
                     secondTitle = "pos";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
                 }
                 else if (selectedTab == 2)
                 {
-                    addpath = @"\Reports\StatisticReport\Sale\En\EnPurVendorSts.rdlc";
-                    secondTitle = "customers";
+                    addpath = @"\Reports\StatisticReport\Sale\Invoice\En\EnCustomer.rdlc";
+                    // paramarr.Add(new ReportParameter("isTax", MainWindow.tax.ToString()));
+                    secondTitle = "vendors";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
                 }
-                else
+                else if (selectedTab == 3)
                 {
-                    addpath = @"\Reports\StatisticReport\Sale\En\EnPurUserSts.rdlc";
+                    addpath = @"\Reports\StatisticReport\Sale\Invoice\En\EnUser.rdlc";
                     secondTitle = "users";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
                 }
+                //else
+                //{
+                //    addpath = @"\Reports\StatisticReport\Purchase\Invoice\En\EnPurItemSts.rdlc";
+                //    secondTitle = "items";
+                //    subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+                //}
 
             }
+
 
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
             ReportCls.checkLang();
-            Title = AppSettings.resourcemanagerreport.GetString("trSalesReport") + " / " + subTitle;
+            Title = AppSettings.resourcemanagerreport.GetString("SalesReport") + " / " + subTitle;
             paramarr.Add(new ReportParameter("trTitle", Title));
 
-            clsReports.SaleInvoiceStsReport(itemTransfers, rep, reppath, paramarr);
+            clsReports.SaleInvoiceSTS(InvoicesQuery.ToList(), rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
             rep.SetParameters(paramarr);
 
             rep.Refresh();
-
         }
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {//pdf
@@ -1418,6 +1385,7 @@ namespace Restaurant.View.reports.salesReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         private void Btn_print_Click(object sender, RoutedEventArgs e)
         {//print
             try
@@ -1429,6 +1397,7 @@ namespace Restaurant.View.reports.salesReports
                 BuildReport();
 
                 LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
+
                 #endregion
 
 
@@ -1445,13 +1414,10 @@ namespace Restaurant.View.reports.salesReports
         {//excel
             try
             {
-               
+
                 HelpClass.StartAwait(grid_main);
 
                 #region
-                //  Thread t1 = new Thread(() =>
-                //{
-
                 BuildReport();
                 this.Dispatcher.Invoke(() =>
                 {
@@ -1462,63 +1428,56 @@ namespace Restaurant.View.reports.salesReports
                         LocalReportExtensions.ExportToExcel(rep, filepath);
                     }
                 });
-
-                //});
-                //  t1.Start();
                 #endregion
 
-               
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
+
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
         private void Btn_preview_Click(object sender, RoutedEventArgs e)
         {//preview
             try
             {
-               
+
                 HelpClass.StartAwait(grid_main);
 
                 #region
                 Window.GetWindow(this).Opacity = 0.2;
                 string pdfpath = "";
-
-
-
-
                 pdfpath = @"\Thumb\report\temp.pdf";
                 pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+
                 BuildReport();
-
-
 
                 LocalReportExtensions.ExportToPDF(rep, pdfpath);
                 wd_previewPdf w = new wd_previewPdf();
                 w.pdfPath = pdfpath;
                 if (!string.IsNullOrEmpty(w.pdfPath))
                 {
+                    // w.ShowInTaskbar = false;
                     w.ShowDialog();
                     w.wb_pdfWebViewer.Dispose();
                 }
                 Window.GetWindow(this).Opacity = 1;
                 #endregion
 
-               
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-               
+
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
 
         #endregion
 

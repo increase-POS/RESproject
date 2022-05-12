@@ -2213,6 +2213,30 @@
     <Content Include="Reports\Sale\Kitchen\En\SmallReport.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\StatisticReport\Sale\Invoice\Ar\ArBranch.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Sale\Invoice\En\EnBranch.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Sale\Invoice\En\EnCustomer.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Sale\Invoice\Ar\ArCustomer.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Sale\Invoice\En\EnPos.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Sale\Invoice\Ar\ArPos.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Sale\Invoice\En\EnUser.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Sale\Invoice\Ar\ArUser.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Resource Include="pic\programs-Rest-login-bg.png" />
@@ -2498,6 +2522,7 @@
     <None Include="Properties\DataSources\Restaurant.Classes.InvoicesClass.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemLocation.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemTransfer2.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.ItemTransferInvoice1.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemUnitInvoiceProfit.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Location.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Offer1.datasource" />

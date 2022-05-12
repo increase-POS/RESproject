@@ -55,10 +55,7 @@ namespace Restaurant.View.reports.purchaseReports
             GC.Collect();
         }
 
-        //prin & pdf
-        ReportCls reportclass = new ReportCls();
-        LocalReport rep = new LocalReport();
-        SaveFileDialog saveFileDialog = new SaveFileDialog();
+   
 
         private int selectedTab = 0;
 
@@ -1330,8 +1327,8 @@ namespace Restaurant.View.reports.purchaseReports
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+
+                HelpClass.StartAwait(grid_main);
 
                 invoice = new Invoice();
                 if (dgInvoice.SelectedIndex != -1)
@@ -1361,17 +1358,22 @@ namespace Restaurant.View.reports.purchaseReports
                     }
                 }
 
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        List<ItemTransferInvoice> query = new List<ItemTransferInvoice>();
+        #region report
+        //prin & pdf
+        ReportCls reportclass = new ReportCls();
+        LocalReport rep = new LocalReport();
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+      //  List<ItemTransferInvoice> query = new List<ItemTransferInvoice>();
         public void BuildReport()
         {
             List<ReportParameter> paramarr = new List<ReportParameter>();
@@ -1472,8 +1474,8 @@ namespace Restaurant.View.reports.purchaseReports
         {//pdf
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+
+                HelpClass.StartAwait(grid_main);
 
                 #region
                 BuildReport();
@@ -1487,13 +1489,13 @@ namespace Restaurant.View.reports.purchaseReports
                 }
                 #endregion
 
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -1502,8 +1504,8 @@ namespace Restaurant.View.reports.purchaseReports
         {//print
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+
+                HelpClass.StartAwait(grid_main);
 
                 #region
                 BuildReport();
@@ -1512,16 +1514,90 @@ namespace Restaurant.View.reports.purchaseReports
 
                 #endregion
 
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
+        {//excel
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+
+                #region
+                BuildReport();
+                this.Dispatcher.Invoke(() =>
+                {
+                    saveFileDialog.Filter = "EXCEL|*.xls;";
+                    if (saveFileDialog.ShowDialog() == true)
+                    {
+                        string filepath = saveFileDialog.FileName;
+                        LocalReportExtensions.ExportToExcel(rep, filepath);
+                    }
+                });
+                #endregion
+
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_preview_Click(object sender, RoutedEventArgs e)
+        {//preview
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+
+                #region
+                Window.GetWindow(this).Opacity = 0.2;
+                string pdfpath = "";
+                pdfpath = @"\Thumb\report\temp.pdf";
+                pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+
+                BuildReport();
+
+                LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                wd_previewPdf w = new wd_previewPdf();
+                w.pdfPath = pdfpath;
+                if (!string.IsNullOrEmpty(w.pdfPath))
+                {
+                    // w.ShowInTaskbar = false;
+                    w.ShowDialog();
+                    w.wb_pdfWebViewer.Dispose();
+                }
+                Window.GetWindow(this).Opacity = 1;
+                #endregion
+
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        #endregion
+
+
+
+
         private void Txt_search_TextChanged(object sender, TextChangedEventArgs e)
         {//search
             try
@@ -1573,74 +1649,7 @@ namespace Restaurant.View.reports.purchaseReports
             }
         }
 
-        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
-        {//excel
-            try
-            {
-                
-                    HelpClass.StartAwait(grid_main);
-
-                #region
-                BuildReport();
-                this.Dispatcher.Invoke(() =>
-                {
-                    saveFileDialog.Filter = "EXCEL|*.xls;";
-                    if (saveFileDialog.ShowDialog() == true)
-                    {
-                        string filepath = saveFileDialog.FileName;
-                        LocalReportExtensions.ExportToExcel(rep, filepath);
-                    }
-                });
-                #endregion
-
-                
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void Btn_preview_Click(object sender, RoutedEventArgs e)
-        {//preview
-            try
-            {
-                
-                HelpClass.StartAwait(grid_main);
-
-                #region
-                Window.GetWindow(this).Opacity = 0.2;
-                string pdfpath = "";
-                pdfpath = @"\Thumb\report\temp.pdf";
-                pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
-
-                BuildReport();
-
-                LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                wd_previewPdf w = new wd_previewPdf();
-                w.pdfPath = pdfpath;
-                if (!string.IsNullOrEmpty(w.pdfPath))
-                {
-                    // w.ShowInTaskbar = false;
-                    w.ShowDialog();
-                    w.wb_pdfWebViewer.Dispose();
-                }
-                Window.GetWindow(this).Opacity = 1;
-                #endregion
-
-                
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
+   
 
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
