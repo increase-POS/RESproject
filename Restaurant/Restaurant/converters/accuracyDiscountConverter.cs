@@ -14,6 +14,9 @@ namespace Restaurant.converters
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
+            try
+            {
+
             if (values != null && values[0] != null && values[1] != null)
             {
                 string type = values[0].ToString();
@@ -51,6 +54,13 @@ namespace Restaurant.converters
 
             }
             else return "";
+            }
+            catch
+            {
+
+                return values;
+                //return "Hello";
+            }
         }
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
