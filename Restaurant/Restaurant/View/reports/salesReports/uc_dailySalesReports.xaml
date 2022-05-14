@@ -54,18 +54,19 @@
                         </Grid.ColumnDefinitions>
 
                         <Border x:Name="bdr_invoice" Grid.Column="0" Background="White" BorderThickness="0"  Height="40" Width="60" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="10,5,0,-1">
-                            <Button x:Name="btn_invoice"  Background="Transparent" Tag="invoice"
-                                    materialDesign:RippleAssist.Feedback="Transparent" BorderBrush="Transparent" Height="auto" Click="Btn_Invoice_Click">
+                            <Button x:Name="btn_invoice"  Background="Transparent" Tag="invoices"
+                                    materialDesign:RippleAssist.Feedback="Transparent" BorderBrush="Transparent" Height="auto" 
+                                    Click="Btn_Invoice_Click">
                                 <Button.Triggers>
                                     <EventTrigger x:Name="trig" RoutedEvent="Button.Click">
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <DoubleAnimation
-                        Storyboard.TargetName="bdrMain"
-                        Storyboard.TargetProperty="Opacity"
-                        From="0" To="1"
-                        Duration="0:0:1"/>
-                                            </Storyboard>
+                                               <DoubleAnimation
+                                            Storyboard.TargetName="bdrMain"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0" To="1"
+                                            Duration="0:0:1"/>
+                                                </Storyboard>
                                         </BeginStoryboard>
                                     </EventTrigger>
                                 </Button.Triggers>
@@ -82,66 +83,7 @@
                                 </Path>
                             </Button>
                         </Border>
-                        <Border x:Name="bdr_order" Grid.Column="1" Background="{StaticResource SecondColor}" BorderThickness="0"  Height="40" Width="60" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="0,5,0,-1">
-                            <Button x:Name="btn_order"  Background="Transparent"   Click="Btn_order_Click"
-                                    materialDesign:RippleAssist.Feedback="Transparent" Tag="order"
-                                    BorderBrush="Transparent" Height="auto" >
-                                <Button.Triggers>
-                                    <EventTrigger RoutedEvent="Button.Click">
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <DoubleAnimation
-                        Storyboard.TargetName="bdrMain"
-                        Storyboard.TargetProperty="Opacity"
-                        From="0" To="1"
-                        Duration="0:0:1"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </EventTrigger>
-                                </Button.Triggers>
-                                <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0,-1,0,0" HorizontalAlignment="Center"
-                                       Width="25" Height="25"   FlowDirection="LeftToRight"  x:Name="path_order" 
-                                         Data="{StaticResource shippingCompanies}"  >
-                                    <Path.ToolTip>
-                                        <ToolTip x:Name="tt_order" Content="Orders"
-                                              Placement="left" 
-                                              HorizontalOffset="35"
-                                              PlacementRectangle="50,0,0,0"
-                                              VerticalOffset="-10"/>
-                                    </Path.ToolTip>
-                                </Path>
-                            </Button>
-                        </Border>
-                        <Border x:Name="bdr_quotation" Grid.Column="2" Background="{StaticResource SecondColor}" BorderThickness="0"  Height="40" Width="60" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="0,5,0,-1">
-                            <Button x:Name="btn_quotation"  Background="Transparent"  Tag="quotation"
-                                    materialDesign:RippleAssist.Feedback="Transparent"
-                                    BorderBrush="Transparent" Height="auto" Width="60" Click="Btn_quotation_Click">
-                                <Button.Triggers>
-                                    <EventTrigger RoutedEvent="Button.Click">
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <DoubleAnimation
-                        Storyboard.TargetName="bdrMain"
-                        Storyboard.TargetProperty="Opacity"
-                        From="0" To="1"
-                        Duration="0:0:1"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </EventTrigger>
-                                </Button.Triggers>
-                                <Path Fill="White" Stretch="Fill"  VerticalAlignment="Top" Margin="0,-1,0,0" HorizontalAlignment="Center"
-                                       Width="25" Height="25"  FlowDirection="LeftToRight"   x:Name="path_quotation" 
-                                         Data="{StaticResource dolarsList}"  >
-                                    <Path.ToolTip>
-                                        <ToolTip x:Name="tt_quotation" Content="Quotations"
-                                              Placement="left" 
-                                              HorizontalOffset="35"
-                                              PlacementRectangle="50,0,0,0"
-                                              VerticalOffset="-10"/>
-                                    </Path.ToolTip>
-                                </Path>
-                            </Button>
-                        </Border>
+                      
                         <Border Grid.Column="10" CornerRadius="7" >
                             <TextBlock  x:Name="txt_tabTitle"  Foreground="White"   
                               VerticalAlignment="Center"      FontSize="16"     Margin="5 5 10 5"/>
@@ -173,113 +115,65 @@
 
 
                                     <DockPanel Grid.ColumnSpan="3" LastChildFill="False">
-                                        <CheckBox x:Name="chk_invoice" Content="Invoice" Margin="5" Foreground="{StaticResource ThickGrey}" Checked="RefreshViewCheckbox" Unchecked="RefreshViewCheckbox"></CheckBox>
-                                        <CheckBox x:Name="chk_return" Content="Return invoice" Margin="5" Foreground="{StaticResource ThickGrey}" Checked="RefreshViewCheckbox" Unchecked="RefreshViewCheckbox"></CheckBox>
-                                        <CheckBox x:Name="chk_drafs"  Content="Drafts" Checked="RefreshViewCheckbox" Foreground="{StaticResource ThickGrey}" Margin="5" Unchecked="RefreshViewCheckbox"></CheckBox>
-                                            <Border Grid.Row="0" DockPanel.Dock="Right" Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                                                <Grid>
+                                            
+                                         <Border  Grid.Row="0" Height="40" CornerRadius="10" Margin="0,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                    <Grid>
+                                                        <ComboBox SelectionChanged="cb_branches_SelectionChanged" 
+                                                                  MinWidth="150" Name="cb_branches" 
+                                                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                                                  materialDesign:HintAssist.Hint="Branch ...."
+                                                                  Foreground="#4E4E4E" BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
+                                                                  Height="40" Padding="10,0,5,0" Grid.Row="1"/>
+                                                    </Grid>
+                                                </Border>
+                                         <CheckBox  Background="{StaticResource MainColor}" x:Name="chk_allBranches" Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_allBranches_Checked" Unchecked="Chk_allBranches_Unchecked"></CheckBox>
 
+                                         <Border Grid.Row="0" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                    <Grid>
+                                                        <ComboBox MinWidth="150" Name="cb_pos" 
+                                                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                                                  materialDesign:HintAssist.Hint="Pos ...."
+                                                                  Foreground="#4E4E4E"  
+                                                                  BorderBrush="#737373"   BorderThickness="0" Margin="4,0"   
+                                                                  Height="40"  Padding="10,0,5,0" 
+                                                                  SelectionChanged="Cb_pos_SelectionChanged"/>
+
+                                                    </Grid>
+                                                </Border>
+
+                                         <CheckBox Background="{StaticResource MainColor}" x:Name="chk_allPos"  Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_allPos_Checked" Unchecked="Chk_allPos_Unchecked"></CheckBox>
+
+                                         <Border Grid.Row="0" DockPanel.Dock="Right" Height="40" CornerRadius="10" Margin="10,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                                <Grid>
                                                     <DatePicker SelectedDateFormat="Short"  
                                                         Name="dp_invoiceDate" Width="100" 
-                                                        Padding="10,0,5,0" Height="40" 
-                                                        DockPanel.Dock="Right" SelectedDateChanged="RefreshView_SelectedDateChanged" 
+                                                        Padding="10,0,5,0" Height="40" DockPanel.Dock="Right" 
                                                         BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
                                                         Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  
                                                         materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                materialDesign:HintAssist.Hint="Date..."/>
-
+                                                        materialDesign:HintAssist.Hint="Date..."
+                                                        SelectedDateChanged="RefreshView_SelectedDateChanged" />
                                                 </Grid>
                                             </Border>
-                                            
 
-
-                                        </DockPanel>
-                                    <DockPanel Grid.Row="1"  LastChildFill="False" >
-
+                                     </DockPanel>
+                                        <DockPanel Grid.Row="1"  LastChildFill="False">
                                             <Border  Grid.Row="1" Height="40" CornerRadius="10" Margin="0,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                                 <Grid>
-                                                    <ComboBox SelectionChanged="cb_branches_SelectionChanged" 
-                                                      MinWidth="150" Name="cb_branches" 
-                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                      materialDesign:HintAssist.Hint="Branch ...."
-                                    Foreground="#4E4E4E"  
-                                    BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
-                                    Height="40" 
-                                    Padding="10,0,5,0" Grid.Row="1"/>
+                                                    <ComboBox Name="cb_sevices" 
+                                                Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                                materialDesign:HintAssist.Hint="Service ...."
+                                                Foreground="#4E4E4E"  MinWidth="150"
+                                                BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
+                                                Height="40" Padding="10,0,5,0"  
+                                                SelectionChanged="Cb_sevices_SelectionChanged"/>
                                                 </Grid>
                                             </Border>
-                                         
-                                            <CheckBox  Background="{StaticResource MainColor}" x:Name="chk_allBranches" Grid.Row="1"  Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_allBranches_Checked" Unchecked="Chk_allBranches_Unchecked"></CheckBox>
 
-                                    </DockPanel>
-                                    <DockPanel Grid.Row="1" Grid.Column="2"  LastChildFill="False">
-
-                                            <Border Grid.Row="1" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                                                <Grid>
-
-                                                    <ComboBox MinWidth="150" Name="cb_pos" 
-                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                      materialDesign:HintAssist.Hint="Pos ...."
-                                    Foreground="#4E4E4E"  
-                                      BorderBrush="#737373"   BorderThickness="0" Margin="4,0"   
-                                    Height="40"  Padding="10,0,5,0" 
-                                     Grid.Row="1" SelectionChanged="Cb_pos_SelectionChanged"/>
-
-                                                </Grid>
-                                            </Border>
-                                            
-                                        <CheckBox DockPanel.Dock="Right" Background="{StaticResource MainColor}" x:Name="chk_allPos" Grid.Row="2"  Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_allPos_Checked" Unchecked="Chk_allPos_Unchecked"></CheckBox>
-
-                                    </DockPanel>
-                                </Grid>
-                                <Grid Grid.Row="1" x:Name="grid_order" Margin="10,0,10,10" Visibility="Collapsed">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"></RowDefinition>
-                                        <RowDefinition Height="auto" ></RowDefinition>
-
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                        <ColumnDefinition Width="1.5*" MinWidth="200"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-
-
-                                    <DockPanel Grid.ColumnSpan="3" LastChildFill="False">
-                                        <CheckBox x:Name="chk_orderInvoice" Content="Order" Margin="5" Foreground="{StaticResource ThickGrey}" Checked="RefreshViewCheckbox" Unchecked="RefreshViewCheckbox"></CheckBox>
-                                        <CheckBox x:Name="chk_orderDraft"  Content="Drafts" Checked="RefreshViewCheckbox" Foreground="{StaticResource ThickGrey}" Margin="5" Unchecked="RefreshViewCheckbox"></CheckBox>
-                                        <DatePicker SelectedDateFormat="Short"  Name="dp_orderDate" Width="100" Margin="10,5,10,5" Padding="10,0,5,0" Height="40" DockPanel.Dock="Right" SelectedDateChanged="RefreshView_SelectedDateChanged" BorderBrush="#737373"  BorderThickness="0" 
-                                       Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                materialDesign:HintAssist.Hint="Date..."></DatePicker>
-
-
-                                    </DockPanel>
-                                </Grid>
-                                <Grid Grid.Row="1" x:Name="grid_quotation" Margin="10,0,10,10"  Visibility="Collapsed">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"></RowDefinition>
-                                        <RowDefinition Height="auto" ></RowDefinition>
-
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                        <ColumnDefinition Width="1.5*" MinWidth="200"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-
-
-                                    <DockPanel Grid.ColumnSpan="3" LastChildFill="False">
-                                        <CheckBox x:Name="chk_quotationInvoice" Content="Quotation" Margin="5" Foreground="{StaticResource ThickGrey}" Checked="RefreshViewCheckbox" Unchecked="RefreshViewCheckbox"></CheckBox>
-                                        <CheckBox x:Name="chk_quotationDraft"  Content="Drafts" Checked="RefreshViewCheckbox" Foreground="{StaticResource ThickGrey}" Margin="5" Unchecked="RefreshViewCheckbox"></CheckBox>
-                                        <DatePicker SelectedDateFormat="Short"  Name="dp_quotationDate" Width="100" Margin="10,5,10,5" Padding="10,0,5,0" Height="40" DockPanel.Dock="Right" SelectedDateChanged="RefreshView_SelectedDateChanged" BorderBrush="#737373"  BorderThickness="0" 
-                                       Style="{StaticResource MaterialDesignFloatingHintDatePicker}"  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                materialDesign:HintAssist.Hint="Date..."></DatePicker>
-
-
-                                    </DockPanel>
-
-
-                                </Grid>
+                                            <CheckBox  Background="{StaticResource MainColor}" x:Name="chk_allServices"  Grid.Row="1" Grid.Column="1" Content="All" Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}" Checked="Chk_allServices_Checked" Unchecked="Chk_allServices_Unchecked" ></CheckBox>
+                                        </DockPanel>
+                                    </Grid>
+                              
                             </Grid>
 
                         </ScrollViewer>
@@ -374,10 +268,8 @@
                             <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                             <DataGrid  Margin="5,5,5,17.5"  IsReadOnly="True"  Background="White"
-                     Name="dgInvoice"  MouseDoubleClick="DgInvoice_MouseDoubleClick"
-                        AutoGenerateColumns="False" 
-                        ColumnWidth="SizeToHeader"
-                            AlternatingRowBackground="#f3f3f3" AlternationCount="2">
+                                       Name="dgInvoice"  AutoGenerateColumns="False" ColumnWidth="SizeToHeader"
+                                       AlternatingRowBackground="#f3f3f3" AlternationCount="2">
                                 <DataGrid.OpacityMask>
                                     <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
                                 </DataGrid.OpacityMask>
@@ -392,16 +284,69 @@
                                 </DataGrid.Resources>
                                 <DataGrid.Columns>
                         <DataGridTextColumn x:Name="col_No" Width="*" Header="No." Binding="{Binding invNumber}"/>
-                        <DataGridTextColumn x:Name="col_type" Width="*" Header="Type" Binding="{Binding Path=invType,Converter={StaticResource invoiceTypeConverter }}"/>
+                        <DataGridTextColumn x:Name="col_type" Width="*" Header="Type" Binding="{Binding Path=invType,Converter={StaticResource saleInvoiceConverterForReport }}"/>
                         <DataGridTextColumn x:Name="col_branch" Width="*" Header="Branch" Binding="{Binding branchCreatorName}" />
                         <DataGridTextColumn x:Name="col_pos" Width="*" Header="Pos" Binding="{Binding posName}" />
                         <DataGridTextColumn x:Name="col_discount" Width="*" Header="Discount Value"  Binding="{Binding discountValue,Converter={StaticResource accuracyConverter}}"/>
-                        <DataGridTextColumn x:Name="col_tax" Width="*" Header="Tax" Binding="{Binding tax,Converter={StaticResource accuracyConverter}}" Visibility="Visible"/>
+                        <DataGridTextColumn x:Name="col_tax" Width="*" Header="Tax" Binding="{Binding tax,Converter={StaticResource accuracyTaxConverter}}" Visibility="Visible"/>
                         <DataGridTextColumn x:Name="col_totalNet" Width="*" Header="Total" Binding="{Binding totalNet ,Converter={StaticResource accuracyConverter}}" />
                         <DataGridTextColumn x:Name="col_processType" Width="*" Header="processType" Binding="{Binding processType ,Converter={StaticResource processTypeConverter}}" />
+                        <DataGridTemplateColumn Width="120" Header="" IsReadOnly="True" CanUserResize="False">
+                            <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Button Margin="-10"   Click="pdfRowinDatagrid" Grid.Column="0"
+                                            Padding="0" ToolTip="Pdf" 
+                                            Background="{x:Null}" BorderBrush="{x:Null}">
+                                                        <materialDesign:PackIcon Foreground="#D20A0A" Kind="FilePdf"  
+                                                                 Width="17" Height="17">
+                                                        </materialDesign:PackIcon>
+                                                    </Button>
+                                                    <Button Margin="-10"   Click="printRowinDatagrid" Grid.Column="1"
+                                            Padding="0" ToolTip="Print" 
+                                            Background="{x:Null}" BorderBrush="{x:Null}">
+                                                        <materialDesign:PackIcon Foreground="#313131" Kind="Printer"  
+                                                         HorizontalAlignment="Center" 
+                                                         Width="17" Height="17">
+                                                        </materialDesign:PackIcon>
+                                                    </Button>
+                                                    <Button Margin="-10"   Click="excelRowinDatagrid" Grid.Column="2"
+                                            Padding="0" ToolTip="Printer" 
+                                            Background="{x:Null}" BorderBrush="{x:Null}">
+                                                        <Path Fill="#378500" Stretch="Fill"
+                                              Width="15" Height="15" 
+                                              FlowDirection="LeftToRight" Data="M25.162,3H16v2.984h3.031v2.031H16V10h3v2h-3v2h3v2h-3v2h3v2h-3v3h9.162   C25.623,23,26,22.609,26,22.13V3.87C26,3.391,25.623,3,25.162,3z M24,20h-4v-2h4V20z M24,16h-4v-2h4V16z M24,12h-4v-2h4V12z M24,8   h-4V6h4V8z 
+	                                          M0,2.889v20.223L15,26V0L0,2.889z M9.488,18.08l-1.745-3.299c-0.066-0.123-0.134-0.349-0.205-0.678   H7.511C7.478,14.258,7.4,14.494,7.277,14.81l-1.751,3.27H2.807l3.228-5.064L3.082,7.951h2.776l1.448,3.037   c0.113,0.24,0.214,0.525,0.304,0.854h0.028c0.057-0.198,0.163-0.492,0.318-0.883l1.61-3.009h2.542l-3.037,5.022l3.122,5.107 
+                                              L9.488,18.08L9.488,18.08z"  >
+                                                        </Path>
+                                                    </Button>
+                                                    <Button Margin="-10"   Click="previewRowinDatagrid" Grid.Column="3"
+                                            Padding="0" ToolTip="Printer" 
+                                            Background="{x:Null}" BorderBrush="{x:Null}">
+                                                        <Grid FlowDirection="LeftToRight">
+                                                            <Path Fill="#4E4E4E" Stretch="Fill"
+                                                  Width="12" Height="15" 
+                                                  FlowDirection="LeftToRight" Data="M322,390.4c-4.4-0.2-8.8-0.1-13.1-0.7c-34.6-4.7-61.9-22.8-85.7-47.1c-4.9-4.9-5.9-11-3.2-17.3  c1.2-2.8,3.4-5.3,5.5-7.5c10.7-11.1,22.9-20.5,36.2-28.3c18.6-10.8,38.4-17.7,60.1-17.6c3.5,0,4.6-1,4.6-4.6  c-0.2-31.8-0.1-63.7-0.1-95.6c0-5,0-5-5.2-5h-70.9c-5.5,0-7.2-1.7-7.2-7.1V83.3c-2-0.1-3.5-0.2-5.1-0.5H149c-19,0-38,0-57,0.1  c-8.7,0.1-14,5.7-14.1,14.2V114c-0.1,92.4-0.1,184.8,0,277.2c0,2.5,0.6,5.3,1.8,7.5c2.9,5.5,8,7,13.9,7h218.7  c9.1,0,15-6.4,13.6-15.1C324.7,390.5,323.3,390.5,322,390.4z M282.8,273.9c-12.7,0.1-25.3,0.1-37.9,0.1h-121c-0.9,0-1.7,0.1-2.6,0  c-3.2-0.2-5.3-1.6-5.4-5c-0.1-3,2.1-5.3,5.5-5.4c6-0.2,12-0.1,18-0.1h143.5c3.4,0.2,5.7,2.5,5.7,5.3  C288.5,271.6,286.1,273.9,282.8,273.9z M119.3,119.7c0.5-0.6,2.1-0.4,3.2-0.4h78.3c3.8,0,6.2,1.9,6.3,4.9c0.2,3.1-2.2,5.4-6.2,5.4  c-13.2,0.1-26.5,0-39.7,0h-39.4c-3,0-5.9-0.9-5.8-4.3C116.1,123.4,117.9,121.4,119.3,119.7z M120.3,167.5c2.6-0.3,5.3-0.2,7.9-0.2  h83.2c1.2,0,2.3,0,3.4,0.1c2.9,0.4,4.4,2.2,4.5,5.1c0,2.9-1.7,4.6-4.5,5.1c-1,0.2-2,0.1-3,0.1h-44.6c-14.2,0-28.5,0.1-42.8,0  c-1.4,0-2.7,0.1-4.1-0.1c-2.8-0.4-4.5-2.1-4.5-5C115.8,169.7,117.5,167.8,120.3,167.5z M122.8,215.5H281c0.9,0,1.7-0.1,2.6,0  c3,0.3,4.9,2,4.8,5.1c-0.1,2.9-1.9,4.8-4.9,5.2c-1.1,0.2-2.3,0.1-3.4,0.1h-78.3c-25.2,0-50.5,0-75.7,0.1h-3.4  c-4.6-0.1-6.8-1.7-6.9-5C115.7,217.5,118.3,215.5,122.8,215.5z M206.3,365.9c-0.3,1.5-2.1,2.8-3.5,3.9c-0.6,0.5-1.9,0.3-2.9,0.3  h-77.6c-4.5,0-6.2-1.2-6.5-4.4c-0.3-3.7,1.6-5.8,6-5.8c13.3-0.1,26.5-0.1,39.8-0.1c12.6,0,25.2-0.1,37.8,0c1.7,0,4,0.3,5.2,1.3  C205.7,362.1,206.6,364.4,206.3,365.9z M201.6,321.9c-5.2,0.2-10.5,0.1-15.7,0.1h-62.6c-1.4,0-3.1,0.2-4-0.5  c-1.4-1.1-3.2-2.9-3.2-4.4c0-1.7,1.5-3.7,2.9-4.9c0.9-0.8,2.8-0.6,4.3-0.6h37.9c12.5,0,25,0,37.5-0.1c1,0,2,0,3,0.1  c3,0.3,4.8,1.9,5,5C206.9,319.6,204.8,321.8,201.6,321.9z M253.5,88.3c0.1,0.1,0,0.9,0,1.6c0,20.8,0.1,41.5-0.1,62.3  c0,3.3,0.9,4.2,4.2,4.2c20-0.1,40-0.1,60-0.1h5.2C299.2,133.1,276.3,110.7,253.5,88.3z"  >
+                                                            </Path>
+                                                            <Path Fill="{StaticResource MainColor}" Stretch="Fill"
+                                          Width="10" Height="5" Margin="13,8,0,0"
+                                          FlowDirection="LeftToRight" Data="M410.8,327c-9.3-7.8-18.3-15.9-28.1-23c-18.2-13.1-38.5-21.1-61.5-22c-8.1,1.4-16.3,2.2-24.2,4.4  c-25.2,6.7-45.9,21.1-64.1,39.3c-4.9,4.9-4.9,7.2,0,12.2c11.1,11.3,23.5,20.9,37.4,28.5c29.7,16.4,60.2,19.3,91.7,5  c18.9-8.6,34.4-22,49.4-36C414.2,332.8,414,329.7,410.8,327z M320.8,361.8c-16.2,0-29.5-13.5-29.6-30c-0.1-16.9,13.3-30.6,29.9-30.6  c16.4-0.1,30.5,14,30.4,30.3C351.4,348.4,337.8,361.8,320.8,361.8z M341,331.2c0.1,11.1-8.7,20.1-19.8,20.1  c-10.6,0-19.6-9.1-19.6-20c0-10.7,8.7-19.6,19.4-19.7C331.8,311.5,340.9,320.4,341,331.2z"  >
 
+                                                            </Path>
+                                                        </Grid>
+                                                    </Button>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
 
-                    </DataGrid.Columns>
+                                </DataGrid.Columns>
                 </DataGrid>
                         </Grid>
                     </Border>

@@ -1043,6 +1043,8 @@ namespace Restaurant.Classes
                 secondTitle = AppSettings.resourcemanager.GetString("trItems");
             else if (secondTitle == "coupon")
                 secondTitle = AppSettings.resourcemanager.GetString("trCoupon");
+            else if (secondTitle == "coupons")
+                secondTitle = AppSettings.resourcemanager.GetString("trCoupons");
             else if (secondTitle == "offers")
                 secondTitle = AppSettings.resourcemanager.GetString("trOffer");
             else if (secondTitle == "invoice")
@@ -1121,6 +1123,8 @@ namespace Restaurant.Classes
                 secondTitle = AppSettings.resourcemanager.GetString("trCash_");
             else if (secondTitle == "invoicesClasses")
                 secondTitle = AppSettings.resourcemanager.GetString("invoicesClasses");
+            else if (secondTitle == "membership")
+                secondTitle = AppSettings.resourcemanager.GetString("trMembership");
             //////////////////////////////////////////////////////////////////////////////
 
             textBlock.Text = firstTitle + " / " + secondTitle;

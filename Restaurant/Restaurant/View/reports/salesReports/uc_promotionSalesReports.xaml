@@ -52,7 +52,7 @@
                         </Grid.ColumnDefinitions>
                         
                         <Border x:Name="bdr_coupon"  Visibility="Visible" Background="{StaticResource SecondColor}"  Grid.Column="0"  BorderThickness="0"  Height="40" Width="60" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="10,5,0,-1">
-                            <Button x:Name="btn_coupons"  Background="Transparent"  Tag="coupon"
+                            <Button x:Name="btn_coupons"  Background="Transparent"  Tag="coupons"
                                     materialDesign:RippleAssist.Feedback="Transparent" Click="btn_coupons_Click"
                                     BorderBrush="Transparent" Height="auto" Width="60">
                                 <Button.Triggers>
@@ -374,7 +374,7 @@
                         <DataGridTextColumn x:Name="col_code" Width="*" Header="Code" Binding="{Binding Copcode}" Visibility="Visible"/>
                         <DataGridTextColumn x:Name="col_coupoValue" Width="*"  Header="Value" >
                              <DataGridTextColumn.Binding >
-                                  <MultiBinding Converter="{StaticResource accuracyDiscountConverter}" >
+                                  <MultiBinding  Converter="{StaticResource accuracyDiscountConverter}">
                                        <Binding Path="CopdiscountType" />
                                        <Binding Path="CopdiscountValue" />
                                   </MultiBinding>

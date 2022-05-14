@@ -82,7 +82,7 @@ namespace Restaurant.View.reports.salesReports
 
                 chk_allBranches.IsChecked = true;
 
-                //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_preparingOrders.Tag.ToString());
+                HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_membership.Tag.ToString());
 
             }
             catch (Exception ex)

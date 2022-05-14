@@ -117,14 +117,17 @@ namespace Restaurant.View.reports.salesReports
 
                 chk_allCoupon.IsChecked = true;
 
+                //await Task.Delay(500);
                 btn_coupons_Click(btn_coupons , null);
+                //btn_offers_Click(btn_offers , null);
+                //Btn_invoicesClasses_Click(btn_invoicesClasses , null);
 
                 HelpClass.EndAwait(grid_main);
             }
-                catch (Exception ex)
-                {
-                    HelpClass.EndAwait(grid_main);
-                    HelpClass.ExceptionMessage(ex, this);
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 

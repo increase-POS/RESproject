@@ -77,8 +77,7 @@ namespace Restaurant.View.reports.salesReports
         {//load
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -92,36 +91,62 @@ namespace Restaurant.View.reports.salesReports
                 translate();
                 #endregion
 
+                fillServices();
+
+                chk_allBranches.IsChecked = true;
+                chk_allPos.IsChecked = true;
+                chk_allServices.IsChecked = true;
                 dp_invoiceDate.SelectedDate = DateTime.Now;
-                chk_invoice.IsChecked = true;
 
-                HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_invoice.Tag.ToString());
+                Btn_Invoice_Click(btn_invoice , null);
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
+        #region methods
+        private void fillServices()
+        {
+            var typelist = new[] {
+                new { Text = AppSettings.resourcemanager.GetString("trDiningHallType")       , Value = "s" },
+                new { Text = AppSettings.resourcemanager.GetString("trTakeAway")             , Value = "ts" },
+                new { Text = AppSettings.resourcemanager.GetString("trSelfService")          , Value = "ss" },
+                 };
+            cb_sevices.SelectedValuePath = "Value";
+            cb_sevices.DisplayMemberPath = "Text";
+            cb_sevices.ItemsSource = typelist;
+            cb_sevices.SelectedIndex = -1;
+        }
+        private async void callSearch(object sender)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private void translate()
         {
             tt_invoice.Content = AppSettings.resourcemanager.GetString("trInvoices");
-            tt_order.Content = AppSettings.resourcemanager.GetString("trOrders");
-            tt_quotation.Content = AppSettings.resourcemanager.GetString("trQuotations_");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_invoiceDate, AppSettings.resourcemanager.GetString("trDate"));
 
-            chk_invoice.Content = AppSettings.resourcemanager.GetString("trInvoice");
-            chk_return.Content = AppSettings.resourcemanager.GetString("trReturn");
-            chk_drafs.Content = AppSettings.resourcemanager.GetString("trDraft");
-
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branches, AppSettings.resourcemanager.GetString("trBranchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_pos, AppSettings.resourcemanager.GetString("trPosHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_sevices, AppSettings.resourcemanager.GetString("typesOfService") + "...");
 
             chk_allBranches.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_allPos.Content = AppSettings.resourcemanager.GetString("trAll");
@@ -129,7 +154,7 @@ namespace Restaurant.View.reports.salesReports
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txt_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
 
-            col_No.Header = AppSettings.resourcemanager.GetString("trNum");
+            col_No.Header = AppSettings.resourcemanager.GetString("trNo.");
             col_type.Header = AppSettings.resourcemanager.GetString("trType");
             col_branch.Header = AppSettings.resourcemanager.GetString("trBranch");
             col_pos.Header = AppSettings.resourcemanager.GetString("trPOS");
@@ -141,6 +166,7 @@ namespace Restaurant.View.reports.salesReports
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
+            tt_preview.Content = AppSettings.resourcemanager.GetString("trPreview");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
 
         }
@@ -164,42 +190,11 @@ namespace Restaurant.View.reports.salesReports
             (
             s.invNumber.ToLower().Contains(searchText)
             ||
-            s.tax.ToString().ToLower().Contains(searchText)
-            )
-            &&
-            (//invType
-                (
-                    selectedTab == 0 //invoice
-                    ?
-                    (chk_invoice.IsChecked == true ? s.invType == "s" : false)
-                    ||
-                    (chk_return.IsChecked == true ? s.invType == "sb" : false)
-                    ||
-                    (chk_drafs.IsChecked == true ? s.invType == "sd" || s.invType == "sbd" : false)
-                    : false
-                )
-                ||
-                (
-                    selectedTab == 1 //order
-                    ?
-                    (chk_invoice.IsChecked == true ? s.invType == "or" : false)
-                    ||
-                    (chk_return.IsChecked == true ? s.invType == "ors" : false)
-                    ||
-                    (chk_drafs.IsChecked == true ? s.invType == "ord" : false)
-                    : false
-                )
-                ||
-                (
-                    selectedTab == 2 //quotation
-                    ?
-                    (chk_invoice.IsChecked == true ? s.invType == "q" : false)
-                    ||
-                    (chk_return.IsChecked == true ? s.invType == "qs" : false)
-                    ||
-                    (chk_drafs.IsChecked == true ? s.invType == "qd" : false)
-                    : false
-                )
+            s.branchCreatorName.ToString().ToLower().Contains(searchText)
+            ||
+            s.posName.ToString().ToLower().Contains(searchText)
+            ||
+            s.invType.ToString().ToLower().Contains(searchText)
             )
             &&
             //branchID
@@ -207,14 +202,15 @@ namespace Restaurant.View.reports.salesReports
             &&
             //posID
             (cb_pos.SelectedIndex != -1 ? s.posId == Convert.ToInt32(cb_pos.SelectedValue) : true)
+             &&
+            //service
+            (cb_sevices.SelectedIndex != -1 ? s.invType == cb_sevices.SelectedValue.ToString() : true)
             );
 
             itemTrasferInvoicesQueryExcel = itemTrasferInvoicesQuery.ToList();
             RefreshIemTrasferInvoicesView();
             fillBranches();
-            fillColumnChart();
-            fillPieChart();
-            fillRowChart();
+           
         }
 
         void RefreshIemTrasferInvoicesView()
@@ -227,6 +223,10 @@ namespace Restaurant.View.reports.salesReports
 
             dgInvoice.ItemsSource = itemTrasferInvoicesQuery;
             txt_count.Text = itemTrasferInvoicesQuery.Count().ToString();
+
+            fillColumnChart();
+            fillPieChart();
+            fillRowChart();
         }
 
         private void fillBranches()
@@ -235,106 +235,42 @@ namespace Restaurant.View.reports.salesReports
             cb_branches.DisplayMemberPath = "branchCreatorName";
             cb_branches.ItemsSource = itemTrasferInvoices.Select(i => new { i.branchCreatorName, i.branchCreatorId }).Distinct();
         }
+
+        private void fillPos(int bID)
+        {
+            cb_pos.SelectedValuePath = "posId";
+            cb_pos.DisplayMemberPath = "posName";
+            cb_pos.ItemsSource = itemTrasferInvoicesQuery.Where(t => t.branchCreatorId == bID)
+                                                         .Select(i => new
+                                                         {
+                                                             i.posName,
+                                                             i.posId
+                                                         }).Distinct();
+        }
+
+        #endregion
+
+        #region events
         private async void Btn_Invoice_Click(object sender, RoutedEventArgs e)
         {//invoice tab
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
-                selectedTab = 0;
                 txt_search.Text = "";
 
-                chk_invoice.Content = AppSettings.resourcemanager.GetString("tr_Invoice");
-                chk_return.Content = AppSettings.resourcemanager.GetString("trReturn");
-
-                path_order.Fill = Brushes.White;
-                path_quotation.Fill = Brushes.White;
-                bdrMain.RenderTransform = Animations.borderAnimation(50, bdrMain, true);
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_invoice);
                 path_invoice.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
                 await Search();
                 rowToHide.Height = rowToShow.Height;
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        private async void Btn_order_Click(object sender, RoutedEventArgs e)
-        {//order tab
-            try
-            {
-                
-                    HelpClass.StartAwait(grid_main);
-
-                HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
-
-                selectedTab = 1;
-                txt_search.Text = "";
-
-                chk_invoice.Content = AppSettings.resourcemanager.GetString("trOrder");
-                chk_return.Content = AppSettings.resourcemanager.GetString("trSaved");
-
-                path_invoice.Fill = Brushes.White;
-                path_quotation.Fill = Brushes.White;
-                bdrMain.RenderTransform = Animations.borderAnimation(50, bdrMain, true);
-                ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_order);
-                path_order.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
-
-                await Search();
-                rowToHide.Height = new GridLength(0);
-
-                
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-
-
-        }
-        private async void Btn_quotation_Click(object sender, RoutedEventArgs e)
-        {//quotation tab
-            try
-            {
-                
-                    HelpClass.StartAwait(grid_main);
-
-                HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
-
-                selectedTab = 2;
-                txt_search.Text = "";
-
-                chk_invoice.Content = AppSettings.resourcemanager.GetString("trQuotation");
-                chk_return.Content = AppSettings.resourcemanager.GetString("trSaved");
-
-                path_invoice.Fill = Brushes.White;
-                path_order.Fill = Brushes.White;
-                bdrMain.RenderTransform = Animations.borderAnimation(50, bdrMain, true);
-                ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_quotation);
-                path_quotation.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
-
-                await Search();
-                rowToHide.Height = new GridLength(0);
-
-                
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -342,42 +278,188 @@ namespace Restaurant.View.reports.salesReports
         {//select date
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 await RefreshItemTransferInvoiceList();
                 await Search();
-                fillBranches();
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
         private async void RefreshViewCheckbox(object sender, RoutedEventArgs e)
         {
+            callSearch(sender);
+        }
+
+        private async void Chk_allBranches_Checked(object sender, RoutedEventArgs e)
+        {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
-                await Search();
+                cb_branches.SelectedIndex = -1;
+                cb_branches.IsEnabled = false;
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        private async void Chk_allBranches_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                cb_branches.IsEnabled = true;
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void Chk_allPos_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                cb_pos.SelectedIndex = -1;
+                cb_pos.IsEnabled = false;
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void Chk_allPos_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                cb_pos.IsEnabled = true;
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void Txt_search_TextChanged(object sender, TextChangedEventArgs e)
+        {//search
+            callSearch(sender);
+        }
+
+        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
+        {//refresh
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                searchText = "";
+                txt_search.Text = "";
+                chk_allServices.IsChecked = true;
+                chk_allBranches.IsChecked = true;
+                chk_allPos.IsChecked = true;
+
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void Cb_pos_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            callSearch(sender);
+        }
+
+        private async void cb_branches_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                fillPos(Convert.ToInt32(cb_branches.SelectedValue));
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void Cb_sevices_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            callSearch(sender);
+        }
+
+        private async void Chk_allServices_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                cb_sevices.SelectedIndex = -1;
+                cb_sevices.IsEnabled = false;
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void Chk_allServices_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                cb_sevices.IsEnabled = true;
+
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        #endregion
+
+        #region charts
         private void fillPieChart()
         {
             List<string> titles = new List<string>();
@@ -438,22 +520,13 @@ namespace Restaurant.View.reports.salesReports
             IEnumerable<int> y = null;
             IEnumerable<int> z = null;
 
-            string trChk1 = "", trChk2 = "", condition1 = "", condition2 = "", condition3 = "", condition4 = "";
-
-            if (selectedTab == 0)
-            { trChk1 = "tr_Sales"; trChk2 = "trReturned"; condition1 = "s"; condition2 = "sb"; condition3 = "sd"; condition4 = "sbd"; }
-            else if (selectedTab == 1)
-            { trChk1 = "trOrder"; trChk2 = "trSaved"; condition1 = "or"; condition2 = "ors"; condition3 = "ord"; condition4 = "ord"; }
-            else if (selectedTab == 2)
-            { trChk1 = "trQuotation"; trChk2 = "trSaved"; condition1 = "q"; condition2 = "qs"; condition3 = "qd"; condition4 = "qd"; }
-
             var temp = itemTrasferInvoicesQuery;
             var result = temp.GroupBy(s => s.branchCreatorId).Select(s => new
             {
                 branchCreatorId = s.Key,
-                countS = s.Where(m => m.invType == condition1).Count(),
-                countSb = s.Where(m => m.invType == condition2).Count(),
-                countSd = s.Where(m => (m.invType == condition3) || (m.invType == condition4)).Count()
+                countS = s.Where(m => m.invType == "s").Count(),
+                countSb = s.Where(m => m.invType == "ts").Count(),
+                countSd = s.Where(m => (m.invType == "ss")).Count()
             });
             x = result.Select(m => m.countS);
             y = result.Select(m => m.countSb);
@@ -472,10 +545,9 @@ namespace Restaurant.View.reports.salesReports
 
             List<string> titles = new List<string>()
             {
-
-                AppSettings.resourcemanager.GetString(trChk1),
-                AppSettings.resourcemanager.GetString(trChk2),
-                AppSettings.resourcemanager.GetString("trDraft")
+                AppSettings.resourcemanager.GetString("trDiningHallType"),
+                AppSettings.resourcemanager.GetString("trTakeAway"),
+                AppSettings.resourcemanager.GetString("trSelfService")
             };
             int xCount;
             if (x.Count() <= 6) xCount = x.Count();
@@ -545,13 +617,14 @@ namespace Restaurant.View.reports.salesReports
             {
                 branchCreatorId = s.Key,
                 totalS = s.Where(x => x.invType == "s").Sum(x => x.totalNet),
-                totalSb = s.Where(x => x.invType == "sb").Sum(x => x.totalNet)
+                totalSb = s.Where(x => x.invType == "ts").Sum(x => x.totalNet),
+                resultTemp = s.Where(x => x.invType == "ss").Sum(x => x.totalNet)
             }
             );
-            var resultTotal = result.Select(x => new { x.branchCreatorId, total = x.totalS - x.totalSb }).ToList();
+            
             pTemp = result.Select(x => (decimal)x.totalS);
             pbTemp = result.Select(x => (decimal)x.totalSb);
-            resultTemp = result.Select(x => (decimal)x.totalS);
+            resultTemp = result.Select(x => (decimal)x.resultTemp);
             var tempName = temp.GroupBy(s => s.branchCreatorName).Select(s => new
             {
                 uUserName = s.Key
@@ -564,9 +637,9 @@ namespace Restaurant.View.reports.salesReports
             List<decimal> sub = new List<decimal>();
             List<string> titles = new List<string>()
             {
-                AppSettings.resourcemanager.GetString("trNetSales"),
-                AppSettings.resourcemanager.GetString("trTotalReturn"),
-                AppSettings.resourcemanager.GetString("trTotalSales")
+                AppSettings.resourcemanager.GetString("trDiningHallType"),
+                AppSettings.resourcemanager.GetString("trTakeAway"),
+                AppSettings.resourcemanager.GetString("trSelfService")
             };
             for (int i = 0; i < pbTemp.Count(); i++)
             {
@@ -599,38 +672,9 @@ namespace Restaurant.View.reports.salesReports
             rowChart.Series = rowChartData;
         }
 
-        private async void cb_branches_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                
-                    HelpClass.StartAwait(grid_main);
-
-                fillPos(Convert.ToInt32(cb_branches.SelectedValue));
-
-                
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void fillPos(int bID)
-        {
-            cb_pos.SelectedValuePath = "posId";
-            cb_pos.DisplayMemberPath = "posName";
-            cb_pos.ItemsSource = itemTrasferInvoicesQuery.Where(t => t.branchCreatorId == bID)
-                                                         .Select(i => new
-                                                         {
-                                                             i.posName,
-                                                             i.posId
-                                                         }).Distinct();
-        }
-
+        #endregion
+       
+        #region report
         private void BuildReport()
         {
             List<ReportParameter> paramarr = new List<ReportParameter>();
@@ -704,8 +748,7 @@ namespace Restaurant.View.reports.salesReports
         {//pdf
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 #region
 
@@ -719,14 +762,12 @@ namespace Restaurant.View.reports.salesReports
                 }
 
                 #endregion
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -735,8 +776,7 @@ namespace Restaurant.View.reports.salesReports
         {//print
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 List<ItemTransferInvoice> query = new List<ItemTransferInvoice>();
 
                 #region
@@ -745,14 +785,12 @@ namespace Restaurant.View.reports.salesReports
                 LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
 
                 #endregion
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -761,8 +799,7 @@ namespace Restaurant.View.reports.salesReports
         {//excel
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 List<ItemTransferInvoice> query = new List<ItemTransferInvoice>();
 
                 #region
@@ -777,14 +814,12 @@ namespace Restaurant.View.reports.salesReports
                     }
                 });
                 #endregion
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -793,8 +828,7 @@ namespace Restaurant.View.reports.salesReports
         {//preview
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 #region
                 Window.GetWindow(this).Opacity = 0.2;
@@ -815,207 +849,181 @@ namespace Restaurant.View.reports.salesReports
                 }
                 Window.GetWindow(this).Opacity = 1;
                 #endregion
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
-        private async void Chk_allBranches_Checked(object sender, RoutedEventArgs e)
+
+        #endregion
+
+        #region datagrid events
+        private void pdfRowinDatagrid(object sender, RoutedEventArgs e)
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
-
-                cb_branches.SelectedIndex = -1;
-                cb_branches.IsEnabled = false;
-
-                
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private async void Chk_allBranches_Unchecked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                
-                    HelpClass.StartAwait(grid_main);
-
-                cb_branches.IsEnabled = true;
-
-                
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private async void Chk_allPos_Checked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                
-                    HelpClass.StartAwait(grid_main);
-
-                cb_pos.SelectedIndex = -1;
-                cb_pos.IsEnabled = false;
-
-
-                
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private async void Chk_allPos_Unchecked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                
-                    HelpClass.StartAwait(grid_main);
-
-                cb_pos.IsEnabled = true;
-
-                
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private async void Txt_search_TextChanged(object sender, TextChangedEventArgs e)
-        {//search
-            try
-            {
-                
-                    HelpClass.StartAwait(grid_main);
-
-                await Search();
-
-                
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-
-
-        }
-
-        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
-        {//refresh
-            try
-            {
-                
-                    HelpClass.StartAwait(grid_main);
-
-                await RefreshItemTransferInvoiceList();
-                await Search();
-
-                
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private async void Cb_pos_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                
-                    HelpClass.StartAwait(grid_main);
-
-                await RefreshItemTransferInvoiceList();
-                await Search();
-
-                
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-
-        Invoice invoice;
-        private async void DgInvoice_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                
-                    HelpClass.StartAwait(grid_main);
-                invoice = new Invoice();
-                if (dgInvoice.SelectedIndex != -1)
-                {
-
-                    ItemTransferInvoice item = dgInvoice.SelectedItem as ItemTransferInvoice;
-                    if (item.invoiceId > 0)
+                HelpClass.StartAwait(grid_main);
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
                     {
-                        /*
-                        invoice = await invoice.GetByInvoiceId(item.invoiceId);
-                        MainWindow.mainWindow.BTN_sales_Click(MainWindow.mainWindow.btn_sales, null);
-                        uc_sales.Instance.UserControl_Loaded(null, null);
-                        uc_sales.Instance.Btn_receiptInvoice_Click(uc_sales.Instance.btn_reciptInvoice, null);
-                        uc_receiptInvoice.Instance.UserControl_Loaded(null, null);
-                        uc_receiptInvoice._InvoiceType = invoice.invType;
-                        uc_receiptInvoice.Instance.invoice = invoice;
-                        uc_receiptInvoice.isFromReport = true;
-                        if (item.archived == 0)
-                            uc_receiptInvoice.archived = false;
-                        else
-                            uc_receiptInvoice.archived = true;
-                        await uc_receiptInvoice.Instance.fillInvoiceInputs(invoice);
-                        */
+                        //POSOpenCloseModel row = (POSOpenCloseModel)dgClosing.SelectedItems[0];
+                        //cashTransID = row.cashTransId;
+                        //openCashTransID = row.openCashTransId.Value;
+                        //await getopquery(row);
+                        //if (opquery.Count() == 0)
+                        //{
+                        //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoChange"), animation: ToasterAnimation.FadeIn);
+                        //}
+                        //else
+                        //{
+                        //    BuildOperationReport();
+
+                        //    saveFileDialog.Filter = "PDF|*.pdf;";
+
+                        //    if (saveFileDialog.ShowDialog() == true)
+                        //    {
+                        //        string filepath = saveFileDialog.FileName;
+                        //        LocalReportExtensions.ExportToPDF(rep, filepath);
+                        //    }
+                        //}
                     }
-                }
-                
-                    HelpClass.EndAwait(grid_main);
+
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
+        private void printRowinDatagrid(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        //POSOpenCloseModel row = (POSOpenCloseModel)dgClosing.SelectedItems[0];
+                        //cashTransID = row.cashTransId;
+                        //openCashTransID = row.openCashTransId.Value;
+                        //await getopquery(row);
+                        //if (opquery.Count() == 0)
+                        //{
+                        //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoChange"), animation: ToasterAnimation.FadeIn);
+
+                        //}
+                        //else
+                        //{
+                        //    BuildOperationReport();
+
+                        //    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
+                        //}
+                    }
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void excelRowinDatagrid(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        //POSOpenCloseModel row = (POSOpenCloseModel)dgClosing.SelectedItems[0];
+                        //cashTransID = row.cashTransId;
+                        //openCashTransID = row.openCashTransId.Value;
+                        //await getopquery(row);
+                        //if (opquery.Count() == 0)
+                        //{
+                        //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoChange"), animation: ToasterAnimation.FadeIn);
+                        //}
+                        //else
+                        //{
+                        //    BuildOperationReport();
+
+                        //    this.Dispatcher.Invoke(() =>
+                        //    {
+                        //        saveFileDialog.Filter = "EXCEL|*.xls;";
+                        //        if (saveFileDialog.ShowDialog() == true)
+                        //        {
+                        //            string filepath = saveFileDialog.FileName;
+                        //            LocalReportExtensions.ExportToExcel(rep, filepath);
+                        //        }
+                        //    });
+                        //}
+                    }
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void previewRowinDatagrid(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        //POSOpenCloseModel row = (POSOpenCloseModel)dgClosing.SelectedItems[0];
+                        //cashTransID = row.cashTransId;
+                        //openCashTransID = row.openCashTransId.Value;
+                        //await getopquery(row);
+                        //if (opquery.Count() == 0)
+                        //{
+                        //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoChange"), animation: ToasterAnimation.FadeIn);
+
+                        //}
+                        //else
+                        //{
+                        //    string pdfpath = "";
+
+                        //    pdfpath = @"\Thumb\report\temp.pdf";
+                        //    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+
+                        //    BuildOperationReport();
+                        //    LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                        //    wd_previewPdf w = new wd_previewPdf();
+                        //    w.pdfPath = pdfpath;
+                        //    if (!string.IsNullOrEmpty(w.pdfPath))
+                        //    {
+                        //        // w.ShowInTaskbar = false;
+                        //        w.ShowDialog();
+                        //        w.wb_pdfWebViewer.Dispose();
+                        //    }
+                        //    Window.GetWindow(this).Opacity = 1;
+                        //}
+                    }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        #endregion
     }
 }
