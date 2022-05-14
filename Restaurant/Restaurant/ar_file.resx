@@ -4021,4 +4021,7 @@
   <data name="theShippingCompany" xml:space="preserve">
     <value>شركة الشحن</value>
   </data>
+  <data name="trErrorDuplicateUserFullNameToolTip" xml:space="preserve">
+    <value>الاسم الكامل للمستخدم محجوز مسبقاً</value>
+  </data>
 </root>

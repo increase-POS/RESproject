@@ -4036,4 +4036,7 @@ Please add Email in setting</value>
   <data name="theShippingCompany" xml:space="preserve">
     <value>Shipping Company</value>
   </data>
+  <data name="trErrorDuplicateUserFullNameToolTip" xml:space="preserve">
+    <value>User full name is already exist</value>
+  </data>
 </root>
