@@ -18,13 +18,14 @@ namespace Restaurant.Classes
 {
     public class User
     {
-
         public int userId { get; set; }
         public string username { get; set; }
         public string password { get; set; }
         public string name { get; set; }
         public string lastname { get; set; }
-        public string fullName { get; set; }
+        //public string fullName { get; set; }
+        public string fullName
+        { get { return name + " " + lastname; } }
         public string job { get; set; }
         public string workHours { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }

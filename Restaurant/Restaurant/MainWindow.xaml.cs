@@ -178,6 +178,27 @@ namespace Restaurant
                 }
             }
         }
+        async void loading_itemUnitsUsersList()
+        {
+            try
+            {
+                FillCombo.itemUnitsUsersList = await FillCombo.RefreshItemUnitUser();
+            }
+            catch (Exception)
+            {
+                loading_itemUnitsUsersList();
+                catchError.Add("loading_itemUnitsUsersList");
+                catchErrorCount++;
+            }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("loading_itemUnitsUsersList"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
         async void loading_getUserPersonalInfo()
         {
             #region user personal info
@@ -1295,6 +1316,7 @@ namespace Restaurant
                 loadingList.Add(new keyValueBool { key = "loading_getStatusesOfPreparingOrder", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_typesOfService", value = false });
                 loadingList.Add(new keyValueBool { key = "loading_maxDiscount", value = false });
+                loadingList.Add(new keyValueBool { key = "loading_itemUnitsUsersList", value = false });
 
 
 
@@ -1326,6 +1348,7 @@ namespace Restaurant
                 loading_getStatusesOfPreparingOrder();
                 loading_typesOfService();
                 loading_maxDiscount();
+                loading_itemUnitsUsersList();
 
                
                 do
