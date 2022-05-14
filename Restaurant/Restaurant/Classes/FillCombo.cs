@@ -515,22 +515,17 @@ namespace Restaurant.Classes
         static public List<User> usersList;
         static public List<User> driversList;
         //static public List<User> salesManList;
-
         static public async Task<IEnumerable<User>> RefreshUsers()
         {
             usersList = await user.Get();
             return usersList;
         }
-
         static public async Task<IEnumerable<User>> RefreshDrivers()
         {
             if (usersList is null)
                 await RefreshUsers();
             driversList = usersList.Where(x => x.isActive == 1 && x.isAdmin != true && x.job == "deliveryEmployee").ToList();
-            foreach (var d in driversList)
-            {
-                d.name = d.name + " " + d.lastname;
-            }
+            
             return driversList;
         }
 
@@ -544,7 +539,8 @@ namespace Restaurant.Classes
             user.name = "-";
             users.Insert(0, user);
             cmb.ItemsSource = users;
-            cmb.DisplayMemberPath = "name";
+            //cmb.DisplayMemberPath = "name";
+            cmb.DisplayMemberPath = "fullName";
             cmb.SelectedValuePath = "userId";
             cmb.SelectedIndex = -1;
         }
@@ -554,7 +550,8 @@ namespace Restaurant.Classes
             if (driversList is null)
                 await RefreshDrivers();
             cmb.ItemsSource = driversList;
-            cmb.DisplayMemberPath = "name";
+            //cmb.DisplayMemberPath = "name";
+            cmb.DisplayMemberPath = "fullName";
             cmb.SelectedValuePath = "userId";
             cmb.SelectedIndex = -1;
         }
@@ -572,27 +569,14 @@ namespace Restaurant.Classes
         }
         static public async Task FillComboUsersForDelivery(ComboBox cmb, string job,int customerId)
         {
-            var users =await user.getUsersForDelivery(job, customerId);
+            var users = await user.getUsersForDelivery(job, customerId);
             cmb.ItemsSource = users;
             cmb.DisplayMemberPath = "fullName";
             cmb.SelectedValuePath = "userId";
             cmb.SelectedIndex = -1;
         }
-        //static public async Task<IEnumerable<User>> RefreshSalesMan()
-        //{
-        //    string deliveryPermission = "salesOrders_delivery";
-        //    salesManList = await user.getBranchSalesMan(MainWindow.branchLogin.branchId, deliveryPermission);
-        //    return salesManList;
-        //}
-        //static public async Task FillComboSalesMan(ComboBox cmb)
-        //{
-        //    if (salesManList is null)
-        //        await RefreshSalesMan();
-           
-        //    cmb.ItemsSource = salesManList;
-        //    cmb.DisplayMemberPath = "name";
-        //    cmb.SelectedValuePath = "userId";
-        //}
+        
+
 
 
         #endregion
@@ -900,9 +884,9 @@ namespace Restaurant.Classes
         }
         #endregion
         #region ItemUnitUser
-        static public List<ItemUnitUser> itemUnitsUsersList = new List<ItemUnitUser>();
+        static public List<ItemUnitUser> itemUnitsUsersList;
         static public ItemUnitUser itemUnitsUser = new ItemUnitUser();
-        static public async Task<IEnumerable<ItemUnitUser>> RefreshItemUnitUser()
+        static public async Task<List<ItemUnitUser>> RefreshItemUnitUser()
         {
             itemUnitsUsersList = await itemUnitsUser.GetByUserId(MainWindow.userLogin.userId);
             return itemUnitsUsersList;
