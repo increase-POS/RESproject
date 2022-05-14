@@ -271,6 +271,7 @@
       <DependentUpon>uc_squareCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="converters\accuracyDiscountConverter.cs" />
+    <Compile Include="converters\accuracyTaxConverter.cs" />
     <Compile Include="converters\agentCompanyConverter.cs" />
     <Compile Include="converters\agentNameConverter.cs" />
     <Compile Include="converters\agentTypeConverter.cs" />

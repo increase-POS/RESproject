@@ -416,7 +416,7 @@
                         <DataGridTextColumn x:Name="col_user" Width="*"         Header="User" Binding="{Binding uUserAccName}" Visibility="Hidden"/>
                         <DataGridTextColumn x:Name="col_count" Width="*"        Header="QTY" Binding="{Binding count}" Visibility="Visible"/>
                         <DataGridTextColumn x:Name="col_discount" Width="*"     Header="Discount Value" Visibility="Visible" Binding="{Binding discountValue,Converter={StaticResource accuracyConverter}}"/>
-                        <DataGridTextColumn x:Name="col_tax" Width="*"          Header="Tax" Binding="{Binding tax ,Converter={StaticResource accuracyConverter}}" Visibility="Visible"/>
+                                    <DataGridTextColumn x:Name="col_tax" Width="*"          Header="Tax" Binding="{Binding tax ,Converter={StaticResource accuracyTaxConverter}}" Visibility="Visible"/>
                         <DataGridTextColumn x:Name="col_totalNet" Width="*"     Header="Total" Binding="{Binding totalNet,Converter={StaticResource accuracyConverter}}" Visibility="Visible"/>
                         <DataGridTemplateColumn Width="120" Header="" IsReadOnly="True" CanUserResize="False">
                              <DataGridTemplateColumn.CellTemplate>

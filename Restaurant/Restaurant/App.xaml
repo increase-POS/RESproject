@@ -8,6 +8,7 @@
     <!--StartupUri="MainWindow.xaml"-->
     <Application.Resources>
         <ResourceDictionary>
+            <converters:accuracyTaxConverter x:Key="accuracyTaxConverter"/>
             <converters:saleInvoiceConverterForReport x:Key="saleInvoiceConverterForReport"/>
             <converters:forAgentsConverters x:Key="forAgentsConverters"/>
             <converters:unlimitedRemainCoupon x:Key="unlimitedRemainCoupon"/>
