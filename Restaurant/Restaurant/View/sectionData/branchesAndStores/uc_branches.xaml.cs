@@ -689,7 +689,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
 
         #endregion
      
-        private void Btn_stores_Click(object sender, RoutedEventArgs e)
+        private async void Btn_stores_Click(object sender, RoutedEventArgs e)
         {
             // stores
             try
@@ -707,6 +707,7 @@ namespace Restaurant.View.sectionData.branchesAndStores
                     //if (w.isActive)
                     //{
                     //}
+                    await FillCombo.RefreshByBranchandUser();
 
                     Window.GetWindow(this).Opacity = 1;
 

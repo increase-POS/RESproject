@@ -70,7 +70,9 @@ namespace Restaurant.View
         int NumberDaysInMonth { get; set; }
         DispatcherTimer threadtimer10 = new DispatcherTimer();
         DispatcherTimer threadtimer30 = new DispatcherTimer();
-        public static int secondTimer10 = 10;
+        //public static int secondTimer10 = 10;
+        public static int secondTimer10 = 3;
+        //public static int secondTimer30 = 30;
         public static int secondTimer30 = 30;
         int SkipBestSeller = 0;
         int SkipIUStorage = 0;

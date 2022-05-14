@@ -203,12 +203,18 @@ namespace Restaurant.View.sectionData.persons
                     //chk duplicate userName
                     bool duplicateUserName = false;
                     duplicateUserName = await chkIfUserNameIsExists(tb_username.Text, 0);
+                    //chk duplicate userFullName
+                    bool duplicateUserFullName = true;
+                    if (duplicateUserName)
+                    {
+                        duplicateUserFullName = await chkIfUserFullNameIsExists(tb_name.Text, tb_lastname.Text, 0);
+                    }
                     //chk password length
                     bool passLength = false;
                     passLength = chkPasswordLength(pb_password.Password);
 
                     user = new User();
-                    if (HelpClass.validate(requiredControlList, this) && duplicateUserName && passLength && HelpClass.IsValidEmail(this))
+                    if (HelpClass.validate(requiredControlList, this) && duplicateUserName && duplicateUserFullName && passLength && HelpClass.IsValidEmail(this))
                     {
 
                             user.username = tb_username.Text;
@@ -274,59 +280,64 @@ namespace Restaurant.View.sectionData.persons
                 HelpClass.StartAwait(grid_main);
                 if (user.userId > 0)
                 {
-                    if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update") )
-                {
-                    //chk duplicate userName
-                    bool duplicateUserName = false;
-                duplicateUserName = await chkIfUserNameIsExists(tb_username.Text, user.userId);
-
-                if (HelpClass.validate(requiredControlList, this) && duplicateUserName && HelpClass.IsValidEmail(this))
-                {
-                        user.username = tb_username.Text;
-                        //user.password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password);
-                        user.name = tb_name.Text;
-                        user.lastname = tb_lastname.Text;
-                        user.job = cb_job.SelectedValue.ToString();
-                        user.workHours = tb_workHours.Text;
-                        user.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text; ;
-                        if (!tb_phone.Text.Equals(""))
-                            user.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
-                        user.email = tb_email.Text;
-                        user.address = tb_address.Text;
-                        user.updateUserId = MainWindow.userLogin.userId;
-                        user.notes = tb_notes.Text;
-                        //user.role = "";
-                        //user.details = "";
-
-                        int s = await user.save(user);
-                    if (s <= 0)
-                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                    else
+                    if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update"))
                     {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                        await Search();
-                        FillCombo.usersList = users.ToList();
-
-                        if (isImgPressed)
+                        //chk duplicate userName
+                        bool duplicateUserName = false;
+                        duplicateUserName = await chkIfUserNameIsExists(tb_username.Text, user.userId);
+                        //chk duplicate userFullName
+                        bool duplicateUserFullName = true;
+                        if (duplicateUserName)
                         {
-                            int userId = s;
-                            string b = await user.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + userId.ToString()), userId);
-                            user.image = b;
-                            isImgPressed = false;
-                            if (!b.Equals(""))
-                            {
-                                 getImg();
-                            }
+                            duplicateUserFullName = await chkIfUserFullNameIsExists(tb_name.Text, tb_lastname.Text, user.userId);
+                        }
+                        if (HelpClass.validate(requiredControlList, this) && duplicateUserName && duplicateUserFullName && HelpClass.IsValidEmail(this))
+                        {
+                            user.username = tb_username.Text;
+                            //user.password = Md5Encription.MD5Hash("Inc-m" + pb_password.Password);
+                            user.name = tb_name.Text;
+                            user.lastname = tb_lastname.Text;
+                            user.job = cb_job.SelectedValue.ToString();
+                            user.workHours = tb_workHours.Text;
+                            user.mobile = cb_areaMobile.Text + "-" + tb_mobile.Text; ;
+                            if (!tb_phone.Text.Equals(""))
+                                user.phone = cb_areaPhone.Text + "-" + cb_areaPhoneLocal.Text + "-" + tb_phone.Text;
+                            user.email = tb_email.Text;
+                            user.address = tb_address.Text;
+                            user.updateUserId = MainWindow.userLogin.userId;
+                            user.notes = tb_notes.Text;
+                            //user.role = "";
+                            //user.details = "";
+
+                            int s = await user.save(user);
+                            if (s <= 0)
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
                             {
-                                HelpClass.clearImg(btn_image);
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                                await Search();
+                                FillCombo.usersList = users.ToList();
+
+                                if (isImgPressed)
+                                {
+                                    int userId = s;
+                                    string b = await user.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + userId.ToString()), userId);
+                                    user.image = b;
+                                    isImgPressed = false;
+                                    if (!b.Equals(""))
+                                    {
+                                        getImg();
+                                    }
+                                    else
+                                    {
+                                        HelpClass.clearImg(btn_image);
+                                    }
+                                }
                             }
                         }
                     }
-                }
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                    else
+                        Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
                 }
                 else
                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
@@ -884,13 +895,24 @@ namespace Restaurant.View.sectionData.persons
             bool isValid = true;
             if (users == null)
                 await RefreshUsersList();
-            if (users.Any(i => i.name == username && i.userId != uId))
+            if (users.Any(i => i.username == username && i.userId != uId))
                 isValid = false;
             if (!isValid)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorDuplicateUserNameToolTip"), animation: ToasterAnimation.FadeIn);
             return isValid;
         }
-        private void Btn_stores_Click(object sender, RoutedEventArgs e)
+        private async Task<bool> chkIfUserFullNameIsExists(string name , string lastName, int uId)
+        {
+            bool isValid = true;
+            if (users == null)
+                await RefreshUsersList();
+            if (users.Any(i => i.name == name && i.lastname == lastName && i.userId != uId))
+                isValid = false;
+            if (!isValid)
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorDuplicateUserFullNameToolTip"), animation: ToasterAnimation.FadeIn);
+            return isValid;
+        }
+        private async void Btn_stores_Click(object sender, RoutedEventArgs e)
         {
             //stores
             try
@@ -904,7 +926,7 @@ namespace Restaurant.View.sectionData.persons
                     w.Id = user.userId;
                     w.userOrBranch = 'u';
                     w.ShowDialog();
-
+                    await FillCombo.RefreshByBranchandUser();
                     Window.GetWindow(this).Opacity = 1;
                 }
                 else

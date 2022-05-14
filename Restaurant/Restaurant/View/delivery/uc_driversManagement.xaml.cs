@@ -180,7 +180,7 @@ namespace Restaurant.View.delivery
             txt_driverOrdersCount.Text = AppSettings.resourcemanager.GetString("trOrders");
             txt_driverStatus.Text = AppSettings.resourcemanager.GetString("trStatus");
 
-            txt_companyName.Text = AppSettings.resourcemanager.GetString("trDriver");
+            txt_companyName.Text = AppSettings.resourcemanager.GetString("trCompany");
             txt_companyMobile.Text = AppSettings.resourcemanager.GetString("trMobile");
             txt_companyEmail.Text = AppSettings.resourcemanager.GetString("trEmail");
             txt_companyOrdersCount.Text = AppSettings.resourcemanager.GetString("trOrders");

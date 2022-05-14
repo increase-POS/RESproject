@@ -78,10 +78,10 @@ namespace Restaurant.View.windows
                 allUsersSource = await userModel.GetUsersActive();
                 allUsersSource = allUsersSource.Where(x => x.isAdmin != true).ToList();
                 selectedUsersSource = await groupModel.GetUsersByGroupId(groupId);
-                foreach (var u in selectedUsersSource)
-                {
-                    u.fullName = u.name + " " + u.lastname;
-                }
+                //foreach (var u in selectedUsersSource)
+                //{
+                //    u.fullName = u.name + " " + u.lastname;
+                //}
                 allUsers.AddRange(allUsersSource);
                 selectedUsers.AddRange(selectedUsersSource);
 
