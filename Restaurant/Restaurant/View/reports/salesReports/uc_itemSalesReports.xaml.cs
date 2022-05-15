@@ -156,6 +156,7 @@ namespace Restaurant.View.reports.salesReports
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
 
             col_number.Header = AppSettings.resourcemanager.GetString("trNo.");
+            col_invType.Header = AppSettings.resourcemanager.GetString("trType");
             col_date.Header = AppSettings.resourcemanager.GetString("trDate");
             col_type.Header = AppSettings.resourcemanager.GetString("trCategorie");
             col_branch.Header = AppSettings.resourcemanager.GetString("trBranch");
@@ -174,12 +175,6 @@ namespace Restaurant.View.reports.salesReports
 
         }
 
-        private void fillComboBranches(ComboBox cb)
-        {
-            cb.SelectedValuePath = "branchId";
-            cb.DisplayMemberPath = "name";
-            cb.ItemsSource = dynamicComboBranches;
-        }
         private void fillComboItemsBranches(ComboBox cb)
         {
             cb.SelectedValuePath = "branchCreatorId";
@@ -212,7 +207,7 @@ namespace Restaurant.View.reports.salesReports
 
         public void fillItemsEvent()
         {
-            temp = fillList(Items, cb_ItemsBranches, cb_Items,dp_ItemStartDate, dp_ItemEndDate)
+            temp = fillList(Items, cb_ItemsBranches, cb_Items, dp_ItemStartDate, dp_ItemEndDate)
                 .Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemId) : true));
 
             dgInvoice.ItemsSource = temp;
@@ -266,7 +261,6 @@ namespace Restaurant.View.reports.salesReports
         {//items
             try
             {
-
                 HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
@@ -285,6 +279,7 @@ namespace Restaurant.View.reports.salesReports
                 grid_items.Visibility = Visibility.Visible;
                 grid_collect.Visibility = Visibility.Hidden;
                 col_number.Visibility = Visibility.Visible;
+                col_invType.Visibility = Visibility.Visible;
                 col_date.Visibility = Visibility.Visible;
                 col_branch.Visibility = Visibility.Visible;
                 col_item.Visibility = Visibility.Visible;
@@ -609,11 +604,10 @@ namespace Restaurant.View.reports.salesReports
             {
                 HelpClass.StartAwait(grid_main);
 
-                //cb_Items.SelectedItem = null;
-                //cb_Items.IsEnabled = false;
-
                 cb_Types.SelectedItem = null;
                 cb_Types.IsEnabled = false;
+                chk_allItems.IsChecked = true;
+                cb_Items.ItemsSource = null;
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -654,7 +648,7 @@ namespace Restaurant.View.reports.salesReports
             var titleTemp = temp.GroupBy(jj => jj.ITitemId)
              .Select(g => new Item
              {
-                 itemUnitId = (int)g.FirstOrDefault().ITitemUnitId,
+                 itemId = (int)g.FirstOrDefault().ITitemId,
                  name = g.FirstOrDefault().ITitemName 
              }).ToList();
             titles.AddRange(titleTemp.Select(jj => jj.name));
@@ -807,19 +801,17 @@ namespace Restaurant.View.reports.salesReports
             IEnumerable<decimal> resultTemp = null;
 
             var temp = fillRowChartList(Items, dp_ItemStartDate, dp_ItemEndDate);
-            temp = temp.Where(j => (selectedItemId.Count != 0 ? stackedButton.Contains((int)j.ITitemUnitId) : true));
+            //temp = temp.Where(j => (selectedItemId.Count != 0 ? stackedButton.Contains((int)j.ITitemId) : true));
             var result = temp.GroupBy(s => s.ITitemId).Select(s => new
             {
-                ITitemUnitId = s.Key,
+                ITitemId = s.Key,
                 totalP = s.Where(x => x.invType == "s").Sum(x => x.totalNet),
                 totalPb = s.Where(x => x.invType == "ts").Sum(x => x.totalNet),
                 resultTemp = s.Where(x => x.invType == "ss").Sum(x => x.totalNet),
             }
          );
-            //var resultTotal = result.Select(x => new { x.ITitemId, total = x.totalP - x.totalPb }).ToList();
             pTemp = result.Select(x => (decimal)x.totalP);
             pbTemp = result.Select(x => (decimal)x.totalPb);
-            //resultTemp = result.Select(x => (decimal)x.totalP - (decimal)x.totalPb);
             resultTemp = result.Select(x => (decimal)x.resultTemp);
             var tempName = temp.GroupBy(jj => jj.ITitemId)
              .Select(g => new Item { itemId = (int)g.FirstOrDefault().ITitemId, name = g.FirstOrDefault().ITitemName }).ToList();

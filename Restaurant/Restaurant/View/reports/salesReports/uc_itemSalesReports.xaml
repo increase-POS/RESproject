@@ -391,6 +391,7 @@
                                 </DataGrid.Resources>
                                 <DataGrid.Columns>
                                     <DataGridTextColumn x:Name="col_number" Width="*" Header="No." Binding="{Binding invNumber}" />
+                                    <DataGridTextColumn x:Name="col_invType" Width="*"         Header="Type" Binding="{Binding Path=invType,Converter={StaticResource saleInvoiceConverterForReport }}"  />
                                     <DataGridTextColumn x:Name="col_date"   Width="*" Header="Date" Binding="{Binding updateDate,Converter={StaticResource dateFrameConverter }}" />
                                     <DataGridTextColumn x:Name="col_branch" Width="*" Header="Branch" Binding="{Binding branchCreatorName}" />
                                     <DataGridTextColumn x:Name="col_item"   Width="*" Header="Item" Binding="{Binding ITitemName}" />
