@@ -132,6 +132,50 @@ namespace Restaurant.Classes
         public int reservationsCount { get; set; }
 
     }
+
+    //bestOf
+    public class BranchInvoiceCount
+    {
+
+
+        public DateTime fromDate { get; set; }
+        public DateTime toDate { get; set; }
+        public Nullable<int> branchCreatorId { get; set; }
+        public string branchCreatorName { get; set; }
+        public int count { get; set; }
+        public int dateindex { get; set; }
+
+
+    }
+    public class BestOfCount
+    {
+        public List<BranchInvoiceCount> CountinMonthsList { get; set; }
+        public List<BranchInvoiceCount> CountinDaysList { get; set; }
+        public List<BranchInvoiceCount> CountinHoursList { get; set; }
+
+
+        public Nullable<int> branchCreatorId { get; set; }
+        public string branchCreatorName { get; set; }
+
+
+
+    }
+
+    //branches balance
+
+
+    public class BranchBalance
+    {
+        public string branchName { get; set; }
+        public  decimal   balance { get; set; }
+        public int branchId{ get; set; }
+        public string branchType{ get; set; }
+        public string branchCode{ get; set; }
+        public byte banchIsActive{ get; set; }
+
+    }
+  
+
     public class Dash
     {
 
@@ -172,7 +216,26 @@ namespace Restaurant.Classes
         public string[] Labels { get; set; }
         public Func<double, string> YFormatter { get; set; }
 
+        // bestOff
+        public class BranchInvoicesCount
+        {
+            public List<BranchInvoiceCount> CountinMonthsList { get; set; }
+            public List<BranchInvoiceCount> CountinDaysList { get; set; }
+            public List<BranchInvoiceCount> CountinHoursList { get; set; }
+            public Nullable<int> branchCreatorId { get; set; }
+            public string branchCreatorName { get; set; }
 
+        }
+        public class BranchInvoiceCount
+        {
+            public DateTime fromDate { get; set; }
+            public DateTime toDate { get; set; }
+            public Nullable<int> branchCreatorId { get; set; }
+            public string branchCreatorName { get; set; }
+            public int count { get; set; }
+            public int dateindex { get; set; }
+
+        }
         // عدد فواتير المبيعات ومرتجع المبيعات والمشتريات ومرتجع المشتريات حسب الفرع
         public async Task<List<InvoiceCount>> Getdashsalpur()
         {
@@ -689,6 +752,50 @@ namespace Restaurant.Classes
             //    }
             //    return list;
             //}
+        }
+
+        // عدد الفواتير في كل فرع وحسب التاريخ BestOf
+        public async Task<List<BestOfCount>> GetBestOf(int mainBranchId, int userId)
+        {
+
+            List<BestOfCount> list = new List<BestOfCount>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
+
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("dash/GetBestOf", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<BestOfCount>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+        }
+
+        // الكاش في كل فرع
+        public async Task<List<BranchBalance>> GetCashBalance(int mainBranchId, int userId)
+        {
+
+            List<BranchBalance> list = new List<BranchBalance>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
+
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("dash/GetCashBalance", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<BranchBalance>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
         }
     }
 }
