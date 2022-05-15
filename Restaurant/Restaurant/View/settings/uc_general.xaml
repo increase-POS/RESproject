@@ -14,10 +14,50 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock x:Name="txt_mainTitle" Text="Settings"  Margin="40 15" FontSize="24" FontWeight="Bold" Foreground="{StaticResource LightGrey}"   />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="txt_mainTitle" Text="Settings"  Margin="40 15 15 15" FontSize="24" FontWeight="Bold" Foreground="{StaticResource LightGrey}"   />
+                <StackPanel x:Name="sp_userSetting" Orientation="Horizontal">
+                    <Border  Margin="5" Background="White" CornerRadius="16" Height="40">
+
+                        <CheckBox x:Name="chk_userSetting"  
+                                                              Background="{StaticResource MainColor}"
+                                                              Content="user" 
+                                                              Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
+                                                              Checked="userSetting_check"  Margin="0" Height="40"
+                                                              Unchecked="userSetting_uncheck"/>
+                    </Border>
+                    <Border  Margin="5" Background="White" CornerRadius="16" Height="40">
+
+                        <CheckBox x:Name="chk_adminSetting" 
+                                                              Background="{StaticResource MainColor}"
+                                                              Content="admin"
+                                                              Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
+                                                              Checked="userSetting_check"  Margin="0" Height="40"
+                                                              Unchecked="userSetting_uncheck"/>
+                    </Border>
+                    <Border  Margin="5" Background="White" CornerRadius="16" Height="40">
+
+                        <CheckBox x:Name="chk_financeSetting"  
+                                                              Background="{StaticResource MainColor}"
+                                                              Content="finance" 
+                                                              Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
+                                                              Checked="userSetting_check"  Margin="0" Height="40"
+                                                              Unchecked="userSetting_uncheck"/>
+                    </Border>
+                    <Border  Margin="5" Background="White" CornerRadius="16" Height="40">
+
+                        <CheckBox x:Name="chk_supportSetting" 
+                                                              Background="{StaticResource MainColor}"
+                                                              Content="support"
+                                                              Style="{StaticResource MaterialDesignFilterChipPrimaryOutlineCheckBox}"
+                                                              Checked="userSetting_check"  Margin="0" Height="40"
+                                                              Unchecked="userSetting_uncheck"/>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
 
             <ScrollViewer Grid.Row="1" Margin="5,0,-5,0">
-                <WrapPanel Margin="20 15" HorizontalAlignment="Left" >
+                <WrapPanel x:Name="wp_main" Margin="20 15" HorizontalAlignment="Left" >
                     <!--#region companyInfo-->
                     <!--Height="140"  Width="260"-->
                     <Border x:Name="brd_companyInfo" Tag="companyInfo" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >

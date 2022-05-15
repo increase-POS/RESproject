@@ -360,7 +360,8 @@ namespace Restaurant.View.settings
             try
             {
                 HelpClass.StartAwait(grid_main);
-                permission();
+                //permission();
+                chk_userSetting.IsChecked = true;
 
                 settingsCls = await setModel.GetAll();
                 settingsValues = await valueModel.GetAll();
@@ -431,6 +432,7 @@ namespace Restaurant.View.settings
                     await loading_getDefaultServerStatus();
                     fillBackup();
                     firstLoading = false;
+
                 }
 
                 #endregion
@@ -446,38 +448,188 @@ namespace Restaurant.View.settings
         }
         void permission()
         {
-                if (!HelpClass.isAdminPermision() && !FillCombo.groupObject.HasPermission(companySettingsPermission, FillCombo.groupObjects))
-                {
-                brd_companyInfo.Visibility = Visibility.Collapsed;
-                brd_region.Visibility = Visibility.Collapsed;
-                brd_currency.Visibility = Visibility.Collapsed;
-                brd_tax.Visibility = Visibility.Collapsed;
-                brd_dateForm.Visibility = Visibility.Collapsed;
-                brd_changePassword.Visibility = Visibility.Collapsed;
-                brd_accuracy.Visibility = Visibility.Collapsed;
-                brd_backup.Visibility = Visibility.Collapsed;
-                brd_itemsCost.Visibility = Visibility.Collapsed;
-                brd_maxDiscount.Visibility = Visibility.Collapsed;
-                //brd_timeStaying.Visibility = Visibility.Collapsed;
-                brd_tableTimes.Visibility = Visibility.Collapsed;
-                brd_statusesOfPreparingOrder.Visibility = Visibility.Collapsed;
-                brd_typesOfService.Visibility = Visibility.Collapsed;
-                brd_activationSite.Visibility = Visibility.Collapsed;
-                brd_serverStatus.Visibility = Visibility.Collapsed;
+            
+            List<string> userSettingList = new List<string> { "language" , "userPath", "errorsExport" };
+            List<string> adminSettingList = new List<string> { "companyInfo" , "region" ,"currency" ,  "changePassword", "backup" };
+            List<string> financeSettingList = new List<string> { "tax" , "dateForm", "accuracy", "itemsCost", "maxDiscount", "tableTimes", "statusesOfPreparingOrder", "typesOfService" };
+            List<string> supportSettingList = new List<string> { "activationSite" , "serverStatus" };
+
+            IEnumerable<Border> bordersList = FindControls.FindVisualChildren<Border>(this)
+               .Where(x => x.Tag != null);
+
+            if (!HelpClass.isAdminPermision() && !FillCombo.groupObject.HasPermission(companySettingsPermission, FillCombo.groupObjects))
+            {
+                sp_userSetting.Visibility = Visibility.Collapsed;
                 
+                foreach (var item in bordersList)
+                {
+                    if (userSettingList.Contains(item.Tag.ToString()))
+                        item.Visibility = Visibility.Visible;
+                    else
+                        item.Visibility = Visibility.Collapsed;
                 }
 
-            if (HelpClass.isSupportPermision())
-            {
-                brd_activationSite.Visibility = Visibility.Visible;
-                brd_serverStatus.Visibility = Visibility.Visible;
+                //brd_companyInfo.Visibility = Visibility.Collapsed;
+                //brd_region.Visibility = Visibility.Collapsed;
+                //brd_currency.Visibility = Visibility.Collapsed;
+                //brd_tax.Visibility = Visibility.Collapsed;
+                //brd_dateForm.Visibility = Visibility.Collapsed;
+                //brd_changePassword.Visibility = Visibility.Collapsed;
+                //brd_accuracy.Visibility = Visibility.Collapsed;
+                //brd_backup.Visibility = Visibility.Collapsed;
+                //brd_itemsCost.Visibility = Visibility.Collapsed;
+                //brd_maxDiscount.Visibility = Visibility.Collapsed;
+                //brd_tableTimes.Visibility = Visibility.Collapsed;
+                //brd_statusesOfPreparingOrder.Visibility = Visibility.Collapsed;
+                //brd_typesOfService.Visibility = Visibility.Collapsed;
+                //brd_activationSite.Visibility = Visibility.Collapsed;
+                //brd_serverStatus.Visibility = Visibility.Collapsed;
+
+
             }
             else
             {
-                brd_activationSite.Visibility = Visibility.Collapsed;
-                brd_serverStatus.Visibility = Visibility.Collapsed;
+                if (HelpClass.isSupportPermision())
+                {
+                    chk_supportSetting.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    chk_supportSetting.IsChecked = false;
+                    chk_supportSetting.Visibility = Visibility.Collapsed;
+                }
+
+                if(chk_userSetting.IsChecked.Value)
+                {
+                    foreach (var item in bordersList)
+                    {
+                        if (userSettingList.Contains(item.Tag.ToString()))
+                            item.Visibility = Visibility.Visible;
+                        else
+                            item.Visibility = Visibility.Collapsed;
+                    }
+                }
+                else if (chk_adminSetting.IsChecked.Value)
+                {
+                    foreach (var item in bordersList)
+                    {
+                        if (adminSettingList.Contains(item.Tag.ToString()))
+                            item.Visibility = Visibility.Visible;
+                        else
+                            item.Visibility = Visibility.Collapsed;
+                    }
+                }
+                else if (chk_financeSetting.IsChecked.Value)
+                {
+                   
+
+                    foreach (var item in bordersList)
+                    {
+                        if (financeSettingList.Contains(item.Tag.ToString()))
+                            item.Visibility = Visibility.Visible;
+                        else
+                            item.Visibility = Visibility.Collapsed;
+                    }
+                }
+                else if (chk_supportSetting.IsChecked.Value)
+                {
+                    foreach (var item in bordersList)
+                    {
+                        if (supportSettingList.Contains(item.Tag.ToString()))
+                            item.Visibility = Visibility.Visible;
+                        else
+                            item.Visibility = Visibility.Collapsed;
+                    }
+                }
+
+
+                    //foreach (var item in bordersList)
+                    //{
+                    //    if (userSettingList.Contains(item.Tag.ToString()))
+                    //        item.Visibility = Visibility.Visible;
+                    //    else
+                    //        item.Visibility = Visibility.Collapsed;
+                    //}
+
+
             }
 
+            //    if (HelpClass.isSupportPermision())
+            //{
+            //    brd_activationSite.Visibility = Visibility.Visible;
+            //    brd_serverStatus.Visibility = Visibility.Visible;
+            //}
+            //else
+            //{
+            //    brd_activationSite.Visibility = Visibility.Collapsed;
+            //    brd_serverStatus.Visibility = Visibility.Collapsed;
+            //}
+        }
+        private  void userSetting_check(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox cb = sender as CheckBox;
+                if (cb.IsFocused)
+                {
+                    if (cb.IsChecked == true)
+                    {
+                        if (cb.Name == "chk_userSetting")
+                        {
+                            chk_adminSetting.IsChecked = false;
+                            chk_financeSetting.IsChecked = false;
+                            chk_supportSetting.IsChecked = false;
+                        }
+                        else if (cb.Name == "chk_adminSetting")
+                        {
+                            chk_userSetting.IsChecked = false;
+                            chk_financeSetting.IsChecked = false;
+                            chk_supportSetting.IsChecked = false;
+                        }
+                        else if (cb.Name == "chk_financeSetting")
+                        {
+                            chk_userSetting.IsChecked = false;
+                            chk_adminSetting.IsChecked = false;
+                            chk_supportSetting.IsChecked = false;
+                        }
+                        else if (cb.Name == "chk_supportSetting")
+                        {
+                            chk_userSetting.IsChecked = false;
+                            chk_adminSetting.IsChecked = false;
+                            chk_financeSetting.IsChecked = false;
+                        }
+                    }
+                }
+
+                permission();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+        private void userSetting_uncheck(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox cb = sender as CheckBox;
+                if (cb.IsFocused)
+                {
+                    if (cb.Name == "chk_userSetting")
+                        chk_userSetting.IsChecked = true;
+                    else if (cb.Name == "chk_adminSetting")
+                        chk_adminSetting.IsChecked = true;
+                    else if (cb.Name == "chk_financeSetting")
+                        chk_financeSetting.IsChecked = true;
+                    else if (cb.Name == "chk_supportSetting")
+                        chk_supportSetting.IsChecked = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         private void Btn_companyInfo_Click(object sender, RoutedEventArgs e)
         {
@@ -753,15 +905,21 @@ namespace Restaurant.View.settings
             txt_backup.Text = AppSettings.resourcemanager.GetString("trBackUp/Restore");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_backup, AppSettings.resourcemanager.GetString("trBackUp/Restore"));
             txt_activationSite.Text = AppSettings.resourcemanager.GetString("trActivationSite");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_activationSite, AppSettings.resourcemanager.GetString("trActivationSite") + "...");
             txt_serverStatus.Text = AppSettings.resourcemanager.GetString("trServerType");
-
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_serverStatus, AppSettings.resourcemanager.GetString("trServerType") + "...");
+            
             txt_statusesOfPreparingOrder.Text = AppSettings.resourcemanager.GetString("trPreparingOrders");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_statusesOfPreparingOrder, AppSettings.resourcemanager.GetString("statuses"));
             brd_statusesOfPreparingOrder.ToolTip = AppSettings.resourcemanager.GetString("statusesOfPreparingOrder");
 
+            chk_userSetting.Content = AppSettings.resourcemanager.GetString("trUser");
+            chk_adminSetting.Content = AppSettings.resourcemanager.GetString("trAdmin");
+            chk_financeSetting.Content = AppSettings.resourcemanager.GetString("finance");
+            chk_supportSetting.Content = AppSettings.resourcemanager.GetString("trSupport");
 
 
- 
+
             // openButton
             List<TextBlock> openTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
                .Where(x => x.Tag != null).ToList();
