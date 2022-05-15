@@ -248,6 +248,7 @@
     <Compile Include="Classes\ApiClasses\StorageCost.cs" />
     <Compile Include="Classes\ApiClasses\SysEmails.cs" />
     <Compile Include="Classes\ApiClasses\Tables.cs" />
+    <Compile Include="Classes\ApiClasses\TablesStatistics.cs" />
     <Compile Include="Classes\ApiClasses\Tag.cs" />
     <Compile Include="Classes\ApiClasses\Unit.cs" />
     <Compile Include="Classes\ApiClasses\userSetValues.cs" />
