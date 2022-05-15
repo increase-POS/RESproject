@@ -113,7 +113,7 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
-         internal async Task<List<Tables>> GetTablesForDinning(int branchId, string dateSearch)
+         internal async Task<List<Tables>> GetTablesForDinning(int branchId, string dateSearch) 
         {
             List<Tables> items = new List<Tables>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -127,6 +127,24 @@ namespace Restaurant.Classes.ApiClasses
                 if (c.Type == "scopes")
                 {
                     items.Add(JsonConvert.DeserializeObject<Tables>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
+        internal async Task<TablesStatistics> GetTablesStatistics(int branchId, string dateSearch) 
+        {
+            TablesStatistics items = new TablesStatistics();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("branchId", branchId.ToString());
+            parameters.Add("dateSearch", dateSearch);
+            //parameters.Add("startTimeSearch", startTimeSearch);
+
+            IEnumerable<Claim> claims = await APIResult.getList("Tables/GetTablesStatistics", parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items = JsonConvert.DeserializeObject<TablesStatistics>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
                 }
             }
             return items;
