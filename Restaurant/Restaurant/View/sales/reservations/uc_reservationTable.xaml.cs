@@ -231,7 +231,8 @@ namespace Restaurant.View.sales.reservations
                     {
                         bool valid1 = await validateReservationTime();
                         bool valid2 = validatePersonsCount();
-                        if (valid1 && valid2)
+                        bool valid3 = validateReservationStartTime();
+                        if (valid1 && valid2 && valid3)
                         {
                             TablesReservation reserve = new TablesReservation();
                             reserve.branchId = MainWindow.branchLogin.branchId;
@@ -292,13 +293,13 @@ namespace Restaurant.View.sales.reservations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         bool validatePersonsCount()
         {
             bool valid = true;
             if(int.Parse(tb_personsCount.Text) > _PersonsCount)
             {
                 Toaster.ShowWarning(Window.GetWindow(this), message:AppSettings.resourcemanager.GetString("trCountMoreTableCapacity"), animation: ToasterAnimation.FadeIn);
+                HelpClass.SetValidate(p_error_personsCount, AppSettings.resourcemanager.GetString("trCountMoreTableCapacity"));
                 valid = false;
             }
             return valid;
@@ -335,6 +336,23 @@ namespace Restaurant.View.sales.reservations
             }
             return valid;
         }
+        Boolean validateReservationStartTime()
+        {
+            bool valid = true;
+            DateTime startTime = DateTime.Parse(dp_reservationDate.SelectedDate.ToString().Split(' ')[0]
+                                + ' ' + tp_reservationStartTime.SelectedTime.ToString().Split(' ')[1]
+                                + ' ' + tp_reservationStartTime.SelectedTime.ToString().Split(' ')[2]);
+            if(dp_reservationDate.SelectedDate == DateTime.Now.Date && startTime.TimeOfDay < DateTime.Now.TimeOfDay)
+            {
+                valid = false;
+                HelpClass.SetValidate(p_error_reservationStartTime, AppSettings.resourcemanager.GetString("wrongTime"));
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("wrongTime"), animation: ToasterAnimation.FadeIn);
+            }
+
+
+
+            return valid;
+        }
         #endregion
         #region events
         private async void Cb_searchSection_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -365,7 +383,6 @@ namespace Restaurant.View.sales.reservations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -402,7 +419,6 @@ namespace Restaurant.View.sales.reservations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private async void Dp_searchDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -417,7 +433,6 @@ namespace Restaurant.View.sales.reservations
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private async void Tp_searchTime_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
         {
             try
