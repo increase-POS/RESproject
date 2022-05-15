@@ -422,7 +422,7 @@ namespace Restaurant.View.sales
                 else if (item != null)
                 {
                     item = items.Where(x => x.itemId == itemId).FirstOrDefault();
-                    addRowToBill(item,1);
+                    addRowToBill(item,1,false);
                 }
             }
             catch { }
@@ -783,7 +783,7 @@ namespace Restaurant.View.sales
         TablesReservation reservation = new TablesReservation();
         InvoicesClass invoiceMemberShipClass = new InvoicesClass();
         List<InvoicesClass> customerInvClasses = new List<InvoicesClass>();
-        private void addRowToBill(Item item, long count)
+        private void addRowToBill(Item item, long count, bool isList = false)
         {
             decimal total = 0;
             var invoiceItem = billDetailsList.Where(x => x.itemId == item.itemId).FirstOrDefault();
@@ -838,6 +838,8 @@ namespace Restaurant.View.sales
             #endregion
             BuildBillDesign();
             refreshTotal();
+            if(isList == false)
+                setKitchenNotification();
         }
         void BuildBillDesign()
         {
@@ -1643,8 +1645,9 @@ namespace Restaurant.View.sales
             foreach (ItemTransfer it in invoiceItems)
             {
                 item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
-                addRowToBill(item, it.quantity);
+                addRowToBill(item, it.quantity,true);
             }
+            setKitchenNotification();
         }
         private void refreshItemsPrice()
         {
@@ -1653,7 +1656,7 @@ namespace Restaurant.View.sales
             foreach (BillDetailsSales it in tempBill)
             {
                 item = items.Where(x => x.itemId == it.itemId).FirstOrDefault();
-                addRowToBill(item, it.Count);
+                addRowToBill(item, it.Count,false);
             }
         }
         async Task fillDiningHallInv()
@@ -1973,27 +1976,62 @@ namespace Restaurant.View.sales
 
         private void setKitchenNotification()
         {
-            foreach (ItemTransfer b in invoiceItems)
+            List<ItemOrderPreparing> preparingItemsList = new List<ItemOrderPreparing>();
+
+            foreach (BillDetailsSales b in billDetailsList)
             {
-
-                int itemCountInOrder = 0;
-                try { itemCountInOrder = kitchenOrders.Where(x => x.itemUnitId == b.itemUnitId).Sum(x => x.quantity); }
-                catch { }
-
-                long countInInvoiceItems = billDetailsList.Where(x => x.itemUnitId == b.itemUnitId).Sum(x => x.Count);
-
-                if(countInInvoiceItems == itemCountInOrder) // set btn_kitchen as default
+                var sentItem = sentInvoiceItems.Where(x => x.itemUnitId == b.itemUnitId).FirstOrDefault();
+                int sentCount = 0;
+                if (sentItem != null)
                 {
-                    txt_kitchen.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
-                    path_kitchen.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                    sentCount = sentItem.Count;
                 }
-                else
+                if (b.Count != sentCount)
                 {
-                    txt_kitchen.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
-                    path_kitchen.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
-                    break;
+                    ItemOrderPreparing it = new ItemOrderPreparing()
+                    {
+                        itemUnitId = b.itemUnitId,
+                        quantity = b.Count - sentCount,
+                        createUserId = MainWindow.userLogin.userId,
+                    };
+                    preparingItemsList.Add(it);
                 }
+
+                
             }
+            if (preparingItemsList.Count == 0) // set btn_kitchen as default
+            {
+                txt_kitchen.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                path_kitchen.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            }
+            else
+            {
+                txt_kitchen.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                path_kitchen.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            }
+
+
+            //foreach (ItemTransfer b in invoiceItems)
+            //{
+
+            //    int itemCountInOrder = 0;
+            //    try { itemCountInOrder = kitchenOrders.Where(x => x.itemUnitId == b.itemUnitId).Sum(x => x.quantity); }
+            //    catch { }
+
+            //    long countInInvoiceItems = billDetailsList.Where(x => x.itemUnitId == b.itemUnitId).Sum(x => x.Count);
+
+            //    if(countInInvoiceItems == itemCountInOrder) // set btn_kitchen as default
+            //    {
+            //        txt_kitchen.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            //        path_kitchen.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+            //    }
+            //    else
+            //    {
+            //        txt_kitchen.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            //        path_kitchen.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+            //        break;
+            //    }
+            //}
         }
         #endregion
         #region buttons: new - orders - tables - customers - waiter - kitchen 
@@ -2849,6 +2887,9 @@ namespace Restaurant.View.sales
                     await reservation.updateReservationStatus((long)invoice.reservationId, "close", MainWindow.userLogin.userId);
                 #endregion
 
+                #region send orders to kitchen
+                await sendOrdersToKitchen();
+                #endregion
                 await clear();
             }
             else
@@ -2869,6 +2910,7 @@ namespace Restaurant.View.sales
                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
                 invoice.invoiceId = res;
+
                 #region send orders to kitchen
                 await saveOrdersPreparing();
                 #endregion
@@ -2954,6 +2996,62 @@ namespace Restaurant.View.sales
                 }
                 #endregion
             }
+        }
+
+        async Task sendOrdersToKitchen()
+        {
+            #region order Items
+
+            List<ItemOrderPreparing> preparingItemsList = new List<ItemOrderPreparing>();
+
+            foreach (BillDetailsSales b in billDetailsList)
+            {
+                var sentItem = sentInvoiceItems.Where(x => x.itemUnitId == b.itemUnitId).FirstOrDefault();
+                int sentCount = 0;
+                if(sentItem != null)
+                {
+                    sentCount = sentItem.Count;
+                }
+                if (b.Count != sentCount)
+                {
+                    ItemOrderPreparing it = new ItemOrderPreparing()
+                    {
+                        itemUnitId = b.itemUnitId,
+                        quantity = b.Count - sentCount,
+                        createUserId = MainWindow.userLogin.userId,
+                    };
+                    preparingItemsList.Add(it);
+                }
+            }
+            #endregion
+
+            if (preparingItemsList.Count > 0)
+            {
+                #region preparing order object
+                preparingOrder = new OrderPreparing();
+                preparingOrder.invoiceId = invoice.invoiceId;
+                preparingOrder.preparingTime = 0;
+                preparingOrder.createUserId = MainWindow.userLogin.userId;
+                #endregion
+
+                #region order status object
+                orderPreparingStatus statusObject = new orderPreparingStatus();
+                statusObject.status = "Listed";
+                statusObject.createUserId = MainWindow.userLogin.userId;
+                #endregion
+
+                int res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId);
+
+                #region save status = Preparing
+                statusObject = new orderPreparingStatus();
+                statusObject.orderPreparingId = res;
+                statusObject.status = "Preparing";
+                statusObject.createUserId = MainWindow.userLogin.userId;
+
+                await preparingOrder.updateOrderStatus(statusObject);
+                #endregion
+            }
+                
         }
 
         async Task savePayments()
