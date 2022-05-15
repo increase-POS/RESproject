@@ -1092,13 +1092,12 @@ namespace Restaurant.View.reports.salesReports
         }
 
         private void fillRowChart(List<int> stackedButton)
-        {//////?????????????????????
+        {
             MyAxis.Labels = new List<string>();
             List<string> names = new List<string>();
             IEnumerable<decimal> sTemp = null;
             IEnumerable<decimal> tsTemp = null;
             IEnumerable<decimal> ssTemp = null;
-            IEnumerable<decimal> resultTemp = null;
 
             var temp = InvoicesQuery;
             if (selectedTab == 0)
@@ -1113,11 +1112,9 @@ namespace Restaurant.View.reports.salesReports
                 }
 
              );
-                //var resultTotal = result.Select(x => new { x.branchCreatorId, total = x.totalP - x.totalPb }).ToList();
                 sTemp = result.Select(x => (decimal)x.totals);
                 tsTemp = result.Select(x => (decimal)x.totalts);
                 ssTemp = result.Select(x => (decimal)x.totalss);
-                //resultTemp = result.Select(x => (decimal)x.totalP - (decimal)x.totalPb);
                 var tempName = temp.GroupBy(s => s.branchCreatorName).Select(s => new
                 {
                     name = s.Key
@@ -1135,11 +1132,9 @@ namespace Restaurant.View.reports.salesReports
                     totalss = s.Where(x => x.invType == "ss").Sum(x => x.totalNet)
                 }
              );
-                //var resultTotal = result.Select(x => new { x.posId, total = x.totalP - x.totalPb }).ToList();
                 sTemp = result.Select(x => (decimal)x.totals);
                 tsTemp = result.Select(x => (decimal)x.totalts);
                 ssTemp = result.Select(x => (decimal)x.totalss);
-                //resultTemp = result.Select(x => (decimal)x.totalP - (decimal)x.totalPb);
                 var tempName = temp.GroupBy(s => s.posName).Select(s => new
                 {
                     name = s.Key
@@ -1157,11 +1152,9 @@ namespace Restaurant.View.reports.salesReports
                     totalss = s.Where(x => x.invType == "ss").Sum(x => x.totalNet)
                 }
              );
-                //var resultTotal = result.Select(x => new { x.agentId, total = x.totalP - x.totalPb }).ToList();
                 sTemp = result.Select(x => (decimal)x.totals);
                 tsTemp = result.Select(x => (decimal)x.totalts);
                 ssTemp = result.Select(x => (decimal)x.totalss);
-                //resultTemp = result.Select(x => (decimal)x.totalP - (decimal)x.totalPb);
                 var tempName = temp.GroupBy(s => s.agentName).Select(s => new
                 {
                     name = s.Key
@@ -1179,11 +1172,9 @@ namespace Restaurant.View.reports.salesReports
                     totalss = s.Where(x => x.invType == "ss").Sum(x => x.totalNet)
                 }
              );
-                //var resultTotal = result.Select(x => new { x.updateUserId, total = x.totalP - x.totalPb }).ToList();
                 sTemp = result.Select(x => (decimal)x.totals);
                 tsTemp = result.Select(x => (decimal)x.totalts);
                 ssTemp = result.Select(x => (decimal)x.totalss);
-                //resultTemp = result.Select(x => (decimal)x.totalP - (decimal)x.totalPb);
                 var tempName = temp.GroupBy(s => s.uUserAccName).Select(s => new
                 {
                     name = s.Key
