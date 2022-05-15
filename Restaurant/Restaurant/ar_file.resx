@@ -4024,4 +4024,16 @@
   <data name="trErrorDuplicateUserFullNameToolTip" xml:space="preserve">
     <value>الاسم الكامل للمستخدم محجوز مسبقاً</value>
   </data>
+  <data name="finance" xml:space="preserve">
+    <value>مالية</value>
+  </data>
+  <data name="trActivationSite" xml:space="preserve">
+    <value>موقع التفعيل</value>
+  </data>
+  <data name="trServerType" xml:space="preserve">
+    <value>نوع السيرفر</value>
+  </data>
+  <data name="wrongTime" xml:space="preserve">
+    <value>الوقت غير صحيح</value>
+  </data>
 </root>

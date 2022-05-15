@@ -4039,4 +4039,16 @@ Please add Email in setting</value>
   <data name="trErrorDuplicateUserFullNameToolTip" xml:space="preserve">
     <value>User full name is already exist</value>
   </data>
+  <data name="finance" xml:space="preserve">
+    <value>Finance</value>
+  </data>
+  <data name="trActivationSite" xml:space="preserve">
+    <value>Activation Site</value>
+  </data>
+  <data name="trServerType" xml:space="preserve">
+    <value>Server type</value>
+  </data>
+  <data name="wrongTime" xml:space="preserve">
+    <value>Wrong time</value>
+  </data>
 </root>
