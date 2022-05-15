@@ -246,6 +246,16 @@ namespace Restaurant.Classes
             public int dateindex { get; set; }
 
         }
+
+        // عدد الطاولات واجمالي الكاش
+        public async Task<List<CashAndTablesCount>> GetCashAndTablesCount()
+        {
+            List<CountByInvType> branchBalanceList  = await GetCountByInvType(MainWindow.branchLogin.branchId , MainWindow.userLogin.userId);
+            List<BranchBalance> bestOfCountList = await GetCashBalance(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
+
+            return new List<CashAndTablesCount>();
+        }
+
         // عدد فواتير المبيعات ومرتجع المبيعات والمشتريات ومرتجع المشتريات حسب الفرع
         public async Task<List<InvoiceCount>> Getdashsalpur()
         {
@@ -263,60 +273,8 @@ namespace Restaurant.Classes
             }
             return list;
 
-            //List<InvoiceCount> list = null;
-            //// ... Use HttpClient.
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-            //using (var client = new HttpClient())
-            //{
-            //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            //    client.BaseAddress = new Uri(Global.APIUri);
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-            //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-            //    HttpRequestMessage request = new HttpRequestMessage();
-            //    request.RequestUri = new Uri(Global.APIUri + "dash/Getdashsalpur");
-            //    request.Headers.Add("APIKey", Global.APIKey);
-            //    request.Method = HttpMethod.Get;
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    HttpResponseMessage response = await client.SendAsync(request);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        var jsonString = await response.Content.ReadAsStringAsync();
-            //        jsonString = jsonString.Replace("\\", string.Empty);
-            //        jsonString = jsonString.Trim('"');
-            //        // fix date format
-            //        JsonSerializerSettings settings = new JsonSerializerSettings
-            //        {
-            //            Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-            //            DateParseHandling = DateParseHandling.None
-            //        };
-            //        list = JsonConvert.DeserializeObject<List<InvoiceCount>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-            //        return list;
-            //    }
-            //    else //web api sent error response 
-            //    {
-            //        list = new List<InvoiceCount>();
-            //    }
-            //    return list;
-            //}
         }
-        // عدد الطاولات واجمالي الكاش
-        public async Task<List<CashAndTablesCount>> GetCashAndTablesCount()
-        {
-            List<CashAndTablesCount> list = new List<CashAndTablesCount>();
-
-            IEnumerable<Claim> claims = await APIResult.getList("dash/GetCashAndTablesCount");
-
-            foreach (Claim c in claims)
-            {
-                if (c.Type == "scopes")
-                {
-                    list.Add(JsonConvert.DeserializeObject<CashAndTablesCount>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-                }
-            }
-            return list;
-        }
+       
         // عدد الموردين والزبائن الكلي
         //public async Task<List<AgentsCount>> GetAgentCount()
         //{
