@@ -64,9 +64,7 @@ namespace Restaurant.View.reports.salesReports
         IEnumerable<ItemTransferInvoice> itemTrasferInvoices;
         Statistics statisticsModel = new Statistics();
         IEnumerable<ItemTransferInvoice> itemTrasferInvoicesQuery;
-        IEnumerable<ItemTransferInvoice> itemTrasferInvoicesQueryExcel;
         string searchText = "";
-        int selectedTab = 0;
         //prin & pdf
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
@@ -150,6 +148,7 @@ namespace Restaurant.View.reports.salesReports
 
             chk_allBranches.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_allPos.Content = AppSettings.resourcemanager.GetString("trAll");
+            chk_allServices.Content = AppSettings.resourcemanager.GetString("trAll");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txt_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
@@ -207,7 +206,6 @@ namespace Restaurant.View.reports.salesReports
             (cb_sevices.SelectedIndex != -1 ? s.invType == cb_sevices.SelectedValue.ToString() : true)
             );
 
-            itemTrasferInvoicesQueryExcel = itemTrasferInvoicesQuery.ToList();
             RefreshIemTrasferInvoicesView();
             fillBranches();
            
@@ -291,11 +289,7 @@ namespace Restaurant.View.reports.salesReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private async void RefreshViewCheckbox(object sender, RoutedEventArgs e)
-        {
-            callSearch(sender);
-        }
-
+      
         private async void Chk_allBranches_Checked(object sender, RoutedEventArgs e)
         {
             try
@@ -692,39 +686,39 @@ namespace Restaurant.View.reports.salesReports
 
 
 
-                if (selectedTab == 0)
-                {
-                    secondTitle = "invoice";
-                }
-                else if (selectedTab == 1)
-                {
-                    secondTitle = "order";
-                }
-                else
-                {
-                    //  selectedTab == 2
-                    secondTitle = "quotation";
+                //if (selectedTab == 0)
+                //{
+                //    secondTitle = "invoice";
+                //}
+                //else if (selectedTab == 1)
+                //{
+                //    secondTitle = "order";
+                //}
+                //else
+                //{
+                //    //  selectedTab == 2
+                //    secondTitle = "quotation";
 
-                }
+                //}
                 subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
             }
             else
             {
                 addpath = @"\Reports\StatisticReport\Sale\Daily\En\dailySale.rdlc";
-                if (selectedTab == 0)
-                {
-                    secondTitle = "invoice";
-                }
-                else if (selectedTab == 1)
-                {
-                    secondTitle = "order";
-                }
-                else
-                {
-                    //  selectedTab == 2
-                    secondTitle = "quotation";
+                //if (selectedTab == 0)
+                //{
+                //    secondTitle = "invoice";
+                //}
+                //else if (selectedTab == 1)
+                //{
+                //    secondTitle = "order";
+                //}
+                //else
+                //{
+                //    //  selectedTab == 2
+                //    secondTitle = "quotation";
 
-                }
+                //}
                 subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
             }
 

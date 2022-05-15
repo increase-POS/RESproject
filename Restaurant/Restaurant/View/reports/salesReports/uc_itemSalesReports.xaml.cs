@@ -801,7 +801,7 @@ namespace Restaurant.View.reports.salesReports
             IEnumerable<decimal> resultTemp = null;
 
             var temp = fillRowChartList(Items, dp_ItemStartDate, dp_ItemEndDate);
-            //temp = temp.Where(j => (selectedItemId.Count != 0 ? stackedButton.Contains((int)j.ITitemId) : true));
+            temp = temp.Where(j => (selectedItemId.Count != 0 ? stackedButton.Contains((int)j.ITitemId) : true));
             var result = temp.GroupBy(s => s.ITitemId).Select(s => new
             {
                 ITitemId = s.Key,

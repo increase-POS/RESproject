@@ -20,13 +20,25 @@ namespace Restaurant.converters
                 case "s":
                     value = AppSettings.resourcemanager.GetString("trDiningHallType");
                     break;
+                //مسودة مبيعات
+                case "sd":
+                    value = AppSettings.resourcemanager.GetString("trDiningHallType")+" - "+ AppSettings.resourcemanager.GetString("trDraft");
+                    break;
                 // طلب خارجي
                 case "ts":
                     value = AppSettings.resourcemanager.GetString("trTakeAway");
                     break;
+                // مسودة طلب خارجي
+                case "tsd":
+                    value = AppSettings.resourcemanager.GetString("trTakeAway") + " - " + AppSettings.resourcemanager.GetString("trDraft"); ;
+                    break;
                 // خدمة ذاتية
                 case "ss":
                     value = AppSettings.resourcemanager.GetString("trSelfService");
+                    break;
+                // خدمة ذاتية مسودة
+                case "ssd":
+                    value = AppSettings.resourcemanager.GetString("trSelfService") + " - " + AppSettings.resourcemanager.GetString("trDraft"); ;
                     break;
                 default: break;
             }
