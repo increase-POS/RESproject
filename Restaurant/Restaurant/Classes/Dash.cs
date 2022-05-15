@@ -140,8 +140,8 @@ namespace Restaurant.Classes
 
         public DateTime fromDate { get; set; }
         public DateTime toDate { get; set; }
-        public Nullable<int> branchCreatorId { get; set; }
-        public string branchCreatorName { get; set; }
+        public Nullable<int> branchId { get; set; }
+        public string branchName { get; set; }
         public int count { get; set; }
         public int dateindex { get; set; }
 
@@ -154,8 +154,8 @@ namespace Restaurant.Classes
         public List<BranchInvoiceCount> CountinHoursList { get; set; }
 
 
-        public Nullable<int> branchCreatorId { get; set; }
-        public string branchCreatorName { get; set; }
+        public Nullable<int> branchId { get; set; }
+        public string branchName { get; set; }
 
 
 
@@ -174,8 +174,18 @@ namespace Restaurant.Classes
         public byte banchIsActive{ get; set; }
 
     }
-  
 
+    // عدد الفواتير بكل فرع حسب نوع الفاتورة
+    public class CountByInvType
+    {
+        public string invType { get; set; }
+        public Nullable<int> branchId { get; set; }
+        public string branchName { get; set; }
+        public int dhallCount { get; set; }
+        public int selfCount { get; set; }
+        public int tawayCount { get; set; }
+
+    }
     public class Dash
     {
 
@@ -222,16 +232,16 @@ namespace Restaurant.Classes
             public List<BranchInvoiceCount> CountinMonthsList { get; set; }
             public List<BranchInvoiceCount> CountinDaysList { get; set; }
             public List<BranchInvoiceCount> CountinHoursList { get; set; }
-            public Nullable<int> branchCreatorId { get; set; }
-            public string branchCreatorName { get; set; }
+            public Nullable<int> branchId { get; set; }
+            public string branchName { get; set; }
 
         }
         public class BranchInvoiceCount
         {
             public DateTime fromDate { get; set; }
             public DateTime toDate { get; set; }
-            public Nullable<int> branchCreatorId { get; set; }
-            public string branchCreatorName { get; set; }
+            public Nullable<int> branchId { get; set; }
+            public string branchName { get; set; }
             public int count { get; set; }
             public int dateindex { get; set; }
 
@@ -793,6 +803,28 @@ namespace Restaurant.Classes
                 if (c.Type == "scopes")
                 {
                     list.Add(JsonConvert.DeserializeObject<BranchBalance>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+        }
+
+        // عدد الفواتير بكل فرع حسب نوع الفاتورة
+        public async Task<List<CountByInvType>> GetCountByInvType(int mainBranchId, int userId)
+        {
+
+            List<CountByInvType> list = new List<CountByInvType>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
+
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("dash/GetCountByInvType", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<CountByInvType>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
                 }
             }
             return list;
