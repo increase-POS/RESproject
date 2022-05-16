@@ -89,7 +89,7 @@
                         <StackPanel Grid.Column="3" Orientation="Vertical" VerticalAlignment="Center">
                             <TextBlock x:Name="txt_totalCash"   Text="cash" FontSize="14" HorizontalAlignment="Center" 
                                 FontWeight="Regular" Foreground="#707070" />
-                            <TextBlock  Text="{Binding totalCash, Mode=OneWay}" FontWeight="Bold" FontSize="14" HorizontalAlignment="Center"  Foreground="#707070" />
+                            <TextBlock  Text="{Binding balance, Mode=OneWay}" FontWeight="Bold" FontSize="14" HorizontalAlignment="Center"  Foreground="#707070" />
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -505,30 +505,33 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="2*" />
+                                <!--<ColumnDefinition Width="*" />-->
+                                <ColumnDefinition Width="5*" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Row="0" x:Name="txt_times" Margin="10 1 5 1"
                                            Text="times" FontSize="16" 
                                            HorizontalAlignment="Left"  VerticalAlignment="Center" 
                                 FontWeight="Bold" Foreground="#707070" />
-                            <RadioButton  Grid.Row="0" Grid.Column="1" Margin="5" IsChecked="True"
-                                    HorizontalAlignment="Center"  VerticalAlignment="Center" />
+                            <RadioButton x:Name="rdb_times" Grid.Row="0" Grid.Column="1" Margin="5"  IsChecked="True"
+                                    HorizontalAlignment="Center"  VerticalAlignment="Center"
+                                         Checked="Rdb_bestOf_Checked"/>
 
                             <TextBlock Grid.Row="1" x:Name="txt_days" Margin="10 1 5 1"
                                            Text="days" FontSize="16" 
                                            HorizontalAlignment="Left"  VerticalAlignment="Center" 
                                 FontWeight="Bold" Foreground="#707070" />
-                            <RadioButton    Grid.Row="1" Grid.Column="1" Margin="5"
-                                    HorizontalAlignment="Center"  VerticalAlignment="Center" />
+                            <RadioButton  x:Name="rdb_days"  Grid.Row="1" Grid.Column="1" Margin="5"
+                                    HorizontalAlignment="Center"  VerticalAlignment="Center" 
+                                          Checked="Rdb_bestOf_Checked"/>
                             <TextBlock Grid.Row="2" x:Name="txt_months" Margin="10 1 5 1"
                                            Text="months" FontSize="16" 
                                            HorizontalAlignment="Left"  VerticalAlignment="Center" 
                                 FontWeight="Bold" Foreground="#707070" />
-                            <RadioButton  Grid.Row="2" Grid.Column="1" Margin="5"
-                                    HorizontalAlignment="Center"  VerticalAlignment="Center" />
+                            <RadioButton x:Name="rdb_months" Grid.Row="2" Grid.Column="1" Margin="5"
+                                    HorizontalAlignment="Center"  VerticalAlignment="Center"
+                                         Checked="Rdb_bestOf_Checked"/>
                             <lvc:PieChart Grid.Row="0" Grid.Column="3" Grid.RowSpan="3" 
-                                      x:Name="pch_bestOf"  >
+                                      x:Name="pch_bestOf" Margin="10 5" >
                                 <lvc:PieChart.ChartLegend>
                                     <lvc:DefaultLegend BulletSize="15"></lvc:DefaultLegend>
                                 </lvc:PieChart.ChartLegend>
@@ -565,8 +568,8 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="2*" />
+                                <!--<ColumnDefinition Width="*" />-->
+                                <ColumnDefinition Width="5*" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Row="0" x:Name="txt_diningHall" Margin="10 1 5 1"
                                        Text="dining hall" FontSize="16" 
@@ -574,7 +577,7 @@
                                 FontWeight="Bold" Foreground="#707070" />
                             <TextBlock  x:Name="txt_diningHallValue" Grid.Row="0" Grid.Column="1" Margin="5"
                                     HorizontalAlignment="Center"  VerticalAlignment="Center"
-                                       Text="{Binding diningHallCount, Mode=OneWay}"
+                                       Text="{Binding dhallCount, Mode=OneWay}"
                                            FontWeight="Bold" FontSize="16" Foreground="#008A1C"  />
 
                             <TextBlock Grid.Row="1" x:Name="txt_takeAway" Margin="10 1 5 1"
@@ -583,7 +586,7 @@
                                 FontWeight="Bold" Foreground="#707070" />
                             <TextBlock  x:Name="txt_takeAwayValue"  Grid.Row="1" Grid.Column="1" Margin="5"
                                     HorizontalAlignment="Center"  VerticalAlignment="Center"
-                                          Text="{Binding takeAwayCount, Mode=OneWay}"
+                                          Text="{Binding tawayCount, Mode=OneWay}"
                                           FontWeight="Bold" FontSize="16" Foreground="#008A1C"  />
                             <TextBlock Grid.Row="2" x:Name="txt_selfService" Margin="10 1 5 1"
                                            Text="selfService" FontSize="16" 
@@ -591,10 +594,10 @@
                                 FontWeight="Bold" Foreground="#707070" />
                             <TextBlock x:Name="txt_selfServiceValue" Grid.Row="2" Grid.Column="1" Margin="5"
                                     HorizontalAlignment="Center"  VerticalAlignment="Center" 
-                                           Text="{Binding selfServiceCount, Mode=OneWay}"
+                                           Text="{Binding selfCount, Mode=OneWay}"
                                         FontWeight="Bold" FontSize="16" Foreground="#008A1C"  />
                             <lvc:PieChart Grid.Row="0" Grid.Column="3" Grid.RowSpan="3"
-                                          Margin="5 5 5 5"  
+                                          Margin="10 5"  
                                       x:Name="pch_invoicesTypeInDay"  >
                                 <lvc:PieChart.ChartLegend>
                                     <lvc:DefaultLegend BulletSize="15"></lvc:DefaultLegend>
