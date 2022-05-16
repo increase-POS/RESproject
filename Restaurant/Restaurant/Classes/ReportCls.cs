@@ -30,6 +30,16 @@ namespace Restaurant.Classes
 
 
     }
+    public class resultmessage
+    {
+
+        public string result { get; set; }
+        public string pdfpath { get; set; }
+        
+
+
+
+    }
     class ReportCls
     {
 

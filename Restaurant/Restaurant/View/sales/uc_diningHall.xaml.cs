@@ -26,7 +26,7 @@ using Microsoft.Reporting.WinForms;
 using Microsoft.Win32;
 using System.Collections.Specialized;
 using System.Threading;
-
+ 
 
 namespace Restaurant.View.sales
 {
@@ -3231,7 +3231,19 @@ namespace Restaurant.View.sales
                 /////////////////////////////////////
                 //Thread t1 = new Thread(() =>
                 //{
-                await pdfPurInvoice();
+            //    await pdfPurInvoice(invoice.invoiceId);
+                
+                    clsReports classrep = new clsReports();
+                resultmessage resmsg = new resultmessage();
+               resmsg   = await classrep.pdfPurInvoice(invoice.invoiceId,"pdf");
+                if (resmsg.result != "")
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString(resmsg.result), animation: ToasterAnimation.FadeIn);
+
+                    });
+                }
                 //});
                 //t1.Start();
                 //////////////////////////////////////
@@ -3245,18 +3257,25 @@ namespace Restaurant.View.sales
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
-        public async Task pdfPurInvoice()
+        
+        public async Task pdfPurInvoice(int invoiceId)
         {
             try
             {
-               
-                prInvoice = new Invoice();
+
+                Invoice prInvoice = new Invoice();
+                List<ItemTransfer> invoiceItems = new List<ItemTransfer>();
+                int itemscount;
+                Invoice invoiceModel = new Invoice();
+                ReportCls reportclass = new ReportCls();
+                reportsize rs = new reportsize();
+                LocalReport rep = new LocalReport();
+                rs.rep = rep;
                 //if (prinvoiceId != 0)
                 //    prInvoice = await invoiceModel.GetByInvoiceId(prinvoiceId);
                 //else
-                prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
-      
+                prInvoice = await invoiceModel.GetByInvoiceId(invoiceId);
+
                 ///
                 if (int.Parse(AppSettings.Allow_print_inv_count) <= prInvoice.printedcount)
                 {
@@ -3270,16 +3289,16 @@ namespace Restaurant.View.sales
                 {
 
 
-                    if (prInvoice.invType == "pd" || prInvoice.invType == "sd"
-                             || prInvoice.invType == "sbd" || prInvoice.invType == "pbd" ||
-                             prInvoice.invType == "ssd" || prInvoice.invType == "tsd")
-                    {
-                        this.Dispatcher.Invoke(() =>
-                        {
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPrintDraftInvoice"), animation: ToasterAnimation.FadeIn);
-                        });
-                    }
-                    else
+                    //if (prInvoice.invType == "pd" || prInvoice.invType == "sd"
+                    //         || prInvoice.invType == "sbd" || prInvoice.invType == "pbd" ||
+                    //         prInvoice.invType == "ssd" || prInvoice.invType == "tsd")
+                    //{
+                    //    this.Dispatcher.Invoke(() =>
+                    //    {
+                    //        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPrintDraftInvoice"), animation: ToasterAnimation.FadeIn);
+                    //    });
+                    //}
+                    //else
                     {
                         //////////////////////////////////////////
                         List<ReportParameter> paramarr = new List<ReportParameter>();
@@ -3293,10 +3312,10 @@ namespace Restaurant.View.sales
                             invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
                             itemscount = invoiceItems.Count();
 
-                            reportsize rs = reportclass.GetreceiptInvoiceRdlcpath(prInvoice, 1, AppSettings.salePaperSize, itemscount, rep);
-                            rep = rs.rep;
-                            width = rs.width;
-                            height = rs.height;
+                            rs = reportclass.GetreceiptInvoiceRdlcpath(prInvoice, 1, AppSettings.salePaperSize, itemscount, rs.rep);
+                            //rs.rep;
+                            //rs.width;
+                            //rs.height;
                             //user
 
 
@@ -3307,7 +3326,7 @@ namespace Restaurant.View.sales
                             }
                             else
                             {
-                                employ = await userModel.getUserById((int)prInvoice.updateUserId);
+                                employ = await employ.getUserById((int)prInvoice.updateUserId);
                             }
 
                             prInvoice.uuserName = employ.name;
@@ -3349,7 +3368,7 @@ namespace Restaurant.View.sales
                             }
                             else
                             {
-                                branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                                branch = await branch.getBranchById((int)prInvoice.branchCreatorId);
                             }
 
                             if (branch.branchId > 0)
@@ -3377,7 +3396,7 @@ namespace Restaurant.View.sales
                             User shipuser = new User();
                             if (prInvoice.shipUserId > 0)
                             {
-                                shipuser = await userModel.getUserById((int)prInvoice.shipUserId);
+                                shipuser = await shipuser.getUserById((int)prInvoice.shipUserId);
                             }
                             prInvoice.shipUserName = shipuser.name + " " + shipuser.lastname;
                             //end shipping
@@ -3408,7 +3427,7 @@ namespace Restaurant.View.sales
                             }
                             //
 
-                            clsReports.purchaseInvoiceReport(invoiceItems, rep, rep.ReportPath);
+                            clsReports.purchaseInvoiceReport(invoiceItems, rs.rep, rs.rep.ReportPath);
 
                             clsReports.setReportLanguage(paramarr);
                             clsReports.Header(paramarr);
@@ -3436,15 +3455,15 @@ namespace Restaurant.View.sales
 
                                 paramarr.Add(new ReportParameter("sumP", reportclass.DecTostring(sump)));
                                 paramarr.Add(new ReportParameter("deserved", reportclass.DecTostring(deservd)));
-                                rep.DataSources.Add(new ReportDataSource("DataSetPayedInvclass", payedList));
+                                rs.rep.DataSources.Add(new ReportDataSource("DataSetPayedInvclass", payedList));
 
 
                             }
 
 
-                            rep.SetParameters(paramarr);
+                            rs.rep.SetParameters(paramarr);
 
-                            rep.Refresh();
+                            rs.rep.Refresh();
                             #endregion
                             /////////////////////////////////////////////////////////
                             saveFileDialog.Filter = "PDF|*.pdf;";
@@ -3462,9 +3481,9 @@ namespace Restaurant.View.sales
                                 string filepath = saveFileDialog.FileName;
 
                                 //copy count
-                                if (prInvoice.invType == "s" || prInvoice.invType == "sb" || prInvoice.invType == "p" 
-                                    || prInvoice.invType == "pb" 
-                                    || prInvoice.invType == "ss" || prInvoice.invType == "ts"  )
+                                if (prInvoice.invType == "s" || prInvoice.invType == "sb" || prInvoice.invType == "p"
+                                    || prInvoice.invType == "pb"
+                                    || prInvoice.invType == "ss" || prInvoice.invType == "ts")
                                 {
 
                                     paramarr.Add(new ReportParameter("isOrginal", false.ToString()));
@@ -3484,9 +3503,9 @@ namespace Restaurant.View.sales
                                     //    //end update
 
                                     //}
-                                    rep.SetParameters(paramarr);
+                                    rs.rep.SetParameters(paramarr);
 
-                                    rep.Refresh();
+                                    rs.rep.Refresh();
 
 
                                     if (int.Parse(AppSettings.Allow_print_inv_count) > prInvoice.printedcount)
@@ -3494,7 +3513,15 @@ namespace Restaurant.View.sales
 
                                         this.Dispatcher.Invoke(() =>
                                         {
-                                            LocalReportExtensions.ExportToPDF(rep, filepath);
+                                            //LocalReportExtensions.ExportToPDF(rep, filepath);
+                                            if (AppSettings.salePaperSize != "A4")
+                                            {
+                                                LocalReportExtensions.customExportToPDF(rs.rep, filepath, rs.width, rs.height);
+                                            }
+                                            else
+                                            {
+                                                LocalReportExtensions.ExportToPDF(rs.rep, filepath);
+                                            }
 
                                         });
 
@@ -3528,9 +3555,15 @@ namespace Restaurant.View.sales
 
                                     this.Dispatcher.Invoke(() =>
                                     {
-
-                                        LocalReportExtensions.ExportToPDF(rep, filepath);
-
+                                        //LocalReportExtensions.ExportToPDF(rep, filepath);
+                                        if (AppSettings.salePaperSize != "A4")
+                                        {
+                                            LocalReportExtensions.customExportToPDF(rs.rep, filepath, rs.width, rs.height);
+                                        }
+                                        else
+                                        {
+                                            LocalReportExtensions.ExportToPDF(rs.rep, filepath);
+                                        }
 
                                     });
 
@@ -3779,6 +3812,7 @@ namespace Restaurant.View.sales
 
                         rep.Refresh();
                         #endregion
+                       // Start  print
                         //copy count
                         if (prInvoice.invType == "s" || prInvoice.invType == "sb" || prInvoice.invType == "p" || prInvoice.invType == "pb" || prInvoice.invType == "ts"
                             || prInvoice.invType == "ss")
@@ -3894,7 +3928,8 @@ namespace Restaurant.View.sales
 
                         }
                         // end copy count
-
+                        //endprint
+/////////////////////////
 
                     }
                     else
@@ -4235,7 +4270,7 @@ namespace Restaurant.View.sales
                         #endregion
                         //
 
-
+                        // start preview
                         //copy count
                         if (prInvoice.invType == "s" || prInvoice.invType == "sb" || prInvoice.invType == "p" || prInvoice.invType == "pb" || prInvoice.invType == "ts" || prInvoice.invType == "ss")
                         {
@@ -4304,10 +4339,7 @@ namespace Restaurant.View.sales
                         }
                         // end copy count
 
-
-
-
-
+                        //end previw
 
                         wd_previewPdf w = new wd_previewPdf();
                         w.pdfPath = pdfpath;

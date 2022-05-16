@@ -29,6 +29,7 @@ using System.Threading;
 using System.Resources;
 using System.Reflection;
 using Restaurant.View.sales;
+using netoaster;
 
 namespace Restaurant.View.reports.salesReports
 {
@@ -1473,7 +1474,7 @@ namespace Restaurant.View.reports.salesReports
         #endregion
 
         #region datagrid print buttons
-        private void pdfRowinDatagrid(object sender, RoutedEventArgs e)
+        private async void pdfRowinDatagrid(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -1481,7 +1482,18 @@ namespace Restaurant.View.reports.salesReports
                 for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                     if (vis is DataGridRow)
                     {
-                        //POSOpenCloseModel row = (POSOpenCloseModel)dgClosing.SelectedItems[0];
+                        ItemTransferInvoice row = (ItemTransferInvoice)dgInvoice.SelectedItems[0];
+                        clsReports classreport = new clsReports();
+                        resultmessage resmsg = new resultmessage();
+                        resmsg = await classreport.pdfPurInvoice(row.invoiceId, "pdf");
+                        if (resmsg.result != "")
+                        {
+                            this.Dispatcher.Invoke(() =>
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString(resmsg.result), animation: ToasterAnimation.FadeIn);
+
+                            });
+                        }
                         //cashTransID = row.cashTransId;
                         //openCashTransID = row.openCashTransId.Value;
                         //await getopquery(row);
@@ -1513,7 +1525,7 @@ namespace Restaurant.View.reports.salesReports
             }
         }
 
-        private void printRowinDatagrid(object sender, RoutedEventArgs e)
+        private async void printRowinDatagrid(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -1521,6 +1533,18 @@ namespace Restaurant.View.reports.salesReports
                 for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                     if (vis is DataGridRow)
                     {
+                        ItemTransferInvoice row = (ItemTransferInvoice)dgInvoice.SelectedItems[0];
+                        clsReports classreport = new clsReports();
+                        resultmessage resmsg = new resultmessage();
+                        resmsg = await classreport.pdfPurInvoice(row.invoiceId, "print");
+                        if (resmsg.result != "")
+                        {
+                            this.Dispatcher.Invoke(() =>
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString(resmsg.result), animation: ToasterAnimation.FadeIn);
+
+                            });
+                        }
                         //POSOpenCloseModel row = (POSOpenCloseModel)dgClosing.SelectedItems[0];
                         //cashTransID = row.cashTransId;
                         //openCashTransID = row.openCashTransId.Value;
@@ -1547,7 +1571,7 @@ namespace Restaurant.View.reports.salesReports
             }
         }
 
-        private void previewRowinDatagrid(object sender, RoutedEventArgs e)
+        private async void previewRowinDatagrid(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -1556,6 +1580,34 @@ namespace Restaurant.View.reports.salesReports
                 for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                     if (vis is DataGridRow)
                     {
+                        ItemTransferInvoice row = (ItemTransferInvoice)dgInvoice.SelectedItems[0];
+                        clsReports classreport = new clsReports();
+                        resultmessage resmsg = new resultmessage();
+                        resmsg = await classreport.pdfPurInvoice(row.invoiceId, "prev");
+                        if (resmsg.result != "")
+                        {
+                            this.Dispatcher.Invoke(() =>
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString(resmsg.result), animation: ToasterAnimation.FadeIn);
+
+                            });
+                        }
+                        else
+                        {
+                            Window.GetWindow(this).Opacity = 0.2;
+                            wd_previewPdf w = new wd_previewPdf();
+                            w.pdfPath = resmsg.pdfpath;
+                            if (!string.IsNullOrEmpty(w.pdfPath))
+                            {
+                                w.ShowDialog();
+
+                                w.wb_pdfWebViewer.Dispose();
+
+                            }
+                            else
+                                Toaster.ShowError(Window.GetWindow(this), message: "", animation: ToasterAnimation.FadeIn);
+                            Window.GetWindow(this).Opacity = 1;
+                        }
                         //POSOpenCloseModel row = (POSOpenCloseModel)dgClosing.SelectedItems[0];
                         //cashTransID = row.cashTransId;
                         //openCashTransID = row.openCashTransId.Value;
