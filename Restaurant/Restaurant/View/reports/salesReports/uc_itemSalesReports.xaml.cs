@@ -67,8 +67,12 @@ namespace Restaurant.View.reports.salesReports
 
         private int selectedTab = 0;
         Statistics statisticModel = new Statistics();
-        List<ItemTransferInvoice> Items;
+        //List<ItemTransferInvoice> Items;
 
+        IEnumerable<ItemTransferInvoice> Items;
+        IEnumerable<ItemTransferInvoice> itemsQuery;
+
+        string searchText = "";
         //for combo boxes
         /*************************/
         Branch selectedBranch;
@@ -100,7 +104,7 @@ namespace Restaurant.View.reports.salesReports
             {
                 HelpClass.StartAwait(grid_main);
 
-                Items = await statisticModel.GetSaleitem((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
+                //Items = await statisticModel.GetSaleitem((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -114,10 +118,10 @@ namespace Restaurant.View.reports.salesReports
                 translate();
                 #endregion
 
-                await fillComboItemTypes();
-
-                fillComboItemsBranches(cb_collect);
-                fillComboItemsBranches(cb_ItemsBranches);
+               
+                chk_allBranchesItem.IsChecked = true;
+                chk_allTypes.IsChecked = true;
+                chk_allItems.IsChecked = true;
 
                 btn_items_Click(btn_items , null);
 
@@ -131,6 +135,7 @@ namespace Restaurant.View.reports.salesReports
 
         }
 
+        #region methods
         private void translate()
         {
             tt_items.Content = AppSettings.resourcemanager.GetString("trItems");
@@ -175,6 +180,68 @@ namespace Restaurant.View.reports.salesReports
 
         }
 
+        async Task Search()
+        {
+            if (Items is null)
+                await RefreshItemsList();
+
+            searchText = txt_search.Text.ToLower();
+            itemsQuery = Items
+                .Where(s =>
+            (
+            s.invNumber.ToLower().Contains(searchText)
+            ||
+            s.branchCreatorName.ToString().ToLower().Contains(searchText)
+            ||
+            s.ITitemName.ToString().ToLower().Contains(searchText)
+            ||
+            s.invType.ToString().ToLower().Contains(searchText)
+            ||
+            s.categoryName.ToString().ToLower().Contains(searchText)
+            )
+            &&
+            //branch
+            (cb_ItemsBranches.SelectedIndex != -1 ? s.branchCreatorId == (int)cb_ItemsBranches.SelectedValue: true)
+             &&
+            //category
+            (cb_Types.SelectedIndex != -1         ? s.categoryId      == (int)cb_Types.SelectedValue : true)
+             &&
+            //items
+            (cb_Items.SelectedIndex != -1         ? s.ITitemId        == (int)cb_Items.SelectedValue : true)
+            &&
+            //date
+            (dp_ItemStartDate.SelectedDate != null ? s.updateDate.Value.Date >= dp_ItemStartDate.SelectedDate.Value.Date : true)
+             &&
+            (dp_ItemEndDate.SelectedDate   != null ? s.updateDate.Value.Date <= dp_ItemEndDate.SelectedDate.Value.Date : true)
+            );
+
+            if (selectedTab == 0)
+                itemsQuery = itemsQuery.Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemId) : true)).ToList();
+
+            fillComboItemTypes();
+            fillComboItemsBranches(cb_collect);
+            fillComboItemsBranches(cb_ItemsBranches);
+
+            RefreshIemsView();
+
+        }
+
+        async Task<IEnumerable<ItemTransferInvoice>> RefreshItemsList()
+        {
+            Items = await statisticModel.GetSaleitem((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
+            return Items;
+        }
+
+        void RefreshIemsView()
+        {
+            dgInvoice.ItemsSource = itemsQuery;
+            txt_count.Text = itemsQuery.Count().ToString();
+
+            fillColumnChart();
+            fillPieChart();
+            //fillRowChart();
+        }
+
         private void fillComboItemsBranches(ComboBox cb)
         {
             cb.SelectedValuePath = "branchCreatorId";
@@ -197,26 +264,12 @@ namespace Restaurant.View.reports.salesReports
             { }
         }
 
-        private async Task fillComboItemTypes()
+        private void fillComboItemTypes()
         {
             cb_Types.SelectedValuePath = "categoryId";
             cb_Types.DisplayMemberPath = "categoryName";
             cb_Types.ItemsSource = Items.GroupBy(i => i.categoryId)
                 .Select(i => new { i.FirstOrDefault().categoryId, i.FirstOrDefault().categoryName });
-        }
-
-        public void fillItemsEvent()
-        {
-            temp = fillList(Items, cb_ItemsBranches, cb_Items, dp_ItemStartDate, dp_ItemEndDate)
-                .Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemId) : true));
-
-            dgInvoice.ItemsSource = temp;
-
-            txt_count.Text = dgInvoice.Items.Count.ToString();
-
-            fillPieChart();
-            fillColumnChart();
-            fillRowChart(selectedItemId);
         }
 
         public void fillCollectEvent()
@@ -257,7 +310,114 @@ namespace Restaurant.View.reports.salesReports
             path_collect.Fill = Brushes.White;
         }
 
-        private void btn_items_Click(object sender, RoutedEventArgs e)
+        private async void fillItemsEventCall(object sender)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void fillCollectEventsCall(object sender)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                fillCollectEvent();
+
+                if (stk_tagsBranches.Children.Count == 0)
+                {
+                    fillCollectEventAll();
+                }
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        #region fillLists
+        List<ItemTransferInvoice> itemList = null;
+        List<ItemTransferInvoice> collectListBranch = null;
+        private List<ItemTransferInvoice> fillCollectListBranch(IEnumerable<ItemTransferInvoice> Invoices, DatePicker startDate, DatePicker endDate)
+        {
+            var temp = Invoices
+                .Where(x =>
+                 (startDate.SelectedDate != null ? x.updateDate >= startDate.SelectedDate : true)
+                && (endDate.SelectedDate != null ? x.updateDate <= endDate.SelectedDate : true))
+                .GroupBy(obj => new
+                {
+                    obj.branchCreatorId,
+                    obj.ITitemId
+                }).Select(obj => new ItemTransferInvoice
+                {
+                    branchCreatorId = obj.FirstOrDefault().branchCreatorId,
+                    branchCreatorName = obj.FirstOrDefault().branchCreatorName,
+                    itemUnitId = obj.FirstOrDefault().itemUnitId,
+                    ItemUnits = obj.FirstOrDefault().ItemUnits,
+                    invoiceId = obj.FirstOrDefault().invoiceId,
+                    ITquantity = obj.Sum(x => x.ITquantity),
+                    ITitemName = obj.FirstOrDefault().ITitemName,
+                    ITitemId = obj.FirstOrDefault().ITitemId,
+                    ITunitName = obj.FirstOrDefault().ITunitName,
+                    ITunitId = obj.FirstOrDefault().ITunitId,
+                    ITupdateDate = obj.FirstOrDefault().ITupdateDate,
+                    itemAvg = obj.Average(x => x.ITquantity),
+                    count = obj.Count()
+                }).OrderByDescending(obj => obj.ITquantity);
+
+            collectListBranch = temp.ToList();
+            return temp.ToList();
+        }
+        List<ItemTransferInvoice> collectListAll = null;
+        private List<ItemTransferInvoice> fillCollectListAll(IEnumerable<ItemTransferInvoice> Invoices, DatePicker startDate, DatePicker endDate)
+        {
+            var temp = Invoices
+                .Where(x =>
+                 (startDate.SelectedDate != null ? x.updateDate >= startDate.SelectedDate : true)
+                && (endDate.SelectedDate != null ? x.updateDate <= endDate.SelectedDate : true))
+                .GroupBy(obj => new
+                {
+                    obj.ITitemId
+                }).Select(obj => new ItemTransferInvoice
+                {
+                    branchCreatorId = obj.FirstOrDefault().branchCreatorId,
+                    branchCreatorName = "All Branches",
+                    itemUnitId = obj.FirstOrDefault().itemUnitId,
+                    ItemUnits = obj.FirstOrDefault().ItemUnits,
+                    invoiceId = obj.FirstOrDefault().invoiceId,
+                    ITquantity = obj.Sum(x => x.ITquantity),
+                    ITitemName = obj.FirstOrDefault().ITitemName,
+                    ITitemId = obj.FirstOrDefault().ITitemId,
+                    ITunitName = obj.FirstOrDefault().ITunitName,
+                    ITunitId = obj.FirstOrDefault().ITunitId,
+                    itemAvg = obj.Average(x => x.ITquantity),
+                    ITupdateDate = obj.FirstOrDefault().ITupdateDate,
+                    count = obj.Count()
+                }).OrderByDescending(obj => obj.ITquantity);
+
+            collectListAll = temp.ToList();
+            return temp.ToList();
+        }
+        #endregion
+
+        #endregion
+
+        #region events
+        private async void btn_items_Click(object sender, RoutedEventArgs e)
         {//items
             try
             {
@@ -275,7 +435,8 @@ namespace Restaurant.View.reports.salesReports
                 path_items.Fill =  Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
                 ReportsHelp.hideAllColumns(dgInvoice);
-                //show columns
+
+                #region show columns
                 grid_items.Visibility = Visibility.Visible;
                 grid_collect.Visibility = Visibility.Hidden;
                 col_number.Visibility = Visibility.Visible;
@@ -287,10 +448,9 @@ namespace Restaurant.View.reports.salesReports
                 col_itQuantity.Visibility = Visibility.Visible;
                 col_price.Visibility = Visibility.Visible;
                 col_total.Visibility = Visibility.Visible;
+                #endregion
 
-                chk_allBranchesItem.IsChecked = true;
-                chk_allTypes.IsChecked = true;
-                fillItemsEvent();
+                await Search();
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -350,13 +510,27 @@ namespace Restaurant.View.reports.salesReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        private void Cb_Types_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        private async void Cb_Types_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            fillComboItems();
-            fillItemsEvent();
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                fillComboItems();
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
+
         #region Items Events
-        private void Chip_OnDeleteItemClick(object sender, RoutedEventArgs e)
+        private async void Chip_OnDeleteItemClick(object sender, RoutedEventArgs e)
         {
             var currentChip = (Chip)sender;
             stk_tagsItems.Children.Remove(currentChip);
@@ -367,36 +541,47 @@ namespace Restaurant.View.reports.salesReports
             {
                 cb_Items.SelectedItem = null;
             }
-            fillItemsEvent();
+            await Search();
 
         }
 
         private async void cb_Items_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cb_Items.SelectedItem != null)
+            try
             {
-                //if (stk_tagsItems.Children.Count < 5)
-                //{
-                //    selectedItem = await itemModel.GetItemByID((int) cb_Items.SelectedValue);
-                //    var b = new MaterialDesignThemes.Wpf.Chip()
-                //    {
-                //        Content = selectedItem.name,
-                //        Name = "btn" + selectedItem.itemId.ToString(),
-                //        IsDeletable = true,
-                //        Margin = new Thickness(5, 0, 5, 0)
-                //    };
-                //    b.DeleteClick += Chip_OnDeleteItemClick;
-                //    stk_tagsItems.Children.Add(b);
-                //    comboItemTemp.Add(selectedItem);
-                //    selectedItemId.Add(selectedItem.itemId);
-                //    dynamicComboItem.Remove(selectedItem);
-                //    fillItemsEvent();
-                //}
-                fillItemsEvent();
+                HelpClass.StartAwait(grid_main);
+
+                if (cb_Items.SelectedItem != null)
+                {
+                    //if (stk_tagsItems.Children.Count < 5)
+                    //{
+                    //    selectedItem = await itemModel.GetItemByID((int) cb_Items.SelectedValue);
+                    //    var b = new MaterialDesignThemes.Wpf.Chip()
+                    //    {
+                    //        Content = selectedItem.name,
+                    //        Name = "btn" + selectedItem.itemId.ToString(),
+                    //        IsDeletable = true,
+                    //        Margin = new Thickness(5, 0, 5, 0)
+                    //    };
+                    //    b.DeleteClick += Chip_OnDeleteItemClick;
+                    //    stk_tagsItems.Children.Add(b);
+                    //    comboItemTemp.Add(selectedItem);
+                    //    selectedItemId.Add(selectedItem.itemId);
+                    //    dynamicComboItem.Remove(selectedItem);
+                    //    fillItemsEvent();
+                    //}
+                    await Search();
+                }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
 
-        private void chk_allItems_Click(object sender, RoutedEventArgs e)
+        private async void chk_allItems_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -417,60 +602,19 @@ namespace Restaurant.View.reports.salesReports
                     cb_Items.IsEnabled = true;
                 }
 
-                fillItemsEvent();
+                await Search();
                  
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                  
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void fillItemsEventCall(object sender)
-        {
-            try
-            {
-                 
-                    HelpClass.StartAwait(grid_main);
-
-                fillItemsEvent();
-
-                 
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                 
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void fillCollectEventsCall(object sender)
-        {
-            try
-            {
-                 HelpClass.StartAwait(grid_main);
-
-                fillCollectEvent();
-
-                if (stk_tagsBranches.Children.Count == 0)
-                {
-                    fillCollectEventAll();
-                }
-
-                 HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
+       
         private void chk_Checked(object sender, RoutedEventArgs e)
         {
             fillItemsEventCall(sender);
@@ -488,31 +632,43 @@ namespace Restaurant.View.reports.salesReports
 
         private async void Cb_ItemsBranches_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            #region
-            //if (cb_ItemsBranches.SelectedItem != null)
-            //{
-            //    if (stk_tagsBranches.Children.Count < 5)
-            //    {
-            //        selectedBranch = await branchModel.getBranchById((int)cb_ItemsBranches.SelectedValue);
-            //        var b = new MaterialDesignThemes.Wpf.Chip()
-            //        {
-            //            Content = selectedBranch.name,
-            //            Name = "btn" + selectedBranch.branchId.ToString(),
-            //            IsDeletable = true,
-            //            Margin = new Thickness(5, 0, 5, 0)
-            //        };
-            //        b.DeleteClick += Chip_OnDeleteItemClick;
-            //        stk_tagsBranches.Children.Add(b);
-            //        comboBrachTemp.Add(selectedBranch);
-            //        selectedBranchId.Add(selectedBranch.branchId);
-            //        dynamicComboBranches.Remove(selectedBranch);
-            //        fillItemsEvent();
-            //    }
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
-            //}
-            #endregion
+                #region
+                //if (cb_ItemsBranches.SelectedItem != null)
+                //{
+                //    if (stk_tagsBranches.Children.Count < 5)
+                //    {
+                //        selectedBranch = await branchModel.getBranchById((int)cb_ItemsBranches.SelectedValue);
+                //        var b = new MaterialDesignThemes.Wpf.Chip()
+                //        {
+                //            Content = selectedBranch.name,
+                //            Name = "btn" + selectedBranch.branchId.ToString(),
+                //            IsDeletable = true,
+                //            Margin = new Thickness(5, 0, 5, 0)
+                //        };
+                //        b.DeleteClick += Chip_OnDeleteItemClick;
+                //        stk_tagsBranches.Children.Add(b);
+                //        comboBrachTemp.Add(selectedBranch);
+                //        selectedBranchId.Add(selectedBranch.branchId);
+                //        dynamicComboBranches.Remove(selectedBranch);
+                //        fillItemsEvent();
+                //    }
 
-            fillItemsEvent();
+                //}
+                #endregion
+
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
         private void Chk_allBranchesItem_Checked(object sender, RoutedEventArgs e)
@@ -534,14 +690,14 @@ namespace Restaurant.View.reports.salesReports
 
         }
 
-        private void Chk_allBranchesItem_Unchecked(object sender, RoutedEventArgs e)
+        private async void Chk_allBranchesItem_Unchecked(object sender, RoutedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
 
                 cb_ItemsBranches.IsEnabled = true;
-
+                await Search();
                  
                 HelpClass.EndAwait(grid_main);
             }
@@ -562,14 +718,14 @@ namespace Restaurant.View.reports.salesReports
 
                 cb_Items.SelectedItem = null;
                 cb_Items.IsEnabled = false;
-                for (int i = 0; i < comboItemTemp.Count; i++)
-                {
-                    dynamicComboItem.Add(comboItemTemp.Skip(i).FirstOrDefault());
-                }
-                comboItemTemp.Clear();
-                stk_tagsItems.Children.Clear();
-                selectedItemId.Clear();
-                fillItemsEvent();
+                //for (int i = 0; i < comboItemTemp.Count; i++)
+                //{
+                //    dynamicComboItem.Add(comboItemTemp.Skip(i).FirstOrDefault());
+                //}
+                //comboItemTemp.Clear();
+                //stk_tagsItems.Children.Clear();
+                //selectedItemId.Clear();
+                //fillItemsEvent();
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -580,14 +736,14 @@ namespace Restaurant.View.reports.salesReports
             }
         }
 
-        private void Chk_allItems_Unchecked(object sender, RoutedEventArgs e)
+        private async void Chk_allItems_Unchecked(object sender, RoutedEventArgs e)
         {
             try
             {
-                 HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 cb_Items.IsEnabled = true;
-                fillItemsEvent();
+                await Search();
 
                  HelpClass.EndAwait(grid_main);
             }
@@ -618,13 +774,14 @@ namespace Restaurant.View.reports.salesReports
             }
         }
 
-        private void Chk_allTypes_Unchecked(object sender, RoutedEventArgs e)
+        private async void Chk_allTypes_Unchecked(object sender, RoutedEventArgs e)
         {
             try
             {
                 HelpClass.StartAwait(grid_main);
 
                 cb_Types.IsEnabled = true;
+                await Search();
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -633,249 +790,6 @@ namespace Restaurant.View.reports.salesReports
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-        }
-        #endregion
-
-        #region Charts
-        private void fillPieChart()
-        {
-            List<string> titles = new List<string>();
-            List<int> x = new List<int>();
-            titles.Clear();
-
-            var temp = itemList
-             .Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemId) : true));
-            var titleTemp = temp.GroupBy(jj => jj.ITitemId)
-             .Select(g => new Item
-             {
-                 itemId = (int)g.FirstOrDefault().ITitemId,
-                 name = g.FirstOrDefault().ITitemName 
-             }).ToList();
-            titles.AddRange(titleTemp.Select(jj => jj.name));
-            var result = temp.GroupBy(s => s.ITitemId).Select(s => new
-            {
-                ITitemId = s.Key,
-                count = s.Count()
-            });
-            x = result.Select(m => m.count).ToList();
-            int count = x.Count();
-            SeriesCollection piechartData = new SeriesCollection();
-            int xCount = 0;
-            if (x.Count() <= 6) xCount = x.Count();
-            for (int i = 0; i < xCount; i++)
-            {
-                List<int> final = new List<int>();
-
-                final.Add(x.ToList().Skip(i).FirstOrDefault());
-                piechartData.Add(
-                  new PieSeries
-                  {
-                      Values = final.AsChartValues(),
-                      Title = titles.Skip(i).FirstOrDefault(),
-                      DataLabels = true,
-                  }
-              );
-            }
-            if (x.Count() > 6)
-            {
-                int finalSum = 0;
-                for (int i = 6; i < x.Count(); i++)
-                {
-                    finalSum = finalSum + x.ToList().Skip(i).FirstOrDefault();
-                }
-                if (finalSum != 0)
-                {
-                    List<int> final = new List<int>();
-                    final.Add(finalSum);
-                    piechartData.Add(
-                      new PieSeries
-                      {
-                          Values = final.AsChartValues(),
-                          Title = AppSettings.resourcemanager.GetString("trOthers"),
-                          DataLabels = true,
-                      }
-                  );
-                }
-            }
-            chart1.Series = piechartData;
-        }
-
-        private void fillColumnChart()
-        {
-            axcolumn.Labels = new List<string>();
-            List<string> names = new List<string>();
-            List<int> x = new List<int>();
-            List<int> y = new List<int>();
-            List<int> z = new List<int>();
-
-            var temp = itemList
-                   .Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemId) : true));
-            var result = temp.GroupBy(s => s.ITitemId).Select(s => new
-            {
-                ITitemId = s.Key,
-                countS   = s.Where(m => m.invType == "s").Count(),
-                countTs  = s.Where(m => m.invType == "ts").Count(),
-                countSs  = s.Where(m => m.invType == "ss").Count(),
-
-            });
-            x = result.Select(m => m.countS).ToList();
-            y = result.Select(m => m.countTs).ToList();
-            z = result.Select(m => m.countSs).ToList();
-
-            var tempName = temp.GroupBy(jj => jj.ITitemId)
-             .Select(g => new Item { itemId = (int)g.FirstOrDefault().ITitemId, name = g.FirstOrDefault().ITitemName }).ToList();
-            names.AddRange(tempName.Select(nn => nn.name));
-
-            List<string> lable = new List<string>();
-            SeriesCollection columnChartData = new SeriesCollection();
-            List<int> cP = new List<int>();
-            List<int> cPb = new List<int>();
-            List<int> cD = new List<int>();
-            List<string> titles = new List<string>()
-            {
-                AppSettings.resourcemanager.GetString("trDiningHallType"),
-                AppSettings.resourcemanager.GetString("trTakeAway"),
-                AppSettings.resourcemanager.GetString("trSelfService")
-            };
-            int xCount = 0;
-            if (x.Count() <= 6) xCount = x.Count();
-            for (int i = 0; i < xCount; i++)
-            {
-                cP.Add(x.ToList().Skip(i).FirstOrDefault());
-                cPb.Add(y.ToList().Skip(i).FirstOrDefault());
-                cD.Add(z.ToList().Skip(i).FirstOrDefault());
-                axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
-            }
-            if (x.Count() > 6)
-            {
-                int cPSum = 0, cPbSum = 0, cDSum = 0;
-                for (int i = 0; i < xCount; i++)
-                {
-                    cPSum = cPSum + x.ToList().Skip(i).FirstOrDefault();
-                    cPbSum = cPbSum + y.ToList().Skip(i).FirstOrDefault();
-                    cDSum = cDSum + z.ToList().Skip(i).FirstOrDefault();
-                }
-                if (!((cPSum == 0) && (cPbSum == 0) && (cDSum == 0)))
-                {
-                    cP.Add(cPSum);
-                    cPb.Add(cPbSum);
-                    cD.Add(cDSum);
-                    axcolumn.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
-                }
-            }
-            //3 فوق بعض
-            columnChartData.Add(
-            new StackedColumnSeries
-            {
-                Values = cP.AsChartValues(),
-                Title = titles[0],
-                DataLabels = true,
-            });
-
-            columnChartData.Add(
-            new StackedColumnSeries
-            {
-                Values = cPb.AsChartValues(),
-                Title = titles[1],
-                DataLabels = true,
-            });
-
-            columnChartData.Add(
-            new StackedColumnSeries
-            {
-                Values = cD.AsChartValues(),
-                Title = titles[2],
-                DataLabels = true,
-            });
-
-            DataContext = this;
-            cartesianChart.Series = columnChartData;
-        }
-
-        private void fillRowChart(List<int> stackedButton)
-        {
-            MyAxis.Labels = new List<string>();
-            List<string> names = new List<string>();
-            IEnumerable<decimal> pTemp = null;
-            IEnumerable<decimal> pbTemp = null;
-            IEnumerable<decimal> resultTemp = null;
-
-            var temp = fillRowChartList(Items, dp_ItemStartDate, dp_ItemEndDate);
-            temp = temp.Where(j => (selectedItemId.Count != 0 ? stackedButton.Contains((int)j.ITitemId) : true));
-            var result = temp.GroupBy(s => s.ITitemId).Select(s => new
-            {
-                ITitemId = s.Key,
-                totalP = s.Where(x => x.invType == "s").Sum(x => x.totalNet),
-                totalPb = s.Where(x => x.invType == "ts").Sum(x => x.totalNet),
-                resultTemp = s.Where(x => x.invType == "ss").Sum(x => x.totalNet),
-            }
-         );
-            pTemp = result.Select(x => (decimal)x.totalP);
-            pbTemp = result.Select(x => (decimal)x.totalPb);
-            resultTemp = result.Select(x => (decimal)x.resultTemp);
-            var tempName = temp.GroupBy(jj => jj.ITitemId)
-             .Select(g => new Item { itemId = (int)g.FirstOrDefault().ITitemId, name = g.FirstOrDefault().ITitemName }).ToList();
-            names.AddRange(tempName.Select(nn => nn.name));
-            /********************************************************************************/
-            SeriesCollection rowChartData = new SeriesCollection();
-            List<decimal> dh = new List<decimal>();
-            List<decimal> ta = new List<decimal>();
-            List<decimal> ss = new List<decimal>();
-            List<string> titles = new List<string>()
-            {
-                AppSettings.resourcemanager.GetString("trDiningHallType"),
-                AppSettings.resourcemanager.GetString("trTakeAway"),
-                AppSettings.resourcemanager.GetString("trSelfService")
-            };
-
-            int xCount = 0;
-            if (pTemp.Count() <= 6) xCount = pTemp.Count();
-
-            for (int i = 0; i < xCount; i++)
-            {
-                dh.Add(pTemp.ToList().Skip(i).FirstOrDefault());
-                ta.Add(pbTemp.ToList().Skip(i).FirstOrDefault());
-                ss.Add(resultTemp.ToList().Skip(i).FirstOrDefault());
-                MyAxis.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
-            }
-            if (pTemp.Count() > 6)
-            {
-                decimal sSum = 0, tsSum = 0, ssSum = 0;
-                for (int i = 0; i < xCount; i++)
-                {
-                    sSum = sSum + pTemp.ToList().Skip(i).FirstOrDefault();
-                    tsSum = tsSum + pbTemp.ToList().Skip(i).FirstOrDefault();
-                    ssSum = ssSum + resultTemp.ToList().Skip(i).FirstOrDefault();
-                }
-                if (!((sSum == 0) && (tsSum == 0) && (ssSum == 0)))
-                {
-                    dh.Add(sSum);
-                    ta.Add(tsSum);
-                    ss.Add(ssSum);
-                    MyAxis.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
-                }
-            }
-            rowChartData.Add(
-          new LineSeries
-          {
-              Values = dh.AsChartValues(),
-              Title = titles[0]
-          });
-            rowChartData.Add(
-         new LineSeries
-         {
-             Values = ta.AsChartValues(),
-             Title = titles[1]
-         });
-            rowChartData.Add(
-        new LineSeries
-        {
-            Values = ss.AsChartValues(),
-            Title = titles[2]
-
-        });
-            DataContext = this;
-            rowChart.Series = rowChartData;
         }
         #endregion
 
@@ -1002,130 +916,31 @@ namespace Restaurant.View.reports.salesReports
                 //{
                 //    fillCollectEventAll();
                 //}
-                 
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
+
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
         #endregion
 
-        #region fillLists
-        List<ItemTransferInvoice> itemList = null;
-        private List<ItemTransferInvoice> fillList(IEnumerable<ItemTransferInvoice> Invoices, ComboBox cbBranch, ComboBox cbitem,  DatePicker startDate, DatePicker endDate)
-        {
-            var result = Invoices.Where(x => (
-
-           ( (cb_ItemsBranches.SelectedIndex != -1 ? x.branchCreatorId == (int)cb_ItemsBranches.SelectedValue: true)
-                      && (cb_Items.SelectedIndex != -1 ? x.ITitemId == (int)cb_Items.SelectedValue : true)
-                      && (cb_Types.SelectedIndex != -1 ? x.categoryId == (int)cb_Types.SelectedValue : true)
-                      && (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
-                      && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true))));
-
-            itemList = result.ToList();
-            return result.ToList();
-        }
-
-        private IEnumerable<ItemTransferInvoice> fillRowChartList(IEnumerable<ItemTransferInvoice> Invoices, DatePicker startDate, DatePicker endDate)
-        {
-            var result = Invoices.Where(x => (
-                         (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
-                        && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true)));
-
-            return result;
-        }
-        List<ItemTransferInvoice> collectListBranch = null;
-        private List<ItemTransferInvoice> fillCollectListBranch(IEnumerable<ItemTransferInvoice> Invoices, DatePicker startDate, DatePicker endDate)
-        {
-            var temp = Invoices
-                .Where(x =>
-                 (startDate.SelectedDate != null ? x.updateDate >= startDate.SelectedDate : true)
-                && (endDate.SelectedDate != null ? x.updateDate <= endDate.SelectedDate : true))
-                .GroupBy(obj => new
-                {
-                    obj.branchCreatorId,
-                    obj.ITitemId
-                }).Select(obj => new ItemTransferInvoice
-                {
-                    branchCreatorId = obj.FirstOrDefault().branchCreatorId,
-                    branchCreatorName = obj.FirstOrDefault().branchCreatorName,
-                    itemUnitId = obj.FirstOrDefault().itemUnitId,
-                    ItemUnits = obj.FirstOrDefault().ItemUnits,
-                    invoiceId = obj.FirstOrDefault().invoiceId,
-                    ITquantity = obj.Sum(x => x.ITquantity),
-                    ITitemName = obj.FirstOrDefault().ITitemName,
-                    ITitemId = obj.FirstOrDefault().ITitemId,
-                    ITunitName = obj.FirstOrDefault().ITunitName,
-                    ITunitId = obj.FirstOrDefault().ITunitId,
-                    ITupdateDate = obj.FirstOrDefault().ITupdateDate,
-                    itemAvg = obj.Average(x => x.ITquantity),
-                    count = obj.Count()
-                }).OrderByDescending(obj => obj.ITquantity);
-
-            collectListBranch = temp.ToList();
-            return temp.ToList();
-        }
-        List<ItemTransferInvoice> collectListAll = null;
-        private List<ItemTransferInvoice> fillCollectListAll(IEnumerable<ItemTransferInvoice> Invoices, DatePicker startDate, DatePicker endDate)
-        {
-            var temp = Invoices
-                .Where(x =>
-                 (startDate.SelectedDate != null ? x.updateDate >= startDate.SelectedDate : true)
-                && (endDate.SelectedDate != null ? x.updateDate <= endDate.SelectedDate : true))
-                .GroupBy(obj => new
-                {
-                    obj.ITitemId
-                }).Select(obj => new ItemTransferInvoice
-                {
-                    branchCreatorId = obj.FirstOrDefault().branchCreatorId,
-                    branchCreatorName = "All Branches",
-                    itemUnitId = obj.FirstOrDefault().itemUnitId,
-                    ItemUnits = obj.FirstOrDefault().ItemUnits,
-                    invoiceId = obj.FirstOrDefault().invoiceId,
-                    ITquantity = obj.Sum(x => x.ITquantity),
-                    ITitemName = obj.FirstOrDefault().ITitemName,
-                    ITitemId = obj.FirstOrDefault().ITitemId,
-                    ITunitName = obj.FirstOrDefault().ITunitName,
-                    ITunitId = obj.FirstOrDefault().ITunitId,
-                    itemAvg = obj.Average(x => x.ITquantity),
-                    ITupdateDate = obj.FirstOrDefault().ITupdateDate,
-                    count = obj.Count()
-                }).OrderByDescending(obj => obj.ITquantity);
-
-            collectListAll = temp.ToList();
-            return temp.ToList();
-        }
-        #endregion
-
         #region General Events
-        private void Txt_search_TextChanged(object sender, TextChangedEventArgs e)
+        private async void Txt_search_TextChanged(object sender, TextChangedEventArgs e)
         {//search
             try
             {
-                 
+
                 HelpClass.StartAwait(grid_main);
 
                 IEnumerable<ItemTransferInvoice> tempSearch = itemList;
 
                 if (selectedTab == 0)
                 {
-                    tempSearch = itemList.Where(s =>
-                                                s.invNumber.ToLower().Contains(txt_search.Text) ||
-                                                 s.branchCreatorName.ToLower().Contains(txt_search.Text) ||
-                                                 s.ITitemName.ToLower().Contains(txt_search.Text) ||
-                                                 s.categoryName.ToLower().Contains(txt_search.Text) ||
-                                                 s.ITquantity.ToString().ToLower().Contains(txt_search.Text) ||
-                                                 s.ITprice.ToString().ToLower().Contains(txt_search.Text) ||
-                                                 s.subTotal.ToString().ToLower().Contains(txt_search.Text)
-                                                 );
-
-                    fillPieChart();
-                    fillColumnChart();
-                    fillRowChart(selectedItemId);
+                    await Search();
                 }
                 else if (selectedTab == 1)
                 {
@@ -1159,26 +974,26 @@ namespace Restaurant.View.reports.salesReports
                 dgInvoice.ItemsSource = tempSearch;
                 txt_count.Text = dgInvoice.Items.Count.ToString();
 
-                 
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                 
+
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
 
-        private void Btn_refresh_Click(object sender, RoutedEventArgs e)
+        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
         {//refresh
             try
             {
-                 
+
                 HelpClass.StartAwait(grid_main);
 
                 txt_search.Text = "";
-                
+
                 if (selectedTab == 0)
                 {
                     chk_allBranchesItem.IsChecked = true;
@@ -1186,7 +1001,7 @@ namespace Restaurant.View.reports.salesReports
                     dp_ItemStartDate.SelectedDate = null;
                     dp_ItemEndDate.SelectedDate = null;
 
-                    fillItemsEvent();
+                    await Search();
                 }
                 else if (selectedTab == 1)
                 {
@@ -1196,7 +1011,7 @@ namespace Restaurant.View.reports.salesReports
                     stk_tagsBranches.Children.Clear();
                     fillCollectEventAll();
                 }
-                 
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -1206,259 +1021,249 @@ namespace Restaurant.View.reports.salesReports
             }
         }
 
-        private void btn_settings_Click(object sender, RoutedEventArgs e)
-        {//settings
+        #endregion
 
-        }
+        #endregion
 
-        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
-        {//excel
-            try
-            {
-                 
-                    HelpClass.StartAwait(grid_main);
-
-                //Thread t1 = new Thread(() =>
-                //{
-                ExcelSalesItems();
-                //});
-                //t1.Start();
-
-                 
-                    HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                 
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void ExcelSalesItems()
+        #region Charts
+        private void fillPieChart()
         {
-            BuildReport();
+            List<string> titles = new List<string>();
+            List<int> x = new List<int>();
+            titles.Clear();
 
-            this.Dispatcher.Invoke(() =>
+            var temp = itemsQuery
+             .Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemId) : true));
+            var titleTemp = temp.GroupBy(jj => jj.ITitemId)
+             .Select(g => new Item
+             {
+                 itemId = (int)g.FirstOrDefault().ITitemId,
+                 name = g.FirstOrDefault().ITitemName 
+             }).ToList();
+            titles.AddRange(titleTemp.Select(jj => jj.name));
+            var result = temp.GroupBy(s => s.ITitemId).Select(s => new
             {
-                saveFileDialog.Filter = "EXCEL|*.xls;";
-                if (saveFileDialog.ShowDialog() == true)
-                {
-                    string filepath = saveFileDialog.FileName;
-                    LocalReportExtensions.ExportToExcel(rep, filepath);
-                }
+                ITitemId = s.Key,
+                count = s.Count()
             });
-        }
-
-        private void Btn_print_Click(object sender, RoutedEventArgs e)
-        {//print
-            try
+            x = result.Select(m => m.count).ToList();
+            int count = x.Count();
+            SeriesCollection piechartData = new SeriesCollection();
+            int xCount = 0;
+            if (x.Count() <= 6) xCount = x.Count();
+            for (int i = 0; i < xCount; i++)
             {
-                 
-                    HelpClass.StartAwait(grid_main);
+                List<int> final = new List<int>();
 
-                /////////////////////////////////////
-                Thread t1 = new Thread(() =>
+                final.Add(x.ToList().Skip(i).FirstOrDefault());
+                piechartData.Add(
+                  new PieSeries
+                  {
+                      Values = final.AsChartValues(),
+                      Title = titles.Skip(i).FirstOrDefault(),
+                      DataLabels = true,
+                  }
+              );
+            }
+            if (x.Count() > 6)
+            {
+                int finalSum = 0;
+                for (int i = 6; i < x.Count(); i++)
                 {
-                    printSalesItems();
-                });
-                t1.Start();
-                //////////////////////////////////////
-
-                 
-                    HelpClass.EndAwait(grid_main);
+                    finalSum = finalSum + x.ToList().Skip(i).FirstOrDefault();
+                }
+                if (finalSum != 0)
+                {
+                    List<int> final = new List<int>();
+                    final.Add(finalSum);
+                    piechartData.Add(
+                      new PieSeries
+                      {
+                          Values = final.AsChartValues(),
+                          Title = AppSettings.resourcemanager.GetString("trOthers"),
+                          DataLabels = true,
+                      }
+                  );
+                }
             }
-            catch (Exception ex)
-            {
-                 
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+            chart1.Series = piechartData;
         }
 
-        private void printSalesItems()
+        private void fillColumnChart()
         {
-            BuildReport();
+            axcolumn.Labels = new List<string>();
+            List<string> names = new List<string>();
+            List<int> x = new List<int>();
+            List<int> y = new List<int>();
+            List<int> z = new List<int>();
 
-            this.Dispatcher.Invoke(() =>
+            var temp = itemsQuery
+                   .Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemId) : true));
+            var result = temp.GroupBy(s => s.ITitemId).Select(s => new
             {
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
+                ITitemId = s.Key,
+                countS   = s.Where(m => m.invType == "s").Count(),
+                countTs  = s.Where(m => m.invType == "ts").Count(),
+                countSs  = s.Where(m => m.invType == "ss").Count(),
+
             });
-        }
+            x = result.Select(m => m.countS).ToList();
+            y = result.Select(m => m.countTs).ToList();
+            z = result.Select(m => m.countSs).ToList();
 
-        private void Btn_pdf_Click(object sender, RoutedEventArgs e)
-        {//pdf
-            try
+            var tempName = temp.GroupBy(jj => jj.ITitemId)
+             .Select(g => new Item { itemId = (int)g.FirstOrDefault().ITitemId, name = g.FirstOrDefault().ITitemName }).ToList();
+            names.AddRange(tempName.Select(nn => nn.name));
+
+            List<string> lable = new List<string>();
+            SeriesCollection columnChartData = new SeriesCollection();
+            List<int> cP = new List<int>();
+            List<int> cPb = new List<int>();
+            List<int> cD = new List<int>();
+            List<string> titles = new List<string>()
             {
-                 
-                    HelpClass.StartAwait(grid_main);
-
-                /////////////////////////////////////
-                Thread t1 = new Thread(() =>
-                {
-                    pdfSelesItems();
-                });
-                t1.Start();
-                //////////////////////////////////////
-
-                 
-                    HelpClass.EndAwait(grid_main);
+                AppSettings.resourcemanager.GetString("trDiningHallType"),
+                AppSettings.resourcemanager.GetString("trTakeAway"),
+                AppSettings.resourcemanager.GetString("trSelfService")
+            };
+            int xCount = 0;
+            if (x.Count() <= 6) xCount = x.Count();
+            for (int i = 0; i < xCount; i++)
+            {
+                cP.Add(x.ToList().Skip(i).FirstOrDefault());
+                cPb.Add(y.ToList().Skip(i).FirstOrDefault());
+                cD.Add(z.ToList().Skip(i).FirstOrDefault());
+                axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
             }
-            catch (Exception ex)
+            if (x.Count() > 6)
             {
-                 
-                    HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void pdfSelesItems()
-        {
-            BuildReport();
-
-            this.Dispatcher.Invoke(() =>
-            {
-                saveFileDialog.Filter = "PDF|*.pdf;";
-
-                if (saveFileDialog.ShowDialog() == true)
+                int cPSum = 0, cPbSum = 0, cDSum = 0;
+                for (int i = 0; i < xCount; i++)
                 {
-                    string filepath = saveFileDialog.FileName;
-                    LocalReportExtensions.ExportToPDF(rep, filepath);
+                    cPSum = cPSum + x.ToList().Skip(i).FirstOrDefault();
+                    cPbSum = cPbSum + y.ToList().Skip(i).FirstOrDefault();
+                    cDSum = cDSum + z.ToList().Skip(i).FirstOrDefault();
                 }
+                if (!((cPSum == 0) && (cPbSum == 0) && (cDSum == 0)))
+                {
+                    cP.Add(cPSum);
+                    cPb.Add(cPbSum);
+                    cD.Add(cDSum);
+                    axcolumn.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
+                }
+            }
+            //3 فوق بعض
+            columnChartData.Add(
+            new StackedColumnSeries
+            {
+                Values = cP.AsChartValues(),
+                Title = titles[0],
+                DataLabels = true,
             });
+
+            columnChartData.Add(
+            new StackedColumnSeries
+            {
+                Values = cPb.AsChartValues(),
+                Title = titles[1],
+                DataLabels = true,
+            });
+
+            columnChartData.Add(
+            new StackedColumnSeries
+            {
+                Values = cD.AsChartValues(),
+                Title = titles[2],
+                DataLabels = true,
+            });
+
+            DataContext = this;
+            cartesianChart.Series = columnChartData;
         }
 
-        private void BuildReport()
+        private void fillRowChart()
         {
-            List<ReportParameter> paramarr = new List<ReportParameter>();
+            MyAxis.Labels = new List<string>();
+            List<string> names = new List<string>();
+            IEnumerable<decimal> pTemp = null;
+            IEnumerable<decimal> pbTemp = null;
+            IEnumerable<decimal> resultTemp = null;
 
-            string addpath = "";
-            string itemtype = "";
-
-            string firstTitle = "saleItems";
-            string secondTitle = "";
-            string subTitle = "";
-            string Title = "";
-
-            bool isArabic = ReportCls.checkLang();
-            if (isArabic)
+            var temp = itemsQuery.Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemId) : true));
+            var result = temp.GroupBy(s => s.ITitemId).Select(s => new
             {
+                ITitemId = s.Key,
+                totalP = s.Where(x => x.invType == "s").Sum(x => x.totalNet),
+                totalPb = s.Where(x => x.invType == "ts").Sum(x => x.totalNet),
+                resultTemp = s.Where(x => x.invType == "ss").Sum(x => x.totalNet),
+            }
+         );
+            pTemp = result.Select(x => (decimal)x.totalP);
+            pbTemp = result.Select(x => (decimal)x.totalPb);
+            resultTemp = result.Select(x => (decimal)x.resultTemp);
+            var tempName = temp.GroupBy(jj => jj.ITitemId)
+             .Select(g => new Item { itemId = (int)g.FirstOrDefault().ITitemId, name = g.FirstOrDefault().ITitemName }).ToList();
+            names.AddRange(tempName.Select(nn => nn.name));
+            /********************************************************************************/
+            SeriesCollection rowChartData = new SeriesCollection();
+            List<decimal> dh = new List<decimal>();
+            List<decimal> ta = new List<decimal>();
+            List<decimal> ss = new List<decimal>();
+            List<string> titles = new List<string>()
+            {
+                AppSettings.resourcemanager.GetString("trDiningHallType"),
+                AppSettings.resourcemanager.GetString("trTakeAway"),
+                AppSettings.resourcemanager.GetString("trSelfService")
+            };
 
-                if (selectedTab == 0)
+            int xCount = 0;
+            if (pTemp.Count() <= 6) xCount = pTemp.Count();
+
+            for (int i = 0; i < xCount; i++)
+            {
+                dh.Add(pTemp.ToList().Skip(i).FirstOrDefault());
+                ta.Add(pbTemp.ToList().Skip(i).FirstOrDefault());
+                ss.Add(resultTemp.ToList().Skip(i).FirstOrDefault());
+                MyAxis.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
+            }
+            if (pTemp.Count() > 6)
+            {
+                decimal sSum = 0, tsSum = 0, ssSum = 0;
+                for (int i = 0; i < xCount; i++)
                 {
-
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        if (chk_allTypes.IsChecked == true || cb_Types.SelectedValue == null)
-                        {
-                            itemtype = "";
-                        }
-                        else
-                        {
-                            itemtype = clsReports.itemTypeConverter(cb_Types.SelectedValue.ToString());
-                        }
-                        secondTitle = "items";
-                        subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-
-                        Title = AppSettings.resourcemanagerreport.GetString("trSalesReport");
-                        paramarr.Add(new ReportParameter("trTitle", Title));
-                    });
-
-
-                    // cb_Types.
-                    addpath = @"\Reports\StatisticReport\Sale\Item\Ar\ArItem.rdlc";
-                    //  paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+                    sSum = sSum + pTemp.ToList().Skip(i).FirstOrDefault();
+                    tsSum = tsSum + pbTemp.ToList().Skip(i).FirstOrDefault();
+                    ssSum = ssSum + resultTemp.ToList().Skip(i).FirstOrDefault();
                 }
-                else if (selectedTab == 1)
+                if (!((sSum == 0) && (tsSum == 0) && (ssSum == 0)))
                 {
-                    addpath = @"\Reports\StatisticReport\Sale\Item\Ar\ArBestSel.rdlc";
-                    secondTitle = "BestSeller";
-                    subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-                    Title = AppSettings.resourcemanagerreport.GetString("trSalesReport") + " / " + subTitle;
-                    paramarr.Add(new ReportParameter("trTitle", Title));
-
+                    dh.Add(sSum);
+                    ta.Add(tsSum);
+                    ss.Add(ssSum);
+                    MyAxis.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
                 }
             }
-            else
-            {
-                if (selectedTab == 0)
-                {
-                    addpath = @"\Reports\StatisticReport\Sale\Item\En\EnItem.rdlc";
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        if (chk_allTypes.IsChecked == true || cb_Types.SelectedValue == null)
-                        {
-                            itemtype = "";
-                        }
-                        else
-                        {
-                            itemtype = clsReports.itemTypeConverter(cb_Types.SelectedValue.ToString());
-                        }
-                        secondTitle = "items";
-                        subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-                        Title = AppSettings.resourcemanagerreport.GetString("trSalesReport");
-                        paramarr.Add(new ReportParameter("trTitle", Title));
-                    });
+            rowChartData.Add(
+          new LineSeries
+          {
+              Values = dh.AsChartValues(),
+              Title = titles[0]
+          });
+            rowChartData.Add(
+         new LineSeries
+         {
+             Values = ta.AsChartValues(),
+             Title = titles[1]
+         });
+            rowChartData.Add(
+        new LineSeries
+        {
+            Values = ss.AsChartValues(),
+            Title = titles[2]
 
-                }
-                else if (selectedTab == 1)
-                {
-                    addpath = @"\Reports\StatisticReport\Sale\Item\En\EnBestSel.rdlc";
-
-                    secondTitle = "BestSeller";
-                    subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-                    Title = AppSettings.resourcemanagerreport.GetString("trSalesReport") + " / " + subTitle;
-                    paramarr.Add(new ReportParameter("trTitle", Title));
-                }
-            }
-            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-            ReportCls.checkLang();
-
-
-            //cb_Types cb_Types.SelectedValue.ToString() itemtypeconverter //chk_allTypes
-            clsReports.saleitemStsReport(temp, rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
-            clsReports.Header(paramarr);
-            paramarr.Add(new ReportParameter("itemtype", itemtype));
-
-            rep.SetParameters(paramarr);
-
-            rep.Refresh();
-        }
-
-        private void Btn_preview_Click(object sender, RoutedEventArgs e)
-        {//preview
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                #region
-                Window.GetWindow(this).Opacity = 0.2;
-                /////////////////////
-                string pdfpath = "";
-                pdfpath = @"\Thumb\report\temp.pdf";
-                pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
-                BuildReport();
-                LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                ///////////////////
-                wd_previewPdf w = new wd_previewPdf();
-                w.pdfPath = pdfpath;
-                if (!string.IsNullOrEmpty(w.pdfPath))
-                {
-                    w.ShowDialog();
-                    w.wb_pdfWebViewer.Dispose();
-                }
-                Window.GetWindow(this).Opacity = 1;
-                #endregion
-                 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
+        });
+            DataContext = this;
+            rowChart.Series = rowChartData;
         }
         #endregion
 
@@ -1648,9 +1453,254 @@ namespace Restaurant.View.reports.salesReports
             rowChart.Series = rowChartData;
         }
 
+        #endregion
+
+        #region reports
+        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
+        {//excel
+            try
+            {
+                 HelpClass.StartAwait(grid_main);
+
+                //Thread t1 = new Thread(() =>
+                //{
+                ExcelSalesItems();
+                //});
+                //t1.Start();
+
+                 HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void ExcelSalesItems()
+        {
+            BuildReport();
+
+            this.Dispatcher.Invoke(() =>
+            {
+                saveFileDialog.Filter = "EXCEL|*.xls;";
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string filepath = saveFileDialog.FileName;
+                    LocalReportExtensions.ExportToExcel(rep, filepath);
+                }
+            });
+        }
+
+        private void Btn_print_Click(object sender, RoutedEventArgs e)
+        {//print
+            try
+            {
+                 HelpClass.StartAwait(grid_main);
+
+                /////////////////////////////////////
+                Thread t1 = new Thread(() =>
+                {
+                    printSalesItems();
+                });
+                t1.Start();
+                //////////////////////////////////////
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void printSalesItems()
+        {
+            BuildReport();
+
+            this.Dispatcher.Invoke(() =>
+            {
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
+            });
+        }
+
+        private void Btn_pdf_Click(object sender, RoutedEventArgs e)
+        {//pdf
+            try
+            {
+                 
+                    HelpClass.StartAwait(grid_main);
+
+                /////////////////////////////////////
+                Thread t1 = new Thread(() =>
+                {
+                    pdfSelesItems();
+                });
+                t1.Start();
+                //////////////////////////////////////
+
+                 
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                 
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void pdfSelesItems()
+        {
+            BuildReport();
+
+            this.Dispatcher.Invoke(() =>
+            {
+                saveFileDialog.Filter = "PDF|*.pdf;";
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string filepath = saveFileDialog.FileName;
+                    LocalReportExtensions.ExportToPDF(rep, filepath);
+                }
+            });
+        }
+
+        private void BuildReport()
+        {
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+
+            string addpath = "";
+            string itemtype = "";
+
+            string firstTitle = "saleItems";
+            string secondTitle = "";
+            string subTitle = "";
+            string Title = "";
+
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
+
+                if (selectedTab == 0)
+                {
+
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        if (chk_allTypes.IsChecked == true || cb_Types.SelectedValue == null)
+                        {
+                            itemtype = "";
+                        }
+                        else
+                        {
+                            itemtype = clsReports.itemTypeConverter(cb_Types.SelectedValue.ToString());
+                        }
+                        secondTitle = "items";
+                        subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+
+                        Title = AppSettings.resourcemanagerreport.GetString("trSalesReport");
+                        paramarr.Add(new ReportParameter("trTitle", Title));
+                    });
+
+
+                    // cb_Types.
+                    addpath = @"\Reports\StatisticReport\Sale\Item\Ar\ArItem.rdlc";
+                    //  paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+                }
+                else if (selectedTab == 1)
+                {
+                    addpath = @"\Reports\StatisticReport\Sale\Item\Ar\ArBestSel.rdlc";
+                    secondTitle = "BestSeller";
+                    subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+                    Title = AppSettings.resourcemanagerreport.GetString("trSalesReport") + " / " + subTitle;
+                    paramarr.Add(new ReportParameter("trTitle", Title));
+
+                }
+            }
+            else
+            {
+                if (selectedTab == 0)
+                {
+                    addpath = @"\Reports\StatisticReport\Sale\Item\En\EnItem.rdlc";
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        if (chk_allTypes.IsChecked == true || cb_Types.SelectedValue == null)
+                        {
+                            itemtype = "";
+                        }
+                        else
+                        {
+                            itemtype = clsReports.itemTypeConverter(cb_Types.SelectedValue.ToString());
+                        }
+                        secondTitle = "items";
+                        subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+                        Title = AppSettings.resourcemanagerreport.GetString("trSalesReport");
+                        paramarr.Add(new ReportParameter("trTitle", Title));
+                    });
+
+                }
+                else if (selectedTab == 1)
+                {
+                    addpath = @"\Reports\StatisticReport\Sale\Item\En\EnBestSel.rdlc";
+
+                    secondTitle = "BestSeller";
+                    subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+                    Title = AppSettings.resourcemanagerreport.GetString("trSalesReport") + " / " + subTitle;
+                    paramarr.Add(new ReportParameter("trTitle", Title));
+                }
+            }
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+            ReportCls.checkLang();
+
+
+            //cb_Types cb_Types.SelectedValue.ToString() itemtypeconverter //chk_allTypes
+            clsReports.saleitemStsReport(temp, rep, reppath, paramarr);
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+            paramarr.Add(new ReportParameter("itemtype", itemtype));
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+        }
+
+        private void Btn_preview_Click(object sender, RoutedEventArgs e)
+        {//preview
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                #region
+                Window.GetWindow(this).Opacity = 0.2;
+                /////////////////////
+                string pdfpath = "";
+                pdfpath = @"\Thumb\report\temp.pdf";
+                pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+                BuildReport();
+                LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                ///////////////////
+                wd_previewPdf w = new wd_previewPdf();
+                w.pdfPath = pdfpath;
+                if (!string.IsNullOrEmpty(w.pdfPath))
+                {
+                    w.ShowDialog();
+                    w.wb_pdfWebViewer.Dispose();
+                }
+                Window.GetWindow(this).Opacity = 1;
+                #endregion
+                 
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
 
         #endregion
-      
-      
+
     }
 }
