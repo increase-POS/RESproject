@@ -1547,47 +1547,6 @@ namespace Restaurant.View.reports.salesReports
             }
         }
 
-        private void excelRowinDatagrid(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
-                    if (vis is DataGridRow)
-                    {
-                        //POSOpenCloseModel row = (POSOpenCloseModel)dgClosing.SelectedItems[0];
-                        //cashTransID = row.cashTransId;
-                        //openCashTransID = row.openCashTransId.Value;
-                        //await getopquery(row);
-                        //if (opquery.Count() == 0)
-                        //{
-                        //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoChange"), animation: ToasterAnimation.FadeIn);
-                        //}
-                        //else
-                        //{
-                        //    BuildOperationReport();
-
-                        //    this.Dispatcher.Invoke(() =>
-                        //    {
-                        //        saveFileDialog.Filter = "EXCEL|*.xls;";
-                        //        if (saveFileDialog.ShowDialog() == true)
-                        //        {
-                        //            string filepath = saveFileDialog.FileName;
-                        //            LocalReportExtensions.ExportToExcel(rep, filepath);
-                        //        }
-                        //    });
-                        //}
-                    }
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
         private void previewRowinDatagrid(object sender, RoutedEventArgs e)
         {
             try
