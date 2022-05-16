@@ -850,11 +850,21 @@ namespace Restaurant.Classes
         {
             try
             {
+                
+
                 //Message
                 if (ex.HResult == -2146233088)
                     Toaster.ShowError(window as Window, message: AppSettings.resourcemanager.GetString("trNoConnection"), animation: ToasterAnimation.FadeIn);
+                if (ex.HResult == -2147467261)
+                {
+                    //Void MoveNext()
+                    //-2147467261
+
+                    // dont't show message
+                }
                 else
                     Toaster.ShowError(window as Window, message: ex.HResult + " || " + ex.Message, animation: ToasterAnimation.FadeIn);
+
                 ErrorClass errorClass = new ErrorClass();
                 errorClass.num = ex.HResult.ToString();
                 errorClass.msg = ex.Message;
@@ -1132,7 +1142,7 @@ namespace Restaurant.Classes
         }
 
 
-        public  static string decimalToTime(decimal remainingTime)
+        public static string decimalToTime(decimal remainingTime)
         {
             TimeSpan span = TimeSpan.FromMinutes(double.Parse(remainingTime.ToString()));
             var timeArr = span.ToString().Split(':');
@@ -1145,7 +1155,35 @@ namespace Restaurant.Classes
             string label = timeArr[1].ToString().PadLeft(2, '0') + ":" + Math.Round(decimal.Parse(timeArr[2])).ToString().PadLeft(2, '0');
             return label;
         }
-       
+        static public string translate_days(string str)
+        {
+            switch (str)
+            {
+                case "sat":
+                    return AppSettings.resourcemanager.GetString("trSaturday"); ;
+                //break;
+                case "sun":
+                    return AppSettings.resourcemanager.GetString("trSunday");
+                //break;
+                case "mon":
+                    return AppSettings.resourcemanager.GetString("trMonday");
+                //break;
+                case "tues":
+                    return AppSettings.resourcemanager.GetString("trTuesday");
+                //break;
+                case "wed":
+                    return AppSettings.resourcemanager.GetString("trWednsday");
+                //break;
+                case "thur":
+                    return AppSettings.resourcemanager.GetString("trThursday");
+                //break;
+                case "fri":
+                    return AppSettings.resourcemanager.GetString("trFriday");
+            //break;
+            default: return str;
+                    //break;
+            }
 
+        }
     }
 }

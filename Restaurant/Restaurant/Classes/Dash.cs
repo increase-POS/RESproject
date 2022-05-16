@@ -30,6 +30,11 @@ namespace Restaurant.Classes
         public int diningHallCount { get; set; }
         public int takeAwayCount { get; set; }
         public int selfServiceCount { get; set; }
+
+        
+
+
+
     }
     //public class AgentsCount
     //{
@@ -123,7 +128,9 @@ namespace Restaurant.Classes
         public int day { get; set; }
 
     }
-    public class CashAndTablesCount
+
+    /*
+      public class CashAndTablesCount
     {
         public Nullable<int> branchCreatorId { get; set; }
         public int totalCash { get; set; }
@@ -132,7 +139,7 @@ namespace Restaurant.Classes
         public int reservationsCount { get; set; }
 
     }
-
+    */
     //bestOf
     public class BranchInvoiceCount
     {
@@ -144,14 +151,15 @@ namespace Restaurant.Classes
         public string branchName { get; set; }
         public int count { get; set; }
         public int dateindex { get; set; }
+        public string duration { get; set; }
 
 
     }
     public class BestOfCount
     {
         public List<BranchInvoiceCount> CountinMonthsList { get; set; }
-        public List<BranchInvoiceCount> CountinDaysList { get; set; }
-        public List<BranchInvoiceCount> CountinHoursList { get; set; }
+        public List<BranchInvoiceCount> CountinDaysList   { get; set; }
+        public List<BranchInvoiceCount> CountinHoursList  { get; set; }
 
 
         public Nullable<int> branchId { get; set; }
@@ -195,16 +203,22 @@ namespace Restaurant.Classes
         //public string vendorCount { get; set; }
 
         // new
-        public string totalCash { get; set; }
+        // branch balance
+        public string balance { get; set; }
         public string emptyTablesCount { get; set; }
         public string openTablesCount { get; set; }
         public string reservationsCount { get; set; }
         // new
-        public string diningHallCount { get; set; }
-        public string takeAwayCount { get; set; }
-        public string selfServiceCount { get; set; }
+        //public string diningHallCount { get; set; }
+        //public string takeAwayCount { get; set; }
+        //public string selfServiceCount { get; set; }
 
+        // count by inv type
+        public string dhallCount { get; set; }
+        public string selfCount { get; set; }
+        public string tawayCount { get; set; }
 
+        
 
 
         public string userOnline { get; set; }
@@ -221,6 +235,7 @@ namespace Restaurant.Classes
 
         public List<userOnlineInfo> listUserOnline;
 
+        public List<BestOfCount> listBestOfCount;
 
         public SeriesCollection SeriesCollection { get; set; }
         public string[] Labels { get; set; }
@@ -247,14 +262,7 @@ namespace Restaurant.Classes
 
         }
 
-        // عدد الطاولات واجمالي الكاش
-        public async Task<List<CashAndTablesCount>> GetCashAndTablesCount()
-        {
-            List<CountByInvType> branchBalanceList  = await GetCountByInvType(MainWindow.branchLogin.branchId , MainWindow.userLogin.userId);
-            List<BranchBalance> bestOfCountList = await GetCashBalance(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
-
-            return new List<CashAndTablesCount>();
-        }
+       
 
         // عدد فواتير المبيعات ومرتجع المبيعات والمشتريات ومرتجع المشتريات حسب الفرع
         public async Task<List<InvoiceCount>> Getdashsalpur()

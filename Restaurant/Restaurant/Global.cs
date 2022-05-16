@@ -11,8 +11,10 @@ namespace Restaurant
         public const string APIKey = "1234";
         //public const string APIUri = "http://141.95.1.58:4747/api/";
         //public static string APIUri = "http://localhost:4747/api/";
+        // server offline
         public static string APIUri = "http://192.168.1.5:4437/api/";
-        //public static string APIUri = "http://192.168.1.7:4747/api/";
+        // naji
+        //public static string APIUri = "http://192.168.1.10:4747/api/";
 
 
         public static string ScannedImage = "Thumb/Scan/scan.jpg";
