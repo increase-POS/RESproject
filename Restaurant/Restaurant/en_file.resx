@@ -4051,4 +4051,7 @@ Please add Email in setting</value>
   <data name="wrongTime" xml:space="preserve">
     <value>Wrong time</value>
   </data>
+  <data name="notCompleted" xml:space="preserve">
+    <value>Not Completed</value>
+  </data>
 </root>

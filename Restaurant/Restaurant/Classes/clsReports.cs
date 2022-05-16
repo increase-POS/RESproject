@@ -3152,7 +3152,7 @@ Parameters!trValueDiscount.Value)
                 //    Toaster.ShowWarning(Window.GetWindow(this), message: "Not completed", animation: ToasterAnimation.FadeIn);
 
                 //});
-                resmsg.result = "Not completed";
+                resmsg.result = "notCompleted";
                 return resmsg ;
             }
             return resmsg ;

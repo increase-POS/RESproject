@@ -4036,4 +4036,7 @@
   <data name="wrongTime" xml:space="preserve">
     <value>الوقت غير صحيح</value>
   </data>
+  <data name="notCompleted" xml:space="preserve">
+    <value>العملية لم تكتمل</value>
+  </data>
 </root>
