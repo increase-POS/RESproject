@@ -118,11 +118,6 @@ namespace Restaurant.View.reports.salesReports
                 translate();
                 #endregion
 
-               
-                chk_allBranchesItem.IsChecked = true;
-                chk_allTypes.IsChecked = true;
-                chk_allItems.IsChecked = true;
-
                 btn_items_Click(btn_items , null);
 
                 HelpClass.EndAwait(grid_main);
@@ -219,7 +214,7 @@ namespace Restaurant.View.reports.salesReports
                 itemsQuery = itemsQuery.Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemId) : true)).ToList();
 
             fillComboItemTypes();
-            fillComboItemsBranches(cb_collect);
+            
             fillComboItemsBranches(cb_ItemsBranches);
 
             RefreshIemsView();
@@ -450,6 +445,11 @@ namespace Restaurant.View.reports.salesReports
                 col_total.Visibility = Visibility.Visible;
                 #endregion
 
+
+                chk_allBranchesItem.IsChecked = true;
+                chk_allTypes.IsChecked = true;
+                chk_allItems.IsChecked = true;
+
                 await Search();
 
                 HelpClass.EndAwait(grid_main);
@@ -462,7 +462,7 @@ namespace Restaurant.View.reports.salesReports
 
         }
 
-        private void Btn_collect_Click(object sender, RoutedEventArgs e)
+        private async void Btn_collect_Click(object sender, RoutedEventArgs e)
         {//collect
             try
             {
@@ -489,6 +489,8 @@ namespace Restaurant.View.reports.salesReports
                 col_invCount.Visibility = Visibility.Visible;
                 col_avg.Visibility = Visibility.Visible;
 
+                await RefreshItemsList();
+                fillComboItemsBranches(cb_collect);
                 chk_allcollect.IsChecked = true;
                 fillCollectEventAll();
                 //if (stk_tagsBranches.Children.Count == 0)
