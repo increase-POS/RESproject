@@ -205,9 +205,9 @@ namespace Restaurant.Classes
         // new
         // branch balance
         public string balance { get; set; }
-        public string emptyTablesCount { get; set; }
-        public string openTablesCount { get; set; }
-        public string reservationsCount { get; set; }
+        public string emptyCount { get; set; }
+        public string openedCount { get; set; }
+        public string reservedCount { get; set; }
         // new
         //public string diningHallCount { get; set; }
         //public string takeAwayCount { get; set; }
@@ -265,12 +265,15 @@ namespace Restaurant.Classes
        
 
         // عدد فواتير المبيعات ومرتجع المبيعات والمشتريات ومرتجع المشتريات حسب الفرع
-        public async Task<List<InvoiceCount>> Getdashsalpur()
+        public async Task<List<InvoiceCount>> Getdashsalpur(int mainBranchId, int userId)
         {
 
             List<InvoiceCount> list = new List<InvoiceCount>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
 
-            IEnumerable<Claim> claims = await APIResult.getList("dash/Getdashsalpur");
+            IEnumerable<Claim> claims = await APIResult.getList("dash/Getdashsalpur", parameters);
 
             foreach (Claim c in claims)
             {
@@ -283,68 +286,15 @@ namespace Restaurant.Classes
 
         }
        
-        // عدد الموردين والزبائن الكلي
-        //public async Task<List<AgentsCount>> GetAgentCount()
-        //{
-        //    List<AgentsCount> list = new List<AgentsCount>();
-
-        //    IEnumerable<Claim> claims = await APIResult.getList("dash/GetAgentCount");
-
-        //    foreach (Claim c in claims)
-        //    {
-        //        if (c.Type == "scopes")
-        //        {
-        //            list.Add(JsonConvert.DeserializeObject<AgentsCount>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
-        //        }
-        //    }
-        //    return list;
-
-
-        //    //List<AgentsCount> list = null;
-        //    //// ... Use HttpClient.
-        //    //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        //    //using (var client = new HttpClient())
-        //    //{
-        //    //    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-        //    //    client.BaseAddress = new Uri(Global.APIUri);
-        //    //    client.DefaultRequestHeaders.Clear();
-        //    //    client.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
-        //    //    client.DefaultRequestHeaders.Add("Keep-Alive", "3600");
-        //    //    HttpRequestMessage request = new HttpRequestMessage();
-        //    //    request.RequestUri = new Uri(Global.APIUri + "dash/GetAgentCount");
-        //    //    request.Headers.Add("APIKey", Global.APIKey);
-        //    //    request.Method = HttpMethod.Get;
-        //    //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //    //    HttpResponseMessage response = await client.SendAsync(request);
-
-        //    //    if (response.IsSuccessStatusCode)
-        //    //    {
-        //    //        var jsonString = await response.Content.ReadAsStringAsync();
-        //    //        jsonString = jsonString.Replace("\\", string.Empty);
-        //    //        jsonString = jsonString.Trim('"');
-        //    //        // fix date format
-        //    //        JsonSerializerSettings settings = new JsonSerializerSettings
-        //    //        {
-        //    //            Converters = new List<JsonConverter> { new BadDateFixingConverter() },
-        //    //            DateParseHandling = DateParseHandling.None
-        //    //        };
-        //    //        list = JsonConvert.DeserializeObject<List<AgentsCount>>(jsonString, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
-        //    //        return list;
-        //    //    }
-        //    //    else //web api sent error response 
-        //    //    {
-        //    //        list = new List<AgentsCount>();
-        //    //    }
-        //    //    return list;
-        //    //}
-        //}
         //عدد المستخدمين المتصلين والغير متصلين  حاليا في كل فرع 
-        public async Task<List<UserOnlineCount>> Getuseronline()
+        public async Task<List<UserOnlineCount>> Getuseronline(int mainBranchId, int userId)
         {
 
             List<UserOnlineCount> list = new List<UserOnlineCount>();
-
-            IEnumerable<Claim> claims = await APIResult.getList("dash/Getuseronline");
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
+            IEnumerable<Claim> claims = await APIResult.getList("dash/Getuseronline", parameters);
 
             foreach (Claim c in claims)
             {
@@ -394,11 +344,13 @@ namespace Restaurant.Classes
             //}
         }
         //بيانات المستخدمين المتصلين
-        public async Task<List<userOnlineInfo>> GetuseronlineInfo()
+        public async Task<List<userOnlineInfo>> GetuseronlineInfo(int mainBranchId, int userId)
         {
             List<userOnlineInfo> list = new List<userOnlineInfo>();
-
-            IEnumerable<Claim> claims = await APIResult.getList("dash/GetuseronlineInfo");
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
+            IEnumerable<Claim> claims = await APIResult.getList("dash/GetuseronlineInfo", parameters);
 
             foreach (Claim c in claims)
             {
@@ -449,11 +401,13 @@ namespace Restaurant.Classes
             //}
         }
         // عدد الفروع المتصلة وغير المتصلة
-        public async Task<List<BranchOnlineCount>> GetBrachonline()
+        public async Task<List<BranchOnlineCount>> GetBrachonline(int mainBranchId, int userId)
         {
             List<BranchOnlineCount> list = new List<BranchOnlineCount>();
-
-            IEnumerable<Claim> claims = await APIResult.getList("dash/GetBrachonline");
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
+            IEnumerable<Claim> claims = await APIResult.getList("dash/GetBrachonline", parameters);
 
             foreach (Claim c in claims)
             {
@@ -504,11 +458,13 @@ namespace Restaurant.Classes
             //}
         }
         // عدد فواتير المبيعات ومرتجع المبيعات والمشتريات ومرتجع المشتريات حسب الفرع في اليوم الحالي
-        public async Task<List<InvoiceCount>> GetdashsalpurDay()
+        public async Task<List<InvoiceCount>> GetdashsalpurDay(int mainBranchId, int userId)
         {
             List<InvoiceCount> list = new List<InvoiceCount>();
-
-            IEnumerable<Claim> claims = await APIResult.getList("dash/GetdashsalpurDay");
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
+            IEnumerable<Claim> claims = await APIResult.getList("dash/GetdashsalpurDay", parameters);
 
             foreach (Claim c in claims)
             {
@@ -558,11 +514,13 @@ namespace Restaurant.Classes
             //}
         }
         // اكثر 10 اصناف مبيعا
-        public async Task<List<BestSeller>> Getbestseller()
+        public async Task<List<BestSeller>> Getbestseller(int mainBranchId, int userId)
         {
             List<BestSeller> list = new List<BestSeller>();
-
-            IEnumerable<Claim> claims = await APIResult.getList("dash/Getbestseller");
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
+            IEnumerable<Claim> claims = await APIResult.getList("dash/Getbestseller", parameters);
 
             foreach (Claim c in claims)
             {
@@ -612,12 +570,14 @@ namespace Restaurant.Classes
             //}
         }
         //كمية قائمة من 10 اصناف في كل فرع 
-        public async Task<List<IUStorage>> GetIUStorage(List<ItemUnit> IUList)
+        public async Task<List<IUStorage>> GetIUStorage(List<ItemUnit> IUList, int mainBranchId, int userId)
         {
 
             List<IUStorage> list = new List<IUStorage>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-
+            
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
             var myContent = JsonConvert.SerializeObject(IUList);
             parameters.Add("IUList", myContent);
             //#################
@@ -676,11 +636,13 @@ namespace Restaurant.Classes
             //}
         }
         // مجموع مبالغ المشتريات والمبيعات اليومي خلال الشهر الحالي لكل فرع
-        public async Task<List<TotalPurSale>> GetTotalPurSale()
+        public async Task<List<TotalPurSale>> GetTotalPurSale(int mainBranchId, int userId)
         {
             List<TotalPurSale> list = new List<TotalPurSale>();
-
-            IEnumerable<Claim> claims = await APIResult.getList("dash/GetTotalPurSale");
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
+            IEnumerable<Claim> claims = await APIResult.getList("dash/GetTotalPurSale", parameters);
 
             foreach (Claim c in claims)
             {

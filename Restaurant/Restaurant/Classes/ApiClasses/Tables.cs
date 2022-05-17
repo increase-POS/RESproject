@@ -64,7 +64,7 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
-        internal async Task<Invoice> GetTableInvoice(int tableId )
+        internal async Task<Invoice> GetTableInvoice(int tableId)
         {
             Invoice items = new Invoice();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -79,7 +79,7 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
-        internal async Task<List<Tables>> getInvoiceTables(int invoiceId )
+        internal async Task<List<Tables>> getInvoiceTables(int invoiceId)
         {
             List<Tables> items = new List<Tables>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -95,7 +95,7 @@ namespace Restaurant.Classes.ApiClasses
             return items;
         }
 
-        internal async Task<List<Tables>> GetTablesStatusInfo(int branchId, string dateSearch,string startTimeSearch, string endTimeSearch)
+        internal async Task<List<Tables>> GetTablesStatusInfo(int branchId, string dateSearch, string startTimeSearch, string endTimeSearch)
         {
             List<Tables> items = new List<Tables>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -113,7 +113,7 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
-         internal async Task<List<Tables>> GetTablesForDinning(int branchId, string dateSearch) 
+        internal async Task<List<Tables>> GetTablesForDinning(int branchId, string dateSearch)
         {
             List<Tables> items = new List<Tables>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -131,18 +131,20 @@ namespace Restaurant.Classes.ApiClasses
             }
             return items;
         }
-        internal async Task<TablesStatistics> GetTablesStatistics(string dateSearch) 
+        internal async Task<List<TablesStatistics>> GetTablesStatistics(string dateSearch, int mainBranchId, int userId)
         {
-            TablesStatistics items = new TablesStatistics();
+            List<TablesStatistics> items = new List<TablesStatistics>();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("dateSearch", dateSearch);
-
+            parameters.Add("mainBranchId", mainBranchId.ToString());
+            parameters.Add("userId", userId.ToString());
             IEnumerable<Claim> claims = await APIResult.getList("Tables/GetTablesStatistics", parameters);
             foreach (Claim c in claims)
             {
                 if (c.Type == "scopes")
                 {
-                    items = JsonConvert.DeserializeObject<TablesStatistics>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                    items.Add(JsonConvert.DeserializeObject<TablesStatistics>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+
                 }
             }
             return items;
@@ -159,7 +161,7 @@ namespace Restaurant.Classes.ApiClasses
             return await APIResult.post(method, parameters);
         }
 
-        public async Task<int> checkTableAvailabiltiy(int tableId,int branchId, string reservationDate, string startTime, string endTime,long reservationId=0,int invoiceId = 0)
+        public async Task<int> checkTableAvailabiltiy(int tableId, int branchId, string reservationDate, string startTime, string endTime, long reservationId = 0, int invoiceId = 0)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Tables/checkTableAvailabiltiy";
@@ -172,7 +174,7 @@ namespace Restaurant.Classes.ApiClasses
             parameters.Add("endTime", endTime);
             return await APIResult.post(method, parameters);
         }
-        public async Task<int> checkOpenedTable(int tableId,int branchId)
+        public async Task<int> checkOpenedTable(int tableId, int branchId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "Tables/checkOpenedTable";
