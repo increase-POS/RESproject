@@ -277,6 +277,8 @@ namespace Restaurant.View
         }
 
         List<keyValueBool> loadingList;
+         List<string> catchError = new List<string>();
+        int catchErrorCount = 0;
         async void loading_getDailySalPur()
         {
             try
@@ -285,7 +287,11 @@ namespace Restaurant.View
                 await DailySalPur();
             }
             catch
-            { }
+            {
+                loading_getDailySalPur();
+                catchError.Add("loading_getDailySalPur");
+                catchErrorCount++;
+            }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("loading_getDailySalPur"))
@@ -330,7 +336,6 @@ namespace Restaurant.View
                 UserOnlinePic();
                 loading_getDailySalPur();
                 AmountMonthlySalPur();
-
                 do
                 {
                     isDone = true;
@@ -355,6 +360,7 @@ namespace Restaurant.View
                     }
                 }
                 while (!isDone);
+                //MessageBox.Show(catchError + " and count: " + catchErrorCount);
                 #endregion
 
                 this.DataContext = new Dash();
@@ -374,7 +380,11 @@ namespace Restaurant.View
                 #endregion
             }
             catch (Exception)
-            { }
+            {
+                IUStorageRefresh();
+                catchError.Add("IUStorageRefresh");
+                catchErrorCount++;
+            }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("IUStorageRefresh"))
@@ -394,7 +404,11 @@ namespace Restaurant.View
                 #endregion
             }
             catch (Exception)
-            { }
+            {
+                BestSellerRefresh();
+                catchError.Add("BestSellerRefresh");
+                catchErrorCount++;
+            }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("BestSellerRefresh"))
@@ -587,7 +601,11 @@ namespace Restaurant.View
                 changeTypeBestOf(dash.listBestOfCount);
             }
             catch
-            { }
+            {
+                getBestOf();
+                catchError.Add("getBestOf");
+                catchErrorCount++;
+            }
             foreach (var item in loadingList)
             {
                 if (item.key.Equals("getBestOf"))
@@ -598,7 +616,7 @@ namespace Restaurant.View
             }
         }
         
-            void changeTypeBestOf(List<BestOfCount> listBestOfCount)
+        void changeTypeBestOf(List<BestOfCount> listBestOfCount)
         {
             List<BranchInvoiceCount> listBranchInvoiceCount = new List<BranchInvoiceCount>();
 
@@ -691,6 +709,9 @@ namespace Restaurant.View
             catch (Exception ex)
             {
                 //SectionData.ExceptionMessage(ex, this);
+                getCountByInvType();
+                catchError.Add("getCountByInvType");
+                catchErrorCount++;
             }
             foreach (var item in loadingList)
             {
@@ -727,6 +748,10 @@ namespace Restaurant.View
             catch (Exception ex)
             {
                 //SectionData.ExceptionMessage(ex, this);
+
+                getBranchBalance();
+                catchError.Add("getBranchBalance");
+                catchErrorCount++;
             }
             foreach (var item in loadingList)
             {
@@ -767,6 +792,9 @@ namespace Restaurant.View
             catch (Exception ex)
             {
                 //SectionData.ExceptionMessage(ex, this);
+                getTableCount();
+                catchError.Add("getTableCount");
+                catchErrorCount++;
             }
             foreach (var item in loadingList)
             {
@@ -777,7 +805,6 @@ namespace Restaurant.View
                 }
             }
         }
-
         async Task UserOnline()
         {
             try
@@ -807,6 +834,9 @@ namespace Restaurant.View
             catch (Exception ex)
             {
                 //SectionData.ExceptionMessage(ex, this);
+                UserOnline();
+                catchError.Add("UserOnline");
+                catchErrorCount++;
             }
             foreach (var item in loadingList)
             {
@@ -844,6 +874,9 @@ namespace Restaurant.View
             catch (Exception ex)
             {
                 //SectionData.ExceptionMessage(ex, this);
+                UserOnlinePic();
+                catchError.Add("UserOnlinePic");
+                catchErrorCount++;
             }
             foreach (var item in loadingList)
             {
@@ -972,6 +1005,10 @@ namespace Restaurant.View
             catch (Exception ex)
             {
                 //SectionData.ExceptionMessage(ex, this);
+                BranchOnline();
+                catchError.Add("BranchOnline");
+                catchErrorCount++;
+
             }
             foreach (var item in loadingList)
             {
@@ -1442,6 +1479,9 @@ namespace Restaurant.View
             catch (Exception ex)
             {
                 //SectionData.ExceptionMessage(ex, this);
+                AmountMonthlySalPur();
+                catchError.Add("AmountMonthlySalPur");
+                catchErrorCount++;
             }
             foreach (var item in loadingList)
             {
