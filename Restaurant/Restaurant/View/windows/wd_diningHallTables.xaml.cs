@@ -754,7 +754,9 @@ namespace Restaurant.View.windows
                             if (res > 0)
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("popConfirmed"), animation: ToasterAnimation.FadeIn);
-                                await refreshReservationsList();
+                            res = await openInvoiceForReserve(reservation);
+
+                            await refreshReservationsList();
                                 await refreshTablesList();
                                 Search();
                                 await showDetails();
@@ -1044,7 +1046,7 @@ namespace Restaurant.View.windows
                         int res = await reservation.updateReservationStatus(nextReservation.reservationId, "confirm", MainWindow.userLogin.userId);
                         if (res > 0)
                         {
-                            res = await openInvoiceForReserve();
+                            res = await openInvoiceForReserve(nextReservation);
                             if (res > 0)
                             {
                                 //Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("popConfirmed"), animation: ToasterAnimation.FadeIn);
@@ -1145,7 +1147,7 @@ namespace Restaurant.View.windows
             invoice.invoiceId = res;
             return res;
         }
-        private async Task<int> openInvoiceForReserve()
+        private async Task<int> openInvoiceForReserve(TablesReservation reserv)
         {
             #region invoice object
             invoice = new Invoice();
@@ -1158,8 +1160,8 @@ namespace Restaurant.View.windows
             else
                 invoice.tax = 0;
 
-            invoice.agentId = nextReservation.customerId;
-            invoice.reservationId = nextReservation.reservationId;
+            invoice.agentId = reserv.customerId;
+            invoice.reservationId = reserv.reservationId;
             invoice.branchCreatorId = MainWindow.branchLogin.branchId;
             invoice.posId = MainWindow.posLogin.posId;
             invoice.branchId = MainWindow.branchLogin.branchId;
@@ -1167,7 +1169,7 @@ namespace Restaurant.View.windows
             #endregion
             #region table object
             List<Tables> invTables = new List<Tables>();
-            invTables.AddRange(nextReservation.tables);
+            invTables.AddRange(reserv.tables);
             selectedTables = invTables;
             #endregion
             int res = await FillCombo.invoice.saveInvoiceWithTables(invoice, invTables);
