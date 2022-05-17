@@ -1618,16 +1618,16 @@ namespace Restaurant.View.sales
                     if (agentToPayCash.membershipStatus == "valid")
                     {
                         customerInvClasses = await invoiceMemberShipClass.GetInvclassByMembershipId(_MemberShipId);
-                        if(agentToPayCash.offersCount > 0)
-                        {
-                            await refreshItemsList();
-                            Search();
-                            refreshItemsPrice();
-                        }
                     }
+                    else
+                        customerInvClasses = new List<InvoicesClass>();
                 }
                 else
                     _MemberShipId = 0;
+
+                await refreshItemsList();
+                Search();
+                refreshItemsPrice();
             }
            
             #endregion
@@ -3042,14 +3042,6 @@ namespace Restaurant.View.sales
 
                 int res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId);
 
-                #region save status = Preparing
-                statusObject = new orderPreparingStatus();
-                statusObject.orderPreparingId = res;
-                statusObject.status = "Preparing";
-                statusObject.createUserId = MainWindow.userLogin.userId;
-
-                await preparingOrder.updateOrderStatus(statusObject);
-                #endregion
             }
                 
         }
