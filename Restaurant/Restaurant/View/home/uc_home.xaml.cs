@@ -2,6 +2,7 @@
 using LiveCharts.Helpers;
 using LiveCharts.Wpf;
 using Restaurant.Classes;
+using Restaurant.Classes.ApiClasses;
 using Restaurant.View.windows;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,7 @@ namespace Restaurant.View
         int value_sales;
         DispatcherTimer timer = new DispatcherTimer();
         DispatcherTimer timer1 = new DispatcherTimer();
+        Tables tablesModel = new Tables();
 
 
         private static uc_home _instance;
@@ -71,7 +73,7 @@ namespace Restaurant.View
         DispatcherTimer threadtimer10 = new DispatcherTimer();
         DispatcherTimer threadtimer30 = new DispatcherTimer();
         //public static int secondTimer10 = 10;
-        public static int secondTimer10 = 3;
+        public static int secondTimer10 = 10;
         //public static int secondTimer30 = 30;
         public static int secondTimer30 = 30;
         int SkipBestSeller = 0;
@@ -157,6 +159,7 @@ namespace Restaurant.View
 
                 rdb_times.IsChecked = true;
 
+
                 //txt_rightReserved.Text =DateTime.Now.Date.Year + " © All Right Reserved for Increase";
             starTimerAfter10();
             starTimerAfter30();
@@ -219,6 +222,9 @@ namespace Restaurant.View
 
             txt_userOnline.Text = txt_branchOnline.Text = AppSettings.resourcemanager.GetString("trOnline") + ":";
             txt_countDailyPurchase.Text = txt_countDailySales.Text = AppSettings.resourcemanager.GetString("trCount") + ":";
+
+            txt_cashSympol.Text = AppSettings.Currency;
+
         }
         void timer_Thread30(object sendert, EventArgs et)
         {
@@ -300,6 +306,7 @@ namespace Restaurant.View
                 //loadingList.Add(new keyValueBool { key = "AgentCount", value = false });
                 loadingList.Add(new keyValueBool { key = "getCountByInvType", value = false });
                 loadingList.Add(new keyValueBool { key = "getBranchBalance", value = false });
+                loadingList.Add(new keyValueBool { key = "getTableCount", value = false });
                 loadingList.Add(new keyValueBool { key = "getBestOf", value = false });
                 loadingList.Add(new keyValueBool { key = "UserOnline", value = false });
                 loadingList.Add(new keyValueBool { key = "BranchOnline", value = false });
@@ -313,6 +320,7 @@ namespace Restaurant.View
                 //AgentCount();
                 getCountByInvType();
                 getBranchBalance();
+                getTableCount();
                 getBestOf();
 
                 UserOnline();
@@ -407,6 +415,7 @@ namespace Restaurant.View
                 //AgentCount();
                 getCountByInvType();
                 getBranchBalance();
+                getTableCount();
                 getBestOf();
                 UserOnline();
                 BranchOnline();
@@ -467,7 +476,7 @@ namespace Restaurant.View
         {
             try
             {
-                List<TotalPurSale> listSalPur = await dash.GetTotalPurSale();
+                List<TotalPurSale> listSalPur = await dash.GetTotalPurSale(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                 if (cb_branch.SelectedValue != null)
                     if ((int)cb_branch.SelectedValue == 0)
                     {
@@ -495,7 +504,7 @@ namespace Restaurant.View
         {
             try
             {
-                List<InvoiceCount> listSalPur = await dash.GetdashsalpurDay();
+                List<InvoiceCount> listSalPur = await dash.GetdashsalpurDay(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                 if (cb_branch.SelectedValue != null)
                     if ((int)cb_branch.SelectedValue == 0)
                     {
@@ -728,12 +737,52 @@ namespace Restaurant.View
                 }
             }
         }
+        async Task getTableCount()
+        {
+
+            try
+            {
+                //List<TablesStatistics> listTablesStatistics = await tablesModel.GetTablesStatistics(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
+                List<TablesStatistics> listTablesStatistics = await tablesModel.GetTablesStatistics(DateTime.Now.ToString(), MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
+                if (cb_branch.SelectedValue != null)
+                    if ((int)cb_branch.SelectedValue == 0)
+                    {
+                        dash.emptyCount = listTablesStatistics.Sum(x => x.emptyCount).ToString();
+                        dash.openedCount = listTablesStatistics.Sum(x => x.openedCount).ToString();
+                        dash.reservedCount = listTablesStatistics.Sum(x => x.reservedCount).ToString();
+                    }
+                    else
+                    {
+                        var newTablesStatistics = listTablesStatistics.Where(s => s.branchId == (int)cb_branch.SelectedValue).FirstOrDefault();
+                        if (newTablesStatistics != null)
+                        {
+                            dash.emptyCount = newTablesStatistics.emptyCount.ToString();
+                            dash.openedCount = newTablesStatistics.openedCount.ToString();
+                            dash.reservedCount = newTablesStatistics.reservedCount.ToString();
+                        }
+                        else
+                            dash.emptyCount = dash.openedCount =  dash.reservedCount = "0";
+                    }
+            }
+            catch (Exception ex)
+            {
+                //SectionData.ExceptionMessage(ex, this);
+            }
+            foreach (var item in loadingList)
+            {
+                if (item.key.Equals("getTableCount"))
+                {
+                    item.value = true;
+                    break;
+                }
+            }
+        }
 
         async Task UserOnline()
         {
             try
             {
-                List<UserOnlineCount> listUserOnline = await dash.Getuseronline();
+                List<UserOnlineCount> listUserOnline = await dash.Getuseronline(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                 if (cb_branch.SelectedValue != null)
                     if ((int)cb_branch.SelectedValue == 0)
                     {
@@ -772,7 +821,7 @@ namespace Restaurant.View
         {
             try
             {
-                dash.listUserOnline = await dash.GetuseronlineInfo();
+                dash.listUserOnline = await dash.GetuseronlineInfo(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                 if (cb_branch.SelectedValue != null)
                     if ((int)cb_branch.SelectedValue == 0)
                     {
@@ -907,7 +956,7 @@ namespace Restaurant.View
         {
             try
             {
-                List<BranchOnlineCount> listBranchOnline = await dash.GetBrachonline();
+                List<BranchOnlineCount> listBranchOnline = await dash.GetBrachonline(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                 var newBranchOnline = listBranchOnline.FirstOrDefault();
                 if (newBranchOnline != null)
                 {
@@ -955,7 +1004,7 @@ namespace Restaurant.View
         {
             try
             {
-                List<BestSeller> listAllBestSeller = await dash.Getbestseller();
+                List<BestSeller> listAllBestSeller = await dash.Getbestseller(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                 if (cb_branch.SelectedValue != null)
                     if ((int)cb_branch.SelectedValue == 0)
                     {
@@ -1171,7 +1220,7 @@ namespace Restaurant.View
         {
             try
             {
-                List<IUStorage> listAllIUStorage = await dash.GetIUStorage(IUList);
+                List<IUStorage> listAllIUStorage = await dash.GetIUStorage(IUList, MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                 if (cb_branch.SelectedValue != null)
                     if ((int)cb_branch.SelectedValue == 0)
                     {
@@ -1323,7 +1372,7 @@ namespace Restaurant.View
                 double[] ArrayS = new double[NumberDaysInMonth];
                 double[] ArrayP = new double[NumberDaysInMonth];
                 string[] ArrayCount = new string[NumberDaysInMonth];
-                List<TotalPurSale> listAllBestSeller = await dash.GetTotalPurSale();
+                List<TotalPurSale> listAllBestSeller = await dash.GetTotalPurSale(MainWindow.branchLogin.branchId, MainWindow.userLogin.userId);
                 if (cb_branch.SelectedValue != null)
                     if ((int)cb_branch.SelectedValue == 0)
                     {
