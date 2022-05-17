@@ -61,10 +61,21 @@ namespace Restaurant.Classes
                     "locations", "storageSections", "storageCost", "storageInvoice", "itemsStorage", "storageMovements",
                     "spendingOrder", "itemsShortage", "itemsDestructive", "stocktaking",
                     "delivery", "deliveryManagement", "shippingCompanies", "driversManagement",
-                    "reports","storageReports", "stockStorageReports", "externalStorageReports", "internalStorageReports"
-                    ,"directStorageReports", "stocktakingStorageReports", "destroiedStorageReports",
-                    "sectionData", "persons", "branchesAndStores", "users", "pos", "residentialSectors",
-                    "settings","general", "permissions" };
+                    // report
+                    "reports",
+                    "storageReports", "stockStorageReports", "externalStorageReports", "internalStorageReports"
+                    ,"directStorageReports", "stocktakingStorageReports", "destroiedStorageReports"
+                    ,"purchaseReports", "invoicePurchaseReports", "itemPurchaseReports", "orderPurchaseReports"
+                    ,"accountsReports", "paymentsAccountsReports", "recipientAccountsReports", "bankAccountsReports"
+                    , "posAccountsReports", "statementAccountsReports", "fundAccountsReports", "profitsAccountsReports"
+                    , "closingAccountsReports", "taxAccountsReports"
+                    ,"deliveryReports" , "deliveryReports_view"
+                    // sectionData
+                    ,"sectionData", "persons", "branchesAndStores", "users", "pos", "residentialSectors",
+                    //settings
+                    "settings","general", "permissions"
+                    // accounts
+                    , "accounts" ,"posTransfers" ,"payments" ,"received" ,"banksAccounting" ,"ordersAccounting"};
                 if (listStorePermision.Contains(_object))
                     return true;
             }
