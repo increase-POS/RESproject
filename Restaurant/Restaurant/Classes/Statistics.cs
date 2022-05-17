@@ -3840,11 +3840,11 @@ namespace Restaurant.Classes
                   :
                   "2";
 
-                if (row.transType == "d" && !(row.processType == "doc" && row.bondIsRecieved != 1))
+                if (row.transType == "d" && !(row.processType == "doc" && row.bondIsRecieved != 1) && row.side != "mb")
                 {
                     rowtotal += (decimal)row.cash;
                 }
-                else if (row.transType == "p" && !(row.processType == "doc" && row.bondIsRecieved != 1))
+                else if (row.transType == "p" && !(row.processType == "doc" && row.bondIsRecieved != 1) && row.side != "mb")
                 {// p
                     rowtotal -= (decimal)row.cash;
                 }
