@@ -88,8 +88,6 @@ namespace Restaurant.View.sales
 
                 fillServices();
 
-                chk_allServices.IsChecked = true;
-                dp_invoiceDate.SelectedDate = DateTime.Now;
 
                 Btn_Invoice_Click(btn_invoice, null);
 
@@ -167,31 +165,35 @@ namespace Restaurant.View.sales
 
         async Task Search()
         {
-            if (itemTrasferInvoices is null)
-                await RefreshItemTransferInvoiceList();
+            try
+            {
+                if (itemTrasferInvoices is null)
+                    await RefreshItemTransferInvoiceList();
 
-            searchText = txt_search.Text.ToLower();
-            itemTrasferInvoicesQuery = itemTrasferInvoices
-                .Where(s =>
-            (
-            s.invNumber.ToLower().Contains(searchText)
-            ||
-            s.branchCreatorName.ToString().ToLower().Contains(searchText)
-            ||
-            s.posName.ToString().ToLower().Contains(searchText)
-            ||
-            s.invType.ToString().ToLower().Contains(searchText)
-            )
-            &&
-            //service
-            (cb_sevices.SelectedIndex != -1 ? s.invType == cb_sevices.SelectedValue.ToString() : true)
-            &&
-            //date
-            (dp_invoiceDate.SelectedDate != null ? s.updateDate.Value.Date.ToShortDateString() == dp_invoiceDate.SelectedDate.Value.Date.ToShortDateString() : true)
-            );
+                searchText = txt_search.Text.ToLower();
+                itemTrasferInvoicesQuery = itemTrasferInvoices
+                    .Where(s =>
+                (
+                s.invNumber.ToLower().Contains(searchText)
+                ||
+                s.branchCreatorName.ToString().ToLower().Contains(searchText)
+                ||
+                s.posName.ToString().ToLower().Contains(searchText)
+                ||
+                s.invType.ToString().ToLower().Contains(searchText)
+                )
+                &&
+                //service
+                (cb_sevices.SelectedIndex != -1 ? s.invType == cb_sevices.SelectedValue.ToString() : true)
+                &&
+                //date
+                (dp_invoiceDate.SelectedDate != null ? s.updateDate.Value.Date.ToShortDateString() == dp_invoiceDate.SelectedDate.Value.Date.ToShortDateString() : true)
+                );
+            
+            }
+            catch { }
 
             RefreshIemTrasferInvoicesView();
-
         }
 
         void RefreshIemTrasferInvoicesView()
@@ -211,12 +213,13 @@ namespace Restaurant.View.sales
         }
 
         #endregion
-        
+
+        #region events
         private async void Btn_Invoice_Click(object sender, RoutedEventArgs e)
         {//invoice tab
-            //try
-            //{
-            //    HelpClass.StartAwait(grid_main);
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 txt_search.Text = "";
@@ -224,19 +227,19 @@ namespace Restaurant.View.sales
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_invoice);
                 path_invoice.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
-                await Search();
+                dp_invoiceDate.SelectedDate = DateTime.Now;
+                chk_allServices.IsChecked = true;
                 rowToHide.Height = rowToShow.Height;
 
-            //    HelpClass.EndAwait(grid_main);
-            //}
-            //catch (Exception ex)
-            //{
-            //    HelpClass.EndAwait(grid_main);
-            //    HelpClass.ExceptionMessage(ex, this);
-            //}
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
 
-        #region events
         private async void Dp_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {//select date
             try
@@ -258,6 +261,25 @@ namespace Restaurant.View.sales
         private void Txt_search_TextChanged(object sender, TextChangedEventArgs e)
         {//search
             callSearch(sender);
+        }
+
+        private void Btn_refresh_Click(object sender, RoutedEventArgs e)
+        {//refresh
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                searchText = "";
+                txt_search.Text = "";
+                chk_allServices.IsChecked = true;
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
         }
 
         private void Chk_allServices_Checked(object sender, RoutedEventArgs e)
@@ -354,164 +376,116 @@ namespace Restaurant.View.sales
 
         private void fillColumnChart()
         {
-           // axcolumn.Labels = new List<string>();
-           // List<string> names = new List<string>();
-           // IEnumerable<int> x = null;//invoice
-           // IEnumerable<int> y = null;//draft invoice
-           // IEnumerable<int> z = null;
+            axcolumn.Labels = new List<string>();
 
-           // var temp = itemTrasferInvoicesQuery;
-           // var result = temp.GroupBy(s => s.createUserId).Select(s => new
-           // {
-           //     updateUserId = s.Key,
-           //     countP = s.Where(m => m.invType == "s").Count(),
-           //     countPb = s.Where(m => m.invType == "ts").Count(),
-           //     countD = s.Where(m => m.invType == "ss" ).Count()
+            var resultList = itemTrasferInvoicesQuery.GroupBy(x => x.invType).Select(x => new 
+            {
+                invType  = x.FirstOrDefault().invType,
+                sTotal   = x.Where(g => g.invType == "s"  ).Count(),
+                tsTotal  = x.Where(g => g.invType == "ts" ).Count(),
+                ssTotal  = x.Where(g => g.invType == "ss" ).Count(),
+                sdTotal  = x.Where(g => g.invType == "sd" ).Count(),
+                tsdTotal = x.Where(g => g.invType == "tsd").Count(),
+                ssdTotal = x.Where(g => g.invType == "ssd").Count(),
+            }
+            ).ToList();
 
-           // });
+            List<string> names = new List<string>()
+            {
+                AppSettings.resourcemanager.GetString("trDiningHallType"),
+                AppSettings.resourcemanager.GetString("trTakeAway"),
+                AppSettings.resourcemanager.GetString("trSelfService")
+            };
 
-           // x = result.Select(m => m.countP);
-           // y = result.Select(m => m.countPb);
-           // z = result.Select(m => m.countD);
-           // var tempName = temp.GroupBy(s => s.uUserAccName).Select(s => new
-           // {
-           //     uUserName = s.Key
-           // });
-           // names.AddRange(tempName.Select(nn => nn.uUserName));
+            List<string> lable = new List<string>();
+            SeriesCollection columnChartData = new SeriesCollection();
+            List<int> invoice = new List<int>();
+            List<int> draft   = new List<int>();
 
-           // List<string> lable = new List<string>();
-           // SeriesCollection columnChartData = new SeriesCollection();
-           // List<int> cP = new List<int>();
-           // List<int> cPb = new List<int>();
-           // List<int> cD = new List<int>();
-           // List<string> titles = new List<string>()
-           // {
-           //     AppSettings.resourcemanager.GetString("trDiningHallType"),
-           //     AppSettings.resourcemanager.GetString("trTakeAway"),
-           //     AppSettings.resourcemanager.GetString("trSelfService")
-           // };
-           // int xCount = 0;
-           // if (x.Count() <= 6) xCount = x.Count();
-           // else xCount = 6;
-           // for (int i = 0; i < xCount; i++)
-           // {
-           //     cP.Add(x.ToList().Skip(i).FirstOrDefault());
-           //     cPb.Add(y.ToList().Skip(i).FirstOrDefault());
-           //     cD.Add(z.ToList().Skip(i).FirstOrDefault());
-           //     axcolumn.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
-           // }
-           // if (x.Count() > 6)
-           // {
-           //     int cPSum = 0, cPbSum = 0, cDSum = 0;
-           //     for (int i = 6; i < x.Count(); i++)
-           //     {
-           //         cPSum = cPSum + x.ToList().Skip(i).FirstOrDefault();
-           //         cPbSum = cPbSum + y.ToList().Skip(i).FirstOrDefault();
-           //         cDSum = cDSum + z.ToList().Skip(i).FirstOrDefault();
-           //     }
-           //     if (!((cPSum == 0) && (cPbSum == 0) && (cDSum == 0)))
-           //     {
-           //         cP.Add(cPSum);
-           //         cPb.Add(cPbSum);
-           //         cD.Add(cDSum);
-           //         axcolumn.Labels.Add(AppSettings.resourcemanager.GetString("trOthers"));
-           //     }
-           // }
-           // //3 فوق بعض
-           // columnChartData.Add(
-           // new StackedColumnSeries
-           // {
-           //     Values = cP.AsChartValues(),
-           //     Title = titles[0],
-           //     DataLabels = true,
-           // });
-           // columnChartData.Add(
-           //new StackedColumnSeries
-           //{
-           //    Values = cPb.AsChartValues(),
-           //    Title = titles[1],
-           //    DataLabels = true,
-           //});
-           // columnChartData.Add(
-           //new StackedColumnSeries
-           //{
-           //    Values = cD.AsChartValues(),
-           //    Title = titles[2],
-           //    DataLabels = true,
-           //});
+            invoice.Add(resultList.Sum(i => i.sTotal));
+            invoice.Add(resultList.Sum(i => i.tsTotal));
+            invoice.Add(resultList.Sum(i => i.ssTotal));
 
-           // DataContext = this;
-           // cartesianChart.Series = columnChartData;
+            draft.Add(resultList.Sum(i => i.sdTotal));
+            draft.Add(resultList.Sum(i => i.tsdTotal));
+            draft.Add(resultList.Sum(i => i.ssdTotal));
+
+            axcolumn.Labels.Add(names[0]);
+            axcolumn.Labels.Add(names[1]);
+            axcolumn.Labels.Add(names[2]);
+
+            columnChartData.Add(
+            new StackedColumnSeries
+            {
+                Values = invoice.AsChartValues(),
+                DataLabels = true,
+                Title = AppSettings.resourcemanager.GetString("trInvoice")
+            });
+            columnChartData.Add(
+            new StackedColumnSeries
+            {
+                Values = draft.AsChartValues(),
+                DataLabels = true,
+                Title = AppSettings.resourcemanager.GetString("trDraft")
+            });
+
+            DataContext = this;
+            cartesianChart.Series = columnChartData;
         }
 
         private void fillRowChart()
         {
-        //    MyAxis.Labels = new List<string>();
-        //    List<string> names = new List<string>();
-        //    IEnumerable<decimal> pTemp = null;
-        //    IEnumerable<decimal> pbTemp = null;
-        //    IEnumerable<decimal> resultTemp = null;
+            MyAxis.Labels = new List<string>();
+            List<string> names = new List<string>();
+           
+            List<decimal> s = new List<decimal>();
+            List<decimal> ts = new List<decimal>();
+            List<decimal> ss = new List<decimal>();
 
-        //    var temp = itemTrasferInvoicesQuery;
-        //    var result = temp.GroupBy(s => s.createUserId).Select(s => new
-        //    {
-        //        updateUserId = s.Key,
-        //        totalP = s.Where(x => x.invType == "s").Sum(x => x.totalNet),
-        //        totalPb = s.Where(x => x.invType == "ts").Sum(x => x.totalNet),
-        //        resultTemp = s.Where(x => x.invType == "ss").Sum(x => x.totalNet)
-        //    }
-        // );
+            var result = itemTrasferInvoicesQuery.GroupBy(i => i.invType).Select(i => new
+            {
+                invType    = i.Key,
+                totalP     = i.Where(x => x.invType == "s" ).Sum(x => x.totalNet),
+                totalPb    = i.Where(x => x.invType == "ts").Sum(x => x.totalNet),
+                resultTemp = i.Where(x => x.invType == "ss").Sum(x => x.totalNet)
+            }
+         );
 
-        //    //var resultTotal = result.Select(x => new { x.updateUserId, total = x.totalP - x.totalPb }).ToList();
-        //    pTemp = result.Select(x => (decimal)x.totalP);
-        //    pbTemp = result.Select(x => (decimal)x.totalPb);
-        //    //resultTemp = result.Select(x => (decimal)x.totalP - (decimal)x.totalPb);
-        //    resultTemp = result.Select(x => (decimal)x.resultTemp);
-        //    var tempName = temp.GroupBy(s => s.uUserAccName).Select(s => new
-        //    {
-        //        uUserName = s.Key
-        //    });
-        //    names.AddRange(tempName.Select(nn => nn.uUserName));
+            s.Add(result.Sum(x => (decimal)x.totalP));
+            ts.Add(result.Sum(x => (decimal)x.totalPb));
+            ss.Add(result.Sum(x => (decimal)x.resultTemp));
 
-        //    SeriesCollection rowChartData = new SeriesCollection();
-        //    List<decimal> purchase = new List<decimal>();
-        //    List<decimal> returns = new List<decimal>();
-        //    List<decimal> sub = new List<decimal>();
-        //    List<string> titles = new List<string>()
-        //    {
-        //         AppSettings.resourcemanager.GetString("trDiningHallType"),
-        //        AppSettings.resourcemanager.GetString("trTakeAway"),
-        //        AppSettings.resourcemanager.GetString("trSelfService")
-        //    };
-        //    for (int i = 0; i < pTemp.Count(); i++)
-        //    {
-        //        purchase.Add(pTemp.ToList().Skip(i).FirstOrDefault());
-        //        returns.Add(pbTemp.ToList().Skip(i).FirstOrDefault());
-        //        sub.Add(resultTemp.ToList().Skip(i).FirstOrDefault());
-        //        MyAxis.Labels.Add(names.ToList().Skip(i).FirstOrDefault());
-        //    }
+            SeriesCollection rowChartData = new SeriesCollection();
+           
 
-        //    rowChartData.Add(
-        //  new LineSeries
-        //  {
-        //      Values = purchase.AsChartValues(),
-        //      Title = titles[0]
-        //  });
-        //    rowChartData.Add(
-        // new LineSeries
-        // {
-        //     Values = returns.AsChartValues(),
-        //     Title = titles[1]
-        // });
-        //    rowChartData.Add(
-        //new LineSeries
-        //{
-        //    Values = sub.AsChartValues(),
-        //    Title = titles[2]
+            List<string> titles = new List<string>()
+            {
+                AppSettings.resourcemanager.GetString("trDiningHallType"),
+                AppSettings.resourcemanager.GetString("trTakeAway"),
+                AppSettings.resourcemanager.GetString("trSelfService")
+            };
+          
+            rowChartData.Add(
+            new LineSeries
+            {
+                Values = s.AsChartValues(),
+                Title = titles[0]
+            });
+            rowChartData.Add(
+             new LineSeries
+             {
+                 Values = ts.AsChartValues(),
+                 Title = titles[1]
+             });
+            rowChartData.Add(
+            new LineSeries
+            {
+                Values = ss.AsChartValues(),
+                Title = titles[2]
+            });
 
-        //});
-        //    DataContext = this;
-        //    rowChart.Series = rowChartData;
+            DataContext = this;
+            rowChart.Series = rowChartData;
         }
 
         #endregion
@@ -704,9 +678,10 @@ namespace Restaurant.View.sales
             }
         }
 
+
+
         #endregion
 
-
-      
+       
     }
 }
