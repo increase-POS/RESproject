@@ -4054,4 +4054,7 @@ Please add Email in setting</value>
   <data name="notCompleted" xml:space="preserve">
     <value>Not Completed</value>
   </data>
+  <data name="trShippingCompanynohint" xml:space="preserve">
+    <value>Shipping Company</value>
+  </data>
 </root>

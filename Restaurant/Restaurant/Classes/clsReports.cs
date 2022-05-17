@@ -693,10 +693,9 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("deliveryTime", AppSettings.resourcemanagerreport.GetString("deliveryTime")));
             //paramarr.Add(new ReportParameter("trStatus", AppSettings.resourcemanagerreport.GetString("trStatus")));
 
-            paramarr.Add(new ReportParameter("trDeliveryMan", AppSettings.resourcemanagerreport.GetString("deliveryMan")));
+           
             paramarr.Add(new ReportParameter("trCustomer", AppSettings.resourcemanagerreport.GetString("trCustomer")));
-            paramarr.Add(new ReportParameter("deliveryMan", Query.Count > 0 ? (Query.FirstOrDefault().shipUserName + " " + Query.FirstOrDefault().shipUserLastName) : "-"));
-            paramarr.Add(new ReportParameter("trCustomerAddress", AppSettings.resourcemanagerreport.GetString("trAddress")));
+             paramarr.Add(new ReportParameter("trCustomerAddress", AppSettings.resourcemanagerreport.GetString("trAddress")));
 
             paramarr.Add(new ReportParameter("trCustomerMobile", AppSettings.resourcemanagerreport.GetString("trMobile")));
 
@@ -2897,7 +2896,7 @@ Parameters!trValueDiscount.Value)
 
         // pdf print
 
-        public async Task<resultmessage> pdfPurInvoice(int invoiceId, string buttonSrc)
+        public async Task<resultmessage> pdfSaleInvoice(int invoiceId, string buttonSrc)
         {
             resultmessage resmsg = new resultmessage();
             resmsg.pdfpath = "";
@@ -3114,28 +3113,40 @@ Parameters!trValueDiscount.Value)
                             rs.rep.Refresh();
                             #endregion
                             /////////////////////////////////////////////////////////
-                            if (buttonSrc == "pdf")
+                            if (buttonSrc != "directprint")
                             {
-                                resmsg.result = await savepdfinvoice(rs, prInvoice, paramarr);
-                                if (resmsg.result != "")
+                                if (buttonSrc == "pdf")
                                 {
-                                    return resmsg ;
+                                    resmsg.result = await savepdfinvoice(rs, prInvoice, paramarr);
+                                    if (resmsg.result != "")
+                                    {
+                                        return resmsg;
+                                    }
                                 }
-                            }else if (buttonSrc == "print")
-                            {
-                                resmsg.result = await printinvoice(rs, prInvoice, paramarr);
-                                if (resmsg.result != "")
+                                else if (buttonSrc == "print")
                                 {
-                                    return resmsg ;
+                                    resmsg.result = await printinvoice(rs, prInvoice, paramarr);
+                                    if (resmsg.result != "")
+                                    {
+                                        return resmsg;
+                                    }
+                                }
+                                else if (buttonSrc == "prev")
+                                {
+                                    resmsg = await previewinvoice(rs, prInvoice, paramarr);
+                                    if (resmsg.result != "")
+                                    {
+
+                                        return resmsg;
+                                    }
                                 }
                             }
-                            else if (buttonSrc == "prev")
+                            else
                             {
-                                 resmsg= await previewinvoice(rs, prInvoice, paramarr);
-                                if (resmsg.result != "")
-                                {
-                                    return resmsg ;
-                                }
+                                resmsg.rs = rs;
+                                resmsg.prInvoice = prInvoice;
+                                resmsg.paramarr = paramarr;
+                                return resmsg;
                             }
 
 
@@ -3466,6 +3477,12 @@ Parameters!trValueDiscount.Value)
             resmsg.pdfpath = pdfpath;
             return resmsg;
         }
-
+        public List<OrderPreparing> newKitchenorderList(List<OrderPreparing> OrderListbeforesave, List<OrderPreparing> OrderListaftersave)
+        {
+            List<OrderPreparing> newOrderList = new List<OrderPreparing>();
+            List<int> oldids = OrderListbeforesave.Select(X => (int)X.orderPreparingId).ToList();
+            newOrderList = OrderListaftersave.Where(X => !oldids.Contains(X.orderPreparingId)).ToList().OrderBy(X => X.categoryId).ToList();
+            return newOrderList;
+        }
     }
 }

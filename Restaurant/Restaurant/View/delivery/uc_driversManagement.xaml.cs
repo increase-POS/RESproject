@@ -579,8 +579,43 @@ namespace Restaurant.View.delivery
                 addpath = @"\Reports\Delivery\En\EnDriversManag.rdlc";
             }
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+            string trDeliveryMan = "";
+            string deliveryMan = "";
+            if (chk_drivers.IsChecked.Value)
+            {
+                driver = dg_user.SelectedItem as User;
 
-          clsReports.driverManagement(driverOrder.ToList(), rep, reppath, paramarr);
+                trDeliveryMan = AppSettings.resourcemanagerreport.GetString("trDriver");
+                if (driver != null)
+                {
+                    deliveryMan = driver.name + " " + driver.lastname;
+
+
+                }
+                else
+                {
+                    deliveryMan = "-";
+                }
+            }
+            else if (chk_shippingCompanies.IsChecked.Value)
+            {
+                company = dg_user.SelectedItem as ShippingCompanies;
+                trDeliveryMan = AppSettings.resourcemanagerreport.GetString("trShippingCompanynohint");
+
+                if (company != null)
+                {
+                    deliveryMan = company.name;
+                }
+                else
+                {
+                    deliveryMan ="-";
+                }
+            }
+
+            paramarr.Add(new ReportParameter("trDeliveryMan", trDeliveryMan));
+            paramarr.Add(new ReportParameter("deliveryMan", deliveryMan));
+
+            clsReports.driverManagement(driverOrder.ToList(), rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 

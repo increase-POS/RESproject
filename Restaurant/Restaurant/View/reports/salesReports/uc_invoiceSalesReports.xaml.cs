@@ -1485,7 +1485,7 @@ namespace Restaurant.View.reports.salesReports
                         ItemTransferInvoice row = (ItemTransferInvoice)dgInvoice.SelectedItems[0];
                         clsReports classreport = new clsReports();
                         resultmessage resmsg = new resultmessage();
-                        resmsg = await classreport.pdfPurInvoice(row.invoiceId, "pdf");
+                        resmsg = await classreport.pdfSaleInvoice(row.invoiceId, "pdf");
                         if (resmsg.result != "")
                         {
                             this.Dispatcher.Invoke(() =>
@@ -1536,7 +1536,7 @@ namespace Restaurant.View.reports.salesReports
                         ItemTransferInvoice row = (ItemTransferInvoice)dgInvoice.SelectedItems[0];
                         clsReports classreport = new clsReports();
                         resultmessage resmsg = new resultmessage();
-                        resmsg = await classreport.pdfPurInvoice(row.invoiceId, "print");
+                        resmsg = await classreport.pdfSaleInvoice(row.invoiceId, "print");
                         if (resmsg.result != "")
                         {
                             this.Dispatcher.Invoke(() =>
@@ -1583,7 +1583,7 @@ namespace Restaurant.View.reports.salesReports
                         ItemTransferInvoice row = (ItemTransferInvoice)dgInvoice.SelectedItems[0];
                         clsReports classreport = new clsReports();
                         resultmessage resmsg = new resultmessage();
-                        resmsg = await classreport.pdfPurInvoice(row.invoiceId, "prev");
+                        resmsg = await classreport.pdfSaleInvoice(row.invoiceId, "prev");
                         if (resmsg.result != "")
                         {
                             this.Dispatcher.Invoke(() =>

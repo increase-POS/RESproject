@@ -370,12 +370,9 @@ namespace Restaurant.View.windows
                     // OrderListAftersave = orders;
                     OrderListAftersave = await preparingOrder.GetOrdersByInvoiceId(invoiceId);
 
-                    prOrderPreparingList = neworderList(OrderListBeforesave, OrderListAftersave);
+                    prOrderPreparingList = clsreport.newKitchenorderList(OrderListBeforesave, OrderListAftersave);
 
-                    //print
-
-                    // prOrderPreparingList = await preparingOrder.GetOrdersByInvoiceId(prinvoiceId);
-
+                  
                     Thread t2 = new Thread(() =>
                     {
 
@@ -444,7 +441,7 @@ namespace Restaurant.View.windows
                         // OrderListAftersave = orders;
                         OrderListAftersave = await preparingOrder.GetOrdersByInvoiceId(invoiceId);
 
-                    prOrderPreparingList = neworderList(OrderListBeforesave, OrderListAftersave);
+                    prOrderPreparingList =  clsreport.newKitchenorderList(OrderListBeforesave, OrderListAftersave);
 
                         //print
 
@@ -470,6 +467,7 @@ namespace Restaurant.View.windows
         List<OrderPreparing> prOrderPreparingList = new List<OrderPreparing>();
         List<OrderPreparing> OrderListBeforesave = new List<OrderPreparing>();
         List<OrderPreparing> OrderListAftersave = new List<OrderPreparing>();
+        clsReports clsreport = new clsReports();
         public void printInvoiceInkitchen(int invoiceId, List<OrderPreparing> OrderPreparingList)
         {
             try
@@ -518,20 +516,14 @@ namespace Restaurant.View.windows
                 ex.ToString();
                 this.Dispatcher.Invoke(() =>
                 {
-                    Toaster.ShowWarning(Window.GetWindow(this), message: "Not completed", animation: ToasterAnimation.FadeIn);
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("notCompleted"), animation: ToasterAnimation.FadeIn);
 
                 });
             }
 
 
         }
-        public List<OrderPreparing> neworderList(List<OrderPreparing> OrderListbeforesave, List<OrderPreparing> OrderListaftersave)
-        {
-            List<OrderPreparing> newOrderList = new List<OrderPreparing>();
-            List<int> oldids = OrderListbeforesave.Select(X => (int)X.orderPreparingId).ToList();
-            newOrderList = OrderListaftersave.Where(X => !oldids.Contains(X.orderPreparingId)).ToList().OrderBy(X=>X.categoryId).ToList();
-            return newOrderList;
-        }
+       
         #endregion
     }
 }

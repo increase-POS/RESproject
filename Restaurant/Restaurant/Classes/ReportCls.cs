@@ -35,9 +35,14 @@ namespace Restaurant.Classes
 
         public string result { get; set; }
         public string pdfpath { get; set; }
-        
+        public int width { get; set; }
+        public int height { get; set; }
+        // public string path { get; set; }
+        public LocalReport rep { get; set; }
 
-
+        public reportsize rs { get; set; }
+        public Invoice prInvoice { get; set; }
+        public List<ReportParameter> paramarr { get; set; }
 
     }
     class ReportCls

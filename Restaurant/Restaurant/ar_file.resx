@@ -4039,4 +4039,7 @@
   <data name="notCompleted" xml:space="preserve">
     <value>العملية لم تكتمل</value>
   </data>
+  <data name="trShippingCompanynohint" xml:space="preserve">
+    <value>شركة الشحن</value>
+  </data>
 </root>
