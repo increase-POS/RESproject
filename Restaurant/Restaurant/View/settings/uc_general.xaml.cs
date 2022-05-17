@@ -450,8 +450,8 @@ namespace Restaurant.View.settings
         {
             
             List<string> userSettingList = new List<string> { "language" , "userPath", "errorsExport" };
-            List<string> adminSettingList = new List<string> { "companyInfo" , "region" ,"currency" ,  "changePassword", "backup" };
-            List<string> financeSettingList = new List<string> { "tax" , "dateForm", "accuracy", "itemsCost", "maxDiscount", "tableTimes", "statusesOfPreparingOrder", "typesOfService" };
+            List<string> adminSettingList = new List<string> { "companyInfo" , "region" ,"currency" ,  "changePassword", "backup", "dateForm", "tableTimes", "statusesOfPreparingOrder", "typesOfService" };
+            List<string> financeSettingList = new List<string> { "tax" ,  "accuracy", "itemsCost", "maxDiscount" };
             List<string> supportSettingList = new List<string> { "activationSite" , "serverStatus" };
 
             IEnumerable<Border> bordersList = FindControls.FindVisualChildren<Border>(this)
