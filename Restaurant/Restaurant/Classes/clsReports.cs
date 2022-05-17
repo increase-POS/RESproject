@@ -1359,6 +1359,7 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
             foreach (var r in tempquery)
             {
+                r.invType= InvoiceTypeConv(r.invType);
                 r.CopdiscountValue = decimal.Parse(HelpClass.DecTostring(r.CopdiscountValue));
                 r.couponTotalValue = decimal.Parse(HelpClass.DecTostring(r.couponTotalValue));//
                 r.OdiscountValue = decimal.Parse(HelpClass.DecTostring(r.OdiscountValue));
@@ -1399,13 +1400,27 @@ namespace Restaurant.Classes
 
         }
 
-        public static void saleitemStsReport(IEnumerable<ItemTransferInvoice> tempquery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        public static void saleitemStsReport(IEnumerable<ItemTransferInvoice> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
+            List<ItemTransferInvoice> tempquery = JsonConvert.DeserializeObject<List<ItemTransferInvoice>>(JsonConvert.SerializeObject(Query));
 
-            itemTypeConv(paramarr);
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("trType", AppSettings.resourcemanagerreport.GetString("trType")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trCategorie", AppSettings.resourcemanagerreport.GetString("trCategorie")));
+            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
+            paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem")));
+            paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
+            paramarr.Add(new ReportParameter("trInvoices", AppSettings.resourcemanagerreport.GetString("trInvoices")));
+            paramarr.Add(new ReportParameter("trPrice", AppSettings.resourcemanagerreport.GetString("trPrice")));
+
+            paramarr.Add(new ReportParameter("trTotal", AppSettings.resourcemanagerreport.GetString("trTotal")));
+            paramarr.Add(new ReportParameter("tr_Invoice", AppSettings.resourcemanager.GetString("trItem") + "/" + AppSettings.resourcemanager.GetString("trInvoices")));
+
             paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
+         //   saleInvoiceConverterForReport
             PurStsReport(tempquery, rep, reppath);
-
+          //  rep.DataSources.Add(new ReportDataSource("DataSetITinvoice", tempquery));
         }
 
         public static void SalePromoStsReport(IEnumerable<ItemTransferInvoice> tempquery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
@@ -1503,15 +1518,15 @@ Parameters!trValueDiscount.Value)
             {
                 //مبيعات
                 case "s":
-                    invType = AppSettings.resourcemanager.GetString("trDiningHallType");
+                    invType = AppSettings.resourcemanagerreport.GetString("trDiningHallType");
                     break;
                 // طلب خارجي
                 case "ts":
-                    invType = AppSettings.resourcemanager.GetString("trTakeAway");
+                    invType = AppSettings.resourcemanagerreport.GetString("trTakeAway");
                     break;
                 // خدمة ذاتية
                 case "ss":
-                    invType = AppSettings.resourcemanager.GetString("trSelfService");
+                    invType = AppSettings.resourcemanagerreport.GetString("trSelfService");
                     break;
                 default: break;
             }

@@ -1588,22 +1588,13 @@ namespace Restaurant.View.reports.salesReports
                 if (selectedTab == 0)
                 {
 
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        if (chk_allTypes.IsChecked == true || cb_Types.SelectedValue == null)
-                        {
-                            itemtype = "";
-                        }
-                        else
-                        {
-                            itemtype = clsReports.itemTypeConverter(cb_Types.SelectedValue.ToString());
-                        }
+                    
+                         
                         secondTitle = "items";
-                        subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+                
 
-                        Title = AppSettings.resourcemanagerreport.GetString("trSalesReport");
-                        paramarr.Add(new ReportParameter("trTitle", Title));
-                    });
+                    
+                  
 
 
                     // cb_Types.
@@ -1614,9 +1605,8 @@ namespace Restaurant.View.reports.salesReports
                 {
                     addpath = @"\Reports\StatisticReport\Sale\Item\Ar\ArBestSel.rdlc";
                     secondTitle = "BestSeller";
-                    subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-                    Title = AppSettings.resourcemanagerreport.GetString("trSalesReport") + " / " + subTitle;
-                    paramarr.Add(new ReportParameter("trTitle", Title));
+              
+                  
 
                 }
             }
@@ -1625,21 +1615,12 @@ namespace Restaurant.View.reports.salesReports
                 if (selectedTab == 0)
                 {
                     addpath = @"\Reports\StatisticReport\Sale\Item\En\EnItem.rdlc";
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        if (chk_allTypes.IsChecked == true || cb_Types.SelectedValue == null)
-                        {
-                            itemtype = "";
-                        }
-                        else
-                        {
-                            itemtype = clsReports.itemTypeConverter(cb_Types.SelectedValue.ToString());
-                        }
+                    
+                       
                         secondTitle = "items";
-                        subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-                        Title = AppSettings.resourcemanagerreport.GetString("trSalesReport");
-                        paramarr.Add(new ReportParameter("trTitle", Title));
-                    });
+                   
+                     
+                   
 
                 }
                 else if (selectedTab == 1)
@@ -1647,21 +1628,21 @@ namespace Restaurant.View.reports.salesReports
                     addpath = @"\Reports\StatisticReport\Sale\Item\En\EnBestSel.rdlc";
 
                     secondTitle = "BestSeller";
-                    subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
-                    Title = AppSettings.resourcemanagerreport.GetString("trSalesReport") + " / " + subTitle;
-                    paramarr.Add(new ReportParameter("trTitle", Title));
+                 
+                  
                 }
             }
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
             ReportCls.checkLang();
-
-
+            subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+            Title = AppSettings.resourcemanagerreport.GetString("SalesReport") + " / " + subTitle;
+            paramarr.Add(new ReportParameter("trTitle", Title));
             //cb_Types cb_Types.SelectedValue.ToString() itemtypeconverter //chk_allTypes
-            clsReports.saleitemStsReport(temp, rep, reppath, paramarr);
+            clsReports.saleitemStsReport(itemsQuery.ToList(), rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
-            paramarr.Add(new ReportParameter("itemtype", itemtype));
+          //  paramarr.Add(new ReportParameter("itemtype", itemtype));
 
             rep.SetParameters(paramarr);
 
