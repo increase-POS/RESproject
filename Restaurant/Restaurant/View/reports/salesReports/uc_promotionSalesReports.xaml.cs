@@ -1185,10 +1185,16 @@ namespace Restaurant.View.reports.salesReports
                     secondTitle = "coupon";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
                 }
-                else
+                else if(selectedTab == 1)
                 {
                     addpath = @"\Reports\StatisticReport\Sale\Promotion\Ar\ArOffers.rdlc";
                     secondTitle = "offers";
+                    subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+                }
+                 else
+                {
+                    addpath = @"\Reports\StatisticReport\Sale\Promotion\Ar\ArInvClass.rdlc";
+                    secondTitle = "invClasses";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
                 }
             }
@@ -1201,10 +1207,17 @@ namespace Restaurant.View.reports.salesReports
                     secondTitle = "coupon";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
                 }
-                else
+                else if(selectedTab == 1)
                 {
                     addpath = @"\Reports\StatisticReport\Sale\Promotion\En\EnOffers.rdlc";
                     secondTitle = "offers";
+                    subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+
+                }
+                else  
+                {
+                    addpath = @"\Reports\StatisticReport\Sale\Promotion\En\EnInvClass.rdlc";
+                    secondTitle = "invClasses";
                     subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
 
                 }
@@ -1213,9 +1226,26 @@ namespace Restaurant.View.reports.salesReports
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
             ReportCls.checkLang();
-            Title = AppSettings.resourcemanagerreport.GetString("trSalesReport") + " / " + subTitle;
+            Title = AppSettings.resourcemanagerreport.GetString("SalesReport") + " / " + subTitle;
             paramarr.Add(new ReportParameter("trTitle", Title));
-            //clsReports.SalePromoStsReport(itemTransfers, rep, reppath, paramarr);
+            //            couponsQuery
+            //offersQuery
+            //invoicesClassesQuery
+            if (selectedTab == 0)
+            {
+                clsReports.SalePromoStsReport(couponsQuery, rep, reppath, paramarr);
+            }
+            else if (selectedTab == 1)
+            {
+                clsReports.SalePromoStsReport(offersQuery, rep, reppath, paramarr);
+            }
+            else
+            {
+                //invoicesClassesQuery
+                clsReports.invoicClassReport(invoicesClassesQuery, rep, reppath, paramarr);
+         
+            }
+            //  clsReports.SalePromoStsReport(couponsQuery, rep, reppath, paramarr); invoicClassReport
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 

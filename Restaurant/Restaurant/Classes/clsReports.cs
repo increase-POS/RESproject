@@ -1360,11 +1360,22 @@ namespace Restaurant.Classes
             foreach (var r in tempquery)
             {
                 r.invType= InvoiceTypeConv(r.invType);
-                r.CopdiscountValue = decimal.Parse(HelpClass.DecTostring(r.CopdiscountValue));
-                r.couponTotalValue = decimal.Parse(HelpClass.DecTostring(r.couponTotalValue));//
-                r.OdiscountValue = decimal.Parse(HelpClass.DecTostring(r.OdiscountValue));
-                r.offerTotalValue = decimal.Parse(HelpClass.DecTostring(r.offerTotalValue));
+                r.categoryName = CategoryConv(r.categoryName);
+                if (r.CopdiscountValue!=null)
+                {
+                    r.CopdiscountValue = decimal.Parse(accuracyDiscountConvert(r.CopdiscountValue, r.CopdiscountType));
+                    r.couponTotalValue = decimal.Parse(HelpClass.DecTostring(r.couponTotalValue));//
+
+                }
+                if (r.OdiscountValue!=null)
+                {
+                   
+                    r.OdiscountValue = decimal.Parse(accuracyDiscountConvert(r.OdiscountValue, r.OdiscountType));
+                    r.offerTotalValue = decimal.Parse(HelpClass.DecTostring(r.offerTotalValue));
+                }
+                r.price = decimal.Parse(HelpClass.DecTostring(r.price));
                 r.ITprice = decimal.Parse(HelpClass.DecTostring(r.ITprice));
+
                 r.subTotal = decimal.Parse(HelpClass.DecTostring(r.subTotal));
                 r.totalNet = decimal.Parse(HelpClass.DecTostring(r.totalNet));
                 r.discountValue = decimal.Parse(HelpClass.DecTostring(r.discountValue));
@@ -1423,17 +1434,69 @@ namespace Restaurant.Classes
           //  rep.DataSources.Add(new ReportDataSource("DataSetITinvoice", tempquery));
         }
 
-        public static void SalePromoStsReport(IEnumerable<ItemTransferInvoice> tempquery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        public static void SalePromoStsReport(IEnumerable<ItemTransferInvoice> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
-            PurStsReport(tempquery, rep, reppath);
 
-            itemTransferDiscountTypeConv(paramarr);
+            List<ItemTransferInvoice> tempquery = JsonConvert.DeserializeObject<List<ItemTransferInvoice>>(JsonConvert.SerializeObject(Query));
+    
+
+            PurStsReport(tempquery, rep, reppath);
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trCoupon", AppSettings.resourcemanagerreport.GetString("trCoupon")));
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trValue", AppSettings.resourcemanagerreport.GetString("trValue")));
+            paramarr.Add(new ReportParameter("trDiscount", AppSettings.resourcemanagerreport.GetString("trDiscount")));
+            paramarr.Add(new ReportParameter("trOffer", AppSettings.resourcemanagerreport.GetString("trOffer")));
+            paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem")));
+            paramarr.Add(new ReportParameter("trPrice", AppSettings.resourcemanagerreport.GetString("trPrice")));
+            paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
+            paramarr.Add(new ReportParameter("trInvoiceClass", AppSettings.resourcemanagerreport.GetString("trInvoiceClass")));
+         
+            paramarr.Add(new ReportParameter("trTotal", AppSettings.resourcemanagerreport.GetString("trTotal")));
+
+            //  itemTransferDiscountTypeConv(paramarr);
             paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
-            /*
-             =IIF(Fields!CopdiscountType.Value="2",
-Parameters!trPercentageDiscount.Value,
-Parameters!trValueDiscount.Value)
-             * */
+
+
+          
+      
+
+        }
+        public static void invoicClassReport(IEnumerable<SalesMembership> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            List<SalesMembership> tempquery = JsonConvert.DeserializeObject<List<SalesMembership>>(JsonConvert.SerializeObject(Query));
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            //  PurStsReport(tempquery, rep, reppath);
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trCoupon", AppSettings.resourcemanagerreport.GetString("trCoupon")));
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trValue", AppSettings.resourcemanagerreport.GetString("trValue")));
+            paramarr.Add(new ReportParameter("trDiscount", AppSettings.resourcemanagerreport.GetString("trDiscount")));
+            paramarr.Add(new ReportParameter("trOffer", AppSettings.resourcemanagerreport.GetString("trOffer")));
+            paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trItem")));
+            paramarr.Add(new ReportParameter("trPrice", AppSettings.resourcemanagerreport.GetString("trPrice")));
+            paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
+            paramarr.Add(new ReportParameter("trInvoiceClass", AppSettings.resourcemanagerreport.GetString("trInvoiceClass")));
+
+            paramarr.Add(new ReportParameter("trTotal", AppSettings.resourcemanagerreport.GetString("trTotal")));
+
+            //  itemTransferDiscountTypeConv(paramarr);
+            paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
+
+
+            foreach (var r in tempquery)
+            {
+                r.invClassdiscountValue = decimal.Parse(accuracyDiscountConvert(r.invClassdiscountValue, r.invClassdiscountType));
+                r.finalDiscount = decimal.Parse(HelpClass.DecTostring(r.finalDiscount));
+                r.total = decimal.Parse(HelpClass.DecTostring(r.total));
+
+            }
+
+            rep.DataSources.Add(new ReportDataSource("DataSetITinvoice", tempquery));
         }
         public static void itemTransferDiscountTypeConv(List<ReportParameter> paramarr)
         {
@@ -1770,7 +1833,9 @@ Parameters!trValueDiscount.Value)
                 secondTitle = AppSettings.resourcemanagerreport.GetString("trDeposit");
             else if (secondTitle == "discounts")
                 secondTitle = AppSettings.resourcemanagerreport.GetString("discounts");
-            //discounts
+            else if (secondTitle == "invClasses")
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trInvoicesClasses");
+            //discounts trInvoiceClass
             //////////////////////////////////////////////////////////////////////////////
             if (firstTitle == "" && secondTitle != "")
             {
@@ -2812,6 +2877,47 @@ Parameters!trValueDiscount.Value)
                 }
 
                 if (type == 2)
+                {
+                    string sdc = string.Format("{0:G29}", decimal.Parse(s));
+                    //return sdc + "%";
+                    return sdc;
+                }
+                else
+                    return s;
+
+            }
+            else return "";
+        }
+        public static string accuracyDiscountConvert(decimal? discountValue,string discountType)
+        {
+            if (discountValue != null && discountType != null)
+            {
+               string type =  discountType;
+                decimal value = (decimal)discountValue;
+
+                decimal num = decimal.Parse(value.ToString());
+                string s = num.ToString();
+
+                switch (AppSettings.accuracy)
+                {
+                    case "0":
+                        s = string.Format("{0:F0}", num);
+                        break;
+                    case "1":
+                        s = string.Format("{0:F1}", num);
+                        break;
+                    case "2":
+                        s = string.Format("{0:F2}", num);
+                        break;
+                    case "3":
+                        s = string.Format("{0:F3}", num);
+                        break;
+                    default:
+                        s = string.Format("{0:F1}", num);
+                        break;
+                }
+
+                if (type == "2")
                 {
                     string sdc = string.Format("{0:G29}", decimal.Parse(s));
                     //return sdc + "%";
