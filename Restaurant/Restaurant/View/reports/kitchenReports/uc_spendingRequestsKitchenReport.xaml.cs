@@ -103,7 +103,7 @@ namespace Restaurant.View.reports.kitchenReports
             {
                 HelpClass.StartAwait(grid_main);
 
-                //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
+                HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 hideAllColumns();
                 dkp_chks.Visibility = Visibility.Visible;
                 row_chks.Height = row_cmb.Height;
@@ -143,7 +143,7 @@ namespace Restaurant.View.reports.kitchenReports
                 hideAllColumns();
                 dkp_chks.Visibility = Visibility.Collapsed;
                 row_chks.Height = new GridLength(0);
-                //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
+                HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 selectedTab = 1;
                 spendingRequests = null;
 

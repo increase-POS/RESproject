@@ -80,7 +80,7 @@ namespace Restaurant.View.reports.storageReports
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -98,12 +98,12 @@ namespace Restaurant.View.reports.storageReports
                 Btn_destroied_Click(btn_destroied, null);
 
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
@@ -500,8 +500,7 @@ namespace Restaurant.View.reports.storageReports
         {//destroid
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 comboDestroiedItemmsUnits = statisticModel.getDestroiedCombo(Destroied);
@@ -515,14 +514,12 @@ namespace Restaurant.View.reports.storageReports
                 chk_destroiedAllItemsUnits.IsChecked = true;
 
                 fillDestroidEvents();
-
                 
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

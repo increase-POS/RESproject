@@ -78,7 +78,7 @@ namespace Restaurant.View.reports.kitchenReports
 
                 chk_allCategories.IsChecked = true;
 
-                //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_preparingOrders.Tag.ToString());
+                HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_preparingOrders.Tag.ToString());
 
             }
             catch (Exception ex)

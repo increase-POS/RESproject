@@ -102,7 +102,7 @@ namespace Restaurant.View.reports.kitchenReports
             {
                 HelpClass.StartAwait(grid_main);
 
-                //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
+                HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 hideAllColumns();
                 selectedTab = 0;
                 consumptions = null;
@@ -139,7 +139,7 @@ namespace Restaurant.View.reports.kitchenReports
             {
                 HelpClass.StartAwait(grid_main);
                 hideAllColumns();
-                //HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
+                HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), (sender as Button).Tag.ToString());
                 selectedTab = 1;
                 consumptions = null;
 

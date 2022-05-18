@@ -81,7 +81,7 @@
                         </Border>
 
                         <Border x:Name="bdr_agent" Grid.Column="1" Background="{StaticResource SecondColor}" BorderThickness="0"  Height="40" Width="60" VerticalAlignment="Bottom" CornerRadius="7,7,0,0" BorderBrush="Transparent" Margin="10,5,0,-1">
-                            <Button x:Name="btn_agent"  Background="Transparent"  Tag="agents"
+                            <Button x:Name="btn_agent"  Background="Transparent"  Tag="agent"
                                     materialDesign:RippleAssist.Feedback="Transparent"
                                     BorderBrush="Transparent" Height="auto" Click="btn_externalAgents_Click">
                                 <Button.Triggers>
