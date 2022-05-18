@@ -24,6 +24,7 @@ using Restaurant.View.windows;
 using System.Resources;
 using System.Reflection;
 using static Restaurant.Classes.Statistics;
+using netoaster;
 
 namespace Restaurant.View.reports.salesReports
 {
@@ -682,29 +683,16 @@ namespace Restaurant.View.reports.salesReports
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
             {
-                addpath = @"\Reports\StatisticReport\Sale\Daily\Ar\dailySale.rdlc";
+                addpath = @"\Reports\StatisticReport\Sale\Daily\Ar\ArDailySale.rdlc";
 
 
 
-                //if (selectedTab == 0)
-                //{
-                //    secondTitle = "invoice";
-                //}
-                //else if (selectedTab == 1)
-                //{
-                //    secondTitle = "order";
-                //}
-                //else
-                //{
-                //    //  selectedTab == 2
-                //    secondTitle = "quotation";
-
-                //}
+              
                 subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
             }
             else
             {
-                addpath = @"\Reports\StatisticReport\Sale\Daily\En\dailySale.rdlc";
+                addpath = @"\Reports\StatisticReport\Sale\Daily\En\EnDailySale.rdlc";
                 //if (selectedTab == 0)
                 //{
                 //    secondTitle = "invoice";
@@ -726,10 +714,10 @@ namespace Restaurant.View.reports.salesReports
 
             ReportCls.checkLang();
 
-            Title = AppSettings.resourcemanagerreport.GetString("trSalesReport") + " / " + subTitle;
+            Title = AppSettings.resourcemanagerreport.GetString("SalesReport") + " / " + subTitle;
             paramarr.Add(new ReportParameter("trTitle", Title));
 
-            clsReports.SaledailyReport(itemTrasferInvoicesQuery, rep, reppath, paramarr);
+            clsReports.SaledailyReport(itemTrasferInvoicesQuery.ToList(), rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
@@ -857,7 +845,7 @@ namespace Restaurant.View.reports.salesReports
         #endregion
 
         #region datagrid events
-        private void pdfRowinDatagrid(object sender, RoutedEventArgs e)
+        private async void pdfRowinDatagrid(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -865,26 +853,18 @@ namespace Restaurant.View.reports.salesReports
                 for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                     if (vis is DataGridRow)
                     {
-                        //POSOpenCloseModel row = (POSOpenCloseModel)dgClosing.SelectedItems[0];
-                        //cashTransID = row.cashTransId;
-                        //openCashTransID = row.openCashTransId.Value;
-                        //await getopquery(row);
-                        //if (opquery.Count() == 0)
-                        //{
-                        //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoChange"), animation: ToasterAnimation.FadeIn);
-                        //}
-                        //else
-                        //{
-                        //    BuildOperationReport();
+                        ItemTransferInvoice row = (ItemTransferInvoice)dgInvoice.SelectedItems[0];
+                        clsReports classreport = new clsReports();
+                        resultmessage resmsg = new resultmessage();
+                        resmsg = await classreport.pdfSaleInvoice(row.invoiceId, "pdf");
+                        if (resmsg.result != "")
+                        {
+                            this.Dispatcher.Invoke(() =>
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString(resmsg.result), animation: ToasterAnimation.FadeIn);
 
-                        //    saveFileDialog.Filter = "PDF|*.pdf;";
-
-                        //    if (saveFileDialog.ShowDialog() == true)
-                        //    {
-                        //        string filepath = saveFileDialog.FileName;
-                        //        LocalReportExtensions.ExportToPDF(rep, filepath);
-                        //    }
-                        //}
+                            });
+                        }
                     }
 
 
@@ -897,7 +877,7 @@ namespace Restaurant.View.reports.salesReports
             }
         }
 
-        private void printRowinDatagrid(object sender, RoutedEventArgs e)
+        private async void printRowinDatagrid(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -905,21 +885,18 @@ namespace Restaurant.View.reports.salesReports
                 for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                     if (vis is DataGridRow)
                     {
-                        //POSOpenCloseModel row = (POSOpenCloseModel)dgClosing.SelectedItems[0];
-                        //cashTransID = row.cashTransId;
-                        //openCashTransID = row.openCashTransId.Value;
-                        //await getopquery(row);
-                        //if (opquery.Count() == 0)
-                        //{
-                        //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoChange"), animation: ToasterAnimation.FadeIn);
+                        ItemTransferInvoice row = (ItemTransferInvoice)dgInvoice.SelectedItems[0];
+                        clsReports classreport = new clsReports();
+                        resultmessage resmsg = new resultmessage();
+                        resmsg = await classreport.pdfSaleInvoice(row.invoiceId, "print");
+                        if (resmsg.result != "")
+                        {
+                            this.Dispatcher.Invoke(() =>
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString(resmsg.result), animation: ToasterAnimation.FadeIn);
 
-                        //}
-                        //else
-                        //{
-                        //    BuildOperationReport();
-
-                        //    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
-                        //}
+                            });
+                        }
                     }
 
                 HelpClass.EndAwait(grid_main);
@@ -931,7 +908,7 @@ namespace Restaurant.View.reports.salesReports
             }
         }
 
-        private void previewRowinDatagrid(object sender, RoutedEventArgs e)
+        private async void previewRowinDatagrid(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -940,34 +917,34 @@ namespace Restaurant.View.reports.salesReports
                 for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                     if (vis is DataGridRow)
                     {
-                        //POSOpenCloseModel row = (POSOpenCloseModel)dgClosing.SelectedItems[0];
-                        //cashTransID = row.cashTransId;
-                        //openCashTransID = row.openCashTransId.Value;
-                        //await getopquery(row);
-                        //if (opquery.Count() == 0)
-                        //{
-                        //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoChange"), animation: ToasterAnimation.FadeIn);
+                        ItemTransferInvoice row = (ItemTransferInvoice)dgInvoice.SelectedItems[0];
+                        clsReports classreport = new clsReports();
+                        resultmessage resmsg = new resultmessage();
+                        resmsg = await classreport.pdfSaleInvoice(row.invoiceId, "prev");
+                        if (resmsg.result != "")
+                        {
+                            this.Dispatcher.Invoke(() =>
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString(resmsg.result), animation: ToasterAnimation.FadeIn);
 
-                        //}
-                        //else
-                        //{
-                        //    string pdfpath = "";
+                            });
+                        }
+                        else
+                        {
+                            Window.GetWindow(this).Opacity = 0.2;
+                            wd_previewPdf w = new wd_previewPdf();
+                            w.pdfPath = resmsg.pdfpath;
+                            if (!string.IsNullOrEmpty(w.pdfPath))
+                            {
+                                w.ShowDialog();
 
-                        //    pdfpath = @"\Thumb\report\temp.pdf";
-                        //    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+                                w.wb_pdfWebViewer.Dispose();
 
-                        //    BuildOperationReport();
-                        //    LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                        //    wd_previewPdf w = new wd_previewPdf();
-                        //    w.pdfPath = pdfpath;
-                        //    if (!string.IsNullOrEmpty(w.pdfPath))
-                        //    {
-                        //        // w.ShowInTaskbar = false;
-                        //        w.ShowDialog();
-                        //        w.wb_pdfWebViewer.Dispose();
-                        //    }
-                        //    Window.GetWindow(this).Opacity = 1;
-                        //}
+                            }
+                            else
+                                Toaster.ShowError(Window.GetWindow(this), message: "", animation: ToasterAnimation.FadeIn);
+                            Window.GetWindow(this).Opacity = 1;
+                        }
                     }
                 HelpClass.EndAwait(grid_main);
             }

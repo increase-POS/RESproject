@@ -248,7 +248,28 @@ namespace Restaurant.Classes
             }
             rep.DataSources.Add(new ReportDataSource("DataSetBankAcc", cash));
         }
-
+       
+        public static string processTypeConvswitch(string processType)
+        {
+            
+            switch (processType)
+            {
+                case "cash": return AppSettings.resourcemanagerreport.GetString("trCash");
+                //break;
+                case "doc": return AppSettings.resourcemanagerreport.GetString("trDocument");
+                //break;
+                case "cheque": return AppSettings.resourcemanagerreport.GetString("trCheque");
+                //break;
+                case "balance": return AppSettings.resourcemanagerreport.GetString("trCredit");
+                //break;
+                case "card": return AppSettings.resourcemanagerreport.GetString("trAnotherPaymentMethods");
+                //break;
+                case "inv": return AppSettings.resourcemanagerreport.GetString("trInv");
+                //break;
+                default: return processType;
+                    //break;
+            }
+        }
         public static void paymentAccReport(IEnumerable<CashTransfer> cash, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             rep.ReportPath = reppath;
@@ -1379,7 +1400,7 @@ namespace Restaurant.Classes
                 r.subTotal = decimal.Parse(HelpClass.DecTostring(r.subTotal));
                 r.totalNet = decimal.Parse(HelpClass.DecTostring(r.totalNet));
                 r.discountValue = decimal.Parse(HelpClass.DecTostring(r.discountValue));
-                r.tax = decimal.Parse(HelpClass.DecTostring(r.tax));
+                r.tax = decimal.Parse(HelpClass.PercentageDecTostring(r.tax));
                 if (r.itemAvg != null)
                 {
                     r.itemAvg = double.Parse(HelpClass.DecTostring(decimal.Parse(r.itemAvg.ToString())));
@@ -1595,10 +1616,15 @@ namespace Restaurant.Classes
             }
             return invType;
         }
-        public static void SaledailyReport(IEnumerable<ItemTransferInvoice> tempquery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        public static void SaledailyReport(IEnumerable<ItemTransferInvoice> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
+            List<ItemTransferInvoice> tempquery = JsonConvert.DeserializeObject<List<ItemTransferInvoice>>(JsonConvert.SerializeObject(Query));
+
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
             string date = "";
-            PurStsReport(tempquery, rep, reppath);
+            //PurStsReport(tempquery, rep, reppath);
             if (tempquery == null || tempquery.Count() == 0)
             {
                 date = "";
@@ -1607,18 +1633,29 @@ namespace Restaurant.Classes
             {
                 date = HelpClass.DateToString(tempquery.FirstOrDefault().updateDate);
             }
-            paramarr.Add(new ReportParameter("isTax", AppSettings.invoiceTax_bool.ToString()));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
             paramarr.Add(new ReportParameter("invDate", date));
+            paramarr.Add(new ReportParameter("isTax", AppSettings.invoiceTax_bool.ToString()));
+    
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("trType", AppSettings.resourcemanagerreport.GetString("trType")));
+            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
+            paramarr.Add(new ReportParameter("trPOS", AppSettings.resourcemanagerreport.GetString("trPOS")));
+            paramarr.Add(new ReportParameter("trDiscount", AppSettings.resourcemanagerreport.GetString("trDiscount")));
+            paramarr.Add(new ReportParameter("trTax", AppSettings.resourcemanagerreport.GetString("trTax")));
+            paramarr.Add(new ReportParameter("trTotal", AppSettings.resourcemanagerreport.GetString("trTotal")));
+            paramarr.Add(new ReportParameter("trPaymentMethods", AppSettings.resourcemanagerreport.GetString("trPaymentMethods")));
 
-            paramarr.Add(new ReportParameter("trPaymentMethodsheader", AppSettings.resourcemanagerreport.GetString("trPaymentMethods")));
+            foreach (var r in tempquery)
+            {
+                r.invType = InvoiceTypeConv(r.invType);
+                r.discountValue = decimal.Parse(HelpClass.DecTostring(r.discountValue));
+                r.tax = decimal.Parse(HelpClass.PercentageDecTostring(r.tax));
+                r.totalNet = decimal.Parse(HelpClass.DecTostring(r.totalNet));
+                r.processType = processTypeConvswitch(r.processType);
+            }
 
-            paramarr.Add(new ReportParameter("trCash", AppSettings.resourcemanagerreport.GetString("trCash")));
-            paramarr.Add(new ReportParameter("trDocument", AppSettings.resourcemanagerreport.GetString("trDocument")));
-            paramarr.Add(new ReportParameter("trCheque", AppSettings.resourcemanagerreport.GetString("trCheque")));
-            paramarr.Add(new ReportParameter("trCredit", AppSettings.resourcemanagerreport.GetString("trCredit")));
-            paramarr.Add(new ReportParameter("trMultiplePayment", AppSettings.resourcemanagerreport.GetString("trMultiplePayment")));
-
-            itemTransferInvTypeConv(paramarr);
+            rep.DataSources.Add(new ReportDataSource("DataSetITinvoice", tempquery));
 
         }
         public static void ProfitReport(IEnumerable<ItemUnitInvoiceProfit> tempquery, LocalReport rep, string reppath, List<ReportParameter> paramarr)

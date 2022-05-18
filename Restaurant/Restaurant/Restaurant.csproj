@@ -2269,6 +2269,12 @@
     <Content Include="Reports\StatisticReport\Sale\Promotion\En\EnOffers.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\StatisticReport\Sale\Daily\Ar\ArDailySale.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\StatisticReport\Sale\Daily\En\EnDailySale.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Resource Include="pic\programs-Rest-login-bg.png" />
