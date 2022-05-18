@@ -104,8 +104,6 @@ namespace Restaurant.View.reports.salesReports
             {
                 HelpClass.StartAwait(grid_main);
 
-                //Items = await statisticModel.GetSaleitem((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
-
                 #region translate
                 if (AppSettings.lang.Equals("en"))
                 {
@@ -184,15 +182,13 @@ namespace Restaurant.View.reports.salesReports
             itemsQuery = Items
                 .Where(s =>
             (
-            s.invNumber.ToLower().Contains(searchText)
+            (s.invNumber != null         ? s.invNumber.ToLower().Contains(searchText)         : false)
             ||
-            s.branchCreatorName.ToString().ToLower().Contains(searchText)
+            (s.branchCreatorName != null ? s.branchCreatorName.ToLower().Contains(searchText) : false)
             ||
-            s.ITitemName.ToString().ToLower().Contains(searchText)
+            (s.categoryName != null      ? s.posName.ToLower().Contains(searchText)           : false)
             ||
-            s.invType.ToString().ToLower().Contains(searchText)
-            ||
-            s.categoryName.ToString().ToLower().Contains(searchText)
+            (s.ITitemName != null        ? s.agentName.ToLower().Contains(searchText)         : false)
             )
             &&
             //branch
@@ -200,23 +196,19 @@ namespace Restaurant.View.reports.salesReports
              &&
             //category
             (cb_Types.SelectedIndex != -1         ? s.categoryId      == (int)cb_Types.SelectedValue : true)
-             &&
-            //items
-            (cb_Items.SelectedIndex != -1         ? s.ITitemId        == (int)cb_Items.SelectedValue : true)
+            //&&
+            ////items
+            //(cb_Items.SelectedIndex != -1         ? s.ITitemId        == (int)cb_Items.SelectedValue : true)
             &&
             //date
             (dp_ItemStartDate.SelectedDate != null ? s.updateDate.Value.Date >= dp_ItemStartDate.SelectedDate.Value.Date : true)
              &&
-            (dp_ItemEndDate.SelectedDate   != null ? s.updateDate.Value.Date <= dp_ItemEndDate.SelectedDate.Value.Date : true)
+            (dp_ItemEndDate.SelectedDate != null ? s.updateDate.Value.Date <= dp_ItemEndDate.SelectedDate.Value.Date : true)
             );
 
             if (selectedTab == 0)
                 itemsQuery = itemsQuery.Where(j => (selectedItemId.Count != 0 ? selectedItemId.Contains((int)j.ITitemId) : true)).ToList();
-
-            fillComboItemTypes();
-            
-            fillComboItemsBranches(cb_ItemsBranches);
-
+          
             RefreshIemsView();
 
         }
@@ -224,6 +216,11 @@ namespace Restaurant.View.reports.salesReports
         async Task<IEnumerable<ItemTransferInvoice>> RefreshItemsList()
         {
             Items = await statisticModel.GetSaleitem((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
+
+            fillComboItemTypes();
+            fillComboItemsBranches(cb_ItemsBranches);
+            fillComboItemsBranches(cb_collect);
+
             return Items;
         }
 
@@ -234,7 +231,7 @@ namespace Restaurant.View.reports.salesReports
 
             fillColumnChart();
             fillPieChart();
-            //fillRowChart();
+            fillRowChart();
         }
 
         private void fillComboItemsBranches(ComboBox cb)
@@ -262,7 +259,7 @@ namespace Restaurant.View.reports.salesReports
         private void fillComboItemTypes()
         {
             cb_Types.SelectedValuePath = "categoryId";
-            cb_Types.DisplayMemberPath = "categoryName";
+            //cb_Types.DisplayMemberPath = "categoryName";
             cb_Types.ItemsSource = Items.GroupBy(i => i.categoryId)
                 .Select(i => new { i.FirstOrDefault().categoryId, i.FirstOrDefault().categoryName });
         }
@@ -270,8 +267,8 @@ namespace Restaurant.View.reports.salesReports
         public void fillCollectEvent()
         {
             temp = fillCollectListBranch(Items, dp_collectStartDate, dp_collectEndDate)
-                //.Where(j => (selectedBranchId.Count != 0 ? selectedBranchId.Contains((int)j.branchCreatorId) : true));
-                .Where(j => j.branchCreatorId == (int)cb_collect.SelectedValue);
+                .Where(j => (selectedBranchId.Count != 0 ? selectedBranchId.Contains((int)j.branchCreatorId) : true));
+                //.Where(j => j.branchCreatorId == (int)cb_collect.SelectedValue);
 
             dgInvoice.ItemsSource = temp;
             txt_count.Text = dgInvoice.Items.Count.ToString();
@@ -423,7 +420,7 @@ namespace Restaurant.View.reports.salesReports
                 txt_search.Text = "";
                 selectedTab = 0;
 
-                //ReportsHelp.showSelectedStack(grid_stacks, stk_tagsItems);
+                ReportsHelp.showSelectedStack(grid_stacks, stk_tagsItems);
 
                 paint();
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_items);
@@ -445,6 +442,7 @@ namespace Restaurant.View.reports.salesReports
                 col_total.Visibility = Visibility.Visible;
                 #endregion
 
+                await RefreshItemsList();
 
                 chk_allBranchesItem.IsChecked = true;
                 chk_allTypes.IsChecked = true;
@@ -473,7 +471,7 @@ namespace Restaurant.View.reports.salesReports
                 txt_search.Text = "";
                 selectedTab = 1;
 
-                //ReportsHelp.showSelectedStack(grid_stacks, stk_tagsBranches);
+                ReportsHelp.showSelectedStack(grid_stacks, stk_tagsBranches);
 
                 paint();
                 ReportsHelp.paintTabControlBorder(grid_tabControl, bdr_collect);
@@ -490,18 +488,9 @@ namespace Restaurant.View.reports.salesReports
                 col_avg.Visibility = Visibility.Visible;
 
                 await RefreshItemsList();
-                fillComboItemsBranches(cb_collect);
+                
                 chk_allcollect.IsChecked = true;
                 fillCollectEventAll();
-                //if (stk_tagsBranches.Children.Count == 0)
-                //{
-                //    fillCollectEventAll();
-                //}
-                //else
-                //{
-                //    fillCollectEvent();
-                //}
-
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -555,24 +544,25 @@ namespace Restaurant.View.reports.salesReports
 
                 if (cb_Items.SelectedItem != null)
                 {
-                    //if (stk_tagsItems.Children.Count < 5)
-                    //{
-                    //    selectedItem = await itemModel.GetItemByID((int) cb_Items.SelectedValue);
-                    //    var b = new MaterialDesignThemes.Wpf.Chip()
-                    //    {
-                    //        Content = selectedItem.name,
-                    //        Name = "btn" + selectedItem.itemId.ToString(),
-                    //        IsDeletable = true,
-                    //        Margin = new Thickness(5, 0, 5, 0)
-                    //    };
-                    //    b.DeleteClick += Chip_OnDeleteItemClick;
-                    //    stk_tagsItems.Children.Add(b);
-                    //    comboItemTemp.Add(selectedItem);
-                    //    selectedItemId.Add(selectedItem.itemId);
-                    //    dynamicComboItem.Remove(selectedItem);
-                    //    fillItemsEvent();
-                    //}
-                    await Search();
+                    stk_tagsItems.Visibility = Visibility.Visible;
+                    if (stk_tagsItems.Children.Count < 5)
+                    {
+                        selectedItem = await itemModel.GetItemByID((int)cb_Items.SelectedValue);
+                        var b = new MaterialDesignThemes.Wpf.Chip()
+                        {
+                            Content = selectedItem.name,
+                            Name = "btn" + selectedItem.itemId.ToString(),
+                            IsDeletable = true,
+                            Margin = new Thickness(5, 0, 5, 0)
+                        };
+                        b.DeleteClick += Chip_OnDeleteItemClick;
+                        stk_tagsItems.Children.Add(b);
+                        comboItemTemp.Add(selectedItem);
+                        selectedItemId.Add(selectedItem.itemId);
+                        dynamicComboItem.Remove(selectedItem);
+                        await Search();
+                    }
+
                 }
                 HelpClass.EndAwait(grid_main);
             }
@@ -708,26 +698,29 @@ namespace Restaurant.View.reports.salesReports
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-
         }
 
-        private void Chk_allItems_Checked(object sender, RoutedEventArgs e)
+        private async void Chk_allItems_Checked(object sender, RoutedEventArgs e)
         {
             try
             {
-                 
                 HelpClass.StartAwait(grid_main);
 
                 cb_Items.SelectedItem = null;
                 cb_Items.IsEnabled = false;
-                //for (int i = 0; i < comboItemTemp.Count; i++)
-                //{
-                //    dynamicComboItem.Add(comboItemTemp.Skip(i).FirstOrDefault());
-                //}
-                //comboItemTemp.Clear();
-                //stk_tagsItems.Children.Clear();
-                //selectedItemId.Clear();
-                //fillItemsEvent();
+                stk_tagsItems.Visibility = Visibility.Collapsed;
+                for (int i = 0; i < comboItemTemp.Count; i++)
+                {
+                    dynamicComboItem.Add(comboItemTemp.Skip(i).FirstOrDefault());
+                }
+                
+                selectedItem = null;
+                selectedItemId.Clear();
+                comboItemTemp.Clear();
+                dynamicComboItem.Clear();
+                stk_tagsItems.Children.Clear();
+                
+                await Search();
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -843,24 +836,23 @@ namespace Restaurant.View.reports.salesReports
 
                 if (cb_collect.SelectedItem != null)
                 {
-                    //if (stk_tagsBranches.Children.Count < 5)
-                    //{
-                    //    selectedBranch = await branchModel.getBranchById((int)cb_collect.SelectedValue);
-                    //    var b = new MaterialDesignThemes.Wpf.Chip()
-                    //    {
-                    //        Content = selectedBranch.name,
-                    //        Name = "btn" + selectedBranch.branchId.ToString(),
-                    //        IsDeletable = true,
-                    //        Margin = new Thickness(5, 0, 5, 0)
-                    //    };
-                    //    b.DeleteClick += Chip_OnDeleteBranchClick;
-                    //    stk_tagsBranches.Children.Add(b);
-                    //    comboBrachTemp.Add(selectedBranch);
-                    //    selectedBranchId.Add(selectedBranch.branchId);
-                    //    dynamicComboBranches.Remove(selectedBranch);
-                    //    fillCollectEvent();
-                    //}
-                    fillCollectEvent();
+                    if (stk_tagsBranches.Children.Count < 5)
+                    {
+                        selectedBranch = await branchModel.getBranchById((int)cb_collect.SelectedValue);
+                        var b = new MaterialDesignThemes.Wpf.Chip()
+                        {
+                            Content = selectedBranch.name,
+                            Name = "btn" + selectedBranch.branchId.ToString(),
+                            IsDeletable = true,
+                            Margin = new Thickness(5, 0, 5, 0)
+                        };
+                        b.DeleteClick += Chip_OnDeleteBranchClick;
+                        stk_tagsBranches.Children.Add(b);
+                        comboBrachTemp.Add(selectedBranch);
+                        selectedBranchId.Add(selectedBranch.branchId);
+                        dynamicComboBranches.Remove(selectedBranch);
+                        fillCollectEvent();
+                    }
                 }
                 else
                     fillCollectEventAll();
@@ -882,19 +874,14 @@ namespace Restaurant.View.reports.salesReports
 
                 cb_collect.SelectedItem = null;
                 cb_collect.IsEnabled = false;
-                //for (int i = 0; i < comboBrachTemp.Count; i++)
-                //{
-                //    dynamicComboBranches.Add(comboBrachTemp.Skip(i).FirstOrDefault());
-                //}
-                //comboBrachTemp.Clear();
-                //stk_tagsBranches.Children.Clear();
-                //selectedBranchId.Clear();
-                //fillCollectEvent();
-
-                //if (stk_tagsBranches.Children.Count == 0)
-                //{
-                //    fillCollectEventAll();
-                //}
+                for (int i = 0; i < comboBrachTemp.Count; i++)
+                {
+                    dynamicComboBranches.Add(comboBrachTemp.Skip(i).FirstOrDefault());
+                }
+                comboBrachTemp.Clear();
+                stk_tagsBranches.Children.Clear();
+                selectedBranchId.Clear();
+                fillCollectEventAll();
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -913,17 +900,16 @@ namespace Restaurant.View.reports.salesReports
                 HelpClass.StartAwait(grid_main);
 
                 cb_collect.IsEnabled = true;
-                //fillCollectEvent();
-                //if (stk_tagsBranches.Children.Count == 0)
-                //{
-                //    fillCollectEventAll();
-                //}
+                fillCollectEvent();
+                if (stk_tagsBranches.Children.Count == 0)
+                {
+                    fillCollectEventAll();
+                }
 
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -935,7 +921,6 @@ namespace Restaurant.View.reports.salesReports
         {//search
             try
             {
-
                 HelpClass.StartAwait(grid_main);
 
                 IEnumerable<ItemTransferInvoice> tempSearch = itemList;
