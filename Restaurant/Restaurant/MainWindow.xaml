@@ -254,8 +254,14 @@
                               Icon="{materialDesign:PackIcon Kind=InfoCircle}"></MenuItem>
                             <!--<Separator Background="{StaticResource SecondColor}" />-->
                             <MenuItem Header="Logout"  Foreground="{StaticResource SecondColor}" BorderThickness="0,1,0,0" BorderBrush="{StaticResource LightGrey}"
-                                      x:Name="BTN_logOut" Click="BTN_logOut_Click" 
-                         Icon="{materialDesign:PackIcon Kind=ExitToApp}" />
+                                      x:Name="BTN_logOut" Click="BTN_logOut_Click" Padding="24 0 0 0" >
+                                <MenuItem.Icon>
+                                    <Path Fill="{StaticResource SecondColor}"  FlowDirection="LeftToRight"
+                                            Stretch="Fill"  
+                           Width="14"  Height="14" 
+                         Data="{StaticResource logOut}"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
                         </MenuItem>
                     </Menu>
                 </StackPanel>
