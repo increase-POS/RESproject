@@ -1578,6 +1578,7 @@ namespace Restaurant.View
             //value_items = Convert.ToInt32(tb_items.Text);
             //value_purchase = Convert.ToInt32(tb_purchase.Text);
             //value_sales = Convert.ToInt32(tb_sales.Text);
+            //value_sales = Convert.ToInt32(txt_cashSympol.Text);
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(10);
             timer.Tick += timer_Tick;
@@ -1588,20 +1589,22 @@ namespace Restaurant.View
             try
             {
 
-                x += 86;
-            y += 74;
-            z += 65;
+                //x += 86;
+                //y += 74;
+                //z += 65;
 
-            //tb_items.Text = x.ToString();
-            //tb_purchase.Text = x.ToString();
-            //tb_sales.Text = x.ToString();
-            if (x >= 5000)
-            {
-                //tb_items.Text = Convert.ToString(value_items);
-                //tb_purchase.Text = Convert.ToString(value_purchase);
-                //tb_sales.Text = Convert.ToString(value_sales);
-                timer.Stop();
-            }
+                //tb_items.Text = x.ToString();
+                //tb_purchase.Text = x.ToString();
+                //tb_sales.Text = x.ToString();
+                //txt_cashSympol.Text = x.ToString();
+            //if (x >= 5000)
+            //{
+                    //tb_items.Text = Convert.ToString(value_items);
+                    //tb_purchase.Text = Convert.ToString(value_purchase);
+                    //tb_sales.Text = Convert.ToString(value_sales);
+                    //txt_cashSympol.Text = Convert.ToString(value_sales);
+                    timer.Stop();
+            //}
             }
             catch (Exception ex)
             {

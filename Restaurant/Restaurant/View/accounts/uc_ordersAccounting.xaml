@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Restaurant.View.accounts"
-             mc:Ignorable="d"  Tag="payments"  Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
+             mc:Ignorable="d"  Tag="ordersAccounting"  Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="870" d:DesignWidth="950">
     <Grid x:Name="grid_main" Margin="20 10" >
@@ -168,7 +168,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="0" CornerRadius="10" Margin="10,5,5,5" Height="40" Background="White"  BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                             <Grid>

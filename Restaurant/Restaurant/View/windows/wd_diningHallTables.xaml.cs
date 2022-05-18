@@ -548,20 +548,21 @@ namespace Restaurant.View.windows
                     grid_reservatedTableDetails.Visibility = Visibility.Collapsed;
 
                     gridTables = selectedTables.Where(x => x.tableId != table.tableId).ToList();
-                    if (gridTables.Count > 0)
-                    {
-                        btn_changeTable.Visibility = Visibility.Collapsed; // change table only if invoice for one table
-                        grid_tables.Visibility = Visibility.Visible;
-                        dg_tables.ItemsSource = null;
-                        dg_tables.ItemsSource = gridTables;
-                    }
-                    else
-                    {
-                        btn_changeTable.Visibility = Visibility.Visible;
-                    }
-                    #endregion
+                        if (gridTables.Count > 0)
+                        {
+                            btn_changeTable.Visibility = Visibility.Collapsed; // change table only if invoice for one table
+                            grid_tables.Visibility = Visibility.Visible;
+                            dg_tables.ItemsSource = null;
+                            dg_tables.ItemsSource = gridTables;
+                        }
+                        else
+                        {
+                            grid_tables.Visibility = Visibility.Collapsed;
+                            btn_changeTable.Visibility = Visibility.Visible;
+                        }
+                        #endregion
 
-                    tb_InvoiceCode.Text = invoice.invNumber;
+                        tb_InvoiceCode.Text = invoice.invNumber;
                     tb_startTime.Text = invoice.invDate.ToString().Split(' ')[1];
                     TimeSpan startTime = TimeSpan.Parse(invoice.invDate.ToString().Split(' ')[1]);
                     TimeSpan timeStaying = TimeSpan.FromHours(AppSettings.time_staying);

@@ -317,7 +317,8 @@ namespace Restaurant.View.sectionData.persons
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                                 await Search();
                                 FillCombo.usersList = users.ToList();
-
+                                if (MainWindow.userLogin.userId == s)
+                                    MainWindow.userLogin =  user;
                                 if (isImgPressed)
                                 {
                                     int userId = s;

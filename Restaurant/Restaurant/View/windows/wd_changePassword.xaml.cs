@@ -92,8 +92,11 @@ namespace Restaurant.View.windows
         {
             txt_title.Text = AppSettings.resourcemanager.GetString("trChangePassword");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(pb_oldPassword, AppSettings.resourcemanager.GetString("trOldPasswordHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_oldPassword, AppSettings.resourcemanager.GetString("trOldPasswordHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(pb_newPassword, AppSettings.resourcemanager.GetString("trNewPasswordHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_newPassword, AppSettings.resourcemanager.GetString("trNewPasswordHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(pb_confirmPassword, AppSettings.resourcemanager.GetString("trConfirmedPasswordHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_confirmPassword, AppSettings.resourcemanager.GetString("trConfirmedPasswordHint"));
 
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
 

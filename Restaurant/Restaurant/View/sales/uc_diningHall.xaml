@@ -302,8 +302,13 @@
                     </Grid>
                    </Grid>
             </Border>
-            <StackPanel Grid.Row="2" Margin="0 5" HorizontalAlignment="Left" Orientation="Horizontal">
-                <Button   Height="40" x:Name="btn_invType" Click="Btn_invType_Click"
+            <!--<StackPanel Grid.Row="2" Margin="0 5" HorizontalAlignment="Left" Orientation="Horizontal">-->
+                <Grid Grid.Row="2" Margin="0 5" Height="41" HorizontalAlignment="Left">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                <Button  Grid.Column="0" Height="40" x:Name="btn_invType" Click="Btn_invType_Click"
                     materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
                     Margin="5 0"  Foreground="White"  >
@@ -314,85 +319,89 @@
                         <TextBlock x:Name="txt_invType" Text="invoice Type"  Foreground="White"/>
                     </StackPanel>
                 </Button>
-                <Button   Height="40" x:Name="btn_tables" Click="Btn_tables_Click"
-                    materialDesign:ButtonAssist.CornerRadius="7"
-                          Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
-                    Margin="5 0"  Foreground="White"  >
-                    <StackPanel Orientation="Horizontal" >
-                        <Path Fill="White" Stretch="Fill" Margin="5,0,5,0"
-                         Width="20" Height="20" FlowDirection="LeftToRight"
-                         Data="{StaticResource table1}"/>
-                        <TextBlock x:Name="txt_tables" Text=""  Foreground="White"/>
-                    </StackPanel>
-                </Button>
-                <Button  x:Name="btn_kitchen" Click="Btn_kitchen_Click"  Height="40" IsEnabled="True"
-                    materialDesign:ButtonAssist.CornerRadius="7"
-                          Background="{StaticResource White}" BorderBrush="{x:Null}"
-                    Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
-                    <StackPanel Orientation="Horizontal" >
-                        <Path x:Name="path_kitchen" Fill="{StaticResource SecondColor}" Stretch="Fill" Margin="5,0,5,0"
-                         Width="20" Height="20" FlowDirection="LeftToRight"
-                         Data="M174.81,27.16c2.05,1.62,2.63,3.74,2.58,6.32-.12,7.18.07,14.36-.1,21.54A6.18,6.18,0,0,0,180,60.5Q201.77,78,223.43,95.63A11,11,0,0,1,226,98.29a4.45,4.45,0,0,1-3,6.58,16.08,16.08,0,0,1-3.41.19H73.51c-.83,0-1.82.27-2.47-.08-1.61-.87-3.9-1.75-4.37-3.15a5.94,5.94,0,0,1,1.58-5.1c5-4.44,10.24-8.5,15.42-12.69,9.78-7.93,19.52-15.9,29.38-23.73A5.89,5.89,0,0,0,115.49,55c-.13-7.18,0-14.36-.1-21.54,0-2.58.55-4.69,2.59-6.32Zm18,138.31c0-4.68-.28-5-4.93-5H105.21c-.94,0-2-.26-2.77.13-1,.5-2.3,1.51-2.34,2.34-.2,5.48-.1,11-.1,16.66h92.83C192.83,174.78,192.84,170.12,192.83,165.47Zm77.53,0v83.37H21.18V160.92h1.87c1.76-.15,3.27-.39,4.77-.4q29.19,0,58.38,0c4.17,0,4.58.41,4.58,4.71q0,39.17,0,78.35c0,1.34-.2,2.67-.32,4.28h9.72V189.27h92.42v58.54h9.54V165.88c0-5.34,0-5.37,5.41-5.37q28.56,0,57.13,0c1.6,0,3.21.23,5.07.38h.62ZM165,208.47H127.86v20.22H165Z"/>
-                        <TextBlock x:Name="txt_kitchen" Text=""  Foreground="{StaticResource SecondColor}"/>
-                    </StackPanel>
-                </Button>
-                <Button x:Name="btn_waiter" Click="Btn_waiter_Click"  Height="40"
-                    materialDesign:ButtonAssist.CornerRadius="7"  IsEnabled="True"
-                          Background="{StaticResource White}" BorderBrush="{x:Null}"
-                    Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
-                    <StackPanel Orientation="Horizontal" >
-                        <Path x:Name="path_waiter" Fill="{StaticResource SecondColor}" Stretch="Fill" Margin="5,0,5,0"
-                         Width="20" Height="20" FlowDirection="LeftToRight"
-                              Data="{StaticResource waiter}"/>
-                        <TextBlock x:Name="txt_waiter" Text=""  Foreground="{StaticResource SecondColor}"/>
-                    </StackPanel>
-                </Button>
-                <Button   x:Name="btn_customer"  Click="Btn_customer_Click" Height="40"
-                    materialDesign:ButtonAssist.CornerRadius="7"  IsEnabled="True"
-                          Background="{StaticResource White}" BorderBrush="{x:Null}"
-                    Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
-                    <StackPanel Orientation="Horizontal" >
-                        <Path x:Name="path_customer" Fill="{StaticResource SecondColor}" Stretch="Fill" Margin="5,0,5,0"
-                         Width="20" Height="20" FlowDirection="LeftToRight"
-                              Data="{StaticResource customer}"/>
-                        <TextBlock x:Name="txt_customer" Text=""  Foreground="{StaticResource SecondColor}"/>
-                    </StackPanel>
-                </Button>
-                <Button x:Name="btn_discount" Click="Btn_discount_Click" Height="40"
-                    materialDesign:ButtonAssist.CornerRadius="7"  IsEnabled="True"
-                          Background="{StaticResource White}" BorderBrush="{x:Null}"
-                    Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
-                    <StackPanel Orientation="Horizontal" >
-                        <Path Name="path_discount" Fill="{StaticResource SecondColor}" Stretch="Fill" Margin="5,0,5,0"
-                         Width="20" Height="20" FlowDirection="LeftToRight"  
-                              Data="M92.5,50.2c0-2.4-3.2-4.1-6.7-5.8c-3.3-1.7-6.8-3.4-8-6.3c-1.3-3,0-6.6,1.3-10.1c1.2-3.3,2.4-6.5,0.9-7.9
-	c-1.6-1.6-4.7-0.9-8-0.1c-3.3,0.7-6.6,1.5-9.5,0.3c-2.7-1.2-4.5-4-6.3-6.8c-1.9-3-3.7-5.9-6.3-5.9c-2.6,0-4.3,2.9-6.2,6
-	c-1.7,2.9-3.5,5.8-6.3,7c-2.9,1.2-6.3,0.3-9.6-0.5c-3.3-0.9-6.4-1.7-8-0.1c-1.5,1.4-0.5,4.6,0.6,8c1.1,3.4,2.2,7,1,10
-	c-1.2,2.9-4.5,4.6-7.7,6.2C10.3,46,7.3,47.6,7.3,50c0,0.1-0.1,0.3-0.1,0.4c0.1,0.1,0.1,0.3,0.1,0.4c0,2.5,3.1,4.1,6.4,5.8
-	c3.2,1.6,6.5,3.3,7.7,6.2c1.3,2.9,0.1,6.5-1,10c-1.1,3.3-2.1,6.5-0.6,8c1.6,1.5,4.7,0.7,8-0.1c3.3-0.9,6.7-1.7,9.6-0.5
-	c2.8,1.2,4.6,4.1,6.3,7c1.9,3.1,3.7,6,6.2,6c2.6,0,4.4-2.9,6.3-5.9c1.7-2.8,3.5-5.6,6.3-6.8c2.9-1.2,6.2-0.5,9.5,0.3
-	c3.3,0.8,6.4,1.5,8-0.1c1.5-1.4,0.3-4.6-0.9-7.9c-1.2-3.5-2.6-7.1-1.3-10.1c1.2-2.9,4.7-4.6,8-6.3c3.5-1.7,6.8-3.4,6.7-5.4
-	c0-0.1,0.1-0.3,0.1-0.4C92.5,50.5,92.5,50.3,92.5,50.2z M36,36.6c1.2-1.6,3-2.7,5-3c2-0.3,4,0.2,5.6,1.4s2.7,3,3,5
-	c0.7,4.2-2.2,8.1-6.3,8.7c-0.4,0.1-0.8,0.1-1.2,0.1c-3.6,0-6.9-2.7-7.5-6.6C34.3,40.2,34.8,38.2,36,36.6z M58,69
-	c-4.2,0-7.6-3.4-7.6-7.6c0-4.2,3.4-7.6,7.6-7.6c4.1,0,7.5,3.4,7.6,7.6C65.6,65.6,62.3,69,58,69z M66,40.5l-30.2,24
-	c-0.2,0.2-0.6,0.3-0.9,0.3c-0.5,0-0.9-0.2-1.2-0.6c-0.6-0.6-0.4-1.6,0.2-2.1l30.2-24c0.7-0.5,1.6-0.4,2.1,0.3
-	C66.8,39,66.6,40,66,40.5z"/>
-                        <TextBlock x:Name="txt_discount" Text=""  Foreground="{StaticResource SecondColor}"/>
-                    </StackPanel>
-                </Button>
-                <Button x:Name="btn_delivery" Click="Btn_delivery_Click" Height="40"
-                        IsEnabled="False"
-                        materialDesign:ButtonAssist.CornerRadius="7"  
-                          Background="{StaticResource White}" BorderBrush="{x:Null}"
-                    Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
-                    <StackPanel Orientation="Horizontal" >
-                        <Path Name="path_delivery" Fill="{StaticResource SecondColor}" Stretch="Fill" Margin="5,0,5,0"
-                         Width="20" Height="20" FlowDirection="LeftToRight"  
-                              Data="{StaticResource delivery}"/>
-                        <TextBlock x:Name="txt_delivery" Text=""  Foreground="{StaticResource SecondColor}"/>
-                    </StackPanel>
-                </Button>
-                <Button x:Name="btn_orderTime" Click="Btn_orderTime_Click" Height="40"
+                <ScrollViewer  Grid.Column="1"   Margin="0 0 0 -16" VerticalAlignment="Top"
+                                   VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Width="auto"
+                                          ScrollViewer.CanContentScroll="True">
+                    <StackPanel Orientation="Horizontal"   >
+                        <Button   Height="40" x:Name="btn_tables" Click="Btn_tables_Click"
+                            materialDesign:ButtonAssist.CornerRadius="7"
+                                  Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
+                            Margin="5 0"  Foreground="White"  >
+                            <StackPanel Orientation="Horizontal" >
+                                <Path Fill="White" Stretch="Fill" Margin="5,0,5,0"
+                                 Width="20" Height="20" FlowDirection="LeftToRight"
+                                 Data="{StaticResource table1}"/>
+                                <TextBlock x:Name="txt_tables" Text=""  Foreground="White"/>
+                            </StackPanel>
+                        </Button>
+                        <Button  x:Name="btn_kitchen" Click="Btn_kitchen_Click"  Height="40" IsEnabled="True"
+                            materialDesign:ButtonAssist.CornerRadius="7"
+                                  Background="{StaticResource White}" BorderBrush="{x:Null}"
+                            Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
+                            <StackPanel Orientation="Horizontal" >
+                                <Path x:Name="path_kitchen" Fill="{StaticResource SecondColor}" Stretch="Fill" Margin="5,0,5,0"
+                                 Width="20" Height="20" FlowDirection="LeftToRight"
+                                 Data="M174.81,27.16c2.05,1.62,2.63,3.74,2.58,6.32-.12,7.18.07,14.36-.1,21.54A6.18,6.18,0,0,0,180,60.5Q201.77,78,223.43,95.63A11,11,0,0,1,226,98.29a4.45,4.45,0,0,1-3,6.58,16.08,16.08,0,0,1-3.41.19H73.51c-.83,0-1.82.27-2.47-.08-1.61-.87-3.9-1.75-4.37-3.15a5.94,5.94,0,0,1,1.58-5.1c5-4.44,10.24-8.5,15.42-12.69,9.78-7.93,19.52-15.9,29.38-23.73A5.89,5.89,0,0,0,115.49,55c-.13-7.18,0-14.36-.1-21.54,0-2.58.55-4.69,2.59-6.32Zm18,138.31c0-4.68-.28-5-4.93-5H105.21c-.94,0-2-.26-2.77.13-1,.5-2.3,1.51-2.34,2.34-.2,5.48-.1,11-.1,16.66h92.83C192.83,174.78,192.84,170.12,192.83,165.47Zm77.53,0v83.37H21.18V160.92h1.87c1.76-.15,3.27-.39,4.77-.4q29.19,0,58.38,0c4.17,0,4.58.41,4.58,4.71q0,39.17,0,78.35c0,1.34-.2,2.67-.32,4.28h9.72V189.27h92.42v58.54h9.54V165.88c0-5.34,0-5.37,5.41-5.37q28.56,0,57.13,0c1.6,0,3.21.23,5.07.38h.62ZM165,208.47H127.86v20.22H165Z"/>
+                                <TextBlock x:Name="txt_kitchen" Text=""  Foreground="{StaticResource SecondColor}"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="btn_waiter" Click="Btn_waiter_Click"  Height="40"
+                            materialDesign:ButtonAssist.CornerRadius="7"  IsEnabled="True"
+                                  Background="{StaticResource White}" BorderBrush="{x:Null}"
+                            Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
+                            <StackPanel Orientation="Horizontal" >
+                                <Path x:Name="path_waiter" Fill="{StaticResource SecondColor}" Stretch="Fill" Margin="5,0,5,0"
+                                 Width="20" Height="20" FlowDirection="LeftToRight"
+                                      Data="{StaticResource waiter}"/>
+                                <TextBlock x:Name="txt_waiter" Text=""  Foreground="{StaticResource SecondColor}"/>
+                            </StackPanel>
+                        </Button>
+                        <Button   x:Name="btn_customer"  Click="Btn_customer_Click" Height="40"
+                            materialDesign:ButtonAssist.CornerRadius="7"  IsEnabled="True"
+                                  Background="{StaticResource White}" BorderBrush="{x:Null}"
+                            Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
+                            <StackPanel Orientation="Horizontal" >
+                                <Path x:Name="path_customer" Fill="{StaticResource SecondColor}" Stretch="Fill" Margin="5,0,5,0"
+                                 Width="20" Height="20" FlowDirection="LeftToRight"
+                                      Data="{StaticResource customer}"/>
+                                <TextBlock x:Name="txt_customer" Text=""  Foreground="{StaticResource SecondColor}"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="btn_discount" Click="Btn_discount_Click" Height="40"
+                            materialDesign:ButtonAssist.CornerRadius="7"  IsEnabled="True"
+                                  Background="{StaticResource White}" BorderBrush="{x:Null}"
+                            Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
+                            <StackPanel Orientation="Horizontal" >
+                                <Path Name="path_discount" Fill="{StaticResource SecondColor}" Stretch="Fill" Margin="5,0,5,0"
+                                 Width="20" Height="20" FlowDirection="LeftToRight"  
+                                      Data="M92.5,50.2c0-2.4-3.2-4.1-6.7-5.8c-3.3-1.7-6.8-3.4-8-6.3c-1.3-3,0-6.6,1.3-10.1c1.2-3.3,2.4-6.5,0.9-7.9
+	        c-1.6-1.6-4.7-0.9-8-0.1c-3.3,0.7-6.6,1.5-9.5,0.3c-2.7-1.2-4.5-4-6.3-6.8c-1.9-3-3.7-5.9-6.3-5.9c-2.6,0-4.3,2.9-6.2,6
+	        c-1.7,2.9-3.5,5.8-6.3,7c-2.9,1.2-6.3,0.3-9.6-0.5c-3.3-0.9-6.4-1.7-8-0.1c-1.5,1.4-0.5,4.6,0.6,8c1.1,3.4,2.2,7,1,10
+	        c-1.2,2.9-4.5,4.6-7.7,6.2C10.3,46,7.3,47.6,7.3,50c0,0.1-0.1,0.3-0.1,0.4c0.1,0.1,0.1,0.3,0.1,0.4c0,2.5,3.1,4.1,6.4,5.8
+	        c3.2,1.6,6.5,3.3,7.7,6.2c1.3,2.9,0.1,6.5-1,10c-1.1,3.3-2.1,6.5-0.6,8c1.6,1.5,4.7,0.7,8-0.1c3.3-0.9,6.7-1.7,9.6-0.5
+	        c2.8,1.2,4.6,4.1,6.3,7c1.9,3.1,3.7,6,6.2,6c2.6,0,4.4-2.9,6.3-5.9c1.7-2.8,3.5-5.6,6.3-6.8c2.9-1.2,6.2-0.5,9.5,0.3
+	        c3.3,0.8,6.4,1.5,8-0.1c1.5-1.4,0.3-4.6-0.9-7.9c-1.2-3.5-2.6-7.1-1.3-10.1c1.2-2.9,4.7-4.6,8-6.3c3.5-1.7,6.8-3.4,6.7-5.4
+	        c0-0.1,0.1-0.3,0.1-0.4C92.5,50.5,92.5,50.3,92.5,50.2z M36,36.6c1.2-1.6,3-2.7,5-3c2-0.3,4,0.2,5.6,1.4s2.7,3,3,5
+	        c0.7,4.2-2.2,8.1-6.3,8.7c-0.4,0.1-0.8,0.1-1.2,0.1c-3.6,0-6.9-2.7-7.5-6.6C34.3,40.2,34.8,38.2,36,36.6z M58,69
+	        c-4.2,0-7.6-3.4-7.6-7.6c0-4.2,3.4-7.6,7.6-7.6c4.1,0,7.5,3.4,7.6,7.6C65.6,65.6,62.3,69,58,69z M66,40.5l-30.2,24
+	        c-0.2,0.2-0.6,0.3-0.9,0.3c-0.5,0-0.9-0.2-1.2-0.6c-0.6-0.6-0.4-1.6,0.2-2.1l30.2-24c0.7-0.5,1.6-0.4,2.1,0.3
+	        C66.8,39,66.6,40,66,40.5z"/>
+                                <TextBlock x:Name="txt_discount" Text=""  Foreground="{StaticResource SecondColor}"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="btn_delivery" Click="Btn_delivery_Click" Height="40"
+                                IsEnabled="False"
+                                materialDesign:ButtonAssist.CornerRadius="7"  
+                                  Background="{StaticResource White}" BorderBrush="{x:Null}"
+                            Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
+                            <StackPanel Orientation="Horizontal" >
+                                <Path Name="path_delivery" Fill="{StaticResource SecondColor}" Stretch="Fill" Margin="5,0,5,0"
+                                 Width="20" Height="20" FlowDirection="LeftToRight"  
+                                      Data="{StaticResource delivery}"/>
+                                <TextBlock x:Name="txt_delivery" Text=""  Foreground="{StaticResource SecondColor}"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="btn_orderTime" Click="Btn_orderTime_Click" Height="40"
 						materialDesign:ButtonAssist.CornerRadius="7"  
 							  Background="{StaticResource White}" BorderBrush="{x:Null}"
 						Margin="5 0"  Foreground="{StaticResource SecondColor}"  >
@@ -403,8 +412,10 @@
                         <TextBlock x:Name="txt_orderTime" Text=""  Foreground="{StaticResource SecondColor}"/>
                     </StackPanel>
                 </Button>
-                
-            </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+                </Grid>
+            <!--</StackPanel>-->
         </Grid>
         <!--#endregion-->
         <!--#region  rightSide-->
