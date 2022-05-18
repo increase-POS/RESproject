@@ -1624,7 +1624,15 @@ namespace Restaurant.View.reports.salesReports
             Title = AppSettings.resourcemanagerreport.GetString("SalesReport") + " / " + subTitle;
             paramarr.Add(new ReportParameter("trTitle", Title));
             //cb_Types cb_Types.SelectedValue.ToString() itemtypeconverter //chk_allTypes
-            clsReports.saleitemStsReport(itemsQuery.ToList(), rep, reppath, paramarr);
+            if (selectedTab == 0)
+            {
+                clsReports.saleitemStsReport(itemsQuery.ToList(), rep, reppath, paramarr);
+            }
+            else
+            {
+                clsReports.saleitemStsReport(temp.ToList(), rep, reppath, paramarr);
+            }
+          //  clsReports.saleitemStsReport(itemsQuery.ToList(), rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
           //  paramarr.Add(new ReportParameter("itemtype", itemtype));
