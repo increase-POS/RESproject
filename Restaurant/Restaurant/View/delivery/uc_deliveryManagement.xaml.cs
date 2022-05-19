@@ -92,14 +92,15 @@ namespace Restaurant.View.delivery
                 #region fill drivers
                 await FillCombo.FillComboDrivers(cb_userId);
 
-                await FillCombo.FillComboDrivers(cb_searchUser);
+                await FillCombo.FillComboDrivers_withDefault(cb_searchUser);
                 #endregion
 
                 #region fill companies
                 await FillCombo.FillComboShippingCompaniesForDelivery(cb_companyId);
-                await FillCombo.FillComboShippingCompaniesForDelivery(cb_searchCompany);
+                await FillCombo.FillComboShippingCompaniesForDelivery_withDefault(cb_searchCompany);
                 #endregion
 
+                col_cbCompany.Width = new GridLength(0, GridUnitType.Star);
                 bdr_searchCompany.Visibility = Visibility.Hidden;
                 chk_allForDelivery.IsChecked = true;
 
@@ -146,7 +147,7 @@ namespace Restaurant.View.delivery
                 else if (chk_inTheWay.IsChecked == true)
                 {
                     await RefreshOrdersList("InTheWay");
-                   
+
                 }
                 if (chk_drivers.IsChecked == true)
                     orders = orders.Where(o => o.shipUserId != null);
@@ -157,8 +158,8 @@ namespace Restaurant.View.delivery
                       || s.shipUserName.ToString().Contains(searchText)
                       || s.orderTime.ToString().Contains(searchText)
                       )
-                      && (cb_searchUser.SelectedIndex != -1    ?  s.shipUserId        == (int)cb_searchUser.SelectedValue : true)
-                      && (cb_searchCompany.SelectedIndex != -1 ?  s.shippingCompanyId == (int)cb_searchCompany.SelectedValue : true)
+                      && ((cb_searchUser.SelectedIndex != -1 && cb_searchUser.SelectedValue.ToString() != "0")   ?  s.shipUserId        == (int)cb_searchUser.SelectedValue : true)
+                      && ( (cb_searchCompany.SelectedIndex != -1 && cb_searchCompany.SelectedValue.ToString() != "0") ?  s.shippingCompanyId == (int)cb_searchCompany.SelectedValue : true)
                   );
 
                 RefreshOrdersView();
@@ -1078,6 +1079,7 @@ namespace Restaurant.View.delivery
                 {
                     if (cb.IsChecked == true)
                     {
+                        selectedOrders.Clear();
                         await RefreshOrdersList("");
                         if (cb.Name == "chk_drivers")
                         {
@@ -1087,12 +1089,22 @@ namespace Restaurant.View.delivery
                             bdr_searchCompany.Visibility = Visibility.Collapsed;
                             cb_companyId.SelectedIndex = -1;
                             bdr_searchUser.Visibility = Visibility.Visible;
-                            col_cbDriver.Width = col_cbCompany.Width;
+                            col_cbDriver.Width = new GridLength(1, GridUnitType.Star);
+                            col_cbCompany.Width = new GridLength(0, GridUnitType.Star);
+                            //col_cbDriver.Width = col_cbCompany.Width;
                             bdr_allForDelivery.Visibility = Visibility.Visible;
                             bdr_readyForDelivery.Visibility = Visibility.Visible;
                             bdr_withDeliveryMan.Visibility = Visibility.Visible;
                             bdr_inTheWay.Visibility = Visibility.Visible;
                             chk_allForDelivery.IsChecked = true;
+
+
+                            bdr_cbDeliveryCompany.Visibility = Visibility.Collapsed;
+                            bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                            grid_deliveryMan.Visibility = Visibility.Visible;
+
+                            
+
                         }
                         else if (cb.Name == "chk_shippingCompanies")
                         {
@@ -1102,13 +1114,17 @@ namespace Restaurant.View.delivery
                             bdr_searchCompany.Visibility = Visibility.Visible;
                             bdr_searchUser.Visibility = Visibility.Hidden;
                             cb_searchUser.SelectedIndex = -1;
-                            //col_cbDriver.Width = new GridLength(0);
-                            //col_cbCompany.Width = new GridLength(0.5, GridUnitType.Star);
+                            col_cbDriver.Width = new GridLength(0, GridUnitType.Star);
+                            col_cbCompany.Width = new GridLength(1, GridUnitType.Star);
                             bdr_allForDelivery.Visibility = Visibility.Hidden;
                             bdr_readyForDelivery.Visibility = Visibility.Hidden;
                             bdr_withDeliveryMan.Visibility = Visibility.Hidden;
                             bdr_inTheWay.Visibility = Visibility.Hidden;
                             chk_allForDelivery.IsChecked = false;
+
+                            bdr_cbDeliveryCompany.Visibility = Visibility.Visible;
+                            bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                            grid_deliveryMan.Visibility = Visibility.Collapsed;
                         }
                         await Search();
                     }

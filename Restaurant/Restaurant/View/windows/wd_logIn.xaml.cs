@@ -262,7 +262,7 @@ namespace Restaurant.View.windows
                             //send user info to main window
                             MainWindow.userLogin.userId = user.userId;
                             MainWindow.userLogin = user;
-                            MainWindow.posLogin = await MainWindow.posLogin.getById(1);
+                             MainWindow.posLogin = await MainWindow.posLogin.getById(1); 
                             MainWindow.branchLogin = await MainWindow.branchLogin.getBranchById(MainWindow.posLogin.branchId);
 
                             //make user online

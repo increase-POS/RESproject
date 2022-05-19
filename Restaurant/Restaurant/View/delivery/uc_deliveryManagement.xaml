@@ -30,7 +30,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
                         <ColumnDefinition  Width="auto"  />
                         <ColumnDefinition  Width="auto"  />
                         <ColumnDefinition  Width="auto"  />
@@ -134,8 +134,8 @@
                 </Grid>
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition x:Name="col_cbDriver"  Width="*"  />
-                        <ColumnDefinition x:Name="col_cbCompany"  Width="*"  />
+                        <ColumnDefinition x:Name="col_cbDriver" MaxWidth="300" Width="*"  />
+                        <ColumnDefinition x:Name="col_cbCompany" MaxWidth="300"  Width="*"  />
                         <ColumnDefinition  Width="auto"  />
                     </Grid.ColumnDefinitions>
 
