@@ -188,8 +188,8 @@ namespace Restaurant.View.accounts
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_toBranch, AppSettings.resourcemanager.GetString("trToBranch")+"...");
 
             chb_all.Content = AppSettings.resourcemanager.GetString("trAll");
-            chk_deposit.Content = AppSettings.resourcemanager.GetString("trDeposit");
-            chk_receive.Content = AppSettings.resourcemanager.GetString("trReceive");
+            chk_deposit.Content = AppSettings.resourcemanager.GetString("trDeposits");
+            chk_receive.Content = AppSettings.resourcemanager.GetString("trReceipts");
             /*
            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_state, MainWindow.resourcemanager.GetString("trStateHint"));
             */
