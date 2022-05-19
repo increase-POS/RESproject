@@ -555,6 +555,21 @@ namespace Restaurant.Classes
             cmb.SelectedValuePath = "userId";
             cmb.SelectedIndex = -1;
         }
+        static public async Task FillComboDrivers_withDefault(ComboBox cmb)
+        {
+            if (driversList is null)
+                await RefreshDrivers();
+            List<User> _driversList = driversList.ToList();
+            var dr = new User();
+            dr.userId = 0;
+            dr.name = "-";
+            _driversList.Insert(0, dr);
+
+            cmb.ItemsSource = _driversList;
+            cmb.DisplayMemberPath = "fullName";
+            cmb.SelectedValuePath = "userId";
+            cmb.SelectedIndex = -1;
+        }
 
         static public async Task FillComboUsersWithJob(ComboBox cmb, string job)
         {
@@ -613,6 +628,23 @@ namespace Restaurant.Classes
                 await RefreshShippingCompanies();
 
             var shippingCompanies = shippingCompaniesList.Where(s => s.deliveryType != "local").ToList();
+            cmb.ItemsSource = shippingCompanies;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "shippingCompanyId";
+            cmb.SelectedIndex = -1;
+        }
+        static public async Task FillComboShippingCompaniesForDelivery_withDefault(ComboBox cmb)
+        {
+            if (shippingCompaniesList is null)
+                await RefreshShippingCompanies();
+
+            var shippingCompanies = shippingCompaniesList.Where(s => s.deliveryType != "local").ToList();
+
+            var sh = new ShippingCompanies();
+            sh.shippingCompanyId = 0;
+            sh.name = "-";
+            shippingCompanies.Insert(0, sh);
+
             cmb.ItemsSource = shippingCompanies;
             cmb.DisplayMemberPath = "name";
             cmb.SelectedValuePath = "shippingCompanyId";
