@@ -100,6 +100,7 @@ namespace Restaurant.View.delivery
                 await FillCombo.FillComboShippingCompaniesForDelivery(cb_searchCompany);
                 #endregion
 
+                bdr_searchCompany.Visibility = Visibility.Hidden;
                 chk_allForDelivery.IsChecked = true;
 
                 HelpClass.EndAwait(grid_main);
@@ -147,6 +148,11 @@ namespace Restaurant.View.delivery
                     await RefreshOrdersList("InTheWay");
                    
                 }
+                if (chk_drivers.IsChecked == true)
+                    orders = orders.Where(o => o.shipUserId != null);
+                else if (chk_shippingCompanies.IsChecked == true)
+                    orders = orders.Where(o => o.shipUserId == null);
+
                 orders = orders.Where(s => (s.invNumber.Contains(searchText)
                       || s.shipUserName.ToString().Contains(searchText)
                       || s.orderTime.ToString().Contains(searchText)
@@ -164,6 +170,7 @@ namespace Restaurant.View.delivery
         {
             orders = await orderModel.GetOrdersWithDelivery(MainWindow.branchLogin.branchId, status);
             orders = orders.Where(o => o.status == "Ready" || o.status == "Collected" || o.status == "InTheWay");
+          
             return orders;
         }
         void RefreshOrdersView()
@@ -193,6 +200,10 @@ namespace Restaurant.View.delivery
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchUser, AppSettings.resourcemanager.GetString("deliveryMan")+"...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_searchCompany, AppSettings.resourcemanager.GetString("trCompany") + "...");
+
+
+            chk_drivers.Content = AppSettings.resourcemanager.GetString("drivers");
+            chk_shippingCompanies.Content = AppSettings.resourcemanager.GetString("trShippingCompanies");
 
             chk_allForDelivery.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_readyForDelivery.Content = AppSettings.resourcemanager.GetString("readyForDelivery");
@@ -724,7 +735,6 @@ namespace Restaurant.View.delivery
         {
             try
             {
-
                 #region
                 //CheckBox chkSelectAll = ((CheckBox)sender);
                 //if (chkSelectAll.IsChecked == true)
@@ -1054,8 +1064,81 @@ namespace Restaurant.View.delivery
             }
         }
 
+        private void Btn_updateDeliveryMan_Click(object sender, RoutedEventArgs e)
+        {
 
-        #endregion
+        }
+
+        private async void deliveryType_check(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox cb = sender as CheckBox;
+                if (cb.IsFocused)
+                {
+                    if (cb.IsChecked == true)
+                    {
+                        await RefreshOrdersList("");
+                        if (cb.Name == "chk_drivers")
+                        {
+                            chk_shippingCompanies.IsChecked = false;
+                            col_driver.Visibility = Visibility.Visible;
+                            col_company.Visibility = Visibility.Hidden;
+                            bdr_searchCompany.Visibility = Visibility.Collapsed;
+                            cb_companyId.SelectedIndex = -1;
+                            bdr_searchUser.Visibility = Visibility.Visible;
+                            col_cbDriver.Width = col_cbCompany.Width;
+                            bdr_allForDelivery.Visibility = Visibility.Visible;
+                            bdr_readyForDelivery.Visibility = Visibility.Visible;
+                            bdr_withDeliveryMan.Visibility = Visibility.Visible;
+                            bdr_inTheWay.Visibility = Visibility.Visible;
+                            chk_allForDelivery.IsChecked = true;
+                        }
+                        else if (cb.Name == "chk_shippingCompanies")
+                        {
+                            chk_drivers.IsChecked = false;
+                            col_driver.Visibility = Visibility.Hidden;
+                            col_company.Visibility = Visibility.Visible;
+                            bdr_searchCompany.Visibility = Visibility.Visible;
+                            bdr_searchUser.Visibility = Visibility.Hidden;
+                            cb_searchUser.SelectedIndex = -1;
+                            //col_cbDriver.Width = new GridLength(0);
+                            //col_cbCompany.Width = new GridLength(0.5, GridUnitType.Star);
+                            bdr_allForDelivery.Visibility = Visibility.Hidden;
+                            bdr_readyForDelivery.Visibility = Visibility.Hidden;
+                            bdr_withDeliveryMan.Visibility = Visibility.Hidden;
+                            bdr_inTheWay.Visibility = Visibility.Hidden;
+                            chk_allForDelivery.IsChecked = false;
+                        }
+                        await Search();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void deliveryType_uncheck(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox cb = sender as CheckBox;
+                if (cb.IsFocused)
+                {
+                    if (cb.Name == "chk_drivers")
+                        chk_drivers.IsChecked = true;
+                    else if (cb.Name == "chk_shippingCompanies")
+                        chk_shippingCompanies.IsChecked = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
 
         private void selectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
@@ -1064,9 +1147,7 @@ namespace Restaurant.View.delivery
             //MessageBox.Show("select");
         }
 
-        private void Btn_updateDeliveryMan_Click(object sender, RoutedEventArgs e)
-        {
+        #endregion
 
-        }
     }
 }

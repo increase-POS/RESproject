@@ -256,6 +256,26 @@
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
+                                <!--<DataGridCheckBoxColumn x:Name="col_chk" Binding="{Binding IsChecked, NotifyOnTargetUpdated=True}" IsReadOnly="False" IsThreeState="False">
+                                    <DataGridCheckBoxColumn.ElementStyle>
+                                        <Style
+                                        TargetType="CheckBox">
+                                            <Setter Property="FlowDirection" Value="LeftToRight"/>
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                            <EventSetter
+                                            Event="CheckBox.Checked"
+                                            Handler="FieldDataGridChecked" />
+                                            <EventSetter
+                                            Event="CheckBox.Unchecked"
+                                            Handler="FieldDataGridUnchecked" />
+                                        </Style>
+                                    </DataGridCheckBoxColumn.ElementStyle>
+                                    <DataGridCheckBoxColumn.HeaderTemplate >
+                                        <DataTemplate >
+                                            <CheckBox   Checked="FieldDataGridCheckedHeader" Unchecked="FieldDataGridUncheckedHeader" Margin="2" />
+                                        </DataTemplate>
+                                    </DataGridCheckBoxColumn.HeaderTemplate>
+                                </DataGridCheckBoxColumn>-->
                                 <DataGridCheckBoxColumn x:Name="col_chk" Binding="{Binding IsChecked, NotifyOnTargetUpdated=True}" IsReadOnly="False" IsThreeState="False">
                                     <DataGridCheckBoxColumn.ElementStyle>
                                         <Style
@@ -276,7 +296,6 @@
                                         </DataTemplate>
                                     </DataGridCheckBoxColumn.HeaderTemplate>
                                 </DataGridCheckBoxColumn>
-
                                 <DataGridTextColumn Width="*" x:Name="col_orderNum" Header="#" Binding="{Binding Path=orderNum}"/>
                                 <DataGridTextColumn Header="invNum" Width="*" Binding="{Binding Path=invNum}">
                                     <!--<DataGridTextColumn.Binding>

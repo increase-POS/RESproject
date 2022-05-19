@@ -334,7 +334,6 @@ namespace Restaurant.View.kitchen
         {
             try
             {
-                /*
                 selectedOrders.Clear();
                 var chkSelectAll = sender as CheckBox;
                 if (chk_allForDelivery.IsChecked == true)
@@ -350,48 +349,32 @@ namespace Restaurant.View.kitchen
                         return;
                     }
 
-                    var item0 = dg_orders.Items[0] as Invoice;
+                    var item0 = dg_orders.Items[0] as OrderPreparing;
 
                     #region refreshSaveBtnText
-                    if (item0.shipUserId != null)
+                    //bdr_cbDeliveryCompany.Visibility = Visibility.Collapsed;
+
+                    if (item0.status.Equals("Listed"))
                     {
-                        bdr_cbDeliveryCompany.Visibility = Visibility.Collapsed;
-
-                        if (item0.status.Equals("Ready"))
-                        {
-                            btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
-                            btn_save.IsEnabled = true;
-                            bdr_cbDeliveryMan.Visibility = Visibility.Visible;
-                            bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
-                        }
-                        else if (item0.status.Equals("Collected"))
-                        {
-                            btn_save.Content = AppSettings.resourcemanager.GetString("onTheWay");
-                            btn_save.IsEnabled = true;
-                            bdr_cbDeliveryMan.Visibility = Visibility.Visible;
-                            bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
-                        }
-                        else if (item0.status.Equals("InTheWay"))
-                        {
-                            btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
-                            btn_save.IsEnabled = true;
-                            bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
-                            bdr_tbDeliveryMan.Visibility = Visibility.Visible;
-                        }
+                        btn_save.Content = AppSettings.resourcemanager.GetString("trPreparing");
+                        btn_save.IsEnabled = true;
+                        //bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                        //bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
                     }
-                    else
+                    else if (item0.status.Equals("Preparing"))
                     {
-                        bdr_cbDeliveryCompany.Visibility = Visibility.Visible;
-                        bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
-                        bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
-
-                        if (item0.status.Equals("Ready"))
-                        {
-                            btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
-                            btn_save.IsEnabled = true;
-                        }
+                        btn_save.Content = AppSettings.resourcemanager.GetString("trReady");
+                        btn_save.IsEnabled = true;
+                        //bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                        //bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
                     }
-
+                    else if (item0.status.Equals("Ready"))
+                    {
+                        btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
+                        btn_save.IsEnabled = true;
+                        //bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                        //bdr_tbDeliveryMan.Visibility = Visibility.Visible;
+                    }
                     #endregion
 
                     foreach (var item in dg_orders.Items)
@@ -402,32 +385,28 @@ namespace Restaurant.View.kitchen
                             continue;
                         }
 
-                        var txt = item as Invoice;
+                        var txt = item as OrderPreparing;
                         if (txt == null)
                         {
                             continue;
                         }
-                        if (txt.status.Equals(item0.status) &&
-                            ((txt.shipUserId == null && item0.shipUserId == null) || (txt.shipUserId != null && item0.shipUserId != null)))
+                        if (txt.status.Equals(item0.status) )
                         {
                             chBx.IsChecked = chkSelectAll.IsChecked;
 
-                            if (item0.status == "InTheWay")
-                                requiredControlList = new List<string>();
-                            else
-                            {
-                                if (item0.shipUserId == null)
-                                    requiredControlList = new List<string> { "companyId" };
-                                else
-                                    requiredControlList = new List<string> { "userId" };
-                            }
+                            //if (item0.status == "InTheWay")
+                            //    requiredControlList = new List<string>();
+                            //else
+                            //{
+                            //    if (item0.shipUserId == null)
+                            //        requiredControlList = new List<string> { "companyId" };
+                            //    else
+                            //        requiredControlList = new List<string> { "userId" };
+                            //}
                             selectedOrders.Add(txt);
-
                         }
                     }
-
                 }
-                */
             }
             catch (Exception ex)
             {
@@ -461,7 +440,7 @@ namespace Restaurant.View.kitchen
         }
 
 
-        List<Invoice> selectedOrders = new List<Invoice>();
+        List<OrderPreparing> selectedOrders = new List<OrderPreparing>();
         private void FieldDataGridChecked(object sender, RoutedEventArgs e)
         {
             try
@@ -473,9 +452,9 @@ namespace Restaurant.View.kitchen
                 }
                 //else
                 //{
-                    Invoice selectedOrder = dg_orders.SelectedItem as Invoice;
-                    if (selectedOrder != null)
-                        selectedOrders.Add(selectedOrder);
+                     OrderPreparing selectedOrder = dg_orders.SelectedItem as OrderPreparing;
+                    
+                     selectedOrders.Add(selectedOrder);
                 //}
             }
             catch (Exception ex)
@@ -495,7 +474,7 @@ namespace Restaurant.View.kitchen
                 //else
                 //{
                     var index = dg_orders.SelectedIndex;
-                    Invoice selectedOrder = dg_orders.SelectedItem as Invoice;
+                    OrderPreparing selectedOrder = dg_orders.SelectedItem as OrderPreparing;
                     selectedOrders.Remove(selectedOrder);
                 //}
 
@@ -562,9 +541,8 @@ namespace Restaurant.View.kitchen
                     preparingOrder = dg_orders.SelectedItem as OrderPreparing;
 
                     this.DataContext = preparingOrder;
-                    //checkboxColumn yasin
-                    /*
-                     if (order != null)
+
+                    if (preparingOrder != null)
                     {
                         if (chk_allForDelivery.IsChecked.Value)
                         {
@@ -573,107 +551,37 @@ namespace Restaurant.View.kitchen
                             if (dg_orders.Items.Count > 1)
                             {
                                 var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
-                                if(firstCol != null || dg_orders?.Items != null )
-                                foreach (var item in dg_orders.Items)
-                                {
-                                    var chBx = firstCol.GetCellContent(item) as CheckBox;
-                                    if (chBx == null)
+                                if (firstCol != null || dg_orders?.Items != null)
+                                    foreach (var item in dg_orders.Items)
                                     {
-                                        continue;
+                                        var chBx = firstCol.GetCellContent(item) as CheckBox;
+                                        if (chBx == null)
+                                        {
+                                            continue;
+                                        }
+                                        chBx.IsChecked = false;
                                     }
-                                    chBx.IsChecked = false;
-                                }
                             }
                         }
                         CheckBox checkboxColumn = (dg_orders.Columns[0].GetCellContent(dg_orders.SelectedItem) as CheckBox);
 
-                        //different status
-                        if (selectedOrders.Count != 0 && order.status != selectedOrders[0].status)
-                        {
-                            checkboxColumn.IsChecked = checkboxColumn.IsChecked;
-                            //checkboxColumn.IsEnabled = false;
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("notHaveSameStatus"), animation: ToasterAnimation.FadeIn);
-                        }
-                        //driver
-                        else if (selectedOrders.Count != 0 && order.shipUserId != null && selectedOrders[0].shipUserId == null)
-                        {
-                            checkboxColumn.IsChecked = checkboxColumn.IsChecked;
-                            //checkboxColumn.IsEnabled = false;
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("notHaveSameType"), animation: ToasterAnimation.FadeIn);
-                        }
-                        //company
-                        else if (selectedOrders.Count != 0 && order.shipUserId == null && selectedOrders[0].shipUserId != null)
-                        {
-                            checkboxColumn.IsChecked = checkboxColumn.IsChecked;
-                            //checkboxColumn.IsEnabled = false;
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("notHaveSameType"), animation: ToasterAnimation.FadeIn);
-                        }
+                        checkboxColumn.IsChecked = !checkboxColumn.IsChecked;
 
-                        else
-                        {
-                            checkboxColumn.IsChecked = !checkboxColumn.IsChecked;
-                            //checkboxColumn.IsEnabled = true;
-                        }
+                        //if (selectedOrders.Count > 0)
+                        //{
+                        //    if (selectedOrders[0].shipUserId == null)
+                        //        requiredControlList = new List<string> { "companyId" };
+                        //    else
+                        //        requiredControlList = new List<string> { "userId" };
+                        //}
 
+                        itemsList = preparingOrder.items;
+                        BuildOrderItemsDesign();
 
-                        if (selectedOrders.Count > 0)
-                        {
-                            if (selectedOrders[0].shipUserId == null)
-                                requiredControlList = new List<string> { "companyId" };
-                            else
-                                requiredControlList = new List<string> { "userId" };
-                        }
-                        #region refreshSaveBtnText
-                        if (order.shipUserId != null)
-                        {
-                            bdr_cbDeliveryCompany.Visibility = Visibility.Collapsed;
-                           
-                            if (order.status.Equals("Ready"))
-                            {
-                                btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
-                                btn_save.IsEnabled = true;
-                                bdr_cbDeliveryMan.Visibility = Visibility.Visible;
-                                bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
-                            }
-                            else if (order.status.Equals("Collected"))
-                            {
-                                btn_save.Content = AppSettings.resourcemanager.GetString("onTheWay");
-                                btn_save.IsEnabled = true;
-                                bdr_cbDeliveryMan.Visibility = Visibility.Visible;
-                                bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
-                            }
-                            else if (order.status.Equals("InTheWay"))
-                            {
-                                btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
-                                btn_save.IsEnabled = true;
-                                bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
-                                bdr_tbDeliveryMan.Visibility = Visibility.Visible;
-                            }
-                        }
-                        else
-                        {
-                            bdr_cbDeliveryCompany.Visibility = Visibility.Visible;
-                            bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
-                            bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
+                        inputEditable(preparingOrder.status);
 
-                            if (order.status.Equals("Ready"))
-                            {
-                                btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
-                                btn_save.IsEnabled = true;
-                            }
-                        }
-
-                        #endregion
+                        //btn_save.IsEnabled = true;
                     }
-
-                    */
-                    itemsList = preparingOrder.items;
-                    BuildOrderItemsDesign();
-
-                    inputEditable(preparingOrder.status);
-
-                    //btn_save.IsEnabled = true;
-
                 }
                 HelpClass.clearValidate(requiredControlList, this);
                 HelpClass.EndAwait(grid_main);
@@ -774,7 +682,7 @@ namespace Restaurant.View.kitchen
         {
             try
             {
-                //selectedOrders.Clear();
+                selectedOrders.Clear();
 
                 CheckBox cb = sender as CheckBox;
                 if (cb.IsChecked == true)
@@ -807,6 +715,7 @@ namespace Restaurant.View.kitchen
                 HelpClass.StartAwait(grid_main);
 
                 //Clear();
+                selectedOrders.Clear();
                 await Search();
 
                 HelpClass.EndAwait(grid_main);
@@ -814,7 +723,7 @@ namespace Restaurant.View.kitchen
             catch (Exception ex)
             {
                 HelpClass.EndAwait(grid_main);
-                //HelpClass.ExceptionMessage(ex, this);
+                HelpClass.ExceptionMessage(ex, this);
             }
         }
         private void chk_uncheck(object sender, RoutedEventArgs e)
