@@ -198,7 +198,6 @@ namespace Restaurant.View.reports.accountsReports
             }
 
             return result.ToList();
-            
         }
 
         /*Vendor*/
