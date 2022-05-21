@@ -171,6 +171,7 @@ namespace Restaurant.View.kitchen
             chk_ready.Content = AppSettings.resourcemanager.GetString("trReady");
 
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
+            //btn_updatePreparingTime.Content = AppSettings.resourcemanager.GetString("trPreparingTime");
         }
         private void UserControl_KeyDown(object sender, KeyEventArgs e)
         {
@@ -191,7 +192,32 @@ namespace Restaurant.View.kitchen
             try
             {
                 if (dg_orders.Items.Count > 0)
+                {
+                    //var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
+                    //if (firstCol != null || dg_orders?.Items != null)
+                    //    foreach (var item in dg_orders.Items)
+                    //    {
+                    //        var chBx = firstCol.GetCellContent(item) as CheckBox;
+                    //        if (chBx == null)
+                    //        {
+                    //            continue;
+                    //        }
+                    //        chBx.IsChecked = false;
+                    //    }
+
                     dg_orders.Items.Refresh();
+                    //var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
+                    //if (firstCol != null || dg_orders?.Items != null)
+                    //    foreach (var item in dg_orders.Items)
+                    //    {
+                    //        OrderPreparing orderPreparing = item as OrderPreparing;
+                    //        if (selectedOrders.Where(x => x.orderPreparingId == orderPreparing.orderPreparingId).Count() > 0)
+                    //        {
+                    //            var chBx = firstCol.GetCellContent(item) as CheckBox;
+                    //            chBx.IsChecked = true;
+                    //        }
+                    //    }
+                }
             }
             catch (Exception ex)
             {
@@ -266,48 +292,67 @@ namespace Restaurant.View.kitchen
             }
         }
         async Task saveOrderPreparing()
-        {          
-            #region order status object
-            orderPreparingStatus statusObject = new orderPreparingStatus();
-            statusObject.orderPreparingId = preparingOrder.orderPreparingId;
-            statusObject.notes = tb_notes.Text;
-            statusObject.createUserId = MainWindow.userLogin.userId;
-            #endregion
+        {
 
-            int res = 0;
-            switch (preparingOrder.status)
+            // code
+            //OrderPreparing
+            if (ordersQuery.Where(x => x.IsChecked).Count() > 0)
             {
-                case "Listed":
-                    #region preparing order object
-                    preparingOrder.preparingTime = decimal.Parse(tb_preparingTime.Text);
-                    preparingOrder.notes = tb_notes.Text;
-                    #endregion
-                    statusObject.status = "Preparing";
-
-                    res = await preparingOrder.editPreparingOrderAndStatus(preparingOrder,statusObject);
-                    break;
-                case "Preparing":
-                    statusObject.status = "Ready";
-
-                    res = await preparingOrder.updateOrderStatus(statusObject);
-                    break;
-                case "Ready":
-                    statusObject.status = "Done";
-
-                    res = await preparingOrder.updateOrderStatus(statusObject);
-                    break;
-            }
-
-            if (res > 0)
-            {
-                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-
-                clear();
-                await refreshPreparingOrders();
-                await Search();
+                foreach (var item in dg_orders.Items)
+                {
+                    var selectedOrder = item as OrderPreparing;
+                }
             }
             else
-                Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+            {
+                // dina code
+                if (preparingOrder.orderPreparingId > 0)
+                {
+
+                    #region order status object
+                    orderPreparingStatus statusObject = new orderPreparingStatus();
+                    statusObject.orderPreparingId = preparingOrder.orderPreparingId;
+                    statusObject.notes = tb_notes.Text;
+                    statusObject.createUserId = MainWindow.userLogin.userId;
+                    #endregion
+
+                    int res = 0;
+                    switch (preparingOrder.status)
+                    {
+                        case "Listed":
+                            #region preparing order object
+                            preparingOrder.preparingTime = decimal.Parse(tb_preparingTime.Text);
+                            preparingOrder.notes = tb_notes.Text;
+                            #endregion
+                            statusObject.status = "Preparing";
+
+                            res = await preparingOrder.editPreparingOrderAndStatus(preparingOrder, statusObject);
+                            break;
+                        case "Preparing":
+                            statusObject.status = "Ready";
+
+                            res = await preparingOrder.updateOrderStatus(statusObject);
+                            break;
+                        case "Ready":
+                            statusObject.status = "Done";
+
+                            res = await preparingOrder.updateOrderStatus(statusObject);
+                            break;
+                    }
+
+                    if (res > 0)
+                    {
+                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+                        clear();
+                        await refreshPreparingOrders();
+                        await Search();
+                    }
+
+                    else
+                        Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                }
+            }
         }
 
         private void clear()
@@ -334,7 +379,7 @@ namespace Restaurant.View.kitchen
         {
             try
             {
-                selectedOrders.Clear();
+                //selectedOrders.Clear();
                 var chkSelectAll = sender as CheckBox;
                 if (chk_allForDelivery.IsChecked == true)
                 {
@@ -342,12 +387,12 @@ namespace Restaurant.View.kitchen
                 }
                 else
                 {
-                    var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
-                    var statusCol = dg_orders.Columns[1] as DataGridTextColumn;
-                    if (chkSelectAll == null || firstCol == null || dg_orders?.Items == null || dg_orders.Items.Count == 0)
-                    {
-                        return;
-                    }
+                    //var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
+                    //var statusCol = dg_orders.Columns[1] as DataGridTextColumn;
+                    //if (chkSelectAll == null || firstCol == null || dg_orders?.Items == null || dg_orders.Items.Count == 0)
+                    //{
+                    //    return;
+                    //}
 
                     var item0 = dg_orders.Items[0] as OrderPreparing;
 
@@ -379,11 +424,14 @@ namespace Restaurant.View.kitchen
 
                     foreach (var item in dg_orders.Items)
                     {
+                        // stop code yasmin
+                        /*
                         var chBx = firstCol.GetCellContent(item) as CheckBox;
                         if (chBx == null)
                         {
                             continue;
                         }
+                        */
 
                         var txt = item as OrderPreparing;
                         if (txt == null)
@@ -392,8 +440,11 @@ namespace Restaurant.View.kitchen
                         }
                         if (txt.status.Equals(item0.status) )
                         {
-                            chBx.IsChecked = chkSelectAll.IsChecked;
 
+                            // stop code yasmin
+                            //chBx.IsChecked = chkSelectAll.IsChecked;
+
+                            txt.IsChecked = chkSelectAll.IsChecked.Value;
                             //if (item0.status == "InTheWay")
                             //    requiredControlList = new List<string>();
                             //else
@@ -403,10 +454,12 @@ namespace Restaurant.View.kitchen
                             //    else
                             //        requiredControlList = new List<string> { "userId" };
                             //}
-                            selectedOrders.Add(txt);
+                            //selectedOrders.Add(txt);
                         }
                     }
                 }
+                dg_orders.Items.Refresh();
+
             }
             catch (Exception ex)
             {
@@ -422,39 +475,53 @@ namespace Restaurant.View.kitchen
             }
             else
             {
+                // stop code yasmin
+                /*
                 var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
                 if (chkSelectAll == null || firstCol == null || dg_orders?.Items == null || dg_orders.Items.Count == 0)
                 {
                     return;
                 }
-                foreach (var item in dg_orders.Items)
+               
+            foreach (var item in dg_orders.Items)
+            {
+
+                var chBx = firstCol.GetCellContent(item) as CheckBox;
+                if (chBx == null)
                 {
-                    var chBx = firstCol.GetCellContent(item) as CheckBox;
-                    if (chBx == null)
-                    {
-                        continue;
-                    }
-                    chBx.IsChecked = chkSelectAll.IsChecked;
+                    continue;
                 }
+                chBx.IsChecked = chkSelectAll.IsChecked;
+
+            }
+                */
+
+                foreach (var item in ordersQuery)
+                {
+                    item.IsChecked = chkSelectAll.IsChecked.Value;
+                }
+                dg_orders.Items.Refresh();
             }
         }
 
-
-        List<OrderPreparing> selectedOrders = new List<OrderPreparing>();
+        //List<OrderPreparing> selectedOrders = new List<OrderPreparing>();
         private void FieldDataGridChecked(object sender, RoutedEventArgs e)
         {
             try
             {
-                CheckBox cb = sender as CheckBox;
-                if (chk_allForDelivery.IsChecked == true)
-                {
-                    selectedOrders.Clear();
-                }
+                //CheckBox cb = sender as CheckBox;
+                //if (chk_allForDelivery.IsChecked == true)
+                //{
+                //    selectedOrders.Clear();
+                //}
                 //else
                 //{
-                     OrderPreparing selectedOrder = dg_orders.SelectedItem as OrderPreparing;
-                    
-                     selectedOrders.Add(selectedOrder);
+                if (chk_allForDelivery.IsChecked != true)
+                {
+                OrderPreparing selectedOrder = dg_orders.SelectedItem as OrderPreparing;
+                }
+
+                //selectedOrders.Add(selectedOrder);
                 //}
             }
             catch (Exception ex)
@@ -467,15 +534,17 @@ namespace Restaurant.View.kitchen
             try
             {
                 CheckBox cb = sender as CheckBox;
-                if (chk_allForDelivery.IsChecked == true)
+                if (chk_allForDelivery.IsChecked != true)
                 {
-                    selectedOrders.Clear();
+                    //selectedOrders.Clear();
+                    //var index = dg_orders.SelectedIndex;
+                    OrderPreparing selectedOrder = dg_orders.SelectedItem as OrderPreparing;
+                    //selectedOrders.Remove(selectedOrder);
+                    selectedOrder.IsChecked = false;
                 }
                 //else
                 //{
-                    var index = dg_orders.SelectedIndex;
-                    OrderPreparing selectedOrder = dg_orders.SelectedItem as OrderPreparing;
-                    selectedOrders.Remove(selectedOrder);
+                   
                 //}
 
             }
@@ -484,6 +553,9 @@ namespace Restaurant.View.kitchen
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+
+
         private async void Cb_search_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -544,6 +616,8 @@ namespace Restaurant.View.kitchen
 
                     if (preparingOrder != null)
                     {
+                        // stop code yasmin
+                        /*
                         if (chk_allForDelivery.IsChecked.Value)
                         {
                             selectedOrders.Clear();
@@ -559,13 +633,25 @@ namespace Restaurant.View.kitchen
                                         {
                                             continue;
                                         }
-                                        chBx.IsChecked = false;
+                                        // stop code yasmin
+                                        //chBx.IsChecked = false;
+                                        preparingOrder.IsChecked =false;
                                     }
                             }
                         }
                         CheckBox checkboxColumn = (dg_orders.Columns[0].GetCellContent(dg_orders.SelectedItem) as CheckBox);
-
                         checkboxColumn.IsChecked = !checkboxColumn.IsChecked;
+                        */
+                        if (chk_allForDelivery.IsChecked.Value)
+                        {
+                            preparingOrder.IsChecked = false;
+                        }
+                        else
+                        {
+                            preparingOrder.IsChecked = !preparingOrder.IsChecked;
+                            dg_orders.Items.Refresh();
+                        }
+                        
 
                         //if (selectedOrders.Count > 0)
                         //{
@@ -682,7 +768,8 @@ namespace Restaurant.View.kitchen
         {
             try
             {
-                selectedOrders.Clear();
+                //selectedOrders.Clear();
+                
 
                 CheckBox cb = sender as CheckBox;
                 if (cb.IsChecked == true)
@@ -692,30 +779,39 @@ namespace Restaurant.View.kitchen
                         chk_listed.IsChecked = false;
                         chk_preparing.IsChecked = false;
                         chk_ready.IsChecked = false;
+                        col_chk.Visibility = Visibility.Collapsed;
                     }
                     else if (cb.Name == "chk_listed")
                     {
                         chk_allForDelivery.IsChecked = false;
                         chk_preparing.IsChecked = false;
                         chk_ready.IsChecked = false;
+                        col_chk.Visibility = Visibility.Visible;
                     }
                     else if (cb.Name == "chk_preparing")
                     {
                         chk_allForDelivery.IsChecked = false;
                         chk_listed.IsChecked = false;
                         chk_ready.IsChecked = false;
+                        col_chk.Visibility = Visibility.Visible;
                     }
                     else if (cb.Name == "chk_ready")
                     {
                         chk_allForDelivery.IsChecked = false;
                         chk_listed.IsChecked = false;
                         chk_preparing.IsChecked = false;
+                        col_chk.Visibility = Visibility.Visible;
                     }
                 }
                 HelpClass.StartAwait(grid_main);
 
                 //Clear();
-                selectedOrders.Clear();
+                //selectedOrders.Clear();
+                foreach (var item in dg_orders.Items)
+                {
+                    OrderPreparing orderSelected = item as OrderPreparing;
+                    orderSelected.IsChecked = false;
+                }
                 await Search();
 
                 HelpClass.EndAwait(grid_main);
@@ -1155,8 +1251,12 @@ namespace Restaurant.View.kitchen
                     break;
             }
         }
+
         #endregion
 
-        
+        private void Btn_updatePreparingTime_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

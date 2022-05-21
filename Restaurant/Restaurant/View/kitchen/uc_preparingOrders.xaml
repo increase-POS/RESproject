@@ -276,7 +276,8 @@
                                         </DataTemplate>
                                     </DataGridCheckBoxColumn.HeaderTemplate>
                                 </DataGridCheckBoxColumn>-->
-                                <DataGridCheckBoxColumn x:Name="col_chk" Binding="{Binding IsChecked, NotifyOnTargetUpdated=True}" IsReadOnly="False" IsThreeState="False">
+                                <DataGridCheckBoxColumn x:Name="col_chk" Binding="{Binding IsChecked, NotifyOnTargetUpdated=True}" 
+                                                     Visibility="Collapsed"   IsReadOnly="False" IsThreeState="False">
                                     <DataGridCheckBoxColumn.ElementStyle>
                                         <Style
                                         TargetType="CheckBox">
@@ -509,6 +510,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <Border Grid.Row="1"  CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" 
                          BorderBrush="{StaticResource LightGrey}">
@@ -531,7 +533,15 @@
                             Foreground="{StaticResource ThickGrey}" FontSize="14"
                                     VerticalAlignment="Center" HorizontalAlignment="Right"
                             Margin="5,5,15,5"/>
-            </Grid>
+                        <Button Grid.Column="2"  Padding="0"    
+                                    Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" 
+                                    x:Name="btn_updatePreparingTime" Click="Btn_updatePreparingTime_Click"  
+                                    Margin="5 5 10 5" IsEnabled="True">
+                            <Path Fill="#4E4E4E" Stretch="Fill"  
+                                      Width="25.5" Height="27.5" FlowDirection="LeftToRight"
+                                      Data="{StaticResource save}" />
+                        </Button>
+                    </Grid>
             <Border Grid.Row="2" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                             <TextBox  x:Name="tb_notes" Text="{Binding notes, Mode=OneWay}"
@@ -585,10 +595,15 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
+                        <!--<Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>-->
                     <Border Background="White" Grid.ColumnSpan="6"  Height="1"  BorderBrush="{StaticResource MainColor}" 
                     BorderThickness="1" Opacity="1" Margin="5,5,5,5"  />
-                    <Border Grid.Row="1" Grid.ColumnSpan="3">
-
+                        
+                    
+                        <Border Grid.Row="1" Grid.Column="1">
                         <Button x:Name="btn_save" Click="Btn_save_Click"   Content="Save" 
                          materialDesign:ButtonAssist.CornerRadius="7"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}"
