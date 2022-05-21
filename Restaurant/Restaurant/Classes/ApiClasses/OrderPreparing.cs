@@ -82,6 +82,10 @@ namespace Restaurant.Classes.ApiClasses
         public string categoryCode { get; set; }
         public string categoryName { get; set; }
         //-------------------------------------------
+
+            // for check dataGrid
+        public bool IsChecked { get; set; }
+
         public async Task<List<OrderPreparing>> GetInvoicePreparingOrders( int invoiceId)
         {
             List<OrderPreparing> items = new List<OrderPreparing>();
