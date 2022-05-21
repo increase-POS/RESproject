@@ -427,8 +427,8 @@ namespace Restaurant.View.reports.accountsReports
 
                 chk_allVendors.IsChecked = true;
                 fillDateCombo(cb_vendorsDate);
-                //ShippingCombo = statisticModel.getShippingForStatementCombo(statement);
-                ShippingCombo = statisticModel.getShippingCombo(statement);
+                ShippingCombo = statisticModel.getShippingForStatementCombo(statement);
+                //ShippingCombo = statisticModel.getShippingCombo(statement);
                 fillShippingCombo(ShippingCombo, cb_vendors);
 
                 HelpClass.EndAwait(grid_main);
