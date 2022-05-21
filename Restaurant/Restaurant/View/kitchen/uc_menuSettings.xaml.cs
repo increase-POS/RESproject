@@ -506,7 +506,7 @@ namespace Restaurant.View.kitchen
             item = new MenuSetting();
 
             this.DataContext = item;
-
+            tb_preparingTime.Text = "";
             #region selected days
             checkAllCheckBox();
             #endregion
@@ -865,7 +865,7 @@ namespace Restaurant.View.kitchen
                 Clear();
                 item = items.Where(x => x.itemId == itemId).FirstOrDefault();
                 this.DataContext = item;
-
+                tb_preparingTime.Text = HelpClass.PercentageDecTostring(item.preparingTime);
                 #region selected days
                 selectedDays = new List<string>();
                 if (item.menuSettingId != null)
