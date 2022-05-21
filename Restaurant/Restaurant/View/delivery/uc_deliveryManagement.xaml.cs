@@ -59,6 +59,7 @@ namespace Restaurant.View.delivery
         string updatePermission = "deliveryManagement_update";
         IEnumerable<Invoice> orders;
         OrderPreparing orderModel = new OrderPreparing();
+        Invoice invoiceModel = new Invoice();
         Invoice order = new Invoice();
         
         string searchText = "";
@@ -100,6 +101,7 @@ namespace Restaurant.View.delivery
                 await FillCombo.FillComboShippingCompaniesForDelivery_withDefault(cb_searchCompany);
                 #endregion
 
+                grid_deliveryCompany.Visibility = Visibility.Collapsed;
                 col_cbCompany.Width = new GridLength(0, GridUnitType.Star);
                 bdr_searchCompany.Visibility = Visibility.Hidden;
                 chk_allForDelivery.IsChecked = true;
@@ -248,7 +250,6 @@ namespace Restaurant.View.delivery
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private async void Cb_searchCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -271,7 +272,6 @@ namespace Restaurant.View.delivery
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -361,13 +361,14 @@ namespace Restaurant.View.delivery
                         #region refreshSaveBtnText
                         if (order.shipUserId != null)
                         {
-                            bdr_cbDeliveryCompany.Visibility = Visibility.Collapsed;
-                           
+                            //bdr_cbDeliveryCompany.Visibility = Visibility.Collapsed;
+                            grid_deliveryCompany.Visibility = Visibility.Collapsed;
+
                             if (order.status.Equals("Ready"))
                             {
                                 btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
                                 btn_save.IsEnabled = true;
-                                bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                                //bdr_cbDeliveryMan.Visibility = Visibility.Visible;
                                 grid_deliveryMan.Visibility = Visibility.Visible;
                                 bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
                             }
@@ -375,7 +376,7 @@ namespace Restaurant.View.delivery
                             {
                                 btn_save.Content = AppSettings.resourcemanager.GetString("onTheWay");
                                 btn_save.IsEnabled = true;
-                                bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                                //bdr_cbDeliveryMan.Visibility = Visibility.Visible;
                                 grid_deliveryMan.Visibility = Visibility.Visible;
                                 bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
                             }
@@ -383,16 +384,17 @@ namespace Restaurant.View.delivery
                             {
                                 btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
                                 btn_save.IsEnabled = true;
-                                bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                                //bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
                                 grid_deliveryMan.Visibility = Visibility.Collapsed;
                                 bdr_tbDeliveryMan.Visibility = Visibility.Visible;
                             }
                         }
                         else
                         {
-                            bdr_cbDeliveryCompany.Visibility = Visibility.Visible;
-                            bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                            //bdr_cbDeliveryCompany.Visibility = Visibility.Visible;
+                            //bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
                             grid_deliveryMan.Visibility = Visibility.Collapsed;
+                            grid_deliveryCompany.Visibility = Visibility.Visible;
                             bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
 
                             if (order.status.Equals("Ready"))
@@ -437,7 +439,6 @@ namespace Restaurant.View.delivery
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {//save
             try
@@ -446,6 +447,23 @@ namespace Restaurant.View.delivery
                 {
                     HelpClass.StartAwait(grid_main);
 
+                    if (selectedOrders.Count > 1)
+                        requiredControlList = new List<string>();
+                    else if (selectedOrders.Count == 1)
+                    {
+                        if(chk_drivers.IsChecked == true)
+                            requiredControlList = new List<string>() { "userId" };
+                        if (chk_shippingCompanies.IsChecked == true)
+                            requiredControlList = new List<string>() { "companyId" };
+                    }
+                    else if(selectedOrders.Count == 0 && order != null)
+                    {
+                        selectedOrders.Add(order);
+                        if (chk_drivers.IsChecked == true)
+                            requiredControlList = new List<string>() { "userId" };
+                        if (chk_shippingCompanies.IsChecked == true)
+                            requiredControlList = new List<string>() { "companyId" };
+                    }
                     #region add
                     if (HelpClass.validate(requiredControlList, this))
                     {
@@ -461,12 +479,18 @@ namespace Restaurant.View.delivery
                                 if (i.status.Equals("Ready"))
                                 {
                                     ops.status = "Collected";
-                                    driverID = (int)cb_userId.SelectedValue;
+                                    if(selectedOrders.Count == 1)
+                                        driverID = (int)cb_userId.SelectedValue;
+                                    else
+                                        driverID = i.shipUserId;
                                 }
                                 else if (i.status.Equals("Collected"))
                                 {
                                     ops.status = "InTheWay";
-                                    driverID = (int)cb_userId.SelectedValue;
+                                    if (selectedOrders.Count == 1)
+                                        driverID = (int)cb_userId.SelectedValue;
+                                    else
+                                        driverID = i.shipUserId;
                                 }
                                 else if (i.status.Equals("InTheWay"))
                                 {
@@ -479,7 +503,10 @@ namespace Restaurant.View.delivery
                                 if (i.status.Equals("Ready"))
                                 {
                                     ops.status = "Done";
-                                    comID = (int)cb_companyId.SelectedValue;
+                                    if (selectedOrders.Count == 1)
+                                        comID = (int)cb_companyId.SelectedValue;
+                                    else
+                                        comID = i.shippingCompanyId.Value;
                                 }
                             }
                             ops.createUserId = MainWindow.userLogin.userId;
@@ -494,6 +521,8 @@ namespace Restaurant.View.delivery
                             else
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         }
+                        if(chk_shippingCompanies.IsChecked == true)
+                            await RefreshOrdersList("");
                         await Search();
                         Clear();
                     }
@@ -513,221 +542,81 @@ namespace Restaurant.View.delivery
             }
         }
 
-        #endregion
 
-        #region report
-        //report  parameters
-        ReportCls reportclass = new ReportCls();
-        LocalReport rep = new LocalReport();
-        SaveFileDialog saveFileDialog = new SaveFileDialog();
-
-        // end report parameters
-        public void BuildReport()
-        {
-
-            List<ReportParameter> paramarr = new List<ReportParameter>();
-
-            string addpath;
-            bool isArabic = ReportCls.checkLang();
-            if (isArabic)
-            {
-                addpath = @"\Reports\Delivery\Ar\ArDeliveryManag.rdlc";
-            }
-            else
-            {
-                addpath = @"\Reports\Delivery\En\EnDeliveryManag.rdlc";
-            }
-            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-            clsReports.deliveryManagement(orders.ToList(), rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
-            clsReports.Header(paramarr);
-
-            rep.SetParameters(paramarr);
-
-            rep.Refresh();
-
-        }
-        private void Btn_pdf_Click(object sender, RoutedEventArgs e)
-        {
-            //pdf
+        private async void Btn_updateDeliveryMan_Click(object sender, RoutedEventArgs e)
+        {//update driver
             try
             {
+                if (FillCombo.groupObject.HasPermissionAction(updatePermission, FillCombo.groupObjects, "one"))
+                {
+                    HelpClass.StartAwait(grid_main);
 
-                HelpClass.StartAwait(grid_main);
-
-                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
-                //{
                     #region
-                    BuildReport();
-
-                    saveFileDialog.Filter = "PDF|*.pdf;";
-
-                    if (saveFileDialog.ShowDialog() == true)
+                    if (HelpClass.validate(requiredControlList, this))
                     {
-                        string filepath = saveFileDialog.FileName;
-                        LocalReportExtensions.ExportToPDF(rep, filepath);
-                    }
-                    #endregion
-                //}
-                //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void Btn_print_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-
-                HelpClass.StartAwait(grid_main);
-                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
-                //{
-
-                    #region
-                    BuildReport();
-                    LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, AppSettings.rep_print_count == null ? short.Parse("1") : short.Parse(AppSettings.rep_print_count));
-                    #endregion
-                //}
-                //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-
-        }
-
-        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-
-                HelpClass.StartAwait(grid_main);
-
-                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
-                //{
-                    #region
-                    //Thread t1 = new Thread(() =>
-                    //{
-                    BuildReport();
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        saveFileDialog.Filter = "EXCEL|*.xls;";
-                        if (saveFileDialog.ShowDialog() == true)
+                        foreach (Invoice i in selectedOrders)
                         {
-                            string filepath = saveFileDialog.FileName;
-                            LocalReportExtensions.ExportToExcel(rep, filepath);
+                            int? driverID = i.shipUserId;
+                            int comID = i.shippingCompanyId.Value;
+
+                            //orderPreparingStatus ops = new orderPreparingStatus();
+
+                            if (i.shipUserName != null)
+                            {
+                                if (i.status.Equals("Ready"))
+                                {
+                                    driverID = (int)cb_userId.SelectedValue;
+                                }
+                                else if (i.status.Equals("Collected"))
+                                {
+                                    driverID = (int)cb_userId.SelectedValue;
+                                }
+                                else if (i.status.Equals("InTheWay"))
+                                {
+                                    driverID = i.shipUserId;
+                                }
+                            }
+                            else
+                            {
+                                if (i.status.Equals("Ready"))
+                                {
+                                    comID = (int)cb_companyId.SelectedValue;
+                                }
+                            }
+                            //ops.status = ops.status;
+                            //ops.createUserId = MainWindow.userLogin.userId;
+                            //ops.updateUserId = MainWindow.userLogin.userId;
+                            //ops.notes = tb_notes.Text;
+                            //ops.isActive = 1;
+                            i.shippingCompanyId = comID;
+                            i.shipUserId = driverID;
+                            //int res = await invoiceModel.saveInvoice(i);
+                            //int res = await orderModel.EditInvoiceOrdersStatus(i.invoiceId, driverID, comID, ops);
+
+                            //if (!res.Equals(0))
+                            //    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                            //else
+                            //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         }
-                    });
-
-
-                    //});
-                    //t1.Start();
-                    #endregion
-                //}
-                //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
-        private void Btn_preview_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-
-                HelpClass.StartAwait(grid_main);
-                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
-                //{
-                    #region
-                    Window.GetWindow(this).Opacity = 0.2;
-
-                    string pdfpath = "";
-                    //
-                    pdfpath = @"\Thumb\report\temp.pdf";
-                    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
-
-                    BuildReport();
-
-                    LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                    wd_previewPdf w = new wd_previewPdf();
-                    w.pdfPath = pdfpath;
-                    if (!string.IsNullOrEmpty(w.pdfPath))
-                    {
-                        w.ShowDialog();
-                        w.wb_pdfWebViewer.Dispose();
-
-
+                        await Search();
+                        Clear();
                     }
-                    Window.GetWindow(this).Opacity = 1;
                     #endregion
-                //}
-                //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
+                    HelpClass.EndAwait(grid_main);
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-
-        }
-        private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
-        {//pie
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
-                //{
-                    #region
-                    //Window.GetWindow(this).Opacity = 0.2;
-                    //win_lvc win = new win_lvc(usersQuery, 3);
-                    //win.ShowDialog();
-                    //Window.GetWindow(this).Opacity = 1;
-                    #endregion
-                //}
-                //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-
-
         }
+
+
         #endregion
 
         #region events
@@ -768,13 +657,14 @@ namespace Restaurant.View.delivery
                     #region refreshSaveBtnText
                     if (item0.shipUserId != null)
                     {
-                        bdr_cbDeliveryCompany.Visibility = Visibility.Collapsed;
+                        //bdr_cbDeliveryCompany.Visibility = Visibility.Collapsed;
+                        grid_deliveryCompany.Visibility = Visibility.Collapsed;
 
                         if (item0.status.Equals("Ready"))
                         {
                             btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
                             btn_save.IsEnabled = true;
-                            bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                            //bdr_cbDeliveryMan.Visibility = Visibility.Visible;
                             grid_deliveryMan.Visibility = Visibility.Visible;
                             bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
                         }
@@ -782,7 +672,7 @@ namespace Restaurant.View.delivery
                         {
                             btn_save.Content = AppSettings.resourcemanager.GetString("onTheWay");
                             btn_save.IsEnabled = true;
-                            bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                            //bdr_cbDeliveryMan.Visibility = Visibility.Visible;
                             grid_deliveryMan.Visibility = Visibility.Visible;
                             bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
                         }
@@ -790,15 +680,16 @@ namespace Restaurant.View.delivery
                         {
                             btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
                             btn_save.IsEnabled = true;
-                            bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                            //bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
                             grid_deliveryMan.Visibility = Visibility.Collapsed;
                             bdr_tbDeliveryMan.Visibility = Visibility.Visible;
                         }
                     }
                     else
                     {
-                        bdr_cbDeliveryCompany.Visibility = Visibility.Visible;
-                        bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                        grid_deliveryCompany.Visibility = Visibility.Visible;
+                        //bdr_cbDeliveryCompany.Visibility = Visibility.Visible;
+                        //bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
                         grid_deliveryMan.Visibility = Visibility.Collapsed;
                         bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
 
@@ -876,7 +767,6 @@ namespace Restaurant.View.delivery
             }
         }
 
-
         List<Invoice> selectedOrders = new List<Invoice>();
         private void FieldDataGridChecked(object sender, RoutedEventArgs e)
         {
@@ -921,7 +811,6 @@ namespace Restaurant.View.delivery
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private async void search_Checking(object sender, RoutedEventArgs e)
         {
             try
@@ -1069,12 +958,6 @@ namespace Restaurant.View.delivery
             }
         }
 
-        private void Btn_updateDeliveryMan_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-
         private async void deliveryType_check(object sender, RoutedEventArgs e)
         {
             try
@@ -1103,16 +986,16 @@ namespace Restaurant.View.delivery
                             bdr_inTheWay.Visibility = Visibility.Visible;
                             chk_allForDelivery.IsChecked = true;
 
-
-                            bdr_cbDeliveryCompany.Visibility = Visibility.Collapsed;
-                            bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                            //bdr_cbDeliveryCompany.Visibility = Visibility.Collapsed;
+                            //bdr_cbDeliveryMan.Visibility = Visibility.Visible;
                             grid_deliveryMan.Visibility = Visibility.Visible;
+                            grid_deliveryCompany.Visibility = Visibility.Collapsed;
 
-                            
 
                         }
                         else if (cb.Name == "chk_shippingCompanies")
                         {
+                            col_chk.Visibility = Visibility.Visible;
                             chk_drivers.IsChecked = false;
                             col_driver.Visibility = Visibility.Hidden;
                             col_company.Visibility = Visibility.Visible;
@@ -1127,9 +1010,10 @@ namespace Restaurant.View.delivery
                             bdr_inTheWay.Visibility = Visibility.Hidden;
                             chk_allForDelivery.IsChecked = false;
 
-                            bdr_cbDeliveryCompany.Visibility = Visibility.Visible;
-                            bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                            //bdr_cbDeliveryCompany.Visibility = Visibility.Visible;
+                            //bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
                             grid_deliveryMan.Visibility = Visibility.Collapsed;
+                            grid_deliveryCompany.Visibility = Visibility.Visible;
                         }
                         await RefreshOrdersList("");
                         await Search();
@@ -1173,5 +1057,220 @@ namespace Restaurant.View.delivery
 
         #endregion
 
+        #region report
+        //report  parameters
+        ReportCls reportclass = new ReportCls();
+        LocalReport rep = new LocalReport();
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+        // end report parameters
+        public void BuildReport()
+        {
+
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
+                addpath = @"\Reports\Delivery\Ar\ArDeliveryManag.rdlc";
+            }
+            else
+            {
+                addpath = @"\Reports\Delivery\En\EnDeliveryManag.rdlc";
+            }
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+            clsReports.deliveryManagement(orders.ToList(), rep, reppath, paramarr);
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+
+        }
+        private void Btn_pdf_Click(object sender, RoutedEventArgs e)
+        {
+            //pdf
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+
+                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
+                //{
+                #region
+                BuildReport();
+
+                saveFileDialog.Filter = "PDF|*.pdf;";
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string filepath = saveFileDialog.FileName;
+                    LocalReportExtensions.ExportToPDF(rep, filepath);
+                }
+                #endregion
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_print_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
+                //{
+
+                #region
+                BuildReport();
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, AppSettings.rep_print_count == null ? short.Parse("1") : short.Parse(AppSettings.rep_print_count));
+                #endregion
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
+        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+
+                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
+                //{
+                #region
+                //Thread t1 = new Thread(() =>
+                //{
+                BuildReport();
+                this.Dispatcher.Invoke(() =>
+                {
+                    saveFileDialog.Filter = "EXCEL|*.xls;";
+                    if (saveFileDialog.ShowDialog() == true)
+                    {
+                        string filepath = saveFileDialog.FileName;
+                        LocalReportExtensions.ExportToExcel(rep, filepath);
+                    }
+                });
+
+
+                //});
+                //t1.Start();
+                #endregion
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_preview_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
+                //{
+                #region
+                Window.GetWindow(this).Opacity = 0.2;
+
+                string pdfpath = "";
+                //
+                pdfpath = @"\Thumb\report\temp.pdf";
+                pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+
+                BuildReport();
+
+                LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                wd_previewPdf w = new wd_previewPdf();
+                w.pdfPath = pdfpath;
+                if (!string.IsNullOrEmpty(w.pdfPath))
+                {
+                    w.ShowDialog();
+                    w.wb_pdfWebViewer.Dispose();
+
+
+                }
+                Window.GetWindow(this).Opacity = 1;
+                #endregion
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
+
+        private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
+        {//pie
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
+                //{
+                #region
+                //Window.GetWindow(this).Opacity = 0.2;
+                //win_lvc win = new win_lvc(usersQuery, 3);
+                //win.ShowDialog();
+                //Window.GetWindow(this).Opacity = 1;
+                #endregion
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+
+        }
+        #endregion
     }
 }

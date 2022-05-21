@@ -533,7 +533,7 @@
                                       Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                       materialDesign:HintAssist.Hint="delivery man..."  
-                                      Grid.Column="1" Height="40"   
+                                      Grid.Column="0" Height="40"   
                                       BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
                                       LostFocus="validateEmpty_LostFocus" />
                                     <Path Fill="#E81123" Stretch="Fill" Margin="5,5,20,5" Name="p_error_userId"
@@ -547,7 +547,7 @@
                                           L13,15 L13,17 Z"/>
                                 </Grid>
                             </Border>
-                            <Button Grid.Column="2"  Padding="0"    
+                            <Button Grid.Column="1"  Padding="0"    
                                     Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" 
                                     x:Name="btn_updateDeliveryMan" Click="Btn_updateDeliveryMan_Click"  
                                     Margin="5 5 10 5" IsEnabled="True">
@@ -573,18 +573,22 @@
                                 </TextBox>
                             </Grid>
                         </Border>
-                        <Border x:Name="bdr_cbDeliveryCompany" Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}" Visibility="Collapsed">
-                            <Grid>
-                                
-                                <ComboBox x:Name="cb_companyId"  Grid.Row="1"
-                                      SelectedValue="{Binding shippingCompanyId,Mode=OneWay}"
+                        <Grid x:Name="grid_deliveryCompany">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="bdr_cbDeliveryCompany" Grid.Row="0" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                <Grid>
+                                    <ComboBox x:Name="cb_companyId"  Grid.Row="1"
+                                          SelectedValue="{Binding shippingCompanyId,Mode=OneWay}"
                                       Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                       materialDesign:HintAssist.Hint="delivery man..."  
-                                      Grid.Column="1" Height="40"   
+                                      Grid.Column="0" Height="40"   
                                       BorderBrush="#737373"   BorderThickness="0" Margin="4,0" 
                                       LostFocus="validateEmpty_LostFocus" />
-                                <Path Fill="#E81123" Stretch="Fill" Margin="5,5,20,5" Name="p_error_companyId"
+                                    <Path Fill="#E81123" Stretch="Fill" Margin="5,5,20,5" Name="p_error_companyId"
                                   HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                                   VerticalAlignment="Center" Width="15"  Height="15"
                                   Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52
@@ -593,8 +597,17 @@
                                           C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12
                                           C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 
                                           L13,15 L13,17 Z"/>
-                            </Grid>
-                        </Border>
+                                </Grid>
+                            </Border>
+                            <Button Grid.Column="1"  Padding="0"    
+                                    Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" 
+                                    x:Name="btn_updateDeliveryCompany" Click="Btn_updateDeliveryMan_Click"  
+                                    Margin="5 5 10 5" IsEnabled="True">
+                                <Path Fill="#4E4E4E" Stretch="Fill"  
+                                      Width="25.5" Height="27.5" FlowDirection="LeftToRight"
+                                      Data="{StaticResource save}" />
+                            </Button>
+                        </Grid>
                         <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -618,10 +631,7 @@
                                 </Path>
                             </Grid>
                         </Border>
-                        <!--<TextBlock x:Name="txt_minutes" Text="minutes" Grid.Column="1"
-                            Foreground="{StaticResource ThickGrey}" FontSize="14"
-                                    VerticalAlignment="Center" HorizontalAlignment="Right"
-                            Margin="5,5,15,5"/>-->
+                        
                     </Grid>
 
         <Border Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}" Visibility="Collapsed">
