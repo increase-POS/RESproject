@@ -489,25 +489,55 @@ namespace Restaurant.View.sales
         }
 
         #endregion
-
-        #region reports
-        public void BuildReport()
+        #region report
+        private void BuildReport()
         {
             List<ReportParameter> paramarr = new List<ReportParameter>();
 
             string addpath;
+            string firstTitle = "dailySalesStatistic";
+            string secondTitle = "";
+            string subTitle = "";
+            string Title = "";
+
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
             {
-                addpath = @"\Reports\Sale\Ar\dailySale.rdlc";
+                addpath = @"\Reports\StatisticReport\Sale\Daily\Ar\ArDailySale.rdlc";
+
+
+
+
+                subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
             }
             else
-                addpath = @"\Reports\Sale\En\dailySale.rdlc";
+            {
+                addpath = @"\Reports\StatisticReport\Sale\Daily\En\EnDailySale.rdlc";
+                //if (selectedTab == 0)
+                //{
+                //    secondTitle = "invoice";
+                //}
+                //else if (selectedTab == 1)
+                //{
+                //    secondTitle = "order";
+                //}
+                //else
+                //{
+                //    //  selectedTab == 2
+                //    secondTitle = "quotation";
+
+                //}
+                subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+            }
+
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
             ReportCls.checkLang();
 
-            clsReports.SaledailyReport(itemTrasferInvoicesQuery, rep, reppath, paramarr);
+            Title = AppSettings.resourcemanagerreport.GetString("SalesReport") + " / " + subTitle;
+            paramarr.Add(new ReportParameter("trTitle", Title));
+
+            clsReports.SaledailyReport(itemTrasferInvoicesQuery.ToList(), rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
@@ -515,13 +545,16 @@ namespace Restaurant.View.sales
 
             rep.Refresh();
         }
-        public void pdfdaily()
-        {
 
-            BuildReport();
-
-            this.Dispatcher.Invoke(() =>
+        private void Btn_pdf_Click(object sender, RoutedEventArgs e)
+        {//pdf
+            try
             {
+                HelpClass.StartAwait(grid_main);
+
+                #region
+
+                BuildReport();
                 saveFileDialog.Filter = "PDF|*.pdf;";
 
                 if (saveFileDialog.ShowDialog() == true)
@@ -529,64 +562,31 @@ namespace Restaurant.View.sales
                     string filepath = saveFileDialog.FileName;
                     LocalReportExtensions.ExportToPDF(rep, filepath);
                 }
-            });
-        }
 
-        private void Btn_pdf_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                //if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
-                //{
-                /////////////////////////////////////
-                Thread t1 = new Thread(() =>
-                {
-                    pdfdaily();
-                });
-                t1.Start();
-                //////////////////////////////////////
-                //}
-                //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                
-                    HelpClass.EndAwait(grid_main);
+                #endregion
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        public void printDaily()
-        {
-            BuildReport();
 
-            this.Dispatcher.Invoke(() =>
-            {
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
-            });
-        }
         private void Btn_print_Click(object sender, RoutedEventArgs e)
-        {
+        {//print
             try
             {
                 HelpClass.StartAwait(grid_main);
+                List<ItemTransferInvoice> query = new List<ItemTransferInvoice>();
 
-                //if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
-                //{
-                /////////////////////////////////////
-                Thread t1 = new Thread(() =>
-                {
-                    printDaily();
-                });
-                t1.Start();
-                //////////////////////////////////////
+                #region
+                BuildReport();
 
-                //}
-                //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
+
+                #endregion
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -597,39 +597,26 @@ namespace Restaurant.View.sales
             }
         }
 
-        public void ExcelDaily()
-        {
-
-            BuildReport();
-
-            this.Dispatcher.Invoke(() =>
-            {
-                saveFileDialog.Filter = "EXCEL|*.xls;";
-                if (saveFileDialog.ShowDialog() == true)
-                {
-                    string filepath = saveFileDialog.FileName;
-                    LocalReportExtensions.ExportToExcel(rep, filepath);
-                }
-            });
-        }
         private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
-        {
+        {//excel
             try
             {
                 HelpClass.StartAwait(grid_main);
+                List<ItemTransferInvoice> query = new List<ItemTransferInvoice>();
 
-                //if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
-                //{
-                //Thread t1 = new Thread(() =>
-                //{
-                ExcelDaily();
+                #region
+                BuildReport();
+                this.Dispatcher.Invoke(() =>
+                {
+                    saveFileDialog.Filter = "EXCEL|*.xls;";
+                    if (saveFileDialog.ShowDialog() == true)
+                    {
+                        string filepath = saveFileDialog.FileName;
+                        LocalReportExtensions.ExportToExcel(rep, filepath);
+                    }
+                });
+                #endregion
 
-                //});
-                //t1.Start();
-                //}
-                //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -640,22 +627,21 @@ namespace Restaurant.View.sales
         }
 
         private void Btn_preview_Click(object sender, RoutedEventArgs e)
-        {
+        {//preview
             try
             {
                 HelpClass.StartAwait(grid_main);
 
-                //if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
-                //{
                 #region
                 Window.GetWindow(this).Opacity = 0.2;
-                /////////////////////
                 string pdfpath = "";
+
                 pdfpath = @"\Thumb\report\temp.pdf";
                 pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+
                 BuildReport();
+
                 LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                ///////////////////
                 wd_previewPdf w = new wd_previewPdf();
                 w.pdfPath = pdfpath;
                 if (!string.IsNullOrEmpty(w.pdfPath))
@@ -665,10 +651,7 @@ namespace Restaurant.View.sales
                 }
                 Window.GetWindow(this).Opacity = 1;
                 #endregion
-                //}
-                //else
-                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -679,9 +662,200 @@ namespace Restaurant.View.sales
         }
 
 
-
         #endregion
 
-       
+        //#region reports
+        //public void BuildReport()
+        //{
+        //    List<ReportParameter> paramarr = new List<ReportParameter>();
+
+        //    string addpath;
+        //    bool isArabic = ReportCls.checkLang();
+        //    if (isArabic)
+        //    {
+        //        addpath = @"\Reports\Sale\Ar\dailySale.rdlc";
+        //    }
+        //    else
+        //        addpath = @"\Reports\Sale\En\dailySale.rdlc";
+        //    string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+        //    ReportCls.checkLang();
+
+        //    clsReports.SaledailyReport(itemTrasferInvoicesQuery, rep, reppath, paramarr);
+        //    clsReports.setReportLanguage(paramarr);
+        //    clsReports.Header(paramarr);
+
+        //    rep.SetParameters(paramarr);
+
+        //    rep.Refresh();
+        //}
+        //public void pdfdaily()
+        //{
+
+        //    BuildReport();
+
+        //    this.Dispatcher.Invoke(() =>
+        //    {
+        //        saveFileDialog.Filter = "PDF|*.pdf;";
+
+        //        if (saveFileDialog.ShowDialog() == true)
+        //        {
+        //            string filepath = saveFileDialog.FileName;
+        //            LocalReportExtensions.ExportToPDF(rep, filepath);
+        //        }
+        //    });
+        //}
+
+        //private void Btn_pdf_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        HelpClass.StartAwait(grid_main);
+        //        //if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+        //        //{
+        //        /////////////////////////////////////
+        //        Thread t1 = new Thread(() =>
+        //        {
+        //            pdfdaily();
+        //        });
+        //        t1.Start();
+        //        //////////////////////////////////////
+        //        //}
+        //        //else
+        //        //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+        //            HelpClass.EndAwait(grid_main);
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //            HelpClass.EndAwait(grid_main);
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
+        //}
+        //public void printDaily()
+        //{
+        //    BuildReport();
+
+        //    this.Dispatcher.Invoke(() =>
+        //    {
+        //        LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
+        //    });
+        //}
+        //private void Btn_print_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        HelpClass.StartAwait(grid_main);
+
+        //        //if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+        //        //{
+        //        /////////////////////////////////////
+        //        Thread t1 = new Thread(() =>
+        //        {
+        //            printDaily();
+        //        });
+        //        t1.Start();
+        //        //////////////////////////////////////
+
+        //        //}
+        //        //else
+        //        //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+        //        HelpClass.EndAwait(grid_main);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        HelpClass.EndAwait(grid_main);
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
+        //}
+
+        //public void ExcelDaily()
+        //{
+
+        //    BuildReport();
+
+        //    this.Dispatcher.Invoke(() =>
+        //    {
+        //        saveFileDialog.Filter = "EXCEL|*.xls;";
+        //        if (saveFileDialog.ShowDialog() == true)
+        //        {
+        //            string filepath = saveFileDialog.FileName;
+        //            LocalReportExtensions.ExportToExcel(rep, filepath);
+        //        }
+        //    });
+        //}
+        //private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        HelpClass.StartAwait(grid_main);
+
+        //        //if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+        //        //{
+        //        //Thread t1 = new Thread(() =>
+        //        //{
+        //        ExcelDaily();
+
+        //        //});
+        //        //t1.Start();
+        //        //}
+        //        //else
+        //        //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+        //        HelpClass.EndAwait(grid_main);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        HelpClass.EndAwait(grid_main);
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
+        //}
+
+        //private void Btn_preview_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        HelpClass.StartAwait(grid_main);
+
+        //        //if (MainWindow.groupObject.HasPermissionAction(basicsPermission, MainWindow.groupObjects, "report") || HelpClass.isAdminPermision())
+        //        //{
+        //        #region
+        //        Window.GetWindow(this).Opacity = 0.2;
+        //        /////////////////////
+        //        string pdfpath = "";
+        //        pdfpath = @"\Thumb\report\temp.pdf";
+        //        pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+        //        BuildReport();
+        //        LocalReportExtensions.ExportToPDF(rep, pdfpath);
+        //        ///////////////////
+        //        wd_previewPdf w = new wd_previewPdf();
+        //        w.pdfPath = pdfpath;
+        //        if (!string.IsNullOrEmpty(w.pdfPath))
+        //        {
+        //            w.ShowDialog();
+        //            w.wb_pdfWebViewer.Dispose();
+        //        }
+        //        Window.GetWindow(this).Opacity = 1;
+        //        #endregion
+        //        //}
+        //        //else
+        //        //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+        //        HelpClass.EndAwait(grid_main);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        HelpClass.EndAwait(grid_main);
+        //        HelpClass.ExceptionMessage(ex, this);
+        //    }
+        //}
+
+
+
+        //#endregion
+
+
     }
 }
