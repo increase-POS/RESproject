@@ -207,15 +207,15 @@ namespace Restaurant.View.delivery
             chk_shippingCompanies.Content = AppSettings.resourcemanager.GetString("trShippingCompanies");
 
             chk_allForDelivery.Content = AppSettings.resourcemanager.GetString("trAll");
-            chk_readyForDelivery.Content = AppSettings.resourcemanager.GetString("readyForDelivery");
-            chk_withDeliveryMan.Content = AppSettings.resourcemanager.GetString("withDeliveryMan");
+            chk_readyForDelivery.Content = AppSettings.resourcemanager.GetString("trReady");
+            chk_withDeliveryMan.Content = AppSettings.resourcemanager.GetString("withDelivery");
             chk_inTheWay.Content = AppSettings.resourcemanager.GetString("onTheWay");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_userId, AppSettings.resourcemanager.GetString("deliveryMan") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_user, AppSettings.resourcemanager.GetString("deliveryMan") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_companyId, AppSettings.resourcemanager.GetString("trCompany") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_deliveryTime, AppSettings.resourcemanager.GetString("deliveryTime") + "...");
-            txt_minutes.Text = AppSettings.resourcemanager.GetString("minute");
+            //txt_minutes.Text = AppSettings.resourcemanager.GetString("minute");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNotes") + "..."); 
 
             dg_orders.Columns[1].Header = AppSettings.resourcemanager.GetString("trCode");
@@ -936,24 +936,28 @@ namespace Restaurant.View.delivery
                         chk_readyForDelivery.IsChecked = false;
                         chk_withDeliveryMan.IsChecked = false;
                         chk_inTheWay.IsChecked = false;
+                        col_chk.Visibility = Visibility.Collapsed;
                     }
                     else if (cb.Name == "chk_readyForDelivery")
                     {
                         chk_allForDelivery.IsChecked = false;
                         chk_withDeliveryMan.IsChecked = false;
                         chk_inTheWay.IsChecked = false;
+                        col_chk.Visibility = Visibility.Visible;
                     }
                     else if (cb.Name == "chk_withDeliveryMan")
                     {
                         chk_allForDelivery.IsChecked = false;
                         chk_readyForDelivery.IsChecked = false;
                         chk_inTheWay.IsChecked = false;
+                        col_chk.Visibility = Visibility.Visible;
                     }
                     else if (cb.Name == "chk_inTheWay")
                     {
                         chk_allForDelivery.IsChecked = false;
                         chk_readyForDelivery.IsChecked = false;
                         chk_withDeliveryMan.IsChecked = false;
+                        col_chk.Visibility = Visibility.Visible;
                     }
                 }
                 HelpClass.StartAwait(grid_main);
@@ -1070,6 +1074,7 @@ namespace Restaurant.View.delivery
 
         }
 
+
         private async void deliveryType_check(object sender, RoutedEventArgs e)
         {
             try
@@ -1077,10 +1082,10 @@ namespace Restaurant.View.delivery
                 CheckBox cb = sender as CheckBox;
                 if (cb.IsFocused)
                 {
+                    HelpClass.StartAwait(grid_main);
                     if (cb.IsChecked == true)
                     {
                         selectedOrders.Clear();
-                        await RefreshOrdersList("");
                         if (cb.Name == "chk_drivers")
                         {
                             chk_shippingCompanies.IsChecked = false;
@@ -1126,8 +1131,11 @@ namespace Restaurant.View.delivery
                             bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
                             grid_deliveryMan.Visibility = Visibility.Collapsed;
                         }
+                        await RefreshOrdersList("");
                         await Search();
                     }
+                    HelpClass.EndAwait(grid_main);
+
                 }
             }
             catch (Exception ex)
