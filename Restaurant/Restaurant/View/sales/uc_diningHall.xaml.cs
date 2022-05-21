@@ -185,7 +185,7 @@ namespace Restaurant.View.sales
                 tb_tax.Visibility = Visibility.Collapsed;
             }
             else
-                tb_tax.Text = AppSettings.invoiceTax_decimal.ToString();
+                tb_tax.Text = HelpClass.PercentageDecTostring(AppSettings.invoiceTax_decimal);
             #endregion
 
             tb_moneyIcon.Text = AppSettings.Currency;
@@ -973,7 +973,7 @@ namespace Restaurant.View.sales
                 #endregion
                 #region   total
                 var totalText = new TextBlock();
-                totalText.Text = item.Total.ToString();
+                totalText.Text = HelpClass.DecTostring( item.Total);
                 totalText.Tag = "total-" + item.index;
                 //totalText.Tag = item.index;
                 totalText.Foreground = Application.Current.Resources["Grey"] as SolidColorBrush;
@@ -1185,7 +1185,7 @@ namespace Restaurant.View.sales
             {
                 _Sum += item.Total;
             }
-            tb_subtotal.Text = _Sum.ToString();
+            tb_subtotal.Text = HelpClass.DecTostring( _Sum);
             total = _Sum;
             #endregion
 
@@ -1302,7 +1302,7 @@ namespace Restaurant.View.sales
             }
             #endregion
 
-            tb_total.Text = total.ToString();
+            tb_total.Text = HelpClass.DecTostring( total);
 
         }
 
