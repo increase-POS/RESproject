@@ -270,7 +270,7 @@
                         <DataGridTextColumn x:Name="col_branch" Width="*" Header="Branch" Binding="{Binding branchCreatorName}" />
                         <DataGridTextColumn x:Name="col_pos" Width="*" Header="Pos" Binding="{Binding posName}" />
                         <DataGridTextColumn x:Name="col_discount" Width="*" Header="Discount Value"  Binding="{Binding discountValue,Converter={StaticResource accuracyConverter}}"/>
-                        <DataGridTextColumn x:Name="col_tax" Width="*" Header="Tax" Binding="{Binding tax ,Converter={StaticResource accuracyConverter}}" Visibility="Visible"/>
+                                    <DataGridTextColumn x:Name="col_tax" Width="*" Header="Tax" Binding="{Binding tax ,Converter={StaticResource accuracyTaxConverter}}" Visibility="Visible"/>
                         <DataGridTextColumn x:Name="col_totalNet" Width="*" Header="Total" Binding="{Binding totalNet ,Converter={StaticResource accuracyConverter}}" />
 
                         <DataGridTextColumn x:Name="col_processType" Width="*" Header="processType" Binding="{Binding processType ,Converter={StaticResource processTypeConverter}}" />
