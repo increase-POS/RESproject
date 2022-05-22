@@ -108,7 +108,7 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="45"/>
                 </Grid.RowDefinitions>
-                
+
                 <Grid   Margin="5" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
@@ -118,8 +118,8 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <Border Grid.Row="0" Height="40" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                            <Grid >
-                                <ComboBox x:Name="cb_paymentProcessType"  Grid.Row="2"
+                        <Grid >
+                            <ComboBox x:Name="cb_paymentProcessType"  Grid.Row="2"
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                                  BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                              materialDesign:HintAssist.Hint="Payment Process Type..."  
@@ -127,20 +127,20 @@
                 Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                 Grid.Column="0" Height="40"   
                            SelectionChanged="Cb_paymentProcessType_SelectionChanged" >
-                                </ComboBox>
+                            </ComboBox>
                             <Path Fill="#E81123" x:Name="p_errorpaymentProcessType" Stretch="Fill" Margin="5,5,20,5"
                               HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
                               Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,13 C11.45,13 11,12.55 11,12 L11,8 C11,7.45 11.45,7 12,7 C12.55,7 13,7.45 13,8 L13,12 C13,12.55 12.55,13 12,13 Z M13,17 L11,17 L11,15 L13,15 L13,17 Z">
-                                    <Path.ToolTip>
-                                        <ToolTip x:Name="tt_errorpaymentProcessType" Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
-                                    </Path.ToolTip>
-                                </Path>
+                                <Path.ToolTip>
+                                    <ToolTip x:Name="tt_errorpaymentProcessType" Content="Name Not Validate"  Style="{StaticResource ToolTipError}"/>
+                                </Path.ToolTip>
+                            </Path>
 
-                            </Grid>
+                        </Grid>
                     </Border>
 
-                
+
                     <Grid Grid.Row="1" x:Name="gd_card" Visibility="Collapsed">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
@@ -157,7 +157,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                           <TextBlock Grid.Row="1" Grid.Column="1"  
+                            <TextBlock Grid.Row="1" Grid.Column="1"  
                        x:Name="txt_card"  Margin="2.5" 
                        Foreground="#4E4E4E" Text="" Background="White"
                         HorizontalAlignment="Left" VerticalAlignment="Center" />
@@ -192,7 +192,7 @@
                             </Grid>
                         </Border>
 
-                       
+
                     </Grid>
                     <Line Grid.Row="3" Grid.Column="0"  Grid.ColumnSpan="3" Stretch="Fill" Stroke="#DFDFDF"  X2="1"  Margin="1,1,1,1"
                           VerticalAlignment="Bottom"/>
@@ -225,7 +225,7 @@
                         </Border>
 
 
-                         <Button Grid.Column="1" x:Name="btn_enter"  Padding="0"  
+                        <Button Grid.Column="1" x:Name="btn_enter"  Padding="0"  
                                         Background="{x:Null}" BorderBrush="{x:Null}" 
                                         Margin="2.5,1" Click="Btn_enter_Click">
                             <Path Fill="{StaticResource SecondColor}"  Stretch="Fill" 
@@ -292,8 +292,8 @@
                 </Grid>
                 <Line Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="3" Stretch="Fill" Stroke="#DFDFDF"  X2="1"  Margin="1,1,1,1"
                           VerticalAlignment="Bottom"/>
-                <Button Content="Save" Grid.Row="5" Grid.ColumnSpan="5" materialDesign:ButtonAssist.CornerRadius="7"
-                       Margin="10,2.5" x:Name="btn_save" Click="Btn_save_Click"
+                <Button Content="Save" Grid.Row="2" Grid.ColumnSpan="3" materialDesign:ButtonAssist.CornerRadius="7"
+                       Margin="10,2,10.5,11" x:Name="btn_save" Click="Btn_save_Click"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" Foreground="White" />
             </Grid>
 

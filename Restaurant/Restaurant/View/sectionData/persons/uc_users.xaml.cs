@@ -87,6 +87,7 @@ namespace Restaurant.View.sectionData.persons
 
         string basicsPermission = "users_basics";
         string storesPermission = "users_stores";
+        string permissionPermission = "users_permission";
         User user = new User();
         IEnumerable<User> usersQuery;
         IEnumerable<User> users;
@@ -123,7 +124,15 @@ namespace Restaurant.View.sectionData.persons
                 await FillCombo.fillCountries(cb_areaPhone);
                 FillCombo.FillUserJob(cb_job);
 
-                //await fillJobCombo();
+                #region permission
+                await FillCombo.FillComboGroups_withDefault(cb_groupId);
+                if (FillCombo.groupObject.HasPermissionAction(permissionPermission, FillCombo.groupObjects, "one"))
+                    bdr_groupId.Visibility = Visibility.Visible;
+                else
+                    bdr_groupId.Visibility = Visibility.Collapsed;
+
+                #endregion
+                    //await fillJobCombo();
                 Keyboard.Focus(tb_name);
                 await RefreshUsersList();
                 await Search();
@@ -173,6 +182,7 @@ namespace Restaurant.View.sectionData.persons
             tt_update_Button.Content = AppSettings.resourcemanager.GetString("trUpdate");
             tt_delete_Button.Content = AppSettings.resourcemanager.GetString("trDelete");
             btn_stores.Content = AppSettings.resourcemanager.GetString("trBranchs/Stores");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_groupId, AppSettings.resourcemanager.GetString("trPermission"));
 
             dg_user.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
             dg_user.Columns[1].Header = AppSettings.resourcemanager.GetString("trJob");
@@ -235,6 +245,9 @@ namespace Restaurant.View.sectionData.persons
                             user.updateUserId = MainWindow.userLogin.userId;
                             user.notes = tb_notes.Text;
                             user.driverIsAvailable = 0;
+
+                        if (cb_groupId.SelectedIndex != -1 && FillCombo.groupObject.HasPermissionAction(permissionPermission, FillCombo.groupObjects, "one"))
+                            user.groupId = (int)cb_groupId.SelectedValue;
                             //user.role = "";
                             //user.details = "";
 
@@ -306,6 +319,8 @@ namespace Restaurant.View.sectionData.persons
                             user.address = tb_address.Text;
                             user.updateUserId = MainWindow.userLogin.userId;
                             user.notes = tb_notes.Text;
+                            if (cb_groupId.SelectedIndex != -1 && FillCombo.groupObject.HasPermissionAction(permissionPermission, FillCombo.groupObjects, "one"))
+                                user.groupId = (int)cb_groupId.SelectedValue;
                             //user.role = "";
                             //user.details = "";
 

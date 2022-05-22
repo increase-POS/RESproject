@@ -1047,7 +1047,7 @@ namespace Restaurant.View.accounts
                     }
                     else
                     {
-                        Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trProcessNotConfirmed"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trProcessNotConfirmed"), animation: ToasterAnimation.FadeIn);
                     }
 
                     #endregion
@@ -1098,7 +1098,7 @@ namespace Restaurant.View.accounts
                     }
                     else
                     {
-                        Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trProcessNotConfirmed"), animation: ToasterAnimation.FadeIn);
+                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trProcessNotConfirmed"), animation: ToasterAnimation.FadeIn);
                     }
 
                     #endregion

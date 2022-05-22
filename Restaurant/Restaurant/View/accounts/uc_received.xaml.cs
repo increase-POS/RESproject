@@ -1522,8 +1522,8 @@ namespace Restaurant.View.accounts
                         }
                         else
                             Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-                        Window.GetWindow(this).Opacity = 1;
                     }
+                    Window.GetWindow(this).Opacity = 1;
 
                 }
                 else
