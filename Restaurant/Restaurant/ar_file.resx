@@ -4045,4 +4045,7 @@
   <data name="withDelivery" xml:space="preserve">
     <value>مع السائق</value>
   </data>
+  <data name="trProcessNotConfirmed" xml:space="preserve">
+    <value>العملية غير مؤكدة</value>
+  </data>
 </root>

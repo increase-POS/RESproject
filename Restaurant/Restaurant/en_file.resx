@@ -4060,4 +4060,7 @@ Please add Email in setting</value>
   <data name="withDelivery" xml:space="preserve">
     <value>With delivery</value>
   </data>
+  <data name="trProcessNotConfirmed" xml:space="preserve">
+    <value>Process not confirmed</value>
+  </data>
 </root>
