@@ -8,7 +8,14 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              d:DesignHeight="800" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <sys:String x:Key="pdfKey">pdf</sys:String>
+        <sys:String x:Key="printKey">print</sys:String>
+        <sys:String x:Key="excelKey">excel</sys:String>
+        <sys:String x:Key="previewKey">preview</sys:String>
+    </UserControl.Resources>
     <Grid Margin="20 10" x:Name="grid_main">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" ></ColumnDefinition>
@@ -301,6 +308,15 @@
                                                     <Button Margin="-10"   Click="pdfRowinDatagrid" Grid.Column="0"
                                             Padding="0" ToolTip="Pdf" 
                                             Background="{x:Null}" BorderBrush="{x:Null}">
+                                                        <ToolTipService.ToolTip>
+                                                            <TextBlock>
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding Converter="{StaticResource toolTipConverter}">
+                                                                        <Binding Source="{StaticResource pdfKey}" />
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </ToolTipService.ToolTip>
                                                         <materialDesign:PackIcon Foreground="#D20A0A" Kind="FilePdf"  
                                                                  Width="17" Height="17">
                                                         </materialDesign:PackIcon>
@@ -308,6 +324,15 @@
                                                     <Button Margin="-10"   Click="printRowinDatagrid" Grid.Column="1"
                                             Padding="0" ToolTip="Print" 
                                             Background="{x:Null}" BorderBrush="{x:Null}">
+                                                        <ToolTipService.ToolTip>
+                                                            <TextBlock>
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding Converter="{StaticResource toolTipConverter}">
+                                                                        <Binding Source="{StaticResource printKey}" />
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </ToolTipService.ToolTip>
                                                         <materialDesign:PackIcon Foreground="#313131" Kind="Printer"  
                                                          HorizontalAlignment="Center" 
                                                          Width="17" Height="17">
@@ -317,6 +342,15 @@
                                                     <Button Margin="-10"   Click="previewRowinDatagrid" Grid.Column="3"
                                             Padding="0" ToolTip="Printer" 
                                             Background="{x:Null}" BorderBrush="{x:Null}">
+                                                        <ToolTipService.ToolTip>
+                                                            <TextBlock>
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding Converter="{StaticResource toolTipConverter}">
+                                                                        <Binding Source="{StaticResource previewKey}" />
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </ToolTipService.ToolTip>
                                                         <Grid FlowDirection="LeftToRight">
                                                             <Path Fill="#4E4E4E" Stretch="Fill"
                                                   Width="12" Height="15" 

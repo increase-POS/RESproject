@@ -6,7 +6,14 @@
              xmlns:local="clr-namespace:Restaurant.View.sales.promotion.membership"
              mc:Ignorable="d"  Tag="membershipUpdate"  Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              d:DesignHeight="870" d:DesignWidth="950">
+    <UserControl.Resources>
+        <sys:String x:Key="offerKey">o</sys:String>
+        <sys:String x:Key="couponKey">c</sys:String>
+        <sys:String x:Key="invoiceClassKey">i</sys:String>
+        <sys:String x:Key="customerKey">cs</sys:String>
+    </UserControl.Resources>
     <Grid x:Name="grid_main" Margin="20 10" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2.5*"/>
@@ -163,6 +170,15 @@
                                             <Button Margin="-10"   Click="customersRowinDatagrid"
                                             Padding="0"    
                                             Background="{x:Null}" BorderBrush="{x:Null}">
+                                                <ToolTipService.ToolTip>
+                                                    <TextBlock>
+                                                        <TextBlock.Text>
+                                                            <MultiBinding Converter="{StaticResource toolTipConverter}">
+                                                                <Binding Source="{StaticResource customerKey}" />
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </ToolTipService.ToolTip>
                                                 <Path Fill="{StaticResource SecondColor}" Stretch="Fill"
                                                        HorizontalAlignment="Center" Grid.Column="0" 
                                                       FlowDirection="LeftToRight"
@@ -178,6 +194,15 @@
                                             <Button Margin="-10"   Click="couponsRowinDatagrid"
                                             Padding="0"    
                                             Background="{x:Null}" BorderBrush="{x:Null}">
+                                                <ToolTipService.ToolTip>
+                                                    <TextBlock>
+                                                        <TextBlock.Text>
+                                                            <MultiBinding Converter="{StaticResource toolTipConverter}">
+                                                                <Binding Source="{StaticResource couponKey}" />
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </ToolTipService.ToolTip>
                                                 <Path Fill="{StaticResource SecondColor}" Stretch="Fill"
                                                        HorizontalAlignment="Center" Grid.Column="0"  
                                                       FlowDirection="LeftToRight"
@@ -193,6 +218,15 @@
                                             <Button Margin="-10"   Click="offersRowinDatagrid"
                                             Padding="0"    
                                             Background="{x:Null}" BorderBrush="{x:Null}">
+                                                <ToolTipService.ToolTip>
+                                                    <TextBlock>
+                                                        <TextBlock.Text>
+                                                            <MultiBinding Converter="{StaticResource toolTipConverter}">
+                                                                <Binding Source="{StaticResource offerKey}" />
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </ToolTipService.ToolTip>
                                                 <Path Fill="{StaticResource SecondColor}" Stretch="Fill"
                                                        HorizontalAlignment="Center" Grid.Column="0"  
                                                       FlowDirection="LeftToRight"
@@ -208,6 +242,15 @@
                                             <Button Margin="-10 "   Click="invoicesClassesRowinDatagrid"
                                             Padding="0"    
                                             Background="{x:Null}" BorderBrush="{x:Null}">
+                                                <ToolTipService.ToolTip>
+                                                    <TextBlock>
+                                                        <TextBlock.Text>
+                                                            <MultiBinding Converter="{StaticResource toolTipConverter}">
+                                                                <Binding Source="{StaticResource invoiceClassKey}" />
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </ToolTipService.ToolTip>
                                                 <Path Fill="{StaticResource SecondColor}" Stretch="Fill"
                                                        HorizontalAlignment="Center" Grid.Column="0"  
                                                       FlowDirection="LeftToRight"

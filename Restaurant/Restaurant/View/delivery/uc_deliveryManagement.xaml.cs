@@ -149,7 +149,6 @@ namespace Restaurant.View.delivery
                 else if (chk_inTheWay.IsChecked == true)
                 {
                     await RefreshOrdersList("InTheWay");
-
                 }
                 if (chk_drivers.IsChecked == true)
                     orders = orders.Where(o => o.shipUserId != null);
