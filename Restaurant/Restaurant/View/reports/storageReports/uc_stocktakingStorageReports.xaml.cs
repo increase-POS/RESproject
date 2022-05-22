@@ -93,7 +93,7 @@ namespace Restaurant.View.reports.storageReports
             try
             {
                 
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 #region translate
                 if (AppSettings.lang.Equals("en"))
@@ -126,8 +126,6 @@ namespace Restaurant.View.reports.storageReports
 
         private void translate()
         {
-            
-
             tt_archives.Content = AppSettings.resourcemanager.GetString("trArchives");
             tt_shortfalls.Content = AppSettings.resourcemanager.GetString("trShortages");
 
@@ -140,7 +138,6 @@ namespace Restaurant.View.reports.storageReports
             chk_stocktakingArchivedAllTypes.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_stocktakingFalseAllBranches.Content = AppSettings.resourcemanager.GetString("trAll");
             chk_stocktakingFalseAllTypes.Content = AppSettings.resourcemanager.GetString("trAll");
-
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_stocktakingArchivedEndDate, AppSettings.resourcemanager.GetString("trEndDateHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_stocktakingArchivedStartDate, AppSettings.resourcemanager.GetString("trStartDateHint"));
@@ -163,6 +160,7 @@ namespace Restaurant.View.reports.storageReports
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
+            tt_preview.Content = AppSettings.resourcemanager.GetString("trPreview");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
 
         }
