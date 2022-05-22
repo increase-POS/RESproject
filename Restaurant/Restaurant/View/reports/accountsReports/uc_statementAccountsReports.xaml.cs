@@ -194,7 +194,7 @@ namespace Restaurant.View.reports.accountsReports
             if (selectedTab == 3)
             {
                 result = payments.Where(x => (
-                                (vendor.SelectedItem != null ? x.shippingCompanyId == selectedItem2.ShippingId : false)
+                                (vendor.SelectedItem != null ? x.invShippingCompanyId == selectedItem2.ShippingId : false)
                              && (date.SelectedItem != null ? x.updateDate.Value.Year == (int)selectedItem3 : true)));
             }
 
