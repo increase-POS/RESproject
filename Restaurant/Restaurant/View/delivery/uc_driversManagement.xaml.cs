@@ -563,8 +563,8 @@ namespace Restaurant.View.delivery
         // end report parameters
         async Task<IEnumerable<Invoice>> RefreshOrdersList()
         {
-            orders = await orderModel.GetOrdersWithDelivery(MainWindow.branchLogin.branchId, "Collected");
-            orders = orders.Where(o => o.status == "Collected").ToList();
+            orders = await orderModel.GetOrdersWithDelivery(MainWindow.branchLogin.branchId, "Collected,Ready");
+            orders = orders.Where(o => o.status == "Collected" || o.status == "Ready").ToList();
             return orders;
         }
         public void BuildReport()
@@ -574,7 +574,18 @@ namespace Restaurant.View.delivery
             List<ReportParameter> paramarr = new List<ReportParameter>();
             if (orders!=null)
             {
-                driverOrder = orders.Where(o => (int)o.shipUserId == driver.userId).ToList();
+                if (chk_drivers.IsChecked.Value)
+                {
+                    driverOrder = orders.Where(o =>  o.shipUserId == null ? false : (int)o.shipUserId == driver.userId ).ToList();
+
+                }
+                else 
+                {
+                   
+                    driverOrder = orders.Where(o =>   (int)o.shippingCompanyId == company.shippingCompanyId && o.status == "Ready").ToList();
+
+                }
+               
             }
          
             string addpath;
@@ -765,8 +776,6 @@ namespace Restaurant.View.delivery
                 {
                     w.ShowDialog();
                     w.wb_pdfWebViewer.Dispose();
-
-
                 }
                 Window.GetWindow(this).Opacity = 1;
                 #endregion
