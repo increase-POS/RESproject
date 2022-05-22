@@ -3058,6 +3058,38 @@ namespace Restaurant.View.sales
                     }
                 }
                 int res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId);
+                if (AppSettings.statusesOfPreparingOrder == "directlyPrint")
+                {
+                    #region save status = Preparing
+                    statusObject = new orderPreparingStatus();
+                    statusObject.orderPreparingId = res;
+                    statusObject.status = "Preparing";
+                    statusObject.createUserId = MainWindow.userLogin.userId;
+
+                    await preparingOrder.updateOrderStatus(statusObject);
+                    #endregion
+
+                    #region save status = Ready
+                    statusObject = new orderPreparingStatus();
+                    statusObject.orderPreparingId = res;
+                    statusObject.status = "Ready";
+                    statusObject.createUserId = MainWindow.userLogin.userId;
+
+                    await preparingOrder.updateOrderStatus(statusObject);
+                    #endregion
+
+                    #region save status = Done if no shipping
+                    if (invoice.shippingCompanyId == null)
+                    {
+                        statusObject = new orderPreparingStatus();
+                        statusObject.orderPreparingId = res;
+                        statusObject.status = "Done";
+                        statusObject.createUserId = MainWindow.userLogin.userId;
+
+                        await preparingOrder.updateOrderStatus(statusObject);
+                    }
+                    #endregion
+                }
                 //list after  save
                 if (AppSettings.print_kitchen_on_sale == "1")
                 {
