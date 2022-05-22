@@ -115,6 +115,9 @@ namespace Restaurant.converters
                 case "kitchenAlerts_spendingOrderRequest":
                     value = AppSettings.resourcemanager.GetString("spendingOrderRequest");
                     break;
+                     case "users_permission":
+                    value = AppSettings.resourcemanager.GetString("trPermission");
+                    break;
 
 
 

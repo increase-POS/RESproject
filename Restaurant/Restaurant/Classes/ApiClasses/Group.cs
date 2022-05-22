@@ -16,7 +16,7 @@ using Restaurant.ApiClasses;
 
 namespace Restaurant.Classes
 {
-    class Group
+    public class Group
     {
         public int groupId { get; set; }
         public string name { get; set; }

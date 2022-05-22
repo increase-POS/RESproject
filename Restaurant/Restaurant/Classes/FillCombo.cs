@@ -26,6 +26,38 @@ namespace Restaurant.Classes
         static public GroupObject groupObject = new GroupObject();
         static public List<GroupObject> groupObjects = new List<GroupObject>();
         #endregion
+        #region Groups
+        static public Group group = new Group();
+        static public List<Group> groupsList;
+       
+        static public async Task<IEnumerable<Group>> RefreshGroups()
+        {
+            groupsList = await group.GetAll();
+            groupsList = groupsList.Where(X => X.isActive == 1).ToList();
+            return groupsList;
+        }
+
+        static public async Task FillComboGroups_withDefault(ComboBox cmb)
+        {
+            if (groupsList is null)
+                await RefreshGroups();
+
+            var groups = groupsList.ToList();
+            group = new Group();
+            group.groupId = 0;
+            group.name = "-";
+            groups.Insert(0, group);
+
+            cmb.ItemsSource = groups;
+            cmb.DisplayMemberPath = "name";
+            cmb.SelectedValuePath = "groupId";
+            cmb.SelectedIndex = -1;
+        }
+
+        
+
+        #endregion
+
         #region branch
         static public Branch branch = new Branch();
         static public List<Branch> branchsList ;
@@ -187,7 +219,6 @@ namespace Restaurant.Classes
             cmb.SelectedIndex = 0;
         }
         #endregion
-        
         #region job
         static public List<keyValueString> UserJobList;
 
@@ -590,10 +621,7 @@ namespace Restaurant.Classes
             cmb.SelectedValuePath = "userId";
             cmb.SelectedIndex = -1;
         }
-        
-
-
-
+      
         #endregion
         #region ShippingCompanies
         static public ShippingCompanies shippingCompanie = new ShippingCompanies();
@@ -1005,6 +1033,8 @@ namespace Restaurant.Classes
             cmb.SelectedIndex = 0;
         }
         #endregion
+
+
         static public Pos pos = new Pos();
         static public ItemLocation itemLocation = new ItemLocation();
         static public Invoice invoice = new Invoice();
