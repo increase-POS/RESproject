@@ -297,6 +297,7 @@ namespace Restaurant.View.delivery
             try
             {
                 CheckBox cb = sender as CheckBox;
+                await RefreshOrdersList();
                 if (cb.IsFocused)
                 {
                     if (cb.IsChecked == true)
@@ -404,6 +405,7 @@ namespace Restaurant.View.delivery
                 
                 if (dg_user.SelectedIndex != -1)
                 {
+                    int ordersCount = 0;
                     if (chk_drivers.IsChecked.Value)
                     {
                         driver = dg_user.SelectedItem as User;
@@ -416,6 +418,9 @@ namespace Restaurant.View.delivery
                             else
                                 txt_activeInactive.Text = AppSettings.resourcemanager.GetString("deActivate");
                             await refreshDriverSectors();
+
+                            if (chk_drivers.IsChecked == true)
+                                ordersCount = orders.Where(o => o.shipUserId == driver.userId).Count();
 
                         }
                     }
@@ -431,9 +436,13 @@ namespace Restaurant.View.delivery
                             else
                                 txt_activeInactive.Text = AppSettings.resourcemanager.GetString("deActivate");
 
+                            if (chk_shippingCompanies.IsChecked == true)
+                                ordersCount = orders.Where(o => o.shipUserId == company.shippingCompanyId).Count();
+
                         }
                     }
-                    
+                    tb_driverOrdersCount.Text = ordersCount.ToString();
+
                 }
                 HelpClass.EndAwait(grid_main);
             }
