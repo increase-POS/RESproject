@@ -4048,4 +4048,10 @@
   <data name="trProcessNotConfirmed" xml:space="preserve">
     <value>العملية غير مؤكدة</value>
   </data>
+  <data name="kitchenPaperSize" xml:space="preserve">
+    <value>قياس ورق المطبخ</value>
+  </data>
+  <data name="kitchenPrinter" xml:space="preserve">
+    <value>طابعة المطبخ</value>
+  </data>
 </root>

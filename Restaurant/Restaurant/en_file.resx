@@ -4063,4 +4063,10 @@ Please add Email in setting</value>
   <data name="trProcessNotConfirmed" xml:space="preserve">
     <value>Process not confirmed</value>
   </data>
+  <data name="kitchenPaperSize" xml:space="preserve">
+    <value>Kitchen paper size</value>
+  </data>
+  <data name="kitchenPrinter" xml:space="preserve">
+    <value>Kitchen printer</value>
+  </data>
 </root>
