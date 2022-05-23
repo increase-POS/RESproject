@@ -550,15 +550,28 @@ namespace Restaurant.View.delivery
                 {
                     HelpClass.StartAwait(grid_main);
 
-                    #region
+                    if (selectedOrders.Count >= 1)
+                    {
+                        if (chk_drivers.IsChecked == true)
+                            requiredControlList = new List<string>() { "userId" };
+                        if (chk_shippingCompanies.IsChecked == true)
+                            requiredControlList = new List<string>() { "companyId" };
+                    }
+                    else if (selectedOrders.Count == 0 && order != null)
+                    {
+                        selectedOrders.Add(order);
+                        if (chk_drivers.IsChecked == true)
+                            requiredControlList = new List<string>() { "userId" };
+                        if (chk_shippingCompanies.IsChecked == true)
+                            requiredControlList = new List<string>() { "companyId" };
+                    }
+                    #region update
                     if (HelpClass.validate(requiredControlList, this))
                     {
                         foreach (Invoice i in selectedOrders)
                         {
                             int? driverID = i.shipUserId;
                             int comID = i.shippingCompanyId.Value;
-
-                            //orderPreparingStatus ops = new orderPreparingStatus();
 
                             if (i.shipUserName != null)
                             {
@@ -582,24 +595,21 @@ namespace Restaurant.View.delivery
                                     comID = (int)cb_companyId.SelectedValue;
                                 }
                             }
-                            //ops.status = ops.status;
-                            //ops.createUserId = MainWindow.userLogin.userId;
-                            //ops.updateUserId = MainWindow.userLogin.userId;
-                            //ops.notes = tb_notes.Text;
-                            //ops.isActive = 1;
-                            i.shippingCompanyId = comID;
-                            i.shipUserId = driverID;
-                            //int res = await invoiceModel.saveInvoice(i);
-                            //int res = await orderModel.EditInvoiceOrdersStatus(i.invoiceId, driverID, comID, ops);
 
-                            //if (!res.Equals(0))
-                            //    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
-                            //else
-                            //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            int res = await orderModel.EditInvoiceDelivery(i.invoiceId, driverID, comID);
+
+                            if (!res.Equals(0))
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
+                            else
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         }
+                        if (chk_shippingCompanies.IsChecked == true)
+                            await RefreshOrdersList("");
+
                         await Search();
                         Clear();
                     }
+
                     #endregion
 
                     HelpClass.EndAwait(grid_main);
