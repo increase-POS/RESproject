@@ -3049,11 +3049,13 @@ namespace Restaurant.View.sales
                 statusObject.createUserId = MainWindow.userLogin.userId;
                 #endregion
                 // OrderListbeforesave
+                prinvoiceId = invoice.invoiceId;
                 if (AppSettings.print_kitchen_on_sale == "1")
                 {
                     if (invoice.invoiceId > 0)
                     {
-                        OrderListBeforesave = await preparingOrder.GetOrdersByInvoiceId(invoice.invoiceId);
+                        prinvoiceId = invoice.invoiceId;
+                        OrderListBeforesave = await preparingOrder.GetOrdersByInvoiceId(prinvoiceId);
 
                     }
                 }
@@ -3094,7 +3096,7 @@ namespace Restaurant.View.sales
                 if (AppSettings.print_kitchen_on_sale == "1")
                 {
 
-                    OrderListAftersave = await preparingOrder.GetOrdersByInvoiceId(invoice.invoiceId);
+                    OrderListAftersave = await preparingOrder.GetOrdersByInvoiceId(prinvoiceId);
 
                     prOrderPreparingList = clsreport.newKitchenorderList(OrderListBeforesave, OrderListAftersave);
 
@@ -3104,8 +3106,8 @@ namespace Restaurant.View.sales
 
                     Thread t2 = new Thread(() =>
                     {
-                        //send all
-                        printInvoiceInkitchen(invoice.invoiceId, prOrderPreparingList);
+                      //  send all
+                       printInvoiceInkitchen(prinvoiceId, prOrderPreparingList);
                     });
                     t2.Start();
                 }
@@ -3141,6 +3143,7 @@ namespace Restaurant.View.sales
         public static int itemscount;
         public static int height;
         Invoice prInvoice = new Invoice();
+         
         User userModel = new User();
         Branch branchModel = new Branch();
         Invoice invoiceModel = new Invoice();
@@ -3323,6 +3326,7 @@ namespace Restaurant.View.sales
             {
 
                 Invoice prInvoice = new Invoice();
+              
                 List<ItemTransfer> invoiceItems = new List<ItemTransfer>();
                 int itemscount;
                 Invoice invoiceModel = new Invoice();
@@ -3822,15 +3826,15 @@ namespace Restaurant.View.sales
                     {
                         if (AppSettings.kitchenPaperSize == "A4")
                         {
-
-                            LocalReportExtensions.PrintToPrinterbyNameAndCopy(rs.rep, AppSettings.kitchen_printer_name, short.Parse(AppSettings.kitchen_copy_count));
+                         //   LocalReportExtensionsPrint locrepext = new LocalReportExtensionsPrint();
+                            LocalReportExtensionsPrint.PrintToPrinterbyNameAndCopy(rs.rep, AppSettings.kitchen_printer_name, short.Parse(AppSettings.kitchen_copy_count));
 
                         }
                         else
                         {
 
-
-                            LocalReportExtensions.customPrintToPrinter(rs.rep, AppSettings.kitchen_printer_name, short.Parse(AppSettings.kitchen_copy_count), rs.width, rs.height);
+                          //  LocalReportExtensionsPrint locrepext = new LocalReportExtensionsPrint();
+                            LocalReportExtensionsPrint.customPrintToPrinter(rs.rep, AppSettings.kitchen_printer_name, short.Parse(AppSettings.kitchen_copy_count), rs.width, rs.height);
 
                         }
 
