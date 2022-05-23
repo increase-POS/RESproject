@@ -9,7 +9,7 @@
          WindowStyle="None" WindowStartupLocation="CenterScreen"
         Title="Increase Restaurant"
         ResizeMode="NoResize" Margin="0"
-          Height="410" Width="300"  Background="Transparent" AllowsTransparency="True" MouseDown="Window_MouseDown"
+          Height="500" Width="300"  Background="Transparent" AllowsTransparency="True" MouseDown="Window_MouseDown"
         Loaded="Window_Loaded" Closing="Window_Closing" >
     <Grid Grid.Column="1" Grid.Row="1"    x:Name="grid_main">
         <Grid.RowDefinitions>
@@ -57,10 +57,17 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <Border Grid.Row="0" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                <DockPanel Margin="10 0" LastChildFill="True"  >
+                    <TextBlock x:Name="txt_reportGroup" Text="report" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
+                    <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
+                </DockPanel>
+                <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                     <Grid>
                         <ComboBox x:Name="cb_repname"  Grid.Row="0" 
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
@@ -74,7 +81,26 @@
                               Data="{StaticResource infoCircle}"/>
                     </Grid>
                 </Border>
-                <Border Grid.Row="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                <Border Grid.Row="2" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                    <Grid>
+                        <ComboBox x:Name="cb_docpapersize"  Grid.Row="3" 
+                                  Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
+                             materialDesign:HintAssist.Hint="Document Paper Size ..."  
+                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                            Grid.Column="0" Height="40"   
+                            BorderBrush="#737373"   BorderThickness="0" Margin="4,0" >
+                        </ComboBox>
+                        <Path Fill="#E81123" x:Name="p_error_docpapersize" Stretch="Fill" Margin="5,5,20,5"
+                              HorizontalAlignment="Right" Grid.Row="3" Grid.Column="2"  Visibility="Collapsed"   
+                         VerticalAlignment="Center" Width="15"  Height="15"
+                          Data="{StaticResource infoCircle}"/>
+                    </Grid>
+                </Border>
+                <DockPanel Grid.Row="3" Margin="10 0" LastChildFill="True"  >
+                    <TextBlock x:Name="txt_saleGroup" Text="sale" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
+                    <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
+                </DockPanel>
+                <Border Grid.Row="4" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                     <Grid>
                         <ComboBox x:Name="cb_salname"  Grid.Row="1"   
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
@@ -91,25 +117,7 @@
 
                     </Grid>
                 </Border>
-                <Border Grid.Row="2" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                    <Grid>
-                        <ComboBox x:Name="cb_kitname"  Grid.Row="1"   
-                                  Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
-                             materialDesign:HintAssist.Hint="kitchen invoice printer..."  
-                                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                Grid.Column="0" Height="40"   
-                                  BorderBrush="#737373"   BorderThickness="0" Margin="4,0"  >
-                        </ComboBox>
-                        <Path Fill="#E81123" x:Name="p_error_kitname" Stretch="Fill" Margin="5,5,20,5"
-                              HorizontalAlignment="Right"  Grid.Row="1"  Grid.Column="2"  Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15"
-                              Data="{StaticResource infoCircle}"/>
-
-
-                    </Grid>
-                </Border>
-
-                <Border Grid.Row="3" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                <Border Grid.Row="5" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                     <Grid>
 
                         <ComboBox x:Name="cb_saleInvPaperSize"  Grid.Row="2" 
@@ -127,22 +135,28 @@
 
                     </Grid>
                 </Border>
-                <Border Grid.Row="4" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                <DockPanel Grid.Row="6" Margin="10 0" LastChildFill="True"  >
+                    <TextBlock x:Name="txt_kitchenGroup" Text="kitchen" Foreground="{StaticResource SecondColor}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,5,5"/>
+                    <Separator  Background="{StaticResource MainColor}" VerticalAlignment="Center" Width="auto"  />
+                </DockPanel>
+                <Border Grid.Row="7" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                     <Grid>
-                        <ComboBox x:Name="cb_docpapersize"  Grid.Row="3" 
+                        <ComboBox x:Name="cb_kitname"  Grid.Row="1"   
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
-                             materialDesign:HintAssist.Hint="Document Paper Size ..."  
-                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                            Grid.Column="0" Height="40"   
-                            BorderBrush="#737373"   BorderThickness="0" Margin="4,0" >
+                             materialDesign:HintAssist.Hint="kitchen invoice printer..."  
+                                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                Grid.Column="0" Height="40"   
+                                  BorderBrush="#737373"   BorderThickness="0" Margin="4,0"  >
                         </ComboBox>
-                        <Path Fill="#E81123" x:Name="p_error_docpapersize" Stretch="Fill" Margin="5,5,20,5"
-                              HorizontalAlignment="Right" Grid.Row="3" Grid.Column="2"  Visibility="Collapsed"   
+                        <Path Fill="#E81123" x:Name="p_error_kitname" Stretch="Fill" Margin="5,5,20,5"
+                              HorizontalAlignment="Right"  Grid.Row="1"  Grid.Column="2"  Visibility="Collapsed"   
                          VerticalAlignment="Center" Width="15"  Height="15"
-                          Data="{StaticResource infoCircle}"/>
+                              Data="{StaticResource infoCircle}"/>
+
+
                     </Grid>
                 </Border>
-                <Border Grid.Row="5" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+               <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                     <Grid>
                         <ComboBox x:Name="cb_kitpapersize"  Grid.Row="3" 
                                   Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
@@ -158,7 +172,7 @@
                     </Grid>
                 </Border>
 
-                <Button   Grid.Row="7"   Content="save" materialDesign:ButtonAssist.CornerRadius="7"
+                <Button   Grid.Row="10"   Content="save" materialDesign:ButtonAssist.CornerRadius="7"
                        Margin="10,5" x:Name="btn_save" Click="Btn_save_Click" Foreground="White"
                           Background="{StaticResource SecondColor}" BorderBrush="{x:Null}" />
 

@@ -149,6 +149,7 @@ namespace Restaurant.View.windows
                     }
                     else
                     {
+                        shippingUserId = null;
                         cb_user.SelectedIndex = -1;
                         brd_user.Visibility = Visibility.Collapsed;
                         p_error_user.Visibility = Visibility.Collapsed;
@@ -160,6 +161,7 @@ namespace Restaurant.View.windows
                 else
                 {
                     shippingCompany = new ShippingCompanies();
+                        shippingUserId = null;
                     cb_user.SelectedIndex = -1;
                     _DeliveryCost = 0;
                     _RealDeliveryCost = 0;

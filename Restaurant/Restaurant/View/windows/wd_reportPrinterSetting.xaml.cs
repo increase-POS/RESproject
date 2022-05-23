@@ -516,10 +516,18 @@ namespace Restaurant.View.windows
         {
            
             txt_title.Text = AppSettings.resourcemanager.GetString("trPrinterSettings");
+
+            txt_reportGroup.Text = AppSettings.resourcemanager.GetString("trReports");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_repname, AppSettings.resourcemanager.GetString("trReportPrinterName")+"...");//
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_salname, AppSettings.resourcemanager.GetString("trReportSalesName") + "...");
+
+            txt_saleGroup.Text = AppSettings.resourcemanager.GetString("trSales");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_saleInvPaperSize, AppSettings.resourcemanager.GetString("trSalesPaperSize") + "...");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_docpapersize, AppSettings.resourcemanager.GetString("trDocPaperSize") + "...");
+
+            txt_kitchenGroup.Text = AppSettings.resourcemanager.GetString("trKitchen");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_kitname, AppSettings.resourcemanager.GetString("kitchenPrinter") + "...");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_kitpapersize, AppSettings.resourcemanager.GetString("kitchenPaperSize") + "...");
 
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
  
