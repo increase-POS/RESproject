@@ -105,6 +105,8 @@ namespace Restaurant.Classes
                 }
             }
             return list;
+
+            #region old
             //List<CashTransfer> cashtransfer = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -146,7 +148,7 @@ namespace Restaurant.Classes
             //    }
             //    return cashtransfer;
             //}
-
+            #endregion
         }
         public async Task<List<CashTransfer>> GetCashTransfer(string type, string side)
         {
@@ -254,7 +256,7 @@ namespace Restaurant.Classes
             }
             return item;
 
-
+            #region old
             //CashTransfer cashtransfer = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -296,7 +298,7 @@ namespace Restaurant.Classes
             //    }
             //    return cashtransfer;
             //}
-
+            #endregion
         }
 
         //GetListByInvId
@@ -317,6 +319,7 @@ namespace Restaurant.Classes
             }
             return list;
 
+            #region old
             //List<CashTransfer> cashtransfer = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -358,7 +361,7 @@ namespace Restaurant.Classes
             //    }
             //    return cashtransfer;
             //}
-
+            #endregion
         }
         public async Task<CashTransfer> GetByID(int cashTransferId)
         {
@@ -378,7 +381,7 @@ namespace Restaurant.Classes
             }
             return item;
 
-
+            #region old
             //CashTransfer casht = new CashTransfer();
 
             //// ... Use HttpClient.
@@ -409,6 +412,7 @@ namespace Restaurant.Classes
 
             //    return casht;
             //}
+            #endregion
         }
         /// ///////////////////////////////////////
 
@@ -424,7 +428,7 @@ namespace Restaurant.Classes
             parameters.Add("Object", myContent);
             return await APIResult.post(method, parameters);
 
-
+            #region old
             //... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
 
@@ -457,6 +461,7 @@ namespace Restaurant.Classes
             //    }
             //    return message;
             //}
+            #endregion
         }
 
 
@@ -502,7 +507,7 @@ namespace Restaurant.Classes
             }
             return list;
 
-
+            #region old
             //List<CashTransfer> cashtransfer = null;
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -544,7 +549,7 @@ namespace Restaurant.Classes
             //    }
             //    return cashtransfer;
             //}
-
+            #endregion
         }
 
         public async Task<int> deletePosTrans(int cashTransId)
@@ -555,7 +560,7 @@ namespace Restaurant.Classes
             string method = "Cashtransfer/Delete";
             return await APIResult.post(method, parameters);
 
-
+            #region old
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
 
@@ -583,6 +588,7 @@ namespace Restaurant.Classes
             //    }
             //    return "error";
             //}
+            #endregion
         }
 
         public async Task<int> MovePosCash(int cashTransId, int userIdD)
@@ -594,8 +600,7 @@ namespace Restaurant.Classes
             string method = "Cashtransfer/MovePosCash";
             return await APIResult.post(method, parameters);
 
-
-
+            #region old
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
 
@@ -627,6 +632,7 @@ namespace Restaurant.Classes
             //    }
             //    return "error";
             //}
+            #endregion
         }
 
         public async Task<int> PayByAmmount(int agentId, decimal ammount, string payType, CashTransfer cashTr)
@@ -645,6 +651,7 @@ namespace Restaurant.Classes
             string method = "Cashtransfer/payByAmount";
             return await APIResult.post(method, parameters);
 
+            #region old
             //string message = "";
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -679,6 +686,7 @@ namespace Restaurant.Classes
             //    }
             //    return message;
             //}
+            #endregion
         }
 
         public async Task<int> PayUserByAmmount(int userId, decimal ammount, string payType, CashTransfer cashTr)
@@ -696,7 +704,7 @@ namespace Restaurant.Classes
             string method = "Cashtransfer/payUserByAmount";
             return await APIResult.post(method, parameters);
 
-
+            #region old
             //string message = "";
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -731,6 +739,7 @@ namespace Restaurant.Classes
             //    }
             //    return message;
             //}
+            #endregion
         }
 
         public async Task<int> payShippingCompanyByAmount(int shippingCompanyId, decimal ammount, string payType, CashTransfer cashTr)
@@ -749,6 +758,7 @@ namespace Restaurant.Classes
             string method = "Cashtransfer/payShippingCompanyByAmount";
             return await APIResult.post(method, parameters);
 
+            #region
             //string message = "";
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -783,6 +793,7 @@ namespace Restaurant.Classes
             //    }
             //    return message;
             //}
+            #endregion
         }
 
         public async Task<int> PayListOfInvoices(int agentId, List<Invoice> invoicelst, string payType, CashTransfer cashTr)
@@ -802,6 +813,7 @@ namespace Restaurant.Classes
             string method = "Cashtransfer/payListOfInvoices";
             return await APIResult.post(method, parameters);
 
+            #region old
             //string message = "";
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -838,7 +850,7 @@ namespace Restaurant.Classes
             //    }
             //    return message;
             //}
-
+            #endregion
 
         }
 
@@ -854,11 +866,10 @@ namespace Restaurant.Classes
             var myContent2 = JsonConvert.SerializeObject(cashTr);
             parameters.Add("cashTransfer", myContent2);
 
-
-
             string method = "Cashtransfer/payUserListOfInvoices";
             return await APIResult.post(method, parameters);
 
+            #region old
             //string message = "";
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -895,6 +906,7 @@ namespace Restaurant.Classes
             //    }
             //    return message;
             //}
+            #endregion
         }
 
         public async Task<int> PayShippingCompanyListOfInvoices(int shippingCompanyId, List<Invoice> invoicelst, string payType, CashTransfer cashTr)
@@ -909,11 +921,10 @@ namespace Restaurant.Classes
             var myContent2 = JsonConvert.SerializeObject(cashTr);
             parameters.Add("cashTransfer", myContent2);
 
-
-
             string method = "Cashtransfer/payShippingCompanyListOfInvoices";
             return await APIResult.post(method, parameters);
 
+            #region old
             //string message = "";
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -950,6 +961,7 @@ namespace Restaurant.Classes
             //    }
             //    return message;
             //}
+            #endregion
         }
 
         public async Task<string> generateCashNumber(string cashNum)
@@ -1032,7 +1044,7 @@ namespace Restaurant.Classes
             }
             return message;
 
-
+            #region old
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             //using (var client = new HttpClient())
@@ -1057,6 +1069,7 @@ namespace Restaurant.Classes
             //    }
             //    return 0;
             //}
+            #endregion
         }
 
         public async Task<int> payOrderInvoice(int invoiceId, int invStatusId, decimal ammount, string payType, CashTransfer cashTransfer)
@@ -1076,6 +1089,7 @@ namespace Restaurant.Classes
             string method = "Cashtransfer/payOrderInvoice";
             return await APIResult.post(method, parameters);
 
+            #region old
             //string message = "";
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -1110,6 +1124,7 @@ namespace Restaurant.Classes
             //    }
             //    return message;
             //}
+            #endregion
         }
         public async Task<int> GetCashCount(int invoiceId)
         {
@@ -1130,7 +1145,7 @@ namespace Restaurant.Classes
             }
             return message;
 
-
+            #region old
             //// ... Use HttpClient.
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             //using (var client = new HttpClient())
@@ -1157,6 +1172,7 @@ namespace Restaurant.Classes
             //        return 0;
             //    }
             //}
+            #endregion
         }
 
     }
