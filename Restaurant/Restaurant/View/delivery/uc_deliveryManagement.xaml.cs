@@ -230,6 +230,7 @@ namespace Restaurant.View.delivery
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
+            tt_preview.Content = AppSettings.resourcemanager.GetString("trPreview");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
 
             btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
