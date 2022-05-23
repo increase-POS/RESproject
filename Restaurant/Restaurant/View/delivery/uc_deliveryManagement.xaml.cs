@@ -219,7 +219,7 @@ namespace Restaurant.View.delivery
             //txt_minutes.Text = AppSettings.resourcemanager.GetString("minute");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNotes") + "..."); 
 
-            dg_orders.Columns[1].Header = AppSettings.resourcemanager.GetString("trCode");
+            dg_orders.Columns[1].Header = AppSettings.resourcemanager.GetString("trInvoiceCharp");
             dg_orders.Columns[2].Header = AppSettings.resourcemanager.GetString("trCompany");
             dg_orders.Columns[3].Header = AppSettings.resourcemanager.GetString("deliveryMan");
             dg_orders.Columns[4].Header = AppSettings.resourcemanager.GetString("deliveryTime");
