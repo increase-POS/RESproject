@@ -50,7 +50,7 @@ namespace Restaurant.converters
                 }
                 else if (isCoupon == "allow")
                 {
-                    return AppSettings.resourcemanager.GetString("trPreview");
+                    return AppSettings.resourcemanager.GetString("trPrintCount");
                 }
                 else
                     return "";
