@@ -479,7 +479,7 @@ namespace Restaurant.View.sales
         {
             DateTime dt = DateTime.Now;
             string day = dt.DayOfWeek.ToString();
-            items = await FillCombo.item.GetAllSalesItemsInv(day.ToLower(), _MemberShipId);
+            items = await FillCombo.item.GetAllSalesItemsInv(MainWindow.branchLogin.branchId, day.ToLower(), _MemberShipId);
         }
         #endregion
         #region Pagination Y
