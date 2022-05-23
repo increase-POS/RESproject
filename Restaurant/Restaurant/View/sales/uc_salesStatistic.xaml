@@ -8,7 +8,15 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              d:DesignHeight="800" d:DesignWidth="1000" >
+    <UserControl.Resources>
+        <sys:String x:Key="pdfKey">pdf</sys:String>
+        <sys:String x:Key="printKey">print</sys:String>
+        <sys:String x:Key="excelKey">excel</sys:String>
+        <sys:String x:Key="previewKey">preview</sys:String>
+        <sys:String x:Key="allowPrintKey">allow</sys:String>
+    </UserControl.Resources>
     <Grid Margin="20 10" x:Name="grid_main">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" ></ColumnDefinition>
@@ -266,16 +274,113 @@
                             </DataGrid.Resources>
                             <DataGrid.Columns>
                         <DataGridTextColumn x:Name="col_No" Width="*" Header="No." Binding="{Binding invNumber}"/>
-                                    <DataGridTextColumn x:Name="col_type" Width="*" Header="Type" Binding="{Binding Path=invType,Converter={StaticResource saleInvoiceConverterForReport }}"/>
+                        <DataGridTextColumn x:Name="col_type" Width="*" Header="Type" Binding="{Binding Path=invType,Converter={StaticResource saleInvoiceConverterForReport }}"/>
                         <DataGridTextColumn x:Name="col_branch" Width="*" Header="Branch" Binding="{Binding branchCreatorName}" />
                         <DataGridTextColumn x:Name="col_pos" Width="*" Header="Pos" Binding="{Binding posName}" />
                         <DataGridTextColumn x:Name="col_discount" Width="*" Header="Discount Value"  Binding="{Binding discountValue,Converter={StaticResource accuracyConverter}}"/>
-                                    <DataGridTextColumn x:Name="col_tax" Width="*" Header="Tax" Binding="{Binding tax ,Converter={StaticResource accuracyTaxConverter}}" Visibility="Visible"/>
+                        <DataGridTextColumn x:Name="col_tax" Width="*" Header="Tax" Binding="{Binding tax ,Converter={StaticResource accuracyTaxConverter}}" Visibility="Visible"/>
                         <DataGridTextColumn x:Name="col_totalNet" Width="*" Header="Total" Binding="{Binding totalNet ,Converter={StaticResource accuracyConverter}}" />
-
                         <DataGridTextColumn x:Name="col_processType" Width="*" Header="processType" Binding="{Binding processType ,Converter={StaticResource processTypeConverter}}" />
+                                    <DataGridTemplateColumn Width="120" Header="" IsReadOnly="True" CanUserResize="False">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Button Margin="-10"   Click="pdfRowinDatagrid" Grid.Column="0"
+                                            Padding="0" ToolTip="Pdf" 
+                                            Background="{x:Null}" BorderBrush="{x:Null}">
+                                                        <ToolTipService.ToolTip>
+                                                            <TextBlock>
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding Converter="{StaticResource toolTipConverter}">
+                                                                        <Binding Source="{StaticResource pdfKey}" />
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </ToolTipService.ToolTip>
+                                                        <materialDesign:PackIcon Foreground="#D20A0A" Kind="FilePdf"  
+                                                                 Width="17" Height="17">
+                                                        </materialDesign:PackIcon>
+                                                    </Button>
+                                                    <Button Margin="-10"   Click="printRowinDatagrid" Grid.Column="1"
+                                            Padding="0" ToolTip="Print" 
+                                            Background="{x:Null}" BorderBrush="{x:Null}">
+                                                        <ToolTipService.ToolTip>
+                                                            <TextBlock>
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding Converter="{StaticResource toolTipConverter}">
+                                                                        <Binding Source="{StaticResource printKey}" />
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </ToolTipService.ToolTip>
+                                                        <materialDesign:PackIcon Foreground="#313131" Kind="Printer"  
+                                                         HorizontalAlignment="Center" 
+                                                         Width="17" Height="17">
+                                                        </materialDesign:PackIcon>
+                                                    </Button>
 
-                    </DataGrid.Columns>
+                                                    <Button Margin="-10"   Click="previewRowinDatagrid" Grid.Column="2"
+                                            Padding="0" ToolTip="Printer" 
+                                            Background="{x:Null}" BorderBrush="{x:Null}">
+                                                        <ToolTipService.ToolTip>
+                                                            <TextBlock>
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding Converter="{StaticResource toolTipConverter}">
+                                                                        <Binding Source="{StaticResource previewKey}" />
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </ToolTipService.ToolTip>
+                                                        <Grid FlowDirection="LeftToRight">
+                                                            <Path Fill="#4E4E4E" Stretch="Fill"
+                                                  Width="12" Height="15" 
+                                                  FlowDirection="LeftToRight" Data="M322,390.4c-4.4-0.2-8.8-0.1-13.1-0.7c-34.6-4.7-61.9-22.8-85.7-47.1c-4.9-4.9-5.9-11-3.2-17.3  c1.2-2.8,3.4-5.3,5.5-7.5c10.7-11.1,22.9-20.5,36.2-28.3c18.6-10.8,38.4-17.7,60.1-17.6c3.5,0,4.6-1,4.6-4.6  c-0.2-31.8-0.1-63.7-0.1-95.6c0-5,0-5-5.2-5h-70.9c-5.5,0-7.2-1.7-7.2-7.1V83.3c-2-0.1-3.5-0.2-5.1-0.5H149c-19,0-38,0-57,0.1  c-8.7,0.1-14,5.7-14.1,14.2V114c-0.1,92.4-0.1,184.8,0,277.2c0,2.5,0.6,5.3,1.8,7.5c2.9,5.5,8,7,13.9,7h218.7  c9.1,0,15-6.4,13.6-15.1C324.7,390.5,323.3,390.5,322,390.4z M282.8,273.9c-12.7,0.1-25.3,0.1-37.9,0.1h-121c-0.9,0-1.7,0.1-2.6,0  c-3.2-0.2-5.3-1.6-5.4-5c-0.1-3,2.1-5.3,5.5-5.4c6-0.2,12-0.1,18-0.1h143.5c3.4,0.2,5.7,2.5,5.7,5.3  C288.5,271.6,286.1,273.9,282.8,273.9z M119.3,119.7c0.5-0.6,2.1-0.4,3.2-0.4h78.3c3.8,0,6.2,1.9,6.3,4.9c0.2,3.1-2.2,5.4-6.2,5.4  c-13.2,0.1-26.5,0-39.7,0h-39.4c-3,0-5.9-0.9-5.8-4.3C116.1,123.4,117.9,121.4,119.3,119.7z M120.3,167.5c2.6-0.3,5.3-0.2,7.9-0.2  h83.2c1.2,0,2.3,0,3.4,0.1c2.9,0.4,4.4,2.2,4.5,5.1c0,2.9-1.7,4.6-4.5,5.1c-1,0.2-2,0.1-3,0.1h-44.6c-14.2,0-28.5,0.1-42.8,0  c-1.4,0-2.7,0.1-4.1-0.1c-2.8-0.4-4.5-2.1-4.5-5C115.8,169.7,117.5,167.8,120.3,167.5z M122.8,215.5H281c0.9,0,1.7-0.1,2.6,0  c3,0.3,4.9,2,4.8,5.1c-0.1,2.9-1.9,4.8-4.9,5.2c-1.1,0.2-2.3,0.1-3.4,0.1h-78.3c-25.2,0-50.5,0-75.7,0.1h-3.4  c-4.6-0.1-6.8-1.7-6.9-5C115.7,217.5,118.3,215.5,122.8,215.5z M206.3,365.9c-0.3,1.5-2.1,2.8-3.5,3.9c-0.6,0.5-1.9,0.3-2.9,0.3  h-77.6c-4.5,0-6.2-1.2-6.5-4.4c-0.3-3.7,1.6-5.8,6-5.8c13.3-0.1,26.5-0.1,39.8-0.1c12.6,0,25.2-0.1,37.8,0c1.7,0,4,0.3,5.2,1.3  C205.7,362.1,206.6,364.4,206.3,365.9z M201.6,321.9c-5.2,0.2-10.5,0.1-15.7,0.1h-62.6c-1.4,0-3.1,0.2-4-0.5  c-1.4-1.1-3.2-2.9-3.2-4.4c0-1.7,1.5-3.7,2.9-4.9c0.9-0.8,2.8-0.6,4.3-0.6h37.9c12.5,0,25,0,37.5-0.1c1,0,2,0,3,0.1  c3,0.3,4.8,1.9,5,5C206.9,319.6,204.8,321.8,201.6,321.9z M253.5,88.3c0.1,0.1,0,0.9,0,1.6c0,20.8,0.1,41.5-0.1,62.3  c0,3.3,0.9,4.2,4.2,4.2c20-0.1,40-0.1,60-0.1h5.2C299.2,133.1,276.3,110.7,253.5,88.3z"  >
+                                                            </Path>
+                                                            <Path Fill="{StaticResource MainColor}" Stretch="Fill"
+                                          Width="10" Height="5" Margin="13,8,0,0"
+                                          FlowDirection="LeftToRight" Data="M410.8,327c-9.3-7.8-18.3-15.9-28.1-23c-18.2-13.1-38.5-21.1-61.5-22c-8.1,1.4-16.3,2.2-24.2,4.4  c-25.2,6.7-45.9,21.1-64.1,39.3c-4.9,4.9-4.9,7.2,0,12.2c11.1,11.3,23.5,20.9,37.4,28.5c29.7,16.4,60.2,19.3,91.7,5  c18.9-8.6,34.4-22,49.4-36C414.2,332.8,414,329.7,410.8,327z M320.8,361.8c-16.2,0-29.5-13.5-29.6-30c-0.1-16.9,13.3-30.6,29.9-30.6  c16.4-0.1,30.5,14,30.4,30.3C351.4,348.4,337.8,361.8,320.8,361.8z M341,331.2c0.1,11.1-8.7,20.1-19.8,20.1  c-10.6,0-19.6-9.1-19.6-20c0-10.7,8.7-19.6,19.4-19.7C331.8,311.5,340.9,320.4,341,331.2z"  >
+
+                                                            </Path>
+                                                        </Grid>
+                                                    </Button>
+
+                                                    <Button Margin="-10"   Click="allowPrintRowinDatagrid" Grid.Column="3"
+                                            Padding="0" ToolTip="Printer" 
+                                            Background="{x:Null}" BorderBrush="{x:Null}">
+                                                        <ToolTipService.ToolTip>
+                                                            <TextBlock>
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding Converter="{StaticResource toolTipConverter}">
+                                                                        <Binding Source="{StaticResource allowPrintKey}" />
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </ToolTipService.ToolTip>
+                                                        <Grid FlowDirection="LeftToRight">
+                                                            <Path Fill="#4E4E4E" Stretch="Fill"
+                                                  Width="12" Height="15" 
+                                                  FlowDirection="LeftToRight" Data="M322,390.4c-4.4-0.2-8.8-0.1-13.1-0.7c-34.6-4.7-61.9-22.8-85.7-47.1c-4.9-4.9-5.9-11-3.2-17.3  c1.2-2.8,3.4-5.3,5.5-7.5c10.7-11.1,22.9-20.5,36.2-28.3c18.6-10.8,38.4-17.7,60.1-17.6c3.5,0,4.6-1,4.6-4.6  c-0.2-31.8-0.1-63.7-0.1-95.6c0-5,0-5-5.2-5h-70.9c-5.5,0-7.2-1.7-7.2-7.1V83.3c-2-0.1-3.5-0.2-5.1-0.5H149c-19,0-38,0-57,0.1  c-8.7,0.1-14,5.7-14.1,14.2V114c-0.1,92.4-0.1,184.8,0,277.2c0,2.5,0.6,5.3,1.8,7.5c2.9,5.5,8,7,13.9,7h218.7  c9.1,0,15-6.4,13.6-15.1C324.7,390.5,323.3,390.5,322,390.4z M282.8,273.9c-12.7,0.1-25.3,0.1-37.9,0.1h-121c-0.9,0-1.7,0.1-2.6,0  c-3.2-0.2-5.3-1.6-5.4-5c-0.1-3,2.1-5.3,5.5-5.4c6-0.2,12-0.1,18-0.1h143.5c3.4,0.2,5.7,2.5,5.7,5.3  C288.5,271.6,286.1,273.9,282.8,273.9z M119.3,119.7c0.5-0.6,2.1-0.4,3.2-0.4h78.3c3.8,0,6.2,1.9,6.3,4.9c0.2,3.1-2.2,5.4-6.2,5.4  c-13.2,0.1-26.5,0-39.7,0h-39.4c-3,0-5.9-0.9-5.8-4.3C116.1,123.4,117.9,121.4,119.3,119.7z M120.3,167.5c2.6-0.3,5.3-0.2,7.9-0.2  h83.2c1.2,0,2.3,0,3.4,0.1c2.9,0.4,4.4,2.2,4.5,5.1c0,2.9-1.7,4.6-4.5,5.1c-1,0.2-2,0.1-3,0.1h-44.6c-14.2,0-28.5,0.1-42.8,0  c-1.4,0-2.7,0.1-4.1-0.1c-2.8-0.4-4.5-2.1-4.5-5C115.8,169.7,117.5,167.8,120.3,167.5z M122.8,215.5H281c0.9,0,1.7-0.1,2.6,0  c3,0.3,4.9,2,4.8,5.1c-0.1,2.9-1.9,4.8-4.9,5.2c-1.1,0.2-2.3,0.1-3.4,0.1h-78.3c-25.2,0-50.5,0-75.7,0.1h-3.4  c-4.6-0.1-6.8-1.7-6.9-5C115.7,217.5,118.3,215.5,122.8,215.5z M206.3,365.9c-0.3,1.5-2.1,2.8-3.5,3.9c-0.6,0.5-1.9,0.3-2.9,0.3  h-77.6c-4.5,0-6.2-1.2-6.5-4.4c-0.3-3.7,1.6-5.8,6-5.8c13.3-0.1,26.5-0.1,39.8-0.1c12.6,0,25.2-0.1,37.8,0c1.7,0,4,0.3,5.2,1.3  C205.7,362.1,206.6,364.4,206.3,365.9z M201.6,321.9c-5.2,0.2-10.5,0.1-15.7,0.1h-62.6c-1.4,0-3.1,0.2-4-0.5  c-1.4-1.1-3.2-2.9-3.2-4.4c0-1.7,1.5-3.7,2.9-4.9c0.9-0.8,2.8-0.6,4.3-0.6h37.9c12.5,0,25,0,37.5-0.1c1,0,2,0,3,0.1  c3,0.3,4.8,1.9,5,5C206.9,319.6,204.8,321.8,201.6,321.9z M253.5,88.3c0.1,0.1,0,0.9,0,1.6c0,20.8,0.1,41.5-0.1,62.3  c0,3.3,0.9,4.2,4.2,4.2c20-0.1,40-0.1,60-0.1h5.2C299.2,133.1,276.3,110.7,253.5,88.3z"  >
+                                                            </Path>
+                                                            <Path Fill="{StaticResource MainColor}" Stretch="Fill"
+                                          Width="10" Height="5" Margin="13,8,0,0"
+                                          FlowDirection="LeftToRight" Data="M410.8,327c-9.3-7.8-18.3-15.9-28.1-23c-18.2-13.1-38.5-21.1-61.5-22c-8.1,1.4-16.3,2.2-24.2,4.4  c-25.2,6.7-45.9,21.1-64.1,39.3c-4.9,4.9-4.9,7.2,0,12.2c11.1,11.3,23.5,20.9,37.4,28.5c29.7,16.4,60.2,19.3,91.7,5  c18.9-8.6,34.4-22,49.4-36C414.2,332.8,414,329.7,410.8,327z M320.8,361.8c-16.2,0-29.5-13.5-29.6-30c-0.1-16.9,13.3-30.6,29.9-30.6  c16.4-0.1,30.5,14,30.4,30.3C351.4,348.4,337.8,361.8,320.8,361.8z M341,331.2c0.1,11.1-8.7,20.1-19.8,20.1  c-10.6,0-19.6-9.1-19.6-20c0-10.7,8.7-19.6,19.4-19.7C331.8,311.5,340.9,320.4,341,331.2z"  >
+
+                                                            </Path>
+                                                        </Grid>
+                                                    </Button>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+
+                                </DataGrid.Columns>
                 </DataGrid>
                         </Grid>
                     </Border>

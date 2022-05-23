@@ -48,6 +48,10 @@ namespace Restaurant.converters
                 {
                     return AppSettings.resourcemanager.GetString("trPreview");
                 }
+                else if (isCoupon == "allow")
+                {
+                    return AppSettings.resourcemanager.GetString("trPreview");
+                }
                 else
                     return "";
 

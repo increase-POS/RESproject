@@ -661,10 +661,125 @@ namespace Restaurant.View.sales
             }
         }
 
-
         #endregion
 
-        //#region reports
+        #region datagrid btns
+        private async void pdfRowinDatagrid(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        ItemTransferInvoice row = (ItemTransferInvoice)dgInvoice.SelectedItems[0];
+                        clsReports classreport = new clsReports();
+                        resultmessage resmsg = new resultmessage();
+                        resmsg = await classreport.pdfSaleInvoice(row.invoiceId, "pdf");
+                        if (resmsg.result != "")
+                        {
+                            this.Dispatcher.Invoke(() =>
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString(resmsg.result), animation: ToasterAnimation.FadeIn);
+
+                            });
+                        }
+                    }
+
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void printRowinDatagrid(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        ItemTransferInvoice row = (ItemTransferInvoice)dgInvoice.SelectedItems[0];
+                        clsReports classreport = new clsReports();
+                        resultmessage resmsg = new resultmessage();
+                        resmsg = await classreport.pdfSaleInvoice(row.invoiceId, "print");
+                        if (resmsg.result != "")
+                        {
+                            this.Dispatcher.Invoke(() =>
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString(resmsg.result), animation: ToasterAnimation.FadeIn);
+
+                            });
+                        }
+                    }
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private async void previewRowinDatagrid(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        ItemTransferInvoice row = (ItemTransferInvoice)dgInvoice.SelectedItems[0];
+                        clsReports classreport = new clsReports();
+                        resultmessage resmsg = new resultmessage();
+                        resmsg = await classreport.pdfSaleInvoice(row.invoiceId, "prev");
+                        if (resmsg.result != "")
+                        {
+                            this.Dispatcher.Invoke(() =>
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString(resmsg.result), animation: ToasterAnimation.FadeIn);
+
+                            });
+                        }
+                        else
+                        {
+                            Window.GetWindow(this).Opacity = 0.2;
+                            wd_previewPdf w = new wd_previewPdf();
+                            w.pdfPath = resmsg.pdfpath;
+                            if (!string.IsNullOrEmpty(w.pdfPath))
+                            {
+                                w.ShowDialog();
+
+                                w.wb_pdfWebViewer.Dispose();
+
+                            }
+                            else
+                                Toaster.ShowError(Window.GetWindow(this), message: "", animation: ToasterAnimation.FadeIn);
+                            Window.GetWindow(this).Opacity = 1;
+                        }
+                    }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void allowPrintRowinDatagrid(object sender, RoutedEventArgs e)
+        {
+
+        }
+        #endregion
+        #region reports
         //public void BuildReport()
         //{
         //    List<ReportParameter> paramarr = new List<ReportParameter>();
@@ -854,7 +969,7 @@ namespace Restaurant.View.sales
 
 
 
-        //#endregion
+        #endregion
 
 
     }
