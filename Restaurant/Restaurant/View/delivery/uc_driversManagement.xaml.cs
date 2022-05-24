@@ -102,7 +102,6 @@ namespace Restaurant.View.delivery
         {
             try
             {
-
                 if (chk_drivers.IsChecked.Value)
                 {
                     if (drivers is null)
@@ -406,6 +405,7 @@ namespace Restaurant.View.delivery
                 if (dg_user.SelectedIndex != -1)
                 {
                     int ordersCount = 0;
+
                     if (chk_drivers.IsChecked.Value)
                     {
                         driver = dg_user.SelectedItem as User;
@@ -413,6 +413,9 @@ namespace Restaurant.View.delivery
                         this.DataContext = driver;
                         if (driver != null)
                         {
+                            if (orders != null)
+                                driverOrder = orders.Where(o => o.shipUserId == null ? false : (int)o.shipUserId == driver.userId).ToList();
+
                             if (driver.driverIsAvailable == 0)
                                 txt_activeInactive.Text = AppSettings.resourcemanager.GetString("activate");
                             else
@@ -420,24 +423,28 @@ namespace Restaurant.View.delivery
                             await refreshDriverSectors();
 
                             if (chk_drivers.IsChecked == true)
-                                ordersCount = orders.Where(o => o.shipUserId == driver.userId).Count();
+                                ordersCount = driverOrder.Count();
 
                         }
                     }
                     else if (chk_shippingCompanies.IsChecked.Value)
                     {
+                        
                         company = dg_user.SelectedItem as ShippingCompanies;
                         selectedIndexDataGrid = dg_user.SelectedIndex;
                         this.DataContext = company;
                         if (company != null)
                         {
+                            if (orders != null)
+                                driverOrder = orders.Where(o => (int)o.shippingCompanyId == company.shippingCompanyId && o.status == "Ready").ToList();
+
                             if (company.isActive == 0)
                                 txt_activeInactive.Text = AppSettings.resourcemanager.GetString("activate");
                             else
                                 txt_activeInactive.Text = AppSettings.resourcemanager.GetString("deActivate");
 
                             if (chk_shippingCompanies.IsChecked == true)
-                                ordersCount = orders.Where(o => o.shipUserId == company.shippingCompanyId).Count();
+                                ordersCount = driverOrder.Count();
 
                         }
                     }
@@ -560,6 +567,7 @@ namespace Restaurant.View.delivery
         SaveFileDialog saveFileDialog = new SaveFileDialog();
         List<Invoice> orders;
         OrderPreparing orderModel = new OrderPreparing();
+        List<Invoice> driverOrder = new List<Invoice>();
         // end report parameters
         async Task<IEnumerable<Invoice>> RefreshOrdersList()
         {
@@ -569,25 +577,8 @@ namespace Restaurant.View.delivery
         }
         public void BuildReport()
         {
-            List<Invoice> driverOrder = new List<Invoice>();
-
             List<ReportParameter> paramarr = new List<ReportParameter>();
-            if (orders!=null)
-            {
-                if (chk_drivers.IsChecked.Value)
-                {
-                    driverOrder = orders.Where(o =>  o.shipUserId == null ? false : (int)o.shipUserId == driver.userId ).ToList();
-
-                }
-                else 
-                {
-                   
-                    driverOrder = orders.Where(o =>   (int)o.shippingCompanyId == company.shippingCompanyId && o.status == "Ready").ToList();
-
-                }
-               
-            }
-         
+            
             string addpath;
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
