@@ -1608,6 +1608,7 @@ namespace Restaurant.View.reports.salesReports
                                 Toaster.ShowError(Window.GetWindow(this), message: "", animation: ToasterAnimation.FadeIn);
                             Window.GetWindow(this).Opacity = 1;
                         }
+                        #region
                         //POSOpenCloseModel row = (POSOpenCloseModel)dgClosing.SelectedItems[0];
                         //cashTransID = row.cashTransId;
                         //openCashTransID = row.openCashTransId.Value;
@@ -1636,6 +1637,7 @@ namespace Restaurant.View.reports.salesReports
                         //    }
                         //    Window.GetWindow(this).Opacity = 1;
                         //}
+                        #endregion
                     }
                 HelpClass.EndAwait(grid_main);
             }
