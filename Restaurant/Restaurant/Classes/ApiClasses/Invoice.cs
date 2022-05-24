@@ -1283,7 +1283,7 @@ namespace Restaurant.Classes
             cashTrasnfer.posId = MainWindow.posLogin.posId;
             cashTrasnfer.shippingCompanyId = invoice.shippingCompanyId;
             cashTrasnfer.invId = invoice.invoiceId;
-            cashTrasnfer.createUserId = invoice.createUserId;
+            cashTrasnfer.createUserId = invoice.updateUserId;
             cashTrasnfer.processType = "balance";
             cashTrasnfer.transType = "d"; //deposit
             cashTrasnfer.side = "sh"; // vendor

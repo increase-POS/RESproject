@@ -636,6 +636,7 @@ namespace Restaurant.View.delivery
         #region payments
         private async Task savePayments(Invoice invoice)
         {
+            invoice.updateUserId = MainWindow.userLog.userId;
             if (invoice.shippingCompanyId != null && invoice.shipUserId == null)
                 await invoice.recordCompanyCashTransfer(invoice, "si");
             else
