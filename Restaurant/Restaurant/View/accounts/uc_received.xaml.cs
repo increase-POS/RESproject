@@ -556,91 +556,91 @@ namespace Restaurant.View.accounts
                         #region save
 
                         if (HelpClass.validate(requiredControlList, this))
-                    {
-                        string depositor = cb_depositFrom.SelectedValue.ToString();
-                        int agentid = 0;
-
-                        CashTransfer cash = new CashTransfer();
-
-                        cash.transType = "d";
-                        cash.posId = MainWindow.posLogin.posId;
-                        cash.transNum = await cashModel.generateCashNumber(cash.transType + cb_depositFrom.SelectedValue.ToString());
-                        cash.cash = decimal.Parse(tb_cash.Text);
-                        cash.notes = tb_notes.Text;
-                        cash.createUserId = MainWindow.userLogin.userId;
-                        cash.side = cb_depositFrom.SelectedValue.ToString();
-                        cash.processType = cb_paymentProcessType.SelectedValue.ToString();
-
-                        if (bdr_depositorV.IsVisible)
-                        { cash.agentId = Convert.ToInt32(cb_depositorV.SelectedValue); agentid = Convert.ToInt32(cb_depositorV.SelectedValue); }
-
-                        if (bdr_depositorC.IsVisible)
                         {
-                            cash.agentId = Convert.ToInt32(cb_depositorC.SelectedValue);
-                            agentid = Convert.ToInt32(cb_depositorC.SelectedValue);
-                        }
+                            string depositor = cb_depositFrom.SelectedValue.ToString();
+                            int agentid = 0;
 
-                        if (bdr_depositorU.IsVisible)
-                            cash.userId = Convert.ToInt32(cb_depositorU.SelectedValue);
+                            CashTransfer cash = new CashTransfer();
 
-                        if (bdr_depositorSh.IsVisible)
-                            cash.shippingCompanyId = Convert.ToInt32(cb_depositorSh.SelectedValue);
+                            cash.transType = "d";
+                            cash.posId = MainWindow.posLogin.posId;
+                            cash.transNum = await cashModel.generateCashNumber(cash.transType + cb_depositFrom.SelectedValue.ToString());
+                            cash.cash = decimal.Parse(tb_cash.Text);
+                            cash.notes = tb_notes.Text;
+                            cash.createUserId = MainWindow.userLogin.userId;
+                            cash.side = cb_depositFrom.SelectedValue.ToString();
+                            cash.processType = cb_paymentProcessType.SelectedValue.ToString();
 
-                        if (cb_paymentProcessType.SelectedValue.ToString().Equals("card"))
-                        {
-                            cash.cardId = _SelectedCard;
-                            cash.docNum = tb_docNumCard.Text;
-                        }
+                            if (bdr_depositorV.IsVisible)
+                            { cash.agentId = Convert.ToInt32(cb_depositorV.SelectedValue); agentid = Convert.ToInt32(cb_depositorV.SelectedValue); }
 
-                        //if (cb_paymentProcessType.SelectedValue.ToString().Equals("doc"))
-                        //    cash.docNum = tb_docNum.Text;
+                            if (bdr_depositorC.IsVisible)
+                            {
+                                cash.agentId = Convert.ToInt32(cb_depositorC.SelectedValue);
+                                agentid = Convert.ToInt32(cb_depositorC.SelectedValue);
+                            }
 
-                        if (cb_paymentProcessType.SelectedValue.ToString().Equals("cheque"))
-                            cash.docNum = tb_docNumCheque.Text;
+                            if (bdr_depositorU.IsVisible)
+                                cash.userId = Convert.ToInt32(cb_depositorU.SelectedValue);
 
-                        if (cb_paymentProcessType.SelectedValue.ToString().Equals("doc"))
-                        {
-                            //int res = await saveBond(cash.docNum, cash.cash, dp_docDate.SelectedDate.Value, "d");
-                            //cash.bondId = res;
-                        }
+                            if (bdr_depositorSh.IsVisible)
+                                cash.shippingCompanyId = Convert.ToInt32(cb_depositorSh.SelectedValue);
 
-                        if (bdr_depositorV.IsVisible || bdr_depositorC.IsVisible)
-                        {
-                            if (tb_cash.IsReadOnly)
-                                s1 = await cashModel.PayListOfInvoices(cash.agentId.Value, invoicesLst, "feed", cash);
+                            if (cb_paymentProcessType.SelectedValue.ToString().Equals("card"))
+                            {
+                                cash.cardId = _SelectedCard;
+                                cash.docNum = tb_docNumCard.Text;
+                            }
+
+                            //if (cb_paymentProcessType.SelectedValue.ToString().Equals("doc"))
+                            //    cash.docNum = tb_docNum.Text;
+
+                            if (cb_paymentProcessType.SelectedValue.ToString().Equals("cheque"))
+                                cash.docNum = tb_docNumCheque.Text;
+
+                            if (cb_paymentProcessType.SelectedValue.ToString().Equals("doc"))
+                            {
+                                //int res = await saveBond(cash.docNum, cash.cash, dp_docDate.SelectedDate.Value, "d");
+                                //cash.bondId = res;
+                            }
+
+                            if (bdr_depositorV.IsVisible || bdr_depositorC.IsVisible)
+                            {
+                                if (tb_cash.IsReadOnly)
+                                    s1 = await cashModel.PayListOfInvoices(cash.agentId.Value, invoicesLst, "feed", cash);
+                                else
+                                    s1 = await cashModel.PayByAmmount(cash.agentId.Value, decimal.Parse(tb_cash.Text), "feed", cash);
+                            }
+                            else if (bdr_depositorU.IsVisible)
+                            {
+                                if (tb_cash.IsReadOnly)
+                                    s1 = await cashModel.PayUserListOfInvoices(cash.userId.Value, invoicesLst, "feed", cash);
+                                else
+                                    s1 = await cashModel.PayUserByAmmount(cash.userId.Value, decimal.Parse(tb_cash.Text), "feed", cash);
+                            }
+                            else if (bdr_depositorSh.IsVisible)
+                            {
+                                if (tb_cash.IsReadOnly)
+                                    s1 = await cashModel.PayShippingCompanyListOfInvoices(cash.shippingCompanyId.Value, invoicesLst, "feed", cash);
+                                else
+                                    s1 = await cashModel.payShippingCompanyByAmount(cash.shippingCompanyId.Value, decimal.Parse(tb_cash.Text), "feed", cash);
+                            }
                             else
-                                s1 = await cashModel.PayByAmmount(cash.agentId.Value, decimal.Parse(tb_cash.Text), "feed", cash);
-                        }
-                        else if (bdr_depositorU.IsVisible)
-                        {
-                            if (tb_cash.IsReadOnly)
-                                s1 = await cashModel.PayUserListOfInvoices(cash.userId.Value, invoicesLst, "feed", cash);
-                            else
-                                s1 = await cashModel.PayUserByAmmount(cash.userId.Value, decimal.Parse(tb_cash.Text), "feed", cash);
-                        }
-                        else if (bdr_depositorSh.IsVisible)
-                        {
-                            if (tb_cash.IsReadOnly)
-                                s1 = await cashModel.PayShippingCompanyListOfInvoices(cash.shippingCompanyId.Value, invoicesLst, "feed", cash);
-                            else
-                                s1 = await cashModel.payShippingCompanyByAmount(cash.shippingCompanyId.Value, decimal.Parse(tb_cash.Text), "feed", cash);
-                        }
-                        else
-                            s = await cashModel.Save(cash);
+                                s = await cashModel.Save(cash);
 
-                        if ((!s.Equals("0")) || (!s1.Equals("")) || (s1.Equals("-1")))
-                        {
-                            if (cb_paymentProcessType.SelectedValue.ToString().Equals("cash"))
-                                await calcBalance(cash.cash, depositor, agentid);
+                            if ((!s.Equals("0")) || (!s1.Equals("")) || (s1.Equals("-1")))
+                            {
+                                if (cb_paymentProcessType.SelectedValue.ToString().Equals("cash"))
+                                    await calcBalance(cash.cash, depositor, agentid);
 
-                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                            Clear();
-                            await RefreshCashesList();
-                            await Search();
-                            await MainWindow.refreshBalance();
-                        }
-                        else
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                                Clear();
+                                await RefreshCashesList();
+                                await Search();
+                                await MainWindow.refreshBalance();
+                            }
+                            else
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         }
                         else
                         {

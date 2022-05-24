@@ -248,5 +248,4 @@ E:\Restaurant 9-2-2022\netoaster\obj\Debug\netoaster.csproj.CoreCompileInputs.ca
 E:\Restaurant 9-2-2022\netoaster\obj\Debug\netoaster.dll
 E:\Restaurant 9-2-2022\netoaster\obj\Debug\netoaster.pdb
 E:\Restaurant 9-2-2022\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache
-E:\GitHub\RESproject\Restaurant\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache
 D:\myproj\posproject5\Restaurant\netoaster\obj\Debug\netoaster.csprojAssemblyReference.cache
