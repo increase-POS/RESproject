@@ -1646,6 +1646,12 @@ namespace Restaurant.View.reports.salesReports
             }
         }
 
+        private void allowPrintRowinDatagrid(object sender, RoutedEventArgs e)
+        {
+
+        }
         #endregion
+
+
     }
 }

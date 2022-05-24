@@ -161,6 +161,7 @@ namespace Restaurant.View.reports.salesReports
             col_discount.Header = AppSettings.resourcemanager.GetString("trDiscount");
             col_tax.Header = AppSettings.resourcemanager.GetString("trTax");
             col_totalNet.Header = AppSettings.resourcemanager.GetString("trTotal");
+            col_delivery.Header = AppSettings.resourcemanager.GetString("trDelivery");
             col_processType.Header = AppSettings.resourcemanager.GetString("trPaymentMethods");
 
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
@@ -954,6 +955,13 @@ namespace Restaurant.View.reports.salesReports
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        private void allowPrintRowinDatagrid(object sender, RoutedEventArgs e)
+        {
+
+        }
         #endregion
+
+
     }
 }

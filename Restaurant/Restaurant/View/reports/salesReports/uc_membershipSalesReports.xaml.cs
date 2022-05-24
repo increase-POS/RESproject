@@ -1018,6 +1018,11 @@ namespace Restaurant.View.reports.salesReports
 
         }
 
+        private void allowPrintRowinDatagrid(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void Btn_preview_Click(object sender, RoutedEventArgs e)
         {//preview
             try

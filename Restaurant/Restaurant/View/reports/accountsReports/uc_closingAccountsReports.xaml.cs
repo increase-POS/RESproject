@@ -815,6 +815,11 @@ namespace Restaurant.View.reports.accountsReports
 
         }
 
+        private void allowPrintRowinDatagrid(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private async void excelRowinDatagrid(object sender, RoutedEventArgs e)
         {
             try
