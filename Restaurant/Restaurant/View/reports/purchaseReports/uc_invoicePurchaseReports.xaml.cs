@@ -104,7 +104,6 @@ namespace Restaurant.View.reports.purchaseReports
         {//load
             try
             {
-                
                 HelpClass.StartAwait(grid_main);
 
                 Invoices = await statisticModel.GetPuritemcount((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
@@ -246,29 +245,15 @@ namespace Restaurant.View.reports.purchaseReports
                ((chkDraft.IsChecked == true ? (x.invType == "pd" || x.invType == "pbd") : false)
                 || (chkReturn.IsChecked == true ? (x.invType == "pb") : false)
                 || (chkInvoice.IsChecked == true ? ((x.invType == "p") || (x.invType == "pw")) : false))
-                && (startDate.SelectedDate != null ? x.updateDate >= startDate.SelectedDate : true)
-                && (endDate.SelectedDate != null ? x.updateDate <= endDate.SelectedDate : true)
-                && (startTime.SelectedTime != null ? x.updateDate >= startTime.SelectedTime : true)
-                && (endTime.SelectedTime != null ? x.updateDate <= endTime.SelectedTime : true)));
+                && (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
+                && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true)
+                && (startTime.SelectedTime != null ? x.invDate >= startTime.SelectedTime : true)
+                && (endTime.SelectedTime != null ? x.invDate <= endTime.SelectedTime : true)));
             invLst = result;
             return result;
         }
         IEnumerable<ItemTransferInvoice> invLst;
-        private IEnumerable<ItemTransferInvoice> fillRowChartList(IEnumerable<ItemTransferInvoice> Invoices, CheckBox chkInvoice, CheckBox chkReturn, CheckBox chkDraft
-          , DatePicker startDate, DatePicker endDate, TimePicker startTime, TimePicker endTime)
-        {
-            fillDates(startDate, endDate, startTime, endTime);
-            var result = Invoices.Where(x => ((txt_search.Text != null ? x.invNumber.Contains(txt_search.Text)
-              || x.invType.Contains(txt_search.Text)
-              || x.discountType.Contains(txt_search.Text) : true)
-              &&
-                         (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
-                        && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true)
-                        && (startTime.SelectedTime != null ? x.invDate >= startTime.SelectedTime : true)
-                        && (endTime.SelectedTime != null ? x.invDate <= endTime.SelectedTime : true)));
-            invLst = result;
-            return result;
-        }
+       
         public List<ItemTransferInvoice> filltoprint()
         {
             List<ItemTransferInvoice> xx = new List<ItemTransferInvoice>();
@@ -1638,13 +1623,11 @@ namespace Restaurant.View.reports.purchaseReports
 
                 txt_count.Text = dgInvoice.Items.Count.ToString();
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }

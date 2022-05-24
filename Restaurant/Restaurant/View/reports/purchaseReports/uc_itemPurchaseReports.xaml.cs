@@ -787,20 +787,11 @@ namespace Restaurant.View.reports.purchaseReports
            ((chkReturn.IsChecked == true ? (x.invType == "pb") : false) || (chkInvoice.IsChecked == true ? (x.invType == "p") : false))
                       && (cbBranch.SelectedItem != null ? x.branchCreatorId == selectedBranch.branchId : true)
                       && (cb_Items.SelectedItem != null ? x.itemUnitId == selectedItemUnit.itemUnitId : true)
-                      && (startDate.SelectedDate != null ? x.updateDate >= startDate.SelectedDate : true)
-                      && (endDate.SelectedDate != null ? x.updateDate <= endDate.SelectedDate : true)));
+                      && (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
+                      && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true)));
 
             invLst = result.ToList();
             return result.ToList();
-        }
-
-        private IEnumerable<ItemTransferInvoice> fillRowChartList(IEnumerable<ItemTransferInvoice> Invoices, CheckBox chkInvoice, CheckBox chkReturn, CheckBox chkDraft, DatePicker startDate, DatePicker endDate, TimePicker startTime, TimePicker endTime)
-        {
-            var result = Invoices.Where(x => (
-                         (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
-                        && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true)));
-
-            return result;
         }
 
         private List<ItemTransferInvoice> fillCollectListBranch(IEnumerable<ItemTransferInvoice> Invoices, DatePicker startDate, DatePicker endDate)
@@ -808,8 +799,8 @@ namespace Restaurant.View.reports.purchaseReports
 
             var temp = Invoices
                 .Where(x =>
-                 (startDate.SelectedDate != null ? x.updateDate >= startDate.SelectedDate : true)
-                && (endDate.SelectedDate != null ? x.updateDate <= endDate.SelectedDate : true))
+                 (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
+                && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true))
                 .GroupBy(obj => new
                 {
                     obj.branchCreatorId,
@@ -826,7 +817,7 @@ namespace Restaurant.View.reports.purchaseReports
                     ITitemId = obj.FirstOrDefault().ITitemId,
                     ITunitName = obj.FirstOrDefault().ITunitName,
                     ITunitId = obj.FirstOrDefault().ITunitId,
-                    ITupdateDate = obj.FirstOrDefault().ITupdateDate,
+                    invDate = obj.FirstOrDefault().invDate,
                     itemAvg = obj.Average(x => x.ITquantity),
                     count = obj.Count()
                 }).OrderByDescending(obj => obj.ITquantity);
@@ -839,8 +830,8 @@ namespace Restaurant.View.reports.purchaseReports
         {
             var temp = Invoices
                 .Where(x =>
-                 (startDate.SelectedDate != null ? x.updateDate >= startDate.SelectedDate : true)
-                && (endDate.SelectedDate != null ? x.updateDate <= endDate.SelectedDate : true))
+                 (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
+                && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true))
                 .GroupBy(obj => new
                 {
                     obj.ITitemUnitId
@@ -857,7 +848,7 @@ namespace Restaurant.View.reports.purchaseReports
                     ITunitName = obj.FirstOrDefault().ITunitName,
                     ITunitId = obj.FirstOrDefault().ITunitId,
                     itemAvg = obj.Average(x => x.ITquantity),
-                    ITupdateDate = obj.FirstOrDefault().ITupdateDate,
+                    invDate = obj.FirstOrDefault().invDate,
                     count = obj.Count()
                 }).OrderByDescending(obj => obj.ITquantity);
 
@@ -1194,7 +1185,7 @@ namespace Restaurant.View.reports.purchaseReports
             }
 
             SeriesCollection rowChartData = new SeriesCollection();
-            var tempName = temp.Select(s => s.IupdateDate);
+            var tempName = temp.Select(s => s.invDate);
             names.Add("x");
 
             List<string> lable = new List<string>();
@@ -1210,7 +1201,7 @@ namespace Restaurant.View.reports.purchaseReports
                     {
                         var firstOfThisMonth = new DateTime(year, month, 1);
                         var firstOfNextMonth = firstOfThisMonth.AddMonths(1);
-                        var drawCash = temp.ToList().Where(c => c.ITupdateDate > firstOfThisMonth && c.ITupdateDate <= firstOfNextMonth).Sum(obj => (long)obj.ITquantity);
+                        var drawCash = temp.ToList().Where(c => c.invDate > firstOfThisMonth && c.invDate <= firstOfNextMonth).Sum(obj => (long)obj.ITquantity);
                         cash.Add(drawCash);
                         MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
 
@@ -1232,7 +1223,7 @@ namespace Restaurant.View.reports.purchaseReports
                 {
                     var firstOfThisYear = new DateTime(year, 1, 1);
                     var firstOfNextMYear = firstOfThisYear.AddYears(1);
-                    var drawCash = temp.ToList().Where(c => c.ITupdateDate > firstOfThisYear && c.ITupdateDate <= firstOfNextMYear).Sum(obj => (long)obj.ITquantity);
+                    var drawCash = temp.ToList().Where(c => c.invDate > firstOfThisYear && c.invDate <= firstOfNextMYear).Sum(obj => (long)obj.ITquantity);
                     cash.Add(drawCash);
                     MyAxis.Labels.Add(year.ToString());
                 }
