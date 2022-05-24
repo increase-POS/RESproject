@@ -217,6 +217,11 @@ namespace Restaurant.Classes
             List<MailimageClass> imgs = new List<MailimageClass>();
             MailimageClass img = new MailimageClass();
             bool isArabic = ReportCls.checkLang();
+
+            decimal disval = repm.calcpercentval(invoice.discountType, invoice.discountValue, invoice.total);
+            decimal manualdisval = repm.calcpercentval(invoice.manualDiscountType, invoice.manualDiscountValue, invoice.total);
+            invoice.discountValue = disval + manualdisval;
+            invoice.discountType = "1";
             if (isArabic)
             {
                 invheader = repm.ReadFile(@"EmailTemplates\ordertemplate\ar\invheader.tmp");
@@ -401,6 +406,10 @@ namespace Restaurant.Classes
             string paytable = "";
             string payrow = "";
             string taxdiv = "";
+            string deliverydiv = "";
+
+            string shipcomdiv = "";
+            string driverdiv = "";
 
             //payrow.tmp
             //    paytable.tmp
@@ -425,31 +434,50 @@ namespace Restaurant.Classes
             ReportCls repm = new ReportCls();
             List<MailimageClass> imgs = new List<MailimageClass>();
             MailimageClass img = new MailimageClass();
+
+
+            decimal disval = repm.calcpercentval(invoice.discountType, invoice.discountValue, invoice.total);
+            decimal manualdisval = repm.calcpercentval(invoice.manualDiscountType, invoice.manualDiscountValue, invoice.total);
+            invoice.discountValue = disval + manualdisval;
+            invoice.discountType = "1";
+
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
             {
                 invheader = repm.ReadFile(@"EmailTemplates\ordertemplate\ar\invheader.tmp");
                 invfooter = repm.ReadFile(@"EmailTemplates\ordertemplate\ar\invfooter.tmp");
-
-                if (invoice.invType == "s" || invoice.invType == "pw" || invoice.invType == "p")
+                deliverydiv = repm.ReadFile(@"EmailTemplates\saletemplate\ar\deliverydiv.tmp");
+                if (invoice.invType == "s"|| invoice.invType == "ss" || invoice.invType == "ts" || invoice.invType == "pw" || invoice.invType == "p")
                 {
                     invbody = repm.ReadFile(@"EmailTemplates\saletemplate\ar\invbody.tmp");
-                    invitemtable = repm.ReadFile(@"EmailTemplates\saletemplate\ar\invitemtable.tmp");
-                    invitemrow = repm.ReadFile(@"EmailTemplates\saletemplate\ar\invitemrow.tmp");
+                    if (invoice.invType == "s" || invoice.invType == "ss" || invoice.invType == "ts"  )
+                    {
+                        invitemtable = repm.ReadFile(@"EmailTemplates\saletemplate\ar\invitemsaletable.tmp");
+                        invitemrow = repm.ReadFile(@"EmailTemplates\saletemplate\ar\invitemsalerow.tmp");
 
+
+                        shipcomdiv = repm.ReadFile(@"EmailTemplates\saletemplate\ar\shipcomdiv.tmp");
+                        driverdiv = repm.ReadFile(@"EmailTemplates\saletemplate\ar\driverdiv.tmp");
+                    
+                    }
+                    else
+                    {
+                        invitemtable = repm.ReadFile(@"EmailTemplates\saletemplate\ar\invitemtable.tmp");
+                        invitemrow = repm.ReadFile(@"EmailTemplates\saletemplate\ar\invitemrow.tmp");
+                    }
                     paytable = repm.ReadFile(@"EmailTemplates\saletemplate\ar\paytable.tmp");
                     payrow = repm.ReadFile(@"EmailTemplates\saletemplate\ar\payrow.tmp");
                     taxdiv = repm.ReadFile(@"EmailTemplates\saletemplate\ar\taxdiv.tmp");
 
 
                 }
-                else if (invoice.invType == "or")
+                else if (invoice.invType == "or" || invoice.invType == "ors")
                 {
                     invbody = repm.ReadFile(@"EmailTemplates\saleordertemplate\ar\invbody.tmp");
                     invitemtable = repm.ReadFile(@"EmailTemplates\saleordertemplate\ar\invitemtable.tmp");
                     invitemrow = repm.ReadFile(@"EmailTemplates\saleordertemplate\ar\invitemrow.tmp");
                 }
-                else if (invoice.invType == "q")
+                else if (invoice.invType == "q" || invoice.invType == "qs")
                 {
                     invbody = repm.ReadFile(@"EmailTemplates\quotationtemplate\ar\invbody.tmp");
                     invitemtable = repm.ReadFile(@"EmailTemplates\quotationtemplate\ar\invitemtable.tmp");
@@ -464,25 +492,36 @@ namespace Restaurant.Classes
 
                 invheader = repm.ReadFile(@"EmailTemplates\ordertemplate\en\invheader.tmp");
                 invfooter = repm.ReadFile(@"EmailTemplates\ordertemplate\en\invfooter.tmp");
-                if (invoice.invType == "s" || invoice.invType == "pw" || invoice.invType == "p")
+                deliverydiv = repm.ReadFile(@"EmailTemplates\saletemplate\en\deliverydiv.tmp");
+                if (invoice.invType == "s" || invoice.invType == "ss" || invoice.invType == "ts"|| invoice.invType == "pw" || invoice.invType == "p")
                 {
 
                     invbody = repm.ReadFile(@"EmailTemplates\saletemplate\en\invbody.tmp");
-                    invitemtable = repm.ReadFile(@"EmailTemplates\saletemplate\en\invitemtable.tmp");
-                    invitemrow = repm.ReadFile(@"EmailTemplates\saletemplate\en\invitemrow.tmp");
+                    if (invoice.invType == "s" || invoice.invType == "ss" || invoice.invType == "ts" )
+                    {
+                        invitemtable = repm.ReadFile(@"EmailTemplates\saletemplate\en\invitemsaletable.tmp");
+                        invitemrow = repm.ReadFile(@"EmailTemplates\saletemplate\en\invitemsalerow.tmp");
 
+                        shipcomdiv = repm.ReadFile(@"EmailTemplates\saletemplate\en\shipcomdiv.tmp");
+                        driverdiv = repm.ReadFile(@"EmailTemplates\saletemplate\en\driverdiv.tmp");
+                    }
+                    else
+                    {
+                        invitemtable = repm.ReadFile(@"EmailTemplates\saletemplate\en\invitemtable.tmp");
+                        invitemrow = repm.ReadFile(@"EmailTemplates\saletemplate\en\invitemrow.tmp");
+                    }
                     paytable = repm.ReadFile(@"EmailTemplates\saletemplate\en\paytable.tmp");
                     payrow = repm.ReadFile(@"EmailTemplates\saletemplate\en\payrow.tmp");
 
                     taxdiv = repm.ReadFile(@"EmailTemplates\saletemplate\en\taxdiv.tmp");
                 }
-                else if (invoice.invType == "or")
+                else if (invoice.invType == "or" || invoice.invType == "ors")
                 {
                     invbody = repm.ReadFile(@"EmailTemplates\saleordertemplate\en\invbody.tmp");
                     invitemtable = repm.ReadFile(@"EmailTemplates\saleordertemplate\en\invitemtable.tmp");
                     invitemrow = repm.ReadFile(@"EmailTemplates\saleordertemplate\en\invitemrow.tmp");
                 }
-                else if (invoice.invType == "q")
+                else if (invoice.invType == "q" || invoice.invType == "qs")
                 {
                     invbody = repm.ReadFile(@"EmailTemplates\quotationtemplate\en\invbody.tmp");
                     invitemtable = repm.ReadFile(@"EmailTemplates\quotationtemplate\en\invitemtable.tmp");
@@ -530,13 +569,13 @@ namespace Restaurant.Classes
             if (invoice.invoiceId > 0)
             {
 
-                if ((invoice.invType == "s" || invoice.invType == "sd" || invoice.invType == "sbd" || invoice.invType == "sb"|| invoice.invType == "p" || invoice.invType == "pw" ))
+                if ((invoice.invType == "s" || invoice.invType == "ss" || invoice.invType == "ts" || invoice.invType == "sd" || invoice.invType == "sbd" || invoice.invType == "sb" || invoice.invType == "p" || invoice.invType == "pw"))
                 {
-                    decimal sump = mailpayedList.Sum(x => x.cash);
+                    decimal sump = mailpayedList.Sum(x => x.cash) ;
                     decimal deservd = (decimal)invoice.totalNet - sump;
 
                     cashTr = AppSettings.resourcemanagerreport.GetString("trCashType");
-                   
+
                     sumP = reportclass.DecTostring(sump);
                     deservedcash = reportclass.DecTostring(deservd);
                     invbody = invbody.Replace("[[payedsum]]", sumP);
@@ -549,12 +588,12 @@ namespace Restaurant.Classes
                     foreach (PayedInvclass row in mailpayedList)
                     {
                         string rowhtml = payrow;
-                      
+
                         rowhtml = rowhtml.Replace("[[cashpayrow]]", reportclass.DecTostring(row.cash));
 
                         paymethod = row.processType == "cash" ? cashTr : row.cardName;
-                        rowhtml = rowhtml.Replace("[[paymethodrow]]",paymethod);
-                     
+                        rowhtml = rowhtml.Replace("[[paymethodrow]]", paymethod);
+
 
                         datapayrows += rowhtml;
 
@@ -598,23 +637,44 @@ namespace Restaurant.Classes
                 }
 
                 //invbody = invbody.Replace("[[invoicetax]]", invoice.tax.ToString());
-                if(invoice.tax==0 || invoice.tax == null)
+                if (invoice.tax == 0 || invoice.tax == null)
                 {
                     invbody = invbody.Replace("[[invoicetax]]", repm.DecTostring(invoice.tax));
                     invbody = invbody.Replace("[[trinvoicetax]]", AppSettings.resourcemanagerreport.GetString("trTax").Trim());
-                    invbody= invbody.Replace("[[taxdiv]]","");
+                    invbody = invbody.Replace("[[taxdiv]]", "");
                 }
                 else
                 {
-                   
+
                     taxdiv = taxdiv.Replace("[[invoicetax]]", repm.DecTostring(invoice.tax));
                     taxdiv = taxdiv.Replace("[[trinvoicetax]]", AppSettings.resourcemanagerreport.GetString("trTax").Trim());
                     invbody = invbody.Replace("[[taxdiv]]", taxdiv);
                 }
-            
+                //shipping cost section
+                if ((invoice.invType == "s" || invoice.invType == "ss" || invoice.invType == "ts" || invoice.invType == "or" || invoice.invType == "q" || invoice.invType == "qs" || invoice.invType == "ors"))
+                {
+                    if (invoice.shippingCost > 0)
+                    {
+                        deliverydiv = deliverydiv.Replace("[[shippingcost]]", repm.DecTostring(invoice.shippingCost));
+                        deliverydiv = deliverydiv.Replace("[[totaldeserved]]", repm.DecTostring(invoice.totalNet));
 
-                //invbody = invbody.Replace("[[totalnet]]", invoice.totalNet.ToString());
-                invbody = invbody.Replace("[[totalnet]]", repm.DecTostring(invoice.totalNet));
+                        invbody = invbody.Replace("[[totalnet]]", repm.DecTostring(invoice.totalNet - invoice.shippingCost));
+                        invbody = invbody.Replace("[[deliverydiv]]", deliverydiv);
+                    }
+                    else
+                    {
+                        invbody = invbody.Replace("[[deliverydiv]]", "");
+                        invbody = invbody.Replace("[[totalnet]]", repm.DecTostring(invoice.totalNet));
+                    }
+                }
+                else
+                {
+                    invbody = invbody.Replace("[[totalnet]]", repm.DecTostring(invoice.totalNet));
+                    invbody = invbody.Replace("[[deliverydiv]]", "");
+
+                }
+                // end shippingcost
+
             }
 
             //  invoiceItems.trQuantity trQTR
@@ -629,16 +689,34 @@ namespace Restaurant.Classes
             invbody = invbody.Replace("[[trinvoicecode]]", AppSettings.resourcemanagerreport.GetString("trInvoiceNumber").Trim() + ": ");
             invbody = invbody.Replace("[[trinvoicedate]]", AppSettings.resourcemanagerreport.GetString("trDate").Trim() + ": ");
 
-            // invbody = invbody.Replace("[[trinvoicetotal]]", AppSettings.resourcemanagerreport.GetString("trSum").Trim() + ": ");
+            // invbody = invbody.Replace("[[trinvoicetotal]]", MainWindow.resourcemanagerreport.GetString("trSum").Trim() + ": ");
 
             invbody = invbody.Replace("[[trinvoicetotal]]", AppSettings.resourcemanagerreport.GetString("trSum").Trim());
             invbody = invbody.Replace("[[currency]]", AppSettings.Currency);
             //
 
             invbody = invbody.Replace("[[trinvoicediscount]]", AppSettings.resourcemanagerreport.GetString("trDiscount").Trim());
-         
-            invbody = invbody.Replace("[[trtotalnet]]", AppSettings.resourcemanagerreport.GetString("trTotal").Trim());
 
+            invbody = invbody.Replace("[[trtotalnet]]", AppSettings.resourcemanagerreport.GetString("trTotal").Trim());
+            //Shipping company 
+            if (invoice.shippingCompanyId > 0)
+            {
+
+                if (invoice.shipUserId>0)
+                {
+                    driverdiv = driverdiv.Replace("[[driver]]", invoice.shipUserName);
+                    driverdiv = driverdiv.Replace("[[trdriver]]", AppSettings.resourcemanagerreport.GetString("deliveryMan"));
+                }
+               
+                shipcomdiv = shipcomdiv.Replace("[[driverdiv]]", driverdiv);
+                shipcomdiv = shipcomdiv.Replace("[[shippingcompany]]", invoice.shippingCompanyName);
+
+                shipcomdiv = shipcomdiv.Replace("[[trshippingcompany]]", AppSettings.resourcemanagerreport.GetString("theShippingCompany"));
+            }
+
+            invbody = invbody.Replace("[[shipcomdiv]]", shipcomdiv);
+
+            //end Shipping company 
 
             // string invoicenote = "Thank you for your cooperation. We have also enclosed our procurement specifications and conditions for your review <br/> Sincerely";
             string invoicenote = setvlist.Where(x => x.notes == "text2").FirstOrDefault() is null ? ""
@@ -693,7 +771,7 @@ namespace Restaurant.Classes
 
 
             invbody = invbody.Replace("[[invitemtable]]", invitemtable);
-       
+
             string mailbody = invheader + invbody + invfooter;
 
 
@@ -928,6 +1006,7 @@ namespace Restaurant.Classes
 
     }
 }
+
 
 
 

@@ -58,7 +58,9 @@
         </div>
       </div>
 	  [[deliverydiv]]
-    </div><div style="clear: both;"></div>
+    </div>
+[[shipcomdiv]]
+<div style="clear: both;"></div>
     <div class="inv-note" style="width: 100%; float: left; padding: 10px; margin-top: 30px;">
       <p style="text-align: center; font-family:'Open Sans',sans-serif; font-size: 14px; color: #47484b; margin: auto; width: 80%; margin-bottom: 30px;">[[invoicenote]]</p>  
     </div>

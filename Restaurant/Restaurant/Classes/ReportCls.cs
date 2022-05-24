@@ -15,7 +15,7 @@ using Restaurant.View.sales;
 using Restaurant.Classes.ApiClasses;
 using System.Windows.Threading;
 using netoaster;
-
+using System.Xml;
 
 namespace Restaurant.Classes
 {
@@ -740,6 +740,16 @@ namespace Restaurant.Classes
             return totalheight;
 
         }
+        public int GetpageHeight(int itemcount, int repheight, int itemHeight)
+        {
+            // int repheight = 457;
+            int tableheight = itemHeight * itemcount;// 33 is cell height
+
+
+            int totalheight = repheight + tableheight;
+            return totalheight;
+
+        }
         public string GetDirectEntryRdlcpath(Invoice invoice)
         {
             string addpath;
@@ -1097,8 +1107,9 @@ namespace Restaurant.Classes
                     else if (PaperSize == "5.7cm" && isPreview == 1)
                     {
                         addpath = @"\Reports\Sale\Invoice\En\SmallSaleReport.rdlc";
+
                         rs.width = 224;//224 =5.7cm
-                        rs.height = GetpageHeight( itemscount, 460);
+                        rs.height = GetpageHeight( itemscount, 460,24);
 
                     }
                     else //MainWindow.salePaperSize == "A4"
@@ -1118,7 +1129,18 @@ namespace Restaurant.Classes
             //
 
             string reppath = PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-            // rs.path = reppath;
+      if (rs.height > 0)
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(reppath);
+
+                //   XmlNodeList nlist=   doc.GetElementsByTagName("PageHeight"); 
+                decimal h = rs.height/40;
+              //  decimal h = (decimal) 0.6 * itemscount + 9;
+                doc.GetElementsByTagName("PageHeight")[0].InnerXml = (h).ToString()+"cm";
+                doc.Save(@reppath);
+            }
+            
             rep.ReportPath = reppath;
             rs.rep = rep;
             return rs;

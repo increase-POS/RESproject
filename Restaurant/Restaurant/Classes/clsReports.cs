@@ -3298,6 +3298,18 @@ namespace Restaurant.Classes
                                         return resmsg;
                                     }
                                 }
+                                if (buttonSrc == "emailpdf")
+                                {
+                                    resmsg.rep = rs.rep;
+                                    resmsg.width = rs.width;
+                                    resmsg.height = rs.height;
+                                    resmsg.paramarr = paramarr;
+                                    resmsg = await saveEmailpdf(prInvoice, resmsg);
+                                    //if (resmsg.result != "")
+                                    //{
+                                        return resmsg;
+                                    //}
+                                }
                             }
                             else
                             {
@@ -3440,6 +3452,124 @@ namespace Restaurant.Classes
             //end pdf
             return result;
         }
+        public async Task<resultmessage> saveEmailpdf( Invoice prInvoice, resultmessage resmsg)
+        {
+      
+           // resmsg.result = "";
+                  Invoice invoiceModel = new Invoice();
+            //pdf
+         
+         
+            //Dispatcher.Invoke(() =>
+            // {
+        
+
+            //});
+                //copy count
+                if (prInvoice.invType == "s" || prInvoice.invType == "sb" || prInvoice.invType == "p"
+                    || prInvoice.invType == "pb"
+                    || prInvoice.invType == "ss" || prInvoice.invType == "ts")
+                {
+                   resmsg.paramarr.Add(new ReportParameter("isOrginal", false.ToString()));
+
+                //if (i > 1)
+                //{
+                //    // update paramarr->isOrginal
+                //    foreach (var item in paramarr.Where(x => x.Name == "isOrginal").ToList())
+                //    {
+                //        StringCollection myCol = new StringCollection();
+                //        myCol.Add(prInvoice.isOrginal.ToString());
+                //        item.Values = myCol;
+
+
+                //    }
+                //    //end update
+
+                //}
+                resmsg.rep.SetParameters(resmsg.paramarr);
+
+                //    rs.rep.Refresh();
+
+
+                    if (int.Parse(AppSettings.Allow_print_inv_count) > prInvoice.printedcount)
+                    {
+
+                        //Dispatcher.Invoke(() =>
+                        //{
+                        //LocalReportExtensions.ExportToPDF(rep, filepath);
+
+
+                        //if (AppSettings.salePaperSize != "A4")
+                        //{
+                        //    LocalReportExtensions.customExportToPDF(rs.rep, filepath, rs.width, rs.height);
+                        //}
+                        //else
+                        //{
+                        //    LocalReportExtensions.ExportToPDF(rs.rep, filepath);
+                        //}
+
+                        //});
+
+
+                        int res = 0;
+
+                        res = await invoiceModel.updateprintstat(prInvoice.invoiceId, 1, false, true);
+
+
+
+                        prInvoice.printedcount = prInvoice.printedcount + 1;
+
+                        prInvoice.isOrginal = false;
+
+
+                    }
+                    else
+                    {
+                        //this.Dispatcher.Invoke(() =>
+                        //{
+                        //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trYouExceedLimit"), animation: ToasterAnimation.FadeIn);
+
+                        //});
+                  
+                    resmsg.result = "trYouExceedLimit";
+                     
+
+                    }
+
+
+                }
+                else
+                {
+                resmsg.result = "trPrintDraftInvoice";
+                    //this.Dispatcher.Invoke(() =>
+                    //{
+                    //LocalReportExtensions.ExportToPDF(rep, filepath);
+                    //if (AppSettings.salePaperSize != "A4")
+                    //{
+                    //    LocalReportExtensions.customExportToPDF(rs.rep, filepath, rs.width, rs.height);
+                    //}
+                    //else
+                    //{
+                    //    LocalReportExtensions.ExportToPDF(rs.rep, filepath);
+                    //}
+
+                //});
+
+            }
+            // end copy count
+
+
+
+
+            //end pdf
+            resmsg.prInvoice = prInvoice;
+            //resmsg.rep = rs.rep;
+            //resmsg.height = rs.height;
+            //resmsg.width = rs.width;
+           
+            return resmsg;
+        }
+
         public async Task<string> printinvoice(reportsize rs, Invoice prInvoice, List<ReportParameter> paramarr)
         {
             string result = "";

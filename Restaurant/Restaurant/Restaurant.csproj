@@ -2542,6 +2542,30 @@
     <Content Include="EmailTemplates\saletemplate\en\taxdiv.tmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="EmailTemplates\saletemplate\ar\invitemsalerow.tmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplates\saletemplate\ar\invitemsaletable.tmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplates\saletemplate\en\invitemsalerow.tmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplates\saletemplate\en\invitemsaletable.tmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplates\saletemplate\ar\driverdiv.tmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplates\saletemplate\ar\shipcomdiv.tmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplates\saletemplate\en\driverdiv.tmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="EmailTemplates\saletemplate\en\shipcomdiv.tmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Restaurant.Classes.Agent.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.AgentMembershipCash1.datasource" />
