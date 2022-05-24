@@ -284,7 +284,7 @@ namespace Restaurant.View.sales
                 if (invoice.invType != "sd" && invoice.invType != null)
                     await clear();
             }
-            else if (AppSettings.invType == "takeAway" || _InvoiceType == "tsd")
+            else if (AppSettings.invType == "takeAway" /*|| _InvoiceType == "tsd"*/)
             {
                 _InvoiceType = "tsd";
                 txt_invType.Text = AppSettings.resourcemanager.GetString("trTakeAway");
@@ -310,7 +310,7 @@ namespace Restaurant.View.sales
                     await addInvoice("tsd");
                 }
             }
-            else if (AppSettings.invType == "selfService" || _InvoiceType == "ssd")
+            else if (AppSettings.invType == "selfService" /*|| _InvoiceType == "ssd"*/)
             {
                 _InvoiceType = "ssd";
 
@@ -819,7 +819,7 @@ namespace Restaurant.View.sales
                     Count = (int)count,
                     Price = (decimal)item.price,
                     basicPrice = basicPrice,
-                    Total = (decimal)item.price,
+                    Total = (decimal)item.price * (int)count,
                     offerId = item.offerId,
                     OfferType = offerType,
                     OfferValue = offerValue,
@@ -2390,8 +2390,8 @@ namespace Restaurant.View.sales
                             await FillCombo.invoice.clearInvoiceCouponsAndClasses(invoice.invoiceId);
 
                             #region return delivery button to default
-                            txt_customer.Text = "";
-
+                            //txt_customer.Text = "";
+                            txt_delivery.Text = "";
                             txt_delivery.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                             path_delivery.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                             #endregion
@@ -2444,7 +2444,7 @@ namespace Restaurant.View.sales
                             path_customer.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
 
                             btn_delivery.IsEnabled = true;
-                        }
+                            }
                     }
                     else
                     {
@@ -2577,7 +2577,6 @@ namespace Restaurant.View.sales
                     else
                     {
                         txt_delivery.Text = "";
-
                         txt_delivery.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                         path_delivery.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                     }
@@ -2849,7 +2848,7 @@ namespace Restaurant.View.sales
                             }
                             #endregion
                         }
-
+                        paymentsList = new List<CashTransfer>();
                     }
                 }
                 else //box is closed
