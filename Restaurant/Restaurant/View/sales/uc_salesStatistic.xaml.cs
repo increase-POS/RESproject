@@ -88,7 +88,6 @@ namespace Restaurant.View.sales
 
                 fillServices();
 
-
                 Btn_Invoice_Click(btn_invoice, null);
 
                 HelpClass.EndAwait(grid_main);
@@ -141,7 +140,7 @@ namespace Restaurant.View.sales
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txt_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             tt_refresh.Content = AppSettings.resourcemanager.GetString("trRefresh");
 
-            col_No.Header = AppSettings.resourcemanager.GetString("trNum");
+            col_No.Header = AppSettings.resourcemanager.GetString("trNo.");
             col_type.Header = AppSettings.resourcemanager.GetString("trType");
             col_branch.Header = AppSettings.resourcemanager.GetString("trBranch");
             col_pos.Header = AppSettings.resourcemanager.GetString("trPOS");
@@ -153,6 +152,7 @@ namespace Restaurant.View.sales
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
             tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
             tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
+            tt_preview.Content = AppSettings.resourcemanager.GetString("trPreview");
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
 
         }

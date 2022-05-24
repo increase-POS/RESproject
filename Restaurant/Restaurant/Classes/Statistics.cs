@@ -617,6 +617,9 @@ namespace Restaurant.Classes
 
     public class ItemTransferInvoice
     {// new properties
+        public string shippingCompanyName { get; set; }
+        public string shipUserName { get; set; }
+        public string shipUserLastName { get; set; }
         public string categoryName { get; set; }
         public Nullable<int> categoryId { get; set; }
         public int archived { get; set; }

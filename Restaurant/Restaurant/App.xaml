@@ -8,6 +8,7 @@
     <!--StartupUri="MainWindow.xaml"-->
     <Application.Resources>
         <ResourceDictionary>
+            <converters:deliveryConverter x:Key="deliveryConverter"/>
             <converters:toolTipConverter x:Key="toolTipConverter"/>
             <converters:accuracyTaxConverter x:Key="accuracyTaxConverter"/>
             <converters:saleInvoiceConverterForReport x:Key="saleInvoiceConverterForReport"/>

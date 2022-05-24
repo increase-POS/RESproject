@@ -281,6 +281,7 @@
     <Compile Include="converters\colorConverter.cs" />
     <Compile Include="converters\dateTimeToTimeConverter.cs" />
     <Compile Include="converters\decimalToTimeConverter.cs" />
+    <Compile Include="converters\deliveryConverter.cs" />
     <Compile Include="converters\deliveryTypeConverter.cs" />
     <Compile Include="converters\depositorNameConverter.cs" />
     <Compile Include="converters\discountTypeConverter.cs" />
