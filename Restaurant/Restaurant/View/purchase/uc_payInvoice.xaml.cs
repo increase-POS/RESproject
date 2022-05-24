@@ -548,7 +548,7 @@ namespace Restaurant.View.purchase
         #region save
         private async Task addInvoice(string invType, string invCode)
         {
-
+            #region invoice object
             if ((invoice.invType == "p" || invoice.invType == "pw") && (invType == "pbw" || invType == "pbd")) // invoice is purchase and will be bounce purchase  or purchase bounce draft , save another invoice in db
             {
                 invoice.invoiceMainId = invoice.invoiceId;
@@ -570,74 +570,72 @@ namespace Restaurant.View.purchase
                 invoice.posId = MainWindow.posLogin.posId;
             }
 
-            if (invoice.invType != "pw" || invoice.invoiceId == 0)
+            //if (invoice.invType != "pw" || invoice.invoiceId == 0)
+            //{
+            invoice.invType = invType;
+            if (!tb_discount.Text.Equals(""))
+                invoice.discountValue = decimal.Parse(tb_discount.Text);
+
+            if (cb_typeDiscount.SelectedIndex != -1)
+                invoice.discountType = cb_typeDiscount.SelectedValue.ToString();
+
+            invoice.total = _Sum;
+            invoice.totalNet = decimal.Parse(tb_total.Text);
+            invoice.paid = 0;
+            invoice.deserved = invoice.totalNet;
+            if (cb_vendor.SelectedIndex != -1 && cb_vendor.SelectedIndex != 0)
+                invoice.agentId = (int)cb_vendor.SelectedValue;
+
+            if (cb_branch.SelectedIndex != -1 && cb_branch.SelectedIndex != 0)
+                invoice.branchId = (int)cb_branch.SelectedValue;
+            else
+                invoice.branchId = MainWindow.branchLogin.branchId;
+
+            invoice.deservedDate = dp_desrvedDate.SelectedDate;
+            invoice.vendorInvNum = tb_invoiceNumber.Text;
+            invoice.vendorInvDate = dp_invoiceDate.SelectedDate;
+            invoice.notes = tb_notes.Text;
+            invoice.taxtype = 2;
+            if (tb_taxValue.Text != "")
+                invoice.tax = decimal.Parse(tb_taxValue.Text);
+            else
+                invoice.tax = 0;
+
+            invoice.createUserId = MainWindow.userLogin.userId;
+            invoice.updateUserId = MainWindow.userLogin.userId;
+            if (invType == "pw" || invType == "p")
+                invoice.invNumber = await invoice.generateInvNumber("pi", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
+            #endregion
+            #region invoice items
+            invoiceItems = new List<ItemTransfer>();
+            ItemTransfer itemT;
+            for (int i = 0; i < billDetails.Count; i++)
             {
-                invoice.invType = invType;
-                if (!tb_discount.Text.Equals(""))
-                    invoice.discountValue = decimal.Parse(tb_discount.Text);
+                itemT = new ItemTransfer();
 
-                if (cb_typeDiscount.SelectedIndex != -1)
-                    invoice.discountType = cb_typeDiscount.SelectedValue.ToString();
+                //itemT.invoiceId = invoiceId;
+                itemT.quantity = billDetails[i].Count;
+                itemT.price = billDetails[i].Price;
+                itemT.itemUnitId = billDetails[i].itemUnitId;
+                itemT.createUserId = MainWindow.userLogin.userId;
+                itemT.invoiceId = billDetails[i].OrderId;
 
-                invoice.total = _Sum;
-                invoice.totalNet = decimal.Parse(tb_total.Text);
-                invoice.paid = 0;
-                invoice.deserved = invoice.totalNet;
-                if (cb_vendor.SelectedIndex != -1 && cb_vendor.SelectedIndex != 0)
-                    invoice.agentId = (int)cb_vendor.SelectedValue;
-
-                if (cb_branch.SelectedIndex != -1 && cb_branch.SelectedIndex != 0)
-                    invoice.branchId = (int)cb_branch.SelectedValue;
-                else
-                    invoice.branchId = MainWindow.branchLogin.branchId;
-
-                invoice.deservedDate = dp_desrvedDate.SelectedDate;
-                invoice.vendorInvNum = tb_invoiceNumber.Text;
-                invoice.vendorInvDate = dp_invoiceDate.SelectedDate;
-                invoice.notes = tb_notes.Text;
-                invoice.taxtype = 2;
-                if (tb_taxValue.Text != "")
-                    invoice.tax = decimal.Parse(tb_taxValue.Text);
-                else
-                    invoice.tax = 0;
-
-                invoice.createUserId = MainWindow.userLogin.userId;
-                invoice.updateUserId = MainWindow.userLogin.userId;
-                if (invType == "pw" || invType == "p")
-                    invoice.invNumber = await invoice.generateInvNumber("pi", MainWindow.branchLogin.code, MainWindow.branchLogin.branchId);
-
-                // save invoice in DB
-                int invoiceId = await FillCombo.invoice.saveInvoice(invoice);
-                prInvoiceId = invoiceId;
-                invoice.invoiceId = invoiceId;
-                if (invoiceId != 0)
-                {
-                    // add invoice details
-                    invoiceItems = new List<ItemTransfer>();
-                    ItemTransfer itemT;
-                    for (int i = 0; i < billDetails.Count; i++)
-                    {
-                        itemT = new ItemTransfer();
-
-                        itemT.invoiceId = invoiceId;
-                        itemT.quantity = billDetails[i].Count;
-                        itemT.price = billDetails[i].Price;
-                        itemT.itemUnitId = billDetails[i].itemUnitId;
-                        itemT.createUserId = MainWindow.userLogin.userId;
-                        itemT.invoiceId = billDetails[i].OrderId;
-
-                        invoiceItems.Add(itemT);
-                    }
-                    int s = await FillCombo.invoice.saveInvoiceItems(invoiceItems, invoiceId);
-
-                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-                    if (invType == "p")
-                        FillCombo.invoice.saveAvgPurchasePrice(invoiceItems);
-                }
-                else
-                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-
+                invoiceItems.Add(itemT);
             }
+            #endregion
+            // save invoice in DB
+            int invoiceId = await FillCombo.invoice.saveInvoiceWithItems(invoice, invoiceItems);
+            prInvoiceId = invoiceId;
+            invoice.invoiceId = invoiceId;
+            if (invoiceId != 0)
+            {            
+                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                if (invType == "p")
+                    FillCombo.invoice.saveAvgPurchasePrice(invoiceItems);
+            }
+            else
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+
 
         }
         private bool validateInvoiceValues()
