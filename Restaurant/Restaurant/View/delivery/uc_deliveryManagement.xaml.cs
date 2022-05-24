@@ -496,6 +496,8 @@ namespace Restaurant.View.delivery
                                 {
                                     ops.status = "Done";
                                     driverID = i.shipUserId;
+
+                                    await savePayments(i);
                                 }
                             }
                             else
@@ -507,6 +509,8 @@ namespace Restaurant.View.delivery
                                         comID = (int)cb_companyId.SelectedValue;
                                     else
                                         comID = i.shippingCompanyId.Value;
+
+                                    await savePayments(i);
                                 }
                             }
                             ops.createUserId = MainWindow.userLogin.userId;
@@ -627,6 +631,16 @@ namespace Restaurant.View.delivery
         }
 
 
+        #endregion
+
+        #region payments
+        private async Task savePayments(Invoice invoice)
+        {
+            if (invoice.shippingCompanyId != null && invoice.shipUserId == null)
+                await invoice.recordCompanyCashTransfer(invoice, "si");
+            else
+                await invoice.recordCashTransfer(invoice, "si");
+        }
         #endregion
 
         #region events
