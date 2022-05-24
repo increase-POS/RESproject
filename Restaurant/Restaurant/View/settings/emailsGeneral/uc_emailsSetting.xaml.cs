@@ -133,6 +133,7 @@ namespace Restaurant.View.settings.emailsGeneral
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_side, AppSettings.resourcemanager.GetString("trDepartmentHent"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branchId, AppSettings.resourcemanager.GetString("trSelectPosBranchHint"));
+            txt_isMajor.Text = AppSettings.resourcemanager.GetString("trMajor");
             txt_active.Text = AppSettings.resourcemanager.GetString("trActive_");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
@@ -143,7 +144,7 @@ namespace Restaurant.View.settings.emailsGeneral
             dg_sysEmail.Columns[1].Header = AppSettings.resourcemanager.GetString("trEmail");
             dg_sysEmail.Columns[2].Header = AppSettings.resourcemanager.GetString("trBranch");
             dg_sysEmail.Columns[3].Header = AppSettings.resourcemanager.GetString("trMajor");
-
+            
             tt_add_Button.Content = AppSettings.resourcemanager.GetString("trAdd");
             tt_update_Button.Content = AppSettings.resourcemanager.GetString("trUpdate");
             tt_delete_Button.Content = AppSettings.resourcemanager.GetString("trDelete");
