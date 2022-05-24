@@ -213,16 +213,16 @@ namespace Restaurant.View.reports.salesReports
             )
             &&
             //start date
-            (dp_couponStartDate.SelectedDate != null   ? s.updateDate >= dp_couponStartDate.SelectedDate : true)
+            (dp_couponStartDate.SelectedDate != null   ? s.invDate >= dp_couponStartDate.SelectedDate : true)
             &&
             //end date
-            (dp_couponEndDate.SelectedDate   != null   ? s.updateDate <= dp_couponEndDate.SelectedDate : true)
+            (dp_couponEndDate.SelectedDate   != null   ? s.invDate <= dp_couponEndDate.SelectedDate : true)
             &&
             //start time
-            (dt_couponStartTime.SelectedTime != null   ? s.updateDate >= dt_couponStartTime.SelectedTime : true)
+            (dt_couponStartTime.SelectedTime != null   ? s.invDate >= dt_couponStartTime.SelectedTime : true)
             &&
             //end time
-            (dt_couponEndTime.SelectedTime   != null   ? s.updateDate <= dt_couponEndTime.SelectedTime : true)
+            (dt_couponEndTime.SelectedTime   != null   ? s.invDate <= dt_couponEndTime.SelectedTime : true)
             ).ToList();
             
             couponsQuery = couponsQuery.Where(j => (selectedcouponId.Count != 0 ? selectedcouponId.Contains((int)j.CopcId) : true)).ToList();
@@ -243,16 +243,16 @@ namespace Restaurant.View.reports.salesReports
             )
             &&
             //start date
-            (dp_couponStartDate.SelectedDate != null ? s.updateDate >= dp_couponStartDate.SelectedDate : true)
+            (dp_couponStartDate.SelectedDate != null ? s.invDate >= dp_couponStartDate.SelectedDate : true)
             &&
             //end date
-            (dp_couponEndDate.SelectedDate != null ? s.updateDate <= dp_couponEndDate.SelectedDate : true)
+            (dp_couponEndDate.SelectedDate != null ? s.invDate <= dp_couponEndDate.SelectedDate : true)
             &&
             //start time
-            (dt_couponStartTime.SelectedTime != null ? s.updateDate >= dt_couponStartTime.SelectedTime : true)
+            (dt_couponStartTime.SelectedTime != null ? s.invDate >= dt_couponStartTime.SelectedTime : true)
             &&
             //end time
-            (dt_couponEndTime.SelectedTime != null ? s.updateDate <= dt_couponEndTime.SelectedTime : true)
+            (dt_couponEndTime.SelectedTime != null ? s.invDate <= dt_couponEndTime.SelectedTime : true)
             ).ToList();
 
             offersQuery = offersQuery.Where(j => (selectedOfferId.Count != 0 ? selectedOfferId.Contains((int)j.OofferId) : true)).ToList();
@@ -269,16 +269,16 @@ namespace Restaurant.View.reports.salesReports
            )
            &&
            //start date
-           (dp_couponStartDate.SelectedDate != null ? s.updateDate >= dp_couponStartDate.SelectedDate : true)
+           (dp_couponStartDate.SelectedDate != null ? s.invDate >= dp_couponStartDate.SelectedDate : true)
            &&
            //end date
-           (dp_couponEndDate.SelectedDate != null ? s.updateDate <= dp_couponEndDate.SelectedDate : true)
+           (dp_couponEndDate.SelectedDate != null ? s.invDate <= dp_couponEndDate.SelectedDate : true)
            &&
            //start time
-           (dt_couponStartTime.SelectedTime != null ? s.updateDate >= dt_couponStartTime.SelectedTime : true)
+           (dt_couponStartTime.SelectedTime != null ? s.invDate >= dt_couponStartTime.SelectedTime : true)
            &&
            //end time
-           (dt_couponEndTime.SelectedTime != null ? s.updateDate <= dt_couponEndTime.SelectedTime : true)
+           (dt_couponEndTime.SelectedTime != null ? s.invDate <= dt_couponEndTime.SelectedTime : true)
            ).ToList();
 
             invoicesClassesQuery = invoicesClassesQuery.Where(j => (selectedInvoiceId.Count != 0 ? selectedInvoiceId.Contains((int)j.invClassId) : true)).ToList();

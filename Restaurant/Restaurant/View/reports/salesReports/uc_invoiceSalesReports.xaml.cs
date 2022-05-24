@@ -292,16 +292,16 @@ namespace Restaurant.View.reports.salesReports
             (cb_sevices.SelectedIndex != -1     ? s.invType == cb_sevices.SelectedValue.ToString() : true)
             &&
             //start date
-            (dp_startDate.SelectedDate != null  ? s.updateDate >= dp_startDate.SelectedDate : true)
+            (dp_startDate.SelectedDate != null  ? s.invDate >= dp_startDate.SelectedDate : true)
             &&
             //end date
-            (dp_endDate.SelectedDate != null    ? s.updateDate <= dp_endDate.SelectedDate : true)
+            (dp_endDate.SelectedDate != null    ? s.invDate <= dp_endDate.SelectedDate : true)
             && 
             //start time
-            (dt_startTime.SelectedTime != null  ? s.updateDate >= dt_startTime.SelectedTime : true)
+            (dt_startTime.SelectedTime != null  ? s.invDate >= dt_startTime.SelectedTime : true)
             && 
             //end time
-            (dt_endTime.SelectedTime != null    ? s.updateDate <= dt_endTime.SelectedTime : true)
+            (dt_endTime.SelectedTime != null    ? s.invDate <= dt_endTime.SelectedTime : true)
             ).ToList();
             //branch
             if (selectedTab == 0)

@@ -154,10 +154,10 @@ namespace Restaurant.View.reports.salesReports
             (cb_membership.SelectedIndex != -1 ? s.membershipId == Convert.ToInt32(cb_membership.SelectedValue) : true)
             &&
             //start date
-            (dp_startDate.SelectedDate != null ? s.updateDate >= dp_startDate.SelectedDate : true)
+            (dp_startDate.SelectedDate != null ? s.invDate >= dp_startDate.SelectedDate : true)
             &&
             //end date
-            (dp_endDate.SelectedDate != null ? s.updateDate <= dp_endDate.SelectedDate : true)
+            (dp_endDate.SelectedDate != null ? s.invDate <= dp_endDate.SelectedDate : true)
             );
 
             RefreshMembershipsView();
@@ -825,7 +825,7 @@ namespace Restaurant.View.reports.salesReports
 
             var tempName = membershipsQuery.GroupBy(s => new { s.invNumber }).Select(s => new
             {
-                Name = s.FirstOrDefault().updateDate,
+                Name = s.FirstOrDefault().invDate,
             });
             names.AddRange(tempName.Select(nn => nn.Name.ToString()));
 
@@ -841,7 +841,7 @@ namespace Restaurant.View.reports.salesReports
                     {
                         var firstOfThisMonth = new DateTime(year, month, 1);
                         var firstOfNextMonth = firstOfThisMonth.AddMonths(1);
-                        var drawQuantity = membershipsQuery.ToList().Where(c => c.updateDate > firstOfThisMonth && c.updateDate <= firstOfNextMonth).Select(s => s.totalDiscount).Sum();
+                        var drawQuantity = membershipsQuery.ToList().Where(c => c.invDate > firstOfThisMonth && c.invDate <= firstOfNextMonth).Select(s => s.totalDiscount).Sum();
                         membershipLst.Add(drawQuantity);
                         MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
 
@@ -863,7 +863,7 @@ namespace Restaurant.View.reports.salesReports
                 {
                     var firstOfThisYear = new DateTime(year, 1, 1);
                     var firstOfNextMYear = firstOfThisYear.AddYears(1);
-                    var drawQuantity = membershipsQuery.ToList().Where(c => c.updateDate > firstOfThisYear && c.updateDate <= firstOfNextMYear).Select(s => s.totalDiscount).Sum();
+                    var drawQuantity = membershipsQuery.ToList().Where(c => c.invDate > firstOfThisYear && c.invDate <= firstOfNextMYear).Select(s => s.totalDiscount).Sum();
 
                     membershipLst.Add(drawQuantity);
 

@@ -120,8 +120,7 @@ namespace Restaurant.View.reports.salesReports
         {//load
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 Invoices = await statisticModel.Getorderitemcount((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
 

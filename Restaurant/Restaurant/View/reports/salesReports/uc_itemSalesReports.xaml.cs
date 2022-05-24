@@ -201,9 +201,9 @@ namespace Restaurant.View.reports.salesReports
             //(cb_Items.SelectedIndex != -1         ? s.ITitemId        == (int)cb_Items.SelectedValue : true)
             &&
             //date
-            (dp_ItemStartDate.SelectedDate != null ? s.updateDate.Value.Date >= dp_ItemStartDate.SelectedDate.Value.Date : true)
+            (dp_ItemStartDate.SelectedDate != null ? s.invDate.Value.Date >= dp_ItemStartDate.SelectedDate.Value.Date : true)
              &&
-            (dp_ItemEndDate.SelectedDate != null ? s.updateDate.Value.Date <= dp_ItemEndDate.SelectedDate.Value.Date : true)
+            (dp_ItemEndDate.SelectedDate != null ? s.invDate.Value.Date <= dp_ItemEndDate.SelectedDate.Value.Date : true)
             );
 
             if (selectedTab == 0)
@@ -348,8 +348,8 @@ namespace Restaurant.View.reports.salesReports
         {
             var temp = Invoices
                 .Where(x =>
-                 (startDate.SelectedDate != null ? x.updateDate >= startDate.SelectedDate : true)
-                && (endDate.SelectedDate != null ? x.updateDate <= endDate.SelectedDate : true))
+                 (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
+                && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true))
                 .GroupBy(obj => new
                 {
                     obj.branchCreatorId,
@@ -366,7 +366,7 @@ namespace Restaurant.View.reports.salesReports
                     ITitemId = obj.FirstOrDefault().ITitemId,
                     ITunitName = obj.FirstOrDefault().ITunitName,
                     ITunitId = obj.FirstOrDefault().ITunitId,
-                    ITupdateDate = obj.FirstOrDefault().ITupdateDate,
+                    invDate = obj.FirstOrDefault().invDate,
                     itemAvg = obj.Average(x => x.ITquantity),
                     count = obj.Count()
                 }).OrderByDescending(obj => obj.ITquantity);
@@ -379,8 +379,8 @@ namespace Restaurant.View.reports.salesReports
         {
             var temp = Invoices
                 .Where(x =>
-                 (startDate.SelectedDate != null ? x.updateDate >= startDate.SelectedDate : true)
-                && (endDate.SelectedDate != null ? x.updateDate <= endDate.SelectedDate : true))
+                 (startDate.SelectedDate != null ? x.invDate >= startDate.SelectedDate : true)
+                && (endDate.SelectedDate != null ? x.invDate <= endDate.SelectedDate : true))
                 .GroupBy(obj => new
                 {
                     obj.ITitemId
@@ -397,7 +397,7 @@ namespace Restaurant.View.reports.salesReports
                     ITunitName = obj.FirstOrDefault().ITunitName,
                     ITunitId = obj.FirstOrDefault().ITunitId,
                     itemAvg = obj.Average(x => x.ITquantity),
-                    ITupdateDate = obj.FirstOrDefault().ITupdateDate,
+                    invDate = obj.FirstOrDefault().invDate,
                     count = obj.Count()
                 }).OrderByDescending(obj => obj.ITquantity);
 
@@ -1387,7 +1387,7 @@ namespace Restaurant.View.reports.salesReports
             }
 
             SeriesCollection rowChartData = new SeriesCollection();
-            var tempName = temp.Select(s => s.IupdateDate);
+            var tempName = temp.Select(s => s.invDate);
             names.Add("x");
 
             List<string> lable = new List<string>();
@@ -1402,7 +1402,7 @@ namespace Restaurant.View.reports.salesReports
                     {
                         var firstOfThisMonth = new DateTime(year, month, 1);
                         var firstOfNextMonth = firstOfThisMonth.AddMonths(1);
-                        var drawCash = temp.ToList().Where(c => c.ITupdateDate > firstOfThisMonth && c.ITupdateDate <= firstOfNextMonth).Sum(obj => (long)obj.ITquantity);
+                        var drawCash = temp.ToList().Where(c => c.invDate > firstOfThisMonth && c.invDate <= firstOfNextMonth).Sum(obj => (long)obj.ITquantity);
                         cash.Add(drawCash);
                         MyAxis.Labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "/" + year);
 
@@ -1424,7 +1424,7 @@ namespace Restaurant.View.reports.salesReports
                 {
                     var firstOfThisYear = new DateTime(year, 1, 1);
                     var firstOfNextMYear = firstOfThisYear.AddYears(1);
-                    var drawCash = temp.ToList().Where(c => c.ITupdateDate > firstOfThisYear && c.ITupdateDate <= firstOfNextMYear).Sum(obj => (long)obj.ITquantity);
+                    var drawCash = temp.ToList().Where(c => c.invDate > firstOfThisYear && c.invDate <= firstOfNextMYear).Sum(obj => (long)obj.ITquantity);
                     cash.Add(drawCash);
                     MyAxis.Labels.Add(year.ToString());
                 }
