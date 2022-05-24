@@ -1113,6 +1113,118 @@ namespace Restaurant.Classes
 
             return invoice;
         }
+        /*
+
+          public async Task<Invoice> recordConfiguredAgentCash(Invoice invoice, string invType, CashTransfer cashTransfer)
+       {
+           Agent agent = new Agent();
+           decimal newBalance = 0;
+           agent = await agent.getAgentById(invoice.agentId.Value);
+
+           #region agent Cash transfer
+           cashTransfer.posId = MainWindow.posLogin.posId;
+           cashTransfer.agentId = invoice.agentId;
+           cashTransfer.invId = invoice.invoiceId;
+           cashTransfer.createUserId = invoice.createUserId;
+           #endregion
+           switch (invType)
+           {
+               #region purchase
+               case "pi"://purchase invoice
+               case "sb"://sale bounce
+                   cashTransfer.transType = "p";
+                   if (invType.Equals("pi"))
+                   {
+                       cashTransfer.side = "v"; // vendor
+                       cashTransfer.transNum = await cashTransfer.generateCashNumber("pv");
+                   }
+                   else
+                   {
+                       cashTransfer.side = "c"; // vendor                        
+                       cashTransfer.transNum = await cashTransfer.generateCashNumber("pc");
+
+                   }
+                   if (agent.balanceType == 1)
+                   {
+                       if (cashTransfer.cash <= (decimal)agent.balance)
+                       {
+                           newBalance = agent.balance - (decimal)cashTransfer.cash;
+                           agent.balance = newBalance;
+                       }
+                       else
+                       {
+                           newBalance = (decimal)cashTransfer.cash - agent.balance;
+                           agent.balance = newBalance;
+                           agent.balanceType = 0;
+                       }
+                       cashTransfer.transType = "p"; //pull
+
+                       if (cashTransfer.processType != "balance")
+                           await cashTransfer.Save(cashTransfer); //add agent cash transfer
+
+                       await agent.save(agent);
+                   }
+                   else if (agent.balanceType == 0)
+                   {
+                       newBalance = agent.balance + (decimal)cashTransfer.cash;
+                       agent.balance = newBalance;
+                       await agent.save(agent);
+                   }
+                   break;
+               #endregion
+               #region purchase bounce
+               case "pb"://purchase bounce invoice
+               case "si"://sale invoice
+                   cashTransfer.transType = "d";
+
+                   if (invType.Equals("pb"))
+                   {
+                       cashTransfer.side = "v"; // vendor
+                       cashTransfer.transNum = await cashTransfer.generateCashNumber("dv");
+                   }
+                   else
+                   {
+                       cashTransfer.side = "c"; // customer
+                       cashTransfer.transNum = await cashTransfer.generateCashNumber("dc");
+                   }
+                   if (agent.balanceType == 0)
+                   {
+                       if (cashTransfer.cash <= (decimal)agent.balance)
+                       {
+                           newBalance = agent.balance - (decimal)cashTransfer.cash;
+                           agent.balance = newBalance;
+                       }
+                       else
+                       {
+                           newBalance = (decimal)cashTransfer.cash - agent.balance;
+                           agent.balance = newBalance;
+                           agent.balanceType = 1;
+                       }
+                       cashTransfer.transType = "d"; //deposit
+
+                       if (cashTransfer.cash > 0 && cashTransfer.processType != "balance")
+                       {
+                           await cashTransfer.Save(cashTransfer); //add cash transfer     
+                       }
+                       await agent.save(agent);
+                   }
+                   else if (agent.balanceType == 1)
+                   {
+                       newBalance = agent.balance + (decimal)cashTransfer.cash;
+                       agent.balance = newBalance;
+                       await agent.save(agent);
+                   }
+                   break;
+                   #endregion
+           }
+
+           return invoice;
+       }
+
+
+        * */
+
+
         public async Task<Invoice> recordConfiguredAgentCash(Invoice invoice, string invType, CashTransfer cashTransfer)
         {
             Agent agent = new Agent();
@@ -1148,9 +1260,19 @@ namespace Restaurant.Classes
                         {
                             newBalance = agent.balance - (decimal)cashTransfer.cash;
                             agent.balance = newBalance;
+
+                            // yasin code
+                            invoice.paid += cashTransfer.cash;
+                            invoice.deserved -= cashTransfer.cash;
+                            ////
                         }
                         else
                         {
+                            // yasin code
+                            invoice.paid += (decimal)agent.balance;
+                            invoice.deserved -= (decimal)agent.balance;
+                            //////
+                            ///
                             newBalance = (decimal)cashTransfer.cash - agent.balance;
                             agent.balance = newBalance;
                             agent.balanceType = 0;
@@ -1191,9 +1313,18 @@ namespace Restaurant.Classes
                         {
                             newBalance = agent.balance - (decimal)cashTransfer.cash;
                             agent.balance = newBalance;
+
+                            // yasin code
+                            invoice.paid += cashTransfer.cash;
+                            invoice.deserved -= cashTransfer.cash;
+                            ////
                         }
                         else
                         {
+                            // yasin code
+                            invoice.paid += (decimal)agent.balance;
+                            invoice.deserved -= (decimal)agent.balance;
+                            //////
                             newBalance = (decimal)cashTransfer.cash - agent.balance;
                             agent.balance = newBalance;
                             agent.balanceType = 1;
@@ -1218,7 +1349,9 @@ namespace Restaurant.Classes
 
             return invoice;
         }
-        public async Task<Invoice> recordPosCashTransfer(Invoice invoice, string invType)
+
+
+          public async Task<Invoice> recordPosCashTransfer(Invoice invoice, string invType)
         {
             #region pos Cash transfer
             CashTransfer posCash = new CashTransfer();
@@ -1273,6 +1406,62 @@ namespace Restaurant.Classes
 
             return invoice;
         }
+        /*
+            public async Task<Invoice> recordCompanyCashTransfer(Invoice invoice, string invType)
+          {
+              ShippingCompanies company = new ShippingCompanies();
+              decimal newBalance = 0;
+              company = await company.GetByID(invoice.shippingCompanyId.Value);
+
+              CashTransfer cashTrasnfer = new CashTransfer();
+              cashTrasnfer.posId = MainWindow.posLogin.posId;
+              cashTrasnfer.shippingCompanyId = invoice.shippingCompanyId;
+              cashTrasnfer.invId = invoice.invoiceId;
+              cashTrasnfer.createUserId = invoice.createUserId;
+              cashTrasnfer.processType = "balance";
+              cashTrasnfer.transType = "d"; //deposit
+              cashTrasnfer.side = "sh"; // vendor
+              cashTrasnfer.transNum = await cashTrasnfer.generateCashNumber("dsh");
+
+              if (company.balanceType == 0)
+              {
+                  if (invoice.totalNet <= (decimal)company.balance)
+                  {
+                      invoice.paid = invoice.totalNet;
+                      invoice.deserved = 0;
+
+                      newBalance = (decimal)company.balance - (decimal)invoice.totalNet;
+                      company.balance = newBalance;
+                  }
+                  else
+                  {
+                      invoice.paid = (decimal)company.balance;
+                      invoice.deserved = invoice.totalNet - (decimal)company.balance;
+                      newBalance = (decimal)invoice.totalNet - company.balance;
+                      company.balance = newBalance;
+                      company.balanceType = 1;
+                  }
+
+                  cashTrasnfer.cash = invoice.paid;
+                  cashTrasnfer.transType = "d"; //deposit
+                  if (invoice.paid > 0)
+                  {
+                      await cashTrasnfer.Save(cashTrasnfer); //add cash transfer
+                      await invoice.saveInvoice(invoice);
+                  }
+                  await company.save(company);
+              }
+              else if (company.balanceType == 1)
+              {
+                  newBalance = (decimal)company.balance + (decimal)invoice.totalNet;
+                  company.balance = newBalance;
+                  await company.save(company);
+              }
+              return invoice;
+          }
+          */
+
+
         public async Task<Invoice> recordCompanyCashTransfer(Invoice invoice, string invType)
         {
             ShippingCompanies company = new ShippingCompanies();
@@ -1283,7 +1472,7 @@ namespace Restaurant.Classes
             cashTrasnfer.posId = MainWindow.posLogin.posId;
             cashTrasnfer.shippingCompanyId = invoice.shippingCompanyId;
             cashTrasnfer.invId = invoice.invoiceId;
-            cashTrasnfer.createUserId = invoice.updateUserId;
+            cashTrasnfer.createUserId = invoice.createUserId;
             cashTrasnfer.processType = "balance";
             cashTrasnfer.transType = "d"; //deposit
             cashTrasnfer.side = "sh"; // vendor
@@ -1291,34 +1480,37 @@ namespace Restaurant.Classes
 
             if (company.balanceType == 0)
             {
-                if (invoice.totalNet <= (decimal)company.balance)
+                if (cashTrasnfer.cash <= (decimal)company.balance)
                 {
-                    invoice.paid = invoice.totalNet;
-                    invoice.deserved = 0;
-                    newBalance = (decimal)company.balance - (decimal)invoice.totalNet;
+                    newBalance = (decimal)company.balance - (decimal)cashTrasnfer.cash;
                     company.balance = newBalance;
+
+                    // yasin code
+                    invoice.paid += cashTrasnfer.cash;
+                    invoice.deserved -= cashTrasnfer.cash;
+                    /////
                 }
                 else
                 {
-                    invoice.paid = (decimal)company.balance;
-                    invoice.deserved = invoice.totalNet - (decimal)company.balance;
-                    newBalance = (decimal)invoice.totalNet - company.balance;
+                    // yasin code
+                    invoice.paid += (decimal)company.balance;
+                    invoice.deserved -= (decimal)company.balance;
+                    ///////
+                    newBalance = (decimal)cashTrasnfer.cash - company.balance;
                     company.balance = newBalance;
                     company.balanceType = 1;
                 }
 
-                cashTrasnfer.cash = invoice.paid;
                 cashTrasnfer.transType = "d"; //deposit
-                if (invoice.paid > 0)
+                if (cashTrasnfer.cash > 0)
                 {
                     await cashTrasnfer.Save(cashTrasnfer); //add cash transfer
-                    await invoice.saveInvoice(invoice);
                 }
                 await company.save(company);
             }
             else if (company.balanceType == 1)
             {
-                newBalance = (decimal)company.balance + (decimal)invoice.totalNet;
+                newBalance = (decimal)company.balance + (decimal)cashTrasnfer.cash;
                 company.balance = newBalance;
                 await company.save(company);
             }
