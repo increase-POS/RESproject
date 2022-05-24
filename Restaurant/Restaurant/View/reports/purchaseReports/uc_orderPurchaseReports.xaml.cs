@@ -142,8 +142,7 @@ namespace Restaurant.View.reports.purchaseReports
         {//load
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
 
                 Invoices = await statisticModel.GetPurorderitemcount((int)MainWindow.branchLogin.branchId, (int)MainWindow.userLogin.userId);
 
@@ -171,13 +170,11 @@ namespace Restaurant.View.reports.purchaseReports
 
                 HelpClass.ReportTabTitle(txt_tabTitle, this.Tag.ToString(), btn_branch.Tag.ToString());
 
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-                
-                    HelpClass.EndAwait(grid_main);
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
