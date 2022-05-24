@@ -2803,6 +2803,7 @@ namespace Restaurant.View.sales
                                 refreshItemsPrice();
                             }
                             ///print 
+                            #region print
                             //thread  
                             if (prinvoiceId > 0)
                             {
@@ -2842,7 +2843,7 @@ namespace Restaurant.View.sales
                                     }
                                 }
                             }
-
+                            #endregion
                         }
 
                     }
@@ -2962,40 +2963,9 @@ namespace Restaurant.View.sales
             statusObject.createUserId = MainWindow.userLogin.userId;
             #endregion
 
-            int res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId);
+            int res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId, AppSettings.statusesOfPreparingOrder);
 
-            if (AppSettings.statusesOfPreparingOrder == "directlyPrint")
-            {
-                #region save status = Preparing
-                statusObject = new orderPreparingStatus();
-                statusObject.orderPreparingId = res;
-                statusObject.status = "Preparing";
-                statusObject.createUserId = MainWindow.userLogin.userId;
-
-                await preparingOrder.updateOrderStatus(statusObject);
-                #endregion
-
-                #region save status = Ready
-                statusObject = new orderPreparingStatus();
-                statusObject.orderPreparingId = res;
-                statusObject.status = "Ready";
-                statusObject.createUserId = MainWindow.userLogin.userId;
-
-                await preparingOrder.updateOrderStatus(statusObject);
-                #endregion
-
-                #region save status = Done if no shipping
-                if (invoice.shippingCompanyId == null)
-                {
-                    statusObject = new orderPreparingStatus();
-                    statusObject.orderPreparingId = res;
-                    statusObject.status = "Done";
-                    statusObject.createUserId = MainWindow.userLogin.userId;
-
-                    await preparingOrder.updateOrderStatus(statusObject);
-                }
-                #endregion
-            }
+          
         }
 
         async Task sendOrdersToKitchen()
@@ -3059,39 +3029,8 @@ namespace Restaurant.View.sales
 
                     }
                 }
-                int res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId);
-                if (AppSettings.statusesOfPreparingOrder == "directlyPrint")
-                {
-                    #region save status = Preparing
-                    statusObject = new orderPreparingStatus();
-                    statusObject.orderPreparingId = res;
-                    statusObject.status = "Preparing";
-                    statusObject.createUserId = MainWindow.userLogin.userId;
-
-                    await preparingOrder.updateOrderStatus(statusObject);
-                    #endregion
-
-                    #region save status = Ready
-                    statusObject = new orderPreparingStatus();
-                    statusObject.orderPreparingId = res;
-                    statusObject.status = "Ready";
-                    statusObject.createUserId = MainWindow.userLogin.userId;
-
-                    await preparingOrder.updateOrderStatus(statusObject);
-                    #endregion
-
-                    #region save status = Done if no shipping
-                    if (invoice.shippingCompanyId == null)
-                    {
-                        statusObject = new orderPreparingStatus();
-                        statusObject.orderPreparingId = res;
-                        statusObject.status = "Done";
-                        statusObject.createUserId = MainWindow.userLogin.userId;
-
-                        await preparingOrder.updateOrderStatus(statusObject);
-                    }
-                    #endregion
-                }
+                int res = await preparingOrder.savePreparingOrders(preparingOrder, preparingItemsList, statusObject, MainWindow.branchLogin.branchId, AppSettings.statusesOfPreparingOrder);
+                
                 //list after  save
                 if (AppSettings.print_kitchen_on_sale == "1")
                 {
