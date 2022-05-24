@@ -2790,6 +2790,7 @@ namespace Restaurant.View.sales
                         }
                         if (multipleValid)
                         {
+                            invoice.invDate = DateTime.Now;
                             if (AppSettings.invType == "diningHall")
                                 await saveDiningHallInvoice("s");
 
