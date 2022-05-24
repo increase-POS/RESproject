@@ -1604,6 +1604,7 @@ namespace Restaurant.View.accounts
         void Clear()
         {
             this.DataContext = new CashTransfer();
+            tb_cash.Text = "0";
             foreach (var el in cardEllipseList)
             {
                 el.Stroke = Application.Current.Resources["SecondColor"] as SolidColorBrush;
