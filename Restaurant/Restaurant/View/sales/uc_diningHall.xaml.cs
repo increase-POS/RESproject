@@ -1625,11 +1625,14 @@ namespace Restaurant.View.sales
                 else
                     _MemberShipId = 0;
 
-                await refreshItemsList();
-                Search();
-                refreshItemsPrice();
+               
             }
+            else
+                _MemberShipId = 0;
 
+            await refreshItemsList();
+            Search();
+            refreshItemsPrice();
             #endregion
 
             if (AppSettings.invType == "diningHall")
