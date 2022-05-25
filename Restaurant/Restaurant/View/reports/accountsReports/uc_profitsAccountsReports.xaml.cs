@@ -66,7 +66,6 @@ namespace Restaurant.View.reports.accountsReports
         IEnumerable<ItemUnitInvoiceProfit> profits;
         Statistics statisticsModel = new Statistics();
         IEnumerable<ItemUnitInvoiceProfit> profitsQuery;
-        IEnumerable<ItemUnitInvoiceProfit> profitsQueryExcel;
         string searchText = "";
         int selectedTab = 0;
         //prin & pdf
@@ -149,7 +148,8 @@ namespace Restaurant.View.reports.accountsReports
 
             searchText = txt_search.Text.ToLower();
 
-            profitsTemp = profits.Where(p =>
+            profitsTemp = profits
+                .Where(p =>
             (dp_startDate.SelectedDate != null ? p.updateDate >= dp_startDate.SelectedDate : true)
             &&
             //end date
@@ -174,16 +174,6 @@ namespace Restaurant.View.reports.accountsReports
             s.invNumber.ToLower().Contains(searchText)
             ||
             s.totalNet.ToString().ToLower().Contains(searchText)
-            ||
-            s.invType.ToLower().Contains(searchText)
-            ||
-            s.ITitemName.ToLower().Contains(searchText)
-            ||
-            s.ITunitName.ToLower().Contains(searchText)
-            ||
-            s.ITquantity.ToString().ToLower().Contains(searchText)
-            ||
-            s.ITprice.ToString().ToLower().Contains(searchText)
             )
             &&
             //branchID/itemID
@@ -196,7 +186,6 @@ namespace Restaurant.View.reports.accountsReports
                 cb_pos.SelectedIndex != -1 ? s.posId == Convert.ToInt32(cb_pos.SelectedValue) : true
             ));
 
-            profitsQueryExcel = profitsQuery.ToList();
         }
 
         async Task SearchItem()
@@ -211,19 +200,9 @@ namespace Restaurant.View.reports.accountsReports
             profitsQuery = profitsTemp
             .Where(s =>
             (
-            s.invNumber.ToLower().Contains(searchText)
-            ||
-            s.totalNet.ToString().ToLower().Contains(searchText)
-            ||
-            s.invType.ToLower().Contains(searchText)
-            ||
             s.ITitemName.ToLower().Contains(searchText)
             ||
             s.ITunitName.ToLower().Contains(searchText)
-            ||
-            s.ITquantity.ToString().ToLower().Contains(searchText)
-            ||
-            s.ITprice.ToString().ToLower().Contains(searchText)
             )
             &&
             //branchID/itemID
@@ -243,7 +222,6 @@ namespace Restaurant.View.reports.accountsReports
                 x.itemunitProfit = quantities[i].itemunitProfit;
                 i++;
             }
-            profitsQueryExcel = profitsQuery.ToList();
         }
 
 
@@ -500,15 +478,16 @@ namespace Restaurant.View.reports.accountsReports
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
+                //HelpClass.StartAwait(grid_main);
 
                 await Search();
 
-                HelpClass.EndAwait(grid_main);
+                //HelpClass.EndAwait(grid_main);
+                
             }
             catch (Exception ex)
             {
-                HelpClass.EndAwait(grid_main);
+                //HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
