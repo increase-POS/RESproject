@@ -999,7 +999,6 @@ namespace Restaurant.View.accounts
         {//deposit selection
             try
             {
-
                 HelpClass.StartAwait(grid_main);
 
                 btn_invoices.IsEnabled = false;
@@ -1639,7 +1638,7 @@ namespace Restaurant.View.accounts
             tb_cash.IsReadOnly = false;
             tb_docNumCard.Visibility = Visibility.Collapsed;
             brd_docNumCard.Visibility = Visibility.Collapsed;
-            grid_cheque.Visibility = Visibility.Collapsed;
+            bdr_cheque.Visibility = Visibility.Collapsed;
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);
