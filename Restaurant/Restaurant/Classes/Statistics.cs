@@ -149,6 +149,7 @@ namespace Restaurant.Classes
         //invoice
         public int invoiceId { get; set; }
         public string invNumber { get; set; }
+        public string invBarcode { get; set; }
         public Nullable<int> agentId { get; set; }
 
         public string invType { get; set; }
@@ -240,6 +241,7 @@ namespace Restaurant.Classes
         //public string ITUpdateuserAccNam { get; set; }*
         public int invoiceId { get; set; }
         public string invNumber { get; set; }
+        public string invBarcode { get; set; }
         //public Nullable<int> agentId { get; set; }*
         public Nullable<int> posId { get; set; }
         public string invType { get; set; }
@@ -411,6 +413,7 @@ namespace Restaurant.Classes
         public Nullable<int> cardId { get; set; }//
         public Nullable<int> bondId { get; set; }//
         public string invNumber { get; set; }//
+        public string invBarcode { get; set; }
         public string invType { get; set; }//
         public Nullable<decimal> totalNet { get; set; }//
         public string Description
@@ -613,6 +616,7 @@ namespace Restaurant.Classes
 
         public int invoiceId { get; set; }
         public string invNumber { get; set; }
+        public string invBarcode { get; set; }
     }
 
     public class ItemTransferInvoice
@@ -676,6 +680,7 @@ namespace Restaurant.Classes
         //invoice
         public int invoiceId { get; set; }
         public string invNumber { get; set; }
+        public string invBarcode { get; set; }
         public Nullable<int> agentId { get; set; }
         public Nullable<int> createUserId { get; set; }
         public string invType { get; set; }
@@ -913,6 +918,7 @@ namespace Restaurant.Classes
         public string categoryName { get; set; }
         public Nullable<decimal> realDuration { get; set; }
         public string invNumber { get; set; }
+        public string invBarcode { get; set; }
         public Nullable<int> tagId { get; set; }
         public string tagName { get; set; }
         public Nullable<System.DateTime> listedDate { get; set; }
@@ -942,6 +948,7 @@ namespace Restaurant.Classes
         //invoice
         public int invoiceId { get; set; }
         public string invNumber { get; set; }
+        public string invBarcode { get; set; }
         public string invType { get; set; }
         public string discountType { get; set; }
         public Nullable<decimal> discountValue { get; set; }

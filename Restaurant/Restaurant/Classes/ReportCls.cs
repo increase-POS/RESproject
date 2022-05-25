@@ -1715,7 +1715,7 @@ srb
 
 
             paramarr.Add(new ReportParameter("tax", DecTostring(invoice.tax) == null ? "0" : DecTostring(invoice.tax)));
-            string invNum = invoice.invNumber == null ? "-" : invoice.invNumber.ToString();
+            string invNum = invoice.invBarcode == null ? "-" : invoice.invBarcode.ToString();
             paramarr.Add(new ReportParameter("barcodeimage", "file:\\" + BarcodeToImage(invNum, "invnum")));
             paramarr.Add(new ReportParameter("Currency", AppSettings.Currency));
             paramarr.Add(new ReportParameter("branchName", invoice.branchName == null ? "-" : invoice.branchName));
@@ -1802,7 +1802,7 @@ srb
             paramarr.Add(new ReportParameter("deservedDate", invoice.deservedDate.ToString() == null ? "-" : DateToString(invoice.deservedDate)));
 
             paramarr.Add(new ReportParameter("tax", invoice.tax == null ? "0" : HelpClass.PercentageDecTostring(invoice.tax)));
-            string invNum = invoice.invNumber == null ? "-" : invoice.invNumber.ToString();
+            string invNum = invoice.invBarcode == null ? "-" : invoice.invBarcode.ToString();
             paramarr.Add(new ReportParameter("barcodeimage", "file:\\" + BarcodeToImage(invNum, "invnum")));
             paramarr.Add(new ReportParameter("Currency", AppSettings.Currency));
             paramarr.Add(new ReportParameter("branchName", invoice.branchName == null ? "-" : invoice.branchName));
@@ -1831,7 +1831,7 @@ srb
                 paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trSalesInvoice")));
 
             }
-            paramarr.Add(new ReportParameter("trDeliveryMan", AppSettings.resourcemanagerreport.GetString("deliveryMan")));
+            paramarr.Add(new ReportParameter("trDeliveryMan", AppSettings.resourcemanagerreport.GetString("trDriver")));
             paramarr.Add(new ReportParameter("trTheShippingCompany", AppSettings.resourcemanagerreport.GetString("theShippingCompany")));
             paramarr.Add(new ReportParameter("DeliveryMan", invoice.shipUserName));
             paramarr.Add(new ReportParameter("ShippingCompany",clsReports.shippingCompanyNameConvert(shippingcompany.name)));

@@ -705,16 +705,26 @@ namespace Restaurant.Classes
                 if (invoice.shipUserId>0)
                 {
                     driverdiv = driverdiv.Replace("[[driver]]", invoice.shipUserName);
-                    driverdiv = driverdiv.Replace("[[trdriver]]", AppSettings.resourcemanagerreport.GetString("deliveryMan"));
+                    driverdiv = driverdiv.Replace("[[trdriver]]", AppSettings.resourcemanagerreport.GetString("trDriver"));
+                    shipcomdiv = shipcomdiv.Replace("[[driverdiv]]", driverdiv);
+                }
+                else
+                {
+                    shipcomdiv = shipcomdiv.Replace("[[driverdiv]]", "");
                 }
                
-                shipcomdiv = shipcomdiv.Replace("[[driverdiv]]", driverdiv);
+             
                 shipcomdiv = shipcomdiv.Replace("[[shippingcompany]]", invoice.shippingCompanyName);
 
                 shipcomdiv = shipcomdiv.Replace("[[trshippingcompany]]", AppSettings.resourcemanagerreport.GetString("theShippingCompany"));
+                invbody = invbody.Replace("[[shipcomdiv]]", shipcomdiv);
+            }
+            else
+            {
+                invbody = invbody.Replace("[[shipcomdiv]]", "");
             }
 
-            invbody = invbody.Replace("[[shipcomdiv]]", shipcomdiv);
+     
 
             //end Shipping company 
 
