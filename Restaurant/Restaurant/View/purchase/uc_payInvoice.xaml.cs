@@ -3585,7 +3585,7 @@ namespace Restaurant.View.purchase
 
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 this.Dispatcher.Invoke(() =>
                 {

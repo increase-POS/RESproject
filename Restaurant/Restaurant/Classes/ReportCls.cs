@@ -1336,8 +1336,8 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("logoImage", "file:\\" + GetLogoImagePath()));
             paramarr.Add(new ReportParameter("branchName", invoice.branchCreatorName == null ? "-" : invoice.branchCreatorName));
             paramarr.Add(new ReportParameter("branchReciever", invoice.branchName == null ? "-" : invoice.branchName));
-            paramarr.Add(new ReportParameter("deserveDate", invoice.deservedDate == null ? "-" : DateToString(invoice.deservedDate)));
-            paramarr.Add(new ReportParameter("venInvoiceNumber", (invoice.vendorInvNum == null || invoice.vendorInvNum == "") ? "-" : invoice.vendorInvNum.ToString()));//paramarr[6]
+        //    paramarr.Add(new ReportParameter("deserveDate", invoice.deservedDate == null ? "-" : DateToString(invoice.deservedDate)));
+          //  paramarr.Add(new ReportParameter("venInvoiceNumber", (invoice.vendorInvNum == null || invoice.vendorInvNum == "") ? "-" : invoice.vendorInvNum.ToString()));//paramarr[6]
 
             paramarr.Add(new ReportParameter("userName", userName.Trim()));
 
@@ -1437,7 +1437,7 @@ srb
             //discountType
             paramarr.Add(new ReportParameter("invNumber", invoice.invNumber == null ? "-" : invoice.invNumber.ToString()));//paramarr[6]
             paramarr.Add(new ReportParameter("invoiceId", invoice.invoiceId.ToString()));
-
+          
 
 
             paramarr.Add(new ReportParameter("invDate", DateToString(invoice.invDate) == null ? "-" : DateToString(invoice.invDate)));
