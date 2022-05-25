@@ -958,9 +958,53 @@ namespace Restaurant.View.reports.salesReports
             }
         }
 
-        private void allowPrintRowinDatagrid(object sender, RoutedEventArgs e)
+        private async void allowPrintRowinDatagrid(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
 
+                int result = 0;
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        ItemTransferInvoice row = (ItemTransferInvoice)dgInvoice.SelectedItems[0];
+                        clsReports classreport = new clsReports();
+
+                        Invoice invoiceModel = new Invoice();
+                        if (row.invoiceId > 0)
+                        {
+                            result = await invoiceModel.updateprintstat(row.invoiceId, -1, true, true);
+
+
+                            if (result > 0)
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+                            }
+                            else
+                            {
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            }
+
+                        }
+                        else
+                        {
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trChooseInvoiceToolTip"), animation: ToasterAnimation.FadeIn);
+                        }
+                    }
+
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+
+
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
         }
         #endregion
 
