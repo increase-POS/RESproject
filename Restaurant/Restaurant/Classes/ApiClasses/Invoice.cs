@@ -1601,7 +1601,7 @@ namespace Restaurant.Classes
 
         public string genarateSaleInvBarcode(string branchCode,string invNumber)
         {
-            return "si-" + branchCode + "-" +DateTime.Now+"-"+ invNumber;
+            return "si-" + branchCode + "-" +DateTime.Now.ToString().Split(' ')[0]+"-"+ invNumber;
         }
         public async Task<int> updateprintstat(int id, int countstep, bool isOrginal, bool updateOrginalstate)
         {
