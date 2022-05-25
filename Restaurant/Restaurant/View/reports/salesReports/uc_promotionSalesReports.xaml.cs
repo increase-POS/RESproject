@@ -205,6 +205,8 @@ namespace Restaurant.View.reports.salesReports
             (
             s.invNumber.ToLower().Contains(searchText)
             ||
+            (s.barcode != null ? s.barcode.ToLower().Contains(searchText) : false)
+            ||
             (s.Copname != null ? s.Copname.ToLower().Contains(searchText) : false)
             ||
             (s.Copcode != null ? s.Copcode.ToLower().Contains(searchText) : false)
@@ -235,6 +237,8 @@ namespace Restaurant.View.reports.salesReports
             (
             s.invNumber.ToLower().Contains(searchText)
             ||
+            (s.barcode != null ? s.barcode.ToLower().Contains(searchText) : false)
+            ||
             (s.Oname != null ? s.Oname.ToLower().Contains(searchText) : false)
             ||
             (s.Ocode != null ? s.Ocode.ToLower().Contains(searchText) : false)
@@ -264,6 +268,8 @@ namespace Restaurant.View.reports.salesReports
               .Where(s =>
            (
            s.invNumber.ToLower().Contains(searchText)
+           //||
+           // (s.barcode != null ? s.barcode.ToLower().Contains(searchText) : false)
            ||
            (s.invoicesClassName != null ? s.invoicesClassName.ToLower().Contains(searchText) : false)
            )

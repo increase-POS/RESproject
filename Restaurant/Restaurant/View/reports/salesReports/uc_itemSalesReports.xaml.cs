@@ -184,11 +184,13 @@ namespace Restaurant.View.reports.salesReports
             (
             (s.invNumber != null         ? s.invNumber.ToLower().Contains(searchText)         : false)
             ||
+            (s.barcode != null ? s.barcode.ToLower().Contains(searchText) : false)
+            ||
             (s.branchCreatorName != null ? s.branchCreatorName.ToLower().Contains(searchText) : false)
             ||
-            (s.categoryName != null      ? s.posName.ToLower().Contains(searchText)           : false)
+            (s.categoryName != null ? s.posName.ToLower().Contains(searchText) : false)
             ||
-            (s.ITitemName != null        ? s.agentName.ToLower().Contains(searchText)         : false)
+            (s.ITitemName != null        ? s.ITitemName.ToLower().Contains(searchText) : false)
             )
             &&
             //branch
@@ -934,6 +936,7 @@ namespace Restaurant.View.reports.salesReports
                     if (stk_tagsBranches.Children.Count == 0)
                     {
                         tempSearch = collectListAll.Where(s =>
+                                                     (s.barcode !=null ? s.branchCreatorName.ToLower().Contains(txt_search.Text) : false) ||
                                                      s.branchCreatorName.ToLower().Contains(txt_search.Text) ||
                                                      s.ITitemName.ToLower().Contains(txt_search.Text) ||
                                                      s.count.ToString().ToLower().Contains(txt_search.Text) ||
@@ -944,6 +947,7 @@ namespace Restaurant.View.reports.salesReports
                     else
                     {
                         tempSearch = collectListBranch.Where(s =>
+                                                    (s.barcode != null ? s.branchCreatorName.ToLower().Contains(txt_search.Text) : false) ||
                                                     s.branchCreatorName.ToLower().Contains(txt_search.Text) ||
                                                     s.ITitemName.ToLower().Contains(txt_search.Text) ||
                                                     s.ITunitName.ToLower().Contains(txt_search.Text) ||
@@ -956,17 +960,16 @@ namespace Restaurant.View.reports.salesReports
                     fillPieChartCollect();
                     fillColumnChartCollect();
                     fillRowChartCollect();
+
+                    dgInvoice.ItemsSource = tempSearch;
+                    txt_count.Text = dgInvoice.Items.Count.ToString();
+
                 }
-
-                dgInvoice.ItemsSource = tempSearch;
-                txt_count.Text = dgInvoice.Items.Count.ToString();
-
 
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }

@@ -1499,8 +1499,7 @@ namespace Restaurant.View.reports.salesReports
         {
             try
             {
-                
-                    HelpClass.StartAwait(grid_main);
+                HelpClass.StartAwait(grid_main);
                 if (selectedTab == 0)
                 {
                     itemTransfers = invLst
@@ -1508,8 +1507,9 @@ namespace Restaurant.View.reports.salesReports
                     itemTransfers = itemTransfers
                         .Where(s =>
                         (s.branchCreatorName.Contains(txt_search.Text) ||
-          s.invNumber.Contains(txt_search.Text)
-          ));
+                        (s.barcode != null ? s.barcode.Contains(txt_search.Text) : false) ||
+                        s.invNumber.Contains(txt_search.Text)
+                        ));
                     dgInvoice.ItemsSource = itemTransfers;
 
 
