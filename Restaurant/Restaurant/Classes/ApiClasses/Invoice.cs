@@ -1599,6 +1599,10 @@ namespace Restaurant.Classes
             return item;
         }
 
+        public string genarateSaleInvBarcode(string branchCode,string invNumber)
+        {
+            return "si-" + branchCode + "-" +DateTime.Now+"-"+ invNumber;
+        }
         public async Task<int> updateprintstat(int id, int countstep, bool isOrginal, bool updateOrginalstate)
         {
         
