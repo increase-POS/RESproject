@@ -474,7 +474,7 @@ namespace Restaurant.View.delivery
 
                             orderPreparingStatus ops = new orderPreparingStatus();
 
-                            if (i.shipUserName != null)
+                            if (i.shipUserId != null)
                             {
                                 if (i.status.Equals("Ready"))
                                 {
