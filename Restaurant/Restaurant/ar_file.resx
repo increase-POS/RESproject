@@ -4054,4 +4054,7 @@
   <data name="kitchenPrinter" xml:space="preserve">
     <value>طابعة المطبخ</value>
   </data>
+  <data name="restaurantInvoice" xml:space="preserve">
+    <value>فاتورة مطعم</value>
+  </data>
 </root>

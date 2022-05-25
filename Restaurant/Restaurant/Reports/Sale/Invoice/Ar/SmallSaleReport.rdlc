@@ -2002,7 +2002,7 @@
                     <TextRun>
                       <Value>=Parameters!Title.Value</Value>
                       <Style>
-                        <FontSize>14pt</FontSize>
+                        <FontSize>12pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -2014,9 +2014,9 @@
               </Paragraphs>
               <rd:DefaultName>agentTitle</rd:DefaultName>
               <Top>0.13847cm</Top>
-              <Left>1.07959cm</Left>
+              <Left>0.20991cm</Left>
               <Height>0.73189cm</Height>
-              <Width>3.53186cm</Width>
+              <Width>5.29297cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border />

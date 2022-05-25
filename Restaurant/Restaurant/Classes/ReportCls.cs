@@ -1660,92 +1660,92 @@ srb
 
             return disval;
         }
-        public List<ReportParameter> fillSaleInvReport(Invoice invoice, List<ReportParameter> paramarr)
-        {
-            checkLang();
+        //public List<ReportParameter> fillSaleInvReport(Invoice invoice, List<ReportParameter> paramarr)
+        //{
+        //    checkLang();
 
-            string agentName = (invoice.agentCompany != null || invoice.agentCompany != "") ? invoice.agentCompany.Trim()
-            : ((invoice.agentName != null || invoice.agentName != "") ? invoice.agentName.Trim() : "-");
-            string userName = invoice.uuserName + " " + invoice.uuserLast;
+        //    string agentName = (invoice.agentCompany != null || invoice.agentCompany != "") ? invoice.agentCompany.Trim()
+        //    : ((invoice.agentName != null || invoice.agentName != "") ? invoice.agentName.Trim() : "-");
+        //    string userName = invoice.uuserName + " " + invoice.uuserLast;
 
-            //  rep.DataSources.Add(new ReportDataSource("DataSetBank", banksQuery));
+        //    //  rep.DataSources.Add(new ReportDataSource("DataSetBank", banksQuery));
 
-            decimal disval = calcpercentval(invoice.discountType, invoice.discountValue, invoice.total);
-            decimal manualdisval = calcpercentval(invoice.manualDiscountType, invoice.manualDiscountValue, invoice.total);
-            invoice.discountValue = disval + manualdisval;
-            invoice.discountType = "1";
+        //    decimal disval = calcpercentval(invoice.discountType, invoice.discountValue, invoice.total);
+        //    decimal manualdisval = calcpercentval(invoice.manualDiscountType, invoice.manualDiscountValue, invoice.total);
+        //    invoice.discountValue = disval + manualdisval;
+        //    invoice.discountType = "1";
 
-            //  decimal totalafterdis;
-            //if (invoice.total != null)
-            //{
-            //    totalafterdis = (decimal)invoice.total - disval;
-            //}
-            //else
-            //{
-            //    totalafterdis = 0;
-            //}
+        //    //  decimal totalafterdis;
+        //    //if (invoice.total != null)
+        //    //{
+        //    //    totalafterdis = (decimal)invoice.total - disval;
+        //    //}
+        //    //else
+        //    //{
+        //    //    totalafterdis = 0;
+        //    //}
 
-            // discountType
-            //  decimal taxval = calcpercentval("2", invoice.tax, totalafterdis);
+        //    // discountType
+        //    //  decimal taxval = calcpercentval("2", invoice.tax, totalafterdis);
 
-            // decimal totalnet = totalafterdis + taxval;
-            //  percentValue(decimal ? value, decimal ? percent);
-            paramarr.Add(new ReportParameter("sales_invoice_note", AppSettings.sales_invoice_note));
-            paramarr.Add(new ReportParameter("Notes", (invoice.notes == null || invoice.notes == "") ? "-" : invoice.notes.Trim()));
-            paramarr.Add(new ReportParameter("invNumber", (invoice.invNumber == null || invoice.invNumber == "") ? "-" : invoice.invNumber.ToString()));//paramarr[6]
-            paramarr.Add(new ReportParameter("invoiceId", invoice.invoiceId.ToString()));
+        //    // decimal totalnet = totalafterdis + taxval;
+        //    //  percentValue(decimal ? value, decimal ? percent);
+        //    paramarr.Add(new ReportParameter("sales_invoice_note", AppSettings.sales_invoice_note));
+        //    paramarr.Add(new ReportParameter("Notes", (invoice.notes == null || invoice.notes == "") ? "-" : invoice.notes.Trim()));
+        //    paramarr.Add(new ReportParameter("invNumber", (invoice.invNumber == null || invoice.invNumber == "") ? "-" : invoice.invNumber.ToString()));//paramarr[6]
+        //    paramarr.Add(new ReportParameter("invoiceId", invoice.invoiceId.ToString()));
 
-            paramarr.Add(new ReportParameter("invDate", DateToString(invoice.updateDate) == null ? "-" : DateToString(invoice.invDate)));
-            paramarr.Add(new ReportParameter("invTime", TimeToString(invoice.invTime)));
-            paramarr.Add(new ReportParameter("vendorInvNum", invoice.agentCode == "-" ? "-" : invoice.agentCode.ToString()));
-            paramarr.Add(new ReportParameter("agentName", agentName.Trim()));
-            paramarr.Add(new ReportParameter("total", DecTostring(invoice.total) == null ? "-" : DecTostring(invoice.total)));
-
-
-
-            //  paramarr.Add(new ReportParameter("discountValue", DecTostring(disval) == null ? "-" : DecTostring(disval)));
-            paramarr.Add(new ReportParameter("discountValue", invoice.discountValue == null ? "0" : DecTostring(invoice.discountValue)));
-            paramarr.Add(new ReportParameter("discountType", invoice.discountType == null ? "1" : invoice.discountType.ToString()));
-
-            paramarr.Add(new ReportParameter("totalNet", DecTostring(invoice.totalNet) == null ? "-" : DecTostring(invoice.totalNet)));
-            paramarr.Add(new ReportParameter("paid", DecTostring(invoice.paid) == null ? "-" : DecTostring(invoice.paid)));
-            paramarr.Add(new ReportParameter("deserved", DecTostring(invoice.deserved) == null ? "-" : DecTostring(invoice.deserved)));
-            //paramarr.Add(new ReportParameter("deservedDate", invoice.deservedDate.ToString() == null ? "-" : invoice.deservedDate.ToString()));
-            paramarr.Add(new ReportParameter("deservedDate", invoice.deservedDate.ToString() == null ? "-" : DateToString(invoice.deservedDate)));
+        //    paramarr.Add(new ReportParameter("invDate", DateToString(invoice.updateDate) == null ? "-" : DateToString(invoice.invDate)));
+        //    paramarr.Add(new ReportParameter("invTime", TimeToString(invoice.invTime)));
+        //    paramarr.Add(new ReportParameter("vendorInvNum", invoice.agentCode == "-" ? "-" : invoice.agentCode.ToString()));
+        //    paramarr.Add(new ReportParameter("agentName", agentName.Trim()));
+        //    paramarr.Add(new ReportParameter("total", DecTostring(invoice.total) == null ? "-" : DecTostring(invoice.total)));
 
 
-            paramarr.Add(new ReportParameter("tax", DecTostring(invoice.tax) == null ? "0" : DecTostring(invoice.tax)));
-            string invNum = invoice.invBarcode == null ? "-" : invoice.invBarcode.ToString();
-            paramarr.Add(new ReportParameter("barcodeimage", "file:\\" + BarcodeToImage(invNum, "invnum")));
-            paramarr.Add(new ReportParameter("Currency", AppSettings.Currency));
-            paramarr.Add(new ReportParameter("branchName", invoice.branchName == null ? "-" : invoice.branchName));
-            paramarr.Add(new ReportParameter("userName", userName.Trim()));
-            paramarr.Add(new ReportParameter("logoImage", "file:\\" + GetLogoImagePath()));
-            if (invoice.invType == "pd" || invoice.invType == "sd" || invoice.invType == "qd"
-                        || invoice.invType == "sbd" || invoice.invType == "pbd" || invoice.invType == "pod"
-                        || invoice.invType == "ord" || invoice.invType == "imd" || invoice.invType == "exd")
-            {
 
-                paramarr.Add(new ReportParameter("watermark", "1"));
-            }
-            else
-            {
-                paramarr.Add(new ReportParameter("watermark", "0"));
-            }
-            paramarr.Add(new ReportParameter("shippingCost", DecTostring(invoice.shippingCost)));
+        //    //  paramarr.Add(new ReportParameter("discountValue", DecTostring(disval) == null ? "-" : DecTostring(disval)));
+        //    paramarr.Add(new ReportParameter("discountValue", invoice.discountValue == null ? "0" : DecTostring(invoice.discountValue)));
+        //    paramarr.Add(new ReportParameter("discountType", invoice.discountType == null ? "1" : invoice.discountType.ToString()));
 
-            if (invoice.invType == "sbd" || invoice.invType == "sb")
-            {
-                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trSalesReturnInvTitle")));
-            }
-            else if (invoice.invType == "s" || invoice.invType == "sd")
-            {
-                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trSalesInvoice")));
+        //    paramarr.Add(new ReportParameter("totalNet", DecTostring(invoice.totalNet) == null ? "-" : DecTostring(invoice.totalNet)));
+        //    paramarr.Add(new ReportParameter("paid", DecTostring(invoice.paid) == null ? "-" : DecTostring(invoice.paid)));
+        //    paramarr.Add(new ReportParameter("deserved", DecTostring(invoice.deserved) == null ? "-" : DecTostring(invoice.deserved)));
+        //    //paramarr.Add(new ReportParameter("deservedDate", invoice.deservedDate.ToString() == null ? "-" : invoice.deservedDate.ToString()));
+        //    paramarr.Add(new ReportParameter("deservedDate", invoice.deservedDate.ToString() == null ? "-" : DateToString(invoice.deservedDate)));
 
-            }
-            return paramarr;
 
-        }
+        //    paramarr.Add(new ReportParameter("tax", DecTostring(invoice.tax) == null ? "0" : DecTostring(invoice.tax)));
+        //    string invNum = invoice.invBarcode == null ? "-" : invoice.invBarcode.ToString();
+        //    paramarr.Add(new ReportParameter("barcodeimage", "file:\\" + BarcodeToImage(invNum, "invnum")));
+        //    paramarr.Add(new ReportParameter("Currency", AppSettings.Currency));
+        //    paramarr.Add(new ReportParameter("branchName", invoice.branchName == null ? "-" : invoice.branchName));
+        //    paramarr.Add(new ReportParameter("userName", userName.Trim()));
+        //    paramarr.Add(new ReportParameter("logoImage", "file:\\" + GetLogoImagePath()));
+        //    if (invoice.invType == "pd" || invoice.invType == "sd" || invoice.invType == "qd"
+        //                || invoice.invType == "sbd" || invoice.invType == "pbd" || invoice.invType == "pod"
+        //                || invoice.invType == "ord" || invoice.invType == "imd" || invoice.invType == "exd")
+        //    {
+
+        //        paramarr.Add(new ReportParameter("watermark", "1"));
+        //    }
+        //    else
+        //    {
+        //        paramarr.Add(new ReportParameter("watermark", "0"));
+        //    }
+        //    paramarr.Add(new ReportParameter("shippingCost", DecTostring(invoice.shippingCost)));
+
+        //    if (invoice.invType == "sbd" || invoice.invType == "sb")
+        //    {
+        //        paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trSalesReturnInvTitle")));
+        //    }
+        //    else if (invoice.invType == "s" || invoice.invType == "sd")
+        //    {
+        //        paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trSalesInvoice")));
+
+        //    }
+        //    return paramarr;
+
+        //}
 
 
         public List<ReportParameter> fillSaleInvReport(Invoice invoice, List<ReportParameter> paramarr, ShippingCompanies shippingcompany)
@@ -1828,7 +1828,7 @@ srb
             }
             else if (invoice.invType == "s" || invoice.invType == "sd"|| invoice.invType == "ss" || invoice.invType == "ts" ||  invoice.invType == "tsd" || invoice.invType == "ssd")
             {
-                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trSalesInvoice")));
+                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("restaurantInvoice")));
 
             }
             paramarr.Add(new ReportParameter("trDeliveryMan", AppSettings.resourcemanagerreport.GetString("trDriver")));

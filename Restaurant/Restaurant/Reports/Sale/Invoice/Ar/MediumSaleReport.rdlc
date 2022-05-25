@@ -2116,7 +2116,7 @@
                       <Value>=Parameters!Title.Value</Value>
                       <Style>
                         <FontFamily>Montserrat</FontFamily>
-                        <FontSize>14pt</FontSize>
+                        <FontSize>12pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>

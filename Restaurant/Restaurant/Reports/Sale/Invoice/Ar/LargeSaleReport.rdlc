@@ -2118,7 +2118,7 @@
                       <Value>=Parameters!Title.Value</Value>
                       <Style>
                         <FontFamily>Montserrat</FontFamily>
-                        <FontSize>14pt</FontSize>
+                        <FontSize>12pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -2130,9 +2130,9 @@
               </Paragraphs>
               <rd:DefaultName>agentTitle</rd:DefaultName>
               <Top>0.14772cm</Top>
-              <Left>3.15932cm</Left>
+              <Left>0.5333cm</Left>
               <Height>0.73189cm</Height>
-              <Width>3.53186cm</Width>
+              <Width>8.8919cm</Width>
               <ZIndex>3</ZIndex>
               <Style>
                 <Border />

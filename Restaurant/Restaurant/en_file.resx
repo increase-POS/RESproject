@@ -4069,4 +4069,7 @@ Please add Email in setting</value>
   <data name="kitchenPrinter" xml:space="preserve">
     <value>Kitchen printer</value>
   </data>
+  <data name="restaurantInvoice" xml:space="preserve">
+    <value>Restaurant Invoice</value>
+  </data>
 </root>

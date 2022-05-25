@@ -2043,7 +2043,7 @@
                     <TextRun>
                       <Value>=Parameters!Title.Value</Value>
                       <Style>
-                        <FontSize>14pt</FontSize>
+                        <FontSize>12pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
