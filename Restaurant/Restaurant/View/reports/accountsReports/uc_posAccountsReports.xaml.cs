@@ -960,14 +960,14 @@ namespace Restaurant.View.reports.accountsReports
                     HelpClass.StartAwait(grid_main);
 
                 #region
-                /*
+
                 BuildReport();
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
-                */
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
+
                 #endregion
 
-                
-                    HelpClass.EndAwait(grid_main);
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {

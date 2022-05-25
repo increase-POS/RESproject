@@ -829,8 +829,8 @@ namespace Restaurant.View.reports.accountsReports
                             mailtosend = mailtosend.fillRequirdTempData(total, emailto, email, setvlist);
 
                             string msg = "";
-                            Thread t1 = new Thread(() =>
-                            {
+                            //Thread t1 = new Thread(() =>
+                            //{
                                 msg = mailtosend.Sendmail();// temp comment
                                 if (msg == "Failure sending mail.")
                                 {
@@ -855,8 +855,8 @@ namespace Restaurant.View.reports.accountsReports
                                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trMailNotSent"), animation: ToasterAnimation.FadeIn);
                                     });
                                 }
-                            });
-                            t1.Start();
+                            //});
+                            //t1.Start();
                         }
                     }
                 }
@@ -991,11 +991,11 @@ namespace Restaurant.View.reports.accountsReports
                 HelpClass.StartAwait(grid_main);
 
                 /////////////////////////////////////
-                Thread t1 = new Thread(() =>
-                {
+                //Thread t1 = new Thread(() =>
+                //{
                     pdfStatement();
-                });
-                t1.Start();
+                //});
+                //t1.Start();
                 //////////////////////////////////////
                
                 HelpClass.EndAwait(grid_main);
@@ -1030,11 +1030,11 @@ namespace Restaurant.View.reports.accountsReports
                 HelpClass.StartAwait(grid_main);
 
                 /////////////////////////////////////
-                Thread t1 = new Thread(() =>
-                {
+                //Thread t1 = new Thread(() =>
+                //{
                     printStatement();
-                });
-                t1.Start();
+                //});
+                //t1.Start();
                 //////////////////////////////////////
                
                 HelpClass.EndAwait(grid_main);
