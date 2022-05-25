@@ -322,7 +322,14 @@ namespace Microsoft.Reporting.WinForms
 
                 printDoc.PrintPage += new PrintPageEventHandler(PrintPage);
                 m_currentPageIndex = 0;
-                printDoc.Print();
+                try
+                {
+                    printDoc.Print();
+                }
+                catch
+                {
+
+                }
             }
         }
         public static void PrintbyPrinterName(string printerName)
@@ -349,7 +356,14 @@ namespace Microsoft.Reporting.WinForms
                 printDoc.PrintPage += new PrintPageEventHandler(PrintPage);
 
                 m_currentPageIndex = 0;
-                printDoc.Print();
+                try
+                {
+                    printDoc.Print();
+                }
+                catch
+                {
+
+                }
             }
         }
 
@@ -378,7 +392,14 @@ namespace Microsoft.Reporting.WinForms
                 printDoc.PrintPage += new PrintPageEventHandler(PrintPage);
 
                 m_currentPageIndex = 0;
-                printDoc.Print();
+                try
+                {
+                    printDoc.Print();
+                }
+                catch
+                {
+
+                }
             }
         }
 
@@ -582,7 +603,14 @@ namespace Microsoft.Reporting.WinForms
                 printDoc.PrintPage += new PrintPageEventHandler(PrintPage);
 
                 m_currentPageIndex = 0;
-                printDoc.Print();
+                try
+                {
+                    printDoc.Print();
+                }
+                catch
+                {
+
+                }
 
             }
             printDoc.DefaultPageSettings.PaperSize = oldpapersize;
@@ -1057,7 +1085,14 @@ namespace Microsoft.Reporting.WinForms
 
                 printDoc.PrintPage += new PrintPageEventHandler( PrintPage);
                 m_currentPageIndex = 0;
-                printDoc.Print();
+                try
+                {
+                    printDoc.Print();
+                }
+                catch
+                {
+
+                }
             }
         }
         public static void PrintbyPrinterName(string printerName)
@@ -1084,7 +1119,14 @@ namespace Microsoft.Reporting.WinForms
                 printDoc.PrintPage += new PrintPageEventHandler(PrintPage);
 
                 m_currentPageIndex = 0;
-                printDoc.Print();
+                try
+                {
+                    printDoc.Print();
+                }
+                catch
+                {
+
+                }
             }
         }
 
@@ -1113,7 +1155,13 @@ namespace Microsoft.Reporting.WinForms
                 printDoc.PrintPage += new PrintPageEventHandler(PrintPage);
 
                 m_currentPageIndex = 0;
-                printDoc.Print();
+                try {
+                    printDoc.Print();
+                } catch
+                {
+
+                }
+               
             }
         }
 
@@ -1317,7 +1365,14 @@ namespace Microsoft.Reporting.WinForms
                 printDoc.PrintPage += new PrintPageEventHandler(PrintPage);
 
                 m_currentPageIndex = 0;
-                printDoc.Print();
+                try
+                {
+                    printDoc.Print();
+                }
+                catch
+                {
+
+                }
 
             }
             printDoc.DefaultPageSettings.PaperSize = oldpapersize;
