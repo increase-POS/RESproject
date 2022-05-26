@@ -2784,7 +2784,7 @@ namespace Restaurant.View.sales
                             w.invoice.invType = _InvoiceType;
                             w.invoice.totalNet = decimal.Parse(tb_total.Text);
                             w.cards = FillCombo.cardsList;
-
+                            w.invoice = invoice;
 
                             #region customer balance
                             if (invoice.agentId != null)
@@ -2797,6 +2797,7 @@ namespace Restaurant.View.sales
                                     decimal remain = 0;
                                     if (customer.maxDeserve != 0)
                                         remain = getCusAvailableBlnc(customer);
+                                    w.agent = customer;
                                     w.hasCredit = true;
                                     w.creditValue = remain;
                                 }

@@ -51,6 +51,7 @@ namespace Restaurant.View.windows
         List<Ellipse> cardEllipseList = new List<Ellipse>();
 
         public Invoice invoice = new Invoice();
+        public Agent agent = new Agent();
         bool amountIsValid = false;
         private  void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -152,11 +153,14 @@ namespace Restaurant.View.windows
         {
             try
             {
+                //decimal remain = getCusAvailableBlnc(agent);
+
                 if (!isPurchase &&
               (invoice.paid >= invoice.totalNet || (hasCredit == true && creditValue > invoice.totalNet - invoice.paid) || (hasCredit == true && creditValue == 0)))
                 {
                     if (invoice.totalNet - invoice.paid > 0)
                     {
+                        //if(remain)
                         cashTrasnfer = new CashTransfer();
 
                         ///////////////////////////////////////////////////
@@ -656,5 +660,20 @@ namespace Restaurant.View.windows
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+        #region check balance
+        private decimal getCusAvailableBlnc(Agent customer)
+        {
+            decimal remain = 0;
+
+            decimal customerBalance = customer.balance;
+
+            if (customer.balanceType == 0)
+                remain = (invoice.totalNet - invoice.paid) - (decimal)customerBalance;
+            else
+                remain = (decimal)customer.balance + (invoice.totalNet - invoice.paid);
+            return remain;
+        }
+        #endregion
     }
 }
