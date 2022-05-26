@@ -3917,7 +3917,7 @@ Please add Email in setting</value>
     <value>Orders</value>
   </data>
   <data name="trInvoiceCharp" xml:space="preserve">
-    <value>#Invoice</value>
+    <value>Invoice#</value>
   </data>
   <data name="trOrderCharp" xml:space="preserve">
     <value>#Order</value>
@@ -4071,5 +4071,11 @@ Please add Email in setting</value>
   </data>
   <data name="restaurantInvoice" xml:space="preserve">
     <value>Restaurant Invoice</value>
+  </data>
+  <data name="PurchaseReturnInvTitle" xml:space="preserve">
+    <value>Purchases Return Invoice</value>
+  </data>
+  <data name="PurchasesInvoice" xml:space="preserve">
+    <value>Purchases Invoice</value>
   </data>
 </root>

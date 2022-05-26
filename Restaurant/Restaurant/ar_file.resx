@@ -3902,7 +3902,7 @@
     <value>الطلبات</value>
   </data>
   <data name="trInvoiceCharp" xml:space="preserve">
-    <value>#الفاتورة</value>
+    <value>رقم الفاتورة</value>
   </data>
   <data name="trOrderCharp" xml:space="preserve">
     <value>#الطلبية</value>
@@ -4056,5 +4056,11 @@
   </data>
   <data name="restaurantInvoice" xml:space="preserve">
     <value>فاتورة مطعم</value>
+  </data>
+  <data name="PurchaseReturnInvTitle" xml:space="preserve">
+    <value>فاتورة مرتجع مشتريات</value>
+  </data>
+  <data name="PurchasesInvoice" xml:space="preserve">
+    <value>فاتورة مشتريات</value>
   </data>
 </root>
