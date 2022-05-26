@@ -660,8 +660,8 @@ namespace Restaurant.View.storage.storageOperations
                     if (invoiceId != 0)
                     {
                         await invoice.recordPosCashTransfer(invoice, "pb");
-                        await invoice.recordCashTransfer(invoice, "pb");
-                        //await FillCombo.invoice.saveInvoiceItems(invoiceItems, invoiceId);
+                        if (invoice.agentId != null)
+                            await invoice.recordCashTransfer(invoice, "pb");
 
                         #region notification Object
                         Notification not = new Notification()
