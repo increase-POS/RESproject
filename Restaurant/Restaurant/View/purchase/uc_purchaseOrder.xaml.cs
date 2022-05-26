@@ -1636,7 +1636,7 @@ namespace Restaurant.View.purchase
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
-        Invoice prInvoice = new Invoice();
+       int prInvoiceId ;
         Invoice invoiceModel = new Invoice();
      Branch   branchModel = new Branch();
         //print
@@ -1646,7 +1646,7 @@ namespace Restaurant.View.purchase
             string pdfpath = "";
 
             //
-
+            Invoice prInvoice = new Invoice();
             if (invoice.invoiceId > 0)
             {
                 prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
@@ -1674,13 +1674,35 @@ namespace Restaurant.View.purchase
                 }
 
                 invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                //
                 Branch branch = new Branch();
                 branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                //branch creator
                 if (branch.branchId > 0)
                 {
-                    prInvoice.branchName = branch.name;
+                    prInvoice.branchCreatorName = branch.name;
                 }
 
+                //branch reciver
+                if (prInvoice.branchId != null)
+                {
+                    if (prInvoice.branchId > 0)
+                    {
+                        branch = await branchModel.getBranchById((int)prInvoice.branchId);
+                        prInvoice.branchName = branch.name;
+                    }
+                    else
+                    {
+                        prInvoice.branchName = "-";
+                    }
+
+                }
+                else
+                {
+                    prInvoice.branchName = "-";
+                }
+                // end branch reciever
+                //
                 User employ = new User();
                 employ = await employ.getUserById((int)prInvoice.updateUserId);
                 prInvoice.uuserName = employ.name;
@@ -1760,6 +1782,7 @@ namespace Restaurant.View.purchase
 
         public async void printPurInvoice()
         {
+            Invoice prInvoice = new Invoice();
             if (invoice.invoiceId > 0)
             {
                 prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
@@ -1794,13 +1817,35 @@ namespace Restaurant.View.purchase
                         prInvoice.agentCompany = agentinv.company;
 
                         invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                        //
                         Branch branch = new Branch();
                         branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                        //branch creator
                         if (branch.branchId > 0)
                         {
-                            prInvoice.branchName = branch.name;
+                            prInvoice.branchCreatorName = branch.name;
                         }
 
+                        //branch reciver
+                        if (prInvoice.branchId != null)
+                        {
+                            if (prInvoice.branchId > 0)
+                            {
+                                branch = await branchModel.getBranchById((int)prInvoice.branchId);
+                                prInvoice.branchName = branch.name;
+                            }
+                            else
+                            {
+                                prInvoice.branchName = "-";
+                            }
+
+                        }
+                        else
+                        {
+                            prInvoice.branchName = "-";
+                        }
+                        // end branch reciever
+                        //
 
                         ReportCls.checkLang();
 
@@ -1823,6 +1868,7 @@ namespace Restaurant.View.purchase
         }
         public async void pdfPurInvoice()
         {
+            Invoice prInvoice = new Invoice();
             if (invoice.invoiceId > 0)
             {
                 prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
@@ -1857,13 +1903,35 @@ namespace Restaurant.View.purchase
                         prInvoice.uuserLast = employ.lastname;
 
 
+                        //
                         Branch branch = new Branch();
                         branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                        //branch creator
                         if (branch.branchId > 0)
                         {
-                            prInvoice.branchName = branch.name;
+                            prInvoice.branchCreatorName = branch.name;
                         }
 
+                        //branch reciver
+                        if (prInvoice.branchId != null)
+                        {
+                            if (prInvoice.branchId > 0)
+                            {
+                                branch = await branchModel.getBranchById((int)prInvoice.branchId);
+                                prInvoice.branchName = branch.name;
+                            }
+                            else
+                            {
+                                prInvoice.branchName = "-";
+                            }
+
+                        }
+                        else
+                        {
+                            prInvoice.branchName = "-";
+                        }
+                        // end branch reciever
+                        //
 
                         ReportCls.checkLang();
 
@@ -1900,6 +1968,7 @@ namespace Restaurant.View.purchase
                 if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     #region
+                    Invoice prInvoice = new Invoice();
                     if (invoice.invoiceId > 0)
                     {
                         prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
@@ -1933,13 +2002,35 @@ namespace Restaurant.View.purchase
                             }
 
                             invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                            //
                             Branch branch = new Branch();
                             branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                            //branch creator
                             if (branch.branchId > 0)
                             {
-                                prInvoice.branchName = branch.name;
+                                prInvoice.branchCreatorName = branch.name;
                             }
 
+                            //branch reciver
+                            if (prInvoice.branchId != null)
+                            {
+                                if (prInvoice.branchId > 0)
+                                {
+                                    branch = await branchModel.getBranchById((int)prInvoice.branchId);
+                                    prInvoice.branchName = branch.name;
+                                }
+                                else
+                                {
+                                    prInvoice.branchName = "-";
+                                }
+
+                            }
+                            else
+                            {
+                                prInvoice.branchName = "-";
+                            }
+                            // end branch reciever
+                            //
                             User employ = new User();
                             employ = await employ.getUserById((int)prInvoice.updateUserId);
                             prInvoice.uuserName = employ.name;
@@ -1998,11 +2089,11 @@ namespace Restaurant.View.purchase
                 if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     /////////////////////////////
-                    Thread t1 = new Thread(() =>
-                    {
+                    //Thread t1 = new Thread(() =>
+                    //{
                         sendPurEmail();
-                    });
-                    t1.Start();
+                    //});
+                    //t1.Start();
                     /////////////////////////////
                 }
                 else
@@ -2019,17 +2110,20 @@ namespace Restaurant.View.purchase
         }
         public async void sendPurEmail()
         {
+            Invoice prInvoice = new Invoice();
+            prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
             SysEmails email = new SysEmails();
             EmailClass mailtosend = new EmailClass();
             email = await email.GetByBranchIdandSide((int)MainWindow.branchLogin.branchId, "purchase");
             Agent toAgent = new Agent();
-            toAgent = await toAgent.getAgentById((int)invoice.agentId) ;
+            toAgent = await toAgent.getAgentById((int)prInvoice.agentId) ;
+            
             //  int? itemcount = invoiceItems.Count();
             if (email.emailId == 0)
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoEmailForThisDept"), animation: ToasterAnimation.FadeIn);
             else
             {
-                if (invoice.invoiceId == 0)
+                if (prInvoice.invoiceId == 0)
                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trThereIsNoOrderToSen"), animation: ToasterAnimation.FadeIn);
                 else
                 {
@@ -2048,10 +2142,11 @@ namespace Restaurant.View.purchase
                             List<SetValues> setvlist = new List<SetValues>();
                             setvlist = await setvmodel.GetBySetName("pur_order_email_temp");
 
-                            mailtosend = mailtosend.fillOrderTempData(invoice, invoiceItems, email, toAgent, setvlist);
+                            mailtosend = mailtosend.fillOrderTempData(prInvoice, invoiceItems, email, toAgent, setvlist);
                             this.Dispatcher.Invoke(new Action(() =>
                             {
-                                string msg = mailtosend.Sendmail();
+                                string msg = "";
+                              //    msg = mailtosend.Sendmail();//tempdelite
                                 if (msg == "Failure sending mail.")
                                 {
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoConnection"), animation: ToasterAnimation.FadeIn);

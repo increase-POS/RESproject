@@ -1328,7 +1328,7 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("paid", DecTostring(invoice.paid) == null ? "-" : DecTostring(invoice.paid)));
             paramarr.Add(new ReportParameter("deserved", DecTostring(invoice.deserved) == null ? "-" : DecTostring(invoice.deserved)));
             //paramarr.Add(new ReportParameter("deservedDate", invoice.deservedDate.ToString() == null ? "-" : invoice.deservedDate.ToString()));
-            paramarr.Add(new ReportParameter("deservedDate", invoice.deservedDate.ToString() == null ? "-" : DateToString(invoice.deservedDate)));
+            paramarr.Add(new ReportParameter("deservedDate", invoice.deservedDate  == null ? "-" : DateToString(invoice.deservedDate)));
             paramarr.Add(new ReportParameter("tax", invoice.tax == null ? "0" : HelpClass.PercentageDecTostring(invoice.tax)));
             string invNum = invoice.invNumber == null ? "-" : invoice.invNumber.ToString();
             paramarr.Add(new ReportParameter("barcodeimage", "file:\\" + BarcodeToImage(invNum, "invnum")));
@@ -1360,11 +1360,11 @@ namespace Restaurant.Classes
             //Title
             if (invoice.invType == "pbd" || invoice.invType == "pb" || invoice.invType == "pbw")
             {
-                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trPurchaseReturnInvTitle")));
+                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("PurchaseReturnInvTitle")));
             }
             else if (invoice.invType == "p" || invoice.invType == "pd" || invoice.invType == "pw" || invoice.invType == "pwd")
             {
-                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trPurchasesInvoice")));
+                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("PurchasesInvoice")));
 
             }
             else if (invoice.invType == "is" || invoice.invType == "isd")
@@ -1382,7 +1382,12 @@ namespace Restaurant.Classes
                 paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trSpendingRequest")+"Return"));
 
             }
+            else if (invoice.invType == "pod" || invoice.invType == "po" || invoice.invType == "pos")
+            {
+                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trPurchaseOrder") ));
 
+
+            }
             /*
              *srd
 srw
@@ -1576,11 +1581,11 @@ srb
             //Title
             if (invoice.invType == "pbd" || invoice.invType == "pb" || invoice.invType == "pbw")
             {
-                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trPurchaseReturnInvTitle")));
+                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("PurchaseReturnInvTitle")));
             }
             else if (invoice.invType == "p" || invoice.invType == "pd" || invoice.invType == "pw" || invoice.invType == "pwd")
             {
-                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trPurchasesInvoice")));
+                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("PurchasesInvoice")));
 
             }
             else if (invoice.invType == "is" || invoice.invType == "isd")

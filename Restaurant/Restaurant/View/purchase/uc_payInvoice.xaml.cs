@@ -3265,18 +3265,42 @@ namespace Restaurant.View.purchase
                                 prInvoice.uuserLast = employ.lastname;
 
 
+                                //
                                 Branch branch = new Branch();
                                 branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                                //branch creator
                                 if (branch.branchId > 0)
                                 {
-                                    prInvoice.branchName = branch.name;
+                                    prInvoice.branchCreatorName = branch.name;
                                 }
+
+                                //branch reciver
+                                if (prInvoice.branchId != null)
+                                {
+                                    if (prInvoice.branchId > 0)
+                                    {
+                                        branch = await branchModel.getBranchById((int)prInvoice.branchId);
+                                        prInvoice.branchName = branch.name;
+                                    }
+                                    else
+                                    {
+                                        prInvoice.branchName = "-";
+                                    }
+
+                                }
+                                else
+                                {
+                                    prInvoice.branchName = "-";
+                                }
+                                // end branch reciever
+                                //
 
 
                                 ReportCls.checkLang();
                                 foreach (var i in invoiceItems)
                                 {
                                     i.price = decimal.Parse(HelpClass.DecTostring(i.price));
+                                    i.subTotal = decimal.Parse(HelpClass.DecTostring(i.price * i.quantity));
                                 }
                                 clsReports.purchaseInvoiceReport(invoiceItems, rep, reppath);
                                 clsReports.setReportLanguage(paramarr);
@@ -3412,9 +3436,6 @@ namespace Restaurant.View.purchase
                     }
                     else
                     {
-
-
-
                         Window.GetWindow(this).Opacity = 0.2;
 
                         List<ReportParameter> paramarr = new List<ReportParameter>();
@@ -3448,22 +3469,46 @@ namespace Restaurant.View.purchase
                             }
 
                             invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                      
+                            //
                             Branch branch = new Branch();
                             branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                            //branch creator
                             if (branch.branchId > 0)
                             {
-                                prInvoice.branchName = branch.name;
+                                prInvoice.branchCreatorName = branch.name;
                             }
 
+                            //branch reciver
+                            if (prInvoice.branchId != null)
+                            {
+                                if (prInvoice.branchId > 0)
+                                {
+                                    branch = await branchModel.getBranchById((int)prInvoice.branchId);
+                                    prInvoice.branchName = branch.name;
+                                }
+                                else
+                                {
+                                    prInvoice.branchName = "-";
+                                }
+
+                            }
+                            else
+                            {
+                                prInvoice.branchName = "-";
+                            }
+                            // end branch reciever
+                            //
                             User employ = new User();
                             employ = await employ.getUserById((int)prInvoice.updateUserId);
                             prInvoice.uuserName = employ.name;
                             prInvoice.uuserLast = employ.lastname;
 
                             ReportCls.checkLang();
-                            foreach (var r in invoiceItems)
+                            foreach (var i in invoiceItems)
                             {
-                                r.price = decimal.Parse(HelpClass.DecTostring(r.price));
+                                i.price = decimal.Parse(HelpClass.DecTostring(i.price));
+                                i.subTotal = decimal.Parse(HelpClass.DecTostring(i.price * i.quantity));
                                 //r.deserveDate = Convert.ToDateTime(HelpClass.DateToString(r.deserveDate));
                             }
                             clsReports.purchaseInvoiceReport(invoiceItems, rep, reppath);
@@ -3649,17 +3694,40 @@ namespace Restaurant.View.purchase
                             }
 
                             invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                            //
                             Branch branch = new Branch();
                             branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                            //branch creator
                             if (branch.branchId > 0)
                             {
-                                prInvoice.branchName = branch.name;
+                                prInvoice.branchCreatorName = branch.name;
                             }
 
+                            //branch reciver
+                            if (prInvoice.branchId != null)
+                            {
+                                if (prInvoice.branchId > 0)
+                                {
+                                    branch = await branchModel.getBranchById((int)prInvoice.branchId);
+                                    prInvoice.branchName = branch.name;
+                                }
+                                else
+                                {
+                                    prInvoice.branchName = "-";
+                                }
+
+                            }
+                            else
+                            {
+                                prInvoice.branchName = "-";
+                            }
+                            // end branch reciever
+                            //
                             ReportCls.checkLang();
                             foreach (var i in invoiceItems)
                             {
                                 i.price = decimal.Parse(HelpClass.DecTostring(i.price));
+                                i.subTotal = decimal.Parse(HelpClass.DecTostring(i.price * i.quantity));
                             }
                             clsReports.purchaseInvoiceReport(invoiceItems, rep, reppath);
                             clsReports.setReportLanguage(paramarr);
@@ -3909,6 +3977,7 @@ namespace Restaurant.View.purchase
                                                     foreach (var i in invoiceItems)
                                                     {
                                                         i.price = decimal.Parse(HelpClass.DecTostring(i.price));
+                                                        i.subTotal = decimal.Parse(HelpClass.DecTostring(i.price * i.quantity));
                                                     }
                                                     string pdfpath = await SavePurpdf();
                                                     prInvoice.discountValue =  discountval.Value;
@@ -4019,12 +4088,35 @@ namespace Restaurant.View.purchase
                         }
 
                         invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                        //
                         Branch branch = new Branch();
                         branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                        //branch creator
                         if (branch.branchId > 0)
                         {
-                            prInvoice.branchName = branch.name;
+                            prInvoice.branchCreatorName = branch.name;
                         }
+
+                        //branch reciver
+                        if (prInvoice.branchId != null)
+                        {
+                            if (prInvoice.branchId > 0)
+                            {
+                                branch = await branchModel.getBranchById((int)prInvoice.branchId);
+                                prInvoice.branchName = branch.name;
+                            }
+                            else
+                            {
+                                prInvoice.branchName = "-";
+                            }
+
+                        }
+                        else
+                        {
+                            prInvoice.branchName = "-";
+                        }
+                        // end branch reciever
+                        //
 
                         User employ = new User();
                         employ = await employ.getUserById((int)prInvoice.updateUserId);
@@ -4035,6 +4127,7 @@ namespace Restaurant.View.purchase
                         foreach (var i in invoiceItems)
                         {
                             i.price = decimal.Parse(HelpClass.DecTostring(i.price));
+                            i.subTotal = decimal.Parse(HelpClass.DecTostring(i.price * i.quantity));
                         }
                         clsReports.purchaseInvoiceReport(invoiceItems, rep, reppath);
                         clsReports.setReportLanguage(paramarr);
