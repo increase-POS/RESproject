@@ -73,7 +73,6 @@ namespace Restaurant.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "company" };
                 if (AppSettings.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -144,7 +143,7 @@ namespace Restaurant.View.windows
                     if (shippingCompany.deliveryType == "local")
                     {
                         brd_user.Visibility = Visibility.Visible;
-                        requiredControlList = new List<string> { "company" ,"user"};
+                        requiredControlList = new List<string> { "user"};
 
                     }
                     else
@@ -154,13 +153,14 @@ namespace Restaurant.View.windows
                         brd_user.Visibility = Visibility.Collapsed;
                         p_error_user.Visibility = Visibility.Collapsed;
 
-                        requiredControlList = new List<string> { "company" };
+                        requiredControlList = new List<string> { "" };
 
                     }
                 }
                 else
                 {
                     shippingCompany = new ShippingCompanies();
+                    shippingCompanyId = 0;
                         shippingUserId = null;
                     cb_user.SelectedIndex = -1;
                     _DeliveryCost = 0;
@@ -168,6 +168,7 @@ namespace Restaurant.View.windows
                     brd_user.Visibility = Visibility.Collapsed;
                     p_error_user.Visibility = Visibility.Collapsed;
 
+                    requiredControlList = new List<string> { "" };
                 }
                 tb_deliveryCost.Text = _DeliveryCost.ToString();
                

@@ -1176,7 +1176,7 @@ namespace Restaurant.View.sales
 
 
         }
-        void refreshTotal()
+        async void refreshTotal()
         {
             decimal total = 0;
             #region subtotal
@@ -1231,6 +1231,8 @@ namespace Restaurant.View.sales
                         break;
                     }
                 }
+                if (invoiceMemberShipClass.invClassMemberId != 0)
+                    await FillCombo.invoice.saveMemberShipClassDis(invoiceMemberShipClass, invoice.invoiceId);
                 #endregion
 
                 totalDiscount = couponsDiscount + manualDiscount + _invoiceClassDiscount;
@@ -2371,7 +2373,6 @@ namespace Restaurant.View.sales
                 w.ShowDialog();
                 if (w.isOk)
                 {
-
                     customerInvClasses = new List<InvoicesClass>();
 
                     if (w.customerId > 0)
@@ -2412,12 +2413,7 @@ namespace Restaurant.View.sales
                             }
                             else
                                 _MemberShipId = 0;
-
-                            #region refresh items with new price
-                            await refreshItemsList();
-                            Search();
-                            refreshItemsPrice();
-                            #endregion
+                        
 
                             #endregion
                             #region update invoice
@@ -2428,10 +2424,8 @@ namespace Restaurant.View.sales
                             if (res > 0)
                             {
                                 // save invoice memberShip discount class
-                                if (invoiceMemberShipClass.invClassMemberId != 0)
-                                    await FillCombo.invoice.saveMemberShipClassDis(invoiceMemberShipClass, invoice.invoiceId);
-                                //Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-
+                                //if (invoiceMemberShipClass.invClassMemberId != 0)
+                                //    await FillCombo.invoice.saveMemberShipClassDis(invoiceMemberShipClass, invoice.invoiceId);
                             }
                             else
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
@@ -2444,10 +2438,25 @@ namespace Restaurant.View.sales
                             path_customer.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
 
                             btn_delivery.IsEnabled = true;
-                            }
+                         }
                     }
                     else
                     {
+                        #region clear prevoius client related values (coupons - delivery - invoiceMemberShipClass)
+                        selectedCopouns = new List<CouponInvoice>();
+                        _DeliveryCost = 0;
+
+                        invoice.agentId = null;
+                        invoice.shippingCompanyId = null;
+                        invoice.shipUserId = null;
+                        invoice.shippingCost = 0;
+                        invoice.realShippingCost = 0;
+                        invoice.membershipId = null;
+                        invoiceMemberShipClass = new InvoicesClass();
+
+                        await FillCombo.invoice.clearInvoiceCouponsAndClasses(invoice.invoiceId);
+                        int res = await addDraft();
+                        #endregion
                         // return button content to default
                         _DeliveryDiscount = 0;
                         _MemberShipId = 0;
@@ -2456,12 +2465,22 @@ namespace Restaurant.View.sales
                         txt_customer.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                         path_customer.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
 
+                        #region return delivery button to default
+                        txt_delivery.Text = "";
+                        txt_delivery.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                        path_delivery.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                         btn_delivery.IsEnabled = false;
+                        
+                        #endregion
 
                         refreshTotal();
-
                     }
 
+                    #region refresh items with new price
+                    //await refreshItemsList();
+                    await Search();
+                    refreshItemsPrice();
+                    #endregion
                 }
                 Window.GetWindow(this).Opacity = 1;
                 //}
@@ -2562,44 +2581,51 @@ namespace Restaurant.View.sales
                 w.ShowDialog();
                 if (w.isOk)
                 {
-                    _DeliveryCost = w._DeliveryCost;
-
-                    refreshTotal();
-                    #region change button Color
+                    int? shippingCompanyId = null;
+                    int? shipUserId = null;
+                    decimal realDeliveryCost = 0;
                     if (w.shippingCompanyId > 0)
                     {
+                        shippingCompanyId = w.shippingCompanyId;
+                        shipUserId = w.shippingUserId;
+                        realDeliveryCost = w._RealDeliveryCost;
+                        _DeliveryCost = w._DeliveryCost;
+
+
+                       // refreshTotal();
+                        #region change button Color
                         var company = FillCombo.shippingCompaniesList.Where(x => x.shippingCompanyId == w.shippingCompanyId).FirstOrDefault();
 
                         txt_delivery.Text = company.name;
                         txt_delivery.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                         path_delivery.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+
+                        #endregion
+
+                        
                     }
                     else
                     {
+                        _DeliveryCost = 0;
+                        #region change button Color
                         txt_delivery.Text = "";
                         txt_delivery.Foreground = Application.Current.Resources["SecondColor"] as SolidColorBrush;
                         path_delivery.Fill = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                        #endregion
                     }
-                    #endregion
+                    refreshTotal();
 
                     #region update invoice
-                    invoice.shippingCompanyId = w.shippingCompanyId;
-                    invoice.shipUserId = w.shippingUserId;
+                    invoice.shippingCompanyId = shippingCompanyId;
+                    invoice.shipUserId = shipUserId;
                     invoice.shippingCost = _DeliveryCost;
-                    invoice.realShippingCost = w._RealDeliveryCost;
-                    //invoice.total = _Sum;
-                    //invoice.totalNet = decimal.Parse(tb_total.Text);
-                    //invoice.paid = 0;
-                    //invoice.deserved = invoice.totalNet;
-                    //invoice.updateUserId = MainWindow.userLogin.userId;
+                    invoice.realShippingCost = realDeliveryCost;
 
                     int res = await addDraft();
 
                     if (res > 0)
                     {
-
-                        //Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                        await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns, invoice.invoiceId, "sd");
+                        //await FillCombo.invoice.saveInvoiceCoupons(selectedCopouns, invoice.invoiceId, "sd");
                     }
                     else
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);

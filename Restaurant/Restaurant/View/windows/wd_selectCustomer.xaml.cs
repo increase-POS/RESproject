@@ -68,13 +68,13 @@ namespace Restaurant.View.windows
         public decimal deliveryDiscount { get; set; }
         public bool hasOffers { get; set; }
         public string memberShipStatus;
-        public static List<string> requiredControlList = new List<string>();
+        //public static List<string> requiredControlList = new List<string>();
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {//load
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "customerId" };
+                //requiredControlList = new List<string> { "customerId" };
                 if (AppSettings.lang.Equals("en"))
                 {
                     grid_main.FlowDirection = FlowDirection.LeftToRight;
@@ -290,14 +290,14 @@ namespace Restaurant.View.windows
         private void Btn_select_Click(object sender, RoutedEventArgs e)
         {
 
-            if (HelpClass.validate(requiredControlList, this))
-            {
+            //if (HelpClass.validate(requiredControlList, this))
+            //{
                 // if have id return true
                 isOk = true;
                 customerId =(int) cb_customerId.SelectedValue;
                
                 this.Close();
-            }
+            //}
         }
         private async void Cb_customerId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
