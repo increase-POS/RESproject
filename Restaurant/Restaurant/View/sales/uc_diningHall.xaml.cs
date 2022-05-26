@@ -2714,15 +2714,19 @@ namespace Restaurant.View.sales
 
         private decimal getCusAvailableBlnc(Agent customer)
         {
-            decimal remain = 0;
+            decimal maxCredit = 0;
 
             decimal customerBalance = customer.balance;
 
             if (customer.balanceType == 0)
-                remain = decimal.Parse(tb_total.Text) - (decimal)customerBalance;
+                maxCredit = customer.maxDeserve  + (decimal)customerBalance;
             else
-                remain = (decimal)customer.balance + decimal.Parse(tb_total.Text);
-            return remain;
+            {
+                maxCredit = customer.maxDeserve - (decimal)customerBalance;
+                if (maxCredit < 0)
+                    maxCredit = 0;
+            }
+            return maxCredit;
         }
         private async Task saveConfiguredCashTrans(CashTransfer cashTransfer)
         {
@@ -2781,10 +2785,11 @@ namespace Restaurant.View.sales
 
                             wd_multiplePayment w = new wd_multiplePayment();
                             w.isPurchase = false;
+                            //w.invoice = new Invoice();
                             w.invoice.invType = _InvoiceType;
                             w.invoice.totalNet = decimal.Parse(tb_total.Text);
                             w.cards = FillCombo.cardsList;
-                            w.invoice = invoice;
+                            //w.invoice = invoice;
 
                             #region customer balance
                             if (invoice.agentId != null)
@@ -2794,17 +2799,25 @@ namespace Restaurant.View.sales
                                 var customer = FillCombo.customersList.ToList().Find(b => b.agentId == (int)invoice.agentId && b.isLimited == true);
                                 if (customer != null)
                                 {
-                                    decimal remain = 0;
-                                    if (customer.maxDeserve != 0)
-                                        remain = getCusAvailableBlnc(customer);
-                                    w.agent = customer;
-                                    w.hasCredit = true;
-                                    w.creditValue = remain;
+                                    if (customer.isLimited)
+                                    {
+                                        decimal maxCredit = 0;
+                                        if (customer.maxDeserve != 0)
+                                            maxCredit = getCusAvailableBlnc(customer);
+                                        w.agent = customer;
+                                        w.hasCredit = true;
+                                        w.maxCredit = maxCredit;
+                                    }
+                                    else
+                                    {
+                                        w.hasCredit = false;
+                                        w.maxCredit = 0;
+                                    }
                                 }
                                 else
                                 {
                                     w.hasCredit = false;
-                                    w.creditValue = 0;
+                                    w.maxCredit = 0;
                                 }
                             }
                             #endregion
@@ -3852,7 +3865,7 @@ namespace Restaurant.View.sales
 
 
         }
-        public void printInvoiceInkitchen(int invoiceId, List<OrderPreparing> OrderPreparingList)
+        public async void printInvoiceInkitchen(int invoiceId, List<OrderPreparing> OrderPreparingList)
         {
             try
             {
@@ -3891,6 +3904,7 @@ namespace Restaurant.View.sales
                     this.Dispatcher.Invoke(() =>
                     {
                         Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPrintEmptyInvoice"), animation: ToasterAnimation.FadeIn);
+
                     });
                 }
 
@@ -3901,7 +3915,7 @@ namespace Restaurant.View.sales
                 this.Dispatcher.Invoke(() =>
                 {
                     Toaster.ShowWarning(Window.GetWindow(this), message: "Not completed", animation: ToasterAnimation.FadeIn);
-
+                  await  Task.Delay(500);
                 });
             }
 

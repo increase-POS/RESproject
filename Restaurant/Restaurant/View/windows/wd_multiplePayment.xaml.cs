@@ -40,7 +40,7 @@ namespace Restaurant.View.windows
         public bool isOk { get; set; }
         public bool isPurchase { get; set; }
         public bool hasCredit { get; set; }
-        public decimal creditValue { get; set; }
+        public decimal maxCredit { get; set; }
         ImageBrush brush = new ImageBrush();
         static private string _SelectedPaymentType = "cash";
         static private int _SelectedCard = -1;
@@ -156,7 +156,7 @@ namespace Restaurant.View.windows
                 //decimal remain = getCusAvailableBlnc(agent);
 
                 if (!isPurchase &&
-              (invoice.paid >= invoice.totalNet || (hasCredit == true && creditValue > invoice.totalNet - invoice.paid) || (hasCredit == true && creditValue == 0)))
+              (invoice.paid >= invoice.totalNet || (hasCredit == true && agent.maxDeserve == 0) || (hasCredit == true && maxCredit >= invoice.totalNet - invoice.paid)  ))
                 {
                     if (invoice.totalNet - invoice.paid > 0)
                     {
@@ -662,6 +662,7 @@ namespace Restaurant.View.windows
         }
 
         #region check balance
+        /*
         private decimal getCusAvailableBlnc(Agent customer)
         {
             decimal remain = 0;
@@ -674,6 +675,7 @@ namespace Restaurant.View.windows
                 remain = (decimal)customer.balance + (invoice.totalNet - invoice.paid);
             return remain;
         }
+        */
         #endregion
     }
 }

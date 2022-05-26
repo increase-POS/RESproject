@@ -711,15 +711,15 @@ namespace Restaurant.View.accounts
                         if (customer != null)
                         {
                             decimal remain = 0;
-                            if (customer.maxDeserve != 0)
-                                remain = getCusAvailableBlnc(customer);
+                            //if (customer.maxDeserve != 0)
+                            //    remain = getCusAvailableBlnc(customer);
                             w.hasCredit = true;
-                            w.creditValue = remain;
+                            w.maxCredit = remain;
                         }
                         else
                         {
                             w.hasCredit = false;
-                            w.creditValue = 0;
+                            w.maxCredit = 0;
                         }
 
                         w.invoice.invType = invoice.invType;
@@ -839,7 +839,7 @@ namespace Restaurant.View.accounts
                     break;
             }
         }
-
+        /*
         private decimal getCusAvailableBlnc(Agent customer)
         {
             decimal remain = 0;
@@ -852,6 +852,7 @@ namespace Restaurant.View.accounts
                 remain = (decimal)customer.balance + invoice.totalNet;
             return remain;
         }
+        */
 
         #region report
 

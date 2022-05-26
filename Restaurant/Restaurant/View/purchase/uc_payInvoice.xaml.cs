@@ -2146,12 +2146,12 @@ namespace Restaurant.View.purchase
                         if (_InvoiceType == "pd")
                         {
                             txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trDraftPurchaseBill");
-                            txt_payInvoice.Foreground = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
+                            txt_payInvoice.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                         }
                         else if (_InvoiceType == "p")
                         {
                             txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaseBill");
-                            txt_payInvoice.Foreground = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
+                            txt_payInvoice.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                         }
                         else if (_InvoiceType == "pbd")
                         {
@@ -2827,7 +2827,7 @@ namespace Restaurant.View.purchase
                         {
                             mainInvoiceItems = invoiceItems;
                             txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trDraftPurchaseBill");
-                            txt_payInvoice.Foreground = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
+                            txt_payInvoice.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                         }
                         if (_InvoiceType == "pbd")
                         {
@@ -2937,7 +2937,7 @@ namespace Restaurant.View.purchase
 
                         // set title to bill
                         txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaseOrder");
-                        txt_payInvoice.Foreground = Application.Current.Resources["MainColorBlue"] as SolidColorBrush;
+                        txt_payInvoice.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
                         await fillInvoiceInputs(invoice);
                         navigateBtnActivate();
                         
