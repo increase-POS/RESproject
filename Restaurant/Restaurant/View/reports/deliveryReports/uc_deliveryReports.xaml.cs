@@ -105,7 +105,7 @@ namespace Restaurant.View.reports.deliveryReports
             tt_delivery.Content = AppSettings.resourcemanager.GetString("trDelivery");
 
             col_orderNum.Header = AppSettings.resourcemanager.GetString("trNo.");
-            col_invNum.Header = AppSettings.resourcemanager.GetString("trInvoiceNumber");
+            col_invNum.Header = AppSettings.resourcemanager.GetString("trInvoiceCharp");
             col_branch.Header = AppSettings.resourcemanager.GetString("trBranch");
             col_customer.Header = AppSettings.resourcemanager.GetString("trCustomer");
             col_company.Header = AppSettings.resourcemanager.GetString("trCompany");

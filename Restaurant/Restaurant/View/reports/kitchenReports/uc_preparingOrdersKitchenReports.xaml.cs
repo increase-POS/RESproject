@@ -102,7 +102,7 @@ namespace Restaurant.View.reports.kitchenReports
             tt_preparingOrder.Content = AppSettings.resourcemanager.GetString("trPreparingOrders");
 
             col_orderNum.Header = AppSettings.resourcemanager.GetString("trNo.");
-            col_invNum.Header = AppSettings.resourcemanager.GetString("trInvoiceNumber");
+            col_invNum.Header = AppSettings.resourcemanager.GetString("trInvoiceCharp");
             col_date.Header = AppSettings.resourcemanager.GetString("trDate");
             col_itemName.Header = AppSettings.resourcemanager.GetString("trItem");
             col_quantity.Header = AppSettings.resourcemanager.GetString("trQTR");
