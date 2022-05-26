@@ -574,7 +574,9 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trPersonsCount", AppSettings.resourcemanagerreport.GetString("trPersonsCount")));
             paramarr.Add(new ReportParameter("trSection", AppSettings.resourcemanagerreport.GetString("trSection")));
             paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
+            paramarr.Add(new ReportParameter("trBranchStore", AppSettings.resourcemanagerreport.GetString("trBranch/Store")));
 
+             
         }
 
         public static void hallSectionsReport(IEnumerable<HallSection> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
@@ -671,7 +673,7 @@ namespace Restaurant.Classes
 
 
             //table columns
-            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trInvoiceCharp")));
             paramarr.Add(new ReportParameter("deliveryMan", AppSettings.resourcemanagerreport.GetString("deliveryMan")));
             paramarr.Add(new ReportParameter("deliveryTime", AppSettings.resourcemanagerreport.GetString("deliveryTime")));
             paramarr.Add(new ReportParameter("trStatus", AppSettings.resourcemanagerreport.GetString("trStatus")));
@@ -709,7 +711,7 @@ namespace Restaurant.Classes
             rep.DataSources.Clear();
 
             //table columns
-            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trInvoiceCharp")));
 
             paramarr.Add(new ReportParameter("deliveryTime", AppSettings.resourcemanagerreport.GetString("deliveryTime")));
             //paramarr.Add(new ReportParameter("trStatus", AppSettings.resourcemanagerreport.GetString("trStatus")));
@@ -903,8 +905,10 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trDetails", AppSettings.resourcemanagerreport.GetString("trDetails")));
         }
 
-        public static void itemReport(IEnumerable<Item> items, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        public static void itemReport(IEnumerable<Item> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
+            List<Item> items = JsonConvert.DeserializeObject<List<Item>>(JsonConvert.SerializeObject(Query));
+
             itemdata(items, rep, reppath, paramarr);
 
 
@@ -935,8 +939,10 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trItemCost")));
             rep.DataSources.Add(new ReportDataSource("DataSetItem", items));
         }
-        public static void FoodReport(IEnumerable<Item> items, LocalReport rep, string reppath, List<ReportParameter> paramarr, string categoryName)
+        public static void FoodReport(IEnumerable<Item> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr, string categoryName)
         {
+            List<Item> items = JsonConvert.DeserializeObject<List<Item>>(JsonConvert.SerializeObject(Query));
+
             string title = AppSettings.resourcemanagerreport.GetString("trFoods");
             itemdata(items, rep, reppath, paramarr);
 
@@ -994,10 +1000,10 @@ namespace Restaurant.Classes
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
-            //foreach (Item r in _items)
-            //{
-            //    r.taxes = decimal.Parse(HelpClass.DecTostring(r.taxes));
-            //}
+            foreach (Item r in items)
+            {
+                r.categoryName = CategoryConv( r.categoryName);
+            }
             rep.DataSources.Add(new ReportDataSource("DataSetItem", items));
 
             paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
@@ -1029,7 +1035,7 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
             paramarr.Add(new ReportParameter("trSection", AppSettings.resourcemanagerreport.GetString("trSection")));
             paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
-
+            paramarr.Add(new ReportParameter("trBranchStore", AppSettings.resourcemanagerreport.GetString("trBranch/Store")));
         }
 
         public static void SectionReport(IEnumerable<Section> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)

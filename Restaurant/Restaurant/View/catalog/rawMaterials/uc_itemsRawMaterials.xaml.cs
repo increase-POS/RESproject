@@ -828,7 +828,7 @@ namespace Restaurant.View.catalog.rawMaterials
                 addpath = @"\Reports\Catalog\En\EnItem.rdlc";
             }
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-            clsReports.itemReport(itemsQuery, rep, reppath, paramarr);
+            clsReports.itemReport(itemsQuery.ToList(), rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 

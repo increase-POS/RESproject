@@ -633,7 +633,7 @@ namespace Restaurant.View.storage.storageDivide
            
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
-            clsReports.LocationsReport(locationsQuery, rep, reppath, paramarr);
+            clsReports.LocationsReport(locationsQuery.ToList(), rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 

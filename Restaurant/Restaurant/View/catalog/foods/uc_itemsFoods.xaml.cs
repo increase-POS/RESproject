@@ -865,7 +865,7 @@ namespace Restaurant.View.catalog.foods
                 addpath = @"\Reports\Catalog\En\EnFood.rdlc";
             }
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-            clsReports.FoodReport(itemsQuery, rep, reppath, paramarr, categoryName);
+            clsReports.FoodReport(itemsQuery.ToList(), rep, reppath, paramarr, categoryName);
 
 
 

@@ -2089,11 +2089,11 @@ namespace Restaurant.View.purchase
                 if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one") || HelpClass.isAdminPermision())
                 {
                     /////////////////////////////
-                    //Thread t1 = new Thread(() =>
-                    //{
+                    Thread t1 = new Thread(() =>
+                    {
                         sendPurEmail();
-                    //});
-                    //t1.Start();
+                    });
+                    t1.Start();
                     /////////////////////////////
                 }
                 else
@@ -2146,7 +2146,7 @@ namespace Restaurant.View.purchase
                             this.Dispatcher.Invoke(new Action(() =>
                             {
                                 string msg = "";
-                              //    msg = mailtosend.Sendmail();//tempdelite
+                                msg = mailtosend.Sendmail();//tempdelite
                                 if (msg == "Failure sending mail.")
                                 {
                                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoConnection"), animation: ToasterAnimation.FadeIn);
