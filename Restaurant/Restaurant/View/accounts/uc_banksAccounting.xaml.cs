@@ -72,11 +72,8 @@ namespace Restaurant.View.accounts
         //IEnumerable<Branch> branches;
 
         Bank bankModel = new Bank();
-        IEnumerable<Bank> banksQueryExcel;
         IEnumerable<Bank> banksQuery;
         IEnumerable<Bank> banks;
-
-        BrushConverter bc = new BrushConverter();
 
         wd_acceptUser w = new wd_acceptUser();
         string createPermission = "banksAccounting_create";
@@ -1160,7 +1157,7 @@ namespace Restaurant.View.accounts
             tb_depositNumber.IsEnabled = false;
             tb_notes.IsEnabled = true;
             btn_image.IsEnabled = false;
-
+            w.isOk = false;
             cb_opperationType.SelectedIndex = -1;
             cb_bank.SelectedIndex = -1;
             cb_user.SelectedIndex = -1;
