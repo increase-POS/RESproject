@@ -1,4 +1,5 @@
 ﻿using LiveCharts;
+using LiveCharts;
 using LiveCharts.Wpf;
 using Restaurant.Classes;
 using System;
@@ -184,7 +185,7 @@ namespace Restaurant.View.reports.salesReports
             (
             (s.invNumber != null         ? s.invNumber.ToLower().Contains(searchText)         : false)
             ||
-            (s.barcode != null ? s.barcode.ToLower().Contains(searchText) : false)
+            (s.invBarcode != null ? s.invBarcode.ToLower().Contains(searchText) : false)
             ||
             (s.branchCreatorName != null ? s.branchCreatorName.ToLower().Contains(searchText) : false)
             ||
@@ -936,7 +937,7 @@ namespace Restaurant.View.reports.salesReports
                     if (stk_tagsBranches.Children.Count == 0)
                     {
                         tempSearch = collectListAll.Where(s =>
-                                                     (s.barcode !=null ? s.branchCreatorName.ToLower().Contains(txt_search.Text) : false) ||
+                                                     (s.invBarcode !=null ? s.invBarcode.ToLower().Contains(txt_search.Text) : false) ||
                                                      s.branchCreatorName.ToLower().Contains(txt_search.Text) ||
                                                      s.ITitemName.ToLower().Contains(txt_search.Text) ||
                                                      s.count.ToString().ToLower().Contains(txt_search.Text) ||
@@ -947,7 +948,7 @@ namespace Restaurant.View.reports.salesReports
                     else
                     {
                         tempSearch = collectListBranch.Where(s =>
-                                                    (s.barcode != null ? s.branchCreatorName.ToLower().Contains(txt_search.Text) : false) ||
+                                                    (s.invBarcode != null ? s.invBarcode.ToLower().Contains(txt_search.Text) : false) ||
                                                     s.branchCreatorName.ToLower().Contains(txt_search.Text) ||
                                                     s.ITitemName.ToLower().Contains(txt_search.Text) ||
                                                     s.ITunitName.ToLower().Contains(txt_search.Text) ||

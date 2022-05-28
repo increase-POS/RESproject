@@ -140,8 +140,8 @@ namespace Restaurant.View.reports.salesReports
             (
              s.invNumber.ToLower().Contains(searchText)
             ||
-            //(s.barcode != null ? s.barecode.ToLower().Contains(searchText) : false)
-            //||
+            (s.invBarcode != null ? s.invBarcode.ToLower().Contains(searchText) : false)
+            ||
             s.branchName.ToLower().Contains(searchText)
             ||
             s.membershipsName.ToLower().Contains(searchText)

@@ -277,7 +277,7 @@ namespace Restaurant.View.reports.salesReports
             (
             s.invNumber.ToLower().Contains(searchText)
             ||
-            (s.barcode           != null ? s.barcode.ToLower().Contains(searchText) : false)
+            (s.invBarcode        != null ? s.barcode.ToLower().Contains(searchText) : false)
             ||
             (s.branchCreatorName != null ? s.branchCreatorName.ToLower().Contains(searchText) : false)
             ||
