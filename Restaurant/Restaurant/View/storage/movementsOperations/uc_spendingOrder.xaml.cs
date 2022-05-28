@@ -767,46 +767,145 @@ namespace Restaurant.View.storage.movementsOperations
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
-
-        private void BuildReport()
+        Branch branchModel = new Branch();
+        public async Task BuildReport()
         {
-            List<ReportParameter> paramarr = new List<ReportParameter>();
 
-            string addpath;
-            bool isArabic = ReportCls.checkLang();
-            if (isArabic)
+            if (invoice.invoiceId > 0)
             {
-                addpath = @"\Reports\Storage\movementsOperations\Ar\ArSpendingOrder.rdlc";
+                List<ReportParameter> paramarr = new List<ReportParameter>();
+                Invoice prInvoice = invoice;
+                Invoice invoiceModel = invoice;
+                prInvoice = await invoiceModel.GetByInvoiceId(invoice.invoiceId);
+                paramarr = new List<ReportParameter>();
+
+                string reppath = reportclass.SpendingRequestRdlcpath();
+                if (prInvoice.invoiceId > 0)
+                {
+                    invoiceItems = await invoiceModel.GetInvoicesItems(prInvoice.invoiceId);
+                    if (prInvoice.agentId != null)
+                    {
+                        Agent agentinv = new Agent();
+                        //  agentinv = vendors.Where(X => X.agentId == prInvoice.agentId).FirstOrDefault();
+                        agentinv = await agentinv.getAgentById((int)prInvoice.agentId);
+                        prInvoice.agentCode = agentinv.code;
+                        //new lines
+                        prInvoice.agentName = agentinv.name;
+                        prInvoice.agentCompany = agentinv.company;
+                    }
+                    else
+                    {
+
+                        prInvoice.agentCode = "-";
+                        //new lines
+                        prInvoice.agentName = "-";
+                        prInvoice.agentCompany = "-";
+                    }
+                    User employ = new User();
+                    employ = await employ.getUserById((int)prInvoice.updateUserId);
+                    prInvoice.uuserName = employ.name;
+                    prInvoice.uuserLast = employ.lastname;
+
+
+                    Branch branch = new Branch();
+                    //branch = await branchModel.getBranchById((int)prInvoice.branchCreatorId);
+                    //if (branch.branchId > 0)
+                    //{
+                    //    prInvoice.branchCreatorName = branch.name;
+                    //}
+                    //branch reciver
+                    if (prInvoice.branchId != null)
+                    {
+                        if (prInvoice.branchId > 0)
+                        {
+                            branch = await branchModel.getBranchById((int)prInvoice.branchId);
+                            prInvoice.branchName = branch.name;
+                        }
+                        else
+                        {
+                            prInvoice.branchName = "-";
+                        }
+
+                    }
+                    else
+                    {
+                        prInvoice.branchName = "-";
+                    }
+                    // end branch reciever
+
+
+                    ReportCls.checkLang();
+                    foreach (var i in invoiceItems)
+                    {
+                        i.price = decimal.Parse(HelpClass.DecTostring(i.price));
+                        i.subTotal = decimal.Parse(HelpClass.DecTostring(i.price * i.quantity));
+                    }
+                    clsReports.purchaseInvoiceReport(invoiceItems, rep, reppath);
+                    clsReports.setReportLanguage(paramarr);
+                    clsReports.Header(paramarr);
+                    paramarr = reportclass.fillSpendingRequest(prInvoice, paramarr);
+                    foreach (var item in paramarr.Where(x => x.Name == "Title").ToList())
+                    {
+                        StringCollection myCol = new StringCollection();
+                        myCol.Add(AppSettings.resourcemanagerreport.GetString("trSpendingOrder"));
+                        item.Values = myCol;
+
+
+                    }
+                 //   paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trSpendingOrder")));
+                    rep.SetParameters(paramarr);
+                    rep.Refresh();
+                }
+                else
+                {
+
+
+                    Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSaveInvoiceToPreview"), animation: ToasterAnimation.FadeIn);
+
+
+
+                }
             }
-            else
-            {
-                addpath = @"\Reports\Storage\movementsOperations\En\EnSpendingOrder.rdlc";
-            }
-            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-            //D:\myproj\posproject5\Restaurant\Restaurant\View\storage\movementsOperations\uc_SpendingOrder.xaml.cs
-
-            clsReports.SpendingOrder(invoiceItems, rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
-            clsReports.Header(paramarr);
-
-            rep.SetParameters(paramarr);
-
-            rep.Refresh();
         }
-        private void PrintRep()
+        //private void BuildReport()
+        //{
+        //    List<ReportParameter> paramarr = new List<ReportParameter>();
+
+        //    string addpath;
+        //    bool isArabic = ReportCls.checkLang();
+        //    if (isArabic)
+        //    {
+        //        addpath = @"\Reports\Storage\movementsOperations\Ar\ArSpendingOrder.rdlc";
+        //    }
+        //    else
+        //    {
+        //        addpath = @"\Reports\Storage\movementsOperations\En\EnSpendingOrder.rdlc";
+        //    }
+        //    string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+        //    //D:\myproj\posproject5\Restaurant\Restaurant\View\storage\movementsOperations\uc_SpendingOrder.xaml.cs
+
+        //    clsReports.SpendingOrder(invoiceItems, rep, reppath, paramarr);
+        //    clsReports.setReportLanguage(paramarr);
+        //    clsReports.Header(paramarr);
+
+        //    rep.SetParameters(paramarr);
+
+        //    rep.Refresh();
+        //}
+        private async void PrintRep()
         {
-            BuildReport();
+           await  BuildReport();
 
             this.Dispatcher.Invoke(() =>
             {
                 LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, AppSettings.rep_print_count == null ? short.Parse("1") : short.Parse(AppSettings.rep_print_count));
             });
         }
-        private void PdfRep()
+        private async  void PdfRep()
         {
 
-            BuildReport();
+           await BuildReport();
 
             this.Dispatcher.Invoke(() =>
             {
@@ -886,7 +985,7 @@ namespace Restaurant.View.storage.movementsOperations
     
        
 
-        private void Btn_preview_Click(object sender, RoutedEventArgs e)
+        private async  void Btn_preview_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -904,7 +1003,7 @@ namespace Restaurant.View.storage.movementsOperations
                         pdfpath = @"\Thumb\report\temp.pdf";
                         pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
 
-                        BuildReport();
+                     await   BuildReport();
                         LocalReportExtensions.ExportToPDF(rep, pdfpath);
                         ///////////////////
                         wd_previewPdf w = new wd_previewPdf();

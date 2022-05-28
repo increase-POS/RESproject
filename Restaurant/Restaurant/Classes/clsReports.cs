@@ -1101,6 +1101,8 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trRealAmount", AppSettings.resourcemanagerreport.GetString("trRealAmount")));
             paramarr.Add(new ReportParameter("trInventoryAmount", AppSettings.resourcemanagerreport.GetString("trInventoryAmount")));
             paramarr.Add(new ReportParameter("trDestoryCount", AppSettings.resourcemanagerreport.GetString("trDestoryCount")));
+            paramarr.Add(new ReportParameter("trInventoryNum", AppSettings.resourcemanagerreport.GetString("trInventoryNum")));
+            paramarr.Add(new ReportParameter("trInventoryDate", AppSettings.resourcemanagerreport.GetString("trInventoryDate")));
 
             DateFormConv(paramarr);
 
@@ -1112,11 +1114,10 @@ namespace Restaurant.Classes
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
             rep.DataSources.Add(new ReportDataSource("DataSetItemsStorage", invoiceItems));
-            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trLocations")));// tt
-            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNum")));
+             paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNo.")));
             paramarr.Add(new ReportParameter("trItemUnit", AppSettings.resourcemanagerreport.GetString("trItemUnit")));
             paramarr.Add(new ReportParameter("trSectionLocation", AppSettings.resourcemanagerreport.GetString("trSectionLocation")));
-            paramarr.Add(new ReportParameter("trQuantity", AppSettings.resourcemanagerreport.GetString("trQuantity")));
+            paramarr.Add(new ReportParameter("trQuantity", AppSettings.resourcemanagerreport.GetString("trQTR")));
             paramarr.Add(new ReportParameter("trStartDate", AppSettings.resourcemanagerreport.GetString("trStartDate")));
             paramarr.Add(new ReportParameter("trEndDate", AppSettings.resourcemanagerreport.GetString("trEndDate")));
             paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
@@ -1143,11 +1144,17 @@ namespace Restaurant.Classes
 
         }
 
-        public static void StorageCosts(IEnumerable<StorageCost> invoiceItems, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        public static void StorageCosts(IEnumerable<StorageCost> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
+            List<StorageCost> invoiceItems = JsonConvert.DeserializeObject<List<StorageCost>>(JsonConvert.SerializeObject(Query));
+
             rep.ReportPath = reppath;
             rep.EnableExternalImages = true;
             rep.DataSources.Clear();
+            foreach (StorageCost r in invoiceItems)
+            {
+                r.cost =decimal.Parse( HelpClass.DecTostring(r.cost));
+            }
             rep.DataSources.Add(new ReportDataSource("DataSetStorageCost", invoiceItems));
             paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trStorageCostPerDay")));// tt
             paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNum")));
@@ -1172,7 +1179,7 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trUnit", AppSettings.resourcemanagerreport.GetString("trUnit")));
             paramarr.Add(new ReportParameter("trQuantity", AppSettings.resourcemanagerreport.GetString("trQuantity")));
 
-            DateFormConv(paramarr);
+       //   DateFormConv(paramarr);
 
         }
 

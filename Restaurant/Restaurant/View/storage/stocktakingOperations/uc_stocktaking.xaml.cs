@@ -632,7 +632,15 @@ namespace Restaurant.View.storage.stocktakingOperations
             clsReports.Stocktaking(invItemsLocations, rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
+            paramarr.Add(new ReportParameter("InventoryNum", inventory.num));
+            paramarr.Add(new ReportParameter("InventoryDate",inventory.createDate.ToString()));
 
+            /*
+             * txt_inventoryNum  trInventoryNum
+txt_inventoryDate trInventoryDate
+   txt_inventoryNum.Text = inventory.num;
+                txt_inventoryDate.Text = inventory.createDate.ToString();
+             * */
             rep.SetParameters(paramarr);
 
             rep.Refresh();

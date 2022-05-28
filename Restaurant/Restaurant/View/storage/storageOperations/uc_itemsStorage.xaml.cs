@@ -567,17 +567,30 @@ namespace Restaurant.View.storage.storageOperations
         private void BuildReport()
         {
             List<ReportParameter> paramarr = new List<ReportParameter>();
-
+            string subtitle = "";
+            string  title = "";
             string addpath;
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
             {
                 addpath = @"\Reports\Storage\storageOperations\Ar\ArItemsStorage.rdlc";
+
             }
             else
             {
                 addpath = @"\Reports\Storage\storageOperations\En\EnItemsStorage.rdlc";
             }
+            if ((bool)chk_freezone.IsChecked)
+            {
+                subtitle = AppSettings.resourcemanagerreport.GetString("trFreeZone");
+            }
+            else  
+            {
+                     subtitle = AppSettings.resourcemanagerreport.GetString("trStored");
+            }
+            title = AppSettings.resourcemanagerreport.GetString("trLocations") + "/" + subtitle;
+            paramarr.Add(new ReportParameter("trTitle", title)); 
+
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
             //D:\myproj\posproject5\Restaurant\Restaurant\View\storage\storageOperations\uc_ItemsStorage.xaml.cs
             ReportCls.checkLang();
