@@ -36,8 +36,7 @@ namespace Restaurant.View.sectionData
         IEnumerable<Bank> banksQuery;
         IEnumerable<Card> cardsQuery;
         IEnumerable<Pos> posQuery;
-        IEnumerable<Classes.Section> sectionsQuery;
-        IEnumerable<HallSection> hallSectionsQuery;
+        IEnumerable<HallSection> sectionsQuery;
         IEnumerable<Tables> tablesQuery;
         IEnumerable<ResidentialSectors> sectoresQuery;
 
@@ -157,25 +156,12 @@ namespace Restaurant.View.sectionData
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        public win_lvc(IEnumerable<Classes.Section> _sectionsQuery, int _data)
-        {
-            try
-            {
-                InitializeComponent();
-                sectionsQuery = _sectionsQuery;
-                data = _data;
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
         public win_lvc(IEnumerable<HallSection> _sectionsQuery, int _data)
         {
             try
             {
                 InitializeComponent();
-                hallSectionsQuery = _sectionsQuery;
+                sectionsQuery = _sectionsQuery;
                 data = _data;
             }
             catch (Exception ex)
