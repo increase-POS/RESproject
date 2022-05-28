@@ -2277,6 +2277,12 @@
     <Content Include="Reports\StatisticReport\Sale\Daily\En\EnDailySale.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\Sale\Reservation\Ar\ArReservation.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Sale\Reservation\En\EnReservation.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Resource Include="pic\programs-Rest-login-bg.png" />
@@ -2571,6 +2577,7 @@
     <None Include="Properties\DataSources\Restaurant.Classes.AgentMembershipCash1.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ApiClasses.OrderPreparing1.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ApiClasses.Tables.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.ApiClasses.TablesReservation.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Bank.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Branch.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Card.datasource" />

@@ -578,7 +578,75 @@ namespace Restaurant.Classes
 
              
         }
+    
+               public static void reservationsUpdateReport(IEnumerable<TablesReservation> Query1, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            List<TablesReservation> Query = JsonConvert.DeserializeObject<List<TablesReservation>>(JsonConvert.SerializeObject(Query1));
 
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+
+            foreach (TablesReservation r in Query)
+            {
+               // r.reservationTime = DateTime.Parse(timeFrameConv((DateTime)r.reservationTime));
+                r.isExceed = ExceedConv(r.isExceed);
+                r.notes = timeFrameConv((DateTime)r.reservationTime);
+
+
+            }
+
+            rep.DataSources.Add(new ReportDataSource("DataSetTables", Query));
+            //title
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("tr_Sales")+" / "+ AppSettings.resourcemanagerreport.GetString("reservationsManagement")));
+     
+            //table columns
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trStartTime", AppSettings.resourcemanagerreport.GetString("trStartTime")));
+            paramarr.Add(new ReportParameter("trCount", AppSettings.resourcemanagerreport.GetString("trCount")));
+            paramarr.Add(new ReportParameter("trCustomer", AppSettings.resourcemanagerreport.GetString("trCustomer")));
+            paramarr.Add(new ReportParameter("trExceed", AppSettings.resourcemanagerreport.GetString("trExceed")));
+            DateFormConv(paramarr);
+
+        }
+        public static string ExceedConv(string isExceed)
+        {
+            switch (isExceed)
+            {
+                // used in reservation update to know if reservation exceed warning Time For Late
+                case "exceed":
+                    isExceed = AppSettings.resourcemanagerreport.GetString("trExceed");
+                    break;
+
+                case "":
+                    isExceed = "-";
+                    break;
+            }
+            return isExceed;
+        }
+        // timeFrameConverter
+        public static  string timeFrameConv(DateTime date)
+        {
+
+
+        //    DateTimeFormatInfo dtfi = DateTimeFormatInfo.CurrentInfo;
+       
+            if (!(date is  DateTime))
+                return date.ToString();
+
+
+            switch (AppSettings.timeFormat)
+            {
+                case "ShortTimePattern":
+                    return date.ToShortTimeString();
+                case "LongTimePattern":
+                    return date.ToLongTimeString();
+                default:
+                    return date.ToShortTimeString();
+            }
+
+        }
         public static void hallSectionsReport(IEnumerable<HallSection> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
             rep.ReportPath = reppath;
@@ -936,7 +1004,7 @@ namespace Restaurant.Classes
             paramarr.Add(new ReportParameter("trPrice", AppSettings.resourcemanagerreport.GetString("trPrice")));
             paramarr.Add(new ReportParameter("trPriceWithService", AppSettings.resourcemanagerreport.GetString("trPriceWithService")));
 
-            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trItemCost")));
+            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trItemsCosting")));
             rep.DataSources.Add(new ReportDataSource("DataSetItem", items));
         }
         public static void FoodReport(IEnumerable<Item> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr, string categoryName)
