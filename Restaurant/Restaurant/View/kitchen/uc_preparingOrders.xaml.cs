@@ -305,7 +305,8 @@ namespace Restaurant.View.kitchen
                 HelpClass.StartAwait(grid_main);
                 if (FillCombo.groupObject.HasPermissionAction(updatePermission, FillCombo.groupObjects, "one"))
                 {
-                    if (HelpClass.validate(requiredControlList, this))
+                    var selectedOrders = ordersQuery.Where(x => x.IsChecked == true).ToList();
+                        if (HelpClass.validate(requiredControlList, this) || selectedOrders.Count > 0)
                     {
                         await saveOrderPreparing();
                     }
@@ -338,7 +339,17 @@ namespace Restaurant.View.kitchen
                 #endregion
 
                 int res = 0;
-                switch (preparingOrder.status)
+                string status = "";
+
+                if (selectedOrders.Count == 0)
+                    status = preparingOrder.status;
+                else if(chk_ready.IsChecked.Value)
+                    status = "Ready";
+                else if (chk_preparing.IsChecked.Value)
+                    status = "Preparing";
+                else if (chk_listed.IsChecked.Value)
+                    status = "Listed";
+                switch (status)
                 {
                     case "Listed":
 
@@ -802,6 +813,7 @@ namespace Restaurant.View.kitchen
                         chk_preparing.IsChecked = false;
                         chk_ready.IsChecked = false;
                         col_chk.Visibility = Visibility.Collapsed;
+                        inputEditable("Listed");
                     }
                     else if (cb.Name == "chk_listed")
                     {
@@ -809,6 +821,7 @@ namespace Restaurant.View.kitchen
                         chk_preparing.IsChecked = false;
                         chk_ready.IsChecked = false;
                         col_chk.Visibility = Visibility.Visible;
+                        inputEditable("Listed");
                     }
                     else if (cb.Name == "chk_preparing")
                     {
@@ -816,6 +829,7 @@ namespace Restaurant.View.kitchen
                         chk_listed.IsChecked = false;
                         chk_ready.IsChecked = false;
                         col_chk.Visibility = Visibility.Visible;
+                        inputEditable("Preparing");
                     }
                     else if (cb.Name == "chk_ready")
                     {
@@ -823,6 +837,7 @@ namespace Restaurant.View.kitchen
                         chk_listed.IsChecked = false;
                         chk_preparing.IsChecked = false;
                         col_chk.Visibility = Visibility.Visible;
+                        inputEditable("Ready");
                     }
                 }
                 HelpClass.StartAwait(grid_main);
