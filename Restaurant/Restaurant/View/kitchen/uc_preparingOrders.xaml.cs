@@ -264,9 +264,40 @@ namespace Restaurant.View.kitchen
                 }
             }
         }
-       
+
         #endregion
-        #region Add - Update - Delete  - Tgl - Clear - DG_SelectionChanged - refresh
+        #region Add - Update - Delete  - Tgl - Clear - DG_SelectionChanged - refresh - Btn_updatePreparingTime
+        private async void Btn_updatePreparingTime_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (FillCombo.groupObject.HasPermissionAction(updatePermission, FillCombo.groupObjects, "one"))
+                {
+                    var selectedOrders = ordersQuery.Where(x => x.IsChecked == true).ToList();
+                    if (selectedOrders.Count == 0)// one row is clicked
+                        selectedOrders.Add(preparingOrder);
+                    decimal preparingTime = decimal.Parse(tb_preparingTime.Text);
+                    int res = await preparingOrder.EditPreparingOrdersPrepTime(selectedOrders, preparingTime, MainWindow.userLogin.userId);
+                    
+                    if(res > 0)
+                    {
+                        await refreshPreparingOrders();
+                        await Search();
+                    }
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
         { //add
             try
@@ -293,65 +324,55 @@ namespace Restaurant.View.kitchen
         }
         async Task saveOrderPreparing()
         {
+            var selectedOrders = ordersQuery.Where(x => x.IsChecked == true).ToList();
+            if (selectedOrders.Count == 0)// one row is clicked
+                selectedOrders.Add(preparingOrder);
 
-            // code
-            //OrderPreparing
-            if (ordersQuery.Where(x => x.IsChecked).Count() > 0)
+            if (selectedOrders.Count > 0)
             {
-                foreach (var item in dg_orders.Items)
+
+                #region order status object
+                orderPreparingStatus statusObject = new orderPreparingStatus();
+                statusObject.notes = tb_notes.Text;
+                statusObject.createUserId = MainWindow.userLogin.userId;
+                #endregion
+
+                int res = 0;
+                switch (preparingOrder.status)
                 {
-                    var selectedOrder = item as OrderPreparing;
+                    case "Listed":
+
+                        statusObject.status = "Preparing";
+
+                        foreach(OrderPreparing or in selectedOrders)
+                        {
+                            or.notes = tb_notes.Text;
+                            or.updateUserId = MainWindow.userLogin.userId;
+                        }
+                        res = await preparingOrder.editPreparingOrdersAndStatus(selectedOrders, statusObject);
+                        break;
+                    case "Preparing":
+                        statusObject.status = "Ready";
+
+                    res = await preparingOrder.updateListOrdersStatus(selectedOrders, statusObject);
+                    break;
+                    case "Ready":
+                        statusObject.status = "Done";
+
+                    res = await preparingOrder.updateListOrdersStatus(selectedOrders, statusObject);
+                    break;
                 }
-            }
-            else
-            {
-                // dina code
-                if (preparingOrder.orderPreparingId > 0)
+                if (res > 0)
                 {
+                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
-                    #region order status object
-                    orderPreparingStatus statusObject = new orderPreparingStatus();
-                    statusObject.orderPreparingId = preparingOrder.orderPreparingId;
-                    statusObject.notes = tb_notes.Text;
-                    statusObject.createUserId = MainWindow.userLogin.userId;
-                    #endregion
-
-                    int res = 0;
-                    switch (preparingOrder.status)
-                    {
-                        case "Listed":
-                            #region preparing order object
-                            preparingOrder.preparingTime = decimal.Parse(tb_preparingTime.Text);
-                            preparingOrder.notes = tb_notes.Text;
-                            #endregion
-                            statusObject.status = "Preparing";
-
-                            res = await preparingOrder.editPreparingOrderAndStatus(preparingOrder, statusObject);
-                            break;
-                        case "Preparing":
-                            statusObject.status = "Ready";
-
-                            res = await preparingOrder.updateOrderStatus(statusObject);
-                            break;
-                        case "Ready":
-                            statusObject.status = "Done";
-
-                            res = await preparingOrder.updateOrderStatus(statusObject);
-                            break;
-                    }
-
-                    if (res > 0)
-                    {
-                        Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-
-                        clear();
-                        await refreshPreparingOrders();
-                        await Search();
-                    }
-
-                    else
-                        Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                    clear();
+                    await refreshPreparingOrders();
+                    await Search();
                 }
+
+                else
+                    Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
             }
         }
 
@@ -703,7 +724,8 @@ namespace Restaurant.View.kitchen
         {
             List<string> statusLst = new List<string>() { "Listed", "Preparing", "Ready" };
 
-            orders = await preparingOrder.GetKitchenPreparingOrders(MainWindow.branchLogin.branchId, "",24);
+            int duration = 24;
+            orders = await preparingOrder.GetKitchenPreparingOrders(MainWindow.branchLogin.branchId, "",duration);
             orders = orders.Where(x=>statusLst.Contains(x.status)).ToList();
             orders = orders.Where(x => x.status != "Ready" || (x.status == "Ready" && x.shippingCompanyId == null)).ToList();
         }
@@ -1254,9 +1276,6 @@ namespace Restaurant.View.kitchen
 
         #endregion
 
-        private void Btn_updatePreparingTime_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+       
     }
 }

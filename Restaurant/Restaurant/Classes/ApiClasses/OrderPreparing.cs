@@ -204,11 +204,22 @@ namespace Restaurant.Classes.ApiClasses
             parameters.Add("statusesOfPreparingOrder", statusesOfPreparingOrder);
             return await APIResult.post(method, parameters);
         }
-        public async Task<int> editPreparingOrderAndStatus(OrderPreparing order, orderPreparingStatus statusObject)
+        public async Task<int> EditPreparingOrdersPrepTime(List<OrderPreparing> orders, decimal preparingTime, int userId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            string method = "OrderPreparing/EditOrderAndStatus";
-            var myContent = JsonConvert.SerializeObject(order);
+            string method = "OrderPreparing/EditPreparingOrdersPrepTime";
+            var myContent = JsonConvert.SerializeObject(orders);
+            parameters.Add("orderObject", myContent);
+          
+            parameters.Add("preparingTime", preparingTime.ToString());
+            parameters.Add("userId", userId.ToString());
+            return await APIResult.post(method, parameters);
+        }
+        public async Task<int> editPreparingOrdersAndStatus(List<OrderPreparing> preparingOrders, orderPreparingStatus statusObject)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "OrderPreparing/EditOrderListAndStatus";
+            var myContent = JsonConvert.SerializeObject(preparingOrders);
             parameters.Add("orderObject", myContent);
             myContent = JsonConvert.SerializeObject(statusObject);
             parameters.Add("statusObject", myContent);
@@ -254,6 +265,18 @@ namespace Restaurant.Classes.ApiClasses
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             string method = "OrderPreparing/updateOrderStatus";
             string myContent = JsonConvert.SerializeObject(statusObject);
+            parameters.Add("statusObject", myContent);
+            return await APIResult.post(method, parameters);
+        }
+
+        public async Task<int> updateListOrdersStatus(List<OrderPreparing> preparingOrders, orderPreparingStatus statusObject)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "OrderPreparing/updateListOrdersStatus";
+            string myContent = JsonConvert.SerializeObject(preparingOrders);
+            parameters.Add("preparingOrders", myContent);
+
+            myContent = JsonConvert.SerializeObject(statusObject);
             parameters.Add("statusObject", myContent);
             return await APIResult.post(method, parameters);
         }
