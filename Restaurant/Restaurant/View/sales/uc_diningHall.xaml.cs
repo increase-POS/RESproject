@@ -3865,7 +3865,7 @@ namespace Restaurant.View.sales
 
 
         }
-        public async void printInvoiceInkitchen(int invoiceId, List<OrderPreparing> OrderPreparingList)
+        public  void printInvoiceInkitchen(int invoiceId, List<OrderPreparing> OrderPreparingList)
         {
             try
             {
@@ -3912,10 +3912,10 @@ namespace Restaurant.View.sales
             catch (Exception ex)
             {
                 ex.ToString();
-                this.Dispatcher.Invoke(() =>
+                this.Dispatcher.Invoke( async () =>
                 {
+                  await Task.Delay(500);
                     Toaster.ShowWarning(Window.GetWindow(this), message: "Not completed", animation: ToasterAnimation.FadeIn);
-                  await  Task.Delay(500);
                 });
             }
 
