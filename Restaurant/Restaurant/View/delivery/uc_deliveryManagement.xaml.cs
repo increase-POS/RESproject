@@ -304,6 +304,7 @@ namespace Restaurant.View.delivery
                         if (chk_allForDelivery.IsChecked.Value)
                         {
                             selectedOrders.Clear();
+                            //selectedOrders.Add(order);
 
                             if (dg_orders.Items.Count > 1)
                             {
@@ -346,8 +347,9 @@ namespace Restaurant.View.delivery
 
                         else
                         {
-                            checkboxColumn.IsChecked = !checkboxColumn.IsChecked;
-                            //checkboxColumn.IsEnabled = true;
+                            if (!chk_allForDelivery.IsChecked.Value)
+                                checkboxColumn.IsChecked = !checkboxColumn.IsChecked;
+                                //checkboxColumn.IsEnabled = true;
                         }
 
 
