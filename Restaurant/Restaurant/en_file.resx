@@ -3785,7 +3785,7 @@ Please add Email in setting</value>
     <value>Open date</value>
   </data>
   <data name="trPartialPay" xml:space="preserve">
-    <value>partial pay</value>
+    <value>Partial pay</value>
   </data>
   <data name="invoiceType" xml:space="preserve">
     <value>Invoice type</value>
@@ -4077,5 +4077,8 @@ Please add Email in setting</value>
   </data>
   <data name="PurchasesInvoice" xml:space="preserve">
     <value>Purchases Invoice</value>
+  </data>
+  <data name="trPaid_" xml:space="preserve">
+    <value>Paid</value>
   </data>
 </root>

@@ -4063,4 +4063,7 @@
   <data name="PurchasesInvoice" xml:space="preserve">
     <value>فاتورة مشتريات</value>
   </data>
+  <data name="trPaid_" xml:space="preserve">
+    <value>مدفوع</value>
+  </data>
 </root>

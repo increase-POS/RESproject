@@ -240,7 +240,7 @@ namespace Restaurant.View.accounts
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_salesMan, AppSettings.resourcemanager.GetString("trSalesManHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_customer, AppSettings.resourcemanager.GetString("trCustomerHint"));
 
-            dg_orderAccounts.Columns[0].Header = AppSettings.resourcemanager.GetString("trInvoiceNumber");
+            dg_orderAccounts.Columns[0].Header = AppSettings.resourcemanager.GetString("trNo.");
             dg_orderAccounts.Columns[1].Header = AppSettings.resourcemanager.GetString("trSalesMan");
             dg_orderAccounts.Columns[2].Header = AppSettings.resourcemanager.GetString("trCustomer");
             dg_orderAccounts.Columns[3].Header = AppSettings.resourcemanager.GetString("trDate");
