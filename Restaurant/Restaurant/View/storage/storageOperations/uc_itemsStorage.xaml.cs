@@ -122,7 +122,7 @@ namespace Restaurant.View.storage.storageOperations
             dg_itemsStorage.Columns[3].Header = AppSettings.resourcemanager.GetString("trStartDate");
             dg_itemsStorage.Columns[4].Header = AppSettings.resourcemanager.GetString("trEndDate");
             dg_itemsStorage.Columns[5].Header = AppSettings.resourcemanager.GetString("trNote");
-            dg_itemsStorage.Columns[6].Header = AppSettings.resourcemanager.GetString("trOrderNum");
+            //dg_itemsStorage.Columns[6].Header = AppSettings.resourcemanager.GetString("trOrderNum");
 
             txt_Location.Text = AppSettings.resourcemanager.GetString("trLocationt");
 
@@ -289,7 +289,7 @@ namespace Restaurant.View.storage.storageOperations
                         //chk_locked.IsChecked = false;
                         btn_transfer.Visibility = Visibility.Visible;
                         //btn_locked.Visibility = Visibility.Collapsed;
-                        dg_itemsStorage.Columns[6].Visibility = Visibility.Collapsed; //make order num column unvisible
+                        //dg_itemsStorage.Columns[6].Visibility = Visibility.Collapsed; //make order num column unvisible
                         dg_itemsStorage.Columns[3].Visibility = Visibility.Visible;
                         dg_itemsStorage.Columns[4].Visibility = Visibility.Visible;
                     }
@@ -299,7 +299,7 @@ namespace Restaurant.View.storage.storageOperations
                         //chk_locked.IsChecked = false;
                         btn_transfer.Visibility = Visibility.Visible;
                        // btn_locked.Visibility = Visibility.Collapsed;
-                        dg_itemsStorage.Columns[6].Visibility = Visibility.Collapsed; //make order num column unvisible
+                        //dg_itemsStorage.Columns[6].Visibility = Visibility.Collapsed; //make order num column unvisible
                         dg_itemsStorage.Columns[3].Visibility = Visibility.Visible;
                         dg_itemsStorage.Columns[4].Visibility = Visibility.Visible;
                     }

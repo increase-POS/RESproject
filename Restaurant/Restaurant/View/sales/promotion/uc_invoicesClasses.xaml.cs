@@ -676,18 +676,18 @@ namespace Restaurant.View.sales.promotion
             }
         }
 
+
+
         #endregion
 
-        
-
         #region reports
-        /*
+        
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
         private void Btn_printBarcode_Click(object sender, RoutedEventArgs e)
         {//print barcode
-            if (tb_barcode.Text != null && tb_barcode.Text != "")
+            //if (tb_barcode.Text != null && tb_barcode.Text != "")
             {
                 buildbarcodereport();
                 saveFileDialog.Filter = "PDF|*.pdf;";
@@ -698,7 +698,7 @@ namespace Restaurant.View.sales.promotion
                     LocalReportExtensions.ExportToPDF(rep, filepath);
                 }
             }
-            else
+            //else
             {
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trBarcodeEmpty"), animation: ToasterAnimation.FadeIn);
             }
@@ -717,7 +717,7 @@ namespace Restaurant.View.sales.promotion
 
             ReportCls.checkLang();
 
-            clsReports.invoicesClassExportReport(rep, reppath, paramarr, tb_barcode.Text);
+            //clsReports.invoicesClassExportReport(rep, reppath, paramarr, tb_barcode.Text);
 
             rep.SetParameters(paramarr);
 
@@ -779,34 +779,6 @@ namespace Restaurant.View.sales.promotion
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
-        private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
-        {//pie
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
-                {
-                    #region
-                    Window.GetWindow(this).Opacity = 0.2;
-                    win_lvcSales win = new win_lvcSales(invoicesClassesQuery, 1);
-                    win.ShowDialog();
-                    Window.GetWindow(this).Opacity = 1;
-                    #endregion
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-
         private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
         {//excel
             try
@@ -831,7 +803,7 @@ namespace Restaurant.View.sales.promotion
 
                     ReportCls.checkLang();
 
-                    clsReports.invoicesClassReport(invoicesClassesQuery, rep, reppath, paramarr);
+                    //clsReports.invoicesClassReport(invoicesClassesQuery, rep, reppath, paramarr);
                     clsReports.setReportLanguage(paramarr);
                     clsReports.Header(paramarr);
 
@@ -892,7 +864,7 @@ namespace Restaurant.View.sales.promotion
 
                     ReportCls.checkLang();
 
-                    clsReports.invoicesClassReport(invoicesClassesQuery, rep, reppath, paramarr);
+                    //clsReports.invoicesClassReport(invoicesClassesQuery, rep, reppath, paramarr);
                     clsReports.setReportLanguage(paramarr);
                     clsReports.Header(paramarr);
 
@@ -937,7 +909,7 @@ namespace Restaurant.View.sales.promotion
 
             ReportCls.checkLang();
 
-            clsReports.invoicesClassReport(invoicesClassesQuery, rep, reppath, paramarr);
+            //clsReports.invoicesClassReport(invoicesClassesQuery, rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
@@ -971,7 +943,7 @@ namespace Restaurant.View.sales.promotion
 
             ReportCls.checkLang();
 
-            clsReports.invoicesClassReport(invoicesClassesQuery, rep, reppath, paramarr);
+            //clsReports.invoicesClassReport(invoicesClassesQuery, rep, reppath, paramarr);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
@@ -979,11 +951,40 @@ namespace Restaurant.View.sales.promotion
             rep.Refresh();
             this.Dispatcher.Invoke(() =>
             {
-                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, short.Parse(FillCombo.rep_print_count));
+                //LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, short.Parse(FillCombo.rep_print_count));
             });
         }
-        */
+        
+
+        private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
+        {//pie
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
+                {
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+                    win_lvcSales win = new win_lvcSales(invoicesClassesQuery, 5);
+                    win.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+
+        }
         #endregion
+
 
     }
 }

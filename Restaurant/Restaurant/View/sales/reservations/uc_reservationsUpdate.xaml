@@ -254,7 +254,7 @@
                             </Button>
                             <Button FlowDirection="LeftToRight"   Background="{x:Null}"    Grid.Column="2" Margin="2.5,0,2.5,0" 
                             Padding="0" Height="20" Width="25"   x:Name="btn_pieChart"   
-                                       BorderBrush="{x:Null}"  >
+                                       BorderBrush="{x:Null}" Click="Btn_pieChart_Click"  >
                                 <Grid Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Path Width="8.8" Height="9.6" Stretch="Fill" Data="M27.7,8.3l-10.2,7.8l9.1,9.1c2.1-2.5,3.4-5.7,3.4-9.2C30,13.1,29.1,10.5,27.7,8.3z" Fill="#DD191B"
                               RenderTransformOrigin="5,5" >

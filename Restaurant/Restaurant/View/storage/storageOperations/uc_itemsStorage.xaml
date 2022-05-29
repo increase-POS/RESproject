@@ -246,7 +246,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Width="*"  Header="Order Number"  Binding="{Binding Path=invNumber}">
+                                <!--<DataGridTextColumn Width="*"  Header="Order Number"  Binding="{Binding Path=invNumber}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>
@@ -256,7 +256,7 @@
                                             </Style.Triggers>
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
+                                </DataGridTextColumn>-->
                             </DataGrid.Columns>
                         </DataGrid>
 

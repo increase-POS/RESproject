@@ -1033,7 +1033,7 @@ namespace Restaurant.View.sales.promotion
                 {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
-                    win_lvcSales win = new win_lvcSales(offersQuery, 1);
+                    win_lvcSales win = new win_lvcSales(offersQuery, 2);
                     win.ShowDialog();
                     Window.GetWindow(this).Opacity = 1;
                     #endregion
