@@ -608,7 +608,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -716,7 +715,7 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>3.746cm</Height>
+        <Height>3.45496cm</Height>
         <Style>
           <Border>
             <Style>None</Style>
