@@ -4066,4 +4066,7 @@
   <data name="trPaid_" xml:space="preserve">
     <value>مدفوع</value>
   </data>
+  <data name="trMemberships" xml:space="preserve">
+    <value>العضويات</value>
+  </data>
 </root>

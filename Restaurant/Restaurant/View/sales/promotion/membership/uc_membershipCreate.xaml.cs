@@ -638,70 +638,78 @@ namespace Restaurant.View.sales.promotion.membership
 
         #endregion
 
-        #region report
-        
-        // report
+        #region reports
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
+
         public void BuildReport()
         {
             List<ReportParameter> paramarr = new List<ReportParameter>();
+            string firstTitle = "promotion";
+            string secondTitle = "memberships";
+            string subTitle = "";
+            string Title = "";
 
-            string addpath;
+            string addpath = "";
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
             {
-                addpath = @"\Reports\Sale\Ar\PackageReport.rdlc";
+
+                addpath = @"\Reports\Sale\Ar\ArMembership.rdlc";
+                //   secondTitle = "items";
+                subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+
             }
             else
-                addpath = @"\Reports\Sale\En\PackageReport.rdlc";
+            {
+                //english
+
+                addpath = @"\Reports\Sale\En\EnMembership.rdlc";
+                //  secondTitle = "items";
+                subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+
+
+            }
+
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
             ReportCls.checkLang();
+            //  getpuritemcount
+            Title = AppSettings.resourcemanagerreport.GetString("trSales") + " / " + subTitle;
+            paramarr.Add(new ReportParameter("trTitle", Title));
+            paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
 
-            //clsReports.packageReport(itemsQuery, rep, reppath, paramarr);
+
+            clsReports.membershipReport(membershipsQuery, rep, reppath, paramarr);
+
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
             rep.SetParameters(paramarr);
 
             rep.Refresh();
+
         }
-        public void pdfpackage()
-        {
 
-            BuildReport();
-
-            this.Dispatcher.Invoke(() =>
-            {
-                saveFileDialog.Filter = "PDF|*.pdf;";
-
-                if (saveFileDialog.ShowDialog() == true)
-                {
-                    string filepath = saveFileDialog.FileName;
-                    LocalReportExtensions.ExportToPDF(rep, filepath);
-                }
-            });
-        }
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {//pdf
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
                     /////////////////////////////////////
-                    Thread t1 = new Thread(() =>
-                    {
-                        pdfpackage();
-                    });
-                    t1.Start();
+                    //Thread t1 = new Thread(() =>
+                    //{
+                        pdf();
+                    //});
+                    //t1.Start();
                     //////////////////////////////////////
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -710,28 +718,19 @@ namespace Restaurant.View.sales.promotion.membership
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        public void printpackage()
-        {
-            BuildReport();
 
-            this.Dispatcher.Invoke(() =>
-            {
-                //LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, MainWindow.rep_printer_name, short.Parse(MainWindow.rep_print_count));
-            });
-        }
         private void Btn_print_Click(object sender, RoutedEventArgs e)
         {//print
             try
             {
-
                 HelpClass.StartAwait(grid_main);
 
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || HelpClass.isAdminPermision())
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
                     /////////////////////////////////////
                     Thread t1 = new Thread(() =>
                     {
-                        printpackage();
+                        print();
                     });
                     t1.Start();
                     //////////////////////////////////////
@@ -740,86 +739,6 @@ namespace Restaurant.View.sales.promotion.membership
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        
-        private void Btn_preview_Click(object sender, RoutedEventArgs e)
-        {//preview
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || HelpClass.isAdminPermision())
-                {
-                    #region
-                    Window.GetWindow(this).Opacity = 0.2;
-                    /////////////////////
-                    string pdfpath = "";
-                    pdfpath = @"\Thumb\report\temp.pdf";
-                    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
-                    BuildReport();
-                    LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                    ///////////////////
-                    wd_previewPdf w = new wd_previewPdf();
-                    w.pdfPath = pdfpath;
-                    if (!string.IsNullOrEmpty(w.pdfPath))
-                    {
-                        w.ShowDialog();
-                        w.wb_pdfWebViewer.Dispose();
-                    }
-                    Window.GetWindow(this).Opacity = 1;
-                    #endregion
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this);
-            }
-        }
-        public void ExcelPackage()
-        {
-
-            BuildReport();
-
-            this.Dispatcher.Invoke(() =>
-            {
-                saveFileDialog.Filter = "EXCEL|*.xls;";
-                if (saveFileDialog.ShowDialog() == true)
-                {
-                    string filepath = saveFileDialog.FileName;
-                    LocalReportExtensions.ExportToExcel(rep, filepath);
-                }
-            });
-        }
-        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
-        {//excel
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report") || HelpClass.isAdminPermision())
-                {
-                    Thread t1 = new Thread(() =>
-                    {
-                        ExcelPackage();
-
-                    });
-                    t1.Start();
-                }
-                else
-                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -837,10 +756,87 @@ namespace Restaurant.View.sales.promotion.membership
 
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
+                    //#region
+                    //Window.GetWindow(this).Opacity = 0.2;
+                    //win_lvcSales win = new win_lvcSales(membershipsQuery, 1);
+                    //win.ShowDialog();
+                    //Window.GetWindow(this).Opacity = 1;
+                    //#endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
+        {//excel
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
+                {
+                    #region
+                    BuildReport();
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        saveFileDialog.Filter = "EXCEL|*.xls;";
+                        if (saveFileDialog.ShowDialog() == true)
+                        {
+                            string filepath = saveFileDialog.FileName;
+                            LocalReportExtensions.ExportToExcel(rep, filepath);
+                        }
+                    });
+
+
+                    #endregion
+                }
+                else
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this);
+            }
+        }
+
+        private void Btn_preview_Click(object sender, RoutedEventArgs e)
+        {//preview
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
+                {
                     #region
                     Window.GetWindow(this).Opacity = 0.2;
-                    win_lvcSales win = new win_lvcSales(membershipsQuery, 4);
-                    win.ShowDialog();
+                    string pdfpath = "";
+
+
+
+                    pdfpath = @"\Thumb\report\temp.pdf";
+                    pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
+
+                    BuildReport();
+
+                    LocalReportExtensions.ExportToPDF(rep, pdfpath);
+                    wd_previewPdf w = new wd_previewPdf();
+                    w.pdfPath = pdfpath;
+                    if (!string.IsNullOrEmpty(w.pdfPath))
+                    {
+                        w.ShowDialog();
+                        w.wb_pdfWebViewer.Dispose();
+                    }
                     Window.GetWindow(this).Opacity = 1;
                     #endregion
                 }
@@ -854,8 +850,32 @@ namespace Restaurant.View.sales.promotion.membership
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
-
         }
+        public async void pdf()
+        {
+            BuildReport();
+            this.Dispatcher.Invoke(() =>
+            {
+                saveFileDialog.Filter = "PDF|*.pdf;";
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string filepath = saveFileDialog.FileName;
+                    LocalReportExtensions.ExportToPDF(rep, filepath);
+                }
+            });
+        }
+
+        public async void print()
+        {
+            BuildReport();
+            this.Dispatcher.Invoke(() =>
+            {
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
+            });
+        }
+
+      
         #endregion
 
         #region barcode
@@ -1074,5 +1094,9 @@ namespace Restaurant.View.sales.promotion.membership
             }
         }
 
+        private void Btn_pdf_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

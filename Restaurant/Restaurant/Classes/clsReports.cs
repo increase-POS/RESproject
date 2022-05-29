@@ -1312,6 +1312,27 @@ namespace Restaurant.Classes
 
         }
 
+        public static void membershipReport(IEnumerable<Memberships> membershipsQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            List<Memberships> Query = JsonConvert.DeserializeObject<List<Memberships>>(JsonConvert.SerializeObject(membershipsQuery));
+
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            foreach (var c in Query)
+            {
+                c.subscriptionType = subscriptionTypeConverter(c.subscriptionType);
+            }
+
+            rep.DataSources.Add(new ReportDataSource("DataSet", Query));
+            paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
+                paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trSubscriptionType", AppSettings.resourcemanagerreport.GetString("trSubscriptionType")));
+
+
+        }
+
 
         public static void OfferReport(IEnumerable<Offer> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
@@ -1953,7 +1974,10 @@ namespace Restaurant.Classes
                 secondTitle = AppSettings.resourcemanagerreport.GetString("discounts");
             else if (secondTitle == "invClasses")
                 secondTitle = AppSettings.resourcemanagerreport.GetString("trInvoicesClasses");
-            //discounts trInvoiceClass
+            else if (secondTitle == "memberships")
+                secondTitle = AppSettings.resourcemanagerreport.GetString("trMemberships");
+
+            //memberships
             //////////////////////////////////////////////////////////////////////////////
             if (firstTitle == "" && secondTitle != "")
             {

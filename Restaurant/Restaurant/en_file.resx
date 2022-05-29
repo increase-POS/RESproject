@@ -4081,4 +4081,7 @@ Please add Email in setting</value>
   <data name="trPaid_" xml:space="preserve">
     <value>Paid</value>
   </data>
+  <data name="trMemberships" xml:space="preserve">
+    <value>Memberships</value>
+  </data>
 </root>

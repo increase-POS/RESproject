@@ -2283,6 +2283,18 @@
     <Content Include="Reports\Sale\Reservation\En\EnReservation.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\Sale\Ar\ArInvClass.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Sale\Ar\ArMembership.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Sale\En\EnInvClass.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Sale\En\EnMembership.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Resource Include="pic\programs-Rest-login-bg.png" />
@@ -2573,6 +2585,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Restaurant.ApiClasses.ApiConnect.datasource" />
+    <None Include="Properties\DataSources\Restaurant.ApiClasses.APIResult.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Agent.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.AgentMembershipCash1.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ApiClasses.OrderPreparing1.datasource" />
@@ -2596,6 +2610,7 @@
     <None Include="Properties\DataSources\Restaurant.Classes.ItemTransferInvoice1.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.ItemUnitInvoiceProfit.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Location.datasource" />
+    <None Include="Properties\DataSources\Restaurant.Classes.Memberships.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.Offer1.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.OrderPreparingSTS.datasource" />
     <None Include="Properties\DataSources\Restaurant.Classes.PayedInvclass1.datasource" />
