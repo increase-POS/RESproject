@@ -585,7 +585,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!shipUserName.Value+" "+Fields!shipUserLastName.Value</Value>
+                                  <Value>=Fields!shipUserName.Value</Value>
                                   <Style>
                                     <FontFamily>Montserrat</FontFamily>
                                   </Style>

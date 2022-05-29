@@ -732,7 +732,7 @@ namespace Restaurant.Classes
         }
 
 
-        public static void deliveryManagement(IEnumerable<Invoice> Query1, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        public static void deliveryManagement(IEnumerable<Invoice> Query1, LocalReport rep, string reppath, List<ReportParameter> paramarr,int isdriver)
         {
             List<Invoice> Query = JsonConvert.DeserializeObject<List<Invoice>>(JsonConvert.SerializeObject(Query1));
             rep.ReportPath = reppath;
@@ -742,22 +742,31 @@ namespace Restaurant.Classes
 
             //table columns
             paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trInvoiceCharp")));
-            paramarr.Add(new ReportParameter("deliveryMan", AppSettings.resourcemanagerreport.GetString("deliveryMan")));
             paramarr.Add(new ReportParameter("deliveryTime", AppSettings.resourcemanagerreport.GetString("deliveryTime")));
             paramarr.Add(new ReportParameter("trStatus", AppSettings.resourcemanagerreport.GetString("trStatus")));
+            if (isdriver==1)
+            {
+                paramarr.Add(new ReportParameter("deliveryMan", AppSettings.resourcemanagerreport.GetString("deliveryMan")));
+            }
+            else
+            {
+                paramarr.Add(new ReportParameter("deliveryMan", AppSettings.resourcemanagerreport.GetString("trCompany")));
+            }
             foreach (var row in Query)
             {
                 row.status = preparingOrderStatusConvert(row.status);
                 row.orderTimeConv = dateTimeToTimeConvert(row.orderTime);
+                row.shipUserName = driverOrShipcompanyConvert(isdriver, row.shipUserName, row.shipUserLastName, row.shippingCompanyName);
+            } 
+               
+            
 
-            }
             rep.DataSources.Add(new ReportDataSource("DataSet", Query));
 
             //title
             paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trDeliveryManagement")));
 
         }
-
         public static string dateTimeToTimeConvert(DateTime? orderTime)
         {
             if (orderTime != null)
@@ -767,6 +776,20 @@ namespace Restaurant.Classes
             }
             else
                 return "-";
+        }
+        public static string driverOrShipcompanyConvert(int isDriver,string shipUserName,string shipUserLastName,string shippingCompanyName)
+        {
+            string name = "";
+            if (isDriver == 1)
+            {
+                name = shipUserName + " " + shipUserLastName;
+            }
+            else
+            {
+                name = shippingCompanyName;
+            }
+              
+            return name;
         }
 
         public static void driverManagement(List<Invoice> Query1, LocalReport rep, string reppath, List<ReportParameter> paramarr)

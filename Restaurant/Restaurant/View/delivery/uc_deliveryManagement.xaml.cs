@@ -1112,7 +1112,19 @@ namespace Restaurant.View.delivery
             }
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
-            clsReports.deliveryManagement(orders.ToList(), rep, reppath, paramarr);
+            int isdriver = 0;
+            if (chk_drivers.IsChecked == true)
+            {
+                isdriver = 1;
+            }
+            else
+            {
+              
+                isdriver = 0;
+
+            }
+            
+            clsReports.deliveryManagement(orders.ToList(), rep, reppath, paramarr,isdriver);
             clsReports.setReportLanguage(paramarr);
             clsReports.Header(paramarr);
 
