@@ -1517,6 +1517,7 @@ namespace Restaurant.Classes
                 company.balance = newBalance;
                 await company.save(company);
             }
+            await saveInvoice(invoice);
             return invoice;
         }
         public async Task<Invoice> recordComSpecificPaidCash(Invoice invoice, string invType, CashTransfer cashTrasnfer)
