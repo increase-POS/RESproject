@@ -194,7 +194,7 @@ namespace Restaurant.View.reports.accountsReports
             if (selectedTab == 3)
             {
                 result = payments.Where(x => (
-                                (vendor.SelectedItem != null ? x.invShippingCompanyId == selectedItem2.ShippingId : false)
+                                (vendor.SelectedItem != null ? x.shippingCompanyId == selectedItem2.ShippingId : false)
                              && (date.SelectedItem != null ? x.updateDate.Value.Year == (int)selectedItem3 : true)));
             }
 
@@ -427,8 +427,8 @@ namespace Restaurant.View.reports.accountsReports
 
                 chk_allVendors.IsChecked = true;
                 fillDateCombo(cb_vendorsDate);
-                ShippingCombo = statisticModel.getShippingForStatementCombo(statement);
-                //ShippingCombo = statisticModel.getShippingCombo(statement);
+                //ShippingCombo = statisticModel.getShippingForStatementCombo(statement);
+                ShippingCombo = statisticModel.getShippingCombo(statement);
                 fillShippingCombo(ShippingCombo, cb_vendors);
 
                 HelpClass.EndAwait(grid_main);

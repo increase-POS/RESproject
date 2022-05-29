@@ -3774,12 +3774,11 @@ namespace Restaurant.Classes
             }
             else if (tab == 3)
             {
-                temp = list.Where(t => (t.invShippingCompanyId != null && t.shipUserId == null && t.invAgentId != null)
+                temp = list.Where(t => (t.shippingCompanyId != null && t.shipUserId == null && t.invAgentId != null)
                                      ||
-                                     (t.invShippingCompanyId != null && t.shipUserId == null && t.invAgentId == null)
+                                     (t.shippingCompanyId != null && t.shipUserId == null && t.invAgentId == null)
                 );
             }
-
 
             list2 = temp.OrderBy(X => X.updateDate).GroupBy(obj => obj.transNum).Select(obj => new CashTransferSts
             {
