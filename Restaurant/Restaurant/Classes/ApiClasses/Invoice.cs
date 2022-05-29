@@ -1477,12 +1477,14 @@ namespace Restaurant.Classes
             cashTrasnfer.transType = "d"; //deposit
             cashTrasnfer.side = "sh"; // vendor
             cashTrasnfer.transNum = await cashTrasnfer.generateCashNumber("dsh");
+         
 
             if (company.balanceType == 0)
             {
-                if (cashTrasnfer.cash <= (decimal)company.balance)
+                //if (cashTrasnfer.cash <= (decimal)company.balance)
+                if (invoice.totalNet <= (decimal)company.balance)
                 {
-                    newBalance = (decimal)company.balance - (decimal)cashTrasnfer.cash;
+                    newBalance = (decimal)company.balance - (decimal)invoice.totalNet;
                     company.balance = newBalance;
 
                     // yasin code
@@ -1496,11 +1498,12 @@ namespace Restaurant.Classes
                     invoice.paid += (decimal)company.balance;
                     invoice.deserved -= (decimal)company.balance;
                     ///////
-                    newBalance = (decimal)cashTrasnfer.cash - company.balance;
+                    newBalance = (decimal)invoice.totalNet - company.balance;
                     company.balance = newBalance;
                     company.balanceType = 1;
                 }
 
+                cashTrasnfer.cash = invoice.paid;
                 cashTrasnfer.transType = "d"; //deposit
                 if (cashTrasnfer.cash > 0)
                 {
@@ -1510,7 +1513,7 @@ namespace Restaurant.Classes
             }
             else if (company.balanceType == 1)
             {
-                newBalance = (decimal)company.balance + (decimal)cashTrasnfer.cash;
+                newBalance = (decimal)company.balance + (decimal)invoice.totalNet;
                 company.balance = newBalance;
                 await company.save(company);
             }
