@@ -341,7 +341,7 @@ namespace Restaurant.View.kitchen
                 int res = 0;
                 string status = "";
 
-                if (selectedOrders.Count == 0)
+                if (selectedOrders.Count == 1)
                     status = preparingOrder.status;
                 else if(chk_ready.IsChecked.Value)
                     status = "Ready";
