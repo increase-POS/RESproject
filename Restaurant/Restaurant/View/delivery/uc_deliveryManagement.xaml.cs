@@ -20,7 +20,7 @@ using Microsoft.Win32;
 using System.IO;
 using Restaurant.View.windows;
 using Microsoft.Reporting.WinForms;
-
+using Restaurant.View.sales;
 
 namespace Restaurant.View.delivery
 {
@@ -466,6 +466,8 @@ namespace Restaurant.View.delivery
                         if (chk_shippingCompanies.IsChecked == true)
                             requiredControlList = new List<string>() { "companyId" };
                     }
+                    
+
                     #region add
                     if (HelpClass.validate(requiredControlList, this))
                     {
@@ -520,14 +522,16 @@ namespace Restaurant.View.delivery
                             ops.notes = tb_notes.Text;
                             ops.isActive = 1;
 
-                            int res = await orderModel.EditInvoiceOrdersStatus(i.invoiceId , driverID , comID , ops);
+                            int res = await orderModel.EditInvoiceOrdersStatus(i.invoiceId, driverID, comID, ops);
 
                             if (!res.Equals(0))
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopSave"), animation: ToasterAnimation.FadeIn);
                             else
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                         }
-                        if(chk_shippingCompanies.IsChecked == true)
+
+                        
+                        if (chk_shippingCompanies.IsChecked == true)
                             await RefreshOrdersList("");
                         await Search();
                         Clear();
@@ -1263,7 +1267,6 @@ namespace Restaurant.View.delivery
             }
             catch (Exception ex)
             {
-
                 HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this);
             }
@@ -1279,10 +1282,10 @@ namespace Restaurant.View.delivery
                 //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 //{
                 #region
-                //Window.GetWindow(this).Opacity = 0.2;
-                //win_lvc win = new win_lvc(usersQuery, 3);
-                //win.ShowDialog();
-                //Window.GetWindow(this).Opacity = 1;
+                Window.GetWindow(this).Opacity = 0.2;
+                win_lvcSales win = new win_lvcSales(orders, 7);
+                win.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
                 #endregion
                 //}
                 //else
@@ -1296,8 +1299,9 @@ namespace Restaurant.View.delivery
                 HelpClass.ExceptionMessage(ex, this);
             }
 
-
         }
         #endregion
+
+
     }
 }
