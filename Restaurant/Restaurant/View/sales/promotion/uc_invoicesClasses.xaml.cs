@@ -681,47 +681,57 @@ namespace Restaurant.View.sales.promotion
         #endregion
 
         #region reports
-        
         ReportCls reportclass = new ReportCls();
         LocalReport rep = new LocalReport();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
-        private void Btn_printBarcode_Click(object sender, RoutedEventArgs e)
-        {//print barcode
-            //if (tb_barcode.Text != null && tb_barcode.Text != "")
-            {
-                buildbarcodereport();
-                saveFileDialog.Filter = "PDF|*.pdf;";
 
-                if (saveFileDialog.ShowDialog() == true)
-                {
-                    string filepath = saveFileDialog.FileName;
-                    LocalReportExtensions.ExportToPDF(rep, filepath);
-                }
-            }
-            //else
-            {
-                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trBarcodeEmpty"), animation: ToasterAnimation.FadeIn);
-            }
-        }
-
-        public void buildbarcodereport()
+        public void BuildReport()
         {
             List<ReportParameter> paramarr = new List<ReportParameter>();
+            string firstTitle = "promotion";
+            string secondTitle = "invClasses";
+            string subTitle = "";
+            string Title = "";
 
-            string addpath;
+            string addpath = "";
             bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
 
-            addpath = @"\Reports\Sale\invoicesClass\coupExport.rdlc";
+                addpath = @"\Reports\Sale\Ar\ArInvClass.rdlc";
+                //   secondTitle = "items";
+                subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+
+            }
+            else
+            {
+                //english
+
+                addpath = @"\Reports\Sale\En\EnInvClass.rdlc";
+                //  secondTitle = "items";
+                subTitle = clsReports.ReportTabTitle(firstTitle, secondTitle);
+
+
+            }
 
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
             ReportCls.checkLang();
+            //  getpuritemcount
+            Title = AppSettings.resourcemanagerreport.GetString("trSales") + " / " + subTitle;
+            paramarr.Add(new ReportParameter("trTitle", Title));
+            paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
 
-            //clsReports.invoicesClassExportReport(rep, reppath, paramarr, tb_barcode.Text);
+
+            clsReports.InvClassReport(invoicesClassesQuery, rep, reppath, paramarr);
+
+            clsReports.setReportLanguage(paramarr);
+            clsReports.Header(paramarr);
 
             rep.SetParameters(paramarr);
 
             rep.Refresh();
+
         }
 
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
@@ -732,11 +742,11 @@ namespace Restaurant.View.sales.promotion
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
                     /////////////////////////////////////
-                    Thread t1 = new Thread(() =>
-                    {
-                        pdfPurInvoicesClass();
-                    });
-                    t1.Start();
+                    //Thread t1 = new Thread(() =>
+                    //{
+                    pdf();
+                    //});
+                    //t1.Start();
                     //////////////////////////////////////
                 }
                 else
@@ -762,7 +772,7 @@ namespace Restaurant.View.sales.promotion
                     /////////////////////////////////////
                     Thread t1 = new Thread(() =>
                     {
-                        printPurInvoicesClass();
+                        print();
                     });
                     t1.Start();
                     //////////////////////////////////////
@@ -779,6 +789,9 @@ namespace Restaurant.View.sales.promotion
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
+    
+
         private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
         {//excel
             try
@@ -788,28 +801,7 @@ namespace Restaurant.View.sales.promotion
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
                     #region
-                    //Thread t1 = new Thread(() =>
-                    //{
-                    List<ReportParameter> paramarr = new List<ReportParameter>();
-
-                    string addpath;
-                    bool isArabic = ReportCls.checkLang();
-                    if (isArabic)
-                    {
-                        addpath = @"\Reports\Sale\Ar\InvoicesClassReport.rdlc";
-                    }
-                    else addpath = @"\Reports\Sale\En\InvoicesClassReport.rdlc";
-                    string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-                    ReportCls.checkLang();
-
-                    //clsReports.invoicesClassReport(invoicesClassesQuery, rep, reppath, paramarr);
-                    clsReports.setReportLanguage(paramarr);
-                    clsReports.Header(paramarr);
-
-                    rep.SetParameters(paramarr);
-
-                    rep.Refresh();
+                    BuildReport();
                     this.Dispatcher.Invoke(() =>
                     {
                         saveFileDialog.Filter = "EXCEL|*.xls;";
@@ -820,8 +812,7 @@ namespace Restaurant.View.sales.promotion
                         }
                     });
 
-                    //});
-                    //t1.Start();
+
                     #endregion
                 }
                 else
@@ -848,29 +839,12 @@ namespace Restaurant.View.sales.promotion
                     Window.GetWindow(this).Opacity = 0.2;
                     string pdfpath = "";
 
-                    List<ReportParameter> paramarr = new List<ReportParameter>();
+
 
                     pdfpath = @"\Thumb\report\temp.pdf";
                     pdfpath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, pdfpath);
 
-                    string addpath;
-                    bool isArabic = ReportCls.checkLang();
-                    if (isArabic)
-                    {
-                        addpath = @"\Reports\Sale\Ar\InvoicesClassReport.rdlc";
-                    }
-                    else addpath = @"\Reports\Sale\En\InvoicesClassReport.rdlc";
-                    string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-                    ReportCls.checkLang();
-
-                    //clsReports.invoicesClassReport(invoicesClassesQuery, rep, reppath, paramarr);
-                    clsReports.setReportLanguage(paramarr);
-                    clsReports.Header(paramarr);
-
-                    rep.SetParameters(paramarr);
-
-                    rep.Refresh();
+                    BuildReport();
 
                     LocalReportExtensions.ExportToPDF(rep, pdfpath);
                     wd_previewPdf w = new wd_previewPdf();
@@ -894,28 +868,9 @@ namespace Restaurant.View.sales.promotion
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-        public async void pdfPurInvoicesClass()
+        public async void pdf()
         {
-            List<ReportParameter> paramarr = new List<ReportParameter>();
-
-            string addpath;
-            bool isArabic = ReportCls.checkLang();
-            if (isArabic)
-            {
-                addpath = @"\Reports\Sale\Ar\InvoicesClassReport.rdlc";
-            }
-            else addpath = @"\Reports\Sale\En\InvoicesClassReport.rdlc";
-            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-            ReportCls.checkLang();
-
-            //clsReports.invoicesClassReport(invoicesClassesQuery, rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
-            clsReports.Header(paramarr);
-
-            rep.SetParameters(paramarr);
-
-            rep.Refresh();
+            BuildReport();
             this.Dispatcher.Invoke(() =>
             {
                 saveFileDialog.Filter = "PDF|*.pdf;";
@@ -928,33 +883,14 @@ namespace Restaurant.View.sales.promotion
             });
         }
 
-        public async void printPurInvoicesClass()
+        public async void print()
         {
-            List<ReportParameter> paramarr = new List<ReportParameter>();
-
-            string addpath;
-            bool isArabic = ReportCls.checkLang();
-            if (isArabic)
-            {
-                addpath = @"\Reports\Sale\Ar\InvoicesClassReport.rdlc";
-            }
-            else addpath = @"\Reports\Sale\En\InvoicesClassReport.rdlc";
-            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-
-            ReportCls.checkLang();
-
-            //clsReports.invoicesClassReport(invoicesClassesQuery, rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
-            clsReports.Header(paramarr);
-
-            rep.SetParameters(paramarr);
-            rep.Refresh();
+            BuildReport();
             this.Dispatcher.Invoke(() =>
             {
-                //LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, FillCombo.rep_printer_name, short.Parse(FillCombo.rep_print_count));
+                LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, short.Parse(AppSettings.rep_print_count));
             });
         }
-        
 
         private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
         {//pie
@@ -984,6 +920,7 @@ namespace Restaurant.View.sales.promotion
 
         }
         #endregion
+
 
 
     }

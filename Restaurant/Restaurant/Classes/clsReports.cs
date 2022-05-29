@@ -1332,6 +1332,24 @@ namespace Restaurant.Classes
 
 
         }
+        public static void InvClassReport(IEnumerable<InvoicesClass> invoicesClassesQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            List<InvoicesClass> Query = JsonConvert.DeserializeObject<List<InvoicesClass>>(JsonConvert.SerializeObject(invoicesClassesQuery));
+
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            foreach (var c in Query)
+            {
+               // c.subscriptionType = subscriptionTypeConverter(c.subscriptionType);
+            }
+
+            rep.DataSources.Add(new ReportDataSource("DataSet", Query));
+            paramarr.Add(new ReportParameter("dateForm", AppSettings.dateFormat));
+              paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trMinimumInvoiceValueHint", AppSettings.resourcemanagerreport.GetString("trMinInvoice")));
+            paramarr.Add(new ReportParameter("trMaximumInvoiceValueHint", AppSettings.resourcemanagerreport.GetString("trMaxInvoice")));
+        }
 
 
         public static void OfferReport(IEnumerable<Offer> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)

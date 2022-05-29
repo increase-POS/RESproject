@@ -747,25 +747,22 @@ namespace Restaurant.View.sales.promotion.membership
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
-
         private void Btn_pieChart_Click(object sender, RoutedEventArgs e)
         {//pie
             try
             {
                 HelpClass.StartAwait(grid_main);
-
                 if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 {
-                    //#region
-                    //Window.GetWindow(this).Opacity = 0.2;
-                    //win_lvcSales win = new win_lvcSales(membershipsQuery, 1);
-                    //win.ShowDialog();
-                    //Window.GetWindow(this).Opacity = 1;
-                    //#endregion
+                    #region
+                    Window.GetWindow(this).Opacity = 0.2;
+                    win_lvcSales win = new win_lvcSales(membershipsQuery, 4);
+                    win.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                    #endregion
                 }
                 else
                     Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -774,6 +771,7 @@ namespace Restaurant.View.sales.promotion.membership
                 HelpClass.ExceptionMessage(ex, this);
             }
         }
+
 
         private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
         {//excel
@@ -1094,9 +1092,6 @@ namespace Restaurant.View.sales.promotion.membership
             }
         }
 
-        private void Btn_pdf_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
+      
     }
 }
