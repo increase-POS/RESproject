@@ -419,79 +419,81 @@ namespace Restaurant.View.kitchen
                 }
                 else
                 {
-                    //var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
-                    //var statusCol = dg_orders.Columns[1] as DataGridTextColumn;
-                    //if (chkSelectAll == null || firstCol == null || dg_orders?.Items == null || dg_orders.Items.Count == 0)
-                    //{
-                    //    return;
-                    //}
-
-                    var item0 = dg_orders.Items[0] as OrderPreparing;
-
-                    #region refreshSaveBtnText
-                    //bdr_cbDeliveryCompany.Visibility = Visibility.Collapsed;
-
-                    if (item0.status.Equals("Listed"))
+                    if(dg_orders.Items.Count > 0)
                     {
-                        btn_save.Content = AppSettings.resourcemanager.GetString("trPreparing");
-                        btn_save.IsEnabled = true;
-                        //bdr_cbDeliveryMan.Visibility = Visibility.Visible;
-                        //bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
-                    }
-                    else if (item0.status.Equals("Preparing"))
-                    {
-                        btn_save.Content = AppSettings.resourcemanager.GetString("trReady");
-                        btn_save.IsEnabled = true;
-                        //bdr_cbDeliveryMan.Visibility = Visibility.Visible;
-                        //bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
-                    }
-                    else if (item0.status.Equals("Ready"))
-                    {
-                        btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
-                        btn_save.IsEnabled = true;
-                        //bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
-                        //bdr_tbDeliveryMan.Visibility = Visibility.Visible;
-                    }
-                    #endregion
+                        //var firstCol = dg_orders.Columns.OfType<DataGridCheckBoxColumn>().FirstOrDefault(c => c.DisplayIndex == 0);
+                        //var statusCol = dg_orders.Columns[1] as DataGridTextColumn;
+                        //if (chkSelectAll == null || firstCol == null || dg_orders?.Items == null || dg_orders.Items.Count == 0)
+                        //{
+                        //    return;
+                        //}
 
-                    foreach (var item in dg_orders.Items)
-                    {
-                        // stop code yasmin
-                        /*
-                        var chBx = firstCol.GetCellContent(item) as CheckBox;
-                        if (chBx == null)
+                        var item0 = dg_orders.Items[0] as OrderPreparing;
+
+                        #region refreshSaveBtnText
+                        //bdr_cbDeliveryCompany.Visibility = Visibility.Collapsed;
+
+                        if (item0.status.Equals("Listed"))
                         {
-                            continue;
+                            btn_save.Content = AppSettings.resourcemanager.GetString("trPreparing");
+                            btn_save.IsEnabled = true;
+                            //bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                            //bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
                         }
-                        */
-
-                        var txt = item as OrderPreparing;
-                        if (txt == null)
+                        else if (item0.status.Equals("Preparing"))
                         {
-                            continue;
+                            btn_save.Content = AppSettings.resourcemanager.GetString("trReady");
+                            btn_save.IsEnabled = true;
+                            //bdr_cbDeliveryMan.Visibility = Visibility.Visible;
+                            //bdr_tbDeliveryMan.Visibility = Visibility.Collapsed;
                         }
-                        if (txt.status.Equals(item0.status) )
+                        else if (item0.status.Equals("Ready"))
                         {
+                            btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
+                            btn_save.IsEnabled = true;
+                            //bdr_cbDeliveryMan.Visibility = Visibility.Collapsed;
+                            //bdr_tbDeliveryMan.Visibility = Visibility.Visible;
+                        }
+                        #endregion
 
+                        foreach (var item in dg_orders.Items)
+                        {
                             // stop code yasmin
-                            //chBx.IsChecked = chkSelectAll.IsChecked;
+                            /*
+                            var chBx = firstCol.GetCellContent(item) as CheckBox;
+                            if (chBx == null)
+                            {
+                                continue;
+                            }
+                            */
 
-                            txt.IsChecked = chkSelectAll.IsChecked.Value;
-                            //if (item0.status == "InTheWay")
-                            //    requiredControlList = new List<string>();
-                            //else
-                            //{
-                            //    if (item0.shipUserId == null)
-                            //        requiredControlList = new List<string> { "companyId" };
-                            //    else
-                            //        requiredControlList = new List<string> { "userId" };
-                            //}
-                            //selectedOrders.Add(txt);
+                            var txt = item as OrderPreparing;
+                            if (txt == null)
+                            {
+                                continue;
+                            }
+                            if (txt.status.Equals(item0.status))
+                            {
+
+                                // stop code yasmin
+                                //chBx.IsChecked = chkSelectAll.IsChecked;
+
+                                txt.IsChecked = chkSelectAll.IsChecked.Value;
+                                //if (item0.status == "InTheWay")
+                                //    requiredControlList = new List<string>();
+                                //else
+                                //{
+                                //    if (item0.shipUserId == null)
+                                //        requiredControlList = new List<string> { "companyId" };
+                                //    else
+                                //        requiredControlList = new List<string> { "userId" };
+                                //}
+                                //selectedOrders.Add(txt);
+                            }
                         }
                     }
+                    dg_orders.Items.Refresh();
                 }
-                dg_orders.Items.Refresh();
-
             }
             catch (Exception ex)
             {
