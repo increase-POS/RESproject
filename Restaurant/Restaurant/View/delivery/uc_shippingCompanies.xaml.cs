@@ -22,6 +22,7 @@ using System.IO;
 using Restaurant.View.windows;
 
 using Microsoft.Reporting.WinForms;
+using Restaurant.View.sales;
 
 namespace Restaurant.View.delivery
 {
@@ -867,10 +868,10 @@ namespace Restaurant.View.delivery
                 //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
                 //{
                 #region
-                //Window.GetWindow(this).Opacity = 0.2;
-                //win_lvc win = new win_lvc(usersQuery, 3);
-                //win.ShowDialog();
-                //Window.GetWindow(this).Opacity = 1;
+                Window.GetWindow(this).Opacity = 0.2;
+                win_lvcSales win = new win_lvcSales(shCompanysQuery, 8);
+                win.ShowDialog();
+                Window.GetWindow(this).Opacity = 1;
                 #endregion
                 //}
                 //else
@@ -886,6 +887,8 @@ namespace Restaurant.View.delivery
 
 
         }
+
+
         #endregion
 
       
