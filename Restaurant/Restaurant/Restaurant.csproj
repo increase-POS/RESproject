@@ -504,6 +504,9 @@
     <Compile Include="View\reports\storageReports\uc_internalStorageReports.xaml.cs">
       <DependentUpon>uc_internalStorageReports.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\reports\storageReports\uc_spendingStorageReport.xaml.cs">
+      <DependentUpon>uc_spendingStorageReport.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\reports\storageReports\uc_stockStorageReports.xaml.cs">
       <DependentUpon>uc_stockStorageReports.xaml</DependentUpon>
     </Compile>
@@ -1150,6 +1153,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\reports\storageReports\uc_internalStorageReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\reports\storageReports\uc_spendingStorageReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
