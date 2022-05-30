@@ -185,7 +185,7 @@ namespace Restaurant.View.delivery
         {
             order = new Invoice();
             btn_save.IsEnabled = true;
-            btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
+            btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
             selectedOrders.Clear();
             this.DataContext = order;
 
@@ -451,15 +451,26 @@ namespace Restaurant.View.delivery
 
                     if (selectedOrders.Count > 1)
                         requiredControlList = new List<string>();
-                    else if (selectedOrders.Count == 1)
+                    else if (selectedOrders.Count == 1 )
                     {
-                        if(chk_drivers.IsChecked == true)
+
+                        if (selectedOrders[0] != null && selectedOrders[0].invoiceId == 0)
+                        {
+                            HelpClass.EndAwait(grid_main);
+                            return;
+                        }
+                        if (chk_drivers.IsChecked == true)
                             requiredControlList = new List<string>() { "userId" };
                         if (chk_shippingCompanies.IsChecked == true)
                             requiredControlList = new List<string>() { "companyId" };
                     }
                     else if(selectedOrders.Count == 0 && order != null)
                     {
+                        if(order.invoiceId == 0)
+                        {
+                            HelpClass.EndAwait(grid_main);
+                            return;
+                        }
                         selectedOrders.Add(order);
                         if (chk_drivers.IsChecked == true)
                             requiredControlList = new List<string>() { "userId" };
@@ -857,6 +868,8 @@ namespace Restaurant.View.delivery
                         chk_withDeliveryMan.IsChecked = false;
                         chk_inTheWay.IsChecked = false;
                         col_chk.Visibility = Visibility.Collapsed;
+                        //btn_save.Content = AppSettings.resourcemanager.GetString("trSave");
+
                     }
                     else if (cb.Name == "chk_readyForDelivery")
                     {
@@ -864,6 +877,7 @@ namespace Restaurant.View.delivery
                         chk_withDeliveryMan.IsChecked = false;
                         chk_inTheWay.IsChecked = false;
                         col_chk.Visibility = Visibility.Visible;
+                        //btn_save.Content = AppSettings.resourcemanager.GetString("trCollect");
                     }
                     else if (cb.Name == "chk_withDeliveryMan")
                     {
@@ -871,6 +885,8 @@ namespace Restaurant.View.delivery
                         chk_readyForDelivery.IsChecked = false;
                         chk_inTheWay.IsChecked = false;
                         col_chk.Visibility = Visibility.Visible;
+                        //btn_save.Content = AppSettings.resourcemanager.GetString("onTheWay");
+
                     }
                     else if (cb.Name == "chk_inTheWay")
                     {
@@ -878,6 +894,7 @@ namespace Restaurant.View.delivery
                         chk_readyForDelivery.IsChecked = false;
                         chk_withDeliveryMan.IsChecked = false;
                         col_chk.Visibility = Visibility.Visible;
+                        //btn_save.Content = AppSettings.resourcemanager.GetString("trDone");
                     }
                 }
                 HelpClass.StartAwait(grid_main);

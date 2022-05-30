@@ -306,7 +306,7 @@ namespace Restaurant.View.kitchen
                 if (FillCombo.groupObject.HasPermissionAction(updatePermission, FillCombo.groupObjects, "one"))
                 {
                     var selectedOrders = ordersQuery.Where(x => x.IsChecked == true).ToList();
-                        if (HelpClass.validate(requiredControlList, this) || selectedOrders.Count > 0)
+                        if (HelpClass.validate(requiredControlList, this)  || selectedOrders.Count > 0)
                     {
                         await saveOrderPreparing();
                     }
@@ -326,7 +326,7 @@ namespace Restaurant.View.kitchen
         async Task saveOrderPreparing()
         {
             var selectedOrders = ordersQuery.Where(x => x.IsChecked == true).ToList();
-            if (selectedOrders.Count == 0)// one row is clicked
+            if (selectedOrders.Count == 0 && preparingOrder.invoiceId != null )// one row is clicked
                 selectedOrders.Add(preparingOrder);
 
             if (selectedOrders.Count > 0)

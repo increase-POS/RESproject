@@ -544,7 +544,7 @@ namespace Restaurant.View.accounts
 
                         #region save
 
-                        if (HelpClass.validate(requiredControlList, this) && enoughMoney)
+                        if ( enoughMoney && HelpClass.validate(requiredControlList, this) )
                         {
                             string recipient = cb_depositTo.SelectedValue.ToString();
                             int agentid = 0;

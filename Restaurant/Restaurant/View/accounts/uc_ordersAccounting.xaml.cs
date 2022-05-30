@@ -388,9 +388,7 @@ namespace Restaurant.View.accounts
             try
             {
                 HelpClass.StartAwait(grid_main);
-
                 await Search();
-              
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -724,7 +722,7 @@ namespace Restaurant.View.accounts
 
                         w.invoice.invType = invoice.invType;
                         w.invoice.totalNet = invoice.totalNet;
-                        w.cards = cards;
+                        w.cards = FillCombo.cardsList;
                         w.ShowDialog();
                         Window.GetWindow(this).Opacity = 1;
                         multipleValid = w.isOk;
@@ -759,6 +757,7 @@ namespace Restaurant.View.accounts
                                 await RefreshInvoiceList();
                                 Tb_search_TextChanged(null, null);
                                 await MainWindow.refreshBalance();
+                                btn_save.IsEnabled = false;
                             }
                             else
                             {
